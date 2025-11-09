@@ -104,6 +104,8 @@ void CvSelectionGroup::reset(int iID, PlayerTypes eOwner, bool bConstructorCall)
 	m_bLastPlotVisible = false;
 	m_bLastPlotRevealed = false;
 
+	m_iArmyID = -1;
+
 	if (!bConstructorCall)
 	{
 		AI_reset();
@@ -513,6 +515,9 @@ bool CvSelectionGroup::pushMissionInternal(MissionTypes eMission, int iData1, in
 		}
 		clearMissionQueue();
 	}
+
+	if (getHeadUnit() == NULL)
+		return false;
 
 	if (bManual)
 	{
@@ -4491,7 +4496,7 @@ void CvSelectionGroup::setActivityType(ActivityTypes eNewValue, MissionTypes eSl
 							||	eSleepType == NO_MISSION
 						)
 					) pLoopUnit->setBuildUpType(NO_PROMOTIONLINE, eSleepType);
-
+					
 					pLoopUnit->setSleepType(pLoopUnit->isFortifyable() ? MISSION_FORTIFY : MISSION_SLEEP);
 				}
 			}
@@ -5453,6 +5458,7 @@ TeamTypes CvSelectionGroup::getHeadTeam() const
 
 void CvSelectionGroup::clearMissionQueue()
 {
+	PROFILE_FUNC();
 	FAssert(getOwner() != NO_PLAYER);
 	FAssert(getHeadUnit());
 

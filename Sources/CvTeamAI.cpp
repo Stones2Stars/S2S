@@ -143,6 +143,11 @@ void CvTeamAI::AI_reset(bool bConstructor)
 	m_iLimitedWarPowerRatio = 0;
 	m_iDogpileWarRand = 0;
 	m_iMakePeaceRand = 0;
+#ifdef	ENABLE_FOGWAR_DECAY
+	m_bPermanentMapLand = false;
+	m_bPermanentMapSea = false;
+	m_iDefaultDecay = DEFAULT_DECAY;
+#endif
 }
 
 
@@ -1329,7 +1334,7 @@ int CvTeamAI::AI_techTradeVal(TechTypes eTech, TeamTypes eTeam)
 	{
 		PROFILE("CvTeamAI::AI_techTradeVal.CacheMiss");
 
-		if (gPlayerLogLevel > 2)
+		if (gPlayerLogLevel > 3)
 		{
 			logBBAI(
 				"Calculate trade value for tech %S by team %d for team %d",
@@ -5028,3 +5033,119 @@ bool CvTeamAI::AI_hasAdjacentLandPlots(TeamTypes eTeam) const
 	}
 	return false;
 }
+
+#ifdef ENABLE_FOGWAR_DECAY
+short CvTeamAI::getVisibilityDecay(bool pSeaPlot)
+{
+	const TeamTypes& team = GC.getGame().getActiveTeam();
+	const PlayerTypes myID = GC.getGame().getActivePlayer();
+	const bool bIsHuman = GET_TEAM(team).isHuman() || GC.getGame().getAIAutoPlay(myID) > 0 || gDLL->GetAutorun();
+	m_iDefaultDecay = GC.getGame().getModderGameOption(MODDERGAMEOPTION_FOGWAR_NBTURNS);
+
+	if ((pSeaPlot && m_bPermanentMapSea) || !bIsHuman || !GC.getGame().getModderGameOption(MODDERGAMEOPTION_FOGWAR_DECAY)) return NO_DECAY;
+	if ((!pSeaPlot && m_bPermanentMapLand) || !bIsHuman || !GC.getGame().getModderGameOption(MODDERGAMEOPTION_FOGWAR_DECAY)) return NO_DECAY;
+
+	if (pSeaPlot)
+	{
+		int iPathfinding = GC.getInfoTypeForString("TECH_NAVIGATION"); 
+		if (isHasTech((TechTypes)iPathfinding))
+		{
+			m_bPermanentMapSea = true;
+			return NO_DECAY;
+		}
+		iPathfinding = GC.getInfoTypeForString("TECH_COMPASS");
+		if (isHasTech((TechTypes)iPathfinding))
+		{
+			return (m_iDefaultDecay + 40);
+		}
+		iPathfinding = GC.getInfoTypeForString("TECH_CARTOGRAPHY");
+		if (isHasTech((TechTypes)iPathfinding))
+		{
+			return (m_iDefaultDecay + 30);
+		}
+		iPathfinding = GC.getInfoTypeForString("TECH_PAPER");
+		if (isHasTech((TechTypes)iPathfinding))
+		{
+			return (m_iDefaultDecay + 20);
+		}		
+		iPathfinding = GC.getInfoTypeForString("TECH_RUDDER");
+		if (isHasTech((TechTypes)iPathfinding))
+		{
+			return (m_iDefaultDecay + 15);
+		}
+		iPathfinding = GC.getInfoTypeForString("TECH_SEAFARING");
+		if (isHasTech((TechTypes)iPathfinding))
+		{
+			return (m_iDefaultDecay + 12);
+		}
+		
+		iPathfinding = GC.getInfoTypeForString("TECH_WRITING");
+		if (isHasTech((TechTypes)iPathfinding))
+		{
+			return (m_iDefaultDecay + 9);
+		}
+		iPathfinding = GC.getInfoTypeForString("TECH_STARGAZING");
+		if (isHasTech((TechTypes)iPathfinding))
+		{
+			return (m_iDefaultDecay + 6);
+		}
+		iPathfinding = GC.getInfoTypeForString("TECH_SAILING");
+		if (isHasTech((TechTypes)iPathfinding))
+		{
+			return (m_iDefaultDecay + 3);
+		}
+		return (m_iDefaultDecay + 1);
+	}
+	else
+	{
+		int iPathfinding = GC.getInfoTypeForString("TECH_CARTOGRAPHY");
+		if (isHasTech((TechTypes)iPathfinding))
+		{
+			m_bPermanentMapLand = true;
+			return NO_DECAY;
+		}		
+		iPathfinding = GC.getInfoTypeForString("TECH_SURVEYING");
+		if (isHasTech((TechTypes)iPathfinding))
+		{
+			return (m_iDefaultDecay + 40);
+		}
+		iPathfinding = GC.getInfoTypeForString("TECH_WRITING");
+		if (isHasTech((TechTypes)iPathfinding))
+		{
+			return (m_iDefaultDecay + 25);
+		}
+		iPathfinding = GC.getInfoTypeForString("TECH_EXPLORATION");
+		if (isHasTech((TechTypes)iPathfinding))
+		{
+			return (m_iDefaultDecay + 18);
+		}
+		iPathfinding = GC.getInfoTypeForString("TECH_IDEOGRAMS");
+		if (isHasTech((TechTypes)iPathfinding))
+		{
+			return (m_iDefaultDecay + 15);
+		}
+		iPathfinding = GC.getInfoTypeForString("TECH_PICTOGRAPHS");
+		if (isHasTech((TechTypes)iPathfinding))
+		{
+			return (m_iDefaultDecay + 12);
+		}
+		iPathfinding = GC.getInfoTypeForString("TECH_HUNTING");
+		if (isHasTech((TechTypes)iPathfinding))
+		{
+			return (m_iDefaultDecay + 9);
+		}
+
+		iPathfinding = GC.getInfoTypeForString("TECH_TRACKING");
+		if (isHasTech((TechTypes)iPathfinding))
+		{
+			return (m_iDefaultDecay + 6);
+		}
+		iPathfinding = GC.getInfoTypeForString("TECH_TRAILS");
+		if (isHasTech((TechTypes)iPathfinding))
+		{
+			return (m_iDefaultDecay + 3);
+		}
+	}
+	return (m_iDefaultDecay + 1);
+}
+#endif

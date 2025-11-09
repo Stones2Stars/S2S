@@ -103,7 +103,7 @@ class AIAutoPlay :
 		self.checkPlayer()
 		for i in range(GC.getMAX_PC_PLAYERS()):
 			if GC.getPlayer(i).isHumanDisabled():
-				GAME.setForcedAIAutoPlay(i, 0)
+				GAME.setForcedAIAutoPlay(i, 0, False)
 
 
 	def onBeginPlayerTurn(self, argsList):
@@ -199,6 +199,9 @@ class AIAutoPlay :
 		yResolution = screen.getYResolution()
 		popupSizeX = 400
 		popupSizeY = 250
+		if (xResolution > 2500) :
+			popupSizeX = 500
+			popupSizeY = 350
 
 		popup = CyPopup(RevDefs.toAIChooserPopup, EventContextTypes.EVENTCONTEXT_ALL, True)
 		popup.setPosition((xResolution - popupSizeX )/2, (yResolution-popupSizeY)/2-50)

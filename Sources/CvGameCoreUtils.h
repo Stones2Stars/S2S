@@ -423,4 +423,29 @@ protected:
 // Toffer
 void makeValueString(CvWString& szValue, const int iValue, const bool bWholeNumberCutDecimals = false, int iNumDecimals = 2);
 // ! Toffer
+
+int applyDistanceScoringFactor(int score, const CvPlot* sourcePlot, const CvPlot* targetPlot, const int currentPlotBoost = 1);
+
+int encodeACDateturn(int decodeda, int b);
+
+int decodeACDate(int n);
+
+int decodeACTurn(int n);
+
+int mapValue(int x);
+
+int inverseMapValue(int y);
+
+// Conversion enum -> brut string (MISSION_XXXXX
+CvString MissionAITypeToString(MissionAITypes eMissionAI);
+
+// Conversion enum -> brut string found a city..., Move to...
+CvString MissionAITypeToDescription(MissionAITypes eMissionAI);
+
+CvString AutomateTypeToDescription(AutomateTypes eAutomateAI);
+
+char remove_diacritic_char(unsigned char c);
+
+CvString remove_diacritics(const CvString& input);
+
 #endif

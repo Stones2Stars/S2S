@@ -113,7 +113,9 @@ CvPlot::CvPlot()
 	m_iImprovementUpgradeHash = 0;
 	m_iCurrentRoundofUpgradeCache = -1;
 	// ! Toffer
-
+#ifdef ENABLE_FOGWAR_DECAY
+	m_iVisibilityDecay = MAX_DECAY;
+#endif
 	m_iImprovementCurrentValue = 0;
 
 	m_szScriptData = NULL;
@@ -164,7 +166,9 @@ void CvPlot::init(int iX, int iY)
 	m_aPlotTeamVisibilityIntensity.clear();
 	//--------------------------------
 	// Init non-saved data
-
+#ifdef ENABLE_FOGWAR_DECAY
+	m_iVisibilityDecay = MAX_DECAY;
+#endif
 	//--------------------------------
 	// Init other game data
 }
@@ -1144,7 +1148,7 @@ void CvPlot::checkFortRevolt()
 }
 
 
-void CvPlot::updateFog()
+void CvPlot::updateFog(const bool bApplyDecay)
 {
 	PROFILE_FUNC();
 
@@ -1152,9 +1156,13 @@ void CvPlot::updateFog()
 	{
 		return;
 	}
-	FAssert(GC.getGame().getActiveTeam() != NO_TEAM);
+	const TeamTypes &team = GC.getGame().getActiveTeam();
+	const PlayerTypes myID = GC.getGame().getActivePlayer();
+	const bool bIsHuman = GET_TEAM(team).isHuman() || GC.getGame().getAIAutoPlay(myID) > 0 || gDLL->GetAutorun();
+	const bool bOptionDecay = GC.getGame().isModderGameOption(MODDERGAMEOPTION_FOGWAR_DECAY);
+	FAssert(team != NO_TEAM);
 
-	if (isRevealed(GC.getGame().getActiveTeam(), false))
+	if (isRevealed(team, false))
 	{
 		if (
 			gDLL->getInterfaceIFace()->isBareMapMode()
@@ -1167,10 +1175,57 @@ void CvPlot::updateFog()
 					||
 					// City screen - only lighten plots belonging to the city's current workable area.
 					gDLL->getInterfaceIFace()->getHeadSelectedCity() == getWorkingCity()
+					)
 				)
-			)
-		) gDLL->getEngineIFace()->LightenVisibility(getFOWIndex());
-		else gDLL->getEngineIFace()->DarkenVisibility(getFOWIndex());
+		)
+		{
+#ifdef ENABLE_FOGWAR_DECAY
+			if (bIsHuman && (bApplyDecay || !bOptionDecay))
+			{
+				bool bSeaPlot = isWater() && !isCoastal();
+				m_iVisibilityDecay = GET_TEAM(team).getVisibilityDecay(bSeaPlot);
+				if (m_iVisibilityDecay != NO_DECAY)
+				{
+					m_iVisibilityDecay += getVisibilityDecayBonus(bSeaPlot);
+				}
+			}
+#endif
+			gDLL->getEngineIFace()->LightenVisibility(getFOWIndex());
+		}
+		else
+		{
+#ifdef ENABLE_FOGWAR_DECAY
+			if (!bIsHuman || m_iVisibilityDecay == NO_DECAY || !bOptionDecay)
+			{
+#endif
+				gDLL->getEngineIFace()->DarkenVisibility(getFOWIndex());
+#ifdef ENABLE_FOGWAR_DECAY
+			}
+			else
+			{
+				if (m_iVisibilityDecay > 0)
+				{
+					gDLL->getEngineIFace()->DarkenVisibility(getFOWIndex());
+
+
+
+					if (bApplyDecay && GC.getGame().getSorenRandNum(12, "Map decay") > 8)
+						m_iVisibilityDecay--;
+				}
+				else if (m_iVisibilityDecay > REMOVE_PLOT_DECAY)
+				{
+					gDLL->getEngineIFace()->BlackenVisibility(getFOWIndex());
+					m_iVisibilityDecay--;
+				}
+				else
+				{
+					gDLL->getEngineIFace()->BlackenVisibility(getFOWIndex());
+					setRevealed(team, false, false, NO_TEAM, false,false);
+				}
+			}
+#endif
+		}
+
 	} else gDLL->getEngineIFace()->BlackenVisibility(getFOWIndex());
 }
 
@@ -1196,6 +1251,72 @@ void CvPlot::updateVisibility()
 		pCity->updateVisibility();
 	}
 }
+
+#ifdef ENABLE_FOGWAR_DECAY
+void CvPlot::InitFogDecay(const bool pWithRandom)
+{
+	const TeamTypes& team = GC.getGame().getActiveTeam();
+	if (team != NO_TEAM)
+	{
+		m_iVisibilityDecay = GET_TEAM(team).getVisibilityDecay();
+	}
+	if (m_iVisibilityDecay <= 0)
+	{
+		m_iVisibilityDecay = 6;
+	}
+	m_iVisibilityDecay += getVisibilityDecayBonus();
+	if (pWithRandom)
+	{
+		m_iVisibilityDecay = GC.getGame().getSorenRandNum((std::max(m_iVisibilityDecay * 2 / 3, 2)), "InitFog Decay") + m_iVisibilityDecay / 3;
+	}
+}
+
+short CvPlot::getVisibilityDecayBonus(const bool pSeaPlot)
+{
+	const FeatureTypes eFeature = getFeatureType();
+	const BonusTypes eBonusType = getBonusType();
+	int iVisibilityDecay = 0;
+	if (eFeature != NO_FEATURE)
+	{
+		const CvFeatureInfo& kFeatureInfo = GC.getFeatureInfo(eFeature);
+		const CvString featureString = kFeatureInfo.getType();
+		const CvBonusInfo& kBonusInfo = GC.getBonusInfo(eBonusType);
+		if (featureString == "FEATURE_OASIS" || featureString == "FEATURE_CAVES" || featureString == "FEATURE_CITY_RUINS")
+		{
+			iVisibilityDecay += 3;
+		}
+		if (featureString == "FEATURE_REEF_LIGHTHOUSE")
+		{
+			iVisibilityDecay += 9;
+		}
+		if (featureString.find("FEATURE_PLATY_") != std::string::npos)
+		{
+			iVisibilityDecay += 40;
+		}
+	}
+	if (eBonusType != NO_BONUS)
+	{
+		iVisibilityDecay += 3;
+	}
+	if (getOwner() != NO_PLAYER)
+	{
+		iVisibilityDecay += 1;
+	}
+	if (isCityRadius())
+	{
+		iVisibilityDecay += 2;
+	}
+	if (isCity())
+	{
+		iVisibilityDecay += 6;
+	}
+	if (isFreshWater())
+	{
+		iVisibilityDecay += 3;
+	}
+	return iVisibilityDecay;
+}
+#endif
 
 
 void CvPlot::updateSymbolDisplay()
@@ -3666,7 +3787,7 @@ namespace {
 				||	pAttacker && pAttacker->isPotentialEnemy(GET_PLAYER(unitX->getOwner()).getTeam(), plotX, unitX)
 			)
 			// If we are testing movement, can the unit move?
-			&& (!bTestCanMove || unitX->canMove() && !unitX->isCargo())
+			&& (!bTestCanMove || unitX->canMove() && !unitX->isCargo() || bAssassinate)
 		)
 		{
 			iValue = unitX->defenderValue(pAttacker);
@@ -3714,6 +3835,7 @@ CvUnit* CvPlot::getBestDefender(PlayerTypes eOwner, PlayerTypes eAttackingPlayer
 	}
 
 	int iBestValue = 0;
+	if (bAssassinate) iBestValue = -1;
 	CvUnit* pBestUnit = nullptr;
 
 	// Can't use this as it requires more than 9 args, and bind only supports 9
@@ -3727,7 +3849,7 @@ CvUnit* CvPlot::getBestDefender(PlayerTypes eOwner, PlayerTypes eAttackingPlayer
 	{
 		int iValue = getDefenderScore(unitX, eOwner, eAttackingPlayer, pAttacker, bTestAtWar, bTestPotentialEnemy, bTestCanMove, bAssassinate, bClearCache ? ECacheAccess::Write : ECacheAccess::ReadWrite);
 
-		if (iValue > iBestValue)
+		if (iValue > iBestValue && unitX->getOwner() != eAttackingPlayer)
 		{
 			pBestUnit = unitX;
 			iBestValue = iValue;
@@ -4544,7 +4666,7 @@ bool CvPlot::isHasPathToEnemyCity( TeamTypes eAttackerTeam, bool bIgnoreBarb ) c
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAlive()
 		&& GET_TEAM(eAttackerTeam).AI_getWarPlan(GET_PLAYER((PlayerTypes)iI).getTeam()) != NO_WARPLAN
-		&& (!bIgnoreBarb || !GET_PLAYER((PlayerTypes)iI).isNPC() && !GET_PLAYER((PlayerTypes)iI).isMinorCiv()))
+		&& (!bIgnoreBarb || !GET_PLAYER((PlayerTypes)iI).isNPC() )) //&& !GET_PLAYER((PlayerTypes)iI).isMinorCiv()
 		{
 			const CvCity* pLoopCity = GET_PLAYER((PlayerTypes)iI).getCapitalCity();
 
@@ -4565,7 +4687,7 @@ bool CvPlot::isHasPathToEnemyCity( TeamTypes eAttackerTeam, bool bIgnoreBarb ) c
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAlive()
 		&& GET_TEAM(eAttackerTeam).AI_getWarPlan(GET_PLAYER((PlayerTypes)iI).getTeam()) != NO_WARPLAN
-		&& (!bIgnoreBarb || !GET_PLAYER((PlayerTypes)iI).isNPC() && !GET_PLAYER((PlayerTypes)iI).isMinorCiv()))
+		&& (!bIgnoreBarb || !GET_PLAYER((PlayerTypes)iI).isNPC() )) //&& !GET_PLAYER((PlayerTypes)iI).isMinorCiv()
 		{
 			foreach_(const CvCity* pLoopCity, GET_PLAYER((PlayerTypes)iI).cities())
 			{
@@ -9387,7 +9509,7 @@ bool CvPlot::isRevealed(TeamTypes eTeam, bool bDebug) const
 }
 
 
-void CvPlot::setRevealed(const TeamTypes eTeam, const bool bNewValue, const bool bTerrainOnly, const TeamTypes eFromTeam, const bool bUpdatePlotGroup)
+void CvPlot::setRevealed(const TeamTypes eTeam, const bool bNewValue, const bool bTerrainOnly, const TeamTypes eFromTeam, const bool bUpdatePlotGroup, const bool bUpdateFog)
 {
 	PROFILE_EXTRA_FUNC();
 	FASSERT_BOUNDS(0, MAX_TEAMS, eTeam);
@@ -9458,7 +9580,10 @@ void CvPlot::setRevealed(const TeamTypes eTeam, const bool bNewValue, const bool
 			{
 				updateGraphics();
 			}
-			updateFog();
+			if (bUpdateFog)
+			{
+				updateFog();
+			}
 			updateVisibility();
 
 			gDLL->getInterfaceIFace()->setDirty(MinimapSection_DIRTY_BIT, true);
@@ -13052,7 +13177,7 @@ int CvPlot::getTotalTurnDamage(const CvUnit* pUnit) const
 	return getTerrainTurnDamage(pUnit) + getFeatureTurnDamage();
 }
 
-CvUnit* CvPlot::getWorstDefender(PlayerTypes eOwner, PlayerTypes eAttackingPlayer, const CvUnit* pAttacker, bool bTestAtWar, bool bTestPotentialEnemy, bool bTestCanMove) const
+CvUnit* CvPlot::getWorstDefender(PlayerTypes eOwner, PlayerTypes eAttackingPlayer, const CvUnit* pAttacker, bool bTestAtWar, bool bTestPotentialEnemy, bool bTestCanMove, bool bAssassinate) const
 {
 	PROFILE_EXTRA_FUNC();
 	CvUnit* pBestUnit = NULL;
@@ -13469,8 +13594,13 @@ int CvPlot::countSeeInvisibleActive(PlayerTypes ePlayer, InvisibleTypes eVisible
 	{
 		const UnitAITypes eAIType = pLoopUnit->AI_getUnitAIType();
 		//MissionAITypes eMissionAI = pLoopUnit->getGroup()->AI_getMissionAIType();
-
-		if (eAIType == UNITAI_SEE_INVISIBLE || eAIType == UNITAI_SEE_INVISIBLE_SEA)
+		
+		if (eAIType == UNITAI_SEE_INVISIBLE || eAIType == UNITAI_SEE_INVISIBLE_SEA 
+			|| eAIType == UNITAI_PROPERTY_CONTROL || eAIType == UNITAI_CITY_DEFENSE
+			|| eAIType == UNITAI_HUNTER_ESCORT || eAIType == UNITAI_HUNTER
+			|| eAIType == UNITAI_PILLAGE_COUNTER || eAIType == UNITAI_INVESTIGATOR
+			|| eAIType == UNITAI_RESERVE || eAIType == UNITAI_COUNTER
+			|| eAIType == UNITAI_SPY || eAIType == UNITAI_CITY_COUNTER)
 		{
 			if (pLoopUnit->getOwner() == ePlayer)
 			{

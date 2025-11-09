@@ -15,7 +15,12 @@ class CvCity;
 class CvEventTriggerInfo;
 class CvSelectionGroup;
 class CvUnitSelectionCriteria;
+class CvArmy;
 
+/**
+ * Stores information about a mission target for AI planning.
+ * - Tracks number of units targeting, closest distance, and total volume.
+ */
 struct MissionTargetInfo
 {
 	MissionTargetInfo() : iCount(0), iClosest(0), iVolume(0) {}
@@ -28,6 +33,10 @@ struct MissionTargetInfo
 //	Koshling - add caching to plot danger calculations
 #define PLOT_DANGER_CACHING
 #ifdef PLOT_DANGER_CACHING
+/**
+ * Caches plot danger calculations for performance.
+ * - Stores coordinates, range, move test flag, result, and last use count.
+ */
 struct plotDangerCacheEntry
 {
 	plotDangerCacheEntry()
@@ -49,6 +58,10 @@ struct plotDangerCacheEntry
 
 #define PLOT_DANGER_CACHE_SIZE 24
 
+/**
+ * Manages a fixed-size cache of plot danger entries.
+ * - Provides clear method and tracks usage counter.
+ */
 class plotDangerCache
 {
 public:
@@ -73,6 +86,12 @@ public:
 };
 #endif
 
+/**
+ * AI player logic for managing all aspects of a civilization.
+ * - Handles turn-based decisions, unit and city management, diplomacy, research, and victory strategies.
+ * - Contains routines for evaluating yields, commerce, military, city sites, attitudes, and more.
+ * - Integrates with city and unit AI, caching, and global game state.
+ */
 class CvPlayerAI : public CvPlayer
 {
 
@@ -114,6 +133,17 @@ public:
 	void AI_unitUpdate();
 
 	void AI_makeAssignWorkDirty();
+	
+/**
+ * Assigns working plots and specialists for the city.
+ * - Updates special yield multipliers.
+ * - Removes invalid plots and excess specialists.
+ * - Ensures home plot is always worked.
+ * - Removes worst citizens if over population limit.
+ * - Assigns unassigned population to plots or specialists.
+ * - If automated, optimizes assignments for best yields.
+ * - Updates UI if city is selected.
+ */	
 	void AI_assignWorkingPlots();
 	void AI_updateAssignWork();
 
@@ -160,6 +190,7 @@ public:
 	int AI_countNumLocalNavy(const CvPlot* pPlot, int iRange) const;
 
 	bool AI_avoidScience() const;
+	bool AI_hasCriticalGold() const;
 	bool AI_isFinancialTrouble() const;
 	short AI_fundingHealth(int iExtraExpense = 0, int iExtraExpenseMod = 0) const;
 	short AI_safeFunding() const;
@@ -418,6 +449,7 @@ public:
 
 	int AI_getTotalCityThreat() const;
 	int AI_getTotalFloatingDefenseNeeded() const;
+	int AI_getTotalProperty(PropertyTypes eProperty) const;
 
 
 	int AI_getTotalAreaCityThreat(const CvArea* pArea, int* piLargestThreat = NULL) const;
@@ -458,6 +490,58 @@ public:
 
 	int AI_getUnitWeight(UnitTypes eUnit) const;
 	int AI_getUnitCombatWeight(UnitCombatTypes eUnitCombat) const;
+
+#ifdef CVARMY_BREAKSAVE
+	void AI_formArmies();   // Nouvelle fonction de création des armées
+#endif
+
+	/**
+	 * \brief Calculate the relative viability of a unit type for a given AI role.
+	 *
+	 * This function evaluates all units of the specified domain and determines
+	 * how strong the best unit of the requested AI type is compared to other
+	 * available units in the same domain.
+	 *
+	 * \param eUnitAI The Unit AI role to evaluate (e.g., UNITAI_ATTACK, UNITAI_CITY_DEFENSE).
+	 * \param eDomain The domain of units to consider (DOMAIN_LAND, DOMAIN_SEA, DOMAIN_AIR).
+	 *
+	 * \return An integer representing the relative strength of the best unit
+	 *         for the requested AI type compared to the strongest other unit
+	 *         in the same domain. The value is scaled by 100.
+	 *
+	 * \note
+	 * - Units are considered only if they are available to the player's team
+	 *   (weight > 0 or prerequisite tech known).
+	 * - Compares combat strength (`getCombat()`) of units.
+	 *
+	 * \see CvUnitInfo::getUnitAIType()
+	 * \see GET_TEAM()
+	 * \see CvPlayerAI::m_aiUnitWeights
+	 *
+	 * \dot
+	 * digraph AI_calculateUnitAIViability {
+	 *   rankdir=LR;
+	 *   node [shape=box, style=filled, color=lightblue];
+	 *   Start [label="Start"];
+	 *   ForEachUnit [label="For each unit in domain"];
+	 *   CheckAvailability [label="Check if player can use unit"];
+	 *   CheckUnitAI [label="Does unit match eUnitAI?"];
+	 *   UpdateBestAI [label="Update iBestUnitAIStrength"];
+	 *   UpdateBestOther [label="Update iBestOtherStrength"];
+	 *   ReturnValue [label="Return (100 * iBestUnitAIStrength) / iBestOtherStrength"];
+	 *
+	 *   Start -> ForEachUnit;
+	 *   ForEachUnit -> CheckAvailability;
+	 *   CheckAvailability -> CheckUnitAI [label="Yes"];
+	 *   CheckAvailability -> UpdateBestOther [label="No"];
+	 *   CheckUnitAI -> UpdateBestAI [label="Yes"];
+	 *   CheckUnitAI -> UpdateBestOther [label="No"];
+	 *   UpdateBestAI -> ForEachUnit;
+	 *   UpdateBestOther -> ForEachUnit;
+	 *   ForEachUnit -> ReturnValue [label="End loop"];
+	 * }
+	 * \enddot
+	 */
 	int AI_calculateUnitAIViability(UnitAITypes eUnitAI, DomainTypes eDomain) const;
 
 	void AI_updateBonusValue();
@@ -623,6 +707,7 @@ protected:
 
 	bool m_bWasFinancialTrouble;
 	int m_iTurnLastProductionDirty;
+
 
 	void AI_doCounter();
 	void AI_doMilitary();

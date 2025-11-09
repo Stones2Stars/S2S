@@ -33,6 +33,7 @@
 #include "CvDLLUtilityIFaceBase.h"
 #include "CyPlot.h"
 #include "CyUnit.h"
+#include "CvDLLButtonPopup.h"
 #ifdef USE_OLD_PATH_GENERATOR
 #include "FAStarNode.h"
 #endif
@@ -1336,8 +1337,15 @@ void CvUnit::convert(CvUnit* pUnit, const bool bKillOriginal)
 		for (int iI = GC.getNumPromotionInfos() - 1; iI > -1; iI--)
 		{
 			const PromotionTypes ePromoX = static_cast<PromotionTypes>(iI);
-
-			if (pUnit->isHasPromotion(ePromoX))
+			const CvPromotionInfo& kPromo = GC.getPromotionInfo(ePromoX);
+			PromotionLineTypes eLine = kPromo.getPromotionLine();
+			bool bIsBuildup = false;
+			if (eLine != NO_PROMOTIONLINE)
+			{
+				const CvPromotionLineInfo& kLine = GC.getPromotionLineInfo(eLine);
+				bIsBuildup = kLine.isBuildUp();
+			}
+			if (pUnit->isHasPromotion(ePromoX) && !bIsBuildup)
 			{
 				if (GC.getPromotionInfo(ePromoX).getGroupChange() != 0)
 				{
@@ -1833,6 +1841,11 @@ void CvUnit::doTurn()
 		if (plot()->getFeatureTurnDamage() != 0)
 		{
 			changeDamagePercent(plot()->getFeatureTurnDamage(), NO_PLAYER);
+			//Calvitix, Terrain Damage gives XP
+			if (isHurt() && plot()->getTerrainType() != NO_TERRAIN)
+			{
+				changeExperience100(4, 2000);
+			}
 		}
 
 		if (plot()->getTerrainTurnDamage(this) != 0)
@@ -1844,6 +1857,11 @@ void CvUnit::doTurn()
 				changeColdDamage(plot()->getTerrainTurnDamage(this));
 			}
 			//TB Combat Mod
+			//Calvitix, Terrain Damage gives XP
+			if (isHurt() && plot()->getTerrainType() != NO_TERRAIN)
+			{
+				changeExperience100(2,2500);
+			}
 		}
 	}
 
@@ -3731,6 +3749,18 @@ void CvUnit::updateCombat(CvUnit* pSelectedDefender, bool bSamePlot, bool bSteal
 					MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_RED(), pPlot->getX(), pPlot->getY()
 				);
 			}
+			LOG_UNIT_BLOCK(3, {
+				CvWString StrunitAIType = GC.getUnitAIInfo(AI_getUnitAIType()).getType();
+				CvWString StrUnitName = m_szName;
+				if (StrUnitName.length() == 0)
+				{
+					StrUnitName = getName(0).GetCString();
+				}
+				logBBAI("	Player %d Unit ID %d, %S of Type %S at (%d,%d) [stack size %d] died.", getOwner(), getID(), StrUnitName.GetCString(), StrunitAIType.GetCString(), getX(), getY(), getGroup()->getNumUnits());
+			});
+
+
+
 			if (bHumanDefender)
 			{
 				CvWString szBuffer;
@@ -5107,7 +5137,7 @@ int CvUnit::defenderValue(const CvUnit* pAttacker) const
 				return 0;
 			}
 		}
-		else if (canCoexistWithAttacker(*pAttacker) || !pAttacker->canAttack(*this))
+		else if ((!isAnimal() && canCoexistWithAttacker(*pAttacker)) || !pAttacker->canAttack(*this))
 		{
 			return 0;
 		}
@@ -6271,6 +6301,25 @@ void CvUnit::move(CvPlot* pPlot, bool bShow)
 
 	//GC.getGame().logOOSSpecial(16, getID(), pPlot->getX(), pPlot->getY());
 	OutputDebugString(CvString::format("%S (%d) CvUnit::move (%d,%d)-->(%d,%d)\n", getDescription().c_str(), m_iID, m_iX, m_iY, pPlot->getX(), pPlot->getY()).c_str());
+	LOG_UNIT_BLOCK(4, {
+		UnitAITypes eUnitAi = AI_getUnitAIType();
+		MissionAITypes eMissionAI = getGroup()->AI_getMissionAIType();
+		CvWString StrunitAIType = GC.getUnitAIInfo(eUnitAi).getType();
+		CvWString MissionInfos = MissionAITypeToString(eMissionAI);
+		CvWString StrUnitName = m_szName;
+		CvPlot* pMissionPlot = getGroup()->AI_getMissionAIPlot();
+		CvWString MissionTarget = "";
+		if (pMissionPlot != NULL)
+		{
+			MissionTarget = CvWString::format(L"--> (%d, %d)", pMissionPlot->getX(), pMissionPlot->getY());
+		}
+		if (StrUnitName.length() == 0)
+		{
+			StrUnitName = getName(0).GetCString();
+		}
+
+		logBBAI("Player %d Unit ID %d, %S of Type %S, move (%d, %d)-->(%d,%d), in Mission %S [stack size %d]%S", getOwner(), m_iID, StrUnitName.GetCString(), StrunitAIType.GetCString(), m_iX, m_iY, pPlot->getX(), pPlot->getY(), MissionInfos.GetCString(), getGroup()->getNumUnits(), MissionTarget.GetCString());
+	});
 
 	setXY(pPlot->getX(), pPlot->getY(), true, true, bShow && pPlot->isVisibleToWatchingHuman(), bShow);
 
@@ -6298,6 +6347,15 @@ void CvUnit::move(CvPlot* pPlot, bool bShow)
 			EffectTypes eEffect = (EffectTypes)GC.getInfoTypeForString(GC.getFeatureInfo(featureType).getEffectType());
 			gDLL->getEngineIFace()->TriggerEffect(eEffect, pPlot->getPoint(), (float)(GC.getASyncRand().get(360)));
 			gDLL->getInterfaceIFace()->playGeneralSound("AS3D_UN_BIRDS_SCATTER", pPlot->getPoint());
+		}
+	}
+	if((pPlot->getOwner() != getOwner() || !pPlot->isOwned() ) && !(GET_PLAYER(getOwner()).isNPC()))
+	{
+		changeExperience100(10, 500);
+		changeExperience100(1, 2000);
+		if(isHasUnitCombat(GC.getUNITCOMBAT_RECON()))
+		{
+			changeExperience100(4, 10000);
 		}
 	}
 }
@@ -12373,7 +12431,7 @@ bool CvUnit::canCoexistWithAttacker(const CvUnit& attacker, bool bStealthDefend,
 		// Always invisible
 		|| alwaysInvisible() || attacker.alwaysInvisible()
 		// Coexists due to blending into a city (nullified by assassination)
-		|| !bAssassinate && plot()->isCity(true) && (isBlendIntoCity() || attacker.isBlendIntoCity())
+		|| !bAssassinate && plot()->isCity(false) && (isBlendIntoCity() || attacker.isBlendIntoCity())
 		// Invisibility to the attacking team (nullified by stealthDefend)
 		|| !bStealthDefend && isInvisible(attackerTeam, false)
 		// War enemy, or just always hostile
@@ -12461,7 +12519,7 @@ bool CvUnit::canUnitCoexistWithArrivingUnit(const CvUnit& enemyUnit) const
 			}
 		}
 
-		if (plot()->isCity(true) && (isBlendIntoCity() || enemyUnit.isBlendIntoCity()))
+		if (plot()->isCity(false) && (isBlendIntoCity() || enemyUnit.isBlendIntoCity()))
 		{
 			return true;
 		}
@@ -13569,6 +13627,48 @@ bool CvUnit::canAttack(const CvUnit& defender) const
 
 	return true;
 }
+
+bool CvUnit::canAmbush(const CvUnit& defender, const bool bAssassinate) const
+{
+	if (!canAttack() || getOwner() == defender.getOwner())
+	{
+		return false;
+	}
+	// Combat limit reached; breakdown combat can proceed even at combat limit.
+	if (defender.getDamage() >= combatLimit() * defender.getMaxHP() / 100 && breakdownChanceTotal() <= 0)
+	{
+		return false;
+	}
+
+	if (canAttackOnlyCities() && !defender.plot()->isCity())
+	{
+		return false;
+	}
+
+	if (defender.plot()->isCity(true) && isBlendIntoCity())
+	{
+		if (!isAssassin())
+		{
+			return false;
+		}
+		if (defender.plot() != plot())
+		{
+			return false;
+		}
+	}
+
+	if (GC.getGame().isOption(GAMEOPTION_COMBAT_AMNESTY)
+	&& defender.plot()->getOwner() == getOwner()
+	&& isHiddenNationality()
+	&& (GET_TEAM(getTeam()).isOpenBorders(defender.getTeam()) || GET_TEAM(getTeam()).isLimitedBorders(defender.getTeam()))
+	&& (!defender.canAttack() || defender.isPassage()))
+	{
+		return false;
+	}
+
+	return true;
+}
+
 
 bool CvUnit::canDefend(const CvPlot* pPlot) const
 {
@@ -15170,6 +15270,16 @@ void CvUnit::joinGroup(CvSelectionGroup* pSelectionGroup, bool bRemoveSelected, 
 				{
 					m_iGroupID = FFreeList::INVALID_INDEX;
 				}
+
+				LOG_UNIT_BLOCK(4, {
+					CvWString StrunitAIType = GC.getUnitAIInfo(AI_getUnitAIType()).getType();
+					CvWString StrUnitName = m_szName;
+					if (StrUnitName.length() == 0)
+					{
+						StrUnitName = getName(0).GetCString();
+					}
+					logBBAI("	Player %d Unit ID %d, %S of Type %S at (%d,%d) [stack size %d] groups have joigned here, new GroupID %d.", getOwner(), getID(), StrUnitName.GetCString(), StrunitAIType.GetCString(), getX(), getY(), getGroup()->getNumUnits(), m_iGroupID);
+				});
 			}
 			else
 			{
@@ -19089,6 +19199,8 @@ void CvUnit::setCombatUnit(CvUnit* pCombatUnit, bool bAttacking, bool bQuick, bo
 					getOwner(), getID(), GET_PLAYER(getOwner()).getName(), getName().GetCString(), currCombatStr(NULL, NULL),
 					pCombatUnit->getOwner(), pCombatUnit->getID(), GET_PLAYER(pCombatUnit->getOwner()).getName(), pCombatUnit->getName().GetCString(), pCombatUnit->currCombatStr(pCombatUnit->plot(), this));
 				gDLL->messageControlLog(szOut);
+				CvString CombatInfos = szOut;
+				LOG_BBAI_UNIT(3, ("%S", CombatInfos.GetCString()));
 			}
 
 			if (showSeigeTower(pCombatUnit) && !isUsingDummyEntities()  && isInViewport())
@@ -28442,61 +28554,64 @@ void CvUnit::setCommander(bool bNewVal)
 	GET_PLAYER(getOwner()).listCommander(bNewVal, this);
 }
 
+
 CvUnit* CvUnit::getCommander() const
 {
 	PROFILE_FUNC();
 
-	FAssertMsg(plot() != NULL, "TEST");
-	// This routine gets called a lot, so short-circuit when no commander is around.
-	if (plot() == NULL || !plot()->inCommandField(getOwner()) || getDomainType() == DOMAIN_SEA)
+	const CvPlot* pPlot = plot();
+	if (pPlot == NULL || !pPlot->inCommandField(getOwner()) || getDomainType() == DOMAIN_SEA)
 	{
 		return NULL;
 	}
-	CvUnit* pBestCommander = getLastCommander();
 
-	if (pBestCommander) //return already used one if it is not dead.
+	CvUnit* pBestCommander = getLastCommander();
+	if (pBestCommander)
 	{
-		if (plotDistance(pBestCommander->getX(), pBestCommander->getY(), getX(), getY()) <= pBestCommander->getCommanderComp()->getCommandRange())
+		const int cachedDistance = plotDistance(pBestCommander->getX(), pBestCommander->getY(), getX(), getY());
+		if (cachedDistance <= pBestCommander->getCommanderComp()->getCommandRange())
 		{
 			return pBestCommander;
 		}
-		// The one we used would have been the cached one so will have to search again
 		pBestCommander = NULL;
 	}
 
-	int iBestCommanderDistance = 9999999;
+	int iBestCommanderDistance = std::numeric_limits<int>::max();
+	int iBestCommanderXP = -1;
 
 	const CvPlayer& player = GET_PLAYER(getOwner());
-	const std::vector<CvUnit*> commanders = player.getCommanders();
+	const std::vector<CvUnit*>& commanders = player.getCommanders();
 
-	for (int i = commanders.size() - 1; i > -1; i--) //loop through player's commanders
+	for (std::vector<CvUnit*>::const_iterator it = commanders.begin(); it != commanders.end(); ++it)
 	{
-		CvUnit* com = commanders[i];
-
-		if (com->getCommanderComp()->getControlPointsLeft() <= 0)
-		{
+		CvUnit* com = *it;
+		UnitCompCommander* comComp = com->getCommanderComp();
+		if (comComp == NULL)
+			continue;  // s�curit� si jamais �a renvoie NULL
+		if (comComp->getControlPointsLeft() <= 0)
 			continue;
-		}
-		const CvPlot* comPlot = com->plot();
 
+		const CvPlot* comPlot = com->plot();
 		FAssertMsg(comPlot != NULL, "Unexpected... CTD incoming");
 
 		const int iDistance = plotDistance(comPlot->getX(), comPlot->getY(), getX(), getY());
-
-		if (iDistance > com->getCommanderComp()->getCommandRange())
-		{
+		if (iDistance > comComp->getCommandRange())
 			continue;
-		}
-		if (pBestCommander == NULL
-		// Best commander is at shorter distance, or at same distance but has more XP:
-		|| (iBestCommanderDistance < iDistance || iBestCommanderDistance == iDistance && com->getExperience() > pBestCommander->getExperience()))
+
+		const int iXP = com->getExperience();
+		if (
+			pBestCommander == NULL ||
+			iDistance < iBestCommanderDistance ||
+			(iDistance == iBestCommanderDistance && iXP > iBestCommanderXP)
+		)
 		{
 			pBestCommander = com;
 			iBestCommanderDistance = iDistance;
+			iBestCommanderXP = iXP;
+			if (iDistance == 0) break; // Early exit: best possible
 		}
 	}
 	m_iCommanderID = pBestCommander ? pBestCommander->getID() : -1;
-
 	return pBestCommander;
 }
 
@@ -28586,17 +28701,17 @@ CvUnit* CvUnit::getCommodore() const
 {
 	PROFILE_FUNC();
 
-	FAssertMsg(plot() != NULL, "TEST");
-	// This routine gets called a lot, so short-circuit when no commodore is around.
-	if (plot() == NULL || !plot()->inCommandCommodoreField(getOwner()) || getDomainType() == DOMAIN_LAND)
+	const CvPlot* pPlot = plot();
+	if (pPlot == NULL || !pPlot->inCommandCommodoreField(getOwner()) || getDomainType() == DOMAIN_LAND)
 	{
 		return NULL;
 	}
-	CvUnit* pBestCommodore = getLastCommodore();
 
-	if (pBestCommodore) //return already used one if it is not dead.
+	CvUnit* pBestCommodore = getLastCommodore();
+	if (pBestCommodore)
 	{
-		if (plotDistance(pBestCommodore->getX(), pBestCommodore->getY(), getX(), getY()) <= pBestCommodore->getCommodoreComp()->getCommandRange())
+		const int cachedDistance = plotDistance(pBestCommodore->getX(), pBestCommodore->getY(), getX(), getY());
+		if (cachedDistance <= pBestCommodore->getCommodoreComp()->getCommandRange())
 		{
 			return pBestCommodore;
 		}
@@ -28604,40 +28719,44 @@ CvUnit* CvUnit::getCommodore() const
 		pBestCommodore = NULL;
 	}
 
-	int iBestCommodoreDistance = 9999999;
+	int iBestCommodoreDistance = std::numeric_limits<int>::max();
+	int iBestCommodoreXP = -1;
 
 	const CvPlayer& player = GET_PLAYER(getOwner());
-	const std::vector<CvUnit*> commodores = player.getCommodores();
+	const std::vector<CvUnit*>& commodores = player.getCommodores();
 
-	for (int i = commodores.size() - 1; i > -1; i--) //loop through player's commodores
+	for (std::vector<CvUnit*>::const_iterator it = commodores.begin(); it != commodores.end(); ++it)
 	{
-		CvUnit* com = commodores[i];
-
-		if (com->getCommodoreComp()->getControlPointsLeft() <= 0)
-		{
+		CvUnit* com = *it;
+		UnitCompCommodore* comComp = com->getCommodoreComp();
+		if (comComp == NULL)
+			continue;  // s�curit� si jamais �a renvoie NULL
+		if (comComp->getControlPointsLeft() <= 0)
 			continue;
-		}
-		const CvPlot* comPlot = com->plot();
 
+		const CvPlot* comPlot = com->plot();
 		FAssertMsg(comPlot != NULL, "Unexpected... CTD incoming");
 
 		const int iDistance = plotDistance(comPlot->getX(), comPlot->getY(), getX(), getY());
-
-		if (iDistance > com->getCommodoreComp()->getCommandRange())
-		{
+		if (iDistance > comComp->getCommandRange())
 			continue;
-		}
-		if (pBestCommodore == NULL
-		// Best commodore is at shorter distance, or at same distance but has more XP:
-		|| (iBestCommodoreDistance < iDistance || iBestCommodoreDistance == iDistance && com->getExperience() > pBestCommodore->getExperience()))
+
+		const int iXP = com->getExperience();
+		if (
+			pBestCommodore == NULL ||
+			iDistance < iBestCommodoreDistance ||
+			(iDistance == iBestCommodoreDistance && iXP > iBestCommodoreXP)
+		)
 		{
 			pBestCommodore = com;
 			iBestCommodoreDistance = iDistance;
+			iBestCommodoreXP = iXP;
+			if (iDistance == 0) break; // Early exit: best possible
 		}
 	}
 	m_iCommodoreID = pBestCommodore ? pBestCommodore->getID() : -1;
-
 	return pBestCommodore;
+
 }
 
 void CvUnit::tryUseCommodore()
@@ -35146,6 +35265,12 @@ void CvUnit::doMerge()
 		pkMergedUnit->setAutoPromoting(pUnit1->isAutoPromoting());
 		pkMergedUnit->testPromotionReady();
 		pkMergedUnit->setName(pUnit1->getNameNoDesc());
+		
+		pkMergedUnit->AI_setUnitAIType(pUnit1->AI_getUnitAIType());
+		if (pUnit2->AI_getUnitAIType() == pUnit3->AI_getUnitAIType() && pkMergedUnit->AI_getUnitAIType() != pUnit2->AI_getUnitAIType())
+		{
+			pkMergedUnit->AI_setUnitAIType(pUnit2->AI_getUnitAIType());
+		}
 
 		if (pUnit1->getLeaderUnitType() != NO_UNIT)
 		{
@@ -36535,8 +36660,28 @@ void CvUnit::setBuildUpType(PromotionLineTypes ePromotionLine, MissionTypes eSle
 
 					if (iValue > iBestValue)
 					{
+						if (gUnitLogLevel > 3) //TO DO
+						{
+								const CvWString strUnitAIType = GC.getUnitAIInfo(AI_getUnitAIType()).getType();
+								CvWString szDesc = GC.getPromotionInfo(ePromotion).getDescription();
+								//const CvWString strCriteria = criteria.GetDescription();								
+								logAiEvaluations(4,"    %S find better Eval (%d > %d) to buildup %S with %S, unit AI %S", GET_PLAYER(getOwner()).getCivilizationDescription(0), iValue, iBestValue, getName(0).GetCString(), szDesc.GetCString(), strUnitAIType.GetCString());
+						}
 						iBestValue = iValue;
 						eAssignPromotionLine = ePotentialPromotionLine;
+
+
+					}
+					else
+					{
+						if (gUnitLogLevel > 3) //TO DO
+						{
+							const CvWString strUnitAIType = GC.getUnitAIInfo(AI_getUnitAIType()).getType();
+							CvWString szDesc = GC.getPromotionInfo(ePromotion).getDescription();
+							//const CvWString strCriteria = criteria.GetDescription();
+
+							logAiEvaluations(2, "    %S will not choose that prom (%d <= %d) to buildup %S with %S, unit AI %S", GET_PLAYER(getOwner()).getCivilizationDescription(0), iValue, iBestValue, getName(0).GetCString(), szDesc.GetCString(), strUnitAIType.GetCString());
+						}
 					}
 				}
 			}
@@ -37857,7 +38002,7 @@ bool CvUnit::canArrest() const
 			return false;
 		}
 		const CvPlot* pPlot = plot();
-		if (canMove() && canAttack() && !isDead() && !isInBattle() && !isCargo() && getGroup()->getNumUnits() == 1)
+		if (canMove() && canAttack() && !isDead() && !isInBattle() && !isCargo()) // && getGroup()->getNumUnits() == 1)
 		{
 			if (pPlot != NULL)
 			{
@@ -37913,6 +38058,8 @@ void CvUnit::doArrest()
 	if (pBestUnit)
 	{
 		attackSamePlotSpecifiedUnit(pBestUnit);
+		setMadeAttack(true);
+		changeMoves(GC.getMOVE_DENOMINATOR());
 	}
 }
 
@@ -37948,7 +38095,7 @@ bool CvUnit::canAmbush(const CvPlot* pPlot, bool bAssassinate) const
 		return false;
 	}
 
-	if (!bAssassinate && pPlot->isCity(true))
+	if (!bAssassinate && pPlot->isCity(false)) //true->false Calvitix (to be able to attack animals in fort)
 	{
 		return false;
 	}
@@ -37958,28 +38105,32 @@ bool CvUnit::canAmbush(const CvPlot* pPlot, bool bAssassinate) const
 		const CvUnit* pDefender = pPlot->getBestDefender(NO_PLAYER, getOwner(), this, true, true, false, bAssassinate);
 		if (pDefender != NULL)
 		{
-			return true;
+			if (!pDefender->isInvisible(getTeam(), false))
+			{
+				return true;
+			}
 		}
-		//if (pPlot->isVisiblePotentialEnemyDefender(this) || pPlot->isVisiblePotentialEnemyDefenderless(this))
-		//{
-		//	foreach_(CvUnit* pLoopUnit, pPlot->units())
-		//	{
-		//		if (bAssassinate && !pLoopUnit->isTargetOf(*this))
-		//		{
-		//			continue;
-		//		}
-		//		if (canAttack(*pLoopUnit))
-		//		{
-		//			return true;
-		//		}
-		//	}
-		//}
+		if (pPlot->isVisiblePotentialEnemyDefender(this) || pPlot->isVisiblePotentialEnemyDefenderless(this))
+		{
+			foreach_(CvUnit* pLoopUnit, pPlot->units())
+			{
+				if (bAssassinate && !pLoopUnit->isTargetOf(*this))
+				{
+					continue;
+				}
+				if (canAttack(*pLoopUnit))
+				{
+					return true;
+				}
+			}
+		}
 	}
 	return false;
 }
 
 bool CvUnit::doAmbush(bool bAssassinate)
 {
+
 	if (!canAmbush(plot(), bAssassinate))
 	{
 		return false;
@@ -37988,7 +38139,7 @@ bool CvUnit::doAmbush(bool bAssassinate)
 	{
 		return false;
 	}
-	if (bAssassinate && plot()->isCity(true))
+	if (bAssassinate && plot()->isCity(false))
 	{
 		doInsidiousnessVSInvestigationCheck();
 	}
@@ -37998,10 +38149,13 @@ bool CvUnit::doAmbush(bool bAssassinate)
 		if (isHuman())
 		{
 			GET_PLAYER(getOwner()).setAmbushingUnit(getID(), bAssassinate);
-			CvPopupInfo* pInfo = new CvPopupInfo(BUTTONPOPUP_CONFIRM_AMBUSH);
+			CvPopupInfo* pInfo = new CvPopupInfo(BUTTONPOPUP_CONFIRM_AMBUSH); // BUTTONPOPUP_CONFIRM_AMBUSH);
 			pInfo->setData1(getID());
 			pInfo->setData2(getX());
 			pInfo->setData3(getY());
+			pInfo->setFlags(AMBUSH_FLAG);
+			//pInfo->setPythonModule("AmbushPopup");
+			//pInfo->setOnClickedPythonCallback("onAmbushPopup");
 			gDLL->getInterfaceIFace()->addPopup(pInfo, getOwner(), true);
 		}
 		else
@@ -38010,10 +38164,21 @@ bool CvUnit::doAmbush(bool bAssassinate)
 			CvPlot* pPlot = plot();
 			if (pPlot != NULL)
 			{
-				CvUnit* pDefender = pPlot->getBestDefender(NO_PLAYER, getOwner(), this, true, true, false, bAssassinate);
+				CvUnit* pDefender;
+				if (bAssassinate && GC.getGame().isModderGameOption(MODDERGAMEOPTION_ASSASSINATE_CHOICE))
+				{
+					pDefender = pPlot->getWorstDefender(NO_PLAYER, getOwner(), this, true, true, false, bAssassinate);
+				}
+				else
+				{
+					pDefender = pPlot->getBestDefender(NO_PLAYER, getOwner(), this, true, true, false, bAssassinate);
+				}
+				
 				if (pDefender != NULL)
 				{
 					attackSamePlotSpecifiedUnit(pDefender);
+					setMadeAttack(true); //Calvitix (if ambush succes, cannot attack anymore)
+					changeMoves(GC.getMOVE_DENOMINATOR());
 				}
 			}
 			GET_PLAYER(getOwner()).setAmbushingUnit(FFreeList::INVALID_INDEX);
@@ -38022,13 +38187,23 @@ bool CvUnit::doAmbush(bool bAssassinate)
 	return true;
 }
 
-void CvUnit::enactAmbush(bool bAssassinate)
+void CvUnit::enactAmbush(bool bAssassinate, CvUnit * pSelectedDefender)
 {
 	CvPlot* pPlot = plot();
-	CvUnit* pDefender = pPlot->getBestDefender(NO_PLAYER, getOwner(), this, !gDLL->altKey(), NO_TEAM == getDeclareWarMove(pPlot), false, bAssassinate);
+	CvUnit* pDefender = NULL;
+	if (!pSelectedDefender)
+	{
+		pDefender = pPlot->getBestDefender(NO_PLAYER, getOwner(), this, !gDLL->altKey(), NO_TEAM == getDeclareWarMove(pPlot), false, bAssassinate);
+	}
+	else
+	{
+		pDefender = pSelectedDefender;
+	}
 	if (pDefender != NULL)
 	{
 		attackSamePlotSpecifiedUnit(pDefender);
+		setMadeAttack(true); //Calvitix (if ambush succes, cannot attack anymore)
+		changeMoves(GC.getMOVE_DENOMINATOR());
 	}
 }
 
@@ -39004,3 +39179,5 @@ void CvUnit::doStarsign()
 		);
 	}
 }
+
+

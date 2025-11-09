@@ -1,4 +1,5 @@
 // game.cpp
+//#define NO_RANDOM
 
 
 #include "FProfiler.h"
@@ -34,6 +35,10 @@
 #include "CvDLLUtilityIFaceBase.h"
 #include "CvBuildingFilters.h"
 #include "CvUnitFilters.h"
+
+#ifdef NO_RANDOM
+	int iNumAlea;
+#endif
 
 
 //	Koshling - save game compatibility between (most) builds
@@ -2209,7 +2214,7 @@ void CvGame::update()
 	startProfilingDLL(false);
 
 	//OutputDebugString(CvString::format("Start profiling(false) for CvGame::update()\n").c_str());
-	PROFILE_BEGIN("CvGame::update");
+	PROFILE_BEGIN("CvGame::update",UPD1);
 	{
 		PROFILE("CvGame::update.ViewportInit");
 
@@ -2321,7 +2326,7 @@ again:
 		}
 	}
 	//OutputDebugString(CvString::format("Stop profiling(false) after CvGame::update()\n").c_str());
-	PROFILE_END();
+	PROFILE_END(UPD1);
 	stopProfilingDLL(false);
 }
 
@@ -4366,6 +4371,10 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 
 /*DllExport*/ bool CvGame::isDebugMode() const
 {
+#ifdef _DEBUG
+	return true;
+#endif // _DEBUG
+
 	return m_bDebugMode;
 }
 
@@ -4564,7 +4573,13 @@ void CvGame::setActivePlayer(PlayerTypes eNewValue, bool bForceHotSeat)
 
 		if (GC.IsGraphicsInitialized())
 		{
+#ifdef ENABLE_FOGWAR_DECAY
+			GC.getMap().InitFogDecay(true);
+			if (GC.getGame().isModderGameOption(MODDERGAMEOPTION_FOGWAR_DECAY))
+				GC.getMap().updateFog(true);
+#else
 			GC.getMap().updateFog();
+#endif
 			GC.getMap().updateVisibility();
 			GC.getMap().updateSymbols();
 			GC.getMap().updateMinimapColor();
@@ -5705,7 +5720,7 @@ void CvGame::addGreatPersonBornName(const CvWString& szName)
 
 void CvGame::doTurn()
 {
-	PROFILE_BEGIN("CvGame::doTurn()");
+	PROFILE_BEGIN("CvGame::doTurn()",DOTURN1);
 
 	// END OF TURN
 	CvEventReporter::getInstance().beginGameTurn( getGameTurn() );
@@ -5873,7 +5888,7 @@ void CvGame::doTurn()
 	gDLL->getEngineIFace()->SetDirty(GlobePartialTexture_DIRTY_BIT, true);
 	gDLL->getEngineIFace()->DoTurn();
 
-	PROFILE_END();
+	PROFILE_END(DOTURN1);
 
 	foreach_(CvMap* map, GC.getMaps())
 	{
@@ -6226,6 +6241,11 @@ void CvGame::doSpawns(PlayerTypes ePlayer)
 			if (getSorenRandNum(std::max(1, iLocalSpawnRate), "Unit spawn") == 0)
 			{
 				const int iArea = pPlot->getArea();
+
+				if (!pPlot->isMapCategoryType(GC.getMAPCATEGORY_EARTH()))
+				{
+					continue;
+				}
 				// Check area unit type density not exceeded if specified
 				if (iMinAreaPlotsPerUnitType > 0
 				&& areaPopulationMap[iArea].find(eUnit) != areaPopulationMap[iArea].end()
@@ -6975,7 +6995,7 @@ void CvGame::createBarbarianUnits()
 		{
 			const CvPlot* pPlot = GC.getMap().syncRandPlot((RANDPLOT_NOT_VISIBLE_TO_CIV | RANDPLOT_ADJACENT_LAND | RANDPLOT_PASSIBLE), pLoopArea->getID(), GC.getMIN_BARBARIAN_STARTING_DISTANCE());
 
-			if (pPlot == NULL)
+			if (pPlot == NULL || !pPlot->isMapCategoryType(GC.getMAPCATEGORY_EARTH()))
 				continue;
 
 			UnitTypes eBestUnit = NO_UNIT;
@@ -7097,77 +7117,78 @@ void CvGame::updateMoves()
 
 	if (!isMPOption(MPOPTION_SIMULTANEOUS_TURNS))
 	{
-		for (int iI = 0; iI < MAX_PLAYERS; iI++)
-		{
-			aiShuffle[iI] = iI;
-		}
+		for (int i = 0; i < MAX_PLAYERS; ++i)
+			aiShuffle[i] = i;
 	}
-	else shuffleArray(aiShuffle, MAX_PLAYERS, getSorenRand());
-
-	for (int iI = 0; iI < MAX_PLAYERS; iI++)
+	else
 	{
-		CvPlayer& player = GET_PLAYER((PlayerTypes)(aiShuffle[iI]));
+		shuffleArray(aiShuffle, MAX_PLAYERS, getSorenRand());
+	}
 
-		if (player.isAlive() && player.isTurnActive())
+	for (int idx = 0; idx < MAX_PLAYERS; ++idx)
+	{
+		const int iPlayer = aiShuffle[idx];
+		CvPlayer& player = GET_PLAYER((PlayerTypes)iPlayer);
+
+		if (!player.isAlive() || !player.isTurnActive())
+			continue;
+
+		const bool isHuman = player.isHumanPlayer();
+		const bool isAutoMoves = player.isAutoMoves();
+
+		// For the human we want auto-moves last so the player can change
+		// orders on their automated units before hitting enter, but for the AI
+		// it is desirable to start with automated units in case the automation is broken
+		// be events, so that we know this before all other units process
+		if (isHuman)
 		{
-			// For the human we want auto-moves last so the player can change
-			// orders on their automated units before hitting enter, but for the AI
-			// it is desirable to start with automated units in case the automation is broken
-			// be events, so that we know this before all other units process
-			if (player.isHumanPlayer())
+			PROFILE("CvGame::updateMoves.Human");
+
+			if (isAutoMoves)
 			{
-				PROFILE("CvGame::updateMoves.Human");
-
-				if (player.isAutoMoves())
+				if (player.hasReadyUnautomatedUnit(false))
 				{
-					if (player.hasReadyUnautomatedUnit(false))
-					{
-						// Pre-emptorary turn end so make sure we run the unit AIs now
-						player.AI_unitUpdate();
-					}
-					algo::for_each(player.groups(), CvSelectionGroup::fn::autoMission());
-
-					if (!player.hasBusyUnit())
-					{
-						player.setAutoMoves(false);
-					}
+					player.AI_unitUpdate();
 				}
-				else
+				algo::for_each(player.groups(), CvSelectionGroup::fn::autoMission());
+
+				if (!player.hasBusyUnit())
 				{
-					if (!player.hasReadyUnautomatedUnit(false))
-					{
-						player.AI_unitUpdate();
-					}
-					/*
-					// A unit ready to move at this point is one the player needs to interact with
-					if (player.hasReadyUnautomatedUnit(true))
-					{
-						player.setTurnHadUIInteraction(true);
-					}
-					*/
+					player.setAutoMoves(false);
 				}
 			}
 			else
 			{
-				PROFILE("CvGame::updateMoves.AI");
-
-				// Always try to do automations first for the AI
-				algo::for_each(player.groups(), CvSelectionGroup::fn::autoMission());
-
-				if (!player.isAutoMoves())
+				if (!player.hasReadyUnautomatedUnit(false))
 				{
 					player.AI_unitUpdate();
-					player.getContractBroker().postProcessUnitsLookingForWork();
+				}
+				// Uncomment if UI interaction tracking is needed
+				// if (player.hasReadyUnautomatedUnit(true))
+				// {
+				//     player.setTurnHadUIInteraction(true);
+				// }
+			}
+		}
+		else
+		{
+			PROFILE("CvGame::updateMoves.AI");
 
-					if (!player.hasBusyUnit() && !player.hasReadyUnit(true))
-					{
-						player.setAutoMoves(true);
-					}
-				}
-				else if (!player.hasBusyUnit())
+			algo::for_each(player.groups(), CvSelectionGroup::fn::autoMission());
+
+			if (!isAutoMoves)
+			{
+				player.AI_unitUpdate();
+				player.getContractBroker().postProcessUnitsLookingForWork();
+
+				if (!player.hasBusyUnit() && !player.hasReadyUnit(true))
 				{
-					player.setAutoMoves(false);
+					player.setAutoMoves(true);
 				}
+			}
+			else if (!player.hasBusyUnit())
+			{
+				player.setAutoMoves(false);
 			}
 		}
 	}
@@ -7255,6 +7276,12 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 		*pbEndScore = false;
 	}
 	if (!isVictoryValid(eVictory))
+	{
+		return false;
+	}
+
+	//Calvitix : in duel, the initial score can be at the beginning very buggy
+	if (getGameTurn() < 100)
 	{
 		return false;
 	}
@@ -7877,13 +7904,23 @@ int CvGame::getSorenRandNum(int iNum, const char* pszLog)
 {
 	PROFILE_EXTRA_FUNC();
 	int iScale = 0;
-	while(iNum > MAX_UNSIGNED_SHORT)
+	while (iNum > MAX_UNSIGNED_SHORT)
 	{
 		iNum /= 2;
 		iScale++;
 	}
 
+#ifdef NO_RANDOM
+	iNumAlea += 1;
+	if (iNumAlea < 1 || iNumAlea >= 10)
+	{
+		iNumAlea = 1;
+	}
+	int Result = iNum * iNumAlea / 10;
+#else
 	int Result = m_sorenRand.get(iNum, pszLog);
+#endif
+
 
 	while(iScale-- > 0)
 	{
@@ -9740,12 +9777,15 @@ void CvGame::changeHighToLowCounter(int iChange)
 void CvGame::doFinalFive()
 {
 	PROFILE_EXTRA_FUNC();
-	if (!isGameMultiPlayer() && isOption(GAMEOPTION_CHALLENGE_CUT_LOSERS) && countCivPlayersAlive() > 5)
+	if (!isGameMultiPlayer() && isOption(GAMEOPTION_CHALLENGE_CUT_LOSERS) && countCivPlayersAlive() > 15) //CALVITIX REMINDER - TO RESTORE
 	{
 		changeCutLosersCounter(1);
 		if (getCutLosersCounter() >= GC.getDefineINT("CUT_LOSERS_TURN_INCREMENT") * GC.getGameSpeedInfo(getGameSpeedType()).getSpeedPercent() / 100)
 		{
-			GET_PLAYER(getRankPlayer(countCivPlayersAlive() -1)).setAlive(false);
+			CvPlayer& pPlayer = GET_PLAYER(getRankPlayer(countCivPlayersAlive() - 1));
+			if (!pPlayer.isHumanPlayer())
+			{
+				pPlayer.setAlive(false);
 			changeCutLosersCounter(getCutLosersCounter() * -1);
 
 			for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
@@ -9760,6 +9800,7 @@ void CvGame::doFinalFive()
 				}
 			}
 		}
+	}
 	}
 }
 
@@ -9886,12 +9927,17 @@ void CvGame::doFlexibleDifficulty()
 		if (playerX.isAlive() && GET_TEAM(playerX.getTeam()).getLeaderID() == ePlayer)
 		{
 			int iTurns = playerX.getModderOption(MODDEROPTION_FLEXIBLE_DIFFICULTY_TURN_INCREMENTS);
+
 			int iTimer = getFlexibleDifficultyTimer(ePlayer);
 			const bool bHuman = playerX.isHumanPlayer(true);
 
 			if (bFlexDiffForAI && !bHuman)
 			{
 				iTurns = getModderGameOption(MODDERGAMEOPTION_FLEXIBLE_DIFFICULTY_AI_TURN_INCREMENTS);
+				if (iTurns == 0)
+				{
+					iTurns = 50;
+				}				
 			}
 
 			logging::logMsg("C2C.log", "[Flexible Difficulty] (%d / %d) turns until next flexible difficulty check for Player: %S\n", iTimer, iTurns, playerX.getName());
@@ -11427,8 +11473,13 @@ void CvGame::recalculateModifiers()
 
 	GC.getMap().setupGraphical();
 	GC.getMap().updateVisibility();
+#ifdef ENABLE_FOGWAR_DECAY
+	GC.getMap().InitFogDecay(true);
+	if (GC.getGame().isModderGameOption(MODDERGAMEOPTION_FOGWAR_DECAY))
+		GC.getMap().updateFog(true);
+#else
 	GC.getMap().updateFog();
-
+#endif
 	Cy::call_optional(PYCivModule, "recalculateModifiers");
 
 	m_bRecalculatingModifiers = false;
@@ -11675,7 +11726,7 @@ bool CvGame::isAutoRaze(const CvCity* city, const PlayerTypes eNewOwner, bool bC
 
 	if (isOption(GAMEOPTION_CHALLENGE_ONE_CITY)
 	|| getMaxCityElimination() > 0
-	|| bConquest && city->getPopulation() == 1)
+	|| (bConquest && city->getPopulation() == 1 && city->getNumWorldWonders() == 0))
 	{
 		return true;
 	}

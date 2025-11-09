@@ -19901,7 +19901,7 @@ Korzy&#156;ci:
 	<TEXT>
 		<Tag>TXT_KEY_TRAIT_TIMID1</Tag>
 		<English>Timid I</English>
-		<French>Timidee I</French>
+		<French>Timide I</French>
 		<German>Schüchtern I</German>
 		<Russian>Ðîáêèé I</Russian>
 		<Italian>Timido I</Italian>
@@ -19935,7 +19935,7 @@ Benefits:
 		<German>Negative Charaktereigenschaft
 "Es gibt eine Grenze, wo Zurückhaltung aufhört, eine Tugend zu sein." - Edmund Burke (1729-1797)
 Obwohl diese Charaktereigenschaft dir Steine bei eventuellen Kriegsbestrebungen in den Weg legt, bringt sie doch auch unbestreitbare defensive Vorteile und sorgt dafür, dass deine Nation wesentlich seltener in bewaffnete Auseinandersetzungen verwickelt wird. Wem es gelingt, die üblen Nachteile anderweitig zu kompensieren, etwa durch technologische Fortschritte oder kulturelle Ausbreitung, der kann durchaus auch als schüchterner Anführer siegreich sein.
-Primäre Nachteile::
+Primäre Nachteile:
 	[ICON_BULLET]verzögerte Kriegsmüdigkeit bei gegnerischen Nationen
 	[ICON_BULLET]erhöhte laufende Kosten für militärische Einheiten
 Einschränkungen für Einheiten:
@@ -20006,7 +20006,7 @@ Korzy&#156;ci:
 	<TEXT>
 		<Tag>TXT_KEY_TRAIT_TIMID2</Tag>
 		<English>Timid II</English>
-		<French>Timidee II</French>
+		<French>Timide II</French>
 		<German>Schüchtern II</German>
 		<Russian>Ðîáêèé II</Russian>
 		<Italian>Timido II</Italian>
@@ -20041,7 +20041,7 @@ Benefits:
 		<German>Negative Charaktereigenschaft
 "Es gibt eine Grenze, wo Zurückhaltung aufhört, eine Tugend zu sein." - Edmund Burke (1729-1797)
 Obwohl diese Charaktereigenschaft dir Steine bei eventuellen Kriegsbestrebungen in den Weg legt, bringt sie doch auch unbestreitbare defensive Vorteile und sorgt dafür, dass deine Nation wesentlich seltener in bewaffnete Auseinandersetzungen verwickelt wird. Wem es gelingt, die üblen Nachteile anderweitig zu kompensieren, etwa durch technologische Fortschritte oder kulturelle Ausbreitung, der kann durchaus auch als schüchterner Anführer siegreich sein.
-Primäre Nachteile::
+Primäre Nachteile:
 	[ICON_BULLET]verzögerte Kriegsmüdigkeit bei gegnerischen Nationen
 	[ICON_BULLET]erhöhte laufende Kosten für militärische Einheiten
 	[ICON_BULLET]Steigerung der Kriegsmüdigkeit des eigenen Volkes
@@ -20113,7 +20113,7 @@ Korzy&#156;ci:
 	<TEXT>
 		<Tag>TXT_KEY_TRAIT_TIMID3</Tag>
 		<English>Timid III</English>
-		<French>Timidee III</French>
+		<French>Timide III</French>
 		<German>Schüchtern III</German>
 		<Russian>Ðîáêèé III</Russian>
 		<Italian>Timido III</Italian>
@@ -20147,7 +20147,7 @@ Benefits:
 		<German>Negative Charaktereigenschaft
 "Es gibt eine Grenze, wo Zurückhaltung aufhört, eine Tugend zu sein." - Edmund Burke (1729-1797)
 Obwohl diese Charaktereigenschaft dir Steine bei eventuellen Kriegsbestrebungen in den Weg legt, bringt sie doch auch unbestreitbare defensive Vorteile und sorgt dafür, dass deine Nation wesentlich seltener in bewaffnete Auseinandersetzungen verwickelt wird. Wem es gelingt, die üblen Nachteile anderweitig zu kompensieren, etwa durch technologische Fortschritte oder kulturelle Ausbreitung, der kann durchaus auch als schüchterner Anführer siegreich sein.
-Primäre Nachteile::
+Primäre Nachteile:
 	[ICON_BULLET]verzögerte Kriegsmüdigkeit bei gegnerischen Nationen
 	[ICON_BULLET]erhöhte laufende Kosten für militärische Einheiten
 	[ICON_BULLET]Steigerung der Kriegsmüdigkeit des eigenen Volkes
@@ -20243,7 +20243,7 @@ Benefits:
 		<German>Negative Charaktereigenschaft
 "Es gibt eine Grenze, wo Zurückhaltung aufhört, eine Tugend zu sein." - Edmund Burke (1729-1797)
 Obwohl diese Charaktereigenschaft dir Steine bei eventuellen Kriegsbestrebungen in den Weg legt, bringt sie doch auch unbestreitbare defensive Vorteile und sorgt dafür, dass deine Nation wesentlich seltener in bewaffnete Auseinandersetzungen verwickelt wird. Wem es gelingt, die üblen Nachteile anderweitig zu kompensieren, etwa durch technologische Fortschritte oder kulturelle Ausbreitung, der kann durchaus auch als schüchterner Anführer siegreich sein.
-Primäre Nachteile::
+Primäre Nachteile:
 	[ICON_BULLET]verzögerte Kriegsmüdigkeit bei gegnerischen Nationen
 	[ICON_BULLET]erhöhte laufende Kosten für militärische Einheiten
 Einschränkungen für Einheiten:

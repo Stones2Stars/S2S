@@ -1436,6 +1436,8 @@ CvInfoBase& cvInternalGlobals::getUnitAIInfo(UnitAITypes eUnitAINum) const
 	FASSERT_BOUNDS(0, NUM_UNITAI_TYPES, eUnitAINum);
 	return *(m_paUnitAIInfos[eUnitAINum]);
 }
+
+
 void cvInternalGlobals::registerUnitAI(const char* szType, int enumVal)
 {
 	FAssertMsg(m_paUnitAIInfos.size() == enumVal, "enumVal not expected value");
@@ -1445,6 +1447,9 @@ void cvInternalGlobals::registerUnitAI(const char* szType, int enumVal)
 	m_paUnitAIInfos.push_back(entry);
 	setInfoTypeFromString(szType, enumVal);
 }
+
+
+
 
 #define	REGISTER_UNITAI(x)	registerUnitAI(#x,x)
 
@@ -1762,6 +1767,7 @@ void cvInternalGlobals::registerMissions()
 	REGISTER_MISSION(MISSION_CAPTIVE_UPGRADE_TO_NEANDERTHAL_WARRIOR);
 	REGISTER_MISSION(MISSION_SELL_CAPTIVE);
 	REGISTER_MISSION(MISSION_FREE_CAPTIVE);
+	REGISTER_MISSION(MISSION_SLAY_ANIMAL);
 	REGISTER_MISSION(MISSION_JOIN_CITY_FREED_SLAVE);
 	REGISTER_MISSION(MISSION_RECORD_TALE);
 	REGISTER_MISSION(MISSION_RECORD_TALE_ORAL);
@@ -3018,6 +3024,15 @@ void cvInternalGlobals::refreshOptionsBUG()
 	gCityLogLevel = getBugOptionINT("Autolog__LogLevelCityBBAI", 0);
 	gUnitLogLevel = getBugOptionINT("Autolog__LogLevelUnitBBAI", 0);
 	gMiscLogging = getBugOptionBOOL("Autolog__MiscLogging", false);
+
+#ifdef _DEBUG
+	gPlayerLogLevel = 4;
+	gTeamLogLevel = 4;
+	gCityLogLevel = 4;
+	gUnitLogLevel = 4;
+#endif // DEBUG
+
+
 
 	OutputRatios::setBaseOutputWeights(
 		getBugOptionINT("CityScreen__BaseWeightFood", 10),
