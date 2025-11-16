@@ -1,4 +1,7 @@
 version: 1.BETA.{build}
+build_cloud: SERENGETI
+image:
+- Windows
 # skip_tags is important or you will get an infinite build loop when we apply release tags
 skip_tags: true
 skip_branch_with_pr: true
@@ -8,6 +11,13 @@ environment:
   release_prefix: Stones2Stars
   build_dir: _build
   release_branch: release
+  svn_user: s2sappveyour
+  svn_pass:
+    secure: 14V4BibCuspUvcuHgasCMkLsXwKwJa3gCBXVTmrpfXo=
+
+cache:
+- Sources/deps -> Tools\deps.exe appveyor.yml Tools/InstallDeps.bat
+- Sources\temp_files\Debug
 
 build_script:
   - cmd: >-
