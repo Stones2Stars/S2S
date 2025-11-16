@@ -136,7 +136,6 @@ call Tools\CI\git-chglog_windows_amd64.exe --output "%root_dir%\commit_desc.txt"
 :: GENERATE FULL CHANGELOG -------------------------------------
 echo Update full SVN changelog ...
 call Tools\CI\git-chglog_windows_amd64.exe --output "%build_dir%\CHANGELOG.md" --config Tools\CI\.chglog\config.yml
-REM call github_changelog_generator --cache-file "github-changelog-http-cache" --cache-log "github-changelog-logger.log" -u caveman2cosmos --token %git_access_token% --future-release %C2C_VERSION% --release-branch %release_branch% --output "%build_dir%\CHANGELOG.md"
 
 :: DELETE TEMP RELEASE TAG -------------------------------------
 :: We delete it ASAP so it isn't left up if the build fails
@@ -186,9 +185,6 @@ POPD
 :: Add the tag, this time annotated with our SVN ID
 call git tag -a %C2C_VERSION% %APPVEYOR_REPO_COMMIT% -m "SVN-%svn_rev%" -f
 call git push --tags
-
-REM 7z a -r -x!.svn "%release_prefix%-%APPVEYOR_BUILD_VERSION%.zip" "%build_dir%\*.*"
-REM 7z a -x!.svn "%release_prefix%-CvGameCoreDLL-%APPVEYOR_BUILD_VERSION%.zip" "%build_dir%\Assets\CvGameCoreDLL.*"
 
 POPD
 
