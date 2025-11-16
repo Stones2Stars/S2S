@@ -25,6 +25,7 @@ PUSHD "%~dp0..\.."
 
 SET C2C_VERSION=v%APPVEYOR_BUILD_VERSION%
 SET "root_dir=%cd%"
+echo %root_dir%
 set SVN=svn.exe
 if not exist "%build_dir%" goto :skip_delete
 rmdir /Q /S "%build_dir%"
