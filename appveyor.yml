@@ -9,9 +9,9 @@ environment:
   release_prefix: Stones2Stars
   build_dir: _build
   release_branch: release
-  svn_user: flabbert
+  svn_user: s2sappveyour
   svn_pass:
-    secure: efqMSfRmcQ/gAFwKmNJJsggbme/V0jkASdN9GAWmjco=
+    secure: x70Tl6zGwhfO3jgKyXica5QLkMhCfxQzRGxaP6O21+I=
   WEBHOOK_URL:
     secure: osDyXDMRQjB4gRlyK6seR5vhHl/BZwPjNFfcXrQd7CvOeE/sSLAZpRbzH2Pqg+H3roGiZDiZSHJuR0hp3earhzfOx4C6womhPEfQ5yEzMeqVPwY/0kfqSllk+qAGf83h5+LCMbtKhVcErEizteHRnmDO826uKnojg8SNJyD5ggY=
   git_email:
