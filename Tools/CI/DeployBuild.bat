@@ -42,7 +42,7 @@ powershell -ExecutionPolicy Bypass -File "%root_dir%\Tools\CI\InitGit.ps1"
 
 :: COMPILE -----------------------------------------------------
 echo Building FinalRelease DLL...
-call "%root_dir%\Tools\_MakeDLL.bat" FinalRelease build deploy
+call "%root_dir%\Tools\_MakeDLL.bat" Debug build deploy
 if not errorlevel 0 (
     echo Building FinalRelease DLL failed, aborting deployment!
     exit /B 2
@@ -122,25 +122,25 @@ xcopy "Tools\CI\C2C.bat" "%build_dir%" /R /Y
 :: This is temporary so that the change log gets created
 :: correctly (it uses origin tags I guess).
 :: TODO: update chlog to not require this...
-echo Setting release version build tag on git ...
-call git tag -a %C2C_VERSION% %APPVEYOR_REPO_COMMIT% -m "%C2C_VERSION%" -f
-call git push --tags
+@REM echo Setting release version build tag on git ...
+@REM call git tag -a %C2C_VERSION% %APPVEYOR_REPO_COMMIT% -m "%C2C_VERSION%" -f
+@REM call git push --tags
 
-:: GENERATE NEW CHANGES LOG ------------------------------------
-echo Generate SVN commit description...
-call Tools\CI\git-chglog_windows_amd64.exe --output "%root_dir%\commit_desc.md" --config Tools\CI\.chglog\config.yml %C2C_VERSION%
+@REM :: GENERATE NEW CHANGES LOG ------------------------------------
+@REM echo Generate SVN commit description...
+@REM call Tools\CI\git-chglog_windows_amd64.exe --output "%root_dir%\commit_desc.md" --config Tools\CI\.chglog\config.yml %C2C_VERSION%
 
-echo Generate forum commit description...
-call Tools\CI\git-chglog_windows_amd64.exe --output "%root_dir%\commit_desc.txt" --config Tools\CI\.chglog\config-bbcode.yml %C2C_VERSION%
+@REM echo Generate forum commit description...
+@REM call Tools\CI\git-chglog_windows_amd64.exe --output "%root_dir%\commit_desc.txt" --config Tools\CI\.chglog\config-bbcode.yml %C2C_VERSION%
 
-:: GENERATE FULL CHANGELOG -------------------------------------
-echo Update full SVN changelog ...
-call Tools\CI\git-chglog_windows_amd64.exe --output "%build_dir%\CHANGELOG.md" --config Tools\CI\.chglog\config.yml
+@REM :: GENERATE FULL CHANGELOG -------------------------------------
+@REM echo Update full SVN changelog ...
+@REM call Tools\CI\git-chglog_windows_amd64.exe --output "%build_dir%\CHANGELOG.md" --config Tools\CI\.chglog\config.yml
 
-:: DELETE TEMP RELEASE TAG -------------------------------------
-:: We delete it ASAP so it isn't left up if the build fails
-:: below.
-call git push origin --delete %C2C_VERSION%
+@REM :: DELETE TEMP RELEASE TAG -------------------------------------
+@REM :: We delete it ASAP so it isn't left up if the build fails
+@REM :: below.
+@REM call git push origin --delete %C2C_VERSION%
 
 :: DETECT SVN CHANGES ------------------------------------------
 echo Detecting working copy changes...
@@ -177,25 +177,26 @@ if %ERRORLEVEL% neq 0 (
 )
 
 :: SET RELEASE TAG -----------------------------------------
-echo Setting SVN commit tag on git ...
-for /f "delims=" %%a in ('svnversion') do @set svn_rev=%%a
+@REM echo Setting SVN commit tag on git ...
+@REM for /f "delims=" %%a in ('svnversion') do @set svn_rev=%%a
 
-POPD
+@REM POPD
 
-:: Add the tag, this time annotated with our SVN ID
-call git tag -a %C2C_VERSION% %APPVEYOR_REPO_COMMIT% -m "SVN-%svn_rev%" -f
-call git push --tags
+@REM :: Add the tag, this time annotated with our SVN ID
+@REM call git tag -a %C2C_VERSION% %APPVEYOR_REPO_COMMIT% -m "SVN-%svn_rev%" -f
+@REM call git push --tags
 
-POPD
 
-echo FORUM COMMIT MESSAGE ----------------------------------------------------------
-echo -------------------------------------------------------------------------------
-echo.
-echo [size=6][b]SVN-%svn_rev%[/b][/size]
-type "%root_dir%\commit_desc.txt"
-echo.
-echo -------------------------------------------------------------------------------
-echo -------------------------------------------------------------------------------
+@REM POPD
+
+@REM echo FORUM COMMIT MESSAGE ----------------------------------------------------------
+@REM echo -------------------------------------------------------------------------------
+@REM echo.
+@REM echo [size=6][b]SVN-%svn_rev%[/b][/size]
+@REM type "%root_dir%\commit_desc.txt"
+@REM echo.
+@REM echo -------------------------------------------------------------------------------
+@REM echo -------------------------------------------------------------------------------
 
 echo Done!
 
