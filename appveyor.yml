@@ -20,9 +20,8 @@ environment:
   git_access_token:
     secure: 2p5XvFyBlcD1dGhQQr1qvlaC/SNrlTi8kNEvEvduPkKJuGVfcfJ9X0r+OzHYtPkw
 
-cache:
-- Sources/deps -> Tools\deps.exe appveyor.yml Tools/InstallDeps.bat
-- Sources\temp_files\Debug
+cache: 
+  - Build/deps -> Tools\deps.exe appveyor.yml Tools/InstallDeps.bat
 
 build_script:
   - cmd: >-
