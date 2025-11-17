@@ -16,8 +16,7 @@ environment:
     secure: osDyXDMRQjB4gRlyK6seR5vhHl/BZwPjNFfcXrQd7CvOeE/sSLAZpRbzH2Pqg+H3roGiZDiZSHJuR0hp3earhzfOx4C6womhPEfQ5yEzMeqVPwY/0kfqSllk+qAGf83h5+LCMbtKhVcErEizteHRnmDO826uKnojg8SNJyD5ggY=
   git_email:
     secure: GZUVMT+I2euad6UK8HZesUOPYg+MYkzNF6mv20l2G/M=
-  git_user:
-    secure: Vf1NNRmM/Ms+Jcp/Rxb7Sg==
+  git_user: flabbert
   git_access_token:
     secure: 2p5XvFyBlcD1dGhQQr1qvlaC/SNrlTi8kNEvEvduPkKJuGVfcfJ9X0r+OzHYtPkw
 
