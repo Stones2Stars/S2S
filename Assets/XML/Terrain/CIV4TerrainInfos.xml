@@ -2324,6 +2324,7 @@
 			<Yields>
 				<iYield>1</iYield>
 				<iYield>1</iYield>
+				<iYield>2</iYield>
 			</Yields>
 			<Button>Art/Interface/Buttons/baseterrain/DuneAnchorGrass.dds</Button>
 			<FootstepSounds>

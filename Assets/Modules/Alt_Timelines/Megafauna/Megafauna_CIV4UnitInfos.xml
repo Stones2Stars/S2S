@@ -73,7 +73,7 @@
 				<BuildingType>BUILDING_ANIMAL_TRAINER_BEAR</BuildingType>
 			</PrereqOrBuildings>
 			<PrereqTech>TECH_MEGAFAUNA_DOMESTICATION</PrereqTech>
-			<iCost>94</iCost>
+			<iCost>169</iCost>
 			<iMoves>1</iMoves>
 			<iCombat>7</iCombat>
 			<iXPValueAttack>4</iXPValueAttack>
@@ -287,7 +287,7 @@
 			<UnitUpgrades>
 				<UnitType>UNIT_WAR_MAMMOTH</UnitType>
 			</UnitUpgrades>
-			<iCost>135</iCost>
+			<iCost>250</iCost>
 			<iMoves>1</iMoves>
 			<iCombat>9</iCombat>
 			<iXPValueAttack>2</iXPValueAttack>
@@ -639,7 +639,7 @@
 			<UnitUpgrades>
 				<UnitType>UNIT_BOMBARD_MAMMOTH</UnitType>
 			</UnitUpgrades>
-			<iCost>375</iCost>
+			<iCost>475</iCost>
 			<iMoves>1</iMoves>
 			<iCombat>15</iCombat>
 			<iXPValueAttack>2</iXPValueAttack>
@@ -761,7 +761,7 @@
 				<PrereqTech>TECH_MEGAFAUNA_DOMESTICATION</PrereqTech>
 			</TechTypes>
 			<BonusType>BONUS_MAMMOTH</BonusType>
-			<iCost>255</iCost>
+			<iCost>495</iCost>
 			<iMoves>1</iMoves>
 			<iCombat>10</iCombat>
 			<iXPValueAttack>2</iXPValueAttack>
@@ -900,7 +900,7 @@
 					</Has>
 				</And>
 			</TrainCondition>
-			<iCost>500</iCost>
+			<iCost>550</iCost>
 			<iMoves>1</iMoves>
 			<iCombat>23</iCombat>
 			<iXPValueAttack>2</iXPValueAttack>
@@ -1260,7 +1260,7 @@
 				<UnitType>UNIT_MAPINGUARI_OBSIDIAN</UnitType>
 			</UnitUpgrades>
 			<ObsoleteTech>TECH_IRON_WORKING</ObsoleteTech>
-			<iCost>70</iCost>
+			<iCost>76</iCost>
 			<iBaseUpkeep>8</iBaseUpkeep>
 			<iMoves>1</iMoves>
 			<iCombat>5</iCombat>
@@ -1346,7 +1346,7 @@
 				<UnitType>UNIT_MAPINGUARI</UnitType>
 			</UnitUpgrades>
 			<ObsoleteTech>TECH_IRON_WORKING</ObsoleteTech>
-			<iCost>92</iCost>
+			<iCost>99</iCost>
 			<iBaseUpkeep>12</iBaseUpkeep>
 			<iMoves>1</iMoves>
 			<iCombat>6</iCombat>
@@ -1702,7 +1702,7 @@
 				<BuildingType>BUILDING_EFFECT_HERITAGE_RHINOS</BuildingType>
 			</PrereqOrBuildings>
 			<PrereqTech>TECH_MEGAFAUNA_DOMESTICATION</PrereqTech>
-			<iCost>104</iCost>
+			<iCost>138</iCost>
 			<iMoves>1</iMoves>
 			<iCombat>5</iCombat>
 			<iXPValueAttack>4</iXPValueAttack>
@@ -2590,7 +2590,7 @@
 					<bUnitCombatTarget>1</bUnitCombatTarget>
 				</UnitCombatTarget>
 			</UnitCombatTargets>
-			<iCost>92</iCost>
+			<iCost>132</iCost>
 			<iBaseUpkeep>2</iBaseUpkeep>
 			<iMoves>2</iMoves>
 			<iCombat>5</iCombat>
@@ -3351,7 +3351,7 @@
 			</PrereqOrBuildings>
 			<PrereqTech>TECH_MEGAFAUNA_DOMESTICATION</PrereqTech>
 			<BonusType>BONUS_BISON</BonusType>
-			<iCost>94</iCost>
+			<iCost>169</iCost>
 			<iMoves>2</iMoves>
 			<iCombat>7</iCombat>
 			<iXPValueAttack>4</iXPValueAttack>
@@ -3477,7 +3477,7 @@
             <TechTypes>
                 <PrereqTech>TECH_ARCHERY</PrereqTech>
             </TechTypes>
-			<iCost>111</iCost>
+			<iCost>155</iCost>
 			<iMoves>2</iMoves>
 			<iCombat>6</iCombat>
 			<iXPValueAttack>6</iXPValueAttack>
@@ -5232,7 +5232,7 @@
 				<UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType>
 				<iUnitCombatMod>20</iUnitCombatMod>
 			</UnitCombatMod>
-			<iCost>100</iCost>
+			<iCost>125</iCost>
 			<iMoves>2</iMoves>
 			<iCombat>5</iCombat>
 			<iXPValueAttack>6</iXPValueAttack>

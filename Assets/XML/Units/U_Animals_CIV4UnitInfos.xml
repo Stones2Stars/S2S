@@ -6683,6 +6683,7 @@
 				<TerrainType>TERRAIN_OCEAN_TROPICAL</TerrainType>
 				<TerrainType>TERRAIN_PERMAFROST</TerrainType>
 				<TerrainType>TERRAIN_BADLAND</TerrainType>
+				<TerrainType>TERRAIN_PEAK</TerrainType>
 				<TerrainType>TERRAIN_JAGGED</TerrainType>
 				<TerrainType>TERRAIN_SALT_FLATS</TerrainType>
 				<TerrainType>TERRAIN_SEA_POLAR</TerrainType>

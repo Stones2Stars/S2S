@@ -1387,9 +1387,11 @@
 					<bPrereqTerrain>1</bPrereqTerrain>
 				</PrereqTerrain>
 			</PrereqOrTerrain>
-			<CommerceChanges>
-				<iCommerce>5</iCommerce>
-			</CommerceChanges>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>5</iYield>
+            </YieldChanges>
 			<GlobalBuildingProductionModifiers>
 				<BuildingProductionModifier>
 					<BuildingType>BUILDING_ARCOLOGY</BuildingType>
@@ -3018,8 +3020,13 @@
 			<iCostMaterialsModifier>0</iCostMaterialsModifier>
 			<iCostComplexityModifier>0</iCostComplexityModifier>
 			<iHappiness>1</iHappiness>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>3</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>3</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>3</iCommerce>
 				<iCommerce>3</iCommerce>
 			</CommerceChanges>
@@ -3889,7 +3896,7 @@
 			<GreatPeopleUnitType>UNIT_GREAT_ENGINEER</GreatPeopleUnitType>
 			<iGreatPeopleRateChange>2</iGreatPeopleRateChange>
 			<bNukeImmune>1</bNukeImmune>
-			<iCost>876</iCost>
+			<iCost>1038</iCost>
 			<iCostSizeModifier>3</iCostSizeModifier>
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
@@ -4204,7 +4211,7 @@
 			</PrereqBonuses>
 			<ObsoleteTech>TECH_SATELLITES</ObsoleteTech>
 			<ObsoletesToBuilding>BUILDING_RELIC_CHEOMSEONGDAE</ObsoletesToBuilding>
-			<iCost>876</iCost>
+			<iCost>1038</iCost>
 			<iCostSizeModifier>2</iCostSizeModifier>
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
@@ -4304,7 +4311,7 @@
 			</TechTypes>
 			<ObsoleteTech>TECH_DIVINE_RIGHT</ObsoleteTech>
 			<ObsoletesToBuilding>BUILDING_RELIC_CHICHEN_ITZA</ObsoletesToBuilding>
-			<iCost>876</iCost>
+			<iCost>1038</iCost>
 			<iCostSizeModifier>3</iCostSizeModifier>
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
@@ -4400,8 +4407,13 @@
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>1</iCostComplexityModifier>
 			<iConquestProb>100</iConquestProb>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>5</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>5</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>7</iCommerce>
 			</CommerceChanges>
@@ -4523,8 +4535,13 @@
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>1</iCostComplexityModifier>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>2</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>6</iCommerce>
+				<iCommerce>4</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>2</iCommerce>
 			</CommerceChanges>
@@ -5683,12 +5700,10 @@
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>2</iCostComplexityModifier>
-			<CommerceChanges>
-				<iCommerce>3</iCommerce>
-			</CommerceChanges>
 			<YieldChanges>
 				<iYield>0</iYield>
 				<iYield>5</iYield>
+				<iYield>3</iYield>
 			</YieldChanges>
 			<FreeBuilding>BUILDING_MANUFACTURING_PLANT</FreeBuilding>
 			<FreeSpecialistCounts>
@@ -5900,9 +5915,11 @@
 				<iCommerce>0</iCommerce>
 				<iCommerce>100</iCommerce>
 			</CommerceChangeDoubleTimes>
-			<CommerceModifiers>
-				<iCommerce>5</iCommerce>
-			</CommerceModifiers>
+            <YieldModifiers>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>5</iYield>
+            </YieldModifiers>
 			<GreatPeopleUnitType>UNIT_ARTIST</GreatPeopleUnitType>
 			<iGreatPeopleRateChange>2</iGreatPeopleRateChange>
 			<PropertyManipulators>
@@ -6147,8 +6164,13 @@
 			<iCostMaterialsModifier>0</iCostMaterialsModifier>
 			<iCostComplexityModifier>1</iCostComplexityModifier>
 			<iHappiness>1</iHappiness>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>1</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>1</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>5</iCommerce>
 			</CommerceChanges>
@@ -6419,8 +6441,13 @@
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>2</iCostComplexityModifier>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>20</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>20</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>3</iCommerce>
 			</CommerceChanges>
@@ -6550,7 +6577,7 @@
 				<BuildingType>BUILDING_GRAND_FIRE_FESTIVAL</BuildingType>
 				<BuildingType>BUILDING_GRAND_MARINE_FESTIVAL</BuildingType>
 			</PrereqNotInCityBuildings>
-			<iCost>516</iCost>
+			<iCost>570</iCost>
 			<iCostSizeModifier>2</iCostSizeModifier>
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
@@ -6564,50 +6591,64 @@
 				<iCommerce>0</iCommerce>
 				<iCommerce>4</iCommerce>
 			</CommerceChanges>
-			<BonusCommercePercentChanges>
-				<BonusCommercePercentChange>
+			<VicinityBonusYieldChanges>
+				<BonusYieldChange>
 					<BonusType>BONUS_STONE</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+                        <iYield>0</iYield>
+                        <iYield>0</iYield>
+                        <iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChange>
+				<BonusYieldChange>
 					<BonusType>BONUS_MARBLE</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+                        <iYield>0</iYield>
+                        <iYield>0</iYield>
+                        <iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChange>
+				<BonusYieldChange>
 					<BonusType>BONUS_AMBER</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+                        <iYield>0</iYield>
+                        <iYield>0</iYield>
+                        <iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChange>
+				<BonusYieldChange>
 					<BonusType>BONUS_RUBIES</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+                        <iYield>0</iYield>
+                        <iYield>0</iYield>
+                        <iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChange>
+				<BonusYieldChange>
 					<BonusType>BONUS_SAPPHIRES</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+                        <iYield>0</iYield>
+                        <iYield>0</iYield>
+                        <iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChange>
+				<BonusYieldChange>
 					<BonusType>BONUS_TURQUOISE</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+                        <iYield>0</iYield>
+                        <iYield>0</iYield>
+                        <iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChange>
+				<BonusYieldChange>
 					<BonusType>BONUS_JADE</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-			</BonusCommercePercentChanges>
+					<YieldChanges>
+                        <iYield>0</iYield>
+                        <iYield>0</iYield>
+                        <iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChange>
+			</VicinityBonusYieldChanges>
 			<TechCommerceChanges>
 				<TechCommerceChange>
 					<TechType>TECH_MINING</TechType>
@@ -6959,14 +7000,16 @@
 				<iCommerce>0</iCommerce>
 				<iCommerce>1000</iCommerce>
 			</CommerceChangeDoubleTimes>
-			<TechCommerceChanges>
-				<TechCommerceChange>
-					<TechType>TECH_TOURISM</TechType>
-					<CommercePercents>
-						<iCommercePercent>700</iCommercePercent>
-					</CommercePercents>
-				</TechCommerceChange>
-			</TechCommerceChanges>
+            <TechYieldChanges>
+                <TechYieldChange>
+                    <PrereqTech>TECH_TOURISM</PrereqTech>
+                    <TechYield>
+                        <iYield>0</iYield>
+                        <iYield>0</iYield>
+                        <iYield>700</iYield>
+                    </TechYield>
+                </TechYieldChange>
+            </TechYieldChanges>
 			<GreatPeopleUnitType>UNIT_MERCHANT</GreatPeopleUnitType>
 			<iGreatPeopleRateChange>2</iGreatPeopleRateChange>
 			<FreeBuilding>BUILDING_BROADCAST_TOWER</FreeBuilding>
@@ -7246,13 +7289,18 @@
 				<BuildingType>BUILDING_BREEDING_PROGRAM_EMU</BuildingType>
 				<BuildingType>BUILDING_ANIMAL_PRESERVE</BuildingType>
 			</PrereqOrBuildings>
-			<iCost>408</iCost>
+			<iCost>516</iCost>
 			<iCostSizeModifier>1</iCostSizeModifier>
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>1</iCostComplexityModifier>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>1</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>1</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>4</iCommerce>
 			</CommerceChanges>
@@ -7832,7 +7880,7 @@
 			<PrereqTech>TECH_CITY_PLANNING</PrereqTech>
 			<GreatPeopleUnitType>UNIT_ARTIST</GreatPeopleUnitType>
 			<iGreatPeopleRateChange>3</iGreatPeopleRateChange>
-			<iCost>1404</iCost>
+			<iCost>1458</iCost>
 			<iCostSizeModifier>1</iCostSizeModifier>
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
@@ -8027,7 +8075,7 @@
 				<BuildingType>BUILDING_GRAND_EARTH_FESTIVAL</BuildingType>
 				<BuildingType>BUILDING_GRAND_MARINE_FESTIVAL</BuildingType>
 			</PrereqNotInCityBuildings>
-			<iCost>516</iCost>
+			<iCost>570</iCost>
 			<iCostSizeModifier>1</iCostSizeModifier>
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>0</iCostMaterialsModifier>
@@ -8041,50 +8089,64 @@
 				<iCommerce>0</iCommerce>
 				<iCommerce>4</iCommerce>
 			</CommerceChanges>
-			<BonusCommercePercentChanges>
-				<BonusCommercePercentChange>
+			<VicinityBonusYieldChanges>
+				<BonusYieldChange>
 					<BonusType>BONUS_PEAT</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+						<iYield>0</iYield>
+						<iYield>0</iYield>
+						<iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChange>
+				<BonusYieldChange>
 					<BonusType>BONUS_TAR</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+						<iYield>0</iYield>
+						<iYield>0</iYield>
+						<iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChange>
+				<BonusYieldChange>
 					<BonusType>BONUS_SULPHUR</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+						<iYield>0</iYield>
+						<iYield>0</iYield>
+						<iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChange>
+				<BonusYieldChange>
 					<BonusType>BONUS_OBSIDIAN</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+						<iYield>0</iYield>
+						<iYield>0</iYield>
+						<iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChange>
+				<BonusYieldChange>
 					<BonusType>BONUS_DIAMOND</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+						<iYield>0</iYield>
+						<iYield>0</iYield>
+						<iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChange>
+				<BonusYieldChange>
 					<BonusType>BONUS_SILVER_ORE</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+						<iYield>0</iYield>
+						<iYield>0</iYield>
+						<iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChange>
+				<BonusYieldChange>
 					<BonusType>BONUS_GOLD_ORE</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-			</BonusCommercePercentChanges>
+					<YieldChanges>
+						<iYield>0</iYield>
+						<iYield>0</iYield>
+						<iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChange>
+			</VicinityBonusYieldChanges>
 			<TechCommerceChanges>
 				<TechCommerceChange>
 					<TechType>TECH_ANCESTOR_WORSHIP</TechType>
@@ -8890,8 +8952,13 @@
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>2</iCostComplexityModifier>
 			<iHappiness>3</iHappiness>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>10</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>10</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>10</iCommerce>
 			</CommerceChanges>
@@ -9348,8 +9415,13 @@
 			<iCostMaterialsModifier>2</iCostMaterialsModifier>
 			<iCostComplexityModifier>2</iCostComplexityModifier>
 			<iHappiness>3</iHappiness>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>10</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>10</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>10</iCommerce>
 			</CommerceChanges>
@@ -10128,7 +10200,7 @@
 			<GreatPeopleUnitType>UNIT_MERCHANT</GreatPeopleUnitType>
 			<iGreatPeopleRateChange>2</iGreatPeopleRateChange>
 			<bNukeImmune>1</bNukeImmune>
-			<iCost>1404</iCost>
+			<iCost>1458</iCost>
 			<iCostSizeModifier>3</iCostSizeModifier>
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
@@ -10522,9 +10594,11 @@
 					<iNumFreeBonuses>6</iNumFreeBonuses>
 				</ExtraFreeBonus>
 			</ExtraFreeBonuses>
-			<CommerceChanges>
-				<iCommerce>1</iCommerce>
-			</CommerceChanges>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>1</iYield>
+            </YieldChanges>
 			<FreeSpecialistCounts>
 				<FreeSpecialistCount>
 					<SpecialistType>SPECIALIST_ARTIST</SpecialistType>
@@ -10805,9 +10879,10 @@
 			<YieldChanges>
 				<iYield>0</iYield>
 				<iYield>5</iYield>
+				<iYield>5</iYield>
 			</YieldChanges>
 			<CommerceChanges>
-				<iCommerce>5</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>2</iCommerce>
 			</CommerceChanges>
@@ -11138,8 +11213,13 @@
 			<MapCategoryTypes>
 				<MapCategoryType>MAPCATEGORY_EARTH</MapCategoryType>
 			</MapCategoryTypes>
+            <YieldModifiers>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>12</iYield>
+            </YieldModifiers>
 			<CommerceModifiers>
-				<iCommerce>12</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>6</iCommerce>
 			</CommerceModifiers>
@@ -11332,9 +11412,11 @@
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>1</iCostComplexityModifier>
-			<CommerceChanges>
-				<iCommerce>10</iCommerce>
-			</CommerceChanges>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>10</iYield>
+            </YieldChanges>
 			<FreeBuilding>BUILDING_DIGITAL_OFFICES</FreeBuilding>
 			<FreeSpecialistCounts>
 				<FreeSpecialistCount>
@@ -11528,9 +11610,11 @@
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>0</iCostMaterialsModifier>
 			<iCostComplexityModifier>1</iCostComplexityModifier>
-			<CommerceModifiers>
-				<iCommerce>50</iCommerce>
-			</CommerceModifiers>
+            <YieldModifiers>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>50</iYield>
+            </YieldModifiers>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -11578,8 +11662,13 @@
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>1</iCostComplexityModifier>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>2</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>2</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>2</iCommerce>
 			</CommerceChanges>
@@ -11619,6 +11708,11 @@
 			<SpecialistExtraCommerces>
 				<iCommerce>1</iCommerce>
 			</SpecialistExtraCommerces>
+<!--            <SpecialistExtraYields>-->
+<!--                <iYield>0</iYield>-->
+<!--                <iYield>0</iYield>-->
+<!--                <iYield>1</iYield>-->
+<!--            </SpecialistExtraYields>-->
 			<SpecialistCounts>
 				<SpecialistCount>
 					<SpecialistType>SPECIALIST_MERCHANT</SpecialistType>
@@ -11908,8 +12002,13 @@
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>1</iCostComplexityModifier>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>1</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>1</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>4</iCommerce>
 			</CommerceChanges>
@@ -11950,8 +12049,13 @@
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>2</iCostMaterialsModifier>
 			<iCostComplexityModifier>2</iCostComplexityModifier>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>8</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>8</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>8</iCommerce>
 			</CommerceChanges>
@@ -12154,8 +12258,13 @@
 			<MapCategoryTypes>
 				<MapCategoryType>MAPCATEGORY_EARTH</MapCategoryType>
 			</MapCategoryTypes>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>10</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>10</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>6</iCommerce>
 			</CommerceChanges>
@@ -12461,8 +12570,13 @@
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>2</iCostComplexityModifier>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>5</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>5</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>15</iCommerce>
 			</CommerceChanges>
 			<FreeBuilding>BUILDING_LABORATORY</FreeBuilding>
@@ -12673,7 +12787,7 @@
 				<BuildingType>BUILDING_INDUSTRIAL_FARMS</BuildingType>
 				<BuildingType>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</BuildingType>
 			</PrereqOrBuildings>
-			<iCost>876</iCost>
+			<iCost>1038</iCost>
 			<iCostSizeModifier>3</iCostSizeModifier>
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
@@ -12739,7 +12853,7 @@
 				<BuildingType>BUILDING_FRESCO_MURAL</BuildingType>
 			</PrereqOrBuildings>
 			<ObsoleteTech>TECH_MASS_MEDIA</ObsoleteTech>
-			<iCost>270</iCost>
+			<iCost>300</iCost>
 			<iCostSizeModifier>2</iCostSizeModifier>
 			<iCostCountModifier>1</iCostCountModifier>
 			<iCostMaterialsModifier>2</iCostMaterialsModifier>
@@ -12809,9 +12923,10 @@
 			<YieldChanges>
 				<iYield>0</iYield>
 				<iYield>8</iYield>
+				<iYield>3</iYield>
 			</YieldChanges>
 			<CommerceChanges>
-				<iCommerce>6</iCommerce>
+				<iCommerce>3</iCommerce>
 			</CommerceChanges>
 			<GreatPeopleUnitType>UNIT_GREAT_ENGINEER</GreatPeopleUnitType>
 			<iGreatPeopleRateChange>2</iGreatPeopleRateChange>
@@ -13011,23 +13126,46 @@
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>1</iCostComplexityModifier>
 			<iHappiness>1</iHappiness>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>3</iYield>
+            </YieldChanges>
 			<CommerceChanges>
 				<iCommerce>3</iCommerce>
 				<iCommerce>3</iCommerce>
 				<iCommerce>3</iCommerce>
 			</CommerceChanges>
+            <VicinityBonusYieldChanges>
+                <BonusYieldChange>
+                    <BonusType>BONUS_FOSSIL_BEDS</BonusType>
+                    <YieldChanges>
+                        <iYield>0</iYield>
+                        <iYield>0</iYield>
+                        <iYield>1</iYield>
+                    </YieldChanges>
+                </BonusYieldChange>
+                <BonusYieldChange>
+                    <BonusType>BONUS_MAMMOTH</BonusType>
+                    <YieldChanges>
+                        <iYield>0</iYield>
+                        <iYield>0</iYield>
+                        <iYield>1</iYield>
+                    </YieldChanges>
+                </BonusYieldChange>
+            </VicinityBonusYieldChanges>
 			<BonusCommercePercentChanges>
 				<BonusCommercePercentChange>
 					<BonusType>BONUS_FOSSIL_BEDS</BonusType>
 					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
+						<iCommercePercent>0</iCommercePercent>
 						<iCommercePercent>100</iCommercePercent>
 					</CommercePercents>
 				</BonusCommercePercentChange>
 				<BonusCommercePercentChange>
 					<BonusType>BONUS_MAMMOTH</BonusType>
 					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
+						<iCommercePercent>0</iCommercePercent>
 						<iCommercePercent>100</iCommercePercent>
 					</CommercePercents>
 				</BonusCommercePercentChange>
@@ -13274,9 +13412,11 @@
 				<iCommerce>0</iCommerce>
 				<iCommerce>1000</iCommerce>
 			</CommerceChangeDoubleTimes>
-			<CommerceModifiers>
-				<iCommerce>12</iCommerce>
-			</CommerceModifiers>
+            <YieldModifiers>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>12</iYield>
+            </YieldModifiers>
 			<SpecialistYieldChanges>
 				<SpecialistYieldChange>
 					<SpecialistType>SPECIALIST_ENGINEER</SpecialistType>
@@ -13630,9 +13770,11 @@
 				<iCommerce>0</iCommerce>
 				<iCommerce>1000</iCommerce>
 			</CommerceChangeDoubleTimes>
-			<CommerceModifiers>
-				<iCommerce>12</iCommerce>
-			</CommerceModifiers>
+            <YieldModifiers>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>12</iYield>
+            </YieldModifiers>
 			<SpecialistCounts>
 				<SpecialistCount>
 					<SpecialistType>SPECIALIST_ARTIST</SpecialistType>
@@ -13972,7 +14114,7 @@
 				<BuildingType>BUILDING_GRAND_EARTH_FESTIVAL</BuildingType>
 				<BuildingType>BUILDING_GRAND_FIRE_FESTIVAL</BuildingType>
 			</PrereqNotInCityBuildings>
-			<iCost>516</iCost>
+			<iCost>570</iCost>
 			<iCostSizeModifier>1</iCostSizeModifier>
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>0</iCostMaterialsModifier>
@@ -13986,50 +14128,64 @@
 				<iCommerce>0</iCommerce>
 				<iCommerce>4</iCommerce>
 			</CommerceChanges>
-			<BonusCommercePercentChanges>
-				<BonusCommercePercentChange>
+			<VicinityBonusYieldChanges>
+				<BonusYieldChanges>
 					<BonusType>BONUS_PEARLS</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+						<iYield>0</iYield>
+						<iYield>0</iYield>
+						<iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChanges>
+				<BonusYieldChanges>
 					<BonusType>BONUS_FISH</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+						<iYield>0</iYield>
+						<iYield>0</iYield>
+						<iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChanges>
+				<BonusYieldChanges>
 					<BonusType>BONUS_SHRIMP</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+						<iYield>0</iYield>
+						<iYield>0</iYield>
+						<iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChanges>
+				<BonusYieldChanges>
 					<BonusType>BONUS_LOBSTER</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+						<iYield>0</iYield>
+						<iYield>0</iYield>
+						<iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChanges>
+				<BonusYieldChanges>
 					<BonusType>BONUS_WHALE</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+						<iYield>0</iYield>
+						<iYield>0</iYield>
+						<iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChanges>
+				<BonusYieldChanges>
 					<BonusType>BONUS_CLAM</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+						<iYield>0</iYield>
+						<iYield>0</iYield>
+						<iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChanges>
+				<BonusYieldChanges>
 					<BonusType>BONUS_CRAB</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-			</BonusCommercePercentChanges>
+					<YieldChanges>
+						<iYield>0</iYield>
+						<iYield>0</iYield>
+						<iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChanges>
+			</VicinityBonusYieldChanges>
 			<TechCommerceChanges>
 				<TechCommerceChange>
 					<TechType>TECH_NAVAL_WARFARE</TechType>
@@ -14147,8 +14303,13 @@
 					<bPrereqTerrain>1</bPrereqTerrain>
 				</PrereqTerrain>
 			</PrereqOrTerrain>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>5</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>5</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>5</iCommerce>
 			</CommerceChanges>
 			<FreeBuilding>BUILDING_SOLAR_PHOTOVOLTAIC_ROOFS</FreeBuilding>
@@ -14486,7 +14647,7 @@
 				<BuildingType>BUILDING_LAUNCH_ARCOLOGY</BuildingType>
 			</PrereqOrBuildings>
 			<ObsoleteTech>TECH_CIVIL_ENGINEERING</ObsoleteTech>
-			<iCost>876</iCost>
+			<iCost>1038</iCost>
 			<iCostSizeModifier>3</iCostSizeModifier>
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
@@ -14724,8 +14885,13 @@
 					<iNumFreeBonuses>6</iNumFreeBonuses>
 				</ExtraFreeBonus>
 			</ExtraFreeBonuses>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>1</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>1</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>5</iCommerce>
 			</CommerceChanges>
@@ -14953,13 +15119,10 @@
 			<iCostMaterialsModifier>0</iCostMaterialsModifier>
 			<iCostComplexityModifier>2</iCostComplexityModifier>
 			<ObsoleteTech>TECH_DIRECT_MERCHANDISING</ObsoleteTech>
-			<CommerceChanges>
-				<iCommerce>10</iCommerce>
-			</CommerceChanges>
 			<YieldChanges>
 				<iYield>0</iYield>
 				<iYield>0</iYield>
-				<iYield>20</iYield>
+				<iYield>30</iYield>
 			</YieldChanges>
 			<GlobalBuildingProductionModifiers>
 				<BuildingProductionModifier>
@@ -15119,8 +15282,13 @@
 					<iNumFreeBonuses>6</iNumFreeBonuses>
 				</ExtraFreeBonus>
 			</ExtraFreeBonuses>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>2</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>2</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>5</iCommerce>
 			</CommerceChanges>
@@ -16206,8 +16374,13 @@
 			<iCostComplexityModifier>2</iCostComplexityModifier>
 			<bWater>1</bWater>
 			<iMinAreaSize>10</iMinAreaSize>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>8</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>8</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>8</iCommerce>
 				<iCommerce>8</iCommerce>
 			</CommerceChanges>
@@ -16256,8 +16429,13 @@
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>2</iCostComplexityModifier>
 			<iHappiness>10</iHappiness>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>10</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>10</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>10</iCommerce>
 			</CommerceChanges>
@@ -16294,9 +16472,11 @@
 			<iCostCountModifier>1</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>2</iCostComplexityModifier>
-			<CommerceChanges>
-				<iCommerce>60</iCommerce>
-			</CommerceChanges>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>60</iYield>
+            </YieldChanges>
 			<FreeBuilding>BUILDING_INTERNATIONAL_PORT</FreeBuilding>
 			<PrereqOrBuildings>
 				<BuildingType>BUILDING_INTERNATIONAL_PORT</BuildingType>
@@ -16755,8 +16935,13 @@
 			<iCostComplexityModifier>2</iCostComplexityModifier>
 			<bWater>1</bWater>
 			<iMinAreaSize>10</iMinAreaSize>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>10</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>10</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>10</iCommerce>
 			</CommerceChanges>
@@ -17145,6 +17330,7 @@
 			<iCostMaterialsModifier>0</iCostMaterialsModifier>
 			<iCostComplexityModifier>2</iCostComplexityModifier>
 			<CommerceChanges>
+				<iCommerce>0</iCommerce>
 				<iCommerce>30</iCommerce>
 			</CommerceChanges>
 			<GlobalBuildingProductionModifiers>
@@ -17621,9 +17807,14 @@
 				<iCommerce>1000</iCommerce>
 			</CommerceChangeDoubleTimes>
 			<GlobalCommerceModifiers>
-				<iCommerce>5</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>5</iCommerce>
 			</GlobalCommerceModifiers>
+            <GlobalYieldModifiers>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>5</iYield>
+            </GlobalYieldModifiers>
 			<GreatPeopleUnitType>UNIT_ARTIST</GreatPeopleUnitType>
 			<iGreatPeopleRateChange>2</iGreatPeopleRateChange>
 			<iEspionageDefense>25</iEspionageDefense>
@@ -17670,8 +17861,13 @@
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>1</iCostComplexityModifier>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>10</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>10</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>10</iCommerce>
 			</CommerceChanges>
@@ -17772,8 +17968,13 @@
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>1</iCostComplexityModifier>
+            <YieldModifiers>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>10</iYield>
+            </YieldModifiers>
 			<CommerceModifiers>
-				<iCommerce>10</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>25</iCommerce>
 				<iCommerce>5</iCommerce>
 			</CommerceModifiers>
@@ -18089,8 +18290,13 @@
 			<iCostCountModifier>1</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>1</iCostComplexityModifier>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>1</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>1</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>4</iCommerce>
 			</CommerceChanges>
@@ -18569,8 +18775,13 @@
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>1</iCostComplexityModifier>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>6</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>6</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>8</iCommerce>
 			</CommerceChanges>
@@ -18796,8 +19007,13 @@
 			<MapCategoryTypes>
 				<MapCategoryType>MAPCATEGORY_EARTH</MapCategoryType>
 			</MapCategoryTypes>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>2</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>2</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>8</iCommerce>
 			</CommerceChanges>
@@ -18936,9 +19152,11 @@
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>1</iCostComplexityModifier>
-			<CommerceChanges>
-				<iCommerce>20</iCommerce>
-			</CommerceChanges>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>20</iYield>
+            </YieldChanges>
 			<FreeBuilding>BUILDING_MIXED_USE_DEVELOPMENT</FreeBuilding>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_MIXED_USE_DEVELOPMENT</BuildingType>
@@ -19430,14 +19648,17 @@
 				<BuildingType>BUILDING_HYPERMARKET</BuildingType>
 			</PrereqOrBuildings>
 			<ObsoleteTech>TECH_MERCANTILISM</ObsoleteTech>
-			<iCost>1350</iCost>
+			<iCost>1404</iCost>
 			<iCostSizeModifier>3</iCostSizeModifier>
 			<iCostCountModifier>1</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>1</iCostComplexityModifier>
-			<CommerceModifiers>
-				<iCommerce>25</iCommerce>
-			</CommerceModifiers>
+            <YieldModifiers>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>25</iYield>
+            </YieldModifiers>
+            <iTradeRouteModifier>25</iTradeRouteModifier>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -19656,7 +19877,7 @@
 				<BuildingType>BUILDING_GRAND_EARTH_FESTIVAL</BuildingType>
 				<BuildingType>BUILDING_GRAND_MARINE_FESTIVAL</BuildingType>
 			</PrereqNotInCityBuildings>
-			<iCost>516</iCost>
+			<iCost>570</iCost>
 			<iCostSizeModifier>1</iCostSizeModifier>
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>0</iCostMaterialsModifier>
@@ -19670,50 +19891,64 @@
 				<iCommerce>0</iCommerce>
 				<iCommerce>4</iCommerce>
 			</CommerceChanges>
-			<BonusCommercePercentChanges>
-				<BonusCommercePercentChange>
+			<VicinityBonusYieldChanges>
+				<BonusYieldChange>
 					<BonusType>BONUS_INCENSE</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+						<iYield>0</iYield>
+						<iYield>0</iYield>
+						<iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChange>
+				<BonusYieldChange>
 					<BonusType>BONUS_INDIGO</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+						<iYield>0</iYield>
+						<iYield>0</iYield>
+						<iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChange>
+				<BonusYieldChange>
 					<BonusType>BONUS_MUSHROOMS</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+						<iYield>0</iYield>
+						<iYield>0</iYield>
+						<iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChange>
+				<BonusYieldChange>
 					<BonusType>BONUS_TOBACCO</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+						<iYield>0</iYield>
+						<iYield>0</iYield>
+						<iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChange>
+				<BonusYieldChange>
 					<BonusType>BONUS_VANILLA</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+						<iYield>0</iYield>
+						<iYield>0</iYield>
+						<iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChange>
+				<BonusYieldChange>
 					<BonusType>BONUS_OPIUM</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-				<BonusCommercePercentChange>
+					<YieldChanges>
+						<iYield>0</iYield>
+						<iYield>0</iYield>
+						<iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChange>
+				<BonusYieldChange>
 					<BonusType>BONUS_TEA</BonusType>
-					<CommercePercents>
-						<iCommercePercent>100</iCommercePercent>
-					</CommercePercents>
-				</BonusCommercePercentChange>
-			</BonusCommercePercentChanges>
+					<YieldChanges>
+						<iYield>0</iYield>
+						<iYield>0</iYield>
+						<iYield>1</iYield>
+					</YieldChanges>
+				</BonusYieldChange>
+			</VicinityBonusYieldChanges>
 			<TechCommerceChanges>
 				<TechCommerceChange>
 					<TechType>TECH_SACRIFICE_CULT</TechType>
@@ -19837,7 +20072,7 @@
 			<iCostComplexityModifier>1</iCostComplexityModifier>
 			<iHappiness>2</iHappiness>
 			<CommerceChanges>
-				<iCommerce>5</iCommerce>
+				<iCommerce>-5</iCommerce>
 				<iCommerce>20</iCommerce>
 				<iCommerce>5</iCommerce>
 			</CommerceChanges>
@@ -20161,8 +20396,13 @@
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>1</iCostComplexityModifier>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>5</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>5</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>5</iCommerce>
 			</CommerceChanges>
@@ -20615,8 +20855,13 @@
 			<iCostCountModifier>1</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>1</iCostComplexityModifier>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>1</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>1</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>4</iCommerce>
 			</CommerceChanges>
@@ -21438,8 +21683,13 @@
 					<iNumFreeBonuses>6</iNumFreeBonuses>
 				</ExtraFreeBonus>
 			</ExtraFreeBonuses>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>2</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>2</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>5</iCommerce>
 			</CommerceChanges>
@@ -22127,8 +22377,13 @@
 			<MapCategoryTypes>
 				<MapCategoryType>MAPCATEGORY_EARTH</MapCategoryType>
 			</MapCategoryTypes>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>4</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>4</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>4</iCommerce>
 			</CommerceChanges>
@@ -22231,8 +22486,13 @@
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>1</iCostComplexityModifier>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>10</iYield>
+            </YieldChanges>
 			<CommerceChanges>
-				<iCommerce>10</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>8</iCommerce>
 			</CommerceChanges>
@@ -22300,9 +22560,11 @@
 				<iCommerce>0</iCommerce>
 				<iCommerce>1000</iCommerce>
 			</CommerceChangeDoubleTimes>
-			<CommerceModifiers>
-				<iCommerce>12</iCommerce>
-			</CommerceModifiers>
+            <YieldModifiers>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>12</iYield>
+            </YieldModifiers>
 			<PrereqOrBuildings>
 				<BuildingType>BUILDING_TRADING_POST</BuildingType>
 				<BuildingType>BUILDING_SHOPPING_DISTRICT</BuildingType>
@@ -22628,6 +22890,46 @@
 			</PrereqAmountBuildings>
 			<bPrereqPower>1</bPrereqPower>
 		</BuildingInfo>
+        <BuildingInfo>
+            <Type>BUILDING_WEMBLEY_STADIUM</Type>
+            <iMaxGlobalInstances>1</iMaxGlobalInstances>
+            <bNeverCapture>1</bNeverCapture>
+            <Description>TXT_KEY_BUILDING_WEMBLEY_STADIUM</Description>
+            <Civilopedia>TXT_KEY_BUILDING_WEMBLEY_STADIUM_PEDIA</Civilopedia>
+            <Help>TXT_KEY_BUILDING_WEMBLEY_STADIUM_HELP</Help>
+            <Advisor>ADVISOR_ECONOMY</Advisor>
+            <ArtDefineTag>ART_DEF_BUILDING_WEMBLEY_STADIUM</ArtDefineTag>
+            <MovieDefineTag>ART_DEF_MOVIE_WEMBLEY</MovieDefineTag>
+            <PrereqTech>TECH_SATELLITES</PrereqTech>
+            <ObsoleteTech>TECH_BINARY_PSYCHOKINESIS</ObsoleteTech>
+            <MapCategoryTypes>
+                <MapCategoryType>MAPCATEGORY_EARTH</MapCategoryType>
+            </MapCategoryTypes>
+            <GreatPeopleUnitType>UNIT_MERCHANT</GreatPeopleUnitType>
+            <iGreatPeopleRateChange>1</iGreatPeopleRateChange>
+            <bNukeImmune>1</bNukeImmune>
+            <iCost>2820</iCost>
+            <iCostSizeModifier>3</iCostSizeModifier>
+            <iCostCountModifier>0</iCostCountModifier>
+            <iCostMaterialsModifier>1</iCostMaterialsModifier>
+            <iCostComplexityModifier>1</iCostComplexityModifier>
+            <iHurryCostModifier>100</iHurryCostModifier>
+            <iHappiness>2</iHappiness>
+            <iAsset>10</iAsset>
+            <fVisibilityPriority>1.0</fVisibilityPriority>
+            <CommerceChanges>
+                <iCommerce>10</iCommerce>
+            </CommerceChanges>
+            <PrereqInCityBuildings>
+                <BuildingType>BUILDING_MAJOR_LEAGUE_STADIUM</BuildingType>
+            </PrereqInCityBuildings>
+            <Flavors>
+                <Flavor>
+                    <FlavorType>FLAVOR_GOLD</FlavorType>
+                    <iFlavor>10</iFlavor>
+                </Flavor>
+            </Flavors>
+        </BuildingInfo>
 		<BuildingInfo>
 			<Type>BUILDING_VENUS_OF_WILLENDORF</Type>
 			<iMaxGlobalInstances>1</iMaxGlobalInstances>
@@ -22654,7 +22956,7 @@
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<iCommerce>2</iCommerce>
 			</CommerceChanges>
 			<CommerceChangeDoubleTimes>
 				<iCommerce>0</iCommerce>
@@ -22849,17 +23151,21 @@
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>1</iCostComplexityModifier>
-			<CommerceModifiers>
-				<iCommerce>25</iCommerce>
-			</CommerceModifiers>
-			<TechCommerceModifiers>
-				<TechCommerceModifier>
-					<PrereqTech>TECH_DERIVATIVES</PrereqTech>
-					<TechCommerce>
-						<iCommerce>5</iCommerce>
-					</TechCommerce>
-				</TechCommerceModifier>
-			</TechCommerceModifiers>
+            <YieldModifiers>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>25</iYield>
+            </YieldModifiers>
+            <TechYieldModifiers>
+                <TechYieldModifier>
+                    <PrereqTech>TECH_DERIVATIVES</PrereqTech>
+                    <TechYield>
+                        <iYield>0</iYield>
+                        <iYield>0</iYield>
+                        <iYield>5</iYield>
+                    </TechYield>
+                </TechYieldModifier>
+            </TechYieldModifiers>
 			<SpecialistCounts>
 				<SpecialistCount>
 					<SpecialistType>SPECIALIST_MERCHANT</SpecialistType>
@@ -23423,15 +23729,16 @@
 			<iCostCountModifier>1</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>2</iCostComplexityModifier>
-			<CommerceChanges>
-				<iCommerce>6</iCommerce>
-			</CommerceChanges>
-			<CommerceChangeDoubleTimes>
-				<iCommerce>1000</iCommerce>
-			</CommerceChangeDoubleTimes>
-			<GlobalCommerceModifiers>
-				<iCommerce>5</iCommerce>
-			</GlobalCommerceModifiers>
+            <YieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>6</iYield>
+            </YieldChanges>
+            <GlobalYieldModifiers>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>5</iYield>
+            </GlobalYieldModifiers>
 			<GreatPeopleUnitType>UNIT_MERCHANT</GreatPeopleUnitType>
 			<iGreatPeopleRateChange>2</iGreatPeopleRateChange>
 			<iAsset>20</iAsset>
@@ -23671,8 +23978,13 @@
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>
 			<iCostComplexityModifier>1</iCostComplexityModifier>
 			<iHappiness>3</iHappiness>
+            <YieldModifiers>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>15</iYield>
+            </YieldModifiers>
 			<CommerceModifiers>
-				<iCommerce>15</iCommerce>
+				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
 				<iCommerce>10</iCommerce>
 			</CommerceModifiers>
@@ -23839,7 +24151,7 @@
 				<BuildingType>BUILDING_MODERN_WAREHOUSE</BuildingType>
 			</PrereqOrBuildings>
 			<ObsoleteTech>TECH_RIFLING</ObsoleteTech>
-			<iCost>516</iCost>
+			<iCost>570</iCost>
 			<iCostSizeModifier>2</iCostSizeModifier>
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>1</iCostMaterialsModifier>

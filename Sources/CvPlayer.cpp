@@ -8046,8 +8046,10 @@ int CvPlayer::calculateUnitSupply(int& iPaidUnits, int& iBaseSupplyCost) const
 {
 	iPaidUnits = std::max(0, getNumOutsideUnits() - GC.getDefineINT("INITIAL_FREE_OUTSIDE_UNITS"));
 
-	iBaseSupplyCost = iPaidUnits * GC.getDefineINT("INITIAL_OUTSIDE_UNIT_GOLD_PERCENT");
+    int eraMultiplier = (int)getCurrentEra() + 1;
+	iBaseSupplyCost = (iPaidUnits * GC.getDefineINT("INITIAL_OUTSIDE_UNIT_GOLD_PERCENT"));
 	iBaseSupplyCost /= 100;
+	iBaseSupplyCost *= eraMultiplier;
 
 	int iSupply = iBaseSupplyCost;
 	int iMod = getDistantUnitSupportCostModifier();

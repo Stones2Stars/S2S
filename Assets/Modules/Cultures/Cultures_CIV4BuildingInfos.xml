@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <Civ4BuildingInfos xmlns="x-schema:../../XML/Schema/C2C_CIV4BuildingsSchema.xml">
+<!--    36 per tech lvl increase in base hammers-->
 	<BuildingInfos>
 		<BuildingInfo>
 			<Type>BUILDING_CULTURE_ABBASID</Type>
@@ -726,7 +727,7 @@
 				<BuildingType>BUILDING_C_AC_NORTH_AMERICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_NORTH_AMERICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>876</iCost>
+			<iCost>918</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -972,7 +973,7 @@
 				<BuildingType>BUILDING_C_AC_SOUTH_AMERICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_SOUTH_AMERICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>336</iCost>
+			<iCost>372</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -1421,7 +1422,7 @@
 				<BuildingType>BUILDING_C_AC_NORTH_AMERICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_NORTH_AMERICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>444</iCost>
+			<iCost>480</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -1524,7 +1525,7 @@
 				<BuildingType>BUILDING_C_AC_MIDDLE_EASTERN</BuildingType>
 				<BuildingType>BUILDING_C_L_MIDDLE_EASTERN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>588</iCost>
+			<iCost>876</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -1803,7 +1804,7 @@
 				<BuildingType>BUILDING_C_AC_EUROPEAN</BuildingType>
 				<BuildingType>BUILDING_C_L_EUROPEAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>1404</iCost>
+			<iCost>1860</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -2247,7 +2248,7 @@
 				<BuildingType>BUILDING_C_AC_EUROPEAN</BuildingType>
 				<BuildingType>BUILDING_C_L_EUROPEAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>1404</iCost>
+			<iCost>1860</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -3006,7 +3007,7 @@
 				<BuildingType>BUILDING_C_AC_SOUTH_AMERICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_SOUTH_AMERICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>552</iCost>
+			<iCost>960</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -3137,7 +3138,7 @@
 				<BuildingType>BUILDING_C_AC_NORTH_AMERICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_NORTH_AMERICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>588</iCost>
+			<iCost>876</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -3445,7 +3446,7 @@
 				<BuildingType>BUILDING_C_AC_NORTH_AMERICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_NORTH_AMERICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>480</iCost>
+			<iCost>552</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -4631,7 +4632,7 @@
 				<BuildingType>BUILDING_C_AC_EUROPEAN</BuildingType>
 				<BuildingType>BUILDING_C_L_EUROPEAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>1296</iCost>
+			<iCost>1680</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -5513,7 +5514,7 @@
 				<BuildingType>BUILDING_C_AC_NORTH_AMERICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_NORTH_AMERICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>516</iCost>
+			<iCost>624</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -6072,7 +6073,7 @@
 				<BuildingType>BUILDING_C_AC_EUROPEAN</BuildingType>
 				<BuildingType>BUILDING_C_L_EUROPEAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>588</iCost>
+			<iCost>876</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -6124,7 +6125,7 @@
 				<BuildingType>BUILDING_C_AC_NORTH_AMERICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_NORTH_AMERICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>270</iCost>
+			<iCost>290</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -6194,7 +6195,7 @@
 				<BuildingType>BUILDING_C_AC_AFRICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_AFRICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>588</iCost>
+			<iCost>876</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -6538,7 +6539,7 @@
 				<BuildingType>BUILDING_C_AC_NORTH_AMERICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_NORTH_AMERICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>516</iCost>
+			<iCost>624</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -7124,7 +7125,7 @@
 				<BuildingType>BUILDING_C_AC_EUROPEAN</BuildingType>
 				<BuildingType>BUILDING_C_L_EUROPEAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>876</iCost>
+			<iCost>918</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -8328,7 +8329,7 @@
 				<BuildingType>BUILDING_C_AC_AFRICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_AFRICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>918</iCost>
+			<iCost>1008</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -8515,7 +8516,7 @@
 				<BuildingType>BUILDING_C_AC_OCEANIAN</BuildingType>
 				<BuildingType>BUILDING_C_L_OCEANIAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>336</iCost>
+			<iCost>372</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -8549,7 +8550,7 @@
 				<BuildingType>BUILDING_C_AC_SOUTH_AMERICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_SOUTH_AMERICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>372</iCost>
+			<iCost>406</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -8623,7 +8624,7 @@
 			</PrereqInCityBuildings>
 			<PrereqTech>TECH_MASONRY</PrereqTech>
 			<RawVicinityBonus>BONUS_TURQUOISE</RawVicinityBonus>
-			<iCost>876</iCost>
+			<iCost>918</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -8663,7 +8664,7 @@
 				<BuildingType>BUILDING_C_AC_NORTH_AMERICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_NORTH_AMERICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>444</iCost>
+			<iCost>480</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -8747,7 +8748,7 @@
 				<BuildingType>BUILDING_C_AC_OCEANIAN</BuildingType>
 				<BuildingType>BUILDING_C_L_OCEANIAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>876</iCost>
+			<iCost>918</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -9043,7 +9044,7 @@
 				<BuildingType>BUILDING_C_AC_NORTH_AMERICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_NORTH_AMERICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>444</iCost>
+			<iCost>480</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -9233,7 +9234,7 @@
 				<BuildingType>BUILDING_C_AC_ASIAN</BuildingType>
 				<BuildingType>BUILDING_C_L_ASIAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>588</iCost>
+			<iCost>876</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -9423,7 +9424,7 @@
 				<BuildingType>BUILDING_C_AC_AFRICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_AFRICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>876</iCost>
+			<iCost>918</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -9458,7 +9459,7 @@
 				<BuildingType>BUILDING_C_AC_MIDDLE_EASTERN</BuildingType>
 				<BuildingType>BUILDING_C_L_MIDDLE_EASTERN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>876</iCost>
+			<iCost>918</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -9607,7 +9608,7 @@
 				<BuildingType>BUILDING_C_AC_SOUTH_AMERICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_SOUTH_AMERICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>444</iCost>
+			<iCost>480</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -9647,7 +9648,7 @@
 				<BuildingType>BUILDING_C_AC_ASIAN</BuildingType>
 				<BuildingType>BUILDING_C_L_ASIAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>876</iCost>
+			<iCost>918</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -10052,7 +10053,7 @@
 				<BuildingType>BUILDING_C_AC_NORTH_AMERICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_NORTH_AMERICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>372</iCost>
+			<iCost>444</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -10388,7 +10389,7 @@
 				<BuildingType>BUILDING_C_AC_OCEANIAN</BuildingType>
 				<BuildingType>BUILDING_C_L_OCEANIAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>516</iCost>
+			<iCost>552</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -10492,7 +10493,7 @@
 				<BuildingType>BUILDING_C_AC_MIDDLE_EASTERN</BuildingType>
 				<BuildingType>BUILDING_C_L_MIDDLE_EASTERN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>588</iCost>
+			<iCost>876</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -10526,7 +10527,7 @@
 				<BuildingType>BUILDING_C_AC_MIDDLE_EASTERN</BuildingType>
 				<BuildingType>BUILDING_C_L_MIDDLE_EASTERN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>588</iCost>
+			<iCost>876</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -11559,7 +11560,7 @@
 			</PrereqInCityBuildings>
 			<PrereqTech>TECH_ANIMAL_RIDING</PrereqTech>
 			<RawVicinityBonus>BONUS_HORSE</RawVicinityBonus>
-			<iCost>588</iCost>
+			<iCost>876</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -12520,7 +12521,7 @@
 				<BuildingType>BUILDING_C_AC_EUROPEAN</BuildingType>
 				<BuildingType>BUILDING_C_L_EUROPEAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>876</iCost>
+			<iCost>918</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -13936,7 +13937,7 @@
 				<BuildingType>BUILDING_C_AC_NORTH_AMERICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_NORTH_AMERICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>444</iCost>
+			<iCost>480</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -13970,7 +13971,7 @@
 				<BuildingType>BUILDING_C_AC_NORTH_AMERICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_NORTH_AMERICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>444</iCost>
+			<iCost>480</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -14039,7 +14040,7 @@
 				<BuildingType>BUILDING_C_AC_NORTH_AMERICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_NORTH_AMERICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>444</iCost>
+			<iCost>480</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -14143,7 +14144,7 @@
 				<BuildingType>BUILDING_C_AC_MIDDLE_EASTERN</BuildingType>
 				<BuildingType>BUILDING_C_L_MIDDLE_EASTERN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>588</iCost>
+			<iCost>876</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -14217,7 +14218,7 @@
 				<BuildingType>BUILDING_C_AC_AFRICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_AFRICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>552</iCost>
+			<iCost>960</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -14252,7 +14253,7 @@
 				<BuildingType>BUILDING_C_AC_SOUTH_AMERICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_SOUTH_AMERICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>372</iCost>
+			<iCost>444</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -14605,7 +14606,7 @@
 				<BuildingType>BUILDING_C_AC_SOUTH_AMERICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_SOUTH_AMERICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>372</iCost>
+			<iCost>444</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -14922,7 +14923,7 @@
 				<BuildingType>BUILDING_C_AC_OCEANIAN</BuildingType>
 				<BuildingType>BUILDING_C_L_OCEANIAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>1404</iCost>
+			<iCost>1860</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -15095,7 +15096,7 @@
 				<BuildingType>BUILDING_C_AC_ASIAN</BuildingType>
 				<BuildingType>BUILDING_C_L_ASIAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>588</iCost>
+			<iCost>876</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -15174,7 +15175,7 @@
 				<BuildingType>BUILDING_C_AC_ASIAN</BuildingType>
 				<BuildingType>BUILDING_C_L_ASIAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>588</iCost>
+			<iCost>876</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -15382,7 +15383,7 @@
 				<BuildingType>BUILDING_C_AC_OCEANIAN</BuildingType>
 				<BuildingType>BUILDING_C_L_OCEANIAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>372</iCost>
+			<iCost>444</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>
@@ -15475,7 +15476,7 @@
 				<BuildingType>BUILDING_C_AC_NORTH_AMERICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_NORTH_AMERICAN</BuildingType>
 			</PrereqInCityBuildings>
-			<iCost>444</iCost>
+			<iCost>480</iCost>
 			<CommerceChanges>
 				<iCommerce>0</iCommerce>
 				<iCommerce>0</iCommerce>

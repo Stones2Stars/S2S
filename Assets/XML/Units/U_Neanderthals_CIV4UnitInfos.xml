@@ -556,7 +556,7 @@
 				<UnitType>UNIT_NEANDERTHAL_ENFORCER</UnitType>
 			</UnitUpgrades>
 			<ObsoleteTech>TECH_SEDENTARY_LIFESTYLE</ObsoleteTech>
-			<iCost>25</iCost>
+			<iCost>21</iCost>
 			<iBaseUpkeep>2</iBaseUpkeep>
 			<iMoves>1</iMoves>
 			<iCombat>3</iCombat>
@@ -692,7 +692,7 @@
 				<UnitType>UNIT_TOWN_WATCHMEN</UnitType>
 			</UnitUpgrades>
 			<ObsoleteTech>TECH_SEDENTARY_LIFESTYLE</ObsoleteTech>
-			<iCost>62</iCost>
+			<iCost>69</iCost>
 			<iBaseUpkeep>3</iBaseUpkeep>
 			<iMoves>1</iMoves>
 			<iCombat>4</iCombat>
@@ -1508,7 +1508,7 @@
 				<UnitType>UNIT_OUTRIGGER</UnitType>
 			</UnitUpgrades>
 			<ObsoleteTech>TECH_SEDENTARY_LIFESTYLE</ObsoleteTech>
-			<iCost>92</iCost>
+			<iCost>108</iCost>
 			<iMinAreaSize>5</iMinAreaSize>
 			<iBaseUpkeep>1</iBaseUpkeep>
 			<iMoves>2</iMoves>
@@ -1733,7 +1733,7 @@
 				<UnitType>UNIT_GALLEY</UnitType>
 			</UnitUpgrades>
 			<ObsoleteTech>TECH_SEDENTARY_LIFESTYLE</ObsoleteTech>
-			<iCost>92</iCost>
+			<iCost>108</iCost>
 			<iMinAreaSize>5</iMinAreaSize>
 			<iBaseUpkeep>1</iBaseUpkeep>
 			<iMoves>1</iMoves>
@@ -2082,7 +2082,7 @@
 				<UnitType>UNIT_BATTERING_RAM</UnitType>
 			</UnitUpgrades>
 			<ObsoleteTech>TECH_SEDENTARY_LIFESTYLE</ObsoleteTech>
-			<iCost>107</iCost>
+			<iCost>111</iCost>
 			<iBaseUpkeep>1</iBaseUpkeep>
 			<iMoves>1</iMoves>
 			<iCombat>3</iCombat>
@@ -2307,7 +2307,7 @@
 				<UnitType>UNIT_SPEARMAN</UnitType>
 			</UnitUpgrades>
 			<ObsoleteTech>TECH_SEDENTARY_LIFESTYLE</ObsoleteTech>
-			<iCost>92</iCost>
+			<iCost>100</iCost>
 			<iBaseUpkeep>1</iBaseUpkeep>
 			<iMoves>1</iMoves>
 			<iCombat>6</iCombat>
@@ -2617,7 +2617,7 @@
 				<UnitType>UNIT_LIGHT_SWORDSMAN</UnitType>
 			</UnitUpgrades>
 			<ObsoleteTech>TECH_SEDENTARY_LIFESTYLE</ObsoleteTech>
-			<iCost>92</iCost>
+			<iCost>103</iCost>
 			<iBaseUpkeep>1</iBaseUpkeep>
 			<iMoves>1</iMoves>
 			<iCombat>7</iCombat>
@@ -2716,7 +2716,7 @@
 				<UnitType>UNIT_AXEMAN</UnitType>
 			</UnitUpgrades>
 			<ObsoleteTech>TECH_SEDENTARY_LIFESTYLE</ObsoleteTech>
-			<iCost>92</iCost>
+			<iCost>100</iCost>
 			<iBaseUpkeep>1</iBaseUpkeep>
 			<iMoves>1</iMoves>
 			<iCombat>6</iCombat>
@@ -2925,7 +2925,7 @@
 				<UnitType>UNIT_EARLY_MACEMAN</UnitType>
 			</UnitUpgrades>
 			<ObsoleteTech>TECH_SEDENTARY_LIFESTYLE</ObsoleteTech>
-			<iCost>92</iCost>
+			<iCost>100</iCost>
 			<iBaseUpkeep>1</iBaseUpkeep>
 			<iMoves>1</iMoves>
 			<iCombat>6</iCombat>
@@ -3366,7 +3366,7 @@
 				<UnitType>UNIT_NEANDERTHAL_TRACKER</UnitType>
 			</UnitUpgrades>
 			<ObsoleteTech>TECH_TRACKING</ObsoleteTech>
-			<iCost>31</iCost>
+			<iCost>27</iCost>
 			<iBaseUpkeep>1</iBaseUpkeep>
 			<iMoves>2</iMoves>
 			<iCombat>2</iCombat>
@@ -3859,7 +3859,7 @@
 				<UnitType>UNIT_GUIDE</UnitType>
 			</UnitUpgrades>
 			<ObsoleteTech>TECH_SEDENTARY_LIFESTYLE</ObsoleteTech>
-			<iCost>25</iCost>
+			<iCost>21</iCost>
 			<iBaseUpkeep>1</iBaseUpkeep>
 			<iMoves>2</iMoves>
 			<iCombat>3</iCombat>

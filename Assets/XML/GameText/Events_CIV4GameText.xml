@@ -13125,6 +13125,10 @@
 		<French>Nous avons trouvé du sucre, c'est sucré.</French>
     </TEXT>
     <TEXT>
+        <Tag>TXT_KEY_EVENT_TRIGGER_KAVA_1</Tag>
+        <English>We have found kava, time start trading.</English>
+    </TEXT>
+    <TEXT>
         <Tag>TXT_KEY_EVENT_TRIGGER_COCA_1</Tag>
         <English>We have found coca, time to earn money.</English>
 		<French>Nous avons trouvé de la coca, il est temps de gagner de l'argent.</French>
@@ -14715,6 +14719,10 @@
         <Tag>TXT_KEY_EVENT_TRIGGER_FOUND_LOBSTERS_1</Tag>
         <English>Divers have spotted a new source of lobsters.</English>
 		<French>Des plongeurs ont repéré une nouvelle source de homards.</French>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_EVENT_TRIGGER_FOUND_PEARLS_1</Tag>
+        <English>Divers have spotted a new source of pearls.</English>
     </TEXT>
     <TEXT>
         <Tag>TXT_KEY_EVENT_TRIGGER_FOUND_FISH_1</Tag>

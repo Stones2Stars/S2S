@@ -1395,7 +1395,6 @@
 			<Type>BUILD_MUSHROOM_GATHERER_KILL</Type>
 			<Description>TXT_KEY_BUILD_MUSHROOM_GATHERER_KILL</Description>
 			<PrereqTech>TECH_GATHERING</PrereqTech>
-			<ObsoleteTech>TECH_SEDENTARY_LIFESTYLE</ObsoleteTech>
 			<iTime>200</iTime>
 			<iCost>4</iCost>
 			<bKill>1</bKill>
@@ -1798,7 +1797,6 @@
 			<Type>BUILD_TAR_GATHERER_KILL</Type>
 			<Description>TXT_KEY_BUILD_TAR_GATHERER_KILL</Description>
 			<PrereqTech>TECH_ADHESIVES</PrereqTech>
-			<ObsoleteTech>TECH_SEDENTARY_LIFESTYLE</ObsoleteTech>
 			<iTime>200</iTime>
 			<iCost>4</iCost>
 			<bKill>1</bKill>
@@ -1859,7 +1857,6 @@
 			<Type>BUILD_SALT_GATHERER_KILL</Type>
 			<Description>TXT_KEY_BUILD_SALT_GATHERER_KILL</Description>
 			<PrereqTech>TECH_HARD_HAMMER_PERCUSSION</PrereqTech>
-			<ObsoleteTech>TECH_SEDENTARY_LIFESTYLE</ObsoleteTech>
 			<iTime>200</iTime>
 			<iCost>4</iCost>
 			<bKill>1</bKill>
@@ -2388,7 +2385,7 @@
 			<PrereqTech>TECH_SEDENTARY_LIFESTYLE</PrereqTech>
 			<ObsoleteTech>TECH_CLASSICAL_LIFESTYLE</ObsoleteTech>
 			<iTime>200</iTime>
-			<iCost>12</iCost>
+			<iCost>4</iCost>
 			<bKill>0</bKill>
 			<ImprovementType>IMPROVEMENT_SEED_CAMP</ImprovementType>
 			<EntityEvent>ENTITY_EVENT_BUILD</EntityEvent>
@@ -2401,7 +2398,6 @@
 			<Type>BUILD_SEED_CAMP_KILL</Type>
 			<Description>TXT_KEY_BUILD_SEED_CAMP_KILL</Description>
 			<PrereqTech>TECH_GATHERING</PrereqTech>
-			<ObsoleteTech>TECH_SEDENTARY_LIFESTYLE</ObsoleteTech>
 			<iTime>202</iTime>
 			<iCost>4</iCost>
 			<bKill>1</bKill>
@@ -3171,7 +3167,6 @@
 			<Type>BUILD_STONE_TOOLS_WORKSHOP_KILL</Type>
 			<Description>TXT_KEY_BUILD_STONE_TOOLS_WORKSHOP_KILL</Description>
 			<PrereqTech>TECH_TOOL_MAKING</PrereqTech>
-			<ObsoleteTech>TECH_SEDENTARY_LIFESTYLE</ObsoleteTech>
 			<iTime>200</iTime>
 			<iCost>4</iCost>
 			<bKill>1</bKill>
@@ -3251,7 +3246,7 @@
 			<PrereqTech>TECH_SEDENTARY_LIFESTYLE</PrereqTech>
 			<ObsoleteTech>TECH_MACHINERY</ObsoleteTech>
 			<iTime>200</iTime>
-			<iCost>4</iCost>
+			<iCost>8</iCost>
 			<bKill>0</bKill>
 			<ImprovementType>IMPROVEMENT_LUMBERJACK</ImprovementType>
 			<EntityEvent>ENTITY_EVENT_BUILD</EntityEvent>
@@ -4110,9 +4105,8 @@
 			<Type>BUILD_COTTAGE_KILL</Type>
 			<Description>TXT_KEY_BUILD_COTTAGE_KILL</Description>
 			<PrereqTech>TECH_CARPENTRY</PrereqTech>
-			<ObsoleteTech>TECH_SEDENTARY_LIFESTYLE</ObsoleteTech>
 			<iTime>401</iTime>
-			<iCost>80</iCost>
+			<iCost>60</iCost>
 			<bKill>1</bKill>
 			<ImprovementType>IMPROVEMENT_COTTAGE</ImprovementType>
 			<EntityEvent>ENTITY_EVENT_BUILD</EntityEvent>
@@ -4164,7 +4158,7 @@
 			<PrereqTech>TECH_SEDENTARY_LIFESTYLE</PrereqTech>
 			<ObsoleteTech>TECH_MEDIEVAL_LIFESTYLE</ObsoleteTech>
 			<iTime>400</iTime>
-			<iCost>80</iCost>
+			<iCost>60</iCost>
 			<bKill>0</bKill>
 			<ImprovementType>IMPROVEMENT_COTTAGE</ImprovementType>
 			<EntityEvent>ENTITY_EVENT_BUILD</EntityEvent>
@@ -5567,7 +5561,6 @@
 			<Type>BUILD_JUNGLE_CAMP_KILL</Type>
 			<Description>TXT_KEY_BUILD_JUNGLE_CAMP_KILL</Description>
 			<PrereqTech>TECH_NATUROPATHY</PrereqTech>
-			<ObsoleteTech>TECH_SEDENTARY_LIFESTYLE</ObsoleteTech>
 			<iTime>405</iTime>
 			<iCost>4</iCost>
 			<bKill>1</bKill>
@@ -5593,7 +5586,6 @@
 			<Type>BUILD_DESERT_CAMP_KILL</Type>
 			<Description>TXT_KEY_BUILD_DESERT_CAMP_KILL</Description>
 			<PrereqTech>TECH_NATUROPATHY</PrereqTech>
-			<ObsoleteTech>TECH_SEDENTARY_LIFESTYLE</ObsoleteTech>
 			<iTime>405</iTime>
 			<iCost>4</iCost>
 			<bKill>1</bKill>
@@ -5619,7 +5611,6 @@
 			<Type>BUILD_WETLANDS_CAMP_KILL</Type>
 			<Description>TXT_KEY_BUILD_WETLANDS_CAMP_KILL</Description>
 			<PrereqTech>TECH_NATUROPATHY</PrereqTech>
-			<ObsoleteTech>TECH_SEDENTARY_LIFESTYLE</ObsoleteTech>
 			<iTime>405</iTime>
 			<iCost>4</iCost>
 			<bKill>1</bKill>
@@ -6301,7 +6292,6 @@
 			<Type>BUILD_WOODEN_WATCHTOWER_KILL</Type>
 			<Description>TXT_KEY_BUILD_WOODEN_WATCHTOWER_KILL</Description>
 			<PrereqTech>TECH_CARPENTRY</PrereqTech>
-			<ObsoleteTech>TECH_SEDENTARY_LIFESTYLE</ObsoleteTech>
 			<iTime>205</iTime>
 			<iCost>20</iCost>
 			<bKill>1</bKill>
@@ -6397,7 +6387,6 @@
 			<Type>BUILD_FORTIFIED_CAVE_KILL</Type>
 			<Description>TXT_KEY_BUILD_FORTIFIED_CAVE_KILL</Description>
 			<PrereqTech>TECH_SHELTER_BUILDING</PrereqTech>
-			<ObsoleteTech>TECH_SEDENTARY_LIFESTYLE</ObsoleteTech>
 			<iTime>200</iTime>
 			<iCost>20</iCost>
 			<bKill>1</bKill>
@@ -6429,7 +6418,6 @@
 			<Type>BUILD_WOODEN_PALISADE_KILL</Type>
 			<Description>TXT_KEY_BUILD_WOODEN_PALISADE_KILL</Description>
 			<PrereqTech>TECH_CARPENTRY</PrereqTech>
-			<ObsoleteTech>TECH_SEDENTARY_LIFESTYLE</ObsoleteTech>
 			<iTime>400</iTime>
 			<iCost>40</iCost>
 			<bKill>1</bKill>

@@ -3016,6 +3016,10 @@
 			<BonusesRequired>
 				<BonusType>BONUS_HORSE</BonusType>
 			</BonusesRequired>
+            <UnitsRequired>
+                <UnitType>UNIT_HORSEMAN</UnitType>
+            </UnitsRequired>
+            <iNumUnits>3</iNumUnits>
 			<RoutesRequired>
 				<RouteType>ROUTE_TRAIL</RouteType>
 				<RouteType>ROUTE_PATH</RouteType>
@@ -4831,28 +4835,6 @@
 		</EventTriggerInfo>
 
 		<EventTriggerInfo>
-			<Type>EVENTTRIGGER_PIRATES_OF_THE_NEUTRAL_ZONES</Type>
-			<WorldNewsTexts>
-				<Text>TXT_KEY_EVENT_WORLD_PIRATES_OF_THE_NEUTRAL_ZONES</Text>
-			</WorldNewsTexts>
-			<TriggerTexts>
-				<TriggerText>
-					<Text>TXT_KEY_EVENT_TRIGGER_PIRATES_OF_THE_NEUTRAL_ZONES</Text>
-					<Era>NONE</Era>
-				</TriggerText>
-			</TriggerTexts>
-			<iPercentGamesActive>100</iPercentGamesActive>
-			<iWeight>25</iWeight>
-			<Events>
-				<Event>EVENT_PIRATES_OF_THE_NEUTRAL_ZONES_1</Event>
-				<Event>EVENT_PIRATES_OF_THE_NEUTRAL_ZONES_2</Event>
-			</Events>
-			<bRecurring>1</bRecurring>
-			<bShowPlot>0</bShowPlot>
-			<PythonCanDo>canTriggerPiratesoftheNeutralZones</PythonCanDo>
-		</EventTriggerInfo>
-
-		<EventTriggerInfo>
 			<Type>EVENTTRIGGER_MALACCAN_PIRATES</Type>
 			<WorldNewsTexts>
 				<Text>TXT_KEY_EVENT_WORLD_MALACCAN_PIRATES</Text>
@@ -6355,7 +6337,7 @@
 				<Event>EVENT_HORSE_WHISPERING_1</Event>
 			</Events>
 			<OrPreReqs>
-				<PrereqTech>TECH_ANIMAL_HUSBANDRY</PrereqTech>
+				<PrereqTech>TECH_ANIMAL_RIDING</PrereqTech>
 			</OrPreReqs>
 			<ObsoleteTechs>
 				<ObsoleteTech>TECH_NATIONALISM</ObsoleteTech>
@@ -7575,6 +7557,28 @@
                 <PrereqTech>TECH_SCAVENGING</PrereqTech>
             </OrPreReqs>
             <bRecurring>1</bRecurring>
+        </EventTriggerInfo>
+
+        <EventTriggerInfo>
+            <Type>EVENTTRIGGER_PIRATES_OF_THE_NEUTRAL_ZONES</Type>
+            <WorldNewsTexts>
+                <Text>TXT_KEY_EVENT_WORLD_PIRATES_OF_THE_NEUTRAL_ZONES</Text>
+            </WorldNewsTexts>
+            <TriggerTexts>
+                <TriggerText>
+                    <Text>TXT_KEY_EVENT_TRIGGER_PIRATES_OF_THE_NEUTRAL_ZONES</Text>
+                    <Era>NONE</Era>
+                </TriggerText>
+            </TriggerTexts>
+            <iPercentGamesActive>100</iPercentGamesActive>
+            <iWeight>25</iWeight>
+            <Events>
+                <Event>EVENT_PIRATES_OF_THE_NEUTRAL_ZONES_1</Event>
+                <Event>EVENT_PIRATES_OF_THE_NEUTRAL_ZONES_2</Event>
+            </Events>
+            <bRecurring>1</bRecurring>
+            <bShowPlot>0</bShowPlot>
+            <PythonCanDo>canTriggerPiratesoftheNeutralZones</PythonCanDo>
         </EventTriggerInfo>
 
 		<EventTriggerInfo>
@@ -11127,7 +11131,7 @@
 				<FeatureType>NONE</FeatureType>
 			</FeaturesRequired>
 			<Events>
-				<Event>EVENT_FOUND_CLAM</Event>
+				<Event>EVENT_FOUND_MUREX</Event>
 			</Events>
 			<OrPreReqs>
 				<PrereqTech>TECH_FISHING</PrereqTech>
@@ -13755,7 +13759,7 @@
             </TriggerTexts>
             <EventArt>Art/Event_Images/Earthquake.dds</EventArt>
             <iPercentGamesActive>100</iPercentGamesActive>
-            <iWeight>1</iWeight>
+            <iWeight>5</iWeight>
             <bPickCity>1</bPickCity>
             <iNumPlotsRequired>1</iNumPlotsRequired>
             <Events>

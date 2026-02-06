@@ -272,7 +272,7 @@
 			<Advisor>ADVISOR_MILITARY</Advisor>
 			<ArtDefineTag>ART_DEF_BUILDING_ANIMAL_TRAINER_BEAR</ArtDefineTag>
 			<MovieDefineTag>ART_DEF_MOVIE_BEAR_RIDER</MovieDefineTag>
-			<iCost>624</iCost>
+			<iCost>1038</iCost>
 			<iCostSizeModifier>1</iCostSizeModifier>
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>0</iCostMaterialsModifier>
@@ -281,7 +281,7 @@
 			<iAsset>4</iAsset>
 			<iPower>2</iPower>
 			<CommerceChanges>
-				<iCommerce>-1</iCommerce>
+				<iCommerce>-5</iCommerce>
 			</CommerceChanges>
 			<ConstructSound>AS2D_BUILD_GRANARY</ConstructSound>
 			<Flavors>
@@ -381,7 +381,7 @@
 				<MapCategoryType>MAPCATEGORY_EARTH</MapCategoryType>
 			</MapCategoryTypes>
 			<Bonus>BONUS_CAT</Bonus>
-			<iCost>624</iCost>
+			<iCost>1038</iCost>
 			<iCostSizeModifier>1</iCostSizeModifier>
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>0</iCostMaterialsModifier>
@@ -389,7 +389,7 @@
 			<iAsset>4</iAsset>
 			<iPower>2</iPower>
 			<CommerceChanges>
-				<iCommerce>-1</iCommerce>
+				<iCommerce>-5</iCommerce>
 			</CommerceChanges>
 			<TechCommerceChanges>
 				<TechCommerceChange>
@@ -488,7 +488,7 @@
 				<MapCategoryType>MAPCATEGORY_EARTH</MapCategoryType>
 			</MapCategoryTypes>
 			<Bonus>BONUS_BISON</Bonus>
-			<iCost>624</iCost>
+			<iCost>1038</iCost>
 			<iCostSizeModifier>1</iCostSizeModifier>
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>0</iCostMaterialsModifier>
@@ -496,7 +496,7 @@
 			<iAsset>4</iAsset>
 			<iPower>2</iPower>
 			<CommerceChanges>
-				<iCommerce>-1</iCommerce>
+				<iCommerce>-5</iCommerce>
 			</CommerceChanges>
 			<ConstructSound>AS2D_BUILD_GRANARY</ConstructSound>
 			<Flavors>
@@ -593,7 +593,7 @@
 				<MapCategoryType>MAPCATEGORY_EARTH</MapCategoryType>
 			</MapCategoryTypes>
 			<Bonus>BONUS_DEER</Bonus>
-			<iCost>624</iCost>
+			<iCost>1038</iCost>
 			<iCostSizeModifier>1</iCostSizeModifier>
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>0</iCostMaterialsModifier>
@@ -603,7 +603,7 @@
 			<iAsset>4</iAsset>
 			<iPower>2</iPower>
 			<CommerceChanges>
-				<iCommerce>-1</iCommerce>
+				<iCommerce>-5</iCommerce>
 			</CommerceChanges>
 			<ConstructSound>AS2D_BUILD_GRANARY</ConstructSound>
 			<Flavors>
@@ -699,7 +699,7 @@
 			<MapCategoryTypes>
 				<MapCategoryType>MAPCATEGORY_EARTH</MapCategoryType>
 			</MapCategoryTypes>
-			<iCost>624</iCost>
+			<iCost>1038</iCost>
 			<iCostSizeModifier>1</iCostSizeModifier>
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>0</iCostMaterialsModifier>
@@ -709,7 +709,7 @@
 			<iAsset>4</iAsset>
 			<iPower>2</iPower>
 			<CommerceChanges>
-				<iCommerce>-1</iCommerce>
+				<iCommerce>-5</iCommerce>
 			</CommerceChanges>
 			<ConstructSound>AS2D_BUILD_GRANARY</ConstructSound>
 			<Flavors>
@@ -838,7 +838,7 @@
 				<MapCategoryType>MAPCATEGORY_EARTH</MapCategoryType>
 			</MapCategoryTypes>
 			<Bonus>BONUS_MAMMOTH</Bonus>
-			<iCost>624</iCost>
+			<iCost>1038</iCost>
 			<iCostSizeModifier>1</iCostSizeModifier>
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>0</iCostMaterialsModifier>
@@ -847,7 +847,7 @@
 			<iAsset>4</iAsset>
 			<iPower>2</iPower>
 			<CommerceChanges>
-				<iCommerce>-1</iCommerce>
+				<iCommerce>-5</iCommerce>
 			</CommerceChanges>
 			<ConstructSound>AS2D_BUILD_GRANARY</ConstructSound>
 			<Flavors>
@@ -943,7 +943,7 @@
 				<BuildingType>BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY</BuildingType>
 			</ReplacementBuildings>
 			<CommerceChanges>
-				<iCommerce>1</iCommerce>
+				<iCommerce>-1</iCommerce>
 			</CommerceChanges>
 			<iAsset>2</iAsset>
 			<iPower>2</iPower>
@@ -959,7 +959,7 @@
 			<PrereqTech>TECH_GUNPOWDER</PrereqTech>
 			<bAutoBuild>1</bAutoBuild>
 			<CommerceChanges>
-				<iCommerce>1</iCommerce>
+				<iCommerce>-1</iCommerce>
 			</CommerceChanges>
 			<iWarWearinessModifier>-5</iWarWearinessModifier>
 			<iRevIdxLocal>-1</iRevIdxLocal>
@@ -1026,7 +1026,7 @@
 			<MapCategoryTypes>
 				<MapCategoryType>MAPCATEGORY_EARTH</MapCategoryType>
 			</MapCategoryTypes>
-			<iCost>624</iCost>
+			<iCost>1038</iCost>
 			<iCostSizeModifier>1</iCostSizeModifier>
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>0</iCostMaterialsModifier>
@@ -1035,7 +1035,7 @@
 			<iAsset>4</iAsset>
 			<iPower>2</iPower>
 			<CommerceChanges>
-				<iCommerce>-1</iCommerce>
+				<iCommerce>-5</iCommerce>
 			</CommerceChanges>
 			<ConstructSound>AS2D_BUILD_GRANARY</ConstructSound>
 			<Flavors>
@@ -1159,13 +1159,13 @@
 			<MapCategoryTypes>
 				<MapCategoryType>MAPCATEGORY_EARTH</MapCategoryType>
 			</MapCategoryTypes>
-			<iCost>624</iCost>
+			<iCost>1038</iCost>
 			<iCostSizeModifier>1</iCostSizeModifier>
 			<iCostCountModifier>0</iCostCountModifier>
 			<iCostMaterialsModifier>0</iCostMaterialsModifier>
 			<iCostComplexityModifier>2</iCostComplexityModifier>
 			<CommerceChanges>
-				<iCommerce>-1</iCommerce>
+				<iCommerce>-5</iCommerce>
 			</CommerceChanges>
 			<iMaxLatitude>45</iMaxLatitude>
 			<iAsset>4</iAsset>

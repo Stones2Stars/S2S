@@ -1346,6 +1346,7 @@
 	<ElementType name="ImprovementHappinessChanges" content="eltOnly">
 		<element type="ImprovementHappinessChange" minOccurs="0" maxOccurs="*"/>
 	</ElementType>
+    <ElementType name="iHealthPercentPerPopulation" content="textOnly" dt:type="int"/>
 	<ElementType name="iHealthPercent" content="textOnly" dt:type="int"/>
 	<ElementType name="ImprovementHealthPercentChange" content="eltOnly">
 		<element type="ImprovementType"/>

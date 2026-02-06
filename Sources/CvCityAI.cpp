@@ -1601,23 +1601,23 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 
-	//#2a Very Critical Income situation
-	if (bCriticalGold)
-	{
-		//Apply Process Income as soon as it's possible
-		int iPathfinding = GC.getInfoTypeForString("TECH_COOPERATION");
-		if ((GET_TEAM(getTeam()).isHasTech((TechTypes)iPathfinding)))
-		{
-			bInhibitUnits = true;
-			m_iRequestedBuilding = 0;
-			if (AI_chooseProcess(COMMERCE_GOLD, NULL, true))
-			{
-				m_iRequestedBuilding = 10;
-				return;
-			}
-			m_iRequestedUnit = 10;
-		}
-	}
+//	//#2a Very Critical Income situation
+//	if (bCriticalGold)
+//	{
+//		//Apply Process Income as soon as it's possible
+//		int iPathfinding = GC.getInfoTypeForString("TECH_COOPERATION");
+//		if ((GET_TEAM(getTeam()).isHasTech((TechTypes)iPathfinding)))
+//		{
+//			bInhibitUnits = true;
+//			m_iRequestedBuilding = 0;
+//			if (AI_chooseProcess(COMMERCE_GOLD, NULL, true))
+//			{
+//				m_iRequestedBuilding = 10;
+//				return;
+//			}
+//			m_iRequestedUnit = 10;
+//		}
+//	}
 
 	//#2b - If Strike, Appropriate Building
 	if (player.isStrike())
@@ -3771,10 +3771,10 @@ void CvCityAI::AI_chooseProduction()
 	}
 
 
-	if (bFinancialTrouble)
-	{
-		AI_chooseProcess(COMMERCE_GOLD);
-	}
+//	if (bFinancialTrouble)
+//	{
+//		AI_chooseProcess(COMMERCE_GOLD);
+//	}
 
 
 	// Koshling - AI shouldn't choose gold as often as it does. If we have plenty of gold prefer research most of the time.
@@ -3783,10 +3783,10 @@ void CvCityAI::AI_chooseProduction()
 	//	100, but only if we already have less gold than our target in which case we should already have unconditonally
 	//	gone for gold earlier in this choice)
 	int64_t commerceWeights[NUM_COMMERCE_TYPES];
-	commerceWeights[COMMERCE_GOLD] = std::max<int64_t>(0, 100 - (player.getGold() - player.AI_goldTarget()) * 100 / std::max<int64_t>(1, player.AI_goldTarget()));
-	commerceWeights[COMMERCE_RESEARCH] = 150; // Can't think of a good measure for research pressure so just set to a middling value
+	commerceWeights[COMMERCE_GOLD] = std::max<int64_t>(5, 100 - (player.getGold() - player.AI_goldTarget()) * 100 / std::max<int64_t>(1, player.AI_goldTarget()));
+	commerceWeights[COMMERCE_RESEARCH] = 120; // Can't think of a good measure for research pressure so just set to a middling value
 	commerceWeights[COMMERCE_CULTURE] = 100 + iCulturePressure;
-	commerceWeights[COMMERCE_ESPIONAGE] = 110;	//	Is this ever really worthwhile?
+	commerceWeights[COMMERCE_ESPIONAGE] = 105;	//	Is this ever really worthwhile?
 
 	if (isHuman())
 	{

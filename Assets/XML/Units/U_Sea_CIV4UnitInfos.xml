@@ -189,7 +189,7 @@
 				<BuildingType>BUILDING_CANOE_BUILDER</BuildingType>
 			</PrereqAndBuildings>
 			<PrereqTech>TECH_BOAT_BUILDING</PrereqTech>
-			<iCost>67</iCost>
+			<iCost>75</iCost>
 			<iMinAreaSize>5</iMinAreaSize>
 			<iBaseUpkeep>1</iBaseUpkeep>
 			<iMoves>2</iMoves>
@@ -1218,7 +1218,10 @@
 				<BuildingType>BUILDING_CANOE_BUILDER</BuildingType>
 			</PrereqAndBuildings>
 			<PrereqTech>TECH_HARPOON_MAKING</PrereqTech>
-			<iCost>77</iCost>
+            <TechTypes>
+                <PrereqTech>TECH_WARFARE</PrereqTech>
+            </TechTypes>
+			<iCost>87</iCost>
 			<iMinAreaSize>5</iMinAreaSize>
 			<iBaseUpkeep>1</iBaseUpkeep>
 			<iMoves>2</iMoves>
@@ -3959,7 +3962,7 @@
 				<BonusType>BONUS_BAMBOO</BonusType>
 				<BonusType>BONUS_WOOD</BonusType>
 			</PrereqBonuses>
-			<iCost>81</iCost>
+			<iCost>89</iCost>
 			<iMinAreaSize>5</iMinAreaSize>
 			<iBaseUpkeep>1</iBaseUpkeep>
 			<iMoves>1</iMoves>

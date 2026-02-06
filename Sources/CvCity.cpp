@@ -11067,12 +11067,48 @@ int CvCity::getAdditionalExtraYieldByBuilding(YieldTypes eIndex, BuildingTypes e
        if (eBuilding == (BuildingTypes)GC.getInfoTypeForString("BUILDING_STORAGE"))
        {
            int iBonusCount = GET_PLAYER(getOwner()).getNumAvailableBonuses((BonusTypes)iI);
+           int iCityCount = GET_PLAYER(getOwner()).getNumCities();
 
            if (iBonusCount > 0)
            {
-               // Add empire-wide bonus yields
-               iExtraYield += iBonusCount * building.getBonusYieldChanges(iI, eIndex);
+
+               int fullCap = iBonusCount * 5;
+               int halfCap = iBonusCount * 10;
+
+               int iYield = building.getBonusYieldChanges(iI, eIndex);
+               int totalYield = iBonusCount * iYield;
+
+               if (iCityCount <= fullCap)
+                   {
+                       iExtraYield += totalYield; // 100%
+                   }
+                   else if (iCityCount <= halfCap)
+                   {
+                       iExtraYield += totalYield / 2; // 50%
+                   }
            }
+
+           if (building.getVicinityBonusYieldChanges(iI, eIndex) != 0
+               && hasVicinityBonus((BonusTypes)iI))
+           {
+               int iVicinityCount = 0;
+               for (int i = 0; i < NUM_CITY_PLOTS; ++i)
+               {
+                   CvPlot* pPlot = getCityIndexPlot(i);
+                   if (pPlot != NULL
+                       && pPlot->getBonusType(getTeam()) == (BonusTypes)iI
+                       && pPlot->getOwner() == getOwner()
+                       && pPlot->getImprovementType() != NO_IMPROVEMENT
+                       && pPlot->isConnectedTo(this)
+                       && pPlot->getWorkingCity() == this)
+                   {
+                       ++iVicinityCount;
+                   }
+               }
+
+               iExtraYield += iVicinityCount * building.getVicinityBonusYieldChanges(iI, eIndex);
+           }
+
        }
         else
         {
@@ -11081,9 +11117,25 @@ int CvCity::getAdditionalExtraYieldByBuilding(YieldTypes eIndex, BuildingTypes e
                 iExtraYield += building.getBonusYieldChanges(iI, eIndex);
             }
 
-            if (building.getVicinityBonusYieldChanges(iI, eIndex) != 0 && hasVicinityBonus((BonusTypes)iI))
+            if (building.getVicinityBonusYieldChanges(iI, eIndex) != 0
+               && hasVicinityBonus((BonusTypes)iI))
             {
-                iExtraYield += building.getVicinityBonusYieldChanges(iI, eIndex);
+               int iVicinityCount = 0;
+               for (int i = 0; i < NUM_CITY_PLOTS; ++i)
+               {
+                   CvPlot* pPlot = getCityIndexPlot(i);
+                   if (pPlot != NULL
+                       && pPlot->getBonusType(getTeam()) == (BonusTypes)iI
+                       && pPlot->getOwner() == getOwner()
+                       && pPlot->getImprovementType() != NO_IMPROVEMENT
+                       && pPlot->isConnectedTo(this)
+                       && pPlot->getWorkingCity() == this)
+                   {
+                       ++iVicinityCount;
+                   }
+               }
+
+               iExtraYield += iVicinityCount * building.getVicinityBonusYieldChanges(iI, eIndex);
             }
         }
     }
