@@ -20,9 +20,6 @@ environment:
   git_access_token:
     secure: 2p5XvFyBlcD1dGhQQr1qvlaC/SNrlTi8kNEvEvduPkKJuGVfcfJ9X0r+OzHYtPkw
 
-cache: 
-  - Build/deps -> Tools\deps.exe appveyor.yml Tools/InstallDeps.bat
-
 build_script:
   - cmd: >-
       call Powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%APPVEYOR_BUILD_FOLDER%\Tools\CI\fix_sources_timestamps.ps1"
