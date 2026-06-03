@@ -1175,6 +1175,16 @@ int CvUnitAI::AI_attackOddsAtPlotInternal(const CvPlot* pPlot, CvUnit* pDefender
 	}
 	int iOurFirepower = ((getDomainType() == DOMAIN_AIR) ? iOurStrength : currFirepower(NULL, NULL));
 
+	// Phase 3b instrumentation (no behaviour change): capture the engine's binomial
+	// win% on the entry state so it can be logged beside the strength-ratio heuristic
+	// computed below. Only the non-air engine path exists; gated on the unit-AI log
+	// level so the heavier getCombatOdds() call is skipped when logging is off.
+	int iBinomialOdds = -1;
+	if (gUnitLogLevel >= 2 && getDomainType() != DOMAIN_AIR)
+	{
+		iBinomialOdds = getCombatOdds(this, pDefender) / 10; // permille -> percent
+	}
+
 	const bool bSamePlot = pDefender->plot() == plot();
 
 	int iDamageToUs;
@@ -1325,6 +1335,8 @@ int CvUnitAI::AI_attackOddsAtPlotInternal(const CvPlot* pPlot, CvUnit* pDefender
 
 	int iOdds = iOurStrength * 100 / (iOurStrength + iTheirStrength);
 
+	const int iHeuristicBase = iOdds; // pre-bias strength-ratio odds, for 3b calibration
+
 	//	Koshling - modify the calculated odds to account for
 	//	the AI player's rose-tinted-spectacles value - this used to simply add
 	//	to the odds, but that made it look like fights with hugely different strengths
@@ -1350,6 +1362,20 @@ int CvUnitAI::AI_attackOddsAtPlotInternal(const CvPlot* pPlot, CvUnit* pDefender
 			iNeededRoundsUs, iNeededRoundsThem, combatLimit(pDefender), iHitLimitThem,
 			iBaseOdds, iOdds);
 	}
+
+	// Phase 3b calibration: emit the heuristic vs binomial mapping for every non-air
+	// AI attack evaluation. iHeuristicBase / iBinomialOdds are the pre-bias win%
+	// numbers (the per-leader personality bias is applied identically to whichever
+	// source we return, so the distribution shift is fully captured pre-bias).
+	if (iBinomialOdds >= 0)
+	{
+		logCombatOdds(2, "[COC] atk=%S(%d) ourStr=%d def=%S theirStr=%d climit=%d nrUs=%d nrThem=%d roundsDiff=%d | heurBase=%d binom=%d finalBiased=%d mod=%d",
+			getDescription(0).GetCString(), getID(), iOurStrength,
+			pDefender->getDescription(0).GetCString(), iTheirStrength,
+			combatLimit(pDefender), iNeededRoundsUs, iNeededRoundsThem, iRoundsDiff,
+			iHeuristicBase, iBinomialOdds, range(iOdds, 1, 99), modifyPredictedResults ? 1 : 0);
+	}
+
 	return range(iOdds, 1, 99);
 }
 
