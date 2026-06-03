@@ -1175,6 +1175,19 @@ int CvUnitAI::AI_attackOddsAtPlotInternal(const CvPlot* pPlot, CvUnit* pDefender
 	}
 	int iOurFirepower = ((getDomainType() == DOMAIN_AIR) ? iOurStrength : currFirepower(NULL, NULL));
 
+	// Phase 3b: the AI now decides on the engine's binomial win% (getCombatOdds) for
+	// non-air attacks -- the same number the UI preview shows and the resolver rolls --
+	// instead of the strength-ratio approximation computed further down. Captured on the
+	// entry state (the predicted-HP context the caller set, matching the heuristic).
+	// Air has no engine path yet (getCombatOdds ignores air strength/interception), so
+	// it keeps the heuristic; the recenter in AI_finalOddsThreshold is air-exempt to
+	// match. The heuristic is still computed below and logged for calibration.
+	int iBinomialOdds = -1;
+	if (getDomainType() != DOMAIN_AIR)
+	{
+		iBinomialOdds = getCombatOdds(this, pDefender) / 10; // permille -> percent
+	}
+
 	const bool bSamePlot = pDefender->plot() == plot();
 
 	int iDamageToUs;
@@ -1325,6 +1338,17 @@ int CvUnitAI::AI_attackOddsAtPlotInternal(const CvPlot* pPlot, CvUnit* pDefender
 
 	int iOdds = iOurStrength * 100 / (iOurStrength + iTheirStrength);
 
+	const int iHeuristicBase = iOdds; // pre-bias strength-ratio odds, for 3b calibration
+
+	// Phase 3b swap: for non-air, decide on the binomial win% rather than the
+	// strength-ratio above. The round-count predicted-HP machinery and the strength
+	// boosts feeding iHeuristicBase are left intact -- the boosts are now dead for the
+	// returned odds but still drive the predicted-HP writes and the logged heuristic.
+	if (iBinomialOdds >= 0)
+	{
+		iOdds = iBinomialOdds;
+	}
+
 	//	Koshling - modify the calculated odds to account for
 	//	the AI player's rose-tinted-spectacles value - this used to simply add
 	//	to the odds, but that made it look like fights with hugely different strengths
@@ -1350,6 +1374,20 @@ int CvUnitAI::AI_attackOddsAtPlotInternal(const CvPlot* pPlot, CvUnit* pDefender
 			iNeededRoundsUs, iNeededRoundsThem, combatLimit(pDefender), iHitLimitThem,
 			iBaseOdds, iOdds);
 	}
+
+	// Phase 3b calibration: emit the heuristic vs binomial mapping for every non-air
+	// AI attack evaluation. iHeuristicBase / iBinomialOdds are the pre-bias win%
+	// numbers (the per-leader personality bias is applied identically to whichever
+	// source we return, so the distribution shift is fully captured pre-bias).
+	if (iBinomialOdds >= 0)
+	{
+		logCombatOdds(2, "[COC] atk=%S(%d) ourStr=%d def=%S theirStr=%d climit=%d nrUs=%d nrThem=%d roundsDiff=%d | heurBase=%d binom=%d finalBiased=%d mod=%d",
+			getDescription(0).GetCString(), getID(), iOurStrength,
+			pDefender->getDescription(0).GetCString(), iTheirStrength,
+			combatLimit(pDefender), iNeededRoundsUs, iNeededRoundsThem, iRoundsDiff,
+			iHeuristicBase, iBinomialOdds, range(iOdds, 1, 99), modifyPredictedResults ? 1 : 0);
+	}
+
 	return range(iOdds, 1, 99);
 }
 
@@ -25435,6 +25473,19 @@ int CvUnitAI::AI_finalOddsThreshold(const CvPlot* pPlot, int iOddsThreshold) con
 		iDivisor += ((AI_getUnitAIType() == UNITAI_ATTACK_CITY || AI_getUnitAIType() == UNITAI_ATTACK) ? 2 : 0);
 		iFinalOddsThreshold /= iDivisor;
 	}
+
+	// Phase 3b recenter: non-air attack odds are now the engine's binomial win%
+	// (CvUnitAI::AI_attackOddsAtPlotInternal), a steeper sigmoid than the strength-ratio
+	// heuristic these thresholds were tuned against. At a fixed bar the binomial
+	// greenlights more "good but not certain" fights, so raise the bar to roughly
+	// preserve aggregate aggression in the operating band. Air still uses the heuristic
+	// and is exempt. TUNING KNOB (dial via autoplay, see combat-phase3b-plan.md  4):
+	//   23/20 ~= +15% (current);  20/20 = none;  ~27/20 restores heuristic-era timidity.
+	if (getDomainType() != DOMAIN_AIR)
+	{
+		iFinalOddsThreshold = iFinalOddsThreshold * 23 / 20;
+	}
+
 	return range(iFinalOddsThreshold, 0, 100);
 }
 

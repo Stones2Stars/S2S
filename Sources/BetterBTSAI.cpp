@@ -80,6 +80,23 @@ void logHunterAI(int level, const char* format, ...)
 	}
 }
 
+// Phase 3b instrumentation: heuristic-vs-binomial AI attack odds, side by side.
+// Gated on gUnitLogLevel so it shares the unit-AI verbosity switch; writes its own
+// file so the mapping is easy to extract for threshold calibration.
+void logCombatOdds(int level, const char* format, ...)
+{
+	if (level <= gUnitLogLevel)
+	{
+		static char buf[2048];
+		_vsnprintf(buf, 2048 - 4, format, (char*)(&format + 1));
+		gDLL->logMsg("CombatOddsCalibration.log", buf);
+
+		// Echo to debugger
+		strcat(buf, "\n");
+		OutputDebugString(buf);
+	}
+}
+
 void logAIJson(CvWString type, CvWString identifier, CvWString squirrel, CvWString message)
 {
 	const std::wstring data = "{ type: \"" + type + "\" name: \"" + identifier + "\" function: \" " + squirrel + "\" message: \"" + message + "\" }";
