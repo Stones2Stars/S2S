@@ -131,3 +131,45 @@ strength ratio already puts >95% or <5%).
   more-accurate binomial and re-tune by feel? (Affects §4b choice.)
 - Is a permanent A/B option worth keeping, or flag-then-remove?
 - Air: keep on the heuristic indefinitely, or schedule the air-odds engine path?
+
+## Status (implemented)
+Hybrid chosen (swap + recenter). Step 1 (instrument, `fe7ca1ff`) and Step 2
+(swap + recenter, `b9e40e3b`) done on branch `combat-ai-binomial-odds`. Non-air AI
+attacks now decide on `getCombatOdds()/10`; `AI_finalOddsThreshold` raises the bar
++15% (`23/20`, air-exempt) to recenter. Measured on 5.7k autoplay evals: heur 60% ==
+binom 80%, heur 70% == binom 96%; post-swap odds are healthily bimodal (~56% clear
+loss, ~31% clear win, ~7% judgment calls — the recenter only bites on that 7%).
+Validated by feel ("good enough for now"). The `23/20` constant + the `[COC]`
+calibration log are scaffolding to be removed at bake-in once the per-player work below
+settles the final shape.
+
+## Follow-up: per-player / per-trait configurable aggression (FUTURE TASK)
+Make the attack-odds bar configurable and per-player so aggressiveness varies by
+civ/leader — barbarians (NPC) more reckless (lower bar), pacifist/defensive civs more
+cautious (higher bar) — instead of one global `23/20` constant.
+
+Where it plugs in: `CvUnitAI::AI_finalOddsThreshold` (CvUnitAI.cpp ~25432) is the single
+chokepoint; the recenter line lives at its tail. The only existing per-leader lever is
+`AI_getAttackOddsChange()` (CvPlayerAI.cpp ~16902), a multiplicative bias applied to the
+*odds* in `AI_attackOddsAtPlotInternal` — distinct from the *threshold* bar, but the
+prior art to follow.
+
+Sketch (smallest first):
+1. **Data-drive the global constant.** Move `23/20` out of code into a GlobalDefine
+   (`Assets/XML/GlobalDefines*`, e.g. `AI_BINOMIAL_ODDS_THRESHOLD_PERCENT = 115`), read
+   via `GC.getDefineINT(...)`. Tunable without recompiling; cache it like other hot
+   defines if `AI_finalOddsThreshold` (PROFILE_FUNC) shows up.
+2. **Per-player modifier.** Add a player/leader aggression term combined multiplicatively
+   in `AI_finalOddsThreshold`: `bar = bar * GLOBAL% / 100 * playerAggr% / 100`. Source it
+   from a trait/leader field (new `iAttackOddsThresholdModifier` on `CvTraitInfo` /
+   `CvLeaderHeadInfo`, or a `FLAVOR_MILITARY`→modifier map). Barbarians: gate on
+   `GET_PLAYER(getOwner()).isNPC()` (already used for combat free-wins) for a built-in
+   recklessness bump even without a trait.
+3. **Keep air exempt** (still heuristic) and the hunter raw-odds path bypassing this
+   (CvUnitAI.cpp ~27167) until those get engine odds too.
+4. Re-run the `[COC]` autoplay comparison per archetype (aggressive vs pacifist leader,
+   barb) to sanity-check the spread before baking in.
+
+This subsumes the "is a permanent A/B option worth keeping" open question: the global
+define + per-player modifier *is* the permanent, data-driven knob, replacing the
+temporary `23/20` literal.
