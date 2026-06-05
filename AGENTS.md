@@ -81,6 +81,12 @@ not findings to re-discover.
   `shouldHaveGraphics`; `CvMap::setupGraphical`.
 
 ## Conventions
+- **Confirm behaviour before opening a PR.** Do not open a PR for a behaviour/feature
+  branch that has no tied, confirmed issue until the change has been **playtested
+  in-game and confirmed working** — a green Assert build is not enough. Keep such work
+  on a pushed branch until then; open the PR after confirmation. (Bug fixes tied to a
+  verified issue, and docs-only/process changes, may be PR'd normally.) Remember a DLL
+  change needs `rebuild deploy` to take effect in a running game.
 - Prefer minimal, local changes in large core files.
 - Preserve save compatibility by default; for intentional breaks, coordinate and
   mark with `@SAVEBREAK`. See `Notes for the next breaking of save game compatability cycle.txt`.
