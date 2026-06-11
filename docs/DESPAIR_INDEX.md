@@ -214,3 +214,6 @@ possible but would legally require the elephant to file an expense report for th
 — a bug whose comprehension produces an audible exhale — it may be added here, with a
 score, a name, and the respect it does not deserve. These entries double as an honest
 summary of the state of the inherited codebase, which is part of why the rework exists.*
+
+*Fresh despair may be reported, contested, or savored on the
+[S2S Discord](https://discord.gg/R8Uejx6uaK).*
