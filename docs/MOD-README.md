@@ -14,12 +14,26 @@ A continuation of *Caveman2Cosmos* — a total-conversion mod for
    It must live under the **install** directory's `Mods` folder — not under
    *My Documents*.
 
-2. The folder **must** be named `Stones2Stars`. If you obtain the mod with git,
-   clone it with its default name so the casing is correct:
+2. The folder **must** be named `Stones2Stars`. The mod is published to two
+   channels with identical content; either can be cloned/checked out straight
+   into `Mods` and updated in place later:
 
-   ```
-   git clone https://github.com/Stones2Stars/Stones2Stars.git
-   ```
+   - **git (GitHub):**
+
+     ```
+     git clone --depth 1 https://github.com/Stones2Stars/Stones2Stars.git
+     ```
+
+     Update later with `git pull`. (`--depth 1` skips old release history and
+     makes the initial download much smaller; a plain `git clone` works too.)
+
+   - **SVN (SourceForge):**
+
+     ```
+     svn checkout https://svn.code.sf.net/p/stones2stars/code/trunk Stones2Stars
+     ```
+
+     Update later with `svn update`.
 
 3. Launch by running `S2S.bat`, or start the game and choose
    *Advanced → Load a Mod → Stones2Stars*.
