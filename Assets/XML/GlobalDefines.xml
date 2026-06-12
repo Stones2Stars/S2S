@@ -1728,9 +1728,11 @@
 		<DefineName>SIZE_MATTERS_MOST_VOLUMETRIC_MULTIPLIER</DefineName>
 		<iDefineIntVal>300</iDefineIntVal>
 	</Define>
-	<!-- Barb horde courage (#409): with MIN_UNITS or more NPC units within RANGE of an
-	     adjacent enemy city, barbarians force the attack at ODDS_FLOOR win% instead of
-	     loitering. MIN_UNITS <= 0 disables the rule. -->
+	<!-- Barb horde courage (#409): a warband of MIN_UNITS+ NPC units (within 2 of each
+	     member) marches on enemy cities and assaults at ODDS_FLOOR win% instead of
+	     loitering. Projection reach starts at RANGE and grows +1 per UNITS_PER_RANGE
+	     pack members beyond the minimum, capped at RANGE_MAX (bigger warbands are
+	     bolder and reach further). MIN_UNITS <= 0 disables the rule. -->
 	<Define>
 		<DefineName>BARB_HORDE_COURAGE_MIN_UNITS</DefineName>
 		<iDefineIntVal>5</iDefineIntVal>
@@ -1742,6 +1744,14 @@
 	<Define>
 		<DefineName>BARB_HORDE_COURAGE_ODDS_FLOOR</DefineName>
 		<iDefineIntVal>1</iDefineIntVal>
+	</Define>
+	<Define>
+		<DefineName>BARB_HORDE_COURAGE_UNITS_PER_RANGE</DefineName>
+		<iDefineIntVal>2</iDefineIntVal>
+	</Define>
+	<Define>
+		<DefineName>BARB_HORDE_COURAGE_RANGE_MAX</DefineName>
+		<iDefineIntVal>8</iDefineIntVal>
 	</Define>
 	<!-- AI Gold Slider Safety Percent
 	This is the BASE income to expense ratio that the AI feels comfortable with.

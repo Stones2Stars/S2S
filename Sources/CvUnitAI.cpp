@@ -2417,26 +2417,37 @@ void CvUnitAI::AI_barbAttackMove()
 
 	// #409 horde courage: barbs force attacks -- it is in their nature, and tuned like a
 	// self-preserving civ army they just loiter ("come to my city, see its not an obvious
-	// win, and jog off again"). A lone barb keeps skulking, but once a horde has gathered
-	// near an enemy city the units inside the courage radius MARCH on it and assault at
-	// the odds floor -- the march matters as much as the floor: barbs only ever approach
-	// cities under AREAAI_OFFENSIVE, so without it the wave never forms and the patrol
-	// dice disperse the horde ("walk away in shame", observed live). This is also the
+	// win, and jog off again"). A lone barb keeps skulking; courage is PACK-ANCHORED: the
+	// warband around this unit grants both the will and the REACH -- projection radius
+	// scales with mass (round 4, owner: a barb city with a stack sat 4 tiles from London
+	// doing nothing, because the old trigger counted units near the TARGET inside a fixed
+	// radius; a growing warband must eventually reach out). The march matters as much as
+	// the odds floor: barbs only ever approach cities under AREAAI_OFFENSIVE, so without
+	// it the wave never forms and the patrol dice disperse the horde. This is also the
 	// local relief valve for #408's unbounded spawn concentration: hordes resolve through
 	// attrition instead of accumulating as ambient siege-by-loitering.
 	{
 		// Tunable without a rebuild (GlobalDefines.xml, #409): MIN_UNITS <= 0 disables
 		// the rule entirely.
 		const int iMinHorde = GC.getDefineINT("BARB_HORDE_COURAGE_MIN_UNITS", 5);
-		const int iRange = GC.getDefineINT("BARB_HORDE_COURAGE_RANGE", 3);
-		const int iOddsFloor = GC.getDefineINT("BARB_HORDE_COURAGE_ODDS_FLOOR", 1);
 
-		CvCity* pHordeTarget = NULL;
-		int iBestDistance = MAX_INT;
+		// The warband: own units within 2 of this one.
+		const int iPack = iMinHorde <= 0 ? 0
+			: plot()->plotCount(PUF_isPlayer, getOwner(), -1, NULL, NO_PLAYER, NO_TEAM, NULL, -1, -1, 2);
 
-		if (iMinHorde > 0)
+		if (iMinHorde > 0 && iPack >= iMinHorde)
 		{
-			foreach_(const CvPlot* plotX, plot()->rect(iRange, iRange))
+			const int iBaseRange = GC.getDefineINT("BARB_HORDE_COURAGE_RANGE", 3);
+			const int iOddsFloor = GC.getDefineINT("BARB_HORDE_COURAGE_ODDS_FLOOR", 1);
+			// Reach grows +1 per UNITS_PER_RANGE pack members beyond the minimum, capped.
+			const int iReach = std::min(
+				GC.getDefineINT("BARB_HORDE_COURAGE_RANGE_MAX", 8),
+				iBaseRange + (iPack - iMinHorde) / std::max(1, GC.getDefineINT("BARB_HORDE_COURAGE_UNITS_PER_RANGE", 2)));
+
+			CvCity* pHordeTarget = NULL;
+			int iBestDistance = MAX_INT;
+
+			foreach_(const CvPlot* plotX, plot()->rect(iReach, iReach))
 			{
 				CvCity* pCity = plotX->getPlotCity();
 
@@ -2451,49 +2462,41 @@ void CvUnitAI::AI_barbAttackMove()
 					}
 				}
 			}
-		}
-		if (pHordeTarget != NULL
-		&& pHordeTarget->plot()->plotCount(PUF_isPlayer, getOwner(), -1, NULL, NO_PLAYER, NO_TEAM, NULL, -1, -1, iRange) >= iMinHorde)
-		{
-			logUnitAI(2, "[UNT/horde] owner=%d unit=%d city=(%d,%d) dist=%d",
-				(int)getOwner(), getID(), pHordeTarget->getX(), pHordeTarget->getY(), iBestDistance);
+			if (pHordeTarget != NULL)
+			{
+				logUnitAI(2, "[UNT/horde] owner=%d unit=%d city=(%d,%d) dist=%d pack=%d reach=%d",
+					(int)getOwner(), getID(), pHordeTarget->getX(), pHordeTarget->getY(), iBestDistance, iPack, iReach);
 
-			if (iBestDistance <= 1)
-			{
-				// Merge a triple first when it flips the duel against the best defender
-				// (#395) -- the wave hits harder; then force the attack at the floor.
-				if (AI_smMergeToBreachCity(pHordeTarget))
+				if (iBestDistance <= 1)
 				{
-					return;
+					// Merge a triple first when it flips the duel against the best defender
+					// (#395) -- the wave hits harder; then force the attack at the floor.
+					if (AI_smMergeToBreachCity(pHordeTarget))
+					{
+						return;
+					}
+					if (AI_cityAttack(1, iOddsFloor))
+					{
+						return;
+					}
 				}
-				if (AI_cityAttack(1, iOddsFloor))
+				else if (AI_goToTargetCity(0, iReach + 1, pHordeTarget))
 				{
 					return;
 				}
 			}
-			else if (AI_goToTargetCity(0, iRange + 1, pHordeTarget))
-			{
-				return;
-			}
-		}
-		// Field version of the same courage: a pack does not scatter from a single
-		// strong unit ("the horde saw 1 master hunter on a hill, and ran further away",
-		// observed live) -- with the pack around it, engage adjacent enemies at the
-		// floor, and MARCH at visible ones in the courage range. The march matters:
-		// 1-move pursuit never catches a runner, but it pins workers, fortified units
-		// and anything that stands its ground -- and a pack that will not even advance
-		// wanders off to garrison a wagon circle instead (observed live: the horde left
-		// to defend a freshly spawned barb city).
-		else if (iMinHorde > 0
-		&& plot()->plotCount(PUF_isPlayer, getOwner(), -1, NULL, NO_PLAYER, NO_TEAM, NULL, -1, -1, 2) >= iMinHorde)
-		{
+			// Field version of the same courage: a pack does not scatter from a single
+			// strong unit ("the horde saw 1 master hunter on a hill, and ran further
+			// away", observed live) -- engage adjacent enemies at the floor, and MARCH
+			// at visible ones within base range. 1-move pursuit never catches a runner,
+			// but it pins workers, fortified units and anything that stands its ground.
 			if (AI_anyAttack(1, iOddsFloor))
 			{
 				logUnitAI(2, "[UNT/horde] owner=%d unit=%d fieldPack at=(%d,%d)",
 					(int)getOwner(), getID(), getX(), getY());
 				return;
 			}
-			if (AI_huntRange(iRange, iOddsFloor, false))
+			if (AI_huntRange(iBaseRange, iOddsFloor, false))
 			{
 				logUnitAI(2, "[UNT/horde] owner=%d unit=%d fieldMarch at=(%d,%d)",
 					(int)getOwner(), getID(), getX(), getY());
