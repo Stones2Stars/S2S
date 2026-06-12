@@ -19,6 +19,12 @@ extern int gUnitLogLevel;
 // Feeds logPerf() -> Performance.log. See PERF_SCOPE below.
 extern int gPerfLogLevel;
 
+// Live log stream gate (#419, Autolog__LogLevelStream): lines at this level or below are
+// ALSO teed raw onto the /events SSE pipe ("the counter-strike way" -- out-of-process
+// parsing against the tag taxonomy in docs/reference/ai-logging-reference.md). A line
+// only streams if its file gate passed too; headline default is 1.
+extern int gStreamLogLevel;
+
 void logCB(CvString message);
 void logToFile(CvString message, const char* filename);
 void logContractBroker(int level, const char* format, ...);

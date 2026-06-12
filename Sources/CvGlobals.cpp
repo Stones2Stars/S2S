@@ -3095,6 +3095,10 @@ void cvInternalGlobals::refreshOptionsBUG()
 	// AI logs. Deliberately NOT forced to 4 in _DEBUG -- timing a debug build is meaningless.
 	gPerfLogLevel = getBugOptionINT("Autolog__LogLevelPerf", 0);
 
+	// Live log stream over /events (#419): headline lines (level <= this) are teed raw
+	// onto the SSE pipe. Default 1 -- inert anyway unless the HTTP server is on.
+	gStreamLogLevel = getBugOptionINT("Autolog__LogLevelStream", 1);
+
 	// Dev live-state HTTP endpoint PoC (#387): GET-only hello-world server on
 	// 127.0.0.1:7227, own Win32 thread, zero game-state access. Starts/stops live
 	// when the option is toggled (this refresh runs on closing the BUG screen).

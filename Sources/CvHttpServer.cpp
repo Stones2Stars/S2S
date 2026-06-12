@@ -137,7 +137,10 @@ namespace
 	// Same contract as the snapshot: the server thread never touches game objects.
 	CRITICAL_SECTION g_eventLock;          // initialized alongside g_snapshotLock
 	std::vector<CvString> g_pendingEvents; // guarded by g_eventLock
-	const size_t EVENT_QUEUE_CAP = 256;    // backstop: drop new events beyond this
+	// Backstop: drop new events beyond this. Sized for the #419 log stream's headline
+	// bursts (hundreds of level-1 lines in a heavy turn; frames ~150-250B => worst case
+	// a few hundred KB transient).
+	const size_t EVENT_QUEUE_CAP = 2048;
 	std::vector<SOCKET> g_sseClients;      // server thread only
 	const size_t SSE_CLIENT_CAP = 8;
 
@@ -390,19 +393,34 @@ namespace
 		events.swap(g_pendingEvents);
 		LeaveCriticalSection(&g_eventLock);
 
+		if (events.empty())
+		{
+			return;
+		}
+		// Batched send (#419): concatenate the drained frames and write once per client
+		// per drain pass -- with the log stream a heavy turn carries hundreds of frames,
+		// and per-frame send() calls would multiply syscalls for no benefit.
+		size_t iTotal = 0;
 		for (size_t i = 0; i < events.size(); ++i)
 		{
-			for (size_t j = 0; j < g_sseClients.size(); )
+			iTotal += events[i].size();
+		}
+		CvString szBatch;
+		szBatch.reserve(iTotal);
+		for (size_t i = 0; i < events.size(); ++i)
+		{
+			szBatch += events[i];
+		}
+		for (size_t j = 0; j < g_sseClients.size(); )
+		{
+			if (!sendAll(g_sseClients[j], szBatch.c_str(), (int)szBatch.size()))
 			{
-				if (!sendAll(g_sseClients[j], events[i].c_str(), (int)events[i].size()))
-				{
-					closesocket(g_sseClients[j]);
-					g_sseClients.erase(g_sseClients.begin() + j);
-				}
-				else
-				{
-					++j;
-				}
+				closesocket(g_sseClients[j]);
+				g_sseClients.erase(g_sseClients.begin() + j);
+			}
+			else
+			{
+				++j;
 			}
 		}
 	}

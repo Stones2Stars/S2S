@@ -28,7 +28,11 @@
 //                                      "playerTurnEnd" for HUMAN players only (the live
 //                                      "human thinking vs AI processing" phase signal --
 //                                      turn DURATION analytics belong to the [PERF]
-//                                      logs); ": keepalive" comments every ~15s.
+//                                      logs); "log" events (#419) carrying RAW gated log
+//                                      lines at Autolog__LogLevelStream and below ("the
+//                                      counter-strike way" -- parse out of process
+//                                      against docs/reference/ai-logging-reference.md);
+//                                      ": keepalive" comments every ~15s.
 //                                      text/event-stream; the response never ends. At
 //                                      most 8 concurrent streams (503 beyond).
 // The /units and /players wrappers carry "gameId" (JSON string) -- CvGame::getGameId(),

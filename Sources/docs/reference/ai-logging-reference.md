@@ -28,6 +28,16 @@ On a `_DEBUG` build all four are forced to `4`.
 DLL (Assert/Release) without turning on the verbose AI logs. It is deliberately *not* forced
 to 4 in `_DEBUG` (timing a debug build is meaningless). `0` = off; `1` enables the timers.
 
+**The live log stream is separate too (#419).** Lines at `Autolog__LogLevelStream`
+(`gStreamLogLevel`, default 1) and below are *also* teed RAW onto the dev HTTP server's
+`/events` SSE pipe as `event: log` frames — "the counter-strike way": no wrapping, no
+escaping; consumers parse out of process and **this document is the wire spec** (the
+`[TAG/...]` taxonomy below). A line only streams if its file gate passed too, so the
+stream is always a subset of the files; the files keep deep forensics (level 3+) while
+the pipe carries headlines. Inert unless `Autolog__HttpServer` is on; off-state cost is
+one int compare per log line. Intended uniform consumer: GameTracker's parser, so
+tooling stops depending on the `Logs/` folder.
+
 Logs are written to:
 
 ```

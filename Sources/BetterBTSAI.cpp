@@ -1,6 +1,7 @@
 #include "CvGameCoreDLL.h"
 #include "CvGlobals.h"
 #include "CvGameAI.h"   // ScopedPerfTimer logs GC.getGame().getGameTurn()
+#include "CvHttpServer.h"
 
 // Log levels:
 // 0 - None
@@ -13,6 +14,23 @@ int gTeamLogLevel = 0;
 int gCityLogLevel = 0;
 int gUnitLogLevel = 0;
 int gPerfLogLevel = 0;
+
+// #419: live log stream over the /events SSE pipe -- "the counter-strike way": the
+// already-formatted line is teed RAW onto the wire (event: log) and parsing happens out
+// of process against the tag taxonomy (docs/reference/ai-logging-reference.md is the
+// wire spec). Own gate (Autolog__LogLevelStream) so the FILES keep deep forensics
+// (level 3+) while the pipe carries headlines (level 1); a line only streams if its
+// file gate passed too (the stream is a subset of what is file-logged). Off-state cost:
+// one int compare. Lines must be single-line (no embedded \n) -- all helpers comply.
+int gStreamLogLevel = 0;
+
+static void streamLogTee(int level, const char* szLine)
+{
+	if (level <= gStreamLogLevel && CvHttpServer::isEnabled())
+	{
+		CvHttpServer::publishEvent("log", szLine);
+	}
+}
 
 // Whole-turn frame-span accumulators (see BetterBTSAI.h) -- logged + reset at CvGame::doTurn.
 double gPerfGameUpdateAccumMs = 0;
@@ -45,6 +63,8 @@ void logPerf(int level, const char* format, ...)
 		static char buf[2048];
 		_vsnprintf(buf, 2048 - 4, format, (char*)(&format + 1));
 		gDLL->logMsg("Performance.log", buf);
+
+		streamLogTee(level, buf);
 
 		// Echo to debugger
 		strcat(buf, "\n");
@@ -81,6 +101,8 @@ void logContractBroker(int level, const char* format, ...)
 		_vsnprintf(buf, 2048 - 4, format, (char*)(&format + 1));
 		gDLL->logMsg("ContractBroker.log", buf);
 
+		streamLogTee(level, buf);
+
 		// Echo to debugger
 		strcat(buf, "\n");
 		OutputDebugString(buf);
@@ -96,6 +118,8 @@ void logBuildEvaluation(int level, const char* format, ...)
 		_vsnprintf(buf, 2048 - 4, format, (char*)(&format + 1));
 		gDLL->logMsg("BuildEvaluation.log", buf);
 
+		streamLogTee(level, buf);
+
 		// Echo to debugger
 		strcat(buf, "\n");
 		OutputDebugString(buf);
@@ -109,6 +133,8 @@ void logHunterAI(int level, const char* format, ...)
 		static char buf[2048];
 		_vsnprintf(buf, 2048 - 4, format, (char*)(&format + 1));
 		gDLL->logMsg("HunterAI.log", buf);
+
+		streamLogTee(level, buf);
 
 		// Echo to debugger
 		strcat(buf, "\n");
@@ -126,6 +152,8 @@ void logDecisionAI(int level, const char* format, ...)
 		_vsnprintf(buf, 2048 - 4, format, (char*)(&format + 1));
 		gDLL->logMsg("DecisionAI.log", buf);
 
+		streamLogTee(level, buf);
+
 		// Echo to debugger
 		strcat(buf, "\n");
 		OutputDebugString(buf);
@@ -142,6 +170,8 @@ void logDiploAI(int level, const char* format, ...)
 		static char buf[2048];
 		_vsnprintf(buf, 2048 - 4, format, (char*)(&format + 1));
 		gDLL->logMsg("DiploAI.log", buf);
+
+		streamLogTee(level, buf);
 
 		// Echo to debugger
 		strcat(buf, "\n");
@@ -161,6 +191,8 @@ void logWarAI(int level, const char* format, ...)
 		static char buf[2048];
 		_vsnprintf(buf, 2048 - 4, format, (char*)(&format + 1));
 		gDLL->logMsg("WarAI.log", buf);
+
+		streamLogTee(level, buf);
 
 		// Echo to debugger
 		strcat(buf, "\n");
@@ -182,6 +214,8 @@ void logUnitAI(int level, const char* format, ...)
 		static char buf[2048];
 		_vsnprintf(buf, 2048 - 4, format, (char*)(&format + 1));
 		gDLL->logMsg("UnitAI.log", buf);
+
+		streamLogTee(level, buf);
 
 		// Echo to debugger
 		strcat(buf, "\n");
@@ -212,6 +246,8 @@ void logCityAI(int level, const char* format, ...)
 		_vsnprintf(buf, 2048 - 4, format, (char*)(&format + 1));
 		gDLL->logMsg("CityAI.log", buf);
 
+		streamLogTee(level, buf);
+
 		// Echo to debugger
 		strcat(buf, "\n");
 		OutputDebugString(buf);
@@ -230,6 +266,8 @@ void logGroupAI(int level, const char* format, ...)
 		_vsnprintf(buf, 2048 - 4, format, (char*)(&format + 1));
 		gDLL->logMsg("GroupAI.log", buf);
 
+		streamLogTee(level, buf);
+
 		// Echo to debugger
 		strcat(buf, "\n");
 		OutputDebugString(buf);
@@ -247,6 +285,8 @@ void logEspionageAI(int level, const char* format, ...)
 		_vsnprintf(buf, 2048 - 4, format, (char*)(&format + 1));
 		gDLL->logMsg("EspionageAI.log", buf);
 
+		streamLogTee(level, buf);
+
 		// Echo to debugger
 		strcat(buf, "\n");
 		OutputDebugString(buf);
@@ -263,6 +303,8 @@ void logFoundAI(int level, const char* format, ...)
 		static char buf[2048];
 		_vsnprintf(buf, 2048 - 4, format, (char*)(&format + 1));
 		gDLL->logMsg("FoundAI.log", buf);
+
+		streamLogTee(level, buf);
 
 		// Echo to debugger
 		strcat(buf, "\n");
@@ -284,6 +326,8 @@ void logCombatAI(int level, const char* format, ...)
 		_vsnprintf(buf, 2048 - 4, format, (char*)(&format + 1));
 		gDLL->logMsg("CombatAI.log", buf);
 
+		streamLogTee(level, buf);
+
 		// Echo to debugger
 		strcat(buf, "\n");
 		OutputDebugString(buf);
@@ -301,6 +345,8 @@ void logEngine(int level, const char* format, ...)
 		_vsnprintf(buf, 2048 - 4, format, (char*)(&format + 1));
 		gDLL->logMsg("Engine.log", buf);
 
+		streamLogTee(level, buf);
+
 		// Echo to debugger
 		strcat(buf, "\n");
 		OutputDebugString(buf);
@@ -315,6 +361,9 @@ void logGameInfo(const char* format, ...)
 	static char buf[2048];
 	_vsnprintf(buf, 2048 - 4, format, (char*)(&format + 1));
 	gDLL->logMsg("GameInfo.log", buf);
+
+	// Session headers always stream -- they are the context every parser wants first.
+	streamLogTee(0, buf);
 
 	// Echo to debugger
 	strcat(buf, "\n");
