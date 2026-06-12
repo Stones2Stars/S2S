@@ -94,9 +94,13 @@ Decision side (`CvCityAI::AI_chooseProduction`):
 - `[CIT/begin]` (1) — production-choice context (pop, danger, finances).
 - `[CIT/order]` (1) — the order the city commits to (TRAIN/CONSTRUCT/CREATE/MAINTAIN) + reason.
 - `[CIT/danger]` (2) — inputs to the "minimal attack (danger)" military gate
-  (`minAtk`/`need`/`ownedAtk`/`fire`).
+  (`minAtk`/`need`/`ownedAtk` SM-effective/`ownedAtkRaw` bodies/`fire`).
 - `[CIT/prop]` (2) — inputs to the property-control production gate
   (`val`/`change`/`proj`/`eval`/`check` + `getting`/`good`/`maxed` veto flags + `fire`).
+- `[CIT/garrcons]` (1) — Size Matters garrison consolidation (#395, in
+  `CvCityAI::AI_doGarrisonConsolidation`): `merges=` defender triples merged this turn,
+  `strLeft=`/`need=` the strength position kept. Each merge also logs centrally as
+  `[UNT/merge]`.
 
 Pipeline side (`CvCity::pushOrder`/`popOrder`/`doProduction`):
 - `[CIT/push]` (2) — an order enters the queue (catches contract-driven units).

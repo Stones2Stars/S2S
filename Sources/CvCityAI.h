@@ -186,6 +186,14 @@ public:
 	void AI_doContractFloatingDefenders();
 
 	/**
+	 * Size Matters garrison consolidation (#395): merges surplus same-type primary
+	 * defenders in triples (fewer, bigger defenders) while the garrison keeps a strength
+	 * surplus over AI_neededDefenseStrength. Owner ruling 2026-06-12 -- overrides the
+	 * count-neutral "gradient" philosophy of the legacy 4-unit auto-merge for garrisons.
+	 */
+	void AI_doGarrisonConsolidation();
+
+	/**
 	 * Determines if the city should avoid growth.
 	 * - Checks food production, human control, and emphasize flags.
 	 * - Considers angry/unhealthy citizens and happiness/health levels.

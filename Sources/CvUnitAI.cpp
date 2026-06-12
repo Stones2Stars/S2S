@@ -4996,7 +4996,11 @@ void CvUnitAI::AI_cityDefenseMove()
 		int iOurDefense = GET_TEAM(getTeam()).AI_getOurPlotStrength(plot(), 0, true, false, true);
 		int iEnemyOffense = GET_PLAYER(getOwner()).AI_getEnemyPlotStrength(plot(), 2, false, false);
 
-		if (iEnemyOffense > iOurDefense / 4 || iOurDefense == 0) //prioritize getting outta there
+		// #395: "overwhelmed" means the enemy actually outweighs the garrison. The historic
+		// /4 hair-trigger shattered merged defenders whenever any enemy held a quarter of
+		// the garrison's strength, fighting every consolidation (splitting doubles aggregate
+		// strength, so it IS the right play -- but only when genuinely about to lose).
+		if (iEnemyOffense > iOurDefense || iOurDefense == 0) //prioritize getting outta there
 		{
 			if (canSplit())
 			{

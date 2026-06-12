@@ -66,6 +66,12 @@
 
 #define NUM_ALL_BUILDINGFOCUS_FLAGS				20
 
+// #395 garrison consolidation: merges stop while they would drop the garrison below this
+// percent of AI_neededDefenseStrength. Held above CvUnitAI's GARRISON_RELEASE_MARGIN_PERCENT
+// (125) so consolidating never parks the city right at the release bar (a 3->1 merge keeps
+// only half the triple's aggregate strength, and the loss estimate is approximate).
+#define GARRISON_CONSOLIDATE_KEEP_PERCENT		150
+
 //	[PERF/choose] accumulators -- decompose one AI_chooseProduction call across its helper
 //	families. Reset on entry by ChoosePerfScope, logged once on exit (the AI is single-
 //	threaded). Each helper accumulates inside its own body, so calls from outside a choose
@@ -324,6 +330,7 @@ void CvCityAI::AI_doTurn()
 		AI_doHurry();
 		AI_doEmphasize();
 		AI_doContractFloatingDefenders();
+		AI_doGarrisonConsolidation();
 	}
 }
 
@@ -381,6 +388,117 @@ void CvCityAI::AI_doContractFloatingDefenders()
 			NULL,
 			eFloatingDefenderUnitAI,
 			iRequiredStrength);
+	}
+}
+
+
+// Size Matters garrison consolidation (#395, owner ruling 2026-06-12): surplus same-type
+// primary defenders merge in triples -- fewer, bigger defenders -- overriding the
+// count-neutral "gradient" philosophy of the legacy 4-unit auto-merge for city garrisons.
+// Strength gates the pass, not count: a 3->1 merge keeps only HALF the triple's aggregate
+// defensive strength (x1.5 per rank vs 3 bodies) while halving upkeep and concentrating
+// per-battle punch, so every merge must leave the garrison at or above
+// GARRISON_CONSOLIDATE_KEEP_PERCENT of needed strength. Only quiet cities consolidate:
+// danger pins garrisons to every-turn re-plans and flips AI_cityDefenseMove's
+// overwhelmed-split the other way.
+void CvCityAI::AI_doGarrisonConsolidation()
+{
+	PROFILE_FUNC();
+
+	if (!GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS)
+	|| GET_PLAYER(getOwner()).AI_getAnyPlotDanger(plot(), 2, false))
+	{
+		return;
+	}
+	// Same currency as getGarrisonStrength()/AI_isDefended, kept times-100.
+	int iHave100 = plot()->plotStrengthTimes100(UNITVALUE_FLAGS_DEFENSIVE, PUF_canDefend, -1, -1, getOwner(), NO_TEAM, PUF_isCityGarrison, getID(), 0, 2);
+	const int iKeep100 = AI_neededDefenseStrength() * GARRISON_CONSOLIDATE_KEEP_PERCENT;
+
+	if (iHave100 <= iKeep100)
+	{
+		return;
+	}
+	// Snapshot eligible on-plot primary defenders by ID -- merging mutates the plot's
+	// unit list (the doMergeAllInGroup idiom). Vicinity garrison members stay untouched.
+	std::vector<int> aiEligible;
+	foreach_(const CvUnit* unitX, plot()->units())
+	{
+		if (unitX->getOwner() == getOwner()
+		&& unitX->AI_getUnitAIType() == UNITAI_CITY_DEFENSE
+		&& unitX->isMergeEligible()
+		&& unitX->groupRank() < unitX->eraGroupMergeLimit())
+		{
+			aiEligible.push_back(unitX->getID());
+		}
+	}
+	if (aiEligible.size() < 3)
+	{
+		return;
+	}
+	CvPlayer& kOwner = GET_PLAYER(getOwner());
+	int iMerges = 0;
+
+	for (size_t i = 0; i < aiEligible.size(); i++)
+	{
+		if (aiEligible[i] == FFreeList::INVALID_INDEX)
+		{
+			continue;
+		}
+		CvUnit* pBase = kOwner.getUnit(aiEligible[i]);
+		if (pBase == NULL || !pBase->isMergeEligible())
+		{
+			continue;
+		}
+		std::vector<CvUnit*> apTriple;
+		apTriple.push_back(pBase);
+
+		for (size_t j = i + 1; j < aiEligible.size() && apTriple.size() < 3; j++)
+		{
+			if (aiEligible[j] == FFreeList::INVALID_INDEX)
+			{
+				continue;
+			}
+			CvUnit* pPartner = kOwner.getUnit(aiEligible[j]);
+
+			if (pPartner != NULL
+			&& pPartner->isMergeEligible()
+			&& pPartner->getUnitType() == pBase->getUnitType()
+			&& pPartner->groupRank() == pBase->groupRank()
+			&& pPartner->qualityRank() == pBase->qualityRank())
+			{
+				apTriple.push_back(pPartner);
+				// Claiming eagerly is safe: every unit sharing this (type, ranks) key is in
+				// the snapshot, so an incomplete triple proves no triple of this key exists.
+				aiEligible[j] = FFreeList::INVALID_INDEX;
+			}
+		}
+		if (apTriple.size() < 3)
+		{
+			continue;
+		}
+		// The merge keeps half the triple's aggregate defensive value; stop when the next
+		// merge would dip below the keep margin.
+		const int iLoss100 = (
+			apTriple[0]->AI_genericUnitValueTimes100(UNITVALUE_FLAGS_DEFENSIVE)
+			+ apTriple[1]->AI_genericUnitValueTimes100(UNITVALUE_FLAGS_DEFENSIVE)
+			+ apTriple[2]->AI_genericUnitValueTimes100(UNITVALUE_FLAGS_DEFENSIVE)) / 2;
+
+		if (iHave100 - iLoss100 < iKeep100)
+		{
+			break;
+		}
+		aiEligible[i] = FFreeList::INVALID_INDEX;
+		CvUnit::mergeUnits(apTriple[0], apTriple[1], apTriple[2], apTriple[0]->getGroup());
+		iHave100 -= iLoss100;
+		iMerges++;
+	}
+
+	if (iMerges > 0)
+	{
+		// [CIT/garrcons] -- deliberate garrison consolidation: how many triples merged and
+		// the strength position left (each merge also logs centrally as [UNT/merge]).
+		logCityAI(1, "[CIT/garrcons] city=%S owner=%d merges=%d strLeft=%d need=%d",
+			getName().GetCString(), (int)getOwner(), iMerges, iHave100 / 100, AI_neededDefenseStrength());
 	}
 }
 
