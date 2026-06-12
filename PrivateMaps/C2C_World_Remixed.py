@@ -261,13 +261,13 @@ class MapConstants:
 		# Peaks
 		selectionID = MAP.getCustomMapOption(1)
 		if not selectionID:
-			self.HillPercent *= 0.50
+			self.PeakPercent *= 0.50
 		elif selectionID == 1:
-			self.HillPercent *= 0.75
+			self.PeakPercent *= 0.75
 		elif selectionID == 3:
-			self.HillPercent *= 1.25
+			self.PeakPercent *= 1.25
 		elif selectionID == 4:
-			self.HillPercent *= 1.50
+			self.PeakPercent *= 1.50
 		# Landmass Type
 		selectionID = MAP.getCustomMapOption(2)
 		self.bDryland = False
@@ -4144,7 +4144,7 @@ def beforeInit():
 	elif optionList[1][1] == 2:
 		print "	%s			100 percent" % optionList[1][0]
 	elif optionList[1][1] == 3:
-		print "	%s			100 percent" % optionList[1][0]
+		print "	%s			125 percent" % optionList[1][0]
 	elif optionList[1][1] == 4:
 		print "	%s			150 percent" % optionList[1][0]
 	# Landform
