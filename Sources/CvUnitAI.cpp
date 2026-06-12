@@ -2084,7 +2084,11 @@ void CvUnitAI::AI_workerMove()
 	//ls612: Combat Worker Danger Evaluation
 	const bool bWorkerDanger = bAbroad && GET_PLAYER(getOwner()).AI_isPlotThreatened(plot(), 2) || !bAbroad && exposedToDanger(plot(), 80, false);
 
-	if (bWorkerDanger && (!canDefend() || GetNumberOfUnitsInGroup() == 1)) {
+	// #406 counterpart: an escorted worker trusts its escort -- the flee test is the
+	// GROUP's ability to defend, not the worker's own (the old unit-level test made a
+	// can't-defend worker abandon its build even with an escort grouped on it). A lone
+	// worker keeps the flee behaviour regardless.
+	if (bWorkerDanger && (!getGroup()->canDefend() || GetNumberOfUnitsInGroup() == 1)) {
 		// in this order, either retreat to safety, or go into a city
 		if (AI_safety() || AI_retreatToCity()) {
 			return;

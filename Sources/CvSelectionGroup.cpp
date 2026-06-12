@@ -351,7 +351,14 @@ void CvSelectionGroup::doTurn()
 					setForceUpdate(true);
 				}
 			}
-			else if (!canDefend() && GET_PLAYER(getOwner()).AI_getAnyPlotDanger(plot(), 2))
+			// AI-side counterpart of the #406 human-mission fix: a defenseless group
+			// mid-mission (e.g. a worker mid-build) only re-plans for danger that
+			// overwhelms the defense standing on its plot. The bare any-danger test
+			// force-updated such groups EVERY turn in animal country -- the worker
+			// re-planned, fled via AI_workerMove's danger terminals, picked a new build
+			// elsewhere, and repeated forever, with a posted guard or garrison counting
+			// for nothing (plus one wasted full decision cascade per worker per turn).
+			else if (!canDefend() && dangerOverwhelmsMission(2))
 			{
 				setForceUpdate(true);
 			}
