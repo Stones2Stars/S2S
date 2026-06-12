@@ -1537,6 +1537,7 @@ void CvUnit::killUnconditional(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
 		OutputDebugString(CvString::format("Unit %S of player %S killed\n", getName().GetCString(), owner.getCivilizationDescription(0)).c_str());
 
 		owner.AI_changeNumAIUnits(AI_getUnitAIType(), -1);
+		owner.AI_changeEffNumAIUnitsTimes100(AI_getUnitAIType(), -SMeffectiveCountTimes100());
 		AI_killed(); // Update AI counts for this unit
 
 		setCommander(false);
@@ -13865,6 +13866,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 		if (AI_getUnitAIType() != NO_UNITAI)
 		{
 			pNewPlot->area()->changeNumAIUnits(eMyPlayer, AI_getUnitAIType(), 1);
+			pNewPlot->area()->changeEffNumAIUnitsTimes100(eMyPlayer, AI_getUnitAIType(), SMeffectiveCountTimes100());
 		}
 
 		if (isAnimal())
@@ -13895,6 +13897,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 		if (AI_getUnitAIType() != NO_UNITAI)
 		{
 			pOldPlot->area()->changeNumAIUnits(eMyPlayer, AI_getUnitAIType(), -1);
+			pOldPlot->area()->changeEffNumAIUnitsTimes100(eMyPlayer, AI_getUnitAIType(), -SMeffectiveCountTimes100());
 		}
 
 		if (isAnimal())
@@ -26789,9 +26792,28 @@ int CvUnit::getExtraGroup() const
 
 void CvUnit::changeExtraGroup(int iChange)
 {
+	const int iOldEffCount = SMeffectiveCountTimes100();
+
 	GET_PLAYER(getOwner()).changeUnitCountSM(m_eUnitType, -intPow(3, groupRank()-1));
 	m_iExtraGroup += iChange;
 	GET_PLAYER(getOwner()).changeUnitCountSM(m_eUnitType, intPow(3, groupRank()-1));
+
+	// Keep the strength-weighted force ledgers in step with rank changes (#395). Dead
+	// units were already removed from the ledgers by the kill path.
+	if (!isDead())
+	{
+		const int iEffChange = SMeffectiveCountTimes100() - iOldEffCount;
+
+		if (iEffChange != 0 && AI_getUnitAIType() != NO_UNITAI)
+		{
+			GET_PLAYER(getOwner()).AI_changeEffNumAIUnitsTimes100(AI_getUnitAIType(), iEffChange);
+
+			if (plot() != NULL)
+			{
+				plot()->area()->changeEffNumAIUnitsTimes100(getOwner(), AI_getUnitAIType(), iEffChange);
+			}
+		}
+	}
 }
 
 int CvUnit::getExtraSize() const
@@ -26820,6 +26842,22 @@ int CvUnit::sizeRank() const
 {
 	FASSERT_NOT_NEGATIVE(getSizeBaseTotal());
 	return (getSizeBaseTotal() + getExtraSize());
+}
+
+// Strength-weighted body equivalent for AI force accounting, times-100 fixed point (#395).
+// A unit at its type's base group rank counts as 100; each group rank above (merges and
+// group promotions alike) multiplies by SIZE_MATTERS_MOST_MULTIPLIER -- the same x1.5 the
+// unit's strength actually scales by -- and each rank below divides. Owner ruling: a merged
+// unit must never be credited as its constituent count (x3 would tell the AI it has force
+// it does not have). Quality/size ranks are deliberately excluded: they exist without
+// merging, and the pre-SM demand constants never weighted promotions either.
+int CvUnit::SMeffectiveCountTimes100() const
+{
+	if (getExtraGroup() == 0 || !GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
+	{
+		return 100;
+	}
+	return applySMRank(100, getExtraGroup(), GC.getSIZE_MATTERS_MOST_MULTIPLIER());
 }
 
 // (bAutocheck = true) check will be ordering a 4th potentially mergable unit to

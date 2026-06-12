@@ -58,6 +58,11 @@ CvArea::CvArea()
 	{
 		m_aaiNumAIUnits[i] = new int[NUM_UNITAI_TYPES];
 	}
+	m_aaiEffNumAIUnitsTimes100 = new int*[MAX_PLAYERS];
+	for (int i = 0; i < MAX_PLAYERS; i++)
+	{
+		m_aaiEffNumAIUnitsTimes100[i] = new int[NUM_UNITAI_TYPES];
+	}
 
 	m_paiNumBonuses = NULL;
 	m_paiNumImprovements = NULL;
@@ -91,6 +96,7 @@ CvArea::~CvArea()
 	SAFE_DELETE_ARRAY2(m_aaiYieldRateModifier, MAX_PLAYERS);
 	SAFE_DELETE_ARRAY2(m_aaiNumTrainAIUnits, MAX_PLAYERS);
 	SAFE_DELETE_ARRAY2(m_aaiNumAIUnits, MAX_PLAYERS);
+	SAFE_DELETE_ARRAY2(m_aaiEffNumAIUnitsTimes100, MAX_PLAYERS);
 }
 
 void CvArea::init(int iID, bool bWater)
@@ -147,6 +153,7 @@ void CvArea::reset(int iID, bool bWater, bool bConstructorCall)
 		{
 			m_aaiNumTrainAIUnits[iI][iJ] = 0;
 			m_aaiNumAIUnits[iI][iJ] = 0;
+			m_aaiEffNumAIUnitsTimes100[iI][iJ] = 0;
 		}
 	}
 
@@ -1075,6 +1082,33 @@ void CvArea::changeNumAIUnits(PlayerTypes eIndex1, UnitAITypes eIndex2, int iCha
 	FASSERT_BOUNDS(0, NUM_UNITAI_TYPES, eIndex2);
 	m_aaiNumAIUnits[eIndex1][eIndex2] += iChange;
 	FASSERT_NOT_NEGATIVE(getNumAIUnits(eIndex1, eIndex2));
+}
+
+
+// Strength-weighted ledger (#395): a unit counts as its SMeffectiveCountTimes100 here
+// (100 at type base group rank, x1.5 per merge rank), so force-sufficiency reads see
+// aggregate strength-equivalents rather than raw bodies. Floored on conversion to whole
+// units -- never round merged force up.
+int CvArea::getEffNumAIUnits(PlayerTypes eIndex1, UnitAITypes eIndex2) const
+{
+	return getEffNumAIUnitsTimes100(eIndex1, eIndex2) / 100;
+}
+
+
+int CvArea::getEffNumAIUnitsTimes100(PlayerTypes eIndex1, UnitAITypes eIndex2) const
+{
+	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex1);
+	FASSERT_BOUNDS(0, NUM_UNITAI_TYPES, eIndex2);
+	return m_aaiEffNumAIUnitsTimes100[eIndex1][eIndex2];
+}
+
+
+void CvArea::changeEffNumAIUnitsTimes100(PlayerTypes eIndex1, UnitAITypes eIndex2, int iChange)
+{
+	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex1);
+	FASSERT_BOUNDS(0, NUM_UNITAI_TYPES, eIndex2);
+	m_aaiEffNumAIUnitsTimes100[eIndex1][eIndex2] += iChange;
+	FASSERT_NOT_NEGATIVE(getEffNumAIUnitsTimes100(eIndex1, eIndex2));
 }
 
 

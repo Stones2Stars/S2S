@@ -2967,6 +2967,7 @@ CvUnit* CvPlayer::getTempUnit(UnitTypes eUnit, int iX, int iY)
 	{
 		m_pTempUnit = initUnit(eUnit, iX, iY, NO_UNITAI, NO_DIRECTION, UNIT_BIRTHMARK_TEMP_UNIT);
 		((CvPlayerAI*)this)->AI_changeNumAIUnits(m_pTempUnit->AI_getUnitAIType(), -1); // This one doesn't count
+		((CvPlayerAI*)this)->AI_changeEffNumAIUnitsTimes100(m_pTempUnit->AI_getUnitAIType(), -m_pTempUnit->SMeffectiveCountTimes100());
 		removeGroupCycle(m_pTempUnit->getGroup()->getID());
 	}
 	// Set an arbitrary automation type - just need it to be flagged as automated

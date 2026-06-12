@@ -1945,6 +1945,7 @@ public:
 	int qualityRank() const;
 	int groupRank() const;
 	int sizeRank() const;
+	int SMeffectiveCountTimes100() const;
 
 	// Functions for evaluating upgrades when splitting and merging
 	bool isGroupUpgradePromotion(PromotionTypes promotion) const;

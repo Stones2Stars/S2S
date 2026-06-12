@@ -370,6 +370,16 @@ public:
 	int AI_getNumAIUnits(UnitAITypes eIndex) const;
 	void AI_changeNumAIUnits(UnitAITypes eIndex, int iChange);
 
+	// Strength-weighted unit ledger (times-100; #395) -- transient, never serialized:
+	// rebuilt at the end of read() and in AI_recalculateUnitCounts. A unit counts as
+	// CvUnit::SMeffectiveCountTimes100 (100 at type base rank, x1.5 per merge rank).
+	int AI_getEffNumAIUnits(UnitAITypes eIndex) const;
+	int AI_getEffNumAIUnitsTimes100(UnitAITypes eIndex) const;
+	void AI_changeEffNumAIUnitsTimes100(UnitAITypes eIndex, int iChange);
+	int AI_totalEffUnitAIs(UnitAITypes eUnitAI) const;
+	int AI_totalEffAreaUnitAIs(const CvArea* pArea, UnitAITypes eUnitAI) const;
+	void AI_rebuildEffUnitLedgers();
+
 	int AI_getSameReligionCounter(PlayerTypes eIndex) const;
 	void AI_changeSameReligionCounter(PlayerTypes eIndex, int iChange);
 
@@ -679,6 +689,7 @@ protected:
 
 	int *m_aiNumTrainAIUnits;
 	int *m_aiNumAIUnits;
+	int *m_aiEffNumAIUnitsTimes100; // transient (#395)
 	int* m_aiSameReligionCounter;
 	int* m_aiDifferentReligionCounter;
 	int* m_aiFavoriteCivicCounter;

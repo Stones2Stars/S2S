@@ -167,6 +167,7 @@ void CvUnitAI::AI_init(UnitAITypes eUnitAI, int iBirthmark)
 
 	FAssertMsg(AI_getUnitAIType() != NO_UNITAI, "AI_getUnitAIType() is not expected to be equal with NO_UNITAI");
 	GET_PLAYER(getOwner()).AI_changeNumAIUnits(AI_getUnitAIType(), 1);
+	GET_PLAYER(getOwner()).AI_changeEffNumAIUnitsTimes100(AI_getUnitAIType(), SMeffectiveCountTimes100());
 }
 
 
@@ -1526,7 +1527,9 @@ UnitAITypes CvUnitAI::AI_getUnitAIType() const
 		((CvUnitAI*)this)->m_eUnitAIType = m_pUnitInfo->getDefaultUnitAIType();
 
 		area()->changeNumAIUnits(getOwner(), m_eUnitAIType, 1);
+		area()->changeEffNumAIUnitsTimes100(getOwner(), m_eUnitAIType, SMeffectiveCountTimes100());
 		GET_PLAYER(getOwner()).AI_changeNumAIUnits(m_eUnitAIType, 1);
+		GET_PLAYER(getOwner()).AI_changeEffNumAIUnitsTimes100(m_eUnitAIType, SMeffectiveCountTimes100());
 	}
 	return m_eUnitAIType;
 }
@@ -1543,13 +1546,19 @@ void CvUnitAI::AI_setUnitAIType(UnitAITypes eNewValue)
 		logUnitAI(1, "[UNT/role] owner=%d unit=%d UNITAI %d -> %d",
 			(int)getOwner(), getID(), (int)AI_getUnitAIType(), (int)eNewValue);
 
+		const int iEffCount = SMeffectiveCountTimes100();
+
 		area()->changeNumAIUnits(getOwner(), AI_getUnitAIType(), -1);
+		area()->changeEffNumAIUnitsTimes100(getOwner(), AI_getUnitAIType(), -iEffCount);
 		GET_PLAYER(getOwner()).AI_changeNumAIUnits(AI_getUnitAIType(), -1);
+		GET_PLAYER(getOwner()).AI_changeEffNumAIUnitsTimes100(AI_getUnitAIType(), -iEffCount);
 
 		m_eUnitAIType = eNewValue;
 
 		area()->changeNumAIUnits(getOwner(), AI_getUnitAIType(), 1);
+		area()->changeEffNumAIUnitsTimes100(getOwner(), AI_getUnitAIType(), iEffCount);
 		GET_PLAYER(getOwner()).AI_changeNumAIUnits(AI_getUnitAIType(), 1);
+		GET_PLAYER(getOwner()).AI_changeEffNumAIUnitsTimes100(AI_getUnitAIType(), iEffCount);
 
 		joinGroup(NULL);
 	}

@@ -141,6 +141,12 @@ public:
 	int getNumAIUnits(PlayerTypes eIndex1, UnitAITypes eIndex2) const;
 	void changeNumAIUnits(PlayerTypes eIndex1, UnitAITypes eIndex2, int iChange);
 
+	// Strength-weighted unit ledger (times-100; #395) -- transient, never serialized:
+	// rebuilt on load (CvPlayerAI::read) and in CvPlayerAI::AI_recalculateUnitCounts.
+	int getEffNumAIUnits(PlayerTypes eIndex1, UnitAITypes eIndex2) const;
+	int getEffNumAIUnitsTimes100(PlayerTypes eIndex1, UnitAITypes eIndex2) const;
+	void changeEffNumAIUnitsTimes100(PlayerTypes eIndex1, UnitAITypes eIndex2, int iChange);
+
 	int getNumBonuses(BonusTypes eBonus) const;
 	int getNumTotalBonuses() const;
 	void changeNumBonuses(BonusTypes eBonus, int iChange);
@@ -203,6 +209,7 @@ protected:
 	int** m_aaiYieldRateModifier;
 	int** m_aaiNumTrainAIUnits;
 	int** m_aaiNumAIUnits;
+	int** m_aaiEffNumAIUnitsTimes100; // transient (#395)
 
 	mutable TeamTypes m_eCachedTeamPlotTypeCounts;
 	mutable int m_iCachedTurnPlotTypeCounts;

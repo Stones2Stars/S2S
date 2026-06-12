@@ -10907,6 +10907,16 @@ void CvPlot::processArea(CvArea* pArea, int iChange)
 		}
 	}
 
+	// Strength-weighted ledger (#395): one pass over the plot's units mirrors the
+	// per-(player, UNITAI) raw transfers above.
+	foreach_(const CvUnit* pLoopUnit, units())
+	{
+		if (pLoopUnit->AI_getUnitAIType() != NO_UNITAI)
+		{
+			pArea->changeEffNumAIUnitsTimes100(pLoopUnit->getOwner(), pLoopUnit->AI_getUnitAIType(), pLoopUnit->SMeffectiveCountTimes100() * iChange);
+		}
+	}
+
 	for (int iI = 0; iI < MAX_TEAMS; ++iI)
 	{
 		if (isRevealed((TeamTypes)iI, false))

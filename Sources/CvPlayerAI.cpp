@@ -99,6 +99,7 @@ CvPlayerAI::CvPlayerAI()
 	PROFILE_EXTRA_FUNC();
 	m_aiNumTrainAIUnits = new int[NUM_UNITAI_TYPES];
 	m_aiNumAIUnits = new int[NUM_UNITAI_TYPES];
+	m_aiEffNumAIUnitsTimes100 = new int[NUM_UNITAI_TYPES];
 	m_aiSameReligionCounter = new int[MAX_PLAYERS];
 	m_aiDifferentReligionCounter = new int[MAX_PLAYERS];
 	m_aiFavoriteCivicCounter = new int[MAX_PLAYERS];
@@ -156,6 +157,7 @@ CvPlayerAI::~CvPlayerAI()
 
 	SAFE_DELETE_ARRAY(m_aiNumTrainAIUnits);
 	SAFE_DELETE_ARRAY(m_aiNumAIUnits);
+	SAFE_DELETE_ARRAY(m_aiEffNumAIUnitsTimes100);
 	SAFE_DELETE_ARRAY(m_aiSameReligionCounter);
 	SAFE_DELETE_ARRAY(m_aiDifferentReligionCounter);
 	SAFE_DELETE_ARRAY(m_aiFavoriteCivicCounter);
@@ -236,6 +238,7 @@ void CvPlayerAI::AI_reset(bool bConstructor)
 		{
 			m_aiNumTrainAIUnits[iI] = 0;
 			m_aiNumAIUnits[iI] = 0;
+			m_aiEffNumAIUnitsTimes100[iI] = 0;
 		}
 	}
 
@@ -11579,6 +11582,20 @@ int CvPlayerAI::AI_totalAreaUnitAIs(const CvArea* pArea, UnitAITypes eUnitAI) co
 }
 
 
+// Strength-weighted totals (#395): deployed units enter at their effective weight; queued
+// production enters raw (a unit trains at its type's base rank, weight 100).
+int CvPlayerAI::AI_totalEffUnitAIs(UnitAITypes eUnitAI) const
+{
+	return AI_getNumTrainAIUnits(eUnitAI) + AI_getEffNumAIUnits(eUnitAI);
+}
+
+
+int CvPlayerAI::AI_totalEffAreaUnitAIs(const CvArea* pArea, UnitAITypes eUnitAI) const
+{
+	return pArea->getNumTrainAIUnits(getID(), eUnitAI) + pArea->getEffNumAIUnits(getID(), eUnitAI);
+}
+
+
 int CvPlayerAI::AI_totalWaterAreaUnitAIs(const CvArea* pArea, UnitAITypes eUnitAI) const
 {
 	PROFILE_EXTRA_FUNC();
@@ -16037,6 +16054,31 @@ void CvPlayerAI::AI_changeNumAIUnits(UnitAITypes eIndex, int iChange)
 }
 
 
+// Strength-weighted ledger (#395): a unit counts as its SMeffectiveCountTimes100 (100 at
+// type base group rank, x1.5 per merge rank), so force-sufficiency reads see aggregate
+// strength-equivalents rather than raw bodies. Floored on conversion to whole units --
+// never round merged force up (owner ruling).
+int CvPlayerAI::AI_getEffNumAIUnits(UnitAITypes eIndex) const
+{
+	return AI_getEffNumAIUnitsTimes100(eIndex) / 100;
+}
+
+
+int CvPlayerAI::AI_getEffNumAIUnitsTimes100(UnitAITypes eIndex) const
+{
+	FASSERT_BOUNDS(0, NUM_UNITAI_TYPES, eIndex);
+	return m_aiEffNumAIUnitsTimes100[eIndex];
+}
+
+
+void CvPlayerAI::AI_changeEffNumAIUnitsTimes100(UnitAITypes eIndex, int iChange)
+{
+	FASSERT_BOUNDS(0, NUM_UNITAI_TYPES, eIndex);
+	m_aiEffNumAIUnitsTimes100[eIndex] += iChange;
+	FASSERT_NOT_NEGATIVE(AI_getEffNumAIUnitsTimes100(eIndex));
+}
+
+
 int CvPlayerAI::AI_getSameReligionCounter(PlayerTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
@@ -20014,6 +20056,10 @@ void CvPlayerAI::read(FDataStreamBase* pStream)
 		AI_updateBonusValue();
 	}
 	WRAPPER_READ_OBJECT_END(wrapper);
+
+	// #395: rebuild the transient strength-weighted ledgers from the loaded units now --
+	// before the NPC cull below, whose kills decrement these ledgers.
+	AI_rebuildEffUnitLedgers();
 
 	//	If the total number of barb units is getting dangerously close to the limit we can
 	//	cull some animals.  Note - this has to be done in PlayerAI not Player, because kills won't
@@ -33054,26 +33100,69 @@ void CvPlayerAI::AI_recalculateUnitCounts()
 	for (int iI = 0; iI < NUM_UNITAI_TYPES; iI++)
 	{
 		AI_changeNumAIUnits((UnitAITypes)iI, -AI_getNumAIUnits((UnitAITypes)iI));
+		AI_changeEffNumAIUnitsTimes100((UnitAITypes)iI, -AI_getEffNumAIUnitsTimes100((UnitAITypes)iI));
 
 		foreach_(CvArea * pLoopArea, GC.getMap().areas())
 		{
 			pLoopArea->changeNumAIUnits(m_eID, (UnitAITypes)iI, -pLoopArea->getNumAIUnits(m_eID, (UnitAITypes)iI));
+			pLoopArea->changeEffNumAIUnitsTimes100(m_eID, (UnitAITypes)iI, -pLoopArea->getEffNumAIUnitsTimes100(m_eID, (UnitAITypes)iI));
 		}
 	}
 
 	foreach_(const CvUnit * pLoopUnit, units())
 	{
+		// The temp unit is explicitly uncounted at creation (getTempUnit: "this one
+		// doesn't count") -- recounting must not resurrect it into the ledgers.
+		if (pLoopUnit == m_pTempUnit)
+		{
+			continue;
+		}
 		const UnitAITypes eAIType = pLoopUnit->AI_getUnitAIType();
 
 		if (NO_UNITAI != eAIType)
 		{
 			AI_changeNumAIUnits(eAIType, 1);
+			AI_changeEffNumAIUnitsTimes100(eAIType, pLoopUnit->SMeffectiveCountTimes100());
 
 			pLoopUnit->area()->changeNumAIUnits(m_eID, eAIType, 1);
+			pLoopUnit->area()->changeEffNumAIUnitsTimes100(m_eID, eAIType, pLoopUnit->SMeffectiveCountTimes100());
 		}
 	}
 
 	bUnitRecalcNeeded = false;
+}
+
+
+// #395: the strength-weighted ledgers are transient (never serialized) -- rebuild them
+// from the loaded units at the end of read(). Area columns for this player were zeroed
+// by CvArea::reset during map load; only this player's units contribute to them here.
+void CvPlayerAI::AI_rebuildEffUnitLedgers()
+{
+	PROFILE_EXTRA_FUNC();
+
+	for (int iI = 0; iI < NUM_UNITAI_TYPES; iI++)
+	{
+		m_aiEffNumAIUnitsTimes100[iI] = 0;
+	}
+
+	foreach_(const CvUnit * pLoopUnit, units())
+	{
+		if (pLoopUnit == m_pTempUnit)
+		{
+			continue;
+		}
+		const UnitAITypes eAIType = pLoopUnit->AI_getUnitAIType();
+
+		if (NO_UNITAI != eAIType)
+		{
+			AI_changeEffNumAIUnitsTimes100(eAIType, pLoopUnit->SMeffectiveCountTimes100());
+
+			if (pLoopUnit->plot() != NULL)
+			{
+				pLoopUnit->area()->changeEffNumAIUnitsTimes100(m_eID, eAIType, pLoopUnit->SMeffectiveCountTimes100());
+			}
+		}
+	}
 }
 
 int CvPlayerAI::AI_calculateAverageLocalInstability() const
