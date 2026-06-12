@@ -10308,8 +10308,11 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		}
 		case UNITAI_COLLATERAL:
 		{
+			// #410: breakdown chance no longer qualifies -- it is a city-assault death
+			// rider, not stack-softening capability; counting it made breakdown-only
+			// siege (battering rams etc.) a valid COLLATERAL pick it could never play.
 			if (kUnitInfo.getCombat() > 0 && !kUnitInfo.isOnlyDefensive()
-			&& (kUnitInfo.getCollateralDamage() > 0 || kUnitInfo.getBreakdownChance() > 0))
+			&& kUnitInfo.getCollateralDamage() > 0)
 			{
 				bValid = true;
 			}
@@ -10802,7 +10805,13 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 
 				bool bHasBombardValue = false;
 				bool bNoBombardValue = true;
-				if (kUnitInfo.getBreakdownChance() > 0 || kUnitInfo.getBombardRate() > 0 || (kUnitInfo.getCollateralDamageMaxUnits() > 0 && kUnitInfo.getCollateralDamage() > 0))
+				// #410: breakdown chance is deliberately NOT bombard potency. It only
+				// fires while the unit personally assaults the garrison (usually fatal,
+				// approximately once) -- valuing it like an aimable, recurring bombard
+				// rate drove the AI to overbuild the breakdown-only siege line and march
+				// "siege capability" it could never schedule. Breakdown-only units are
+				// now valued as the plain attackers they actually are.
+				if (kUnitInfo.getBombardRate() > 0 || (kUnitInfo.getCollateralDamageMaxUnits() > 0 && kUnitInfo.getCollateralDamage() > 0))
 				{
 					// Army composition needs to scale with army size, bombard unit potency
 
@@ -10822,16 +10831,10 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 						{
 							int iUnitCount = getUnitCount(eLoopUnit);
 							int iBombardRate = GC.getUnitInfo(eLoopUnit).getBombardRate();
-							int iBreakdown = (GC.getUnitInfo(eLoopUnit).getBreakdownChance() * GC.getUnitInfo(eLoopUnit).getBreakdownDamage()) / 10;
 
 							if (iBombardRate > 0)
 							{
 								iTotalBombard += ((iBombardRate * iUnitCount * ((GC.getUnitInfo(eLoopUnit).isIgnoreBuildingDefense()) ? 3 : 2)) / 2);
-							}
-							if (iBreakdown > 0)
-							{
-								iThisBombard += iBreakdown;
-								iTotalBombard += ((iBreakdown * iUnitCount * ((GC.getUnitInfo(eLoopUnit).isIgnoreNoEntryLevel()) ? 4 : 2)) / 2);
 							}
 
 							int iBombRate = GC.getUnitInfo(eLoopUnit).getBombRate();
@@ -24650,7 +24653,9 @@ int CvPlayerAI::AI_calculateTotalBombard(DomainTypes eDomain) const
 		if (kUnit.getDomainType() == eDomain)
 		{
 			const int iBombRate = kUnit.getBombRate();
-			int iBombardRate = kUnit.getBombardRate() + (kUnit.getBreakdownChance() + kUnit.getBreakdownDamage() * 10) / 2;
+			// #410: breakdown is not bombard -- war planning must not count phantom
+			// siege capability that can only be cashed by dying in an assault.
+			int iBombardRate = kUnit.getBombardRate();
 
 			if (iBombardRate > 0 || iBombRate > 0)
 			{
