@@ -57,7 +57,11 @@ namespace CvHttpServer
 
 	// Game-thread event publish (#407): enqueues one SSE frame ("event: <szEvent>",
 	// "data: <szJsonData>") for the /events stream. Pre-rendered on this side so the
-	// server thread never touches game objects; cheap no-op when the server is off.
+	// server thread never touches game objects. publishEvent itself no-ops when the
+	// server is off, but C++ evaluates call arguments regardless -- so guard the
+	// payload FORMATTING with isEnabled() at the call site, or the off-state cost is
+	// a wasted format instead of one bool check.
+	bool isEnabled();
 	void publishEvent(const char* szEvent, const char* szJsonData);
 }
 

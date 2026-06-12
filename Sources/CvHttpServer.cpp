@@ -764,9 +764,15 @@ void CvHttpServer::setEnabled(bool bEnable)
 	}
 }
 
+bool CvHttpServer::isEnabled()
+{
+	return g_hThread != NULL;
+}
+
 // Game thread (#407): enqueue a turn-boundary event for the /events SSE stream. The
 // frame is pre-rendered here so the server thread never touches game objects; a cheap
-// no-op while the server is off. Events beyond the queue cap are dropped (a backstop
+// no-op while the server is off (but see the header: guard payload formatting with
+// isEnabled() at the call site). Events beyond the queue cap are dropped (a backstop
 // against a wedged server thread -- the stream is advisory dev tooling, never truth).
 void CvHttpServer::publishEvent(const char* szEvent, const char* szJsonData)
 {

@@ -11959,7 +11959,7 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 		// per-AI-player events would be 40+ frames/turn of noise, and turn DURATION
 		// analytics belong to the [PERF] logs (turn.wall / update.accum / per-phase),
 		// not to this stream.
-		if (isHuman())
+		if (isHuman() && CvHttpServer::isEnabled())
 		{
 			CvHttpServer::publishEvent(bNewValue ? "playerTurnStart" : "playerTurnEnd",
 				CvString::format("{\"player\":%d,\"turn\":%d}", getID(), GC.getGame().getGameTurn()).c_str());
