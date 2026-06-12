@@ -67,6 +67,41 @@ assault troops or go home.*
 
 ---
 
+## 4. The Grid Before the Generator — 72 cb
+
+You discover Electricity. Eager to enter the modern age, you order a power plant. You
+cannot. First your city must build **Power Lines** — a complete electrical distribution
+network, erected pole by pole, for electricity that *does not exist anywhere on the
+planet* — and only once the dead copper is humming with anticipation does the game
+permit you to construct something that generates power to put in it. `BUILDING_POWER_LINES`
+is the gateway prerequisite for the entire electric economy (45 references downstream),
+making "wiring the city for nothing" the mandatory first act of every electrical age.
+
+And every city repeats the whole ritual independently — poles, then plant, in each one —
+because power is strictly municipal (see the issue trying to make electricity empire-wide).
+
+*Status: working exactly as designed. Empire-wide power generation/consumption is the
+productive direction (#411).*
+
+---
+
+## 5. The 326 Artisanal Supply Chains — 68 cb
+
+The game tracks **481 distinct bonus resources**, of which **326 are manufactured goods**
+— each a discrete, named, individually-plumbed commodity flowing through the trade
+network. This is not an abstraction of an industrial economy; it is an attempt at a
+full-relational inventory of one, in a game whose map cannot decide how long a tile is
+(see entry №1).
+
+Special mention to the energy aisle, where the seventeen-plus distinct power plant types
+include "Osmotic", "Jetstream", "Quantum Vacuum", and — for the late game — "Cosmic
+Expansion", a power plant fueled by the universe getting bigger.
+
+*Status: working exactly as designed, at O(bonuses) cost in every prereq sweep the
+constructibility work (#195) keeps having to index around.*
+
+---
+
 *Scale calibration note: 100 cb = 1 full Longbow. Readings above 100 are reserved for
 mechanics that violate not merely military history but causality.*
 
