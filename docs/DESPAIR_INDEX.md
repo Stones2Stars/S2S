@@ -217,3 +217,6 @@ summary of the state of the inherited codebase, which is part of why the rework 
 
 *Fresh despair may be reported, contested, or savored on the
 [S2S Discord](https://discord.gg/R8Uejx6uaK).*
+
+*Sibling publication: the [Realism Index](REALISM_INDEX.md) — for mechanics that work
+exactly as designed, which is somehow worse.*

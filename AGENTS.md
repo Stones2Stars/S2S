@@ -203,7 +203,10 @@ change*, so every contributor and every agent sees one shared source of truth:
 - Player-facing rules, manuals, FAQs → top-level `docs/`.
 - A newly-found bug of exceptional absurdity may *additionally* earn an entry in
   [`docs/DESPAIR_INDEX.md`](docs/DESPAIR_INDEX.md) (owner-sanctioned, lighthearted,
-  optional — never a substitute for the real fix/issue/doc).
+  optional — never a substitute for the real fix/issue/doc). Its sibling
+  [`docs/REALISM_INDEX.md`](docs/REALISM_INDEX.md) catalogues "super realistic" *mechanics*
+  — absurdities working exactly as designed (same policy: optional, never a substitute
+  for the real issue).
 - **Rules and conventions for agents/contributors → THIS file (`AGENTS.md`), always.**
   `AGENTS.md` is the one unified place for rules and docs. The root `CLAUDE.md` exists
   only as a session-bootstrap shim that imports this file — never add rules or content
