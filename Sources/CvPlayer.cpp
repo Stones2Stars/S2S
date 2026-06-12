@@ -18,6 +18,7 @@
 #include "CvGameAI.h"
 #include "CvGameTextMgr.h"
 #include "CvGlobals.h"
+#include "CvHttpServer.h"
 #include "CvImprovementInfo.h"
 #include "CvHeritageInfo.h"
 #include "CvInfos.h"
@@ -11951,6 +11952,19 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 	if (m_bTurnActive != bNewValue)
 	{
 		m_bTurnActive = bNewValue;
+
+		// #407: human turn boundaries for the dev SSE stream -- the live "human is
+		// thinking vs AI/engine is processing" phase signal (e.g. tooling polls during
+		// the human phase instead of competing with AI compute). HUMAN ONLY by design:
+		// per-AI-player events would be 40+ frames/turn of noise, and turn DURATION
+		// analytics belong to the [PERF] logs (turn.wall / update.accum / per-phase),
+		// not to this stream.
+		if (isHuman())
+		{
+			CvHttpServer::publishEvent(bNewValue ? "playerTurnStart" : "playerTurnEnd",
+				CvString::format("{\"player\":%d,\"turn\":%d}", getID(), GC.getGame().getGameTurn()).c_str());
+		}
+
 		if (bNewValue)
 		{
 			PROFILE("CvPlayer::setTurnActive.SetActive");

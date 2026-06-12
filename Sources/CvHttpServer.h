@@ -22,11 +22,15 @@
 //   GET /cities?id=N                -> filtered to one city id (combinable with playerNumber)
 //   GET /cities?playerNumber=N      -> filtered to one player's cities
 //   GET /events                     -> Server-Sent Events stream (#407): "hello" with the
-//                                      current turn + gameId on connect, then "turnEnd"
-//                                      (old turn) and "turnStart" (new turn) bracketing
-//                                      every game-turn increment, ": keepalive" comments
-//                                      every ~15s. text/event-stream; the response never
-//                                      ends. At most 8 concurrent streams (503 beyond).
+//                                      current turn + gameId on connect; "turnEnd" (old
+//                                      turn) / "turnStart" (new turn) bracketing every
+//                                      game-turn increment; "playerTurnStart" /
+//                                      "playerTurnEnd" for HUMAN players only (the live
+//                                      "human thinking vs AI processing" phase signal --
+//                                      turn DURATION analytics belong to the [PERF]
+//                                      logs); ": keepalive" comments every ~15s.
+//                                      text/event-stream; the response never ends. At
+//                                      most 8 concurrent streams (503 beyond).
 // The /units and /players wrappers carry "gameId" (JSON string) -- CvGame::getGameId(),
 // the persistent playtest identity stamped at game creation (digits-only yyMMddHHmm local
 // time for new games; saves predating the format change carry "DD-MM-YYYY HH:MM:SS") --
