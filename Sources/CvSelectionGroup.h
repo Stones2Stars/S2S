@@ -67,6 +67,11 @@ public:
 
 	void doTurn();
 
+	// True when nearby danger outweighs the defense standing on this group's plot --
+	// the bar for interrupting a human mission (a posted protector keeps missions
+	// working; owner ruling 2026-06-12).
+	bool dangerOverwhelmsMission(int iRange) const;
+
 	void resetHealing();
 
 	bool showMoves() const;

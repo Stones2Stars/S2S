@@ -202,6 +202,29 @@ bool CvSelectionGroup::sentryAlertSameDomainType() const
 #endif
 
 
+// A queued human mission used to be cleared by ANY danger within range -- but a plot
+// reads as dangerous whenever any hostile is visible nearby, and a posted protector only
+// suppresses danger from the plot itself, not from a tile or two away. In the
+// animal-saturated early game that is a PERMANENT condition, so workers could never hold
+// a multi-turn build: the group went green every turn and unit cycling dragged the player
+// to it (owner report 2026-06-12). Owner ruling: a deliberately posted protector keeps
+// missions working -- danger only interrupts a mission when it outweighs the defense
+// standing on the group's plot (the same overwhelmed idiom as AI_cityDefenseMove's
+// split test). A lone worker still wakes for any animal; an escorted one works on until
+// the threat is real.
+bool CvSelectionGroup::dangerOverwhelmsMission(int iRange) const
+{
+	const CvPlayerAI& kOwner = GET_PLAYER(getOwner());
+
+	if (!kOwner.AI_getAnyPlotDanger(plot(), iRange))
+	{
+		return false;
+	}
+	return kOwner.AI_getEnemyPlotStrength(plot(), iRange, false, false)
+		 > kOwner.AI_getOurPlotStrength(plot(), 0, true, false);
+}
+
+
 void CvSelectionGroup::doTurn()
 {
 	PROFILE("CvSelectionGroup::doTurn()");
@@ -337,7 +360,7 @@ void CvSelectionGroup::doTurn()
 		{
 			foreach_(const CvUnit* pLoopUnit, units() | filtered(!CvUnit::fn::isSpy()))
 			{
-				if (GET_PLAYER(getOwner()).AI_getAnyPlotDanger(plot(), 2))
+				if (dangerOverwhelmsMission(2))
 				{
 					clearMissionQueue();
 				}
@@ -615,7 +638,7 @@ void CvSelectionGroup::autoMission()
 	{
 		if (isHuman()
 		&& algo::any_of(units(), !CvUnit::fn::alwaysInvisible())
-		&& GET_PLAYER(getOwner()).AI_getAnyPlotDanger(plot(), 1))
+		&& dangerOverwhelmsMission(1))
 		{
 			clearMissionQueue();
 		}
