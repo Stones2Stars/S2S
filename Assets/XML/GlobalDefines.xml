@@ -1728,6 +1728,21 @@
 		<DefineName>SIZE_MATTERS_MOST_VOLUMETRIC_MULTIPLIER</DefineName>
 		<iDefineIntVal>300</iDefineIntVal>
 	</Define>
+	<!-- Barb horde courage (#409): with MIN_UNITS or more NPC units within RANGE of an
+	     adjacent enemy city, barbarians force the attack at ODDS_FLOOR win% instead of
+	     loitering. MIN_UNITS <= 0 disables the rule. -->
+	<Define>
+		<DefineName>BARB_HORDE_COURAGE_MIN_UNITS</DefineName>
+		<iDefineIntVal>5</iDefineIntVal>
+	</Define>
+	<Define>
+		<DefineName>BARB_HORDE_COURAGE_RANGE</DefineName>
+		<iDefineIntVal>3</iDefineIntVal>
+	</Define>
+	<Define>
+		<DefineName>BARB_HORDE_COURAGE_ODDS_FLOOR</DefineName>
+		<iDefineIntVal>1</iDefineIntVal>
+	</Define>
 	<!-- AI Gold Slider Safety Percent
 	This is the BASE income to expense ratio that the AI feels comfortable with.
 	e.g. a value of 10 would mean that the AI feels confortable if their net income is only 10% of gross income.

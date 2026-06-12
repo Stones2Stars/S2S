@@ -145,6 +145,10 @@ Pipeline side (`CvCity::pushOrder`/`popOrder`/`doProduction`):
   `CvUnitAI::AI_smMergeToBreachCity`): the stack cannot out-muscle the target city's best
   defender as singles (`singleStr`/`defStr`) and merges a triple to flip the duel. The
   merge itself logs as `[UNT/merge]`.
+- `[UNT/horde]` (2) — barb horde courage triggered (#409, in `AI_barbAttackMove`):
+  `horde=` NPC units within `BARB_HORDE_COURAGE_RANGE` of the adjacent enemy `city=` —
+  the unit wave-assaults at the odds floor (the attack commit logs via `[UNT/act]`
+  cityAttack as usual).
 
 ### `[COM]` — combat (`CombatAI.log`)
 

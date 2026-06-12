@@ -105,6 +105,7 @@ void CvUnitAI::AI_clearCaches()
 //	reason to accept coin-flip odds (which bled the prehistoric defense corps 84 -> 25).
 #define	GARRISON_ANIMAL_SORTIE_MIN_ODDS	85
 
+
 #define FOUND_RANGE					(7)
 
 typedef struct
@@ -2412,6 +2413,51 @@ void CvUnitAI::AI_barbAttackMove()
 	|| AI_cityAttack(1, 20))
 	{
 		return;
+	}
+
+	// #409 horde courage: barbs force attacks -- it is in their nature, and tuned like a
+	// self-preserving civ army they just loiter ("come to my city, see its not an obvious
+	// win, and jog off again"). A lone barb keeps skulking, but with a horde gathered at
+	// an enemy city the odds gate drops to the floor and they wave-assault. This is also
+	// the local relief valve for #408's unbounded spawn concentration: hordes resolve
+	// through attrition instead of accumulating as ambient siege-by-loitering.
+	{
+		const CvCity* pAdjacentCity = NULL;
+		foreach_(const CvPlot* pAdj, plot()->adjacent())
+		{
+			const CvCity* pCity = pAdj->getPlotCity();
+
+			if (pCity != NULL && isEnemy(pAdj->getTeam(), pAdj))
+			{
+				pAdjacentCity = pCity;
+				break;
+			}
+		}
+		if (pAdjacentCity != NULL)
+		{
+			// Tunable without a rebuild (GlobalDefines.xml, #409): MIN_UNITS <= 0
+			// disables the rule entirely.
+			const int iMinHorde = GC.getDefineINT("BARB_HORDE_COURAGE_MIN_UNITS", 5);
+			const int iHorde = iMinHorde <= 0 ? -1
+				: pAdjacentCity->plot()->plotCount(PUF_isPlayer, getOwner(), -1, NULL, NO_PLAYER, NO_TEAM, NULL, -1, -1, GC.getDefineINT("BARB_HORDE_COURAGE_RANGE", 3));
+
+			if (iMinHorde > 0 && iHorde >= iMinHorde)
+			{
+				logUnitAI(2, "[UNT/horde] owner=%d unit=%d city=(%d,%d) horde=%d",
+					(int)getOwner(), getID(), pAdjacentCity->getX(), pAdjacentCity->getY(), iHorde);
+
+				// Merge a triple first when it flips the duel against the best defender
+				// (#395) -- the wave hits harder; then force the attack at the floor.
+				if (AI_smMergeToBreachCity(pAdjacentCity))
+				{
+					return;
+				}
+				if (AI_cityAttack(1, GC.getDefineINT("BARB_HORDE_COURAGE_ODDS_FLOOR", 1)))
+				{
+					return;
+				}
+			}
+		}
 	}
 
 	const AreaAITypes eAreaAI = area()->getAreaAIType(getTeam());
