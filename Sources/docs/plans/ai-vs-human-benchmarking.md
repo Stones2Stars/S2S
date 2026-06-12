@@ -98,7 +98,11 @@ diplomacy state, and per-decision *why* (Autolog channels).
   near-incomprehensible; #403 tracks documenting + reworking H&S); under H&S ON the gate
   would be approximate (intensity-blind) — acceptable, revisit with #403. Gate covers barb map spawns, barb
   city training, property spawns (`CIV4SpawnInfos.xml` spawning bypasses `canTrain` — no
-  camouflaged unit has a SpawnInfo today). Owner rulings folded in: civ criminals stay
+  camouflaged unit has a SpawnInfo today), **and — since 2026-06-12 — goody-hut hostiles**:
+  `CIV4GoodyInfo.xml` has a `<BarbarianUnit>UNIT_THIEF</BarbarianUnit>` outcome whose
+  spawn path (`receiveGoody` → `initUnit`) bypassed `canTrain` entirely — 11 pre-counter
+  barb thieves on the t120 map of game 2606121831; `canReceiveGoody` now vetoes
+  hostile-unit goodies the gate bars (the hut rolls another outcome). Owner rulings folded in: civ criminals stay
   exempt by design (they must *travel* from owned territory — an investment and an
   exposure — while NPCs spawn virtually anywhere); the broader "invisible units arrive
   too early for everyone" timing question is deferred to a future tech rework.

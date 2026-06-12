@@ -5961,6 +5961,15 @@ bool CvPlayer::canReceiveGoody(const CvPlot* pPlot, GoodyTypes eGoody, const CvU
 		{
 			return false;
 		}
+
+		// The NPC invisible-unit gate (#405) binds goody spawns too -- this was the
+		// bypass that put 11 pre-counter barb thieves on the map by t120 (goody hostiles
+		// spawn via initUnit, never passing canTrain). A hostile-unit goody no PC team
+		// can yet detect is not a valid outcome; the hut rolls something else.
+		if (!GC.getGame().canNPCFieldUnit((UnitTypes)GC.getGoodyInfo(eGoody).getBarbarianUnit()))
+		{
+			return false;
+		}
 	}
 	if (!isMapCategory(*pPlot, GC.getGoodyInfo(eGoody)))
 	{
