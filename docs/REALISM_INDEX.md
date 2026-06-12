@@ -71,8 +71,18 @@ the stat is to die holding it.
 At best, stealthy. At worst — in the owner's full technical assessment — *"just........
 no words....."*
 
-*Status: working as redesigned, which is not the same as designed. The army-lifecycle
-work (#410) owns the question of what early-era siege should actually be.*
+Deeper archaeology only makes it better. The mechanic appears in none of the public
+documentation (the CivFanatics combat-mod guides do not mention it); the owner knows of
+it only because **the designer alluded to it in a conversation once**; the alluded-to
+form — defenses grinding down *passively* while siege units camp adjacent, which would
+at least have explained why AI stacks besiege cities by picnicking next to them — has no
+implementation, and no vestige of one, anywhere in the code. There is a real chance that
+part never actually worked. The game may contain AI behaviour tuned around a siege
+mechanic that exists exclusively as an oral tradition.
+
+*Status: working as redesigned, which is not the same as designed, which is not the same
+as described. The army-lifecycle work (#410) owns the question of what early-era siege
+should actually be.*
 
 ---
 
