@@ -1,10 +1,13 @@
 #include "CvGameCoreDLL.h"
 #include "CvHttpServer.h"
+#include "CvBuildingInfo.h"
+#include "CvCity.h"
 #include "CvGameAI.h"
 #include "CvGlobals.h"
 #include "CvInfos.h"
 #include "CvPlayerAI.h"
 #include "CvSelectionGroup.h"
+#include "CvTeamAI.h"
 #include "CvUnit.h"
 
 // Deliberately the winsock 1.1 header, NOT winsock2.h: some unity batches pull a
@@ -51,12 +54,74 @@ namespace
 		CvString szAI;   // XML key, e.g. UNITAI_HUNTER
 	};
 
+	struct PlayerSnap
+	{
+		int iID;
+		int iTeam;
+		int iHuman;
+		int iNPC;
+		int iScore;
+		int iEra;
+		int iTechs;
+		int iCities;
+		int iPopulation;
+		int iUnits;
+		int64_t iGold; // CvPlayer::getGold() is 64-bit
+		int iGoldRate;
+		int iScienceRate;
+		int iProduction;
+		CvString szCiv;      // XML key, e.g. CIVILIZATION_ENGLAND
+		CvString szName;     // sanitized to JSON-safe ASCII
+		CvString szResearch; // XML key of the current research, or NONE
+		CvString szHandicap; // XML key, e.g. HANDICAP_EMPEROR -- the per-player difficulty
+	};
+
+	struct CitySnap
+	{
+		int iID;
+		int iOwner;
+		int iX;
+		int iY;
+		int iPopulation;
+		int iFood;            // YIELD_FOOD rate
+		int iProduction;      // YIELD_PRODUCTION rate
+		int iCommerce;        // YIELD_COMMERCE rate
+		int iProducingTurns;  // turns left on the current production (0 when idle)
+		int iNumBuildings;
+		int iCultureLevel;
+		int iCapital;
+		// The property values worth tracking (owner ruling 2026-06-11: crime, education
+		// and disease carry real gameplay; flammability and the pollutions are dormant).
+		int iCrime;
+		int iEducation;
+		int iDisease;
+		CvString szName;      // sanitized to ASCII; escaped by picojson
+		CvString szProducing; // XML key of the production head, or NONE
+	};
+
 	struct GameSnapshot
 	{
 		GameSnapshot() : iTurn(-1) {}
 		int iTurn;
+		CvString szGameId; // playtest id (CvGame::getGameId; digits-only yyMMddHHmm for new games)
 		std::vector<UnitSnap> units;
+		std::vector<PlayerSnap> players;
+		std::vector<CitySnap> cities;
 	};
+
+	// Narrow a wide game string to ASCII for the snapshot; non-ASCII becomes '?'.
+	// No escaping here -- free-text fields are rendered through picojson, which owns
+	// JSON escaping (the documented rendering rule; FAssert's AssertsJson.log precedent).
+	CvString narrowToAscii(const CvWString& wName)
+	{
+		CvString szOut;
+		for (int i = 0; i < (int)wName.length(); ++i)
+		{
+			const wchar_t wc = wName[i];
+			szOut += (wc < 0x20 || wc > 0x7E) ? '?' : (char)wc;
+		}
+		return szOut;
+	}
 
 	CRITICAL_SECTION g_snapshotLock;
 	bool g_bLockInitialized = false;
@@ -154,9 +219,120 @@ namespace
 			}
 		}
 
-		CvString szBody = CvString::format("{\"turn\":%d,\"count\":%d,\"units\":[", iTurn, iCount);
+		// gameId is emitted as a JSON string: legacy saves carry the old timestamp format
+		// (digits, dashes, spaces, colons -- all JSON-string-safe without escaping).
+		CvString szBody = CvString::format(
+			"{\"turn\":%d,\"gameId\":\"%s\",\"count\":%d,\"units\":[",
+			iTurn, pSnap ? pSnap->szGameId.c_str() : "", iCount);
 		szBody += szItems;
 		szBody += "\n]}\n";
+		return szBody;
+	}
+
+	// Rendered through picojson, unlike /units: the name field is free text, and the
+	// documented rendering rule reserves hand-built JSON for flat ints + XML keys.
+	// The document is small (<= MAX_PLAYERS objects), so DOM + serialize costs nothing
+	// and is immune to CvString::format's ~82KB cap. picojson objects are std::maps,
+	// so fields serialize in alphabetical key order.
+	CvString renderPlayers(bool bFilterOwner, int iOwner)
+	{
+		const bst::shared_ptr<const GameSnapshot> pSnap = grabSnapshot();
+		const int iTurn = pSnap ? pSnap->iTurn : -1;
+
+		picojson::value::array players;
+		if (pSnap)
+		{
+			for (size_t i = 0; i < pSnap->players.size(); ++i)
+			{
+				const PlayerSnap& p = pSnap->players[i];
+				if (bFilterOwner && p.iID != iOwner)
+				{
+					continue;
+				}
+				picojson::value::object o;
+				o["id"] = picojson::value((double)p.iID);
+				o["team"] = picojson::value((double)p.iTeam);
+				o["civ"] = picojson::value(p.szCiv);
+				o["name"] = picojson::value(p.szName);
+				o["human"] = picojson::value(p.iHuman != 0);
+				o["npc"] = picojson::value(p.iNPC != 0);
+				o["score"] = picojson::value((double)p.iScore);
+				o["era"] = picojson::value((double)p.iEra);
+				o["techs"] = picojson::value((double)p.iTechs);
+				o["research"] = picojson::value(p.szResearch);
+				o["handicap"] = picojson::value(p.szHandicap);
+				o["cities"] = picojson::value((double)p.iCities);
+				o["population"] = picojson::value((double)p.iPopulation);
+				o["units"] = picojson::value((double)p.iUnits);
+				o["gold"] = picojson::value((double)p.iGold);
+				o["goldRate"] = picojson::value((double)p.iGoldRate);
+				o["scienceRate"] = picojson::value((double)p.iScienceRate);
+				o["production"] = picojson::value((double)p.iProduction);
+				players.push_back(picojson::value(o));
+			}
+		}
+
+		picojson::value::object root;
+		root["turn"] = picojson::value((double)iTurn);
+		root["gameId"] = picojson::value(pSnap ? pSnap->szGameId : CvString(""));
+		root["count"] = picojson::value((double)players.size());
+		root["players"] = picojson::value(players);
+
+		CvString szBody(picojson::value(root).serialize().c_str());
+		szBody += "\n";
+		return szBody;
+	}
+
+	// picojson-rendered like /players: the name field is free text.
+	CvString renderCities(bool bFilterId, int iId, bool bFilterOwner, int iOwner)
+	{
+		const bst::shared_ptr<const GameSnapshot> pSnap = grabSnapshot();
+		const int iTurn = pSnap ? pSnap->iTurn : -1;
+
+		picojson::value::array cities;
+		if (pSnap)
+		{
+			for (size_t i = 0; i < pSnap->cities.size(); ++i)
+			{
+				const CitySnap& c = pSnap->cities[i];
+				if (bFilterId && c.iID != iId)
+				{
+					continue;
+				}
+				if (bFilterOwner && c.iOwner != iOwner)
+				{
+					continue;
+				}
+				picojson::value::object o;
+				o["id"] = picojson::value((double)c.iID);
+				o["owner"] = picojson::value((double)c.iOwner);
+				o["x"] = picojson::value((double)c.iX);
+				o["y"] = picojson::value((double)c.iY);
+				o["name"] = picojson::value(c.szName);
+				o["population"] = picojson::value((double)c.iPopulation);
+				o["food"] = picojson::value((double)c.iFood);
+				o["production"] = picojson::value((double)c.iProduction);
+				o["commerce"] = picojson::value((double)c.iCommerce);
+				o["producing"] = picojson::value(c.szProducing);
+				o["producingTurns"] = picojson::value((double)c.iProducingTurns);
+				o["buildings"] = picojson::value((double)c.iNumBuildings);
+				o["cultureLevel"] = picojson::value((double)c.iCultureLevel);
+				o["capital"] = picojson::value(c.iCapital != 0);
+				o["crime"] = picojson::value((double)c.iCrime);
+				o["education"] = picojson::value((double)c.iEducation);
+				o["disease"] = picojson::value((double)c.iDisease);
+				cities.push_back(picojson::value(o));
+			}
+		}
+
+		picojson::value::object root;
+		root["turn"] = picojson::value((double)iTurn);
+		root["gameId"] = picojson::value(pSnap ? pSnap->szGameId : CvString(""));
+		root["count"] = picojson::value((double)cities.size());
+		root["cities"] = picojson::value(cities);
+
+		CvString szBody(picojson::value(root).serialize().c_str());
+		szBody += "\n";
 		return szBody;
 	}
 
@@ -223,6 +399,55 @@ namespace
 				szTok = szNext;
 			}
 			sendResponse(sock, "200 OK", "application/json", renderUnits(bFilterId, iId, bFilterOwner, iOwner), snapshotTurn());
+		}
+		else if (strcmp(szTarget, "/players") == 0)
+		{
+			bool bFilterOwner = false;
+			int iOwner = -1;
+			char* szTok = szQuery;
+			while (szTok != NULL && *szTok != '\0')
+			{
+				char* szNext = strchr(szTok, '&');
+				if (szNext != NULL)
+				{
+					*szNext = '\0';
+					++szNext;
+				}
+				if (strncmp(szTok, "playerNumber=", 13) == 0)
+				{
+					bFilterOwner = true;
+					iOwner = atoi(szTok + 13);
+				}
+				szTok = szNext;
+			}
+			sendResponse(sock, "200 OK", "application/json", renderPlayers(bFilterOwner, iOwner), snapshotTurn());
+		}
+		else if (strcmp(szTarget, "/cities") == 0)
+		{
+			bool bFilterId = false, bFilterOwner = false;
+			int iId = -1, iOwner = -1;
+			char* szTok = szQuery;
+			while (szTok != NULL && *szTok != '\0')
+			{
+				char* szNext = strchr(szTok, '&');
+				if (szNext != NULL)
+				{
+					*szNext = '\0';
+					++szNext;
+				}
+				if (strncmp(szTok, "id=", 3) == 0)
+				{
+					bFilterId = true;
+					iId = atoi(szTok + 3);
+				}
+				else if (strncmp(szTok, "playerNumber=", 13) == 0)
+				{
+					bFilterOwner = true;
+					iOwner = atoi(szTok + 13);
+				}
+				szTok = szNext;
+			}
+			sendResponse(sock, "200 OK", "application/json", renderCities(bFilterId, iId, bFilterOwner, iOwner), snapshotTurn());
 		}
 		else
 		{
@@ -408,7 +633,9 @@ void CvHttpServer::publishIfDue()
 
 	bst::shared_ptr<GameSnapshot> pNew(new GameSnapshot());
 	pNew->iTurn = GC.getGame().getGameTurn();
+	pNew->szGameId = GC.getGame().getGameId();
 	pNew->units.reserve(4096);
+	pNew->cities.reserve(256);
 
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
@@ -440,6 +667,104 @@ void CvHttpServer::publishIfDue()
 
 			pNew->units.push_back(snap);
 		}
+	}
+
+	// Per-team tech counts, computed once per team and shared by its members.
+	std::vector<int> aiTeamTechs(MAX_TEAMS, -1);
+
+	pNew->players.reserve(MAX_PLAYERS);
+	for (int iI = 0; iI < MAX_PLAYERS; iI++)
+	{
+		const CvPlayerAI& kPlayer = GET_PLAYER((PlayerTypes)iI);
+		if (!kPlayer.isAlive())
+		{
+			continue;
+		}
+		const TeamTypes eTeam = kPlayer.getTeam();
+		if (aiTeamTechs[eTeam] == -1)
+		{
+			int iTechs = 0;
+			for (int iTech = 0; iTech < GC.getNumTechInfos(); iTech++)
+			{
+				if (GET_TEAM(eTeam).isHasTech((TechTypes)iTech))
+				{
+					iTechs++;
+				}
+			}
+			aiTeamTechs[eTeam] = iTechs;
+		}
+
+		PlayerSnap snap;
+		snap.iID = iI;
+		snap.iTeam = eTeam;
+		snap.iHuman = kPlayer.isHuman() ? 1 : 0;
+		snap.iNPC = kPlayer.isNPC() ? 1 : 0;
+		snap.iScore = GC.getGame().getPlayerScore((PlayerTypes)iI);
+		snap.iEra = kPlayer.getCurrentEra();
+		snap.iTechs = aiTeamTechs[eTeam];
+		snap.iCities = kPlayer.getNumCities();
+		snap.iPopulation = kPlayer.getTotalPopulation();
+		snap.iUnits = kPlayer.getNumUnits();
+		snap.iGold = kPlayer.getGold();
+		snap.iGoldRate = kPlayer.calculateGoldRate();
+		snap.iScienceRate = kPlayer.getCommerceRate(COMMERCE_RESEARCH);
+
+		// One walk over the player's cities: the player's production total and the
+		// /cities snapshot rows.
+		int iProduction = 0;
+		foreach_(const CvCity* pLoopCity, kPlayer.cities())
+		{
+			CitySnap city;
+			city.iID = pLoopCity->getID();
+			city.iOwner = iI;
+			city.iX = pLoopCity->getX();
+			city.iY = pLoopCity->getY();
+			city.iPopulation = pLoopCity->getPopulation();
+			city.iFood = pLoopCity->getYieldRate(YIELD_FOOD);
+			city.iProduction = pLoopCity->getYieldRate(YIELD_PRODUCTION);
+			city.iCommerce = pLoopCity->getYieldRate(YIELD_COMMERCE);
+			city.iNumBuildings = pLoopCity->getNumBuildings();
+			city.iCultureLevel = pLoopCity->getCultureLevel();
+			city.iCapital = pLoopCity->isCapital() ? 1 : 0;
+
+			const CvProperties* pProps = pLoopCity->getPropertiesConst();
+			const PropertyTypes eCrime = GC.getPROPERTY_CRIME();
+			const PropertyTypes eEducation = GC.getPROPERTY_EDUCATION();
+			const PropertyTypes eDisease = GC.getPROPERTY_DISEASE();
+			city.iCrime = eCrime > NO_PROPERTY ? pProps->getValueByProperty(eCrime) : 0;
+			city.iEducation = eEducation > NO_PROPERTY ? pProps->getValueByProperty(eEducation) : 0;
+			city.iDisease = eDisease > NO_PROPERTY ? pProps->getValueByProperty(eDisease) : 0;
+
+			const UnitTypes eProdUnit = pLoopCity->getProductionUnit();
+			const BuildingTypes eProdBuilding = pLoopCity->getProductionBuilding();
+			const ProjectTypes eProdProject = pLoopCity->getProductionProject();
+			const ProcessTypes eProdProcess = pLoopCity->getProductionProcess();
+			if (eProdUnit != NO_UNIT) city.szProducing = GC.getUnitInfo(eProdUnit).getType();
+			else if (eProdBuilding != NO_BUILDING) city.szProducing = GC.getBuildingInfo(eProdBuilding).getType();
+			else if (eProdProject != NO_PROJECT) city.szProducing = GC.getProjectInfo(eProdProject).getType();
+			else if (eProdProcess != NO_PROCESS) city.szProducing = GC.getProcessInfo(eProdProcess).getType();
+			else city.szProducing = "NONE";
+			city.iProducingTurns = city.szProducing != "NONE" && eProdProcess == NO_PROCESS
+				? pLoopCity->getProductionTurnsLeft() : 0;
+
+			city.szName = narrowToAscii(pLoopCity->getName());
+			pNew->cities.push_back(city);
+
+			iProduction += city.iProduction;
+		}
+		snap.iProduction = iProduction;
+
+		const CivilizationTypes eCiv = kPlayer.getCivilizationType();
+		snap.szCiv = eCiv != NO_CIVILIZATION ? GC.getCivilizationInfo(eCiv).getType() : "NO_CIVILIZATION";
+		snap.szName = narrowToAscii(kPlayer.getName());
+
+		const TechTypes eResearch = kPlayer.getCurrentResearch();
+		snap.szResearch = eResearch != NO_TECH ? GC.getTechInfo(eResearch).getType() : "NONE";
+
+		const HandicapTypes eHandicap = kPlayer.getHandicapType();
+		snap.szHandicap = eHandicap != NO_HANDICAP ? GC.getHandicapInfo(eHandicap).getType() : "NO_HANDICAP";
+
+		pNew->players.push_back(snap);
 	}
 
 	EnterCriticalSection(&g_snapshotLock);

@@ -865,6 +865,12 @@ void CvGame::uninit()
 }
 
 
+// The playtest identity: stamped at game creation (reset), overwritten from the save on
+// load, so every save of one game carries the same id. Digits-only local creation minute,
+// yyMMddHHmm (e.g. "2606112045" = 2026-06-11 20:45) -- sortable, filename-safe, and small
+// enough to treat as a number (owner ruling 2026-06-11; saves from before the format
+// change carry the old "%d-%m-%Y %H:%M:%S" form). Local clock: MP clients can disagree,
+// so the id must never feed synced logic or the sync checksum.
 CvString create_game_id()
 {
 	time_t rawtime;
@@ -874,7 +880,7 @@ CvString create_game_id()
 	time (&rawtime);
 	timeinfo = localtime(&rawtime);
 
-	strftime(buffer, sizeof(buffer), "%d-%m-%Y %H:%M:%S", timeinfo);
+	strftime(buffer, sizeof(buffer), "%y%m%d%H%M", timeinfo);
 	return CvString(buffer);
 }
 

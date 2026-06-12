@@ -244,10 +244,17 @@ the eventual endpoint is a thin reader over the registry rather than per-feature
 **Endpoint shipped (2026-06-11):** `Sources/CvHttpServer.{h,cpp}` — a GET-only HTTP/1.0
 server on `127.0.0.1:7227`, on its own Win32 thread, gated by the BUG option
 `Autolog__HttpServer` (Logging tab, off by default; toggling takes effect on closing the
-options screen via `refreshOptionsBUG`). Live routes: `/` (hello-world smoke test) and
+options screen via `refreshOptionsBUG`). Live routes: `/` (hello-world smoke test),
 **`/units`** with optional `?id=N` / `?playerNumber=N` filters — JSON per unit:
-id/owner/x/y/type/ai (XML keys)/group/missionAI/activity/damage/level, wrapper carries the
-snapshot turn (also the `X-S2S-Turn` response header).
+id/owner/x/y/type/ai (XML keys)/group/missionAI/activity/damage/level — and **`/players`**
+(2026-06-11, for the AI-vs-human benchmarking initiative) with optional `?playerNumber=N`:
+per alive player id/team/civ/name/human/npc/score/era/techs/research/cities/population/
+units/gold/goldRate/scienceRate/production/handicap, rendered through picojson per the
+rule below (it carries a free-text name field) — and **`/cities`** (same day) with
+optional `?id=N` / `?playerNumber=N`: per city position/name/population/yield rates/
+production head (+turns left)/buildings/culture level/capital plus the live crime,
+education and disease property values (picojson; free-text name). Wrappers carry the
+snapshot turn (also the `X-S2S-Turn` response header) and `gameId`.
 
 **Publish-and-serve contract (the pattern phase 2 generalizes):** the server thread NEVER
 touches game objects. `CvHttpServer::publishIfDue()` runs on the game thread once per frame

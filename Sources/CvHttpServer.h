@@ -11,6 +11,20 @@
 //   GET /units                      -> JSON array of every unit in the game
 //   GET /units?id=N                 -> filtered to one unit id
 //   GET /units?playerNumber=N       -> filtered to one player's units (combinable with id)
+//   GET /players                    -> JSON array of every alive player: score, era, tech
+//                                      count, current research, cities, population, units,
+//                                      gold(+rate), science rate, production, handicap
+//   GET /players?playerNumber=N     -> filtered to one player
+//   GET /cities                     -> JSON array of every city: position, name, population,
+//                                      yield rates, production head (+turns left), building
+//                                      count, culture level, capital flag, and the live
+//                                      property values: crime, education, disease
+//   GET /cities?id=N                -> filtered to one city id (combinable with playerNumber)
+//   GET /cities?playerNumber=N      -> filtered to one player's cities
+// The /units and /players wrappers carry "gameId" (JSON string) -- CvGame::getGameId(),
+// the persistent playtest identity stamped at game creation (digits-only yyMMddHHmm local
+// time for new games; saves predating the format change carry "DD-MM-YYYY HH:MM:SS") --
+// so tooling can tell playtests apart and detect reloads/new games mid-session.
 // Responses carry X-S2S-Turn (the game turn the snapshot was taken on). Data is
 // "as of the last publish" -- the game thread refreshes it every few seconds via
 // publishIfDue(); unknown query parameters are ignored.
