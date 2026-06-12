@@ -50,7 +50,33 @@ decide to have a go); the civ-side army lifecycle is #410.*
 
 ---
 
-## 🥉 3. The Hundred-Year Picnic — 75 cb
+## 🥉 3. The Clandestine Battering Ram — 80 cb
+
+A battering ram cannot be ordered to batter anything. It has no bombard command, no
+button, no siege verb of any kind. Its entire reason for existing — reducing city
+defenses — is implemented as a **hidden dice roll** (`iBreakdownChance`, 25%) that procs
+per combat round *only while the ram is personally assaulting the garrison*, an
+engagement a strength-4 wooden frame conducts approximately once. The walls are chipped,
+if they are chipped, as an invisible side effect of the ram's death, at a rate scaled
+down by the defenses it is trying to chip.
+
+Nobody is told any of this. The mechanic's documentation lives on a fifteen-year-old
+forum thread; the in-code comments reveal it was *originally* a pure no-combat "siege
+event" that was later converted to real combat with a note that the rams' strength
+should probably be reduced "when I get into the H2H/Distance mechanism" — a mechanism
+the code is still waiting for. The AI, for its part, values breakdown chance like a
+bombard rate it could aim, overbuilds the units, and then discovers the only way to cash
+the stat is to die holding it.
+
+At best, stealthy. At worst — in the owner's full technical assessment — *"just........
+no words....."*
+
+*Status: working as redesigned, which is not the same as designed. The army-lifecycle
+work (#410) owns the question of what early-era siege should actually be.*
+
+---
+
+## 4. The Hundred-Year Picnic — 75 cb
 
 An AI stack assembles, marches to an enemy city, encamps — so far, textbook Vegetius —
 and then discovers its composition is entirely ranged units, which cannot assault
@@ -67,7 +93,7 @@ assault troops or go home.*
 
 ---
 
-## 4. The Grid Before the Generator — 72 cb
+## 5. The Grid Before the Generator — 72 cb
 
 You discover Electricity. Eager to enter the modern age, you order a power plant. You
 cannot. First your city must build **Power Lines** — a complete electrical distribution
@@ -85,7 +111,7 @@ productive direction (#411).*
 
 ---
 
-## 5. The 326 Artisanal Supply Chains — 68 cb
+## 6. The 326 Artisanal Supply Chains — 68 cb
 
 The game tracks **481 distinct bonus resources**, of which **326 are manufactured goods**
 — each a discrete, named, individually-plumbed commodity flowing through the trade
