@@ -65,6 +65,9 @@ also the measured CITY_DEFENSE turn-time plateau (`turn-time-optimization.md`).
 
 ## Plan
 
+**Status (2026-06-12): Phases A–E implemented on `feature/395-size-matters-ai`
+(Assert-green), awaiting playtest verification against the benchmark census.**
+
 - **Phase A — effective-count infrastructure.** `CvUnit::SMeffectiveCountTimes100()`
   (100 at type base rank; ×1.5/rank; 100 always when SM off) + transient per-UNITAI
   effective ledgers on `CvPlayerAI` and `CvArea`, mirrored at the exact `m_aiNumAIUnits`
@@ -81,9 +84,16 @@ also the measured CITY_DEFENSE turn-time plateau (`turn-time-optimization.md`).
   in the #384 garrison machinery: while garrison strength minus the would-be merge loss
   stays ≥ `AI_neededDefenseStrength × GARRISON_RELEASE_MARGIN_PERCENT`, merge surplus
   primary-defender triples; hysteresis vs the (retuned) overwhelmed-split.
-- **Phase D — attack-side need-merge** (ruling 4) in the city-attack odds path.
-- **Phase E — mix sanity.** Retire the blanket `EVAL_MERGE_FACTOR` (honest accounting
-  replaces the thumb on the scale); healer-demand weighting (ruling 5).
+- **Phase D — attack-side need-merge** (ruling 4): `CvUnitAI::AI_smMergeToBreachCity`,
+  called from `AI_attackCityMove` when adjacent to the target with group odds ≤ 75. Merges
+  a triple only when it flips the strength duel against the city's best defender (single
+  ≤ defender < single×1.5); the actual attack stays odds-gated next evaluation. Logs
+  `[UNT/merge2breach]`.
+- **Phase E — mix sanity.** `EVAL_MERGE_FACTOR` retired (honest accounting replaces the
+  thumb on the scale; `unit-ai-valuation.md` §B1 updated); healer demand scales with stack
+  HP-mass (ruling 5): one healer per started 10 base-body-equivalents, capped at 3, in the
+  `AI_attackCityMove` broker request (HP scales by the same ×1.5/rank as strength —
+  `CvUnit::setSMHPValue` — so the effective-count weight IS the HP-mass weight).
 
 Verification: AI-vs-human benchmark census (`/units` + `players_timeseries`) before/after —
 expected: CITY_DEFENSE body count falls toward ~1/3 in consolidated cities, upkeep drops,

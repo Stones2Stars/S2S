@@ -3182,14 +3182,17 @@ void CvUnitAI::AI_attackCityMove()
 		bReadyToAttack = false;
 		int iCityCaptureCount = 0;
 		int iHealerCount = 0;
+		int iStackMass100 = 0;
 
+		// Full scan (the historic early-out on bReadyToAttack left iHealerCount partial,
+		// spuriously re-requesting healers the stack already had).
 		CLLNode<IDInfo>* pUnitNode = getGroup()->headUnitNode();
-		while (pUnitNode != NULL && !bReadyToAttack)
+		while (pUnitNode != NULL)
 		{
 			CvUnit* pLoopUnit = ::getUnit(pUnitNode->m_data);
 			pUnitNode = getGroup()->nextUnitNode(pUnitNode);
 
-			if (!pLoopUnit->isOnlyDefensive())
+			if (!bReadyToAttack && !pLoopUnit->isOnlyDefensive())
 			{
 				if (!(pLoopUnit->isNoCapture()) && (pLoopUnit->combatLimit() >= 100))
 				{
@@ -3205,6 +3208,7 @@ void CvUnitAI::AI_attackCityMove()
 			{
 				iHealerCount++;
 			}
+			iStackMass100 += pLoopUnit->SMeffectiveCountTimes100();
 		}
 
 		//	Special case - if we have no attackers at all advertise for one urgently
@@ -3227,7 +3231,14 @@ void CvUnitAI::AI_attackCityMove()
 			}
 		}
 
-		if (iHealerCount == 0 && !isCargo())
+		// #395 (owner ruling 5): merged units carry more HP (x1.5 per rank) and so heal
+		// slower in absolute terms -- healer demand scales with the stack's HP-mass, not
+		// its body count: one healer per started 10 base-body-equivalents, capped at 3.
+		// Without Size Matters the historic 1-healer-per-stack demand is unchanged.
+		const int iHealersNeeded = GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS)
+			? std::min(3, 1 + iStackMass100 / 1000) : 1;
+
+		if (iHealerCount < iHealersNeeded && !isCargo())
 		{
 			GET_PLAYER(getOwner()).getContractBroker().advertiseWork(
 				HIGH_PRIORITY_ESCORT_PRIORITY - 1,

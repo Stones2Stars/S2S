@@ -81,7 +81,7 @@ retires the ones it has. That's the dog/hunter glut.
 > merge bonus. **That is wrong** — confirmed from two angles below. Dogs **cannot merge**, so
 > the merge factor never touches them. Size Matters / merge is a **dead end for the dog glut.**
 
-### B1. The merge factor only applies to *mergeable* units — **[V]** `EVAL_MERGE_FACTOR` (`CvPlayerAI.cpp:52`)
+### B1. The merge factor only applies to *mergeable* units — **[V]** `EVAL_MERGE_FACTOR` — **RETIRED (#395, 2026-06-12)**
 ```cpp
 #ifndef NO_CAN_MERGE_BONUS
     #define EVAL_MERGE_FACTOR  2
@@ -90,8 +90,12 @@ retires the ones it has. That's the dog/hunter glut.
 if (kUnitInfo.canMergeSplit() && GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
     iValue = int(iValue * EVAL_MERGE_FACTOR);   // doubles the value
 ```
-Applied in UNITAI_ATTACK, ATTACK_CITY, COUNTER, CITY_DEFENSE, ESCORT (`10768/10951/11054/
-11090/11530`). **Gated on `kUnitInfo.canMergeSplit()`.**
+Was applied in UNITAI_ATTACK, ATTACK_CITY, COUNTER, CITY_DEFENSE, ESCORT — gated on
+`kUnitInfo.canMergeSplit()`. **Deleted by the #395 mix-sanity pass**
+([`size-matters-ai.md`](size-matters-ai.md)): it biased the unit mix toward mergeable
+types while the accounting treated every body the same; with strength-weighted force
+ledgers and need-driven merges the thumb on the scale is gone. (B2/B3 below remain
+relevant as history: the factor never applied to dogs.)
 
 ### B2. Dogs are non-mergeable — **[V]** `canMergeSplit()` vs `UNITCOMBAT_SUBDUED`
 - `CvUnitInfo::canMergeSplit()` returns `m_bCanMergeSplit`, which is forced **`false` if any of
@@ -212,8 +216,9 @@ Per [[ai-logging-before-bug-audit]], before fixing, instrument and watch:
   era), so the target falls once the map is tamed.
 - **A/B:** add an era/obsolescence decay to cheap-unit `AI_unitValue` so dogs/hunters lose
   value as better units unlock — independent of the merge boost.
-- **B:** reconsider the flat `EVAL_MERGE_FACTOR=2` (or offset it in needed-counts) so merge
-  potential isn't double-counted.
+- **B:** ~~reconsider the flat `EVAL_MERGE_FACTOR=2` (or offset it in needed-counts) so merge
+  potential isn't double-counted.~~ **DONE (#395):** retired outright; see
+  [`size-matters-ai.md`](size-matters-ai.md).
 - **C:** in the hunter explore/safety fallback, prefer own/neutral territory and avoid
   resting inside foreign cities even under open borders; or reduce the idle-hunter explore
   fallback once exploration is complete.

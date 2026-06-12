@@ -49,11 +49,10 @@
 //	(so that it doesn't change it's value as a component relative to other factors) a multiplier is needed
 #define	BUILDING_VALUE_TO_TECH_BUILDING_VALUE_MULTIPLIER	30
 
-#ifdef NO_CAN_MERGE_BONUS
-	#define EVAL_MERGE_FACTOR  1.5
-#else
-	#define EVAL_MERGE_FACTOR  2
-#endif
+// #395: the EVAL_MERGE_FACTOR blanket x2 on mergeable types is retired. It biased the
+// unit mix toward mergeable types while the accounting treated every body the same;
+// with strength-weighted force ledgers and need-driven merges, merge-ability no longer
+// needs (or justifies) a thumb on the training scale.
 // statics
 
 CvPlayerAI* CvPlayerAI::m_aPlayers = NULL;
@@ -10778,10 +10777,6 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					iValue += ((iCombatValue * kUnitInfo.getUnitCombatModifier(iI) * AI_getUnitCombatWeight((UnitCombatTypes)iI)) / 10000);
 				}
 
-				if (kUnitInfo.canMergeSplit() && GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS)){
-					iValue = int(iValue * EVAL_MERGE_FACTOR);
-				}
-
 				break;
 			}
 			case UNITAI_ATTACK_CITY:
@@ -10961,10 +10956,6 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					iValue += ((iCombatValue * kUnitInfo.getWithdrawalProbability()) / 100);
 				}
 
-				if (kUnitInfo.canMergeSplit() && GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS)){
-					iValue = int(iValue * EVAL_MERGE_FACTOR);
-				}
-
 				break;
 			}
 			case UNITAI_COLLATERAL:
@@ -11064,10 +11055,6 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					iValue += iTempValue;
 				}
 
-				if (kUnitInfo.canMergeSplit() && GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS)){
-					iValue = int(iValue * EVAL_MERGE_FACTOR);
-				}
-
 				break;
 			}
 			case UNITAI_CITY_DEFENSE:
@@ -11099,10 +11086,6 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					iValue /= 5;
 				}
 
-
-				if (kUnitInfo.canMergeSplit() && GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS)){
-					iValue = int(iValue * EVAL_MERGE_FACTOR);
-				}
 				break;
 
 			}
@@ -11222,10 +11205,6 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 				//Calvitix try to limit impact of moves
 				iValue += iCombatValue;
 				iValue += iCombatValue * (kUnitInfo.getMoves() - 1) / 2; //Only extra moves gives +50% bonus
-
-				//if (kUnitInfo.canMergeSplit() && GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS)){
-				//	iValue *= EVAL_MERGE_FACTOR;
-				//}
 
 				break;
 			}
@@ -11539,10 +11518,6 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					iValue /= 2;
 					//better because it enables the unit to move through opponent territory with a RoP
 				}
-
-			if (kUnitInfo.canMergeSplit() && GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS)){
-				iValue = int(iValue * EVAL_MERGE_FACTOR);
-			}
 				break;
 
 			}
