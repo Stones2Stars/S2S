@@ -102,6 +102,13 @@ diplomacy state, and per-decision *why* (Autolog channels).
   exempt by design (they must *travel* from owned territory — an investment and an
   exposure — while NPCs spawn virtually anywhere); the broader "invisible units arrive
   too early for everyone" timing question is deferred to a future tech rework.
+- **Balance finding: barbarian pressure concentrates on the smallest civs (#408)** (owner,
+  2026-06-12 game, t349): England (human, 2 cities) had 61 of the map's 166 barb+nean
+  units within 8 tiles of its cities + 2 barb cities within 12; most civs had 4–22/0.
+  Structural: land-barb spawns require plots no civ can SEE, so big civs deflect spawn
+  pressure with vision coverage alone while a small civ absorbs it — and barb cities
+  seeded in that same wilderness keep producing. The loop compounds onto whoever is
+  already behind (Korea died to it before t265). Levers + data in #408.
 - **Balance finding: early wildlife may be overtuned** (owner observation). With
   era-available units capping at str ~4 and a quarter of land animals at str 5–7 (74%
   aggressive), turtling is the *only* correct AI play; civs bleed anyway (one dead by t84,
