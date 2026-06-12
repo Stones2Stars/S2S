@@ -2429,6 +2429,7 @@ void CvUnitAI::AI_barbAttackMove()
 		// the rule entirely.
 		const int iMinHorde = GC.getDefineINT("BARB_HORDE_COURAGE_MIN_UNITS", 5);
 		const int iRange = GC.getDefineINT("BARB_HORDE_COURAGE_RANGE", 3);
+		const int iOddsFloor = GC.getDefineINT("BARB_HORDE_COURAGE_ODDS_FLOOR", 1);
 
 		CvCity* pHordeTarget = NULL;
 		int iBestDistance = MAX_INT;
@@ -2465,7 +2466,7 @@ void CvUnitAI::AI_barbAttackMove()
 				{
 					return;
 				}
-				if (AI_cityAttack(1, GC.getDefineINT("BARB_HORDE_COURAGE_ODDS_FLOOR", 1)))
+				if (AI_cityAttack(1, iOddsFloor))
 				{
 					return;
 				}
@@ -2478,15 +2479,23 @@ void CvUnitAI::AI_barbAttackMove()
 		// Field version of the same courage: a pack does not scatter from a single
 		// strong unit ("the horde saw 1 master hunter on a hill, and ran further away",
 		// observed live) -- with the pack around it, engage adjacent enemies at the
-		// floor instead of consulting the self-preservation terminals below. With
-		// universal 1-move nothing can be caught, so a pack that will not commit can
-		// never be thinned in the field at all.
+		// floor, and MARCH at visible ones in the courage range. The march matters:
+		// 1-move pursuit never catches a runner, but it pins workers, fortified units
+		// and anything that stands its ground -- and a pack that will not even advance
+		// wanders off to garrison a wagon circle instead (observed live: the horde left
+		// to defend a freshly spawned barb city).
 		else if (iMinHorde > 0
 		&& plot()->plotCount(PUF_isPlayer, getOwner(), -1, NULL, NO_PLAYER, NO_TEAM, NULL, -1, -1, 2) >= iMinHorde)
 		{
-			if (AI_anyAttack(1, GC.getDefineINT("BARB_HORDE_COURAGE_ODDS_FLOOR", 1)))
+			if (AI_anyAttack(1, iOddsFloor))
 			{
 				logUnitAI(2, "[UNT/horde] owner=%d unit=%d fieldPack at=(%d,%d)",
+					(int)getOwner(), getID(), getX(), getY());
+				return;
+			}
+			if (AI_huntRange(iRange, iOddsFloor, false))
+			{
+				logUnitAI(2, "[UNT/horde] owner=%d unit=%d fieldMarch at=(%d,%d)",
 					(int)getOwner(), getID(), getX(), getY());
 				return;
 			}
