@@ -57,6 +57,16 @@ A hunter only reverts to its default UNITAI when `iOwnedHunters>5` (or deficit �
 surplus. So absent financial pressure, hunters persist on the roster indefinitely, which feeds
 back into A3 (owned count) but never satisfies the inflated need.
 
+### A5. Merging deflates the count under a count-based target — **[H]** (owner hypothesis, 2026-06-11)
+Hunter-line units can merge (`CvUnit::canMerge`/`doMerge`; note §B's dog exception — dogs
+cannot). Every merge (e.g. 3 units → 1 stronger unit) drops `iOwnedHunters` while hunting
+*capacity* is preserved, so the A3 deficit reopens and cities rebuild toward the count
+target — a merge → deficit → rebuild loop that pumps hammers into hunters even when
+capacity never fell. Benchmark consequence: census *count* series can't distinguish merges
+from attrition (observed 2026-06-11 game: hunters 120→111 across t340–348 during prey
+collapse — either reading fits). Any fix to A1/A3 should target hunting *capacity*
+(count weighted by merged size/strength), not raw unit count.
+
 **Net:** the AI targets ~`sqrt(cities)` hunters per landmass for the whole game regardless of
 animals, scores each hunter with no decay, keeps building toward the target, and rarely
 retires the ones it has. That's the dog/hunter glut.

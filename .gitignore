@@ -1,6 +1,10 @@
 # Claude Code local settings (per-developer; keep skills/ shared)
 .claude/settings.local.json
 
+# Live-game benchmark data (per-developer; the README documenting the scheme stays tracked)
+/Benchmarks/*
+!/Benchmarks/README.md
+
 # Compiled Object files
 *.obj
 

@@ -4,6 +4,7 @@
 #include "FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "BetterBTSAI.h"
 #include "CvArea.h"
 #include "CvBuildingInfo.h"
 #include "CvCity.h"
@@ -27196,6 +27197,14 @@ CvUnit* CvUnit::mergeUnits(CvUnit* pUnit1, CvUnit* pUnit2, CvUnit* pUnit3, CvSel
 		pkMergedUnit->joinGroup(pJoinGroup);
 	}
 
+	// [UNT/merge] -- Size Matters: three units became one. Merges deflate raw unit counts
+	// under count-based demand targets (docs/plans/unit-ai-valuation.md A5), so every merge
+	// is auditable in UnitAI.log.
+	logUnitAI(1, "[UNT/merge] owner=%d type=%d ai=%d at=(%d,%d) ids=(%d,%d,%d)->%d rank=%d quality=%d",
+		(int)eOwner, (int)eUnitType, (int)pkMergedUnit->AI_getUnitAIType(), pPlot->getX(), pPlot->getY(),
+		pUnit1->getID(), pUnit2->getID(), pUnit3->getID(), pkMergedUnit->getID(),
+		pkMergedUnit->groupRank(), pkMergedUnit->qualityRank());
+
 	pUnit1->joinGroup(NULL);
 	pUnit2->joinGroup(NULL);
 	pUnit3->joinGroup(NULL);
@@ -27373,6 +27382,13 @@ void CvUnit::doSplit()
 		}
 
 		GET_PLAYER(getOwner()).setSplittingUnit(FFreeList::INVALID_INDEX);
+
+		// [UNT/split] -- Size Matters: one unit became three (the inverse count distortion
+		// of [UNT/merge]; same auditability rationale).
+		logUnitAI(1, "[UNT/split] owner=%d type=%d ai=%d at=(%d,%d) id=%d->(%d,%d,%d) rank=%d quality=%d",
+			(int)getOwner(), (int)eUnitType, (int)pUnit0->AI_getUnitAIType(), pUnit0->getX(), pUnit0->getY(),
+			pUnit0->getID(), pUnit1->getID(), pUnit2->getID(), pUnit3->getID(),
+			pUnit1->groupRank(), pUnit1->qualityRank());
 
 		pUnit0->kill(true, NO_PLAYER, true);
 	}

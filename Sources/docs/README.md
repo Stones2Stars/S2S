@@ -51,6 +51,8 @@ This folder is split by intent:
 
 | Doc | Subject |
 |---|---|
+| [ai-architecture-north-star](plans/ai-architecture-north-star.md) | The coherence frame for the AI/data rework: goal, hard constraints, module taxonomy, roadmap |
+| [ai-vs-human-benchmarking](plans/ai-vs-human-benchmarking.md) | Live playthrough observation: does the AI run ahead of or lag the player; competence-not-handicaps principle |
 | [codebase-bug-hunt](plans/codebase-bug-hunt.md) | Standing C++/Python bug-sweep initiative + GitHub issue convention |
 | [combat-simplification-scope](plans/combat-simplification-scope.md) | Consolidated scope of the combat-system simplification |
 | [combat-model-sketch](plans/combat-model-sketch.md) | `CvCombatModel` engine API sketch (for review) |
@@ -63,6 +65,14 @@ This folder is split by intent:
 | [fight-or-flight](plans/fight-or-flight.md) | `FIGHT_OR_FLIGHT` design capture (removal + plugin reimplementation) |
 | [surround-destroy-removal-map](plans/surround-destroy-removal-map.md) | `SURROUND_DESTROY` removal map (deferred) |
 | [specialist-rebalance](plans/specialist-rebalance.md) | Why specialists are weak + the lever plan: yield-modifier parity (done), GPP rebalance, city-amplifier mechanics (#317) |
+| [derived-data-repository](plans/derived-data-repository.md) | Change-driven derived-data repository on the base objects (+ the `/units` HTTP endpoint) |
+| [turn-time-optimization](plans/turn-time-optimization.md) | Turn-time hotspot tracking and the remaining levers |
+| [unit-ai-valuation](plans/unit-ai-valuation.md) | Living report on unit-AI valuation bugs (hunter/dog persistence, tech-value fall-through, …) |
+| [subdued-animal-ai](plans/subdued-animal-ai.md) | AI handling of subdued animals: resource-building spread, butchering valuation |
+| [improvement-category-yields](plans/improvement-category-yields.md) | Building→improvement yield lever: Category-group replacement for per-improvement tags |
+| [worker-stranded-tiles-reachability](plans/worker-stranded-tiles-reachability.md) | AI border tiles unimproved because unreachable by land; reachability + efficiency fix |
+| [unified-prerequisites-and-constructibility](plans/unified-prerequisites-and-constructibility.md) | Unify the ~38 `Prereq*` families into the introspectable requirement model (#195) |
+| [multimap-zone-rework](plans/multimap-zone-rework.md) | One-map viewport-region approach to multi-zone play (vs separate-CvMap switching) |
 
 ## Where docs go
 

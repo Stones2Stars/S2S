@@ -130,6 +130,13 @@ Pipeline side (`CvCity::pushOrder`/`popOrder`/`doProduction`):
   in [`CvUnitAI.md`](CvUnitAI.md).
 - `[UNT/mission]` (2) — the committed MissionAI + target (central, in
   `CvSelectionGroupAI::AI_setMissionAI`).
+- `[UNT/merge]` (1) — Size Matters merge: three units became one
+  (`ids=(a,b,c)->d rank= quality=`, in `CvUnit::mergeUnits`). Logged because merges
+  deflate raw unit counts under count-based demand targets
+  ([`../plans/unit-ai-valuation.md`](../plans/unit-ai-valuation.md) §A5) — without this
+  line, a census count drop can't be told apart from attrition.
+- `[UNT/split]` (1) — Size Matters split: one unit became three
+  (`id=a->(b,c,d)`, in `CvUnit::doSplit`). The inverse count distortion of `[UNT/merge]`.
 
 ### `[COM]` — combat (`CombatAI.log`)
 
