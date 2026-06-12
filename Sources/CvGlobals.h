@@ -605,6 +605,12 @@ public:
 	// via Autolog__LogLevelPerf). Called once from the CABV PreLoop.
 	void logConstructRequirementFidelity() const;
 
+	// Static invisibility counter reverse-index: for invisibility class I, the trainable
+	// units that can see I. Load-derived from info data only -> identical on every client.
+	// Backs CvGame::canNPCFieldUnit's "every civ can counter it" gate on NPC invisible
+	// units. See Sources/docs/plans/ai-vs-human-benchmarking.md (criminal finding).
+	const std::vector<UnitTypes>& getUnitsSeeingInvisible(InvisibleTypes eInvisible) const;
+
 	int getNumSpecialBuildingInfos() const;
 	CvSpecialBuildingInfo& getSpecialBuildingInfo(SpecialBuildingTypes eSpecialBuildingNum) const;
 
@@ -812,6 +818,7 @@ public:
 protected:
 	void doPostLoadCaching();
 	void buildConstructibilityEnablerIndex();
+	void buildInvisibleSeerIndex();
 
 	bool m_bGraphicsInitialized;
 	bool m_bDLLProfiler;
@@ -1001,6 +1008,7 @@ protected:
 	// #195 constructibility enabler reverse-indices, indexed by enabler BuildingTypes.
 	std::vector< std::vector<BuildingTypes> > m_buildingEnablerIndex;
 	std::vector< std::vector<UnitTypes> > m_buildingToUnitsEnabledIndex;
+	std::vector< std::vector<UnitTypes> > m_invisibleSeerUnits;
 	std::vector<CvSpecialBuildingInfo*> m_paSpecialBuildingInfo;
 	CvInfoReplacements<CvSpecialBuildingInfo> m_SpecialBuildingInfoReplacements;
 	std::vector<CvUnitInfo*> m_paUnitInfo;

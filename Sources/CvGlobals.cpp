@@ -3224,6 +3224,8 @@ void cvInternalGlobals::doPostLoadCaching()
 	// Derive the static constructibility enabler reverse-index now that every building's
 	// prereqs, free bonuses and construct-condition are loaded and resolved (#195).
 	buildConstructibilityEnablerIndex();
+
+	buildInvisibleSeerIndex();
 }
 
 const std::vector<BuildingTypes>& cvInternalGlobals::getBuildingsEnabledBy(BuildingTypes eEnabler) const
@@ -3236,6 +3238,46 @@ const std::vector<UnitTypes>& cvInternalGlobals::getUnitsEnabledBy(BuildingTypes
 {
 	FASSERT_BOUNDS(0, (int)m_buildingToUnitsEnabledIndex.size(), eEnabler);
 	return m_buildingToUnitsEnabledIndex[eEnabler];
+}
+
+const std::vector<UnitTypes>& cvInternalGlobals::getUnitsSeeingInvisible(InvisibleTypes eInvisible) const
+{
+	FASSERT_BOUNDS(0, (int)m_invisibleSeerUnits.size(), eInvisible);
+	return m_invisibleSeerUnits[eInvisible];
+}
+
+// Build, once at load, the map "invisibility class -> trainable units that can see it".
+// Pure function of info data, so it is identical on every client (lockstep/OOS safe) and
+// never needs rebuilding during play. Units that can never be trained (ProductionCost -1,
+// e.g. spawn-only creatures) are excluded: a civ "unlocking" one of those is no counter.
+// Only units offering UNITAI_SEE_INVISIBLE count as seers: recon units (Scout/Guide/...)
+// technically see camouflage but roam the map instead of countering infiltrators, and
+// counting them opened the NPC gate at TECH_TRAILS -- observed live 2026-06-11: a new
+// barb thief spawned at t~270 "through" the gate. The dedicated-counter lines (dogs, law
+// enforcement) all carry the AI type.
+void cvInternalGlobals::buildInvisibleSeerIndex()
+{
+	PROFILE_EXTRA_FUNC();
+	m_invisibleSeerUnits.assign(getNumInvisibleInfos(), std::vector<UnitTypes>());
+
+	for (int iI = 0; iI < getNumUnitInfos(); iI++)
+	{
+		const CvUnitInfo& kUnit = getUnitInfo(static_cast<UnitTypes>(iI));
+
+		if (kUnit.getProductionCost() < 0 || !kUnit.getUnitAIType(UNITAI_SEE_INVISIBLE))
+		{
+			continue;
+		}
+		for (int iJ = 0; iJ < kUnit.getNumSeeInvisibleTypes(); iJ++)
+		{
+			const int iSee = kUnit.getSeeInvisibleType(iJ);
+
+			if (iSee > -1)
+			{
+				m_invisibleSeerUnits[iSee].push_back(static_cast<UnitTypes>(iI));
+			}
+		}
+	}
 }
 
 // Build, once at load, the map "enabler building B -> buildings whose constructibility

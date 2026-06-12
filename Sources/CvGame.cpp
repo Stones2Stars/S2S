@@ -11429,6 +11429,35 @@ bool CvGame::canEverConstruct(BuildingTypes eBuilding) const
 	return true;
 }
 
+// NPC eligibility gate. NPCs spawn virtually anywhere, so an NPC unit nobody can detect
+// is uncounterable wherever it appears; a PC player's invisible unit must instead travel
+// from its owner's territory, which is an investment and an exposure. Hence: NPC players
+// may not field a unit with an invisibility class until every living civ team has
+// tech-unlocked at least one unit that can see that class (e.g. barbarian Thieves stay
+// out of the game until the dog line is universally available). Invisibility classes with
+// no trainable seer anywhere in the XML keep the gate closed by the same principle.
+// See Sources/docs/plans/ai-vs-human-benchmarking.md (criminal finding).
+bool CvGame::canNPCFieldUnit(UnitTypes eUnit) const
+{
+	PROFILE_EXTRA_FUNC();
+	const InvisibleTypes eInvisible = (InvisibleTypes)GC.getUnitInfo(eUnit).getInvisibleType();
+
+	if (eInvisible == NO_INVISIBLE)
+	{
+		return true;
+	}
+	for (int iI = 0; iI < MAX_PC_TEAMS; iI++)
+	{
+		const CvTeam& kTeam = GET_TEAM((TeamTypes)iI);
+
+		if (kTeam.isAlive() && !kTeam.isInvisibleSeerUnlocked(eInvisible))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
 bool CvGame::canEverTrain(UnitTypes eUnit) const
 {
 	PROFILE_EXTRA_FUNC();

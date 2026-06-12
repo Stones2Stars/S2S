@@ -5067,6 +5067,37 @@ bool CvTeam::isHasTech(TechTypes eIndex) const
 	return false;
 }
 
+// True if this team has researched everything needed to train at least one unit that can
+// see eInvisible. Tech-unlock only by intent: resources/buildings are availability noise,
+// and once the counter tech is in, the gap is the team's to close.
+bool CvTeam::isInvisibleSeerUnlocked(InvisibleTypes eInvisible) const
+{
+	PROFILE_EXTRA_FUNC();
+	foreach_(const UnitTypes eSeer, GC.getUnitsSeeingInvisible(eInvisible))
+	{
+		const CvUnitInfo& kSeer = GC.getUnitInfo(eSeer);
+
+		if (!isHasTech((TechTypes)kSeer.getPrereqAndTech()))
+		{
+			continue;
+		}
+		bool bHasAllTechs = true;
+		foreach_(const TechTypes eTechX, kSeer.getPrereqAndTechs())
+		{
+			if (!isHasTech(eTechX))
+			{
+				bHasAllTechs = false;
+				break;
+			}
+		}
+		if (bHasAllTechs)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 
 void CvTeam::cacheAdjacentResearch()
 {

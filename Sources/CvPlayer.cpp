@@ -6362,7 +6362,7 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 
 	if (eUnit == NO_UNIT) return false;
 
-	if (isNPC() && isWorldUnit(eUnit))
+	if (isNPC() && (isWorldUnit(eUnit) || !GC.getGame().canNPCFieldUnit(eUnit)))
 	{
 		return false;
 	}

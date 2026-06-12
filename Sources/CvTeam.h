@@ -399,6 +399,7 @@ public:
 
 	bool isHasTech(TechTypes eIndex) const;
 	void setHasTech(TechTypes eIndex, bool bNewValue, PlayerTypes ePlayer, bool bFirst, bool bAnnounce);
+	bool isInvisibleSeerUnlocked(InvisibleTypes eInvisible) const;
 
 	bool isNoTradeTech(short iTech) const;
 	void setNoTradeTech(short iTech, bool bNewValue);
