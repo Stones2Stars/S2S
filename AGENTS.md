@@ -106,6 +106,14 @@ not findings to re-discover.
   gate per-re-plan progress on an RNG — re-rolled dice compound into a random walk.
   `MOVE_NO_ENEMY_TERRITORY` does NOT keep units out of rival land (it only excludes
   at-war territory), so it is not a substitute for any of the above.
+- **Generalization — pseudo-progress terminals (owner ruling 2026-06-12, #410): a
+  free/cheap action that cannot change the strategic state must not satisfy the decision
+  loop.** A cascade step that "does something" (a ranged potshot, a no-op heal, an
+  advertise-that-returns-true) terminates the unit's decision looking like progress, so
+  the real commit-or-withdraw decision is never reached — AI stacks camped cities for
+  eras feeding near-zero-damage ranged strikes as the "yay we did something at least"
+  clause. Standoff/maintenance actions are phase steps inside a plan with an abort rule,
+  never turn-satisfying terminals in their own right.
 
 ### Graphics / map generation
 - Any plot-graphics mutation must be guarded by **`GC.IsGraphicsInitialized()`**.
