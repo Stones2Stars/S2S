@@ -39234,7 +39234,7 @@
 			<iCost>-1</iCost>
 			<iBaseUpkeep>1</iBaseUpkeep>
 			<iMoves>3</iMoves>
-			<iCombat>2</iCombat>
+			<iCombat>4</iCombat>
 			<iXPValueAttack>1</iXPValueAttack>
 			<iXPValueDefense>2</iXPValueDefense>
 			<iCityAttack>-75</iCityAttack>
@@ -39328,7 +39328,7 @@
 			<iCost>-1</iCost>
 			<iBaseUpkeep>1</iBaseUpkeep>
 			<iMoves>3</iMoves>
-			<iCombat>3</iCombat>
+			<iCombat>5</iCombat>
 			<iXPValueAttack>1</iXPValueAttack>
 			<iXPValueDefense>2</iXPValueDefense>
 			<iCityAttack>-75</iCityAttack>
@@ -39418,7 +39418,7 @@
 <!--            <SupersedingUnits>-->
 <!--                <UnitType>UNIT_NEANDERTHAL_MASTER_HUNTER</UnitType>-->
 <!--            </SupersedingUnits>-->
-			<iCombat>4</iCombat>
+			<iCombat>6</iCombat>
 			<iXPValueAttack>1</iXPValueAttack>
 			<iXPValueDefense>2</iXPValueDefense>
 			<iCityAttack>-75</iCityAttack>
@@ -39499,7 +39499,7 @@
 			<iCost>-1</iCost>
 			<iBaseUpkeep>1</iBaseUpkeep>
 			<iMoves>3</iMoves>
-			<iCombat>5</iCombat>
+			<iCombat>7</iCombat>
 			<iXPValueAttack>1</iXPValueAttack>
 			<iXPValueDefense>2</iXPValueDefense>
 			<iCityAttack>-75</iCityAttack>
@@ -39580,7 +39580,7 @@
 			<iCost>-1</iCost>
 			<iBaseUpkeep>1</iBaseUpkeep>
 			<iMoves>3</iMoves>
-			<iCombat>7</iCombat>
+			<iCombat>9</iCombat>
 			<iXPValueAttack>1</iXPValueAttack>
 			<iXPValueDefense>2</iXPValueDefense>
 			<iCityAttack>-75</iCityAttack>
@@ -39662,7 +39662,7 @@
 			<iCost>-1</iCost>
 			<iBaseUpkeep>1</iBaseUpkeep>
 			<iMoves>3</iMoves>
-			<iCombat>10</iCombat>
+			<iCombat>12</iCombat>
 			<iXPValueAttack>1</iXPValueAttack>
 			<iXPValueDefense>2</iXPValueDefense>
 			<iCityAttack>-75</iCityAttack>
@@ -39740,7 +39740,7 @@
 			<iCost>-1</iCost>
 			<iBaseUpkeep>1</iBaseUpkeep>
 			<iMoves>4</iMoves>
-			<iCombat>15</iCombat>
+			<iCombat>17</iCombat>
 			<iXPValueAttack>1</iXPValueAttack>
 			<iXPValueDefense>2</iXPValueDefense>
 			<iCityAttack>-75</iCityAttack>
