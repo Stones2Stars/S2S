@@ -2083,7 +2083,13 @@ void CvUnitAI::AI_workerMove()
 		return;
 	}
 	//ls612: Combat Worker Danger Evaluation
-	const bool bWorkerDanger = bAbroad && GET_PLAYER(getOwner()).AI_isPlotThreatened(plot(), 2) || !bAbroad && exposedToDanger(plot(), 80, false);
+	// #406/#415: the danger half of the test is protection-aware (dangerOverwhelmsMission:
+	// nearby enemy strength must outweigh the defense standing on the plot) -- the bare
+	// threat tests parked 10 automated human gatherers in their city FOREVER on a map
+	// where "threatened within 2" is a permanent condition, with defenders on every tile
+	// (live repro: every gatherer logged retreatToCity/holdFriendlyCity each turn).
+	const bool bWorkerDanger = (bAbroad || exposedToDanger(plot(), 80, false))
+		&& getGroup()->dangerOverwhelmsMission(2);
 
 	// #406 counterpart: an escorted worker trusts its escort -- the flee test is the
 	// GROUP's ability to defend, not the worker's own (the old unit-level test made a
@@ -2119,7 +2125,13 @@ void CvUnitAI::AI_workerMove()
 		return;
 	}
 
-	if (!getGroup()->canDefend() && (isHuman() && GET_PLAYER(getOwner()).AI_isPlotThreatened(plot(), 2) || !isHuman() && AI_workerNeedsDefender(plot())) && AI_retreatToCity()) // XXX maybe not do this??? could be working productively somewhere else...
+	// #415: the human(-automated) branch used the bare AI_isPlotThreatened(2) -- with no
+	// protection awareness, prehistoric threat saturation made this terminal re-park
+	// automated gatherers every turn ("could be working productively somewhere else",
+	// indeed). Both branches now require the danger to OVERWHELM the standing defense.
+	if (!getGroup()->canDefend()
+	&& (isHuman() ? getGroup()->dangerOverwhelmsMission(2) : AI_workerNeedsDefender(plot()) && getGroup()->dangerOverwhelmsMission(2))
+	&& AI_retreatToCity())
 	{
 		return;
 	}
