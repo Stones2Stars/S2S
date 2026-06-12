@@ -79,6 +79,11 @@ assaulting a fully fortified city, or **produce them to hell**, so you can affor
 waste a few dozen as ammunition. A siege weapon whose two viable doctrines are
 "singularity ram" and "human-wave the woodwork."
 
+Which is its own realism citation: the historical battering ram was a thing you schlepped
+for miles, hid behind, and could never actually lose — a roofed, mantleted, reusable piece
+of capital equipment that outlived the men swinging it. It was not something you built in
+the hundreds and fed to a wall like crackers.
+
 *Status: working as designed, allegedly. The army-lifecycle work (#410) owns the
 question of what early-era siege should actually be.*
 
