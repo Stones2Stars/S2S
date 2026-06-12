@@ -584,6 +584,15 @@ protected:
      */
 	void AI_attackCityMove();
 
+	/**
+	 * Size Matters need-driven merge (#395): when the stack besieging a city cannot beat
+	 * its best defender as singles, merges a triple whose merged unit out-muscles that
+	 * defender (per-battle punch breaks cities). The actual attack stays odds-gated on
+	 * the next evaluation. Returns true if a merge happened (this unit may be one of the
+	 * merged-away triple -- callers must return immediately).
+	 */
+	bool AI_smMergeToBreachCity(const CvCity* pTargetCity);
+
     /**
      * Handles movement logic for city attack lemming units.
      * @brief Executes AI behavior for units assigned to follow city attack stacks.

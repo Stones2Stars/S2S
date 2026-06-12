@@ -2996,6 +2996,99 @@ void CvUnitAI::AI_paratrooperMove()
 }
 
 
+// Size Matters need-driven merge (#395, owner ruling 2026-06-12): a stack besieging a city
+// feeds the defender 1v1 -- three S-strength attackers lose three favorable-to-the-defender
+// battles where one 1.5xS attacker wins. When the group's units cannot out-muscle the
+// city's best defender as singles, merge a triple whose merged form flips that strength
+// dominance. Speculative by design: the actual attack remains odds-gated next evaluation
+// (AI_stackAttackCity / AI_cityAttack); this only changes the stack's composition.
+bool CvUnitAI::AI_smMergeToBreachCity(const CvCity* pTargetCity)
+{
+	PROFILE_EXTRA_FUNC();
+
+	// Human (automated) stacks are excluded: a direct CvUnit::mergeUnits here would merge
+	// the player's units silently, without the confirmation popup the manual path uses.
+	if (!GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) || isHuman())
+	{
+		return false;
+	}
+	const CvUnit* pDefender = pTargetCity->plot()->getBestDefender(pTargetCity->getOwner(), getOwner(), this, true, /*bTestPotentialEnemy*/ true);
+
+	if (pDefender == NULL)
+	{
+		return false;
+	}
+	// Snapshot by ID (the doMergeAllInGroup idiom) -- merging mutates the group.
+	std::vector<int> aiEligible;
+	foreach_(const CvUnit* unitX, getGroup()->units())
+	{
+		if (unitX->canAttack()
+		&& unitX->isMergeEligible()
+		&& unitX->groupRank() < unitX->eraGroupMergeLimit())
+		{
+			aiEligible.push_back(unitX->getID());
+		}
+	}
+	if (aiEligible.size() < 3)
+	{
+		return false;
+	}
+	CvPlayer& kOwner = GET_PLAYER(getOwner());
+
+	for (size_t i = 0; i < aiEligible.size(); i++)
+	{
+		CvUnit* pBase = kOwner.getUnit(aiEligible[i]);
+		if (pBase == NULL || !pBase->isMergeEligible())
+		{
+			continue;
+		}
+		// Only merge where it flips the duel: the single loses the strength matchup, the
+		// merged unit (x1.5) wins it. Already-dominant or hopeless triples stay unmerged
+		// (a merge halves the triple's aggregate strength).
+		const int iSingleStr = pBase->currCombatStr(NULL, NULL);
+		const int iDefenderStr = pDefender->currCombatStr(pTargetCity->plot(), pBase);
+
+		if (iSingleStr > iDefenderStr
+		|| iSingleStr * GC.getSIZE_MATTERS_MOST_MULTIPLIER() / 100 <= iDefenderStr)
+		{
+			continue;
+		}
+		std::vector<CvUnit*> apTriple;
+		apTriple.push_back(pBase);
+
+		for (size_t j = 0; j < aiEligible.size() && apTriple.size() < 3; j++)
+		{
+			if (j == i)
+			{
+				continue;
+			}
+			CvUnit* pPartner = kOwner.getUnit(aiEligible[j]);
+
+			if (pPartner != NULL
+			&& pPartner->isMergeEligible()
+			&& pPartner->getUnitType() == pBase->getUnitType()
+			&& pPartner->groupRank() == pBase->groupRank()
+			&& pPartner->qualityRank() == pBase->qualityRank())
+			{
+				apTriple.push_back(pPartner);
+			}
+		}
+		if (apTriple.size() < 3)
+		{
+			continue;
+		}
+		// [UNT/merge2breach] -- the decision line; the merge itself logs as [UNT/merge].
+		logUnitAI(1, "[UNT/merge2breach] owner=%d unit=%d type=%d target=(%d,%d) singleStr=%d defStr=%d",
+			(int)getOwner(), pBase->getID(), (int)pBase->getUnitType(),
+			pTargetCity->getX(), pTargetCity->getY(), iSingleStr, iDefenderStr);
+
+		CvUnit::mergeUnits(apTriple[0], apTriple[1], apTriple[2], apTriple[0]->getGroup());
+		return true; // 'this' may be merged away -- callers return immediately.
+	}
+	return false;
+}
+
+
 void CvUnitAI::AI_attackCityMove()
 {
 	PROFILE_FUNC();
@@ -3395,6 +3488,12 @@ void CvUnitAI::AI_attackCityMove()
 					{
 						return;
 					}
+				}
+				// #395: odds as singles are not good enough -- recognize "merge to beat the
+				// defender" before settling in to bombard/wait.
+				else if (AI_smMergeToBreachCity(pTargetCity))
+				{
+					return;
 				}
 				if ((iComparePostBombard >= iAttackRatio) || (pTargetCity->getDefenseDamage() < ((GC.getMAX_CITY_DEFENSE_DAMAGE() * 1) / 2)) || (iOurOffense / (iEnemyOffense+1)) > 39/20 || pTargetCity->plot()->getNumDefenders(pTargetCity->getOwner()) <= 2)
 				{

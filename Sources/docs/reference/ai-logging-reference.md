@@ -141,6 +141,10 @@ Pipeline side (`CvCity::pushOrder`/`popOrder`/`doProduction`):
   line, a census count drop can't be told apart from attrition.
 - `[UNT/split]` (1) — Size Matters split: one unit became three
   (`id=a->(b,c,d)`, in `CvUnit::doSplit`). The inverse count distortion of `[UNT/merge]`.
+- `[UNT/merge2breach]` (1) — need-driven siege merge decision (#395, in
+  `CvUnitAI::AI_smMergeToBreachCity`): the stack cannot out-muscle the target city's best
+  defender as singles (`singleStr`/`defStr`) and merges a triple to flip the duel. The
+  merge itself logs as `[UNT/merge]`.
 
 ### `[COM]` — combat (`CombatAI.log`)
 
