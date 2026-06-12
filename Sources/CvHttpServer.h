@@ -21,6 +21,12 @@
 //                                      property values: crime, education, disease
 //   GET /cities?id=N                -> filtered to one city id (combinable with playerNumber)
 //   GET /cities?playerNumber=N      -> filtered to one player's cities
+//   GET /events                     -> Server-Sent Events stream (#407): "hello" with the
+//                                      current turn + gameId on connect, then "turnEnd"
+//                                      (old turn) and "turnStart" (new turn) bracketing
+//                                      every game-turn increment, ": keepalive" comments
+//                                      every ~15s. text/event-stream; the response never
+//                                      ends. At most 8 concurrent streams (503 beyond).
 // The /units and /players wrappers carry "gameId" (JSON string) -- CvGame::getGameId(),
 // the persistent playtest identity stamped at game creation (digits-only yyMMddHHmm local
 // time for new games; saves predating the format change carry "DD-MM-YYYY HH:MM:SS") --
@@ -44,6 +50,11 @@ namespace CvHttpServer
 	// snapshots queryable state into the server's buffer. No-op when the server is
 	// off; internally throttled to one snapshot every few seconds when it is on.
 	void publishIfDue();
+
+	// Game-thread event publish (#407): enqueues one SSE frame ("event: <szEvent>",
+	// "data: <szJsonData>") for the /events stream. Pre-rendered on this side so the
+	// server thread never touches game objects; cheap no-op when the server is off.
+	void publishEvent(const char* szEvent, const char* szJsonData);
 }
 
 #endif

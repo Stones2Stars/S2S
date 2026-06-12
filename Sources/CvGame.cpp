@@ -5998,8 +5998,15 @@ void CvGame::doTurn()
 		}
 	}
 	{ PERF_SCOPE("game.py.endGameTurn", -1); CvEventReporter::getInstance().endGameTurn(getGameTurn()); }
+
+	// #407: turn-boundary events for the dev SSE stream (cheap no-ops when the server
+	// is off). turnEnd carries the closing turn, turnStart the incremented one.
+	CvHttpServer::publishEvent("turnEnd", CvString::format("{\"turn\":%d,\"gameId\":\"%s\"}", getGameTurn(), getGameId().c_str()).c_str());
+
 	incrementGameTurn();
 	incrementElapsedGameTurns();
+
+	CvHttpServer::publishEvent("turnStart", CvString::format("{\"turn\":%d,\"gameId\":\"%s\"}", getGameTurn(), getGameId().c_str()).c_str());
 
 	if (isMPOption(MPOPTION_SIMULTANEOUS_TURNS))
 	{

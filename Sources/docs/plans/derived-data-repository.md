@@ -254,7 +254,13 @@ rule below (it carries a free-text name field) — and **`/cities`** (same day) 
 optional `?id=N` / `?playerNumber=N`: per city position/name/population/yield rates/
 production head (+turns left)/buildings/culture level/capital plus the live crime,
 education and disease property values (picojson; free-text name). Wrappers carry the
-snapshot turn (also the `X-S2S-Turn` response header) and `gameId`.
+snapshot turn (also the `X-S2S-Turn` response header) and `gameId`. **`/events`**
+(2026-06-12, #407) is a Server-Sent Events stream: `hello` (current turn + gameId) on
+connect, then `turnEnd`/`turnStart` bracketing every game-turn increment
+(`CvGame::doTurn` → `publishEvent`, a lock-guarded pre-rendered frame queue the server
+thread broadcasts — SSE chosen over WebSocket: same persistent-connection rework, none
+of the handshake/framing; consumable from PowerShell/curl/`EventSource` natively). At
+most 8 concurrent streams; ~15s comment keepalives reap dead clients.
 
 **Publish-and-serve contract (the pattern phase 2 generalizes):** the server thread NEVER
 touches game objects. `CvHttpServer::publishIfDue()` runs on the game thread once per frame

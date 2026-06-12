@@ -131,6 +131,16 @@ namespace
 	bst::shared_ptr<const GameSnapshot> g_pSnapshot; // guarded by g_snapshotLock
 	DWORD g_iLastPublishTick = 0;                    // game thread only
 
+	// --- SSE turn-event stream (#407) -----------------------------------------------
+	// The game thread enqueues pre-rendered SSE frames (CvHttpServer::publishEvent);
+	// the server thread drains and broadcasts them to the connected /events clients.
+	// Same contract as the snapshot: the server thread never touches game objects.
+	CRITICAL_SECTION g_eventLock;          // initialized alongside g_snapshotLock
+	std::vector<CvString> g_pendingEvents; // guarded by g_eventLock
+	const size_t EVENT_QUEUE_CAP = 256;    // backstop: drop new events beyond this
+	std::vector<SOCKET> g_sseClients;      // server thread only
+	const size_t SSE_CLIENT_CAP = 8;
+
 	bst::shared_ptr<const GameSnapshot> grabSnapshot()
 	{
 		EnterCriticalSection(&g_snapshotLock);
@@ -150,7 +160,7 @@ namespace
 		"\r\n"
 		"GET only\n";
 
-	void sendAll(SOCKET sock, const char* szData, int iLen)
+	bool sendAll(SOCKET sock, const char* szData, int iLen)
 	{
 		int iSent = 0;
 		while (iSent < iLen)
@@ -158,10 +168,11 @@ namespace
 			const int iRet = send(sock, szData + iSent, iLen - iSent, 0);
 			if (iRet == SOCKET_ERROR || iRet == 0)
 			{
-				return;
+				return false;
 			}
 			iSent += iRet;
 		}
+		return true;
 	}
 
 	void sendResponse(SOCKET sock, const char* szStatus, const char* szContentType, const CvString& szBody, int iTurn)
@@ -342,12 +353,67 @@ namespace
 		return pSnap ? pSnap->iTurn : -1;
 	}
 
-	void handleRequest(SOCKET sock, const char* szRequest)
+	// --- SSE turn-event stream (server thread; #407) --------------------------------
+
+	// The /events preamble: a response that never ends (no Content-Length -- the
+	// stream IS the body). The hello event carries the current snapshot turn and
+	// gameId so a client syncs immediately and detects reloads on reconnect.
+	void beginEventStream(SOCKET sock)
+	{
+		const bst::shared_ptr<const GameSnapshot> pSnap = grabSnapshot();
+		const CvString szHead = CvString::format(
+			"HTTP/1.1 200 OK\r\n"
+			"Content-Type: text/event-stream\r\n"
+			"Cache-Control: no-cache\r\n"
+			"Connection: keep-alive\r\n"
+			"Access-Control-Allow-Origin: *\r\n"
+			"\r\n"
+			"retry: 3000\n\n"
+			"event: hello\ndata: {\"turn\":%d,\"gameId\":\"%s\"}\n\n",
+			pSnap ? pSnap->iTurn : -1, pSnap ? pSnap->szGameId.c_str() : "");
+		sendAll(sock, szHead.c_str(), (int)szHead.size());
+	}
+
+	// Server thread (NEVER the profiler -- it is not thread-safe).
+	void broadcastPendingEvents()
+	{
+		if (g_sseClients.empty())
+		{
+			// Nobody listening -- still drain, so the queue cannot sit full while idle.
+			EnterCriticalSection(&g_eventLock);
+			g_pendingEvents.clear();
+			LeaveCriticalSection(&g_eventLock);
+			return;
+		}
+		std::vector<CvString> events;
+		EnterCriticalSection(&g_eventLock);
+		events.swap(g_pendingEvents);
+		LeaveCriticalSection(&g_eventLock);
+
+		for (size_t i = 0; i < events.size(); ++i)
+		{
+			for (size_t j = 0; j < g_sseClients.size(); )
+			{
+				if (!sendAll(g_sseClients[j], events[i].c_str(), (int)events[i].size()))
+				{
+					closesocket(g_sseClients[j]);
+					g_sseClients.erase(g_sseClients.begin() + j);
+				}
+				else
+				{
+					++j;
+				}
+			}
+		}
+	}
+
+	// Returns true if the socket joined the SSE client list and must stay open.
+	bool handleRequest(SOCKET sock, const char* szRequest)
 	{
 		if (strncmp(szRequest, "GET ", 4) != 0)
 		{
 			sendAll(sock, RESPONSE_405, (int)strlen(RESPONSE_405));
-			return;
+			return false;
 		}
 
 		// Extract the request target ("/units?id=123") -- everything between the
@@ -449,10 +515,26 @@ namespace
 			}
 			sendResponse(sock, "200 OK", "application/json", renderCities(bFilterId, iId, bFilterOwner, iOwner), snapshotTurn());
 		}
+		else if (strcmp(szTarget, "/events") == 0)
+		{
+			// SSE turn-event stream (#407): the response never ends and the socket
+			// joins the broadcast list (the caller must keep it open).
+			if (g_sseClients.size() >= SSE_CLIENT_CAP)
+			{
+				sendResponse(sock, "503 Service Unavailable", "application/json", CvString("{\"error\":\"too many event streams\"}\n"), snapshotTurn());
+			}
+			else
+			{
+				beginEventStream(sock);
+				g_sseClients.push_back(sock);
+				return true;
+			}
+		}
 		else
 		{
 			sendResponse(sock, "404 Not Found", "application/json", CvString("{\"error\":\"not found\"}\n"), snapshotTurn());
 		}
+		return false;
 	}
 
 	void handleClient(SOCKET sock)
@@ -480,13 +562,20 @@ namespace
 			}
 		}
 
+		bool bKeepOpen = false;
 		if (iReceived > 0)
 		{
 			szRequest[iReceived] = '\0';
-			handleRequest(sock, szRequest);
-			shutdown(sock, SD_SEND);
+			bKeepOpen = handleRequest(sock, szRequest);
+			if (!bKeepOpen)
+			{
+				shutdown(sock, SD_SEND);
+			}
 		}
-		closesocket(sock);
+		if (!bKeepOpen)
+		{
+			closesocket(sock);
+		}
 	}
 
 	void runServerLoop()
@@ -524,13 +613,21 @@ namespace
 			return;
 		}
 
+		DWORD iLastKeepaliveTick = GetTickCount();
+
 		while (g_iStopRequested == 0)
 		{
 			// select() with a timeout so the stop flag is honoured within 250ms
 			// without the game thread having to close the socket out from under us.
+			// The persistent /events clients are watched too: them becoming readable
+			// means stray data (drained, ignored) or a disconnect to reap.
 			fd_set readSet;
 			FD_ZERO(&readSet);
 			FD_SET(listenSock, &readSet);
+			for (size_t i = 0; i < g_sseClients.size(); ++i)
+			{
+				FD_SET(g_sseClients[i], &readSet);
+			}
 			timeval timeout;
 			timeout.tv_sec = 0;
 			timeout.tv_usec = 250 * 1000;
@@ -540,16 +637,61 @@ namespace
 			{
 				break;
 			}
-			if (iReady == 0)
+			if (iReady > 0)
 			{
-				continue;
+				if (FD_ISSET(listenSock, &readSet))
+				{
+					const SOCKET clientSock = accept(listenSock, NULL, NULL);
+					if (clientSock != INVALID_SOCKET)
+					{
+						handleClient(clientSock);
+					}
+				}
+				for (size_t i = 0; i < g_sseClients.size(); )
+				{
+					if (FD_ISSET(g_sseClients[i], &readSet))
+					{
+						char szDrain[256];
+						const int iRet = recv(g_sseClients[i], szDrain, sizeof(szDrain), 0);
+						if (iRet == 0 || iRet == SOCKET_ERROR)
+						{
+							closesocket(g_sseClients[i]);
+							g_sseClients.erase(g_sseClients.begin() + i);
+							continue;
+						}
+					}
+					++i;
+				}
 			}
-			const SOCKET clientSock = accept(listenSock, NULL, NULL);
-			if (clientSock != INVALID_SOCKET)
+
+			broadcastPendingEvents();
+
+			// Comment-line keepalive: detects half-dead clients between turns and
+			// keeps idle streams from being timed out by intermediaries.
+			const DWORD iNow = GetTickCount();
+			if (iNow - iLastKeepaliveTick >= 15000)
 			{
-				handleClient(clientSock);
+				iLastKeepaliveTick = iNow;
+				for (size_t i = 0; i < g_sseClients.size(); )
+				{
+					if (!sendAll(g_sseClients[i], ": keepalive\n\n", 13))
+					{
+						closesocket(g_sseClients[i]);
+						g_sseClients.erase(g_sseClients.begin() + i);
+					}
+					else
+					{
+						++i;
+					}
+				}
 			}
 		}
+
+		for (size_t i = 0; i < g_sseClients.size(); ++i)
+		{
+			closesocket(g_sseClients[i]);
+		}
+		g_sseClients.clear();
 
 		closesocket(listenSock);
 		WSACleanup();
@@ -583,9 +725,15 @@ void CvHttpServer::setEnabled(bool bEnable)
 		if (!g_bLockInitialized)
 		{
 			InitializeCriticalSection(&g_snapshotLock);
+			InitializeCriticalSection(&g_eventLock);
 			g_bLockInitialized = true;
 		}
 		g_iLastPublishTick = 0; // force a fresh snapshot on the next frame
+
+		// Drop any events queued by a previous server incarnation.
+		EnterCriticalSection(&g_eventLock);
+		g_pendingEvents.clear();
+		LeaveCriticalSection(&g_eventLock);
 
 		// Pin the DLL for the thread's lifetime BEFORE starting it (the thread
 		// releases the pin as it exits, via FreeLibraryAndExitThread).
@@ -614,6 +762,26 @@ void CvHttpServer::setEnabled(bool bEnable)
 		}
 		g_hThread = NULL;
 	}
+}
+
+// Game thread (#407): enqueue a turn-boundary event for the /events SSE stream. The
+// frame is pre-rendered here so the server thread never touches game objects; a cheap
+// no-op while the server is off. Events beyond the queue cap are dropped (a backstop
+// against a wedged server thread -- the stream is advisory dev tooling, never truth).
+void CvHttpServer::publishEvent(const char* szEvent, const char* szJsonData)
+{
+	if (g_hThread == NULL)
+	{
+		return;
+	}
+	const CvString szFrame = CvString::format("event: %s\ndata: %s\n\n", szEvent, szJsonData);
+
+	EnterCriticalSection(&g_eventLock);
+	if (g_pendingEvents.size() < EVENT_QUEUE_CAP)
+	{
+		g_pendingEvents.push_back(szFrame);
+	}
+	LeaveCriticalSection(&g_eventLock);
 }
 
 // Game thread, once per frame from CvGame::update. Walks live game objects HERE
