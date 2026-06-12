@@ -68,6 +68,7 @@ This folder is split by intent:
 | [derived-data-repository](plans/derived-data-repository.md) | Change-driven derived-data repository on the base objects (+ the `/units` HTTP endpoint) |
 | [turn-time-optimization](plans/turn-time-optimization.md) | Turn-time hotspot tracking and the remaining levers |
 | [unit-ai-valuation](plans/unit-ai-valuation.md) | Living report on unit-AI valuation bugs (hunter/dog persistence, tech-value fall-through, …) |
+| [size-matters-ai](plans/size-matters-ai.md) | SM-literate AI (#395): strength-weighted force accounting, garrison consolidation, need-driven merges |
 | [subdued-animal-ai](plans/subdued-animal-ai.md) | AI handling of subdued animals: resource-building spread, butchering valuation |
 | [improvement-category-yields](plans/improvement-category-yields.md) | Building→improvement yield lever: Category-group replacement for per-improvement tags |
 | [worker-stranded-tiles-reachability](plans/worker-stranded-tiles-reachability.md) | AI border tiles unimproved because unreachable by land; reachability + efficiency fix |

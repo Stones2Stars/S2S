@@ -65,7 +65,9 @@ target — a merge → deficit → rebuild loop that pumps hammers into hunters 
 capacity never fell. Benchmark consequence: census *count* series can't distinguish merges
 from attrition (observed 2026-06-11 game: hunters 120→111 across t340–348 during prey
 collapse — either reading fits). Any fix to A1/A3 should target hunting *capacity*
-(count weighted by merged size/strength), not raw unit count.
+(count weighted by merged size/strength), not raw unit count. **→ Now owner-ruled and
+scoped in [`size-matters-ai.md`](size-matters-ai.md) (#395):** strength-weighted effective
+counts (×1.5/rank), hunters keep merging, `AI_neededHunters` goes capacity-based.
 
 **Net:** the AI targets ~`sqrt(cities)` hunters per landmass for the whole game regardless of
 animals, scores each hunter with no decay, keeps building toward the target, and rarely
