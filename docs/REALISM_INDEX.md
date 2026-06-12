@@ -71,18 +71,16 @@ the stat is to die holding it.
 At best, stealthy. At worst — in the owner's full technical assessment — *"just........
 no words....."*
 
-Deeper archaeology only makes it better. The mechanic appears in none of the public
-documentation (the CivFanatics combat-mod guides do not mention it); the owner knows of
-it only because **the designer alluded to it in a conversation once**; the alluded-to
-form — defenses grinding down *passively* while siege units camp adjacent, which would
-at least have explained why AI stacks besiege cities by picnicking next to them — has no
-implementation, and no vestige of one, anywhere in the code. There is a real chance that
-part never actually worked. The game may contain AI behaviour tuned around a siege
-mechanic that exists exclusively as an oral tradition.
+The mechanic appears in none of the public documentation (the CivFanatics combat-mod
+guides do not mention it), so nobody ever figured it out — they just learned the
+practical consequence: these units are wildly useless unless you either **merge them to
+infinity** under Size Matters, so a battering ram becomes statistically able to survive
+assaulting a fully fortified city, or **produce them to hell**, so you can afford to
+waste a few dozen as ammunition. A siege weapon whose two viable doctrines are
+"singularity ram" and "human-wave the woodwork."
 
-*Status: working as redesigned, which is not the same as designed, which is not the same
-as described. The army-lifecycle work (#410) owns the question of what early-era siege
-should actually be.*
+*Status: working as designed, allegedly. The army-lifecycle work (#410) owns the
+question of what early-era siege should actually be.*
 
 ---
 
