@@ -4255,10 +4255,12 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 				}
 
 				int iNeededHunters = GET_PLAYER(ePlotOwner).AI_neededHunters(pPlot->area());
-				int iHasHunters = GET_PLAYER(ePlotOwner).AI_totalAreaUnitAIs(pPlot->area(), UNITAI_HUNTER);
+				// Capacity-based (#395): show what the AI actually compares (raw bodies in parens).
+				int iHasHunters = GET_PLAYER(ePlotOwner).AI_totalEffAreaUnitAIs(pPlot->area(), UNITAI_HUNTER);
 				if (iNeededHunters > 0)
 				{
-					szTempBuffer.Format(L"\nNeeded hunters = %d (has %d)", iNeededHunters, iHasHunters);
+					szTempBuffer.Format(L"\nNeeded hunters = %d (has %d, bodies %d)", iNeededHunters, iHasHunters,
+						GET_PLAYER(ePlotOwner).AI_totalAreaUnitAIs(pPlot->area(), UNITAI_HUNTER));
 					szString.append(szTempBuffer);
 				}
 

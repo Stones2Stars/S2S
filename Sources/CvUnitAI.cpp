@@ -22275,7 +22275,8 @@ bool CvUnitAI::AI_pickup(UnitAITypes eUnitAI, bool bCountProduction, int iMaxPat
 					}
 					else if (eUnitAI == UNITAI_ATTACK_CITY && !(pCity->AI_isDanger()))
 					{
-						bConsider = (pCity->plot()->plotCount(PUF_canDefend, -1, -1, NULL, getOwner(), NO_TEAM, PUF_isDomainType, DOMAIN_LAND) > pCity->AI_neededDefenders());
+						// Strength-weighted surplus test (#395).
+						bConsider = (pCity->plot()->plotCountSM(PUF_canDefend, -1, -1, NULL, getOwner(), NO_TEAM, PUF_isDomainType, DOMAIN_LAND) > pCity->AI_neededDefenders());
 					}
 					else
 					{
@@ -22358,8 +22359,8 @@ bool CvUnitAI::AI_pickup(UnitAITypes eUnitAI, bool bCountProduction, int iMaxPat
 					}
 					else if (eUnitAI == UNITAI_ATTACK_CITY && !(pLoopCity->AI_isDanger()))
 					{
-						// Improve island hopping
-						bConsider = (pLoopCity->plot()->plotCount(PUF_canDefend, -1, -1, NULL, getOwner(), NO_TEAM, PUF_isDomainType, DOMAIN_LAND) > pLoopCity->AI_neededDefenders());
+						// Improve island hopping -- strength-weighted surplus test (#395).
+						bConsider = (pLoopCity->plot()->plotCountSM(PUF_canDefend, -1, -1, NULL, getOwner(), NO_TEAM, PUF_isDomainType, DOMAIN_LAND) > pLoopCity->AI_neededDefenders());
 					}
 					else
 					{

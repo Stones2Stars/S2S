@@ -826,7 +826,8 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 				if (pPlotCity && pPlotCity->getOwner() == getID())
 				{
 					if ((unitX->getDomainType() != DOMAIN_LAND || unitPlot->plotCount(PUF_isMilitaryHappiness, -1, -1, NULL, getID()) > 1)
-					&& unitPlot->getNumDefenders(getID()) > pPlotCity->AI_neededDefenders()
+					// Strength-weighted surplus test (#395): merged defenders count as x1.5 per rank.
+					&& unitPlot->plotCountSM(PUF_canDefend, -1, -1, NULL, getID()) > pPlotCity->AI_neededDefenders()
 					&& pPlotCity->canTrain(unitX->getUnitType())
 					&& (!unitX->canDefend() || !AI_getAnyPlotDanger(unitPlot, 2, false)))
 					{
@@ -23460,13 +23461,15 @@ int CvPlayerAI::AI_getTotalFloatingDefenders(const CvArea* pArea) const
 	PROFILE_FUNC();
 	int iCount = 0;
 
-	iCount += AI_totalAreaUnitAIs(pArea, UNITAI_COLLATERAL);
-	iCount += AI_totalAreaUnitAIs(pArea, UNITAI_RESERVE);
-	iCount += std::max(0, (AI_totalAreaUnitAIs(pArea, UNITAI_CITY_DEFENSE) - (pArea->getCitiesPerPlayer(getID()) * 2)));
-	iCount += AI_totalAreaUnitAIs(pArea, UNITAI_CITY_COUNTER);
-	iCount += AI_totalAreaUnitAIs(pArea, UNITAI_CITY_SPECIAL);
+	// Strength-weighted supply (#395): merged defenders count as their aggregate
+	// strength-equivalent (x1.5 per rank), not as their constituent bodies.
+	iCount += AI_totalEffAreaUnitAIs(pArea, UNITAI_COLLATERAL);
+	iCount += AI_totalEffAreaUnitAIs(pArea, UNITAI_RESERVE);
+	iCount += std::max(0, (AI_totalEffAreaUnitAIs(pArea, UNITAI_CITY_DEFENSE) - (pArea->getCitiesPerPlayer(getID()) * 2)));
+	iCount += AI_totalEffAreaUnitAIs(pArea, UNITAI_CITY_COUNTER);
+	iCount += AI_totalEffAreaUnitAIs(pArea, UNITAI_CITY_SPECIAL);
 	// BBAI TODO: Defense air?  Is this outdated?
-	iCount += AI_totalAreaUnitAIs(pArea, UNITAI_DEFENSE_AIR);
+	iCount += AI_totalEffAreaUnitAIs(pArea, UNITAI_DEFENSE_AIR);
 	return iCount;
 }
 

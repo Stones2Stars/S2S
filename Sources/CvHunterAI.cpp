@@ -249,7 +249,8 @@ bool CvHunterAI::hunterMove(CvUnitAI* unit, bool bWithCommander)
 	// Toffer - Non-optimal hunter is temporary, phase them out when appropriate.
 	if (!bWithCommander && !unit->isHuman() && unit->getUnitInfo().getDefaultUnitAIType() != UNITAI_HUNTER)
 	{
-		const int iOwnedHunters = player.AI_totalAreaUnitAIs(unit->area(), UNITAI_HUNTER);
+		// Capacity-based (#395): merged hunters count as their strength equivalent.
+		const int iOwnedHunters = player.AI_totalEffAreaUnitAIs(unit->area(), UNITAI_HUNTER);
 		if (iOwnedHunters > 5)
 		{
 			logHunterAI(2, "[HAI/scrap] unit=%d revert AI (owned=%d)", unit->getID(), iOwnedHunters);
@@ -388,7 +389,8 @@ bool CvHunterAI::hunterMove(CvUnitAI* unit, bool bWithCommander)
 	&& player.getUnitUpkeepNet(unit->isMilitaryBranch(), unit->getUpkeep100()) > 0)
 	{
 		const int iNeededHunters = player.AI_neededHunters(unit->area());
-		const int iHasHunters = player.AI_totalAreaUnitAIs(unit->area(), UNITAI_HUNTER);
+		// Capacity-based (#395): merged hunters count as their strength equivalent.
+		const int iHasHunters = player.AI_totalEffAreaUnitAIs(unit->area(), UNITAI_HUNTER);
 
 		if (iHasHunters > iNeededHunters)
 		{

@@ -4997,6 +4997,45 @@ int CvPlot::plotCount(ConstPlotUnitFunc funcA, int iData1A, int iData2A, const C
 	return iCount;
 }
 
+// Strength-weighted plotCount (#395): each matching unit contributes its
+// SMeffectiveCountTimes100 (100 at type base group rank, x1.5 per merge rank) instead
+// of 1, so count-based gates can see merged force honestly. Floored on /100 conversion.
+int CvPlot::plotCountSM(ConstPlotUnitFunc funcA, int iData1A, int iData2A, const CvUnit* pUnit, PlayerTypes eOwner, TeamTypes eTeam, ConstPlotUnitFunc funcB, int iData1B, int iData2B, int iRange) const
+{
+	return plotCountSMTimes100(funcA, iData1A, iData2A, pUnit, eOwner, eTeam, funcB, iData1B, iData2B, iRange) / 100;
+}
+
+int CvPlot::plotCountSMTimes100(ConstPlotUnitFunc funcA, int iData1A, int iData2A, const CvUnit* pUnit, PlayerTypes eOwner, TeamTypes eTeam, ConstPlotUnitFunc funcB, int iData1B, int iData2B, int iRange) const
+{
+	PROFILE_FUNC();
+
+	int iCount = 0;
+
+	if (iRange == 0)
+	{
+		foreach_(const CvUnit* unitX, units())
+		{
+			if (unitX->isDead()) continue;
+
+			if ((eOwner == NO_PLAYER || unitX->getOwner() == eOwner)
+			&& (eTeam == NO_TEAM || unitX->getTeam() == eTeam)
+			&& (funcA == NULL || funcA(unitX, iData1A, iData2A, pUnit))
+			&& (funcB == NULL || funcB(unitX, iData1B, iData2B, NULL)))
+			{
+				iCount += unitX->SMeffectiveCountTimes100();
+			}
+		}
+	}
+	else
+	{
+		foreach_(const CvPlot* plotX, rect(iRange, iRange))
+		{
+			iCount += plotX->plotCountSMTimes100(funcA, iData1A, iData2A, pUnit, eOwner, eTeam, funcB, iData1B, iData2B);
+		}
+	}
+	return iCount;
+}
+
 int CvPlot::plotStrength(UnitValueFlags eFlags, ConstPlotUnitFunc funcA, int iData1A, int iData2A, PlayerTypes eOwner, TeamTypes eTeam, ConstPlotUnitFunc funcB, int iData1B, int iData2B, int iRange) const
 {
 	return plotStrengthTimes100(eFlags, funcA, iData1A, iData2A, eOwner, eTeam, funcB, iData1B, iData2B, iRange) / 100;

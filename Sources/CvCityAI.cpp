@@ -1126,8 +1126,10 @@ void CvCityAI::AI_chooseProduction()
 	// Fuyu: The right way is to 1) queue the warriors with UNITAI_CITY_DEFENCE or UNITAI_RESERVE,
 	// then 2) to detect defenders with plot()->plotCount(PUF_canDefendGroupHead, -1, -1, eOwner, NO_TEAM, PUF_isCityAIType) - compare AI_isDefended()
 	const int iPlotSettlerCount = (iNumSettlers == 0) ? 0 : plot()->plotCount(PUF_isUnitAIType, UNITAI_SETTLE, -1, NULL, eOwner);
-	const int iPlotCityDefenderCount = plot()->plotCount(PUF_isUnitAIType, UNITAI_CITY_DEFENSE, -1, NULL, eOwner, NO_TEAM, NULL, -1, -1, 2);
-	const int iPlotOtherCityAICount = plot()->plotCount(PUF_canDefend, -1, -1, NULL, eOwner, NO_TEAM, PUF_isCityAIType, -1, -1, 2);
+	// Strength-weighted (#395): these feed the danger-shortfall demand gate, which must
+	// see merged defenders as their strength-equivalent, not as one body each.
+	const int iPlotCityDefenderCount = plot()->plotCountSM(PUF_isUnitAIType, UNITAI_CITY_DEFENSE, -1, NULL, eOwner, NO_TEAM, NULL, -1, -1, 2);
+	const int iPlotOtherCityAICount = plot()->plotCountSM(PUF_canDefend, -1, -1, NULL, eOwner, NO_TEAM, PUF_isCityAIType, -1, -1, 2);
 
 	const int iPlotSettlerEscortCityDefenseCount = plot()->plotCount(PUF_isUnitAIType, UNITAI_CITY_COUNTER, -1, NULL, eOwner) - (AI_minDefenders() + 1);
 	const int iPlotSettlerEscortCounterCount = plot()->plotCount(PUF_isUnitAIType, UNITAI_CITY_COUNTER, -1, NULL, eOwner);
@@ -1149,7 +1151,10 @@ void CvCityAI::AI_chooseProduction()
 	//TB Note: min 1 hunter goes under the priority level of settling initiation because this is exploitable with ambushers (or just plain bad luck for the hunters which is not unlikely).  Destroy all hunters and you cripple growth.
 	//Koshling - made having at least 1 hunter a much higher priority
 	const int iNeededHunters = player.AI_neededHunters(pArea);
-	const int iOwnedHunters = player.AI_totalAreaUnitAIs(pArea, UNITAI_HUNTER);
+	// Capacity-based (#395, owner ruling): a merged hunter counts as its strength
+	// equivalent (x1.5 per rank) -- merged hunters punching up vs strong animals is the
+	// intended counter, so capacity, not bodies, satisfies the need.
+	const int iOwnedHunters = player.AI_totalEffAreaUnitAIs(pArea, UNITAI_HUNTER);
 	const int iHunterDeficitPercent = (iNeededHunters <= iOwnedHunters) ? 0 : (iNeededHunters - iOwnedHunters) * 100 / iNeededHunters;
 
 	const int iLowlimitProductionRank = (player.getNumCities() + 1) * 2 / 3;
@@ -1646,7 +1651,7 @@ void CvCityAI::AI_chooseProduction()
 	if (eCurrentEra == 0)
 	{
 		// Warriors are blocked from UNITAI_CITY_DEFENSE, in early game this confuses AI city building
-		if (player.AI_totalUnitAIs(UNITAI_CITY_DEFENSE) <= player.getNumCities() + iNumSettlers)
+		if (player.AI_totalEffUnitAIs(UNITAI_CITY_DEFENSE) <= player.getNumCities() + iNumSettlers)
 		{
 			if (player.AI_bestCityUnitAIValue(UNITAI_CITY_DEFENSE, this) == 0)
 			{
@@ -2198,16 +2203,19 @@ void CvCityAI::AI_chooseProduction()
 		const int iDefShortfall = std::max(0, AI_neededDefenders() - (iPlotCityDefenderCount + iPlotOtherCityAICount));
 		const int iSqrtCities = intSqrt(player.getNumCities());
 		const int iAttackNeeded = iNbMinimalAttackers + iDefShortfall + iSqrtCities; //Try to add some attack units at minimum
-		const int iOwnedAttackers = player.AI_totalAreaUnitAIs(pArea, UNITAI_ATTACK);
+		// Strength-weighted (#395): merged attackers count as x1.5 per rank, not one body.
+		const int iOwnedAttackers = player.AI_totalEffAreaUnitAIs(pArea, UNITAI_ATTACK);
 
 		// [CIT/danger] -- inputs to the dominant "minimal attack (danger)" production driver.
 		// fire=1 means this city trains a UNITAI_ATTACK unit this pass. The gate compares an
-		// AREA-wide UNITAI_ATTACK count (ownedAtk) against a PER-CITY need; if ownedAtk stays
-		// stuck below need while many cities keep firing, the trained units are being reassigned
-		// out of UNITAI_ATTACK (the role count never catches up) -> perpetual cheap-military spam.
-		logCityAI(2, "[CIT/danger] city=%S owner=%d minAtk=%d defShortfall=%d sqrtCities=%d need=%d ownedAtk=%d fire=%d",
+		// AREA-wide UNITAI_ATTACK count (ownedAtk, SM-effective; ownedAtkRaw = bodies) against
+		// a PER-CITY need; if ownedAtk stays stuck below need while many cities keep firing,
+		// the trained units are being reassigned out of UNITAI_ATTACK (the role count never
+		// catches up) -> perpetual cheap-military spam.
+		logCityAI(2, "[CIT/danger] city=%S owner=%d minAtk=%d defShortfall=%d sqrtCities=%d need=%d ownedAtk=%d ownedAtkRaw=%d fire=%d",
 			getName().GetCString(), (int)eOwner, iNbMinimalAttackers, iDefShortfall, iSqrtCities,
-			iAttackNeeded, iOwnedAttackers, (iOwnedAttackers < iAttackNeeded) ? 1 : 0);
+			iAttackNeeded, iOwnedAttackers, player.AI_totalAreaUnitAIs(pArea, UNITAI_ATTACK),
+			(iOwnedAttackers < iAttackNeeded) ? 1 : 0);
 
 		if (iOwnedAttackers < iAttackNeeded
 		&& AI_chooseUnitImmediate("minimal attack (danger)", UNITAI_ATTACK))
