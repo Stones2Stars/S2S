@@ -1,27 +1,29 @@
 #!/usr/bin/env python3
 """Curate GameSpeed to the top-down model (#428) — a CONFIG/GLOBAL entity (enables nothing): the master
-PACING multiplier. It sits at the TOP of the cascade and multiplies everything beneath, so it deposits at
+PACING percentage. It sits at the TOP of the cascade and scales everything beneath, so it deposits at
 `world` scope (owner: "a base multiplier on everything, lives in global").
 
-Two stored scalars (verified vs Sources/Infos/CvGameSpeedInfo.{h,cpp} — everything else is DERIVED:
-getHammerCostPercent = iSpeedPercent + an optional UPSCALED_HAMMER_COST_MODIFIER game-option; turns/calendar
-from CvEraInfo). The single `iSpeedPercent` fans out into the universal cost + duration families
-(owner ruling 2026-06-14):
+Two stored scalars, authored AS THE PERCENTAGES THEY ARE (owner rulings 2026-06-15): the data leads and the
+C++ data-fetching is reworked to fit it; the file must read COLD to a modder; never reverse-engineer the
+unit/shape from how the engine currently fetches it. Both verified vs Sources/Infos/CvGameSpeedInfo.{h,cpp}
+(everything else there is DERIVED: getHammerCostPercent = iSpeedPercent ± an UPSCALED option; turns/calendar
+from CvEraInfo):
 
-- `costs.world.{train,construct,create,research}.percent` = iSpeedPercent — the MULTIPLIER on base costs that
-  live on the infos (unit/building/project production cost; tech research cost). FINE-GRAINED per produced-thing
-  (Era distinguishes them per-era; GameSpeed sets all four = iSpeedPercent). The ~99% global source.
-- `growth.world.percent` = iSpeedPercent — the food-to-grow scale, its OWN family (like Era + Handicap), NOT
-  `costs.food`.
-- `durations.world.{anger,decay,happiness}.percent` = iSpeedPercent — length of anger / production-decay /
-  happiness effects. Member list is PROVISIONAL: the full set is enumerated by the consumption rewrite
-  (~150 ad-hoc `getSpeedPercent()/100` sites across CvCity/CvPlayer/CvGame/…; the C++ readers-phase task).
-- `unitYieldScale.world.percent` = iUnitYieldScalePercent — a YIELD multiplier (the `<AdaptUnitYield>` channel,
-  ~sqrt of speed), NOT a cost; its own family.
-- `cultureThreshold.world.percent` = iSpeedPercent — the culture-points-to-reach-a-level scale. CultureLevel's
-  per-speed `SpeedThresholds` were REDUNDANT precomputation of `base(Normal) * iSpeedPercent/100` (values
-  identical, and the GameSpeed XML notes the coupling). The scale lives HERE (owner ruling 2026-06-14);
-  CultureLevel keeps only the Normal base and derives per-speed via this member. Its own family.
+- `speed.world.percent` = iSpeedPercent — the master game-pace percentage (Normal=100 → 100%, Eternity=1000 →
+  1000%, default 100). ONE value the modder sets; the ENGINE applies it across costs (unit/building/project/
+  research), effect durations (anger/decay/happiness), food-to-grow, and the culture-points-to-reach-a-level
+  scale. That application is the engine/readers job (§7 combine-mode), NOT enumerated in the data — an earlier
+  pass fanned this one value into costs/growth/durations/cultureThreshold members, which (a) repeated one
+  number across many keys, (b) faked independently-tunable knobs that aren't, and (c) required codebase
+  knowledge to read; collapsed per the cold-modder ruling.
+- `missionYieldMultiplier.world.percent` = iUnitYieldScalePercent — the multiplier (as a percentage) on yields
+  a unit MISSION produces: a merchant's trade mission boosting another city, a subdued animal slaughtered for
+  food/production (the `<AdaptUnitYield>` channel, ~sqrt of speed; Normal=500, Eternity=1575). A separate value,
+  independently tunable.
+
+CultureLevel dedup (its turn at Tier A): its per-speed `SpeedThresholds` were a redundant precomputation of
+`base(Normal) * iSpeedPercent/100` — CultureLevel keeps only the Normal base and derives per-speed by
+referencing this single `speed` value, instead of duplicating the table.
 
   python3 curate_gamespeed.py --sample GAMESPEED_NORMAL
   python3 curate_gamespeed.py --write
@@ -34,10 +36,6 @@ from collections import OrderedDict
 import engine
 from store import Store, REPO
 
-# hammer cost split per produced-thing (unit/building/project) + tech; food-to-grow is the `growth` family.
-COST_MEMBERS = ["train", "construct", "create", "research"]
-DURATION_MEMBERS = ["anger", "decay", "happiness"]     # PROVISIONAL — completed by the consumption rewrite
-
 
 def curate(typ, rec):
     out = OrderedDict()
@@ -48,18 +46,10 @@ def curate(typ, rec):
             out[key] = t
     speed = engine.text(rec.find("iSpeedPercent"))
     if engine.is_int(speed):
-        sp = int(speed)
-        out["costs"] = OrderedDict([("world", OrderedDict((m, {"percent": sp}) for m in COST_MEMBERS))])
-        out["growth"] = {"world": {"percent": sp}}      # food-to-grow scale: its OWN family (like Era/Handicap), not a cost
-        out["durations"] = OrderedDict([("world", OrderedDict((m, {"percent": sp}) for m in DURATION_MEMBERS))])
-        # culture-points-to-reach-a-level scale (= iSpeedPercent; verified identical to CultureLevel's per-speed
-        # SpeedThresholds and coupled by the GameSpeed XML note "...update CultureLevelInfos.xml"). CultureLevel
-        # holds the NORMAL base; the reader derives per-speed via this (owner ruling 2026-06-14: the percent
-        # belongs on GameSpeed). Its OWN family — a threshold scale, not a cost/duration.
-        out["cultureThreshold"] = {"world": {"percent": sp}}
+        out["speed"] = {"world": {"percent": int(speed)}}
     uys = engine.text(rec.find("iUnitYieldScalePercent"))
     if engine.is_int(uys) and int(uys) != 0:
-        out["unitYieldScale"] = {"world": {"percent": int(uys)}}
+        out["missionYieldMultiplier"] = {"world": {"percent": int(uys)}}
     return out
 
 
@@ -70,8 +60,7 @@ def main():
     args = ap.parse_args()
     table = Store().table("GameSpeedInfo")
     results = OrderedDict((typ, curate(typ, rec)) for typ, rec in table.items())
-    print("GameSpeedInfo curated: %d  | families: costs, growth, durations, cultureThreshold, unitYieldScale"
-          % len(results))
+    print("GameSpeedInfo curated: %d  | families: speed, missionYieldMultiplier" % len(results))
     if args.sample is not None:
         for nm in (args.sample or list(results)[:1]):
             print("\n=== %s ===" % nm)

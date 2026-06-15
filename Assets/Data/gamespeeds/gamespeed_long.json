@@ -1,0 +1,15 @@
+{
+ "type": "GAMESPEED_LONG",
+ "description": "TXT_KEY_GAMESPEED_LONG",
+ "help": "TXT_KEY_GAMESPEED_LONG_HELP",
+ "speed": {
+  "world": {
+   "percent": 200
+  }
+ },
+ "missionYieldMultiplier": {
+  "world": {
+   "percent": 700
+  }
+ }
+}

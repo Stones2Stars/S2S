@@ -1,0 +1,15 @@
+{
+ "type": "GAMESPEED_EONS",
+ "description": "TXT_KEY_GAMESPEED_EONS",
+ "help": "TXT_KEY_GAMESPEED_EONS_HELP",
+ "speed": {
+  "world": {
+   "percent": 800
+  }
+ },
+ "missionYieldMultiplier": {
+  "world": {
+   "percent": 1400
+  }
+ }
+}

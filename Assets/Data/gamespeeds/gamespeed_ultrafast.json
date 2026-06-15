@@ -1,0 +1,15 @@
+{
+ "type": "GAMESPEED_ULTRAFAST",
+ "description": "TXT_KEY_GAMESPEED_ULTRAFAST",
+ "help": "TXT_KEY_GAMESPEED_ULTRAFAST_HELP",
+ "speed": {
+  "world": {
+   "percent": 25
+  }
+ },
+ "missionYieldMultiplier": {
+  "world": {
+   "percent": 250
+  }
+ }
+}

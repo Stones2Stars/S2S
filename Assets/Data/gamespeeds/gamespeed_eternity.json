@@ -1,0 +1,15 @@
+{
+ "type": "GAMESPEED_ETERNITY",
+ "description": "TXT_KEY_GAMESPEED_ETERNITY",
+ "help": "TXT_KEY_GAMESPEED_ETERNITY_HELP",
+ "speed": {
+  "world": {
+   "percent": 1000
+  }
+ },
+ "missionYieldMultiplier": {
+  "world": {
+   "percent": 1575
+  }
+ }
+}

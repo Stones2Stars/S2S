@@ -1,0 +1,15 @@
+{
+ "type": "GAMESPEED_EPIC",
+ "description": "TXT_KEY_GAMESPEED_EPIC",
+ "help": "TXT_KEY_GAMESPEED_EPIC_HELP",
+ "speed": {
+  "world": {
+   "percent": 300
+  }
+ },
+ "missionYieldMultiplier": {
+  "world": {
+   "percent": 850
+  }
+ }
+}
