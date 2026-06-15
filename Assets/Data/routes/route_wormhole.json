@@ -1,0 +1,30 @@
+{
+ "type": "ROUTE_WORMHOLE",
+ "description": "TXT_KEY_ROUTE_WORMHOLE",
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "art/interface/buttons/improvements/wormhole.dds"
+ },
+ "identity": {
+  "value": 3,
+  "advancedStart": {
+   "cost": 30
+  },
+  "movementCost": 25,
+  "flatMovementCost": 25
+ }
+}

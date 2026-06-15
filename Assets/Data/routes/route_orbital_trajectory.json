@@ -1,0 +1,30 @@
+{
+ "type": "ROUTE_ORBITAL_TRAJECTORY",
+ "description": "TXT_KEY_ROUTE_ORBITAL_TRAJECTORY",
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "art/interface/buttons/improvements/cislunar_trajectory.dds"
+ },
+ "identity": {
+  "value": 1,
+  "advancedStart": {
+   "cost": 30
+  },
+  "movementCost": 100,
+  "flatMovementCost": 100
+ }
+}

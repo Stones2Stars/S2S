@@ -1,0 +1,15 @@
+{
+ "type": "ROUTE_PATH",
+ "description": "TXT_KEY_ROUTE_PATH",
+ "art": {
+  "icon": "Art/Interface/Buttons/Builds/dirt.dds"
+ },
+ "identity": {
+  "value": 2,
+  "advancedStart": {
+   "cost": 6
+  },
+  "movementCost": 80,
+  "flatMovementCost": 80
+ }
+}

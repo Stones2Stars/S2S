@@ -1,0 +1,38 @@
+{
+ "type": "ROUTE_TUNNEL",
+ "description": "TXT_KEY_ROUTE_TUNNEL",
+ "production": {
+  "plot": {
+   "improvements": {
+    "IMPROVEMENT_EXTRACTION_FACILITY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_OFFSHORE_PLATFORM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1,
+   "improvements": {
+    "IMPROVEMENT_SUBMERGED_TOWN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/Buttons/builds/buildtunnel.dds"
+ },
+ "identity": {
+  "value": 1,
+  "advancedStart": {
+   "cost": 20
+  },
+  "movementCost": 55,
+  "flatMovementCost": 22,
+  "seaTunnel": true
+ }
+}

@@ -1,0 +1,57 @@
+{
+ "type": "ROUTE_PAVED_ROAD",
+ "description": "TXT_KEY_ROUTE_PAVED_ROAD",
+ "production": {
+  "plot": {
+   "improvements": {
+    "IMPROVEMENT_SHAFT_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_LUMBERMILL": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WORKSHOP": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "plot": {
+   "improvements": {
+    "IMPROVEMENT_ARCHEOLOGICAL_SITE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FOSSIL_DIG_SITE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SUBURBS": {
+     "flat": 1
+    },
+    "IMPROVEMENT_TOWN": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VILLAGE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/Buttons/Builds/BuildPavedRoad.dds"
+ },
+ "identity": {
+  "value": 4,
+  "advancedStart": {
+   "cost": 8
+  },
+  "movementCost": 40,
+  "flatMovementCost": 40
+ }
+}

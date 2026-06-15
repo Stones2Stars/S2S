@@ -271,3 +271,26 @@ modifiers on the TARGET they boost (keep-on-source, modifier-spec §6), authored
 | `PrereqAndBonus`/`PrereqOrBonuses`/vicinity (on Building/Unit/Route) | (store) `bonus.enables.{buildings,units,routes}` | The bonus is the CONDITIONER those targets require → surfaces as the bonus's `enables` edge (store-indexed). The Culture chain (Culture wonder grants a `BONUS_*` that gates the punk buildings) appears here. |
 | map-gen fields (`iPlacementOrder`/`iConstAppearance`/`Rands`/`iTilesPer`/`bHills`/`TerrainBooleans`/…) | `mapGeneration.{…}` | Placement/spawn config grouped out of the identity catch-all (de-Hungarianized). |
 | Building/Unit/Project/Civic/Trait `Bonus*Changes`/`Bonus*Modifiers` | — (NOT on the bonus) | Conditioned-on-bonus modifiers stay on the SOURCE (keep-on-source, §6), gated by the bonus; authored at the Building/Unit/Project pass (Civic empty/moot; Trait `BonusHappinessChanges` authored on the trait — see Trait above). The old `BONUS_BOOSTS` fold is REMOVED. |
+
+## Route  (`curate_route.py`)  — Tier C #19 (21 records: 12 base + 9 module-added space routes)
+
+A small plot-leaf entity: a route lays movement cost + (optionally) its own tile yields onto the plot it
+occupies, ranks itself by `iValue`, and is GATED by a prerequisite bonus — so it is a DEPENDENT in the
+bonus→route enabler chain (`store.enabled_by(ROUTE_*)` is empty → **no `enables` block**, no `requires`).
+EXE-link: **0 `DllExport` on `CvRouteInfo`** (unconstrained; readJson-mapped). `Categories` (getCategory trio
+compiles but no route consumer reads it via `getRouteInfo`, and no route populates `<Categories>`) and
+`PropertyManipulators` (empty on every route) are dead/empty → dropped. Mechanical de-Hungarian (`Button`→`icon`,
+`Description`→`description`) not re-logged. Structural / manual:
+
+| old XML | new JSON path | note |
+|---|---|---|
+| `Yields` | `<yield>.plot.flat` (food/production/commerce) | The route's OWN base-yield deposit onto the tile it occupies, downward — **plot** scope (a tile yield summed alongside terrain/improvement yields in `CvPlot::calculateYield`). Split into per-yield families. |
+| `ImprovementInfo.RouteYieldChanges` (INBOUND) | `<yield>.plot.improvements.{IMPROVEMENT}.flat` | The improvement's per-route yield bonus (`getRouteYieldChanges(route,yield)`, applied to a plot when that improvement sits on a tile carrying THIS route, `CvPlayer::calculatePlotRouteYieldDifference`) — **FOLDED ONTO THE ROUTE**, keyed by the source improvement, at plot scope. **Owner ruling 2026-06-16: KEPT on the route** (NOT moved keep-on-source like Bonus #18's `BONUS_BOOSTS` removal). Rationale (owner): **routes only ever boost plots/improvements, and we want all of a route's boosts in ONE place so a modder reading the route file understands its full effect** (the cold-modder rule, governing ruling #3). Distinct from the bonus case — a bonus is never a target so nothing folds onto it; a route's narrow, uniform effect surface makes co-locating its boosts the clearer home. (Honors the older 2026-06-13 ruling #4 "RouteYieldChanges owned by `CvRouteInfo`".) |
+| `iMovement` / `iFlatMovement` | `identity.movementCost` / `identity.flatMovementCost` | Base per-plot traversal cost — an INTRINSIC own-stat read directly by pathfinding (`CvPlot::movementCost`), never summed onto a scope accumulator → `identity`, NOT a `movement` family (owner ruling: base stats are identity; only summed contributions are modifier families). The cascading movement modifier is the per-TECH route delta, folded onto the tech (`movement.team.routes.{ROUTE}.flat`). Renamed for clarity off `iMovement`/`iFlatMovement`. |
+| `iAdvancedStartCost` | `identity.advancedStart.cost` | Pre-game advanced-start placement points — NOT a modifier; parked in identity pending the advanced-start review (matches Handicap/Era). |
+| `iValue` | `identity.value` | Route TIER/ranking comparator (trail=1 … gravityTrain=10); a pure ranking scalar, not a deposited modifier. |
+| `bSeaTunnel` | `identity.seaTunnel` | Capability flag: route lets LAND units cross water tiles (`CvPlot::isSeaTunnel`). Boolean (true emitted, false omitted); only `ROUTE_TUNNEL` sets it. |
+| `BonusType` / `PrereqOrBonuses` | (store) `bonus.enables.routes` | The prereq bonus(es) gating the route — the bonus is the CONDITIONER, store-inverted to its `enables.routes` (dropped here; the route is a DEPENDENT). Live cold-path consumer `SevoPediaRoute.py` re-points to the derived reverse index at the reader phase. |
+| `TechMovementChanges` | (curate_tech) `tech` `movement.team.routes.{ROUTE}.flat` | Per-tech route-movement improvement → inverts onto the TECH (`CvTeam::processTech` accumulates it team-wide); dropped here. Live consumers reworked at the reader phase: C++ `CvTeam::processTech`, Python `Revolution.py` / `CvTechChooser.py`. Only `ROUTE_VACTRAIN` sets one (`TECH_SKYROADS`, −4). |
+| `Categories` / `PropertyManipulators` | — (DROPPED) | Dead/empty on every route (see intro). |
+| `m_zobristValue` | — (drop) | Runtime-only (seeded from `getSorenRand()` in the ctor), not XML-backed. |
