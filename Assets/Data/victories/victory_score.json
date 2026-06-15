@@ -1,0 +1,8 @@
+{
+ "type": "VICTORY_SCORE",
+ "description": "TXT_KEY_VICTORY_SCORE",
+ "condition": {
+  "targetScore": true,
+  "permanent": true
+ }
+}

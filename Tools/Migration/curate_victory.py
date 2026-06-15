@@ -6,7 +6,9 @@ they are read every turn by CvGame::testVictory (CvGame.cpp:6081 + 265/685/2773-
 victory-stage evaluation. They are the win-condition definition, gathered under one `condition` section:
 - KIND/property flags -> condition booleans: `bConquest` (eliminate rivals), `bTargetScore`/`bEndScore`
   (score/time), `bDiploVote` (UN vote), `bTotalVictory` (mastery), `bPermanent` (the always-available score
-  victory; NB its getter isPermanent() appears UNREAD today -> purge candidate, kept faithfully for now).
+  victory). NB isPermanent() is a HARD EXE LINK — **DllExport** (CvVictoryInfo.h:39, the .exe imports it) — AND
+  Python-consumed (PbWizard.py:1271, CvWBDesc.py:125). Definitely KEPT, NOT a purge candidate; the earlier
+  "appears UNREAD" note was a C++-only blind spot the drop re-check (against the EXE + Python) corrected.
 - THRESHOLDS -> condition numbers: `iLandPercent`/`iMinLandPercent`/`iPopulationPercentLead` (domination),
   `iReligionPercent` (religious), `iNumCultureCities` + `CityCulture` (a CultureLevel ref) (cultural),
   `iVictoryDelayTurns` (space-race travel delay).

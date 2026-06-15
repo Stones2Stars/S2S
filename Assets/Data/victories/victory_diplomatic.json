@@ -1,0 +1,7 @@
+{
+ "type": "VICTORY_DIPLOMATIC",
+ "description": "TXT_KEY_VICTORY_DIPLOMATIC",
+ "condition": {
+  "diploVote": true
+ }
+}

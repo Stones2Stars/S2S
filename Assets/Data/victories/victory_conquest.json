@@ -1,0 +1,10 @@
+{
+ "type": "VICTORY_CONQUEST",
+ "description": "TXT_KEY_VICTORY_CONQUEST",
+ "condition": {
+  "conquest": true
+ },
+ "art": {
+  "movie": "ART_DEF_MOVIE_VICTORY_CONQUEST"
+ }
+}

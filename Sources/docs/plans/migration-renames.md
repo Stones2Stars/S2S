@@ -62,3 +62,16 @@ DISTINCT per-era field) are natural field→member splits, not re-logged. Manual
 | `iEventChancePerTurn` | `eventChance.world.flat` | Per-turn random-event chance. |
 | `bNoAnimals` | — (DROPPED) | Dead as an era field; relocating to a game/BUG option (existing issue). See curate_era docstring for the likely era-gated intent. |
 | `bNoGoodies` / `bNoBarbUnits` / `bNoBarbCities` | — (deferred) | LIVE C++ world-state gates, unset in all eras → not emitted; world-state-section home deferred to the Vote pass. |
+
+## Victory  (`curate_victory.py`)
+
+Victory is a PURE-config entity (no modifiers, no enables). Its win-condition fields are gathered under a
+bespoke **`condition`** section — kept as-is; there is NO formal "cascading config section" concept and adding
+one is a SEPARATE planning effort (owner 2026-06-15), so `condition` stays a bespoke section, not a spec change.
+The condition keys are natural de-Hungarianizations (`bConquest`→`conquest`, `iLandPercent`→`landPercent`, …),
+not re-logged. One non-obvious rename:
+
+| old XML tag | new JSON path | note |
+|---|---|---|
+| `iVictoryDelayTurns` | `condition.delayTurns` | Space-race travel delay before the win triggers (dropped the redundant `Victory` prefix inside a victory file). |
+| `CityCulture` | `condition.cityCulture` | A `CULTURELEVEL_*` ref (the culture level each of `numCultureCities` must reach) — forward ref to CultureLevel. |

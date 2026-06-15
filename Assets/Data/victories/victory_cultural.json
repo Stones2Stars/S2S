@@ -1,0 +1,11 @@
+{
+ "type": "VICTORY_CULTURAL",
+ "description": "TXT_KEY_VICTORY_CULTURAL",
+ "condition": {
+  "cityCulture": "CULTURELEVEL_MONUMENTAL",
+  "numCultureCities": 10
+ },
+ "art": {
+  "movie": "ART_DEF_MOVIE_VICTORY_CULTURAL"
+ }
+}
