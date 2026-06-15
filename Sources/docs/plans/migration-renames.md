@@ -250,4 +250,24 @@ only module touching traits, owner-confirmed in.
 | `DisallowedTraitTypes` | `excludes` | Same-tier mutual exclusion (one end authored; reverse derived cold-path). |
 | `PromotionLine`/`iLinePriority` | `succession.{promotionLine,priority}` | Developing-leaders line ordering. |
 | `PropertyManipulators` | `<PROPERTY>.<scope>.<unit>` (v3) | Via shared `engine.property_source_v3` (274 sources, all CONSTANT/RELATION_ASSOCIATED → `<PROPERTY>.city.flat`). |
+| `BonusHappinessChanges` | `happiness.empire.flat[].{value, enabled:{type:BONUS_X, scope:empire, min:1}}` | **AUTHORED ON THE TRAIT (keep-on-source, modifier-spec §6 — UPDATED 2026-06-15: was "folds onto the bonus", that was the old pre-v3 invert rule; a resource is NEVER a target).** The trait grants +N happiness while a bonus is present: deposit `happiness.empire.flat` (scope = the modifier's — benefits the player's cities), condition = the agreed enabler atom `{type, scope, min}` (§6.1/§13.7), `min:1` = "we have ≥1" (a tally count). Coexists with unconditional happiness members via the §1.5 mixed list. 26 traits. `trait-classification.json` confirms: CREST conditioner, do-NOT-invert. |
 | `GreatPeopleUnitType`+`iGreatPeopleRateChange`, `CityStartCulture`/`BonusPopulationinNewCities`, state-religion/policies/grants/etc. | (per the curator docstring) | Mirror Civic conventions; unchanged this pass. |
+
+## Bonus  (`curate_bonus.py`)  — Tier C #18 (902 records: cultures 410 / map 118 / manufactured 374)
+
+A SOURCE/CONDITIONER positioned **above** plot/feature/improvement/building in the containment spine
+(`building-cascade-conversion.md:281`); it cascades DOWN and is **NEVER a target** (the "coal test"). So it
+carries only its OWN amplification + `enables`; the prior `BONUS_BOOSTS` inversion table (building/civic/trait
+effects conditioned on the bonus folded ONTO it) was the old pre-v3 invert rule and is REMOVED — those are
+modifiers on the TARGET they boost (keep-on-source, modifier-spec §6), authored at the source's pass. EXE-link:
+0 `DllExport` on `CvBonusInfo`. No inbound boosts. Sub-foldered `cultures`/`map`/`manufactured` (`bonus_folder`).
+
+| old XML | new JSON path | note |
+|---|---|---|
+| `YieldChanges` | `<yield>.plot.flat` (food/production/commerce) | The on-map resource buffs the TILE it sits on, downward — **plot** scope (owner 2026-06-15: "the actual map bonus buffs the plot downwards"). Split into per-yield families. |
+| `iHealth` / `iHappiness` | `health.empire.flat` / `happiness.empire.flat` | The trade-connected resource's benefit to the player's cities — **empire** scope (connected bonus amplifies empire-wide, `building-cascade-conversion.md:1205-1207`). |
+| `TechReveal` / `TechCityTrade` | (store) `tech.enables.bonuses` | The tech reveals / enables-trade of the bonus → inverted onto the TECH (store PREREQ_FIELDS); dropped here. |
+| `TechObsolete` | (store) `tech.obsoletes.bonuses` | The obsoleting tech's edge → inverted onto the TECH (store OBSOLETE_FIELDS); dropped here (`extra_drop`). |
+| `PrereqAndBonus`/`PrereqOrBonuses`/vicinity (on Building/Unit/Route) | (store) `bonus.enables.{buildings,units,routes}` | The bonus is the CONDITIONER those targets require → surfaces as the bonus's `enables` edge (store-indexed). The Culture chain (Culture wonder grants a `BONUS_*` that gates the punk buildings) appears here. |
+| map-gen fields (`iPlacementOrder`/`iConstAppearance`/`Rands`/`iTilesPer`/`bHills`/`TerrainBooleans`/…) | `mapGeneration.{…}` | Placement/spawn config grouped out of the identity catch-all (de-Hungarianized). |
+| Building/Unit/Project/Civic/Trait `Bonus*Changes`/`Bonus*Modifiers` | — (NOT on the bonus) | Conditioned-on-bonus modifiers stay on the SOURCE (keep-on-source, §6), gated by the bonus; authored at the Building/Unit/Project pass (Civic empty/moot; Trait `BonusHappinessChanges` authored on the trait — see Trait above). The old `BONUS_BOOSTS` fold is REMOVED. |
