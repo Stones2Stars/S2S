@@ -427,9 +427,13 @@ refactor — so we KEEP it.** The migration does NOT block on building the tier;
 same "works now, organize-and-promote later" bucket as `PropertyEffect`/`BaseEffect`. (Owner likes the interim
 less, but it's the pragmatic path.)
 
-(The lone *converted* `disables` — a per-civ research ban — is PERMANENT and per-civ, so it is NOT the empire-scope
-player-law ban: re-home it to `obsoletes`-shaped permanent removal or `loadPrune`/`policies`. The `disables` ban is
-the destructive empire-scope law-ban — repeal re-allows *building*, but already-destroyed instances stay gone.)
+(The lone *converted* `disables` — a per-civ research ban — STAYS a `disables` (owner 2026-06-15): it is modeled
+as a REVERSIBLE ban. There is no current in-game logic to reverse a tech-disable — nor any general logic to apply
+one: it is ONE hardcoded case today, the BARBARIAN/Neanderthal civ (`TECH_SEDENTARY_LIFESTYLE`). But nothing
+stops us adding reversal if we want, so the model treats it as the reversible `disables` (data leads, engine
+catches up). The earlier "PERMANENT, re-home it to `obsoletes`/`loadPrune`/`policies`" framing was WRONG. Scope is
+just a parameter — the empire-scope player-law ban (destructive, repeal⇒rebuild) and this per-civ/barb tech ban
+are the same uniform `disables`, differing only in scope.)
 
 **Each EDGE is authored ONCE, on its natural end** — `enables`/`obsoletes`/`replaces` on the source (the actor),
 `requires` on the target (the thing needing means). **The reverse view of each is derived at load and KEPT, but is
@@ -457,9 +461,10 @@ availability edges). Shapes verified on disk:
   `obsoletes:{buildings:[],units:[],builds:[],bonuses:[],techs:[],…}` (330 files already use this shape, e.g.
   `tech.obsoletes.units` = the old `ObsoleteTech`). **NB: obsoleting an INSTANCE-bearing target (a unit) removes it
   from CAN GET only — existing instances stay on the map** (the instance lifecycle is the deferred outcome system,
-  §0/§11; design choice = keep-on-map). The per-civ research ban (the lone converted `disables`, an OVERRIDE) is an
-  `obsoletes`-shaped permanent removal — re-home it here (or to `loadPrune`/`policies` if it is a setup gate).
-  Source-authored; read forward in generation to remove the named targets from CAN GET.
+  §0/§11; design choice = keep-on-map). The per-civ research ban (the lone converted `disables`) STAYS a
+  `disables` — a reversible ban, NOT re-homed (owner 2026-06-15; see §5). It is ONE hardcoded case today: the
+  **Neanderthal barbarians** (`CIVILIZATION_NPC_NEANDERTHAL`) can't research `TECH_SEDENTARY_LIFESTYLE`.
+  Source-authored; read forward in generation to remove the named target from CAN GET while active.
 - **`replaces` (base object; self-framing)** — per-type successor sections mirroring `enables`/`obsoletes`:
   `replaces:{buildings:[BUILDING_X],…}` ("I take X's slot"; conditional form carries `onGameOption`, load-stable) —
   destructive (it destroys the predecessor), same reason as `obsoletes`. Source-authored; the **transitive successor

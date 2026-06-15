@@ -137,3 +137,15 @@ docstring. Structural mappings (not simple renames):
 | `iTargetLevel` / `TargetLevelbyEraTypes` | `targetLevel` (+`.byEra`) | A GENUINE ISOLATED field, outside enabler/modifier (the decay equilibrium). |
 | `iOperationalRangeMin/Max`, `PropertyPropagator` (DIFFUSE), `ChangePropagators` | — (DROPPED → #429) | The obsolete LEAKING mechanic. The unit→city emission re-homes as a containment deposit on the unit/building. |
 | `bSourceDrain` / `bOAType` | `identity.{sourceDrain,oaType}` | Property-system behaviour flags (don't fit enabler/modifier) — parked pending the rework; `bOAType` likely near-dead (getter only). |
+
+## Civilization  (`curate_civilization.py`)
+
+A source entity: game-start `grants` + per-civ `policies` + one modifier. Most fields are natural (policies
+`bPlayable`→`playable`; art/identity de-Hungarianized). Notable mappings:
+
+| old XML | new JSON path | note |
+|---|---|---|
+| `FreeTechs` / `FreeBuildings` / `InitialCivics` | `grants.{techs,buildings,civics}` | One-shot game-start provision (capital buildings, one starting civic per slot, free techs). FreeTechs is Neanderthal-only. |
+| `iSpawnRateModifier` / `iSpawnRateNPCPeaceModifier` | `spawnRate.empire.{general,npcPeace}.percent` | The one cascade modifier (barb/NPC civs only). |
+| `DisableTechs` | `disables.techs` | Per-civ REVERSIBLE research ban (a v0.3 `disables`, NOT a permanent removal — owner; no in-game reverse/apply logic exists, it's ONE hardcoded case: Neanderthal barbarians can't research `TECH_SEDENTARY_LIFESTYLE`). `disables` mirrors `grants`, extensible to other kinds. |
+| `Cities` / `Leaders` / `DerivativeCiv` | `identity.{cityNames,leaders,derivativeCiv}` | City-name auto-naming pool (STAYS — integral to a city getting a name on founding), civ↔leader eligibility, civ-split lineage. Individual city names whose special characters break the game-matching encoding are DROPPED (they're broken in-game too — if the toolkit can't encode it, the loader can't load it): 1 dropped (`KōZUKE`). |

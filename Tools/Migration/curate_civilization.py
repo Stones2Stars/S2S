@@ -15,9 +15,14 @@ pre-base ArtDefineTag merge) → a bespoke curator. Verdicts (light-four-classif
   cascade modifier (PERCENT, (100+mod)/100; CvGame:6359/6363). Barb/NPC civs only.
 - `policies` (booleans): `playable` / `aiPlayable` (can a human/AI pick this civ) + `stronglyRestricted` (NPC
   build-lockdown, CvCity:2205/2547).
-- `disables.techs` — per-civ permanent research ban (anti-enable; canEverResearch=false, CvPlayer:8266). The
-  `disables` OBJECT mirrors `grants` (owner) so it extends to other kinds (buildings/units/…) later. LIVE but
-  Neanderthal-ONLY: CIVILIZATION_NPC_NEANDERTHAL can never research TECH_SEDENTARY_LIFESTYLE (stays nomadic).
+- `disables.techs` — per-civ research ban (canEverResearch=false while active, CvPlayer:8266). Modeled as a v0.3
+  `disables` (a reversible ban), NOT a permanent removal to re-home (owner 2026-06-15: there is no CURRENT in-game
+  logic to reverse a tech disable — so today it is effectively permanent — BUT nothing stops us adding reversal
+  if we want, so the MODEL treats it as reversible; data leads, the engine catches up). The earlier "permanent,
+  re-home it" framing was wrong. Removes the tech from the civ's CAN GET while active; scope = this civ's
+  player/empire. `disables` stays uniform (= reversible ban; scope is just a parameter — empire-law vs per-civ).
+  The `disables` OBJECT mirrors `grants` so it extends to other kinds later. ONLY 1 tech on the NPC-barb civ:
+  CIVILIZATION_NPC_NEANDERTHAL can't research TECH_SEDENTARY_LIFESTYLE (stays nomadic).
 - `art`: DefaultPlayerColor / ArtDefineTag / ArtStyleType / UnitArtStyleType + the two civ sounds.
 - `identity`: Leaders (civ↔leader eligibility), Cities (`cityNames` pool), DerivativeCiv (civ-split lineage).
 No dead structure found (every getter has a live non-class consumer).
@@ -27,11 +32,25 @@ No dead structure found (every getter has a live non-class consumer).
 """
 import argparse
 import json
+import locale
 import os
 from collections import OrderedDict
 
 import engine
 from store import Store, REPO
+
+# The JSON writer uses the DEFAULT (game-matching) encoding on purpose (see write()). A string that cannot be
+# encoded in it is BROKEN content the game's loader can't load either (owner 2026-06-15) — e.g. a modder's
+# Old-Norwegian special-char city names. Such names are dropped individually; everything encodable stays.
+ENC = locale.getpreferredencoding(False)
+
+
+def _encodable(s):
+    try:
+        s.encode(ENC)
+        return True
+    except (UnicodeEncodeError, LookupError):
+        return False
 
 TEXT = OrderedDict([
     ("Description", "description"), ("ShortDescription", "shortDescription"),
@@ -105,7 +124,11 @@ def curate(typ, rec):
     leaders = _list(rec, "Leaders", "Leader")
     if leaders:
         identity["leaders"] = leaders
-    cities = _list(rec, "Cities", "City")
+    # cityNames STAY — integral to a city getting a name when founded (owner 2026-06-15). But DROP individual
+    # names whose SPECIAL CHARACTERS break the (game-matching) encoding: a modder wrote Scandinavian names in Old
+    # Norwegian to be "authentic"; the game's loader can't load those either, so they are broken content. Keep all
+    # the encodable names.
+    cities = [c for c in _list(rec, "Cities", "City") if _encodable(c)]
     if cities:
         identity["cityNames"] = cities
     dc = engine.text(rec.find("DerivativeCiv"))
@@ -136,6 +159,11 @@ def main():
         print("  !! UNHANDLED tags (review): %s" % ", ".join("%s×%d" % (t, n) for t, n in sorted(leftovers.items())))
     else:
         print("  (every XML tag classified — no leftovers)")
+    dropped = [c for rec in table.values() for c in _list(rec, "Cities", "City") if not _encodable(c)]
+    if dropped:
+        safe = [c.encode("ascii", "replace").decode() for c in dropped[:8]]
+        print("  dropped %d special-char city name(s) the game can't load either (%s): %s%s"
+              % (len(dropped), ENC, ", ".join(safe), " …" if len(dropped) > 8 else ""))
     if args.sample is not None:
         for nm in (args.sample or list(results)[:1]):
             print("\n=== %s ===" % nm)
@@ -149,6 +177,10 @@ def main():
         if not os.path.isdir(out_dir):
             os.makedirs(out_dir)
         for typ, obj in results.items():
+            # Default (game-matching) encoding ON PURPOSE — NOT utf-8 (owner 2026-06-15): if the toolkit can't
+            # encode a string, the game's loader can't load it either, so an encode error SURFACES broken content
+            # rather than masking it. The special-char city names that triggered this are already dropped
+            # INDIVIDUALLY by _encodable (the cityNames pool itself stays), so the remaining content is encodable.
             with open(os.path.join(out_dir, typ.lower() + ".json"), "w") as f:
                 json.dump(obj, f, indent=1, ensure_ascii=False)
         print("\nwrote %d CivilizationInfo JSON files under Assets/Data/civilizations" % len(results))

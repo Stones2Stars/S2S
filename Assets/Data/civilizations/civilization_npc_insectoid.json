@@ -1,0 +1,47 @@
+{
+ "type": "CIVILIZATION_NPC_INSECTOID",
+ "description": "TXT_KEY_CIVILIZATION_NPC_INSECTOID",
+ "shortDescription": "TXT_KEY_CIVILIZATION_NPC_INSECTOID_SHORT",
+ "adjective": "TXT_KEY_CIVILIZATION_NPC_INSECTOID_ADJECTIVE",
+ "civilopedia": "TXT_KEY_CIVILIZATION_NPC_INSECTOID_PEDIA",
+ "grants": {
+  "civics": [
+   "CIVIC_ANARCHISM",
+   "CIVIC_OBEDIENCE",
+   "CIVIC_STRONGMAN",
+   "CIVIC_MILITIA",
+   "CIVIC_IRRELIGION",
+   "CIVIC_PRIMITIVE",
+   "CIVIC_COMMUNALISM",
+   "CIVIC_SURVIVAL",
+   "CIVIC_CURRENCY_LESS",
+   "CIVIC_UNORGANIZED",
+   "CIVIC_IGNORANCE",
+   "CIVIC_NONVERBAL",
+   "CIVIC_BORDERLESS",
+   "CIVIC_HUNTER_GATHERING",
+   "CIVIC_GARBAGE_ANYWHERE"
+  ]
+ },
+ "spawnRate": {
+  "empire": {
+   "npcPeace": {
+    "percent": 30
+   }
+  }
+ },
+ "policies": {
+  "stronglyRestricted": true
+ },
+ "art": {
+  "playerColor": "PLAYERCOLOR_BLACK",
+  "artDefine": "ART_DEF_CIVILIZATION_NPC_BARBARIAN",
+  "artStyle": "ARTSTYLE_BARBARIAN",
+  "unitArtStyle": "UNIT_ARTSTYLE_BARBARIAN"
+ },
+ "identity": {
+  "leaders": [
+   "LEADER_BARBARIAN"
+  ]
+ }
+}
