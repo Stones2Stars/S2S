@@ -1,0 +1,78 @@
+{
+ "type": "TECH_ZEPPELINS",
+ "description": "TXT_KEY_TECH_ZEPPELINS",
+ "civilopedia": "TXT_KEY_TECH_ZEPPELINS_PEDIA",
+ "quote": "TXT_KEY_TECH_ZEPPELINS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DIRIGIBLE_TERMINAL"
+  ],
+  "techs": [
+   "TECH_VERTICAL_FLIGHT"
+  ],
+  "units": [
+   "UNIT_AIRSHIP",
+   "UNIT_BARRAGE_BALLOON",
+   "UNIT_DRACHE_HELICOPTER",
+   "UNIT_GOLIATH_AIRSHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FLIGHT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_NATIONAL_AIRCRAFT_MUSEUM": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 9889
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_ZEPPELINS",
+  "soundMP": "AS2D_TECH_ZEPPELINS",
+  "icon": "Art/Interface/Buttons/TechTree/zeppelins.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 8,
+  "tradeable": true,
+  "gridX": 73,
+  "gridY": 19
+ }
+}

@@ -1,0 +1,198 @@
+{
+ "type": "TECH_INDUSTRIAL_LIFESTYLE",
+ "description": "TXT_KEY_TECH_INDUSTRIAL_LIFESTYLE",
+ "civilopedia": "TXT_KEY_TECH_INDUSTRIAL_LIFESTYLE_PEDIA",
+ "quote": "TXT_KEY_TECH_INDUSTRIAL_LIFESTYLE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_EDUCATION_FARCICAL",
+   "BUILDING_EDUCATION_KNOWLEDGE_BASE_INDUSTRIAL",
+   "BUILDING_EDUCATION_SCHOLARLY",
+   "BUILDING_TOURISM_LEVEL_5"
+  ],
+  "promotions": [
+   "PROMOTION_MIGHT6"
+  ],
+  "techs": [
+   "TECH_BAHAI",
+   "TECH_DEPUTIZATION",
+   "TECH_MARINE_BIOLOGY",
+   "TECH_MILITARY_SCIENCE",
+   "TECH_PHOTOGRAPHY",
+   "TECH_ROMANTICISM",
+   "TECH_STATISTICS",
+   "TECH_STEAM_POWER"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_MINE",
+   "BUILD_VILLAGE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_REPLACEABLE_PARTS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MILITARY_TRADITION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GRAND_WAR",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_REPRESENTATIVE_DEMOCRACY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_FOLKLORE_T_ANTELOPE": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_T_BEAR": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_T_BIRDS": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_T_BULL": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_T_FISH": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_T_FLIGHTLESS_BIRDS": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_T_LEVIATHAN": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_T_TALES_OF_FISH": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_T_NEW_WORLD_MONKEYS": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_T_OLD_MAN_OF_THE_FOREST": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_T_OLD_WORLD_MONKEYS": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_T_RAPTORS": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_T_RAY": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_T_RHINOCEROSES": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_T_SEA_BIRDS": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_T_SHARKS": {
+     "flat": -10
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_FOLKLORE_T_ANTELOPE": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_T_BEAR": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_T_BIRDS": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_T_BULL": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_T_FISH": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_T_FLIGHTLESS_BIRDS": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_T_LEVIATHAN": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_T_TALES_OF_FISH": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_T_NEW_WORLD_MONKEYS": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_T_OLD_MAN_OF_THE_FOREST": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_T_OLD_WORLD_MONKEYS": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_T_RAPTORS": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_T_RAY": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_T_RHINOCEROSES": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_T_SEA_BIRDS": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_T_SHARKS": {
+     "flat": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 4925
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_INDUSTRIAL_LIFESTYLE",
+  "soundMP": "AS2D_TECH_INDUSTRIAL_LIFESTYLE",
+  "icon": "Art/Interface/Buttons/TechTree/industriallifestyle.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 61,
+  "gridY": 9
+ }
+}

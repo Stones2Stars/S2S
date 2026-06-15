@@ -1,0 +1,115 @@
+{
+ "type": "TECH_FUSION_SPACECRAFT",
+ "description": "TXT_KEY_TECH_FUSION_SPACECRAFT",
+ "civilopedia": "TXT_KEY_TECH_FUSION_SPACECRAFT_PEDIA",
+ "quote": "TXT_KEY_TECH_FUSION_SPACECRAFT_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_PERSONAL_SPACECRAFT"
+  ],
+  "buildings": [
+   "BUILDING_ASTEROID_PIRATE_BASE",
+   "BUILDING_DEEP_SPACE_HOTEL",
+   "BUILDING_INTERSTELLAR_FUSION_ENGINE",
+   "BUILDING_MARTIAN_HOTEL",
+   "BUILDING_MIRANDA_BASE_JUMPING",
+   "BUILDING_PERSONAL_SPACECRAFT_FACTORY",
+   "BUILDING_PLANETARY_IMMIGRATION_OFFICE",
+   "BUILDING_SATURN_RING_HOTEL",
+   "BUILDING_VENUS_HOTEL"
+  ],
+  "techs": [
+   "TECH_COLONY_GOVERNANCE",
+   "TECH_CULTURAL_EVOLUTION",
+   "TECH_INTERSTELLAR_COMMUNICATION"
+  ],
+  "units": [
+   "UNIT_ATTACKSHIP"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BED_N_BREAKFAST",
+   "BUILDING_GONDOLA_CANALS",
+   "BUILDING_JUNGLE_TREEHOUSE_HOTEL",
+   "BUILDING_MOTEL",
+   "BUILDING_ORBITAL_HOTEL",
+   "BUILDING_OUTBACK_HOTEL",
+   "BUILDING_POLAR_HOTEL",
+   "BUILDING_SAFARI_HOTEL",
+   "BUILDING_SCUBA_DIVING_SITE",
+   "BUILDING_SPELUNKING_CAVES",
+   "BUILDING_TOURIST_TRAP",
+   "BUILDING_UNDERWATER_HOTEL",
+   "BUILDING_VACATION_RESORT",
+   "BUILDING_WILD_WEST_HOTEL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LAUNCH_ARCOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_SOLAR_CONCENTRATOR": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_STARPORT": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_GREAT_ENGINEER"
+ },
+ "cost": {
+  "research": 134744
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_FUSION_SPACECRAFT",
+  "soundMP": "AS2D_TECH_FUSION_SPACECRAFT",
+  "icon": "Art/Interface/Buttons/TechTree/vasimrpropulsion.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 126,
+  "gridY": 9
+ }
+}

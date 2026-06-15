@@ -1,0 +1,95 @@
+{
+ "type": "TECH_ADVANCED_AVIATION",
+ "description": "TXT_KEY_TECH_ADVANCED_AVIATION",
+ "civilopedia": "TXT_KEY_TECH_ADVANCED_AVIATION_PEDIA",
+ "quote": "TXT_KEY_TECH_ADVANCED_AVIATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_COMMERCIAL_AIRPORT",
+   "BUILDING_GRAND_AERODROME"
+  ],
+  "promotions": [
+   "PROMOTION_FUEL_TANK",
+   "PROMOTION_RANGE1",
+   "PROMOTION_REPAIR_AIRCRAFT2"
+  ],
+  "techs": [
+   "TECH_JET_PROPULSION",
+   "TECH_VERTICAL_FLIGHT"
+  ],
+  "units": [
+   "UNIT_BOMBER",
+   "UNIT_FIGHTER",
+   "UNIT_FLIGHT_TECHNICIAN",
+   "UNIT_PARATROOPER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CARNIVAL_BOXING_KANGAROO",
+   "BUILDING_CARNIVAL_DANCING_BEAR",
+   "BUILDING_CARNIVAL_TRAINED_SEAL",
+   "BUILDING_ORNITHOPTER_AERIE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MODERN_PHYSICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_RADAR",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MECHANIZED_WARFARE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_NATIONAL_AIRCRAFT_MUSEUM": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 12152
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GOLD": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_ADVANCED_AVIATION",
+  "soundMP": "AS2D_TECH_ADVANCED_AVIATION",
+  "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,3,16"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 78,
+  "gridY": 11
+ }
+}

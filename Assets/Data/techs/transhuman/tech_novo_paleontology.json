@@ -1,0 +1,72 @@
+{
+ "type": "TECH_NOVO_PALEONTOLOGY",
+ "description": "TXT_KEY_TECH_NOVO_PALEONTOLOGY",
+ "civilopedia": "TXT_KEY_TECH_NOVO_PALEONTOLOGY_PEDIA",
+ "quote": "TXT_KEY_TECH_NOVO_PALEONTOLOGY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_PALEO_PARK",
+   "BUILDING_PTERADACTYL_BREEDER",
+   "BUILDING_TRILOBITE_BREEDER",
+   "BUILDING_TYRANNOSAURUS_REX_BREEDER",
+   "BUILDING_VELOCIRAPTOR_BREEDER"
+  ],
+  "techs": [
+   "TECH_ARTIFICIAL_EVOLUTION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SPECIES_UPLIFTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NEURON_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 65511
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_NOVO_PALEONTOLOGY",
+  "soundMP": "AS2D_TECH_NOVO_PALEONTOLOGY",
+  "icon": "Art/Interface/Buttons/TechTree/novopaleontology.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 112,
+  "gridY": 13
+ }
+}

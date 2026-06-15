@@ -1,0 +1,119 @@
+{
+ "type": "TECH_SKYROADS",
+ "description": "TXT_KEY_TECH_SKYROADS",
+ "civilopedia": "TXT_KEY_TECH_SKYROADS_PEDIA",
+ "quote": "TXT_KEY_TECH_SKYROADS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ROOFTOP_FLYING_CAR_PORT",
+   "BUILDING_SKYROAD_CONTROL_TOWER",
+   "BUILDING_SKYROAD_STATION"
+  ],
+  "builds": [
+   "BUILD_VACTRAIN"
+  ],
+  "techs": [
+   "TECH_BATTLEFIELD_SPORTS",
+   "TECH_LEVITATION",
+   "TECH_ORBITAL_FLIGHT"
+  ],
+  "units": [
+   "UNIT_DROPSHIP",
+   "UNIT_HITECH_HOVERCRAFT",
+   "UNIT_MEDEVAC_DROPSHIP"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CHOP_SHOP",
+   "BUILDING_DIRIGIBLE_TERMINAL",
+   "BUILDING_PAVED_ROADS",
+   "BUILDING_RIVER_ROUGE_COMPLEX",
+   "BUILDING_ROUTE_66",
+   "BUILDING_ROUTE_66_TERMINUS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NOVUS_CHEMISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SUPERSONIC_RAILS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_AEROTROPOLIS": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_FACTORY_SHOCKWAVE_ENGINES": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_NATIONAL_AIRCRAFT_MUSEUM": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "movement": {
+  "team": {
+   "routes": {
+    "ROUTE_VACTRAIN": {
+     "flat": -4
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 46107
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_SKYROADS",
+  "soundMP": "AS2D_TECH_SKYROADS",
+  "icon": "Art/Interface/Buttons/TechTree/skyroads.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 107,
+  "gridY": 3
+ }
+}

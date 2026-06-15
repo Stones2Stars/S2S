@@ -1,0 +1,111 @@
+{
+ "type": "TECH_ARCHEOLOGY",
+ "description": "TXT_KEY_TECH_ARCHEOLOGY",
+ "civilopedia": "TXT_KEY_TECH_ARCHEOLOGY_PEDIA",
+ "quote": "TXT_KEY_TECH_ARCHEOLOGY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_ANCIENT_RELICS"
+  ],
+  "buildings": [
+   "BUILDING_ANTIQUE_SHOP",
+   "BUILDING_ARCHAEOLOGY_LAB",
+   "BUILDING_GENEALOGY_CENTER",
+   "BUILDING_ROSETTA_STONE"
+  ],
+  "techs": [
+   "TECH_PSYCHOLOGY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_SIX_HARMONIES_PAGODA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MUMMIFICATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BIOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GEOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_MOAI": {
+     "flat": 2
+    },
+    "IMPROVEMENT_GEOGLYPH": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_NGORONGORO_CRATER": {
+     "flat": 1000
+    },
+    "BUILDING_WONDER_OF_NATURE_SHARK_BAY": {
+     "flat": 500
+    },
+    "BUILDING_WONDER_OF_NATURE_ULURU": {
+     "flat": 500
+    },
+    "BUILDING_WONDER_OF_NATURE_VICTORIA_FALLS": {
+     "flat": 500
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_PAMUKKALE": {
+     "flat": 500
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 3704
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_ARCHEOLOGY",
+  "soundMP": "AS2D_TECH_ARCHEOLOGY",
+  "icon": "Art/Interface/Buttons/TechTree/archeology.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 58,
+  "gridY": 11
+ }
+}

@@ -1,0 +1,65 @@
+{
+ "type": "TECH_CRITICAL_THOUGHT",
+ "description": "TXT_KEY_TECH_CRITICAL_THOUGHT",
+ "civilopedia": "TXT_KEY_TECH_CRITICAL_THOUGHT_PEDIA",
+ "quote": "TXT_KEY_TECH_CRITICAL_THOUGHT_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_REVIVALIST_CHURCH"
+  ],
+  "techs": [
+   "TECH_SCIENTIFIC_METHOD",
+   "TECH_SOCIAL_CONTRACT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CRYPTOGRAPHY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASTRONOMY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DIVINE_RIGHT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 2883
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_CRITICALTHOUGHT",
+  "soundMP": "AS2D_TECH_CRITICALTHOUGHT",
+  "icon": "Art/Interface/Buttons/TechTree/criticalthought.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 54,
+  "gridY": 9
+ }
+}

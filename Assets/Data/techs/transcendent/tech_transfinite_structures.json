@@ -1,0 +1,79 @@
+{
+ "type": "TECH_TRANSFINITE_STRUCTURES",
+ "description": "TXT_KEY_TECH_TRANSFINITE_STRUCTURES",
+ "civilopedia": "TXT_KEY_TECH_TRANSFINITE_STRUCTURES_PEDIA",
+ "quote": "TXT_KEY_TECH_TRANSFINITE_STRUCTURES_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_FRACTAL_CITY",
+   "BUILDING_DISTANT_HOTEL_INFINITE",
+   "BUILDING_HYPERSPACE_TRANSFINITE_STRUCTURES"
+  ],
+  "techs": [
+   "TECH_NONSTANDARD_MATHEMATICS",
+   "TECH_REALITY_REPROGRAMMING",
+   "TECH_TRANSFINITE_COMPUTATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MANIFOLD_COLONIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ATEMPORAL_BEINGS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_HYPERPLANET": {
+     "flat": 2000
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_HIDE_AND_SEEK": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 642419
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/transfinite_structures.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 157,
+  "gridY": 19
+ }
+}

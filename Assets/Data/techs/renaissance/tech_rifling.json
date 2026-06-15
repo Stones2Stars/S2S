@@ -1,0 +1,128 @@
+{
+ "type": "TECH_RIFLING",
+ "description": "TXT_KEY_TECH_RIFLING",
+ "civilopedia": "TXT_KEY_TECH_RIFLING_PEDIA",
+ "quote": "TXT_KEY_TECH_RIFLING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_AMIS",
+   "BUILDING_CULTURE_ECUADORIAN",
+   "BUILDING_CULTURE_HERERO",
+   "BUILDING_CULTURE_KENYAN",
+   "BUILDING_CULTURE_KLAMATH",
+   "BUILDING_CULTURE_QUEBECKER",
+   "BUILDING_CULTURE_SAMOAN",
+   "BUILDING_CULTURE_TEXAN"
+  ],
+  "civics": [
+   "CIVIC_FEDERALISM"
+  ],
+  "promotions": [
+   "PROMOTION_SNIPER"
+  ],
+  "techs": [
+   "TECH_NATIONALISM"
+  ],
+  "units": [
+   "UNIT_BIG_GAME_HUNTER",
+   "UNIT_BUFFALO_HUMP",
+   "UNIT_ELPIDIO_QUIRINO",
+   "UNIT_ENGLISH_REDCOAT",
+   "UNIT_EUGENE",
+   "UNIT_GAZAVAT_WARRIORS",
+   "UNIT_HERERO_REBEL",
+   "UNIT_INNISKILLING",
+   "UNIT_ISAAC_BROCK",
+   "UNIT_JAEGER",
+   "UNIT_JUAN_JOSE_FLORES",
+   "UNIT_KATARI_INSURGENTS",
+   "UNIT_KLAMATH_RIFLEMAN",
+   "UNIT_MAHKAN",
+   "UNIT_MANUELITO",
+   "UNIT_MASTER_BIG_GAME_HUNTER",
+   "UNIT_MATAAFA_IOSEFO",
+   "UNIT_NORBERTO_ROMUALDEZ",
+   "UNIT_PAAKA",
+   "UNIT_PANCHO_VILLA",
+   "UNIT_PANGCAH_IMPANTERYA",
+   "UNIT_PARTISAN",
+   "UNIT_PREMPEH",
+   "UNIT_QUEBEC_DEFENDERS",
+   "UNIT_RIFLEMAN",
+   "UNIT_SHER_ALI_KHAN",
+   "UNIT_SIYU_WARRIOR",
+   "UNIT_STEPHEN_AUSTIN",
+   "UNIT_STONEWALL_BRIGADE",
+   "UNIT_TSAVO_HUNTERS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BURGLARS_HIDEOUT_UNSANCTIONED",
+   "BUILDING_GREAT_HOLMEGAARD_HUNT",
+   "BUILDING_HIGH_WALLS",
+   "BUILDING_IKHANDA",
+   "BUILDING_ROGUES_HIDEOUT_UNSANCTIONED",
+   "BUILDING_THE_ISHTAR_GATE",
+   "BUILDING_THIEVES_HIDEOUT",
+   "BUILDING_THIEVES_HIDEOUT_UNSANCTIONED"
+  ],
+  "units": [
+   "UNIT_BANDIT_FOOTPAD",
+   "UNIT_BUSH_TRACKERS",
+   "UNIT_CUTTHROAT",
+   "UNIT_GAME_HUNTER",
+   "UNIT_KARAI_PYHARE",
+   "UNIT_MASTER_GAME_HUNTER",
+   "UNIT_SIBERIAN_TRACKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EXPLOSIVES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PHYSICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 3704
+ },
+ "ai": {
+  "behaviour": {
+   "weight": 10,
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_RIFLING",
+  "soundMP": "AS2D_TECH_MP_RIFLING",
+  "icon": ",Art/Interface/Buttons/TechTree/Rifling.dds,Art/Interface/Buttons/TechTree_Atlas.dds,3,7"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "militaryWorth": 12,
+  "tradeable": true,
+  "gridX": 58,
+  "gridY": 15
+ }
+}

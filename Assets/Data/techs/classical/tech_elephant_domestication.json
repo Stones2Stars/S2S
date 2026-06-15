@@ -1,0 +1,70 @@
+{
+ "type": "TECH_ELEPHANT_DOMESTICATION",
+ "description": "TXT_KEY_TECH_ELEPHANT_DOMESTICATION",
+ "civilopedia": "TXT_KEY_TECH_ELEPHANT_DOMESTICATION_PEDIA",
+ "quote": "TXT_KEY_TECH_ELEPHANT_DOMESTICATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CENTRAL_BREEDER_ELEPHANT",
+   "BUILDING_ELEPHANT_SHRINE",
+   "BUILDING_FARM_ANIMAL_ELEPHANT"
+  ],
+  "techs": [
+   "TECH_ARMORED_CAVALRY"
+  ],
+  "units": [
+   "UNIT_BALLISTA_ELEPHANT",
+   "UNIT_ELEPHANT_RIDER",
+   "UNIT_NEANDERTHAL_ELEPHANT_RIDER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CLASSICAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 448
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_ELEPHANT_DOMESTICATION",
+  "soundMP": "AS2D_TECH_ELEPHANT_DOMESTICATION",
+  "icon": ",Art/Interface/Buttons/TechTree/ElephantRiding.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,6"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 6,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "gridX": 33,
+  "gridY": 3
+ }
+}

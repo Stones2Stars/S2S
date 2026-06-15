@@ -1,0 +1,127 @@
+{
+ "type": "TECH_GEOLOGY",
+ "description": "TXT_KEY_TECH_GEOLOGY",
+ "civilopedia": "TXT_KEY_TECH_GEOLOGY_PEDIA",
+ "quote": "TXT_KEY_TECH_GEOLOGY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_FOSSIL_BEDS",
+   "BONUS_GEODE",
+   "BONUS_LITHIUM",
+   "BONUS_MAGNESIUM_ORE",
+   "BONUS_MANGANESE",
+   "BONUS_TUNGSTEN"
+  ],
+  "buildings": [
+   "BUILDING_GEOLOGY_LAB",
+   "BUILDING_MINE_GEODE",
+   "BUILDING_MINE_LITHIUM",
+   "BUILDING_MINE_MAGNESIUM",
+   "BUILDING_MINE_MANGANESE",
+   "BUILDING_MINE_TUNGSTEN"
+  ],
+  "builds": [
+   "BUILD_PAVED_ROAD"
+  ],
+  "techs": [
+   "TECH_ARCHEOLOGY",
+   "TECH_NITROGLYCERIN",
+   "TECH_PALEONTOLOGY",
+   "TECH_WILDLIFE_CONSERVATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CHEMISTRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_MINING_CAMP": {
+     "flat": 500
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_TAR_GATHERER": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SHAFT_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_QUARRY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_MINING_CAMP": {
+     "flat": 500
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_AUYANTEPUI": {
+     "flat": 700
+    },
+    "BUILDING_WONDER_OF_NATURE_BASALT_ORGAN": {
+     "flat": 500
+    },
+    "BUILDING_WONDER_OF_NATURE_KRAKATOA": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "buildings": {
+    "BUILDING_GRAND_EARTH_FESTIVAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 3484
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_GEOLOGY",
+  "soundMP": "AS2D_TECH_GEOLOGY",
+  "icon": "Art/Interface/Buttons/TechTree/geology.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 20,
+  "tradeable": true,
+  "gridX": 57,
+  "gridY": 11
+ }
+}

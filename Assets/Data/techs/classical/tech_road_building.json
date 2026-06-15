@@ -1,0 +1,73 @@
+{
+ "type": "TECH_ROAD_BUILDING",
+ "description": "TXT_KEY_TECH_ROAD_BUILDING",
+ "civilopedia": "TXT_KEY_TECH_ROAD_BUILDING_PEDIA",
+ "quote": "TXT_KEY_TECH_ROAD_BUILDING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ROADS",
+   "BUILDING_ROAD_SIGNS",
+   "BUILDING_SILK_ROAD"
+  ],
+  "builds": [
+   "BUILD_PATH",
+   "BUILD_ROAD"
+  ],
+  "promotions": [
+   "PROMOTION_STREET_FIGHTER3"
+  ],
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ],
+  "units": [
+   "UNIT_EXPLORER",
+   "UNIT_TIGURINI_SCOUTS",
+   "UNIT_WAPITI"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GEOMETRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 554
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_RELIGION": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_CULTURE": 9
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_ROAD_BUILDING",
+  "soundMP": "AS2D_TECH_ROAD_BUILDING",
+  "icon": "Art/Interface/Buttons/TechTree/Roadbuilding.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "tradeable": true,
+  "gridX": 35,
+  "gridY": 11
+ }
+}

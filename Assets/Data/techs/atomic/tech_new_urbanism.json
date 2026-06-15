@@ -1,0 +1,98 @@
+{
+ "type": "TECH_NEW_URBANISM",
+ "description": "TXT_KEY_TECH_NEW_URBANISM",
+ "civilopedia": "TXT_KEY_TECH_NEW_URBANISM_PEDIA",
+ "quote": "TXT_KEY_TECH_NEW_URBANISM_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BICYCLE_BOULEVARD",
+   "BUILDING_GARDEN_CITY",
+   "BUILDING_LARGE_SUSPENSION_BRIDGE",
+   "BUILDING_MIXED_USE_DEVELOPMENT",
+   "BUILDING_MODERN_WATERWORKS",
+   "BUILDING_REGIONAL_PLANNING_COMMISSION",
+   "BUILDING_SEASIDE",
+   "BUILDING_URBAN_VILLAGE"
+  ],
+  "techs": [
+   "TECH_URBAN_CULTURE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CISTERN",
+   "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+   "BUILDING_TOWN_WELL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RECYCLING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_BICYCLE_SHOP": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "buildings": {
+    "BUILDING_PUBLIC_TRANSPORTATION": {
+     "flat": 2
+    },
+    "BUILDING_VELODROME": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 14870
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/Interface/Buttons/techtree/New_Urbanism.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 14,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "gridX": 83,
+  "gridY": 5
+ }
+}

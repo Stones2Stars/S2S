@@ -1,0 +1,59 @@
+{
+ "type": "TECH_MOSAIC_WORKING",
+ "description": "TXT_KEY_TECH_MOSAIC_WORKING",
+ "civilopedia": "TXT_KEY_TECH_MOSAIC_WORKING_PEDIA",
+ "quote": "TXT_KEY_TECH_MOSAIC_WORKING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_MOSAIC_WORKSHOP",
+   "BUILDING_PLAZA"
+  ],
+  "techs": [
+   "TECH_ARISTOCRACY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CONCRETE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AESTHETICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 824
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_MOSAIC_WORKING",
+  "soundMP": "AS2D_TECH_MOSAIC_WORKING",
+  "icon": "Art/Interface/Buttons/TechTree/Mosaicworking.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 10,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 39,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,121 @@
+{
+ "type": "TECH_PERSONAL_ROBOTS",
+ "description": "TXT_KEY_TECH_PERSONAL_ROBOTS",
+ "civilopedia": "TXT_KEY_TECH_PERSONAL_ROBOTS_PEDIA",
+ "quote": "TXT_KEY_TECH_PERSONAL_ROBOTS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANDROID_BROTHEL",
+   "BUILDING_ANDROID_SERVANT_STORE",
+   "BUILDING_ARTIFICIAL_CHILD_ADOPTION_AGENCY",
+   "BUILDING_CRIME_ASIMOV_TAMPERING"
+  ],
+  "techs": [
+   "TECH_BINARY_LEGISLATION",
+   "TECH_TRANSHUMAN_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_WORKER_ANDROID"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BROTHEL"
+  ],
+  "units": [
+   "UNIT_FORTY_NINER",
+   "UNIT_STEAMPUNK_WORKER",
+   "UNIT_WORKER_MODERN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ELECTROMAGNETIC_VOLTAGE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_UNIVERSAL_TRANSLATOR",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_ANTHROPOMORPHICS_LAB": {
+     "flat": 900
+    },
+    "BUILDING_BIOMORPHICS_LAB": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_FACIAL_RECOGNITION_SOFTWARE": {
+     "flat": 900
+    },
+    "BUILDING_INTUITIVE_ALGORITHMS": {
+     "flat": 900
+    },
+    "BUILDING_FACTORY_SERVICE_BOTS": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_ANTHROPOMORPHICS_LAB": {
+     "flat": 900
+    },
+    "BUILDING_BIOMORPHICS_LAB": {
+     "flat": 900
+    },
+    "BUILDING_ROBOTICS_LAB": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "research": 49574
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_PERSONAL_ROBOTS",
+  "soundMP": "AS2D_TECH_PERSONAL_ROBOTS",
+  "icon": "Art/Interface/Buttons/TechTree/personal_robots.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 109,
+  "gridY": 7
+ }
+}

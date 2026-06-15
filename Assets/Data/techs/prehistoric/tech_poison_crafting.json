@@ -1,0 +1,70 @@
+{
+ "type": "TECH_POISON_CRAFTING",
+ "description": "TXT_KEY_TECH_POISON_CRAFTING",
+ "civilopedia": "TXT_KEY_TECH_POISON_CRAFTING_PEDIA",
+ "quote": "TXT_KEY_TECH_POISON_CRAFTING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_POISON"
+  ],
+  "buildings": [
+   "BUILDING_BELLADONNA",
+   "BUILDING_CULTURE_CARIB",
+   "BUILDING_CURARE",
+   "BUILDING_POISON_CRAFTER",
+   "BUILDING_SNAKE_PIT"
+  ],
+  "promotions": [
+   "PROMOTION_BUSHWHACK1"
+  ],
+  "techs": [
+   "TECH_NATUROPATHY",
+   "TECH_TRACKING"
+  ],
+  "units": [
+   "UNIT_CARIB_BLOWGUNNER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NATURAL_PIGMENTS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 13
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_POISON_CRAFTING",
+  "soundMP": "AS2D_TECH_POISON_CRAFTING",
+  "icon": "Art/Interface/Buttons/TechTree/poisoncrafting.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 15,
+  "tradeable": true,
+  "gridX": 7,
+  "gridY": 11
+ }
+}

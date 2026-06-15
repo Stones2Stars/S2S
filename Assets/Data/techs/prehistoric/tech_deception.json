@@ -1,0 +1,75 @@
+{
+ "type": "TECH_DECEPTION",
+ "description": "TXT_KEY_TECH_DECEPTION",
+ "civilopedia": "TXT_KEY_TECH_DECEPTION_PEDIA",
+ "quote": "TXT_KEY_TECH_DECEPTION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_LYING",
+   "BUILDING_EXILE_PRACTICES",
+   "BUILDING_LOOKOUT_POST"
+  ],
+  "processes": [
+   "PROCESS_SPY_MEAGER"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_CLEVERNESS1",
+   "PROMOTION_BUILD_UP_CRIME_FIGHTING1",
+   "PROMOTION_BUILD_UP_INSPECTIONS1",
+   "PROMOTION_BUILD_UP_SCHEMES1",
+   "PROMOTION_BUILD_UP_SECURITY1",
+   "PROMOTION_CONNIVING1",
+   "PROMOTION_SLEUTH1",
+   "PROMOTION_WAYLAY1"
+  ],
+  "techs": [
+   "TECH_THEFT"
+  ],
+  "units": [
+   "UNIT_EXILE",
+   "UNIT_NEANDERTHAL_WATCHER",
+   "UNIT_WATCHER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LANGUAGE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 4
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_DECEPTION",
+  "soundMP": "AS2D_TECH_DECEPTION",
+  "icon": "art/buttons/techs/DeceptionTech.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 2,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 2,
+  "gridY": 13
+ }
+}

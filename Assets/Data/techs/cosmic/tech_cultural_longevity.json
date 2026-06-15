@@ -1,0 +1,83 @@
+{
+ "type": "TECH_CULTURAL_LONGEVITY",
+ "description": "TXT_KEY_TECH_CULTURAL_LONGEVITY",
+ "civilopedia": "TXT_KEY_TECH_CULTURAL_LONGEVITY_PEDIA",
+ "quote": "TXT_KEY_TECH_CULTURAL_LONGEVITY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_ABANDONED_MEGASTRUCTURE"
+  ],
+  "buildings": [
+   "BUILDING_INTERGALACTIC_ANCIENT_CIVILIZATION",
+   "BUILDING_INTERGALACTIC_CULTURE",
+   "BUILDING_INTERGALACTIC_GOVERNMENT",
+   "BUILDING_INTERGALACTIC_LIBRARY",
+   "BUILDING_SOLAR_NOVA_SURVIVAL_PLAN"
+  ],
+  "techs": [
+   "TECH_IMMORTALITY",
+   "TECH_INTERGROUP_TRAVEL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TIME_TRAVEL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DIRECTED_PANSPERMIA",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_ADMINISTRATION_CENTER": {
+     "flat": 1200
+    },
+    "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN": {
+     "flat": 1200
+    },
+    "BUILDING_CHRONOPOLIS": {
+     "flat": 1200
+    },
+    "BUILDING_UNIVERSAL_LIBRARY": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 271404
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/cultural_longevity.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 139,
+  "gridY": 19
+ }
+}

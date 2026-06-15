@@ -1,0 +1,73 @@
+{
+ "type": "TECH_INTERSTELLAR_COMMUNICATION",
+ "description": "TXT_KEY_TECH_INTERSTELLAR_COMMUNICATION",
+ "civilopedia": "TXT_KEY_TECH_INTERSTELLAR_COMMUNICATION_PEDIA",
+ "quote": "TXT_KEY_TECH_INTERSTELLAR_COMMUNICATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_ALIEN_SIGNAL_DECODER",
+   "BUILDING_INTERSTELLAR_BROADCAST_NODE",
+   "BUILDING_INTERSTELLAR_DATA_COLLECTION",
+   "BUILDING_INTERSTELLAR_PULSAR_NAVIGATION",
+   "BUILDING_STARDATE_CALENDAR"
+  ],
+  "techs": [
+   "TECH_DATA_ARCHIVAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FUSION_SPACECRAFT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PRECISION_SOCIAL_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_ADVANCED_METI": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 144040
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/interstellar_communication.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 128,
+  "gridY": 13
+ }
+}

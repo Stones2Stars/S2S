@@ -1,0 +1,71 @@
+{
+ "type": "TECH_LUNAR_TOURISM",
+ "description": "TXT_KEY_TECH_LUNAR_TOURISM",
+ "civilopedia": "TXT_KEY_TECH_LUNAR_TOURISM_PEDIA",
+ "quote": "TXT_KEY_TECH_LUNAR_TOURISM_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_HOTEL",
+   "BUILDING_LUNAR_HOTEL",
+   "BUILDING_LUNAR_SPACE_PORT"
+  ],
+  "techs": [
+   "TECH_MAGNETIC_SAILS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEGACORPORATIONS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_COLONY_HABITAT_MEDIUM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 40165
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_LUNAR_TOURISM2",
+  "soundMP": "AS2D_TECH_LUNAR_TOURISM2",
+  "icon": "Art/Interface/Buttons/TechTree/lunartourism.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 103,
+  "gridY": 1
+ }
+}

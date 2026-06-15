@@ -1,0 +1,102 @@
+{
+ "type": "TECH_NOVUS_CHEMISTRY",
+ "description": "TXT_KEY_TECH_NOVUS_CHEMISTRY",
+ "civilopedia": "TXT_KEY_TECH_NOVUS_CHEMISTRY_PEDIA",
+ "quote": "TXT_KEY_TECH_NOVUS_CHEMISTRY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_NOVUS_CHEMICALS"
+  ],
+  "buildings": [
+   "BUILDING_ATMOSPHERIC_WATER_GENERATOR",
+   "BUILDING_CHEMICALS_DISTRICT",
+   "BUILDING_DEACIDIFICATION_STATION",
+   "BUILDING_FIREPROOF_BUILDING_MATERIALS",
+   "BUILDING_NOVUS_REFINERY"
+  ],
+  "techs": [
+   "TECH_ACCELERATED_GERMINATION",
+   "TECH_AMPLIFIED_WAVELENGTHS",
+   "TECH_EXOCORTEX_NETWORKS",
+   "TECH_PHOTON_THERMODYNAMICS",
+   "TECH_SKYROADS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ALCHEMISTS_LAB",
+   "BUILDING_BELLADONNA",
+   "BUILDING_CURARE",
+   "BUILDING_DEATH_CAP_MUSHROOM",
+   "BUILDING_DYE_MAKER",
+   "BUILDING_LYE_MAKER",
+   "BUILDING_PERFUME_MAKER",
+   "BUILDING_RESOURCES_POISON",
+   "BUILDING_SOAP_MAKER",
+   "BUILDING_TANNIN_MAKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ONTOLOGICAL_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_LIQUID_METALS_FOUNDRY": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_CHEMISTRY_LAB": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 41539
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_NOVUS_CHEMISTRY",
+  "soundMP": "AS2D_TECH_NOVUS_CHEMISTRY",
+  "icon": "Art/Interface/Buttons/TechTree/Novuschemistry2.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 104,
+  "gridY": 17
+ }
+}

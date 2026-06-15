@@ -1,0 +1,67 @@
+{
+ "type": "TECH_FRANCHISES",
+ "description": "TXT_KEY_TECH_FRANCHISES",
+ "civilopedia": "TXT_KEY_TECH_FRANCHISES_PEDIA",
+ "quote": "TXT_KEY_TECH_FRANCHISES_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BURGER_JOINT",
+   "BUILDING_CAFE",
+   "BUILDING_DELI",
+   "BUILDING_DINER",
+   "BUILDING_PANCAKE_HOUSE",
+   "BUILDING_PIZZA_PARLOR",
+   "BUILDING_TACO_HUT"
+  ],
+  "techs": [
+   "TECH_CONGLOMERATES",
+   "TECH_SCIENTOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_APPLIED_ECONOMICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 11196
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_FRANCHISES",
+  "soundMP": "AS2D_TECH_FRANCHISES",
+  "icon": "Art/Interface/Buttons/TechTree/franchises.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 76,
+  "gridY": 9
+ }
+}

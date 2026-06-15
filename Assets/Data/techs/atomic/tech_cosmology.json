@@ -1,0 +1,53 @@
+{
+ "type": "TECH_COSMOLOGY",
+ "description": "TXT_KEY_TECH_COSMOLOGY",
+ "civilopedia": "TXT_KEY_TECH_COSMOLOGY_PEDIA",
+ "quote": "TXT_KEY_TECH_COSMOLOGY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_PLANETARIUM"
+  ],
+  "techs": [
+   "TECH_MODERN_PHYSICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_THEORY_OF_RELATIVITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 10309
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_COSMOLOGY",
+  "soundMP": "AS2D_TECH_COSMOLOGY",
+  "icon": "Art/Interface/Buttons/TechTree/cosmology.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 30,
+  "tradeable": true,
+  "gridX": 74,
+  "gridY": 5
+ }
+}

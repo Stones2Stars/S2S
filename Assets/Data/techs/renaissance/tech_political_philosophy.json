@@ -1,0 +1,87 @@
+{
+ "type": "TECH_POLITICAL_PHILOSOPHY",
+ "description": "TXT_KEY_TECH_POLITICAL_PHILOSOPHY",
+ "civilopedia": "TXT_KEY_TECH_POLITICAL_PHILOSOPHY_PEDIA",
+ "quote": "TXT_KEY_TECH_POLITICAL_PHILOSOPHY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CONSPIRATORS_HIDEOUT",
+   "BUILDING_CONSPIRATORS_HIDEOUT_UNSANCTIONED",
+   "BUILDING_CRIME_DRUGS",
+   "BUILDING_CRIME_DRUG_CARTELS",
+   "BUILDING_HOUSE_OF_PARLIAMENT",
+   "BUILDING_SPY_SAFE_HOUSE",
+   "BUILDING_SPY_TRAINING_FACILITY"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_SCHEMES5",
+   "PROMOTION_CONNIVING5",
+   "PROMOTION_FOMENT5",
+   "PROMOTION_INSPIRE5"
+  ],
+  "techs": [
+   "TECH_DIVINE_RIGHT",
+   "TECH_JURISPRUDENCE"
+  ],
+  "units": [
+   "UNIT_HAJDUK",
+   "UNIT_SCOUNDREL",
+   "UNIT_SLEEPER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PARLIAMENTS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BANKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HUMANISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "defensivePactTrading": {
+  "team": {
+   "enabler": true
+  }
+ },
+ "cost": {
+  "research": 2528
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_ESPIONAGE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_POLITICAL_PHILOSOPHY",
+  "soundMP": "AS2D_TECH_POLITICAL_PHILOSOPHY",
+  "icon": ",Art/Interface/Buttons/TechTree/Diplomacy.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,5"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 52,
+  "gridY": 9
+ }
+}

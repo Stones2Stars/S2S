@@ -1,0 +1,76 @@
+{
+ "type": "TECH_COMPOSITE_TOOLS",
+ "description": "TXT_KEY_TECH_COMPOSITE_TOOLS",
+ "civilopedia": "TXT_KEY_TECH_COMPOSITE_TOOLS_PEDIA",
+ "quote": "TXT_KEY_TECH_COMPOSITE_TOOLS_QUOTE",
+ "enables": {
+  "techs": [
+   "TECH_AXE_MAKING",
+   "TECH_SPEAR_MAKING"
+  ],
+  "units": [
+   "UNIT_NEANDERTHAL_STONE_MACEMAN",
+   "UNIT_STONE_MACEMAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BINDING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADHESIVES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BONE_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_STONE_TOOL_MAKER": {
+     "flat": 100
+    }
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "cost": {
+  "research": 17
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_COMPOSITE_TOOLS",
+  "soundMP": "AS2D_TECH_COMPOSITE_TOOLS",
+  "icon": "Art/Interface/Buttons/TechTree/compositetools.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "militaryWorth": 3,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 9,
+  "gridY": 5
+ }
+}

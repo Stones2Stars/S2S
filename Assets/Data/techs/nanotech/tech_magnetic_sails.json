@@ -1,0 +1,75 @@
+{
+ "type": "TECH_MAGNETIC_SAILS",
+ "description": "TXT_KEY_TECH_MAGNETIC_SAILS",
+ "civilopedia": "TXT_KEY_TECH_MAGNETIC_SAILS_PEDIA",
+ "quote": "TXT_KEY_TECH_MAGNETIC_SAILS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_SEDNA_PROBE"
+  ],
+  "builds": [
+   "BUILD_SOLAR_TRADING_POST"
+  ],
+  "improvements": [
+   "IMPROVEMENT_SOLAR_TRADING_POST"
+  ],
+  "techs": [
+   "TECH_ORBITAL_FLIGHT"
+  ],
+  "units": [
+   "UNIT_MAGSAIL_WORKER",
+   "UNIT_SEDNOID_REWARD",
+   "UNIT_TRANSNEPTUNIAN_REWARD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INTERNAL_SHOCKWAVE_ENGINE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LUNAR_TOURISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 41539
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_MAGNETIC_SAILS",
+  "soundMP": "AS2D_TECH_MAGNETIC_SAILS",
+  "icon": "Art/Interface/Buttons/TechTree/magneticsails.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 104,
+  "gridY": 1
+ }
+}

@@ -1,0 +1,87 @@
+{
+ "type": "TECH_THE_WHEEL",
+ "description": "TXT_KEY_TECH_THE_WHEEL",
+ "civilopedia": "TXT_KEY_TECH_THE_WHEEL_PEDIA",
+ "quote": "TXT_KEY_TECH_THE_WHEEL_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DONKEY_BREEDER",
+   "BUILDING_HORSE_BREEDER",
+   "BUILDING_WHEELWRIGHT"
+  ],
+  "builds": [
+   "BUILD_PATH"
+  ],
+  "promotions": [
+   "PROMOTION_DRILL2",
+   "PROMOTION_REPAIR_MECHANICAL1",
+   "PROMOTION_STREET_FIGHTER2"
+  ],
+  "techs": [
+   "TECH_CHARIOTRY",
+   "TECH_EXPLORATION",
+   "TECH_STANDARDIZATION"
+  ],
+  "units": [
+   "UNIT_BATTERING_RAM",
+   "UNIT_TAMED_DONKEY_PAIR",
+   "UNIT_TAMED_HORSE_PAIR",
+   "UNIT_TAMED_WOLF_PAIR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_POTTERY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_LUMBERJACK": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 110
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_THE_WHEEL",
+  "soundMP": "AS2D_TECH_MP_THE_WHEEL",
+  "icon": "Art/Interface/Buttons/TechTree/thewheel2.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 22,
+  "gridY": 11
+ }
+}

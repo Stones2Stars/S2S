@@ -1,0 +1,93 @@
+{
+ "type": "TECH_DEEP_SEA_EXPLORATION",
+ "description": "TXT_KEY_TECH_DEEP_SEA_EXPLORATION",
+ "civilopedia": "TXT_KEY_TECH_DEEP_SEA_EXPLORATION_PEDIA",
+ "quote": "TXT_KEY_TECH_DEEP_SEA_EXPLORATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SEA_LAB",
+   "BUILDING_MISSION_TO_CHALLENGER_DEEP"
+  ],
+  "builds": [
+   "BUILD_TUNNEL"
+  ],
+  "promotions": [
+   "PROMOTION_REPAIR_NAVAL5"
+  ],
+  "techs": [
+   "TECH_MODERN_SEISMOLOGY",
+   "TECH_MODERN_WARFARE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SONAR",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NUCLEAR_POWER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_OFFSHORE_PLATFORM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_MARINE_BIOLOGY_LAB": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 13181
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_DEEP_SEA_EXPLORATION",
+  "soundMP": "AS2D_TECH_DEEP_SEA_EXPLORATION",
+  "icon": "Art/Interface/Buttons/TechTree/deepseaexploration.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 80,
+  "gridY": 15
+ }
+}

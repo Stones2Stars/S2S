@@ -1,0 +1,83 @@
+{
+ "type": "TECH_HYPERINTELLIGENCE",
+ "description": "TXT_KEY_TECH_HYPERINTELLIGENCE",
+ "civilopedia": "TXT_KEY_TECH_HYPERINTELLIGENCE_PEDIA",
+ "quote": "TXT_KEY_TECH_HYPERINTELLIGENCE_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_ARCHAILECT"
+  ],
+  "buildings": [
+   "BUILDING_HUMAN_MOD_ARCHAILECT",
+   "BUILDING_HYPERINTELLIGENT_ORACLE",
+   "BUILDING_INTERGALACTIC_CONSCIOUS_GALAXY",
+   "BUILDING_INTERGALACTIC_UNIVERSAL_AC"
+  ],
+  "civics": [
+   "CIVIC_HYPERINTELLIGENT"
+  ],
+  "techs": [
+   "TECH_DEITIES",
+   "TECH_OMNIBENEVOLENT_MANDATE"
+  ],
+  "units": [
+   "UNIT_HYPERINTELLIGENT_WORK_CREW"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HYPERSTRUCTURE_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MATERIALIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PANPSYCHISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_ULTIMATE_COMBAT_ARENA": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 563149
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/hyperintelligence.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 153,
+  "gridY": 3
+ }
+}

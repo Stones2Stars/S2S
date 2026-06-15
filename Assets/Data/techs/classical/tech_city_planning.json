@@ -1,0 +1,136 @@
+{
+ "type": "TECH_CITY_PLANNING",
+ "description": "TXT_KEY_TECH_CITY_PLANNING",
+ "civilopedia": "TXT_KEY_TECH_CITY_PLANNING_PEDIA",
+ "quote": "TXT_KEY_TECH_CITY_PLANNING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CITY_COUNCIL",
+   "BUILDING_CRIME_ARSON",
+   "BUILDING_FORBIDDEN_PALACE",
+   "BUILDING_GREAT_ZIMBABWE",
+   "BUILDING_HELLENIC_PANTHEON",
+   "BUILDING_NAVAL_SHIPPING_WAREHOUSE",
+   "BUILDING_OFFICIUM",
+   "BUILDING_PHIDIAS_STATUE_WORKSHOP",
+   "BUILDING_PORT"
+  ],
+  "builds": [
+   "BUILD_RESOURCE_SETTLEMENT",
+   "BUILD_VILLAGE"
+  ],
+  "civics": [
+   "CIVIC_PUBLIC_WORKS"
+  ],
+  "improvements": [
+   "IMPROVEMENT_RESOURCE_SETTLEMENT",
+   "IMPROVEMENT_VILLAGE"
+  ],
+  "techs": [
+   "TECH_CANAL_SYSTEMS",
+   "TECH_PAVED_ROADS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ANT_CATCHER",
+   "BUILDING_BERRY_GATHERER",
+   "BUILDING_BIRD_CALLER",
+   "BUILDING_BONEMARROWER",
+   "BUILDING_BONEWORKER",
+   "BUILDING_BUFFALO_JUMP",
+   "BUILDING_CAPTURE_THE_FLAG",
+   "BUILDING_CHILDBIRTH_HUT",
+   "BUILDING_DINING_HALL",
+   "BUILDING_DRYING_FRAME",
+   "BUILDING_EARTHWORM_GATHERER",
+   "BUILDING_FLINT_KNAPPER",
+   "BUILDING_GER",
+   "BUILDING_GRAIN_GATHERER",
+   "BUILDING_GRASSHOPPER_CATCHER",
+   "BUILDING_HUNTERS_CAMP",
+   "BUILDING_LICHEN_BURNER",
+   "BUILDING_LICHEN_GATHERER",
+   "BUILDING_MUSHROOM_GATHERER",
+   "BUILDING_NUT_CRACKING_STONE",
+   "BUILDING_ROCK_ART",
+   "BUILDING_ROCK_GATHERER",
+   "BUILDING_SNAIL_GATHERER",
+   "BUILDING_SPEARFISHER",
+   "BUILDING_SPEARPOINT_BURIAL",
+   "BUILDING_STICK_COMBAT",
+   "BUILDING_STICK_GATHERER",
+   "BUILDING_STONEWORKER",
+   "BUILDING_TERMITE_CATCHER",
+   "BUILDING_TREE_CARVINGS",
+   "BUILDING_TREE_PLATFORMS",
+   "BUILDING_TUBER_GATHERER",
+   "BUILDING_TUMULUS",
+   "BUILDING_VILLAGE_HALL",
+   "BUILDING_VISION_QUEST",
+   "BUILDING_WALKABOUT",
+   "BUILDING_WILD_HERBS_GATHERER",
+   "BUILDING_WOODCARVER"
+  ],
+  "builds": [
+   "BUILD_RESOURCE_OUTPOST"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MAIL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ROAD_BUILDING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CONSTRUCTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 614
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 3
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_GOLD": 8
+   },
+   {
+    "FLAVOR_CULTURE": 9
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_CITY_PLANNING",
+  "soundMP": "AS2D_TECH_CITY_PLANNING",
+  "icon": ",Art/Interface/Buttons/TechTree/CityPlanning.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,4"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 36,
+  "gridY": 11
+ }
+}

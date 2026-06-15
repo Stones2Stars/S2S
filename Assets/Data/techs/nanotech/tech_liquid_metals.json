@@ -1,0 +1,94 @@
+{
+ "type": "TECH_LIQUID_METALS",
+ "description": "TXT_KEY_TECH_LIQUID_METALS",
+ "civilopedia": "TXT_KEY_TECH_LIQUID_METALS_PEDIA",
+ "quote": "TXT_KEY_TECH_LIQUID_METALS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_LIQUID_METAL",
+   "BONUS_METAL_FOAM"
+  ],
+  "buildings": [
+   "BUILDING_CISLUNAR_MATERIALS_LAB",
+   "BUILDING_LIQUID_METALS_FOUNDRY",
+   "BUILDING_METAL_FOAM_FOUNDRY"
+  ],
+  "techs": [
+   "TECH_NANOGENERATORS"
+  ],
+  "units": [
+   "UNIT_HOVER_ARTILLERY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GENESIS_BIOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GRAPHENE_ALLOYS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOTECH_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_MECHATRONICS_LAB": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_MECHATRONICS_LAB": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 36429
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_LIQUID_METALS",
+  "soundMP": "AS2D_TECH_LIQUID_METALS",
+  "icon": "Art/Interface/Buttons/TechTree/liquidmaterials.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 100,
+  "gridY": 9
+ }
+}

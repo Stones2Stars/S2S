@@ -1,0 +1,78 @@
+{
+ "type": "TECH_ALPHABET",
+ "description": "TXT_KEY_TECH_ALPHABET",
+ "civilopedia": "TXT_KEY_TECH_ALPHABET_PEDIA",
+ "quote": "TXT_KEY_TECH_ALPHABET_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_ILLEGAL_IMMIGRATION",
+   "BUILDING_CULTURE_CHEROKEE"
+  ],
+  "civics": [
+   "CIVIC_CLOSED_BORDERS",
+   "CIVIC_OPEN_BORDERS"
+  ],
+  "processes": [
+   "PROCESS_RESEARCH"
+  ],
+  "promotions": [
+   "PROMOTION_SNEAK"
+  ],
+  "techs": [
+   "TECH_CODE_OF_LAWS",
+   "TECH_CRYPTOGRAPHY",
+   "TECH_LITERATURE"
+  ],
+  "units": [
+   "UNIT_BAAL_ESER",
+   "UNIT_SARGON",
+   "UNIT_SEMIRAMIS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CLASSICAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "freeTechs": 1
+ },
+ "cost": {
+  "research": 448
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_ESPIONAGE": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_ALPHABET",
+  "soundMP": "AS2D_TECH_MP_ALPHABET",
+  "icon": ",Art/Interface/Buttons/TechTree/Alphabet.dds,Art/Interface/Buttons/TechTree_Atlas.dds,2,1"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 33,
+  "gridY": 15
+ }
+}

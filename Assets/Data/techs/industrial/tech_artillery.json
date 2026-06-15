@@ -1,0 +1,80 @@
+{
+ "type": "TECH_ARTILLERY",
+ "description": "TXT_KEY_TECH_ARTILLERY",
+ "civilopedia": "TXT_KEY_TECH_ARTILLERY_PEDIA",
+ "quote": "TXT_KEY_TECH_ARTILLERY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARTILLERY_BATTERY",
+   "BUILDING_FACTORY_AMMUNITION"
+  ],
+  "techs": [
+   "TECH_ARMORED_VEHICLES",
+   "TECH_TRENCH_WARFARE"
+  ],
+  "units": [
+   "UNIT_ARTHUR_CURRIE",
+   "UNIT_BATTLECRUISER",
+   "UNIT_DREADNOUGHT_SHIP",
+   "UNIT_IMAM_SHAMIL",
+   "UNIT_JAMES_BROOKE",
+   "UNIT_KAI_HO",
+   "UNIT_LIGHT_ARTILLERY",
+   "UNIT_MASTER_SAILOR_DREADNOUGHT_SHIP",
+   "UNIT_MASTER_SAILOR_PRE_DREADNOUGHT",
+   "UNIT_MASTER_SAILOR_STEAM_DESTROYER",
+   "UNIT_MATO_TOPE",
+   "UNIT_PRE_DREADNOUGHT",
+   "UNIT_STEAM_DESTROYER",
+   "UNIT_TRUGANINI"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BAMBOO_ARMOURER",
+   "BUILDING_CATACOMBS_OF_KOM_EL_SHOQAFA",
+   "BUILDING_CITADEL",
+   "BUILDING_KEEP_TOWER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_IMPERIALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 7356
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_ARTILLERY",
+  "soundMP": "AS2D_TECH_MP_ARTILLERY",
+  "icon": ",Art/Interface/Buttons/TechTree/Artillery.dds,Art/Interface/Buttons/TechTree_Atlas.dds,5,1"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 69,
+  "gridY": 15
+ }
+}

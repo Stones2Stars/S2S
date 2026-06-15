@@ -1,0 +1,150 @@
+{
+ "type": "TECH_IRON_WORKING",
+ "description": "TXT_KEY_TECH_IRON_WORKING",
+ "civilopedia": "TXT_KEY_TECH_IRON_WORKING_PEDIA",
+ "quote": "TXT_KEY_TECH_IRON_WORKING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_IRON_INGOTS",
+   "BONUS_IRON_ORE",
+   "BONUS_IRON_WARES",
+   "BONUS_PEAT",
+   "BONUS_PLATINUM_INGOTS",
+   "BONUS_PLATINUM_ORE",
+   "BONUS_PLATINUM_WARES",
+   "BONUS_TERRA_SIGILLATA"
+  ],
+  "buildings": [
+   "BUILDING_CULTURE_BURGUNDIAN",
+   "BUILDING_CULTURE_CELTIC",
+   "BUILDING_CULTURE_KHAZAR",
+   "BUILDING_CULTURE_PICTISH",
+   "BUILDING_CULTURE_QIN",
+   "BUILDING_CULTURE_SWAZI",
+   "BUILDING_MINE_IRON",
+   "BUILDING_MINE_MAGNETITE",
+   "BUILDING_MINE_PLATINUM",
+   "BUILDING_NATIONAL_SMELTER_IRON",
+   "BUILDING_NATIONAL_SMELTER_PLATINUM",
+   "BUILDING_PEAT_GATHERER",
+   "BUILDING_SMELTER_IRON",
+   "BUILDING_SMELTER_PLATINUM",
+   "BUILDING_SMITH_IRON",
+   "BUILDING_SMITH_PLATINUM",
+   "BUILDING_TERRA_SIGILLATA_WORKSHOP"
+  ],
+  "builds": [
+   "BUILD_PEAT_CUTTER",
+   "BUILD_STONE_TOOLS_WORKSHOP",
+   "BUILD_STONE_TOOLS_WORKSHOP_KILL"
+  ],
+  "improvements": [
+   "IMPROVEMENT_PEAT_CUTTER"
+  ],
+  "promotions": [
+   "PROMOTION_CARAVAN_GUARD_III",
+   "PROMOTION_CARAVAN_MARINES_III",
+   "PROMOTION_HILL_WORKER2"
+  ],
+  "techs": [
+   "TECH_SIEGE_WARFARE"
+  ],
+  "units": [
+   "UNIT_BACTRIAN_CATAPHRACT",
+   "UNIT_CELTIC_GALLIC_WARRIOR",
+   "UNIT_HAMILCAR",
+   "UNIT_HUSKARL",
+   "UNIT_ISRAELI_MACCABEE",
+   "UNIT_LIGHT_SWORDSMAN",
+   "UNIT_LITHOBOLOS",
+   "UNIT_OXYBELES",
+   "UNIT_PICTISH_WARRIOR",
+   "UNIT_RHINO_SWORDSMAN",
+   "UNIT_ROME_PRAETORIAN",
+   "UNIT_SPARTAN_WARRIOR",
+   "UNIT_SWAZI_TRACKER",
+   "UNIT_TIBETIAN_DOB_DOB"
+  ]
+ },
+ "obsoletes": {
+  "bonuses": [
+   "BONUS_STONE_TOOLS"
+  ],
+  "buildings": [
+   "BUILDING_MICROLITH_WORKSHOP"
+  ],
+  "units": [
+   "UNIT_MAPINGUARI_OBSIDIAN",
+   "UNIT_MAPINGUARI_STONE",
+   "UNIT_WAR_RHINO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CLASSICAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_EARLY_MOUNTAIN_MINE": {
+     "flat": 2
+    },
+    "IMPROVEMENT_MINE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_STONE_TOOL_MAKER": {
+     "flat": 300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 448
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_IRONWORK",
+  "soundMP": "AS2D_TECH_MP_IRONWORK",
+  "icon": ",Art/Interface/Buttons/TechTree/Iron_Working.dds,Art/Interface/Buttons/TechTree_Atlas.dds,5,10"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 33,
+  "gridY": 7
+ }
+}

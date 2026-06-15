@@ -1,0 +1,90 @@
+{
+ "type": "TECH_ASTROGEOLOGY",
+ "description": "TXT_KEY_TECH_ASTROGEOLOGY",
+ "civilopedia": "TXT_KEY_TECH_ASTROGEOLOGY_PEDIA",
+ "quote": "TXT_KEY_TECH_ASTROGEOLOGY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CARBON_DIOXIDE_ICE",
+   "BONUS_HELIUM_3"
+  ],
+  "buildings": [
+   "BUILDING_METEORITE_LAB"
+  ],
+  "techs": [
+   "TECH_PLANETARY_EXPLORATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RADIO_ASTRONOMY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_VOLCANOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LUNAR_EXPLORATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_MINING_CAMP": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_MINING_CAMP": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 16099
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_ASTROGEOLOGY",
+  "soundMP": "AS2D_TECH_ASTROGEOLOGY",
+  "icon": "Art/Interface/Buttons/TechTree/astrogeology.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 85,
+  "gridY": 15
+ }
+}

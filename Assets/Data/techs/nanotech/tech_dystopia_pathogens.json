@@ -1,0 +1,88 @@
+{
+ "type": "TECH_DYSTOPIA_PATHOGENS",
+ "description": "TXT_KEY_TECH_DYSTOPIA_PATHOGENS",
+ "civilopedia": "TXT_KEY_TECH_DYSTOPIA_PATHOGENS_PEDIA",
+ "quote": "TXT_KEY_TECH_DYSTOPIA_PATHOGENS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_MARTIAN_ALGAE"
+  ],
+  "buildings": [
+   "BUILDING_CISLUNAR_BIOFACTORY",
+   "BUILDING_CLIMATE_GEOENGINEERING",
+   "BUILDING_MARTIAN_ALGAE_DESIGNER",
+   "BUILDING_MARTIAN_BIOFACTORY",
+   "BUILDING_URBAN_DEPOLLENIZER"
+  ],
+  "techs": [
+   "TECH_APOCALYPTIC_PATHOGENS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PROTOTYPED_PATHOGENS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ELECTROMAGNETIC_VOLTAGE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CYBERIMMUNOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DNA_COMPUTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_CISLUNAR_SANITATION_SYSTEM": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 49574
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_DYSTOPIA_PATHOGENS",
+  "soundMP": "AS2D_TECH_DYSTOPIA_PATHOGENS",
+  "icon": "Art/Interface/Buttons/TechTree/dystopianpathogens.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 109,
+  "gridY": 17
+ }
+}

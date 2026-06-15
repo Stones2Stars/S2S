@@ -1,0 +1,95 @@
+{
+ "type": "TECH_PLASTIC_ELECTRONICS",
+ "description": "TXT_KEY_TECH_PLASTIC_ELECTRONICS",
+ "civilopedia": "TXT_KEY_TECH_PLASTIC_ELECTRONICS_PEDIA",
+ "quote": "TXT_KEY_TECH_PLASTIC_ELECTRONICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ELECTRONIC_PAPER_MAKER",
+   "BUILDING_HYPERMARKET",
+   "BUILDING_LUNAR_SHIPYARD"
+  ],
+  "techs": [
+   "TECH_ELECTROMAGNETIC_FIELD_SHIELDING",
+   "TECH_NANOELECTRONICS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BAZAAR",
+   "BUILDING_BRIDAL_SHOP",
+   "BUILDING_COSTUME_SHOP",
+   "BUILDING_CRAFTS_HUT",
+   "BUILDING_GROCER",
+   "BUILDING_MARKET",
+   "BUILDING_PAPER_MAKER",
+   "BUILDING_PORTRAIT_PAINTER",
+   "BUILDING_SMOKE_SIGNALS",
+   "BUILDING_WIG_SHOP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HOLOGRAPHICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_SILK_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_LIQUID_METALS_FOUNDRY": {
+     "flat": 900
+    },
+    "BUILDING_FACTORY_NANOGENERATORS": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 40165
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_PLASTIC_ELECTRONICS",
+  "soundMP": "AS2D_TECH_PLASTIC_ELECTRONICS",
+  "icon": "Art/Interface/Buttons/TechTree/wearable_computer.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 103,
+  "gridY": 9
+ }
+}

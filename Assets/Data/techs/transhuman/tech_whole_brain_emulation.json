@@ -1,0 +1,82 @@
+{
+ "type": "TECH_WHOLE_BRAIN_EMULATION",
+ "description": "TXT_KEY_TECH_WHOLE_BRAIN_EMULATION",
+ "civilopedia": "TXT_KEY_TECH_WHOLE_BRAIN_EMULATION_PEDIA",
+ "quote": "TXT_KEY_TECH_WHOLE_BRAIN_EMULATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BEHAVIOR_PREDICTION",
+   "BUILDING_EM_CITIZENS",
+   "BUILDING_EM_SLAVES",
+   "BUILDING_SIMULATED_POPULATION"
+  ],
+  "techs": [
+   "TECH_ARTIFICIAL_LIFE",
+   "TECH_COMPREHENSIVE_CYBERNETICS",
+   "TECH_TECHNOLOGICAL_SINGULARITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SOCIAL_CALCULUS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BINARY_SEMIOTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_EVOLUTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_SOMA_DISPENSARY": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 70029
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_WHOLE_BRAIN_EMULATION",
+  "soundMP": "AS2D_TECH_WHOLE_BRAIN_EMULATION",
+  "icon": "Art/Interface/Buttons/TechTree/wholebrainemulation.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 114,
+  "gridY": 19
+ }
+}

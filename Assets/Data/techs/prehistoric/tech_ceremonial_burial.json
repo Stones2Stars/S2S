@@ -1,0 +1,72 @@
+{
+ "type": "TECH_CEREMONIAL_BURIAL",
+ "description": "TXT_KEY_TECH_CEREMONIAL_BURIAL",
+ "civilopedia": "TXT_KEY_TECH_CEREMONIAL_BURIAL_PEDIA",
+ "quote": "TXT_KEY_TECH_CEREMONIAL_BURIAL_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BURIAL_GROUND",
+   "BUILDING_BURIAL_PLATFORMS",
+   "BUILDING_BURIAL_TRADITION_BONE",
+   "BUILDING_BURIAL_TRADITION_CAVE",
+   "BUILDING_BURIAL_TRADITION_EARTH",
+   "BUILDING_BURIAL_TRADITION_FIRE",
+   "BUILDING_BURIAL_TRADITION_SEA",
+   "BUILDING_BURIAL_TRADITION_SKY",
+   "BUILDING_FUNERAL_PYRE",
+   "BUILDING_SPEARPOINT_BURIAL",
+   "BUILDING_STELE",
+   "BUILDING_TUMULUS",
+   "BUILDING_WATER_BURIALS"
+  ],
+  "techs": [
+   "TECH_CELEBRATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ANIMISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 39
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 8
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_CEREMONIAL_BURIAL",
+  "soundMP": "AS2D_TECH_CEREMONIAL_BURIAL",
+  "icon": "Art/Interface/Buttons/TechTree/Button_CeremonialBurial.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 15,
+  "gridY": 13
+ }
+}

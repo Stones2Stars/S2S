@@ -1,0 +1,67 @@
+{
+ "type": "TECH_CASTE_SYSTEM",
+ "description": "TXT_KEY_TECH_CASTE_SYSTEM",
+ "civilopedia": "TXT_KEY_TECH_CASTE_SYSTEM_PEDIA",
+ "quote": "TXT_KEY_TECH_CASTE_SYSTEM_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BRAHMIN_LIBRARY",
+   "BUILDING_CULTURE_FULANI"
+  ],
+  "civics": [
+   "CIVIC_CASTE_SYSTEM"
+  ],
+  "techs": [
+   "TECH_SACRIFICE_CULT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_IDEOGRAMS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COMMUNITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 96
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_CASTE_SYSTEM",
+  "soundMP": "AS2D_TECH_CASTE_SYSTEM",
+  "icon": "Art/Interface/Buttons/TechTree/CasteSystem.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 16,
+  "tradeable": true,
+  "gridX": 21,
+  "gridY": 19
+ }
+}

@@ -1,0 +1,51 @@
+{
+ "type": "TECH_STARPUNK",
+ "description": "TXT_KEY_TECH_STARPUNK",
+ "civilopedia": "TXT_KEY_TECH_STARPUNK_PEDIA",
+ "quote": "TXT_KEY_TECH_STARPUNK_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_STARPUNK"
+  ],
+  "specialBuildings": [
+   "SPECIALBUILDING_PUNK_STAR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ZERO_POINT_ENERGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEGAWORMHOLES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 338869
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/starpunk.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 145,
+  "gridY": 17
+ }
+}

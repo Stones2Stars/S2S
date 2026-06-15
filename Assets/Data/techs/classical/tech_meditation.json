@@ -1,0 +1,86 @@
+{
+ "type": "TECH_MEDITATION",
+ "description": "TXT_KEY_TECH_MEDITATION",
+ "civilopedia": "TXT_KEY_TECH_MEDITATION_PEDIA",
+ "quote": "TXT_KEY_TECH_MEDITATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_ALACALUFE",
+   "BUILDING_CULTURE_ALEMANNIC",
+   "BUILDING_CULTURE_SARMATIAN",
+   "BUILDING_CULTURE_TAIRONA",
+   "BUILDING_CULTURE_TIBETAN",
+   "BUILDING_FAMEN_TEMPLE",
+   "BUILDING_GROVE",
+   "BUILDING_PORCELAIN_TOWER",
+   "BUILDING_ROCK_GARDEN",
+   "BUILDING_SHWEDAGON_PAYA",
+   "BUILDING_YOGA_SCHOOL"
+  ],
+  "civics": [
+   "CIVIC_CHURCH"
+  ],
+  "promotions": [
+   "PROMOTION_MARTIAL_ARTS"
+  ],
+  "specialBuildings": [
+   "SPECIALBUILDING_MONASTERY"
+  ],
+  "techs": [
+   "TECH_BUDDHISM",
+   "TECH_CONFUCIANISM",
+   "TECH_JAINISM",
+   "TECH_THEOLOGY"
+  ],
+  "units": [
+   "UNIT_BATRADZ",
+   "UNIT_CHROCUS",
+   "UNIT_GESAR",
+   "UNIT_KANISHKA",
+   "UNIT_TUOBA_LIWEI"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SCRIPTURES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CLASSICAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 448
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_MEDITATION",
+  "soundMP": "AS2D_TECH_MP_MEDITATION",
+  "icon": ",Art/Interface/Buttons/TechTree/Meditation.dds,Art/Interface/Buttons/TechTree_Atlas.dds,5,5"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 8,
+  "tradeable": true,
+  "gridX": 33,
+  "gridY": 19
+ }
+}

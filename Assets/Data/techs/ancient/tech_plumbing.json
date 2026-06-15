@@ -1,0 +1,66 @@
+{
+ "type": "TECH_PLUMBING",
+ "description": "TXT_KEY_TECH_PLUMBING",
+ "civilopedia": "TXT_KEY_TECH_PLUMBING_PEDIA",
+ "quote": "TXT_KEY_TECH_PLUMBING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEPARTMENT_OF_WATER",
+   "BUILDING_PLUMBERS_WORKSHOP",
+   "BUILDING_WATER_PIPES"
+  ],
+  "techs": [
+   "TECH_CENTRAL_HEATING",
+   "TECH_HYDRAULIC_MINING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LEAD_WORKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_METAL_CASTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_IRRIGATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SPECIALIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 274
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_PLUMBING",
+  "soundMP": "AS2D_TECH_PLUMBING",
+  "icon": "Art/Interface/Buttons/TechTree/plumbing.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 29,
+  "gridY": 5
+ }
+}

@@ -1,0 +1,115 @@
+{
+ "type": "TECH_FISHING",
+ "description": "TXT_KEY_TECH_FISHING",
+ "civilopedia": "TXT_KEY_TECH_FISHING_PEDIA",
+ "quote": "TXT_KEY_TECH_FISHING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CLAM",
+   "BONUS_CRAB",
+   "BONUS_FISH",
+   "BONUS_LOBSTER",
+   "BONUS_MUREX",
+   "BONUS_SHRIMP",
+   "BONUS_SPONGES"
+  ],
+  "buildings": [
+   "BUILDING_ABALONE_DIGGERS",
+   "BUILDING_BOATYARD",
+   "BUILDING_CLAM_DIGGERS",
+   "BUILDING_CONCH_DIVER",
+   "BUILDING_CORMORANT_TRAINER",
+   "BUILDING_CULTURE_CHUMASH",
+   "BUILDING_FARM_CROP_SEAWEED",
+   "BUILDING_FISHMONGER",
+   "BUILDING_GIANT_CLAM_DIVERS",
+   "BUILDING_HOUSING_STILT_HUTS",
+   "BUILDING_NETS_COD",
+   "BUILDING_NET_ANCHOVY",
+   "BUILDING_NET_FLOUNDER",
+   "BUILDING_NET_SARDINE",
+   "BUILDING_NET_SEA_BASS",
+   "BUILDING_NET_SHARK",
+   "BUILDING_NET_SNAPPER",
+   "BUILDING_NET_SQUID",
+   "BUILDING_NET_TUNA",
+   "BUILDING_SEA_TURTLE_EGG_GATHERER",
+   "BUILDING_SPONGE_GATHERER"
+  ],
+  "builds": [
+   "BUILD_FISHING_BOATS",
+   "BUILD_HARVEST_KELP_KILL"
+  ],
+  "improvements": [
+   "IMPROVEMENT_FISHING_BOATS",
+   "IMPROVEMENT_HARVEST_KELP"
+  ],
+  "techs": [
+   "TECH_HARPOON_MAKING",
+   "TECH_SAILING"
+  ],
+  "units": [
+   "UNIT_NEANDERTHAL_WORKBOAT",
+   "UNIT_TOMOL",
+   "UNIT_WORKBOAT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BOAT_BUILDING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_LAKE_BAIKAL": {
+     "flat": 200
+    },
+    "BUILDING_WONDER_OF_NATURE_GREAT_BARRIER_REEF": {
+     "flat": 200
+    },
+    "BUILDING_WONDER_OF_NATURE_NUKUORO": {
+     "flat": 300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 45
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_FISHING",
+  "soundMP": "AS2D_TECH_MP_FISHING",
+  "icon": ",Art/Interface/Buttons/TechTree/Fishing.dds,Art/Interface/Buttons/TechTree_Atlas.dds,2,10"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 10,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 16,
+  "gridY": 1
+ }
+}

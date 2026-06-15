@@ -1,0 +1,100 @@
+{
+ "type": "TECH_PLANETARY_MEGASTRUCTURES",
+ "description": "TXT_KEY_TECH_PLANETARY_MEGASTRUCTURES",
+ "civilopedia": "TXT_KEY_TECH_PLANETARY_MEGASTRUCTURES_PEDIA",
+ "quote": "TXT_KEY_TECH_PLANETARY_MEGASTRUCTURES_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ECUMENOPOLIS_EARTH",
+   "BUILDING_EFFECT_SOLAR_ECONOMY",
+   "BUILDING_MARTIAN_ARCOLOGY",
+   "BUILDING_MARTIAN_ECUMENOPOLIS",
+   "BUILDING_RING_OF_MARS",
+   "BUILDING_SOLAR_ECONOMY",
+   "BUILDING_VENUS_ARCOLOGY"
+  ],
+  "techs": [
+   "TECH_GALACTIC_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LUNAR_MEGASTRUCTURES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_ENGINEERING_SCHOOL": {
+     "flat": 1000
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_COLONY_MANUFACTORY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_COLONY_HABITAT_HUGE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_SELF_CONSTRUCTION_FIRM": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 93709
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_PLANETARY_MEGASTRUCTURES",
+  "soundMP": "AS2D_TECH_PLANETARY_MEGASTRUCTURES",
+  "icon": "Art/Interface/Buttons/TechTree/planetarymegastructures.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 122,
+  "gridY": 5
+ }
+}

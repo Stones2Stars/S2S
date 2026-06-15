@@ -1,0 +1,92 @@
+{
+ "type": "TECH_AUTOMATED_TRAFFIC",
+ "description": "TXT_KEY_TECH_AUTOMATED_TRAFFIC",
+ "civilopedia": "TXT_KEY_TECH_AUTOMATED_TRAFFIC_PEDIA",
+ "quote": "TXT_KEY_TECH_AUTOMATED_TRAFFIC_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUTOMATED_HIGHWAY",
+   "BUILDING_ELEVATED_BICYCLE_TRACK",
+   "BUILDING_INTERLACED_INTERSECTION",
+   "BUILDING_MOBILE_BODEGA",
+   "BUILDING_SUBTERRANEAN_TUNNEL_NETWORK"
+  ],
+  "techs": [
+   "TECH_AUTOMATED_ROBOTICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AFFECTIVE_ALGORITHMS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOTECH_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_EFFECT_GPS": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_WIRELESS_NETWORKS": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_TRAFFIC_ENGINEERING_AGENCY": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 36429
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 4
+   },
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_AUTOMATED_TRAFFIC",
+  "soundMP": "AS2D_TECH_AUTOMATED_TRAFFIC",
+  "icon": ",Art/Interface/Buttons/TechTree/AutomatedTraffic.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,6,2"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 100,
+  "gridY": 19
+ }
+}

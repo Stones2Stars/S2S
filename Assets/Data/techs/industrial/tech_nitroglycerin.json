@@ -1,0 +1,106 @@
+{
+ "type": "TECH_NITROGLYCERIN",
+ "description": "TXT_KEY_TECH_NITROGLYCERIN",
+ "civilopedia": "TXT_KEY_TECH_NITROGLYCERIN_PEDIA",
+ "quote": "TXT_KEY_TECH_NITROGLYCERIN_QUOTE",
+ "enables": {
+  "builds": [
+   "BUILD_RAILROAD"
+  ],
+  "techs": [
+   "TECH_MEDICINE",
+   "TECH_SEMI_AUTOMATIC_WEAPONS"
+  ],
+  "units": [
+   "UNIT_FORTY_NINER",
+   "UNIT_WORKER_INDUSTRIAL"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_LAS_MEDULAS"
+  ],
+  "units": [
+   "UNIT_RAPANUIWORKER",
+   "UNIT_WORKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GEOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASSEMBLY_LINE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_MINING_CAMP": {
+     "flat": 600
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_MOUNTAIN_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SHAFT_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_QUARRY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_MINING_CAMP": {
+     "flat": 600
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 6351
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_NITROGLYCERIN",
+  "soundMP": "AS2D_TECH_NITROGLYCERIN",
+  "icon": "Art/Interface/Buttons/TechTree/nitroglycerin.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 32,
+  "militaryWorth": 8,
+  "tradeable": true,
+  "gridX": 66,
+  "gridY": 7
+ }
+}

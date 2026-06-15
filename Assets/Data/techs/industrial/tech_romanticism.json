@@ -1,0 +1,102 @@
+{
+ "type": "TECH_ROMANTICISM",
+ "description": "TXT_KEY_TECH_ROMANTICISM",
+ "civilopedia": "TXT_KEY_TECH_ROMANTICISM_PEDIA",
+ "quote": "TXT_KEY_TECH_ROMANTICISM_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_IMPERIAL_FORTRESS",
+   "BUILDING_NEUSCHWANSTEIN",
+   "BUILDING_WINTER_CHALET"
+  ],
+  "techs": [
+   "TECH_REALISM"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BALLISTA_TURRET",
+   "BUILDING_CASTLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FREE_ARTISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INDUSTRIAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_BARDIC_CIRCLE": {
+     "flat": 600
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
+     "percent": -5
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_ART_GALLERY": {
+     "flat": 600
+    },
+    "BUILDING_BARDIC_CIRCLE": {
+     "flat": 600
+    },
+    "BUILDING_STRING_INSTRUMENT_MAKER": {
+     "flat": 600
+    },
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
+     "percent": -5
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 5187
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 8
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_ROMANTICISM",
+  "soundMP": "AS2D_TECH_ROMANTICISM",
+  "icon": "Art/Interface/Buttons/TechTree/romanticism.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "gridX": 62,
+  "gridY": 17
+ }
+}

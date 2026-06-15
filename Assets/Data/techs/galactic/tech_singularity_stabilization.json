@@ -1,0 +1,80 @@
+{
+ "type": "TECH_SINGULARITY_STABILIZATION",
+ "description": "TXT_KEY_TECH_SINGULARITY_STABILIZATION",
+ "civilopedia": "TXT_KEY_TECH_SINGULARITY_STABILIZATION_PEDIA",
+ "quote": "TXT_KEY_TECH_SINGULARITY_STABILIZATION_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_KUGELBLITZ"
+  ],
+  "buildings": [
+   "BUILDING_CISLUNAR_BLACK_HOLE",
+   "BUILDING_CISLUNAR_DILATON_GENERATOR",
+   "BUILDING_INTERSTELLAR_BLACKHOLE_JETSTREAM_PLANT",
+   "BUILDING_INTERSTELLAR_KUGELBLITZ_FACTORY",
+   "BUILDING_INTERSTELLAR_KUGELBLITZ_POWER_PLANT"
+  ],
+  "techs": [
+   "TECH_MEGASTRONG_ALLOYS",
+   "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS",
+   "TECH_WORMHOLE_COMMUNICATIONS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ANTIMATTER_ROCKETS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WEAPONIZED_GRAVITY_FIELDS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PLANET_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_SCIENTIST"
+ },
+ "cost": {
+  "research": 172549
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_SINGULARITY_STABILIZATION",
+  "soundMP": "AS2D_TECH_SINGULARITY_STABILIZATION",
+  "icon": "Art/Interface/Buttons/TechTree/SingularityStanilization.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 133,
+  "gridY": 11
+ }
+}

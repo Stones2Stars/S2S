@@ -1,0 +1,114 @@
+{
+ "type": "TECH_METAL_CASTING",
+ "description": "TXT_KEY_TECH_METAL_CASTING",
+ "civilopedia": "TXT_KEY_TECH_METAL_CASTING_PEDIA",
+ "quote": "TXT_KEY_TECH_METAL_CASTING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_GOLD_INGOTS",
+   "BONUS_GOLD_WARES",
+   "BONUS_PLATINUM_ORE",
+   "BONUS_SILVER_INGOTS",
+   "BONUS_SILVER_WARES",
+   "BONUS_TOOLS"
+  ],
+  "buildings": [
+   "BUILDING_CHARCOAL_BURNER",
+   "BUILDING_CULTURE_KILLKE",
+   "BUILDING_CULTURE_KOREAN",
+   "BUILDING_FORGE",
+   "BUILDING_NATIONAL_SMELTER_GOLD",
+   "BUILDING_NATIONAL_SMELTER_SILVER",
+   "BUILDING_SMELTER_GOLD",
+   "BUILDING_SMELTER_SILVER",
+   "BUILDING_SMITH_COPPER",
+   "BUILDING_SMITH_GOLD",
+   "BUILDING_SMITH_SILVER"
+  ],
+  "techs": [
+   "TECH_BRONZE_WORKING",
+   "TECH_LOCKS",
+   "TECH_ORNAMENTATION",
+   "TECH_PLUMBING"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FIRE_PIT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COPPER_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_STONE_TOOL_MAKER": {
+     "flat": -100
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_STONE_TOOL_MAKER": {
+     "flat": -100
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_STONE_TOOL_MAKER": {
+     "flat": -100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 164
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_PRODUCTION": 9
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_METALCAST",
+  "soundMP": "AS2D_TECH_MP_METALCAST",
+  "icon": ",Art/Interface/Buttons/TechTree/Metal_Casting.dds,Art/Interface/Buttons/TechTree_Atlas.dds,6,5"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 16,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 25,
+  "gridY": 9
+ }
+}

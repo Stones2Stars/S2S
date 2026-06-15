@@ -1,0 +1,61 @@
+{
+ "type": "TECH_KEMETISM",
+ "description": "TXT_KEY_TECH_KEMETISM",
+ "civilopedia": "TXT_KEY_TECH_KEMETISM_PEDIA",
+ "quote": "TXT_KEY_TECH_KEMETISM_QUOTE",
+ "enables": {
+  "religions": [
+   "RELIGION_KEMETISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_POLYTHEISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HERITAGE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MUMMIFICATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 144
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_KEMETISM",
+  "soundMP": "AS2D_TECH_KEMETISM",
+  "icon": "Art/Interface/Buttons/TechTree/Kemetism.dds"
+ },
+ "identity": {
+  "global": true,
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "gridX": 24,
+  "gridY": 19
+ }
+}

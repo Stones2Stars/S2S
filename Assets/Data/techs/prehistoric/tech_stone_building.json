@@ -1,0 +1,65 @@
+{
+ "type": "TECH_STONE_BUILDING",
+ "description": "TXT_KEY_TECH_STONE_BUILDING",
+ "civilopedia": "TXT_KEY_TECH_STONE_BUILDING_PEDIA",
+ "quote": "TXT_KEY_TECH_STONE_BUILDING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_HOUSING_STONE_HUTS",
+   "BUILDING_LL_MEADOWCROFT_ROCKSHELTER"
+  ],
+  "promotions": [
+   "PROMOTION_CITY_GARRISON3"
+  ],
+  "techs": [
+   "TECH_MEGALITH_CONSTRUCTION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MICROLITH",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PORTABLE_SHELTERS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 23
+ },
+ "ai": {
+  "behaviour": {
+   "weight": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_STONE_BUILDING",
+  "soundMP": "AS2D_TECH_STONE_BUILDING",
+  "icon": "Art/Interface/Buttons/TechTree/Button_HutBuilding.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 11,
+  "gridY": 11
+ }
+}

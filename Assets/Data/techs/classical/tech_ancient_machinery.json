@@ -1,0 +1,81 @@
+{
+ "type": "TECH_ANCIENT_MACHINERY",
+ "description": "TXT_KEY_TECH_ANCIENT_MACHINERY",
+ "civilopedia": "TXT_KEY_TECH_ANCIENT_MACHINERY_PEDIA",
+ "quote": "TXT_KEY_TECH_ANCIENT_MACHINERY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTROLOGICAL_INFLUENCE_OF_GEMINI",
+   "BUILDING_ASTROLOGICAL_INFLUENCE_OF_LIBRA",
+   "BUILDING_ASTROLOGICAL_INFLUENCE_OF_TAURUS",
+   "BUILDING_ASTROLOGICAL_INFLUENCE_OF_VIRGO",
+   "BUILDING_SIEGE_WEAPONS_WORKSHOP"
+  ],
+  "promotions": [
+   "PROMOTION_REPAIR_MECHANICAL2"
+  ],
+  "techs": [
+   "TECH_ANCIENT_BALLISTICS",
+   "TECH_CONSTRUCTION"
+  ],
+  "units": [
+   "UNIT_BALAMOB_SLINGER",
+   "UNIT_BALEARIC_SLINGERS",
+   "UNIT_BELLYBOWMAN",
+   "UNIT_DECAREME",
+   "UNIT_DOUJIAN",
+   "UNIT_GASTRAPHETES",
+   "UNIT_LITHOBOLOS",
+   "UNIT_MASTER_SAILOR_DECAREME",
+   "UNIT_OXYBELES",
+   "UNIT_SIEGE_ENGINEER"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_MASTER_SAILOR_QUINQUEREME"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MILITARY_TRAINING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "cost": {
+  "research": 499
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_ANCIENT_MACHINERY",
+  "soundMP": "AS2D_TECH_ANCIENT_MACHINERY",
+  "icon": "Art/Interface/Buttons/TechTree/amachinery.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 34,
+  "gridY": 5
+ }
+}

@@ -1,0 +1,95 @@
+{
+ "type": "TECH_MODERN_ART",
+ "description": "TXT_KEY_TECH_MODERN_ART",
+ "civilopedia": "TXT_KEY_TECH_MODERN_ART_PEDIA",
+ "quote": "TXT_KEY_TECH_MODERN_ART_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BAUHAUS_SCHOOL",
+   "BUILDING_COIT_TOWER",
+   "BUILDING_GETTY_CENTER"
+  ],
+  "techs": [
+   "TECH_DADA",
+   "TECH_POP_ART"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CUBISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_EXPRESSIONISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CONSUMERISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_THEATRE": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_ART_GALLERY": {
+     "flat": 700
+    },
+    "BUILDING_THEATRE": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 10744
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_ESPIONAGE": 5
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_FINEARTS",
+  "soundMP": "AS2D_TECH_FINEARTS",
+  "icon": "Art/Interface/Buttons/TechTree/modernart.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 75,
+  "gridY": 5
+ }
+}

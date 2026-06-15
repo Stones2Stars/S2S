@@ -1,0 +1,77 @@
+{
+ "type": "TECH_GALACTIC_WARFARE",
+ "description": "TXT_KEY_TECH_GALACTIC_WARFARE",
+ "civilopedia": "TXT_KEY_TECH_GALACTIC_WARFARE_PEDIA",
+ "quote": "TXT_KEY_TECH_GALACTIC_WARFARE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_NEBULA_REBEL_BASE"
+  ],
+  "techs": [
+   "TECH_EXTREME_ENERGY_WEAPONS",
+   "TECH_GALACTIC_ECOLOGY"
+  ],
+  "units": [
+   "UNIT_WARLORDVIII",
+   "UNIT_WARLORDVIIIS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FOLDING_SPACE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COSMIC_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_CAPITOL": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "espionage": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_ADMINISTRATION_CENTER": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_GREAT_GENERAL"
+ },
+ "cost": {
+  "research": 262044
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/galactic_warfare.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 138,
+  "gridY": 11
+ }
+}

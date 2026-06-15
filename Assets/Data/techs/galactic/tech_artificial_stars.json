@@ -1,0 +1,82 @@
+{
+ "type": "TECH_ARTIFICIAL_STARS",
+ "description": "TXT_KEY_TECH_ARTIFICIAL_STARS",
+ "civilopedia": "TXT_KEY_TECH_ARTIFICIAL_STARS_PEDIA",
+ "quote": "TXT_KEY_TECH_ARTIFICIAL_STARS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_COLD_FUSION",
+   "BUILDING_INTERSTELLAR_HOLLOW_PLANET_INTERIOR_STAR",
+   "BUILDING_TRANSTELLAR_ARTIFICIAL_RED_DWARF",
+   "BUILDING_TRANSTELLAR_DYSON_SPHERE"
+  ],
+  "builds": [
+   "BUILD_HELIOFORMED_BROWN_DWARF"
+  ],
+  "improvements": [
+   "IMPROVEMENT_HELIOFORMED_BROWN_DWARF"
+  ],
+  "techs": [
+   "TECH_STELLAR_ENGINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASTROENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_PLANETS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_INTERSTELLAR_TRADING_POST": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 179514
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_ARTIFICIAL_STARS",
+  "soundMP": "AS2D_TECH_ARTIFICIAL_STARS",
+  "icon": "Art/Interface/Buttons/TechTree/artificialstars.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 134,
+  "gridY": 3
+ }
+}

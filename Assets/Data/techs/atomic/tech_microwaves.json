@@ -1,0 +1,69 @@
+{
+ "type": "TECH_MICROWAVES",
+ "description": "TXT_KEY_TECH_MICROWAVES",
+ "civilopedia": "TXT_KEY_TECH_MICROWAVES_PEDIA",
+ "quote": "TXT_KEY_TECH_MICROWAVES_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_MICROWAVE_OVENS"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_MICROWAVE_OVENS"
+  ],
+  "techs": [
+   "TECH_LASER",
+   "TECH_NUCLEAR_POWER",
+   "TECH_RADIO_ASTRONOMY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MODERN_PHYSICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MASS_MEDIA",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 12152
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_MICROWAVES",
+  "soundMP": "AS2D_TECH_MICROWAVES",
+  "icon": "Art/Interface/Buttons/TechTree/microwaves.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 78,
+  "gridY": 15
+ }
+}

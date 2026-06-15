@@ -1,0 +1,82 @@
+{
+ "type": "TECH_ASTROECOLOGY",
+ "description": "TXT_KEY_TECH_ASTROECOLOGY",
+ "civilopedia": "TXT_KEY_TECH_ASTROECOLOGY_PEDIA",
+ "quote": "TXT_KEY_TECH_ASTROECOLOGY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUNAR_SEA",
+   "BUILDING_MARTIAN_BIOTIC_SEA",
+   "BUILDING_MARTIAN_CO2_SUBLIMATION",
+   "BUILDING_VENUS_CALCIUM_CARBONATE_STRUCTURES",
+   "BUILDING_VENUS_CO2_REMOVAL"
+  ],
+  "techs": [
+   "TECH_PLANETARY_TERRAFORMING"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MARTIAN_HYDROPONICS_COMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SUBTERRANEAN_EXPLORATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GALACTIC_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_ASTROBIOLOGY_LAB": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 126324
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_ASTROECOLOGY",
+  "soundMP": "AS2D_TECH_ASTROECOLOGY",
+  "icon": "Art/Interface/Buttons/TechTree/astroecology.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 124,
+  "gridY": 15
+ }
+}

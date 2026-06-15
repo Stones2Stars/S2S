@@ -1,0 +1,86 @@
+{
+ "type": "TECH_SUPERSONIC_RAILS",
+ "description": "TXT_KEY_TECH_SUPERSONIC_RAILS",
+ "civilopedia": "TXT_KEY_TECH_SUPERSONIC_RAILS_PEDIA",
+ "quote": "TXT_KEY_TECH_SUPERSONIC_RAILS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_TURBOLIFTS",
+   "BUILDING_HYPERLOOP",
+   "BUILDING_MARTIAN_MAGLEV_TERMINAL",
+   "BUILDING_VACTRAIN_TERMINAL",
+   "BUILDING_VENUS_MAGLEV_TERMINAL"
+  ],
+  "builds": [
+   "BUILD_PLANETARY_MAGLEV",
+   "BUILD_VACTRAIN"
+  ],
+  "techs": [
+   "TECH_SKYROADS"
+  ],
+  "units": [
+   "UNIT_MARTIAN_WORKER",
+   "UNIT_VENUS_WORKER"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_HIGHWAY",
+   "BUILD_LUNAR_PATH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WIRELESS_ELECTRICITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_NATIONAL_RAILROAD_MUSEUM": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 44505
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_SUPERSONIC_RAILS",
+  "soundMP": "AS2D_TECH_SUPERSONIC_RAILS",
+  "icon": "Art/Interface/Buttons/TechTree/Straffic2.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 106,
+  "gridY": 3
+ }
+}

@@ -1,0 +1,83 @@
+{
+ "type": "TECH_SOFT_HAMMER_PERCUSSION",
+ "description": "TXT_KEY_TECH_SOFT_HAMMER_PERCUSSION",
+ "civilopedia": "TXT_KEY_TECH_SOFT_HAMMER_PERCUSSION_PEDIA",
+ "quote": "TXT_KEY_TECH_SOFT_HAMMER_PERCUSSION_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_COPPER_ORE",
+   "BONUS_GEMSTONE",
+   "BONUS_GOLD_ORE",
+   "BONUS_JADE",
+   "BONUS_SALT",
+   "BONUS_SILVER_ORE",
+   "BONUS_TIN_ORE"
+  ],
+  "buildings": [
+   "BUILDING_FOLKLORE_E_METAL",
+   "BUILDING_JADE_GATHERER",
+   "BUILDING_PRESENCE_OF_METAL"
+  ],
+  "techs": [
+   "TECH_CHOPPING",
+   "TECH_PIERCING",
+   "TECH_SCRAPING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HARD_HAMMER_PERCUSSION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_STONE_TOOL_MAKER": {
+     "flat": 100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 9
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_SOFT_HAMMER_PERCUSSION",
+  "soundMP": "AS2D_TECH_SOFT_HAMMER_PERCUSSION",
+  "icon": "Art/Interface/Buttons/TechTree/softhammerpercussion.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 5,
+  "gridY": 7
+ }
+}

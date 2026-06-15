@@ -1,0 +1,94 @@
+{
+ "type": "TECH_BINARY_SUBCONSCIOUSNESS",
+ "description": "TXT_KEY_TECH_BINARY_SUBCONSCIOUSNESS",
+ "civilopedia": "TXT_KEY_TECH_BINARY_SUBCONSCIOUSNESS_PEDIA",
+ "quote": "TXT_KEY_TECH_BINARY_SUBCONSCIOUSNESS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AI_ARTIST",
+   "BUILDING_AI_MUSICIAN"
+  ],
+  "promotions": [
+   "PROMOTION_RECOVER_TECH6"
+  ],
+  "techs": [
+   "TECH_SMART_DUST",
+   "TECH_SOCIAL_CALCULUS"
+  ],
+  "units": [
+   "UNIT_SENTROID_INFANTRY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_RADIOPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_UNIFICATION_PHYSICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SYNTHETIC_SYNESTHESIA",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NEURON_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BINARY_LEGISLATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_DIGITAL_RESURRECTION": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 65511
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_BINARY_SUBCONSCIOUSNESS",
+  "soundMP": "AS2D_TECH_BINARY_SUBCONSCIOUSNESS",
+  "icon": "Art/Interface/Buttons/TechTree/binarysubconsciousness.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 112,
+  "gridY": 9
+ }
+}

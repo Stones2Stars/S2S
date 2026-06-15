@@ -1,0 +1,89 @@
+{
+ "type": "TECH_HYPERMAGNETICS",
+ "description": "TXT_KEY_TECH_HYPERMAGNETICS",
+ "civilopedia": "TXT_KEY_TECH_HYPERMAGNETICS_PEDIA",
+ "quote": "TXT_KEY_TECH_HYPERMAGNETICS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_PLASTEEL"
+  ],
+  "buildings": [
+   "BUILDING_ARCONIC_TOWER",
+   "BUILDING_DEEP_SPACE_PLASTEEL_FACTORY",
+   "BUILDING_LOFSTROM_LOOP",
+   "BUILDING_LUNAR_CENTRIFUGAL_HABITAT",
+   "BUILDING_MARTIAN_ECOSYSTEM",
+   "BUILDING_MARTIAN_FROST_CANNON",
+   "BUILDING_MARTIAN_GARDEN",
+   "BUILDING_MARTIAN_METROPOLIS",
+   "BUILDING_MARTIAN_SPACEPORT",
+   "BUILDING_STRATOSPHERIC_TOWER"
+  ],
+  "techs": [
+   "TECH_CRYONICS",
+   "TECH_CRYSTALPUNK",
+   "TECH_MEGASTRUCTURE_ENGINEERING",
+   "TECH_SYNERGETICS",
+   "TECH_WEIGHTLESS_FLIGHT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NEURON_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_UNIFICATION_PHYSICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_ASTEROID_EPITAXY_FACTORY": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 65511
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_HYPERMAGNETICS",
+  "soundMP": "AS2D_TECH_HYPERMAGNETICS",
+  "icon": "Art/Interface/Buttons/TechTree/hypermagnetics.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 112,
+  "gridY": 3
+ }
+}

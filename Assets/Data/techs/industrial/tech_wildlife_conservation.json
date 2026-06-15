@@ -1,0 +1,112 @@
+{
+ "type": "TECH_WILDLIFE_CONSERVATION",
+ "description": "TXT_KEY_TECH_WILDLIFE_CONSERVATION",
+ "civilopedia": "TXT_KEY_TECH_WILDLIFE_CONSERVATION_PEDIA",
+ "quote": "TXT_KEY_TECH_WILDLIFE_CONSERVATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ACHIEVEMENT_ENVIRONMENTAL",
+   "BUILDING_CAMP_GROUNDS",
+   "BUILDING_COASTAL_PRESERVE",
+   "BUILDING_EFFECT_ACHIEVEMENT_ENVIRONMENTAL",
+   "BUILDING_HIKING_TRAILS",
+   "BUILDING_NATIONAL_PARK",
+   "BUILDING_POACHERS_CAMP",
+   "BUILDING_RANGER_STATION",
+   "BUILDING_STATE_PARK"
+  ],
+  "builds": [
+   "BUILD_FOREST_PRESERVE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_FOREST_PRESERVE"
+  ],
+  "techs": [
+   "TECH_ECOLOGY"
+  ],
+  "units": [
+   "UNIT_FOREST_GUARDIANS",
+   "UNIT_PARK_RANGER",
+   "UNIT_SERENGETI_RANGER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GEOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MARINE_BIOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_JUNGLE_CAMP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_DESERT_CAMP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WETLANDS_CAMP": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_ENTOMOLOGY_LAB": {
+     "flat": 600
+    },
+    "BUILDING_HERPETOLOGY_LAB": {
+     "flat": 600
+    },
+    "BUILDING_ORNITHOLOGY_LAB": {
+     "flat": 600
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 5745
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_WILDLIFE_CONSERVATION",
+  "soundMP": "AS2D_TECH_WILDLIFE_CONSERVATION",
+  "icon": "Art/Interface/Buttons/TechTree/Wildernessc.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 64,
+  "gridY": 3
+ }
+}

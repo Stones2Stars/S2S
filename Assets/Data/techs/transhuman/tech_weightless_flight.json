@@ -1,0 +1,73 @@
+{
+ "type": "TECH_WEIGHTLESS_FLIGHT",
+ "description": "TXT_KEY_TECH_WEIGHTLESS_FLIGHT",
+ "civilopedia": "TXT_KEY_TECH_WEIGHTLESS_FLIGHT_PEDIA",
+ "quote": "TXT_KEY_TECH_WEIGHTLESS_FLIGHT_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AERIAL_HOTEL",
+   "BUILDING_CLOUD_NINE",
+   "BUILDING_FLOATING_SOLAR_ARRAY",
+   "BUILDING_HYBRID_AIRSHIP_PORT",
+   "BUILDING_MARTIAN_SKYHOOK",
+   "BUILDING_STRATOSPHERIC_SPACEPORT"
+  ],
+  "techs": [
+   "TECH_ANTI_GRAVITY_FIELDS",
+   "TECH_ASTROGATION_CONSTELLATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_TRADE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HYPERMAGNETICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_AEROTROPOLIS": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 67710
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_WEIGHTLESS_FLIGHT",
+  "soundMP": "AS2D_TECH_WEIGHTLESS_FLIGHT",
+  "icon": "Art/Buttons/Techs/TechWeightlessFlight.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 50,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 113,
+  "gridY": 1
+ }
+}

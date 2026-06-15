@@ -1,0 +1,70 @@
+{
+ "type": "TECH_BONE_WORKING",
+ "description": "TXT_KEY_TECH_BONE_WORKING",
+ "civilopedia": "TXT_KEY_TECH_BONE_WORKING_PEDIA",
+ "quote": "TXT_KEY_TECH_BONE_WORKING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_FEATHERS",
+   "BONUS_IVORY"
+  ],
+  "buildings": [
+   "BUILDING_BONEMARROWER",
+   "BUILDING_BONEWORKER",
+   "BUILDING_FEATHER_WORKER",
+   "BUILDING_HOUSING_BONE_HUTS",
+   "BUILDING_LL_BLACKWATER_DRAW",
+   "BUILDING_SHELL_WORKERS_HUT"
+  ],
+  "techs": [
+   "TECH_COMPOSITE_TOOLS",
+   "TECH_PERSONAL_ADORNMENTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CARVING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SHARPENING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SKINNING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 15
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_BONE_WORKING",
+  "soundMP": "AS2D_TECH_BONE_WORKING",
+  "icon": "Art/Interface/Buttons/TechTree/boneworking.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 2,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 8,
+  "gridY": 5
+ }
+}

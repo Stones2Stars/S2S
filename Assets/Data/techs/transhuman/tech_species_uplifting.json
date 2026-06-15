@@ -1,0 +1,100 @@
+{
+ "type": "TECH_SPECIES_UPLIFTING",
+ "description": "TXT_KEY_TECH_SPECIES_UPLIFTING",
+ "civilopedia": "TXT_KEY_TECH_SPECIES_UPLIFTING_PEDIA",
+ "quote": "TXT_KEY_TECH_SPECIES_UPLIFTING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CETACEA_SAPIENS"
+  ],
+  "buildings": [
+   "BUILDING_CULTURE_CETACEA_SAPIEN",
+   "BUILDING_DOLPHIN_COMMUNICATION_CENTER"
+  ],
+  "techs": [
+   "TECH_HOMO_SUPERIOR",
+   "TECH_NOVO_PALEONTOLOGY",
+   "TECH_QUADRUPLE_HELIX",
+   "TECH_UTOPIA_DESTINY"
+  ],
+  "units": [
+   "UNIT_DOLPHIN_MECH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRANSHUMAN_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_ANTHROPOMORPHICS_LAB": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_ANTHROPOMORPHICS_LAB": {
+     "flat": 1000
+    },
+    "BUILDING_ASTROBIOLOGY_LAB": {
+     "flat": 1000
+    },
+    "BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS": {
+     "flat": 1000
+    },
+    "BUILDING_EVOLUTIONARY_ALGORITHMS": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_SCIENTIST"
+ },
+ "cost": {
+  "research": 63426
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_SPECIES_UPLIFTING",
+  "soundMP": "AS2D_TECH_SPECIES_UPLIFTING",
+  "icon": "Art/Interface/Buttons/TechTree/speciesuplifting.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 111,
+  "gridY": 17
+ }
+}

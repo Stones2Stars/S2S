@@ -1,0 +1,72 @@
+{
+ "type": "TECH_NATURAL_PIGMENTS",
+ "description": "TXT_KEY_TECH_NATURAL_PIGMENTS",
+ "civilopedia": "TXT_KEY_TECH_NATURAL_PIGMENTS_PEDIA",
+ "quote": "TXT_KEY_TECH_NATURAL_PIGMENTS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CHALK",
+   "BONUS_CLAY",
+   "BONUS_DYE",
+   "BONUS_FINE_CLAY",
+   "BONUS_HAEMATITE_ORE",
+   "BONUS_HENNA",
+   "BONUS_INDIGO",
+   "BONUS_SAND"
+  ],
+  "buildings": [
+   "BUILDING_BEACH_SAND_GATHERER",
+   "BUILDING_CHALK_GATHERER",
+   "BUILDING_CLAY_PIT",
+   "BUILDING_DESERT_SAND_GATHERER",
+   "BUILDING_DYE_MAKER",
+   "BUILDING_HEMATITE_GATHERER",
+   "BUILDING_HENNA_GATHERER",
+   "BUILDING_HOPSCOTCH",
+   "BUILDING_INDIGO_GATHERER",
+   "BUILDING_ROCKDUST_GATHERER"
+  ],
+  "techs": [
+   "TECH_ADHESIVES",
+   "TECH_PETROGLYPHS",
+   "TECH_POISON_CRAFTING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GROUND_STONE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 11
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_NATURAL_PIGMENTS",
+  "soundMP": "AS2D_TECH_NATURAL_PIGMENTS",
+  "icon": "Art/Interface/Buttons/TechTree/Button_NaturalPigments.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 6,
+  "gridY": 11
+ }
+}

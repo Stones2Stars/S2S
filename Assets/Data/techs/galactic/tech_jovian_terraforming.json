@@ -1,0 +1,77 @@
+{
+ "type": "TECH_JOVIAN_TERRAFORMING",
+ "description": "TXT_KEY_TECH_JOVIAN_TERRAFORMING",
+ "civilopedia": "TXT_KEY_TECH_JOVIAN_TERRAFORMING_PEDIA",
+ "quote": "TXT_KEY_TECH_JOVIAN_TERRAFORMING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_GAS_GIANT_SURFACE_SHELL",
+   "BUILDING_INTERSTELLAR_TERRAFORMED_GAS_GIANT",
+   "BUILDING_TERRAFORMED_JUPITER",
+   "BUILDING_TERRAFORMED_NEPTUNE",
+   "BUILDING_TERRAFORMED_SATURN",
+   "BUILDING_TERRAFORMED_URANUS"
+  ],
+  "builds": [
+   "BUILD_TERRAFORMED_PLANET"
+  ],
+  "techs": [
+   "TECH_STELLAR_COMPUTING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GRAVITY_CONTROL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ECOSYNTHESIS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_TERRAFORMED_PLANET": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 172549
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/Buttons/Techs/jovian_terraforming.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 133,
+  "gridY": 5
+ }
+}

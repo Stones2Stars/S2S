@@ -1,0 +1,69 @@
+{
+ "type": "TECH_FISSION",
+ "description": "TXT_KEY_TECH_FISSION",
+ "civilopedia": "TXT_KEY_TECH_FISSION_PEDIA",
+ "quote": "TXT_KEY_TECH_FISSION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ATOMIUM",
+   "BUILDING_BOMB_SHELTERS",
+   "BUILDING_MANHATTAN_PROJECT"
+  ],
+  "promotions": [
+   "PROMOTION_RAD_SHELLS"
+  ],
+  "techs": [
+   "TECH_MODERN_PHYSICS"
+  ],
+  "units": [
+   "UNIT_ATOMIC"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ADVANCED_METALLURGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_QUANTUM_PHYSICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 10744
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_FISSION",
+  "soundMP": "AS2D_TECH_MP_FISSION",
+  "icon": ",Art/Interface/Buttons/TechTree/Fission.dds,Art/Interface/Buttons/TechTree_Atlas.dds,3,10"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "militaryWorth": 8,
+  "tradeable": true,
+  "gridX": 75,
+  "gridY": 3
+ }
+}

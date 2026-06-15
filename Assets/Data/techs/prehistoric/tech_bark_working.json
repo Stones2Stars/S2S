@@ -1,0 +1,71 @@
+{
+ "type": "TECH_BARK_WORKING",
+ "description": "TXT_KEY_TECH_BARK_WORKING",
+ "civilopedia": "TXT_KEY_TECH_BARK_WORKING_PEDIA",
+ "quote": "TXT_KEY_TECH_BARK_WORKING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_BARK"
+  ],
+  "buildings": [
+   "BUILDING_BARK_GATHERER",
+   "BUILDING_HOUSING_BARK_HUTS"
+  ],
+  "techs": [
+   "TECH_ADHESIVES",
+   "TECH_SIMPLE_WOOD_WORKING"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HOUSING_ANIMAL_BURROW"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SCRAPING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 13
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_BARK_WORKING",
+  "soundMP": "AS2D_TECH_BARK_WORKING",
+  "icon": "Art/Interface/Buttons/TechTree/barkworking.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 7,
+  "gridY": 3
+ }
+}

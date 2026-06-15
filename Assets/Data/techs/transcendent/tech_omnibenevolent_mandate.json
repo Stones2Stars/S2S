@@ -1,0 +1,71 @@
+{
+ "type": "TECH_OMNIBENEVOLENT_MANDATE",
+ "description": "TXT_KEY_TECH_OMNIBENEVOLENT_MANDATE",
+ "civilopedia": "TXT_KEY_TECH_OMNIBENEVOLENT_MANDATE_PEDIA",
+ "quote": "TXT_KEY_TECH_OMNIBENEVOLENT_MANDATE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_SUFFERING_PREVENTION",
+   "BUILDING_OMELAS",
+   "BUILDING_UTOPIA"
+  ],
+  "civics": [
+   "CIVIC_EUDAIMONIA",
+   "CIVIC_PHRONESIS"
+  ],
+  "techs": [
+   "TECH_DIRECTED_COSMIC_EVOLUTION",
+   "TECH_TIMELINE_RECTIFICATION",
+   "TECH_UNIVERSAL_SINGULARITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TIME_REVERSAL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HYPERINTELLIGENCE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_RATIONAL_CITY": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 601234
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/omnibenevolent_mandate.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 155,
+  "gridY": 3
+ }
+}

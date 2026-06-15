@@ -1,0 +1,82 @@
+{
+ "type": "TECH_ION_BEAMS",
+ "description": "TXT_KEY_TECH_ION_BEAMS",
+ "civilopedia": "TXT_KEY_TECH_ION_BEAMS_PEDIA",
+ "quote": "TXT_KEY_TECH_ION_BEAMS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_MARTIAN_ELECTRONICS"
+  ],
+  "buildings": [
+   "BUILDING_CISLUNAR_ION_CANNON",
+   "BUILDING_CISLUNAR_SPACE_JUNK_REMOVAL",
+   "BUILDING_MARTIAN_ELECTRONICS_FACTORY",
+   "BUILDING_ZEUS_CANNON"
+  ],
+  "builds": [
+   "BUILD_CISLUNAR_BASE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_CISLUNAR_BASE"
+  ],
+  "techs": [
+   "TECH_ELECTROMAGNETIC_VOLTAGE"
+  ],
+  "units": [
+   "UNIT_MARTIAN_INFANTRY",
+   "UNIT_VENUS_INFANTRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WARMACHINES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PHOTON_THERMODYNAMICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AMPLIFIED_WAVELENGTHS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SUPERSTRONG_ALLOYS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 46107
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 9
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_ION_BEAMS",
+  "soundMP": "AS2D_TECH_ION_BEAMS",
+  "icon": "Art/Buttons/Techs/TechIonBeams.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 50,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 107,
+  "gridY": 13
+ }
+}

@@ -1,0 +1,57 @@
+{
+ "type": "TECH_HELLENISM",
+ "description": "TXT_KEY_TECH_HELLENISM",
+ "civilopedia": "TXT_KEY_TECH_HELLENISM_PEDIA",
+ "quote": "TXT_KEY_TECH_HELLENISM_QUOTE",
+ "enables": {
+  "religions": [
+   "RELIGION_HELLENISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASTROLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ATHLETICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 554
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_HELLENISM",
+  "soundMP": "AS2D_TECH_HELLENISM",
+  "icon": "Art/Interface/Buttons/TechTree/Hellenism.dds"
+ },
+ "identity": {
+  "global": true,
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 8,
+  "gridX": 35,
+  "gridY": 7
+ }
+}

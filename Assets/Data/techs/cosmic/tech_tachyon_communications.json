@@ -1,0 +1,80 @@
+{
+ "type": "TECH_TACHYON_COMMUNICATIONS",
+ "description": "TXT_KEY_TECH_TACHYON_COMMUNICATIONS",
+ "civilopedia": "TXT_KEY_TECH_TACHYON_COMMUNICATIONS_PEDIA",
+ "quote": "TXT_KEY_TECH_TACHYON_COMMUNICATIONS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_TACHYON_COMMUNICATION_CENTER",
+   "BUILDING_INTERGALACTIC_TACHYON_DETECTOR",
+   "BUILDING_TACHYONIC_ANTITELEPHONE"
+  ],
+  "techs": [
+   "TECH_HORIZON_BREAKING",
+   "TECH_METAVERSE",
+   "TECH_TRANSCENDENT_LIFESTYLE",
+   "TECH_TRANSDIMENSIONAL_COMMERCE",
+   "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_PLANETARY_IMMIGRATION_OFFICE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_OMEGA_MINUS_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SPACETIME_ECONOMICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_ADMINISTRATION_CENTER": {
+     "flat": 1200
+    },
+    "BUILDING_INTERSTELLAR_BROADCAST_NODE": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 366008
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/tachyon_communications.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 147,
+  "gridY": 19
+ }
+}

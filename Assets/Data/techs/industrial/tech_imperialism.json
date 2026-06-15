@@ -1,0 +1,73 @@
+{
+ "type": "TECH_IMPERIALISM",
+ "description": "TXT_KEY_TECH_IMPERIALISM",
+ "civilopedia": "TXT_KEY_TECH_IMPERIALISM_PEDIA",
+ "quote": "TXT_KEY_TECH_IMPERIALISM_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRYSTAL_PALACE",
+   "BUILDING_CULTURE_RHODESIAN",
+   "BUILDING_HELSINKI_CATHEDRAL",
+   "BUILDING_PEARL_HARBOR",
+   "BUILDING_REICHSTAG",
+   "BUILDING_SCAPA_FLOW"
+  ],
+  "techs": [
+   "TECH_ARTILLERY",
+   "TECH_FOREIGN_POLICY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ALHAMBRA",
+   "BUILDING_GREAT_ZIMBABWE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SCREW_PROPELLER",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_RAILROAD",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SEMI_AUTOMATIC_WEAPONS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 7008
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_IMPERIALISM",
+  "soundMP": "AS2D_TECH_IMPERIALISM",
+  "icon": "Art/Interface/Buttons/TechTree/imperialism.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 68,
+  "gridY": 15
+ }
+}

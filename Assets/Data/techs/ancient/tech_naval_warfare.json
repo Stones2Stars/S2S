@@ -1,0 +1,92 @@
+{
+ "type": "TECH_NAVAL_WARFARE",
+ "description": "TXT_KEY_TECH_NAVAL_WARFARE",
+ "civilopedia": "TXT_KEY_TECH_NAVAL_WARFARE_PEDIA",
+ "quote": "TXT_KEY_TECH_NAVAL_WARFARE_QUOTE",
+ "enables": {
+  "promotions": [
+   "PROMOTION_COASTAL_ASSAULT1",
+   "PROMOTION_COASTAL_GUARD1",
+   "PROMOTION_REPAIR_NAVAL2"
+  ],
+  "techs": [
+   "TECH_PIRACY"
+  ],
+  "units": [
+   "UNIT_MASTER_SAILOR_WAR_GALLEY",
+   "UNIT_WARGALLEY"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_MASTER_SAILOR_WAR_CANOE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HARPOON_MAKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARCHERY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SAILING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_GRAND_MARINE_FESTIVAL": {
+     "flat": 200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 126
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_NAVAL_WARFARE",
+  "soundMP": "AS2D_TECH_NAVAL_WARFARE",
+  "icon": ",Art/Interface/Buttons/TechTree/NavalWarfare.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,13"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 23,
+  "gridY": 5
+ }
+}

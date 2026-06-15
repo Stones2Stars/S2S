@@ -1,0 +1,193 @@
+{
+ "type": "TECH_AESTHETICS",
+ "description": "TXT_KEY_TECH_AESTHETICS",
+ "civilopedia": "TXT_KEY_TECH_AESTHETICS_PEDIA",
+ "quote": "TXT_KEY_TECH_AESTHETICS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CARPETS",
+   "BONUS_PORCELAIN"
+  ],
+  "buildings": [
+   "BUILDING_AKSHARDHAM",
+   "BUILDING_ANGORA_GOAT_BREEDER",
+   "BUILDING_ANGORA_RABBIT_BREEDER",
+   "BUILDING_BEHISTUN_INSCRIPTION",
+   "BUILDING_BEZEKLIK_CAVES",
+   "BUILDING_CARPET_MAKER",
+   "BUILDING_CRIME_GRAFFITI",
+   "BUILDING_CULTURE_BANGLADESHI",
+   "BUILDING_CULTURE_BURMESE",
+   "BUILDING_CULTURE_CHOLA",
+   "BUILDING_CULTURE_SURINAMESE",
+   "BUILDING_EFFECT_TRADITION_AESTHETIC_APPRECIATION",
+   "BUILDING_FARM_ANIMAL_ALPACA",
+   "BUILDING_FOUNTAIN",
+   "BUILDING_ITSUKUSHIMA_SHRINE",
+   "BUILDING_KOTOKU_IN",
+   "BUILDING_MEENAKSHI_TEMPLE",
+   "BUILDING_PIR_E_NARAKI",
+   "BUILDING_PORCELAIN_WORKSHOP",
+   "BUILDING_SHWEDAGON_PAYA",
+   "BUILDING_TAILOR_SHOP",
+   "BUILDING_THE_ERECHTHEUM",
+   "BUILDING_THE_ISHTAR_GATE",
+   "BUILDING_THE_NECROMANTEION",
+   "BUILDING_THE_PARTHENON",
+   "BUILDING_THRONE_ROOM",
+   "BUILDING_TRADITION_AESTHETIC_APPRECIATION",
+   "BUILDING_TUMEN_AMUGULANG_PALACE",
+   "BUILDING_WOOLLY_PIG_BREEDER"
+  ],
+  "techs": [
+   "TECH_DRAMA",
+   "TECH_FLORISTRY",
+   "TECH_JAINISM",
+   "TECH_MOSAIC_WORKING"
+  ],
+  "units": [
+   "UNIT_CHANDRAGUPTA_MAURYA",
+   "UNIT_KARIKALA_CHOLA",
+   "UNIT_LOPHORON",
+   "UNIT_PIYE",
+   "UNIT_RED_CHIEF"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SERICULTURE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FURNITURE_MAKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CALLIGRAPHY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_SMITH_COPPER": {
+     "flat": 300
+    },
+    "BUILDING_FURNITURE_MAKER": {
+     "flat": 300
+    },
+    "BUILDING_SMITH_GOLD": {
+     "flat": 300
+    },
+    "BUILDING_SMITH_SILVER": {
+     "flat": 300
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_MOAI": {
+     "flat": 1
+    },
+    "IMPROVEMENT_GEOGLYPH": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_CALLIGRAPHY_SCHOOL": {
+     "flat": 100
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_SMITH_BRASS": {
+     "flat": 300
+    },
+    "BUILDING_SMITH_BRONZE": {
+     "flat": 300
+    },
+    "BUILDING_CALLIGRAPHY_SCHOOL": {
+     "flat": 300
+    },
+    "BUILDING_SMITH_ELECTRUM": {
+     "flat": 300
+    },
+    "BUILDING_GLASSBLOWERS_WORKSHOP": {
+     "flat": 300
+    },
+    "BUILDING_GLAZE_MAKER": {
+     "flat": 300
+    },
+    "BUILDING_SMITH_IRON": {
+     "flat": 300
+    },
+    "BUILDING_LACQUERWARE_MAKER": {
+     "flat": 300
+    },
+    "BUILDING_WONDER_OF_NATURE_MT_FUJI": {
+     "flat": 300
+    },
+    "BUILDING_POTTERS_HUT": {
+     "flat": 300
+    },
+    "BUILDING_SCULPTORS_WORKSHOP": {
+     "flat": 300
+    }
+   }
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_PRAVCICKA_BRANA": {
+     "flat": [
+      {
+       "SPECIALIST_ARTIST": 1
+      }
+     ]
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 749
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_AESTHETICS",
+  "soundMP": "AS2D_TECH_AESTHETICS",
+  "icon": ",Art/Interface/Buttons/TechTree/StoneCarving.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,6,1"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 10,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 38,
+  "gridY": 7
+ }
+}

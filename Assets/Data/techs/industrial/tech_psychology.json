@@ -1,0 +1,110 @@
+{
+ "type": "TECH_PSYCHOLOGY",
+ "description": "TXT_KEY_TECH_PSYCHOLOGY",
+ "civilopedia": "TXT_KEY_TECH_PSYCHOLOGY_PEDIA",
+ "quote": "TXT_KEY_TECH_PSYCHOLOGY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AMUSEMENT_PARK",
+   "BUILDING_INSANE_ASYLUM",
+   "BUILDING_PSYCHOLOGY_LAB",
+   "BUILDING_PUBLIC_BEACH",
+   "BUILDING_SECURITY_BUREAU",
+   "BUILDING_WATER_PARK"
+  ],
+  "techs": [
+   "TECH_COMPULSORY_EDUCATION",
+   "TECH_CUBISM",
+   "TECH_EXPRESSIONISM"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_DEBTORS_PRISON",
+   "BUILDING_DUNGEON",
+   "BUILDING_EXECUTIONER",
+   "BUILDING_INTERROGATION_CHAIR",
+   "BUILDING_INTESTINAL_RATS",
+   "BUILDING_IRON_MAIDEN",
+   "BUILDING_JUDAS_CRADLE",
+   "BUILDING_SCAVENGERS_DAUGHTER",
+   "BUILDING_STOCKS",
+   "BUILDING_THE_RACK",
+   "BUILDING_THUMBSCREW",
+   "BUILDING_TORTURE_CHAMBER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ARCHEOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PALEONTOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CRIMINOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_ANATOMY_LAB": {
+     "flat": 600
+    },
+    "BUILDING_UNIVERSITY": {
+     "flat": 600
+    }
+   }
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "buildings": {
+    "BUILDING_UNIVERSITY": {
+     "flat": [
+      {
+       "SPECIALIST_SCIENTIST": 1
+      }
+     ]
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 7356
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_PSYCHOLOGY",
+  "soundMP": "AS2D_TECH_PSYCHOLOGY",
+  "icon": ",Art/Interface/Buttons/TechTree/Psychology.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,14"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 21,
+  "militaryWorth": 7,
+  "tradeable": true,
+  "gridX": 69,
+  "gridY": 1
+ }
+}

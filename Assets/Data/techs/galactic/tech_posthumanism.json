@@ -1,0 +1,80 @@
+{
+ "type": "TECH_POSTHUMANISM",
+ "description": "TXT_KEY_TECH_POSTHUMANISM",
+ "civilopedia": "TXT_KEY_TECH_POSTHUMANISM_PEDIA",
+ "quote": "TXT_KEY_TECH_POSTHUMANISM_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_INFORMATION_BASED"
+  ],
+  "buildings": [
+   "BUILDING_ASTEROID_CLUSTER_CITY",
+   "BUILDING_HUMAN_MOD_INFORMATION_BASED",
+   "BUILDING_INTERSTELLAR_BASE_CHTHONIAN_PLANET",
+   "BUILDING_LIFE_SILICON_DIOXIDE",
+   "BUILDING_MERCURY_CITY"
+  ],
+  "techs": [
+   "TECH_ASTROANTHROPOLOGY",
+   "TECH_ECOSYNTHESIS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FACTORY_CELLULASE_CAPSULES",
+   "BUILDING_FACTORY_HYPOSPRAYS",
+   "BUILDING_FACTORY_IMMUNITY_DRUGS",
+   "BUILDING_FACTORY_MEDICAL_TRICODERS",
+   "BUILDING_FACTORY_NEUROIMPLANTS",
+   "BUILDING_FACTORY_REPLACEMENT_ORGANS",
+   "BUILDING_FACTORY_STIM_PACKS",
+   "BUILDING_NUTRACEUTICAL_LAB",
+   "BUILDING_RESOURCES_SMART_MEDICINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ADAPTIVE_RADIATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_ULTIMATE_COMBAT_ARENA": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 159944
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/posthumanism.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 131,
+  "gridY": 15
+ }
+}

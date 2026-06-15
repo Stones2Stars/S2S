@@ -1,0 +1,97 @@
+{
+ "type": "TECH_WEATHER_FORECASTING",
+ "description": "TXT_KEY_TECH_WEATHER_FORECASTING",
+ "civilopedia": "TXT_KEY_TECH_WEATHER_FORECASTING_PEDIA",
+ "quote": "TXT_KEY_TECH_WEATHER_FORECASTING_QUOTE",
+ "enables": {
+  "builds": [
+   "BUILD_PAVED_ROAD"
+  ],
+  "techs": [
+   "TECH_HOT_AIR_BALLOON",
+   "TECH_SEXTANT"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_RAIN_DANCE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CARTOGRAPHY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASTRONOMY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_WHALING_SHIPS": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FISHING_BOATS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_WHALING_SHIPS": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FISHING_BOATS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_WEATHER_VANES": {
+     "flat": 500
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 2701
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_WEATHER_FORECASTING",
+  "soundMP": "AS2D_TECH_WEATHER_FORECASTING",
+  "icon": "Art/Interface/Buttons/techtree/Weather_Forecasting.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 40,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "gridX": 53,
+  "gridY": 17
+ }
+}

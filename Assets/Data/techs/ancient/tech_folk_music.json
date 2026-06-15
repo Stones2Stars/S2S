@@ -1,0 +1,93 @@
+{
+ "type": "TECH_FOLK_MUSIC",
+ "description": "TXT_KEY_TECH_FOLK_MUSIC",
+ "civilopedia": "TXT_KEY_TECH_FOLK_MUSIC_PEDIA",
+ "quote": "TXT_KEY_TECH_FOLK_MUSIC_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_BRASS_INSTRUMENTS",
+   "BONUS_STRING_INSTRUMENTS"
+  ],
+  "buildings": [
+   "BUILDING_BRASS_INSTRUMENT_MAKER",
+   "BUILDING_CULTURE_BELIZEAN",
+   "BUILDING_CULTURE_MITTANNI",
+   "BUILDING_CULTURE_MOCOVI",
+   "BUILDING_CULTURE_QULLA",
+   "BUILDING_CULTURE_SCOTTISH",
+   "BUILDING_CULTURE_SENEGALI",
+   "BUILDING_PUPPET_THEATER",
+   "BUILDING_STRING_INSTRUMENT_MAKER"
+  ],
+  "techs": [
+   "TECH_ANCESTOR_WORSHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMMUNITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_GRAND_EARTH_FESTIVAL": {
+     "flat": 200
+    },
+    "BUILDING_GRAND_FIRE_FESTIVAL": {
+     "flat": 200
+    },
+    "BUILDING_GRAND_MARINE_FESTIVAL": {
+     "flat": 200
+    },
+    "BUILDING_GRAND_SKY_FESTIVAL": {
+     "flat": 200
+    },
+    "BUILDING_PERCUSSION_INSTRUMENT_MAKER": {
+     "flat": 200
+    },
+    "BUILDING_WOODWIND_INSTRUMENT_MAKER": {
+     "flat": 200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 96
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 9
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_FOLK_MUSIC",
+  "soundMP": "AS2D_TECH_FOLK_MUSIC",
+  "icon": "Art/Interface/Buttons/TechTree/folkmusic.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 21,
+  "gridY": 15
+ }
+}

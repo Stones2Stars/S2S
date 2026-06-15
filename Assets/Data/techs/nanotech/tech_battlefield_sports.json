@@ -1,0 +1,86 @@
+{
+ "type": "TECH_BATTLEFIELD_SPORTS",
+ "description": "TXT_KEY_TECH_BATTLEFIELD_SPORTS",
+ "civilopedia": "TXT_KEY_TECH_BATTLEFIELD_SPORTS_PEDIA",
+ "quote": "TXT_KEY_TECH_BATTLEFIELD_SPORTS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ATHLETIC_MEGACOMPLEX",
+   "BUILDING_BATTLEMECH_ARENA",
+   "BUILDING_HUNGER_GAMES",
+   "BUILDING_REHABILITATION"
+  ],
+  "techs": [
+   "TECH_BINARY_LEGISLATION"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AUTOMATED_FIRING_RANGE",
+   "BUILDING_MINOR_LEAGUE_STADIUM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SKYROADS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_QUANTUM_COMPUTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ANDROIDS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_AUGMENTED_SPORTS_ARENA": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 47795
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_BATTLEFIELD_SPORTS",
+  "soundMP": "AS2D_TECH_BATTLEFIELD_SPORTS",
+  "icon": "Art/Interface/Buttons/TechTree/battlefieldsports.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 108,
+  "gridY": 7
+ }
+}

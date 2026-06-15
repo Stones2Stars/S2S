@@ -1,0 +1,96 @@
+{
+ "type": "TECH_SOCIAL_CONTRACT",
+ "description": "TXT_KEY_TECH_SOCIAL_CONTRACT",
+ "civilopedia": "TXT_KEY_TECH_SOCIAL_CONTRACT_PEDIA",
+ "quote": "TXT_KEY_TECH_SOCIAL_CONTRACT_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAPITAL_ADMINISTRATION",
+   "BUILDING_CRIME_INSURANCE_FRAUD",
+   "BUILDING_CULTURE_CANADIAN",
+   "BUILDING_METROPOLITAN_ADMINISTRATION",
+   "BUILDING_POST_OFFICE",
+   "BUILDING_TAX_OFFICE",
+   "BUILDING_WORKHOUSE"
+  ],
+  "civics": [
+   "CIVIC_VOLUNTARY"
+  ],
+  "promotions": [
+   "PROMOTION_CRACKDOWN3"
+  ],
+  "techs": [
+   "TECH_ENLIGHTENMENT"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_GLADIATORIAL_SCHOOL",
+   "BUILDING_TOWN_HALL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_JURISPRUDENCE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CRITICAL_THOUGHT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_TOWN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
+     "percent": -5
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 3074
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_SOCIAL_CONTRACT",
+  "soundMP": "AS2D_TECH_SOCIAL_CONTRACT",
+  "icon": ",Art/Interface/Buttons/TechTree/Human_rights.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,1,9"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 55,
+  "gridY": 9
+ }
+}

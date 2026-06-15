@@ -1,0 +1,79 @@
+{
+ "type": "TECH_PHOTOGRAPHY",
+ "description": "TXT_KEY_TECH_PHOTOGRAPHY",
+ "civilopedia": "TXT_KEY_TECH_PHOTOGRAPHY_PEDIA",
+ "quote": "TXT_KEY_TECH_PHOTOGRAPHY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_PHOTOGRAPHY_STUDIO"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_SECURITY3"
+  ],
+  "techs": [
+   "TECH_JOURNALISM"
+  ],
+  "units": [
+   "UNIT_AGENT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CHEMISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INDUSTRIAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_ART_GALLERY": {
+     "flat": 600
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 5187
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   },
+   {
+    "FLAVOR_ESPIONAGE": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_PHOTOGRAPHY",
+  "soundMP": "AS2D_TECH_PHOTOGRAPHY",
+  "icon": ",Art/Interface/Buttons/TechTree/Photography.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,5,14"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 32,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 62,
+  "gridY": 1
+ }
+}

@@ -1,0 +1,106 @@
+{
+ "type": "TECH_MERCANTILISM",
+ "description": "TXT_KEY_TECH_MERCANTILISM",
+ "civilopedia": "TXT_KEY_TECH_MERCANTILISM_PEDIA",
+ "quote": "TXT_KEY_TECH_MERCANTILISM_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CENTRAL_BANK",
+   "BUILDING_MERCANTILISM_BONUS_GOLD",
+   "BUILDING_MERCANTILISM_BONUS_SILVER",
+   "BUILDING_SPICE_VOYAGE"
+  ],
+  "civics": [
+   "CIVIC_MERCANTILISM"
+  ],
+  "techs": [
+   "TECH_STOCK_BROKERING"
+  ],
+  "units": [
+   "UNIT_JACOB_KETTLER",
+   "UNIT_MATAPANG",
+   "UNIT_PIER",
+   "UNIT_PRIVATEER",
+   "UNIT_RAZZIA_PIRATES",
+   "UNIT_SANDEH",
+   "UNIT_VAKHTANG_VI"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_SILK_ROAD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DIVINE_RIGHT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COLONIALISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NAVIGATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_SILK_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_CRIME_SHOPLIFTING": {
+     "flat": -200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 2883
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_MERCANTILISM",
+  "soundMP": "AS2D_TECH_MERCANTILISM",
+  "icon": ",Art/Interface/Buttons/TechTree/Mercantilism.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,2,11"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 54,
+  "gridY": 13
+ }
+}

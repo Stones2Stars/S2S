@@ -1,0 +1,71 @@
+{
+ "type": "TECH_COSMIC_WARFARE",
+ "description": "TXT_KEY_TECH_COSMIC_WARFARE",
+ "civilopedia": "TXT_KEY_TECH_COSMIC_WARFARE_PEDIA",
+ "quote": "TXT_KEY_TECH_COSMIC_WARFARE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_HYPERSPACE_ENERGY_CANNON",
+   "BUILDING_HYPERSPACE_TIME_TRAP"
+  ],
+  "builds": [
+   "BUILD_HYPERSPACE_BUNKER"
+  ],
+  "civics": [
+   "CIVIC_INTERDIMENSIONAL"
+  ],
+  "improvements": [
+   "IMPROVEMENT_HYPERSPACE_BUNKER"
+  ],
+  "techs": [
+   "TECH_DEITIES",
+   "TECH_TIMELINE_RECTIFICATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COSMIC_GOVERNANCE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TIME_REVERSAL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_ADMINISTRATION_CENTER": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 581814
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/cosmic_warfare.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 154,
+  "gridY": 13
+ }
+}

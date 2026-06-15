@@ -1,0 +1,85 @@
+{
+ "type": "TECH_OPTRONICS",
+ "description": "TXT_KEY_TECH_OPTRONICS",
+ "civilopedia": "TXT_KEY_TECH_OPTRONICS_PEDIA",
+ "quote": "TXT_KEY_TECH_OPTRONICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_EXABIT_BROADBAND",
+   "BUILDING_OPTRONIC_SUPERCOMPUTER",
+   "BUILDING_VENUS_ORBITAL_SOLAR_ARRAY"
+  ],
+  "techs": [
+   "TECH_ABYSS_COLONIZATION",
+   "TECH_SHIELDING",
+   "TECH_TECHNOLOGICAL_SINGULARITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SMART_DUST",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SYNERGETICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_MARTIAN_BROADBAND": {
+     "flat": 1000
+    },
+    "BUILDING_VENUS_BROADBAND": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_NEUTRINO_OBSERVATORY": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 70029
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_OPTRONICS",
+  "soundMP": "AS2D_TECH_OPTRONICS",
+  "icon": "Art/Interface/Buttons/TechTree/optronics2.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 114,
+  "gridY": 7
+ }
+}

@@ -1,0 +1,71 @@
+{
+ "type": "TECH_HELIOCENTRISM",
+ "description": "TXT_KEY_TECH_HELIOCENTRISM",
+ "civilopedia": "TXT_KEY_TECH_HELIOCENTRISM_PEDIA",
+ "quote": "TXT_KEY_TECH_HELIOCENTRISM_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_RUDOLPHINE"
+  ],
+  "techs": [
+   "TECH_SCIENTIFIC_METHOD"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ALMAGEST"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NAVIGATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_GREAT_ADMIRAL"
+ },
+ "cost": {
+  "research": 2883
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_HELIOCENTRISM",
+  "soundMP": "AS2D_TECH_HELIOCENTRISM",
+  "icon": "Art/Interface/Buttons/techtree/Heliocentrism.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 20,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "gridX": 54,
+  "gridY": 11
+ }
+}

@@ -1,0 +1,93 @@
+{
+ "type": "TECH_TECHNOLOGICAL_SINGULARITY",
+ "description": "TXT_KEY_TECH_TECHNOLOGICAL_SINGULARITY",
+ "civilopedia": "TXT_KEY_TECH_TECHNOLOGICAL_SINGULARITY_PEDIA",
+ "quote": "TXT_KEY_TECH_TECHNOLOGICAL_SINGULARITY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_SUPERINTELLIGENT_COMPUTERS"
+  ],
+  "buildings": [
+   "BUILDING_AI_SINGLETON",
+   "BUILDING_DEEP_SPACE_CONSCIOUS_STATION",
+   "BUILDING_SELF_AWARE_CITY"
+  ],
+  "promotions": [
+   "PROMOTION_RECOVER_TECH7"
+  ],
+  "techs": [
+   "TECH_ANIMAMATERIALS",
+   "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+   "TECH_KNOWLEDGE_MERCANTILISM",
+   "TECH_SAPIENTROIDS",
+   "TECH_TRANSHUMANISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_OPTRONICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_EVOLVED_CONSTRUCTION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WHOLE_BRAIN_EMULATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MIND_UPLOADING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_OPTRONIC_SUPERCOMPUTER": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 72474
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_TECHNOLOGICAL_SINGULARITY",
+  "soundMP": "AS2D_TECH_TECHNOLOGICAL_SINGULARITY",
+  "icon": "Art/Interface/Buttons/TechTree/singularity.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 115,
+  "gridY": 5
+ }
+}

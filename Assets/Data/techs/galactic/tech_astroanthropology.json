@@ -1,0 +1,85 @@
+{
+ "type": "TECH_ASTROANTHROPOLOGY",
+ "description": "TXT_KEY_TECH_ASTROANTHROPOLOGY",
+ "civilopedia": "TXT_KEY_TECH_ASTROANTHROPOLOGY_PEDIA",
+ "quote": "TXT_KEY_TECH_ASTROANTHROPOLOGY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ALIEN_EMBASSY",
+   "BUILDING_GALACTIC_CANTINA",
+   "BUILDING_MUSEUM_OF_HUMANITY",
+   "BUILDING_TRANSTELLAR_REST_STOP"
+  ],
+  "techs": [
+   "TECH_ASTROIMPERIALISM"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FERTILITY_CLINIC",
+   "BUILDING_GESTATION_TANKS",
+   "BUILDING_PUB",
+   "BUILDING_RESURRECTION_HUB",
+   "BUILDING_UTERINE_REPLICATOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_XENODIPLOMACY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_POSTHUMANISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_ASTROBIOLOGY_LAB": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 166029
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_ASTROANTHROPOLOGY",
+  "soundMP": "AS2D_TECH_ASTROANTHROPOLOGY",
+  "icon": "Art/Interface/Buttons/TechTree/astroanthropology.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 132,
+  "gridY": 15
+ }
+}

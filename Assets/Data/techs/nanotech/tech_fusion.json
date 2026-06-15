@@ -1,0 +1,93 @@
+{
+ "type": "TECH_FUSION",
+ "description": "TXT_KEY_TECH_FUSION",
+ "civilopedia": "TXT_KEY_TECH_FUSION_PEDIA",
+ "quote": "TXT_KEY_TECH_FUSION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_D_T_FUSION_POWER_PLANT"
+  ],
+  "promotions": [
+   "PROMOTION_FUSION_POWER_SOURCE",
+   "PROMOTION_FUSION_SHELLS"
+  ],
+  "techs": [
+   "TECH_ELECTRIC_ARC_WEAPONRY",
+   "TECH_MASS_DRIVER"
+  ],
+  "units": [
+   "UNIT_FF_DESTROYER_I",
+   "UNIT_FUSION_NUKE",
+   "UNIT_FUSION_SUBMARINE",
+   "UNIT_FUSION_TRANSPORT",
+   "UNIT_HOVER_ARTILLERY",
+   "UNIT_MASTER_SAILOR_FF_DESTROYER_I",
+   "UNIT_MASTER_SAILOR_FUSION_SUBMARINE",
+   "UNIT_POWER_ARMORED_INFANTRY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_COAL_FIRED_DYNAMO",
+   "BUILDING_COAL_PLANT",
+   "BUILDING_FAST_BREEDER_REACTOR",
+   "BUILDING_HI_TECH_NUCLEAR_REACTOR",
+   "BUILDING_PEARL_HARBOR",
+   "BUILDING_SCAPA_FLOW",
+   "BUILDING_SMALL_REACTOR_FACTORY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CONTROLLED_PLASMA",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GRAPHENE_ALLOYS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOTECH_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_GREAT_ENGINEER"
+ },
+ "cost": {
+  "research": 36429
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_FUSION",
+  "soundMP": "AS2D_TECH_MP_FUSION",
+  "icon": ",Art/Interface/Buttons/TechTree/Fusion.dds,Art/Interface/Buttons/TechTree_Atlas.dds,1,4"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 100,
+  "gridY": 11
+ }
+}

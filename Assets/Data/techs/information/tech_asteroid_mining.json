@@ -1,0 +1,98 @@
+{
+ "type": "TECH_ASTEROID_MINING",
+ "description": "TXT_KEY_TECH_ASTEROID_MINING",
+ "civilopedia": "TXT_KEY_TECH_ASTEROID_MINING_PEDIA",
+ "quote": "TXT_KEY_TECH_ASTEROID_MINING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTEROID_MINE",
+   "BUILDING_CAPTURED_ASTEROID"
+  ],
+  "builds": [
+   "BUILD_ASTEROID_MINE",
+   "BUILD_SPACE_STATION_LV3"
+  ],
+  "improvements": [
+   "IMPROVEMENT_ASTEROID_MINE",
+   "IMPROVEMENT_SPACE_STATION_LV3"
+  ],
+  "techs": [
+   "TECH_GRAPHENE_ALLOYS",
+   "TECH_JOVIAN_EXPLORATION",
+   "TECH_WEAPONIZED_LASERS"
+  ],
+  "units": [
+   "UNIT_SS3_REWARD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASTEROID_BELT_PROBES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_MINING_CAMP": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_FACTORY_MICROGENERATORS": {
+     "flat": 800
+    },
+    "BUILDING_MINING_CAMP": {
+     "flat": 800
+    },
+    "BUILDING_SPACE_STATION": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 27203
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_ASTEROID_MINING",
+  "soundMP": "AS2D_TECH_ASTEROID_MINING",
+  "icon": "Art/Interface/Buttons/TechTree/asteroidmining.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 40,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 96,
+  "gridY": 5
+ }
+}

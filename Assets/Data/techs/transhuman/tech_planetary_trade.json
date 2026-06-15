@@ -1,0 +1,99 @@
+{
+ "type": "TECH_PLANETARY_TRADE",
+ "description": "TXT_KEY_TECH_PLANETARY_TRADE",
+ "civilopedia": "TXT_KEY_TECH_PLANETARY_TRADE_PEDIA",
+ "quote": "TXT_KEY_TECH_PLANETARY_TRADE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTEROID_CERES_TRADING_POST",
+   "BUILDING_EFFECT_MARS_CYCLER",
+   "BUILDING_MARS_CYCLER",
+   "BUILDING_MARTIAN_CYBERNETIC_CHLOROPLAST_IMPORTER",
+   "BUILDING_MARTIAN_DEUTERIUM_EXPORTER",
+   "BUILDING_MARTIAN_DIAMOND_NANOTHREAD_IMPORTER",
+   "BUILDING_MARTIAN_NOVUS_CHEMICAL_IMPORTER",
+   "BUILDING_MARTIAN_RARE_MINERAL_EXPORTER",
+   "BUILDING_MARTIAN_TRADING_POST",
+   "BUILDING_VENUS_DEUTERIUM_EXPORTER",
+   "BUILDING_VENUS_TRADING_POST"
+  ],
+  "techs": [
+   "TECH_WEIGHTLESS_FLIGHT"
+  ],
+  "units": [
+   "UNIT_CAPTURED_ASTEROID"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_COLONIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LUNAR_TRADE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRANSHUMAN_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_VENUS_SURFACE_MINE": {
+     "flat": 2
+    },
+    "IMPROVEMENT_MARTIAN_MINE": {
+     "flat": 2
+    },
+    "IMPROVEMENT_SOLAR_TRADING_POST": {
+     "flat": 1
+    },
+    "IMPROVEMENT_COLONY_HABITAT_HUGE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 63426
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_PLANETARY_TRADE",
+  "soundMP": "AS2D_TECH_PLANETARY_TRADE",
+  "icon": "Art/Interface/Buttons/TechTree/planetarytrade.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 111,
+  "gridY": 15
+ }
+}

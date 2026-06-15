@@ -1,0 +1,193 @@
+{
+ "type": "TECH_INFORMATION_LIFESTYLE",
+ "description": "TXT_KEY_TECH_INFORMATION_LIFESTYLE",
+ "civilopedia": "TXT_KEY_TECH_INFORMATION_LIFESTYLE_PEDIA",
+ "quote": "TXT_KEY_TECH_INFORMATION_LIFESTYLE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_EDUCATION_COSMOPOLITAN",
+   "BUILDING_EDUCATION_RIDICULOUS",
+   "BUILDING_TOURISM_LEVEL_7"
+  ],
+  "promotions": [
+   "PROMOTION_MIGHT8"
+  ],
+  "techs": [
+   "TECH_AQUACULTURE",
+   "TECH_CHAOS_THEORY",
+   "TECH_FIBER_OPTICS",
+   "TECH_FORENSICS",
+   "TECH_FUEL_CELLS",
+   "TECH_GENE_MANIPULATION",
+   "TECH_PLANETARY_EXPLORATION",
+   "TECH_STEALTH",
+   "TECH_SUPERCONDUCTORS"
+  ],
+  "traits": [
+   "TRAIT_AERIAL3",
+   "TRAIT_AGGRESSIVE3",
+   "TRAIT_AGRICULTURAL3",
+   "TRAIT_ALOOF3",
+   "TRAIT_ANTI_CLERICAL3",
+   "TRAIT_BARBARIC3",
+   "TRAIT_BIGOT3",
+   "TRAIT_CARELESS3",
+   "TRAIT_CHARISMATIC3",
+   "TRAIT_CIVILIZED3",
+   "TRAIT_COVETOUS3",
+   "TRAIT_COWARDLY3",
+   "TRAIT_CREATIVE3",
+   "TRAIT_CROOKED3",
+   "TRAIT_CRUEL3",
+   "TRAIT_DECEIVER3",
+   "TRAIT_DEFENSIVE3",
+   "TRAIT_DYNAMIC3",
+   "TRAIT_EFFICIENT3",
+   "TRAIT_EXCESSIVE3",
+   "TRAIT_EXPANSIVE3",
+   "TRAIT_FINANCIAL3",
+   "TRAIT_FOREIGN3",
+   "TRAIT_GLOOMY3",
+   "TRAIT_GLORIOUS3",
+   "TRAIT_GLUTTONOUS3",
+   "TRAIT_GREEDY3",
+   "TRAIT_GRIM3",
+   "TRAIT_HONEST3",
+   "TRAIT_HUMANITARIAN3",
+   "TRAIT_HUMBLE3",
+   "TRAIT_HUNTER_GATHERER3",
+   "TRAIT_IDEALISTIC3",
+   "TRAIT_IMPERIALIST3",
+   "TRAIT_IMPULSIVE3",
+   "TRAIT_INDUSTRIOUS3",
+   "TRAIT_INNOVATIVE3",
+   "TRAIT_ISOLATIONIST3",
+   "TRAIT_LAWFUL3",
+   "TRAIT_LAZY3",
+   "TRAIT_LIAR3",
+   "TRAIT_MEDICAL3",
+   "TRAIT_MEEK3",
+   "TRAIT_MEGALOMANIAC3",
+   "TRAIT_MINIMALIST3",
+   "TRAIT_NAIVE3",
+   "TRAIT_NATURALIST3",
+   "TRAIT_NEGLIGENT3",
+   "TRAIT_NEGOTIATOR3",
+   "TRAIT_NOMADIC3",
+   "TRAIT_ORGANIZED3",
+   "TRAIT_PACIFIST3",
+   "TRAIT_PHILOSOPHICAL3",
+   "TRAIT_PIOUS3",
+   "TRAIT_POLITICIAN3",
+   "TRAIT_POPULIST3",
+   "TRAIT_PRAGMATIC3",
+   "TRAIT_PREEMINENT3",
+   "TRAIT_PROGRESSIVE3",
+   "TRAIT_PROLIFIC3",
+   "TRAIT_PROTECTIVE3",
+   "TRAIT_REVOLUTIONARY3",
+   "TRAIT_SCIENTIFIC3",
+   "TRAIT_SEAFARING3",
+   "TRAIT_SLOB3",
+   "TRAIT_SPIRITUAL3",
+   "TRAIT_STRATEGIST3",
+   "TRAIT_STUBBORN3",
+   "TRAIT_TIMID3",
+   "TRAIT_TRADITIONAL3",
+   "TRAIT_UNREFINED3",
+   "TRAIT_UNSANITARY3",
+   "TRAIT_USURPER3",
+   "TRAIT_WARMONGER3",
+   "TRAIT_ZEALOUS3"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_DESERT_CAMP",
+   "BUILD_FACTORY",
+   "BUILD_HUNTING_PRESERVE",
+   "BUILD_JUNGLE_CAMP",
+   "BUILD_LUMBERMILL",
+   "BUILD_PEAT_CUTTER",
+   "BUILD_SALT_GATHERER",
+   "BUILD_SHAFT_MINE",
+   "BUILD_THATCH_CUTTER",
+   "BUILD_WETLANDS_CAMP",
+   "BUILD_WINDMILL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MODERN_HEALTH_CARE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_URBAN_CULTURE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SPACE_STATIONS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ROBOTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COMPOSITES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
+     "percent": -25
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 19246
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_INFORMATION_LIFESTYLE",
+  "soundMP": "AS2D_TECH_INFORMATION_LIFESTYLE",
+  "icon": "Art/Buttons/Techs/InformationLifestyleTech.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 86,
+  "gridY": 9
+ }
+}

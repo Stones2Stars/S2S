@@ -1,0 +1,74 @@
+{
+ "type": "TECH_ORGANIC_PHOTONICS",
+ "description": "TXT_KEY_TECH_ORGANIC_PHOTONICS",
+ "civilopedia": "TXT_KEY_TECH_ORGANIC_PHOTONICS_PEDIA",
+ "quote": "TXT_KEY_TECH_ORGANIC_PHOTONICS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_ORGANIC_PHOTONIC_CELLS"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_OLED",
+   "BUILDING_LUMINESCENT_SOLAR_CONCENTRATORS",
+   "BUILDING_OLED_LAMPS"
+  ],
+  "techs": [
+   "TECH_AUGMENTED_REALITY",
+   "TECH_BIOMECHANICAL_HARVESTING"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_GAS_LAMPS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BIOMATERIALS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WEARABLE_COMPUTERS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 24485
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_ORGANIC_PHOTONICS",
+  "soundMP": "AS2D_TECH_ORGANIC_PHOTONICS",
+  "icon": "Art/Interface/Buttons/TechTree/photonics2.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 93,
+  "gridY": 15
+ }
+}

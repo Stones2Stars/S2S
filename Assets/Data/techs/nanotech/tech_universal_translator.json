@@ -1,0 +1,93 @@
+{
+ "type": "TECH_UNIVERSAL_TRANSLATOR",
+ "description": "TXT_KEY_TECH_UNIVERSAL_TRANSLATOR",
+ "civilopedia": "TXT_KEY_TECH_UNIVERSAL_TRANSLATOR_PEDIA",
+ "quote": "TXT_KEY_TECH_UNIVERSAL_TRANSLATOR_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ADVANCED_METI"
+  ],
+  "civics": [
+   "CIVIC_UNIVERSAL_TRANSLATOR"
+  ],
+  "techs": [
+   "TECH_CYBERSOCIAL_INTEGRATION",
+   "TECH_PERSONAL_ROBOTS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ROSETTA_STONE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AMPLIFIED_WAVELENGTHS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ANDROIDS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_WIRELESS_NETWORKS": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_NATURAL_LANGUAGE_ALGORITHMS": {
+     "flat": 900
+    },
+    "BUILDING_SPEECH_RECOGNITION_SOFTWARE": {
+     "flat": 900
+    },
+    "BUILDING_WIRELESS_NETWORKS": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 47795
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_UNIVERSAL_TRANSLATOR",
+  "soundMP": "AS2D_TECH_UNIVERSAL_TRANSLATOR",
+  "icon": "Art/Interface/Buttons/TechTree/universaltranslator.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 108,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,150 @@
+{
+ "type": "TECH_AUTOMATED_URBANIZATION",
+ "description": "TXT_KEY_TECH_AUTOMATED_URBANIZATION",
+ "civilopedia": "TXT_KEY_TECH_AUTOMATED_URBANIZATION_PEDIA",
+ "quote": "TXT_KEY_TECH_AUTOMATED_URBANIZATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DELIVERY_DRONE_CONTROL_CENTER",
+   "BUILDING_INTELLIGENT_PAVEMENT",
+   "BUILDING_NEOM",
+   "BUILDING_SELF_CONSTRUCTION_FIRM",
+   "BUILDING_SHOPPING_DRONE_CONTROL_CENTER"
+  ],
+  "techs": [
+   "TECH_ADVANCED_COMPUTERS",
+   "TECH_VERTICAL_FARMING",
+   "TECH_WIRELESS_ELECTRICITY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ABALONE_DIGGERS",
+   "BUILDING_CAD_STUDIO",
+   "BUILDING_CLAM_DIGGERS",
+   "BUILDING_CONCH_DIVER",
+   "BUILDING_DRIED_FISH_MAKER",
+   "BUILDING_FARM_CROP_SEAWEED",
+   "BUILDING_FISHERMANS_HUT",
+   "BUILDING_FISH_TRAPS",
+   "BUILDING_GIANT_CLAM_DIVERS",
+   "BUILDING_MACKEREL_NETS",
+   "BUILDING_MARLIN_NETS",
+   "BUILDING_MUREX_DIVER",
+   "BUILDING_NETS_COD",
+   "BUILDING_NET_ANCHOVY",
+   "BUILDING_NET_CRAB",
+   "BUILDING_NET_EEL",
+   "BUILDING_NET_FLOUNDER",
+   "BUILDING_NET_LOBSTER",
+   "BUILDING_NET_PRAWN",
+   "BUILDING_NET_SALMON",
+   "BUILDING_NET_SARDINE",
+   "BUILDING_NET_SEA_BASS",
+   "BUILDING_NET_SHARK",
+   "BUILDING_NET_SHRIMP",
+   "BUILDING_NET_SNAPPER",
+   "BUILDING_NET_SQUID",
+   "BUILDING_NET_TUNA",
+   "BUILDING_PARROTFISH_NETS",
+   "BUILDING_PEARL_DIVER",
+   "BUILDING_RESOURCES_FISH",
+   "BUILDING_RESOURCES_SHELLFISH",
+   "BUILDING_SWORDFISH_NETS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEDIA_HIVEMIND",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ONTOLOGICAL_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_FACIAL_RECOGNITION_SOFTWARE": {
+     "flat": 900
+    },
+    "BUILDING_GESTURE_RECOGNITION_SOFTWARE": {
+     "flat": 900
+    },
+    "BUILDING_INTUITIVE_ALGORITHMS": {
+     "flat": 900
+    },
+    "BUILDING_MIXED_USE_DEVELOPMENT": {
+     "flat": 900
+    },
+    "BUILDING_SPEECH_RECOGNITION_SOFTWARE": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_AUTOMATED_HIGHWAY": {
+     "flat": 900
+    },
+    "BUILDING_ELEVATED_BICYCLE_TRACK": {
+     "flat": 900
+    },
+    "BUILDING_NATURAL_LANGUAGE_ALGORITHMS": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "espionage": {
+  "city": {
+   "buildings": {
+    "BUILDING_BLACKNET": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 41539
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_AUTOMATED_URBANIZATION",
+  "soundMP": "AS2D_TECH_AUTOMATED_URBANIZATION",
+  "icon": "Art/Interface/Buttons/TechTree/Aicity.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 104,
+  "gridY": 13
+ }
+}

@@ -1,0 +1,85 @@
+{
+ "type": "TECH_FOLK_DANCE",
+ "description": "TXT_KEY_TECH_FOLK_DANCE",
+ "civilopedia": "TXT_KEY_TECH_FOLK_DANCE_PEDIA",
+ "quote": "TXT_KEY_TECH_FOLK_DANCE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_MASAI",
+   "BUILDING_DANCE_HALL",
+   "BUILDING_PUPPET_THEATER"
+  ],
+  "promotions": [
+   "PROMOTION_MARCH"
+  ],
+  "techs": [
+   "TECH_ANCESTOR_WORSHIP"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FIRE_DANCE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMMUNITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_GRAND_EARTH_FESTIVAL": {
+     "flat": 200
+    },
+    "BUILDING_GRAND_FIRE_FESTIVAL": {
+     "flat": 200
+    },
+    "BUILDING_GRAND_MARINE_FESTIVAL": {
+     "flat": 200
+    },
+    "BUILDING_GRAND_SKY_FESTIVAL": {
+     "flat": 200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 96
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 9
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_FOLK_DANCE",
+  "soundMP": "AS2D_TECH_FOLK_DANCE",
+  "icon": "Art/Interface/Buttons/TechTree/folkdance.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 21,
+  "gridY": 17
+ }
+}

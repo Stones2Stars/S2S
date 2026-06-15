@@ -1,0 +1,104 @@
+{
+ "type": "TECH_SCREW_PROPELLER",
+ "description": "TXT_KEY_TECH_SCREW_PROPELLER",
+ "civilopedia": "TXT_KEY_TECH_SCREW_PROPELLER_PEDIA",
+ "quote": "TXT_KEY_TECH_SCREW_PROPELLER_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_HQ_SIDS_SUSHI_CO",
+   "BUILDING_SIDS_SUSHI_RESTAURANT",
+   "BUILDING_WATER_PUMPING_STATION"
+  ],
+  "promotions": [
+   "PROMOTION_REPAIR_NAVAL4"
+  ],
+  "techs": [
+   "TECH_COMBUSTION",
+   "TECH_GYROCOMPASS",
+   "TECH_IMPERIALISM"
+  ],
+  "units": [
+   "UNIT_IRONCLAD",
+   "UNIT_WORKBOAT_MODERN"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HAND_WATER_PUMP",
+   "BUILDING_VENETIAN_ARSENAL",
+   "BUILDING_ZHENG_HES_VOYAGE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STEAM_POWER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_WHALING_SHIPS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_WHALING_SHIPS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_WHALING_SHIPS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 5460
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_SCREW_PROPELLER",
+  "soundMP": "AS2D_TECH_SCREW_PROPELLER",
+  "icon": ",Art/Interface/Buttons/TechTree/Screw_propeller.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,6,15"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 63,
+  "gridY": 15
+ }
+}

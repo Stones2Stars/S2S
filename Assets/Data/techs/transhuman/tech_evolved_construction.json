@@ -1,0 +1,89 @@
+{
+ "type": "TECH_EVOLVED_CONSTRUCTION",
+ "description": "TXT_KEY_TECH_EVOLVED_CONSTRUCTION",
+ "civilopedia": "TXT_KEY_TECH_EVOLVED_CONSTRUCTION_PEDIA",
+ "quote": "TXT_KEY_TECH_EVOLVED_CONSTRUCTION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_BIONIC_CORE",
+   "BUILDING_CLIMATE_CONTROLLED_ARCOLOGY",
+   "BUILDING_LIVING_BUILDINGS"
+  ],
+  "techs": [
+   "TECH_ABYSS_COLONIZATION",
+   "TECH_COMPREHENSIVE_CYBERNETICS",
+   "TECH_ORBITAL_MEGASTRUCTURES",
+   "TECH_ORGANIC_CITIES",
+   "TECH_SHIELDING",
+   "TECH_TECHNOLOGICAL_SINGULARITY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BICYCLE_BOULEVARD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEGASTRUCTURE_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_EVOLUTION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SMART_DUST",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_SELF_CONSTRUCTION_FIRM": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 70029
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_EVOLVED_CONSTRUCTION",
+  "soundMP": "AS2D_TECH_EVOLVED_CONSTRUCTION",
+  "icon": "Art/Interface/Buttons/TechTree/evolvedconstruction.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 114,
+  "gridY": 9
+ }
+}

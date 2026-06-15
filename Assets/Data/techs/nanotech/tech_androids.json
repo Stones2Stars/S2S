@@ -1,0 +1,149 @@
+{
+ "type": "TECH_ANDROIDS",
+ "description": "TXT_KEY_TECH_ANDROIDS",
+ "civilopedia": "TXT_KEY_TECH_ANDROIDS_PEDIA",
+ "quote": "TXT_KEY_TECH_ANDROIDS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_ANDROIDS"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_ANDROIDS",
+   "BUILDING_LUNAR_DROID_FACTORY"
+  ],
+  "civics": [
+   "CIVIC_AUTOMATED"
+  ],
+  "techs": [
+   "TECH_BATTLEFIELD_SPORTS",
+   "TECH_PLANETARY_ECONOMICS",
+   "TECH_UNIVERSAL_TRANSLATOR"
+  ],
+  "units": [
+   "UNIT_ANDROID_INFANTRY",
+   "UNIT_DROID_HELICOPTER",
+   "UNIT_DROID_TANK",
+   "UNIT_LUNAR_WORKER",
+   "UNIT_ROBOT_IMP_GUARD"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MADISON_AVENUE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WARMACHINES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INTERACTIVE_GLASS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DROIDS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_ANTHROPOMORPHICS_LAB": {
+     "flat": 900
+    },
+    "BUILDING_BIOMORPHICS_LAB": {
+     "flat": 900
+    },
+    "BUILDING_MECHATRONICS_LAB": {
+     "flat": 900
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_QUARRY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTUITIVE_ALGORITHMS": {
+     "flat": 900
+    },
+    "BUILDING_FACTORY_SERVICE_BOTS": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_ANTHROPOMORPHICS_LAB": {
+     "flat": 900
+    },
+    "BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS": {
+     "flat": 900
+    },
+    "BUILDING_BIOMORPHICS_LAB": {
+     "flat": 900
+    },
+    "BUILDING_EVOLUTIONARY_ALGORITHMS": {
+     "flat": 900
+    },
+    "BUILDING_MECHATRONICS_LAB": {
+     "flat": 900
+    },
+    "BUILDING_ROBOTICS_LAB": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "buildings": {
+    "BUILDING_GARBAGE_COLLECTION_AGENCY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 46107
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_ANDROIDS",
+  "soundMP": "AS2D_TECH_ANDROIDS",
+  "icon": ",Art/Interface/Buttons/TechTree/android.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,1,2"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 107,
+  "gridY": 11
+ }
+}

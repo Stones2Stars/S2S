@@ -1,0 +1,84 @@
+{
+ "type": "TECH_ASTEROID_BELT_PROBES",
+ "description": "TXT_KEY_TECH_ASTEROID_BELT_PROBES",
+ "civilopedia": "TXT_KEY_TECH_ASTEROID_BELT_PROBES_PEDIA",
+ "quote": "TXT_KEY_TECH_ASTEROID_BELT_PROBES_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_METALLIC_ASTEROID",
+   "BONUS_ORGANIC_VOLATILES"
+  ],
+  "buildings": [
+   "BUILDING_ASTEROID_DEFLECTION_SYSTEM",
+   "BUILDING_LUNAR_ORBITAL_PLATFORM_GATEWAY",
+   "BUILDING_MISSION_TO_MARS"
+  ],
+  "builds": [
+   "BUILD_PLACE_ASTEROID"
+  ],
+  "improvements": [
+   "IMPROVEMENT_PLACE_ASTEROID"
+  ],
+  "techs": [
+   "TECH_ASTEROID_MINING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EXOPLANET_DISCOVERY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LUNAR_BASES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_OBSERVATORY": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 26259
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_ASTEROID_BELT_PROBES",
+  "soundMP": "AS2D_TECH_ASTEROID_BELT_PROBES",
+  "icon": "Art/Interface/Buttons/TechTree/Asteroidprobe.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 95,
+  "gridY": 5
+ }
+}

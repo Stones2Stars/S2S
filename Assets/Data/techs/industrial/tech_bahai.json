@@ -1,0 +1,53 @@
+{
+ "type": "TECH_BAHAI",
+ "description": "TXT_KEY_TECH_BAHAI",
+ "civilopedia": "TXT_KEY_TECH_BAHAI_PEDIA",
+ "quote": "TXT_KEY_TECH_BAHAI_QUOTE",
+ "enables": {
+  "religions": [
+   "RELIGION_BAHAI"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INDUSTRIAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 5187
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_BAHAI",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/Interface/Buttons/TechTree/Bahai.dds"
+ },
+ "identity": {
+  "global": true,
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 8,
+  "gridX": 62,
+  "gridY": 13
+ }
+}

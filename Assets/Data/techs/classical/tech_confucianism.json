@@ -1,0 +1,57 @@
+{
+ "type": "TECH_CONFUCIANISM",
+ "description": "TXT_KEY_TECH_CONFUCIANISM",
+ "civilopedia": "TXT_KEY_TECH_CONFUCIANISM_PEDIA",
+ "quote": "TXT_KEY_TECH_CONFUCIANISM_QUOTE",
+ "enables": {
+  "religions": [
+   "RELIGION_CONFUCIANISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEDITATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MERITOCRACY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 679
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_CONFUCIANISM",
+  "soundMP": "AS2D_TECH_CONFUCIANISM",
+  "icon": "Art/Interface/Buttons/TechTree/Confucianism.dds"
+ },
+ "identity": {
+  "global": true,
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 8,
+  "gridX": 37,
+  "gridY": 17
+ }
+}

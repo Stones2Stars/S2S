@@ -128,6 +128,18 @@ def apply_channel(families, spec, c):
     if family and family.endswith("PerPopulation"):
         family = family[:-len("PerPopulation")]
         kind = "percentPerPopulation" if kind == "percent" else "perPopulation"
+    # Keyed-by-Type CONTAINER (e.g. FreeSpecialistCounts: each entry = <SpecialistType> + <iFreeSpecialistCount>).
+    # `targetType` in the mapping marks this; the entry is addressed family.scope.<targetType>.<TARGET>.<unit>
+    # (modifier-spec §1.2). Reuses _boost_entries (the same ref+value parser used to invert entity-targeted fields).
+    target_type = spec.get("targetType")
+    if target_type:
+        for ref, _u, val in _boost_entries(c, keys, kind):
+            if val in (None, {}, [], "") or val == 0:
+                continue
+            leaf = (families.setdefault(family, {}).setdefault(scope, {})
+                    .setdefault(target_type, {}).setdefault(ref, {}))
+            leaf[kind] = _merge_val(leaf[kind], val) if kind in leaf else val
+        return
     if kind == "enabler":
         if engine.text(c) not in ("1", "true", "True"):
             return
@@ -158,7 +170,7 @@ def apply_channel(families, spec, c):
 class EntityConfig:
     """Per-entity config, mostly read from mapping/<Entity>.json (channels/cost/art/prereqs)."""
     def __init__(self, entity, cost_rename=None, grants=None, era_fn=None, extra_drop=None, map_gen=None,
-                 families=None, id_rename=None, to_identity=None):
+                 families=None, id_rename=None, to_identity=None, requires_fn=None):
         m = json.load(open(os.path.join(MAPDIR, entity + ".json")))
         self.entity = entity
         # `families` = verified per-field modifier specs (from the classification) that OVERRIDE the first-pass
@@ -179,6 +191,10 @@ class EntityConfig:
         self.grants = grants or {}
         self.map_gen = set(map_gen or [])   # field tags routed into a `mapGeneration` group instead of identity
         self.era_fn = era_fn or (lambda rec, store: "")
+        # requires_fn(rec, store) -> the TARGET-side reversible MEANS gate (enabler-spec §3/§5): the positive
+        # `requires.{build,operate}` BoolExpr authored ON this entity from its OWN prereq fields (the fields the
+        # store does NOT invert away). Returns a dict or None. Per-entity, since prereq shapes differ.
+        self.requires_fn = requires_fn or (lambda rec, store: None)
 
 
 def curate(typ, rec, cfg, store, boosts):
@@ -242,6 +258,12 @@ def curate(typ, rec, cfg, store, boosts):
     disables = store.disables_of(typ)
     if disables:
         out["disables"] = OrderedDict((k, disables[k]) for k in sorted(disables))
+    # `requires` — the TARGET-side reversible MEANS gate (enabler-spec §3/§5), authored from THIS entity's own
+    # prereq fields (those the store does not invert into others' `enables`). Reserved order: after the
+    # `enables`-family (enables/obsoletes/replaces/disables), before the modifier families (modifier-spec §1.1).
+    requires = cfg.requires_fn(rec, store)
+    if requires:
+        out["requires"] = requires
     for family in FAMILY_ORDER:                            # families at TOP LEVEL (no `modifiers` wrapper, §3)
         if family in families:
             out[family] = families[family]
@@ -289,7 +311,7 @@ def main(cfg, boosts_config, out_dir):
               "replaces", "disables", "requires", "grants", "cost", "ai", "art", "mapGeneration", "identity"}
     fams = lambda o: [k for k in o if k not in STRUCT]
     print("%s curated: %d" % (cfg.entity, n))
-    for k in ("enables", "obsoletes", "replaces", "disables", "grants", "ai"):
+    for k in ("enables", "obsoletes", "replaces", "disables", "requires", "grants", "ai"):
         print("  with %-9s: %d" % (k, has(k)))
     print("  with families: %d  | seen: %s"
           % (sum(1 for (o, _) in result.values() if fams(o)),

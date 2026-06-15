@@ -1,0 +1,123 @@
+{
+ "type": "TECH_AUGMENTED_CONSUMABLES",
+ "description": "TXT_KEY_TECH_AUGMENTED_CONSUMABLES",
+ "civilopedia": "TXT_KEY_TECH_AUGMENTED_CONSUMABLES_PEDIA",
+ "quote": "TXT_KEY_TECH_AUGMENTED_CONSUMABLES_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_ORGANIC_COMPUTERS",
+   "BONUS_ULTRAFUEL"
+  ],
+  "buildings": [
+   "BUILDING_CISLUNAR_AGRICULTURAL_LAB",
+   "BUILDING_FACTORY_ORGANIC_COMPUTERS",
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+   "BUILDING_MARTIAN_HYDROPONICS_COMPLEX",
+   "BUILDING_ORGANIC_COMPUTER_LAB",
+   "BUILDING_ULTRAFUEL_REFINERY",
+   "BUILDING_UNIVERSAL_RESTAURANT"
+  ],
+  "civics": [
+   "CIVIC_LAB_GROWN_FOOD"
+  ],
+  "techs": [
+   "TECH_BIOPUNK",
+   "TECH_VERTICAL_FARMING"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CHEESE_SHOP",
+   "BUILDING_CONFECTIONERS_WORKSHOP",
+   "BUILDING_DONKEY_MILL",
+   "BUILDING_OXEN_MILL",
+   "BUILDING_PASTA_MAKERS_SHOP",
+   "BUILDING_RESOURCES_FLOUR",
+   "BUILDING_ROASTING_HOUSE",
+   "BUILDING_SAUSAGE_SHOP",
+   "BUILDING_WATERMILL",
+   "BUILDING_WINDMILL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GENE_ENHANCEMENT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOGENERATORS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_SPACE_COLONY_CISLUNAR": {
+     "flat": 900
+    },
+    "BUILDING_CULINARY_SCHOOL": {
+     "flat": 900
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_COLONY_HYDROPONICS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_BACTERIUM_BIOFORGE": {
+     "flat": 900
+    },
+    "BUILDING_GASTRONOMY_LAB": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 38858
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_AUGMENTED_CONSUMABLES",
+  "soundMP": "AS2D_TECH_AUGMENTED_CONSUMABLES",
+  "icon": "Art/Interface/Buttons/TechTree/augmentconsumables.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 102,
+  "gridY": 9
+ }
+}

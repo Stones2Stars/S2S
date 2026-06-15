@@ -1,0 +1,64 @@
+{
+ "type": "TECH_SEWING",
+ "description": "TXT_KEY_TECH_SEWING",
+ "civilopedia": "TXT_KEY_TECH_SEWING_PEDIA",
+ "quote": "TXT_KEY_TECH_SEWING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CLOTHING"
+  ],
+  "buildings": [
+   "BUILDING_LAUNDRY_HUT",
+   "BUILDING_QUILT_MAKER",
+   "BUILDING_SEAMSTRESS"
+  ],
+  "techs": [
+   "TECH_PERSONAL_ADORNMENTS",
+   "TECH_TRAP_FISHING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PIERCING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRAPPING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 13
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_SEWING",
+  "soundMP": "AS2D_TECH_SEWING",
+  "icon": "Art/Interface/Buttons/TechTree/sewing.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 7,
+  "gridY": 1
+ }
+}

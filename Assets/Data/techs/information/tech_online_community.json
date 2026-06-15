@@ -1,0 +1,99 @@
+{
+ "type": "TECH_ONLINE_COMMUNITY",
+ "description": "TXT_KEY_TECH_ONLINE_COMMUNITY",
+ "civilopedia": "TXT_KEY_TECH_ONLINE_COMMUNITY_PEDIA",
+ "quote": "TXT_KEY_TECH_ONLINE_COMMUNITY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_DIGITAL_LIFESTYLE"
+  ],
+  "buildings": [
+   "BUILDING_CRIME_CYBERBULLYING",
+   "BUILDING_DIGITAL_ADVERTISING_FIRM",
+   "BUILDING_FREELANCE_MARKETPLACE",
+   "BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE",
+   "BUILDING_PEER_TO_PEER_RENTALS",
+   "BUILDING_RIDESHARE",
+   "BUILDING_SOCIAL_NETWORKS",
+   "BUILDING_SPEECH_RECOGNITION_SOFTWARE",
+   "BUILDING_WIKIA",
+   "BUILDING_WIKIPEDIA"
+  ],
+  "techs": [
+   "TECH_DIGITIZATION"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_DANCE_HALL",
+   "BUILDING_GAMBLING_HALL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GASTRONOMY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CLOUD_COMPUTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_EFFECT_GPS": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_CGI_ANIMATION_STUDIO": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 22074
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_ONLINE_COMMUNITY",
+  "soundMP": "AS2D_TECH_ONLINE_COMMUNITY",
+  "icon": "Art/Interface/Buttons/TechTree/mmo2.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 90,
+  "gridY": 13
+ }
+}

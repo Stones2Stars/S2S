@@ -1,0 +1,71 @@
+{
+ "type": "TECH_KARMA",
+ "description": "TXT_KEY_TECH_KARMA",
+ "civilopedia": "TXT_KEY_TECH_KARMA_PEDIA",
+ "quote": "TXT_KEY_TECH_KARMA_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BELIEF_KARMA",
+   "BUILDING_NATIONAL_BELIEF_KARMA"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_INSPECTIONS4"
+  ],
+  "techs": [
+   "TECH_HINDUISM",
+   "TECH_REINCARNATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DUALISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MAGIC",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 309
+ },
+ "ai": {
+  "behaviour": {
+   "weight": 25
+  },
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_KARMA",
+  "soundMP": "AS2D_TECH_KARMA",
+  "icon": "Art/Interface/Buttons/TechTree/karma.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 16,
+  "tradeable": true,
+  "gridX": 30,
+  "gridY": 15
+ }
+}

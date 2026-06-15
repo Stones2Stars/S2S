@@ -1,0 +1,89 @@
+{
+ "type": "TECH_OMEGA_POINT",
+ "description": "TXT_KEY_TECH_OMEGA_POINT",
+ "civilopedia": "TXT_KEY_TECH_OMEGA_POINT_PEDIA",
+ "quote": "TXT_KEY_TECH_OMEGA_POINT_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASCENDED_CITY",
+   "BUILDING_DEEP_SPACE_ASCENDED_PLANET",
+   "BUILDING_HEAVEN",
+   "BUILDING_INTERGALACTIC_ASCENDED_GALAXY",
+   "BUILDING_INTERSTELLAR_ASCENDED_STAR_SYSTEM"
+  ],
+  "techs": [
+   "TECH_FUTURE_TECH"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ANTIMATTER_HARVESTER",
+   "BUILDING_COMPUTRONIUM_MAKER",
+   "BUILDING_FACTORY_GRAVITY_GENERATORS",
+   "BUILDING_FACTORY_SOYLENT_GREEN",
+   "BUILDING_FEMTOBOT_FACTORY",
+   "BUILDING_INTERSTELLAR_NETWORK_NODE",
+   "BUILDING_MEGASTRONG_ALLOY_FOUNDRY",
+   "BUILDING_PERSONAL_SPACECRAFT_FACTORY",
+   "BUILDING_QUANTUM_ASSEMBLER",
+   "BUILDING_SPELLCASTERS_HUT",
+   "BUILDING_VIBRANIUM_MINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MACROVERSE_TRAVERSAL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRANSFINITE_COMPUTATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARCHETYPAL_VECTOR_SPACES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_DISTANT_SPIRIT_WORLD": {
+     "flat": 1300
+    },
+    "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE": {
+     "flat": 2000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 686864
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/omega_point.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 159,
+  "gridY": 11
+ }
+}

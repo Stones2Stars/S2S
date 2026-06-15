@@ -1,0 +1,129 @@
+{
+ "type": "TECH_DIVINE_RIGHT",
+ "description": "TXT_KEY_TECH_DIVINE_RIGHT",
+ "civilopedia": "TXT_KEY_TECH_DIVINE_RIGHT_PEDIA",
+ "quote": "TXT_KEY_TECH_DIVINE_RIGHT_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ALHAMBRA",
+   "BUILDING_CAPUCHIN_CRYPT",
+   "BUILDING_EL_ESCORIAL",
+   "BUILDING_GREAT_MOSQUE_OF_DESERT",
+   "BUILDING_SPIRAL_MINARET",
+   "BUILDING_TEMPLE_OF_HEAVEN",
+   "BUILDING_VERSAILLES"
+  ],
+  "civics": [
+   "CIVIC_DIVINE_RIGHT"
+  ],
+  "techs": [
+   "TECH_CRITICAL_THOUGHT",
+   "TECH_MERCANTILISM"
+  ],
+  "units": [
+   "UNIT_ACALAPUA",
+   "UNIT_BATU_KHAN",
+   "UNIT_CHARLES_V",
+   "UNIT_FANATIC",
+   "UNIT_IDRIS",
+   "UNIT_JOAN_OF_ARC",
+   "UNIT_MINDAUGAS",
+   "UNIT_NAHUAL",
+   "UNIT_NAYLAMP",
+   "UNIT_OSMAN",
+   "UNIT_PEDRO",
+   "UNIT_RAJARAJA_CHOLA",
+   "UNIT_SURIYOTHAI",
+   "UNIT_TUPAC_YUPANQUI"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CHICHEN_ITZA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FUNDAMENTALISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PAPACY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_POLITICAL_PHILOSOPHY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_UNIVERSITY": {
+     "flat": 500
+    }
+   }
+  }
+ },
+ "espionage": {
+  "city": {
+   "buildings": {
+    "BUILDING_GUARDHOUSE": {
+     "flat": 500
+    },
+    "BUILDING_TOWN_PATROL": {
+     "flat": 500
+    }
+   }
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "buildings": {
+    "BUILDING_UNIVERSITY": {
+     "flat": [
+      {
+       "SPECIALIST_PRIEST": 1
+      }
+     ]
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 2701
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_DIVINE_RIGHT",
+  "soundMP": "AS2D_TECH_MP_DIVINE_RIGHT",
+  "icon": ",Art/Interface/Buttons/TechTree/Divine_Right.dds,Art/Interface/Buttons/TechTree_Atlas.dds,1,3"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 53,
+  "gridY": 9
+ }
+}

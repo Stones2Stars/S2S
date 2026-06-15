@@ -1,0 +1,55 @@
+{
+ "type": "TECH_ATHLETICS",
+ "description": "TXT_KEY_TECH_ATHLETICS",
+ "civilopedia": "TXT_KEY_TECH_ATHLETICS_PEDIA",
+ "quote": "TXT_KEY_TECH_ATHLETICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ATHLETIC_FIELDS",
+   "BUILDING_OLYMPIC_GAMES",
+   "BUILDING_PUBLIC_POOL"
+  ],
+  "techs": [
+   "TECH_COMBAT_SPORTS",
+   "TECH_HELLENISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MILITARY_TRAINING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 499
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_ATHLETICS",
+  "soundMP": "AS2D_TECH_ATHLETICS",
+  "icon": ",Art/Interface/Buttons/TechTree/Athletics.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,2"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 10,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 34,
+  "gridY": 7
+ }
+}

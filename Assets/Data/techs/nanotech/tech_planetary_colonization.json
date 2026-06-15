@@ -1,0 +1,73 @@
+{
+ "type": "TECH_PLANETARY_COLONIZATION",
+ "description": "TXT_KEY_TECH_PLANETARY_COLONIZATION",
+ "civilopedia": "TXT_KEY_TECH_PLANETARY_COLONIZATION_PEDIA",
+ "quote": "TXT_KEY_TECH_PLANETARY_COLONIZATION_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_MARTIAN_VEGETABLES"
+  ],
+  "buildings": [
+   "BUILDING_MARTIAN_CAVE_DWELLING",
+   "BUILDING_MARTIAN_COMMUNICATION_BEACON",
+   "BUILDING_MARTIAN_HYDROPONICS_ARRAY",
+   "BUILDING_MARTIAN_SOLAR_ARRAY",
+   "BUILDING_SPACE_COLONY_MARTIAN",
+   "BUILDING_SPACE_COLONY_VENUS",
+   "BUILDING_VENUS_SOLAR_ARRAY"
+  ],
+  "techs": [
+   "TECH_PLANETARY_EXTRACTION",
+   "TECH_PLANETARY_TRADE"
+  ],
+  "units": [
+   "UNIT_PLANETARYSETTLER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LUNAR_COLONIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 38858
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_PLANETARY_COLONIZATION",
+  "soundMP": "AS2D_TECH_PLANETARY_COLONIZATION",
+  "icon": "Art/Interface/Buttons/TechTree/planetarycolonization.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 102,
+  "gridY": 5
+ }
+}

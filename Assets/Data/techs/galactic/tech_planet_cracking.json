@@ -1,0 +1,70 @@
+{
+ "type": "TECH_PLANET_CRACKING",
+ "description": "TXT_KEY_TECH_PLANET_CRACKING",
+ "civilopedia": "TXT_KEY_TECH_PLANET_CRACKING_PEDIA",
+ "quote": "TXT_KEY_TECH_PLANET_CRACKING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_ASTEROID_MINING_SYSTEM",
+   "BUILDING_INTERSTELLAR_COMET_DUST_COLLECTION",
+   "BUILDING_INTERSTELLAR_DYSON_SWARM",
+   "BUILDING_NEPTUNE_ORBITAL_RING",
+   "BUILDING_NEPTUNE_VOLATILE_MINE",
+   "BUILDING_OORT_CLOUD_COMET_DISASSEMBLY"
+  ],
+  "techs": [
+   "TECH_ADAPTIVE_ARCHITECTURE",
+   "TECH_FORGE_WORLDS",
+   "TECH_GRAVITY_CONTROL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NANOMORPHIC_TROIDS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WEAPONIZED_DISINTEGRATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INTERSTELLAR_COLONIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_ASTEROID_EPITAXY_FACTORY": {
+     "flat": 1100
+    },
+    "BUILDING_IO_GEOTHERMAL_POWER_PLANT": {
+     "flat": 1100
+    },
+    "BUILDING_KUIPER_BELT_INTERSTELLAR_SUPPLY_BASE": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 154284
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/exomining.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 130,
+  "gridY": 11
+ }
+}

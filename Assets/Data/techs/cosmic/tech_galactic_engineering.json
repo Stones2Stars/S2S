@@ -1,0 +1,85 @@
+{
+ "type": "TECH_GALACTIC_ENGINEERING",
+ "description": "TXT_KEY_TECH_GALACTIC_ENGINEERING",
+ "civilopedia": "TXT_KEY_TECH_GALACTIC_ENGINEERING_PEDIA",
+ "quote": "TXT_KEY_TECH_GALACTIC_ENGINEERING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARGUS_ARRAY",
+   "BUILDING_GALACTIC_CORE_DYSON_SPHERE",
+   "BUILDING_INTERGALACTIC_CORE_DYSON_SPHERE",
+   "BUILDING_INTERGALACTIC_DYSON_SPHERES",
+   "BUILDING_INTERGALACTIC_ROMAN_RING",
+   "BUILDING_INTERGALACTIC_SUPERMASSIVE_BLACK_HOLE_PLANT",
+   "BUILDING_INTERSTELLAR_STAR_ROAD",
+   "BUILDING_WORMHOLE_NETWORK"
+  ],
+  "techs": [
+   "TECH_COMPUTRONIUM_UNIVERSE",
+   "TECH_GALACTIFORMING",
+   "TECH_INTERGALACTIC_EMPIRE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FEMTOTECHNOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_APPLIED_RELATIVITY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INTERGALACTIC_COLONIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_TRANSTELLAR_ALDERSON_DISK": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_TRANSTELLAR_ALDERSON_DISK": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 281279
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/galactic_engineering.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 140,
+  "gridY": 17
+ }
+}

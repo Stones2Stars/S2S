@@ -1,0 +1,82 @@
+{
+ "type": "TECH_ANIMATION",
+ "description": "TXT_KEY_TECH_ANIMATION",
+ "civilopedia": "TXT_KEY_TECH_ANIMATION_PEDIA",
+ "quote": "TXT_KEY_TECH_ANIMATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMATION_STUDIO",
+   "BUILDING_ANIMATRONICS_WORKSHOP",
+   "BUILDING_DISNEYLAND",
+   "BUILDING_EFFECT_DISNEYLAND",
+   "BUILDING_VIDEO_GAME_ARCADE"
+  ],
+  "techs": [
+   "TECH_POP_ART"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MOTION_PICTURES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_MOVIE_THEATRE": {
+     "flat": 600
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_ART_GALLERY": {
+     "flat": 700
+    },
+    "BUILDING_MOVIE_THEATRE": {
+     "flat": 600
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 7718
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_CULTURE": 9
+   },
+   {
+    "FLAVOR_RELIGION": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_ANIMATION",
+  "soundMP": "AS2D_TECH_ANIMATION",
+  "icon": "Art/Interface/Buttons/TechTree/animation.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 70,
+  "gridY": 3
+ }
+}

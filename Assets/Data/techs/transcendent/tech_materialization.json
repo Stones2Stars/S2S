@@ -1,0 +1,86 @@
+{
+ "type": "TECH_MATERIALIZATION",
+ "description": "TXT_KEY_TECH_MATERIALIZATION",
+ "civilopedia": "TXT_KEY_TECH_MATERIALIZATION_PEDIA",
+ "quote": "TXT_KEY_TECH_MATERIALIZATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_ZERO_POINT_FACTORIES",
+   "BUILDING_INTERSTELLAR_MATTER_GENERATOR",
+   "BUILDING_MATERIALIZATION_COMPLEX",
+   "BUILDING_MATERIALIZER",
+   "BUILDING_ZERO_POINT_MAKER"
+  ],
+  "civics": [
+   "CIVIC_DEMATERIALIZED"
+  ],
+  "techs": [
+   "TECH_COSMIC_GOVERNANCE",
+   "TECH_HYPERINTELLIGENCE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ATOMIC_ASSEMBLER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MENSIOKINESIS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HORIZON_BREAKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRANSDIMENSIONAL_COMMERCE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_TRANSTELLAR_DARK_MATTER_HEAT_SOURCE": {
+     "flat": 1300
+    },
+    "BUILDING_INTERSTELLAR_ZERO_POINT_POWER": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 528012
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/materialization.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 151,
+  "gridY": 11
+ }
+}

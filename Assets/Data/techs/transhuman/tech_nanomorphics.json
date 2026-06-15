@@ -1,0 +1,85 @@
+{
+ "type": "TECH_NANOMORPHICS",
+ "description": "TXT_KEY_TECH_NANOMORPHICS",
+ "civilopedia": "TXT_KEY_TECH_NANOMORPHICS_PEDIA",
+ "quote": "TXT_KEY_TECH_NANOMORPHICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_CLOAKING",
+   "BUILDING_DEEP_SPACE_PRISON",
+   "BUILDING_DEEP_SPACE_SIMULATED_WORLD"
+  ],
+  "projects": [
+   "PROJECT_SS_DOCKING_BAY"
+  ],
+  "promotions": [
+   "PROMOTION_HEAL3"
+  ],
+  "techs": [
+   "TECH_MOLECULAR_SCANNING",
+   "TECH_NANOSHIELDING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BINARY_PSYCHOKINESIS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TERRA_COMPUTER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_URBAN_PSYCHIC_INTEGRATION": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_HIDE_AND_SEEK": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 80635
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 9
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/Buttons/Techs/TechNanomorphics.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 50,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 118,
+  "gridY": 7
+ }
+}

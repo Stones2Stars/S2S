@@ -1,0 +1,88 @@
+{
+ "type": "TECH_CYBERSOCIAL_INTEGRATION",
+ "description": "TXT_KEY_TECH_CYBERSOCIAL_INTEGRATION",
+ "civilopedia": "TXT_KEY_TECH_CYBERSOCIAL_INTEGRATION_PEDIA",
+ "quote": "TXT_KEY_TECH_CYBERSOCIAL_INTEGRATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANDROID_PARENTS",
+   "BUILDING_FUTARCHY_MARKET",
+   "BUILDING_SOCIABLE_ROBOTS",
+   "BUILDING_VIRTUAL_ECONOMY"
+  ],
+  "civics": [
+   "CIVIC_VIRTUAL_CITIZENSHIP"
+  ],
+  "techs": [
+   "TECH_TRANSHUMAN_LIFESTYLE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AUCTION_HOUSE",
+   "BUILDING_CREDIT_UNION",
+   "BUILDING_INSURANCE_OFFICE",
+   "BUILDING_LOAN_SHARK",
+   "BUILDING_LOAN_SHARK_UNSANCTIONED"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_QUANTUM_COMPUTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_UNIVERSAL_TRANSLATOR",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_APPLIED_SOCIOLOGY_LAB": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 49574
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_CYBERSOCIAL_INTEGRATION",
+  "soundMP": "AS2D_TECH_CYBERSOCIAL_INTEGRATION",
+  "icon": "Art/Interface/Buttons/TechTree/cybersociology.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 109,
+  "gridY": 5
+ }
+}

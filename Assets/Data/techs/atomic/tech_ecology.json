@@ -1,0 +1,378 @@
+{
+ "type": "TECH_ECOLOGY",
+ "description": "TXT_KEY_TECH_ECOLOGY",
+ "civilopedia": "TXT_KEY_TECH_ECOLOGY_PEDIA",
+ "quote": "TXT_KEY_TECH_ECOLOGY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BREEDING_PROGRAM_ANTELOPE",
+   "BUILDING_BREEDING_PROGRAM_BEAVER",
+   "BUILDING_BREEDING_PROGRAM_BELUGA",
+   "BUILDING_BREEDING_PROGRAM_BISON",
+   "BUILDING_BREEDING_PROGRAM_BOAR",
+   "BUILDING_BREEDING_PROGRAM_CARIBOU",
+   "BUILDING_BREEDING_PROGRAM_CHINCHILLA",
+   "BUILDING_BREEDING_PROGRAM_DEER",
+   "BUILDING_BREEDING_PROGRAM_ELEPHANT",
+   "BUILDING_BREEDING_PROGRAM_ELEPHANT_SEAL",
+   "BUILDING_BREEDING_PROGRAM_EMU",
+   "BUILDING_BREEDING_PROGRAM_FOX",
+   "BUILDING_BREEDING_PROGRAM_GIRAFFE",
+   "BUILDING_BREEDING_PROGRAM_HIPPO",
+   "BUILDING_BREEDING_PROGRAM_KANGAROO",
+   "BUILDING_BREEDING_PROGRAM_MAMMOTH",
+   "BUILDING_BREEDING_PROGRAM_MINK",
+   "BUILDING_BREEDING_PROGRAM_MOOSE",
+   "BUILDING_BREEDING_PROGRAM_MOUFLON",
+   "BUILDING_BREEDING_PROGRAM_MUSKOX",
+   "BUILDING_BREEDING_PROGRAM_NARWHAL",
+   "BUILDING_BREEDING_PROGRAM_OSTRICH",
+   "BUILDING_BREEDING_PROGRAM_RABBIT",
+   "BUILDING_BREEDING_PROGRAM_RACCOON",
+   "BUILDING_BREEDING_PROGRAM_RHEA",
+   "BUILDING_BREEDING_PROGRAM_RHINO",
+   "BUILDING_BREEDING_PROGRAM_SEAL",
+   "BUILDING_BREEDING_PROGRAM_SEA_OTTER",
+   "BUILDING_BREEDING_PROGRAM_WALRUS",
+   "BUILDING_BREEDING_PROGRAM_ZEBRA",
+   "BUILDING_COMPOST_DUMP",
+   "BUILDING_CRIME_ANIMAL_ABUSE",
+   "BUILDING_CRIME_ENVIRONMENTAL_DUMPING",
+   "BUILDING_GREEN_BELTS",
+   "BUILDING_MONTREAL_BIODOME",
+   "BUILDING_ORDINANCE_AUTOMOBILE_EMISSION_REDUCTION_ACT",
+   "BUILDING_ORDINANCE_CLEAN_AIR_ACT",
+   "BUILDING_ORDINANCE_CLEAN_WATER_ACT",
+   "BUILDING_ORDINANCE_EFFECT_AUTOMOBILE_EMISSION_REDUCTION_ACT",
+   "BUILDING_ORDINANCE_EFFECT_CLEAN_AIR_ACT",
+   "BUILDING_ORDINANCE_EFFECT_CLEAN_WATER_ACT",
+   "BUILDING_RAIN_GARDEN",
+   "BUILDING_SOLAR_PHOTOVOLTAIC_ROOFS",
+   "BUILDING_WORLD_WIDE_FUND_FOR_NATURE"
+  ],
+  "builds": [
+   "BUILD_GROW_FOREST",
+   "BUILD_MODERN_WINDMILL",
+   "BUILD_PLANT_BAMBOO",
+   "BUILD_PLANT_JUNGLE",
+   "BUILD_PLANT_SAVANNA",
+   "BUILD_SCRUB_FALLOUT",
+   "BUILD_SEA_MILL",
+   "BUILD_TIDAL_HARNESS",
+   "BUILD_TREEFARM"
+  ],
+  "civics": [
+   "CIVIC_GREEN",
+   "CIVIC_ORGANIC_FARMING"
+  ],
+  "improvements": [
+   "IMPROVEMENT_GROW_FOREST",
+   "IMPROVEMENT_MODERN_WINDMILL",
+   "IMPROVEMENT_PLANT_BAMBOO",
+   "IMPROVEMENT_PLANT_JUNGLE",
+   "IMPROVEMENT_PLANT_SAVANNA",
+   "IMPROVEMENT_SEA_MILL",
+   "IMPROVEMENT_TIDAL_HARNESS",
+   "IMPROVEMENT_TREEFARM"
+  ],
+  "techs": [
+   "TECH_CLIMATE_MODELS",
+   "TECH_HYDROPONICS",
+   "TECH_RECYCLING"
+  ],
+  "units": [
+   "UNIT_ECOLOGIST"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CASTLE_GARDEN",
+   "BUILDING_FOUNTAIN",
+   "BUILDING_ROCK_GARDEN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WILDLIFE_CONSERVATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TOURISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_LAKE_BAIKAL": {
+     "flat": -500
+    },
+    "BUILDING_WONDER_OF_NATURE_GREAT_BARRIER_REEF": {
+     "flat": -500
+    },
+    "BUILDING_WONDER_OF_NATURE_NGORONGORO_CRATER": {
+     "flat": -500
+    },
+    "BUILDING_WONDER_OF_NATURE_NUKUORO": {
+     "flat": -600
+    },
+    "BUILDING_WONDER_OF_NATURE_SHARK_BAY": {
+     "flat": -500
+    }
+   }
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_NGORONGORO_CRATER": {
+     "flat": -300
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_GREAT_BARRIER_REEF": {
+     "flat": -200
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_WILDLIFE_SANCTUARY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_NATURE_PRESERVE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FOREST_PRESERVE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_BIOLOGY_LAB": {
+     "flat": 700
+    },
+    "BUILDING_ENTOMOLOGY_LAB": {
+     "flat": 700
+    },
+    "BUILDING_HERPETOLOGY_LAB": {
+     "flat": 700
+    },
+    "BUILDING_MICROBIOLOGY_LAB": {
+     "flat": 700
+    },
+    "BUILDING_WONDER_OF_NATURE_LAKE_BAIKAL": {
+     "flat": 1000
+    },
+    "BUILDING_WONDER_OF_NATURE_GREAT_BARRIER_REEF": {
+     "flat": 1000
+    },
+    "BUILDING_WONDER_OF_NATURE_NGORONGORO_CRATER": {
+     "flat": 700
+    },
+    "BUILDING_ORNITHOLOGY_LAB": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "buildings": {
+    "BUILDING_CAMP_ANTELOPE": {
+     "flat": -1
+    },
+    "BUILDING_TRAP_BEAVER": {
+     "flat": -1
+    },
+    "BUILDING_CAMP_BELUGA": {
+     "flat": -1
+    },
+    "BUILDING_CATCHER_BIRDS_OF_PARADISE": {
+     "flat": -1
+    },
+    "BUILDING_CAMP_BISON": {
+     "flat": -1
+    },
+    "BUILDING_CAMP_BOAR": {
+     "flat": -1
+    },
+    "BUILDING_CATCHER_CANARY": {
+     "flat": -1
+    },
+    "BUILDING_CAMP_CARIBOU": {
+     "flat": -1
+    },
+    "BUILDING_TRAP_CHINCHILLA": {
+     "flat": -1
+    },
+    "BUILDING_CATCHER_COCKATOO": {
+     "flat": -1
+    },
+    "BUILDING_CAMP_DEER": {
+     "flat": -1
+    },
+    "BUILDING_CAMP_ELEPHANT_SEAL": {
+     "flat": -1
+    },
+    "BUILDING_CAMP_ELEPHANT": {
+     "flat": -1
+    },
+    "BUILDING_CAMP_EMU": {
+     "flat": -1
+    },
+    "BUILDING_TRAP_FOX": {
+     "flat": -1
+    },
+    "BUILDING_CAMP_GIRAFFE": {
+     "flat": -1
+    },
+    "BUILDING_CAMP_HIPPO": {
+     "flat": -1
+    },
+    "BUILDING_CATCHER_HUMMINGBIRD": {
+     "flat": -1
+    },
+    "BUILDING_CATCHER_JUNGLEFOWL": {
+     "flat": -1
+    },
+    "BUILDING_CAMP_KANGAROO": {
+     "flat": -1
+    },
+    "BUILDING_LIZARD_HUNTERS_CAMP": {
+     "flat": -1
+    },
+    "BUILDING_CATCHER_LYREBIRD": {
+     "flat": -1
+    },
+    "BUILDING_CATCHER_MACAW": {
+     "flat": -1
+    },
+    "BUILDING_TRAP_MINK": {
+     "flat": -1
+    },
+    "BUILDING_CAMP_MOOSE": {
+     "flat": -1
+    },
+    "BUILDING_CAMP_MOUFLON": {
+     "flat": -1
+    },
+    "BUILDING_CAMP_MUSKOX": {
+     "flat": -1
+    },
+    "BUILDING_CAMP_NARWHAL": {
+     "flat": -1
+    },
+    "BUILDING_WONDER_OF_NATURE_NGORONGORO_CRATER": {
+     "flat": 3
+    },
+    "BUILDING_WONDER_OF_NATURE_SHARK_BAY": {
+     "flat": 2
+    },
+    "BUILDING_CAMP_OSTRICH": {
+     "flat": -1
+    },
+    "BUILDING_TRAP_SEA_OTTER": {
+     "flat": -1
+    },
+    "BUILDING_CATCHER_PARAKEET": {
+     "flat": -1
+    },
+    "BUILDING_CATCHER_PARROT": {
+     "flat": -1
+    },
+    "BUILDING_CATCHER_PEACOCK": {
+     "flat": -1
+    },
+    "BUILDING_CATCHER_QUETZAL": {
+     "flat": -1
+    },
+    "BUILDING_TRAP_RABBIT": {
+     "flat": -1
+    },
+    "BUILDING_TRAP_RACCOON": {
+     "flat": -1
+    },
+    "BUILDING_CAMP_RHEA": {
+     "flat": -1
+    },
+    "BUILDING_CAMP_RHINO": {
+     "flat": -1
+    },
+    "BUILDING_CAMP_SEAL": {
+     "flat": -1
+    },
+    "BUILDING_SPONGE_GATHERER": {
+     "flat": -1
+    },
+    "BUILDING_CATCHER_TOUCAN": {
+     "flat": -1
+    },
+    "BUILDING_CAMP_WALRUS": {
+     "flat": -1
+    },
+    "BUILDING_CAMP_ZEBRA": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "buildings": {
+    "BUILDING_LANDFILL": {
+     "flat": 1
+    },
+    "BUILDING_MARINA": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 13181
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   },
+   {
+    "FLAVOR_GOLD": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_ECOLOGY",
+  "soundMP": "AS2D_TECH_MP_ECOLOGY",
+  "icon": ",Art/Interface/Buttons/TechTree/Ecology2.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,1,6"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 80,
+  "gridY": 5
+ }
+}

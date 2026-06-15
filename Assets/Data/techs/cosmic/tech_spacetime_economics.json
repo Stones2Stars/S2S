@@ -1,0 +1,66 @@
+{
+ "type": "TECH_SPACETIME_ECONOMICS",
+ "description": "TXT_KEY_TECH_SPACETIME_ECONOMICS",
+ "civilopedia": "TXT_KEY_TECH_SPACETIME_ECONOMICS_PEDIA",
+ "quote": "TXT_KEY_TECH_SPACETIME_ECONOMICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_COMMERCIAL_DISTRICT",
+   "BUILDING_INTERGALACTIC_LOGISTICS_CENTER",
+   "BUILDING_INTERTEMPORAL_STOCK_MARKET"
+  ],
+  "techs": [
+   "TECH_CONTROLLED_INFLATION",
+   "TECH_TACHYON_COMMUNICATIONS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEGAWORMHOLES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COMPACT_WORMHOLES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 352130
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/spacetime_economics.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 146,
+  "gridY": 19
+ }
+}

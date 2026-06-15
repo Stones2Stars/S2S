@@ -1,0 +1,77 @@
+{
+ "type": "TECH_MONOTHEISM",
+ "description": "TXT_KEY_TECH_MONOTHEISM",
+ "civilopedia": "TXT_KEY_TECH_MONOTHEISM_PEDIA",
+ "quote": "TXT_KEY_TECH_MONOTHEISM_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_ISRAELI",
+   "BUILDING_MASADA",
+   "BUILDING_PERGAMON_ALTAR"
+  ],
+  "civics": [
+   "CIVIC_STATE_CHURCH"
+  ],
+  "techs": [
+   "TECH_MONARCHY",
+   "TECH_SCRIPTURES",
+   "TECH_ZOROASTRIANISM"
+  ],
+  "units": [
+   "UNIT_MACCABEUS",
+   "UNIT_SOLOMON"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SACRIFICE_CULT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WRITING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_DEAD_SEA": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 274
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_MONOTHEISM",
+  "soundMP": "AS2D_TECH_MP_MONOTHEISM",
+  "icon": ",Art/Interface/Buttons/TechTree/Monotheism.dds,Art/Interface/Buttons/TechTree_Atlas.dds,2,11"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "gridX": 29,
+  "gridY": 11
+ }
+}

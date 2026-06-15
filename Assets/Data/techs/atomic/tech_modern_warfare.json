@@ -1,0 +1,81 @@
+{
+ "type": "TECH_MODERN_WARFARE",
+ "description": "TXT_KEY_TECH_MODERN_WARFARE",
+ "civilopedia": "TXT_KEY_TECH_MODERN_WARFARE_PEDIA",
+ "quote": "TXT_KEY_TECH_MODERN_WARFARE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_MILITARY_SURPLUS_STORE"
+  ],
+  "techs": [
+   "TECH_GUIDED_WEAPONS"
+  ],
+  "units": [
+   "UNIT_AH64_GUNSHIP",
+   "UNIT_HYDROGEN",
+   "UNIT_MASTER_SAILOR_NUCLEAR_CARRIER",
+   "UNIT_MODERN_HOVERCRAFT",
+   "UNIT_MODERN_MEDIVAC",
+   "UNIT_MODERN_PARATROOPER",
+   "UNIT_NUCLEAR_CARRIER",
+   "UNIT_ROYAL_SPECIAL_FORCES"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_CLOCKWORK_GOLEM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GUERRILLA_WARFARE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AMPHIBIOUS_WARFARE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DEEP_SEA_EXPLORATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SUPERSONIC_FLIGHT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 14287
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_MODERN_WARFARE",
+  "soundMP": "AS2D_TECH_MODERN_WARFARE",
+  "icon": ",Art/Interface/Buttons/TechTree/ModernWarfare.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,1,12"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 82,
+  "gridY": 9
+ }
+}

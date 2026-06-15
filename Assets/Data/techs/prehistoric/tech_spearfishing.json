@@ -1,0 +1,95 @@
+{
+ "type": "TECH_SPEARFISHING",
+ "description": "TXT_KEY_TECH_SPEARFISHING",
+ "civilopedia": "TXT_KEY_TECH_SPEARFISHING_PEDIA",
+ "quote": "TXT_KEY_TECH_SPEARFISHING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_SPEARFISHER"
+  ],
+  "promotions": [
+   "PROMOTION_SEA_HUNTER2"
+  ],
+  "techs": [
+   "TECH_BOAT_BUILDING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RAFT_BUILDING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SPEAR_MAKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_FISHERMANS_HUT": {
+     "flat": 100
+    },
+    "BUILDING_WONDER_OF_NATURE_LAKE_BAIKAL": {
+     "flat": 300
+    },
+    "BUILDING_WONDER_OF_NATURE_GREAT_BARRIER_REEF": {
+     "flat": 300
+    },
+    "BUILDING_WONDER_OF_NATURE_VICTORIA_FALLS": {
+     "flat": 200
+    },
+    "BUILDING_TIDEPOOL_SCAVENGER": {
+     "flat": 100
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_GREAT_BARRIER_REEF": {
+     "flat": 200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 30
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 9
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_SPEARFISHING",
+  "soundMP": "AS2D_TECH_SPEARFISHING",
+  "icon": "Art/Interface/Buttons/TechTree/Spearfishing.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 13,
+  "gridY": 1
+ }
+}

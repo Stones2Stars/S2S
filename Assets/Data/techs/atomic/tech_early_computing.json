@@ -1,0 +1,72 @@
+{
+ "type": "TECH_EARLY_COMPUTING",
+ "description": "TXT_KEY_TECH_EARLY_COMPUTING",
+ "civilopedia": "TXT_KEY_TECH_EARLY_COMPUTING_PEDIA",
+ "quote": "TXT_KEY_TECH_EARLY_COMPUTING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_HQ_MAPSTER",
+   "BUILDING_SETI_PROGRAM",
+   "BUILDING_ZUSE_COMPUTER"
+  ],
+  "techs": [
+   "TECH_ADVANCED_ROCKETRY",
+   "TECH_COMPUTER_SCIENCE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DECRYPTION_MACHINES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ELECTRONICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_BELL_LABS": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 11196
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_EARLY_COMPUTING",
+  "soundMP": "AS2D_TECH_EARLY_COMPUTING",
+  "icon": "Art/Buttons/Techs/TechEarlyComputing.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 76,
+  "gridY": 19
+ }
+}

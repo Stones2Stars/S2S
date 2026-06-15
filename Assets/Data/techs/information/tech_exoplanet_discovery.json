@@ -1,0 +1,71 @@
+{
+ "type": "TECH_EXOPLANET_DISCOVERY",
+ "description": "TXT_KEY_TECH_EXOPLANET_DISCOVERY",
+ "civilopedia": "TXT_KEY_TECH_EXOPLANET_DISCOVERY_PEDIA",
+ "quote": "TXT_KEY_TECH_EXOPLANET_DISCOVERY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTRONOMICAL_DATABASE",
+   "BUILDING_EUROPEAN_EXTREMELY_LARGE_TELESCOPE",
+   "BUILDING_JAMES_WEBB_SPACE_TELESCOPE",
+   "BUILDING_KEPLER_SPACE_TELESCOPE"
+  ],
+  "techs": [
+   "TECH_ASTEROID_BELT_PROBES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_EXPLORATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_AMUNDSEN_SCOTT_SOUTH_POLE_STATION": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 20610
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_EXOPLANET_DISCOVERY",
+  "soundMP": "AS2D_TECH_EXOPLANET_DISCOVERY",
+  "icon": "Art/Interface/Buttons/TechTree/Exoplanetdiscovery.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 88,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,94 @@
+{
+ "type": "TECH_HARPOON_MAKING",
+ "description": "TXT_KEY_TECH_HARPOON_MAKING",
+ "civilopedia": "TXT_KEY_TECH_HARPOON_MAKING_PEDIA",
+ "quote": "TXT_KEY_TECH_HARPOON_MAKING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_WHALE"
+  ],
+  "buildings": [
+   "BUILDING_CAMP_BELUGA",
+   "BUILDING_CAMP_ELEPHANT_SEAL",
+   "BUILDING_CAMP_SEAL",
+   "BUILDING_CAMP_WALRUS",
+   "BUILDING_CULTURE_HAIDA",
+   "BUILDING_CULTURE_INUIT",
+   "BUILDING_WHALE_SHRINE"
+  ],
+  "builds": [
+   "BUILD_WHALING_BOATS"
+  ],
+  "improvements": [
+   "IMPROVEMENT_WHALING_BOATS"
+  ],
+  "promotions": [
+   "PROMOTION_SEA_HUNTER3"
+  ],
+  "techs": [
+   "TECH_NAVAL_WARFARE"
+  ],
+  "units": [
+   "UNIT_HAIDA_WAR_CANOE",
+   "UNIT_INUIT_HARPOONER",
+   "UNIT_NEANDERTHAL_WAR_CANOE",
+   "UNIT_WAR_CANOE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FISHING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_FISHERMANS_HUT": {
+     "flat": 100
+    },
+    "BUILDING_SPEARFISHER": {
+     "flat": 200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 60
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 9
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_HARPOON_MAKING",
+  "soundMP": "AS2D_TECH_HARPOON_MAKING",
+  "icon": "Art/Interface/Buttons/TechTree/harpoonmaking.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 18,
+  "gridY": 1
+ }
+}

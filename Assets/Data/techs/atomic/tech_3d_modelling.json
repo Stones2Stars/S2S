@@ -1,0 +1,102 @@
+{
+ "type": "TECH_3D_MODELLING",
+ "description": "TXT_KEY_TECH_3D_MODELLING",
+ "civilopedia": "TXT_KEY_TECH_3D_MODELLING_PEDIA",
+ "quote": "TXT_KEY_TECH_3D_MODELLING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAD_STUDIO",
+   "BUILDING_CGI_ANIMATION_STUDIO"
+  ],
+  "techs": [
+   "TECH_3D_PRINTING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MICROPROCESSOR",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_ANIMATION_STUDIO": {
+     "flat": 700
+    },
+    "BUILDING_FACTORY_FURNITURE": {
+     "flat": 700
+    },
+    "BUILDING_MOVIE_THEATRE": {
+     "flat": 700
+    },
+    "BUILDING_VIDEO_GAME_ARCADE": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_INVENTORS_WORKSHOP": {
+     "flat": 700
+    },
+    "BUILDING_PROTEIN_LAB": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_ANIMATION_STUDIO": {
+     "flat": 700
+    },
+    "BUILDING_ART_GALLERY": {
+     "flat": 700
+    },
+    "BUILDING_MOVIE_THEATRE": {
+     "flat": 700
+    },
+    "BUILDING_VIDEO_GAME_ARCADE": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 15474
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_GOLD": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_3D_MODELLING",
+  "soundMP": "AS2D_TECH_3D_MODELLING",
+  "icon": ",Art/Interface/Buttons/TechTree/3d_modeling.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,1,1"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 84,
+  "gridY": 19
+ }
+}

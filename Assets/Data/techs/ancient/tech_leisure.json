@@ -1,0 +1,80 @@
+{
+ "type": "TECH_LEISURE",
+ "description": "TXT_KEY_TECH_LEISURE",
+ "civilopedia": "TXT_KEY_TECH_LEISURE_PEDIA",
+ "quote": "TXT_KEY_TECH_LEISURE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_PAVILION"
+  ],
+  "techs": [
+   "TECH_FURNITURE_MAKING",
+   "TECH_SHINTO",
+   "TECH_SPECIALIZATION",
+   "TECH_SUNDIAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_OIL_LAMPS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TEXTILE_LOOM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SCULPTURE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "buildings": {
+    "BUILDING_STABLE": {
+     "flat": 1
+    },
+    "BUILDING_ANCIENT_CUSTOMS": {
+     "flat": 1
+    },
+    "BUILDING_FISHERMANS_HUT": {
+     "flat": 1
+    },
+    "BUILDING_HUNTERS_CAMP": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 213
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_LEISURE",
+  "soundMP": "AS2D_TECH_LEISURE",
+  "icon": "Art/Interface/Buttons/TechTree/leisure.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 27,
+  "gridY": 9
+ }
+}

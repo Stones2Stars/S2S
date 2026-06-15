@@ -1,0 +1,113 @@
+{
+ "type": "TECH_CONSUMERISM",
+ "description": "TXT_KEY_TECH_CONSUMERISM",
+ "civilopedia": "TXT_KEY_TECH_CONSUMERISM_PEDIA",
+ "quote": "TXT_KEY_TECH_CONSUMERISM_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_APPLIANCE_STORE",
+   "BUILDING_DEPARTMENT_STORE",
+   "BUILDING_DISCOUNT_STORE",
+   "BUILDING_MADISON_AVENUE",
+   "BUILDING_MALL",
+   "BUILDING_PAWN_SHOP",
+   "BUILDING_SHOPPING_DISTRICT",
+   "BUILDING_SUPERMARKET"
+  ],
+  "techs": [
+   "TECH_APPLIED_ECONOMICS",
+   "TECH_MASS_MEDIA",
+   "TECH_MODERN_ART"
+  ],
+  "units": [
+   "UNIT_ROBBER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BARTER_POST"
+  ],
+  "units": [
+   "UNIT_MOBSTER_CAR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PROPAGANDA",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_CHARCOAL_BURNER": {
+     "flat": 700
+    },
+    "BUILDING_MAIL_ORDER_CATALOGUE": {
+     "flat": 700
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_SUBURBS": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FACTORY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_CRIME_SHOPLIFTING": {
+     "flat": -300
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
+     "percent": -5
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 10309
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 3
+   },
+   {
+    "FLAVOR_GOLD": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_CONSUMERISM",
+  "soundMP": "AS2D_TECH_CONSUMERISM",
+  "icon": "Art/Interface/Buttons/TechTree/consumerism.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 74,
+  "gridY": 7
+ }
+}

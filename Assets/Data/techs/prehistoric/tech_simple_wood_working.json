@@ -1,0 +1,81 @@
+{
+ "type": "TECH_SIMPLE_WOOD_WORKING",
+ "description": "TXT_KEY_TECH_SIMPLE_WOOD_WORKING",
+ "civilopedia": "TXT_KEY_TECH_SIMPLE_WOOD_WORKING_PEDIA",
+ "quote": "TXT_KEY_TECH_SIMPLE_WOOD_WORKING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_LACQUERWARE",
+   "BONUS_WOODWIND_INSTRUMENTS"
+  ],
+  "buildings": [
+   "BUILDING_ABATIS",
+   "BUILDING_DINING_HALL",
+   "BUILDING_LACQUERWARE_MAKER",
+   "BUILDING_MAPINGUARI_COMPOUND",
+   "BUILDING_PRIME_TIMBER_CAMP",
+   "BUILDING_SMOKEHOUSE",
+   "BUILDING_SNAKE_CHARMER",
+   "BUILDING_WOODWIND_INSTRUMENT_MAKER"
+  ],
+  "builds": [
+   "BUILD_WOOD_GATHERER_KILL"
+  ],
+  "improvements": [
+   "IMPROVEMENT_WOOD_GATHERER"
+  ],
+  "techs": [
+   "TECH_AXE_MAKING",
+   "TECH_FIRE_MAKING",
+   "TECH_RAFT_BUILDING"
+  ],
+  "units": [
+   "UNIT_BOOMERANG_THROWER",
+   "UNIT_MAPINGUARI_WOODEN",
+   "UNIT_NEANDERTHAL_WOODEN_SPEARMAN",
+   "UNIT_WOODEN_SPEARMAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BARK_WORKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CARVING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 17
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_SIMPLE_WOOD_WORKING",
+  "soundMP": "AS2D_TECH_SIMPLE_WOOD_WORKING",
+  "icon": "Art/Interface/Buttons/TechTree/simplewoodworking.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 2,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 9,
+  "gridY": 7
+ }
+}

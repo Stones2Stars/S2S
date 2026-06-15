@@ -1,0 +1,67 @@
+{
+ "type": "TECH_TRANSFINITE_COMPUTATION",
+ "description": "TXT_KEY_TECH_TRANSFINITE_COMPUTATION",
+ "civilopedia": "TXT_KEY_TECH_TRANSFINITE_COMPUTATION_PEDIA",
+ "quote": "TXT_KEY_TECH_TRANSFINITE_COMPUTATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_HYPERCOMPUTRONIUM_STRUCTURES",
+   "BUILDING_HYPERSPACE_TRANSFINITE_SUPERCOMPUTER",
+   "BUILDING_LIBRARY_OF_BABEL",
+   "BUILDING_TRANSFINITE_ORACLE"
+  ],
+  "techs": [
+   "TECH_ALPHA_POINT",
+   "TECH_OMEGA_POINT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SUBDIMENSIONAL_UNIVERSE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRANSFINITE_STRUCTURES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_HYPERPLANET": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 664224
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/transfinite_computation.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 158,
+  "gridY": 19
+ }
+}

@@ -1,0 +1,100 @@
+{
+ "type": "TECH_SHELTER_BUILDING",
+ "description": "TXT_KEY_TECH_SHELTER_BUILDING",
+ "civilopedia": "TXT_KEY_TECH_SHELTER_BUILDING_PEDIA",
+ "quote": "TXT_KEY_TECH_SHELTER_BUILDING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BUTCHERY",
+   "BUILDING_CHILDBIRTH_HUT",
+   "BUILDING_CHILDCARE_HUT",
+   "BUILDING_CHILD_LABOR_CREW",
+   "BUILDING_DANCE_BIRD",
+   "BUILDING_DANCE_FOX",
+   "BUILDING_DANCE_HUT",
+   "BUILDING_HEALERS_HUT",
+   "BUILDING_HOUSING_ANIMAL_HIDE_TENTS",
+   "BUILDING_HOUSING_BONE_HUTS",
+   "BUILDING_HOUSING_GRASS_HUTS",
+   "BUILDING_HOUSING_IGLOOS",
+   "BUILDING_HOUSING_LEAN_TOS",
+   "BUILDING_MICROLITH_WORKSHOP",
+   "BUILDING_MUSIC_HUT",
+   "BUILDING_SLAUGHTERHOUSE",
+   "BUILDING_WET_NURSE"
+  ],
+  "builds": [
+   "BUILD_ABATIS_THORN_HEDGE_KILL",
+   "BUILD_FORTIFIED_CAVE_KILL",
+   "BUILD_GATHERING_CAMP_KILL"
+  ],
+  "improvements": [
+   "IMPROVEMENT_ABATIS_THORN_HEDGE",
+   "IMPROVEMENT_FORTIFIED_CAVE",
+   "IMPROVEMENT_GATHERING_CAMP"
+  ],
+  "promotions": [
+   "PROMOTION_CITY_GARRISON2"
+  ],
+  "techs": [
+   "TECH_BINDING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TOOL_MAKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WEAVING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COOPERATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CAVE_DWELLING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 7
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_SHELTER_BUILDING",
+  "soundMP": "AS2D_TECH_SHELTER_BUILDING",
+  "icon": "Art/Interface/Buttons/TechTree/shelterbuilding.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "tradeable": true,
+  "gridX": 4,
+  "gridY": 1
+ }
+}

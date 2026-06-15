@@ -1,0 +1,66 @@
+{
+ "type": "TECH_GLASS_BLOWING",
+ "description": "TXT_KEY_TECH_GLASS_BLOWING",
+ "civilopedia": "TXT_KEY_TECH_GLASS_BLOWING_PEDIA",
+ "quote": "TXT_KEY_TECH_GLASS_BLOWING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_GLASSWARE",
+   "BONUS_POTASH",
+   "BONUS_RED_AND_BLACK_CERAMICS"
+  ],
+  "buildings": [
+   "BUILDING_GLASSBLOWERS_WORKSHOP",
+   "BUILDING_MINE_POTASH",
+   "BUILDING_RED_AND_BLACK_WARE_PAINTER",
+   "BUILDING_THE_ISHTAR_GATE"
+  ],
+  "techs": [
+   "TECH_CONCRETE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BRONZE_WORKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CENTRAL_HEATING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 348
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_GLASS_BLOWING",
+  "soundMP": "AS2D_TECH_GLASS_BLOWING",
+  "icon": ",Art/Interface/Buttons/TechTree/GlassBlowing.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,7"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 15,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 31,
+  "gridY": 5
+ }
+}

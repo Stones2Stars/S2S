@@ -1,0 +1,100 @@
+{
+ "type": "TECH_SERICULTURE",
+ "description": "TXT_KEY_TECH_SERICULTURE",
+ "civilopedia": "TXT_KEY_TECH_SERICULTURE_PEDIA",
+ "quote": "TXT_KEY_TECH_SERICULTURE_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_SILK",
+   "BONUS_SILK_FIBERS"
+  ],
+  "buildings": [
+   "BUILDING_ASSASSIN_BUG_GATHERER",
+   "BUILDING_BAMBOO_WORM_GATHERER",
+   "BUILDING_BOGONG_MOTH_GATHERER",
+   "BUILDING_BUTTERFLY_GATHERER",
+   "BUILDING_CENTIPEDE_GATHERER",
+   "BUILDING_CICADA_GATHERER",
+   "BUILDING_CRICKET_GATHERER",
+   "BUILDING_DRAGONFLY_GATHERER",
+   "BUILDING_DUNG_BEETLE_GATHERER",
+   "BUILDING_FARM_ANIMAL_SILK",
+   "BUILDING_FARM_CROP_COCHINEAL",
+   "BUILDING_FIREFLY_GATHERER",
+   "BUILDING_GIANT_COCKROACH_GATHERER",
+   "BUILDING_GOLIATH_BEETLE_GATHERER",
+   "BUILDING_GRASSHOPPER_GATHERER",
+   "BUILDING_HERCULES_BEETLE_GATHERER",
+   "BUILDING_JUMILES_GATHERER",
+   "BUILDING_JUNEBUG_GATHERER",
+   "BUILDING_LADYBUG_GATHERER",
+   "BUILDING_MEALWORM_GATHERER",
+   "BUILDING_MEZCAL_WORM_GATHERER",
+   "BUILDING_MOPANE_MOTH_GATHERER",
+   "BUILDING_PALM_WEEVIL_GATHERER",
+   "BUILDING_PILLBUG_GATHERER",
+   "BUILDING_PRAYING_MANTIS_GATHERER",
+   "BUILDING_RICE_BEETLE_GATHERER",
+   "BUILDING_SCARAB_BEETLE_GATHERER",
+   "BUILDING_SCORPION_GATHERER",
+   "BUILDING_SILK_ROAD",
+   "BUILDING_TARANTULA_GATHERER",
+   "BUILDING_WEAVING_SPIDER_GATHERER"
+  ],
+  "builds": [
+   "BUILD_SILK_FARM"
+  ],
+  "improvements": [
+   "IMPROVEMENT_SILK_FARM"
+  ],
+  "techs": [
+   "TECH_AESTHETICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_APICULTURE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TEXTILE_LOOM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 187
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 9
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_SERICULTURE",
+  "soundMP": "AS2D_TECH_SERICULTURE",
+  "icon": "Art/Interface/Buttons/TechTree/sericulture.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "gridX": 26,
+  "gridY": 13
+ }
+}

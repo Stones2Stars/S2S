@@ -1,0 +1,166 @@
+{
+ "type": "TECH_PLANETARY_ECONOMICS",
+ "description": "TXT_KEY_TECH_PLANETARY_ECONOMICS",
+ "civilopedia": "TXT_KEY_TECH_PLANETARY_ECONOMICS_PEDIA",
+ "quote": "TXT_KEY_TECH_PLANETARY_ECONOMICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_PRESERVE",
+   "BUILDING_GLOBAL_RAIL_NETWORK",
+   "BUILDING_WORLD_ELECTRIC_GRID"
+  ],
+  "builds": [
+   "BUILD_HYBRID_FOREST"
+  ],
+  "improvements": [
+   "IMPROVEMENT_HYBRID_FOREST"
+  ],
+  "techs": [
+   "TECH_LUNAR_TRADE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CAMP_ANTELOPE",
+   "BUILDING_CAMP_BELUGA",
+   "BUILDING_CAMP_BISON",
+   "BUILDING_CAMP_BOAR",
+   "BUILDING_CAMP_CARIBOU",
+   "BUILDING_CAMP_DEER",
+   "BUILDING_CAMP_ELEPHANT",
+   "BUILDING_CAMP_ELEPHANT_SEAL",
+   "BUILDING_CAMP_EMU",
+   "BUILDING_CAMP_GIRAFFE",
+   "BUILDING_CAMP_HIPPO",
+   "BUILDING_CAMP_KANGAROO",
+   "BUILDING_CAMP_MOOSE",
+   "BUILDING_CAMP_MOUFLON",
+   "BUILDING_CAMP_MUSKOX",
+   "BUILDING_CAMP_NARWHAL",
+   "BUILDING_CAMP_OSTRICH",
+   "BUILDING_CAMP_RHEA",
+   "BUILDING_CAMP_RHINO",
+   "BUILDING_CAMP_SEAL",
+   "BUILDING_CAMP_WALRUS",
+   "BUILDING_CAMP_ZEBRA",
+   "BUILDING_FACTORY_GHEE_OIL",
+   "BUILDING_FACTORY_LEATHER",
+   "BUILDING_GERBIL_BREEDER",
+   "BUILDING_HAMSTER_BREEDER",
+   "BUILDING_INDUSTRIAL_FARMS",
+   "BUILDING_MEAT_PACKING_PLANT",
+   "BUILDING_MOUSE_BREEDER",
+   "BUILDING_RAT_BREEDER",
+   "BUILDING_RESOURCES_LARD",
+   "BUILDING_TRAP_BEAVER",
+   "BUILDING_TRAP_CHINCHILLA",
+   "BUILDING_TRAP_FOX",
+   "BUILDING_TRAP_MINK",
+   "BUILDING_TRAP_RABBIT",
+   "BUILDING_TRAP_RACCOON",
+   "BUILDING_TRAP_SEA_OTTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NANOROBOTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ENVIRONMENTAL_ECONOMICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ANDROIDS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_COLONY_HYDROPONICS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_COLONY_SOLAR_ARRAY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_HOLOGRAPHIC_SOLAR_SYSTEM": {
+     "flat": 900
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_COLONY_HYDROPONICS": {
+     "flat": 1
+    },
+    "IMPROVEMENT_COLONY_SOLAR_ARRAY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_GEOTHERMAL_FACTORY": {
+     "flat": 2
+    },
+    "IMPROVEMENT_NATURE_PRESERVE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_CRIME_SHOPLIFTING": {
+     "flat": -300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 47795
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_PLANETARY_ECONOMICS",
+  "soundMP": "AS2D_TECH_PLANETARY_ECONOMICS",
+  "icon": "Art/Interface/Buttons/TechTree/planetaryeconomics.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 108,
+  "gridY": 11
+ }
+}

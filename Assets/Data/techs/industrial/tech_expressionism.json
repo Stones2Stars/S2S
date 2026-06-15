@@ -1,0 +1,70 @@
+{
+ "type": "TECH_EXPRESSIONISM",
+ "description": "TXT_KEY_TECH_EXPRESSIONISM",
+ "civilopedia": "TXT_KEY_TECH_EXPRESSIONISM_PEDIA",
+ "quote": "TXT_KEY_TECH_EXPRESSIONISM_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHILEHAUS"
+  ],
+  "techs": [
+   "TECH_MODERN_ART"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PSYCHOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_IMPRESSIONISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_ART_GALLERY": {
+     "flat": 600
+    },
+    "BUILDING_BALLOON_RIDES": {
+     "flat": 600
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 7718
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_EXPRESSIONISM",
+  "soundMP": "AS2D_TECH_EXPRESSIONISM",
+  "icon": "Art/Interface/Buttons/TechTree/expressionism.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 21,
+  "militaryWorth": 7,
+  "tradeable": true,
+  "gridX": 70,
+  "gridY": 19
+ }
+}

@@ -1,0 +1,82 @@
+{
+ "type": "TECH_ARCHETYPAL_VECTOR_SPACES",
+ "description": "TXT_KEY_TECH_ARCHETYPAL_VECTOR_SPACES",
+ "civilopedia": "TXT_KEY_TECH_ARCHETYPAL_VECTOR_SPACES_PEDIA",
+ "quote": "TXT_KEY_TECH_ARCHETYPAL_VECTOR_SPACES_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_METAPHYSICAL"
+  ],
+  "buildings": [
+   "BUILDING_FORMAL_REASONING_CENTER",
+   "BUILDING_HUMAN_MOD_METAPHYSICAL",
+   "BUILDING_HYPERSPACE_FORMAL_CONSTRUCTION_CENTER",
+   "BUILDING_HYPERURANION"
+  ],
+  "techs": [
+   "TECH_OMEGA_POINT",
+   "TECH_SIMULATION_AWARENESS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SPIRITUAL_REALMS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DIRECTED_COSMIC_EVOLUTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_SPIRITUAL_REALM": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERGALACTIC_CONSCIOUS_GALAXY": {
+     "flat": 1300
+    },
+    "BUILDING_DISTANT_SPIRIT_WORLD": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 664224
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/archetypal_vector_spaces.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 158,
+  "gridY": 11
+ }
+}

@@ -1,0 +1,60 @@
+{
+ "type": "TECH_PREHISTORIC_MUSIC",
+ "description": "TXT_KEY_TECH_PREHISTORIC_MUSIC",
+ "civilopedia": "TXT_KEY_TECH_PREHISTORIC_MUSIC_PEDIA",
+ "quote": "TXT_KEY_TECH_PREHISTORIC_MUSIC_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_PERCUSSION_INSTRUMENTS"
+  ],
+  "buildings": [
+   "BUILDING_MUSIC_HUT",
+   "BUILDING_PERCUSSION_INSTRUMENT_MAKER"
+  ],
+  "techs": [
+   "TECH_PREHISTORIC_DANCE",
+   "TECH_RITUALISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORAL_TRADITION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 7
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_PREHISTORIC_MUSIC",
+  "soundMP": "AS2D_TECH_PREHISTORIC_MUSIC",
+  "icon": "Art/Interface/Buttons/TechTree/Button_PrehistoricMusic.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 5,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 4,
+  "gridY": 17
+ }
+}

@@ -1,0 +1,117 @@
+{
+ "type": "TECH_GUERRILLA_WARFARE",
+ "description": "TXT_KEY_TECH_GUERRILLA_WARFARE",
+ "civilopedia": "TXT_KEY_TECH_GUERRILLA_WARFARE_PEDIA",
+ "quote": "TXT_KEY_TECH_GUERRILLA_WARFARE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BOOBY_TRAPS",
+   "BUILDING_REBEL_CAMP"
+  ],
+  "promotions": [
+   "PROMOTION_AMBUSH"
+  ],
+  "techs": [
+   "TECH_BIOLOGICAL_WARFARE",
+   "TECH_COUNTERCULTURE",
+   "TECH_MODERN_WARFARE"
+  ],
+  "units": [
+   "UNIT_AL_KHALIFA",
+   "UNIT_APOCALYPSE_URBAN_CROSSBOWMAN",
+   "UNIT_ARTILLERY",
+   "UNIT_CROWBAR_GUARD",
+   "UNIT_GUERRILLA",
+   "UNIT_HATCHET_MAN",
+   "UNIT_IAN_SMITH",
+   "UNIT_JASIR_ARAFAT",
+   "UNIT_KHOMEINI",
+   "UNIT_MACHETE_WARRIOR",
+   "UNIT_MILITIA_MODERN",
+   "UNIT_MODERN_FLAMETHROWER",
+   "UNIT_POST_APOCALYPTIC_GRENADIER",
+   "UNIT_SPECIAL_FORCES",
+   "UNIT_SSG",
+   "UNIT_TRUNG_SISTERS",
+   "UNIT_URBAN_GIRAFFEMAN",
+   "UNIT_URBAN_HORSEMAN",
+   "UNIT_VIETCONG",
+   "UNIT_WARLORDV",
+   "UNIT_WARLORDVS",
+   "UNIT_WRENCH_WARRIOR"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MECHANICAL_TRAPS"
+  ],
+  "units": [
+   "UNIT_PARTISAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMMUNISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FASCISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AUTOMATIC_WEAPONS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "buildings": {
+    "BUILDING_TATTOOER": {
+     "flat": -1
+    },
+    "BUILDING_TATTOO_PARLOR": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 10309
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_GUERRILLA_WARFARE",
+  "soundMP": "AS2D_TECH_GUERRILLA_WARFARE",
+  "icon": ",Art/Interface/Buttons/TechTree/guerrillawarfare.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,8"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 74,
+  "gridY": 15
+ }
+}

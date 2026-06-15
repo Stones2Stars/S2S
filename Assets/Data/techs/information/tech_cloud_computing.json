@@ -1,0 +1,93 @@
+{
+ "type": "TECH_CLOUD_COMPUTING",
+ "description": "TXT_KEY_TECH_CLOUD_COMPUTING",
+ "civilopedia": "TXT_KEY_TECH_CLOUD_COMPUTING_PEDIA",
+ "quote": "TXT_KEY_TECH_CLOUD_COMPUTING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CLOUD_SERVER",
+   "BUILDING_CRIME_MALWARE",
+   "BUILDING_DIGITAL_OFFICES",
+   "BUILDING_EFFECT_NATIONAL_ACADEMIC_DATABASE",
+   "BUILDING_INTERNET_RADIO_STATION",
+   "BUILDING_INTERNET_TELEVISION_STATION",
+   "BUILDING_NATIONAL_ACADEMIC_DATABASE",
+   "BUILDING_NATIONAL_LEGAL_DATABASE",
+   "BUILDING_ONLINE_SHIPPING_WAREHOUSE",
+   "BUILDING_SAFETY_NATIONAL_LEGAL_DATABASE",
+   "BUILDING_UNDERWATER_DATA_CENTER"
+  ],
+  "techs": [
+   "TECH_ONLINE_COMMUNITY",
+   "TECH_VIRTUAL_REALITY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FARNSWORTH_ELECTRONICS_LAB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMMUNICATION_NETWORKS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_WIRELESS_NETWORKS": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_COMPUTER_SCIENCE_DEPARTMENT": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 21329
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_CLOUD_COMPUTING",
+  "soundMP": "AS2D_TECH_CLOUD_COMPUTING",
+  "icon": "Art/Interface/Buttons/TechTree/Cloudcomputing.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 89,
+  "gridY": 11
+ }
+}

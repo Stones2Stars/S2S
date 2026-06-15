@@ -1,0 +1,120 @@
+{
+ "type": "TECH_COLONY_ARCOLOGY",
+ "description": "TXT_KEY_TECH_COLONY_ARCOLOGY",
+ "civilopedia": "TXT_KEY_TECH_COLONY_ARCOLOGY_PEDIA",
+ "quote": "TXT_KEY_TECH_COLONY_ARCOLOGY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_BISHOP_RING",
+   "BUILDING_EUROPA_CITY",
+   "BUILDING_HALO",
+   "BUILDING_HOUSING_COLONY_ARCOLOGY",
+   "BUILDING_SATURN_CLOUD_CITY",
+   "BUILDING_TALL_TOWER",
+   "BUILDING_URANUS_FLOATING_CITY"
+  ],
+  "builds": [
+   "BUILD_JOVIAN_FLOATING_CITY",
+   "BUILD_JOVIAN_SCOOP",
+   "BUILD_SATELLITE_STATION"
+  ],
+  "improvements": [
+   "IMPROVEMENT_JOVIAN_FLOATING_CITY",
+   "IMPROVEMENT_JOVIAN_SCOOP",
+   "IMPROVEMENT_SATELLITE_STATION"
+  ],
+  "techs": [
+   "TECH_LAUNCH_ARCOLOGY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_COAST_GUARD_STATION",
+   "BUILDING_HOUSING_APARTMENTS",
+   "BUILDING_HOUSING_BOONDOCKS",
+   "BUILDING_HOUSING_CONDOMINIUMS",
+   "BUILDING_HOUSING_FRATERNITY_HOUSE",
+   "BUILDING_HOUSING_GHETTOS",
+   "BUILDING_HOUSING_HIGHRISES",
+   "BUILDING_HOUSING_MANSIONS",
+   "BUILDING_HOUSING_MID_CLASS_SKYPAD_APARTMENTS",
+   "BUILDING_HOUSING_PENTHOUSE_SUITES",
+   "BUILDING_HOUSING_PROJECTS",
+   "BUILDING_HOUSING_SORORITY_HOUSE",
+   "BUILDING_HOUSING_SUBURBS",
+   "BUILDING_HOUSING_TRAILER_PARK",
+   "BUILDING_POLICE_DRONE_CONTROL_CENTER",
+   "BUILDING_REEDUCATION_CENTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GALACTIC_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_ENGINEERING_SCHOOL": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_COLONY_HABITAT_HUGE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_VENUS_ARCOLOGY": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 126324
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_COLONY_ARCOLOGY",
+  "soundMP": "AS2D_TECH_COLONY_ARCOLOGY",
+  "icon": "Art/Interface/Buttons/TechTree/colonyarcology.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 124,
+  "gridY": 5
+ }
+}

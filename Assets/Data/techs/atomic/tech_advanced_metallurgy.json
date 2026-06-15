@@ -1,0 +1,82 @@
+{
+ "type": "TECH_ADVANCED_METALLURGY",
+ "description": "TXT_KEY_TECH_ADVANCED_METALLURGY",
+ "civilopedia": "TXT_KEY_TECH_ADVANCED_METALLURGY_PEDIA",
+ "quote": "TXT_KEY_TECH_ADVANCED_METALLURGY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_TITANIUM_INGOTS",
+   "BONUS_TITANIUM_ORE",
+   "BONUS_TITANIUM_WARES"
+  ],
+  "buildings": [
+   "BUILDING_ADVANCED_COPPERWORKS",
+   "BUILDING_ADVANCED_IRONWORKS",
+   "BUILDING_MINE_TITANIUM",
+   "BUILDING_NATIONAL_SMELTER_TITANIUM",
+   "BUILDING_PARTS_PLANT",
+   "BUILDING_SMELTER_TITANIUM",
+   "BUILDING_SMITH_TITANIUM"
+  ],
+  "promotions": [
+   "PROMOTION_REPAIR_MECHANICAL6"
+  ],
+  "techs": [
+   "TECH_AMPHIBIOUS_WARFARE",
+   "TECH_ARMORED_VEHICLES",
+   "TECH_AVIATION",
+   "TECH_ELECTRONICS",
+   "TECH_FISSION",
+   "TECH_SUBMARINE_WARFARE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INDUSTRIALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 9889
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_ESPIONAGE": 5
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_ADVANCED_METALLURGY2",
+  "soundMP": "AS2D_TECH_ADVANCED_METALLURGY2",
+  "icon": "Art/Interface/Buttons/TechTree/advancedmetallurgy.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 73,
+  "gridY": 11
+ }
+}

@@ -1,0 +1,85 @@
+{
+ "type": "TECH_ANTIMATTER_ROCKETS",
+ "description": "TXT_KEY_TECH_ANTIMATTER_ROCKETS",
+ "civilopedia": "TXT_KEY_TECH_ANTIMATTER_ROCKETS_PEDIA",
+ "quote": "TXT_KEY_TECH_ANTIMATTER_ROCKETS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_PAIR_PRODUCTION_PLANT",
+   "BUILDING_INTERSTELLAR_PRECIOUS_METAL_GENERATOR",
+   "BUILDING_KEPLER_186F_COLONY",
+   "BUILDING_KEPLER_22B_COLONY",
+   "BUILDING_MISSION_TO_THE_GALACTIC_CORE"
+  ],
+  "techs": [
+   "TECH_ORBITAL_ENGINEERING",
+   "TECH_SINGULARITY_STABILIZATION",
+   "TECH_WEAPONIZED_ANTIMATTER"
+  ],
+  "units": [
+   "UNIT_GALACTIC_CORE_REWARD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ACNP_PROPULSION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FORGE_WORLDS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_STARPORT": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_GREAT_ENGINEER"
+ },
+ "cost": {
+  "research": 166029
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_ANTIMATTER_ROCKETS",
+  "soundMP": "AS2D_TECH_ANTIMATTER_ROCKETS",
+  "icon": "Art/Interface/Buttons/TechTree/antimatterrocket.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 132,
+  "gridY": 3
+ }
+}

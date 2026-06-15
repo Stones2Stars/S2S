@@ -1,0 +1,77 @@
+{
+ "type": "TECH_YEOMANRY",
+ "description": "TXT_KEY_TECH_YEOMANRY",
+ "civilopedia": "TXT_KEY_TECH_YEOMANRY_PEDIA",
+ "quote": "TXT_KEY_TECH_YEOMANRY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARCHERY_RANGE",
+   "BUILDING_BALISTRARIA",
+   "BUILDING_CULTURE_ORANG_ASLI",
+   "BUILDING_CULTURE_WELSH"
+  ],
+  "techs": [
+   "TECH_HERALDRY",
+   "TECH_USURY"
+  ],
+  "units": [
+   "UNIT_BENIN_WAR_BOW",
+   "UNIT_CANARI_BOWMANS",
+   "UNIT_LONGBOWMAN",
+   "UNIT_ORANG_BOWMAN",
+   "UNIT_PATAGONIAN_ARCHER",
+   "UNIT_ROBIN_HOOD",
+   "UNIT_YEOMAN",
+   "UNIT_YUMI_ARCHER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FEUDALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1334
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 9
+   },
+   {
+    "FLAVOR_RELIGION": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_YEOMANRY",
+  "soundMP": "AS2D_TECH_YEOMANRY",
+  "icon": "Art/Interface/Buttons/TechTree/yeomany.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 16,
+  "tradeable": true,
+  "gridX": 44,
+  "gridY": 19
+ }
+}

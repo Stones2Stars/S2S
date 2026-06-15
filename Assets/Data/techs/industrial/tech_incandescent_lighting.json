@@ -1,0 +1,66 @@
+{
+ "type": "TECH_INCANDESCENT_LIGHTING",
+ "description": "TXT_KEY_TECH_INCANDESCENT_LIGHTING",
+ "civilopedia": "TXT_KEY_TECH_INCANDESCENT_LIGHTING_PEDIA",
+ "quote": "TXT_KEY_TECH_INCANDESCENT_LIGHTING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_HIT_MUSICALS"
+  ],
+  "buildings": [
+   "BUILDING_BROADWAY",
+   "BUILDING_EDISONS_WORKSHOP",
+   "BUILDING_ELECTRIC_LAMPS",
+   "BUILDING_ENCLOSURE_NOCTURNAL",
+   "BUILDING_TRAFFIC_SIGNALS"
+  ],
+  "techs": [
+   "TECH_MOTION_PICTURES",
+   "TECH_MOTORIZED_TRANSPORTATION"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_OIL_LAMPS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ELECTRICITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 7008
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/Buttons/Techs/incandescent_lighting.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 68,
+  "gridY": 5
+ }
+}

@@ -1,0 +1,119 @@
+{
+ "type": "TECH_TELEPORTATION",
+ "description": "TXT_KEY_TECH_TELEPORTATION",
+ "civilopedia": "TXT_KEY_TECH_TELEPORTATION_PEDIA",
+ "quote": "TXT_KEY_TECH_TELEPORTATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_TELEPORT_BOOTH",
+   "BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
+  ],
+  "builds": [
+   "BUILD_JUMPLANE"
+  ],
+  "techs": [
+   "TECH_GRAVITY_CONTROL",
+   "TECH_PLANET_SCOUTING",
+   "TECH_XENODIPLOMACY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AON_CENTER",
+   "BUILDING_ASPHALT_ROADS",
+   "BUILDING_BONNEVILLE_SPEEDWAY",
+   "BUILDING_CRIME_AIRCRAFT_HIJACKING",
+   "BUILDING_CRIME_CAR_BOMBING",
+   "BUILDING_CRIME_CAR_THEFT",
+   "BUILDING_CRIME_DRUNK_DRIVING",
+   "BUILDING_ELECTRIC_VEHICLE_RECHARGING_STATION",
+   "BUILDING_EL_CAMINO_DE_SANTIAGO",
+   "BUILDING_EXPRESSWAY",
+   "BUILDING_GOLDEN_GATE_BRIDGE",
+   "BUILDING_HIGHWAY",
+   "BUILDING_PARKING_GARAGE",
+   "BUILDING_SMALL_SUSPENSION_BRIDGE"
+  ],
+  "builds": [
+   "BUILD_MAGLEV"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ATOMIZATION_FIELD",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_COLONY_EXTRACTION_FACILITY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_GEOTHERMAL_FACTORY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_EXTRACTION_FACILITY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SUBMERGED_TOWN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_SUBMERGED_TOWN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "buildings": {
+    "BUILDING_GARBAGE_COLLECTION_AGENCY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 149039
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_TELEPORTATION",
+  "soundMP": "AS2D_TECH_TELEPORTATION",
+  "icon": "Art/Interface/Buttons/TechTree/teleportation.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 129,
+  "gridY": 5
+ }
+}

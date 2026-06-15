@@ -1,0 +1,78 @@
+{
+ "type": "TECH_DIRECTED_PANSPERMIA",
+ "description": "TXT_KEY_TECH_DIRECTED_PANSPERMIA",
+ "civilopedia": "TXT_KEY_TECH_DIRECTED_PANSPERMIA_PEDIA",
+ "quote": "TXT_KEY_TECH_DIRECTED_PANSPERMIA_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_GUIDED_PLANETARY_EVOLUTION",
+   "BUILDING_INTERGALACTIC_TERRAFORMING_BASE",
+   "BUILDING_INTERSTELLAR_BIOGEOCOMPUTER",
+   "BUILDING_LIFE_DUST_AND_PLASMA",
+   "BUILDING_ROGUE_PLANET_CITY"
+  ],
+  "techs": [
+   "TECH_CULTURAL_LONGEVITY",
+   "TECH_GALACTIC_ECOLOGY",
+   "TECH_PARTICLE_GENETICS"
+  ],
+  "units": [
+   "UNIT_BACTERIA_SWARM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STELLAR_ENGINE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COSMIC_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_LIFE_SILICON_DIOXIDE": {
+     "flat": 1200
+    },
+    "BUILDING_LIFE_SUPERCRITICAL_CO2": {
+     "flat": 1200
+    },
+    "BUILDING_INTERSTELLAR_BIOTIC_SPHERE_WORLD": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 262044
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/directed_panspermia.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 138,
+  "gridY": 19
+ }
+}

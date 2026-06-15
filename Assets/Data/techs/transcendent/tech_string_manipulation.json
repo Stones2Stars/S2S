@@ -1,0 +1,85 @@
+{
+ "type": "TECH_STRING_MANIPULATION",
+ "description": "TXT_KEY_TECH_STRING_MANIPULATION",
+ "civilopedia": "TXT_KEY_TECH_STRING_MANIPULATION_PEDIA",
+ "quote": "TXT_KEY_TECH_STRING_MANIPULATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_PARTICLE_TRANSMUTATION",
+   "BUILDING_INTERSTELLAR_MOLECULAR_DISRUPTION_DEVICE",
+   "BUILDING_STRINGWORKS"
+  ],
+  "builds": [
+   "BUILD_TERRAFORM_BRANESPACE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_TERRAFORM_BRANESPACE"
+  ],
+  "techs": [
+   "TECH_CONTROLLED_INFLATION",
+   "TECH_HYPERSTRUCTURE_ENGINEERING"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_QUANTUM_SUPERCOMPUTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MENSIOKINESIS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_STABLE_TIME_LOOPS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COSMIC_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRANSCENDENT_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_WHITE_HOLE": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 495679
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/string_manipulation.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 149,
+  "gridY": 15
+ }
+}

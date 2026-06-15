@@ -1,0 +1,95 @@
+{
+ "type": "TECH_SATELLITES",
+ "description": "TXT_KEY_TECH_SATELLITES",
+ "civilopedia": "TXT_KEY_TECH_SATELLITES_PEDIA",
+ "quote": "TXT_KEY_TECH_SATELLITES_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DARPA",
+   "BUILDING_MILITARY_SATELLITES",
+   "BUILDING_MODERN_CARTOGRAPHER",
+   "BUILDING_PROJECT_MERCURY",
+   "BUILDING_WEMBLEY_STADIUM"
+  ],
+  "promotions": [
+   "PROMOTION_URBAN_TACTICS1"
+  ],
+  "techs": [
+   "TECH_ASTRONAUTICS",
+   "TECH_CLIMATE_MODELS"
+  ],
+  "units": [
+   "UNIT_LOE_REWARD",
+   "UNIT_SATELLITE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CHEOMSEONGDAE",
+   "BUILDING_MASTER_SEA_HUNTER",
+   "BUILDING_SURVEYORS_OFFICE",
+   "BUILDING_TRADITION_SEA_HUNTING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SOLAR_POWER",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADVANCED_ROCKETRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_METEOROLOGY_LAB": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "mapVisible": {
+  "team": {
+   "enabler": true
+  }
+ },
+ "cost": {
+  "research": 13724
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_SATELLITES",
+  "soundMP": "AS2D_TECH_MP_SATELLITES",
+  "icon": ",Art/Interface/Buttons/TechTree/Satellites.dds,Art/Interface/Buttons/TechTree_Atlas.dds,7,7"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 81,
+  "gridY": 11
+ }
+}

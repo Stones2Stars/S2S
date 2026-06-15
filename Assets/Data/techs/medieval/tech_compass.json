@@ -1,0 +1,94 @@
+{
+ "type": "TECH_COMPASS",
+ "description": "TXT_KEY_TECH_COMPASS",
+ "civilopedia": "TXT_KEY_TECH_COMPASS_PEDIA",
+ "quote": "TXT_KEY_TECH_COMPASS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_COMMERCIAL_PORT",
+   "BUILDING_CULTURE_ILOCANO",
+   "BUILDING_MARCO_POLOS_EMBASSY"
+  ],
+  "techs": [
+   "TECH_RENAISSANCE_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_ADVENTURER",
+   "UNIT_BILOG",
+   "UNIT_CARAVEL",
+   "UNIT_FLUYT",
+   "UNIT_HENRY",
+   "UNIT_MASTER_SAILOR_CARAVEL",
+   "UNIT_MASTER_SAILOR_SLOOP_OF_WAR",
+   "UNIT_OMUCHTAN",
+   "UNIT_PORTUGAL_CARRACK",
+   "UNIT_SINBAD",
+   "UNIT_SLOOP_OF_WAR"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HARBOR"
+  ],
+  "units": [
+   "UNIT_CATAMARAN",
+   "UNIT_MASTER_SAILOR_GALLEASS",
+   "UNIT_MASTER_SAILOR_OUTRIGGER",
+   "UNIT_OUTRIGGER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RUDDER",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CLOCKWORKS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_EDUCATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1960
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_COMPASS",
+  "soundMP": "AS2D_TECH_MP_COMPASS",
+  "icon": ",Art/Interface/Buttons/TechTree/Compass.dds,Art/Interface/Buttons/TechTree_Atlas.dds,5,2"
+ },
+ "identity": {
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 16,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 49,
+  "gridY": 5
+ }
+}

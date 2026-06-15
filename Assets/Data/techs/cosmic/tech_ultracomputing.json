@@ -1,0 +1,84 @@
+{
+ "type": "TECH_ULTRACOMPUTING",
+ "description": "TXT_KEY_TECH_ULTRACOMPUTING",
+ "civilopedia": "TXT_KEY_TECH_ULTRACOMPUTING_PEDIA",
+ "quote": "TXT_KEY_TECH_ULTRACOMPUTING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_MICROVAC",
+   "BUILDING_INTERGALACTIC_SUPERCOMPUTER",
+   "BUILDING_INTERSTELLAR_SUPERCOMPUTER"
+  ],
+  "civics": [
+   "CIVIC_COMPUTATION"
+  ],
+  "techs": [
+   "TECH_COMPUTRONIUM_UNIVERSE",
+   "TECH_UNIFICATION_MATHEMATICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GRAVITRONICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FEMTOTECHNOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_OPTRONIC_SUPERCOMPUTER": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN": {
+     "flat": 1200
+    },
+    "BUILDING_OPTRONIC_SUPERCOMPUTER": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 281279
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/ultracomputing.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 140,
+  "gridY": 3
+ }
+}

@@ -1,0 +1,93 @@
+{
+ "type": "TECH_GRAPHENE_ALLOYS",
+ "description": "TXT_KEY_TECH_GRAPHENE_ALLOYS",
+ "civilopedia": "TXT_KEY_TECH_GRAPHENE_ALLOYS_PEDIA",
+ "quote": "TXT_KEY_TECH_GRAPHENE_ALLOYS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_FULLERENE",
+   "BONUS_GRAPHENE",
+   "BONUS_SYNTHETIC_DIAMOND"
+  ],
+  "buildings": [
+   "BUILDING_BULK_DIAMOND_PLANT",
+   "BUILDING_FACTORY_GRAPHENE",
+   "BUILDING_FULLERENE_PLANT"
+  ],
+  "techs": [
+   "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+   "TECH_FUSION",
+   "TECH_INVISIBILITY",
+   "TECH_LIQUID_METALS",
+   "TECH_NANOTECH_LIFESTYLE",
+   "TECH_NANO_ARCHITECTURE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASTEROID_MINING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MICROMECHANICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_MECHATRONICS_LAB": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_MECHATRONICS_LAB": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 29220
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_GRAPHENE_ALLOYS",
+  "soundMP": "AS2D_TECH_GRAPHENE_ALLOYS",
+  "icon": "Art/Interface/Buttons/TechTree/Graphene.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 98,
+  "gridY": 9
+ }
+}

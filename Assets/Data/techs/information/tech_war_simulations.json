@@ -1,0 +1,84 @@
+{
+ "type": "TECH_WAR_SIMULATIONS",
+ "description": "TXT_KEY_TECH_WAR_SIMULATIONS",
+ "civilopedia": "TXT_KEY_TECH_WAR_SIMULATIONS_PEDIA",
+ "quote": "TXT_KEY_TECH_WAR_SIMULATIONS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_COMBAT_SIMULATOR",
+   "BUILDING_FLIGHT_SIMULATOR",
+   "BUILDING_SECURITY_CENTER",
+   "BUILDING_SIGNALS_INTELLIGENCE_RECEIVERS"
+  ],
+  "techs": [
+   "TECH_MICROWAVE_WEAPONRY",
+   "TECH_MILITARY_ROBOTICS"
+  ],
+  "units": [
+   "UNIT_F22_RAPTOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_KNOWLEDGE_MANAGEMENT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_EFFECT_GPS": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "espionage": {
+  "city": {
+   "buildings": {
+    "BUILDING_CRYPTOLOGY_CENTER": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 22074
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_WAR_SIMULATIONS",
+  "soundMP": "AS2D_TECH_WAR_SIMULATIONS",
+  "icon": "Art/Interface/Buttons/TechTree/Warsimulation.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 90,
+  "gridY": 7
+ }
+}

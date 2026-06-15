@@ -1,0 +1,75 @@
+{
+ "type": "TECH_ADVANCED_WARMACHINES",
+ "description": "TXT_KEY_TECH_ADVANCED_WARMACHINES",
+ "civilopedia": "TXT_KEY_TECH_ADVANCED_WARMACHINES_PEDIA",
+ "quote": "TXT_KEY_TECH_ADVANCED_WARMACHINES_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BETA_ASSEMBLER",
+   "BUILDING_MARTIAN_MASS_DRIVER",
+   "BUILDING_MARTIAN_NOMAD",
+   "BUILDING_NEPTUNE_WIND_TURBINE"
+  ],
+  "techs": [
+   "TECH_PLANETARY_DEFENSES"
+  ],
+  "units": [
+   "UNIT_ASSAULT_MECH",
+   "UNIT_FUSION_BATTLESHIP",
+   "UNIT_MASTER_SAILOR_FUSION_BATTLESHIP",
+   "UNIT_WARLORDVII",
+   "UNIT_WARLORDVIIS"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_MASTER_SAILOR_BATTLESHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SAPIENTROIDS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ANIMAMATERIALS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 77770
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_ADVANCED_WARMACHINES",
+  "soundMP": "AS2D_TECH_ADVANCED_WARMACHINES",
+  "icon": "Art/Interface/Buttons/TechTree/Mech_Warfare2.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 117,
+  "gridY": 5
+ }
+}

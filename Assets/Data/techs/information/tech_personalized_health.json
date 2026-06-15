@@ -1,0 +1,108 @@
+{
+ "type": "TECH_PERSONALIZED_HEALTH",
+ "description": "TXT_KEY_TECH_PERSONALIZED_HEALTH",
+ "civilopedia": "TXT_KEY_TECH_PERSONALIZED_HEALTH_PEDIA",
+ "quote": "TXT_KEY_TECH_PERSONALIZED_HEALTH_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_HYPOSPRAYS",
+   "BONUS_MEDICAL_TRICORDERS",
+   "BONUS_STIM_PACKS"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_HYPOSPRAYS",
+   "BUILDING_FACTORY_MEDICAL_TRICODERS",
+   "BUILDING_FACTORY_STIM_PACKS"
+  ],
+  "projects": [
+   "PROJECT_CURE_FOR_CANCER"
+  ],
+  "promotions": [
+   "PROMOTION_FIRST_AID_ANIMALS6",
+   "PROMOTION_FIRST_AID_PEOPLE6"
+  ],
+  "techs": [
+   "TECH_BACTERIUM_ENGINEERING",
+   "TECH_BRAIN_MACHINE_INTERFACE",
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GENOMIC_ENCYCLOPEDIA",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DIRECT_MERCHANDISING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_METAMATERIALS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BIOMATHEMATICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_VACCINE_LAB": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "buildings": {
+    "BUILDING_APPLIED_PSYCHOLOGY_LAB": {
+     "flat": 2
+    },
+    "BUILDING_SYSTEMS_BIOLOGY_SIMULATOR": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 26259
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_PERSONALIZED_HEALTH",
+  "soundMP": "AS2D_TECH_PERSONALIZED_HEALTH",
+  "icon": "Art/Interface/Buttons/TechTree/PersonalizedHealth2.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 95,
+  "gridY": 3
+ }
+}

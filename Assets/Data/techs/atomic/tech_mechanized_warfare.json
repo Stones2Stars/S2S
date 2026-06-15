@@ -1,0 +1,92 @@
+{
+ "type": "TECH_MECHANIZED_WARFARE",
+ "description": "TXT_KEY_TECH_MECHANIZED_WARFARE",
+ "civilopedia": "TXT_KEY_TECH_MECHANIZED_WARFARE_PEDIA",
+ "quote": "TXT_KEY_TECH_MECHANIZED_WARFARE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUTOMATED_FIRING_RANGE"
+  ],
+  "promotions": [
+   "PROMOTION_CRACKDOWN5"
+  ],
+  "techs": [
+   "TECH_ADVANCED_AVIATION",
+   "TECH_LOGISTICS"
+  ],
+  "units": [
+   "UNIT_BAZOOKA",
+   "UNIT_CRUISER",
+   "UNIT_GERMAN_PANZER",
+   "UNIT_HEAVY_CRUISER",
+   "UNIT_HEAVY_TANK",
+   "UNIT_JEEP",
+   "UNIT_LIGHT_TANK",
+   "UNIT_MASTER_SAILOR_WW2_BATTLESHIP",
+   "UNIT_MOTORPOOL",
+   "UNIT_PLO_FIGHTER",
+   "UNIT_POLICE_APC",
+   "UNIT_RWENZURURU_SOLDIER",
+   "UNIT_SEARCH_BLOC",
+   "UNIT_TANK",
+   "UNIT_WW2_BATTLESHIP"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_SHOOTING_CLUB"
+  ],
+  "units": [
+   "UNIT_MASTER_SAILOR_DREADNOUGHT_SHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AUTOMATIC_WEAPONS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARMORED_VEHICLES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 10744
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_MECHANIZED_WARFARE",
+  "soundMP": "AS2D_TECH_MECHANIZED_WARFARE",
+  "icon": ",Art/Interface/Buttons/TechTree/GlobalWarfare.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,2,8"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 75,
+  "gridY": 11
+ }
+}

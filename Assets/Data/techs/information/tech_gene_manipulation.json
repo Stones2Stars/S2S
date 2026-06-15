@@ -1,0 +1,149 @@
+{
+ "type": "TECH_GENE_MANIPULATION",
+ "description": "TXT_KEY_TECH_GENE_MANIPULATION",
+ "civilopedia": "TXT_KEY_TECH_GENE_MANIPULATION_PEDIA",
+ "quote": "TXT_KEY_TECH_GENE_MANIPULATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_GENE_FARMING_LAB"
+  ],
+  "builds": [
+   "BUILD_SANITIZE",
+   "BUILD_SANITIZE_WATER"
+  ],
+  "techs": [
+   "TECH_CLONING",
+   "TECH_NANOTECHNOLOGY"
+  ],
+  "units": [
+   "UNIT_POISON_NUKE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_DONKEY_BREEDER",
+   "BUILDING_HORSE_BREEDER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GENETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INFORMATION_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_PASTURE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_ORCHARD": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_FARM_SUPPLY": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_PASTURE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WINERY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_PLANTATION": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SILK_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_BACTERIOPHAGE_THERAPY_CLINIC": {
+     "flat": 800
+    },
+    "BUILDING_NUCLEIC_ACID_LAB": {
+     "flat": 800
+    },
+    "BUILDING_PROTEIN_LAB": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  },
+  "city": {
+   "buildings": {
+    "BUILDING_LANDFILL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 19916
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_GENE_MANIPULATION",
+  "soundMP": "AS2D_TECH_GENE_MANIPULATION",
+  "icon": ",Art/Interface/Buttons/TechTree/dna_button_04.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,6,5"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 87,
+  "gridY": 5
+ }
+}

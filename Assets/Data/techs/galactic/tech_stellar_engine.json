@@ -1,0 +1,74 @@
+{
+ "type": "TECH_STELLAR_ENGINE",
+ "description": "TXT_KEY_TECH_STELLAR_ENGINE",
+ "civilopedia": "TXT_KEY_TECH_STELLAR_ENGINE_PEDIA",
+ "quote": "TXT_KEY_TECH_STELLAR_ENGINE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARTIFICIAL_CONSTELLATION",
+   "BUILDING_HYADES_STAR_CLUSTER_COLONY",
+   "BUILDING_INTERSTELLAR_SHKADOV_THRUSTER",
+   "BUILDING_NGC_6811_COLONY"
+  ],
+  "techs": [
+   "TECH_DIRECTED_PANSPERMIA",
+   "TECH_NEUTRINO_COMMUNICATIONS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORBITAL_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PICOTECHNOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_STARS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_DYSON_SPHERE": {
+     "flat": 3
+    },
+    "IMPROVEMENT_HELIOFORMED_BROWN_DWARF": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 186934
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/stellar_engine.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 135,
+  "gridY": 3
+ }
+}

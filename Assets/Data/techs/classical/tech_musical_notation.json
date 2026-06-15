@@ -1,0 +1,114 @@
+{
+ "type": "TECH_MUSICAL_NOTATION",
+ "description": "TXT_KEY_TECH_MUSICAL_NOTATION",
+ "civilopedia": "TXT_KEY_TECH_MUSICAL_NOTATION_PEDIA",
+ "quote": "TXT_KEY_TECH_MUSICAL_NOTATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BALLROOM",
+   "BUILDING_CULTURE_SERBIAN",
+   "BUILDING_CULTURE_TIMURID",
+   "BUILDING_MONKEY_BREEDER",
+   "BUILDING_MUSIC_SCHOOL"
+  ],
+  "promotions": [
+   "PROMOTION_BARD1"
+  ],
+  "specialBuildings": [
+   "SPECIALBUILDING_CATHEDRAL"
+  ],
+  "techs": [
+   "TECH_MEDIEVAL_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_BAYAJIDDA",
+   "UNIT_JAYAVARMAN_II",
+   "UNIT_KUCUMATZ",
+   "UNIT_STEPHEN_UROS_IV_DUSAN",
+   "UNIT_SUNDIATA_KEITA",
+   "UNIT_TIMUR",
+   "UNIT_YAWAR_RUNA"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MOON_DANCE",
+   "BUILDING_NATURE_DANCE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DRAMA",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_GRAND_EARTH_FESTIVAL": {
+     "flat": 300
+    },
+    "BUILDING_GRAND_FIRE_FESTIVAL": {
+     "flat": 300
+    },
+    "BUILDING_GRAND_MARINE_FESTIVAL": {
+     "flat": 300
+    },
+    "BUILDING_GRAND_SKY_FESTIVAL": {
+     "flat": 300
+    },
+    "BUILDING_BRASS_INSTRUMENT_MAKER": {
+     "flat": 300
+    },
+    "BUILDING_PERCUSSION_INSTRUMENT_MAKER": {
+     "flat": 300
+    },
+    "BUILDING_STRING_INSTRUMENT_MAKER": {
+     "flat": 300
+    },
+    "BUILDING_WOODWIND_INSTRUMENT_MAKER": {
+     "flat": 300
+    }
+   }
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_ARTIST"
+ },
+ "cost": {
+  "research": 904
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_RELIGION": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_MUSICAL_NOTATION",
+  "soundMP": "AS2D_TECH_MP_MUSIC",
+  "icon": ",Art/Interface/Buttons/TechTree/Music.dds,Art/Interface/Buttons/TechTree_Atlas.dds,3,11"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 40,
+  "gridY": 3
+ }
+}

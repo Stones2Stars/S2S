@@ -1,0 +1,69 @@
+{
+ "type": "TECH_ORBITAL_ENGINEERING",
+ "description": "TXT_KEY_TECH_ORBITAL_ENGINEERING",
+ "civilopedia": "TXT_KEY_TECH_ORBITAL_ENGINEERING_PEDIA",
+ "quote": "TXT_KEY_TECH_ORBITAL_ENGINEERING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAPTURED_IO",
+   "BUILDING_INTERSTELLAR_CAPTURED_ROGUE_PLANET",
+   "BUILDING_INTERSTELLAR_STAR_CLUSTER_COLONY",
+   "BUILDING_INTERSTELLAR_STELLAR_SAIL_NETWORK",
+   "BUILDING_JOVIAN_FUSION_CANDLE",
+   "BUILDING_TRANSTELLAR_TOROIDAL_PLANET"
+  ],
+  "techs": [
+   "TECH_COSMIC_LIFESTYLE",
+   "TECH_STELLAR_ENGINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ANTIMATTER_ROCKETS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PLANET_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 172549
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/orbital_engineering.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 133,
+  "gridY": 9
+ }
+}

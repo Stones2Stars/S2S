@@ -1,0 +1,88 @@
+{
+ "type": "TECH_GUIDED_WEAPONS",
+ "description": "TXT_KEY_TECH_GUIDED_WEAPONS",
+ "civilopedia": "TXT_KEY_TECH_GUIDED_WEAPONS_PEDIA",
+ "quote": "TXT_KEY_TECH_GUIDED_WEAPONS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANTI_MISSILE_BATTERIES"
+  ],
+  "projects": [
+   "PROJECT_AA_MISSILE_DEFENSES"
+  ],
+  "promotions": [
+   "PROMOTION_HEAT_SEEKING",
+   "PROMOTION_IMPROVED_RADAR",
+   "PROMOTION_PRECISION_BOMBING"
+  ],
+  "techs": [
+   "TECH_COMPOSITES"
+  ],
+  "units": [
+   "UNIT_A10_BOMBER",
+   "UNIT_BIOLOGICAL_WARFARE_MISSILE",
+   "UNIT_F14_TOMCAT",
+   "UNIT_GUIDED_MISSILE",
+   "UNIT_IRBM",
+   "UNIT_MASTER_SAILOR_NUCLEAR_SUBMARINE",
+   "UNIT_MIG_29",
+   "UNIT_MISSILE_CRUISER",
+   "UNIT_MOBILE_SAM",
+   "UNIT_NUCLEAR_SUBMARINE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FLAK_TOWER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ADVANCED_ROCKETRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MODERN_WARFARE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "dcmAirBomb2": {
+  "team": {
+   "enabler": true
+  }
+ },
+ "cost": {
+  "research": 15474
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_GUIDED_WEAPONS",
+  "soundMP": "AS2D_TECH_GUIDED_WEAPONS",
+  "icon": ",Art/Interface/Buttons/TechTree/smart_weapons.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,5,16"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 84,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,53 @@
+{
+ "type": "TECH_VOODOO",
+ "description": "TXT_KEY_TECH_VOODOO",
+ "civilopedia": "TXT_KEY_TECH_VOODOO_PEDIA",
+ "quote": "TXT_KEY_TECH_VOODOO_QUOTE",
+ "enables": {
+  "religions": [
+   "RELIGION_VOODOO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FUNDAMENTALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 1334
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_VOODOO",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/Interface/Buttons/TechTree/Voodoo.dds"
+ },
+ "identity": {
+  "global": true,
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 8,
+  "gridX": 44,
+  "gridY": 3
+ }
+}

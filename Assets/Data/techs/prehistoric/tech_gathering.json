@@ -1,0 +1,149 @@
+{
+ "type": "TECH_GATHERING",
+ "description": "TXT_KEY_TECH_GATHERING",
+ "civilopedia": "TXT_KEY_TECH_GATHERING_PEDIA",
+ "quote": "TXT_KEY_TECH_GATHERING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_ALMONDS",
+   "BONUS_APPLE",
+   "BONUS_BANANA",
+   "BONUS_BARLEY",
+   "BONUS_COCA",
+   "BONUS_COCOA",
+   "BONUS_COCONUT",
+   "BONUS_COFFEE",
+   "BONUS_CORN",
+   "BONUS_COTTON",
+   "BONUS_DATES",
+   "BONUS_FIG",
+   "BONUS_FLAX",
+   "BONUS_FLINT",
+   "BONUS_GRAPES",
+   "BONUS_GRASS",
+   "BONUS_GUAVAS",
+   "BONUS_HEMP",
+   "BONUS_HENNA",
+   "BONUS_INCENSE",
+   "BONUS_INDIGO",
+   "BONUS_KAVA",
+   "BONUS_LEMONS",
+   "BONUS_MANGO",
+   "BONUS_MELONS",
+   "BONUS_MUSHROOMS",
+   "BONUS_OBSIDIAN",
+   "BONUS_OLIVES",
+   "BONUS_OPIUM",
+   "BONUS_PAPAYA",
+   "BONUS_PAPYRUS",
+   "BONUS_PEYOTE",
+   "BONUS_PISTACHIO",
+   "BONUS_POMEGRANATE",
+   "BONUS_POTATOES",
+   "BONUS_PRICKLY_PEAR",
+   "BONUS_PRIME_TIMBER",
+   "BONUS_PUMICE_STONE",
+   "BONUS_PUMPKIN",
+   "BONUS_REEDS",
+   "BONUS_RESIN",
+   "BONUS_RICE",
+   "BONUS_RUBBER",
+   "BONUS_SILK",
+   "BONUS_SPICES",
+   "BONUS_SQUASH",
+   "BONUS_STONE",
+   "BONUS_SUGAR",
+   "BONUS_TEA",
+   "BONUS_TOBACCO",
+   "BONUS_VANILLA",
+   "BONUS_WHEAT",
+   "BONUS_WOOD"
+  ],
+  "buildings": [
+   "BUILDING_BERRY_GATHERER",
+   "BUILDING_DRIFTWOOD_GATHERER",
+   "BUILDING_FLINT_GATHERER",
+   "BUILDING_GRAIN_GATHERER",
+   "BUILDING_GRASS_GATHERER",
+   "BUILDING_LAVA_ROCK_GATHERER",
+   "BUILDING_LICHEN_GATHERER",
+   "BUILDING_LUMBER_GATHERER",
+   "BUILDING_MUSHROOM_GATHERER",
+   "BUILDING_OBSIDIAN_GATHERER",
+   "BUILDING_REED_GATHERER",
+   "BUILDING_ROCK_GATHERER",
+   "BUILDING_STICK_GATHERER",
+   "BUILDING_STORAGE_PIT",
+   "BUILDING_TUBER_GATHERER"
+  ],
+  "builds": [
+   "BUILD_FRUIT_GATHERING_CAMP_KILL",
+   "BUILD_GRAPE_GATHERING_CAMP_KILL",
+   "BUILD_MUSHROOM_GATHERER_KILL",
+   "BUILD_PLANT_GATHERING_CAMP_KILL",
+   "BUILD_SEED_CAMP_KILL"
+  ],
+  "improvements": [
+   "IMPROVEMENT_FRUIT_GATHERING_CAMP",
+   "IMPROVEMENT_GRAPE_GATHERING_CAMP",
+   "IMPROVEMENT_MUSHROOM_GATHERER",
+   "IMPROVEMENT_PLANT_GATHERING_CAMP",
+   "IMPROVEMENT_SEED_CAMP"
+  ],
+  "promotions": [
+   "PROMOTION_CAUTIOUS2"
+  ],
+  "techs": [
+   "TECH_CONTROLLED_FIRE",
+   "TECH_COUNTING",
+   "TECH_HERBALISM",
+   "TECH_TOOL_MAKING",
+   "TECH_WEAVING"
+  ],
+  "units": [
+   "UNIT_GATHERER",
+   "UNIT_NEANDERTHAL_GATHERER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NOMADISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_GATHERER"
+ },
+ "cost": {
+  "research": 4
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_GATHERING",
+  "soundMP": "AS2D_TECH_GATHERING",
+  "icon": "Art/Interface/Buttons/TechTree/Button_GrainGathering.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 2,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 2,
+  "gridY": 11
+ }
+}

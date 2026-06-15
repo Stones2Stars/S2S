@@ -1,0 +1,99 @@
+{
+ "type": "TECH_KNOWLEDGE_MANAGEMENT",
+ "description": "TXT_KEY_TECH_KNOWLEDGE_MANAGEMENT",
+ "civilopedia": "TXT_KEY_TECH_KNOWLEDGE_MANAGEMENT_PEDIA",
+ "quote": "TXT_KEY_TECH_KNOWLEDGE_MANAGEMENT_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_EFFECT_MEDICAL_DATABASE",
+   "BUILDING_INFO_NET",
+   "BUILDING_NATIONAL_MEDICAL_DATABASE",
+   "BUILDING_NUCLEAR_POWERCOMPLEX",
+   "BUILDING_POWER_NUCLEAR",
+   "BUILDING_TRAFFIC_CAMERAS"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_TEACH5",
+   "PROMOTION_EDUCATE6",
+   "PROMOTION_RECOVER_TECH2"
+  ],
+  "techs": [
+   "TECH_BIOINFORMATICS",
+   "TECH_DERIVATIVES",
+   "TECH_IMAGINARY_PHYSICS",
+   "TECH_MEDIA_PSYCHOLOGY",
+   "TECH_NEURAL_NETWORKS",
+   "TECH_WAR_SIMULATIONS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMMUNICATION_NETWORKS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_MODERN_WAREHOUSE": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_FORENSICS_LAB": {
+     "flat": 800
+    },
+    "BUILDING_ISP_OFFICES": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "espionage": {
+  "city": {
+   "buildings": {
+    "BUILDING_CRYPTOLOGY_CENTER": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 21329
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_KNOWLEDGE_MANAGEMENT",
+  "soundMP": "AS2D_TECH_KNOWLEDGE_MANAGEMENT",
+  "icon": ",Art/Interface/Buttons/TechTree/Knowledge_management.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,9"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 89,
+  "gridY": 9
+ }
+}

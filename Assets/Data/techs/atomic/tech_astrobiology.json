@@ -1,0 +1,80 @@
+{
+ "type": "TECH_ASTROBIOLOGY",
+ "description": "TXT_KEY_TECH_ASTROBIOLOGY",
+ "civilopedia": "TXT_KEY_TECH_ASTROBIOLOGY_PEDIA",
+ "quote": "TXT_KEY_TECH_ASTROBIOLOGY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTROBIOLOGY_LAB"
+  ],
+  "techs": [
+   "TECH_PLANETARY_EXPLORATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BIOLOGICAL_WARFARE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_RADIO_ASTRONOMY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LUNAR_EXPLORATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_NUCLEIC_ACID_LAB": {
+     "flat": 700
+    },
+    "BUILDING_PROTEIN_LAB": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 16099
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_ASTROBIOLOGY",
+  "soundMP": "AS2D_TECH_ASTROBIOLOGY",
+  "icon": "Art/Interface/Buttons/TechTree/astrobiology.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 85,
+  "gridY": 13
+ }
+}

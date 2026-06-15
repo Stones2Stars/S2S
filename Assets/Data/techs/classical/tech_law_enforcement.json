@@ -1,0 +1,81 @@
+{
+ "type": "TECH_LAW_ENFORCEMENT",
+ "description": "TXT_KEY_TECH_LAW_ENFORCEMENT",
+ "civilopedia": "TXT_KEY_TECH_LAW_ENFORCEMENT_PEDIA",
+ "quote": "TXT_KEY_TECH_LAW_ENFORCEMENT_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTROLOGICAL_INFLUENCE_OF_ARIES",
+   "BUILDING_ASTROLOGICAL_INFLUENCE_OF_SCORPIO",
+   "BUILDING_TOWN_PATROL"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_INSPECTIONS5",
+   "PROMOTION_CRACKDOWN2",
+   "PROMOTION_POLICING3",
+   "PROMOTION_SLEUTH3"
+  ],
+  "techs": [
+   "TECH_ANCIENT_MEDICINE",
+   "TECH_MERITOCRACY"
+  ],
+  "units": [
+   "UNIT_HOPLOMACHUS",
+   "UNIT_PATROLS",
+   "UNIT_TREASURE_GUARD"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_SENTRY_POST"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MILITARY_TRAINING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CODE_OF_LAWS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 554
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_LAW_ENFORCEMENT",
+  "soundMP": "AS2D_TECH_LAW_ENFORCEMENT",
+  "icon": "art/buttons/techs/LawEnforcementTech.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 35,
+  "gridY": 15
+ }
+}

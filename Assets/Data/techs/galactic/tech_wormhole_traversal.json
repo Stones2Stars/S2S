@@ -1,0 +1,83 @@
+{
+ "type": "TECH_WORMHOLE_TRAVERSAL",
+ "description": "TXT_KEY_TECH_WORMHOLE_TRAVERSAL",
+ "civilopedia": "TXT_KEY_TECH_WORMHOLE_TRAVERSAL_PEDIA",
+ "quote": "TXT_KEY_TECH_WORMHOLE_TRAVERSAL_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_OLYMPICS",
+   "BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST"
+  ],
+  "builds": [
+   "BUILD_WORMHOLE"
+  ],
+  "techs": [
+   "TECH_FOLDING_SPACE",
+   "TECH_NEUTRINO_COMMUNICATIONS",
+   "TECH_SPECIES_AMALGAMATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WORMHOLE_COMMUNICATIONS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEGASTRONG_ALLOYS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_STARPORT": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 186934
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_WORMHOLE_TRAVERSAL",
+  "soundMP": "AS2D_TECH_WORMHOLE_TRAVERSAL",
+  "icon": "Art/Interface/Buttons/TechTree/wormholetraversal.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 135,
+  "gridY": 5
+ }
+}

@@ -1,0 +1,88 @@
+{
+ "type": "TECH_SEMI_AUTOMATIC_WEAPONS",
+ "description": "TXT_KEY_TECH_SEMI_AUTOMATIC_WEAPONS",
+ "civilopedia": "TXT_KEY_TECH_SEMI_AUTOMATIC_WEAPONS_PEDIA",
+ "quote": "TXT_KEY_TECH_SEMI_AUTOMATIC_WEAPONS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_GUN_RAMPAGE",
+   "BUILDING_MOB_STOREFRONT"
+  ],
+  "techs": [
+   "TECH_IMPERIALISM"
+  ],
+  "units": [
+   "UNIT_BOSNEGERS",
+   "UNIT_GATLING_GUN",
+   "UNIT_MOBSTER_CAR",
+   "UNIT_MOTORCYCLE",
+   "UNIT_THUG"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HUNTING_INSTRUCTIONS",
+   "BUILDING_MASTER_HUNTER"
+  ],
+  "units": [
+   "UNIT_GUNFIGHTER",
+   "UNIT_HAJDUK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MILITARY_SCIENCE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NITROGLYCERIN",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_STEEL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_HUNTING_PRESERVE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 6673
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_SEMI_AUTOMATIC_WEAPONS",
+  "soundMP": "AS2D_TECH_SEMI_AUTOMATIC_WEAPONS",
+  "icon": ",Art/Interface/Buttons/TechTree/Semi_automatic.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,15"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 67,
+  "gridY": 13
+ }
+}

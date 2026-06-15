@@ -1,0 +1,81 @@
+{
+ "type": "TECH_ANCIENT_BALLISTICS",
+ "description": "TXT_KEY_TECH_ANCIENT_BALLISTICS",
+ "civilopedia": "TXT_KEY_TECH_ANCIENT_BALLISTICS_PEDIA",
+ "quote": "TXT_KEY_TECH_ANCIENT_BALLISTICS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_SULPHUR"
+  ],
+  "promotions": [
+   "PROMOTION_FIRE_SHIP"
+  ],
+  "techs": [
+   "TECH_SIEGE_WARFARE"
+  ],
+  "units": [
+   "UNIT_BALLISTA_MAMMOTH",
+   "UNIT_CARROBALLISTA",
+   "UNIT_CATAPULT",
+   "UNIT_DROMON_FIRE_SHIP",
+   "UNIT_GIRAFFE_CROSSBOW",
+   "UNIT_HORSE_CROSSBOWMAN",
+   "UNIT_LIGHT_CROSSBOWMAN",
+   "UNIT_MASTER_SAILOR_QUINQUEREME",
+   "UNIT_QUINQUEREME",
+   "UNIT_SCORPION",
+   "UNIT_ZHUGE_KESHIK",
+   "UNIT_ZHUGE_NO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ANCIENT_MACHINERY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CONSTRUCTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 614
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_ANCIENT_BALLISTICS",
+  "soundMP": "AS2D_TECH_ANCIENT_BALLISTICS",
+  "icon": "Art/Interface/Buttons/TechTree/ancientballistics.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 36,
+  "gridY": 13
+ }
+}

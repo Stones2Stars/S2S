@@ -1,0 +1,70 @@
+{
+ "type": "TECH_GERONTOCRACY",
+ "description": "TXT_KEY_TECH_GERONTOCRACY",
+ "civilopedia": "TXT_KEY_TECH_GERONTOCRACY_PEDIA",
+ "quote": "TXT_KEY_TECH_GERONTOCRACY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_CAPITOL",
+   "BUILDING_INTERSTELLAR_GOVERNMENT_GERONTOCRACY"
+  ],
+  "civics": [
+   "CIVIC_GERONTOCRACY"
+  ],
+  "techs": [
+   "TECH_ECOSYNTHESIS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ADAPTIVE_RADIATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_XENODIPLOMACY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "buildings": {
+    "BUILDING_CISLUNAR_GOVERNANCE": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 159944
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/elder_council.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 131,
+  "gridY": 1
+ }
+}

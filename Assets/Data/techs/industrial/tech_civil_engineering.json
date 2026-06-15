@@ -1,0 +1,139 @@
+{
+ "type": "TECH_CIVIL_ENGINEERING",
+ "description": "TXT_KEY_TECH_CIVIL_ENGINEERING",
+ "civilopedia": "TXT_KEY_TECH_CIVIL_ENGINEERING_PEDIA",
+ "quote": "TXT_KEY_TECH_CIVIL_ENGINEERING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BULLSEYE_STORE",
+   "BUILDING_CITY_PARK",
+   "BUILDING_CONSTRUCTION_FIRM",
+   "BUILDING_DISNEYLAND",
+   "BUILDING_EAST_WEST_TRADERS_STORE",
+   "BUILDING_EIFFEL_TOWER",
+   "BUILDING_GATEWAY_ARCH",
+   "BUILDING_GOLDEN_GATE_BRIDGE",
+   "BUILDING_HOUSING_HIGHRISES",
+   "BUILDING_HOUSING_PENTHOUSE_SUITES",
+   "BUILDING_HOUSING_PROJECTS",
+   "BUILDING_HQ_BULLSEYE",
+   "BUILDING_HQ_EAST_WEST_TRADERS",
+   "BUILDING_HQ_MALLWART",
+   "BUILDING_INDUSTRIAL_PARK",
+   "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+   "BUILDING_MALLWART_STORE",
+   "BUILDING_MODERN_OFFICES",
+   "BUILDING_NATIONAL_WEATHER_SERVICE",
+   "BUILDING_ORDINANCE_FIRE_CODE",
+   "BUILDING_PESTS_PIGEONS",
+   "BUILDING_PESTS_RACCOONS",
+   "BUILDING_SKYSCRAPER"
+  ],
+  "builds": [
+   "BUILD_TUNNEL"
+  ],
+  "techs": [
+   "TECH_MANAGEMENT"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_EFFECT_TRADITION_AESTHETIC_APPRECIATION",
+   "BUILDING_GROVE",
+   "BUILDING_LEANING_TOWER_OF_PISA",
+   "BUILDING_MESA_VERDE",
+   "BUILDING_TAXPERSON",
+   "BUILDING_TRADITION_AESTHETIC_APPRECIATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MODERN_SANITATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ELECTRICITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_ENGINEERING_SCHOOL": {
+     "flat": 600
+    },
+    "BUILDING_UNIVERSITY": {
+     "flat": 600
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_SUBURBS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_QUARRY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "buildings": {
+    "BUILDING_UNIVERSITY": {
+     "flat": [
+      {
+       "SPECIALIST_ENGINEER": 1
+      }
+     ]
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 7008
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_CIVILENGINEERING",
+  "soundMP": "AS2D_TECH_CIVILENGINEERING",
+  "icon": ",Art/Interface/Buttons/TechTree/concrete.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,4"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 68,
+  "gridY": 11
+ }
+}

@@ -1,0 +1,65 @@
+{
+ "type": "TECH_TEXTILE_LOOM",
+ "description": "TXT_KEY_TECH_TEXTILE_LOOM",
+ "civilopedia": "TXT_KEY_TECH_TEXTILE_LOOM_PEDIA",
+ "quote": "TXT_KEY_TECH_TEXTILE_LOOM_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_TAPESTRIES"
+  ],
+  "buildings": [
+   "BUILDING_PESTS_MOTHS",
+   "BUILDING_TAPESTRY_MAKERS_WORKSHOP"
+  ],
+  "techs": [
+   "TECH_LEISURE",
+   "TECH_SERICULTURE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PULLEY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_WEAVER": {
+     "flat": 200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 164
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_TEXTILE_LOOM",
+  "soundMP": "AS2D_TECH_TEXTILE_LOOM",
+  "icon": "Art/Interface/Buttons/TechTree/loom2.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 25,
+  "gridY": 15
+ }
+}

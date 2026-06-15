@@ -1,0 +1,70 @@
+{
+ "type": "TECH_BRANE_CROSSOVER",
+ "description": "TXT_KEY_TECH_BRANE_CROSSOVER",
+ "civilopedia": "TXT_KEY_TECH_BRANE_CROSSOVER_PEDIA",
+ "quote": "TXT_KEY_TECH_BRANE_CROSSOVER_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_BRANE_COLLISION",
+   "BUILDING_DISTANT_BRANE_THRUSTER",
+   "BUILDING_UNIVERSE_PORTAL"
+  ],
+  "techs": [
+   "TECH_ALTERNATE_HISTORY_EXPLORATION",
+   "TECH_MANIFOLD_COLONIZATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DECOMPACTIFIED_SPACE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BRANE_CONSTRUCTION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MULTIVERSE_TRAVERSAL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_STRINGWORKS": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 601234
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/brane_crossover.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 155,
+  "gridY": 15
+ }
+}

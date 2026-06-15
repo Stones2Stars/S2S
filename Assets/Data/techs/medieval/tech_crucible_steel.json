@@ -1,0 +1,82 @@
+{
+ "type": "TECH_CRUCIBLE_STEEL",
+ "description": "TXT_KEY_TECH_CRUCIBLE_STEEL",
+ "civilopedia": "TXT_KEY_TECH_CRUCIBLE_STEEL_PEDIA",
+ "quote": "TXT_KEY_TECH_CRUCIBLE_STEEL_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_STEEL_INGOTS",
+   "BONUS_STEEL_WARES"
+  ],
+  "buildings": [
+   "BUILDING_SMELTER_STEEL",
+   "BUILDING_SMITH_STEEL"
+  ],
+  "techs": [
+   "TECH_CHIVALRY",
+   "TECH_COAL_MINING",
+   "TECH_WARRANTS_AND_DECREES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ALCHEMY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GUILDS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AGRICULTURAL_TOOLS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARMOR_CRAFTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1688
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 9
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_CRUCIBLESTEEL",
+  "soundMP": "AS2D_TECH_CRUCIBLESTEEL",
+  "icon": "Art/Interface/Buttons/TechTree/cruciblesteel.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 47,
+  "gridY": 19
+ }
+}

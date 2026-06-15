@@ -1,0 +1,82 @@
+{
+ "type": "TECH_PANPSYCHISM",
+ "description": "TXT_KEY_TECH_PANPSYCHISM",
+ "civilopedia": "TXT_KEY_TECH_PANPSYCHISM_PEDIA",
+ "quote": "TXT_KEY_TECH_PANPSYCHISM_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_GALAXY_SCAN",
+   "BUILDING_INTERSTELLAR_PHILOTE_PRODUCER",
+   "BUILDING_REMOTE_VIEWING"
+  ],
+  "civics": [
+   "CIVIC_OMNISCIENCE"
+  ],
+  "techs": [
+   "TECH_COSMIC_GOVERNANCE",
+   "TECH_HYPERINTELLIGENCE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MENSIOKINESIS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GRAND_UNIFICATION_BIOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_METAVERSE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_BIOTIC_GALAXY": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 528012
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/panpsychism.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 151,
+  "gridY": 1
+ }
+}

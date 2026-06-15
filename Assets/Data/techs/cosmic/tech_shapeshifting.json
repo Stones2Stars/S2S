@@ -1,0 +1,71 @@
+{
+ "type": "TECH_SHAPESHIFTING",
+ "description": "TXT_KEY_TECH_SHAPESHIFTING",
+ "civilopedia": "TXT_KEY_TECH_SHAPESHIFTING_PEDIA",
+ "quote": "TXT_KEY_TECH_SHAPESHIFTING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_METAMORPHIC_STATION",
+   "BUILDING_DEEP_SPACE_EXOTIC_ARCHITECTURE",
+   "BUILDING_SHAPESHIFTING_ARCHITECTURE"
+  ],
+  "techs": [
+   "TECH_METAVERSE"
+  ],
+  "units": [
+   "UNIT_SHAPESHIFTING_WORK_CREW"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NOOGENESIS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PURE_INFORMATION_SOCIETY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_ULTIMATE_COMBAT_ARENA": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_GREAT_SPY"
+ },
+ "cost": {
+  "research": 366008
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/shapeshifting.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 147,
+  "gridY": 9
+ }
+}

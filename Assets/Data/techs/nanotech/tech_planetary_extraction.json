@@ -1,0 +1,97 @@
+{
+ "type": "TECH_PLANETARY_EXTRACTION",
+ "description": "TXT_KEY_TECH_PLANETARY_EXTRACTION",
+ "civilopedia": "TXT_KEY_TECH_PLANETARY_EXTRACTION_PEDIA",
+ "quote": "TXT_KEY_TECH_PLANETARY_EXTRACTION_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_MARTIAN_BLUEBERRIES",
+   "BONUS_MARTIAN_ROCKS"
+  ],
+  "buildings": [
+   "BUILDING_MARTIAN_ASTEROID_MINE",
+   "BUILDING_MARTIAN_GEOLOGY_LAB",
+   "BUILDING_MARTIAN_GEOTHERMAL_PLANT",
+   "BUILDING_MARTIAN_MINE",
+   "BUILDING_MARTIAN_WATER_EXTRACTION",
+   "BUILDING_VENUS_VERTICAL_WIND_FARM"
+  ],
+  "builds": [
+   "BUILD_MARTIAN_MINE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_MARTIAN_MINE"
+  ],
+  "techs": [
+   "TECH_PLANETARY_MANUFACTURING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ACOUSTIC_WEAPONRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PLANETARY_COLONIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_MINING_CAMP": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_MINING_CAMP": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 40165
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_PLANETARY_EXTRACTION",
+  "soundMP": "AS2D_TECH_PLANETARY_EXTRACTION",
+  "icon": "Art/Interface/Buttons/TechTree/planetarymining.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 103,
+  "gridY": 3
+ }
+}

@@ -1,0 +1,84 @@
+{
+ "type": "TECH_ZERO_POINT_ENERGY",
+ "description": "TXT_KEY_TECH_ZERO_POINT_ENERGY",
+ "civilopedia": "TXT_KEY_TECH_ZERO_POINT_ENERGY_PEDIA",
+ "quote": "TXT_KEY_TECH_ZERO_POINT_ENERGY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_ZERO_POINT_PLANT",
+   "BUILDING_INTERSTELLAR_ZERO_POINT_POWER",
+   "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
+  ],
+  "techs": [
+   "TECH_DARK_ENERGY_HARVESTING",
+   "TECH_MACROSCOPIC_SUPERPOSITION",
+   "TECH_NOOGENESIS",
+   "TECH_QUANTUM_RAMJET",
+   "TECH_STARPUNK",
+   "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ACOUSTIC_CROWD_CONTROL",
+   "BUILDING_HE3_FUSION_POWER_PLANT",
+   "BUILDING_INTERSTELLAR_DYSON_SWARM",
+   "BUILDING_LASER_BATTERY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EXOTIC_STARS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_UNIFICATION_MATHEMATICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 314134
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/zero_point_energy.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 143,
+  "gridY": 1
+ }
+}

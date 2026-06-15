@@ -1,0 +1,85 @@
+{
+ "type": "TECH_BINARY_PSYCHOKINESIS",
+ "description": "TXT_KEY_TECH_BINARY_PSYCHOKINESIS",
+ "civilopedia": "TXT_KEY_TECH_BINARY_PSYCHOKINESIS_PEDIA",
+ "quote": "TXT_KEY_TECH_BINARY_PSYCHOKINESIS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_SIMULATED_WORLD_MANIFESTATION",
+   "BUILDING_ULTIMATE_COMBAT_ARENA"
+  ],
+  "techs": [
+   "TECH_NANOMORPHICS",
+   "TECH_SENTIENT_EARTH"
+  ],
+  "units": [
+   "UNIT_DEEPSPACE_INFANTRY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_NATIONAL_NIGHT_OF_HOCKEY",
+   "BUILDING_NATIONAL_SPORTS_LEAGUE",
+   "BUILDING_STATUE_OF_CHAMPION",
+   "BUILDING_WEMBLEY_STADIUM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ANTI_GRAVITY_FIELDS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ANIMAMATERIALS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRANSHUMANISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SAPIENTROIDS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 77770
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_BINARY_PSYCHOKINESIS",
+  "soundMP": "AS2D_TECH_BINARY_PSYCHOKINESIS",
+  "icon": "Art/Interface/Buttons/TechTree/binarypsychokinesis.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 117,
+  "gridY": 17
+ }
+}

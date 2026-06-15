@@ -1,0 +1,105 @@
+{
+ "type": "TECH_MONARCHY",
+ "description": "TXT_KEY_TECH_MONARCHY",
+ "civilopedia": "TXT_KEY_TECH_MONARCHY_PEDIA",
+ "quote": "TXT_KEY_TECH_MONARCHY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ABU_SIMBEL",
+   "BUILDING_CULTURE_ENGLISH",
+   "BUILDING_CULTURE_MERINA",
+   "BUILDING_CULTURE_NOONGAR",
+   "BUILDING_CYRUS_CYLINDER",
+   "BUILDING_GOVERNORS_MENAGERIE",
+   "BUILDING_MEETING_HALL",
+   "BUILDING_ROYAL_MONUMENT",
+   "BUILDING_SPY_HIDEOUT",
+   "BUILDING_TERRACOTTA_ARMY",
+   "BUILDING_TOMB_OF_CYRUS",
+   "BUILDING_TREASURY"
+  ],
+  "builds": [
+   "BUILD_HUNTING_PRESERVE"
+  ],
+  "civics": [
+   "CIVIC_MONARCHY",
+   "CIVIC_SOVEREIGNTY"
+  ],
+  "improvements": [
+   "IMPROVEMENT_HUNTING_PRESERVE"
+  ],
+  "techs": [
+   "TECH_CLASSICAL_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_ASHURBANIPAL",
+   "UNIT_LUGALZAGESI",
+   "UNIT_PIBELMAN",
+   "UNIT_RED_SPEAR",
+   "UNIT_SCIPIO_AFRICANUS",
+   "UNIT_TAHARQA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PATRIARCHY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BRONZE_WORKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MONOTHEISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_TAPESTRY_MAKERS_WORKSHOP": {
+     "flat": 200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 348
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_RELIGION": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_CULTURE": 9
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_MONARCHY",
+  "soundMP": "AS2D_TECH_MP_MONARCHY",
+  "icon": ",Art/Interface/Buttons/TechTree/Monarchy.dds,Art/Interface/Buttons/TechTree_Atlas.dds,1,11"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 16,
+  "tradeable": true,
+  "gridX": 31,
+  "gridY": 11
+ }
+}

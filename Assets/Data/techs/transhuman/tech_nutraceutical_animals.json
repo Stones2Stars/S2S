@@ -1,0 +1,76 @@
+{
+ "type": "TECH_NUTRACEUTICAL_ANIMALS",
+ "description": "TXT_KEY_TECH_NUTRACEUTICAL_ANIMALS",
+ "civilopedia": "TXT_KEY_TECH_NUTRACEUTICAL_ANIMALS_PEDIA",
+ "quote": "TXT_KEY_TECH_NUTRACEUTICAL_ANIMALS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIOLOGICAL_VEHICLES",
+   "BUILDING_MOBILE_PLANTS",
+   "BUILDING_NUTRACEUTICAL_LAB"
+  ],
+  "techs": [
+   "TECH_ARTIFICIAL_LIFE",
+   "TECH_ORGANIC_CITIES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CRYONICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_EVOLUTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_LIFE_SILICON_BASED": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 70029
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_NUTRACEUTICAL_ANIMALS",
+  "soundMP": "AS2D_TECH_NUTRACEUTICAL_ANIMALS",
+  "icon": "Art/Interface/Buttons/TechTree/nutraceuticals.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 114,
+  "gridY": 17
+ }
+}

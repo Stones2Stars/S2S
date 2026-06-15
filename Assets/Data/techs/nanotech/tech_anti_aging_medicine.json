@@ -1,0 +1,104 @@
+{
+ "type": "TECH_ANTI_AGING_MEDICINE",
+ "description": "TXT_KEY_TECH_ANTI_AGING_MEDICINE",
+ "civilopedia": "TXT_KEY_TECH_ANTI_AGING_MEDICINE_PEDIA",
+ "quote": "TXT_KEY_TECH_ANTI_AGING_MEDICINE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CELL_REPAIR_CENTER",
+   "BUILDING_CURE_FOR_ALZHEIMERS"
+  ],
+  "projects": [
+   "PROJECT_LONGEVITY"
+  ],
+  "techs": [
+   "TECH_SMART_DRUGS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ONTOLOGICAL_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_RAPID_RECUPERATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_TRANSGENICS_LAB": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_TISSUE_ENGINEERING_LAB": {
+     "flat": 900
+    },
+    "BUILDING_TRANSGENICS_LAB": {
+     "flat": 900
+    },
+    "BUILDING_VACCINE_LAB": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "buildings": {
+    "BUILDING_RETIREMENT_HOME": {
+     "flat": 1
+    },
+    "BUILDING_TISSUE_ENGINEERING_LAB": {
+     "flat": 1
+    },
+    "BUILDING_VETERINARIAN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 42984
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_ANTI_AGING_MEDICINE",
+  "soundMP": "AS2D_TECH_ANTI_AGING_MEDICINE",
+  "icon": ",Art/Interface/Buttons/TechTree/dna_button_05.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,5"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 105,
+  "gridY": 17
+ }
+}

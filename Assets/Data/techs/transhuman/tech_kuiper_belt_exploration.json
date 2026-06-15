@@ -1,0 +1,94 @@
+{
+ "type": "TECH_KUIPER_BELT_EXPLORATION",
+ "description": "TXT_KEY_TECH_KUIPER_BELT_EXPLORATION",
+ "civilopedia": "TXT_KEY_TECH_KUIPER_BELT_EXPLORATION_PEDIA",
+ "quote": "TXT_KEY_TECH_KUIPER_BELT_EXPLORATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CALLISTO_RESUPPLY_BASE",
+   "BUILDING_DEEP_SPACE_ORBITAL_BASE",
+   "BUILDING_ENCELADUS_RESUPPLY_BASE",
+   "BUILDING_LIFE_HYDROGEN_SULFIDE",
+   "BUILDING_MARTIAN_SPACEPORT",
+   "BUILDING_PLUTO_RESEARCH_BASE",
+   "BUILDING_SATURN_RING_ICE_MINE",
+   "BUILDING_TRITON_COLONY",
+   "BUILDING_UMBRIEL_COLONY"
+  ],
+  "builds": [
+   "BUILD_JOVIAN_LUNAR_BASE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_JOVIAN_LUNAR_BASE"
+  ],
+  "techs": [
+   "TECH_ASTROGATION_CONSTELLATION"
+  ],
+  "units": [
+   "UNIT_PLANETARY_INFANTRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_UNIFICATION_PHYSICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DEEP_SPACE_COLONIES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_CISLUNAR_DOCKING_BAY": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 65511
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_KUIPER_BELT_EXPLORATION",
+  "soundMP": "AS2D_TECH_KUIPER_BELT_EXPLORATION",
+  "icon": "Art/Interface/Buttons/TechTree/oortcloudprobes.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 112,
+  "gridY": 1
+ }
+}

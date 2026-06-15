@@ -1,0 +1,72 @@
+{
+ "type": "TECH_CANDLE_MAKING",
+ "description": "TXT_KEY_TECH_CANDLE_MAKING",
+ "civilopedia": "TXT_KEY_TECH_CANDLE_MAKING_PEDIA",
+ "quote": "TXT_KEY_TECH_CANDLE_MAKING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CANDLES"
+  ],
+  "buildings": [
+   "BUILDING_CANDLEMAKERS_SHOP"
+  ],
+  "promotions": [
+   "PROMOTION_POLAR_WORKER1"
+  ],
+  "techs": [
+   "TECH_ALCHEMY",
+   "TECH_PAPACY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SOAP_MAKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PRIESTHOOD",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "cost": {
+  "research": 213
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 9
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_CANDLE_MAKING",
+  "soundMP": "AS2D_TECH_CANDLE_MAKING",
+  "icon": "Art/Interface/Buttons/TechTree/candlemaking.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "gridX": 27,
+  "gridY": 19
+ }
+}

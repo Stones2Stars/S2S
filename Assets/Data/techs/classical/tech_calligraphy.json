@@ -1,0 +1,68 @@
+{
+ "type": "TECH_CALLIGRAPHY",
+ "description": "TXT_KEY_TECH_CALLIGRAPHY",
+ "civilopedia": "TXT_KEY_TECH_CALLIGRAPHY_PEDIA",
+ "quote": "TXT_KEY_TECH_CALLIGRAPHY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CALLIGRAPHY_SCHOOL"
+  ],
+  "techs": [
+   "TECH_AESTHETICS",
+   "TECH_INSURANCE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LITERATURE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DIPLOMACY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CALENDAR",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 614
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 7
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_CALLIGRAPHY",
+  "soundMP": "AS2D_TECH_CALLIGRAPHY",
+  "icon": "Art/Interface/Buttons/TechTree/calligraphy.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 36,
+  "gridY": 9
+ }
+}

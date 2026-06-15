@@ -1,0 +1,96 @@
+{
+ "type": "TECH_LEAD_WORKING",
+ "description": "TXT_KEY_TECH_LEAD_WORKING",
+ "civilopedia": "TXT_KEY_TECH_LEAD_WORKING_PEDIA",
+ "quote": "TXT_KEY_TECH_LEAD_WORKING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CINNABAR_ORE",
+   "BONUS_LEAD_INGOTS",
+   "BONUS_LEAD_ORE",
+   "BONUS_LEAD_WARES"
+  ],
+  "buildings": [
+   "BUILDING_MINE_CINNABAR",
+   "BUILDING_MINE_LEAD",
+   "BUILDING_NATIONAL_SMELTER_LEAD",
+   "BUILDING_SMELTER_LEAD",
+   "BUILDING_SMITH_LEAD"
+  ],
+  "techs": [
+   "TECH_PLUMBING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STANDARDIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MINING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_STONE_TOOL_MAKER": {
+     "flat": -100
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_STONE_TOOL_MAKER": {
+     "flat": -100
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_STONE_TOOL_MAKER": {
+     "flat": -100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 144
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_LEAD_WORKING",
+  "soundMP": "AS2D_TECH_LEAD_WORKING",
+  "icon": "Art/Interface/Buttons/TechTree/leadworking.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 24,
+  "gridY": 9
+ }
+}

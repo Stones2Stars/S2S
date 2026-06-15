@@ -1,0 +1,65 @@
+{
+ "type": "TECH_FIRE_BRIGADES",
+ "description": "TXT_KEY_TECH_FIRE_BRIGADES",
+ "civilopedia": "TXT_KEY_TECH_FIRE_BRIGADES_PEDIA",
+ "quote": "TXT_KEY_TECH_FIRE_BRIGADES_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_FIRE_BRIGADE"
+  ],
+  "techs": [
+   "TECH_FIREFIGHTING"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BONFIRE",
+   "BUILDING_IMU",
+   "BUILDING_RESOURCES_CHARCOAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SANITATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEDIEVAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1132
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_FIRE_BRIGADES",
+  "soundMP": "AS2D_TECH_FIRE_BRIGADES",
+  "icon": "Art/Interface/Buttons/TechTree/Fire_Brigades.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "gridX": 42,
+  "gridY": 11
+ }
+}

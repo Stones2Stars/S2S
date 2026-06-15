@@ -1,0 +1,91 @@
+{
+ "type": "TECH_FERMENTATION",
+ "description": "TXT_KEY_TECH_FERMENTATION",
+ "civilopedia": "TXT_KEY_TECH_FERMENTATION_PEDIA",
+ "quote": "TXT_KEY_TECH_FERMENTATION_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_ALCOHOL",
+   "BONUS_BARRELS",
+   "BONUS_OLIVE_OIL"
+  ],
+  "buildings": [
+   "BUILDING_BREWERY",
+   "BUILDING_CIDER_HOUSE",
+   "BUILDING_COOPER",
+   "BUILDING_CULTURE_CATALONIAN",
+   "BUILDING_CULTURE_LULE",
+   "BUILDING_CULTURE_SYRIAN",
+   "BUILDING_CULTURE_TUNGUS",
+   "BUILDING_OLIVE_PRESS",
+   "BUILDING_ORCHARD_OLIVE",
+   "BUILDING_PLANTATION_AGAVE",
+   "BUILDING_TAVERN",
+   "BUILDING_VINEYARD",
+   "BUILDING_WINERY"
+  ],
+  "builds": [
+   "BUILD_WINERY"
+  ],
+  "improvements": [
+   "IMPROVEMENT_WINERY"
+  ],
+  "techs": [
+   "TECH_FOLK_MEDICINE",
+   "TECH_OIL_LAMPS"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_GRAPE_PICKING_CAMP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BREAD_MAKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FUNGICULTURE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ORCHARDS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 144
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_FERMENTATION",
+  "soundMP": "AS2D_TECH_FERMENTATION",
+  "icon": "Art/Interface/Buttons/TechTree/fermentation.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 24,
+  "gridY": 1
+ }
+}

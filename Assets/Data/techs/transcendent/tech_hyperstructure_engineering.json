@@ -1,0 +1,78 @@
+{
+ "type": "TECH_HYPERSTRUCTURE_ENGINEERING",
+ "description": "TXT_KEY_TECH_HYPERSTRUCTURE_ENGINEERING",
+ "civilopedia": "TXT_KEY_TECH_HYPERSTRUCTURE_ENGINEERING_PEDIA",
+ "quote": "TXT_KEY_TECH_HYPERSTRUCTURE_ENGINEERING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_ARTISAN_PLANETS"
+  ],
+  "buildings": [
+   "BUILDING_DISTANT_ARTISAN_PLANET_DESIGNER",
+   "BUILDING_DISTANT_DARK_FLOW_GENERATOR",
+   "BUILDING_EARTH_2_0"
+  ],
+  "techs": [
+   "TECH_EXPERIMENTAL_COSMOLOGY",
+   "TECH_HYPERINTELLIGENCE",
+   "TECH_TESSERACT_CONSTRUCTION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STRING_MANIPULATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERGALACTIC_DARK_ENERGY_PLANT": {
+     "flat": 5000
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERGALACTIC_SHKADOV_THRUSTER": {
+     "flat": 1300
+    },
+    "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 511504
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/hyperstructure_engineering.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 150,
+  "gridY": 17
+ }
+}

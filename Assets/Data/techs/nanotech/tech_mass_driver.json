@@ -1,0 +1,78 @@
+{
+ "type": "TECH_MASS_DRIVER",
+ "description": "TXT_KEY_TECH_MASS_DRIVER",
+ "civilopedia": "TXT_KEY_TECH_MASS_DRIVER_PEDIA",
+ "quote": "TXT_KEY_TECH_MASS_DRIVER_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_RESUPPLY",
+   "BUILDING_MAGLEV_LAUNCHER",
+   "BUILDING_STARTRAM"
+  ],
+  "techs": [
+   "TECH_ACOUSTIC_WEAPONRY"
+  ],
+  "units": [
+   "UNIT_SPACE_WORK_CREW"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_JOVIAN_EXPLORATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FUSION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_CISLUNAR_DOCKING_BAY": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 37614
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_MASS_DRIVER",
+  "soundMP": "AS2D_TECH_MASS_DRIVER",
+  "icon": "Art/Interface/Buttons/TechTree/massdriver.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 101,
+  "gridY": 13
+ }
+}

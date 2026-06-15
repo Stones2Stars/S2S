@@ -1,0 +1,57 @@
+{
+ "type": "TECH_ZOROASTRIANISM",
+ "description": "TXT_KEY_TECH_ZOROASTRIANISM",
+ "civilopedia": "TXT_KEY_TECH_ZOROASTRIANISM_PEDIA",
+ "quote": "TXT_KEY_TECH_ZOROASTRIANISM_QUOTE",
+ "enables": {
+  "religions": [
+   "RELIGION_ZOROASTRIANISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DUALISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MONOTHEISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 309
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_ZOROASTRIANISM",
+  "soundMP": "AS2D_TECH_ZOROASTRIANISM",
+  "icon": "Art/Interface/Buttons/TechTree/Zoroastrianism.dds"
+ },
+ "identity": {
+  "global": true,
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "gridX": 30,
+  "gridY": 13
+ }
+}

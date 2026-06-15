@@ -1,0 +1,126 @@
+{
+ "type": "TECH_MEGASTRUCTURE_ENGINEERING",
+ "description": "TXT_KEY_TECH_MEGASTRUCTURE_ENGINEERING",
+ "civilopedia": "TXT_KEY_TECH_MEGASTRUCTURE_ENGINEERING_PEDIA",
+ "quote": "TXT_KEY_TECH_MEGASTRUCTURE_ENGINEERING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARCOLOGY",
+   "BUILDING_BOSTON_ARCOLOGY",
+   "BUILDING_DOWNDRAFT_TOWER",
+   "BUILDING_HIGH_TECH_CRANE",
+   "BUILDING_HOUSING_ARCOLOGY_SLUMS",
+   "BUILDING_HOUSING_ARCOLOGY_SUBURBS",
+   "BUILDING_HOUSING_ARCOLOGY_UPPER_CLASS",
+   "BUILDING_OCEAN_ARCOLOGY",
+   "BUILDING_SHIMIZU_MEGA_CITY_PYRAMID",
+   "BUILDING_SOLAR_UPDRAFT_TOWER",
+   "BUILDING_ULTIMA_TOWER",
+   "BUILDING_X_SEED_4000"
+  ],
+  "techs": [
+   "TECH_ASTROGATION_CONSTELLATION",
+   "TECH_EVOLVED_CONSTRUCTION"
+  ],
+  "units": [
+   "UNIT_FUSION_CARRIER",
+   "UNIT_MASTER_SAILOR_FUSION_CARRIER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_COIT_TOWER",
+   "BUILDING_LONDON_EYE",
+   "BUILDING_NEUSCHWANSTEIN",
+   "BUILDING_NOTRE_DAME",
+   "BUILDING_SINGAPORE_FLYER",
+   "BUILDING_STEAM_CRANE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SIMULATED_REALITY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HYPERMAGNETICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_ENGINEERING_SCHOOL": {
+     "flat": 1000
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_COLONY_MANUFACTORY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SUBURBS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_FACTORY_LEVITATION_GENERATORS": {
+     "flat": 1000
+    },
+    "BUILDING_SUPERSTRONG_ALLOY_FOUNDRY": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 67710
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 7
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   },
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_MEGASTRUCTURE_ENGINEERING",
+  "soundMP": "AS2D_TECH_MEGASTRUCTURE_ENGINEERING",
+  "icon": ",Art/Interface/Buttons/TechTree/cybercity.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,1,5"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 113,
+  "gridY": 3
+ }
+}

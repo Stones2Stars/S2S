@@ -1,0 +1,66 @@
+{
+ "type": "TECH_WEAPONIZED_DISINTEGRATION",
+ "description": "TXT_KEY_TECH_WEAPONIZED_DISINTEGRATION",
+ "civilopedia": "TXT_KEY_TECH_WEAPONIZED_DISINTEGRATION_PEDIA",
+ "quote": "TXT_KEY_TECH_WEAPONIZED_DISINTEGRATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_DEATH_RAY",
+   "BUILDING_DEEP_SPACE_DEATH_RAY",
+   "BUILDING_LUNAR_DEATH_RAY",
+   "BUILDING_MARTIAN_DEATH_RAY",
+   "BUILDING_STARFLEET_ACADEMY",
+   "BUILDING_VENUS_DEATH_RAY"
+  ],
+  "techs": [
+   "TECH_PLANET_CRACKING",
+   "TECH_XENODIPLOMACY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ATOMIZATION_FIELD",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 149039
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_WEAPONIZED_DISINTEGRATION",
+  "soundMP": "AS2D_TECH_WEAPONIZED_DISINTEGRATION",
+  "icon": "Art/Interface/Buttons/TechTree/weaponizeddisintegration.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 50,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 129,
+  "gridY": 7
+ }
+}

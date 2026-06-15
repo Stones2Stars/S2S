@@ -1,0 +1,160 @@
+{
+ "type": "TECH_GLOBALIZATION",
+ "description": "TXT_KEY_TECH_GLOBALIZATION",
+ "civilopedia": "TXT_KEY_TECH_GLOBALIZATION_PEDIA",
+ "quote": "TXT_KEY_TECH_GLOBALIZATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AON_CENTER",
+   "BUILDING_AZADI_TOWER",
+   "BUILDING_DRUGLORDS_MANSON",
+   "BUILDING_NAVAL_YARD",
+   "BUILDING_SOCIAL_JUSTICE_ORGANIZATION",
+   "BUILDING_TRANSAMERICA_TOWER",
+   "BUILDING_UNESCO_HERITAGE_SITE",
+   "BUILDING_UNITED_NATIONS",
+   "BUILDING_UNIVERSAL_CHURCH",
+   "BUILDING_WILLIS_TOWER",
+   "BUILDING_WORLD_BANK",
+   "BUILDING_WORLD_TOWER",
+   "BUILDING_WORLD_TRADE_CENTER"
+  ],
+  "civics": [
+   "CIVIC_SKILLED_WORKERS",
+   "CIVIC_WORLD_LANGUAGE"
+  ],
+  "projects": [
+   "PROJECT_INTERNATIONAL_MONETARY_FUND"
+  ],
+  "techs": [
+   "TECH_CONGLOMERATES",
+   "TECH_POSTMODERNISM",
+   "TECH_TOURISM"
+  ],
+  "units": [
+   "UNIT_HOSPITAL_SHIP_2"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CELLAR",
+   "BUILDING_GRANARY",
+   "BUILDING_GUILD_BAKERS",
+   "BUILDING_GUILD_BLACKSMITHS",
+   "BUILDING_GUILD_BUTCHERS",
+   "BUILDING_GUILD_CARPENTERS",
+   "BUILDING_GUILD_DRAPERS",
+   "BUILDING_GUILD_FISHMONGERS",
+   "BUILDING_GUILD_GOLDSMITHS",
+   "BUILDING_GUILD_GROCERS",
+   "BUILDING_GUILD_MASONS",
+   "BUILDING_GUILD_PRINTERS",
+   "BUILDING_GUILD_TAILORS",
+   "BUILDING_GUILD_VICTUALLERS",
+   "BUILDING_GUILD_WOODCUTTERS",
+   "BUILDING_SHIPYARD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FOREIGN_POLICY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LOGISTICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_MODERN_WAREHOUSE": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_BUSINESS_SCHOOL": {
+     "flat": 700
+    },
+    "BUILDING_FACTORY_FURNITURE": {
+     "flat": 700
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_WINERY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_ORCHARD": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SILK_FARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_OFFSHORE_PLATFORM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_CRIME_SHOPLIFTING": {
+     "flat": -500
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 11665
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GOLD": 7
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GLOBALIZATION",
+  "soundMP": "AS2D_TECH_GLOBALIZATION",
+  "icon": ",Art/Interface/Buttons/TechTree/Globalization.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,7"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 77,
+  "gridY": 3
+ }
+}

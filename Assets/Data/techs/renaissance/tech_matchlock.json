@@ -1,0 +1,132 @@
+{
+ "type": "TECH_MATCHLOCK",
+ "description": "TXT_KEY_TECH_MATCHLOCK",
+ "civilopedia": "TXT_KEY_TECH_MATCHLOCK_PEDIA",
+ "quote": "TXT_KEY_TECH_MATCHLOCK_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_FIREARMS"
+  ],
+  "buildings": [
+   "BUILDING_CRIME_ARMED_COMMUNITIES",
+   "BUILDING_CULTURE_APACHE",
+   "BUILDING_CULTURE_AZANDE",
+   "BUILDING_CULTURE_MICRONESIAN",
+   "BUILDING_CULTURE_PERUVIAN",
+   "BUILDING_CULTURE_SLOVAKIAN",
+   "BUILDING_GUNSMITH",
+   "BUILDING_HIGHWAYMANS_HIDEOUT",
+   "BUILDING_SHOOTING_CLUB"
+  ],
+  "promotions": [
+   "PROMOTION_PINCH"
+  ],
+  "techs": [
+   "TECH_BATTLEFIELD_MEDICINE",
+   "TECH_FLINTLOCK"
+  ],
+  "units": [
+   "UNIT_ALVARADO_CAVALRY",
+   "UNIT_ARQUEBUSIER",
+   "UNIT_BUSH_TRACKERS",
+   "UNIT_CAMEL_CUIRASSIER",
+   "UNIT_CHULLPAS",
+   "UNIT_COCHISE",
+   "UNIT_CUIRASSIER",
+   "UNIT_CULVERIN",
+   "UNIT_DEER_LIGHT",
+   "UNIT_FALCONET",
+   "UNIT_GAME_HUNTER",
+   "UNIT_GIRAFFE_CUIRASSIER",
+   "UNIT_HAJDUK",
+   "UNIT_HIGHWAYMAN",
+   "UNIT_ISOKELEKEL",
+   "UNIT_MASTER_GAME_HUNTER",
+   "UNIT_NIAM_NIAM",
+   "UNIT_PERUVIAN_CONQUISTADOR",
+   "UNIT_PUEBLO_REBEL",
+   "UNIT_SCOUNDREL",
+   "UNIT_SHARPSHOOTER",
+   "UNIT_SPANISH_CONQUISTADOR",
+   "UNIT_UJEN_CHOOHA",
+   "UNIT_WARLORDIII",
+   "UNIT_WARLORDIIIS",
+   "UNIT_ZAGON",
+   "UNIT_ZBOJNIK"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ASSASSINS_DEN",
+   "BUILDING_ASSASSINS_DEN_UNSANCTIONED"
+  ],
+  "units": [
+   "UNIT_ASSASSIN",
+   "UNIT_BANDIT_RIDER",
+   "UNIT_BEGGAR",
+   "UNIT_BISON_WARDENS",
+   "UNIT_BOLA_HUNTER",
+   "UNIT_BURGLAR",
+   "UNIT_HEADHUNTER",
+   "UNIT_MASTER_WARDEN",
+   "UNIT_ROGUE",
+   "UNIT_SABLE_TRAPPER",
+   "UNIT_STALKERS",
+   "UNIT_SWAZI_TRACKER",
+   "UNIT_THIEF",
+   "UNIT_WARDEN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GUNPOWDER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_HUNTING_PRESERVE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 2528
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 9
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_MATCHLOCK",
+  "soundMP": "AS2D_TECH_MATCHLOCK",
+  "icon": ",Art/Interface/Buttons/TechTree/matchlock.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,10"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "militaryWorth": 12,
+  "tradeable": true,
+  "gridX": 52,
+  "gridY": 5
+ }
+}

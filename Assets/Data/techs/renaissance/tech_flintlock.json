@@ -1,0 +1,191 @@
+{
+ "type": "TECH_FLINTLOCK",
+ "description": "TXT_KEY_TECH_FLINTLOCK",
+ "civilopedia": "TXT_KEY_TECH_FLINTLOCK_PEDIA",
+ "quote": "TXT_KEY_TECH_FLINTLOCK_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BARRICADES",
+   "BUILDING_CULTURE_BOLIVIAN",
+   "BUILDING_CULTURE_DAHOMEY",
+   "BUILDING_CULTURE_KAZAKH",
+   "BUILDING_CULTURE_LATVIAN",
+   "BUILDING_CULTURE_LA_PLATAN",
+   "BUILDING_CULTURE_MOROCCAN",
+   "BUILDING_CULTURE_SAUDI",
+   "BUILDING_CULTURE_SWEDISH",
+   "BUILDING_CULTURE_TOBA",
+   "BUILDING_CULTURE_WAYUU",
+   "BUILDING_GUARD_STATION"
+  ],
+  "promotions": [
+   "PROMOTION_FIREARMS1",
+   "PROMOTION_PINCH2",
+   "PROMOTION_SUPPRESIVE_FIRE"
+  ],
+  "techs": [
+   "TECH_CAVALRY_TACTICS",
+   "TECH_EXPLOSIVES",
+   "TECH_NAVAL_TACTICS"
+  ],
+  "units": [
+   "UNIT_ABLAI_KHAN",
+   "UNIT_ALBANIAN_JANISSARY",
+   "UNIT_ARACAGUA",
+   "UNIT_BLACK_GUARD",
+   "UNIT_BRAZILIAN_BANDEIRANTE",
+   "UNIT_CHEROKEE_RIFLEMAN",
+   "UNIT_CITY_GUARD",
+   "UNIT_COURLAND_JAEGER",
+   "UNIT_DAHOMEY_MINO",
+   "UNIT_DE_SUCRE_DRAGOONS",
+   "UNIT_ETHIOPIAN_OROMO_WARRIOR",
+   "UNIT_FRENCH_MUSKETEER",
+   "UNIT_GERONIMO",
+   "UNIT_GIRAFFE_DRAGOON",
+   "UNIT_GUAJIRO",
+   "UNIT_GURKHA",
+   "UNIT_HAITIAN_REBEL",
+   "UNIT_HERNANDARIAS_REGIMENTO",
+   "UNIT_HIGHLANDER",
+   "UNIT_KARIM_KHAN",
+   "UNIT_KAROLINER",
+   "UNIT_LANCER",
+   "UNIT_LA_PLATA_MOSQUETERO",
+   "UNIT_MAHSUD_ATTAN",
+   "UNIT_MAROON",
+   "UNIT_MUHAMMAD_BIN_SAUD",
+   "UNIT_MUSKETMAN",
+   "UNIT_OILAT_KESHIK",
+   "UNIT_OTTOMAN_JANISSARY",
+   "UNIT_POMAREI",
+   "UNIT_RAM_MOHAN_ROY",
+   "UNIT_REN_IMP_GUARD",
+   "UNIT_SEPOY",
+   "UNIT_SHAN_WARRIOR",
+   "UNIT_THAYENDANEGEA",
+   "UNIT_TOFANGCHI"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TOWN_PATROL"
+  ],
+  "units": [
+   "UNIT_ANDAMAN_PYGMIES",
+   "UNIT_ARCHER",
+   "UNIT_ATLATL",
+   "UNIT_BABYLON_BOWMAN",
+   "UNIT_BALAMOB_SLINGER",
+   "UNIT_BALEARIC_SLINGERS",
+   "UNIT_BALLESTER",
+   "UNIT_BELLYBOWMAN",
+   "UNIT_BLACKWOOD_ARCHER",
+   "UNIT_BOOMERANG_THROWER",
+   "UNIT_BRUTE",
+   "UNIT_CANARI_BOWMANS",
+   "UNIT_CARIB_BLOWGUNNER",
+   "UNIT_CHINA_CHOKONU",
+   "UNIT_CLUBMAN",
+   "UNIT_COMPOSITE_BOWMAN",
+   "UNIT_CROSSBOWMAN",
+   "UNIT_CRUSADER",
+   "UNIT_GASTRAPHETES",
+   "UNIT_GENOAN_MERCENARY",
+   "UNIT_HEAVY_CROSSBOWMAN",
+   "UNIT_HEMUDU_HUNTERS",
+   "UNIT_KARAWETARI",
+   "UNIT_KUSH_ARCHER",
+   "UNIT_LIGHT_CROSSBOWMAN",
+   "UNIT_LONGBOWMAN",
+   "UNIT_MATNU",
+   "UNIT_MOTU_ARCHERS",
+   "UNIT_ORANG_BOWMAN",
+   "UNIT_PATAGONIAN_ARCHER",
+   "UNIT_PLUMED_ARCHER",
+   "UNIT_PYGMY_WARRIOR",
+   "UNIT_RED_FOX_ARCHER",
+   "UNIT_SAMOSTRELAC",
+   "UNIT_SHARKTOOTH_ARCHER",
+   "UNIT_SLINGER",
+   "UNIT_SOTAROAS",
+   "UNIT_SPIKED_CLUBMAN",
+   "UNIT_STONE_AXEMAN",
+   "UNIT_STONE_MACEMAN",
+   "UNIT_STONE_SPEARMAN",
+   "UNIT_SURKU",
+   "UNIT_TAIRONA_REBELS",
+   "UNIT_TLATOANI_BOWMANS",
+   "UNIT_WOODEN_SPEARMAN",
+   "UNIT_YUPANQUI_BOWMAN",
+   "UNIT_ZHUGE_NO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MATCHLOCK",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_METALLURGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DUELING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "buildings": {
+    "BUILDING_GRAND_FIRE_FESTIVAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 2883
+ },
+ "ai": {
+  "behaviour": {
+   "weight": 45,
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_FLINTLOCK",
+  "soundMP": "AS2D_TECH_FLINTLOCK",
+  "icon": ",Art/Interface/Buttons/TechTree/Flintlock.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,6,6"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 54,
+  "gridY": 5
+ }
+}

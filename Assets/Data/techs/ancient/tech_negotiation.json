@@ -1,0 +1,67 @@
+{
+ "type": "TECH_NEGOTIATION",
+ "description": "TXT_KEY_TECH_NEGOTIATION",
+ "civilopedia": "TXT_KEY_TECH_NEGOTIATION_PEDIA",
+ "quote": "TXT_KEY_TECH_NEGOTIATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_NEGOTIATORS_HUT"
+  ],
+  "techs": [
+   "TECH_TRADE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EXPLORATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "buildings": {
+    "BUILDING_CHIEFS_HUT": {
+     "flat": 200
+    },
+    "BUILDING_FRONTIER_OUTPOST": {
+     "flat": 200
+    }
+   }
+  }
+ },
+ "openBordersTrading": {
+  "team": {
+   "enabler": true
+  }
+ },
+ "cost": {
+  "research": 144
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 9
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_NEGOTIATION",
+  "soundMP": "AS2D_TECH_NEGOTIATION",
+  "icon": "Art/Interface/Buttons/techtree/Negotiation.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 20,
+  "tradeable": true,
+  "gridX": 24,
+  "gridY": 5
+ }
+}

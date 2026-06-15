@@ -1,0 +1,92 @@
+{
+ "type": "TECH_PLANETARY_EXPLORATION",
+ "description": "TXT_KEY_TECH_PLANETARY_EXPLORATION",
+ "civilopedia": "TXT_KEY_TECH_PLANETARY_EXPLORATION_PEDIA",
+ "quote": "TXT_KEY_TECH_PLANETARY_EXPLORATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CASSINI_HUYGENS",
+   "BUILDING_GALILEO",
+   "BUILDING_MARINER_PROGRAM",
+   "BUILDING_MARS_SCIENCE_LABORATORY",
+   "BUILDING_VOYAGER_PROGRAM"
+  ],
+  "techs": [
+   "TECH_EXOPLANET_DISCOVERY",
+   "TECH_ION_PROPULSION"
+  ],
+  "units": [
+   "UNIT_JUPITER_REWARD",
+   "UNIT_MARS_REWARD",
+   "UNIT_MERCURY_REWARD",
+   "UNIT_NEPTUNE_REWARD",
+   "UNIT_PLANET_PROBE",
+   "UNIT_SATURN_REWARD",
+   "UNIT_URANUS_REWARD",
+   "UNIT_VENUS_REWARD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASTROBIOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASTROGEOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INFORMATION_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_PLANETARIUM": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 19916
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/Interface/Buttons/TechTree/planetaryexploration.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 87,
+  "gridY": 7
+ }
+}

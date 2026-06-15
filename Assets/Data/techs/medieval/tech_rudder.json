@@ -1,0 +1,88 @@
+{
+ "type": "TECH_RUDDER",
+ "description": "TXT_KEY_TECH_RUDDER",
+ "civilopedia": "TXT_KEY_TECH_RUDDER_PEDIA",
+ "quote": "TXT_KEY_TECH_RUDDER_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_FIJIAN",
+   "BUILDING_GUILD_FISHMONGERS"
+  ],
+  "promotions": [
+   "PROMOTION_CARAVAN_SEA_MOVEMENT_III"
+  ],
+  "techs": [
+   "TECH_COMMERCIAL_WHALING",
+   "TECH_COMPASS"
+  ],
+  "units": [
+   "UNIT_COG",
+   "UNIT_GALLEASS",
+   "UNIT_GONE_DAU",
+   "UNIT_KNARR",
+   "UNIT_MASTER_SAILOR_GALLEASS",
+   "UNIT_WORKBOAT_MIDDLE"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_MASTER_SAILOR_DECAREME"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SHIP_BUILDING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SMITHING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1230
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_PRODUCTION": 9
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_RUDDER",
+  "soundMP": "AS2D_TECH_RUDDER",
+  "icon": "Art/Interface/Buttons/TechTree/rudder.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 16,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 43,
+  "gridY": 13
+ }
+}

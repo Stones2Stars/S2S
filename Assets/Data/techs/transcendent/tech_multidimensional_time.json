@@ -1,0 +1,74 @@
+{
+ "type": "TECH_MULTIDIMENSIONAL_TIME",
+ "description": "TXT_KEY_TECH_MULTIDIMENSIONAL_TIME",
+ "civilopedia": "TXT_KEY_TECH_MULTIDIMENSIONAL_TIME_PEDIA",
+ "quote": "TXT_KEY_TECH_MULTIDIMENSIONAL_TIME_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_HYPERSPACE_NONCAUSAL_ENGINEERING_FIRM",
+   "BUILDING_TIMELINE_SWITCHING_STATION"
+  ],
+  "builds": [
+   "BUILD_TIME_MANIFOLD"
+  ],
+  "improvements": [
+   "IMPROVEMENT_TIME_MANIFOLD"
+  ],
+  "techs": [
+   "TECH_MACROVERSE_TRAVERSAL",
+   "TECH_NONSTANDARD_MATHEMATICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ALTERNATE_HISTORY_EXPLORATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ATEMPORAL_BEINGS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_CHRONOPOLIS": {
+     "flat": 1300
+    },
+    "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 642419
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/multidimensional_time.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 157,
+  "gridY": 15
+ }
+}

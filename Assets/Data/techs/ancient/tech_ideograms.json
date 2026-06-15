@@ -1,0 +1,69 @@
+{
+ "type": "TECH_IDEOGRAMS",
+ "description": "TXT_KEY_TECH_IDEOGRAMS",
+ "civilopedia": "TXT_KEY_TECH_IDEOGRAMS_PEDIA",
+ "quote": "TXT_KEY_TECH_IDEOGRAMS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_TABLETS"
+  ],
+  "buildings": [
+   "BUILDING_CLEOPATRAS_NEEDLE",
+   "BUILDING_FRESCO_MURAL",
+   "BUILDING_LIBRARY_OF_NINEVEH",
+   "BUILDING_TABLET_MAKER"
+  ],
+  "techs": [
+   "TECH_CASTE_SYSTEM",
+   "TECH_POTTERY",
+   "TECH_TAXONOMY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PICTOGRAPHS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 84
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 9
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_IDEOGRAMS",
+  "soundMP": "AS2D_TECH_IDEOGRAMS",
+  "icon": "Art/Interface/Buttons/TechTree/ideograms.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 20,
+  "gridY": 1
+ }
+}

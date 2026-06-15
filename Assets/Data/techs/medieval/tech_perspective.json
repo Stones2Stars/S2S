@@ -1,0 +1,67 @@
+{
+ "type": "TECH_PERSPECTIVE",
+ "description": "TXT_KEY_TECH_PERSPECTIVE",
+ "civilopedia": "TXT_KEY_TECH_PERSPECTIVE_PEDIA",
+ "quote": "TXT_KEY_TECH_PERSPECTIVE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CASTLE_GARDEN",
+   "BUILDING_SISTINE_CHAPEL"
+  ],
+  "techs": [
+   "TECH_ALGEBRA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INVENTION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PAPER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1688
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_RELIGION": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_PERSPECTIVE",
+  "soundMP": "AS2D_TECH_PERSPECTIVE",
+  "icon": ",Art/Interface/Buttons/TechTree/Perspective.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,14"
+ },
+ "identity": {
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 47,
+  "gridY": 11
+ }
+}

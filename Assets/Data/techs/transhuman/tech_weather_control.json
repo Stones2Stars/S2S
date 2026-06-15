@@ -1,0 +1,184 @@
+{
+ "type": "TECH_WEATHER_CONTROL",
+ "description": "TXT_KEY_TECH_WEATHER_CONTROL",
+ "civilopedia": "TXT_KEY_TECH_WEATHER_CONTROL_PEDIA",
+ "quote": "TXT_KEY_TECH_WEATHER_CONTROL_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INDUCED_RAIN",
+   "BUILDING_OZONE_GENERATOR",
+   "BUILDING_PARADISE_GARDEN"
+  ],
+  "builds": [
+   "BUILD_TERRAFORM_DESERT",
+   "BUILD_TERRAFORM_DUNES",
+   "BUILD_TERRAFORM_GRASS",
+   "BUILD_TERRAFORM_LUSH",
+   "BUILD_TERRAFORM_MUDDY",
+   "BUILD_TERRAFORM_PERMAFROST",
+   "BUILD_TERRAFORM_PLAINS",
+   "BUILD_TERRAFORM_ROCKY",
+   "BUILD_TERRAFORM_SCRUB",
+   "BUILD_TERRAFORM_TAIGA",
+   "BUILD_TERRAFORM_TUNDRA"
+  ],
+  "improvements": [
+   "IMPROVEMENT_TERRAFORM_DESERT",
+   "IMPROVEMENT_TERRAFORM_DUNES",
+   "IMPROVEMENT_TERRAFORM_GRASS",
+   "IMPROVEMENT_TERRAFORM_LUSH",
+   "IMPROVEMENT_TERRAFORM_MUDDY",
+   "IMPROVEMENT_TERRAFORM_PERMAFROST",
+   "IMPROVEMENT_TERRAFORM_PLAINS",
+   "IMPROVEMENT_TERRAFORM_ROCKY",
+   "IMPROVEMENT_TERRAFORM_SCRUB",
+   "IMPROVEMENT_TERRAFORM_TAIGA",
+   "IMPROVEMENT_TERRAFORM_TUNDRA"
+  ],
+  "projects": [
+   "PROJECT_EDEN_PROJECT"
+  ],
+  "techs": [
+   "TECH_EXTRATERRESTRIAL_AGRICULTURE",
+   "TECH_NANOTROIDS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BASE_JUMPING_SITE",
+   "BUILDING_BASKETBALL_COURT",
+   "BUILDING_BIOSPHERE_2",
+   "BUILDING_BOSSABALL_COURT",
+   "BUILDING_BOWLING_ALLEY",
+   "BUILDING_BOXING_RING",
+   "BUILDING_BUNGEE_JUMPING_SITE",
+   "BUILDING_COUNTRY_CLUB",
+   "BUILDING_CRICKET_FIELD",
+   "BUILDING_CROQUET_FIELD",
+   "BUILDING_CURLING_SHEET",
+   "BUILDING_DROP_ZONE",
+   "BUILDING_FENCING_ACADEMY",
+   "BUILDING_GOLF_COURSE",
+   "BUILDING_GYM",
+   "BUILDING_HOCKEY_RINK",
+   "BUILDING_ICE_RINK",
+   "BUILDING_JAI_ALAI_COURT",
+   "BUILDING_LACROSSE_FIELD",
+   "BUILDING_LASER_TAG_ARENA",
+   "BUILDING_MASTERS_DOJO",
+   "BUILDING_MINI_GOLF_COURSE",
+   "BUILDING_MOUNTAIN_CLIMBING_SITE",
+   "BUILDING_NATIONAL_WEATHER_SERVICE",
+   "BUILDING_PAINTBALL_ARENA",
+   "BUILDING_PING_PONG_ARENA",
+   "BUILDING_POLO_FIELD",
+   "BUILDING_PUBLIC_POOL",
+   "BUILDING_RECREATION_CENTER",
+   "BUILDING_RIVER_RAFTING_DOCK",
+   "BUILDING_ROLLER_DERBY_TRACK",
+   "BUILDING_RUGBY_FIELD",
+   "BUILDING_SKATE_PARK",
+   "BUILDING_SKI_RESORT",
+   "BUILDING_SLAMBALL_COURT",
+   "BUILDING_SOCCER_FIELD",
+   "BUILDING_SOFTBALL_FIELD",
+   "BUILDING_TENNIS_COURT",
+   "BUILDING_TRAINING_DOJO",
+   "BUILDING_VELODROME",
+   "BUILDING_VOLLEYBALL_COURT",
+   "BUILDING_WATER_POLO_POOL",
+   "BUILDING_WATER_RACEWAY",
+   "BUILDING_WINTER_CHALET",
+   "BUILDING_YOGA_SCHOOL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TERRA_COMPUTER",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_THERMAL_NEGATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_MODERN_WINDMILL": {
+     "flat": 1
+    },
+    "IMPROVEMENT_TIDAL_HARNESS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_MODERN_WINDMILL": {
+     "flat": 2
+    },
+    "IMPROVEMENT_TIDAL_HARNESS": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SEA_MILL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 83654
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_ESPIONAGE": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_WEATHER_CONTROL",
+  "soundMP": "AS2D_TECH_WEATHER_CONTROL",
+  "icon": ",Art/Interface/Buttons/TechTree/weather_control.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,5,3"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 119,
+  "gridY": 13
+ }
+}

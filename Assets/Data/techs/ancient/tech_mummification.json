@@ -1,0 +1,61 @@
+{
+ "type": "TECH_MUMMIFICATION",
+ "description": "TXT_KEY_TECH_MUMMIFICATION",
+ "civilopedia": "TXT_KEY_TECH_MUMMIFICATION_PEDIA",
+ "quote": "TXT_KEY_TECH_MUMMIFICATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANCIENT_EMBALMER",
+   "BUILDING_BURIAL_TRADITION_MUMMY",
+   "BUILDING_TEMPLE_OF_RA"
+  ],
+  "techs": [
+   "TECH_ARCHEOLOGY",
+   "TECH_KEMETISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ANCESTOR_WORSHIP",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SACRIFICE_CULT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 126
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_MUMMIFICATION",
+  "soundMP": "AS2D_TECH_MUMMIFICATION",
+  "icon": "Art/Interface/Buttons/TechTree/mummification.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 23,
+  "gridY": 19
+ }
+}

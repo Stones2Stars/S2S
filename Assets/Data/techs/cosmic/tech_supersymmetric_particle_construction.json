@@ -1,0 +1,70 @@
+{
+ "type": "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION",
+ "description": "TXT_KEY_TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION",
+ "civilopedia": "TXT_KEY_TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION_PEDIA",
+ "quote": "TXT_KEY_TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_ALICE_MATTER"
+  ],
+  "buildings": [
+   "BUILDING_EXOTIC_PARTICLE_LAB",
+   "BUILDING_INTERGALACTIC_EXOTIC_PARTICLE_FOUNDRY",
+   "BUILDING_INTERGALACTIC_FANTASY_CITY",
+   "BUILDING_INTERSTELLAR_ANIMATED_PREON_STAR",
+   "BUILDING_SUPERSYMMETRIC_PARTICLE_REINFORCEMENT"
+  ],
+  "techs": [
+   "TECH_COMPACT_WORMHOLES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ZERO_POINT_ENERGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ZEPTOTECHNOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_EXOTIC_MATTER_LAB": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 326209
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/supersymmetric_particle_construction.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 144,
+  "gridY": 11
+ }
+}

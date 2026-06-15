@@ -1,0 +1,97 @@
+{
+ "type": "TECH_ELECTROWEAK_MATTER",
+ "description": "TXT_KEY_TECH_ELECTROWEAK_MATTER",
+ "civilopedia": "TXT_KEY_TECH_ELECTROWEAK_MATTER_PEDIA",
+ "quote": "TXT_KEY_TECH_ELECTROWEAK_MATTER_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_MAGNETIC_MONOPOLES"
+  ],
+  "buildings": [
+   "BUILDING_ELECTROWEAK_FORGE",
+   "BUILDING_INTERGALACTIC_ACCELERATOR",
+   "BUILDING_INTERGALACTIC_PROTON_DECAY_GENERATOR",
+   "BUILDING_INTERGALACTIC_ULTRA_HIGH_PRESSURE_FORGE",
+   "BUILDING_INTERSTELLAR_HYPERMAGLEV",
+   "BUILDING_LIFE_CHIRAL_FLEXIBLE"
+  ],
+  "techs": [
+   "TECH_NEUTRONIUM",
+   "TECH_QUANTUM_RAMJET"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AEROGEL_FACTORY",
+   "BUILDING_ANIMAMATERIAL_FACTORY",
+   "BUILDING_ATOMICALLY_PRECISE_ALLOY_FOUNDRY",
+   "BUILDING_BULK_DIAMOND_PLANT",
+   "BUILDING_CARBYNE_FOUNDRY",
+   "BUILDING_DIAMOND_NANOTHREAD_FOUNDRY",
+   "BUILDING_FACTORY_CYBERNETIC_CHLOROPLASTS",
+   "BUILDING_FACTORY_GRAPHENE",
+   "BUILDING_FULLERENE_PLANT",
+   "BUILDING_LIQUID_METALS_FOUNDRY",
+   "BUILDING_METALLIC_HYDROGEN_PLANT",
+   "BUILDING_METAL_FOAM_FOUNDRY",
+   "BUILDING_METAMATERIAL_FOUNDRY",
+   "BUILDING_NANOFACTORY",
+   "BUILDING_NANOTRUSS_FOUNDRY",
+   "BUILDING_NANO_RESEARCH_DEPARTMENT",
+   "BUILDING_NOVUS_REFINERY",
+   "BUILDING_QUANTUM_DOT_FACTORY",
+   "BUILDING_SUPERSOLID_HELIUM_PLANT",
+   "BUILDING_SUPERSTRONG_ALLOY_FOUNDRY",
+   "BUILDING_SUPERSTRONG_ALLOY_WALLS",
+   "BUILDING_TRANSPARENT_ALUMINUM_FOUNDRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ZEPTOTECHNOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DARK_MATTER_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_INDUSTRIAL_THINGAMAJIG": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_JADE_MERCHANT_LOCAL": {
+     "flat": 200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 338869
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/electroweak_matter2.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 145,
+  "gridY": 13
+ }
+}

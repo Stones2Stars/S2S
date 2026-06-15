@@ -1,0 +1,64 @@
+{
+ "type": "TECH_SUPERCONDUCTORS",
+ "description": "TXT_KEY_TECH_SUPERCONDUCTORS",
+ "civilopedia": "TXT_KEY_TECH_SUPERCONDUCTORS_PEDIA",
+ "quote": "TXT_KEY_TECH_SUPERCONDUCTORS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_FAST_BREEDER_REACTOR",
+   "BUILDING_HI_TECH_NUCLEAR_REACTOR",
+   "BUILDING_NUCLEAR_POWERCOMPLEX",
+   "BUILDING_POWER_NUCLEAR",
+   "BUILDING_RESEARCH_INSTITUTE",
+   "BUILDING_SUPERCOLLIDER"
+  ],
+  "techs": [
+   "TECH_MAGNETIC_LEVITATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INFORMATION_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_HIGH_ENERGY_LAB": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 19916
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_SUPERCONDUCTOR",
+  "soundMP": "AS2D_TECH_MP_SUPERCONDUCTOR",
+  "icon": ",Art/Interface/Buttons/TechTree/Superconductor.dds,Art/Interface/Buttons/TechTree_Atlas.dds,3,12"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 87,
+  "gridY": 15
+ }
+}

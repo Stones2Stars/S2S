@@ -1,0 +1,93 @@
+{
+ "type": "TECH_MESH_NETWORKS",
+ "description": "TXT_KEY_TECH_MESH_NETWORKS",
+ "civilopedia": "TXT_KEY_TECH_MESH_NETWORKS_PEDIA",
+ "quote": "TXT_KEY_TECH_MESH_NETWORKS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ADVANCED_QUALITY_CONTROL",
+   "BUILDING_CISLUNAR_SATELLITE_FACTORY",
+   "BUILDING_DISTRIBUTED_SOCIAL_NETWORK",
+   "BUILDING_FACTORY_NANOGENERATORS",
+   "BUILDING_NOMAD_SKYSCRAPER"
+  ],
+  "civics": [
+   "CIVIC_POLYSTATE"
+  ],
+  "techs": [
+   "TECH_AUTOMATED_ROBOTICS",
+   "TECH_HOLOGRAPHICS",
+   "TECH_MEGACORPORATIONS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_UBIQUITOUS_COMPUTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_FREELANCE_MARKETPLACE": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES": {
+     "flat": 900
+    },
+    "BUILDING_MAKERSPACE": {
+     "flat": 900
+    },
+    "BUILDING_PEER_TO_PEER_RENTALS": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 37614
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_MESH_NETWORKS",
+  "soundMP": "AS2D_TECH_MESH_NETWORKS",
+  "icon": ",Art/Interface/Buttons/TechTree/mesh_network.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,3,4"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 101,
+  "gridY": 17
+ }
+}

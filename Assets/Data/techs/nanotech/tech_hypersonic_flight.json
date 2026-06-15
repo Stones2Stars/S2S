@@ -1,0 +1,84 @@
+{
+ "type": "TECH_HYPERSONIC_FLIGHT",
+ "description": "TXT_KEY_TECH_HYPERSONIC_FLIGHT",
+ "civilopedia": "TXT_KEY_TECH_HYPERSONIC_FLIGHT_PEDIA",
+ "quote": "TXT_KEY_TECH_HYPERSONIC_FLIGHT_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_HYPERSONIC_TERMINAL",
+   "BUILDING_SKYHOOK"
+  ],
+  "promotions": [
+   "PROMOTION_REPAIR_AIRCRAFT5"
+  ],
+  "techs": [
+   "TECH_INTERNAL_SHOCKWAVE_ENGINE",
+   "TECH_NANOPUNK"
+  ],
+  "units": [
+   "UNIT_SCRAMJET"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AERODROME",
+   "BUILDING_AIRPORT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_UBIQUITOUS_COMPUTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_NATIONAL_AIRCRAFT_MUSEUM": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 37614
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_HYPERSONIC_FLIGHT",
+  "soundMP": "AS2D_TECH_HYPERSONIC_FLIGHT",
+  "icon": "Art/Buttons/Techs/hypersonic_flight.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 101,
+  "gridY": 15
+ }
+}

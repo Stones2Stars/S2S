@@ -1,0 +1,75 @@
+{
+ "type": "TECH_SPECIES_AMALGAMATION",
+ "description": "TXT_KEY_TECH_SPECIES_AMALGAMATION",
+ "civilopedia": "TXT_KEY_TECH_SPECIES_AMALGAMATION_PEDIA",
+ "quote": "TXT_KEY_TECH_SPECIES_AMALGAMATION_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_ALIEN_HYBRID"
+  ],
+  "buildings": [
+   "BUILDING_HUMAN_MOD_ALIEN_HYBRID",
+   "BUILDING_INTERSTELLAR_INTERSPECIES_COMMUNITY",
+   "BUILDING_INTERSTELLAR_PARADISE_PLANET",
+   "BUILDING_TRANSTELLAR_HIVEMIND"
+  ],
+  "civics": [
+   "CIVIC_XENOSEMIOTIC"
+  ],
+  "techs": [
+   "TECH_COSMIC_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WORMHOLE_TRAVERSAL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GALACTIC_FEDERATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_ECUMENOPOLIS": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 194821
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/species_amalgamation.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 136,
+  "gridY": 15
+ }
+}

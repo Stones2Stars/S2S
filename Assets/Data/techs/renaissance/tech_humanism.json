@@ -1,0 +1,118 @@
+{
+ "type": "TECH_HUMANISM",
+ "description": "TXT_KEY_TECH_HUMANISM",
+ "civilopedia": "TXT_KEY_TECH_HUMANISM_PEDIA",
+ "quote": "TXT_KEY_TECH_HUMANISM_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_UZBEK",
+   "BUILDING_HOSTEL",
+   "BUILDING_NONSUCH_PALACE",
+   "BUILDING_PALACE_OF_BEAULIEU",
+   "BUILDING_PHILANTHROPIC_ORGANIZATION"
+  ],
+  "civics": [
+   "CIVIC_SECULARISM"
+  ],
+  "techs": [
+   "TECH_FREE_ARTISTRY",
+   "TECH_POLITICAL_PHILOSOPHY",
+   "TECH_SIKHISM",
+   "TECH_TEAM_SPORTS"
+  ],
+  "units": [
+   "UNIT_HENRI_IV",
+   "UNIT_LORENZO_DE_MEDICI",
+   "UNIT_PASTENE",
+   "UNIT_POCAHONTAS",
+   "UNIT_SHAYBANI",
+   "UNIT_STAMAN",
+   "UNIT_YUPANQUI"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ALTAR_FOR_HUMAN_SACRIFICE",
+   "BUILDING_HEIMDALL_SANCTUARY",
+   "BUILDING_KINGS_CRUSADE",
+   "BUILDING_PYRAMID_OF_THE_MOON",
+   "BUILDING_PYRAMID_OF_THE_SUN",
+   "BUILDING_SOLOMONS_TEMPLE",
+   "BUILDING_THOR_ALTAR",
+   "BUILDING_THOR_SANCTUARY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RENAISSANCE_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
+     "percent": -10
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "buildings": {
+    "BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE": {
+     "iHappiness": {
+      "flat": -3
+     },
+     "iHealth": {
+      "flat": -3
+     }
+    },
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
+     "flat": -5
+    }
+   },
+   "specialists": {
+    "SPECIALIST_SLAVES": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 2364
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_HUMANISM",
+  "soundMP": "AS2D_TECH_HUMANISM",
+  "icon": ",Art/Interface/Buttons/TechTree/Protestantism.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,6,14"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 51,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,64 @@
+{
+ "type": "TECH_CHIEFDOM",
+ "description": "TXT_KEY_TECH_CHIEFDOM",
+ "civilopedia": "TXT_KEY_TECH_CHIEFDOM_PEDIA",
+ "quote": "TXT_KEY_TECH_CHIEFDOM_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHIEFS_FUNERAL_PYRE",
+   "BUILDING_CHIEFS_HUT",
+   "BUILDING_GOVERNORS_PETS"
+  ],
+  "civics": [
+   "CIVIC_CHIEFDOM"
+  ],
+  "promotions": [
+   "PROMOTION_STALL4"
+  ],
+  "techs": [
+   "TECH_CANINE_DOMESTICATION",
+   "TECH_WARFARE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HUNTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRIBALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 39
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_CHIEFDOM",
+  "soundMP": "AS2D_TECH_CHIEFDOM",
+  "icon": "Art/Interface/Buttons/TechTree/Button_Chiefdom.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 15,
+  "gridY": 9
+ }
+}

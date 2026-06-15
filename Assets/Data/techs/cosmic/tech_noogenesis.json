@@ -1,0 +1,79 @@
+{
+ "type": "TECH_NOOGENESIS",
+ "description": "TXT_KEY_TECH_NOOGENESIS",
+ "civilopedia": "TXT_KEY_TECH_NOOGENESIS_PEDIA",
+ "quote": "TXT_KEY_TECH_NOOGENESIS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_HERO_ACADEMY",
+   "BUILDING_INTERSTELLAR_CONSCIOUS_STAR",
+   "BUILDING_MARTIAN_MONUMENT",
+   "BUILDING_MONOLITH"
+  ],
+  "techs": [
+   "TECH_FANTASY_MATERIALS",
+   "TECH_LUMINAL_BEINGS",
+   "TECH_MENSIOKINESIS",
+   "TECH_SHAPESHIFTING",
+   "TECH_STABLE_TIME_LOOPS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ZEPTOTECHNOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ZERO_POINT_ENERGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_BIOTIC_GALAXY": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 338869
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/noogenesis.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 145,
+  "gridY": 5
+ }
+}

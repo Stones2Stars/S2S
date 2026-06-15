@@ -1,0 +1,104 @@
+{
+ "type": "TECH_CHEMISTRY",
+ "description": "TXT_KEY_TECH_CHEMISTRY",
+ "civilopedia": "TXT_KEY_TECH_CHEMISTRY_PEDIA",
+ "quote": "TXT_KEY_TECH_CHEMISTRY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CHEMICALS",
+   "BONUS_RUBBER"
+  ],
+  "buildings": [
+   "BUILDING_BUREAU_OF_FARM_MANAGEMENT",
+   "BUILDING_CHEMISTRY_LAB",
+   "BUILDING_FARM_SUPPLY",
+   "BUILDING_MODERN_EMBALMER",
+   "BUILDING_MODERN_WAREHOUSE",
+   "BUILDING_PERIODIC_TABLE_OF_ELEMENTS",
+   "BUILDING_PLANTATION_RUBBER"
+  ],
+  "techs": [
+   "TECH_BIOLOGY",
+   "TECH_FOOD_PRESERVATION",
+   "TECH_GAS_LIGHTING",
+   "TECH_GEOLOGY",
+   "TECH_PHOTOGRAPHY"
+  ],
+  "units": [
+   "UNIT_BANYAN_XEBEC",
+   "UNIT_CLIPPER_MERCHANT",
+   "UNIT_SUGAR_CLIPPER",
+   "UNIT_TRADE_JUNK"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_CARRACK_MERCHANT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_METALLURGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SCIENTIFIC_METHOD",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_WORKSHOP": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_DEAD_SEA": {
+     "flat": 500
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 3274
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_CHEMISTRY",
+  "soundMP": "AS2D_TECH_MP_CHEMISTRY",
+  "icon": ",Art/Interface/Buttons/TechTree/Chemistry.dds,Art/Interface/Buttons/TechTree_Atlas.dds,4,9"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 56,
+  "gridY": 11
+ }
+}

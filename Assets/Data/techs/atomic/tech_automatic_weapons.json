@@ -1,0 +1,88 @@
+{
+ "type": "TECH_AUTOMATIC_WEAPONS",
+ "description": "TXT_KEY_TECH_AUTOMATIC_WEAPONS",
+ "civilopedia": "TXT_KEY_TECH_AUTOMATIC_WEAPONS_PEDIA",
+ "quote": "TXT_KEY_TECH_AUTOMATIC_WEAPONS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BERLIN_WALL",
+   "BUILDING_CRIME_ORGANIZED_CRIME",
+   "BUILDING_CRIME_WEAPONS_TRAFFICKING",
+   "BUILDING_FLAK_TOWER",
+   "BUILDING_MOB_STOREFRONT_UNSANCTIONED"
+  ],
+  "promotions": [
+   "PROMOTION_AIR_DEFENSE1"
+  ],
+  "techs": [
+   "TECH_GUERRILLA_WARFARE",
+   "TECH_MECHANIZED_WARFARE"
+  ],
+  "units": [
+   "UNIT_AKIMEL_BRIGADE",
+   "UNIT_CHROMIUM_GUNMAN",
+   "UNIT_DARFUR_MILITIA",
+   "UNIT_FLAMETHROWER",
+   "UNIT_GUDARI",
+   "UNIT_HALFTRACK",
+   "UNIT_INFANTRY",
+   "UNIT_KUOMINTANG",
+   "UNIT_LIGHT_AA",
+   "UNIT_MACHINE_GUN",
+   "UNIT_MODERN_GRENADIER",
+   "UNIT_MODERN_IMP_GUARD",
+   "UNIT_NEW_ZEALAND_INFANTRY",
+   "UNIT_PESHMERGA"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_J_S_BACHS_CATHEDRAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRENCH_WARFARE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 9889
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_AUTOMATIC_WEAPONS",
+  "soundMP": "AS2D_TECH_AUTOMATIC_WEAPONS",
+  "icon": ",Art/Interface/Buttons/TechTree/AutomaticWeapons.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,2"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 73,
+  "gridY": 15
+ }
+}

@@ -1,0 +1,108 @@
+{
+ "type": "TECH_AUTOMATED_ROBOTICS",
+ "description": "TXT_KEY_TECH_AUTOMATED_ROBOTICS",
+ "civilopedia": "TXT_KEY_TECH_AUTOMATED_ROBOTICS_PEDIA",
+ "quote": "TXT_KEY_TECH_AUTOMATED_ROBOTICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUTODOCTOR",
+   "BUILDING_FARM_MECH_CONTROL_CENTER",
+   "BUILDING_LIGHTS_OUT_MANUFACTURING"
+  ],
+  "techs": [
+   "TECH_ONTOLOGICAL_ENGINEERING",
+   "TECH_SYNTHETIC_SENTIENCE",
+   "TECH_WARMACHINES"
+  ],
+  "units": [
+   "UNIT_AUTOM_INFANTRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DISASTER_ROBOTS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOGENERATORS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AUTOMATED_TRAFFIC",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MESH_NETWORKS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_FACIAL_RECOGNITION_SOFTWARE": {
+     "flat": 900
+    },
+    "BUILDING_GESTURE_RECOGNITION_SOFTWARE": {
+     "flat": 900
+    },
+    "BUILDING_INTUITIVE_ALGORITHMS": {
+     "flat": 900
+    },
+    "BUILDING_MODULAR_CONSTRUCTION_FIRM": {
+     "flat": 900
+    },
+    "BUILDING_SPEECH_RECOGNITION_SOFTWARE": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_NATURAL_LANGUAGE_ALGORITHMS": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 38858
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_AUTOMATED_ROBOTICS",
+  "soundMP": "AS2D_TECH_AUTOMATED_ROBOTICS",
+  "icon": "Art/Interface/Buttons/TechTree/Automatedsevices.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 102,
+  "gridY": 15
+ }
+}

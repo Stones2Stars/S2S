@@ -1,0 +1,104 @@
+{
+ "type": "TECH_INTERNAL_SHOCKWAVE_ENGINE",
+ "description": "TXT_KEY_TECH_INTERNAL_SHOCKWAVE_ENGINE",
+ "civilopedia": "TXT_KEY_TECH_INTERNAL_SHOCKWAVE_ENGINE_PEDIA",
+ "quote": "TXT_KEY_TECH_INTERNAL_SHOCKWAVE_ENGINE_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_SHOCKWAVE_ENGINES"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_SHOCKWAVE_ENGINES",
+   "BUILDING_SHOCKWAVE_VEHICLE_DEALERSHIP"
+  ],
+  "techs": [
+   "TECH_MAGNETIC_SAILS",
+   "TECH_PHOTON_THERMODYNAMICS",
+   "TECH_WARMACHINES"
+  ],
+  "units": [
+   "UNIT_SHOCKWAVE_APC"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AUTOMOBILE_DEALERSHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HYPERSONIC_FLIGHT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ACOUSTIC_WEAPONRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_MECHATRONICS_LAB": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_LIQUID_METALS_FOUNDRY": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_MECHATRONICS_LAB": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 40165
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_INTERNAL_SHOCKWAVE_ENGINE",
+  "soundMP": "AS2D_TECH_INTERNAL_SHOCKWAVE_ENGINE",
+  "icon": "Art/Interface/Buttons/TechTree/lengine.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 103,
+  "gridY": 13
+ }
+}

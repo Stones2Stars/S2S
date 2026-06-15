@@ -1,0 +1,66 @@
+{
+ "type": "TECH_CLIMATE_MODELS",
+ "description": "TXT_KEY_TECH_CLIMATE_MODELS",
+ "civilopedia": "TXT_KEY_TECH_CLIMATE_MODELS_PEDIA",
+ "quote": "TXT_KEY_TECH_CLIMATE_MODELS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AMUNDSEN_SCOTT_SOUTH_POLE_STATION",
+   "BUILDING_CLIMATE_SATELLITE",
+   "BUILDING_CLIMATOLOGY_LAB"
+  ],
+  "techs": [
+   "TECH_CHAOS_THEORY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_WEATHER_VANES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SATELLITES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LONG_RANGE_FORECASTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 14870
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_CLIMATE_MODELS",
+  "soundMP": "AS2D_TECH_CLIMATE_MODELS",
+  "icon": "Art/Interface/Buttons/techtree/climate_modeling.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "gridX": 83,
+  "gridY": 19
+ }
+}

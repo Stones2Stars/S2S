@@ -1,0 +1,86 @@
+{
+ "type": "TECH_DATA_ARCHIVAL",
+ "description": "TXT_KEY_TECH_DATA_ARCHIVAL",
+ "civilopedia": "TXT_KEY_TECH_DATA_ARCHIVAL_PEDIA",
+ "quote": "TXT_KEY_TECH_DATA_ARCHIVAL_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_EARTH_HISTORY_BACKUP",
+   "BUILDING_INTERSTELLAR_CARBON_12_13_CRYSTAL"
+  ],
+  "civics": [
+   "CIVIC_PROTOCOL"
+  ],
+  "techs": [
+   "TECH_ADAPTIVE_RADIATION",
+   "TECH_INTERSTELLAR_TRADE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_COMMUNICATION_TOWER",
+   "BUILDING_SUPERCOMPUTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COSMIC_PERSPECTIVE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INTERSTELLAR_COMMUNICATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_OPTRONIC_SUPERCOMPUTER": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_OPTRONIC_SUPERCOMPUTER": {
+     "flat": 1100
+    },
+    "BUILDING_UNIVERSAL_LIBRARY": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 149039
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/data_archival.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 129,
+  "gridY": 13
+ }
+}

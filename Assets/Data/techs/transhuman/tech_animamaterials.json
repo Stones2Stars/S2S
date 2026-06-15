@@ -1,0 +1,117 @@
+{
+ "type": "TECH_ANIMAMATERIALS",
+ "description": "TXT_KEY_TECH_ANIMAMATERIALS",
+ "civilopedia": "TXT_KEY_TECH_ANIMAMATERIALS_PEDIA",
+ "quote": "TXT_KEY_TECH_ANIMAMATERIALS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CLAYTRONIC_ATOMS",
+   "BONUS_DEEP_SPACE_NANOBOTS"
+  ],
+  "buildings": [
+   "BUILDING_ANIMAMATERIAL_FACTORY",
+   "BUILDING_CLAYTRONIC_FIRE_SUPPRESSION",
+   "BUILDING_DEEP_SPACE_FACTORY",
+   "BUILDING_MARTIAN_ALBEDO_REDUCTION",
+   "BUILDING_MARTIAN_CFC_GENERATOR",
+   "BUILDING_MARTIAN_MEGACITY"
+  ],
+  "techs": [
+   "TECH_ADVANCED_SHIELDING",
+   "TECH_ADVANCED_WARMACHINES",
+   "TECH_BINARY_PSYCHOKINESIS",
+   "TECH_PHOTONIC_SATELLITES"
+  ],
+  "units": [
+   "UNIT_NANITE_REPAIR_CLOUD"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CHEMICAL_PLANT",
+   "BUILDING_CHEMISTRY_LAB",
+   "BUILDING_FACTORY_BIOPOLYMERS",
+   "BUILDING_FACTORY_DYE",
+   "BUILDING_FACTORY_ELECTROACTIVE_POLYMERS",
+   "BUILDING_FACTORY_ELECTROLYTE_CELLS",
+   "BUILDING_FACTORY_LYE",
+   "BUILDING_FACTORY_OLED",
+   "BUILDING_FACTORY_OMEGA_ACIDS",
+   "BUILDING_FACTORY_PAPER",
+   "BUILDING_FACTORY_PERFUME",
+   "BUILDING_FACTORY_PHARMACEUTICALS",
+   "BUILDING_FACTORY_SOAP",
+   "BUILDING_FACTORY_TANNIN",
+   "BUILDING_HYDROGEN_GENERATOR",
+   "BUILDING_KEROSENE_DISTILLERY",
+   "BUILDING_MOLECULAR_BIOLOGY_LAB",
+   "BUILDING_PAPER_RECLAMATION_PLANT",
+   "BUILDING_RESOURCES_CHEMICALS",
+   "BUILDING_RESOURCES_PAPER",
+   "BUILDING_ROCKET_FUEL_REFINERY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NANOMINING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_LIFE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TECHNOLOGICAL_SINGULARITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_CISLUNAR_FACTORY": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 75052
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_ANIMAMATERIALS",
+  "soundMP": "AS2D_TECH_ANIMAMATERIALS",
+  "icon": "Art/Interface/Buttons/TechTree/animamaterials.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 116,
+  "gridY": 3
+ }
+}

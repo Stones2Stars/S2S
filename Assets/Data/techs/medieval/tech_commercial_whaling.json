@@ -1,0 +1,95 @@
+{
+ "type": "TECH_COMMERCIAL_WHALING",
+ "description": "TXT_KEY_TECH_COMMERCIAL_WHALING",
+ "civilopedia": "TXT_KEY_TECH_COMMERCIAL_WHALING_PEDIA",
+ "quote": "TXT_KEY_TECH_COMMERCIAL_WHALING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_WHALE_OIL"
+  ],
+  "buildings": [
+   "BUILDING_RENDERING_PLANT",
+   "BUILDING_WHALERS_DOCK",
+   "BUILDING_WHALE_OIL_MAKER"
+  ],
+  "builds": [
+   "BUILD_WHALING_SHIPS"
+  ],
+  "improvements": [
+   "IMPROVEMENT_WHALING_SHIPS"
+  ],
+  "techs": [
+   "TECH_GAS_LIGHTING",
+   "TECH_MARINE_BIOLOGY"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_WHALING_BOATS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RUDDER",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_OPTICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_SHARK_BAY": {
+     "flat": 400
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 1563
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 3
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_COMMERCIAL_WHALING",
+  "soundMP": "AS2D_TECH_COMMERCIAL_WHALING",
+  "icon": "Art/Interface/Buttons/TechTree/whaling.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 46,
+  "gridY": 11
+ }
+}

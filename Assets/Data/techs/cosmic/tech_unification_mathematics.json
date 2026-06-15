@@ -1,0 +1,63 @@
+{
+ "type": "TECH_UNIFICATION_MATHEMATICS",
+ "description": "TXT_KEY_TECH_UNIFICATION_MATHEMATICS",
+ "civilopedia": "TXT_KEY_TECH_UNIFICATION_MATHEMATICS_PEDIA",
+ "quote": "TXT_KEY_TECH_UNIFICATION_MATHEMATICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_KOLMOGOROV_COMPRESSION",
+   "BUILDING_INTERGALACTIC_PSYCHOHISTORY_STUDIO",
+   "BUILDING_INTERSTELLAR_GALACTIC_AC",
+   "BUILDING_MATHEMATICAL_ORACLE"
+  ],
+  "techs": [
+   "TECH_DARK_MATTER_ENGINEERING",
+   "TECH_ZERO_POINT_ENERGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ULTRACOMPUTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 302630
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/unification_mathematics.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 142,
+  "gridY": 3
+ }
+}

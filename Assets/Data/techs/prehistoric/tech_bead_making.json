@@ -1,0 +1,79 @@
+{
+ "type": "TECH_BEAD_MAKING",
+ "description": "TXT_KEY_TECH_BEAD_MAKING",
+ "civilopedia": "TXT_KEY_TECH_BEAD_MAKING_PEDIA",
+ "quote": "TXT_KEY_TECH_BEAD_MAKING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_BEADS"
+  ],
+  "buildings": [
+   "BUILDING_BEADWORKER"
+  ],
+  "techs": [
+   "TECH_BARTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PERSONAL_ADORNMENTS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_BONEWORKER": {
+     "flat": 100
+    },
+    "BUILDING_WONDER_OF_NATURE_GREAT_BARRIER_REEF": {
+     "flat": 200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 20
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 9
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_BEAD_MAKING",
+  "soundMP": "AS2D_TECH_BEAD_MAKING",
+  "icon": "Art/Interface/Buttons/TechTree/beadmaking.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 10,
+  "gridY": 3
+ }
+}

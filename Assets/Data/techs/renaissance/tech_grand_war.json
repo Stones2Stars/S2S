@@ -1,0 +1,69 @@
+{
+ "type": "TECH_GRAND_WAR",
+ "description": "TXT_KEY_TECH_GRAND_WAR",
+ "civilopedia": "TXT_KEY_TECH_GRAND_WAR_PEDIA",
+ "quote": "TXT_KEY_TECH_GRAND_WAR_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CONGRESS_OF_VIENNA",
+   "BUILDING_MA_IMPERIAL_NAVAL_ACADEMY",
+   "BUILDING_MA_REPUBLIC_NAVAL_ACADEMY"
+  ],
+  "techs": [
+   "TECH_INDUSTRIAL_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_MANOWAR",
+   "UNIT_MASTER_SAILOR_MANOWAR",
+   "UNIT_MOTAR"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_MASTER_SAILOR_SLOOP_OF_WAR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEXTANT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NATIONALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 4174
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_GRAND_WAR",
+  "soundMP": "AS2D_TECH_GRAND_WAR",
+  "icon": ",Art/Interface/Buttons/TechTree/Grand_war.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,8"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 60,
+  "gridY": 15
+ }
+}

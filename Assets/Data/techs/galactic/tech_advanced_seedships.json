@@ -1,0 +1,87 @@
+{
+ "type": "TECH_ADVANCED_SEEDSHIPS",
+ "description": "TXT_KEY_TECH_ADVANCED_SEEDSHIPS",
+ "civilopedia": "TXT_KEY_TECH_ADVANCED_SEEDSHIPS_PEDIA",
+ "quote": "TXT_KEY_TECH_ADVANCED_SEEDSHIPS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_IMMIGRATION_OFFICE",
+   "BUILDING_INTERSTELLAR_STARPORT",
+   "BUILDING_INTERSTELLAR_TRACTOR_BEAM",
+   "BUILDING_MISSION_TO_THE_GALACTIC_CORE",
+   "BUILDING_SPACE_COLONY_MILKY_WAY"
+  ],
+  "builds": [
+   "BUILD_INTERSTELLAR_COLONY"
+  ],
+  "improvements": [
+   "IMPROVEMENT_INTERSTELLAR_COLONY"
+  ],
+  "techs": [
+   "TECH_ASTROIMPERIALISM",
+   "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS"
+  ],
+  "units": [
+   "UNIT_WORLDSHIP2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ACNP_PROPULSION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GRAVITY_CONTROL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_STARPORT": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 166029
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_ADVANCED_SEEDSHIPS",
+  "soundMP": "AS2D_TECH_ADVANCED_SEEDSHIPS",
+  "icon": "Art/Interface/Buttons/TechTree/advancedseedships.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 132,
+  "gridY": 11
+ }
+}

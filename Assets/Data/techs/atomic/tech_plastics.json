@@ -1,0 +1,99 @@
+{
+ "type": "TECH_PLASTICS",
+ "description": "TXT_KEY_TECH_PLASTICS",
+ "civilopedia": "TXT_KEY_TECH_PLASTICS_PEDIA",
+ "quote": "TXT_KEY_TECH_PLASTICS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_PLASTIC"
+  ],
+  "buildings": [
+   "BUILDING_EMPIRE_STATE_BUILDING",
+   "BUILDING_FACTORY_PLASTIC",
+   "BUILDING_FACTORY_ROPE",
+   "BUILDING_FACTORY_TOYS",
+   "BUILDING_TOY_STORE"
+  ],
+  "builds": [
+   "BUILD_OFFSHORE_PLATFORM"
+  ],
+  "improvements": [
+   "IMPROVEMENT_OFFSHORE_PLATFORM"
+  ],
+  "promotions": [
+   "PROMOTION_NAPALM_BOMBS"
+  ],
+  "techs": [
+   "TECH_AGRICHEMICALS",
+   "TECH_ELECTRONICS",
+   "TECH_HIGHWAY_SYSTEMS"
+  ],
+  "units": [
+   "UNIT_OFFSHORE_PLATFORM"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_SHELL_WORKERS_HUT",
+   "BUILDING_TOY_CARVER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INDUSTRIALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_FACTORY_FURNITURE": {
+     "flat": 700
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_HYDROCARBON_WELL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 10309
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_GOLD": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_PLASTICS",
+  "soundMP": "AS2D_TECH_MP_PLASTICS",
+  "icon": ",Art/Interface/Buttons/TechTree/Plastics.dds,Art/Interface/Buttons/TechTree_Atlas.dds,6,6"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 74,
+  "gridY": 13
+ }
+}

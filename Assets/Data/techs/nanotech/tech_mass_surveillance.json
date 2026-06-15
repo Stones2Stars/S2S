@@ -1,0 +1,92 @@
+{
+ "type": "TECH_MASS_SURVEILLANCE",
+ "description": "TXT_KEY_TECH_MASS_SURVEILLANCE",
+ "civilopedia": "TXT_KEY_TECH_MASS_SURVEILLANCE_PEDIA",
+ "quote": "TXT_KEY_TECH_MASS_SURVEILLANCE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_PRECRIME_UNIT",
+   "BUILDING_TELESCREEN",
+   "BUILDING_VIRTUAL_WORLD_DATA_ANALYSIS"
+  ],
+  "civics": [
+   "CIVIC_GRID"
+  ],
+  "techs": [
+   "TECH_MEDIA_HIVEMIND",
+   "TECH_NANOPUNK",
+   "TECH_SYNTHETIC_SENTIENCE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TERRORISTS_COMPOUND"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_THOUGHT_SCANNING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_UBIQUITOUS_COMPUTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BIOMETRIC_WARFARE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "buildings": {
+    "BUILDING_BIOMETRIC_SECURITY_SYSTEM": {
+     "flat": 900
+    },
+    "BUILDING_CRYPTOLOGY_CENTER": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 37614
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_MASS_SURVEILLANCE",
+  "soundMP": "AS2D_TECH_MASS_SURVEILLANCE",
+  "icon": "Art/Interface/Buttons/TechTree/massurveillance.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 101,
+  "gridY": 5
+ }
+}

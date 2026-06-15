@@ -1,0 +1,63 @@
+{
+ "type": "TECH_BOARD_GAMES",
+ "description": "TXT_KEY_TECH_BOARD_GAMES",
+ "civilopedia": "TXT_KEY_TECH_BOARD_GAMES_PEDIA",
+ "quote": "TXT_KEY_TECH_BOARD_GAMES_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_TOYS"
+  ],
+  "buildings": [
+   "BUILDING_GAMBLING_DEN",
+   "BUILDING_TOY_CARVER"
+  ],
+  "techs": [
+   "TECH_CEREMONY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STANDARDIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 144
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_BOARD_GAMES",
+  "soundMP": "AS2D_TECH_BOARD_GAMES",
+  "icon": "Art/Interface/Buttons/TechTree/Boardgames.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 24,
+  "gridY": 17
+ }
+}

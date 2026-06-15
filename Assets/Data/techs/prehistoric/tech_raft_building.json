@@ -1,0 +1,90 @@
+{
+ "type": "TECH_RAFT_BUILDING",
+ "description": "TXT_KEY_TECH_RAFT_BUILDING",
+ "civilopedia": "TXT_KEY_TECH_RAFT_BUILDING_PEDIA",
+ "quote": "TXT_KEY_TECH_RAFT_BUILDING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_WATER_BURIALS"
+  ],
+  "promotions": [
+   "PROMOTION_SEA_HUNTER1"
+  ],
+  "techs": [
+   "TECH_SPEARFISHING"
+  ],
+  "units": [
+   "UNIT_NEANDERTHAL_RAFT",
+   "UNIT_RAFT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BINDING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADHESIVES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SIMPLE_WOOD_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_VICTORIA_FALLS": {
+     "flat": 200
+    }
+   }
+  }
+ },
+ "riverTrade": {
+  "team": {
+   "enabler": true
+  }
+ },
+ "cost": {
+  "research": 20
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_RAFT_BUILDING",
+  "soundMP": "AS2D_TECH_RAFT_BUILDING",
+  "icon": "Art/Interface/Buttons/TechTree/raftbuilding.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 10,
+  "gridY": 5
+ }
+}

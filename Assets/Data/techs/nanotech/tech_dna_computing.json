@@ -1,0 +1,109 @@
+{
+ "type": "TECH_DNA_COMPUTING",
+ "description": "TXT_KEY_TECH_DNA_COMPUTING",
+ "civilopedia": "TXT_KEY_TECH_DNA_COMPUTING_PEDIA",
+ "quote": "TXT_KEY_TECH_DNA_COMPUTING_QUOTE",
+ "enables": {
+  "promotions": [
+   "PROMOTION_RECOVER_TECH5"
+  ],
+  "techs": [
+   "TECH_DESIGNER_MICROBIOLOGY",
+   "TECH_DYSTOPIA_PATHOGENS",
+   "TECH_HYPOTHETICAL_BIOCHEMISTRY"
+  ],
+  "units": [
+   "UNIT_POISON_NOVA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BIOMIMETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADVANCED_COMPUTERS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_REGENERATIVE_MEDICINE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_SUBMERGED_TOWN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_NOVUS_REFINERY": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_STEM_CELL_LAB": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "buildings": {
+    "BUILDING_STEM_CELL_LAB": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 47795
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_DNA_COMPUTING",
+  "soundMP": "AS2D_TECH_DNA_COMPUTING",
+  "icon": "Art/Interface/Buttons/TechTree/DNA_computing.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 108,
+  "gridY": 15
+ }
+}

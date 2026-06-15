@@ -1,0 +1,62 @@
+{
+ "type": "TECH_CALCULUS",
+ "description": "TXT_KEY_TECH_CALCULUS",
+ "civilopedia": "TXT_KEY_TECH_CALCULUS_PEDIA",
+ "quote": "TXT_KEY_TECH_CALCULUS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_KERALA_SCHOOL_OF_MATHEMATICS"
+  ],
+  "techs": [
+   "TECH_PHYSICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SCIENTIFIC_METHOD",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_MATHEMATICS_ACADEMY": {
+     "flat": 500
+    },
+    "BUILDING_OBSERVATORY": {
+     "flat": 500
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 3274
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_CALCULUS",
+  "soundMP": "AS2D_TECH_CALCULUS",
+  "icon": "Art/Interface/Buttons/TechTree/calculus.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 56,
+  "gridY": 13
+ }
+}

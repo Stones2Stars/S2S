@@ -1,0 +1,85 @@
+{
+ "type": "TECH_ARCHITECTURE",
+ "description": "TXT_KEY_TECH_ARCHITECTURE",
+ "civilopedia": "TXT_KEY_TECH_ARCHITECTURE_PEDIA",
+ "quote": "TXT_KEY_TECH_ARCHITECTURE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_MUGHAL",
+   "BUILDING_GUILD_MASONS",
+   "BUILDING_LEANING_TOWER_OF_PISA",
+   "BUILDING_PORCELAIN_TOWER",
+   "BUILDING_SAINT_MARKS_BASILICA"
+  ],
+  "techs": [
+   "TECH_GUILDS",
+   "TECH_STAINED_GLASS"
+  ],
+  "units": [
+   "UNIT_MUGHAL_BABUR"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_THE_GREAT_SPHINX",
+   "BUILDING_VALLEY_OF_THE_KINGS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SURVEYING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_ENGINEERING_SCHOOL": {
+     "flat": 400
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 1334
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_RELIGION": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_ARCHITECTURE",
+  "soundMP": "AS2D_TECH_ARCHITECTURE",
+  "icon": ",Art/Interface/Buttons/TechTree/Architecture.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,2,2"
+ },
+ "identity": {
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 44,
+  "gridY": 11
+ }
+}

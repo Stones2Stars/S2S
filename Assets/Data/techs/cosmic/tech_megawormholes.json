@@ -1,0 +1,70 @@
+{
+ "type": "TECH_MEGAWORMHOLES",
+ "description": "TXT_KEY_TECH_MEGAWORMHOLES",
+ "civilopedia": "TXT_KEY_TECH_MEGAWORMHOLES_PEDIA",
+ "quote": "TXT_KEY_TECH_MEGAWORMHOLES_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_GRAZER",
+   "BUILDING_INTERGALACTIC_KLIKISS_TORCH",
+   "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
+   "BUILDING_INTERGALACTIC_VOID_BASE"
+  ],
+  "builds": [
+   "BUILD_MEGAWORMHOLE"
+  ],
+  "techs": [
+   "TECH_INTERCLUSTER_TRAVEL",
+   "TECH_SPACETIME_ECONOMICS",
+   "TECH_STARPUNK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INDUCED_SUPERNOVA",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 326209
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/megawormholes.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 144,
+  "gridY": 17
+ }
+}

@@ -1,0 +1,176 @@
+{
+ "type": "TECH_ASSEMBLY_LINE",
+ "description": "TXT_KEY_TECH_ASSEMBLY_LINE",
+ "civilopedia": "TXT_KEY_TECH_ASSEMBLY_LINE_PEDIA",
+ "quote": "TXT_KEY_TECH_ASSEMBLY_LINE_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_NEWSPAPERS",
+   "BONUS_NUTELLA",
+   "BONUS_PENCILS",
+   "BONUS_PHONOGRAPHS",
+   "BONUS_POTATO_CHIPS",
+   "BONUS_SODA_POP",
+   "BONUS_WATER_BOTTLES"
+  ],
+  "buildings": [
+   "BUILDING_CHAMBER_OF_COMMERCE",
+   "BUILDING_EMPERORS_CLOTHING_STORE",
+   "BUILDING_FACTORY",
+   "BUILDING_FACTORY_BARRELS",
+   "BUILDING_FACTORY_BASKETS",
+   "BUILDING_FACTORY_BEADS",
+   "BUILDING_FACTORY_BOOKS",
+   "BUILDING_FACTORY_BRICKS",
+   "BUILDING_FACTORY_CANDLES",
+   "BUILDING_FACTORY_CARPETS",
+   "BUILDING_FACTORY_CHEESE",
+   "BUILDING_FACTORY_CLOTH",
+   "BUILDING_FACTORY_CLOTHING",
+   "BUILDING_FACTORY_DYE",
+   "BUILDING_FACTORY_FURNITURE",
+   "BUILDING_FACTORY_GLASSWARE",
+   "BUILDING_FACTORY_HATS",
+   "BUILDING_FACTORY_LACQUERWARE",
+   "BUILDING_FACTORY_LEATHER",
+   "BUILDING_FACTORY_LYE",
+   "BUILDING_FACTORY_MARZIPAN",
+   "BUILDING_FACTORY_NEWSPAPERS",
+   "BUILDING_FACTORY_NUTELLA",
+   "BUILDING_FACTORY_PAPER",
+   "BUILDING_FACTORY_PENCILS",
+   "BUILDING_FACTORY_PHONOGRAPHS",
+   "BUILDING_FACTORY_PORCELAIN_WARES",
+   "BUILDING_FACTORY_POTATO_CHIPS",
+   "BUILDING_FACTORY_POTTERY",
+   "BUILDING_FACTORY_SAILS",
+   "BUILDING_FACTORY_SAUSAGE",
+   "BUILDING_FACTORY_SCULPTURES",
+   "BUILDING_FACTORY_SHOES",
+   "BUILDING_FACTORY_SOAP",
+   "BUILDING_FACTORY_SODA_POP",
+   "BUILDING_FACTORY_TANNIN",
+   "BUILDING_FACTORY_TERRACOTTA_WARES",
+   "BUILDING_FACTORY_WATER_BOTTLES",
+   "BUILDING_HQ_EMPERORS_CLOTHING",
+   "BUILDING_MUSIC_FACTORY",
+   "BUILDING_NEWS_STAND",
+   "BUILDING_OIL_REFINERY"
+  ],
+  "builds": [
+   "BUILD_FACTORY"
+  ],
+  "civics": [
+   "CIVIC_PRIVATIZED"
+  ],
+  "improvements": [
+   "IMPROVEMENT_FACTORY"
+  ],
+  "techs": [
+   "TECH_AGRICULTURAL_ENGINEERING",
+   "TECH_MARXISM",
+   "TECH_NITROGLYCERIN",
+   "TECH_STEEL"
+  ],
+  "units": [
+   "UNIT_JOHN_MONASH",
+   "UNIT_MILITIA_INDUSTRIAL",
+   "UNIT_TORPEDO_BOAT"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AUTOMATION_CLOCK",
+   "BUILDING_BASKETMAKER",
+   "BUILDING_BEADWORKER",
+   "BUILDING_GUILD_GLASSBLOWERS",
+   "BUILDING_GUILD_POTTERS",
+   "BUILDING_LACQUERWARE_MAKER",
+   "BUILDING_POTTERS_HUT",
+   "BUILDING_SEAMSTRESS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EMANCIPATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MACHINE_TOOLS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_THATCH_CUTTER": {
+     "flat": -2
+    }
+   }
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_THATCH_CUTTER": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
+     "percent": -15
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
+     "percent": -5
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 6042
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_ASSEMBLINE",
+  "soundMP": "AS2D_TECH_MP_ASSEMBLINE",
+  "icon": ",Art/Interface/Buttons/TechTree/Assembly_Line.dds,Art/Interface/Buttons/TechTree_Atlas.dds,6,1"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 21,
+  "militaryWorth": 7,
+  "tradeable": true,
+  "gridX": 65,
+  "gridY": 11
+ }
+}

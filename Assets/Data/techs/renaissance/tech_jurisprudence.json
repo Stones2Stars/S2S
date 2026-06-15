@@ -1,0 +1,73 @@
+{
+ "type": "TECH_JURISPRUDENCE",
+ "description": "TXT_KEY_TECH_JURISPRUDENCE",
+ "civilopedia": "TXT_KEY_TECH_JURISPRUDENCE_PEDIA",
+ "quote": "TXT_KEY_TECH_JURISPRUDENCE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_RIOTING",
+   "BUILDING_DISTRICT_COURTHOUSE",
+   "BUILDING_GUILLOTINE",
+   "BUILDING_NATIONAL_PROSTITUTION_BAN",
+   "BUILDING_ORDINANCE_PROSTITUTION_BAN",
+   "BUILDING_SUPREME_COURT"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_CRIME_FIGHTING5"
+  ],
+  "techs": [
+   "TECH_CORPORATION",
+   "TECH_SOCIAL_CONTRACT"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CRUCIFIXION_CROSSES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_POLITICAL_PHILOSOPHY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 2701
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   },
+   {
+    "FLAVOR_ESPIONAGE": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_JURISPRUDENCE",
+  "soundMP": "AS2D_TECH_JURISPRUDENCE",
+  "icon": ",Art/Interface/Buttons/TechTree/justice.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,6,9"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 53,
+  "gridY": 11
+ }
+}

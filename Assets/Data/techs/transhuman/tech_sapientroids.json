@@ -1,0 +1,95 @@
+{
+ "type": "TECH_SAPIENTROIDS",
+ "description": "TXT_KEY_TECH_SAPIENTROIDS",
+ "civilopedia": "TXT_KEY_TECH_SAPIENTROIDS_PEDIA",
+ "quote": "TXT_KEY_TECH_SAPIENTROIDS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_HUMANOID_DESIGNER"
+  ],
+  "civics": [
+   "CIVIC_ENGINEERED"
+  ],
+  "techs": [
+   "TECH_ADVANCED_WARMACHINES",
+   "TECH_BINARY_PSYCHOKINESIS",
+   "TECH_HUMAN_TRANSMUTATION",
+   "TECH_TERRA_COMPUTER"
+  ],
+  "units": [
+   "UNIT_ANTHROID_INFANTRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TECHNOLOGICAL_SINGULARITY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_LIFE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COMPREHENSIVE_CYBERNETICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_SOCIABLE_ROBOTS": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_ANDROID_PARENTS": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 75052
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_SAPIENTROIDS",
+  "soundMP": "AS2D_TECH_SAPIENTROIDS",
+  "icon": "Art/Interface/Buttons/TechTree/humanoids.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 116,
+  "gridY": 19
+ }
+}

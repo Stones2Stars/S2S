@@ -1,0 +1,80 @@
+{
+ "type": "TECH_SUBTERRANEAN_EXPLORATION",
+ "description": "TXT_KEY_TECH_SUBTERRANEAN_EXPLORATION",
+ "civilopedia": "TXT_KEY_TECH_SUBTERRANEAN_EXPLORATION_PEDIA",
+ "quote": "TXT_KEY_TECH_SUBTERRANEAN_EXPLORATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_GRAVITY_TRAIN_NETWORK",
+   "BUILDING_MISSION_TO_EARTHS_CORE",
+   "BUILDING_SUBTERRANEAN_CITY",
+   "BUILDING_SUBTERRANEAN_FARM",
+   "BUILDING_SUBTERRANEAN_HOTEL",
+   "BUILDING_SUBTERRANEAN_LAB"
+  ],
+  "techs": [
+   "TECH_ASTROECOLOGY",
+   "TECH_GEOSCULPTING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_THERMAL_NEGATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_MINING_CAMP": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_MINING_CAMP": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 83654
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GOLD": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_SUBTERRANEAN_EXPLORATION",
+  "soundMP": "AS2D_TECH_SUBTERRANEAN_EXPLORATION",
+  "icon": "Art/Interface/Buttons/TechTree/subterraineanexploration.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 119,
+  "gridY": 15
+ }
+}

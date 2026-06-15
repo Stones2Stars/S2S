@@ -1,0 +1,64 @@
+{
+ "type": "TECH_BIOMIMETICS",
+ "description": "TXT_KEY_TECH_BIOMIMETICS",
+ "civilopedia": "TXT_KEY_TECH_BIOMIMETICS_PEDIA",
+ "quote": "TXT_KEY_TECH_BIOMIMETICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BUILDING_MEMBRANES"
+  ],
+  "promotions": [
+   "PROMOTION_SUPER_CAVITATION"
+  ],
+  "techs": [
+   "TECH_DNA_COMPUTING",
+   "TECH_DROIDS",
+   "TECH_SUPERSTRONG_ALLOYS"
+  ],
+  "units": [
+   "UNIT_FUSION_SUBMARINE",
+   "UNIT_MASTER_SAILOR_FUSION_SUBMARINE",
+   "UNIT_STEALTH_ARMOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ONTOLOGICAL_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 41539
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_BIOMIMETICS",
+  "soundMP": "AS2D_TECH_BIOMIMETICS",
+  "icon": "Art/Interface/Buttons/Techtree/biomimetics.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 104,
+  "gridY": 15
+ }
+}

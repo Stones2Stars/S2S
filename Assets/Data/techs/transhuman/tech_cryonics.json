@@ -1,0 +1,72 @@
+{
+ "type": "TECH_CRYONICS",
+ "description": "TXT_KEY_TECH_CRYONICS",
+ "civilopedia": "TXT_KEY_TECH_CRYONICS_PEDIA",
+ "quote": "TXT_KEY_TECH_CRYONICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_CRYONIC_BODY_STORAGE",
+   "BUILDING_CRYOGENIC_PRISON"
+  ],
+  "techs": [
+   "TECH_NUTRACEUTICAL_ANIMALS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ELECTRIC_CHAIR",
+   "BUILDING_PANOPTICON_PRISON"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HYPERMAGNETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FROST_BEAMS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HOMO_SUPERIOR",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 67710
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_CRYONICS",
+  "soundMP": "AS2D_TECH_CRYONICS",
+  "icon": ",Art/Interface/Buttons/TechTree/genetic_engineering.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,5,7"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 113,
+  "gridY": 17
+ }
+}

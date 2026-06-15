@@ -1,0 +1,60 @@
+{
+ "type": "TECH_PHYSICAL_CHEMISTRY",
+ "description": "TXT_KEY_TECH_PHYSICAL_CHEMISTRY",
+ "civilopedia": "TXT_KEY_TECH_PHYSICAL_CHEMISTRY_PEDIA",
+ "quote": "TXT_KEY_TECH_PHYSICAL_CHEMISTRY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_FIBERGLASS"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_FIBERGLASS"
+  ],
+  "techs": [
+   "TECH_BIOLOGICAL_WARFARE",
+   "TECH_MANUFACTURING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AGRICHEMICALS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 11196
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_GOLD": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_PHYSICAL_CHEMISTRY",
+  "soundMP": "AS2D_TECH_PHYSICAL_CHEMISTRY",
+  "icon": "Art/Interface/Buttons/TechTree/catalyticpolymerization.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 76,
+  "gridY": 13
+ }
+}

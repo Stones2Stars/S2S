@@ -1,0 +1,101 @@
+{
+ "type": "TECH_PLANET_ENGINEERING",
+ "description": "TXT_KEY_TECH_PLANET_ENGINEERING",
+ "civilopedia": "TXT_KEY_TECH_PLANET_ENGINEERING_PEDIA",
+ "quote": "TXT_KEY_TECH_PLANET_ENGINEERING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
+   "BUILDING_INTERSTELLAR_ARTIFICIAL_MOON",
+   "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
+   "BUILDING_INTERSTELLAR_MINING_PLANET",
+   "BUILDING_INTERSTELLAR_STAR_SCOOP",
+   "BUILDING_INTERSTELLAR_STELLAR_FUSION_PLANT",
+   "BUILDING_JOVIAN_MAGNETOSPHERE_POWER_PLANT",
+   "BUILDING_LIFE_SUPERCRITICAL_CO2"
+  ],
+  "builds": [
+   "BUILD_ARCOLOGY_MOON"
+  ],
+  "improvements": [
+   "IMPROVEMENT_ARCOLOGY_MOON"
+  ],
+  "techs": [
+   "TECH_ARTIFICIAL_PLANETS",
+   "TECH_ASTROENGINEERING",
+   "TECH_ORBITAL_ENGINEERING",
+   "TECH_SINGULARITY_STABILIZATION"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_SATELLITE_STATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ADAPTIVE_ARCHITECTURE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FORGE_WORLDS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GRAVITY_CONTROL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_GREAT_ENGINEER"
+ },
+ "cost": {
+  "research": 166029
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_PLANET_ENGINEERING",
+  "soundMP": "AS2D_TECH_PLANET_ENGINEERING",
+  "icon": "Art/interface/buttons/TechTree/planet_engineering.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 132,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,80 @@
+{
+ "type": "TECH_MOLECULAR_BIOLOGY",
+ "description": "TXT_KEY_TECH_MOLECULAR_BIOLOGY",
+ "civilopedia": "TXT_KEY_TECH_MOLECULAR_BIOLOGY_PEDIA",
+ "quote": "TXT_KEY_TECH_MOLECULAR_BIOLOGY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_ENZYMES",
+   "BONUS_OMEGA_FATTY_ACID"
+  ],
+  "buildings": [
+   "BUILDING_BACTERIOPHAGE_THERAPY_CLINIC",
+   "BUILDING_FACTORY_OMEGA_ACIDS",
+   "BUILDING_MOLECULAR_BIOLOGY_LAB",
+   "BUILDING_NUCLEIC_ACID_LAB",
+   "BUILDING_PROTEIN_LAB"
+  ],
+  "techs": [
+   "TECH_GENETICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BIOLOGICAL_WARFARE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MODERN_HEALTH_CARE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_BIOLOGY_LAB": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 13724
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_ESPIONAGE": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_MOLECULARBIOLOGY",
+  "soundMP": "AS2D_TECH_MOLECULARBIOLOGY",
+  "icon": "Art/Interface/Buttons/TechTree/molecularbiology.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 81,
+  "gridY": 7
+ }
+}

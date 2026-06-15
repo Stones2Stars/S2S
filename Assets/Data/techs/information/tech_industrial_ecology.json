@@ -1,0 +1,99 @@
+{
+ "type": "TECH_INDUSTRIAL_ECOLOGY",
+ "description": "TXT_KEY_TECH_INDUSTRIAL_ECOLOGY",
+ "civilopedia": "TXT_KEY_TECH_INDUSTRIAL_ECOLOGY_PEDIA",
+ "quote": "TXT_KEY_TECH_INDUSTRIAL_ECOLOGY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AQUAPONICS_TANKS",
+   "BUILDING_AUTOMATED_WASTE_COLLECTION_SYSTEM",
+   "BUILDING_CO2_RESERVOIR",
+   "BUILDING_ENHANCED_GEOTHERMAL_SYSTEM",
+   "BUILDING_GENERATION_IV_REACTOR",
+   "BUILDING_HEATING_AND_COOLING_DISTRICT",
+   "BUILDING_HYDRAULIC_FRACTURING",
+   "BUILDING_SUPERCRITICAL_CO2_TURBINE"
+  ],
+  "builds": [
+   "BUILD_MAGLEV",
+   "BUILD_RECLAIM_LAND"
+  ],
+  "techs": [
+   "TECH_MEGACITIES"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CLEAN_NUCLEAR_REACTOR",
+   "BUILDING_FARM_FLOWER_BEGONIA",
+   "BUILDING_FARM_FLOWER_BLUEBELL",
+   "BUILDING_FARM_FLOWER_CARNATION",
+   "BUILDING_FARM_FLOWER_DAISY",
+   "BUILDING_FARM_FLOWER_FOXGLOVE",
+   "BUILDING_FARM_FLOWER_HIBISCUS",
+   "BUILDING_FARM_FLOWER_INDIGO",
+   "BUILDING_FARM_FLOWER_IRIS",
+   "BUILDING_FARM_FLOWER_LILY",
+   "BUILDING_FARM_FLOWER_ORCHID",
+   "BUILDING_FARM_FLOWER_PANSY",
+   "BUILDING_FARM_FLOWER_ROSE",
+   "BUILDING_FARM_FLOWER_SNAPDRAGON",
+   "BUILDING_FARM_FLOWER_SUNFLOWER",
+   "BUILDING_FARM_FLOWER_TULIP",
+   "BUILDING_FARM_FLOWER_VIOLET",
+   "BUILDING_NUCLEAR_PLANT",
+   "BUILDING_PLANTATION_HENNA",
+   "BUILDING_PLANTATION_MADDER",
+   "BUILDING_RESOURCES_FLOWERS"
+  ],
+  "builds": [
+   "BUILD_BURN_VEGETATION",
+   "BUILD_DRAIN_SWAMP",
+   "BUILD_REMOVE_ROCK_FORMATION",
+   "BUILD_REMOVE_VEGETATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECOLOGICAL_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_RAPID_PROTOTYPING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 25354
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/Buttons/Techs/industrial_ecology.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 94,
+  "gridY": 7
+ }
+}

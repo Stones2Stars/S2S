@@ -1,0 +1,92 @@
+{
+ "type": "TECH_COOKING",
+ "description": "TXT_KEY_TECH_COOKING",
+ "civilopedia": "TXT_KEY_TECH_COOKING_PEDIA",
+ "quote": "TXT_KEY_TECH_COOKING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_LARD",
+   "BONUS_RAW_MEAT"
+  ],
+  "buildings": [
+   "BUILDING_BUTCHERY",
+   "BUILDING_DINING_HALL",
+   "BUILDING_LICHEN_BURNER",
+   "BUILDING_PESTS_ANTS",
+   "BUILDING_PESTS_FLIES",
+   "BUILDING_PESTS_TERMITES",
+   "BUILDING_SLAUGHTERHOUSE"
+  ],
+  "techs": [
+   "TECH_DRYING",
+   "TECH_FIRE_MAKING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CONTROLLED_FIRE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_WILD_HERBS_GATHERER": {
+     "flat": 100
+    }
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  },
+  "city": {
+   "buildings": {
+    "BUILDING_CARRION_GATHERER": {
+     "flat": 1
+    },
+    "BUILDING_EARTHWORM_GATHERER": {
+     "flat": 1
+    },
+    "BUILDING_SNAIL_GATHERER": {
+     "flat": 1
+    },
+    "BUILDING_NEST_THIEF": {
+     "flat": 1
+    },
+    "BUILDING_TIDEPOOL_SCAVENGER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 9
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_COOKING",
+  "soundMP": "AS2D_TECH_COOKING",
+  "icon": "Art/Interface/Buttons/TechTree/Button_CookedFood.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 4,
+  "gridY": 11
+ }
+}

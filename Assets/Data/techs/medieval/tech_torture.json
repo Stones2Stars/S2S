@@ -1,0 +1,86 @@
+{
+ "type": "TECH_TORTURE",
+ "description": "TXT_KEY_TECH_TORTURE",
+ "civilopedia": "TXT_KEY_TECH_TORTURE_PEDIA",
+ "quote": "TXT_KEY_TECH_TORTURE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DUNGEON",
+   "BUILDING_INTERROGATION_CHAIR",
+   "BUILDING_INTESTINAL_RATS",
+   "BUILDING_IRON_MAIDEN",
+   "BUILDING_JUDAS_CRADLE",
+   "BUILDING_SCAVENGERS_DAUGHTER",
+   "BUILDING_THE_RACK",
+   "BUILDING_THUMBSCREW",
+   "BUILDING_TORTURE_CHAMBER"
+  ],
+  "techs": [
+   "TECH_WARRANTS_AND_DECREES"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BRAZEN_BULL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EXECUTIONS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_USURY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INVENTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1688
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_TORTURE",
+  "soundMP": "AS2D_TECH_TORTURE",
+  "icon": "Art/Interface/Buttons/TechTree/torture.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 47,
+  "gridY": 7
+ }
+}

@@ -1,0 +1,79 @@
+{
+ "type": "TECH_GEOSCULPTING",
+ "description": "TXT_KEY_TECH_GEOSCULPTING",
+ "civilopedia": "TXT_KEY_TECH_GEOSCULPTING_PEDIA",
+ "quote": "TXT_KEY_TECH_GEOSCULPTING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CALLISTO_FLOATING_CONTINENT",
+   "BUILDING_NUCLEAR_MINE",
+   "BUILDING_SUBTERRANEAN_CITY_EXPANSION",
+   "BUILDING_TITAN_FLOATING_CONTINENT"
+  ],
+  "techs": [
+   "TECH_PLANETARY_TERRAFORMING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SUBTERRANEAN_EXPLORATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOTROIDS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GALACTIC_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_SUBTERRANEAN_FARM": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_SUBTERRANEAN_HOTEL": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 126324
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/geosculpting.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 124,
+  "gridY": 17
+ }
+}

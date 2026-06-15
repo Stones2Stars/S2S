@@ -1,0 +1,75 @@
+{
+ "type": "TECH_MICROMECHANICS",
+ "description": "TXT_KEY_TECH_MICROMECHANICS",
+ "civilopedia": "TXT_KEY_TECH_MICROMECHANICS_PEDIA",
+ "quote": "TXT_KEY_TECH_MICROMECHANICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_4D_PRINTING_STUDIO"
+  ],
+  "promotions": [
+   "PROMOTION_AUTOMATIC_REPAIRS1",
+   "PROMOTION_REPAIR_NAVAL6"
+  ],
+  "techs": [
+   "TECH_BRAIN_MACHINE_INTERFACE",
+   "TECH_COILGUN",
+   "TECH_GRAPHENE_ALLOYS",
+   "TECH_REPLACEMENT_ORGANS"
+  ],
+  "units": [
+   "UNIT_NLOS_CANNON"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MICROGENERATORS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_SOLAR_PANELS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 27203
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_MICROMECHANICS",
+  "soundMP": "AS2D_TECH_MICROMECHANICS",
+  "icon": "Art/Interface/Buttons/TechTree/Micromechanics.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 96,
+  "gridY": 11
+ }
+}

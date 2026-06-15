@@ -1,0 +1,82 @@
+{
+ "type": "TECH_NEUTRONIUM",
+ "description": "TXT_KEY_TECH_NEUTRONIUM",
+ "civilopedia": "TXT_KEY_TECH_NEUTRONIUM_PEDIA",
+ "quote": "TXT_KEY_TECH_NEUTRONIUM_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_NEUTRONIUM"
+  ],
+  "buildings": [
+   "BUILDING_INTERGALACTIC_NEUTRONIUM_FOUNDRY",
+   "BUILDING_INTERGALACTIC_STAR_CANNON"
+  ],
+  "builds": [
+   "BUILD_NEUTRON_STAR_COLONY"
+  ],
+  "improvements": [
+   "IMPROVEMENT_NEUTRON_STAR_COLONY"
+  ],
+  "techs": [
+   "TECH_GRAND_UNIFICATION_BIOLOGY"
+  ],
+  "units": [
+   "UNIT_HYPER_BATTLECRUISER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_REACTIONLESS_DRIVE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ELECTROWEAK_MATTER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES": {
+     "flat": 1200
+    },
+    "BUILDING_QUANTUM_ASSEMBLER": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 352130
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/electronuclear_matter.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 146,
+  "gridY": 13
+ }
+}

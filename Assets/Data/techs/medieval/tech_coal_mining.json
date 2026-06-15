@@ -1,0 +1,75 @@
+{
+ "type": "TECH_COAL_MINING",
+ "description": "TXT_KEY_TECH_COAL_MINING",
+ "civilopedia": "TXT_KEY_TECH_COAL_MINING_PEDIA",
+ "quote": "TXT_KEY_TECH_COAL_MINING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_COAL"
+  ],
+  "buildings": [
+   "BUILDING_MINE_COAL"
+  ],
+  "techs": [
+   "TECH_GUNPOWDER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CRUCIBLE_STEEL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_MINE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 1820
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 9
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_COAL_MINING",
+  "soundMP": "AS2D_TECH_COAL_MINING",
+  "icon": "Art/Interface/Buttons/TechTree/coalmining.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 48,
+  "gridY": 19
+ }
+}

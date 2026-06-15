@@ -1,0 +1,74 @@
+{
+ "type": "TECH_COAST_GUARD",
+ "description": "TXT_KEY_TECH_COAST_GUARD",
+ "civilopedia": "TXT_KEY_TECH_COAST_GUARD_PEDIA",
+ "quote": "TXT_KEY_TECH_COAST_GUARD_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_COAST_GUARD_STATION",
+   "BUILDING_FERRY_TERMINAL"
+  ],
+  "techs": [
+   "TECH_AMPHIBIOUS_WARFARE"
+  ],
+  "units": [
+   "UNIT_ASSAULT_SHIP",
+   "UNIT_CG_CUTTER",
+   "UNIT_MALACCAN_PIRATE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_RIVER_AUTHORITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NAVAL_FLIGHT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 10309
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 9
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_GOLD": 7
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_COAST_GUARD",
+  "soundMP": "AS2D_TECH_COAST_GUARD",
+  "icon": "Art/Interface/Buttons/TechTree/coastguard.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 74,
+  "gridY": 19
+ }
+}

@@ -1,0 +1,100 @@
+{
+ "type": "TECH_DISASTER_ROBOTS",
+ "description": "TXT_KEY_TECH_DISASTER_ROBOTS",
+ "civilopedia": "TXT_KEY_TECH_DISASTER_ROBOTS_PEDIA",
+ "quote": "TXT_KEY_TECH_DISASTER_ROBOTS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_SERVICE_BOTS"
+  ],
+  "buildings": [
+   "BUILDING_AMBULANCE_DRONE_CONTROL_CENTER",
+   "BUILDING_FACTORY_SERVICE_BOTS",
+   "BUILDING_FIRE_SAFETY_DRONE_CONTROL_CENTER",
+   "BUILDING_POLICE_DRONE_CONTROL_CENTER",
+   "BUILDING_ROBOTIC_PET_SHOP"
+  ],
+  "promotions": [
+   "PROMOTION_POLICING9",
+   "PROMOTION_SLEUTH8"
+  ],
+  "techs": [
+   "TECH_AUTOMATED_ROBOTICS",
+   "TECH_BIOMETRIC_WARFARE",
+   "TECH_NANOTECH_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_LITTORAL_COMBAT_SHIP",
+   "UNIT_POLICE_MECH",
+   "UNIT_SCOUT_MECH",
+   "UNIT_UNMANNED_DESTROYER",
+   "UNIT_UNMANNED_PIRATE_SKIFF",
+   "UNIT_UNMANNED_SUBMARINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEGACITIES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AFFECTIVE_ALGORITHMS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MILITARY_ROBOTICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_DARPA": {
+     "flat": 800
+    },
+    "BUILDING_ROBOTICS_LAB": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 29220
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_DISASTER_ROBOTS",
+  "soundMP": "AS2D_TECH_DISASTER_ROBOTS",
+  "icon": "Art/Interface/Buttons/TechTree/firstresponse.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 98,
+  "gridY": 15
+ }
+}

@@ -1,0 +1,106 @@
+{
+ "type": "TECH_AGRICULTURAL_ENGINEERING",
+ "description": "TXT_KEY_TECH_AGRICULTURAL_ENGINEERING",
+ "civilopedia": "TXT_KEY_TECH_AGRICULTURAL_ENGINEERING_PEDIA",
+ "quote": "TXT_KEY_TECH_AGRICULTURAL_ENGINEERING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AGRICULTURAL_EXTENSION",
+   "BUILDING_GREENHOUSE",
+   "BUILDING_MEGAFARM",
+   "BUILDING_MODERN_GRANARY"
+  ],
+  "civics": [
+   "CIVIC_CORPORATE_OWNED"
+  ],
+  "techs": [
+   "TECH_AGRICHEMICALS",
+   "TECH_BARBED_WIRE",
+   "TECH_LAWN_SPORTS",
+   "TECH_MORMON"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HENNA_GATHERER",
+   "BUILDING_INDIGO_GATHERER",
+   "BUILDING_STORAGE_PIT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FOOD_PRESERVATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASSEMBLY_LINE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_WINERY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_ORCHARD": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_WINERY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_ORCHARD": {
+     "flat": 1
+    },
+    "IMPROVEMENT_PLANTATION": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 6351
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_AGRICULTURAL_ENGINEERING",
+  "soundMP": "AS2D_TECH_AGRICULTURAL_ENGINEERING",
+  "icon": ",Art/Interface/Buttons/TechTree/Agronomy.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,5,1"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 66,
+  "gridY": 5
+ }
+}

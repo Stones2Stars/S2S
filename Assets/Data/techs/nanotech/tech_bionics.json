@@ -1,0 +1,112 @@
+{
+ "type": "TECH_BIONICS",
+ "description": "TXT_KEY_TECH_BIONICS",
+ "civilopedia": "TXT_KEY_TECH_BIONICS_PEDIA",
+ "quote": "TXT_KEY_TECH_BIONICS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_BIONIC_SUITS"
+  ],
+  "buildings": [
+   "BUILDING_ANTHROPOMORPHICS_LAB",
+   "BUILDING_FACTORY_BIONIC_SUITS"
+  ],
+  "techs": [
+   "TECH_DROIDS",
+   "TECH_EXOCORTEX_NETWORKS"
+  ],
+  "units": [
+   "UNIT_AUTOMATONS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RAPID_RECUPERATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_BIOMORPHICS_LAB": {
+     "flat": 900
+    },
+    "BUILDING_RECHARGING_NODE": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_FACTORY_NANOGENERATORS": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_BIOMORPHICS_LAB": {
+     "flat": 900
+    },
+    "BUILDING_EVOLUTIONARY_ALGORITHMS": {
+     "flat": 900
+    },
+    "BUILDING_ROBOTICS_LAB": {
+     "flat": 900
+    },
+    "BUILDING_TRANSGENICS_LAB": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 42984
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GOLD": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_BIONICS",
+  "soundMP": "AS2D_TECH_BIONICS",
+  "icon": ",Art/Interface/Buttons/TechTree/Robotics.dds,Art/Interface/Buttons/NextWar_Atlas.dds,4,3"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 105,
+  "gridY": 19
+ }
+}

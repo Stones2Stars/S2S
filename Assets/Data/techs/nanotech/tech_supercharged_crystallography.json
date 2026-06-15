@@ -1,0 +1,91 @@
+{
+ "type": "TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
+ "description": "TXT_KEY_TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
+ "civilopedia": "TXT_KEY_TECH_SUPERCHARGED_CRYSTALLOGRAPHY_PEDIA",
+ "quote": "TXT_KEY_TECH_SUPERCHARGED_CRYSTALLOGRAPHY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_DIAMOND_NANOTHREADS"
+  ],
+  "buildings": [
+   "BUILDING_ASTEROID_EPITAXY_FACTORY",
+   "BUILDING_DIAMOND_NANOTHREAD_FOUNDRY",
+   "BUILDING_MARTIAN_ALGAE_DESIGNER",
+   "BUILDING_MARTIAN_CITY",
+   "BUILDING_MARTIAN_SKYSCRAPER"
+  ],
+  "techs": [
+   "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+   "TECH_NEURON_ENGINEERING",
+   "TECH_TRANSHUMAN_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INTERACTIVE_GLASS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ELECTROMAGNETIC_VOLTAGE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_CISLUNAR_MATERIALS_LAB": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_CISLUNAR_FACTORY": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 49574
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
+  "soundMP": "AS2D_TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
+  "icon": "Art/Interface/Buttons/TechTree/superchargedcrystallines.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 109,
+  "gridY": 11
+ }
+}

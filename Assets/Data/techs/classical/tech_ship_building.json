@@ -1,0 +1,127 @@
+{
+ "type": "TECH_SHIP_BUILDING",
+ "description": "TXT_KEY_TECH_SHIP_BUILDING",
+ "civilopedia": "TXT_KEY_TECH_SHIP_BUILDING_PEDIA",
+ "quote": "TXT_KEY_TECH_SHIP_BUILDING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTROLOGICAL_INFLUENCE_OF_AQUARIUS",
+   "BUILDING_ASTROLOGICAL_INFLUENCE_OF_CAPRICORN",
+   "BUILDING_CULTURE_ICELANDIC",
+   "BUILDING_CULTURE_ILLYRIAN",
+   "BUILDING_CULTURE_JOSEON",
+   "BUILDING_CULTURE_TAHITIAN",
+   "BUILDING_CULTURE_THREE_KINGDOMS",
+   "BUILDING_FREYA_SANCTUARY",
+   "BUILDING_HEIMDALL_SANCTUARY",
+   "BUILDING_LOKI_SANCTUARY",
+   "BUILDING_SHIPYARD",
+   "BUILDING_THE_ERECHTHEUM",
+   "BUILDING_THOR_ALTAR",
+   "BUILDING_THOR_SANCTUARY"
+  ],
+  "promotions": [
+   "PROMOTION_CARAVAN_SEA_MOVEMENT_II",
+   "PROMOTION_CARAVAN_SHALLOW_DRAFT",
+   "PROMOTION_REPAIR_NAVAL3",
+   "PROMOTION_TRANSPORT1",
+   "PROMOTION_TRANSPORT_PEOPLE",
+   "PROMOTION_TRANSPORT_PEOPLE1",
+   "PROMOTION_TRANSPORT_PEOPLE2",
+   "PROMOTION_TRANSPORT_PEOPLE3",
+   "PROMOTION_TRANSPORT_TROOPS",
+   "PROMOTION_TRANSPORT_TROOPS1",
+   "PROMOTION_TRANSPORT_TROOPS2",
+   "PROMOTION_TRANSPORT_TROOPS3"
+  ],
+  "techs": [
+   "TECH_RUDDER"
+  ],
+  "units": [
+   "UNIT_DECAREME",
+   "UNIT_DOUJIAN",
+   "UNIT_DRAGON_SHIP_PIRATE",
+   "UNIT_LIBURNA",
+   "UNIT_MASTER_SAILOR_DECAREME",
+   "UNIT_PHOENICAN_BIREME",
+   "UNIT_QUINQUEREME2",
+   "UNIT_TAHITIAN_RIDERS",
+   "UNIT_TURTLE_SHIP"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_MASTER_SAILOR_TRIREME"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CLASSICAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_TAR_GATHERER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_GRAND_MARINE_FESTIVAL": {
+     "flat": 300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 448
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_PRODUCTION": 9
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_SHIP_BUILDING",
+  "soundMP": "AS2D_TECH_SHIP_BUILDING",
+  "icon": ",Art/Interface/Buttons/TechTree/Shipbuilding.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,2,16"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 33,
+  "gridY": 1
+ }
+}

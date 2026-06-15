@@ -1,0 +1,93 @@
+{
+ "type": "TECH_NAVAL_CANNON",
+ "description": "TXT_KEY_TECH_NAVAL_CANNON",
+ "civilopedia": "TXT_KEY_TECH_NAVAL_CANNON_PEDIA",
+ "quote": "TXT_KEY_TECH_NAVAL_CANNON_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_DUTCH",
+   "BUILDING_EAST_INDIA_COMPANY",
+   "BUILDING_PIRATES_COVE"
+  ],
+  "promotions": [
+   "PROMOTION_BOMBARDING1"
+  ],
+  "techs": [
+   "TECH_NAVAL_TACTICS"
+  ],
+  "units": [
+   "UNIT_FRIGATE",
+   "UNIT_GALLEON",
+   "UNIT_MASTER_SAILOR_FRIGATE",
+   "UNIT_NETHERLANDS_OOSTINDIEVAARDER",
+   "UNIT_PATAMAR",
+   "UNIT_PRIVATEER",
+   "UNIT_RAZZIA_PIRATES",
+   "UNIT_TREASURE_SHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_METALLURGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_WHALING_SHIPS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_WHALING_SHIPS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 2701
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_NAVAL_CANNON",
+  "soundMP": "AS2D_TECH_NAVAL_CANNON",
+  "icon": ",Art/Interface/Buttons/TechTree/NavalOrdnance.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,1,13"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "militaryWorth": 12,
+  "tradeable": true,
+  "gridX": 53,
+  "gridY": 7
+ }
+}

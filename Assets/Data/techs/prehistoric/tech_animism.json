@@ -1,0 +1,84 @@
+{
+ "type": "TECH_ANIMISM",
+ "description": "TXT_KEY_TECH_ANIMISM",
+ "civilopedia": "TXT_KEY_TECH_ANIMISM_PEDIA",
+ "quote": "TXT_KEY_TECH_ANIMISM_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_LL_RICHARDSON_ISLAND",
+   "BUILDING_SAGE",
+   "BUILDING_SWEAT_LODGE"
+  ],
+  "techs": [
+   "TECH_CEREMONIAL_BURIAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FIRE_MAKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TATTOOS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRIBALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_VICTORIA_FALLS": {
+     "flat": 500
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_DEAD_SEA": {
+     "flat": 1
+    },
+    "BUILDING_WONDER_OF_NATURE_PAMUKKALE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 34
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_ANIMISM",
+  "soundMP": "AS2D_TECH_ANIMISM",
+  "icon": "Art/Interface/Buttons/TechTree/Animism.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "tradeable": true,
+  "gridX": 14,
+  "gridY": 11
+ }
+}

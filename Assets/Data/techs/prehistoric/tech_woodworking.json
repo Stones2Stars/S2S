@@ -1,0 +1,73 @@
+{
+ "type": "TECH_WOODWORKING",
+ "description": "TXT_KEY_TECH_WOODWORKING",
+ "civilopedia": "TXT_KEY_TECH_WOODWORKING_PEDIA",
+ "quote": "TXT_KEY_TECH_WOODWORKING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_PRIME_TIMBER"
+  ],
+  "buildings": [
+   "BUILDING_CULTURE_NOOTKA",
+   "BUILDING_HOUSING_TREEHOUSES",
+   "BUILDING_LOG_BRIDGE",
+   "BUILDING_LUMBER_CAMP",
+   "BUILDING_SPIKED_PIT_TRAPS",
+   "BUILDING_WOODCARVER"
+  ],
+  "techs": [
+   "TECH_ATLATL_MAKING",
+   "TECH_CARPENTRY"
+  ],
+  "units": [
+   "UNIT_NOOTKA_CLUBMAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AXE_MAKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 23
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_WOODWORKING",
+  "soundMP": "AS2D_TECH_WOODWORKING",
+  "icon": "Art/Interface/Buttons/TechTree/Button_WoodWorking.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 11,
+  "gridY": 9
+ }
+}

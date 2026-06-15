@@ -1,0 +1,74 @@
+{
+ "type": "TECH_SIMULATION_AWARENESS",
+ "description": "TXT_KEY_TECH_SIMULATION_AWARENESS",
+ "civilopedia": "TXT_KEY_TECH_SIMULATION_AWARENESS_PEDIA",
+ "quote": "TXT_KEY_TECH_SIMULATION_AWARENESS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_UNOBTAINIUM"
+  ],
+  "buildings": [
+   "BUILDING_ASCENSION_GATE",
+   "BUILDING_DISTANT_HACKED_SOURCE_CODE",
+   "BUILDING_GLITCH_IN_THE_MATRIX",
+   "BUILDING_INTERSTELLAR_UNOBTAINIUM_SOURCE",
+   "BUILDING_MULTIVERSE_STEERING"
+  ],
+  "techs": [
+   "TECH_FUTURE_TECH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NONSTANDARD_MATHEMATICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MACROVERSE_TRAVERSAL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARCHETYPAL_VECTOR_SPACES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE": {
+     "flat": 2000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 686864
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/simulation_awareness.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 159,
+  "gridY": 9
+ }
+}

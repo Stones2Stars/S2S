@@ -1,0 +1,68 @@
+{
+ "type": "TECH_COUNTING",
+ "description": "TXT_KEY_TECH_COUNTING",
+ "civilopedia": "TXT_KEY_TECH_COUNTING_PEDIA",
+ "quote": "TXT_KEY_TECH_COUNTING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_COUNTING_STICKS",
+   "BUILDING_TALLY_STONE"
+  ],
+  "techs": [
+   "TECH_GAMES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GATHERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COOPERATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 9
+ },
+ "ai": {
+  "behaviour": {
+   "weight": 25
+  },
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_COUNTING",
+  "soundMP": "AS2D_TECH_COUNTING",
+  "icon": "Art/Interface/Buttons/TechTree/counting.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 16,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 3,
+  "gridY": 15
+ }
+}

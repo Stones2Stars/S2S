@@ -1,0 +1,91 @@
+{
+ "type": "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS",
+ "description": "TXT_KEY_TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS",
+ "civilopedia": "TXT_KEY_TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS_PEDIA",
+ "quote": "TXT_KEY_TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CARINA_AND_SAGITTARIUS_ARM_COLONY",
+   "BUILDING_CYGNUS_X_1_COLONY",
+   "BUILDING_INTERSTELLAR_BLACK_HOLE_COLONY",
+   "BUILDING_NORMA_AND_OUTER_ARM_COLONY",
+   "BUILDING_PERSEUS_ARM_COLONY",
+   "BUILDING_SCUTUM_CRUX_ARM_COLONY"
+  ],
+  "techs": [
+   "TECH_PHASING",
+   "TECH_WORMHOLE_TRAVERSAL"
+  ],
+  "units": [
+   "UNIT_INT_BATTLECRUISER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ADVANCED_SEEDSHIPS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SINGULARITY_STABILIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_TERRAFORMED_PLANET": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_STARPORT": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 179514
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS",
+  "soundMP": "AS2D_TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS",
+  "icon": "Art/interface/buttons/TechTree/transtangible_neutrino_accelerators.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 134,
+  "gridY": 11
+ }
+}

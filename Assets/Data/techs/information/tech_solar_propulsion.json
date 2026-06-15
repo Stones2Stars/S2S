@@ -1,0 +1,76 @@
+{
+ "type": "TECH_SOLAR_PROPULSION",
+ "description": "TXT_KEY_TECH_SOLAR_PROPULSION",
+ "civilopedia": "TXT_KEY_TECH_SOLAR_PROPULSION_PEDIA",
+ "quote": "TXT_KEY_TECH_SOLAR_PROPULSION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_IKAROS",
+   "BUILDING_SENTINEL",
+   "BUILDING_SOLAR_WEATHER_MONITOR"
+  ],
+  "builds": [
+   "BUILD_SPACE_SOLAR_ARRAY"
+  ],
+  "improvements": [
+   "IMPROVEMENT_SPACE_SOLAR_ARRAY"
+  ],
+  "techs": [
+   "TECH_SPACE_TOURISM"
+  ],
+  "units": [
+   "UNIT_INNER_SOLAR_SYSTEM_REWARD",
+   "UNIT_SOLARSAIL_WORKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RENEWABLE_ENERGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ION_PROPULSION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 21329
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_SOLAR_PROPULSION",
+  "soundMP": "AS2D_TECH_SOLAR_PROPULSION",
+  "icon": "Art/Interface/Buttons/TechTree/solarpropulsion.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 89,
+  "gridY": 5
+ }
+}

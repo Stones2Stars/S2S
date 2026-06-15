@@ -1,0 +1,98 @@
+{
+ "type": "TECH_GRAND_UNIFICATION_BIOLOGY",
+ "description": "TXT_KEY_TECH_GRAND_UNIFICATION_BIOLOGY",
+ "civilopedia": "TXT_KEY_TECH_GRAND_UNIFICATION_BIOLOGY_PEDIA",
+ "quote": "TXT_KEY_TECH_GRAND_UNIFICATION_BIOLOGY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_QUASAR_ECOSYSTEM",
+   "BUILDING_INTERSTELLAR_NEUTRON_STAR_COLONY"
+  ],
+  "builds": [
+   "BUILD_BIOTIC_NEUTRON_STAR"
+  ],
+  "improvements": [
+   "IMPROVEMENT_BIOTIC_NEUTRON_STAR"
+  ],
+  "techs": [
+   "TECH_PANPSYCHISM",
+   "TECH_TRANSCENDENT_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_LIFE_SWARM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NEUTRONIUM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PURE_INFORMATION_SOCIETY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_BIOTIC_GALAXY": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_BIOGEOCOMPUTER": {
+     "flat": 1200
+    },
+    "BUILDING_INTERSTELLAR_BIOTIC_SPHERE_WORLD": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_LIFE_DUST_AND_PLASMA": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 366008
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/grand_unification_biology.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 147,
+  "gridY": 11
+ }
+}

@@ -1,0 +1,84 @@
+{
+ "type": "TECH_ROCKETRY",
+ "description": "TXT_KEY_TECH_ROCKETRY",
+ "civilopedia": "TXT_KEY_TECH_ROCKETRY_PEDIA",
+ "quote": "TXT_KEY_TECH_ROCKETRY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_ROCKET_FUEL"
+  ],
+  "buildings": [
+   "BUILDING_ALUMINUM_CO_RESEARCH_AND_DEVELOPMENT",
+   "BUILDING_HQ_ALUMINUM_CO",
+   "BUILDING_ROCKET_FUEL_REFINERY"
+  ],
+  "promotions": [
+   "PROMOTION_TRANSPORT_MISSILES",
+   "PROMOTION_TRANSPORT_MISSILES1",
+   "PROMOTION_TRANSPORT_MISSILES2",
+   "PROMOTION_TRANSPORT_MISSILES3"
+  ],
+  "techs": [
+   "TECH_ATOMPUNK",
+   "TECH_JET_PROPULSION"
+  ],
+  "units": [
+   "UNIT_BAZOOKA",
+   "UNIT_PLO_FIGHTER",
+   "UNIT_RWENZURURU_SOLDIER",
+   "UNIT_V1"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AVIATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_NATIONAL_AIRCRAFT_MUSEUM": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 10744
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   },
+   {
+    "FLAVOR_GOLD": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_ROCKETRY",
+  "soundMP": "AS2D_TECH_MP_ROCKETRY",
+  "icon": ",Art/Interface/Buttons/TechTree/Rocketry.dds,Art/Interface/Buttons/TechTree_Atlas.dds,5,7"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 75,
+  "gridY": 9
+ }
+}

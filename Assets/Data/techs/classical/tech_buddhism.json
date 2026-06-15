@@ -1,0 +1,57 @@
+{
+ "type": "TECH_BUDDHISM",
+ "description": "TXT_KEY_TECH_BUDDHISM",
+ "civilopedia": "TXT_KEY_TECH_BUDDHISM_PEDIA",
+ "quote": "TXT_KEY_TECH_BUDDHISM_QUOTE",
+ "enables": {
+  "religions": [
+   "RELIGION_BUDDHISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_REINCARNATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEDITATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 499
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_BUDDHISM",
+  "soundMP": "AS2D_TECH_BUDDHISM",
+  "icon": "Art/Interface/Buttons/TechTree/Buddhism.dds"
+ },
+ "identity": {
+  "global": true,
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 8,
+  "gridX": 34,
+  "gridY": 19
+ }
+}

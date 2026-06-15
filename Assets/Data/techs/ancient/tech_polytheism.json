@@ -1,0 +1,79 @@
+{
+ "type": "TECH_POLYTHEISM",
+ "description": "TXT_KEY_TECH_POLYTHEISM",
+ "civilopedia": "TXT_KEY_TECH_POLYTHEISM_PEDIA",
+ "quote": "TXT_KEY_TECH_POLYTHEISM_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_EGYPTIAN",
+   "BUILDING_CULTURE_INDIAN",
+   "BUILDING_CULTURE_SUMERIAN",
+   "BUILDING_DISEASE_SYPHILIS",
+   "BUILDING_TEMPLE_OF_AN",
+   "BUILDING_TEMPLE_OF_ENKI",
+   "BUILDING_TEMPLE_OF_ENLIL",
+   "BUILDING_TEMPLE_OF_INANNA",
+   "BUILDING_TEMPLE_OF_KI",
+   "BUILDING_TEMPLE_OF_KI_CORN",
+   "BUILDING_TEMPLE_OF_KI_POTATO",
+   "BUILDING_TEMPLE_OF_KI_RICE",
+   "BUILDING_TEMPLE_OF_KI_WHEAT",
+   "BUILDING_ZIGGURAT"
+  ],
+  "techs": [
+   "TECH_KEMETISM",
+   "TECH_MESOPOTAMISM",
+   "TECH_PRIESTHOOD",
+   "TECH_YORUBA"
+  ],
+  "units": [
+   "UNIT_CROESUS",
+   "UNIT_HUITZILOPOCHTLI",
+   "UNIT_LAMBOGA",
+   "UNIT_LEONIDAS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TAXONOMY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CONSCIOUSNESS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 110
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_CULTURE": 9
+   },
+   {
+    "FLAVOR_GOLD": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_POLYTHEISM",
+  "soundMP": "AS2D_TECH_MP_POLYTHEISM",
+  "icon": ",Art/Interface/Buttons/TechTree/Polytheism.dds,Art/Interface/Buttons/TechTree_Atlas.dds,7,6"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "gridX": 22,
+  "gridY": 15
+ }
+}

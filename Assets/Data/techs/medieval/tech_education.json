@@ -1,0 +1,114 @@
+{
+ "type": "TECH_EDUCATION",
+ "description": "TXT_KEY_TECH_EDUCATION",
+ "civilopedia": "TXT_KEY_TECH_EDUCATION_PEDIA",
+ "quote": "TXT_KEY_TECH_EDUCATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLUE_MOSQUE",
+   "BUILDING_CULTURE_COLOMBIAN",
+   "BUILDING_CULTURE_CZECH",
+   "BUILDING_CULTURE_TANZANIAN",
+   "BUILDING_CULTURE_THAI",
+   "BUILDING_DOSAN_SEOWON",
+   "BUILDING_HOUSING_FRATERNITY_HOUSE",
+   "BUILDING_LAW_SCHOOL",
+   "BUILDING_PALACE_OF_POTALA",
+   "BUILDING_SALON",
+   "BUILDING_SULTAN_QABOOS_GRAND_MOSQUE",
+   "BUILDING_THE_BRIHADEESWARAR_TEMPLE",
+   "BUILDING_UNIVERSITY"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_TEACH3",
+   "PROMOTION_EDUCATE4"
+  ],
+  "specialBuildings": [
+   "SPECIALBUILDING_GROUP_ELITE_UNIVERSITIES"
+  ],
+  "techs": [
+   "TECH_ACOUSTICS",
+   "TECH_ALGEBRA",
+   "TECH_ANATOMY",
+   "TECH_COMPASS"
+  ],
+  "units": [
+   "UNIT_AMINA",
+   "UNIT_BAIBARS",
+   "UNIT_BARQUQ",
+   "UNIT_HIDEYOSHI",
+   "UNIT_JACHAL",
+   "UNIT_KHALID",
+   "UNIT_PETER_CLAVER",
+   "UNIT_PHILIP_THE_BOLD",
+   "UNIT_TAEJO"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_SCHOOL_OF_SCRIBES",
+   "BUILDING_TEMPLE_OF_ARTEMIS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PAPER",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_STAINED_GLASS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_LAKE_BAIKAL": {
+     "flat": 500
+    },
+    "BUILDING_WONDER_OF_NATURE_BASALT_ORGAN": {
+     "flat": 500
+    },
+    "BUILDING_WONDER_OF_NATURE_DEAD_SEA": {
+     "flat": 500
+    },
+    "BUILDING_WONDER_OF_NATURE_SHARK_BAY": {
+     "flat": 400
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 1820
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 9
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_EDUCATION",
+  "soundMP": "AS2D_TECH_MP_EDUCATION",
+  "icon": ",Art/Interface/Buttons/TechTree/Education.dds,Art/Interface/Buttons/TechTree_Atlas.dds,5,3"
+ },
+ "identity": {
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 48,
+  "gridY": 9
+ }
+}

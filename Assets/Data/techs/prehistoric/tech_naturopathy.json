@@ -1,0 +1,104 @@
+{
+ "type": "TECH_NATUROPATHY",
+ "description": "TXT_KEY_TECH_NATUROPATHY",
+ "civilopedia": "TXT_KEY_TECH_NATUROPATHY_PEDIA",
+ "quote": "TXT_KEY_TECH_NATUROPATHY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_ALMONDS",
+   "BONUS_COCA",
+   "BONUS_COCOA",
+   "BONUS_DRUGS",
+   "BONUS_KAVA",
+   "BONUS_OPIUM",
+   "BONUS_PEYOTE",
+   "BONUS_TOBACCO",
+   "BONUS_VANILLA"
+  ],
+  "buildings": [
+   "BUILDING_DISEASE_SCURVY",
+   "BUILDING_HEALERS_HUT",
+   "BUILDING_HEALING_CLAY",
+   "BUILDING_LEECH_CATCHER",
+   "BUILDING_MUD_BATH",
+   "BUILDING_PLANTATION_KAVA"
+  ],
+  "builds": [
+   "BUILD_DESERT_CAMP_KILL",
+   "BUILD_JUNGLE_CAMP_KILL",
+   "BUILD_WETLANDS_CAMP_KILL"
+  ],
+  "improvements": [
+   "IMPROVEMENT_DESERT_CAMP",
+   "IMPROVEMENT_JUNGLE_CAMP",
+   "IMPROVEMENT_WETLANDS_CAMP"
+  ],
+  "promotions": [
+   "PROMOTION_DISEASE_CONTROL1",
+   "PROMOTION_SELF_HEAL2"
+  ],
+  "techs": [
+   "TECH_TATTOOS"
+  ],
+  "units": [
+   "UNIT_HEALER",
+   "UNIT_NEANDERTHAL_HEALER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_POISON_CRAFTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DRYING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "buildings": {
+    "BUILDING_WILD_HERBS_GATHERER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 17
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_NATUROPATHY",
+  "soundMP": "AS2D_TECH_NATUROPATHY",
+  "icon": ",Art/Interface/Buttons/TechTree/naturopath.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,12"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 9,
+  "gridY": 13
+ }
+}

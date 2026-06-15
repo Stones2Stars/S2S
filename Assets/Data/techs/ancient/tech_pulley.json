@@ -1,0 +1,78 @@
+{
+ "type": "TECH_PULLEY",
+ "description": "TXT_KEY_TECH_PULLEY",
+ "civilopedia": "TXT_KEY_TECH_PULLEY_PEDIA",
+ "quote": "TXT_KEY_TECH_PULLEY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_PULLEY_WHEEL"
+  ],
+  "techs": [
+   "TECH_TEXTILE_LOOM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MINING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_STANDARDIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_MINING_CAMP": {
+     "flat": 200
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_MINING_CAMP": {
+     "flat": 200
+    }
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "cost": {
+  "research": 144
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_PULLEY",
+  "soundMP": "AS2D_TECH_PULLEY",
+  "icon": "Art/Interface/Buttons/TechTree/pulley2.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 24,
+  "gridY": 15
+ }
+}

@@ -1,0 +1,92 @@
+{
+ "type": "TECH_MICROGENERATORS",
+ "description": "TXT_KEY_TECH_MICROGENERATORS",
+ "civilopedia": "TXT_KEY_TECH_MICROGENERATORS_PEDIA",
+ "quote": "TXT_KEY_TECH_MICROGENERATORS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_MICROGENERATORS"
+  ],
+  "buildings": [
+   "BUILDING_BIOLUMINESCENT_BOUTIQUE",
+   "BUILDING_E_CLOTHING_OUTFITTER",
+   "BUILDING_FACTORY_MICROGENERATORS",
+   "BUILDING_PLASMA_ARC_RECYCLING",
+   "BUILDING_UBIQUITOUS_SENSORS",
+   "BUILDING_VIBRO_WIND_GENERATORS"
+  ],
+  "techs": [
+   "TECH_MARINE_ARCHITECTURE",
+   "TECH_MICROMECHANICS",
+   "TECH_POWERED_EXOSKELETON",
+   "TECH_WEAPONIZED_LASERS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_METAMATERIALS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BIOMECHANICAL_HARVESTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_RECHARGING_NODE": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_WIRELESS_NETWORKS": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 26259
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_MICROGENERATORS",
+  "soundMP": "AS2D_TECH_MICROGENERATORS",
+  "icon": "Art/Interface/Buttons/TechTree/Microturbine.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 95,
+  "gridY": 13
+ }
+}

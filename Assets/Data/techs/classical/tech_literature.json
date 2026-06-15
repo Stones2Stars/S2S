@@ -1,0 +1,139 @@
+{
+ "type": "TECH_LITERATURE",
+ "description": "TXT_KEY_TECH_LITERATURE",
+ "civilopedia": "TXT_KEY_TECH_LITERATURE_PEDIA",
+ "quote": "TXT_KEY_TECH_LITERATURE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ACADEMY",
+   "BUILDING_AESOPS_FABLES",
+   "BUILDING_CULTURE_DRAVIDIAN",
+   "BUILDING_CULTURE_SIAMESE",
+   "BUILDING_CULTURE_SWAHILI",
+   "BUILDING_HEROIC_EPIC",
+   "BUILDING_HO_TRAI_LIBRARY",
+   "BUILDING_LIBRARY",
+   "BUILDING_MADRASSA",
+   "BUILDING_NATIONAL_ARCHIVES",
+   "BUILDING_NATIONAL_EPIC",
+   "BUILDING_SAFETY_AESOPS_FABLES",
+   "BUILDING_THE_GREAT_LIBRARY"
+  ],
+  "processes": [
+   "PROCESS_CULTURE"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_TEACH2",
+   "PROMOTION_EDUCATE3"
+  ],
+  "techs": [
+   "TECH_CALLIGRAPHY",
+   "TECH_MERITOCRACY"
+  ],
+  "units": [
+   "UNIT_ABAOJI",
+   "UNIT_ALFRED",
+   "UNIT_DEMETRIUS",
+   "UNIT_ITZCOATL",
+   "UNIT_KHARAVELA",
+   "UNIT_MANCO_CAPAC",
+   "UNIT_MANSA_SAKURA",
+   "UNIT_ORANG_KAYA",
+   "UNIT_SHEHE_MVITA",
+   "UNIT_TEUTA",
+   "UNIT_VIRIATHUS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CAVE_PAINTINGS",
+   "BUILDING_STORYTELLER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SCRIPTURES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ALPHABET",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_ANCIENT_CUSTOMS": {
+     "flat": -100
+    },
+    "BUILDING_WONDER_OF_NATURE_KILIMANJARO": {
+     "flat": 400
+    },
+    "BUILDING_WONDER_OF_NATURE_MT_SINAI": {
+     "flat": 400
+    },
+    "BUILDING_ROCK_ART": {
+     "flat": -100
+    },
+    "BUILDING_EFFECT_LASCAUX_CAVES": {
+     "flat": -100
+    },
+    "BUILDING_SNAKE_CHARMER": {
+     "flat": -100
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_ANCIENT_CUSTOMS": {
+     "flat": -100
+    },
+    "BUILDING_ROCK_ART": {
+     "flat": -100
+    },
+    "BUILDING_EFFECT_LASCAUX_CAVES": {
+     "flat": -200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 499
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 4
+   },
+   {
+    "FLAVOR_CULTURE": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_LITERATURE",
+  "soundMP": "AS2D_TECH_MP_LITERATURE",
+  "icon": ",Art/Interface/Buttons/TechTree/Literature.dds,Art/Interface/Buttons/TechTree_Atlas.dds,7,10"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 34,
+  "gridY": 15
+ }
+}

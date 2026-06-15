@@ -1,0 +1,95 @@
+{
+ "type": "TECH_GAS_LIGHTING",
+ "description": "TXT_KEY_TECH_GAS_LIGHTING",
+ "civilopedia": "TXT_KEY_TECH_GAS_LIGHTING_PEDIA",
+ "quote": "TXT_KEY_TECH_GAS_LIGHTING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_GAS_LAMPS"
+  ],
+  "builds": [
+   "BUILD_SUBURBS"
+  ],
+  "improvements": [
+   "IMPROVEMENT_SUBURBS"
+  ],
+  "techs": [
+   "TECH_ELECTRICITY",
+   "TECH_FIREFIGHTING",
+   "TECH_REFINING"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TORCHES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMMERCIAL_WHALING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CHEMISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_STEAM_POWER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_MOUNTAIN_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SHAFT_MINE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "cost": {
+  "research": 5745
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_GAS_LIGHTING",
+  "soundMP": "AS2D_TECH_GAS_LIGHTING",
+  "icon": "Art/Interface/Buttons/TechTree/gaslighting.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 32,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 64,
+  "gridY": 7
+ }
+}

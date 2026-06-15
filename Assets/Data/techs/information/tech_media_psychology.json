@@ -1,0 +1,87 @@
+{
+ "type": "TECH_MEDIA_PSYCHOLOGY",
+ "description": "TXT_KEY_TECH_MEDIA_PSYCHOLOGY",
+ "civilopedia": "TXT_KEY_TECH_MEDIA_PSYCHOLOGY_PEDIA",
+ "quote": "TXT_KEY_TECH_MEDIA_PSYCHOLOGY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_APPLIED_PSYCHOLOGY_LAB",
+   "BUILDING_MARKET_RESEARCH"
+  ],
+  "techs": [
+   "TECH_DIRECT_MERCHANDISING",
+   "TECH_VIRTUAL_SOCIETY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_KNOWLEDGE_MANAGEMENT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CYBERWARFARE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DIGITIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_MIXED_USE_DEVELOPMENT": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_WIRELESS_NETWORKS": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 23650
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_MEDIA_PSYCHOLOGY",
+  "soundMP": "AS2D_TECH_MEDIA_PSYCHOLOGY",
+  "icon": "Art/Interface/Buttons/TechTree/MediaPsychology.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 92,
+  "gridY": 13
+ }
+}

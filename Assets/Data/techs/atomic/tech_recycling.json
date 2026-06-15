@@ -1,0 +1,103 @@
+{
+ "type": "TECH_RECYCLING",
+ "description": "TXT_KEY_TECH_RECYCLING",
+ "civilopedia": "TXT_KEY_TECH_RECYCLING_PEDIA",
+ "quote": "TXT_KEY_TECH_RECYCLING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ALUMINUM_RECLAMATION_PLANT",
+   "BUILDING_CARHENGE",
+   "BUILDING_COPPER_RECLAMATION_PLANT",
+   "BUILDING_ELECTRONIC_WASTE_RECYCLING_DEPOT",
+   "BUILDING_GLASS_RECLAMATION_PLANT",
+   "BUILDING_GOLD_RECLAMATION_PLANT",
+   "BUILDING_IRON_RECLAMATION_PLANT",
+   "BUILDING_LEAD_RECLAMATION_PLANT",
+   "BUILDING_ORDINANCE_EFFECT_TIRE_RECYCLING_PROGRAM",
+   "BUILDING_ORDINANCE_TIRE_RECYCLING_PROGRAM",
+   "BUILDING_PAPER_RECLAMATION_PLANT",
+   "BUILDING_PLASTIC_RECLAMATION_PLANT",
+   "BUILDING_PLATINUM_RECLAMATION_PLANT",
+   "BUILDING_RECYCLING_CENTER",
+   "BUILDING_RUBBER_RECLAMATION_PLANT",
+   "BUILDING_SILVER_RECLAMATION_PLANT",
+   "BUILDING_STEEL_RECLAMATION_PLANT",
+   "BUILDING_TIN_RECLAMATION_PLANT",
+   "BUILDING_TITANIUM_RECLAMATION_PLANT",
+   "BUILDING_WASTE_INCINERATOR_POWER_PLANT"
+  ],
+  "civics": [
+   "CIVIC_RECYCLED"
+  ],
+  "techs": [
+   "TECH_ASTRO_ENVIRONMENTAL_SYSTEMS",
+   "TECH_NEW_URBANISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_JUNKYARD": {
+     "flat": 700
+    },
+    "BUILDING_WASTE_EXPORTATION_OFFICE": {
+     "flat": -500
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "buildings": {
+    "BUILDING_LANDFILL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 14287
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_RECYCLING",
+  "soundMP": "AS2D_TECH_RECYCLING",
+  "icon": ",Art/Interface/Buttons/TechTree/Ecology.dds,Art/Interface/Buttons/TechTree_Atlas.dds,3,3"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 82,
+  "gridY": 5
+ }
+}

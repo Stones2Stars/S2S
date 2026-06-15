@@ -1,0 +1,69 @@
+{
+ "type": "TECH_CONDUCT",
+ "description": "TXT_KEY_TECH_CONDUCT",
+ "civilopedia": "TXT_KEY_TECH_CONDUCT_PEDIA",
+ "quote": "TXT_KEY_TECH_CONDUCT_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_FIGHTING",
+   "BUILDING_CRIME_MUGGING",
+   "BUILDING_EXECUTIONER",
+   "BUILDING_PUBLIC_STONING",
+   "BUILDING_SENTRY_POST"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_INSPECTIONS2",
+   "PROMOTION_CRACKDOWN1",
+   "PROMOTION_POLICING1"
+  ],
+  "techs": [
+   "TECH_BARTER",
+   "TECH_TRIBALISM"
+  ],
+  "units": [
+   "UNIT_ENFORCERS",
+   "UNIT_NEANDERTHAL_ENFORCER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GAMES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PETROGLYPHS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 23
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_CONDUCT",
+  "soundMP": "AS2D_TECH_CONDUCT",
+  "icon": "Art/Interface/Buttons/TechTree/conduct.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 11,
+  "gridY": 17
+ }
+}

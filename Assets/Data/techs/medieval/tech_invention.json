@@ -1,0 +1,101 @@
+{
+ "type": "TECH_INVENTION",
+ "description": "TXT_KEY_TECH_INVENTION",
+ "civilopedia": "TXT_KEY_TECH_INVENTION_PEDIA",
+ "quote": "TXT_KEY_TECH_INVENTION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARTESIAN_WELL",
+   "BUILDING_CULTURE_ITALIAN",
+   "BUILDING_CULTURE_SENNAR",
+   "BUILDING_GUILD_ARTISANS",
+   "BUILDING_INVENTORS_WORKSHOP",
+   "BUILDING_LEONARDOS_WORKSHOP",
+   "BUILDING_VIADUCT"
+  ],
+  "techs": [
+   "TECH_ARMORED_CAVALRY",
+   "TECH_CLOCKWORKS",
+   "TECH_MOUNTAINEERING",
+   "TECH_PERSPECTIVE",
+   "TECH_TORTURE"
+  ],
+  "units": [
+   "UNIT_ASVARAN_SARDAR",
+   "UNIT_FUNJ_CAVALRY",
+   "UNIT_HEAVY_CAVALRY",
+   "UNIT_HEAVY_TARKHAN",
+   "UNIT_NORMAN_KNIGHT",
+   "UNIT_PEN_HUO_QI",
+   "UNIT_SIPAHI"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BRICK_BRIDGE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CIVIL_SERVICE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GUILDS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ALCHEMY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_FURNITURE_MAKER": {
+     "flat": 400
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
+     "percent": -5
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 1563
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_INVENTION",
+  "soundMP": "AS2D_TECH_INVENTION",
+  "icon": ",Art/Interface/Buttons/TechTree/alchemy.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,1"
+ },
+ "identity": {
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 46,
+  "gridY": 5
+ }
+}

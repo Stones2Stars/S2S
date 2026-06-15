@@ -1,0 +1,72 @@
+{
+ "type": "TECH_ALTERNATE_HISTORY_EXPLORATION",
+ "description": "TXT_KEY_TECH_ALTERNATE_HISTORY_EXPLORATION",
+ "civilopedia": "TXT_KEY_TECH_ALTERNATE_HISTORY_EXPLORATION_PEDIA",
+ "quote": "TXT_KEY_TECH_ALTERNATE_HISTORY_EXPLORATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_HISTORICAL_RECREATION",
+   "BUILDING_HYPERSPACE_ALTERNATE_HISTORY_EXPLORATION",
+   "BUILDING_TIME_TOURIST_AGENCY"
+  ],
+  "techs": [
+   "TECH_DIRECTED_COSMIC_EVOLUTION",
+   "TECH_MULTIDIMENSIONAL_TIME"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DEITIES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BRANE_CROSSOVER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_UNIVERSAL_LIBRARY": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_ARTIST"
+ },
+ "cost": {
+  "research": 621429
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/alternate_history.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 156,
+  "gridY": 11
+ }
+}

@@ -1,0 +1,90 @@
+{
+ "type": "TECH_MOLECULAR_ASSEMBLY",
+ "description": "TXT_KEY_TECH_MOLECULAR_ASSEMBLY",
+ "civilopedia": "TXT_KEY_TECH_MOLECULAR_ASSEMBLY_PEDIA",
+ "quote": "TXT_KEY_TECH_MOLECULAR_ASSEMBLY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_FOOD_REPLICATOR",
+   "BUILDING_MOLECULAR_ASSEMBLER",
+   "BUILDING_MOLECULAR_FEED"
+  ],
+  "civics": [
+   "CIVIC_CORNUCOPIA",
+   "CIVIC_NUTRIENT_REPLICATION"
+  ],
+  "techs": [
+   "TECH_ADAPTIVE_ARCHITECTURE",
+   "TECH_FORGE_WORLDS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_3D_PRINTING_MILL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NANOMORPHIC_TROIDS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ATOMIZATION_FIELD",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_CISLUNAR_EXPANSION_MODULE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SATELLITE_STATION": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_CISLUNAR_EXPANSION_MODULE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SATELLITE_STATION": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 149039
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/molecular_assembly.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 129,
+  "gridY": 3
+ }
+}

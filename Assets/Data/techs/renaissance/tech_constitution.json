@@ -1,0 +1,78 @@
+{
+ "type": "TECH_CONSTITUTION",
+ "description": "TXT_KEY_TECH_CONSTITUTION",
+ "civilopedia": "TXT_KEY_TECH_CONSTITUTION_PEDIA",
+ "quote": "TXT_KEY_TECH_CONSTITUTION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_PRISON_BREAKOUTS",
+   "BUILDING_CULTURE_CONFEDERATES",
+   "BUILDING_CULTURE_SUDANESE",
+   "BUILDING_CULTURE_TURKISH",
+   "BUILDING_JAIL",
+   "BUILDING_MAXIMUM_SECURITY_PRISON",
+   "BUILDING_SAFETY_MAXIMUM_SECURITY_PRISON"
+  ],
+  "techs": [
+   "TECH_NATIONALISM"
+  ],
+  "units": [
+   "UNIT_ATATURK",
+   "UNIT_JAHAI",
+   "UNIT_JOSE_BALLIVIAN",
+   "UNIT_JOSE_RIZAL",
+   "UNIT_KOLOKOTRONIS",
+   "UNIT_LUDOVIT_STUR",
+   "UNIT_MUHAMMAD_AHMAD",
+   "UNIT_SAN_MARTIN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LIBERALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 3704
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_CONSTITUTION",
+  "soundMP": "AS2D_TECH_CONSTITUTION",
+  "icon": ",Art/Interface/Buttons/TechTree/Constitution.dds,Art/Interface/Buttons/TechTree_Atlas.dds,8,2"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 58,
+  "gridY": 9
+ }
+}

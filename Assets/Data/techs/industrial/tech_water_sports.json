@@ -1,0 +1,60 @@
+{
+ "type": "TECH_WATER_SPORTS",
+ "description": "TXT_KEY_TECH_WATER_SPORTS",
+ "civilopedia": "TXT_KEY_TECH_WATER_SPORTS_PEDIA",
+ "quote": "TXT_KEY_TECH_WATER_SPORTS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_WATER_POLO_POOL",
+   "BUILDING_WATER_RACEWAY"
+  ],
+  "techs": [
+   "TECH_EXTREME_SPORTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMBUSTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 6673
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 5
+  },
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 6
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_WATER_SPORTS",
+  "soundMP": "AS2D_TECH_WATER_SPORTS",
+  "icon": "Art/Interface/Buttons/TechTree/Water_Sports.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 67,
+  "gridY": 19
+ }
+}

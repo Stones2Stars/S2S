@@ -1,0 +1,79 @@
+{
+ "type": "TECH_INTERSTELLAR_TRAVEL",
+ "description": "TXT_KEY_TECH_INTERSTELLAR_TRAVEL",
+ "civilopedia": "TXT_KEY_TECH_INTERSTELLAR_TRAVEL_PEDIA",
+ "quote": "TXT_KEY_TECH_INTERSTELLAR_TRAVEL_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_ADVANCED_NUCLEAR_ENGINE",
+   "BUILDING_INTERSTELLAR_ARTIFICIALLY_INTELLIGENT_SHIP",
+   "BUILDING_INTERSTELLAR_CRYONIC_SLEEPING_QUARTERS",
+   "BUILDING_INTERSTELLAR_GENE_ENHANCEMENT_LAB",
+   "BUILDING_INTERSTELLAR_MIND_STORAGE_SERVER",
+   "BUILDING_OORT_CLOUD_BASE",
+   "BUILDING_OORT_CLOUD_DEUTERIUM_MINE",
+   "BUILDING_OORT_CLOUD_SOLAR_ARRAY",
+   "BUILDING_SPACE_COLONY_INTERSTELLAR_MOTHERSHIP",
+   "BUILDING_SPACE_COLONY_TRANSTELLAR"
+  ],
+  "techs": [
+   "TECH_LAUNCH_ARCOLOGY",
+   "TECH_SPACEPUNK"
+  ],
+  "units": [
+   "UNIT_WORLDSHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NUCLEAR_PULSE_PROPULSION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GALACTIC_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_STARPORT": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 126324
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/interstellar_voyage.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 124,
+  "gridY": 9
+ }
+}

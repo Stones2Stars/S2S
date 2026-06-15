@@ -1,0 +1,110 @@
+{
+ "type": "TECH_CULTURAL_IDENTITY",
+ "description": "TXT_KEY_TECH_CULTURAL_IDENTITY",
+ "civilopedia": "TXT_KEY_TECH_CULTURAL_IDENTITY_PEDIA",
+ "quote": "TXT_KEY_TECH_CULTURAL_IDENTITY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ELDER_COUNCIL",
+   "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+   "BUILDING_MILITARY_STANDARD_WORKERS",
+   "BUILDING_TRADITION_MILITARY_STANDARD_MASCOT"
+  ],
+  "processes": [
+   "PROCESS_CULTURE_MEAGER"
+  ],
+  "promotions": [
+   "PROMOTION_SOPHISTICATION2"
+  ],
+  "techs": [
+   "TECH_GAMES",
+   "TECH_PERSONAL_ADORNMENTS",
+   "TECH_PETROGLYPHS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RITUALISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PREHISTORIC_DANCE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_KILIMANJARO": {
+     "flat": 500
+    },
+    "BUILDING_WONDER_OF_NATURE_MT_FUJI": {
+     "flat": 300
+    },
+    "BUILDING_WONDER_OF_NATURE_MT_SINAI": {
+     "flat": 500
+    },
+    "BUILDING_WONDER_OF_NATURE_ULURU": {
+     "flat": 500
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_MT_EVEREST": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_MT_FUJI": {
+     "flat": [
+      {
+       "SPECIALIST_ARTIST": 1
+      }
+     ]
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 13
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_CULTURAL_IDENTITY",
+  "soundMP": "AS2D_TECH_CULTURAL_IDENTITY",
+  "icon": "Art/Interface/Buttons/TechTree/Button_CulturalIdentity.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 2,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 7,
+  "gridY": 17
+ }
+}

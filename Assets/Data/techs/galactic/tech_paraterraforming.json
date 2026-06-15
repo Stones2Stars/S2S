@@ -1,0 +1,103 @@
+{
+ "type": "TECH_PARATERRAFORMING",
+ "description": "TXT_KEY_TECH_PARATERRAFORMING",
+ "civilopedia": "TXT_KEY_TECH_PARATERRAFORMING_PEDIA",
+ "quote": "TXT_KEY_TECH_PARATERRAFORMING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTEROID_SHELL_FACTORY",
+   "BUILDING_ASTEROID_SHELL_FLIGHT_LANES",
+   "BUILDING_ASTEROID_SHELL_HANGING_CITY",
+   "BUILDING_ASTEROID_SHELL_LIGHTING",
+   "BUILDING_ASTEROID_SHELL_SPACEPORT",
+   "BUILDING_ASTEROID_SHELL_WORLD",
+   "BUILDING_DEEP_SPACE_INDUSTRIALIZED_ASTEROID",
+   "BUILDING_LUNAR_SEA",
+   "BUILDING_LUNAR_SOIL_GENERATOR",
+   "BUILDING_MARTIAN_ECOPOIESIS_REACTOR"
+  ],
+  "builds": [
+   "BUILD_PARATERRAFORMED_ASTEROID"
+  ],
+  "improvements": [
+   "IMPROVEMENT_PARATERRAFORMED_ASTEROID"
+  ],
+  "techs": [
+   "TECH_PLANETARY_TERRAFORMING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NANOTROIDS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GALACTIC_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_ASTEROID_INTERIOR_CITY": {
+     "flat": 1100
+    },
+    "BUILDING_OORT_CLOUD_HILLS_COLONY": {
+     "flat": 1100
+    },
+    "BUILDING_KUIPER_BELT_OUTPOST": {
+     "flat": 1100
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_LUNAR_ARCOLOGY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_ASTEROID_EPITAXY_FACTORY": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 126324
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/paraterraforming.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 124,
+  "gridY": 11
+ }
+}

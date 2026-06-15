@@ -1,0 +1,88 @@
+{
+ "type": "TECH_UTOPIA_DESTINY",
+ "description": "TXT_KEY_TECH_UTOPIA_DESTINY",
+ "civilopedia": "TXT_KEY_TECH_UTOPIA_DESTINY_PEDIA",
+ "quote": "TXT_KEY_TECH_UTOPIA_DESTINY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_ENLIGHTENED"
+  ],
+  "buildings": [
+   "BUILDING_AI_POLICE_FORCE",
+   "BUILDING_HUMAN_MOD_ENLIGHTENED",
+   "BUILDING_RATIONAL_CITY",
+   "BUILDING_VENUS_PROJECT"
+  ],
+  "civics": [
+   "CIVIC_POST_CURRENCY",
+   "CIVIC_POST_SCARCITY"
+  ],
+  "techs": [
+   "TECH_ARTIFICIAL_EVOLUTION",
+   "TECH_CRYSTALPUNK",
+   "TECH_SOCIAL_CALCULUS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_UNIFICATION_PHYSICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NEURON_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SPECIES_UPLIFTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BINARY_LEGISLATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 65511
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_UTOPIA_DESTINY",
+  "soundMP": "AS2D_TECH_UTOPIA_DESTINY",
+  "icon": "Art/Interface/Buttons/TechTree/utopiadestiny.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 112,
+  "gridY": 11
+ }
+}

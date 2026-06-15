@@ -1,0 +1,92 @@
+{
+ "type": "TECH_ARTIFICIAL_PLANETS",
+ "description": "TXT_KEY_TECH_ARTIFICIAL_PLANETS",
+ "civilopedia": "TXT_KEY_TECH_ARTIFICIAL_PLANETS_PEDIA",
+ "quote": "TXT_KEY_TECH_ARTIFICIAL_PLANETS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET",
+   "BUILDING_INTERSTELLAR_HOLLOW_PLANET",
+   "BUILDING_INTERSTELLAR_OSMIUM_CORE_PLANET",
+   "BUILDING_INTERSTELLAR_PLANETARY_SHELLWORLD",
+   "BUILDING_ONYX",
+   "BUILDING_TRANSTELLAR_ARTIFICIAL_BROWN_DWARF",
+   "BUILDING_TRANSTELLAR_ARTIFICIAL_GAS_GIANT",
+   "BUILDING_TRANSTELLAR_ARTIFICIAL_ROCKY_PLANET",
+   "BUILDING_TRANSTELLAR_TOROIDAL_PLANET"
+  ],
+  "builds": [
+   "BUILD_ARTIFICIAL_PLANET"
+  ],
+  "improvements": [
+   "IMPROVEMENT_ARTIFICIAL_PLANET"
+  ],
+  "techs": [
+   "TECH_ARTIFICIAL_STARS",
+   "TECH_PICOTECHNOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STAR_LIFTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PLANET_SCANNING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PLANET_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 172549
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_ARTIFICIAL_PLANETS",
+  "soundMP": "AS2D_TECH_ARTIFICIAL_PLANETS",
+  "icon": "Art/Interface/Buttons/TechTree/artificialplanets.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 133,
+  "gridY": 7
+ }
+}

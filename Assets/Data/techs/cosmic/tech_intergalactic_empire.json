@@ -1,0 +1,67 @@
+{
+ "type": "TECH_INTERGALACTIC_EMPIRE",
+ "description": "TXT_KEY_TECH_INTERGALACTIC_EMPIRE",
+ "civilopedia": "TXT_KEY_TECH_INTERGALACTIC_EMPIRE_PEDIA",
+ "quote": "TXT_KEY_TECH_INTERGALACTIC_EMPIRE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_ADMINISTRATION",
+   "BUILDING_INTERGALACTIC_CAPITOL",
+   "BUILDING_INTERGALACTIC_EMPIRE",
+   "BUILDING_INTERGALACTIC_REPUBLIC"
+  ],
+  "civics": [
+   "CIVIC_UNIVERSAL_EMPIRE"
+  ],
+  "techs": [
+   "TECH_INDUCED_SUPERNOVA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EXTREME_ENERGY_WEAPONS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GALACTIC_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_IMMORTALITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 302630
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/intergalactic_empire.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 142,
+  "gridY": 15
+ }
+}

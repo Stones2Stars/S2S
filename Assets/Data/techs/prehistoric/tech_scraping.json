@@ -1,0 +1,70 @@
+{
+ "type": "TECH_SCRAPING",
+ "description": "TXT_KEY_TECH_SCRAPING",
+ "civilopedia": "TXT_KEY_TECH_SCRAPING_PEDIA",
+ "quote": "TXT_KEY_TECH_SCRAPING_QUOTE",
+ "enables": {
+  "techs": [
+   "TECH_BARK_WORKING",
+   "TECH_CARVING",
+   "TECH_SKINNING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SOFT_HAMMER_PERCUSSION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_STONE_TOOL_MAKER": {
+     "flat": 100
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_STONE_TOOL_MAKER": {
+     "flat": 100
+    }
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "cost": {
+  "research": 11
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_SCRAPING",
+  "soundMP": "AS2D_TECH_SCRAPING",
+  "icon": "Art/Interface/Buttons/TechTree/scraping.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 6,
+  "gridY": 5
+ }
+}

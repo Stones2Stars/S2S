@@ -1,0 +1,63 @@
+{
+ "type": "TECH_BICYCLES",
+ "description": "TXT_KEY_TECH_BICYCLES",
+ "civilopedia": "TXT_KEY_TECH_BICYCLES_PEDIA",
+ "quote": "TXT_KEY_TECH_BICYCLES_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_BICYCLES"
+  ],
+  "buildings": [
+   "BUILDING_BICYCLE_SHOP",
+   "BUILDING_VELODROME"
+  ],
+  "techs": [
+   "TECH_MOTORIZED_TRANSPORTATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STEEL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 6673
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_BICYCLES",
+  "soundMP": "AS2D_TECH_BICYCLES",
+  "icon": "Art/Interface/Buttons/TechTree/bicycles.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 67,
+  "gridY": 11
+ }
+}

@@ -1,0 +1,115 @@
+{
+ "type": "TECH_BARTER",
+ "description": "TXT_KEY_TECH_BARTER",
+ "civilopedia": "TXT_KEY_TECH_BARTER_PEDIA",
+ "quote": "TXT_KEY_TECH_BARTER_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_AMBER",
+   "BONUS_FINE_STONEWARE",
+   "BONUS_LIANGZHU_JADES",
+   "BONUS_OLMEC_JADE_FIGURINES",
+   "BONUS_TURQUOISE"
+  ],
+  "buildings": [
+   "BUILDING_AMBER_GATHERER",
+   "BUILDING_BARTER_POST",
+   "BUILDING_CRAFTS_HUT",
+   "BUILDING_CULTURE_OLMEC",
+   "BUILDING_CULTURE_TUCANO",
+   "BUILDING_CULTURE_VALDIVIAN",
+   "BUILDING_CULTURE_YOLNGU",
+   "BUILDING_FINE_STONEWARE_CARVERS",
+   "BUILDING_JADE_MERCHANT_LOCAL",
+   "BUILDING_LIANGZHU_JADE_CARVER",
+   "BUILDING_OLMEC_JADE_CARVER"
+  ],
+  "civics": [
+   "CIVIC_BARTER"
+  ],
+  "promotions": [
+   "PROMOTION_CARAVAN_GUARD_I",
+   "PROMOTION_CARAVAN_MARINES_I"
+  ],
+  "techs": [
+   "TECH_ARITHMETIC",
+   "TECH_PICTOGRAPHS"
+  ],
+  "units": [
+   "UNIT_EARLY_FOOD_MERCHANT_C2C",
+   "UNIT_EARLY_MERCHANT_C2C",
+   "UNIT_FIGURINE_POTTER",
+   "UNIT_TUCANO_MERCHANT",
+   "UNIT_YOLNGU_MESSENGER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BEAD_MAKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CONDUCT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_FRUIT_GATHERING_CAMP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_GRAPE_GATHERING_CAMP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_PLANT_GATHERING_CAMP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_MUSHROOM_GATHERER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_THIEVES_HIDEOUT": {
+     "flat": 100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 30
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_BARTER",
+  "soundMP": "AS2D_TECH_BARTER",
+  "icon": "Art/Interface/Buttons/TechTree/Barter.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 13,
+  "gridY": 17
+ }
+}

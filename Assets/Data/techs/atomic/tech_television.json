@@ -1,0 +1,101 @@
+{
+ "type": "TECH_TELEVISION",
+ "description": "TXT_KEY_TECH_TELEVISION",
+ "civilopedia": "TXT_KEY_TECH_TELEVISION_PEDIA",
+ "quote": "TXT_KEY_TECH_TELEVISION_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_TELEVISIONS"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_TELEVISIONS",
+   "BUILDING_NATIONAL_TV_STATION",
+   "BUILDING_TELECOURSE_STUDIO",
+   "BUILDING_TELEVANGELIST_STUDIO",
+   "BUILDING_TV_STUDIO"
+  ],
+  "techs": [
+   "TECH_MASS_MEDIA",
+   "TECH_PERSONAL_COMPUTERS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MOTION_PICTURES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ELECTRONICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_ANIMATION_STUDIO": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_BELL_LABS": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_ANIMATION_STUDIO": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 11196
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 9
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_TELEVISION",
+  "soundMP": "AS2D_TECH_TELEVISION",
+  "icon": "Art/Interface/Buttons/TechTree/television.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 76,
+  "gridY": 15
+ }
+}

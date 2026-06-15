@@ -1,0 +1,94 @@
+{
+ "type": "TECH_POWERED_EXOSKELETON",
+ "description": "TXT_KEY_TECH_POWERED_EXOSKELETON",
+ "civilopedia": "TXT_KEY_TECH_POWERED_EXOSKELETON_PEDIA",
+ "quote": "TXT_KEY_TECH_POWERED_EXOSKELETON_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_EXOSKELETONS",
+   "BONUS_MECHS"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_EXOSKELETONS",
+   "BUILDING_MECH_ASSEMBLY_PLANT"
+  ],
+  "promotions": [
+   "PROMOTION_REINFORCED_STRUCTURE"
+  ],
+  "techs": [
+   "TECH_LUNAR_MANUFACTURING",
+   "TECH_MILITARY_ROBOTICS"
+  ],
+  "units": [
+   "UNIT_EXOARMORED_INFANTRY",
+   "UNIT_HITECH_MARINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MACHINE_LEARNING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MICROGENERATORS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_MECHATRONICS_LAB": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_MECHATRONICS_LAB": {
+     "flat": 800
+    },
+    "BUILDING_ROBOTICS_LAB": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 27203
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   },
+   {
+    "FLAVOR_MILITARY": 9
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_POWERED_EXOSKELETON",
+  "soundMP": "AS2D_TECH_POWERED_EXOSKELETON",
+  "icon": "Art/Interface/Buttons/TechTree/exoskeleton.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 96,
+  "gridY": 15
+ }
+}

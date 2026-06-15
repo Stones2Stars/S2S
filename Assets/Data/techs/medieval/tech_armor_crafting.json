@@ -1,0 +1,99 @@
+{
+ "type": "TECH_ARMOR_CRAFTING",
+ "description": "TXT_KEY_TECH_ARMOR_CRAFTING",
+ "civilopedia": "TXT_KEY_TECH_ARMOR_CRAFTING_PEDIA",
+ "quote": "TXT_KEY_TECH_ARMOR_CRAFTING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_DANISH",
+   "BUILDING_CULTURE_FLEMISH",
+   "BUILDING_CULTURE_GHANA",
+   "BUILDING_CULTURE_KITARAN",
+   "BUILDING_CULTURE_KURDISH",
+   "BUILDING_CULTURE_MAMELUK",
+   "BUILDING_CULTURE_SLOVENIAN",
+   "BUILDING_CULTURE_SWISS",
+   "BUILDING_CULTURE_WALLACHIAN"
+  ],
+  "techs": [
+   "TECH_ARMORED_CAVALRY",
+   "TECH_CRUCIBLE_STEEL"
+  ],
+  "units": [
+   "UNIT_AL_SAFFAR",
+   "UNIT_ASHINA_ELITE",
+   "UNIT_BRABANT_MERCENARIES",
+   "UNIT_CARANTANIAN_MERCENARY",
+   "UNIT_CHWEZI_ELITES",
+   "UNIT_FORKBEARD",
+   "UNIT_FREDRICK_II",
+   "UNIT_HEAVY_AXEMAN",
+   "UNIT_HEAVY_PIKEMAN",
+   "UNIT_HEAVY_SWORDSMAN",
+   "UNIT_LEIDANG",
+   "UNIT_MAHAQUE",
+   "UNIT_MBARZ_BALSYF",
+   "UNIT_ORDER_OF_THE_DRAGON",
+   "UNIT_QIANG_PIKEMAN",
+   "UNIT_RAJPUT",
+   "UNIT_ROLLO",
+   "UNIT_SONINKE_SWORDSMAN",
+   "UNIT_SWISS_PIKEMAN",
+   "UNIT_TERCIO_PIKEMAN",
+   "UNIT_TOMISLAV"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SMITHING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HERALDRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1563
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 9
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_ARMORCRAFTING",
+  "soundMP": "AS2D_TECH_ARMORCRAFTING",
+  "icon": "Art/Interface/Buttons/TechTree/Armorcrafting.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 46,
+  "gridY": 19
+ }
+}

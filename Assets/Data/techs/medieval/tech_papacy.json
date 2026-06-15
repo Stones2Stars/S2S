@@ -1,0 +1,61 @@
+{
+ "type": "TECH_PAPACY",
+ "description": "TXT_KEY_TECH_PAPACY",
+ "civilopedia": "TXT_KEY_TECH_PAPACY_PEDIA",
+ "quote": "TXT_KEY_TECH_PAPACY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AACHEN_CATHEDRAL",
+   "BUILDING_APOSTOLIC_PALACE"
+  ],
+  "civics": [
+   "CIVIC_FREE_CHURCH"
+  ],
+  "techs": [
+   "TECH_DIVINE_RIGHT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CANDLE_MAKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_THEOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1230
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_PAPACY",
+  "soundMP": "AS2D_TECH_PAPACY",
+  "icon": "Art/Interface/Buttons/TechTree/Papacy.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 43,
+  "gridY": 3
+ }
+}

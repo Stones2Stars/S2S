@@ -1,0 +1,80 @@
+{
+ "type": "TECH_FANTASY_MATERIALS",
+ "description": "TXT_KEY_TECH_FANTASY_MATERIALS",
+ "civilopedia": "TXT_KEY_TECH_FANTASY_MATERIALS_PEDIA",
+ "quote": "TXT_KEY_TECH_FANTASY_MATERIALS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CONSCIOUS_MATERIALS",
+   "BONUS_MITHRIL",
+   "BONUS_ORICHALCUM"
+  ],
+  "buildings": [
+   "BUILDING_INTERSTELLAR_ANIMATED_PREON_STAR",
+   "BUILDING_INTERSTELLAR_CONSCIOUS_MATERIAL_FOUNDRY",
+   "BUILDING_MITHRIL_FOUNDRY",
+   "BUILDING_MITHRIL_IMPORTER",
+   "BUILDING_ORICHALCUM_FORGE",
+   "BUILDING_TECHNOALCHEMIST"
+  ],
+  "techs": [
+   "TECH_TRANSCENDENT_LIFESTYLE",
+   "TECH_TRANSDIMENSIONAL_COMMERCE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MACROSCOPIC_SUPERPOSITION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NOOGENESIS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_BLITZBALL_ARENA": {
+     "flat": 1200
+    },
+    "BUILDING_ULTIMATE_COMBAT_ARENA": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 366008
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/electroweak_matter.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 147,
+  "gridY": 7
+ }
+}

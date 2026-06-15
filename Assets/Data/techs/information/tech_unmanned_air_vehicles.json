@@ -1,0 +1,80 @@
+{
+ "type": "TECH_UNMANNED_AIR_VEHICLES",
+ "description": "TXT_KEY_TECH_UNMANNED_AIR_VEHICLES",
+ "civilopedia": "TXT_KEY_TECH_UNMANNED_AIR_VEHICLES_PEDIA",
+ "quote": "TXT_KEY_TECH_UNMANNED_AIR_VEHICLES_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_UNMANNED_AIRCRAFTS"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_UNMANNED_AIRCRAFTS"
+  ],
+  "techs": [
+   "TECH_SPACE_TOURISM",
+   "TECH_UNMANNED_NAVAL_VEHICLES"
+  ],
+  "units": [
+   "UNIT_DRONE",
+   "UNIT_UAV"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STEALTH",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_ROBOTICS_LAB": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_NATIONAL_AIRCRAFT_MUSEUM": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 20610
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_UNMANNED_AIR_VEHICLES",
+  "soundMP": "AS2D_TECH_UNMANNED_AIR_VEHICLES",
+  "icon": ",Art/Interface/Buttons/TechTree/uav.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,2,3"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 88,
+  "gridY": 1
+ }
+}

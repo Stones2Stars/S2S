@@ -1,0 +1,83 @@
+{
+ "type": "TECH_OMEGA_MINUS_ENGINEERING",
+ "description": "TXT_KEY_TECH_OMEGA_MINUS_ENGINEERING",
+ "civilopedia": "TXT_KEY_TECH_OMEGA_MINUS_ENGINEERING_PEDIA",
+ "quote": "TXT_KEY_TECH_OMEGA_MINUS_ENGINEERING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CHRONOTON"
+  ],
+  "buildings": [
+   "BUILDING_INTERGALACTIC_CHRONOTON_GENERATOR",
+   "BUILDING_INTERGALACTIC_FANTASY_CITY",
+   "BUILDING_INTERGALACTIC_MATTER_PRESERVER",
+   "BUILDING_INTERGALACTIC_QUASAR_PLANT",
+   "BUILDING_INTERSTELLAR_CHRONOTON_CANNONS",
+   "BUILDING_SPACETIME_FACTORY"
+  ],
+  "techs": [
+   "TECH_TACHYON_COMMUNICATIONS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_REACTIONLESS_DRIVE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MACROSCOPIC_SUPERPOSITION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_SUPERNOVA_MINE": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_GRAND_UNIFIED_ACCELERATOR": {
+     "flat": 5000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 352130
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/omega_minus_engineering.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 146,
+  "gridY": 9
+ }
+}

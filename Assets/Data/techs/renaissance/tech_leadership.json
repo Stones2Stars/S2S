@@ -1,0 +1,82 @@
+{
+ "type": "TECH_LEADERSHIP",
+ "description": "TXT_KEY_TECH_LEADERSHIP",
+ "civilopedia": "TXT_KEY_TECH_LEADERSHIP_PEDIA",
+ "quote": "TXT_KEY_TECH_LEADERSHIP_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_ARGENTINIAN",
+   "BUILDING_GARRISON",
+   "BUILDING_GUARD_DOG_TRAINER"
+  ],
+  "civics": [
+   "CIVIC_CONFEDERACY"
+  ],
+  "techs": [
+   "TECH_BATTLEFIELD_MEDICINE",
+   "TECH_COLONIALISM",
+   "TECH_DUELING"
+  ],
+  "units": [
+   "UNIT_GUARDCAT",
+   "UNIT_GUARDDOG",
+   "UNIT_NIAM_NIAM",
+   "UNIT_PUEBLO_REBEL",
+   "UNIT_SHARPSHOOTER",
+   "UNIT_VICEROY",
+   "UNIT_WARLORDIII",
+   "UNIT_WARLORDIIIS"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_LORD",
+   "UNIT_WARLORDII"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GUNPOWDER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_GREAT_GENERAL"
+ },
+ "cost": {
+  "research": 2528
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_LEADERSHIP",
+  "soundMP": "AS2D_TECH_LEADERSHIP",
+  "icon": ",Art/Interface/Buttons/TechTree/MilitaryLeadership.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,6,11"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 52,
+  "gridY": 3
+ }
+}

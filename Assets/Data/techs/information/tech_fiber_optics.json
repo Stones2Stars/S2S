@@ -1,0 +1,82 @@
+{
+ "type": "TECH_FIBER_OPTICS",
+ "description": "TXT_KEY_TECH_FIBER_OPTICS",
+ "civilopedia": "TXT_KEY_TECH_FIBER_OPTICS_PEDIA",
+ "quote": "TXT_KEY_TECH_FIBER_OPTICS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_FIBER_OPTIC_CABLES"
+  ],
+  "buildings": [
+   "BUILDING_CRIME_INTERNET_FRAUD",
+   "BUILDING_CRIME_ONLINE_PIRACY",
+   "BUILDING_DIGITAL_EMBASSY",
+   "BUILDING_ELECTRONIC_SECURITY_SYSTEM",
+   "BUILDING_FACTORY_FIBER_OPTIC_CABLES",
+   "BUILDING_ISP_OFFICES"
+  ],
+  "projects": [
+   "PROJECT_THE_INTERNET"
+  ],
+  "techs": [
+   "TECH_COMMUNICATION_NETWORKS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_THE_KREMLIN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LASER",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INFORMATION_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 19916
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_FIBER_OPTICS",
+  "soundMP": "AS2D_TECH_MP_FIBER_OPTICS",
+  "icon": ",Art/Interface/Buttons/TechTree/FiberOptics.dds,Art/Interface/Buttons/TechTree_Atlas.dds,8,8"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 87,
+  "gridY": 11
+ }
+}

@@ -1,0 +1,76 @@
+{
+ "type": "TECH_BANKING",
+ "description": "TXT_KEY_TECH_BANKING",
+ "civilopedia": "TXT_KEY_TECH_BANKING_PEDIA",
+ "quote": "TXT_KEY_TECH_BANKING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BANK",
+   "BUILDING_CRIME_BANK_ROBBERY",
+   "BUILDING_CRIME_COUNTERFEITING",
+   "BUILDING_EU_OXFORD_UNIVERSITY",
+   "BUILDING_EU_UNIVERSITY_OF_EDINBURGH",
+   "BUILDING_EU_UNIVERSITY_OF_MURCIA",
+   "BUILDING_GUILD_GOLDSMITHS",
+   "BUILDING_NATIONAL_MINT"
+  ],
+  "civics": [
+   "CIVIC_CERTIFIED"
+  ],
+  "techs": [
+   "TECH_POLITICAL_PHILOSOPHY"
+  ],
+  "units": [
+   "UNIT_ENRICO_DANDOLO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_USURY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CHARTERS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_CRIME_SHOPLIFTING": {
+     "flat": -200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 1820
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_BANKING",
+  "soundMP": "AS2D_TECH_MP_BANKING",
+  "icon": ",Art/Interface/Buttons/TechTree/Banking.dds,Art/Interface/Buttons/TechTree_Atlas.dds,8,1"
+ },
+ "identity": {
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 48,
+  "gridY": 17
+ }
+}

@@ -1,0 +1,87 @@
+{
+ "type": "TECH_SYNERGETICS",
+ "description": "TXT_KEY_TECH_SYNERGETICS",
+ "civilopedia": "TXT_KEY_TECH_SYNERGETICS_PEDIA",
+ "quote": "TXT_KEY_TECH_SYNERGETICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CLOUD_NINE",
+   "BUILDING_GEODESIC_DOME",
+   "BUILDING_SELF_ASSEMBLY_FACTORY"
+  ],
+  "civics": [
+   "CIVIC_NEO_SYNCRETISM"
+  ],
+  "techs": [
+   "TECH_ANTI_GRAVITY_FIELDS",
+   "TECH_ASTROGATION_CONSTELLATION",
+   "TECH_BOTANICAL_ALCHEMY",
+   "TECH_MIND_UPLOADING",
+   "TECH_OPTRONICS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CARRIAGE_BUILDER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SIMULATED_REALITY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HYPERMAGNETICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_APPLIED_SOCIOLOGY_LAB": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 67710
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_SYNERGETICS",
+  "soundMP": "AS2D_TECH_SYNERGETICS",
+  "icon": "Art/Interface/Buttons/TechTree/synergetics.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 113,
+  "gridY": 5
+ }
+}

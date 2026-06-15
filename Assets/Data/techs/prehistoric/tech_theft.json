@@ -1,0 +1,71 @@
+{
+ "type": "TECH_THEFT",
+ "description": "TXT_KEY_TECH_THEFT",
+ "civilopedia": "TXT_KEY_TECH_THEFT_PEDIA",
+ "quote": "TXT_KEY_TECH_THEFT_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_THIEVES_HIDEOUT",
+   "BUILDING_THIEVES_HIDEOUT_UNSANCTIONED"
+  ],
+  "civics": [
+   "CIVIC_BANDITRY"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_CLEVERNESS2",
+   "PROMOTION_BUILD_UP_SCHEMES2",
+   "PROMOTION_CORRUPTION1"
+  ],
+  "techs": [
+   "TECH_WARFARE"
+  ],
+  "units": [
+   "UNIT_THIEF"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DECEPTION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GAMES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 20
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_THEFT",
+  "soundMP": "AS2D_TECH_THEFT",
+  "icon": "art/buttons/techs/TheftTech.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 10,
+  "gridY": 15
+ }
+}

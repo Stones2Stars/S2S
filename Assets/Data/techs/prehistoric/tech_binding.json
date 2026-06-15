@@ -1,0 +1,81 @@
+{
+ "type": "TECH_BINDING",
+ "description": "TXT_KEY_TECH_BINDING",
+ "civilopedia": "TXT_KEY_TECH_BINDING_PEDIA",
+ "quote": "TXT_KEY_TECH_BINDING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_ROPE",
+   "BONUS_VINES"
+  ],
+  "buildings": [
+   "BUILDING_ROPER",
+   "BUILDING_ROPE_BRIDGE",
+   "BUILDING_VINE_GATHERER"
+  ],
+  "promotions": [
+   "PROMOTION_BOUNTY_HUNTER1",
+   "PROMOTION_BOUNTY_HUNTER2",
+   "PROMOTION_BOUNTY_HUNTER3"
+  ],
+  "techs": [
+   "TECH_COMPOSITE_TOOLS",
+   "TECH_RAFT_BUILDING",
+   "TECH_TRAPPING"
+  ],
+  "units": [
+   "UNIT_NEANDERTHAL_SLINGER",
+   "UNIT_SLINGER"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_STONE_THROWER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BASKETRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SHELTER_BUILDING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 9
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_GOLD": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_BINDING",
+  "soundMP": "AS2D_TECH_BINDING",
+  "icon": "Art/Interface/Buttons/TechTree/binding.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "militaryWorth": 3,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 5,
+  "gridY": 1
+ }
+}

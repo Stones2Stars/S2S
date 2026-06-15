@@ -1,0 +1,68 @@
+{
+ "type": "TECH_3D_PROJECTIONS",
+ "description": "TXT_KEY_TECH_3D_PROJECTIONS",
+ "civilopedia": "TXT_KEY_TECH_3D_PROJECTIONS_PEDIA",
+ "quote": "TXT_KEY_TECH_3D_PROJECTIONS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_QUANTONIUM_CRYSTALS"
+  ],
+  "buildings": [
+   "BUILDING_FLATLAND",
+   "BUILDING_HYPERSPACE_CONSTRUCTION_CENTER",
+   "BUILDING_HYPERSPACE_CONSTRUCTION_FIRM"
+  ],
+  "techs": [
+   "TECH_DECOMPACTIFIED_SPACE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TESSERACT_CONSTRUCTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_TRANSTELLAR_ALDERSON_DISK_FANTASY_ZONE": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 545221
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/3d_projections.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 152,
+  "gridY": 17
+ }
+}

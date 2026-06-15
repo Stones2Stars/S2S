@@ -1,0 +1,125 @@
+{
+ "type": "TECH_MINING",
+ "description": "TXT_KEY_TECH_MINING",
+ "civilopedia": "TXT_KEY_TECH_MINING_PEDIA",
+ "quote": "TXT_KEY_TECH_MINING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_AMBER",
+   "BONUS_DIAMOND",
+   "BONUS_GOLD_ORE",
+   "BONUS_IRON_ORE",
+   "BONUS_LEAD_ORE",
+   "BONUS_RUBIES",
+   "BONUS_SAPPHIRES",
+   "BONUS_SILVER_ORE",
+   "BONUS_SULPHUR",
+   "BONUS_TURQUOISE"
+  ],
+  "buildings": [
+   "BUILDING_CULTURE_KANEM_BORNU",
+   "BUILDING_GEMCUTTER",
+   "BUILDING_MINE_AMBER",
+   "BUILDING_MINE_AMETHYST",
+   "BUILDING_MINE_DIAMOND",
+   "BUILDING_MINE_EMERALD",
+   "BUILDING_MINE_FLUORITE",
+   "BUILDING_MINE_GARNET",
+   "BUILDING_MINE_GOLD",
+   "BUILDING_MINE_JADE",
+   "BUILDING_MINE_QUARTZ",
+   "BUILDING_MINE_RUBY",
+   "BUILDING_MINE_SAPPHIRE",
+   "BUILDING_MINE_SILVER",
+   "BUILDING_MINE_TOPAZ",
+   "BUILDING_MINE_TURQUOISE",
+   "BUILDING_MINING_CAMP",
+   "BUILDING_TAR_REFINERY"
+  ],
+  "builds": [
+   "BUILD_EARLY_MOUNTAIN_MINE",
+   "BUILD_EARLY_QUARRY",
+   "BUILD_MINE"
+  ],
+  "civics": [
+   "CIVIC_METALS"
+  ],
+  "improvements": [
+   "IMPROVEMENT_EARLY_MOUNTAIN_MINE",
+   "IMPROVEMENT_EARLY_QUARRY",
+   "IMPROVEMENT_MINE"
+  ],
+  "promotions": [
+   "PROMOTION_HILL_WORKER1"
+  ],
+  "techs": [
+   "TECH_COPPER_WORKING",
+   "TECH_LEAD_WORKING",
+   "TECH_PULLEY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_LL_MEADOWCROFT_ROCKSHELTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_POTTERY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_MT_EVEREST": {
+     "flat": 500
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_GRAND_EARTH_FESTIVAL": {
+     "flat": 200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 110
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_MINING",
+  "soundMP": "AS2D_TECH_MINING",
+  "icon": ",Art/Interface/Buttons/TechTree/Mining.dds,Art/Interface/Buttons/TechTree_Atlas.dds,8,5"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 22,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,77 @@
+{
+ "type": "TECH_DEPUTIZATION",
+ "description": "TXT_KEY_TECH_DEPUTIZATION",
+ "civilopedia": "TXT_KEY_TECH_DEPUTIZATION_PEDIA",
+ "quote": "TXT_KEY_TECH_DEPUTIZATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_SALOON",
+   "BUILDING_SHERIFFS_OFFICE"
+  ],
+  "promotions": [
+   "PROMOTION_CORRUPTION5",
+   "PROMOTION_POLICING5",
+   "PROMOTION_SLEUTH5"
+  ],
+  "techs": [
+   "TECH_EMANCIPATION",
+   "TECH_FIREFIGHTING"
+  ],
+  "units": [
+   "UNIT_GUNFIGHTER",
+   "UNIT_OUTLAW",
+   "UNIT_SATURDAY",
+   "UNIT_SHERIFF",
+   "UNIT_TEXAS_RANGER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_GUARDHOUSE"
+  ],
+  "units": [
+   "UNIT_GARAMANTES",
+   "UNIT_HIGHWAYMAN",
+   "UNIT_STEPPE_RIDER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INDUSTRIAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 5187
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_DEPUTIZATION",
+  "soundMP": "AS2D_TECH_DEPUTIZATION",
+  "icon": "art/buttons/techs/DeputizationTech.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 62,
+  "gridY": 5
+ }
+}

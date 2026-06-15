@@ -1,0 +1,71 @@
+{
+ "type": "TECH_SUBDIMENSIONAL_UNIVERSE",
+ "description": "TXT_KEY_TECH_SUBDIMENSIONAL_UNIVERSE",
+ "civilopedia": "TXT_KEY_TECH_SUBDIMENSIONAL_UNIVERSE_PEDIA",
+ "quote": "TXT_KEY_TECH_SUBDIMENSIONAL_UNIVERSE_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_POCKET_UNIVERSE"
+  ],
+  "buildings": [
+   "BUILDING_POCKET_UNIVERSE_HOTEL",
+   "BUILDING_POCKET_UNIVERSE_MAKER",
+   "BUILDING_POCKET_UNIVERSE_STORAGE"
+  ],
+  "techs": [
+   "TECH_TRANSFINITE_COMPUTATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MANIFOLD_COLONIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_UNIVERSAL_SINGULARITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_HYPERSPACE_INFLATON_FIELD": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 642419
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/subdimensional_universe.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 157,
+  "gridY": 7
+ }
+}

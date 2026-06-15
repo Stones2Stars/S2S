@@ -1,0 +1,57 @@
+{
+ "type": "TECH_YORUBA",
+ "description": "TXT_KEY_TECH_YORUBA",
+ "civilopedia": "TXT_KEY_TECH_YORUBA_PEDIA",
+ "quote": "TXT_KEY_TECH_YORUBA_QUOTE",
+ "enables": {
+  "religions": [
+   "RELIGION_YORUBA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_POLYTHEISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CEREMONY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 187
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_YORUBA2",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/Interface/Buttons/TechTree/Yoruba.dds"
+ },
+ "identity": {
+  "global": true,
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "gridX": 26,
+  "gridY": 15
+ }
+}

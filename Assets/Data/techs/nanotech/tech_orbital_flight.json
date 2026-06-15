@@ -1,0 +1,130 @@
+{
+ "type": "TECH_ORBITAL_FLIGHT",
+ "description": "TXT_KEY_TECH_ORBITAL_FLIGHT",
+ "civilopedia": "TXT_KEY_TECH_ORBITAL_FLIGHT_PEDIA",
+ "quote": "TXT_KEY_TECH_ORBITAL_FLIGHT_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AEROSPACE_COMPLEX",
+   "BUILDING_GARBAGE_SPACEPORT",
+   "BUILDING_SPACE_SHIPPING_WAREHOUSE",
+   "BUILDING_TOURISM_MEGACOMPLEX",
+   "BUILDING_ZURICH_ORBITAL",
+   "BUILDING_ZURICH_ORBITAL_UPLINK"
+  ],
+  "builds": [
+   "BUILD_AQUATIC_ANTI_AIR_DEFENSE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_AQUATIC_ANTI_AIR_DEFENSE"
+  ],
+  "promotions": [
+   "PROMOTION_REPAIR_AIRCRAFT6"
+  ],
+  "techs": [
+   "TECH_CLOAKING",
+   "TECH_LUNAR_TRADE"
+  ],
+  "units": [
+   "UNIT_ORBITAL_BOMBER",
+   "UNIT_ORBITAL_FIGHTER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FACTORY_AIRCRAFT",
+   "BUILDING_FACTORY_AMMUNITION",
+   "BUILDING_FACTORY_HELICOPTERS",
+   "BUILDING_FACTORY_HOVERCRAFTS",
+   "BUILDING_FACTORY_JET_ENGINES",
+   "BUILDING_FACTORY_TANKS",
+   "BUILDING_FACTORY_UNMANNED_AIRCRAFTS",
+   "BUILDING_MISSILE_LAB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MAGNETIC_SAILS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PHOTON_THERMODYNAMICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SKYROADS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_AEROTROPOLIS": {
+     "flat": 900
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_COLONY_HABITAT_LARGE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_NOVUS_REFINERY": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_NATIONAL_AIRCRAFT_MUSEUM": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 47795
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_ORBITAL_FLIGHT",
+  "soundMP": "AS2D_TECH_ORBITAL_FLIGHT",
+  "icon": ",Art/Interface/Buttons/TechTree/SpaceColonies.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,1,1"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 108,
+  "gridY": 1
+ }
+}

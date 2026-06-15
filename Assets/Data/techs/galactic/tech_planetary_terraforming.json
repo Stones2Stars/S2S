@@ -1,0 +1,89 @@
+{
+ "type": "TECH_PLANETARY_TERRAFORMING",
+ "description": "TXT_KEY_TECH_PLANETARY_TERRAFORMING",
+ "civilopedia": "TXT_KEY_TECH_PLANETARY_TERRAFORMING_PEDIA",
+ "quote": "TXT_KEY_TECH_PLANETARY_TERRAFORMING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_EFFECT_TERRAFORMED_MARS",
+   "BUILDING_EFFECT_TERRAFORMED_VENUS",
+   "BUILDING_TERRAFORMED_MARS",
+   "BUILDING_TERRAFORMED_MERCURY",
+   "BUILDING_TERRAFORMED_VENUS"
+  ],
+  "builds": [
+   "BUILD_TERRAFORM_MARS"
+  ],
+  "improvements": [
+   "IMPROVEMENT_TERRAFORM_MARS"
+  ],
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING",
+   "TECH_CLOSED_ECONOMIES",
+   "TECH_CULTURAL_EVOLUTION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PARATERRAFORMING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GEOSCULPTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASTROECOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_ASTROBIOLOGY_LAB": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 130429
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_PLANETARY_TERRAFORMING",
+  "soundMP": "AS2D_TECH_PLANETARY_TERRAFORMING",
+  "icon": "Art/Interface/Buttons/TechTree/planetaryterraforming.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 125,
+  "gridY": 13
+ }
+}

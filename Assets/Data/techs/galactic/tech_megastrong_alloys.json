@@ -1,0 +1,81 @@
+{
+ "type": "TECH_MEGASTRONG_ALLOYS",
+ "description": "TXT_KEY_TECH_MEGASTRONG_ALLOYS",
+ "civilopedia": "TXT_KEY_TECH_MEGASTRONG_ALLOYS_PEDIA",
+ "quote": "TXT_KEY_TECH_MEGASTRONG_ALLOYS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_MEGASTRONG_ALLOYS"
+  ],
+  "buildings": [
+   "BUILDING_INTERSTELLAR_BANKS_ORBITAL",
+   "BUILDING_INTERSTELLAR_BANKS_ORBITAL_CITY",
+   "BUILDING_INTERSTELLAR_REINFORCED_DYSON_SPHERE",
+   "BUILDING_MEGASTRONG_ALLOY_FOUNDRY",
+   "BUILDING_MEGASTRONG_ALLOY_WALLS"
+  ],
+  "techs": [
+   "TECH_WORMHOLE_TRAVERSAL"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_METAMATERIAL_WALLS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WEAPONIZED_ANTIMATTER",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SINGULARITY_STABILIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_COLONY_EXTRACTION_FACILITY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 179514
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/Interface/Buttons/TechTree/megastrongalloys.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 134,
+  "gridY": 9
+ }
+}

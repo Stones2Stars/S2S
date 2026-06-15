@@ -1,0 +1,73 @@
+{
+ "type": "TECH_DEITIES",
+ "description": "TXT_KEY_TECH_DEITIES",
+ "civilopedia": "TXT_KEY_TECH_DEITIES_PEDIA",
+ "quote": "TXT_KEY_TECH_DEITIES_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_NATURE_GODDESS",
+   "BUILDING_SEA_GOD",
+   "BUILDING_SKY_GOD",
+   "BUILDING_UNDERWORLD_GODDESS"
+  ],
+  "civics": [
+   "CIVIC_APOTHEOSIS"
+  ],
+  "techs": [
+   "TECH_ALTERNATE_HISTORY_EXPLORATION",
+   "TECH_ATEMPORAL_BEINGS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COSMIC_WARFARE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HYPERINTELLIGENCE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_ULTIMATE_COMBAT_ARENA": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 601234
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/deities.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 155,
+  "gridY": 1
+ }
+}

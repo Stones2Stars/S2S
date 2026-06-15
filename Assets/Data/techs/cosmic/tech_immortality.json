@@ -1,0 +1,76 @@
+{
+ "type": "TECH_IMMORTALITY",
+ "description": "TXT_KEY_TECH_IMMORTALITY",
+ "civilopedia": "TXT_KEY_TECH_IMMORTALITY_PEDIA",
+ "quote": "TXT_KEY_TECH_IMMORTALITY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_IMMORTAL",
+   "BONUS_TIME_CRYSTALS"
+  ],
+  "buildings": [
+   "BUILDING_HUMAN_MOD_IMMORTAL",
+   "BUILDING_INTERGALACTIC_AESTIVATION_CENTER",
+   "BUILDING_INTERSTELLAR_DEGENERATE_ERA_SURVIVAL_PLAN",
+   "BUILDING_INTERSTELLAR_ETERNAL_INTELLIGENCE",
+   "BUILDING_INTERSTELLAR_WHITE_DWARF_COLONY"
+  ],
+  "techs": [
+   "TECH_GALACTIFORMING",
+   "TECH_INTERGALACTIC_EMPIRE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GRAVITRONICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CULTURAL_LONGEVITY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GALACTIC_ECOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 291683
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/immortality.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 141,
+  "gridY": 15
+ }
+}

@@ -1,0 +1,62 @@
+{
+ "type": "TECH_PARLIAMENTS",
+ "description": "TXT_KEY_TECH_PARLIAMENTS",
+ "civilopedia": "TXT_KEY_TECH_PARLIAMENTS_PEDIA",
+ "quote": "TXT_KEY_TECH_PARLIAMENTS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHANCELLORS_OFFICE",
+   "BUILDING_COURT_CHAPLAINS_OFFICE",
+   "BUILDING_KINGS_COUNCIL",
+   "BUILDING_MARSHALS_OFFICE",
+   "BUILDING_SPYMASTERS_OFFICE",
+   "BUILDING_STEWARDS_OFFICE"
+  ],
+  "techs": [
+   "TECH_POLITICAL_PHILOSOPHY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EXECUTIONS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CHARTERS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1820
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_PARLIAMENTS",
+  "soundMP": "AS2D_TECH_PARLIAMENTS",
+  "icon": "Art/Interface/Buttons/TechTree/parliaments.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 48,
+  "gridY": 15
+ }
+}

@@ -1,0 +1,62 @@
+{
+ "type": "TECH_CLOAKING",
+ "description": "TXT_KEY_TECH_CLOAKING",
+ "civilopedia": "TXT_KEY_TECH_CLOAKING_PEDIA",
+ "quote": "TXT_KEY_TECH_CLOAKING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_CLOAKING",
+   "BUILDING_HIDE_AND_SEEK"
+  ],
+  "promotions": [
+   "PROMOTION_COVERT_OPERATIONS3"
+  ],
+  "techs": [
+   "TECH_TRANSHUMAN_LIFESTYLE",
+   "TECH_UNIFICATION_PHYSICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORBITAL_FLIGHT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_GREAT_SPY"
+ },
+ "cost": {
+  "research": 49574
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_CLOAKING",
+  "soundMP": "AS2D_TECH_CLOAKING",
+  "icon": "Art/Buttons/Techs/TechCloaking.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 109,
+  "gridY": 1
+ }
+}

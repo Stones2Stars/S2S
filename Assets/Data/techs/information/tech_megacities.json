@@ -1,0 +1,88 @@
+{
+ "type": "TECH_MEGACITIES",
+ "description": "TXT_KEY_TECH_MEGACITIES",
+ "civilopedia": "TXT_KEY_TECH_MEGACITIES_PEDIA",
+ "quote": "TXT_KEY_TECH_MEGACITIES_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AEROTROPOLIS",
+   "BUILDING_BELT_AND_ROAD_INITIATIVE",
+   "BUILDING_CHUO_SHINKANSEN",
+   "BUILDING_DELHI_MUMBAI_INDUSTRIAL_CORRIDOR",
+   "BUILDING_DUBAI_WORLD_CENTRAL",
+   "BUILDING_HUDSON_YARDS",
+   "BUILDING_JEDDAH_TOWER",
+   "BUILDING_KING_ABDULLAH_ECONOMIC_CITY",
+   "BUILDING_MODULAR_CONSTRUCTION_FIRM",
+   "BUILDING_RIVER_ADMINISTRATION",
+   "BUILDING_SONGDO_INTERNATIONAL_BUSINESS_DISTRICT"
+  ],
+  "techs": [
+   "TECH_DISASTER_ROBOTS",
+   "TECH_MARINE_ARCHITECTURE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AQUEDUCT",
+   "BUILDING_ARTESIAN_WELL",
+   "BUILDING_RESERVOIR",
+   "BUILDING_STEAMBOAT_PORT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AUTONOMOUS_VEHICLES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INDUSTRIAL_ECOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_CAD_STUDIO": {
+     "flat": 800
+    },
+    "BUILDING_MIXED_USE_DEVELOPMENT": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 26259
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/megacities.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 95,
+  "gridY": 7
+ }
+}

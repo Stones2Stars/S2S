@@ -1,0 +1,50 @@
+{
+ "type": "TECH_FUTURE_TECH",
+ "description": "TXT_KEY_TECH_FUTURE_TECH",
+ "civilopedia": "TXT_KEY_TECH_FUTURE_TECH_PEDIA",
+ "quote": "TXT_KEY_TECH_FUTURE_TECH_QUOTE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ALPHA_POINT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_OMEGA_POINT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SIMULATION_AWARENESS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "research": 960359
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_FUTURE",
+  "soundMP": "AS2D_TECH_MP_FUTURE",
+  "icon": ",Art/Interface/Buttons/TechTree/Future_Tech.dds,Art/Interface/Buttons/TechTree_Atlas.dds,2,4"
+ },
+ "identity": {
+  "era": "C2C_ERA_FUTURE",
+  "worth": 64,
+  "repeat": true,
+  "gridX": 160,
+  "gridY": 9
+ }
+}

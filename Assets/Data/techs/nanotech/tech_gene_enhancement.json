@@ -1,0 +1,120 @@
+{
+ "type": "TECH_GENE_ENHANCEMENT",
+ "description": "TXT_KEY_TECH_GENE_ENHANCEMENT",
+ "civilopedia": "TXT_KEY_TECH_GENE_ENHANCEMENT_PEDIA",
+ "quote": "TXT_KEY_TECH_GENE_ENHANCEMENT_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_GENE_EDITING"
+  ],
+  "buildings": [
+   "BUILDING_AUGMENTED_ORGAN_LAB",
+   "BUILDING_BIOENHANCEMENT_CENTER",
+   "BUILDING_FARM_MECH_CONTROL_CENTER",
+   "BUILDING_HUMAN_MOD_GENE_EDITING",
+   "BUILDING_TRANSGENICS_LAB"
+  ],
+  "techs": [
+   "TECH_AUGMENTED_CONSUMABLES",
+   "TECH_GENE_JURISPRUDENCE",
+   "TECH_MAINSTREAM_CLONING"
+  ],
+  "units": [
+   "UNIT_CHROME_INFANTRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GENESIS_BIOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_UBIQUITOUS_COMPUTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_FACTORY_OLED": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_BACTERIOPHAGE_THERAPY_CLINIC": {
+     "flat": 900
+    },
+    "BUILDING_MICROBIOLOGY_LAB": {
+     "flat": 900
+    },
+    "BUILDING_STEM_CELL_LAB": {
+     "flat": 900
+    },
+    "BUILDING_TISSUE_ENGINEERING_LAB": {
+     "flat": 900
+    },
+    "BUILDING_VACCINE_LAB": {
+     "flat": 900
+    },
+    "BUILDING_VIROTHERAPY_CLINIC": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "buildings": {
+    "BUILDING_STEM_CELL_LAB": {
+     "flat": 1
+    },
+    "BUILDING_TISSUE_ENGINEERING_LAB": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 37614
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_GENE_ENHANCEMENT",
+  "soundMP": "AS2D_TECH_GENE_ENHANCEMENT",
+  "icon": "Art/Interface/Buttons/TechTree/Geneenhancement.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 101,
+  "gridY": 19
+ }
+}

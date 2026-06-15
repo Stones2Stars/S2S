@@ -1,0 +1,101 @@
+{
+ "type": "TECH_PERSONAL_COMPUTERS",
+ "description": "TXT_KEY_TECH_PERSONAL_COMPUTERS",
+ "civilopedia": "TXT_KEY_TECH_PERSONAL_COMPUTERS_PEDIA",
+ "quote": "TXT_KEY_TECH_PERSONAL_COMPUTERS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_COMPUTERS",
+   "BONUS_DISKETTES",
+   "BONUS_VIDEO_GAMES"
+  ],
+  "buildings": [
+   "BUILDING_BACTERIOPHAGE_THERAPY_CLINIC",
+   "BUILDING_CRIME_HACKING",
+   "BUILDING_CRIME_IDENTITY_THEFT",
+   "BUILDING_DESIGN_STUDIO",
+   "BUILDING_FACTORY_COMPUTERS",
+   "BUILDING_FACTORY_DISKETTES",
+   "BUILDING_KARAOKE_CLUB",
+   "BUILDING_VIDEO_GAME_ARCADE"
+  ],
+  "promotions": [
+   "PROMOTION_RECOVER_TECH",
+   "PROMOTION_RECOVER_TECH1"
+  ],
+  "techs": [
+   "TECH_COMPUTER_NETWORKS",
+   "TECH_LONG_RANGE_FORECASTING"
+  ],
+  "units": [
+   "UNIT_F104_STARFIGHTER",
+   "UNIT_F111_AARDVARK",
+   "UNIT_PROGRAMMER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ACADEMY",
+   "BUILDING_ANGKOR_WAT",
+   "BUILDING_OFFICIUM",
+   "BUILDING_SPIRAL_MINARET",
+   "BUILDING_STEP_RECKONER_MANUFACTURE",
+   "BUILDING_UNIVERSITY_OF_SANKORE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TELEVISION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SEMICONDUCTORS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_COMPUTER_SCIENCE_DEPARTMENT": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 13724
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_PERSONAL_COMPUTERS",
+  "soundMP": "AS2D_TECH_PERSONAL_COMPUTERS",
+  "icon": ",Art/Interface/Buttons/TechTree/Computers.dds,Art/Interface/Buttons/TechTree_Atlas.dds,7,2"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 81,
+  "gridY": 19
+ }
+}

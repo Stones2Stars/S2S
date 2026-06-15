@@ -1,0 +1,63 @@
+{
+ "type": "TECH_POLYMERIZATION",
+ "description": "TXT_KEY_TECH_POLYMERIZATION",
+ "civilopedia": "TXT_KEY_TECH_POLYMERIZATION_PEDIA",
+ "quote": "TXT_KEY_TECH_POLYMERIZATION_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_NYLON",
+   "BONUS_SYNTHETIC_RUBBER"
+  ],
+  "buildings": [
+   "BUILDING_CHEMICAL_PLANT",
+   "BUILDING_FACTORY_NYLON",
+   "BUILDING_RUBBER_PLANT"
+  ],
+  "techs": [
+   "TECH_MOTORIZED_TRANSPORTATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORGANIC_CHEMISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_REFINING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 6351
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_POLYMERIZATION",
+  "soundMP": "AS2D_TECH_POLYMERIZATION",
+  "icon": "Art/Interface/Buttons/TechTree/polymerization.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 66,
+  "gridY": 17
+ }
+}

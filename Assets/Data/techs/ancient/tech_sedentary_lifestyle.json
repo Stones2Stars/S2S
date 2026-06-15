@@ -1,0 +1,944 @@
+{
+ "type": "TECH_SEDENTARY_LIFESTYLE",
+ "description": "TXT_KEY_TECH_SEDENTARY_LIFESTYLE",
+ "civilopedia": "TXT_KEY_TECH_SEDENTARY_LIFESTYLE_PEDIA",
+ "quote": "TXT_KEY_TECH_SEDENTARY_LIFESTYLE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BAMBOO_BRIDGE",
+   "BUILDING_CRIME_KIDNAPPING",
+   "BUILDING_DISEASE_BUBONIC_PLAGUE",
+   "BUILDING_DISEASE_CHOLERA",
+   "BUILDING_DISEASE_DYSENTERY",
+   "BUILDING_DISEASE_LEPROSY",
+   "BUILDING_DISEASE_MEASLES",
+   "BUILDING_DISEASE_TYPHOID_FEVER",
+   "BUILDING_EDUCATION_BRILLIANT",
+   "BUILDING_EDUCATION_FOOLISH",
+   "BUILDING_EDUCATION_KNOWLEDGE_BASE_ANCIENT",
+   "BUILDING_PESTS_BED_BUGS",
+   "BUILDING_PESTS_COCKROACHES",
+   "BUILDING_PESTS_RATS",
+   "BUILDING_TOURISM_LEVEL_1"
+  ],
+  "builds": [
+   "BUILD_COTTAGE",
+   "BUILD_DESERT_CAMP",
+   "BUILD_FORTIFIED_CAVE",
+   "BUILD_FRUIT_PICKING_CAMP",
+   "BUILD_GRAPE_PICKING_CAMP",
+   "BUILD_HUNTING_CAMP",
+   "BUILD_JUNGLE_CAMP",
+   "BUILD_LUMBERJACK",
+   "BUILD_MUSHROOM_GATHERER",
+   "BUILD_PASTURE",
+   "BUILD_PLANT_PICKING_CAMP",
+   "BUILD_RESOURCE_OUTPOST",
+   "BUILD_SALT_GATHERER",
+   "BUILD_SEED_CAMP",
+   "BUILD_STONE_TOOLS_WORKSHOP",
+   "BUILD_TAR_GATHERER",
+   "BUILD_THATCH_CUTTER",
+   "BUILD_WETLANDS_CAMP",
+   "BUILD_WOODEN_PALISADE",
+   "BUILD_WOODEN_WATCHTOWER"
+  ],
+  "improvements": [
+   "IMPROVEMENT_FRUIT_PICKING_CAMP",
+   "IMPROVEMENT_GRAPE_PICKING_CAMP",
+   "IMPROVEMENT_HUNTING_CAMP",
+   "IMPROVEMENT_LUMBERJACK",
+   "IMPROVEMENT_PASTURE",
+   "IMPROVEMENT_PLANT_PICKING_CAMP",
+   "IMPROVEMENT_THATCH_CUTTER"
+  ],
+  "promotions": [
+   "PROMOTION_CITY_RAIDER2",
+   "PROMOTION_MIGHT2"
+  ],
+  "specialBuildings": [
+   "SPECIALBUILDING_GROUP_ANCIENT_WAYS"
+  ],
+  "techs": [
+   "TECH_AGRICULTURE",
+   "TECH_ARCHERY",
+   "TECH_COMMUNITY",
+   "TECH_IDEOGRAMS"
+  ],
+  "units": [
+   "UNIT_PALACE_GUARD",
+   "UNIT_SETTLER",
+   "UNIT_WORKER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CAMP_AUROCHS",
+   "BUILDING_CAMP_DIPROTODON",
+   "BUILDING_CAMP_MAMMOTH",
+   "BUILDING_CAMP_MEGALOCEROS",
+   "BUILDING_CAMP_MEGATHERIUM",
+   "BUILDING_CAMP_WOOLLY_RHINO",
+   "BUILDING_CAVE_SHELTER",
+   "BUILDING_CULTURE_NEANDERTHAL",
+   "BUILDING_C_AC_NEANDERTHAL",
+   "BUILDING_C_AD_NEANDERTHAL",
+   "BUILDING_C_L_NEANDERTHAL",
+   "BUILDING_C_N_NEANDERTHAL",
+   "BUILDING_LL_BLACKWATER_DRAW",
+   "BUILDING_LL_KILGII_GWAAY",
+   "BUILDING_LL_MCCALLUM",
+   "BUILDING_NEANDERTHAL_CAVES",
+   "BUILDING_PC_BLOMBOS_CAVE",
+   "BUILDING_PC_BLUEFISH_CAVES",
+   "BUILDING_PC_CAVE_OF_ALTAMIRA",
+   "BUILDING_PC_CHARLIE_LAKE_CAVE",
+   "BUILDING_PC_KLASIES_RIVER_CAVES",
+   "BUILDING_PC_PEDRA_FURADA",
+   "BUILDING_ROPE_BRIDGE"
+  ],
+  "builds": [
+   "BUILD_RESOURCE_OUTPOST_KILL"
+  ],
+  "units": [
+   "UNIT_EXILE",
+   "UNIT_GATHERER",
+   "UNIT_NEANDERTHAL",
+   "UNIT_NEANDERTHAL_BRUTE",
+   "UNIT_NEANDERTHAL_CANOE",
+   "UNIT_NEANDERTHAL_ELEPHANT_RIDER",
+   "UNIT_NEANDERTHAL_ENFORCER",
+   "UNIT_NEANDERTHAL_GATHERER",
+   "UNIT_NEANDERTHAL_HEALER",
+   "UNIT_NEANDERTHAL_HUNTER",
+   "UNIT_NEANDERTHAL_KAYAK",
+   "UNIT_NEANDERTHAL_LOG_RAM",
+   "UNIT_NEANDERTHAL_MAMMOTH_RIDER",
+   "UNIT_NEANDERTHAL_OBSIDIAN_AXEMAN",
+   "UNIT_NEANDERTHAL_OBSIDIAN_MACEMAN",
+   "UNIT_NEANDERTHAL_OBSIDIAN_SPEARMAN",
+   "UNIT_NEANDERTHAL_OBSIDIAN_SWORDSMAN",
+   "UNIT_NEANDERTHAL_RAFT",
+   "UNIT_NEANDERTHAL_SCOUT",
+   "UNIT_NEANDERTHAL_SHEPHERD",
+   "UNIT_NEANDERTHAL_SLINGER",
+   "UNIT_NEANDERTHAL_STONE_AGE_AXEMAN",
+   "UNIT_NEANDERTHAL_STONE_AGE_SPEARMAN",
+   "UNIT_NEANDERTHAL_STONE_MACEMAN",
+   "UNIT_NEANDERTHAL_STONE_THROWER",
+   "UNIT_NEANDERTHAL_TRAINED_DOG",
+   "UNIT_NEANDERTHAL_TRIBAL_GUARDIAN",
+   "UNIT_NEANDERTHAL_WARRIOR",
+   "UNIT_NEANDERTHAL_WAR_CANOE",
+   "UNIT_NEANDERTHAL_WATCHER",
+   "UNIT_NEANDERTHAL_WISE_WOMAN",
+   "UNIT_NEANDERTHAL_WOODEN_SPEARMAN",
+   "UNIT_NEANDERTHAL_WORKBOAT",
+   "UNIT_TRIBAL_GUARDIAN",
+   "UNIT_TRIBE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MYSTICISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEGALITH_CONSTRUCTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_JUNGLE_CAMP": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_STONE_TOOL_MAKER": {
+     "flat": -300
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_WETLANDS_CAMP": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_DESERT_CAMP": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_FOLKLORE_E_CORAL_REEF": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_E_STONE_FROM_THE_SKY": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_E_FIRE": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_E_METAL": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_E_OASIS": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_E_LANDFORM": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_E_REEF": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_E_STONE": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_E_VOLCANO": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_E_DRAGON": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_E_EARTH": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_E_MERMAID": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_E_PHOENIX": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_E_SEA": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_E_SKY": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_NINE_BANDED_ARMADILLO": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_MOON_BEAR": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_AUROCHS": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_BARBARY_MACAQUE": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_BELUGA": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_BISON": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_BLACK_BEAR": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_BLACK_RHINOCEROS": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_BONGO": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_BLUE_FOOTED_BOOBY": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_BROWN_BEAR": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_CAPE_BUFFALO": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_CAMEL": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_CAPUCHIN_MONKEY": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_CARIBOU": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_CASSOWARY": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_CAVE_BEAR": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_CHIMPANZEE": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_COD": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_CRAB": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_CROW": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_DEER": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_DOLPHIN": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_DONKEY": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_DUCK": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_DUGONG": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_EAGLE": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_BALD_EAGLE": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_GIANT_RHINOCEROS": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_EMU": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_FLAMINGO": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_THOMSONS_GAZELLE": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_GELADA_MONKEY": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_GEMSBOK": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_GERENUK": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_GIRAFFE": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_GLYPTODON": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_MOUFLON": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_GORILLA": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_GREAT_WHITE_SHARK": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_GRIZZLY": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_SEAGULL": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_HAASTS_EAGLE": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_HAMMERHEAD_SHARK": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_HARPY_EAGLE": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_HAWK": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_HUMPBACK_WHALE": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_WALIA_IBEX": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_IMPALA": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_INDIAN_RHINOCEROS": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_JAVA_RHINOCEROS": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_KOOKABURRA": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_GIANT_SQUID": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_RING_TAILED_LEMUR": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_GUANACO": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_LOON": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_MACKEREL": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_MANDRILL": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_MARLIN": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_MINKIE_WHALE": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_MOA": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_MOOSE": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_MUSKOX": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_NARWHAL": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_OKAPI": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_ORANGUTAN": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_ORCA": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_OSTRICH": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_OXPECKER": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_PALEOLITHIC_BIRDS": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_PALEOLITHIC_CAT": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_GROUND_SLOTH": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_GIANT_PANDA": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_PARROT": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_PEACOCK": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_PHEASANT": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_PIGEON": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_POLAR_BEAR": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_RAVEN": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_EAGLE_RAY": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_MANTA_RAY": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_RAZORBILL": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_REEF_SHARK": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_RHEA": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_SABRETOOTH": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_SAIGA_ANTELOPE": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_STELLERS_SEA_EAGLE": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_SEA_LION": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_SECRETARY_BIRD": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_SLOTH_BEAR": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_SPECTACLED_BEAR": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_SUN_BEAR": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_ARCTIC_TERN": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_TOUCAN": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_THREE_TOED_SLOTH": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_TUNA": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_WILD_TURKEY": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_VULTURE": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_WALRUS": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_WHALE_SHARK": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_WHITE_RHINOCEROS": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_WILDEBEEST": {
+     "flat": -10
+    },
+    "BUILDING_FOLKLORE_ZEBRA": {
+     "flat": -10
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_FOLKLORE_E_CORAL_REEF": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_E_STONE_FROM_THE_SKY": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_E_FIRE": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_E_METAL": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_E_OASIS": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_E_LANDFORM": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_E_REEF": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_E_STONE": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_E_VOLCANO": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_E_DRAGON": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_E_EARTH": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_E_MERMAID": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_E_PHOENIX": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_E_SEA": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_E_SKY": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_NINE_BANDED_ARMADILLO": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_MOON_BEAR": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_AUROCHS": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_BARBARY_MACAQUE": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_BELUGA": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_BISON": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_BLACK_BEAR": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_BLACK_RHINOCEROS": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_BONGO": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_BLUE_FOOTED_BOOBY": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_BROWN_BEAR": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_CAPE_BUFFALO": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_CAMEL": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_CAPUCHIN_MONKEY": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_CARIBOU": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_CASSOWARY": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_CAVE_BEAR": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_CHIMPANZEE": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_COD": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_CRAB": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_CROW": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_DEER": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_DOLPHIN": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_DONKEY": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_DUCK": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_DUGONG": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_EAGLE": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_BALD_EAGLE": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_GIANT_RHINOCEROS": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_EMU": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_FLAMINGO": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_THOMSONS_GAZELLE": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_GELADA_MONKEY": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_GEMSBOK": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_GERENUK": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_GIRAFFE": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_GLYPTODON": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_MOUFLON": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_GORILLA": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_GREAT_WHITE_SHARK": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_GRIZZLY": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_SEAGULL": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_HAASTS_EAGLE": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_HAMMERHEAD_SHARK": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_HARPY_EAGLE": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_HAWK": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_HUMPBACK_WHALE": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_WALIA_IBEX": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_IMPALA": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_INDIAN_RHINOCEROS": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_JAVA_RHINOCEROS": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_KOOKABURRA": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_GIANT_SQUID": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_RING_TAILED_LEMUR": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_GUANACO": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_LOON": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_MACKEREL": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_MANDRILL": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_MARLIN": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_MINKIE_WHALE": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_MOA": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_MOOSE": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_MUSKOX": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_NARWHAL": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_OKAPI": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_ORANGUTAN": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_ORCA": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_OSTRICH": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_OXPECKER": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_PALEOLITHIC_BIRDS": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_PALEOLITHIC_CAT": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_GROUND_SLOTH": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_GIANT_PANDA": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_PARROT": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_PEACOCK": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_PHEASANT": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_PIGEON": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_POLAR_BEAR": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_RAVEN": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_EAGLE_RAY": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_MANTA_RAY": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_RAZORBILL": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_REEF_SHARK": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_RHEA": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_SABRETOOTH": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_SAIGA_ANTELOPE": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_STELLERS_SEA_EAGLE": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_SEA_LION": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_SECRETARY_BIRD": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_SLOTH_BEAR": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_SPECTACLED_BEAR": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_SUN_BEAR": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_ARCTIC_TERN": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_TOUCAN": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_THREE_TOED_SLOTH": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_TUNA": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_WILD_TURKEY": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_VULTURE": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_WALRUS": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_WHALE_SHARK": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_WHITE_RHINOCEROS": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_WILDEBEEST": {
+     "flat": 10
+    },
+    "BUILDING_FOLKLORE_ZEBRA": {
+     "flat": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 74
+ },
+ "ai": {
+  "behaviour": {
+   "weight": 100
+  },
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_MILITARY": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_SEDENTARY_LIFESTYLE",
+  "soundMP": "AS2D_TECH_SEDENTARY_LIFESTYLE",
+  "icon": "Art/Interface/Buttons/TechTree/Button_SedentaryLifeStyle.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 12,
+  "tradeable": true,
+  "gridX": 19,
+  "gridY": 9
+ }
+}

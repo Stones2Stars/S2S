@@ -1,0 +1,73 @@
+{
+ "type": "TECH_BACTERIUM_ENGINEERING",
+ "description": "TXT_KEY_TECH_BACTERIUM_ENGINEERING",
+ "civilopedia": "TXT_KEY_TECH_BACTERIUM_ENGINEERING_PEDIA",
+ "quote": "TXT_KEY_TECH_BACTERIUM_ENGINEERING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CELLULASE_CAPSULES"
+  ],
+  "buildings": [
+   "BUILDING_BACTERIUM_BIOFORGE",
+   "BUILDING_BACTERIUM_LANDFILL",
+   "BUILDING_DESIGNER_PROBIOTICS_CLINIC",
+   "BUILDING_FACTORY_CELLULASE_CAPSULES",
+   "BUILDING_HYDROCARBON_REFINERY",
+   "BUILDING_LIFE_C4_CROPS",
+   "BUILDING_LIFE_CRISPR_CAS9_BACTERIA",
+   "BUILDING_LIFE_FLUORESCENT_BACTERIA",
+   "BUILDING_NATURAL_INSECTICIDE_SPRAYERS",
+   "BUILDING_PHENOTYPE_STUDIO"
+  ],
+  "techs": [
+   "TECH_GENESIS_BIOLOGY",
+   "TECH_PROTOTYPED_PATHOGENS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PERSONALIZED_HEALTH",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 28189
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_BACTERIUM_ENGINEERING",
+  "soundMP": "AS2D_TECH_BACTERIUM_ENGINEERING",
+  "icon": "Art/Interface/Buttons/TechTree/bacteriumcomputing.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 97,
+  "gridY": 1
+ }
+}

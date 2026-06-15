@@ -1,0 +1,86 @@
+{
+ "type": "TECH_MOUNTED_ARCHERY",
+ "description": "TXT_KEY_TECH_MOUNTED_ARCHERY",
+ "civilopedia": "TXT_KEY_TECH_MOUNTED_ARCHERY_PEDIA",
+ "quote": "TXT_KEY_TECH_MOUNTED_ARCHERY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_BERBER",
+   "BUILDING_CULTURE_COMANCHE",
+   "BUILDING_CULTURE_DZUNGAR",
+   "BUILDING_CULTURE_FATIMID",
+   "BUILDING_CULTURE_MANCHURIAN",
+   "BUILDING_CULTURE_SCYTHIAN",
+   "BUILDING_CULTURE_UIGHUR"
+  ],
+  "techs": [
+   "TECH_CAVALRY_TACTICS"
+  ],
+  "units": [
+   "UNIT_BALLISTA_ELEPHANT",
+   "UNIT_BALLISTA_MAMMOTH",
+   "UNIT_CAMEL_ARCHER",
+   "UNIT_CARTHAGE_NUMIDIAN_CAVALRY",
+   "UNIT_CHEYENNE_RIDER",
+   "UNIT_COMANCHE_HORSE_ARCHER",
+   "UNIT_DEER_ARCHER",
+   "UNIT_GANDR",
+   "UNIT_GIRAFFE_ARCHER",
+   "UNIT_GIRAFFE_CROSSBOW",
+   "UNIT_HORSE_ARCHER",
+   "UNIT_HORSE_CROSSBOWMAN",
+   "UNIT_KRUM",
+   "UNIT_LLAMA_ARCHER",
+   "UNIT_MANCHU_HORSEARCHER",
+   "UNIT_MONGOL_KESHIK",
+   "UNIT_SCYTHIAN_HORSE_ARCHER",
+   "UNIT_TARKAN",
+   "UNIT_ZEBRA_ARCHER",
+   "UNIT_ZHUGE_KESHIK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HORSE_BREEDING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 554
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_MOUNTED_ARCHERY",
+  "soundMP": "AS2D_TECH_MOUNTED_ARCHERY",
+  "icon": "Art/Interface/Buttons/TechTree/Mounted_archery.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 8,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 35,
+  "gridY": 1
+ }
+}

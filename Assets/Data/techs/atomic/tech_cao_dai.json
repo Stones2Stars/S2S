@@ -1,0 +1,53 @@
+{
+ "type": "TECH_CAO_DAI",
+ "description": "TXT_KEY_TECH_CAO_DAI",
+ "civilopedia": "TXT_KEY_TECH_CAO_DAI_PEDIA",
+ "quote": "TXT_KEY_TECH_CAO_DAI_QUOTE",
+ "enables": {
+  "religions": [
+   "RELIGION_CAO_DAI"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ATOMIC_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 9484
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/Interface/Buttons/TechTree/Caodai.dds"
+ },
+ "identity": {
+  "global": true,
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 8,
+  "gridX": 72,
+  "gridY": 1
+ }
+}

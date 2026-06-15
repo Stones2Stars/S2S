@@ -1,0 +1,115 @@
+{
+ "type": "TECH_EXTRATERRESTRIAL_AGRICULTURE",
+ "description": "TXT_KEY_TECH_EXTRATERRESTRIAL_AGRICULTURE",
+ "civilopedia": "TXT_KEY_TECH_EXTRATERRESTRIAL_AGRICULTURE_PEDIA",
+ "quote": "TXT_KEY_TECH_EXTRATERRESTRIAL_AGRICULTURE_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_MARTIAN_CROPS"
+  ],
+  "buildings": [
+   "BUILDING_DEEP_SPACE_FARM",
+   "BUILDING_MARTIAN_FARM",
+   "BUILDING_VENUS_AGRODOME"
+  ],
+  "builds": [
+   "BUILD_MARTIAN_FARM"
+  ],
+  "improvements": [
+   "IMPROVEMENT_MARTIAN_FARM"
+  ],
+  "projects": [
+   "PROJECT_SS_LIFE_SUPPORT"
+  ],
+  "techs": [
+   "TECH_GALACTIC_LIFESTYLE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_SVALBARD_GLOBAL_SEED_VAULT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_APOCALYPTIC_PATHOGENS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WEATHER_CONTROL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MOLECULAR_SCANNING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_FARM_MECH_CONTROL_CENTER": {
+     "flat": 1000
+    },
+    "BUILDING_FARM_NANOBOT_CONTROL_CENTER": {
+     "flat": 2000
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_COLONY_HYDROPONICS": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_ASTROBIOLOGY_LAB": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 93709
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_EXTRATERRESTRIAL_AGRICULTURE",
+  "soundMP": "AS2D_TECH_EXTRATERRESTRIAL_AGRICULTURE",
+  "icon": "Art/Interface/Buttons/TechTree/extraterrestrialagriculture.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 122,
+  "gridY": 13
+ }
+}

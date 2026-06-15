@@ -1,0 +1,86 @@
+{
+ "type": "TECH_PHILOSOPHY",
+ "description": "TXT_KEY_TECH_PHILOSOPHY",
+ "civilopedia": "TXT_KEY_TECH_PHILOSOPHY_PEDIA",
+ "quote": "TXT_KEY_TECH_PHILOSOPHY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANGKOR_WAT",
+   "BUILDING_CULTURE_NAVAJO",
+   "BUILDING_LYCEUM"
+  ],
+  "civics": [
+   "CIVIC_PACIFISM"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_CLEVERNESS5"
+  ],
+  "techs": [
+   "TECH_CHRISTIANITY",
+   "TECH_TAOISM",
+   "TECH_WEATHER_LORE"
+  ],
+  "units": [
+   "UNIT_AGAPARO",
+   "UNIT_GUAN_YU",
+   "UNIT_HIAWATHA",
+   "UNIT_LARS_PORSENA",
+   "UNIT_NARBONA",
+   "UNIT_SHANG_YANG",
+   "UNIT_TERES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MERITOCRACY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "buildings": {
+    "BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE": {
+     "iHappiness": {
+      "flat": -3
+     },
+     "iHealth": {
+      "flat": -3
+     }
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 679
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_PHILOSOPHY",
+  "soundMP": "AS2D_TECH_MP_PHILOSOPHY",
+  "icon": ",Art/Interface/Buttons/TechTree/Philosophy.dds,Art/Interface/Buttons/TechTree_Atlas.dds,4,6"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 37,
+  "gridY": 19
+ }
+}

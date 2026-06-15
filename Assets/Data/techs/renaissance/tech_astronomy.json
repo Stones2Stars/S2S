@@ -1,0 +1,93 @@
+{
+ "type": "TECH_ASTRONOMY",
+ "description": "TXT_KEY_TECH_ASTRONOMY",
+ "civilopedia": "TXT_KEY_TECH_ASTRONOMY_PEDIA",
+ "quote": "TXT_KEY_TECH_ASTRONOMY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_COPERNICUS_OBSERVATORY",
+   "BUILDING_CULTURE_SAFAVID",
+   "BUILDING_OBSERVATORY",
+   "BUILDING_PIRATES_COVE"
+  ],
+  "techs": [
+   "TECH_COLONIALISM",
+   "TECH_CRITICAL_THOUGHT",
+   "TECH_NAVIGATION",
+   "TECH_WEATHER_FORECASTING"
+  ],
+  "units": [
+   "UNIT_FAKHR_EL_DIN_II",
+   "UNIT_HAYREDDIN",
+   "UNIT_ISMAIL_I",
+   "UNIT_LORD_NELSON",
+   "UNIT_TARIACURI",
+   "UNIT_ULUGH_BEG",
+   "UNIT_WANLI",
+   "UNIT_YI_SUN_SIN"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ANTIKYTHERA_MECHANISM",
+   "BUILDING_HAAMONGA_A_MAUI",
+   "BUILDING_THE_COLOSSUS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MOUNTAINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASTROLABE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_BARRINGER_CRATER": {
+     "flat": 500
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 2528
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_ASTRONOMY",
+  "soundMP": "AS2D_TECH_MP_ASTRONOMY",
+  "icon": ",Art/Interface/Buttons/TechTree/Astronomy.dds,Art/Interface/Buttons/TechTree_Atlas.dds,7,1"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 52,
+  "gridY": 15
+ }
+}

@@ -1,0 +1,77 @@
+{
+ "type": "TECH_ADAPTIVE_RADIATION",
+ "description": "TXT_KEY_TECH_ADAPTIVE_RADIATION",
+ "civilopedia": "TXT_KEY_TECH_ADAPTIVE_RADIATION_PEDIA",
+ "quote": "TXT_KEY_TECH_ADAPTIVE_RADIATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_ADAPTED_HUMANS",
+   "BUILDING_INTERSTELLAR_UTOPIAN_COLONY",
+   "BUILDING_LIFE_LIQUID_NITROGEN",
+   "BUILDING_LIFE_SUPERCRITICAL_CO2"
+  ],
+  "techs": [
+   "TECH_ACNP_PROPULSION",
+   "TECH_GERONTOCRACY",
+   "TECH_POSTHUMANISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INTERSTELLAR_COLONIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DATA_ARCHIVAL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_LIFE_SILICON_BASED": {
+     "flat": 1100
+    },
+    "BUILDING_LIFE_NONPHOTOSYNTHETIC_PLANTS": {
+     "flat": 1100
+    },
+    "BUILDING_MOBILE_PLANTS": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 154284
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/adaptive_radiation.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 130,
+  "gridY": 15
+ }
+}

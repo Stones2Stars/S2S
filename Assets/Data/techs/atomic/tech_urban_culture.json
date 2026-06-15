@@ -1,0 +1,85 @@
+{
+ "type": "TECH_URBAN_CULTURE",
+ "description": "TXT_KEY_TECH_URBAN_CULTURE",
+ "civilopedia": "TXT_KEY_TECH_URBAN_CULTURE_PEDIA",
+ "quote": "TXT_KEY_TECH_URBAN_CULTURE_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_ECSTASY",
+   "BONUS_METHAMPHETAMINE"
+  ],
+  "buildings": [
+   "BUILDING_CRIME_GANG_WARFARE",
+   "BUILDING_CRIME_SCHOOL_SHOOTINGS",
+   "BUILDING_ECSTASY_LAB",
+   "BUILDING_METH_LAB",
+   "BUILDING_ORDINANCE_NATIONAL_SMOKING_PROHIBITION",
+   "BUILDING_ORDINANCE_SMOKING_PROHIBITION"
+  ],
+  "promotions": [
+   "PROMOTION_CONNIVING7",
+   "PROMOTION_CORRUPTION8",
+   "PROMOTION_FOMENT7",
+   "PROMOTION_INSPIRE7"
+  ],
+  "techs": [
+   "TECH_INFORMATION_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_HEZBOLLAH",
+   "UNIT_SOMALI_PIRATE",
+   "UNIT_STREET_GANG"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MINORITY_RIGHTS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NEW_URBANISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_EXTREME_SPORTS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 16099
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_URBAN_CULTURE",
+  "soundMP": "AS2D_TECH_URBAN_CULTURE",
+  "icon": "Art/Buttons/Techs/TechUrbanCulture.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 85,
+  "gridY": 3
+ }
+}

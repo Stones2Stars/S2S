@@ -1,0 +1,78 @@
+{
+ "type": "TECH_REGENERATIVE_MEDICINE",
+ "description": "TXT_KEY_TECH_REGENERATIVE_MEDICINE",
+ "civilopedia": "TXT_KEY_TECH_REGENERATIVE_MEDICINE_PEDIA",
+ "quote": "TXT_KEY_TECH_REGENERATIVE_MEDICINE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CIRCADIAN_CHAMBER",
+   "BUILDING_REJUVENATION_TANK"
+  ],
+  "promotions": [
+   "PROMOTION_DISEASE_CONTROL9",
+   "PROMOTION_FIRST_AID_ANIMALS7",
+   "PROMOTION_FIRST_AID_PEOPLE7",
+   "PROMOTION_SELF_HEAL5",
+   "PROMOTION_SELF_REPAIR5"
+  ],
+  "techs": [
+   "TECH_CYBERIMMUNOLOGY",
+   "TECH_DNA_COMPUTING"
+  ],
+  "units": [
+   "UNIT_BLEEDER",
+   "UNIT_MEDEVAC_DROPSHIP"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_DISEASE_LEPROSY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SMART_DRUGS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 46107
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_REGENERATIVE_MEDICINE",
+  "soundMP": "AS2D_TECH_REGENERATIVE_MEDICINE",
+  "icon": ",Art/Interface/Buttons/TechTree/Immunology.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,2,9"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 107,
+  "gridY": 17
+ }
+}

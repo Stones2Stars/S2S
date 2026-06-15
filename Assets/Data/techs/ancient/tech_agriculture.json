@@ -1,0 +1,117 @@
+{
+ "type": "TECH_AGRICULTURE",
+ "description": "TXT_KEY_TECH_AGRICULTURE",
+ "civilopedia": "TXT_KEY_TECH_AGRICULTURE_PEDIA",
+ "quote": "TXT_KEY_TECH_AGRICULTURE_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_COTTON_FIBERS",
+   "BONUS_HEMP_FIBERS",
+   "BONUS_STRAW"
+  ],
+  "buildings": [
+   "BUILDING_CULTURE_GUYANESE",
+   "BUILDING_CULTURE_LUSITANIAN",
+   "BUILDING_FARM_CROP_BARLEY",
+   "BUILDING_FARM_CROP_CORN",
+   "BUILDING_FARM_CROP_MILLET",
+   "BUILDING_FARM_CROP_OAT",
+   "BUILDING_FARM_CROP_QUINOA",
+   "BUILDING_FARM_CROP_RYE",
+   "BUILDING_FARM_CROP_SORGHUM",
+   "BUILDING_FARM_CROP_SOYBEAN",
+   "BUILDING_FARM_CROP_WHEAT",
+   "BUILDING_HEMP_FARM",
+   "BUILDING_PESTS_GOPHERS",
+   "BUILDING_PESTS_LOCUST",
+   "BUILDING_PLANTATION_COTTON",
+   "BUILDING_RICE_PADDY",
+   "BUILDING_SCARECROWS",
+   "BUILDING_STRAW_GATHERER"
+  ],
+  "builds": [
+   "BUILD_FARM"
+  ],
+  "civics": [
+   "CIVIC_SMALLHOLDING"
+  ],
+  "improvements": [
+   "IMPROVEMENT_FARM"
+  ],
+  "promotions": [
+   "PROMOTION_FIELD_WORKER3"
+  ],
+  "techs": [
+   "TECH_BREAD_MAKING",
+   "TECH_EQUINE_DOMESTICATION",
+   "TECH_POTTERY",
+   "TECH_POULTRY_DOMESTICATION",
+   "TECH_TAXONOMY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_EARTHWORM_GATHERER": {
+     "flat": 200
+    },
+    "BUILDING_WONDER_OF_NATURE_VICTORIA_FALLS": {
+     "flat": 200
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_GRAPE_PICKING_CAMP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_MUSHROOM_GATHERER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 84
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_AGRICULTURE",
+  "soundMP": "AS2D_TECH_MP_AGRICULTURE",
+  "icon": "Art/Interface/Buttons/TechTree/agriculture2.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 20,
+  "gridY": 9
+ }
+}

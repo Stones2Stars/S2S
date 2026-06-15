@@ -1,0 +1,94 @@
+{
+ "type": "TECH_METAVERSE",
+ "description": "TXT_KEY_TECH_METAVERSE",
+ "civilopedia": "TXT_KEY_TECH_METAVERSE_PEDIA",
+ "quote": "TXT_KEY_TECH_METAVERSE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_FEYMARCH",
+   "BUILDING_METAVERSE_EDUCATION_CENTER",
+   "BUILDING_METAVERSE_ENTERTAINMENT_CENTER",
+   "BUILDING_METAVERSE_VR_CENTER"
+  ],
+  "techs": [
+   "TECH_PANPSYCHISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SHAPESHIFTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TACHYON_COMMUNICATIONS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRANSCENDENT_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_WORMHOLE_BEACON": {
+     "flat": 1300
+    },
+    "BUILDING_INTERGALACTIC_WORMHOLE_COMMUNICATION_NETWORK": {
+     "flat": 1300
+    },
+    "BUILDING_INTERGALACTIC_TACHYON_COMMUNICATION_CENTER": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERGALACTIC_REPUBLIC": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "espionage": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERGALACTIC_EMPIRE": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 495679
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/metaverse.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 149,
+  "gridY": 3
+ }
+}

@@ -1,0 +1,85 @@
+{
+ "type": "TECH_SPATIAL_TRANSCENDENCE",
+ "description": "TXT_KEY_TECH_SPATIAL_TRANSCENDENCE",
+ "civilopedia": "TXT_KEY_TECH_SPATIAL_TRANSCENDENCE_PEDIA",
+ "quote": "TXT_KEY_TECH_SPATIAL_TRANSCENDENCE_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_NON_SPATIAL"
+  ],
+  "buildings": [
+   "BUILDING_HUMAN_MOD_NON_SPATIAL",
+   "BUILDING_INTERGALACTIC_INSTANT_TELEPORTATION_PORTAL"
+  ],
+  "builds": [
+   "BUILD_ASPATIAL_ROUTE"
+  ],
+  "techs": [
+   "TECH_ATEMPORAL_BEINGS",
+   "TECH_MANIFOLD_COLONIZATION",
+   "TECH_UNIVERSAL_SINGULARITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ENTROPY_REVERSAL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SENTIENT_ENERGY_FIELDS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MULTIVERSE_TRAVERSAL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_DISTANT_PARALLEL_UNIVERSE_PORTAL": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_HIDE_AND_SEEK": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 601234
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/spatial_transcendence.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 155,
+  "gridY": 17
+ }
+}

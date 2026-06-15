@@ -1,0 +1,88 @@
+{
+ "type": "TECH_GALACTIC_FEDERATION",
+ "description": "TXT_KEY_TECH_GALACTIC_FEDERATION",
+ "civilopedia": "TXT_KEY_TECH_GALACTIC_FEDERATION_PEDIA",
+ "quote": "TXT_KEY_TECH_GALACTIC_FEDERATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ENCYCLOPEDIA_GALACTICA",
+   "BUILDING_SECTION_31",
+   "BUILDING_TRANSTELLAR_CUSTOMS_CENTER",
+   "BUILDING_UNITED_FEDERATION_OF_PLANETS"
+  ],
+  "civics": [
+   "CIVIC_GALACTIC_FEDERATION"
+  ],
+  "techs": [
+   "TECH_SPECIES_AMALGAMATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASTROIMPERIALISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WORMHOLE_COMMUNICATIONS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_CAPITOL": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "espionage": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_ADMINISTRATION_CENTER": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 186934
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GALACTIC_FEDERATION",
+  "soundMP": "AS2D_TECH_GALACTIC_FEDERATION",
+  "icon": "Art/Interface/Buttons/TechTree/galacticfederation.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 135,
+  "gridY": 11
+ }
+}

@@ -1,0 +1,72 @@
+{
+ "type": "TECH_CONTROLLED_INFLATION",
+ "description": "TXT_KEY_TECH_CONTROLLED_INFLATION",
+ "civilopedia": "TXT_KEY_TECH_CONTROLLED_INFLATION_PEDIA",
+ "quote": "TXT_KEY_TECH_CONTROLLED_INFLATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_BUBBLE_TRANSFER_STATION",
+   "BUILDING_HYPERSPACE_INFLATON_FIELD",
+   "BUILDING_HYPERSPACE_OPEN_FRW_UNIVERSE"
+  ],
+  "builds": [
+   "BUILD_OBSERVABLE_UNIVERSE_COLONY"
+  ],
+  "improvements": [
+   "IMPROVEMENT_OBSERVABLE_UNIVERSE_COLONY"
+  ],
+  "techs": [
+   "TECH_CONTROLLED_VACUUM_COLLAPSE",
+   "TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SPACETIME_ECONOMICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_STRING_MANIPULATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_GRAND_UNIFIED_ACCELERATOR": {
+     "flat": 5000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 511504
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/controlled_inflation.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 150,
+  "gridY": 19
+ }
+}

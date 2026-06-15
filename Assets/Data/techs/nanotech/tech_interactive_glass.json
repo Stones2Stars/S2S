@@ -1,0 +1,85 @@
+{
+ "type": "TECH_INTERACTIVE_GLASS",
+ "description": "TXT_KEY_TECH_INTERACTIVE_GLASS",
+ "civilopedia": "TXT_KEY_TECH_INTERACTIVE_GLASS_PEDIA",
+ "quote": "TXT_KEY_TECH_INTERACTIVE_GLASS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_DIGITIZED_MEMBRANES"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_DIGITIZED_MEMBRANES",
+   "BUILDING_FARM_NANOBOT_CONTROL_CENTER"
+  ],
+  "techs": [
+   "TECH_ANDROIDS",
+   "TECH_SUPERCHARGED_CRYSTALLOGRAPHY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WIRELESS_ELECTRICITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_FACIAL_RECOGNITION_SOFTWARE": {
+     "flat": 900
+    },
+    "BUILDING_INTUITIVE_ALGORITHMS": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_NATURAL_LANGUAGE_ALGORITHMS": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 44505
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_INTERACTIVE_GLASS",
+  "soundMP": "AS2D_TECH_INTERACTIVE_GLASS",
+  "icon": "Art/Interface/Buttons/TechTree/Photovalticglass.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 106,
+  "gridY": 7
+ }
+}

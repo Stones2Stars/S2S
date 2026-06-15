@@ -1,0 +1,63 @@
+{
+ "type": "TECH_WINDMILLS",
+ "description": "TXT_KEY_TECH_WINDMILLS",
+ "civilopedia": "TXT_KEY_TECH_WINDMILLS_PEDIA",
+ "quote": "TXT_KEY_TECH_WINDMILLS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_WINDMILL"
+  ],
+  "builds": [
+   "BUILD_WINDMILL"
+  ],
+  "improvements": [
+   "IMPROVEMENT_WINDMILL"
+  ],
+  "techs": [
+   "TECH_AGRICULTURAL_TOOLS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SURVEYING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1334
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_WINDMILLS",
+  "soundMP": "AS2D_TECH_WINDMILLS",
+  "icon": "Art/Interface/Buttons/TechTree/windmills.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "militaryWorth": 8,
+  "tradeable": true,
+  "gridX": 44,
+  "gridY": 15
+ }
+}

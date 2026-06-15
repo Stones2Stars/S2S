@@ -1,0 +1,122 @@
+{
+ "type": "TECH_MACHINE_LEARNING",
+ "description": "TXT_KEY_TECH_MACHINE_LEARNING",
+ "civilopedia": "TXT_KEY_TECH_MACHINE_LEARNING_PEDIA",
+ "quote": "TXT_KEY_TECH_MACHINE_LEARNING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DIGITAL_ADVERTISING_FIRM",
+   "BUILDING_MECHATRONICS_LAB",
+   "BUILDING_SPEECH_RECOGNITION_SOFTWARE",
+   "BUILDING_YUTU"
+  ],
+  "builds": [
+   "BUILD_BREAK_ICE",
+   "BUILD_FISHING_BOATS",
+   "BUILD_HARVEST_KELP",
+   "BUILD_LIGHTHOUSE_CORAL",
+   "BUILD_LIGHTHOUSE_REEF",
+   "BUILD_SEA_MILL",
+   "BUILD_TIDAL_HARNESS",
+   "BUILD_WHALING_SHIPS"
+  ],
+  "promotions": [
+   "PROMOTION_RECOVER_TECH3"
+  ],
+  "techs": [
+   "TECH_AUTONOMOUS_VEHICLES",
+   "TECH_POWERED_EXOSKELETON"
+  ],
+  "units": [
+   "UNIT_CONSTRUCT_SHIP",
+   "UNIT_WALKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NEURAL_NETWORKS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_FRAUNHOFER_SOCIETY": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_HEDGE_FUND": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_HEDGE_FUND": {
+     "flat": 800
+    },
+    "BUILDING_SUPERCOMPUTER": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_COMPUTER_SCIENCE_DEPARTMENT": {
+     "flat": 800
+    },
+    "BUILDING_EVOLUTION_SIMULATOR": {
+     "flat": 800
+    },
+    "BUILDING_ROBOTICS_LAB": {
+     "flat": 800
+    },
+    "BUILDING_SUPERCOMPUTER": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 23650
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_MACHINE_LEARNING",
+  "soundMP": "AS2D_TECH_MACHINE_LEARNING",
+  "icon": "Art/Interface/Buttons/TechTree/Sentient_robots.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 92,
+  "gridY": 11
+ }
+}

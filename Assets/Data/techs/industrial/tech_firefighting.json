@@ -1,0 +1,68 @@
+{
+ "type": "TECH_FIREFIGHTING",
+ "description": "TXT_KEY_TECH_FIREFIGHTING",
+ "civilopedia": "TXT_KEY_TECH_FIREFIGHTING_PEDIA",
+ "quote": "TXT_KEY_TECH_FIREFIGHTING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_FIRE_STATION",
+   "BUILDING_NATIONAL_FIRE_SERVICE"
+  ],
+  "techs": [
+   "TECH_MODERN_SANITATION"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_GREAT_BONFIRE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FIRE_BRIGADES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DEPUTIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GAS_LIGHTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 6042
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 6
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_FIREFIGHTING",
+  "soundMP": "AS2D_TECH_FIREFIGHTING",
+  "icon": "Art/Interface/Buttons/TechTree/Firefighting.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 65,
+  "gridY": 5
+ }
+}

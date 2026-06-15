@@ -1,0 +1,106 @@
+{
+ "type": "TECH_PLANETARY_MANUFACTURING",
+ "description": "TXT_KEY_TECH_PLANETARY_MANUFACTURING",
+ "civilopedia": "TXT_KEY_TECH_PLANETARY_MANUFACTURING_PEDIA",
+ "quote": "TXT_KEY_TECH_PLANETARY_MANUFACTORING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_MARTIAN_MANUFACTURED_GOODS"
+  ],
+  "buildings": [
+   "BUILDING_MARTIAN_EXPANDED_HABITAT",
+   "BUILDING_MARTIAN_FACTORY",
+   "BUILDING_MARTIAN_HYDROPONICS_COMPLEX",
+   "BUILDING_MARTIAN_LIQUID_FLUORIDE_THORIUM_REACTOR",
+   "BUILDING_VENUS_CARBONWORKS",
+   "BUILDING_VENUS_HYDROGEN_GENERATOR",
+   "BUILDING_VENUS_OXYGEN_GENERATOR"
+  ],
+  "builds": [
+   "BUILD_COLONY_HABITAT_LARGE",
+   "BUILD_LUNAR_HABITATION_COMPLEX"
+  ],
+  "improvements": [
+   "IMPROVEMENT_COLONY_HABITAT_LARGE",
+   "IMPROVEMENT_LUNAR_HABITATION_COMPLEX"
+  ],
+  "techs": [
+   "TECH_DEEP_SPACE_COLONIES"
+  ],
+  "units": [
+   "UNIT_MARSSETTLER",
+   "UNIT_VENUS_SETTLER"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_LUNAR_BASE",
+   "BUILD_LUNAR_OUTPOST"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ACOUSTOPHORESIS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PLANETARY_EXTRACTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_COLONY_MANUFACTORY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_COLONY_EXTRACTION_FACILITY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_MANUFACTURING_COMPLEX": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 41539
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_PLANETARY_MANUFACTORING",
+  "soundMP": "AS2D_TECH_PLANETARY_MANUFACTORING",
+  "icon": "Art/Interface/Buttons/TechTree/planetarymanufacturing.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 104,
+  "gridY": 3
+ }
+}

@@ -1,0 +1,64 @@
+{
+ "type": "TECH_EXPLORATION",
+ "description": "TXT_KEY_TECH_EXPLORATION",
+ "civilopedia": "TXT_KEY_TECH_EXPLORATION_PEDIA",
+ "quote": "TXT_KEY_TECH_EXPLORATION_QUOTE",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BUSHWHACK4"
+  ],
+  "techs": [
+   "TECH_NEGOTIATION",
+   "TECH_STARGAZING"
+  ],
+  "units": [
+   "UNIT_GUIDE",
+   "UNIT_STALKERS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_THE_WHEEL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NOCTURNALISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SAILING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 126
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_EXPLORATION",
+  "soundMP": "AS2D_TECH_EXPLORATION",
+  "icon": "Art/Interface/Buttons/TechTree/exploration.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 23,
+  "gridY": 3
+ }
+}

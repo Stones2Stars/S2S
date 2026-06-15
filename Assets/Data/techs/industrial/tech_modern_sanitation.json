@@ -1,0 +1,100 @@
+{
+ "type": "TECH_MODERN_SANITATION",
+ "description": "TXT_KEY_TECH_MODERN_SANITATION",
+ "civilopedia": "TXT_KEY_TECH_MODERN_SANITATION_PEDIA",
+ "quote": "TXT_KEY_TECH_MODERN_SANITATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_LITTERING",
+   "BUILDING_FIRE_HYDRANTS",
+   "BUILDING_FUNERARY_SERVICES",
+   "BUILDING_PUBLIC_RESTROOMS",
+   "BUILDING_WASTE_COMPACTOR",
+   "BUILDING_WATER_TREATMENT_PLANT"
+  ],
+  "techs": [
+   "TECH_CIVIL_ENGINEERING",
+   "TECH_MEDICINE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ANCIENT_EMBALMER",
+   "BUILDING_BURIAL_GROUND",
+   "BUILDING_MONUMENT",
+   "BUILDING_OUTHOUSE",
+   "BUILDING_STONEHENGE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ELIXIRS_AND_TONICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_STATISTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FIREFIGHTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "buildings": {
+    "BUILDING_DISEASE_CHOLERA": {
+     "flat": 1
+    },
+    "BUILDING_DISEASE_DIPHTHERIA": {
+     "flat": 1
+    },
+    "BUILDING_DISEASE_DYSENTERY": {
+     "flat": 1
+    },
+    "BUILDING_DISEASE_TYPHOID_FEVER": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 6351
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_MODERN_SANITATION",
+  "soundMP": "AS2D_TECH_MODERN_SANITATION",
+  "icon": ",Art/Interface/Buttons/TechTree/Modern_Sanitation.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,11"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 66,
+  "gridY": 3
+ }
+}

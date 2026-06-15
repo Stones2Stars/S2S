@@ -1,0 +1,113 @@
+{
+ "type": "TECH_AQUACULTURE",
+ "description": "TXT_KEY_TECH_AQUACULTURE",
+ "civilopedia": "TXT_KEY_TECH_AQUACULTURE_PEDIA",
+ "quote": "TXT_KEY_TECH_AQUACULTURE_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_ALGAE"
+  ],
+  "buildings": [
+   "BUILDING_AQUAFARM",
+   "BUILDING_COASTAL_FISH_FARM",
+   "BUILDING_CRAB_NETS",
+   "BUILDING_FARM_CROP_ALGAE",
+   "BUILDING_MUSSEL_RAFTS",
+   "BUILDING_SPONGE_FARM"
+  ],
+  "builds": [
+   "BUILD_SANITIZE_WATER"
+  ],
+  "improvements": [
+   "IMPROVEMENT_SANITIZE_WATER"
+  ],
+  "techs": [
+   "TECH_BIOMATERIALS",
+   "TECH_LUNAR_BASES"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TIDEPOOL_SCAVENGER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HYDROPONICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INFORMATION_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_FISHING_BOATS": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HARVEST_KELP": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_FISHING_BOATS": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HARVEST_KELP": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_MARINE_BIOLOGY_LAB": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 19916
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   },
+   {
+    "FLAVOR_GOLD": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_AQUACULTURE",
+  "soundMP": "AS2D_TECH_AQUACULTURE",
+  "icon": ",Art/Interface/Buttons/TechTree/Ecology.dds,Art/Interface/Buttons/NextWar_Atlas.dds,2,3"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 87,
+  "gridY": 19
+ }
+}

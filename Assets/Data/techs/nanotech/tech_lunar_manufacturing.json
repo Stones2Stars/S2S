@@ -1,0 +1,107 @@
+{
+ "type": "TECH_LUNAR_MANUFACTURING",
+ "description": "TXT_KEY_TECH_LUNAR_MANUFACTURING",
+ "civilopedia": "TXT_KEY_TECH_LUNAR_MANUFACTURING_PEDIA",
+ "quote": "TXT_KEY_TECH_LUNAR_MANUFACTURING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_REFUELING_STATION",
+   "BUILDING_LUNAR_ALGAE_LAB",
+   "BUILDING_LUNAR_ASSEMBLY_PLANT",
+   "BUILDING_LUNAR_BUG_FARM",
+   "BUILDING_LUNAR_FISH_FARM",
+   "BUILDING_LUNAR_GREENHOUSE_COMPLEX",
+   "BUILDING_LUNAR_MANUFACTURING_PLANT",
+   "BUILDING_LUNAR_OBSERVATORY",
+   "BUILDING_LUNAR_ORGANIC_POLYMERE_FACTORY",
+   "BUILDING_LUNAR_RESEARCH_BASE",
+   "BUILDING_LUNAR_ROCKET_FUEL_REFINERY",
+   "BUILDING_LUNAR_SHIPYARD",
+   "BUILDING_LUNAR_SILICON_PROCESSING_FACILITY",
+   "BUILDING_LUNAR_SOLAR_ARRAY",
+   "BUILDING_SOLAR_SATELLITE_ARRAY"
+  ],
+  "builds": [
+   "BUILD_COLONY_EXTRACTION_FACILITY",
+   "BUILD_COLONY_HABITAT_MEDIUM",
+   "BUILD_COLONY_HYDROPONICS",
+   "BUILD_COLONY_MANUFACTORY",
+   "BUILD_COLONY_SOLAR_ARRAY",
+   "BUILD_LUNAR_MINE",
+   "BUILD_LUNAR_OUTPOST"
+  ],
+  "improvements": [
+   "IMPROVEMENT_COLONY_EXTRACTION_FACILITY",
+   "IMPROVEMENT_COLONY_HABITAT_MEDIUM",
+   "IMPROVEMENT_COLONY_HYDROPONICS",
+   "IMPROVEMENT_COLONY_MANUFACTORY",
+   "IMPROVEMENT_COLONY_SOLAR_ARRAY",
+   "IMPROVEMENT_LUNAR_MINE",
+   "IMPROVEMENT_LUNAR_OUTPOST"
+  ],
+  "techs": [
+   "TECH_ACOUSTOPHORESIS"
+  ],
+  "units": [
+   "UNIT_LUNAR_INFANTRY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_WILLOW_RUN"
+  ],
+  "builds": [
+   "BUILD_LUNAR_MINING_OUTPOST"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_POWERED_EXOSKELETON",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LUNAR_COLONIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 38858
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_LUNAR_MANUFACTURING",
+  "soundMP": "AS2D_TECH_LUNAR_MANUFACTURING",
+  "icon": "Art/Interface/Buttons/TechTree/lunarmanufacturing.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 102,
+  "gridY": 1
+ }
+}

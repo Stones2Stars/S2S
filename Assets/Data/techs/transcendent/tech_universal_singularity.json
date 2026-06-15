@@ -1,0 +1,57 @@
+{
+ "type": "TECH_UNIVERSAL_SINGULARITY",
+ "description": "TXT_KEY_TECH_UNIVERSAL_SINGULARITY",
+ "civilopedia": "TXT_KEY_TECH_UNIVERSAL_SINGULARITY_PEDIA",
+ "quote": "TXT_KEY_TECH_UNIVERSAL_SINGULARITY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_INFINITE_SPEED_TACHYON_GENERATOR",
+   "BUILDING_HYPERSPACE_CONSCIOUS_UNIVERSE",
+   "BUILDING_INTERSTELLAR_COSMIC_NODE"
+  ],
+  "techs": [
+   "TECH_ASCENSION",
+   "TECH_SPIRITUAL_REALMS",
+   "TECH_SUBDIMENSIONAL_UNIVERSE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SPATIAL_TRANSCENDENCE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_OMNIBENEVOLENT_MANDATE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 621429
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/universal_singularity.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 156,
+  "gridY": 7
+ }
+}

@@ -1,0 +1,87 @@
+{
+ "type": "TECH_CAVALRY_TACTICS",
+ "description": "TXT_KEY_TECH_CAVALRY_TACTICS",
+ "civilopedia": "TXT_KEY_TECH_CAVALRY_TACTICS_PEDIA",
+ "quote": "TXT_KEY_TECH_CAVALRY_TACTICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_RACE_TRACK",
+   "BUILDING_CULTURE_MEXICAN",
+   "BUILDING_MODERN_STABLE",
+   "BUILDING_RODEO"
+  ],
+  "techs": [
+   "TECH_MILITARY_TRADITION"
+  ],
+  "units": [
+   "UNIT_BATYRS",
+   "UNIT_BOMBARD_ELEPHANT",
+   "UNIT_BOMBARD_MAMMOTH",
+   "UNIT_CARABINIER",
+   "UNIT_DRAGOON",
+   "UNIT_GIRAFFE_CARABINIER",
+   "UNIT_GOBIR_LANCER",
+   "UNIT_GUAYKURU",
+   "UNIT_MOUNTED_GRENADIERS",
+   "UNIT_SIEGE_ELEPHANT",
+   "UNIT_ZAPOROZKI_KOZAK",
+   "UNIT_ZEBRA_CUIRASSIER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_STABLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CAMELID_DOMESTICATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MOUNTED_ARCHERY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FLINTLOCK",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 3074
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_CAVALRYTACTICS",
+  "soundMP": "AS2D_TECH_CAVALRYTACTICS",
+  "icon": ",Art/Interface/Buttons/TechTree/MilitaryTactics.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,11"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "militaryWorth": 8,
+  "tradeable": true,
+  "gridX": 55,
+  "gridY": 1
+ }
+}

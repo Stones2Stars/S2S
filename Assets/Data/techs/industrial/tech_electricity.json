@@ -1,0 +1,124 @@
+{
+ "type": "TECH_ELECTRICITY",
+ "description": "TXT_KEY_TECH_ELECTRICITY",
+ "civilopedia": "TXT_KEY_TECH_ELECTRICITY_PEDIA",
+ "quote": "TXT_KEY_TECH_ELECTRICITY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_COPPER_WIRES"
+  ],
+  "buildings": [
+   "BUILDING_BIOMASS_POWER_PLANT",
+   "BUILDING_BUNKER",
+   "BUILDING_COAL_FIRED_DYNAMO",
+   "BUILDING_COAL_PLANT",
+   "BUILDING_DEPARTMENT_OF_ENERGY",
+   "BUILDING_ELECTRICIANS_WORKSHOP",
+   "BUILDING_ELECTRIC_CHAIR",
+   "BUILDING_FACTORY_COPPER_WIRES",
+   "BUILDING_NATURAL_GAS_POWER_PLANT",
+   "BUILDING_OIL_POWER_PLANT",
+   "BUILDING_PEAT_FIRED_DYNAMO",
+   "BUILDING_POWER_LINES",
+   "BUILDING_SHALE_PLANT",
+   "BUILDING_WOOD_FIRED_DYNAMO"
+  ],
+  "builds": [
+   "BUILD_COMMAND_BUNKER",
+   "BUILD_RESOURCE_TOWN"
+  ],
+  "improvements": [
+   "IMPROVEMENT_COMMAND_BUNKER",
+   "IMPROVEMENT_RESOURCE_TOWN"
+  ],
+  "techs": [
+   "TECH_CIVIL_ENGINEERING",
+   "TECH_HYDROELECTRICITY",
+   "TECH_INCANDESCENT_LIGHTING",
+   "TECH_REFRIGERATION",
+   "TECH_TELEPHONE"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_FORT",
+   "BUILD_RESOURCE_SETTLEMENT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GAS_LIGHTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_STEEL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_WATERMILL": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WINDMILL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_WATERMILL": {
+     "flat": 2
+    },
+    "IMPROVEMENT_WINDMILL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 6673
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_ELECTRICITY",
+  "soundMP": "AS2D_TECH_MP_ELECTRICITY",
+  "icon": ",Art/Interface/Buttons/TechTree/Electricity.dds,Art/Interface/Buttons/TechTree_Atlas.dds,6,3"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 67,
+  "gridY": 9
+ }
+}

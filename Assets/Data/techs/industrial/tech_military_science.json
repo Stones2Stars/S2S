@@ -1,0 +1,93 @@
+{
+ "type": "TECH_MILITARY_SCIENCE",
+ "description": "TXT_KEY_TECH_MILITARY_SCIENCE",
+ "civilopedia": "TXT_KEY_TECH_MILITARY_SCIENCE_PEDIA",
+ "quote": "TXT_KEY_TECH_MILITARY_SCIENCE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARC_DE_TRIOMPHE",
+   "BUILDING_CULTURE_AFGHAN",
+   "BUILDING_CULTURE_PARAGUAYAN"
+  ],
+  "promotions": [
+   "PROMOTION_BLITZ",
+   "PROMOTION_COMMANDO"
+  ],
+  "techs": [
+   "TECH_SEMI_AUTOMATIC_WEAPONS",
+   "TECH_STEAMPUNK"
+  ],
+  "units": [
+   "UNIT_AHMAD_SHAH_DURRANI",
+   "UNIT_AURANGZEB",
+   "UNIT_EGUSHAWA",
+   "UNIT_GUSTAVUS_ADOLPHUS",
+   "UNIT_IRONCLAD",
+   "UNIT_IRON_FRIGATE",
+   "UNIT_JOSE_DE_FRANCIA",
+   "UNIT_JUAN_MANUEL_DE_ROSAS",
+   "UNIT_MASTER_SAILOR_IRON_FRIGATE",
+   "UNIT_MICHIEL_DE_RUYTER",
+   "UNIT_MOCOVI_TRACKER",
+   "UNIT_MOHAWK_TRACKER",
+   "UNIT_NAVAJO_RIFLEMAN",
+   "UNIT_SNIPER",
+   "UNIT_TARKKA_AMPUJA",
+   "UNIT_WARLORDIV",
+   "UNIT_WARLORDIVS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_DANCE_HAKA",
+   "BUILDING_SUN_TZUS_ART_OF_WAR",
+   "BUILDING_WAR_DANCE"
+  ],
+  "units": [
+   "UNIT_HASHISHIN",
+   "UNIT_SHARPSHOOTER",
+   "UNIT_WARLORDIII"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TEAM_SPORTS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INDUSTRIAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 5187
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_MILITARY_SCIENCE",
+  "soundMP": "AS2D_TECH_MP_MILITARY_SCIENCE",
+  "icon": ",Art/Interface/Buttons/TechTree/Military_Tradition.dds,Art/Interface/Buttons/TechTree_Atlas.dds,7,5"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 32,
+  "militaryWorth": 12,
+  "tradeable": true,
+  "gridX": 62,
+  "gridY": 15
+ }
+}

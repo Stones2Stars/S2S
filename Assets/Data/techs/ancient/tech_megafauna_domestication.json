@@ -1,0 +1,83 @@
+{
+ "type": "TECH_MEGAFAUNA_DOMESTICATION",
+ "description": "TXT_KEY_TECH_MEGAFAUNA_DOMESTICATION",
+ "civilopedia": "TXT_KEY_TECH_MEGAFAUNA_DOMESTICATION_PEDIA",
+ "quote": "TXT_KEY_TECH_MEGAFAUNA_DOMESTICATION_QUOTE",
+ "enables": {
+  "specialBuildings": [
+   "SPECIALBUILDING_PUNK_MEGAFAUNA"
+  ],
+  "units": [
+   "UNIT_BALLISTA_MAMMOTH",
+   "UNIT_BEARKNIGHT",
+   "UNIT_BEARRIDER",
+   "UNIT_BISON_RIDER",
+   "UNIT_BOMBARD_MAMMOTH",
+   "UNIT_DEERRIDER",
+   "UNIT_DEER_ARCHER",
+   "UNIT_DEER_LIGHT",
+   "UNIT_FELINE_SUPERIOR",
+   "UNIT_GIRAFFE_ARCHER",
+   "UNIT_GIRAFFE_CARABINIER",
+   "UNIT_GIRAFFE_CAVALRY",
+   "UNIT_GIRAFFE_CROSSBOW",
+   "UNIT_GIRAFFE_CUIRASSIER",
+   "UNIT_GIRAFFE_DRAGOON",
+   "UNIT_GIRAFFE_TRENCH_CAVALRY",
+   "UNIT_GUARDCAT",
+   "UNIT_LLAMA_ARCHER",
+   "UNIT_LLAMA_RIDER",
+   "UNIT_NEANDERTHAL_MAMMOTH_RIDER",
+   "UNIT_POLICE_CAT",
+   "UNIT_RHINO_SWORDSMAN",
+   "UNIT_TAMED_MAMMOTH",
+   "UNIT_TRAINEDCAT",
+   "UNIT_TRAINED_MAMMOTH",
+   "UNIT_URBAN_GIRAFFEMAN",
+   "UNIT_WARCAT",
+   "UNIT_WAR_MAMMOTH",
+   "UNIT_WAR_RHINO",
+   "UNIT_WORKMAMMOTH",
+   "UNIT_ZEBRA_ARCHER",
+   "UNIT_ZEBRA_CAVALRY",
+   "UNIT_ZEBRA_CHARIOT",
+   "UNIT_ZEBRA_CUIRASSIER",
+   "UNIT_ZEBRA_KNIGHT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ANIMAL_RIDING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 164
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_MEGAFAUNA_DOMESTICATION",
+  "soundMP": "AS2D_TECH_MEGAFAUNA_DOMESTICATION",
+  "icon": "Art/Interface/Buttons/TechTree/megafaunadomestication.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 4,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 25,
+  "gridY": 11
+ }
+}

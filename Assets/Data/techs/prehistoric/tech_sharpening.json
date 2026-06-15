@@ -1,0 +1,69 @@
+{
+ "type": "TECH_SHARPENING",
+ "description": "TXT_KEY_TECH_SHARPENING",
+ "civilopedia": "TXT_KEY_TECH_SHARPENING_PEDIA",
+ "quote": "TXT_KEY_TECH_SHARPENING_QUOTE",
+ "enables": {
+  "techs": [
+   "TECH_BONE_WORKING",
+   "TECH_FLINT_KNAPPING",
+   "TECH_TRACKING"
+  ],
+  "units": [
+   "UNIT_NEANDERTHAL_WARRIOR",
+   "UNIT_SPIKED_CLUBMAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PIERCING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_STONE_TOOL_MAKER": {
+     "flat": 100
+    }
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "cost": {
+  "research": 13
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_SHARPENING",
+  "soundMP": "AS2D_TECH_SHARPENING",
+  "icon": "Art/Interface/Buttons/TechTree/Button_FineEdgedTools.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 2,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 7,
+  "gridY": 9
+ }
+}

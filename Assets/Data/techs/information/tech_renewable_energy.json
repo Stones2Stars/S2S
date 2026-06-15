@@ -1,0 +1,67 @@
+{
+ "type": "TECH_RENEWABLE_ENERGY",
+ "description": "TXT_KEY_TECH_RENEWABLE_ENERGY",
+ "civilopedia": "TXT_KEY_TECH_RENEWABLE_ENERGY_PEDIA",
+ "quote": "TXT_KEY_TECH_RENEWABLE_ENERGY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARCOSANTI",
+   "BUILDING_OSMOTIC_POWER_PLANT",
+   "BUILDING_TIDAL_FARM",
+   "BUILDING_WAVE_FARM",
+   "BUILDING_WIND_FARM",
+   "BUILDING_WIND_TURBINE_HIGHWAY"
+  ],
+  "techs": [
+   "TECH_BIOMECHANICAL_HARVESTING",
+   "TECH_CONTROLLED_PLASMA",
+   "TECH_ECOLOGICAL_ENGINEERING",
+   "TECH_SOLAR_PROPULSION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FUEL_CELLS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_FRAUNHOFER_SOCIETY": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 20610
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/renewable_energy.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 88,
+  "gridY": 13
+ }
+}

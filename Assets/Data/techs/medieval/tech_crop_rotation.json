@@ -1,0 +1,73 @@
+{
+ "type": "TECH_CROP_ROTATION",
+ "description": "TXT_KEY_TECH_CROP_ROTATION",
+ "civilopedia": "TXT_KEY_TECH_CROP_ROTATION_PEDIA",
+ "quote": "TXT_KEY_TECH_CROP_ROTATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_PASTA_MAKERS_SHOP"
+  ],
+  "techs": [
+   "TECH_BOTANY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FLORISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FEUDALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_COMMUNITY_GARDEN": {
+     "flat": 400
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 1334
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_CROP_ROTATION",
+  "soundMP": "AS2D_TECH_CROP_ROTATION",
+  "icon": "Art/Interface/Buttons/TechTree/croprotation2.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 44,
+  "gridY": 17
+ }
+}

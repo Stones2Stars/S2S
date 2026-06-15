@@ -1,0 +1,136 @@
+{
+ "type": "TECH_CONSTRUCTION",
+ "description": "TXT_KEY_TECH_CONSTRUCTION",
+ "civilopedia": "TXT_KEY_TECH_CONSTRUCTION_PEDIA",
+ "quote": "TXT_KEY_TECH_CONSTRUCTION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AKSHARDHAM",
+   "BUILDING_BRICK_BRIDGE",
+   "BUILDING_CULTURE_DACIAN",
+   "BUILDING_FLAVIAN_AMPHITHEATRE",
+   "BUILDING_HADRIANS_WALL",
+   "BUILDING_MEENAKSHI_TEMPLE",
+   "BUILDING_ODEON",
+   "BUILDING_OLYMPIC_GAMES",
+   "BUILDING_SOLOMONS_TEMPLE",
+   "BUILDING_THE_PARTHENON"
+  ],
+  "promotions": [
+   "PROMOTION_POLAR_WORKER2"
+  ],
+  "techs": [
+   "TECH_ANCIENT_BALLISTICS",
+   "TECH_CITY_PLANNING",
+   "TECH_CONCRETE"
+  ],
+  "units": [
+   "UNIT_DECEBALUS",
+   "UNIT_IMMIGRANT",
+   "UNIT_NEDBUCHADNEZZAR",
+   "UNIT_PACADEO"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BAMBOO_BRIDGE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HYDRAULIC_MINING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ANCIENT_MACHINERY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LOCKS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GEOMETRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_LUMBERJACK": {
+     "flat": 1
+    },
+    "IMPROVEMENT_THATCH_CUTTER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_THATCH_CUTTER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_GRAND_EARTH_FESTIVAL": {
+     "flat": 300
+    }
+   }
+  }
+ },
+ "bridgeBuilding": {
+  "team": {
+   "enabler": true
+  }
+ },
+ "cost": {
+  "research": 554
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_CONSTRUCTION",
+  "soundMP": "AS2D_TECH_MP_CONSTRUCTION",
+  "icon": ",Art/Interface/Buttons/TechTree/Construction.dds,Art/Interface/Buttons/TechTree_Atlas.dds,5,9"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 35,
+  "gridY": 13
+ }
+}

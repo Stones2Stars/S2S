@@ -1,0 +1,88 @@
+{
+ "type": "TECH_SPACE_TOURISM",
+ "description": "TXT_KEY_TECH_SPACE_TOURISM",
+ "civilopedia": "TXT_KEY_TECH_SPACE_TOURISM_PEDIA",
+ "quote": "TXT_KEY_TECH_SPACE_TOURISM_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ORBITAL_HOTEL",
+   "BUILDING_SPACE_STATION_TOURS"
+  ],
+  "builds": [
+   "BUILD_SPACE_STATION_LV2"
+  ],
+  "improvements": [
+   "IMPROVEMENT_SPACE_STATION_LV2"
+  ],
+  "techs": [
+   "TECH_COMMERCIAL_SPACEFLIGHT"
+  ],
+  "units": [
+   "UNIT_SS2_REWARD"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TRAVEL_AGENCY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_UNMANNED_AIR_VEHICLES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MAGNETIC_LEVITATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SOLAR_PROPULSION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_SPACE_STATION": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 22847
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_SPACE_TOURISM",
+  "soundMP": "AS2D_TECH_SPACE_TOURISM",
+  "icon": "Art/Interface/Buttons/TechTree/Space_Tourism.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 50,
+  "tradeable": true,
+  "gridX": 91,
+  "gridY": 5
+ }
+}

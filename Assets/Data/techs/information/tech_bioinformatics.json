@@ -1,0 +1,95 @@
+{
+ "type": "TECH_BIOINFORMATICS",
+ "description": "TXT_KEY_TECH_BIOINFORMATICS",
+ "civilopedia": "TXT_KEY_TECH_BIOINFORMATICS_PEDIA",
+ "quote": "TXT_KEY_TECH_BIOINFORMATICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIOINFORMATICS_LAB",
+   "BUILDING_ONLINE_GENEALOGY_CENTER"
+  ],
+  "promotions": [
+   "PROMOTION_DISEASE_CONTROL8"
+  ],
+  "techs": [
+   "TECH_BIOMATHEMATICS",
+   "TECH_GENOMIC_ENCYCLOPEDIA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_KNOWLEDGE_MANAGEMENT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GENETIC_BIOCHEMISTRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_BIOLOGY_LAB": {
+     "flat": 800
+    },
+    "BUILDING_NUCLEIC_ACID_LAB": {
+     "flat": 1000
+    },
+    "BUILDING_MICROBIOLOGY_LAB": {
+     "flat": 800
+    },
+    "BUILDING_MOLECULAR_BIOLOGY_LAB": {
+     "flat": 1000
+    },
+    "BUILDING_PALEONTOLOGY_LAB": {
+     "flat": 800
+    },
+    "BUILDING_PROTEIN_LAB": {
+     "flat": 1000
+    },
+    "BUILDING_VACCINE_LAB": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 22847
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_BIOINFORMATICS",
+  "soundMP": "AS2D_TECH_BIOINFORMATICS",
+  "icon": "Art/Interface/Buttons/TechTree/Bioinformatics.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 91,
+  "gridY": 1
+ }
+}

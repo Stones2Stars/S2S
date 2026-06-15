@@ -1,0 +1,81 @@
+{
+ "type": "TECH_PERSISTENCE_HUNTING",
+ "description": "TXT_KEY_TECH_PERSISTENCE_HUNTING",
+ "civilopedia": "TXT_KEY_TECH_PERSISTENCE_HUNTING_PEDIA",
+ "quote": "TXT_KEY_TECH_PERSISTENCE_HUNTING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_HUNTING_INSTRUCTIONS"
+  ],
+  "promotions": [
+   "PROMOTION_BY_THE_HORNS",
+   "PROMOTION_HIT_AND_RUN",
+   "PROMOTION_HUNTER1",
+   "PROMOTION_STALL2"
+  ],
+  "techs": [
+   "TECH_TRAPPING"
+  ],
+  "units": [
+   "UNIT_CHASER",
+   "UNIT_MASTER_CHASER",
+   "UNIT_NEANDERTHAL_CHASER",
+   "UNIT_NEANDERTHAL_MASTER_CHASER"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_NEANDERTHAL_WANDERER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRAILS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_CHASER"
+ },
+ "cost": {
+  "research": 5
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_PERSISTENCE_HUNTING",
+  "soundMP": "AS2D_TECH_PERSISTENCE_HUNTING",
+  "icon": "Art/Interface/Buttons/TechTree/PersistenceHunting.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 3,
+  "gridY": 5
+ }
+}

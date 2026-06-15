@@ -1,0 +1,92 @@
+{
+ "type": "TECH_PHYSICS",
+ "description": "TXT_KEY_TECH_PHYSICS",
+ "civilopedia": "TXT_KEY_TECH_PHYSICS_PEDIA",
+ "quote": "TXT_KEY_TECH_PHYSICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHAIN_BRIDGE",
+   "BUILDING_ISAAC_NEWTONS_COLLEGE",
+   "BUILDING_PHYSICS_LAB",
+   "BUILDING_WATER_TOWER"
+  ],
+  "techs": [
+   "TECH_HOT_AIR_BALLOON",
+   "TECH_RIFLING",
+   "TECH_SEXTANT"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_VIADUCT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ACOUSTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CALCULUS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_UNIVERSITY": {
+     "flat": 500
+    }
+   }
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "buildings": {
+    "BUILDING_UNIVERSITY": {
+     "flat": [
+      {
+       "SPECIALIST_SCIENTIST": 1
+      }
+     ]
+    }
+   }
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_SCIENTIST"
+ },
+ "cost": {
+  "research": 3484
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_PHYSICS",
+  "soundMP": "AS2D_TECH_MP_PHYSICS",
+  "icon": ",Art/Interface/Buttons/TechTree/Physics.dds,Art/Interface/Buttons/TechTree_Atlas.dds,5,6"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 57,
+  "gridY": 13
+ }
+}

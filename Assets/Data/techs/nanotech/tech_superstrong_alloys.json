@@ -1,0 +1,136 @@
+{
+ "type": "TECH_SUPERSTRONG_ALLOYS",
+ "description": "TXT_KEY_TECH_SUPERSTRONG_ALLOYS",
+ "civilopedia": "TXT_KEY_TECH_SUPERSTRONG_ALLOYS_PEDIA",
+ "quote": "TXT_KEY_TECH_SUPERSTRONG_ALLOYS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CARBYNE",
+   "BONUS_METHANE_ICE",
+   "BONUS_SUPERSTRONG_ALLOYS"
+  ],
+  "buildings": [
+   "BUILDING_CARBYNE_FOUNDRY",
+   "BUILDING_EARTHSCRAPER",
+   "BUILDING_JETSTREAM_POWER_PLANT",
+   "BUILDING_METHANE_POWER_PLANT",
+   "BUILDING_SPACE_ELEVATOR",
+   "BUILDING_SUPERSTRONG_ALLOY_FOUNDRY",
+   "BUILDING_SUPERSTRONG_ALLOY_WALLS",
+   "BUILDING_TRANSATLANTIC_TUNNEL",
+   "BUILDING_VENUS_SURFACE_PROBE"
+  ],
+  "builds": [
+   "BUILD_EXTRACTION_FACILITY",
+   "BUILD_SUBMERGED_TOWN"
+  ],
+  "improvements": [
+   "IMPROVEMENT_EXTRACTION_FACILITY"
+  ],
+  "techs": [
+   "TECH_ION_BEAMS"
+  ],
+  "units": [
+   "UNIT_EXPERIMENTAL",
+   "UNIT_EXTRACTION_FACILITY",
+   "UNIT_HTSNIPER",
+   "UNIT_SIEGE_DROID",
+   "UNIT_SPACE_SAM_INFANTRY",
+   "UNIT_WALKER_ARTILLERY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BUNKER",
+   "BUILDING_CEMENT_BARRIER"
+  ],
+  "units": [
+   "UNIT_GUERRILLA",
+   "UNIT_HERERO_REBEL",
+   "UNIT_INNISKILLING",
+   "UNIT_MOCOVI_TRACKER",
+   "UNIT_MOHAWK_TRACKER",
+   "UNIT_MSNIPER",
+   "UNIT_NAVAJO_RIFLEMAN",
+   "UNIT_SPECIAL_FORCES",
+   "UNIT_TARKKA_AMPUJA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BIOMIMETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADVANCED_COMPUTERS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_CISLUNAR_MATERIALS_LAB": {
+     "flat": 900
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_COLONY_MANUFACTORY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_COLONY_EXTRACTION_FACILITY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_LIQUID_METALS_FOUNDRY": {
+     "flat": 900
+    },
+    "BUILDING_NOVUS_REFINERY": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 44505
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_SUPERSTRONG_ALLOYS",
+  "soundMP": "AS2D_TECH_SUPERSTRONG_ALLOYS",
+  "icon": ",Art/Interface/Buttons/TechTree/Superstrong_alloys.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,2,2"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 106,
+  "gridY": 13
+ }
+}

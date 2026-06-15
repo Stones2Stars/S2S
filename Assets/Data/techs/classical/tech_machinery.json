@@ -1,0 +1,99 @@
+{
+ "type": "TECH_MACHINERY",
+ "description": "TXT_KEY_TECH_MACHINERY",
+ "civilopedia": "TXT_KEY_TECH_MACHINERY_PEDIA",
+ "quote": "TXT_KEY_TECH_MACHINERY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CARRIAGE_BUILDER",
+   "BUILDING_CITY_GATE",
+   "BUILDING_DONKEY_MILL",
+   "BUILDING_GROVE_BRAZILWOOD",
+   "BUILDING_GROVE_TIMBER",
+   "BUILDING_LUMBER_MILL",
+   "BUILDING_MECHANICAL_TRAPS",
+   "BUILDING_OXEN_MILL",
+   "BUILDING_REPAIR_DOCK",
+   "BUILDING_TREADMILL_CRANE"
+  ],
+  "builds": [
+   "BUILD_LUMBERMILL",
+   "BUILD_WORKSHOP"
+  ],
+  "improvements": [
+   "IMPROVEMENT_LUMBERMILL",
+   "IMPROVEMENT_WORKSHOP"
+  ],
+  "techs": [
+   "TECH_GEOCENTRISM",
+   "TECH_PAVED_ROADS",
+   "TECH_WATERWHEELS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AERIAL_BASKET_ROPEWAYS",
+   "BUILDING_PIT_TRAPS",
+   "BUILDING_TRAVOIS_MAKER"
+  ],
+  "builds": [
+   "BUILD_LUMBERJACK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SIEGE_WARFARE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_FURNITURE_MAKER": {
+     "flat": 300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 824
+ },
+ "ai": {
+  "behaviour": {
+   "weight": 100,
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_MACHINERY",
+  "soundMP": "AS2D_TECH_MP_MACHINERY",
+  "icon": ",Art/Interface/Buttons/TechTree/Machinery.dds,Art/Interface/Buttons/TechTree_Atlas.dds,8,10"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 24,
+  "militaryWorth": 8,
+  "tradeable": true,
+  "gridX": 39,
+  "gridY": 13
+ }
+}

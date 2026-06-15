@@ -1,0 +1,72 @@
+{
+ "type": "TECH_SENTIENT_ENERGY_FIELDS",
+ "description": "TXT_KEY_TECH_SENTIENT_ENERGY_FIELDS",
+ "civilopedia": "TXT_KEY_TECH_SENTIENT_ENERGY_FIELDS_PEDIA",
+ "quote": "TXT_KEY_TECH_SENTIENT_ENERGY_FIELDS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_INTERDICTION_FIELD_GENERATOR",
+   "BUILDING_DISTANT_SMART_GRAVITY_GENERATOR",
+   "BUILDING_FIELD_GENERATOR"
+  ],
+  "techs": [
+   "TECH_SPATIAL_TRANSCENDENCE"
+  ],
+  "units": [
+   "UNIT_ENERGY_ENTITY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COSMIC_GOVERNANCE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_MAGITEK_COMBAT_ARENA": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 563149
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/sentient_energy_fields.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 153,
+  "gridY": 15
+ }
+}

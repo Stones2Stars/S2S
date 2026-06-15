@@ -1,0 +1,83 @@
+{
+ "type": "TECH_MICROPROCESSOR",
+ "description": "TXT_KEY_TECH_MICROPROCESSOR",
+ "civilopedia": "TXT_KEY_TECH_MICROPROCESSOR_PEDIA",
+ "quote": "TXT_KEY_TECH_MICROPROCESSOR_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_PERSONAL_ELECTRONICS"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_PERSONAL_ELECTRONICS"
+  ],
+  "techs": [
+   "TECH_3D_MODELLING",
+   "TECH_ROBOTICS"
+  ],
+  "units": [
+   "UNIT_SOFTWARE_DEVELOPER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ADAM_SMITHS_TRADING_COMPANY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMPUTER_NETWORKS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_BELL_LABS": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 14870
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   },
+   {
+    "FLAVOR_GOLD": 9
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_MILITARY": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_MICROPROCESSOR",
+  "soundMP": "AS2D_TECH_MICROPROCESSOR",
+  "icon": "Art/Interface/Buttons/TechTree/Microprocessor.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 83,
+  "gridY": 17
+ }
+}

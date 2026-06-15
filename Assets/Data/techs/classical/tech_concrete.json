@@ -1,0 +1,72 @@
+{
+ "type": "TECH_CONCRETE",
+ "description": "TXT_KEY_TECH_CONCRETE",
+ "civilopedia": "TXT_KEY_TECH_CONCRETE_PEDIA",
+ "quote": "TXT_KEY_TECH_CONCRETE_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CEMENT"
+  ],
+  "buildings": [
+   "BUILDING_CONCRETE_MASON"
+  ],
+  "techs": [
+   "TECH_MOSAIC_WORKING",
+   "TECH_WATERPROOF_CONCRETE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GLASS_BLOWING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CONSTRUCTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 614
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_CONCRETE",
+  "soundMP": "AS2D_TECH_CONCRETE",
+  "icon": "Art/Interface/Buttons/TechTree/Concrete.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 36,
+  "gridY": 15
+ }
+}

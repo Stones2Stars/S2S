@@ -1,0 +1,79 @@
+{
+ "type": "TECH_DARK_MATTER_ENGINEERING",
+ "description": "TXT_KEY_TECH_DARK_MATTER_ENGINEERING",
+ "civilopedia": "TXT_KEY_TECH_DARK_MATTER_ENGINEERING_PEDIA",
+ "quote": "TXT_KEY_TECH_DARK_MATTER_ENGINEERING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_DARK_MATTER"
+  ],
+  "buildings": [
+   "BUILDING_INTERGALACTIC_DARK_MATTER_FUEL_SUPPLY",
+   "BUILDING_INTERGALACTIC_DARK_MATTER_HIGHWAY",
+   "BUILDING_INTERGALACTIC_DARK_MATTER_SCOOP",
+   "BUILDING_INTERGALACTIC_GRAVITATIONAL_CRANE",
+   "BUILDING_INTERSTELLAR_DARK_LIGHT_BEACON",
+   "BUILDING_INTERSTELLAR_DARK_MATTER_REACTOR",
+   "BUILDING_TRANSTELLAR_DARK_MATTER_HEAT_SOURCE",
+   "BUILDING_TRANSTELLAR_HELIOFORMED_GAS_GIANT"
+  ],
+  "techs": [
+   "TECH_DARK_ENERGY_HARVESTING",
+   "TECH_ELECTROWEAK_MATTER",
+   "TECH_MACROSCOPIC_SUPERPOSITION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GALACTIFORMING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COMPUTRONIUM_UNIVERSE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_UNIFICATION_MATHEMATICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 326209
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/dark_matter_engineering.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 144,
+  "gridY": 7
+ }
+}

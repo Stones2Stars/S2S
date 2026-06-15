@@ -1,0 +1,149 @@
+{
+ "type": "TECH_LUNAR_TRADE",
+ "description": "TXT_KEY_TECH_LUNAR_TRADE",
+ "civilopedia": "TXT_KEY_TECH_LUNAR_TRADE_PEDIA",
+ "quote": "TXT_KEY_TECH_LUNAR_TRADE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTEROID_MINING_COMPLEX",
+   "BUILDING_CISLUNAR_ECONOMY",
+   "BUILDING_CISLUNAR_SPACEPORT",
+   "BUILDING_EFFECT_ASTEROID_MINING_COMPLEX",
+   "BUILDING_EFFECT_CISLUNAR_ECONOMY",
+   "BUILDING_LUNAR_HE3_EXTRACTION_FACILITY",
+   "BUILDING_LUNAR_KREEP_MINE",
+   "BUILDING_LUNAR_PARCOLOGY"
+  ],
+  "builds": [
+   "BUILD_COLONY_HABITAT_HUGE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_COLONY_HABITAT_HUGE"
+  ],
+  "techs": [
+   "TECH_DEEP_SPACE_COLONIES",
+   "TECH_PLANETARY_TRADE",
+   "TECH_TRANSHUMAN_LIFESTYLE"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_COLONY_HABITAT_LARGE",
+   "BUILD_COLONY_HABITAT_MEDIUM",
+   "BUILD_COLONY_HABITAT_SMALL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORBITAL_FLIGHT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PLANETARY_ECONOMICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_LUNAR_MINE": {
+     "flat": 2
+    },
+    "IMPROVEMENT_COLONY_EXTRACTION_FACILITY": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_LUNAR_ALUMINIUM_PROCESSING_FACILITY": {
+     "flat": 20000
+    },
+    "BUILDING_LUNAR_ASSEMBLY_PLANT": {
+     "flat": 20000
+    },
+    "BUILDING_LUNAR_DROID_FACTORY": {
+     "flat": 20000
+    },
+    "BUILDING_LUNAR_IRON_PROCESSING_FACILITY": {
+     "flat": 10000
+    },
+    "BUILDING_LUNAR_LAUNCH_SITE": {
+     "flat": 10000
+    },
+    "BUILDING_LUNAR_MAGNESIUM_EXTRACTION_FACILITY": {
+     "flat": 5000
+    },
+    "BUILDING_LUNAR_MANGANESE_EXTRACTION_FACILITY": {
+     "flat": 5000
+    },
+    "BUILDING_LUNAR_MANUFACTURING_PLANT": {
+     "flat": 20000
+    },
+    "BUILDING_LUNAR_ORGANIC_POLYMERE_FACTORY": {
+     "flat": 10000
+    },
+    "BUILDING_LUNAR_ROCKET_FUEL_REFINERY": {
+     "flat": 20000
+    },
+    "BUILDING_LUNAR_SHIPYARD": {
+     "flat": 20000
+    },
+    "BUILDING_LUNAR_SILICON_PROCESSING_FACILITY": {
+     "flat": 10000
+    },
+    "BUILDING_LUNAR_TITANIUM_PROCESSING_FACILITY": {
+     "flat": 20000
+    },
+    "BUILDING_FACTORY_LEVITATION_GENERATORS": {
+     "flat": 900
+    },
+    "BUILDING_CRIME_SHOPLIFTING": {
+     "flat": -200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 49574
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_LUNAR_TRADE",
+  "soundMP": "AS2D_TECH_LUNAR_TRADE",
+  "icon": "Art/Interface/Buttons/TechTree/lunartrade.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 109,
+  "gridY": 9
+ }
+}

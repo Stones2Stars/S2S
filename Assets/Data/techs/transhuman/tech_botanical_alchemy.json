@@ -1,0 +1,108 @@
+{
+ "type": "TECH_BOTANICAL_ALCHEMY",
+ "description": "TXT_KEY_TECH_BOTANICAL_ALCHEMY",
+ "civilopedia": "TXT_KEY_TECH_BOTANICAL_ALCHEMY_PEDIA",
+ "quote": "TXT_KEY_TECH_BOTANICAL_ALCHEMY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_MARTIAN_FRUIT"
+  ],
+  "buildings": [
+   "BUILDING_CISLUNAR_BIONIC_CORE",
+   "BUILDING_CISLUNAR_ORGANIC_COLONY",
+   "BUILDING_GREEN_FLOAT",
+   "BUILDING_MARTIAN_VERTICAL_FARM"
+  ],
+  "builds": [
+   "BUILD_VENUS_AERIAL_FARM"
+  ],
+  "improvements": [
+   "IMPROVEMENT_VENUS_AERIAL_FARM"
+  ],
+  "techs": [
+   "TECH_ABYSS_COLONIZATION",
+   "TECH_ARTIFICIAL_LIFE",
+   "TECH_NANOMINING",
+   "TECH_ORGANIC_CITIES"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BIOFUEL_REFINERY",
+   "BUILDING_HYDRAULIC_FRACTURING",
+   "BUILDING_HYDROCARBON_REFINERY",
+   "BUILDING_MARTIAN_HYDROPONICS_ARRAY",
+   "BUILDING_OIL_DERRICK",
+   "BUILDING_OIL_REFINERY",
+   "BUILDING_RESOURCES_PETROLEUM_PRODUCTS",
+   "BUILDING_SHALE_PLANT",
+   "BUILDING_TAR_REFINERY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SYNERGETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_EVOLUTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_CISLUNAR_AGRICULTURAL_LAB": {
+     "flat": 1000
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_COLONY_HYDROPONICS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 70029
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_BOTANICAL_ALCHEMY",
+  "soundMP": "AS2D_TECH_BOTANICAL_ALCHEMY",
+  "icon": "Art/Interface/Buttons/TechTree/botanicalalchemy.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 114,
+  "gridY": 15
+ }
+}

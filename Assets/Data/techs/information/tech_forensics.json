@@ -1,0 +1,82 @@
+{
+ "type": "TECH_FORENSICS",
+ "description": "TXT_KEY_TECH_FORENSICS",
+ "civilopedia": "TXT_KEY_TECH_FORENSICS_PEDIA",
+ "quote": "TXT_KEY_TECH_FORENSICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_FORENSICS_LAB",
+   "BUILDING_POLICE_PRECINCT"
+  ],
+  "promotions": [
+   "PROMOTION_POLICING8",
+   "PROMOTION_SLEUTH7"
+  ],
+  "techs": [
+   "TECH_CYBERWARFARE"
+  ],
+  "units": [
+   "UNIT_PUBLIC_FORCES",
+   "UNIT_SWAT_TEAM"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_SHERIFFS_OFFICE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INFORMATION_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "buildings": {
+    "BUILDING_NUCLEIC_ACID_LAB": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 19916
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_FORENSICS",
+  "soundMP": "AS2D_TECH_FORENSICS",
+  "icon": "Art/Interface/Buttons/TechTree/Forensics.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 87,
+  "gridY": 3
+ }
+}

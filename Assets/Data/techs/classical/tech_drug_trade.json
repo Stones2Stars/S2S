@@ -1,0 +1,89 @@
+{
+ "type": "TECH_DRUG_TRADE",
+ "description": "TXT_KEY_TECH_DRUG_TRADE",
+ "civilopedia": "TXT_KEY_TECH_DRUG_TRADE_PEDIA",
+ "quote": "TXT_KEY_TECH_DRUG_TRADE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CIGAR_ROLLERS_SHOP",
+   "BUILDING_GROVE_COLA",
+   "BUILDING_GROVE_GINKGO",
+   "BUILDING_PLANTATION_CANNABIS",
+   "BUILDING_PLANTATION_COCA",
+   "BUILDING_PLANTATION_MARSH_MALLOW",
+   "BUILDING_PLANTATION_MYRRH",
+   "BUILDING_PLANTATION_PEYOTE",
+   "BUILDING_PLANTATION_POPPY",
+   "BUILDING_PLANTATION_TOBACCO"
+  ],
+  "techs": [
+   "TECH_ALCHEMY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ANCIENT_MEDICINE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SPICE_TRADE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_PLANTATION": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "buildings": {
+    "BUILDING_GRAND_SKY_FESTIVAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "research": 679
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_DRUG_TRADE2",
+  "soundMP": "AS2D_TECH_DRUG_TRADE2",
+  "icon": "Art/Interface/Buttons/TechTree/drug_trade.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 8,
+  "tradeable": true,
+  "gridX": 37,
+  "gridY": 5
+ }
+}

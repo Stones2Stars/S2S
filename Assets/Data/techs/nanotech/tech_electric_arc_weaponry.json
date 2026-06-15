@@ -1,0 +1,86 @@
+{
+ "type": "TECH_ELECTRIC_ARC_WEAPONRY",
+ "description": "TXT_KEY_TECH_ELECTRIC_ARC_WEAPONRY",
+ "civilopedia": "TXT_KEY_TECH_ELECTRIC_ARC_WEAPONRY_PEDIA",
+ "quote": "TXT_KEY_TECH_ELECTRIC_ARC_WEAPONRY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_PLASMA_GENERATORS"
+  ],
+  "buildings": [
+   "BUILDING_DELTA_ASSEMBLER",
+   "BUILDING_EMP_TRAPS",
+   "BUILDING_FACTORY_PLASMA_GENERATORS",
+   "BUILDING_LASER_BATTERY"
+  ],
+  "techs": [
+   "TECH_ACOUSTIC_WEAPONRY"
+  ],
+  "units": [
+   "UNIT_CISLUNAR_INFANTRY",
+   "UNIT_PLASMA_THROWER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_GERM_TRAPS",
+   "BUILDING_MISSILE_BATTERY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WEAPONIZED_LASERS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FUSION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_ADVANCED_COPPERWORKS": {
+     "flat": 900
+    },
+    "BUILDING_ADVANCED_IRONWORKS": {
+     "flat": 900
+    },
+    "BUILDING_PLASMA_ARC_RECYCLING": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 37614
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_ELECTRIC_ARC_WEAPONRY",
+  "soundMP": "AS2D_TECH_ELECTRIC_ARC_WEAPONRY",
+  "icon": "Art/Buttons/Techs/TechElectricArcWeaponry.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 43,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 101,
+  "gridY": 11
+ }
+}

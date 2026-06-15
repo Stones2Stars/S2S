@@ -1,0 +1,85 @@
+{
+ "type": "TECH_VIRTUAL_REALITY",
+ "description": "TXT_KEY_TECH_VIRTUAL_REALITY",
+ "civilopedia": "TXT_KEY_TECH_VIRTUAL_REALITY_PEDIA",
+ "quote": "TXT_KEY_TECH_VIRTUAL_REALITY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DIGITAL_GLOBE",
+   "BUILDING_EVOLUTION_SIMULATOR",
+   "BUILDING_E_BANK"
+  ],
+  "techs": [
+   "TECH_3D_PRINTING",
+   "TECH_GENOMIC_ENCYCLOPEDIA",
+   "TECH_NEURAL_NETWORKS",
+   "TECH_WEARABLE_COMPUTERS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BAYREUTH_FESTSPIELHAUS",
+   "BUILDING_WESTMINSTER_ABBEY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CLOUD_COMPUTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_USER_EXPERIENCE_RESEARCH_LAB": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_CGI_ANIMATION_STUDIO": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 22074
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_VIRTUAL_REALITY",
+  "soundMP": "AS2D_TECH_VIRTUAL_REALITY",
+  "icon": ",Art/Interface/Buttons/TechTree/CyberWarfare.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,2,5"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 90,
+  "gridY": 11
+ }
+}

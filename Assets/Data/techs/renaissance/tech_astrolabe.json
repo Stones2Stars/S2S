@@ -1,0 +1,82 @@
+{
+ "type": "TECH_ASTROLABE",
+ "description": "TXT_KEY_TECH_ASTROLABE",
+ "civilopedia": "TXT_KEY_TECH_ASTROLABE_PEDIA",
+ "quote": "TXT_KEY_TECH_ASTROLABE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_ZANZIBARI",
+   "BUILDING_MARINA",
+   "BUILDING_ZHENG_HES_VOYAGE"
+  ],
+  "techs": [
+   "TECH_ASTRONOMY"
+  ],
+  "units": [
+   "UNIT_BARBARY_CORSAIR",
+   "UNIT_BRIGANTINE",
+   "UNIT_CARRACK_MERCHANT",
+   "UNIT_GALLEON",
+   "UNIT_MASTER_SAILOR_SLOOP",
+   "UNIT_NETHERLANDS_OOSTINDIEVAARDER",
+   "UNIT_PATAMAR",
+   "UNIT_SAMBUK",
+   "UNIT_SLOOP",
+   "UNIT_TREASURE_SHIP",
+   "UNIT_ZHENG_HE"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_ARABIAN_GALLIOT",
+   "UNIT_BOROBUDUR",
+   "UNIT_COG_MERCHANT",
+   "UNIT_GALLIOT",
+   "UNIT_MASTER_SAILOR_CARAVEL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_OPTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_RENAISSANCE_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 2364
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_ASTROLABE",
+  "soundMP": "AS2D_TECH_ASTROLABE",
+  "icon": "Art/Interface/Buttons/TechTree/astrolabe.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 51,
+  "gridY": 15
+ }
+}

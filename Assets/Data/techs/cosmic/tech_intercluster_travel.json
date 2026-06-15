@@ -1,0 +1,66 @@
+{
+ "type": "TECH_INTERCLUSTER_TRAVEL",
+ "description": "TXT_KEY_TECH_INTERCLUSTER_TRAVEL",
+ "civilopedia": "TXT_KEY_TECH_INTERCLUSTER_TRAVEL_PEDIA",
+ "quote": "TXT_KEY_TECH_INTERCLUSTER_TRAVEL_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CENTAURUS_SUPERCLUSTER_COLONY",
+   "BUILDING_COMA_SUPERCLUSTER_COLONY",
+   "BUILDING_HYDRA_SUPERCLUSTER_COLONY",
+   "BUILDING_INTERGALACTIC_SUPERCLUSTER_COLONY",
+   "BUILDING_PERSEUS_PISCES_SUPERCLUSTER_COLONY"
+  ],
+  "techs": [
+   "TECH_DARK_ENERGY_HARVESTING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEGAWORMHOLES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERGALACTIC_STARPORT": {
+     "flat": 1200
+    },
+    "BUILDING_GALACTIC_PORT": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 338869
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/intercluster_travel.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 145,
+  "gridY": 15
+ }
+}

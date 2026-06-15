@@ -1,0 +1,71 @@
+{
+ "type": "TECH_TIMELINE_RECTIFICATION",
+ "description": "TXT_KEY_TECH_TIMELINE_RECTIFICATION",
+ "civilopedia": "TXT_KEY_TECH_TIMELINE_RECTIFICATION_PEDIA",
+ "quote": "TXT_KEY_TECH_TIMELINE_RECTIFICATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_TIMELINE_STABILIZERS",
+   "BUILDING_HISTORICAL_RECREATION",
+   "BUILDING_HISTORY_REPAIR_CENTER",
+   "BUILDING_HYPERSPACE_ANCESTOR_RESURRECTION",
+   "BUILDING_INTERSTELLAR_TIME_POLICE",
+   "BUILDING_TIME_SHIP"
+  ],
+  "techs": [
+   "TECH_ASCENSION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COSMIC_WARFARE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_OMNIBENEVOLENT_MANDATE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_CHRONOPOLIS": {
+     "flat": 1300
+    },
+    "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 621429
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/timeline_rectification.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 156,
+  "gridY": 3
+ }
+}

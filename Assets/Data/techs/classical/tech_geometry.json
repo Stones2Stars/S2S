@@ -1,0 +1,89 @@
+{
+ "type": "TECH_GEOMETRY",
+ "description": "TXT_KEY_TECH_GEOMETRY",
+ "civilopedia": "TXT_KEY_TECH_GEOMETRY_PEDIA",
+ "quote": "TXT_KEY_TECH_GEOMETRY_QUOTE",
+ "enables": {
+  "techs": [
+   "TECH_CALENDAR",
+   "TECH_CONSTRUCTION",
+   "TECH_ROAD_BUILDING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SUNDIAL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MATHEMATICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_GEOGLYPH": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_MATHEMATICS_ACADEMY": {
+     "flat": 300
+    }
+   }
+  }
+ },
+ "featureProduction": {
+  "empire": {
+   "percent": 50
+  }
+ },
+ "mapCentering": {
+  "team": {
+   "enabler": true
+  }
+ },
+ "cost": {
+  "research": 499
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_GEOMETRY",
+  "soundMP": "AS2D_TECH_GEOMETRY",
+  "icon": "Art/Interface/Buttons/TechTree/geometry.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 34,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,51 @@
+{
+ "type": "TECH_CRYSTALPUNK",
+ "description": "TXT_KEY_TECH_CRYSTALPUNK",
+ "civilopedia": "TXT_KEY_TECH_CRYSTALPUNK_PEDIA",
+ "quote": "TXT_KEY_TECH_CRYSTALPUNK_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CRYSTALPUNK"
+  ],
+  "specialBuildings": [
+   "SPECIALBUILDING_PUNK_CRYSTAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HYPERMAGNETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_UTOPIA_DESTINY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 67710
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/crystalpunk.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 113,
+  "gridY": 13
+ }
+}

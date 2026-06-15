@@ -1,0 +1,89 @@
+{
+ "type": "TECH_MEGALITH_CONSTRUCTION",
+ "description": "TXT_KEY_TECH_MEGALITH_CONSTRUCTION",
+ "civilopedia": "TXT_KEY_TECH_MEGALITH_CONSTRUCTION_PEDIA",
+ "quote": "TXT_KEY_TECH_MEGALITH_CONSTRUCTION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_RAPA_NUI",
+   "BUILDING_EARTH_WALL",
+   "BUILDING_GOBEKLI_TEPE",
+   "BUILDING_HAAMONGA_A_MAUI",
+   "BUILDING_HILL_OF_TARA",
+   "BUILDING_LOG_ROLLER_SYSTEM",
+   "BUILDING_MOAI_STATUES",
+   "BUILDING_NATURE_ALLIANCE",
+   "BUILDING_NATURE_LEGACY",
+   "BUILDING_SPIRITS_ALLIANCE",
+   "BUILDING_SPIRITS_LEGACY",
+   "BUILDING_STONEHENGE"
+  ],
+  "builds": [
+   "BUILD_MOAI_STATUES"
+  ],
+  "improvements": [
+   "IMPROVEMENT_MOAI"
+  ],
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_RAPANUIWORKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STONE_BUILDING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARITHMETIC",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SLAVERY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ANIMAL_HUSBANDRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 60
+ },
+ "ai": {
+  "behaviour": {
+   "weight": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_MEGALITH_CONSTRUCTION",
+  "soundMP": "AS2D_TECH_MEGALITH_CONSTRUCTION",
+  "icon": "Art/Interface/Buttons/TechTree/megalithconstruction.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 18,
+  "gridY": 9
+ }
+}

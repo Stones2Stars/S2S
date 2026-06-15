@@ -1,0 +1,84 @@
+{
+ "type": "TECH_ANCESTOR_WORSHIP",
+ "description": "TXT_KEY_TECH_ANCESTOR_WORSHIP",
+ "civilopedia": "TXT_KEY_TECH_ANCESTOR_WORSHIP_PEDIA",
+ "quote": "TXT_KEY_TECH_ANCESTOR_WORSHIP_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_CHINESE",
+   "BUILDING_SHRINE"
+  ],
+  "techs": [
+   "TECH_HERITAGE",
+   "TECH_MUMMIFICATION",
+   "TECH_STARGAZING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_POTTERY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FOLK_DANCE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FOLK_MUSIC",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CONSCIOUSNESS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_MOAI": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_GRAND_FIRE_FESTIVAL": {
+     "flat": 200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 110
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_ANCESTOR_WORSHIP",
+  "soundMP": "AS2D_TECH_ANCESTOR_WORSHIP",
+  "icon": "Art/Interface/Buttons/TechTree/ancestorworship.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 22,
+  "gridY": 17
+ }
+}

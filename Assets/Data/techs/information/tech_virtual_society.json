@@ -1,0 +1,124 @@
+{
+ "type": "TECH_VIRTUAL_SOCIETY",
+ "description": "TXT_KEY_TECH_VIRTUAL_SOCIETY",
+ "civilopedia": "TXT_KEY_TECH_VIRTUAL_SOCIETY_PEDIA",
+ "quote": "TXT_KEY_TECH_VIRTUAL_SOCIETY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_DIGITAL_IDENTITY"
+  ],
+  "buildings": [
+   "BUILDING_HUMAN_MOD_DIGITAL_IDENTITY",
+   "BUILDING_ONLINE_UNIVERSITY",
+   "BUILDING_SANITATION_CHAMBER",
+   "BUILDING_SOCIAL_CREDIT_SYSTEM",
+   "BUILDING_THINK_TANK",
+   "BUILDING_VIRTUAL_WORLD"
+  ],
+  "civics": [
+   "CIVIC_ONLINE",
+   "CIVIC_TECHNOCRACY"
+  ],
+  "techs": [
+   "TECH_AUGMENTED_REALITY",
+   "TECH_AUTONOMOUS_VEHICLES",
+   "TECH_COMPUTATIONAL_SOCIOLOGY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_GARDEROBE",
+   "BUILDING_PINBALL_ARCADE",
+   "BUILDING_TUMEN_AMUGULANG_PALACE",
+   "BUILDING_VIDEOPHONE_NETWORK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEDIA_PSYCHOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WEARABLE_COMPUTERS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_DIGITAL_ADVERTISING_FIRM": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_APPLIED_PSYCHOLOGY_LAB": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_DIGITAL_ADVERTISING_FIRM": {
+     "flat": 800
+    },
+    "BUILDING_SPEECH_RECOGNITION_SOFTWARE": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "espionage": {
+  "city": {
+   "buildings": {
+    "BUILDING_BLACKNET": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 24485
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_VIRTUAL_SOCIETY",
+  "soundMP": "AS2D_TECH_VIRTUAL_SOCIETY",
+  "icon": "Art/Interface/Buttons/TechTree/Virtualsociety.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 93,
+  "gridY": 17
+ }
+}

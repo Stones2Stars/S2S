@@ -1,0 +1,95 @@
+{
+ "type": "TECH_MINORITY_RIGHTS",
+ "description": "TXT_KEY_TECH_MINORITY_RIGHTS",
+ "civilopedia": "TXT_KEY_TECH_MINORITY_RIGHTS_PEDIA",
+ "quote": "TXT_KEY_TECH_MINORITY_RIGHTS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AMNESTY_INTERNATIONAL",
+   "BUILDING_CRIME_HATE_CRIME",
+   "BUILDING_INTEGRATED_SCHOOLS",
+   "BUILDING_PRIDE_PARADE"
+  ],
+  "techs": [
+   "TECH_URBAN_CULTURE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COUNTERCULTURE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
+     "percent": -5
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
+     "percent": -5
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "buildings": {
+    "BUILDING_RACIAL_PROFILING": {
+     "flat": -1
+    },
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
+     "flat": -5
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 14287
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 9
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_MINORITY_RIGHTS",
+  "soundMP": "AS2D_TECH_MINORITY_RIGHTS",
+  "icon": "Art/Interface/Buttons/TechTree/minorityrights.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 82,
+  "gridY": 1
+ }
+}

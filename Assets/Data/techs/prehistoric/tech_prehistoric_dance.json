@@ -1,0 +1,71 @@
+{
+ "type": "TECH_PREHISTORIC_DANCE",
+ "description": "TXT_KEY_TECH_PREHISTORIC_DANCE",
+ "civilopedia": "TXT_KEY_TECH_PREHISTORIC_DANCE_PEDIA",
+ "quote": "TXT_KEY_TECH_PREHISTORIC_DANCE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLOOD_DANCE",
+   "BUILDING_BULL_LEAPING",
+   "BUILDING_DANCE_BIRD",
+   "BUILDING_DANCE_FOX",
+   "BUILDING_DANCE_HAKA",
+   "BUILDING_DANCE_HUT",
+   "BUILDING_FERTILITY_DANCE",
+   "BUILDING_FIRE_DANCE",
+   "BUILDING_HAREMS",
+   "BUILDING_MOON_DANCE",
+   "BUILDING_NATURE_DANCE",
+   "BUILDING_RAIN_DANCE",
+   "BUILDING_WAR_DANCE"
+  ],
+  "promotions": [
+   "PROMOTION_BACK_DOWN3"
+  ],
+  "techs": [
+   "TECH_CULTURAL_IDENTITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COOPERATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PREHISTORIC_MUSIC",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 9
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_PREHISTORIC_DANCE",
+  "soundMP": "AS2D_TECH_PREHISTORIC_DANCE",
+  "icon": "Art/Interface/Buttons/TechTree/prehistoricdance.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 5,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 5,
+  "gridY": 17
+ }
+}

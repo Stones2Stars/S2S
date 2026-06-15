@@ -1,0 +1,91 @@
+{
+ "type": "TECH_RADAR",
+ "description": "TXT_KEY_TECH_RADAR",
+ "civilopedia": "TXT_KEY_TECH_RADAR_PEDIA",
+ "quote": "TXT_KEY_TECH_RADAR_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_RADAR_STATION"
+  ],
+  "builds": [
+   "BUILD_RADAR_TOWER"
+  ],
+  "improvements": [
+   "IMPROVEMENT_RADAR_TOWER"
+  ],
+  "promotions": [
+   "PROMOTION_SENTRY2"
+  ],
+  "techs": [
+   "TECH_ADVANCED_AVIATION"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_COPERNICUS_OBSERVATORY",
+   "BUILDING_RUDOLPHINE"
+  ],
+  "builds": [
+   "BUILD_STEEL_WATCHTOWER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AVIATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SONAR",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_METEOROLOGY_LAB": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 11665
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 9
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_RADAR",
+  "soundMP": "AS2D_TECH_RADAR",
+  "icon": ",Art/Interface/Buttons/TechTree/Radar.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,1,15"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 77,
+  "gridY": 17
+ }
+}

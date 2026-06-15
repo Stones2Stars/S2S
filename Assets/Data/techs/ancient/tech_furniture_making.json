@@ -1,0 +1,64 @@
+{
+ "type": "TECH_FURNITURE_MAKING",
+ "description": "TXT_KEY_TECH_FURNITURE_MAKING",
+ "civilopedia": "TXT_KEY_TECH_FURNITURE_MAKING_PEDIA",
+ "quote": "TXT_KEY_TECH_FURNITURE_MAKING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUXURY_FURNITURE_WORKSHOP"
+  ],
+  "techs": [
+   "TECH_AESTHETICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LEISURE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ORNAMENTATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_FURNITURE_MAKER": {
+     "flat": 200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 242
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_FURNITURE_MAKING",
+  "soundMP": "AS2D_TECH_FURNITURE_MAKING",
+  "icon": "Art/Interface/Buttons/TechTree/furnituremaking2.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 28,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,89 @@
+{
+ "type": "TECH_JOVIAN_EXPLORATION",
+ "description": "TXT_KEY_TECH_JOVIAN_EXPLORATION",
+ "civilopedia": "TXT_KEY_TECH_JOVIAN_EXPLORATION_PEDIA",
+ "quote": "TXT_KEY_TECH_JOVIAN_EXPLORATION_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_EXTRATERRESTRIAL_MICROBES"
+  ],
+  "buildings": [
+   "BUILDING_ATLAST_SPACE_TELESCOPE",
+   "BUILDING_EUROPA_PROBE",
+   "BUILDING_HOLOGRAPHIC_SOLAR_SYSTEM",
+   "BUILDING_NEPTUNE_ATMOSPHERIC_PROBE",
+   "BUILDING_TITAN_PROBE",
+   "BUILDING_URANUS_ATMOSPHERIC_PROBE"
+  ],
+  "techs": [
+   "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+   "TECH_MASS_DRIVER"
+  ],
+  "units": [
+   "UNIT_EUROPA_REWARD",
+   "UNIT_OUTER_SOLAR_SYSTEM_REWARD",
+   "UNIT_TITAN_REWARD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COILGUN",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASTEROID_MINING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_OBSERVATORY": {
+     "flat": 800
+    },
+    "BUILDING_PLANETARIUM": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 29220
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_JOVIAN_EXPLORATION",
+  "soundMP": "AS2D_TECH_JOVIAN_EXPLORATION",
+  "icon": "Art/Interface/Buttons/TechTree/jovian.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 98,
+  "gridY": 5
+ }
+}

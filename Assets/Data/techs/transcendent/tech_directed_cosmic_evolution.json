@@ -1,0 +1,73 @@
+{
+ "type": "TECH_DIRECTED_COSMIC_EVOLUTION",
+ "description": "TXT_KEY_TECH_DIRECTED_COSMIC_EVOLUTION",
+ "civilopedia": "TXT_KEY_TECH_DIRECTED_COSMIC_EVOLUTION_PEDIA",
+ "quote": "TXT_KEY_TECH_DIRECTED_COSMIC_EVOLUTION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_ARTIFICIAL_SUPERMASSIVE_BLACK_HOLE",
+   "BUILDING_DISTANT_BIOPHILIC_SUBUNIVERSE",
+   "BUILDING_DISTANT_BLACK_HOLE_CONSTELLATION"
+  ],
+  "techs": [
+   "TECH_ARCHETYPAL_VECTOR_SPACES",
+   "TECH_REALITY_REPROGRAMMING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_OMNIBENEVOLENT_MANDATE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PARAMETER_TUNING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ALTERNATE_HISTORY_EXPLORATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 642419
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/directed_cosmic_evolution.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 157,
+  "gridY": 11
+ }
+}

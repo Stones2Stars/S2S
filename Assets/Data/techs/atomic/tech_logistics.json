@@ -1,0 +1,104 @@
+{
+ "type": "TECH_LOGISTICS",
+ "description": "TXT_KEY_TECH_LOGISTICS",
+ "civilopedia": "TXT_KEY_TECH_LOGISTICS_PEDIA",
+ "quote": "TXT_KEY_TECH_LOGISTICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIVOUAC_GROUNDS",
+   "BUILDING_HQ_ULTIMATE_SOLDIERS",
+   "BUILDING_INTERNATIONAL_PORT",
+   "BUILDING_MILITARY_BASE",
+   "BUILDING_THE_PENTAGON",
+   "BUILDING_ULTIMATE_SOLDIERS_TRAINER"
+  ],
+  "techs": [
+   "TECH_GLOBALIZATION",
+   "TECH_MANUFACTURING"
+  ],
+  "units": [
+   "UNIT_AMBULANCE_II",
+   "UNIT_WARLORDV",
+   "UNIT_WARLORDVS",
+   "UNIT_WORKER_MODERN"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BARRACKS",
+   "BUILDING_EAST_INDIA_COMPANY",
+   "BUILDING_EKAL_MASHARTI",
+   "BUILDING_PORT"
+  ],
+  "units": [
+   "UNIT_WARLORDIV",
+   "UNIT_WORKANIMAL",
+   "UNIT_WORKBUFFALO",
+   "UNIT_WORKCAMEL",
+   "UNIT_WORKELEPHANT",
+   "UNIT_WORKLLAMA",
+   "UNIT_WORKMULE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MECHANIZED_WARFARE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_APPLIED_ECONOMICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "research": 11196
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_GOLD": 7
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_LOGISTICS",
+  "soundMP": "AS2D_TECH_LOGISTICS",
+  "icon": ",Art/Interface/Buttons/TechTree/Logistic.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,10"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 76,
+  "gridY": 5
+ }
+}

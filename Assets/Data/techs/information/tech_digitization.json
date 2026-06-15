@@ -1,0 +1,93 @@
+{
+ "type": "TECH_DIGITIZATION",
+ "description": "TXT_KEY_TECH_DIGITIZATION",
+ "civilopedia": "TXT_KEY_TECH_DIGITIZATION_PEDIA",
+ "quote": "TXT_KEY_TECH_DIGITIZATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLACKNET",
+   "BUILDING_BLOGS",
+   "BUILDING_DIGITAL_ART_MUSEUM",
+   "BUILDING_E_STOCK_MARKET",
+   "BUILDING_INTERNET_OF_THINGS"
+  ],
+  "techs": [
+   "TECH_MEDIA_PSYCHOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ONLINE_COMMUNITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_ISP_OFFICES": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_COMPUTER_SCIENCE_DEPARTMENT": {
+     "flat": 800
+    },
+    "BUILDING_EFFECT_GPS": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_CGI_ANIMATION_STUDIO": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 22847
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_DIGITIZATION",
+  "soundMP": "AS2D_TECH_DIGITIZATION",
+  "icon": "Art/Interface/Buttons/TechTree/digitization.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 91,
+  "gridY": 13
+ }
+}

@@ -1,0 +1,68 @@
+{
+ "type": "TECH_COLONIALISM",
+ "description": "TXT_KEY_TECH_COLONIALISM",
+ "civilopedia": "TXT_KEY_TECH_COLONIALISM_PEDIA",
+ "quote": "TXT_KEY_TECH_COLONIALISM_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_BRAZILIAN",
+   "BUILDING_CULTURE_CHECHEN",
+   "BUILDING_CULTURE_CHILEAN",
+   "BUILDING_CULTURE_HAITIAN",
+   "BUILDING_CULTURE_JAMAICAN"
+  ],
+  "techs": [
+   "TECH_CORPORATION",
+   "TECH_MERCANTILISM"
+  ],
+  "units": [
+   "UNIT_COLONIST",
+   "UNIT_TUPI_CUNHAMBEBE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LEADERSHIP",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASTRONOMY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "moveFastPeaks": {
+  "team": {
+   "enabler": true
+  }
+ },
+ "cost": {
+  "research": 2701
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_GOLD": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_COLONIALISM",
+  "soundMP": "AS2D_TECH_COLONIALISM",
+  "icon": "Art/Interface/Buttons/TechTree/colonialism.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 53,
+  "gridY": 15
+ }
+}

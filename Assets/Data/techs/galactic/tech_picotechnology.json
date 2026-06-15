@@ -1,0 +1,104 @@
+{
+ "type": "TECH_PICOTECHNOLOGY",
+ "description": "TXT_KEY_TECH_PICOTECHNOLOGY",
+ "civilopedia": "TXT_KEY_TECH_PICOTECHNOLOGY_PEDIA",
+ "quote": "TXT_KEY_TECH_PICOTECHNOLOGY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_COMPUTRONIUM"
+  ],
+  "buildings": [
+   "BUILDING_ATOMIC_FIREPROOFING",
+   "BUILDING_COMPUTRONIUM_MAKER",
+   "BUILDING_INTERSTELLAR_COMPUTRONIUM_FACTORY",
+   "BUILDING_OMEGA_ASSEMBLER",
+   "BUILDING_PICOTECH_COMPLEX"
+  ],
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY",
+   "TECH_STELLAR_ENGINE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ALTERNATIVE_MEDICINE",
+   "BUILDING_AMBULANCE_DRONE_CONTROL_CENTER",
+   "BUILDING_APPLIED_PSYCHOLOGY_LAB",
+   "BUILDING_AUTODOCTOR",
+   "BUILDING_BIONIC_EYE_IMPLANT",
+   "BUILDING_CELL_REPAIR_CENTER",
+   "BUILDING_DENTIST",
+   "BUILDING_DESIGNER_PROBIOTICS_CLINIC",
+   "BUILDING_FIELD_HOSPITAL",
+   "BUILDING_HEALTH_SPA",
+   "BUILDING_HOSPITAL",
+   "BUILDING_INCUBATION_CENTER",
+   "BUILDING_INSANE_ASYLUM",
+   "BUILDING_IQ_TESTING_CENTER",
+   "BUILDING_LASER_EYE_SURGERY_CLINIC",
+   "BUILDING_MEDICAL_CLINIC",
+   "BUILDING_MEDICAL_PROSTHETICS_LAB",
+   "BUILDING_MEGATOWER_MEDICAL_LEVEL",
+   "BUILDING_MRI_LAB",
+   "BUILDING_NEUROINDUCTION_FIELD",
+   "BUILDING_NEUROSCIENCE_CENTER",
+   "BUILDING_OPTOMETRIST",
+   "BUILDING_PHARMACY",
+   "BUILDING_PSYCHOLOGY_LAB",
+   "BUILDING_QUANTIFIED_HEALTH_CENTER",
+   "BUILDING_REHABILITATION_CENTER",
+   "BUILDING_RESPIROCYTE_INJECTION",
+   "BUILDING_ROBOTIC_SURGEON",
+   "BUILDING_VETERINARIAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ARTIFICIAL_PLANETS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WEAPONIZED_ANTIMATTER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_MOLECULAR_ASSEMBLER": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 179514
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/picotechnology.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 134,
+  "gridY": 1
+ }
+}

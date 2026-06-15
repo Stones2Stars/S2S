@@ -1,0 +1,71 @@
+{
+ "type": "TECH_STEALTH",
+ "description": "TXT_KEY_TECH_STEALTH",
+ "civilopedia": "TXT_KEY_TECH_STEALTH_PEDIA",
+ "quote": "TXT_KEY_TECH_STEALTH_QUOTE",
+ "enables": {
+  "techs": [
+   "TECH_UNMANNED_AIR_VEHICLES"
+  ],
+  "units": [
+   "UNIT_F22_RAPTOR",
+   "UNIT_MASTER_SAILOR_STEALTH_DESTROYER",
+   "UNIT_MODERN_FIGHTER",
+   "UNIT_STEALTH_BOMBER",
+   "UNIT_STEALTH_CHOPPER",
+   "UNIT_STEALTH_DESTROYER",
+   "UNIT_STEALTH_FIGHTER",
+   "UNIT_STEALTH_SUBMARINE",
+   "UNIT_STILETTO_BOAT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INFORMATION_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_NATIONAL_AIRCRAFT_MUSEUM": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 19916
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_STEALTH",
+  "soundMP": "AS2D_TECH_MP_STEALTH",
+  "icon": ",Art/Interface/Buttons/Units/StealthBomber.dds,Art/Interface/Buttons/Unit_Resource_Atlas.dds,8,10"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 87,
+  "gridY": 1
+ }
+}

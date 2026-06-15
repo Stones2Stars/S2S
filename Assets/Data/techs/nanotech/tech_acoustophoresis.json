@@ -1,0 +1,78 @@
+{
+ "type": "TECH_ACOUSTOPHORESIS",
+ "description": "TXT_KEY_TECH_ACOUSTOPHORESIS",
+ "civilopedia": "TXT_KEY_TECH_ACOUSTOPHORESIS_PEDIA",
+ "quote": "TXT_KEY_TECH_ACOUSTOPHORESIS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ACOUSTIC_CONSTRUCTION_FIRM",
+   "BUILDING_ACOUSTIC_DRILLING",
+   "BUILDING_ACOUSTIC_GRAVITY_WAVES",
+   "BUILDING_ASTEROID_MINE_RARE_MINERALS"
+  ],
+  "techs": [
+   "TECH_ELECTROMAGNETIC_FIELD_SHIELDING",
+   "TECH_PLANETARY_MANUFACTURING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LUNAR_MANUFACTURING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ACOUSTIC_WEAPONRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HOLOGRAPHICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_ASTEROID_MINE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 40165
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_ACOUSTOPHORESIS",
+  "soundMP": "AS2D_TECH_ACOUSTOPHORESIS",
+  "icon": "Art/Buttons/Techs/TechAcoustophoresis.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 43,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 103,
+  "gridY": 7
+ }
+}

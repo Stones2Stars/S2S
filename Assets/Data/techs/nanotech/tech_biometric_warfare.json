@@ -1,0 +1,80 @@
+{
+ "type": "TECH_BIOMETRIC_WARFARE",
+ "description": "TXT_KEY_TECH_BIOMETRIC_WARFARE",
+ "civilopedia": "TXT_KEY_TECH_BIOMETRIC_WARFARE_PEDIA",
+ "quote": "TXT_KEY_TECH_BIOMETRIC_WARFARE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIOMETRIC_SECURITY_SYSTEM",
+   "BUILDING_FARM_BOT_CONTROL_CENTER",
+   "BUILDING_MINING_BOT_CONTROL_CENTER"
+  ],
+  "techs": [
+   "TECH_MASS_SURVEILLANCE",
+   "TECH_WARMACHINES"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_LOCKSMITH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DISASTER_ROBOTS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOTECH_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_ROBOTICS_LAB": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 36429
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_BIOMETRIC_WARFARE",
+  "soundMP": "AS2D_TECH_BIOMETRIC_WARFARE",
+  "icon": "Art/Interface/Buttons/TechTree/biometricw.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 100,
+  "gridY": 5
+ }
+}

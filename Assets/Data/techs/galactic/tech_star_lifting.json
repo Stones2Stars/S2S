@@ -1,0 +1,76 @@
+{
+ "type": "TECH_STAR_LIFTING",
+ "description": "TXT_KEY_TECH_STAR_LIFTING",
+ "civilopedia": "TXT_KEY_TECH_STAR_LIFTING_PEDIA",
+ "quote": "TXT_KEY_TECH_STAR_LIFTING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_SUN_SCOOP",
+   "BUILDING_DEEP_SPACE_SUN_SCOOP_POWER_PLANT",
+   "BUILDING_INTERSTELLAR_PRECIOUS_METAL_GENERATOR",
+   "BUILDING_INTERSTELLAR_STAR_SCOOP",
+   "BUILDING_INTERSTELLAR_STELLAR_FUSION_PLANT"
+  ],
+  "builds": [
+   "BUILD_STAR_SCOOP",
+   "BUILD_SUN_SCOOP"
+  ],
+  "improvements": [
+   "IMPROVEMENT_STAR_SCOOP",
+   "IMPROVEMENT_SUN_SCOOP"
+  ],
+  "techs": [
+   "TECH_ARTIFICIAL_PLANETS",
+   "TECH_ASTROENGINEERING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FORGE_WORLDS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADAPTIVE_ARCHITECTURE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_DEEP_SPACE_FOCUSED_SUNLIGHT_PLANT": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 166029
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/solar_mining.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 132,
+  "gridY": 1
+ }
+}

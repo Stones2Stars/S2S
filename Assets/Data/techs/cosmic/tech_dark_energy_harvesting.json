@@ -1,0 +1,86 @@
+{
+ "type": "TECH_DARK_ENERGY_HARVESTING",
+ "description": "TXT_KEY_TECH_DARK_ENERGY_HARVESTING",
+ "civilopedia": "TXT_KEY_TECH_DARK_ENERGY_HARVESTING_PEDIA",
+ "quote": "TXT_KEY_TECH_DARK_ENERGY_HARVESTING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_BIRCH_PLANET",
+   "BUILDING_INTERGALACTIC_DARK_ENERGY_PLANT",
+   "BUILDING_INTERGALACTIC_SHKADOV_THRUSTER",
+   "BUILDING_INTERGALACTIC_YOTTAFACTORY"
+  ],
+  "builds": [
+   "BUILD_COSMIC_EXPANSION_NODE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_COSMIC_EXPANSION_NODE"
+  ],
+  "techs": [
+   "TECH_COSMIC_ENGINEERING",
+   "TECH_LUMINAL_BEINGS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ZERO_POINT_ENERGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DARK_MATTER_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INTERCLUSTER_TRAVEL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_INTERGALACTIC_COLONY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_INTERGALACTIC_COLONY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 352130
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/dark_energy_harvesting.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 146,
+  "gridY": 17
+ }
+}

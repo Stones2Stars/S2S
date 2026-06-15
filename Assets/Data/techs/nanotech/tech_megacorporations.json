@@ -1,0 +1,108 @@
+{
+ "type": "TECH_MEGACORPORATIONS",
+ "description": "TXT_KEY_TECH_MEGACORPORATIONS",
+ "civilopedia": "TXT_KEY_TECH_MEGACORPORATIONS_PEDIA",
+ "quote": "TXT_KEY_TECH_MEGACORPORATIONS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CORPORATE_HIVE",
+   "BUILDING_GLOBAL_STOCK_EXCHANGE",
+   "BUILDING_MATERIALS_CONGLOMERATE",
+   "BUILDING_MEGACORPORATE_HEADQUARTERS"
+  ],
+  "civics": [
+   "CIVIC_CORPOR_NATION",
+   "CIVIC_PLUTOCRACY"
+  ],
+  "techs": [
+   "TECH_LUNAR_TOURISM",
+   "TECH_MEDIA_HIVEMIND"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MESH_NETWORKS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LUNAR_COLONIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_DIGITAL_ADVERTISING_FIRM": {
+     "flat": 900
+    },
+    "BUILDING_E_STOCK_MARKET": {
+     "flat": 900
+    },
+    "BUILDING_HEDGE_FUND": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_HEDGE_FUND": {
+     "flat": 900
+    },
+    "BUILDING_CRIME_SHOPLIFTING": {
+     "flat": -500
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_DIGITAL_ADVERTISING_FIRM": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 38858
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_PRODUCTION": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_MEGACORPORATIONS",
+  "soundMP": "AS2D_TECH_MEGACORPORATIONS",
+  "icon": "Art/Interface/Buttons/TechTree/megacorporations.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 102,
+  "gridY": 3
+ }
+}

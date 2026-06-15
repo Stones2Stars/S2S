@@ -1,0 +1,96 @@
+{
+ "type": "TECH_MULTIVERSE_TRAVERSAL",
+ "description": "TXT_KEY_TECH_MULTIVERSE_TRAVERSAL",
+ "civilopedia": "TXT_KEY_TECH_MULTIVERSE_TRAVERSAL_PEDIA",
+ "quote": "TXT_KEY_TECH_MULTIVERSE_TRAVERSAL_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_MULTIVERSE_MINE",
+   "BUILDING_DISTANT_PARALLEL_UNIVERSE_PORTAL",
+   "BUILDING_MULTIVERSE_CITY"
+  ],
+  "techs": [
+   "TECH_BRANE_CROSSOVER",
+   "TECH_SPATIAL_TRANSCENDENCE"
+  ],
+  "units": [
+   "UNIT_MULTIVERSE_REWARD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TIME_REVERSAL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_EXPERIMENTAL_COSMOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_DEEP_SPACE_EXOTIC_ARCHITECTURE": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERGALACTIC_STARPORT": {
+     "flat": 1300
+    },
+    "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_CHRONOPOLIS": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 581814
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/multiverse_traversal.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 154,
+  "gridY": 11
+ }
+}

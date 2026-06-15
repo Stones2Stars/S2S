@@ -1,0 +1,81 @@
+{
+ "type": "TECH_HYPOTHETICAL_BIOCHEMISTRY",
+ "description": "TXT_KEY_TECH_HYPOTHETICAL_BIOCHEMISTRY",
+ "civilopedia": "TXT_KEY_TECH_HYPOTHETICAL_BIOCHEMISTRY_PEDIA",
+ "quote": "TXT_KEY_TECH_HYPOTHETICAL_BIOCHEMISTRY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_LIFE_HYDROGEN_PEROXIDE",
+   "BUILDING_LIFE_METAL_OXIDE",
+   "BUILDING_LIFE_NONPHOTOSYNTHETIC_PLANTS",
+   "BUILDING_LIFE_SILICON_BASED",
+   "BUILDING_LIFE_SULFURIC_ACID"
+  ],
+  "techs": [
+   "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+   "TECH_NEURON_ENGINEERING",
+   "TECH_QUADRUPLE_HELIX",
+   "TECH_SYNTHETIC_SYNESTHESIA",
+   "TECH_TRANSHUMAN_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ENVIRONMENTAL_ECONOMICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DNA_COMPUTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_ARTIFICIAL_REEF": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 49574
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_HYPOTHETICAL_BIOCHEMISTRY",
+  "soundMP": "AS2D_TECH_HYPOTHETICAL_BIOCHEMISTRY",
+  "icon": "Art/Interface/Buttons/TechTree/hypotheticalbiochemistry.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 109,
+  "gridY": 15
+ }
+}

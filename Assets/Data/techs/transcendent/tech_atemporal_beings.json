@@ -1,0 +1,66 @@
+{
+ "type": "TECH_ATEMPORAL_BEINGS",
+ "description": "TXT_KEY_TECH_ATEMPORAL_BEINGS",
+ "civilopedia": "TXT_KEY_TECH_ATEMPORAL_BEINGS_PEDIA",
+ "quote": "TXT_KEY_TECH_ATEMPORAL_BEINGS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_ATEMPORAL"
+  ],
+  "buildings": [
+   "BUILDING_COSMIC_AC",
+   "BUILDING_FAIRYLAND",
+   "BUILDING_HUMAN_MOD_ATEMPORAL"
+  ],
+  "techs": [
+   "TECH_MULTIDIMENSIONAL_TIME",
+   "TECH_SPIRITUAL_REALMS",
+   "TECH_TRANSFINITE_STRUCTURES"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HEDGE_FUND"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DEITIES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SPATIAL_TRANSCENDENCE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 621429
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/non_temporal_entities.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 156,
+  "gridY": 17
+ }
+}

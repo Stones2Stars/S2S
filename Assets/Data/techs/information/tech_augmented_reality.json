@@ -1,0 +1,113 @@
+{
+ "type": "TECH_AUGMENTED_REALITY",
+ "description": "TXT_KEY_TECH_AUGMENTED_REALITY",
+ "civilopedia": "TXT_KEY_TECH_AUGMENTED_REALITY_PEDIA",
+ "quote": "TXT_KEY_TECH_AUGUMENTEDREALITY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUGMENTED_EQUIPMENT_CENTER",
+   "BUILDING_AUGMENTED_SPORTS_ARENA",
+   "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
+   "BUILDING_VIRTUAL_REALITY_THEATER"
+  ],
+  "techs": [
+   "TECH_BRAIN_MACHINE_INTERFACE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NEURAL_NETWORKS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DIRECT_MERCHANDISING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ORGANIC_PHOTONICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_VIRTUAL_SOCIETY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_DIGITAL_ADVERTISING_FIRM": {
+     "flat": 800
+    },
+    "BUILDING_GESTURE_RECOGNITION_SOFTWARE": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_USER_EXPERIENCE_RESEARCH_LAB": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_DIGITAL_GLOBE": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_DIGITAL_ADVERTISING_FIRM": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 25354
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_AUGUMENTEDREALITY",
+  "soundMP": "AS2D_TECH_AUGUMENTEDREALITY",
+  "icon": "Art/Interface/Buttons/TechTree/Augmentedreality.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 94,
+  "gridY": 17
+ }
+}

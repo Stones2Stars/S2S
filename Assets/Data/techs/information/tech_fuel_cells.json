@@ -1,0 +1,75 @@
+{
+ "type": "TECH_FUEL_CELLS",
+ "description": "TXT_KEY_TECH_FUEL_CELLS",
+ "civilopedia": "TXT_KEY_TECH_FUEL_CELLS_PEDIA",
+ "quote": "TXT_KEY_TECH_FUEL_CELLS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_ELECTROLYTIC_CELLS"
+  ],
+  "buildings": [
+   "BUILDING_ELECTRIC_VEHICLE_RECHARGING_STATION",
+   "BUILDING_FACTORY_ELECTROLYTE_CELLS",
+   "BUILDING_SMART_GRID"
+  ],
+  "techs": [
+   "TECH_ION_PROPULSION",
+   "TECH_RENEWABLE_ENERGY",
+   "TECH_WEARABLE_COMPUTERS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INFORMATION_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_SOLAR_PANELS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 19916
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_FUEL_CELLS",
+  "soundMP": "AS2D_TECH_FUEL_CELLS",
+  "icon": ",Art/Interface/Buttons/TechTree/Fuel_cells.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,1,7"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 87,
+  "gridY": 13
+ }
+}

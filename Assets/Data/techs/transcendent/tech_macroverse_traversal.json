@@ -1,0 +1,85 @@
+{
+ "type": "TECH_MACROVERSE_TRAVERSAL",
+ "description": "TXT_KEY_TECH_MACROVERSE_TRAVERSAL",
+ "civilopedia": "TXT_KEY_TECH_MACROVERSE_TRAVERSAL_PEDIA",
+ "quote": "TXT_KEY_TECH_MACROVERSE_TRAVERSAL_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_EXAVERSE_PORTAL",
+   "BUILDING_GIGAVERSE_PORTAL",
+   "BUILDING_MEGAVERSE_PORTAL",
+   "BUILDING_PETAVERSE_PORTAL",
+   "BUILDING_TERAVERSE_PORTAL",
+   "BUILDING_YOTTAVERSE_PORTAL",
+   "BUILDING_ZETTAVERSE_PORTAL"
+  ],
+  "techs": [
+   "TECH_OMEGA_POINT",
+   "TECH_SIMULATION_AWARENESS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASCENSION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MULTIDIMENSIONAL_TIME",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_DISTANT_PORTAL_TO_DIMENSION_X": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_CHRONOPOLIS": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 664224
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/macroverse_traversal.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 158,
+  "gridY": 17
+ }
+}

@@ -1,0 +1,81 @@
+{
+ "type": "TECH_WEATHER_LORE",
+ "description": "TXT_KEY_TECH_WEATHER_LORE",
+ "civilopedia": "TXT_KEY_TECH_WEATHER_LORE_PEDIA",
+ "quote": "TXT_KEY_TECH_WEATHER_LORE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_WEATHER_VANES"
+  ],
+  "promotions": [
+   "PROMOTION_POLAR_WORKER3"
+  ],
+  "techs": [
+   "TECH_GEOCENTRISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CLOUD_PATTERNS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CALENDAR",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PHILOSOPHY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_COMMUNITY_GARDEN": {
+     "flat": 300
+    }
+   }
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_WHALING_BOATS": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FISHING_BOATS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 824
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_WEATHER_LORE",
+  "soundMP": "AS2D_TECH_WEATHER_LORE",
+  "icon": "Art/Interface/Buttons/techtree/weather_lore.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 20,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 39,
+  "gridY": 19
+ }
+}

@@ -1,0 +1,96 @@
+{
+ "type": "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+ "description": "TXT_KEY_TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+ "civilopedia": "TXT_KEY_TECH_ARTIFICIAL_NUCLEOSYNTHESIS_PEDIA",
+ "quote": "TXT_KEY_TECH_ARTIFICIAL_NUCLEOSYNTHESIS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CALLISTO_NOBLE_GAS_GENERATOR",
+   "BUILDING_EUROPA_SF6_GENERATOR",
+   "BUILDING_EXOTIC_MATTER_LAB",
+   "BUILDING_HE3_FUSION_POWER_PLANT",
+   "BUILDING_TITAN_SF6_GENERATOR",
+   "BUILDING_URANIAN_SF6_GENERATOR",
+   "BUILDING_VENUS_FUSION_PLANT"
+  ],
+  "promotions": [
+   "PROMOTION_HEAL2"
+  ],
+  "techs": [
+   "TECH_ADVANCED_SHIELDING",
+   "TECH_TERRA_COMPUTER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_D_T_FUSION_POWER_PLANT",
+   "BUILDING_NATURAL_GAS_POWER_PLANT",
+   "BUILDING_NUCLEAR_POWERCOMPLEX",
+   "BUILDING_OIL_POWER_PLANT",
+   "BUILDING_POWER_NUCLEAR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TECHNOLOGICAL_SINGULARITY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ABYSS_COLONIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOMINING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_MARTIAN_FUSION_PLANT": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 75052
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+  "soundMP": "AS2D_TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+  "icon": "Art/Interface/Buttons/TechTree/artificialnucleosynthesis.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 116,
+  "gridY": 13
+ }
+}

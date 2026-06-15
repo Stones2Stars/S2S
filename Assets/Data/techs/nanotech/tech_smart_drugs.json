@@ -1,0 +1,98 @@
+{
+ "type": "TECH_SMART_DRUGS",
+ "description": "TXT_KEY_TECH_SMART_DRUGS",
+ "civilopedia": "TXT_KEY_TECH_SMART_DRUGS_PEDIA",
+ "quote": "TXT_KEY_TECH_SMART_DRUGS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_SMART_MEDICINE"
+  ],
+  "buildings": [
+   "BUILDING_NOOTROPIC_DISPENSARY",
+   "BUILDING_RESEARCH_HOSPITAL",
+   "BUILDING_RESPIROCYTE_INJECTION"
+  ],
+  "techs": [
+   "TECH_REGENERATIVE_MEDICINE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_DISEASE_ANTHRAX",
+   "BUILDING_DISEASE_BIRD_FLU",
+   "BUILDING_DISEASE_CHOLERA",
+   "BUILDING_DISEASE_COMMON_COLD",
+   "BUILDING_DISEASE_DYSENTERY",
+   "BUILDING_DISEASE_MEASLES",
+   "BUILDING_DISEASE_SCARLET_FEVER",
+   "BUILDING_DISEASE_SWINE_FLU",
+   "BUILDING_DISEASE_TYPHOID_FEVER",
+   "BUILDING_DRUGLORDS_MANSON"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SYNTHETIC_SENTIENCE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ANTI_AGING_MEDICINE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_VACCINE_LAB": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "buildings": {
+    "BUILDING_CRUISE_SHIP_PORT": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 44505
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_SMART_DRUGS",
+  "soundMP": "AS2D_TECH_SMART_DRUGS",
+  "icon": "Art/Interface/Buttons/TechTree/smart_drugs.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 106,
+  "gridY": 17
+ }
+}

@@ -1,0 +1,79 @@
+{
+ "type": "TECH_HERITAGE",
+ "description": "TXT_KEY_TECH_HERITAGE",
+ "civilopedia": "TXT_KEY_TECH_HERITAGE_PEDIA",
+ "quote": "TXT_KEY_TECH_HERITAGE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANCIENT_CUSTOMS",
+   "BUILDING_EFFECT_HERITAGE_BEARS",
+   "BUILDING_EFFECT_HERITAGE_BISON",
+   "BUILDING_EFFECT_HERITAGE_DEER",
+   "BUILDING_EFFECT_HERITAGE_GIRAFFES",
+   "BUILDING_EFFECT_HERITAGE_MAMMOTHS",
+   "BUILDING_EFFECT_HERITAGE_RHINOS",
+   "BUILDING_EFFECT_HERITAGE_ZEBRAS",
+   "BUILDING_GRAMMATICUS",
+   "BUILDING_HERITAGE_BEARS",
+   "BUILDING_HERITAGE_BIG_CATS",
+   "BUILDING_HERITAGE_BISON",
+   "BUILDING_HERITAGE_DEER",
+   "BUILDING_HERITAGE_GIRAFFE",
+   "BUILDING_HERITAGE_MAMMOTH",
+   "BUILDING_HERITAGE_RHINOCEROS",
+   "BUILDING_HERITAGE_ZEBRA",
+   "BUILDING_MILITARY_STANDARD_BEARS",
+   "BUILDING_MILITARY_STANDARD_GIRAFFE",
+   "BUILDING_MILITARY_STANDARD_RHINOCEROS"
+  ],
+  "processes": [
+   "PROCESS_CULTURE_LESSER"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_INSPECTIONS3"
+  ],
+  "techs": [
+   "TECH_CEREMONY",
+   "TECH_KEMETISM",
+   "TECH_LINGUISTICS",
+   "TECH_ORNAMENTATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ANCESTOR_WORSHIP",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 126
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_HERITAGE",
+  "soundMP": "AS2D_TECH_HERITAGE",
+  "icon": "Art/Interface/Buttons/TechTree/heritage.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 23,
+  "gridY": 17
+ }
+}

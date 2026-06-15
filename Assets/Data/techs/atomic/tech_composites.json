@@ -1,0 +1,97 @@
+{
+ "type": "TECH_COMPOSITES",
+ "description": "TXT_KEY_TECH_COMPOSITES",
+ "civilopedia": "TXT_KEY_TECH_COMPOSITES_PEDIA",
+ "quote": "TXT_KEY_TECH_COMPOSITES_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CARBON_FIBER",
+   "BONUS_CERMET"
+  ],
+  "buildings": [
+   "BUILDING_CARBON_FIBER_PLANT",
+   "BUILDING_CERMET_PLANT",
+   "BUILDING_TEST_PILOT_INSTITUTE",
+   "BUILDING_THE_MOTHERLAND_CALLS"
+  ],
+  "promotions": [
+   "PROMOTION_ALCHEMIST3"
+  ],
+  "techs": [
+   "TECH_INFORMATION_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_AT_INFANTRY",
+   "UNIT_B1_LANCER",
+   "UNIT_F18_HORNET",
+   "UNIT_FURAWI_TECHNICAL",
+   "UNIT_HUMVEE",
+   "UNIT_JET_FIGHTER",
+   "UNIT_MODERN_ARMOR",
+   "UNIT_MODERN_MARINE",
+   "UNIT_ROCKET_ARTILLERY",
+   "UNIT_STRIKE_FIGHTER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BRASS_INSTRUMENT_MAKER",
+   "BUILDING_PERCUSSION_INSTRUMENT_MAKER",
+   "BUILDING_STRING_INSTRUMENT_MAKER",
+   "BUILDING_WOODWIND_INSTRUMENT_MAKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_VOLCANOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GUIDED_WEAPONS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_FRAUNHOFER_SOCIETY": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 16099
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_COMPOSITES",
+  "soundMP": "AS2D_TECH_COMPOSITES",
+  "icon": ",Art/Interface/Buttons/TechTree/Composites.dds,Art/Interface/Buttons/TechTree_Atlas.dds,6,2"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 85,
+  "gridY": 9
+ }
+}

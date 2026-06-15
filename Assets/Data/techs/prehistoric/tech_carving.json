@@ -1,0 +1,78 @@
+{
+ "type": "TECH_CARVING",
+ "description": "TXT_KEY_TECH_CARVING",
+ "civilopedia": "TXT_KEY_TECH_CARVING_PEDIA",
+ "quote": "TXT_KEY_TECH_CARVING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_JADE"
+  ],
+  "buildings": [
+   "BUILDING_EXCREMENT_HOLES",
+   "BUILDING_JADE_CARVER",
+   "BUILDING_PIT_TRAPS",
+   "BUILDING_TREE_CARVINGS",
+   "BUILDING_VENUS_OF_WILLENDORF"
+  ],
+  "techs": [
+   "TECH_BONE_WORKING",
+   "TECH_SIMPLE_WOOD_WORKING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SCRAPING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CHOPPING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_STONE_TOOL_MAKER": {
+     "flat": 100
+    }
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "cost": {
+  "research": 13
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_CARVING",
+  "soundMP": "AS2D_TECH_CARVING",
+  "icon": "Art/Interface/Buttons/TechTree/carving.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 2,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 7,
+  "gridY": 7
+ }
+}

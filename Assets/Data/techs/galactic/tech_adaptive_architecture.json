@@ -1,0 +1,94 @@
+{
+ "type": "TECH_ADAPTIVE_ARCHITECTURE",
+ "description": "TXT_KEY_TECH_ADAPTIVE_ARCHITECTURE",
+ "civilopedia": "TXT_KEY_TECH_ADAPTIVE_ARCHITECTURE_PEDIA",
+ "quote": "TXT_KEY_TECH_ADAPTIVE_ARCHITECTURE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_GRAND_SPACESCRAPER",
+   "BUILDING_INTERSTELLAR_AERIAL_CITY",
+   "BUILDING_INTERSTELLAR_AEROPONICS_ARCOLOGY",
+   "BUILDING_INTERSTELLAR_GRAVITON_DETECTOR",
+   "BUILDING_INTERSTELLAR_METROPOLIS",
+   "BUILDING_INTERSTELLAR_RESIDENTIAL_DISTRICT",
+   "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
+   "BUILDING_NEPTUNE_CHANDELIER_CITY"
+  ],
+  "techs": [
+   "TECH_PLANET_ENGINEERING",
+   "TECH_STAR_LIFTING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MOLECULAR_ASSEMBLY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PLANET_CRACKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PLANET_SCOUTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_XENODIPLOMACY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_LIVING_BUILDINGS": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_SPACESCRAPER": {
+     "flat": 1100
+    },
+    "BUILDING_STRATOSPHERIC_TOWER": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 159944
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/adaptive_architecture.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 131,
+  "gridY": 3
+ }
+}

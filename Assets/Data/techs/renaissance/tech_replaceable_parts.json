@@ -1,0 +1,89 @@
+{
+ "type": "TECH_REPLACEABLE_PARTS",
+ "description": "TXT_KEY_TECH_REPLACEABLE_PARTS",
+ "civilopedia": "TXT_KEY_TECH_REPLACEABLE_PARTS_PEDIA",
+ "quote": "TXT_KEY_TECH_REPLACEABLE_PARTS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_COTTAGE_INDUSTRY",
+   "BUILDING_PINBALL_ARCADE",
+   "BUILDING_TEXTILE_MILL",
+   "BUILDING_WIND_WATER_PUMP"
+  ],
+  "civics": [
+   "CIVIC_FIAT_MONEY"
+  ],
+  "techs": [
+   "TECH_INDUSTRIAL_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECONOMICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_WORKSHOP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WATERMILL": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WINDMILL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_INVENTORS_WORKSHOP": {
+     "flat": 500
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 3934
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_REPLACE_PARTS",
+  "soundMP": "AS2D_TECH_MP_REPLACE_PARTS",
+  "icon": ",Art/Interface/Buttons/TechTree/Replaceable_Parts.dds,Art/Interface/Buttons/TechTree_Atlas.dds,2,7"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 59,
+  "gridY": 7
+ }
+}

@@ -1,0 +1,79 @@
+{
+ "type": "TECH_MANAGEMENT",
+ "description": "TXT_KEY_TECH_MANAGEMENT",
+ "civilopedia": "TXT_KEY_TECH_MANAGEMENT_PEDIA",
+ "quote": "TXT_KEY_TECH_MANAGEMENT_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASSEMBLY_PLANT",
+   "BUILDING_BUSINESS_SCHOOL",
+   "BUILDING_IQ_TESTING_CENTER",
+   "BUILDING_RACIAL_PROFILING",
+   "BUILDING_TIME_ZONES"
+  ],
+  "civics": [
+   "CIVIC_CENTRALIZED"
+  ],
+  "techs": [
+   "TECH_COMPULSORY_EDUCATION"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_SUNDIAL",
+   "BUILDING_WATERCLOCK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TELEPHONE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CIVIL_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
+     "percent": -10
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 7356
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/Buttons/Techs/management.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 69,
+  "gridY": 11
+ }
+}

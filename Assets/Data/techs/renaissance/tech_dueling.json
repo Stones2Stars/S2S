@@ -1,0 +1,66 @@
+{
+ "type": "TECH_DUELING",
+ "description": "TXT_KEY_TECH_DUELING",
+ "civilopedia": "TXT_KEY_TECH_DUELING_PEDIA",
+ "quote": "TXT_KEY_TECH_DUELING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BOXING_RING",
+   "BUILDING_FENCING_ACADEMY"
+  ],
+  "techs": [
+   "TECH_FLINTLOCK",
+   "TECH_TEAM_SPORTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MARTIAL_ARTS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LEADERSHIP",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 2701
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_DUELING",
+  "soundMP": "AS2D_TECH_DUELING",
+  "icon": "Art/Interface/Buttons/TechTree/Dueling.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "militaryWorth": 8,
+  "tradeable": true,
+  "gridX": 53,
+  "gridY": 3
+ }
+}

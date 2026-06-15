@@ -1,0 +1,88 @@
+{
+ "type": "TECH_MYTHOLOGICAL_BESTIARY",
+ "description": "TXT_KEY_TECH_MYTHOLOGICAL_BESTIARY",
+ "civilopedia": "TXT_KEY_TECH_MYTHOLOGICAL_BESTIARY_PEDIA",
+ "quote": "TXT_KEY_TECH_MYTHOLOGICAL_BESTIARY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_HIERACOSPHINX",
+   "BONUS_JACKALOPE",
+   "BONUS_PEGASUS",
+   "BONUS_PHOENIX",
+   "BONUS_QILIN",
+   "BONUS_QUETZALCOATL",
+   "BONUS_RAINBOW_SERPENT"
+  ],
+  "buildings": [
+   "BUILDING_HIERACOSPHINX_BREEDER",
+   "BUILDING_JACKALOPE_BREEDER",
+   "BUILDING_NOBLEGARDEN",
+   "BUILDING_PEGASUS_BREEDER",
+   "BUILDING_PHOENIX_BREEDER",
+   "BUILDING_QILIN_BREEDER",
+   "BUILDING_QUETZALCOATL_BREEDER",
+   "BUILDING_RAINBOW_SERPENT_BREEDER"
+  ],
+  "techs": [
+   "TECH_HUMAN_TRANSMUTATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORGANIC_CITIES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ABYSS_COLONIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COMPREHENSIVE_CYBERNETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_LIFE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 75052
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_MYTHOLOGICAL_BESTIARY",
+  "soundMP": "AS2D_TECH_MYTHOLOGICAL_BESTIARY",
+  "icon": "Art/Interface/Buttons/TechTree/mythologicalbeastiary.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 116,
+  "gridY": 17
+ }
+}

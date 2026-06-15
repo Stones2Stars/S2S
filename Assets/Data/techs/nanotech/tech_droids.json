@@ -1,0 +1,99 @@
+{
+ "type": "TECH_DROIDS",
+ "description": "TXT_KEY_TECH_DROIDS",
+ "civilopedia": "TXT_KEY_TECH_DROIDS_PEDIA",
+ "quote": "TXT_KEY_TECH_DROIDS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE"
+  ],
+  "promotions": [
+   "PROMOTION_COMBAT_AI1"
+  ],
+  "techs": [
+   "TECH_ANDROIDS"
+  ],
+  "units": [
+   "UNIT_DROID_INFANTRY",
+   "UNIT_SERVICE_DROID"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BIOMIMETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BIONICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADVANCED_COMPUTERS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_VIDEO_GAME_ARCADE": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_EVOLUTIONARY_ALGORITHMS": {
+     "flat": 900
+    },
+    "BUILDING_ROBOTICS_LAB": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_VIDEO_GAME_ARCADE": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 44505
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_PRODUCTION": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_DROIDS",
+  "soundMP": "AS2D_TECH_DROIDS",
+  "icon": ",Art/Interface/Buttons/TechTree/hal9000.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,5,8"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 106,
+  "gridY": 11
+ }
+}

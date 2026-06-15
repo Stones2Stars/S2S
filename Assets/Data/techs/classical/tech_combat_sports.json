@@ -1,0 +1,70 @@
+{
+ "type": "TECH_COMBAT_SPORTS",
+ "description": "TXT_KEY_TECH_COMBAT_SPORTS",
+ "civilopedia": "TXT_KEY_TECH_COMBAT_SPORTS_PEDIA",
+ "quote": "TXT_KEY_TECH_COMBAT_SPORTS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BALL_COURT",
+   "BUILDING_COLOSSEUM",
+   "BUILDING_FLAVIAN_AMPHITHEATRE",
+   "BUILDING_GLADIATORIAL_SCHOOL",
+   "BUILDING_OLYMPIC_GAMES",
+   "BUILDING_STATUE_OF_CHAMPION"
+  ],
+  "promotions": [
+   "PROMOTION_CAUTIOUS5"
+  ],
+  "techs": [
+   "TECH_MARTIAL_ARTS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BULL_LEAPING",
+   "BUILDING_FIGHTING_PIT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ATHLETICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 554
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_COMBAT_SPORTS",
+  "soundMP": "AS2D_TECH_COMBAT_SPORTS",
+  "icon": "Art/Interface/Buttons/TechTree/Combat_Sports.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "tradeable": true,
+  "gridX": 35,
+  "gridY": 5
+ }
+}

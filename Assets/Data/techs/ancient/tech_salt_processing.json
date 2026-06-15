@@ -1,0 +1,71 @@
+{
+ "type": "TECH_SALT_PROCESSING",
+ "description": "TXT_KEY_TECH_SALT_PROCESSING",
+ "civilopedia": "TXT_KEY_TECH_SALT_PROCESSING_PEDIA",
+ "quote": "TXT_KEY_TECH_SALT_PROCESSING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_BORAX",
+   "BONUS_SALT"
+  ],
+  "buildings": [
+   "BUILDING_CULTURE_MALINESE",
+   "BUILDING_MINE_BORAX",
+   "BUILDING_SALT_EVAPORATION_POND",
+   "BUILDING_SALT_EVAPORATION_WORKS",
+   "BUILDING_SALT_FLAT_QUARRY",
+   "BUILDING_SALT_QUARRY"
+  ],
+  "promotions": [
+   "PROMOTION_DESERT_WORKER2"
+  ],
+  "techs": [
+   "TECH_SPICE_TRADE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_IRRIGATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 213
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 8
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_SALT_PROCESSING",
+  "soundMP": "AS2D_TECH_SALT_PROCESSING",
+  "icon": "Art/Interface/Buttons/TechTree/saltprocessing.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "gridX": 27,
+  "gridY": 7
+ }
+}

@@ -1,0 +1,57 @@
+{
+ "type": "TECH_JAINISM",
+ "description": "TXT_KEY_TECH_JAINISM",
+ "civilopedia": "TXT_KEY_TECH_JAINISM_PEDIA",
+ "quote": "TXT_KEY_TECH_JAINISM_QUOTE",
+ "enables": {
+  "religions": [
+   "RELIGION_JAINISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEDITATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AESTHETICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 824
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_JAINISM",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/Interface/Buttons/TechTree/Jainism.dds"
+ },
+ "identity": {
+  "global": true,
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 8,
+  "gridX": 39,
+  "gridY": 3
+ }
+}

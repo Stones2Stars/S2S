@@ -1,0 +1,161 @@
+{
+ "type": "TECH_WRITING",
+ "description": "TXT_KEY_TECH_WRITING",
+ "civilopedia": "TXT_KEY_TECH_WRITING_PEDIA",
+ "quote": "TXT_KEY_TECH_WRITING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_SCROLLS"
+  ],
+  "buildings": [
+   "BUILDING_BRAHMIN_LIBRARY",
+   "BUILDING_CRIME_FORGERY",
+   "BUILDING_CULTURE_BANDANESE",
+   "BUILDING_CULTURE_HURRIANS",
+   "BUILDING_CULTURE_LIBYAN",
+   "BUILDING_CULTURE_MINOAN",
+   "BUILDING_CULTURE_ROMAN",
+   "BUILDING_CULTURE_VENETIAN",
+   "BUILDING_HOMING_PIGEON_COOP",
+   "BUILDING_SCHOOL_OF_SCRIBES",
+   "BUILDING_SCROLL_MAKER",
+   "BUILDING_SPY_NETWORK",
+   "BUILDING_TEMPLE_OF_OSIRIS",
+   "BUILDING_TEMPLE_OF_PTAH",
+   "BUILDING_TEMPLE_OF_TOTH"
+  ],
+  "civics": [
+   "CIVIC_INTERPRETERS",
+   "CIVIC_WRITTEN_TRADITION"
+  ],
+  "processes": [
+   "PROCESS_RESEARCH_LESSER"
+  ],
+  "promotions": [
+   "PROMOTION_INDUSTRYESPIONAGE"
+  ],
+  "specialBuildings": [
+   "SPECIALBUILDING_ACHIEVEMENT"
+  ],
+  "techs": [
+   "TECH_MONOTHEISM",
+   "TECH_VETERINARY_MEDICINE"
+  ],
+  "units": [
+   "UNIT_AGUEYBANA",
+   "UNIT_ARABIAN_GALLIOT",
+   "UNIT_BOROBUDUR",
+   "UNIT_COG_MERCHANT",
+   "UNIT_CROESUS",
+   "UNIT_DAEDALUS",
+   "UNIT_DIDO",
+   "UNIT_ENKIDU",
+   "UNIT_GALLIOT",
+   "UNIT_GYGES",
+   "UNIT_HUITZILOPOCHTLI",
+   "UNIT_KHAEMWASET",
+   "UNIT_LABARNA",
+   "UNIT_LAMBOGA",
+   "UNIT_MAUI",
+   "UNIT_MURSILI",
+   "UNIT_NARAMSIN",
+   "UNIT_ODYSSEUS",
+   "UNIT_PERAHU",
+   "UNIT_ROMULUS",
+   "UNIT_SHEBA",
+   "UNIT_SHOSHENQ_I",
+   "UNIT_SHUTTARNA_II",
+   "UNIT_SPY",
+   "UNIT_THESEUS",
+   "UNIT_THUTMOSE_III",
+   "UNIT_TISH_ATAL"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_SCOUT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRADE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ORNAMENTATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_SOPKA": {
+     "flat": 300
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_ULURU": {
+     "flat": 200
+    }
+   }
+  }
+ },
+ "embassyTrading": {
+  "team": {
+   "enabler": true
+  }
+ },
+ "techTrading": {
+  "team": {
+   "enabler": true
+  }
+ },
+ "grants": {
+  "freeTechs": 1
+ },
+ "cost": {
+  "research": 242
+ },
+ "ai": {
+  "behaviour": {
+   "weight": 100,
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_WRITING",
+  "soundMP": "AS2D_TECH_MP_WRITING",
+  "icon": ",Art/Interface/Buttons/TechTree/Writing.dds,Art/Interface/Buttons/TechTree_Atlas.dds,6,12"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 28,
+  "gridY": 11
+ }
+}

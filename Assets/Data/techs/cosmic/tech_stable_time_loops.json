@@ -1,0 +1,77 @@
+{
+ "type": "TECH_STABLE_TIME_LOOPS",
+ "description": "TXT_KEY_TECH_STABLE_TIME_LOOPS",
+ "civilopedia": "TXT_KEY_TECH_STABLE_TIME_LOOPS_PEDIA",
+ "quote": "TXT_KEY_TECH_STABLE_TIME_LOOPS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
+   "BUILDING_DEEP_THOUGHT",
+   "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM",
+   "BUILDING_TACHYONIC_ANTITELEPHONE",
+   "BUILDING_TIME_MACHINE"
+  ],
+  "techs": [
+   "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+   "TECH_STRING_MANIPULATION",
+   "TECH_TRANSCENDENT_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_CHRONOFORM_SHIP"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MODULAR_CONSTRUCTION_FIRM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NOOGENESIS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_QUANTUM_RAMJET",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_CHRONOPOLIS": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 366008
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/stable_time_loops.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 147,
+  "gridY": 13
+ }
+}

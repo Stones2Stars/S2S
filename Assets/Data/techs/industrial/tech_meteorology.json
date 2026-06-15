@@ -1,0 +1,63 @@
+{
+ "type": "TECH_METEOROLOGY",
+ "description": "TXT_KEY_TECH_METEOROLOGY",
+ "civilopedia": "TXT_KEY_TECH_METEOROLOGY_PEDIA",
+ "quote": "TXT_KEY_TECH_METEOROLOGY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_METEOROLOGY_LAB",
+   "BUILDING_NATIONAL_WEATHER_SERVICE"
+  ],
+  "techs": [
+   "TECH_LONG_RANGE_FORECASTING"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CLOUD_OBSERVERS_HUT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TELEGRAPH",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_COMMUNITY_GARDEN": {
+     "flat": 600
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 6351
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_METEOROLOGY",
+  "soundMP": "AS2D_TECH_METEOROLOGY",
+  "icon": "Art/Interface/Buttons/techtree/Meteorology.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "gridX": 66,
+  "gridY": 1
+ }
+}

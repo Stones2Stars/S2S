@@ -1,0 +1,53 @@
+{
+ "type": "TECH_ISLAM",
+ "description": "TXT_KEY_TECH_ISLAM",
+ "civilopedia": "TXT_KEY_TECH_ISLAM_PEDIA",
+ "quote": "TXT_KEY_TECH_ISLAM_QUOTE",
+ "enables": {
+  "religions": [
+   "RELIGION_ISLAM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FUNDAMENTALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 1334
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_ISLAM",
+  "soundMP": "AS2D_TECH_ISLAM",
+  "icon": "Art/Interface/Buttons/TechTree/Islam.dds"
+ },
+ "identity": {
+  "global": true,
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 8,
+  "gridX": 44,
+  "gridY": 1
+ }
+}

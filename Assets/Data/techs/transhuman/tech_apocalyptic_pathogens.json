@@ -1,0 +1,87 @@
+{
+ "type": "TECH_APOCALYPTIC_PATHOGENS",
+ "description": "TXT_KEY_TECH_APOCALYPTIC_PATHOGENS",
+ "civilopedia": "TXT_KEY_TECH_APOCALYPTIC_PATHOGENS_PEDIA",
+ "quote": "TXT_KEY_TECH_APOCALYPTIC_PATHOGENS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CALLISTO_NITROGEN_GENERATOR",
+   "BUILDING_CALLISTO_NOBLE_GAS_GENERATOR",
+   "BUILDING_MARTIAN_ALBEDO_REDUCTION",
+   "BUILDING_MARTIAN_CFC_GENERATOR"
+  ],
+  "techs": [
+   "TECH_EXTRATERRESTRIAL_AGRICULTURE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DYSTOPIA_PATHOGENS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_LIFE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COMPREHENSIVE_CYBERNETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOMINING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_CISLUNAR_BIOFACTORY": {
+     "flat": 1000
+    },
+    "BUILDING_MARTIAN_BIOFACTORY": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 75052
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_APOCALYPTIC_PATHOGENS",
+  "soundMP": "AS2D_TECH_APOCALYPTIC_PATHOGENS",
+  "icon": "Art/Interface/Buttons/TechTree/apocolypticpathogens.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 116,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,88 @@
+{
+ "type": "TECH_CORPORATION",
+ "description": "TXT_KEY_TECH_CORPORATION",
+ "civilopedia": "TXT_KEY_TECH_CORPORATION_PEDIA",
+ "quote": "TXT_KEY_TECH_CORPORATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_MONEY_LAUNDERING",
+   "BUILDING_LAW_FIRM",
+   "BUILDING_LEARNING_CENTER"
+  ],
+  "civics": [
+   "CIVIC_CAPITALIST",
+   "CIVIC_CORPORATE"
+  ],
+  "specialBuildings": [
+   "SPECIALBUILDING_CORPORATION",
+   "SPECIALBUILDING_CORPORATION_HQ"
+  ],
+  "techs": [
+   "TECH_PATENT_RIGHTS",
+   "TECH_STOCK_BROKERING"
+  ],
+  "units": [
+   "UNIT_LAWYER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_THE_GREAT_LIGHTHOUSE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_JURISPRUDENCE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COLONIALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_WHALING_SHIPS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 2883
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_CORPORATION",
+  "soundMP": "AS2D_TECH_MP_CORPORATION",
+  "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/TechTree_Atlas.dds,6,9"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 54,
+  "gridY": 15
+ }
+}

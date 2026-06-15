@@ -1,0 +1,85 @@
+{
+ "type": "TECH_OPTICS",
+ "description": "TXT_KEY_TECH_OPTICS",
+ "civilopedia": "TXT_KEY_TECH_OPTICS_PEDIA",
+ "quote": "TXT_KEY_TECH_OPTICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_OPTOMETRIST"
+  ],
+  "techs": [
+   "TECH_ASTROLABE",
+   "TECH_CLOCKPUNK",
+   "TECH_COMMERCIAL_WHALING"
+  ],
+  "units": [
+   "UNIT_TUITATUI"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_CANOE",
+   "UNIT_HAIDA_WAR_CANOE",
+   "UNIT_KAYAK",
+   "UNIT_MASTER_SAILOR_KAYAK",
+   "UNIT_RAFT",
+   "UNIT_WAR_CANOE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ALCHEMY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "extraWaterSeeFrom": {
+  "team": {
+   "enabler": true
+  }
+ },
+ "cost": {
+  "research": 1445
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 3
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_OPTICS",
+  "soundMP": "AS2D_TECH_MP_OPTICS",
+  "icon": ",Art/Interface/Buttons/TechTree/Optics.dds,Art/Interface/Buttons/TechTree_Atlas.dds,2,6"
+ },
+ "identity": {
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 45,
+  "gridY": 11
+ }
+}

@@ -1,0 +1,106 @@
+{
+ "type": "TECH_VERTICAL_FLIGHT",
+ "description": "TXT_KEY_TECH_VERTICAL_FLIGHT",
+ "civilopedia": "TXT_KEY_TECH_VERTICAL_FLIGHT_PEDIA",
+ "quote": "TXT_KEY_TECH_VERTICAL_FLIGHT_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_HELICOPTERS"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_HELICOPTERS",
+   "BUILDING_HELICOPTER_TRAINING_CENTER"
+  ],
+  "promotions": [
+   "PROMOTION_POLICING7"
+  ],
+  "techs": [
+   "TECH_ASTRONAUTICS"
+  ],
+  "units": [
+   "UNIT_AH64_GUNSHIP",
+   "UNIT_EARLY_MEDIVAC",
+   "UNIT_GUNSHIP",
+   "UNIT_MODERN_MEDIVAC",
+   "UNIT_POLICE_HELICOPTER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CENTRAL_BREEDER_CAMEL",
+   "BUILDING_CENTRAL_BREEDER_DONKEY",
+   "BUILDING_CENTRAL_BREEDER_ELEPHANT",
+   "BUILDING_CENTRAL_BREEDER_HORSE",
+   "BUILDING_CENTRAL_BREEDER_LLAMA",
+   "BUILDING_FUR_FARM",
+   "BUILDING_GUILD_HOSTLERS",
+   "BUILDING_KNIGHTS_STABLE",
+   "BUILDING_TENGRII_HORSE_TRAINER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ZEPPELINS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADVANCED_AVIATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_AUYANTEPUI": {
+     "flat": 700
+    },
+    "BUILDING_WONDER_OF_NATURE_GREAT_BARRIER_REEF": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_NATIONAL_AIRCRAFT_MUSEUM": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 12657
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_VERTICAL_FLIGHT",
+  "soundMP": "AS2D_TECH_VERTICAL_FLIGHT",
+  "icon": ",Art/Interface/Buttons/TechTree/VerticalFlight.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,7,3"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 79,
+  "gridY": 9
+ }
+}

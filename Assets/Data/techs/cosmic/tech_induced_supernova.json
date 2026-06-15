@@ -1,0 +1,77 @@
+{
+ "type": "TECH_INDUCED_SUPERNOVA",
+ "description": "TXT_KEY_TECH_INDUCED_SUPERNOVA",
+ "civilopedia": "TXT_KEY_TECH_INDUCED_SUPERNOVA_PEDIA",
+ "quote": "TXT_KEY_TECH_INDUCED_SUPERNOVA_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_CAPTURED_NEUTRON_STARS",
+   "BUILDING_INTERSTELLAR_SUPERNOVA_MINE"
+  ],
+  "builds": [
+   "BUILD_SUPERNOVA_MINE",
+   "BUILD_TERRAFORM_NEUTRON_STAR"
+  ],
+  "improvements": [
+   "IMPROVEMENT_SUPERNOVA_MINE",
+   "IMPROVEMENT_TERRAFORM_NEUTRON_STAR"
+  ],
+  "techs": [
+   "TECH_MEGAWORMHOLES",
+   "TECH_REACTIONLESS_DRIVE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EXOTIC_STARS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INTERGROUP_TRAVEL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INTERGALACTIC_EMPIRE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_MINING_PLANET": {
+     "flat": 2000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 314134
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/induced_supernova.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 143,
+  "gridY": 19
+ }
+}

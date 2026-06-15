@@ -1,0 +1,116 @@
+{
+ "type": "TECH_SAILING",
+ "description": "TXT_KEY_TECH_SAILING",
+ "civilopedia": "TXT_KEY_TECH_SAILING_PEDIA",
+ "quote": "TXT_KEY_TECH_SAILING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_SAILS"
+  ],
+  "buildings": [
+   "BUILDING_CAMP_NARWHAL",
+   "BUILDING_CULTURE_CARAL_SUPE",
+   "BUILDING_CULTURE_KUSHITE",
+   "BUILDING_CULTURE_LEBANESE",
+   "BUILDING_CULTURE_PHOENICIAN",
+   "BUILDING_CULTURE_POLYNESIAN",
+   "BUILDING_CULTURE_TONGAN",
+   "BUILDING_CULTURE_VANATUAN",
+   "BUILDING_CULTURE_VIKING",
+   "BUILDING_LIGHTHOUSE",
+   "BUILDING_MACKEREL_NETS",
+   "BUILDING_MARLIN_NETS",
+   "BUILDING_MASTER_SEA_HUNTER",
+   "BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT",
+   "BUILDING_PARROTFISH_NETS",
+   "BUILDING_SAIL_WEAVER",
+   "BUILDING_SHIPWRIGHT",
+   "BUILDING_SWORDFISH_NETS",
+   "BUILDING_TRADITION_NAVAL_MASCOT",
+   "BUILDING_TRADITION_SEA_HUNTING"
+  ],
+  "builds": [
+   "BUILD_BEACON_CORAL",
+   "BUILD_BEACON_GREAT_BARRIER_REEF",
+   "BUILD_BEACON_REEF",
+   "BUILD_HARVEST_KELP"
+  ],
+  "improvements": [
+   "IMPROVEMENT_BEACON_CORAL",
+   "IMPROVEMENT_BEACON_GREAT_BARRIER_REEF",
+   "IMPROVEMENT_BEACON_REEF"
+  ],
+  "promotions": [
+   "PROMOTION_AMPHIBIOUS",
+   "PROMOTION_CARAVAN_SEA_MOVEMENT_I"
+  ],
+  "techs": [
+   "TECH_EXPLORATION",
+   "TECH_NAVAL_WARFARE"
+  ],
+  "units": [
+   "UNIT_CATAMARAN",
+   "UNIT_GALLEY",
+   "UNIT_KON_TIKI",
+   "UNIT_MASTER_SAILOR_OUTRIGGER",
+   "UNIT_OUTRIGGER",
+   "UNIT_WORKBOAT_CLASSIC"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_HARVEST_KELP_KILL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FISHING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_POTTERY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 110
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_SAILING",
+  "soundMP": "AS2D_TECH_MP_SAILING",
+  "icon": ",Art/Interface/Buttons/TechTree/Sailing.dds,Art/Interface/Buttons/TechTree_Atlas.dds,6,7"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 22,
+  "gridY": 7
+ }
+}

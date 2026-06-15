@@ -1,0 +1,78 @@
+{
+ "type": "TECH_WARFARE",
+ "description": "TXT_KEY_TECH_WARFARE",
+ "civilopedia": "TXT_KEY_TECH_WARFARE_PEDIA",
+ "quote": "TXT_KEY_TECH_WARFARE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_PAPUAN",
+   "BUILDING_FIGHTING_PIT",
+   "BUILDING_IKHANDA",
+   "BUILDING_STICK_COMBAT",
+   "BUILDING_WARRIORS_HUT"
+  ],
+  "civics": [
+   "CIVIC_TRIBAL_WARFARE"
+  ],
+  "promotions": [
+   "PROMOTION_BACK_DOWN5",
+   "PROMOTION_CITY_RAIDER1",
+   "PROMOTION_DRILL1",
+   "PROMOTION_LOOTER",
+   "PROMOTION_SOPHISTICATION3",
+   "PROMOTION_WAYLAY2"
+  ],
+  "techs": [
+   "TECH_NOCTURNALISM",
+   "TECH_SLAVERY"
+  ],
+  "units": [
+   "UNIT_LOG_RAM",
+   "UNIT_NEANDERTHAL_LOG_RAM",
+   "UNIT_PAPUAN_CANNIBAL",
+   "UNIT_WAR_CANOE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_THEFT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HUNTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CHIEFDOM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 45
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_WARFARE",
+  "soundMP": "AS2D_TECH_WARFARE",
+  "icon": "Art/Interface/Buttons/TechTree/Button_Warfare.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 16,
+  "gridY": 7
+ }
+}

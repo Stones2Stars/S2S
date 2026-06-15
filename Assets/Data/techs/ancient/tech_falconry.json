@@ -1,0 +1,64 @@
+{
+ "type": "TECH_FALCONRY",
+ "description": "TXT_KEY_TECH_FALCONRY",
+ "civilopedia": "TXT_KEY_TECH_FALCONRY_PEDIA",
+ "quote": "TXT_KEY_TECH_FALCONRY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_FALCONER",
+   "BUILDING_HAWKING_HUT"
+  ],
+  "techs": [
+   "TECH_ARISTOCRACY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_POULTRY_DOMESTICATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CEREMONY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 187
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_RELIGION": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_CULTURE": 9
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_FALCONRY",
+  "soundMP": "AS2D_TECH_FALCONRY",
+  "icon": "Art/Interface/Buttons/TechTree/Falconry.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 16,
+  "tradeable": true,
+  "gridX": 26,
+  "gridY": 19
+ }
+}

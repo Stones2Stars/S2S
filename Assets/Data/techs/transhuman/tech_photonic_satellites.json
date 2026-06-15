@@ -1,0 +1,87 @@
+{
+ "type": "TECH_PHOTONIC_SATELLITES",
+ "description": "TXT_KEY_TECH_PHOTONIC_SATELLITES",
+ "civilopedia": "TXT_KEY_TECH_PHOTONIC_SATELLITES_PEDIA",
+ "quote": "TXT_KEY_TECH_PHOTONIC_SATELLITES_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTEROID_BELT_ASTRONOMICAL_TELESCOPE",
+   "BUILDING_CISLUNAR_DYSON_HARROP_SATELLITE",
+   "BUILDING_ENERGY_BEAM_NETWORK",
+   "BUILDING_EYE_IN_THE_SKY",
+   "BUILDING_MARTIAN_ORBITAL_MIRROR_ARRAY"
+  ],
+  "techs": [
+   "TECH_MOLECULAR_SCANNING",
+   "TECH_PLANETARY_DEFENSES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORBITAL_MEGASTRUCTURES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ANIMAMATERIALS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_SPACE_SOLAR_ARRAY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "flat": 1000
+    },
+    "BUILDING_HOLOGRAPHIC_SOLAR_SYSTEM": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 77770
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_SATELLITES",
+  "soundMP": "AS2D_TECH_MP_SATELLITES",
+  "icon": "Art/Interface/Buttons/TechTree/photonicsatellites.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 117,
+  "gridY": 7
+ }
+}

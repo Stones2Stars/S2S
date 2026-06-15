@@ -1,0 +1,53 @@
+{
+ "type": "TECH_SCIENTOLOGY",
+ "description": "TXT_KEY_TECH_SCIENTOLOGY",
+ "civilopedia": "TXT_KEY_TECH_SCIENTOLOGY_PEDIA",
+ "quote": "TXT_KEY_TECH_SCIENTOLOGY_QUOTE",
+ "enables": {
+  "religions": [
+   "RELIGION_SCIENTOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FRANCHISES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 11665
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_SCIENTOLOGY2",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/Interface/Buttons/TechTree/Scientology.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "gridX": 77,
+  "gridY": 7,
+  "global": true,
+  "worth": 8
+ }
+}

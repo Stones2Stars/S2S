@@ -1,0 +1,99 @@
+{
+ "type": "TECH_MOLECULAR_MEDICINE",
+ "description": "TXT_KEY_TECH_MOLECULAR_MEDICINE",
+ "civilopedia": "TXT_KEY_TECH_MOLECULAR_MEDICINE_PEDIA",
+ "quote": "TXT_KEY_TECH_MOLECULAR_MEDICINE_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_IMMUNITY_DRUGS"
+  ],
+  "buildings": [
+   "BUILDING_AEROPONICS_LAB",
+   "BUILDING_FACTORY_IMMUNITY_DRUGS",
+   "BUILDING_MEDICAL_PROSTHETICS_LAB",
+   "BUILDING_TISSUE_ENGINEERING_LAB",
+   "BUILDING_VIROTHERAPY_CLINIC"
+  ],
+  "techs": [
+   "TECH_GENOMIC_ENCYCLOPEDIA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GENETIC_BIOCHEMISTRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_BACTERIOPHAGE_THERAPY_CLINIC": {
+     "flat": 800
+    },
+    "BUILDING_MICROBIOLOGY_LAB": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "buildings": {
+    "BUILDING_NUCLEIC_ACID_LAB": {
+     "flat": 2
+    },
+    "BUILDING_MOLECULAR_BIOLOGY_LAB": {
+     "flat": 2
+    },
+    "BUILDING_WONDER_OF_NATURE_DEAD_SEA": {
+     "flat": 1
+    },
+    "BUILDING_WONDER_OF_NATURE_PAMUKKALE": {
+     "flat": 1
+    },
+    "BUILDING_PROTEIN_LAB": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 22847
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_MOLECULAR_MEDICINE",
+  "soundMP": "AS2D_TECH_MOLECULAR_MEDICINE",
+  "icon": "Art/Interface/Buttons/TechTree/Tissueengineering.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 91,
+  "gridY": 3
+ }
+}

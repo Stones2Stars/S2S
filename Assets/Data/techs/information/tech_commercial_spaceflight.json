@@ -1,0 +1,71 @@
+{
+ "type": "TECH_COMMERCIAL_SPACEFLIGHT",
+ "description": "TXT_KEY_TECH_COMMERCIAL_SPACEFLIGHT",
+ "civilopedia": "TXT_KEY_TECH_COMMERCIAL_SPACEFLIGHT_PEDIA",
+ "quote": "TXT_KEY_TECH_COMMERCIAL_SPACEFLIGHT_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_COMMERCIAL_SPACEPORT",
+   "BUILDING_LUNAR_XPRIZE"
+  ],
+  "techs": [
+   "TECH_LUNAR_BASES"
+  ],
+  "units": [
+   "UNIT_HEAVY_ROCKET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DERIVATIVES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WEARABLE_COMPUTERS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SPACE_TOURISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 24485
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_COMMERCIAL_SPACEFLIGHT",
+  "soundMP": "AS2D_TECH_COMMERCIAL_SPACEFLIGHT",
+  "icon": "Art/Interface/Buttons/TechTree/Cspacecraft.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 93,
+  "gridY": 5
+ }
+}

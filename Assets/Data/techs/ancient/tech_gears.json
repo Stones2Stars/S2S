@@ -1,0 +1,78 @@
+{
+ "type": "TECH_GEARS",
+ "description": "TXT_KEY_TECH_GEARS",
+ "civilopedia": "TXT_KEY_TECH_GEARS_PEDIA",
+ "quote": "TXT_KEY_TECH_GEARS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANTIKYTHERA_MECHANISM"
+  ],
+  "techs": [
+   "TECH_CENTRAL_HEATING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORNAMENTATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SPECIALIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_MINING_CAMP": {
+     "flat": 200
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_MINING_CAMP": {
+     "flat": 200
+    }
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 15
+  }
+ },
+ "cost": {
+  "research": 274
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_GEARS",
+  "soundMP": "AS2D_TECH_GEARS",
+  "icon": "Art/Interface/Buttons/TechTree/gear.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 29,
+  "gridY": 7
+ }
+}

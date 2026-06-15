@@ -1,0 +1,99 @@
+{
+ "type": "TECH_THOUGHT_SCANNING",
+ "description": "TXT_KEY_TECH_THOUGHT_SCANNING",
+ "civilopedia": "TXT_KEY_TECH_THOUGHT_SCANNING_PEDIA",
+ "quote": "TXT_KEY_TECH_THOUGHT_SCANNING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIOMORPHICS_LAB",
+   "BUILDING_NATURAL_LANGUAGE_ALGORITHMS",
+   "BUILDING_PERSONALIZED_ADVERTISING"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_SECURITY5"
+  ],
+  "techs": [
+   "TECH_MASS_SURVEILLANCE",
+   "TECH_ONTOLOGICAL_ENGINEERING"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MOB_STOREFRONT",
+   "BUILDING_MOB_STOREFRONT_UNSANCTIONED",
+   "BUILDING_REHABILITATION_CENTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NANOTECH_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_VIDEO_GAME_ARCADE": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_NEUROSCIENCE_CENTER": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_VIDEO_GAME_ARCADE": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 36429
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_ESPIONAGE": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_THOUGHT_SCANNING",
+  "soundMP": "AS2D_TECH_THOUGHT_SCANNING",
+  "icon": "Art/Interface/Buttons/TechTree/brain_scan.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 100,
+  "gridY": 7
+ }
+}

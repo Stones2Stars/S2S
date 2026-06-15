@@ -1,0 +1,80 @@
+{
+ "type": "TECH_BIOMATHEMATICS",
+ "description": "TXT_KEY_TECH_BIOMATHEMATICS",
+ "civilopedia": "TXT_KEY_TECH_BIOMATHEMATICS_PEDIA",
+ "quote": "TXT_KEY_TECH_BIOMATHEMATICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_3D_BODY_ATLAS",
+   "BUILDING_GESTURE_RECOGNITION_SOFTWARE",
+   "BUILDING_SYSTEMS_BIOLOGY_SIMULATOR"
+  ],
+  "techs": [
+   "TECH_AFFECTIVE_ALGORITHMS",
+   "TECH_PERSONALIZED_HEALTH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BIOINFORMATICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_BIOINFORMATICS_LAB": {
+     "flat": 1000
+    },
+    "BUILDING_NUCLEIC_ACID_LAB": {
+     "flat": 1000
+    },
+    "BUILDING_MOLECULAR_BIOLOGY_LAB": {
+     "flat": 1000
+    },
+    "BUILDING_PROTEIN_LAB": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 23650
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_BIOMATHEMATICS",
+  "soundMP": "AS2D_TECH_BIOMATHEMATICS",
+  "icon": "Art/Interface/Buttons/TechTree/Biomathmatics.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 92,
+  "gridY": 3
+ }
+}

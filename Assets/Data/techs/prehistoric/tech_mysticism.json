@@ -1,0 +1,83 @@
+{
+ "type": "TECH_MYSTICISM",
+ "description": "TXT_KEY_TECH_MYSTICISM",
+ "civilopedia": "TXT_KEY_TECH_MYSTICISM_PEDIA",
+ "quote": "TXT_KEY_TECH_MYSTICISM_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DIVINE_MONUMENT"
+  ],
+  "civics": [
+   "CIVIC_DIVINE_CULT"
+  ],
+  "techs": [
+   "TECH_DRUIDIC_TRADITIONS",
+   "TECH_SEDENTARY_LIFESTYLE",
+   "TECH_SHAMANISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CELEBRATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_WONDER_OF_NATURE_DEVILS_TABLE": {
+     "flat": 500
+    },
+    "BUILDING_WONDER_OF_NATURE_MT_EVEREST": {
+     "flat": 500
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "buildings": {
+    "BUILDING_SPEARPOINT_BURIAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 52
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 9
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_MYSTICISM",
+  "soundMP": "AS2D_TECH_MP_MYSTICISM",
+  "icon": ",Art/Interface/Buttons/TechTree/Mysticism.dds,Art/Interface/Buttons/TechTree_Atlas.dds,4,11"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 17,
+  "gridY": 15
+ }
+}

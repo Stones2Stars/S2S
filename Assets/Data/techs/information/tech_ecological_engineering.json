@@ -1,0 +1,154 @@
+{
+ "type": "TECH_ECOLOGICAL_ENGINEERING",
+ "description": "TXT_KEY_TECH_ECOLOGICAL_ENGINEERING",
+ "civilopedia": "TXT_KEY_TECH_ECOLOGICAL_ENGINEERING_PEDIA",
+ "quote": "TXT_KEY_TECH_ECOLOGICAL_ENGINEERING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_GEOTHERMAL_ENERGY"
+  ],
+  "buildings": [
+   "BUILDING_ARTIFICIAL_TREE_FARM",
+   "BUILDING_CARBON_EXCHANGE",
+   "BUILDING_ECOSCRAPER",
+   "BUILDING_GARDENS_BY_THE_BAY",
+   "BUILDING_MASDAR_CITY",
+   "BUILDING_POLLUTION_SCRUBBERS",
+   "BUILDING_RIVER_SEWAGE_TREATMENT_PLANT",
+   "BUILDING_SEA_TREE"
+  ],
+  "builds": [
+   "BUILD_CLEAR_FALLOUT_FAST"
+  ],
+  "techs": [
+   "TECH_INDUSTRIAL_ECOLOGY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_POACHERS_CAMP"
+  ],
+  "builds": [
+   "BUILD_SCRUB_FALLOUT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RENEWABLE_ENERGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BIOMATERIALS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_ENGINEERING_SCHOOL": {
+     "flat": 800
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_TREEFARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_WILDLIFE_SANCTUARY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_NATURE_PRESERVE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_TREEFARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_CLIMATE_SATELLITE": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_CLIMATOLOGY_LAB": {
+     "flat": 800
+    },
+    "BUILDING_ENTOMOLOGY_LAB": {
+     "flat": 800
+    },
+    "BUILDING_HERPETOLOGY_LAB": {
+     "flat": 800
+    },
+    "BUILDING_ORNITHOLOGY_LAB": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "buildings": {
+    "BUILDING_COASTAL_PRESERVE": {
+     "flat": 1
+    },
+    "BUILDING_GREEN_BELTS": {
+     "flat": 1
+    },
+    "BUILDING_STATE_PARK": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 22074
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_ECOLOGICAL_ENGINEERING",
+  "soundMP": "AS2D_TECH_ECOLOGICAL_ENGINEERING",
+  "icon": ",Art/Interface/Buttons/TechTree/forestry.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,6"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 90,
+  "gridY": 1
+ }
+}

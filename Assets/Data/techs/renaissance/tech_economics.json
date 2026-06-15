@@ -1,0 +1,139 @@
+{
+ "type": "TECH_ECONOMICS",
+ "description": "TXT_KEY_TECH_ECONOMICS",
+ "civilopedia": "TXT_KEY_TECH_ECONOMICS_PEDIA",
+ "quote": "TXT_KEY_TECH_ECONOMICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ADAM_SMITHS_TRADING_COMPANY",
+   "BUILDING_CITY_BISTRO",
+   "BUILDING_CULTURE_BELGIAN",
+   "BUILDING_CUSTOMS_OFFICE",
+   "BUILDING_FAMILY_FARM",
+   "BUILDING_FEITORIA",
+   "BUILDING_FREE_PORT",
+   "BUILDING_HOTEL",
+   "BUILDING_WASTE_EXPORTATION_OFFICE"
+  ],
+  "civics": [
+   "CIVIC_FREE_MARKET",
+   "CIVIC_PRIVATE_OWNED",
+   "CIVIC_WASTE_EXPORTATION",
+   "CIVIC_WASTE_IMPORTATION"
+  ],
+  "techs": [
+   "TECH_NATIONALISM",
+   "TECH_REPLACEABLE_PARTS"
+  ],
+  "units": [
+   "UNIT_KATARI",
+   "UNIT_LEOPOLD",
+   "UNIT_MOHAMMED_II_TAIRAB",
+   "UNIT_NUSTA_HUILLAC",
+   "UNIT_SAID_BIN_SULTAN",
+   "UNIT_SALAWAT_YULAYEV"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_EDINBURGH_CASTLE",
+   "BUILDING_PETRA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PATENT_RIGHTS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_STOCK_BROKERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LIBERALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_TOWN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_UNIVERSITY": {
+     "flat": 500
+    },
+    "BUILDING_CRIME_SHOPLIFTING": {
+     "flat": -300
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
+     "percent": -5
+    }
+   }
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "buildings": {
+    "BUILDING_UNIVERSITY": {
+     "flat": [
+      {
+       "SPECIALIST_MERCHANT": 1
+      }
+     ]
+    }
+   }
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_MERCHANT"
+ },
+ "cost": {
+  "research": 3704
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_ECONOMICS",
+  "soundMP": "AS2D_TECH_MP_ECONOMICS",
+  "icon": ",Art/Interface/Buttons/TechTree/Economics.dds,Art/Interface/Buttons/TechTree_Atlas.dds,4,3"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 58,
+  "gridY": 7
+ }
+}

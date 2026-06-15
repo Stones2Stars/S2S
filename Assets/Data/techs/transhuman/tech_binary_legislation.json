@@ -1,0 +1,84 @@
+{
+ "type": "TECH_BINARY_LEGISLATION",
+ "description": "TXT_KEY_TECH_BINARY_LEGISLATION",
+ "civilopedia": "TXT_KEY_TECH_BINARY_LEGISLATION_PEDIA",
+ "quote": "TXT_KEY_TECH_BINARY_LEGISLATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AI_LEGAL_SYSTEM",
+   "BUILDING_CISLUNAR_GOVERNANCE",
+   "BUILDING_MARTIAN_GOVERNING_COUNCIL",
+   "BUILDING_VENUS_GOVERNING_COUNCIL",
+   "BUILDING_VIRTUAL_GOVERNANCE"
+  ],
+  "civics": [
+   "CIVIC_MACHINE_RULE"
+  ],
+  "techs": [
+   "TECH_BINARY_SUBCONSCIOUSNESS",
+   "TECH_SIMULATED_REALITY",
+   "TECH_UTOPIA_DESTINY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ELECTRONIC_SECURITY_SYSTEM",
+   "BUILDING_POLICE_BOX",
+   "BUILDING_POLICE_STATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BATTLEFIELD_SPORTS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PERSONAL_ROBOTS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRANSHUMAN_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 63426
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_BINARY_LEGISLATION",
+  "soundMP": "AS2D_TECH_BINARY_LEGISLATION",
+  "icon": "Art/Interface/Buttons/TechTree/binarylegislation.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 111,
+  "gridY": 9
+ }
+}

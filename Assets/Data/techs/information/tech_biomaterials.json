@@ -1,0 +1,129 @@
+{
+ "type": "TECH_BIOMATERIALS",
+ "description": "TXT_KEY_TECH_BIOMATERIALS",
+ "civilopedia": "TXT_KEY_TECH_BIOMATERIALS_PEDIA",
+ "quote": "TXT_KEY_TECH_BIOMATERIALS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_BIOFUEL",
+   "BONUS_BIOPOLYMERS"
+  ],
+  "buildings": [
+   "BUILDING_BIOFUEL_POWER_PLANT",
+   "BUILDING_BIOFUEL_REFINERY",
+   "BUILDING_ETHANOL_STATION",
+   "BUILDING_FACTORY_BIOPOLYMERS"
+  ],
+  "techs": [
+   "TECH_ECOLOGICAL_ENGINEERING",
+   "TECH_GENETIC_BIOCHEMISTRY",
+   "TECH_ORGANIC_PHOTONICS"
+  ],
+  "units": [
+   "UNIT_HEAVY_ARMOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AQUACULTURE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOTECHNOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_FARM_CROP_ALGAE": {
+     "flat": 800
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_ENTOMOLOGY_LAB": {
+     "flat": 800
+    },
+    "BUILDING_HERPETOLOGY_LAB": {
+     "flat": 800
+    },
+    "BUILDING_MOLECULAR_BIOLOGY_LAB": {
+     "flat": 800
+    },
+    "BUILDING_ORNITHOLOGY_LAB": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_NUCLEIC_ACID_LAB": {
+     "flat": 800
+    },
+    "BUILDING_MICROBIOLOGY_LAB": {
+     "flat": 800
+    },
+    "BUILDING_PROTEIN_LAB": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_GREAT_ENGINEER"
+ },
+ "cost": {
+  "research": 21329
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_BIOMATERIALS",
+  "soundMP": "AS2D_TECH_BIOMATERIALS",
+  "icon": "Art/Interface/Buttons/TechTree/Biofuels.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 89,
+  "gridY": 3
+ }
+}

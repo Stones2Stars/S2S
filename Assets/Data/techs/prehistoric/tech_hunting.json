@@ -1,0 +1,93 @@
+{
+ "type": "TECH_HUNTING",
+ "description": "TXT_KEY_TECH_HUNTING",
+ "civilopedia": "TXT_KEY_TECH_HUNTING_PEDIA",
+ "quote": "TXT_KEY_TECH_HUNTING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANCIENT_WAY_OF_THE_WILD",
+   "BUILDING_BUFFALO_JUMP",
+   "BUILDING_CULTURE_FUEGIAN",
+   "BUILDING_CULTURE_JIVARO",
+   "BUILDING_MASTER_HUNTER_TRADITION",
+   "BUILDING_TRADITION_HUNTER"
+  ],
+  "promotions": [
+   "PROMOTION_BACKSTAB2",
+   "PROMOTION_HUNTER_GREAT"
+  ],
+  "techs": [
+   "TECH_CHIEFDOM",
+   "TECH_WARFARE"
+  ],
+  "units": [
+   "UNIT_HEADHUNTER",
+   "UNIT_HUNTER",
+   "UNIT_MASTER_HUNTER",
+   "UNIT_NEANDERTHAL_HUNTER",
+   "UNIT_NEANDERTHAL_MASTER_HUNTER",
+   "UNIT_SEAL_HUNTER"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_MASTER_TRACKER",
+   "UNIT_NEANDERTHAL_MASTER_TRACKER",
+   "UNIT_NEANDERTHAL_TRACKER",
+   "UNIT_TRACKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRACKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ATLATL_MAKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_JUNGLE_CAMP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_DESERT_CAMP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WETLANDS_CAMP": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 30
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_HUNTING",
+  "soundMP": "AS2D_TECH_HUNTING",
+  "icon": "Art/Interface/Buttons/TechTree/huntingtactics.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 13,
+  "gridY": 11
+ }
+}

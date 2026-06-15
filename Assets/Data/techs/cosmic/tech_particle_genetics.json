@@ -1,0 +1,82 @@
+{
+ "type": "TECH_PARTICLE_GENETICS",
+ "description": "TXT_KEY_TECH_PARTICLE_GENETICS",
+ "civilopedia": "TXT_KEY_TECH_PARTICLE_GENETICS_PEDIA",
+ "quote": "TXT_KEY_TECH_PARTICLE_GENETICS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_FEMTOBOTS"
+  ],
+  "buildings": [
+   "BUILDING_FEMTOBOTIC_ASSEMBLER",
+   "BUILDING_FEMTOBOTIC_FIREFIGHTERS",
+   "BUILDING_FEMTOBOT_FACTORY",
+   "BUILDING_INTERSTELLAR_LILLIPUTIAN_CITY",
+   "BUILDING_LIFE_INTERSTELLAR_PARTICLE"
+  ],
+  "techs": [
+   "TECH_EXOTIC_STARS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DIRECTED_PANSPERMIA",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FEMTOTECHNOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_BIOGEOCOMPUTER": {
+     "flat": 1200
+    },
+    "BUILDING_INTERSTELLAR_BIOTIC_SPHERE_WORLD": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_ZOO": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 271404
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/particle_genetics.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 139,
+  "gridY": 1
+ }
+}

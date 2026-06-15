@@ -1,0 +1,102 @@
+{
+ "type": "TECH_MARINE_BIOLOGY",
+ "description": "TXT_KEY_TECH_MARINE_BIOLOGY",
+ "civilopedia": "TXT_KEY_TECH_MARINE_BIOLOGY_PEDIA",
+ "quote": "TXT_KEY_TECH_MARINE_BIOLOGY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AQUARIUM",
+   "BUILDING_CENTER_FOR_CEPHALOPOD_STUDIES",
+   "BUILDING_CENTER_FOR_SHARK_STUDIES",
+   "BUILDING_CENTER_FOR_WHALE_STUDIES",
+   "BUILDING_MARINE_BIOLOGY_LAB",
+   "BUILDING_MARINE_INSTITUTE",
+   "BUILDING_NATIONAL_AQUARIUM",
+   "BUILDING_SCUBA_DIVING_SITE"
+  ],
+  "techs": [
+   "TECH_WILDLIFE_CONSERVATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMMERCIAL_WHALING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ZOOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BOTANY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INDUSTRIAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_WHALING_SHIPS": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FISHING_BOATS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_ENTOMOLOGY_LAB": {
+     "flat": 600
+    },
+    "BUILDING_HERPETOLOGY_LAB": {
+     "flat": 600
+    },
+    "BUILDING_WONDER_OF_NATURE_SHARK_BAY": {
+     "flat": 600
+    },
+    "BUILDING_ORNITHOLOGY_LAB": {
+     "flat": 600
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 5187
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_MARINE_BIOLOGY",
+  "soundMP": "AS2D_TECH_MARINE_BIOLOGY",
+  "icon": "Art/Interface/Buttons/TechTree/marinebiology.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 62,
+  "gridY": 3
+ }
+}

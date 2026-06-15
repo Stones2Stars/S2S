@@ -1,0 +1,61 @@
+{
+ "type": "TECH_XENODIPLOMACY",
+ "description": "TXT_KEY_TECH_XENODIPLOMACY",
+ "civilopedia": "TXT_KEY_TECH_XENODIPLOMACY_PEDIA",
+ "quote": "TXT_KEY_TECH_XENODIPLOMACY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_STADIUM",
+   "BUILDING_INTERSTELLAR_XENOARCHEOLOGIST",
+   "BUILDING_MANDATE",
+   "BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS"
+  ],
+  "civics": [
+   "CIVIC_INTERSTELLAR"
+  ],
+  "techs": [
+   "TECH_ADAPTIVE_ARCHITECTURE",
+   "TECH_ASTROANTHROPOLOGY",
+   "TECH_GERONTOCRACY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TELEPORTATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WEAPONIZED_DISINTEGRATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_ADVANCED_METI": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 154284
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/astrodiplomacy.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 130,
+  "gridY": 7
+ }
+}

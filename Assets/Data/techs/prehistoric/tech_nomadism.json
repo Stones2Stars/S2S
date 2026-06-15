@@ -1,0 +1,51 @@
+{
+ "type": "TECH_NOMADISM",
+ "description": "TXT_KEY_TECH_NOMADISM",
+ "civilopedia": "TXT_KEY_TECH_NOMADISM_PEDIA",
+ "quote": "TXT_KEY_TECH_NOMADISM_QUOTE",
+ "enables": {
+  "promotions": [
+   "PROMOTION_GUERILLA2",
+   "PROMOTION_HILLSMAN",
+   "PROMOTION_SENTRY",
+   "PROMOTION_SIDESTEP1",
+   "PROMOTION_WOODSMAN1"
+  ],
+  "techs": [
+   "TECH_GATHERING",
+   "TECH_SCAVENGING",
+   "TECH_TRAILS"
+  ],
+  "units": [
+   "UNIT_NEANDERTHAL_WANDERER",
+   "UNIT_WANDERER"
+  ]
+ },
+ "cost": {
+  "research": 3
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_NOMADISM",
+  "soundMP": "AS2D_TECH_NOMADISM",
+  "icon": "Art/Interface/Buttons/TechTree/Button_Exploration.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 1,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,64 @@
+{
+ "type": "TECH_HYDROPONICS",
+ "description": "TXT_KEY_TECH_HYDROPONICS",
+ "civilopedia": "TXT_KEY_TECH_HYDROPONICS_PEDIA",
+ "quote": "TXT_KEY_TECH_HYDROPONICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CANNABIS_GROW_OPERATION",
+   "BUILDING_HYDROPONICS_LAB",
+   "BUILDING_HYDROPONIC_VEGETABLE_GARDEN"
+  ],
+  "techs": [
+   "TECH_AQUACULTURE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_GIVERNY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GASTRONOMY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 13724
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_HYDROPONICS",
+  "soundMP": "AS2D_TECH_HYDROPONICS",
+  "icon": ",Art/Interface/Buttons/TechTree/Ecology.dds,Art/Interface/Buttons/NextWar_Atlas.dds,8,3"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 81,
+  "gridY": 1
+ }
+}

@@ -1,0 +1,105 @@
+{
+ "type": "TECH_CYBERNETICS",
+ "description": "TXT_KEY_TECH_CYBERNETICS",
+ "civilopedia": "TXT_KEY_TECH_CYBERNETICS_PEDIA",
+ "quote": "TXT_KEY_TECH_CYBERNETICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CYBERNETICA_APPAREL_SHOP",
+   "BUILDING_CYBERNETICA_SALON",
+   "BUILDING_CYBERNETIC_ORGAN_LAB",
+   "BUILDING_SOMATOSENSORY_MANIPULATOR_LAB",
+   "BUILDING_UTERINE_REPLICATOR"
+  ],
+  "techs": [
+   "TECH_TRANSHUMAN_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_CYBORG",
+   "UNIT_WALKER_MECH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ELECTROMAGNETIC_VOLTAGE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CYBERIMMUNOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_ANTHROPOMORPHICS_LAB": {
+     "flat": 900
+    },
+    "BUILDING_BIOMORPHICS_LAB": {
+     "flat": 900
+    },
+    "BUILDING_RECHARGING_NODE": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_FACTORY_NANOGENERATORS": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_ANTHROPOMORPHICS_LAB": {
+     "flat": 900
+    },
+    "BUILDING_BIOMORPHICS_LAB": {
+     "flat": 900
+    },
+    "BUILDING_ROBOTICS_LAB": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 49574
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_CYBERNETICS",
+  "soundMP": "AS2D_TECH_CYBERNETICS",
+  "icon": ",Art/Interface/Buttons/TechTree/cybernetics2.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 50,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 109,
+  "gridY": 19
+ }
+}

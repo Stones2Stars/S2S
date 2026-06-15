@@ -1,0 +1,84 @@
+{
+ "type": "TECH_LEGALIZED_GAMBLING",
+ "description": "TXT_KEY_TECH_LEGALIZED_GAMBLING",
+ "civilopedia": "TXT_KEY_TECH_LEGALIZED_GAMBLING_PEDIA",
+ "quote": "TXT_KEY_TECH_LEGALIZED_GAMBLING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CASINO",
+   "BUILDING_CIRCUS_CIRCUS_CASINO",
+   "BUILDING_COMEDY_CLUB",
+   "BUILDING_GENTLEMANS_CLUB",
+   "BUILDING_LAS_VEGAS_STRIP",
+   "BUILDING_LUXOR_CASINO",
+   "BUILDING_MONTE_CARLO",
+   "BUILDING_NATIONAL_GAMBLING_BAN",
+   "BUILDING_ORDINANCE_GAMBLING_BAN",
+   "BUILDING_PACHINKO_ARCADE",
+   "BUILDING_STRATOSPHERE_CASINO"
+  ],
+  "techs": [
+   "TECH_COUNTERCULTURE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_GAMBLING_DEN",
+   "BUILDING_HAREMS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TOURISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_ANIMAL_RACE_TRACK": {
+     "flat": 700
+    },
+    "BUILDING_COCK_FIGHTING_RING": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 13181
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 9
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_LEGALIZED_GAMBLING",
+  "soundMP": "AS2D_TECH_LEGALIZED_GAMBLING",
+  "icon": ",Art/Interface/Buttons/TechTree/Gambling.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,7"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 80,
+  "gridY": 3
+ }
+}

@@ -1,0 +1,81 @@
+{
+ "type": "TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION",
+ "description": "TXT_KEY_TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION",
+ "civilopedia": "TXT_KEY_TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION_PEDIA",
+ "quote": "TXT_KEY_TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_PERSONAL_HYPERCRAFT"
+  ],
+  "buildings": [
+   "BUILDING_HYPERSPACE_HYPERCRAFT_FACTORY",
+   "BUILDING_HYPERSPACE_TOURISM_AGENCY"
+  ],
+  "techs": [
+   "TECH_HYPERLANES",
+   "TECH_TIME_REVERSAL"
+  ],
+  "units": [
+   "UNIT_HYPERSPACE_DEFENDER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CONTROLLED_INFLATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_GALACTIC_PORT": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 528012
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION",
+  "soundMP": "AS2D_TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION",
+  "icon": "Art/interface/buttons/TechTree/endogenous_euclidean_propulsion.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 151,
+  "gridY": 3
+ }
+}

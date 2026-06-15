@@ -1,0 +1,86 @@
+{
+ "type": "TECH_CAMELID_DOMESTICATION",
+ "description": "TXT_KEY_TECH_CAMELID_DOMESTICATION",
+ "civilopedia": "TXT_KEY_TECH_CAMELID_DOMESTICATION_PEDIA",
+ "quote": "TXT_KEY_TECH_CAMELID_DOMESTICATION_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CAMEL",
+   "BONUS_LLAMA"
+  ],
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_CAMEL",
+   "BUILDING_ANIMAL_TRAINER_LLAMA",
+   "BUILDING_CENTRAL_BREEDER_CAMEL",
+   "BUILDING_CENTRAL_BREEDER_LLAMA",
+   "BUILDING_CULTURE_CHAVIN",
+   "BUILDING_CULTURE_TUAREG",
+   "BUILDING_FARM_ANIMAL_ALPACA",
+   "BUILDING_FARM_ANIMAL_CAMEL",
+   "BUILDING_FARM_ANIMAL_LLAMA"
+  ],
+  "promotions": [
+   "PROMOTION_DESERT_WORKER1"
+  ],
+  "techs": [
+   "TECH_CAVALRY_TACTICS"
+  ],
+  "units": [
+   "UNIT_BACTRIAN_CATAPHRACT",
+   "UNIT_CAMEL_RIDER",
+   "UNIT_LLAMA_RIDER",
+   "UNIT_PACK_LLAMA",
+   "UNIT_QHATUQ",
+   "UNIT_TUAREG_CAMEL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRADE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 187
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_CAMELID_DOMESTICATION",
+  "soundMP": "AS2D_TECH_CAMELID_DOMESTICATION",
+  "icon": "Art/Interface/Buttons/TechTree/Camel_Riding.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 6,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "gridX": 26,
+  "gridY": 3
+ }
+}

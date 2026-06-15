@@ -1,0 +1,109 @@
+{
+ "type": "TECH_GUNPOWDER",
+ "description": "TXT_KEY_TECH_GUNPOWDER",
+ "civilopedia": "TXT_KEY_TECH_GUNPOWDER_PEDIA",
+ "quote": "TXT_KEY_TECH_GUNPOWDER_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_COBALT_ORE",
+   "BONUS_FIRECRACKERS",
+   "BONUS_PYRITE"
+  ],
+  "buildings": [
+   "BUILDING_BOMBARD_TOWER",
+   "BUILDING_CANNON_FORGE",
+   "BUILDING_CANNON_TURRET",
+   "BUILDING_CULTURE_ASHANTI",
+   "BUILDING_CULTURE_GUATEMALAN",
+   "BUILDING_CULTURE_OTTOMAN",
+   "BUILDING_CULTURE_PANAMAN",
+   "BUILDING_FIREWORKS_SHOP",
+   "BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY",
+   "BUILDING_MINE_CITRINE",
+   "BUILDING_MINE_COBALT",
+   "BUILDING_MINE_PYRITE",
+   "BUILDING_MINE_SULPHUR",
+   "BUILDING_VENETIAN_ARSENAL"
+  ],
+  "techs": [
+   "TECH_LEADERSHIP",
+   "TECH_MATCHLOCK",
+   "TECH_METALLURGY"
+  ],
+  "units": [
+   "UNIT_ANTONIO_RUIZ_DE_MONTOYA",
+   "UNIT_BARBAROSSA",
+   "UNIT_BENCOMO",
+   "UNIT_BOMBARD",
+   "UNIT_CROWFOOT",
+   "UNIT_DAVINCI_TANK",
+   "UNIT_FLAMING_ARROW",
+   "UNIT_HERNAN_CORTES",
+   "UNIT_MILITIA_RENAISSANCE",
+   "UNIT_OSEI",
+   "UNIT_OZOLUA",
+   "UNIT_PEDRO_DE_ALVARADO",
+   "UNIT_SHAH_RUKH",
+   "UNIT_VASCO_DE_BALBOA"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ARCHIMEDES_WORKSHOP",
+   "BUILDING_GUARD_TOWER",
+   "BUILDING_TEMPLE_OF_AH_CACAO",
+   "BUILDING_WALLS"
+  ],
+  "units": [
+   "UNIT_MAPINGUARI",
+   "UNIT_MAPINGUARI_PIKE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COAL_MINING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_RENAISSANCE_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 2364
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 9
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_GUNPOWDER",
+  "soundMP": "AS2D_TECH_MP_GUNPOWDER",
+  "icon": ",Art/Interface/Buttons/TechTree/Gunpowder.dds,Art/Interface/Buttons/TechTree_Atlas.dds,5,4"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "militaryWorth": 12,
+  "tradeable": true,
+  "gridX": 51,
+  "gridY": 7
+ }
+}

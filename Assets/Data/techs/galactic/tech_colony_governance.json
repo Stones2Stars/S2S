@@ -1,0 +1,69 @@
+{
+ "type": "TECH_COLONY_GOVERNANCE",
+ "description": "TXT_KEY_TECH_COLONY_GOVERNANCE",
+ "civilopedia": "TXT_KEY_TECH_COLONY_GOVERNANCE_PEDIA",
+ "quote": "TXT_KEY_TECH_COLONY_GOVERNANCE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_DESIGNER_CASTE_MISSION_CONTROL",
+   "BUILDING_INTERSTELLAR_GOVERNMENT_HOLACRACY",
+   "BUILDING_INTERSTELLAR_GOVERNMENT_MACHINE_RULE",
+   "BUILDING_INTERSTELLAR_GOVERNMENT_NOOCRACY"
+  ],
+  "techs": [
+   "TECH_INTERSTELLAR_COLONIZATION"
+  ],
+  "units": [
+   "UNIT_WORLDSHIP_DEFENDER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CLOSED_ECONOMIES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FUSION_SPACECRAFT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "buildings": {
+    "BUILDING_CISLUNAR_GOVERNANCE": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 139278
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/colony_governance.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 127,
+  "gridY": 5
+ }
+}

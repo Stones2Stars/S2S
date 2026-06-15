@@ -1,0 +1,93 @@
+{
+ "type": "TECH_MAINSTREAM_CLONING",
+ "description": "TXT_KEY_TECH_MAINSTREAM_CLONING",
+ "civilopedia": "TXT_KEY_TECH_MAINSTREAM_CLONING_PEDIA",
+ "quote": "TXT_KEY_TECH_MAINSTREAM_CLONING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CLONING_FACTORY",
+   "BUILDING_CRIME_UNLICENSED_CLONING",
+   "BUILDING_FACTORY_ORGANIC_COMPUTERS",
+   "BUILDING_ORGANIC_COMPUTER_LAB",
+   "BUILDING_PLEISTOCENE_PARK",
+   "BUILDING_REPET"
+  ],
+  "civics": [
+   "CIVIC_CLONED"
+  ],
+  "techs": [
+   "TECH_BIOPUNK",
+   "TECH_RAPID_RECUPERATION"
+  ],
+  "units": [
+   "UNIT_CLONES",
+   "UNIT_CLONE_INFANTRY"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_BULLDOZER",
+   "UNIT_UNDEAD_WORKER",
+   "UNIT_WORKER_INDUSTRIAL",
+   "UNIT_WORKMAMMOTH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GENE_ENHANCEMENT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_BACTERIUM_BIOFORGE": {
+     "flat": 900
+    },
+    "BUILDING_TRANSGENICS_LAB": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 38858
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_MAINSTREAM_CLONING",
+  "soundMP": "AS2D_TECH_MAINSTREAM_CLONING",
+  "icon": "Art/Interface/Buttons/TechTree/mainstreamcloning.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 102,
+  "gridY": 17
+ }
+}

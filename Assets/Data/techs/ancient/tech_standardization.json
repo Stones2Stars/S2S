@@ -1,0 +1,62 @@
+{
+ "type": "TECH_STANDARDIZATION",
+ "description": "TXT_KEY_TECH_STANDARDIZATION",
+ "civilopedia": "TXT_KEY_TECH_STANDARDIZATION_PEDIA",
+ "quote": "TXT_KEY_TECH_STANDARDIZATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_MARKET_SCALES",
+   "BUILDING_THE_NATIONAL_STANDARD_OF_MEASUREMENT"
+  ],
+  "techs": [
+   "TECH_BOARD_GAMES",
+   "TECH_COPPER_WORKING",
+   "TECH_FOLK_MEDICINE",
+   "TECH_LEAD_WORKING",
+   "TECH_MASONRY",
+   "TECH_OIL_LAMPS",
+   "TECH_PULLEY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TAXONOMY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_THE_WHEEL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 126
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_STANDARDIZATION",
+  "soundMP": "AS2D_TECH_STANDARDIZATION",
+  "icon": "Art/Interface/Buttons/TechTree/standardization2.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 23,
+  "gridY": 13
+ }
+}

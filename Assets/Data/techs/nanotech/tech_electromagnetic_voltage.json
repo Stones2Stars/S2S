@@ -1,0 +1,91 @@
+{
+ "type": "TECH_ELECTROMAGNETIC_VOLTAGE",
+ "description": "TXT_KEY_TECH_ELECTROMAGNETIC_VOLTAGE",
+ "civilopedia": "TXT_KEY_TECH_ELECTROMAGNETIC_VOLTAGE_PEDIA",
+ "quote": "TXT_KEY_TECH_ELECTROMAGNETIC_VOLTAGE_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_EMP_POWER_SUPPLY",
+   "BUILDING_D_HE3_FUSION_PLANT",
+   "BUILDING_EMP_GRID",
+   "BUILDING_WIRELESS_EV_CHARGING",
+   "BUILDING_WIRELESS_SPACE_LAUNCH"
+  ],
+  "techs": [
+   "TECH_CYBERNETICS",
+   "TECH_DYSTOPIA_PATHOGENS",
+   "TECH_PERSONAL_ROBOTS",
+   "TECH_SUPERCHARGED_CRYSTALLOGRAPHY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_GENERATION_IV_REACTOR",
+   "BUILDING_HIGH_TECH_COAL_POWER_PLANT",
+   "BUILDING_SMART_GRID"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ENVIRONMENTAL_ECONOMICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_QUANTUM_COMPUTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ION_BEAMS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_LASER_DRILLING": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 47795
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_ELECTROMAGNETIC_VOLTAGE",
+  "soundMP": "AS2D_TECH_ELECTROMAGNETIC_VOLTAGE",
+  "icon": "Art/Interface/Buttons/TechTree/electromagneticvoltage.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 108,
+  "gridY": 13
+ }
+}

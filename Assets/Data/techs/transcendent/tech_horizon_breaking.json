@@ -1,0 +1,90 @@
+{
+ "type": "TECH_HORIZON_BREAKING",
+ "description": "TXT_KEY_TECH_HORIZON_BREAKING",
+ "civilopedia": "TXT_KEY_TECH_HORIZON_BREAKING_PEDIA",
+ "quote": "TXT_KEY_TECH_HORIZON_BREAKING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_BLAZAR_FACTORY",
+   "BUILDING_DISTANT_COMPUTRONIUM_FILAMENT",
+   "BUILDING_DISTANT_COSMOPOLIS",
+   "BUILDING_DISTANT_HORIZON_PORT",
+   "BUILDING_DISTANT_VON_NEUMANN_GALACTIFORMING_FLEET",
+   "BUILDING_INTERSTELLAR_BLACK_HOLE_INTERIOR_PLANET",
+   "BUILDING_INTERSTELLAR_EVENT_HORIZON_PROBE",
+   "BUILDING_SPACE_COLONY_DISTANT"
+  ],
+  "techs": [
+   "TECH_CONTROLLED_VACUUM_COLLAPSE",
+   "TECH_ENDLESS_EXPLORATION",
+   "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY",
+   "TECH_MATERIALIZATION"
+  ],
+  "units": [
+   "UNIT_WORLDSHIP4"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_QUANTUM_RAMJET",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COSMIC_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TACHYON_COMMUNICATIONS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRANSCENDENT_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERGALACTIC_STARPORT": {
+     "flat": 1300
+    },
+    "BUILDING_GALACTIC_PORT": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 495679
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/horizon_breaking.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 149,
+  "gridY": 11
+ }
+}

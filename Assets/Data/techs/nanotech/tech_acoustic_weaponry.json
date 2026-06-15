@@ -1,0 +1,59 @@
+{
+ "type": "TECH_ACOUSTIC_WEAPONRY",
+ "description": "TXT_KEY_TECH_ACOUSTIC_WEAPONRY",
+ "civilopedia": "TXT_KEY_TECH_ACOUSTIC_WEAPONRY_PEDIA",
+ "quote": "TXT_KEY_TECH_ACOUSTIC_WEAPONRY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ACOUSTIC_CROWD_CONTROL",
+   "BUILDING_INFRASOUND_DEFENSES",
+   "BUILDING_LED_INCAPACITATOR"
+  ],
+  "techs": [
+   "TECH_ACOUSTOPHORESIS",
+   "TECH_INTERNAL_SHOCKWAVE_ENGINE",
+   "TECH_PLANETARY_EXTRACTION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MASS_DRIVER",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ELECTRIC_ARC_WEAPONRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 38858
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_ACOUSTIC_WEAPONRY",
+  "soundMP": "AS2D_TECH_ACOUSTIC_WEAPONRY",
+  "icon": "Art/Buttons/Techs/TechAcousticWeaponry.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 43,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 102,
+  "gridY": 13
+ }
+}

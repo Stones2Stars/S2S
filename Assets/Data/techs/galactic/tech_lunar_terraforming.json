@@ -1,0 +1,85 @@
+{
+ "type": "TECH_LUNAR_TERRAFORMING",
+ "description": "TXT_KEY_TECH_LUNAR_TERRAFORMING",
+ "civilopedia": "TXT_KEY_TECH_LUNAR_TERRAFORMING_PEDIA",
+ "quote": "TXT_KEY_TECH_LUNAR_TERRAFORMING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_EFFECT_TERRAFORMED_LUNA",
+   "BUILDING_TERRAFORMED_CALLISTO",
+   "BUILDING_TERRAFORMED_CERES",
+   "BUILDING_TERRAFORMED_EUROPA",
+   "BUILDING_TERRAFORMED_GANYMEDE",
+   "BUILDING_TERRAFORMED_LUNA",
+   "BUILDING_TERRAFORMED_OBERON",
+   "BUILDING_TERRAFORMED_PLUTO",
+   "BUILDING_TERRAFORMED_TITAN",
+   "BUILDING_TERRAFORMED_TITANIA",
+   "BUILDING_TERRAFORMED_TRITON"
+  ],
+  "builds": [
+   "BUILD_TERRAFORM_MOON"
+  ],
+  "improvements": [
+   "IMPROVEMENT_TERRAFORM_MOON"
+  ],
+  "techs": [
+   "TECH_COSMIC_PERSPECTIVE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CLOSED_ECONOMIES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_LUNAR_SEA": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 139278
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_LUNAR_TERRAFORMING",
+  "soundMP": "AS2D_TECH_LUNAR_TERRAFORMING",
+  "icon": "Art/Interface/Buttons/TechTree/lunar_terraforming.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 127,
+  "gridY": 11
+ }
+}

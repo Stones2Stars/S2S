@@ -1,0 +1,80 @@
+{
+ "type": "TECH_GALACTIC_ECOLOGY",
+ "description": "TXT_KEY_TECH_GALACTIC_ECOLOGY",
+ "civilopedia": "TXT_KEY_TECH_GALACTIC_ECOLOGY_PEDIA",
+ "quote": "TXT_KEY_TECH_GALACTIC_ECOLOGY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_BERSERKER",
+   "BUILDING_INTERGALACTIC_DYSON_SPHERES",
+   "BUILDING_INTERGALACTIC_VON_NEUMANN_COLONIZERS"
+  ],
+  "builds": [
+   "BUILD_BIOTIC_GALAXY"
+  ],
+  "improvements": [
+   "IMPROVEMENT_BIOTIC_GALAXY"
+  ],
+  "techs": [
+   "TECH_IMMORTALITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DIRECTED_PANSPERMIA",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GALACTIC_WARFARE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_LIFE_SILICON_DIOXIDE": {
+     "flat": 1200
+    },
+    "BUILDING_LIFE_SUPERCRITICAL_CO2": {
+     "flat": 1200
+    },
+    "BUILDING_INTERSTELLAR_BIOGEOCOMPUTER": {
+     "flat": 1200
+    },
+    "BUILDING_INTERSTELLAR_BIOTIC_SPHERE_WORLD": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 281279
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/galactic_ecology.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 140,
+  "gridY": 15
+ }
+}

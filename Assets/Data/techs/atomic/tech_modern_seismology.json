@@ -1,0 +1,136 @@
+{
+ "type": "TECH_MODERN_SEISMOLOGY",
+ "description": "TXT_KEY_TECH_MODERN_SEISMOLOGY",
+ "civilopedia": "TXT_KEY_TECH_MODERN_SEISMOLOGY_PEDIA",
+ "quote": "TXT_KEY_TECH_MODERN_SEISMOLOGY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_GEOTHERMAL_ENERGY",
+   "BONUS_METHANE_ICE",
+   "BONUS_RARE_EARTH_MINERALS"
+  ],
+  "buildings": [
+   "BUILDING_MODERN_EARTHWORKS",
+   "BUILDING_RARE_EARTH_MINERAL_MINE"
+  ],
+  "builds": [
+   "BUILD_GROUNDWATER_WELL",
+   "BUILD_MODERN_MINE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_GROUNDWATER_WELL",
+   "IMPROVEMENT_MODERN_MINE"
+  ],
+  "techs": [
+   "TECH_VOLCANOLOGY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BRICK_MASON",
+   "BUILDING_CONCRETE_MASON"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DEEP_SEA_EXPLORATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_MINING_CAMP": {
+     "flat": 700
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_HYDROCARBON_WELL": {
+     "flat": 1
+    },
+    "IMPROVEMENT_MOUNTAIN_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_OFFSHORE_PLATFORM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_MINING_CAMP": {
+     "flat": 700
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_HYDROCARBON_WELL": {
+     "flat": 1
+    },
+    "IMPROVEMENT_OFFSHORE_PLATFORM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_ARCHAEOLOGY_LAB": {
+     "flat": 700
+    },
+    "BUILDING_GEOLOGY_LAB": {
+     "flat": 700
+    },
+    "BUILDING_PALEONTOLOGY_LAB": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 13724
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_MODERN_SEISMOLOGY",
+  "soundMP": "AS2D_TECH_MODERN_SEISMOLOGY",
+  "icon": "Art/Interface/Buttons/TechTree/Modern_seismology.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 81,
+  "gridY": 15
+ }
+}

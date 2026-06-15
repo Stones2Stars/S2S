@@ -1,0 +1,84 @@
+{
+ "type": "TECH_DERIVATIVES",
+ "description": "TXT_KEY_TECH_DERIVATIVES",
+ "civilopedia": "TXT_KEY_TECH_DERIVATIVES_PEDIA",
+ "quote": "TXT_KEY_TECH_DERIVATIVES_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_HEDGE_FUND",
+   "BUILDING_PREDICTION_MARKET"
+  ],
+  "techs": [
+   "TECH_COMMERCIAL_SPACEFLIGHT",
+   "TECH_DIRECT_MERCHANDISING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_KNOWLEDGE_MANAGEMENT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_FINANCIAL_RISK_MONITOR": {
+     "flat": 800
+    },
+    "BUILDING_WALL_STREET": {
+     "percent": 5
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_PLANTATION": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HYDROCARBON_WELL": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "freeSpecialists": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 22074
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_DERIVATIVES",
+  "soundMP": "AS2D_TECH_DERIVATIVES",
+  "icon": "Art/Interface/Buttons/TechTree/derivatives.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 120,
+  "militaryWorth": 24,
+  "tradeable": true,
+  "gridX": 90,
+  "gridY": 9
+ }
+}

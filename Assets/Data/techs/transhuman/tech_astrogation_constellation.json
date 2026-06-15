@@ -1,0 +1,104 @@
+{
+ "type": "TECH_ASTROGATION_CONSTELLATION",
+ "description": "TXT_KEY_TECH_ASTROGATION_CONSTELLATION",
+ "civilopedia": "TXT_KEY_TECH_ASTROGATION_CONSTELLATION_PEDIA",
+ "quote": "TXT_KEY_TECH_ASTROGATION_CONSTELLATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_NANOSATELLITE_CONSTELLATION",
+   "BUILDING_INTERPLANETARY_TRANSPORT_NETWORK",
+   "BUILDING_INTERSTELLAR_PROBE",
+   "BUILDING_STARPORT",
+   "BUILDING_TRITON_GEOTHERMAL_POWER_PLANT"
+  ],
+  "builds": [
+   "BUILD_SOLAR_TRAJECTORY"
+  ],
+  "techs": [
+   "TECH_FRICTIONLESS_FLIGHT",
+   "TECH_ORBITAL_MEGASTRUCTURES"
+  ],
+  "units": [
+   "UNIT_INTERSTELLAR_PROBE",
+   "UNIT_INTERSTELLAR_REWARD",
+   "UNIT_OORT_CLOUD_REWARD",
+   "UNIT_SOLAR_WORKER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FLIGHT_SIMULATOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_KUIPER_BELT_EXPLORATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEGASTRUCTURE_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SYNERGETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SOCIAL_CALCULUS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WEIGHTLESS_FLIGHT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_CISLUNAR_SPACEPORT": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 70029
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_ASTROGATION_CONSTELLATION",
+  "soundMP": "AS2D_TECH_ASTROGATION_CONSTELLATION",
+  "icon": "Art/Interface/Buttons/TechTree/astrogationconstellation.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 114,
+  "gridY": 1
+ }
+}

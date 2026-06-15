@@ -1,0 +1,96 @@
+{
+ "type": "TECH_GRAVITRONICS",
+ "description": "TXT_KEY_TECH_GRAVITRONICS",
+ "civilopedia": "TXT_KEY_TECH_GRAVITRONICS_PEDIA",
+ "quote": "TXT_KEY_TECH_GRAVITRONICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ATOMIC_ASSEMBLER",
+   "BUILDING_CENTERPOINT_STATION",
+   "BUILDING_INTERSTELLAR_BLACK_HOLE_COMPUTER",
+   "BUILDING_INTERSTELLAR_BLACK_HOLE_EMS",
+   "BUILDING_INTERSTELLAR_EVENT_HORIZON_CITY",
+   "BUILDING_MULTIVAC",
+   "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER"
+  ],
+  "techs": [
+   "TECH_IMMORTALITY",
+   "TECH_ULTRACOMPUTING",
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER",
+   "BUILDING_NANOBOTIC_PRINTING_MILL",
+   "BUILDING_REPLICATOR_PLANT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TIME_TRAVEL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_APPLIED_RELATIVITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_KUGELBLITZ_FACTORY": {
+     "flat": 1200
+    },
+    "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET": {
+     "flat": 1200
+    },
+    "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 271404
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/gravitronics.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 139,
+  "gridY": 9
+ }
+}

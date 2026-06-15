@@ -1,0 +1,60 @@
+{
+ "type": "TECH_HOT_AIR_BALLOON",
+ "description": "TXT_KEY_TECH_HOT_AIR_BALLOON",
+ "civilopedia": "TXT_KEY_TECH_HOT_AIR_BALLOON_PEDIA",
+ "quote": "TXT_KEY_TECH_HOT_AIR_BALLOON_QUOTE",
+ "enables": {
+  "techs": [
+   "TECH_BALLOON_WARFARE"
+  ],
+  "units": [
+   "UNIT_AUGUSTINE_I",
+   "UNIT_BALLOON",
+   "UNIT_ZEPHYR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WEATHER_FORECASTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PHYSICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 3934
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_HOT_AIR_BALLOON",
+  "soundMP": "AS2D_TECH_HOT_AIR_BALLOON",
+  "icon": "Art/Interface/Buttons/TechTree/hotairballoon.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 40,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "gridX": 59,
+  "gridY": 13
+ }
+}

@@ -1,0 +1,72 @@
+{
+ "type": "TECH_DIVINATION",
+ "description": "TXT_KEY_TECH_DIVINATION",
+ "civilopedia": "TXT_KEY_TECH_DIVINATION_PEDIA",
+ "quote": "TXT_KEY_TECH_DIVINATION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUGUR",
+   "BUILDING_MYSTICS_HUT",
+   "BUILDING_THE_ORACLE"
+  ],
+  "civics": [
+   "CIVIC_PROPHETS"
+  ],
+  "techs": [
+   "TECH_ANDEANISM",
+   "TECH_MATRIARCHY",
+   "TECH_RESURRECTION",
+   "TECH_SHINTO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STARGAZING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SACRIFICE_CULT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PRIESTHOOD",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 213
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_DIVINATION",
+  "soundMP": "AS2D_TECH_DIVINATION",
+  "icon": "Art/Interface/Buttons/TechTree/divination.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "gridX": 27,
+  "gridY": 17
+ }
+}

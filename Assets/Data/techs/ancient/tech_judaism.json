@@ -1,0 +1,57 @@
+{
+ "type": "TECH_JUDAISM",
+ "description": "TXT_KEY_TECH_JUDAISM",
+ "civilopedia": "TXT_KEY_TECH_JUDAISM_PEDIA",
+ "quote": "TXT_KEY_TECH_JUDAISM_QUOTE",
+ "enables": {
+  "religions": [
+   "RELIGION_JUDAISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RESURRECTION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SCRIPTURES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 348
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_JUDAISM",
+  "soundMP": "AS2D_TECH_JUDAISM",
+  "icon": "Art/Interface/Buttons/TechTree/judaism.dds"
+ },
+ "identity": {
+  "global": true,
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "gridX": 31,
+  "gridY": 9
+ }
+}

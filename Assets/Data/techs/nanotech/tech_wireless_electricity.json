@@ -1,0 +1,148 @@
+{
+ "type": "TECH_WIRELESS_ELECTRICITY",
+ "description": "TXT_KEY_TECH_WIRELESS_ELECTRICITY",
+ "civilopedia": "TXT_KEY_TECH_WIRELESS_ELECTRICITY_PEDIA",
+ "quote": "TXT_KEY_TECH_WIRELESS_ELECTRICITY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANTHROPOMORPHICS_LAB",
+   "BUILDING_MINING_MECH_CONTROL_CENTER",
+   "BUILDING_WIRELESS_ELECTRIC_FENCE",
+   "BUILDING_WIRELESS_GRID"
+  ],
+  "techs": [
+   "TECH_ACCELERATED_GERMINATION",
+   "TECH_AMPLIFIED_WAVELENGTHS",
+   "TECH_EXOCORTEX_NETWORKS",
+   "TECH_INTERACTIVE_GLASS",
+   "TECH_PHOTON_THERMODYNAMICS",
+   "TECH_SUPERSONIC_RAILS"
+  ],
+  "units": [
+   "UNIT_TESLA_INFANTRY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BARBWIRE_FENCE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AUTOMATED_URBANIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ELECTROMAGNETIC_FIELD_SHIELDING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_RECHARGING_NODE": {
+     "flat": 900
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_MODERN_WINDMILL": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SOLAR_PANELS": {
+     "flat": 1
+    },
+    "IMPROVEMENT_TIDAL_HARNESS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_WIRELESS_NETWORKS": {
+     "flat": 900
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_HYDRO_DAM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_MODERN_WINDMILL": {
+     "flat": 1
+    },
+    "IMPROVEMENT_RADIO_TOWER": {
+     "flat": 1
+    },
+    "IMPROVEMENT_TIDAL_HARNESS": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SEA_MILL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_FACTORY_NANOGENERATORS": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_HIGH_ENERGY_LAB": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 42984
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_WIRELESS_ELECTRICITY",
+  "soundMP": "AS2D_TECH_WIRELESS_ELECTRICITY",
+  "icon": "Art/Interface/Buttons/TechTree/wireless_electricity.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 105,
+  "gridY": 5
+ }
+}

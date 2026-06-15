@@ -1,0 +1,123 @@
+{
+ "type": "TECH_COMMUNICATION_NETWORKS",
+ "description": "TXT_KEY_TECH_COMMUNICATION_NETWORKS",
+ "civilopedia": "TXT_KEY_TECH_COMMUNICATION_NETWORKS_PEDIA",
+ "quote": "TXT_KEY_TECH_COMMUNICATION_NETWORKS_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CELLPHONES"
+  ],
+  "buildings": [
+   "BUILDING_BLACK_HAT_HIDEOUT",
+   "BUILDING_BLACK_HAT_HIDEOUT_UNSANCTIONED",
+   "BUILDING_CELLPHONE_STORE",
+   "BUILDING_COMMUNICATIONS_SATELLITE",
+   "BUILDING_COMMUNICATION_TOWER",
+   "BUILDING_CONVENTION_CENTRE",
+   "BUILDING_EFFECT_GPS",
+   "BUILDING_FACTORY_CELLPHONES",
+   "BUILDING_GLOBAL_POSITIONING_SYSTEM",
+   "BUILDING_SCIENCE_SYMPOSIUM",
+   "BUILDING_TOKYO_SKY_TREE",
+   "BUILDING_WIRELESS_NETWORKS"
+  ],
+  "civics": [
+   "CIVIC_DIGITAL"
+  ],
+  "projects": [
+   "PROJECT_SDI"
+  ],
+  "promotions": [
+   "PROMOTION_GPS"
+  ],
+  "techs": [
+   "TECH_CLOUD_COMPUTING",
+   "TECH_CYBERWARFARE",
+   "TECH_KNOWLEDGE_MANAGEMENT"
+  ],
+  "units": [
+   "UNIT_STEALTH_BOMBER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CABARET_VOLTAIRE",
+   "BUILDING_TRADING_POST",
+   "BUILDING_ZUSE_COMPUTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CHAOS_THEORY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FIBER_OPTICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_ISP_OFFICES": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_ATOMIC_CLOCK": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_BELL_LABS": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 20610
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_COMMUNICATION_NETWORKS",
+  "soundMP": "AS2D_TECH_COMMUNICATION_NETWORKS",
+  "icon": ",Art/Interface/Buttons/TechTree/GlobalNetwork.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,1,8"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 88,
+  "gridY": 11
+ }
+}

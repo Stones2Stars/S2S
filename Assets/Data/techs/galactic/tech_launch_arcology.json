@@ -1,0 +1,95 @@
+{
+ "type": "TECH_LAUNCH_ARCOLOGY",
+ "description": "TXT_KEY_TECH_LAUNCH_ARCOLOGY",
+ "civilopedia": "TXT_KEY_TECH_LAUNCH_ARCOLOGY_PEDIA",
+ "quote": "TXT_KEY_TECH_LAUNCH_ARCOLOGY_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ELYSIUM",
+   "BUILDING_PLANET_CLOUD",
+   "BUILDING_TRITON_MILITARY_BASE"
+  ],
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING",
+   "TECH_CLOSED_ECONOMIES",
+   "TECH_FUSION_SPACECRAFT"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ADVANCED_FLOODWALL",
+   "BUILDING_DEEP_SEA_MINE",
+   "BUILDING_INTERNATIONAL_PORT",
+   "BUILDING_LIGHTHOUSE",
+   "BUILDING_PIER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INTERSTELLAR_TRAVEL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COLONY_ARCOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_STARPORT": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_VENUS_ARCOLOGY": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 130429
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_LAUNCH_ARCOLOGY",
+  "soundMP": "AS2D_TECH_LAUNCH_ARCOLOGY",
+  "icon": "Art/interface/buttons/TechTree/launch_arcology.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 125,
+  "gridY": 5
+ }
+}

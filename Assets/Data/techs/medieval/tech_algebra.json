@@ -1,0 +1,68 @@
+{
+ "type": "TECH_ALGEBRA",
+ "description": "TXT_KEY_TECH_ALGEBRA",
+ "civilopedia": "TXT_KEY_TECH_ALGEBRA_PEDIA",
+ "quote": "TXT_KEY_TECH_ALGEBRA_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_GREAT_MOSQUE_OF_DJENNE"
+  ],
+  "techs": [
+   "TECH_RENAISSANCE_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PERSPECTIVE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_EDUCATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_MATHEMATICS_ACADEMY": {
+     "flat": 400
+    }
+   }
+  }
+ },
+ "canFoundOnPeaks": {
+  "team": {
+   "enabler": true
+  }
+ },
+ "cost": {
+  "research": 1960
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_SCIENCE",
+  "sound": "AS2D_TECH_ALGEBRA",
+  "soundMP": "AS2D_TECH_ALGEBRA",
+  "icon": "Art/Interface/Buttons/TechTree/Algebra.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 49,
+  "gridY": 11
+ }
+}

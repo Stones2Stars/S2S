@@ -1,0 +1,81 @@
+{
+ "type": "TECH_QUANTUM_RAMJET",
+ "description": "TXT_KEY_TECH_QUANTUM_RAMJET",
+ "civilopedia": "TXT_KEY_TECH_QUANTUM_RAMJET_PEDIA",
+ "quote": "TXT_KEY_TECH_QUANTUM_RAMJET_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_QUANTUM_THRUSTERS",
+   "BUILDING_DEEP_SPACE_QUANTUM_THRUSTERS",
+   "BUILDING_INTERGALACTIC_TOURIST_AGENCY"
+  ],
+  "techs": [
+   "TECH_HORIZON_BREAKING",
+   "TECH_MENSIOKINESIS",
+   "TECH_STABLE_TIME_LOOPS"
+  ],
+  "units": [
+   "UNIT_DISTANT_COSMOS_REWARD",
+   "UNIT_QUANTUM_PROBE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ZERO_POINT_ENERGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_REACTIONLESS_DRIVE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ELECTROWEAK_MATTER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_INTERGALACTIC_STARPORT": {
+     "flat": 1200
+    },
+    "BUILDING_HIDE_AND_SEEK": {
+     "flat": 1200
+    },
+    "BUILDING_GALACTIC_PORT": {
+     "flat": 1200
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 352130
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/quantum_ramjet.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 146,
+  "gridY": 15
+ }
+}

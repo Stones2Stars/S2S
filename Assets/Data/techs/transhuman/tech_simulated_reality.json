@@ -1,0 +1,114 @@
+{
+ "type": "TECH_SIMULATED_REALITY",
+ "description": "TXT_KEY_TECH_SIMULATED_REALITY",
+ "civilopedia": "TXT_KEY_TECH_SIMULATED_REALITY_PEDIA",
+ "quote": "TXT_KEY_TECH_SIMULATED_REALITY_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_SOYLENT_GREEN"
+  ],
+  "buildings": [
+   "BUILDING_CISLUNAR_SIMULATED_WORLD",
+   "BUILDING_CYBERNETIC_PRISON",
+   "BUILDING_FACTORY_SOYLENT_GREEN",
+   "BUILDING_MARTIAN_SIMULATED_WORLD",
+   "BUILDING_MIND_CONTROL_CENTER",
+   "BUILDING_SIMULATED_WORLD"
+  ],
+  "civics": [
+   "CIVIC_MIND_CONTROL"
+  ],
+  "techs": [
+   "TECH_BINARY_SEMIOTICS",
+   "TECH_CYBERPUNK",
+   "TECH_MEGASTRUCTURE_ENGINEERING",
+   "TECH_SOCIAL_CALCULUS",
+   "TECH_SYNERGETICS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_COMBAT_SIMULATOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BINARY_LEGISLATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SYNTHETIC_SYNESTHESIA",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NEURON_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_UNIFICATION_PHYSICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_SOMA_DISPENSARY": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "espionage": {
+  "city": {
+   "buildings": {
+    "BUILDING_SOMA_DISPENSARY": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 65511
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_SIMULATED_REALITY",
+  "soundMP": "AS2D_TECH_SIMULATED_REALITY",
+  "icon": "Art/Interface/Buttons/TechTree/simulatedreality.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 112,
+  "gridY": 5
+ }
+}

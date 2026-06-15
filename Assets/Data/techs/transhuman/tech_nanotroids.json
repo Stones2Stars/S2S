@@ -1,0 +1,101 @@
+{
+ "type": "TECH_NANOTROIDS",
+ "description": "TXT_KEY_TECH_NANOTROIDS",
+ "civilopedia": "TXT_KEY_TECH_NANOTROIDS_PEDIA",
+ "quote": "TXT_KEY_TECH_NANOTROIDS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CLAYTRONIC_CITY",
+   "BUILDING_HEALTHCARE_MEGACOMPLEX",
+   "BUILDING_HOLODECK",
+   "BUILDING_NANOMORPHIC_REPLICATOR"
+  ],
+  "projects": [
+   "PROJECT_SS_STASIS_CHAMBER"
+  ],
+  "techs": [
+   "TECH_GALACTIC_LIFESTYLE",
+   "TECH_GEOSCULPTING",
+   "TECH_PARATERRAFORMING"
+  ],
+  "units": [
+   "UNIT_NANITE_CLOUD",
+   "UNIT_NANOWORKER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ACUPUNCTURISTS_SHOP",
+   "BUILDING_ANCIENT_VETERINARIAN",
+   "BUILDING_APOTHECARY_SHOP",
+   "BUILDING_GENTLEMANS_CLUB",
+   "BUILDING_HEALING_CLAY",
+   "BUILDING_HERBALIST",
+   "BUILDING_HUMPHREY_METRODOME",
+   "BUILDING_LAW_FIRM",
+   "BUILDING_LAW_SCHOOL",
+   "BUILDING_LEECH_CATCHER",
+   "BUILDING_LOCAL_COURTHOUSE",
+   "BUILDING_MECHANICAL_ORGANS_LAB",
+   "BUILDING_MUD_BATH",
+   "BUILDING_SAGE",
+   "BUILDING_SNAKE_OIL_SALES",
+   "BUILDING_SURGEONS_OFFICE",
+   "BUILDING_SWEAT_LODGE",
+   "BUILDING_TRANCE_HUT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WEATHER_CONTROL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANO_DISASSEMBLY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "buildings": {
+    "BUILDING_DEEP_SPACE_CLOAKING": {
+     "flat": 1000
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 93709
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 9
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_NANOTROIDS",
+  "soundMP": "AS2D_TECH_NANOTROIDS",
+  "icon": "Art/Buttons/Techs/TechNanotroids.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 50,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 122,
+  "gridY": 7
+ }
+}

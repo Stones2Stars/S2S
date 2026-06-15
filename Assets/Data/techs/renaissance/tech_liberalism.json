@@ -1,0 +1,88 @@
+{
+ "type": "TECH_LIBERALISM",
+ "description": "TXT_KEY_TECH_LIBERALISM",
+ "civilopedia": "TXT_KEY_TECH_LIBERALISM_PEDIA",
+ "quote": "TXT_KEY_TECH_LIBERALISM_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_NATIONAL_LIBRARY_SERVICE",
+   "BUILDING_UNIVERSAL_HEALTH_CARE"
+  ],
+  "civics": [
+   "CIVIC_EGALITARIAN"
+  ],
+  "projects": [
+   "PROJECT_ENCYCLOPEDIA"
+  ],
+  "promotions": [
+   "PROMOTION_FOMENT6",
+   "PROMOTION_INSPIRE6"
+  ],
+  "techs": [
+   "TECH_CONSTITUTION",
+   "TECH_ECONOMICS"
+  ],
+  "units": [
+   "UNIT_HALAKWULUP",
+   "UNIT_PEDRO_DE_AGUADO",
+   "UNIT_STEFAN_RAZVAN",
+   "UNIT_TIRADENTES",
+   "UNIT_TUXAWA",
+   "UNIT_XICOTENCATL_II"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ENLIGHTENMENT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
+     "percent": -5
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 3484
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_LIBERALISM",
+  "soundMP": "AS2D_TECH_MP_LIBERALISM",
+  "icon": ",Art/Interface/Buttons/TechTree/Liberalism.dds,Art/Interface/Buttons/TechTree_Atlas.dds,6,10"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 57,
+  "gridY": 9
+ }
+}

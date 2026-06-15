@@ -1,0 +1,74 @@
+{
+ "type": "TECH_PROPAGANDA",
+ "description": "TXT_KEY_TECH_PROPAGANDA",
+ "civilopedia": "TXT_KEY_TECH_PROPAGANDA_PEDIA",
+ "quote": "TXT_KEY_TECH_PROPAGANDA_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ADVERTISING_AGENCY",
+   "BUILDING_CRIME_SECTARIAN_VIOLENCE",
+   "BUILDING_PROPAGANDA_NET",
+   "BUILDING_PROPAGANDA_OFFICE"
+  ],
+  "civics": [
+   "CIVIC_PROPAGANDA"
+  ],
+  "techs": [
+   "TECH_COMMUNISM",
+   "TECH_CONSUMERISM",
+   "TECH_FASCISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MOTION_PICTURES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ATOMIC_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_PSYCHOLOGY_LAB": {
+     "flat": 700
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 9484
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_ESPIONAGE": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_PROPAGANDA",
+  "soundMP": "AS2D_TECH_PROPAGANDA",
+  "icon": "Art/Interface/Buttons/TechTree/propaganda.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 72,
+  "gridY": 7
+ }
+}

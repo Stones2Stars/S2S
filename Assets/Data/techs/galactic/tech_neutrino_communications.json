@@ -1,0 +1,83 @@
+{
+ "type": "TECH_NEUTRINO_COMMUNICATIONS",
+ "description": "TXT_KEY_TECH_NEUTRINO_COMMUNICATIONS",
+ "civilopedia": "TXT_KEY_TECH_NEUTRINO_COMMUNICATIONS_PEDIA",
+ "quote": "TXT_KEY_TECH_NEUTRINO_COMMUNICATIONS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_NEUTRINO_BEACON",
+   "BUILDING_INTERSTELLAR_NEUTRINO_SCANNER",
+   "BUILDING_NEUTRINO_SURVEILLANCE"
+  ],
+  "techs": [
+   "TECH_COSMIC_LIFESTYLE",
+   "TECH_EXTREME_ENERGY_WEAPONS",
+   "TECH_INTERGALACTIC_COLONIZATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STELLAR_COMPUTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WORMHOLE_TRAVERSAL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_STELLAR_ENGINE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_DEEP_SPACE_ALIEN_SIGNAL_DECODER": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "espionage": {
+  "city": {
+   "buildings": {
+    "BUILDING_DEEP_SPACE_ALIEN_SIGNAL_DECODER": {
+     "flat": 1100
+    },
+    "BUILDING_INTERSTELLAR_BROADCAST_NODE": {
+     "flat": 1100
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 194821
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/interface/buttons/TechTree/neutrino_communications.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 136,
+  "gridY": 3
+ }
+}

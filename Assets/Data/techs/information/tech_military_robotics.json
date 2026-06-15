@@ -1,0 +1,103 @@
+{
+ "type": "TECH_MILITARY_ROBOTICS",
+ "description": "TXT_KEY_TECH_MILITARY_ROBOTICS",
+ "civilopedia": "TXT_KEY_TECH_MILITARY_ROBOTICS_PEDIA",
+ "quote": "TXT_KEY_TECH_MILITARY_ROBOTICS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUTOMATED_DEFENSES",
+   "BUILDING_CONTROL_CENTER",
+   "BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
+   "BUILDING_MILITARY_SPACEPORT"
+  ],
+  "civics": [
+   "CIVIC_ROBOTIC"
+  ],
+  "techs": [
+   "TECH_DISASTER_ROBOTS"
+  ],
+  "units": [
+   "UNIT_ACV",
+   "UNIT_ACVSAM",
+   "UNIT_FUTURE_APC",
+   "UNIT_HYBRID_GUNSHIP",
+   "UNIT_PRECISION_ATTACK_MISSILE",
+   "UNIT_UNMANNED_HELICOPTER",
+   "UNIT_UNMANNED_MACHINE_GUN",
+   "UNIT_UNMANNED_TRIKE",
+   "UNIT_WARLORDVI",
+   "UNIT_WARLORDVIS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AMMUNITIONS_WORKSHOP",
+   "BUILDING_DRYDOCK",
+   "BUILDING_GARRISON",
+   "BUILDING_GUNSMITH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_UNMANNED_NAVAL_VEHICLES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WAR_SIMULATIONS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_POWERED_EXOSKELETON",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_DARPA": {
+     "flat": 800
+    },
+    "BUILDING_ROBOTICS_LAB": {
+     "flat": 800
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 28189
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_MILITARY_ROBOTICS",
+  "soundMP": "AS2D_TECH_MILITARY_ROBOTICS",
+  "icon": ",Art/Interface/Buttons/TechTree/military_robotics.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,5,11"
+ },
+ "identity": {
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 97,
+  "gridY": 15
+ }
+}

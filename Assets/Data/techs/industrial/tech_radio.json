@@ -1,0 +1,108 @@
+{
+ "type": "TECH_RADIO",
+ "description": "TXT_KEY_TECH_RADIO",
+ "civilopedia": "TXT_KEY_TECH_RADIO_PEDIA",
+ "quote": "TXT_KEY_TECH_RADIO_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_RADIOS"
+  ],
+  "buildings": [
+   "BUILDING_BROADCAST_TOWER",
+   "BUILDING_CRISTO_REDENTOR",
+   "BUILDING_EIFFEL_TOWER",
+   "BUILDING_FACTORY_RADIOS",
+   "BUILDING_LOCAL_RADIO_STATION",
+   "BUILDING_LOTUS_TEMPLE",
+   "BUILDING_NATIONAL_WEATHER_SERVICE"
+  ],
+  "builds": [
+   "BUILD_RADIO_TOWER"
+  ],
+  "improvements": [
+   "IMPROVEMENT_RADIO_TOWER"
+  ],
+  "promotions": [
+   "PROMOTION_TORPEDOES"
+  ],
+  "techs": [
+   "TECH_ATOMIC_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_POLICE_CAR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TEAM_SPORTS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TELEPHONE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_BRASS_INSTRUMENT_MAKER": {
+     "flat": 600
+    },
+    "BUILDING_MUSIC_FACTORY": {
+     "flat": 2400
+    },
+    "BUILDING_PERCUSSION_INSTRUMENT_MAKER": {
+     "flat": 600
+    },
+    "BUILDING_STRING_INSTRUMENT_MAKER": {
+     "flat": 600
+    },
+    "BUILDING_WOODWIND_INSTRUMENT_MAKER": {
+     "flat": 600
+    }
+   }
+  }
+ },
+ "dcmAirBomb1": {
+  "team": {
+   "enabler": true
+  }
+ },
+ "cost": {
+  "research": 7718
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_CULTURE": 9
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_RADIO",
+  "soundMP": "AS2D_TECH_MP_RADIO",
+  "icon": ",Art/Interface/Buttons/TechTree/Radio.dds,Art/Interface/Buttons/TechTree_Atlas.dds,7,11"
+ },
+ "identity": {
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 70,
+  "gridY": 9
+ }
+}

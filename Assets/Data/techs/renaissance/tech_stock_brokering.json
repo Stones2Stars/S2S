@@ -1,0 +1,78 @@
+{
+ "type": "TECH_STOCK_BROKERING",
+ "description": "TXT_KEY_TECH_STOCK_BROKERING",
+ "civilopedia": "TXT_KEY_TECH_STOCK_BROKERING_PEDIA",
+ "quote": "TXT_KEY_TECH_STOCK_BROKERING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ACCOUNTING_FIRM",
+   "BUILDING_CRIME_INSIDER_TRADING",
+   "BUILDING_STOCK_MARKET",
+   "BUILDING_WALL_STREET"
+  ],
+  "techs": [
+   "TECH_ECONOMICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MERCANTILISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CORPORATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "tradeRouteYield": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "corporationRevenue": {
+  "empire": {
+   "percent": 15
+  }
+ },
+ "corporationMaintenance": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "cost": {
+  "research": 3074
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_GOLD": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_STOCK_BROKERING",
+  "soundMP": "AS2D_TECH_STOCK_BROKERING",
+  "icon": "Art/Interface/Buttons/TechTree/stockbrokering.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 55,
+  "gridY": 15
+ }
+}

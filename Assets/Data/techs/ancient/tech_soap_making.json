@@ -1,0 +1,57 @@
+{
+ "type": "TECH_SOAP_MAKING",
+ "description": "TXT_KEY_TECH_SOAP_MAKING",
+ "civilopedia": "TXT_KEY_TECH_SOAP_MAKING_PEDIA",
+ "quote": "TXT_KEY_TECH_SOAP_MAKING_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_LYE",
+   "BONUS_SOAP"
+  ],
+  "buildings": [
+   "BUILDING_LYE_MAKER",
+   "BUILDING_SOAP_MAKER"
+  ],
+  "techs": [
+   "TECH_ANCIENT_MEDICINE",
+   "TECH_CANDLE_MAKING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FOLK_MEDICINE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 187
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_CULTURE",
+  "sound": "AS2D_TECH_SOAP_MAKING",
+  "soundMP": "AS2D_TECH_SOAP_MAKING",
+  "icon": "Art/Interface/Buttons/TechTree/soapmaking.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 26,
+  "gridY": 1
+ }
+}

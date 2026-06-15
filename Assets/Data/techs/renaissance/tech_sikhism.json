@@ -1,0 +1,53 @@
+{
+ "type": "TECH_SIKHISM",
+ "description": "TXT_KEY_TECH_SIKHISM",
+ "civilopedia": "TXT_KEY_TECH_SIKHISM_PEDIA",
+ "quote": "TXT_KEY_TECH_SIKHISM_QUOTE",
+ "enables": {
+  "religions": [
+   "RELIGION_SIKHISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HUMANISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 2528
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_RELIGION",
+  "sound": "AS2D_TECH_SIKHISM",
+  "soundMP": "AS2D_TECH_GENERIC",
+  "icon": "Art/Interface/Buttons/TechTree/sikhism.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_RENAISSANCE",
+  "global": true,
+  "gridX": 52,
+  "gridY": 11,
+  "worth": 8
+ }
+}

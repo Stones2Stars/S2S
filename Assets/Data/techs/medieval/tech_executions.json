@@ -1,0 +1,71 @@
+{
+ "type": "TECH_EXECUTIONS",
+ "description": "TXT_KEY_TECH_EXECUTIONS",
+ "civilopedia": "TXT_KEY_TECH_EXECUTIONS_PEDIA",
+ "quote": "TXT_KEY_TECH_EXECUTIONS_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_GALLOWS"
+  ],
+  "techs": [
+   "TECH_PARLIAMENTS",
+   "TECH_TORTURE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_PUBLIC_STONING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CIVIL_SERVICE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1230
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_MILITARY",
+  "sound": "AS2D_TECH_EXECUTIONS",
+  "soundMP": "AS2D_TECH_EXECUTIONS",
+  "icon": "Art/Interface/Buttons/TechTree/executions.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 43,
+  "gridY": 11
+ }
+}

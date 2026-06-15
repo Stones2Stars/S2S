@@ -1,0 +1,123 @@
+{
+ "type": "TECH_VERTICAL_FARMING",
+ "description": "TXT_KEY_TECH_VERTICAL_FARMING",
+ "civilopedia": "TXT_KEY_TECH_VERTICAL_FARMING_PEDIA",
+ "quote": "TXT_KEY_TECH_VERTICAL_FARMING_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_I",
+   "BUILDING_FARMSCRAPER_II",
+   "BUILDING_FARMSCRAPER_III"
+  ],
+  "builds": [
+   "BUILD_VERTICAL_FARM"
+  ],
+  "improvements": [
+   "IMPROVEMENT_VERTICAL_FARM"
+  ],
+  "techs": [
+   "TECH_ACCELERATED_GERMINATION"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BARLEY_GATHERER",
+   "BUILDING_CORN_GATHERER",
+   "BUILDING_PESTS_CROWS",
+   "BUILDING_RICE_GATHERER",
+   "BUILDING_WHEAT_GATHERER",
+   "BUILDING_YASNAYA_POLYANA"
+  ],
+  "builds": [
+   "BUILD_MUSHROOM_GATHERER",
+   "BUILD_ORCHARD",
+   "BUILD_PASTURE",
+   "BUILD_PLANTATION",
+   "BUILD_SILK_FARM",
+   "BUILD_WINERY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AUGMENTED_CONSUMABLES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AUTOMATED_URBANIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_CISLUNAR_AGRICULTURAL_LAB": {
+     "flat": 900
+    },
+    "BUILDING_FARM_BOT_CONTROL_CENTER": {
+     "flat": 900
+    }
+   }
+  },
+  "team": {
+   "improvements": {
+    "IMPROVEMENT_COLONY_HYDROPONICS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_FACTORY_OLED": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "buildings": {
+    "BUILDING_CHEMICALS_DISTRICT": {
+     "flat": 900
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 42984
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_GROWTH",
+  "sound": "AS2D_TECH_VERTICAL_FARMING",
+  "soundMP": "AS2D_TECH_VERTICAL_FARMING",
+  "icon": "Art/Interface/Buttons/TechTree/Vertical_Farming.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 105,
+  "gridY": 13
+ }
+}

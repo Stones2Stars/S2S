@@ -1,0 +1,75 @@
+{
+ "type": "TECH_ASCENSION",
+ "description": "TXT_KEY_TECH_ASCENSION",
+ "civilopedia": "TXT_KEY_TECH_ASCENSION_PEDIA",
+ "quote": "TXT_KEY_TECH_ASCENSION_QUOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASCENSION_GATE",
+   "BUILDING_ASCENSION_STUDIO",
+   "BUILDING_INTERSTELLAR_HOLOGRAPHIC_MULTIVERSE"
+  ],
+  "techs": [
+   "TECH_MACROVERSE_TRAVERSAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TIMELINE_RECTIFICATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_UNIVERSAL_SINGULARITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE": {
+     "flat": 1300
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 642419
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_ASCENSION",
+  "soundMP": "AS2D_TECH_ASCENSION",
+  "icon": "Art/Interface/Buttons/TechTree/ascension.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 157,
+  "gridY": 9
+ }
+}

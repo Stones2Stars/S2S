@@ -1,0 +1,69 @@
+{
+ "type": "TECH_APICULTURE",
+ "description": "TXT_KEY_TECH_APICULTURE",
+ "civilopedia": "TXT_KEY_TECH_APICULTURE_PEDIA",
+ "quote": "TXT_KEY_TECH_APICULTURE_QUOTE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CANDY",
+   "BONUS_HONEY",
+   "BONUS_WAX"
+  ],
+  "buildings": [
+   "BUILDING_APIARY",
+   "BUILDING_BEE_BOMBS",
+   "BUILDING_CANDY_SHOP",
+   "BUILDING_PESTS_WASPS"
+  ],
+  "techs": [
+   "TECH_ORCHARDS",
+   "TECH_SERICULTURE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_POTTERY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TAXONOMY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 110
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 9
+   }
+  ]
+ },
+ "art": {
+  "advisor": "ADVISOR_ECONOMY",
+  "sound": "AS2D_TECH_APICULTURE",
+  "soundMP": "AS2D_TECH_APICULTURE",
+  "icon": "Art/Interface/Buttons/TechTree/apiculture2.dds"
+ },
+ "identity": {
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "gridX": 22,
+  "gridY": 1
+ }
+}
