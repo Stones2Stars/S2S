@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_APACHE",
+ "description": "TXT_KEY_BONUS_APACHE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_APACHE_CAVALRY",
+   "UNIT_COCHISE",
+   "UNIT_GERONIMO"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_APACHE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

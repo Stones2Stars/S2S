@@ -1,0 +1,22 @@
+{
+ "type": "BONUS_EXOSKELETONS",
+ "description": "TXT_KEY_BONUS_EXOSKELETONS",
+ "civilopedia": "TXT_KEY_BONUS_EXOSKELETONS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANTHROPOMORPHICS_LAB",
+   "BUILDING_FACTORY_BIONIC_SUITS",
+   "BUILDING_MECH_ASSEMBLY_PLANT",
+   "BUILDING_PLATINUM_RECLAMATION_PLANT"
+  ],
+  "units": [
+   "UNIT_EXOARMORED_INFANTRY"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_EXOSKELETONS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

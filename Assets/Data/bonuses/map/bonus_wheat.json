@@ -1,0 +1,78 @@
+{
+ "type": "BONUS_WHEAT",
+ "description": "TXT_KEY_BONUS_WHEAT",
+ "civilopedia": "TXT_KEY_BONUS_WHEAT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CATCHER_CANARY",
+   "BUILDING_CULTURE_BABYLONIAN",
+   "BUILDING_CULTURE_BENIN",
+   "BUILDING_CULTURE_ITALIAN",
+   "BUILDING_CULTURE_MAPUCHE",
+   "BUILDING_CULTURE_SENNAR",
+   "BUILDING_DIG_SITE_SMILODON_FOSSILS",
+   "BUILDING_FARM_CROP_CARROT",
+   "BUILDING_FARM_CROP_MILLET",
+   "BUILDING_FARM_CROP_OAT",
+   "BUILDING_FARM_CROP_QUINOA",
+   "BUILDING_FARM_CROP_RADISH",
+   "BUILDING_FARM_CROP_RYE",
+   "BUILDING_FARM_CROP_SESAME",
+   "BUILDING_FARM_CROP_SORGHUM",
+   "BUILDING_FARM_CROP_SOYBEAN",
+   "BUILDING_FARM_CROP_WHEAT",
+   "BUILDING_FARM_FLOWER_TULIP",
+   "BUILDING_GROVE_OAK",
+   "BUILDING_MEALWORM_GATHERER",
+   "BUILDING_MOUSE_BREEDER",
+   "BUILDING_NATURE_ALTAR_WHEAT_GOD",
+   "BUILDING_NATURE_CIRCLE_WHEAT_GOD",
+   "BUILDING_ORCHARD_BREADFRUIT",
+   "BUILDING_TEMPLE_OF_KI_WHEAT",
+   "BUILDING_WHEAT_GATHERER"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_WHEAT"
+ },
+ "mapGeneration": {
+  "placementOrder": 6,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "minLatitude": 10,
+  "maxLatitude": 50,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 16,
+  "area": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_GRASSLAND"
+  ],
+  "validFeatures": [
+   "FEATURE_FLOOD_PLAINS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_DESERT",
+   "TERRAIN_PLAINS"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CROP"
+ }
+}

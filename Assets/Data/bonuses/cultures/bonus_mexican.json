@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_MEXICAN",
+ "description": "TXT_KEY_BONUS_MEXICAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_AUGUSTINE_I",
+   "UNIT_MANUELITO",
+   "UNIT_MEXICO_RURALES",
+   "UNIT_PANCHO_VILLA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_MEXICAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

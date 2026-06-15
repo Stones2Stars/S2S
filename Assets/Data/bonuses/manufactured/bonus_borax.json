@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_BORAX",
+ "description": "TXT_KEY_BONUS_BORAX",
+ "civilopedia": "TXT_KEY_BONUS_BORAX_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_BORAX"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

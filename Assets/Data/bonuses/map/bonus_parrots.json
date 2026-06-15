@@ -1,0 +1,78 @@
+{
+ "type": "BONUS_PARROTS",
+ "description": "TXT_KEY_BONUS_PARROTS",
+ "civilopedia": "TXT_KEY_BONUS_PARROTS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASSASSIN_BUG_GATHERER",
+   "BUILDING_BIRD_CALLER",
+   "BUILDING_CARRION_GATHERER",
+   "BUILDING_CATCHER_BIRDS_OF_PARADISE",
+   "BUILDING_CATCHER_CANARY",
+   "BUILDING_CATCHER_COCKATOO",
+   "BUILDING_CATCHER_HUMMINGBIRD",
+   "BUILDING_CATCHER_JUNGLEFOWL",
+   "BUILDING_CATCHER_LYREBIRD",
+   "BUILDING_CATCHER_MACAW",
+   "BUILDING_CATCHER_PARAKEET",
+   "BUILDING_CATCHER_PARROT",
+   "BUILDING_CATCHER_PEACOCK",
+   "BUILDING_CATCHER_QUETZAL",
+   "BUILDING_CATCHER_TOUCAN",
+   "BUILDING_CULTURE_AMIS",
+   "BUILDING_CULTURE_OMANI",
+   "BUILDING_CULTURE_TUPI",
+   "BUILDING_DISEASE_BIRD_FLU",
+   "BUILDING_ORNITHOLOGY_LAB",
+   "BUILDING_PARROT_AVIARY"
+  ]
+ },
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_PARROTS"
+ },
+ "mapGeneration": {
+  "placementOrder": 6,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "maxLatitude": 45,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 100,
+  "hills": true,
+  "flatlands": true,
+  "normalize": true,
+  "validFeatures": [
+   "FEATURE_JUNGLE",
+   "FEATURE_VERY_TALL_GRASS",
+   "FEATURE_OASIS",
+   "FEATURE_MANGROVE"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_DESERT",
+   "TERRAIN_PLAINS",
+   "TERRAIN_DUNES",
+   "TERRAIN_SCRUB",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_MARSH"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_LUXURY"
+ }
+}

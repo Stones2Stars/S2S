@@ -1,0 +1,83 @@
+{
+ "type": "BONUS_CAMEL",
+ "description": "TXT_KEY_BONUS_CAMEL",
+ "civilopedia": "TXT_KEY_BONUS_CAMEL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_CAMEL",
+   "BUILDING_CARRION_GATHERER",
+   "BUILDING_CENTRAL_BREEDER_CAMEL",
+   "BUILDING_CULTURE_ARABIAN",
+   "BUILDING_CULTURE_KUSHAN",
+   "BUILDING_CULTURE_KUSHITE",
+   "BUILDING_CULTURE_LYDIAN",
+   "BUILDING_CULTURE_NUMIDIAN",
+   "BUILDING_CULTURE_TUAREG",
+   "BUILDING_CULTURE_UIGHUR",
+   "BUILDING_FARM_ANIMAL_CAMEL",
+   "BUILDING_KINGS_TOURNAMENT",
+   "BUILDING_RIDING_SCHOOL",
+   "BUILDING_ROYAL_TOURNAMENT"
+  ],
+  "units": [
+   "UNIT_ARABIA_CAMELARCHER",
+   "UNIT_BACTRIAN_CATAPHRACT",
+   "UNIT_CAMEL_ARCHER",
+   "UNIT_CAMEL_CAVALRY",
+   "UNIT_CAMEL_CUIRASSIER",
+   "UNIT_CAMEL_GUNNER",
+   "UNIT_CAMEL_KNIGHT",
+   "UNIT_CAMEL_RIDER",
+   "UNIT_CAMEL_TRENCH_CAVALRY",
+   "UNIT_NEANDERTHAL_SHEPHERD",
+   "UNIT_SHEPHERD",
+   "UNIT_TAMED_CAMEL",
+   "UNIT_TUAREG_CAMEL"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CAMEL"
+ },
+ "mapGeneration": {
+  "placementOrder": 0,
+  "constAppearance": 200,
+  "minAreaSize": 4,
+  "maxLatitude": 65,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 16,
+  "uniqueRange": 1,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_SCRUB"
+  ],
+  "validFeatures": [
+   "FEATURE_FLOOD_PLAINS",
+   "FEATURE_OASIS",
+   "FEATURE_CACTUS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_DUNES"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_STRATEGIC"
+ }
+}

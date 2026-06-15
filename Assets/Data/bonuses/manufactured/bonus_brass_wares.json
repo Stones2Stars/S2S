@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_BRASS_WARES",
+ "description": "TXT_KEY_BONUS_BRASS_WARES",
+ "civilopedia": "TXT_KEY_BONUS_WARES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARMOURER",
+   "BUILDING_BRASS_INSTRUMENT_MAKER",
+   "BUILDING_CLOCKWORK_WORKSHOP",
+   "BUILDING_FIRE_HYDRANTS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BRASS_WARES"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

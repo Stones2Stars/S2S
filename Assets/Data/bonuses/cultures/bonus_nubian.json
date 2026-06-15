@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_NUBIAN",
+ "description": "TXT_KEY_BONUS_NUBIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_KUSH_ARCHER",
+   "UNIT_TAHARQA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_NUBIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

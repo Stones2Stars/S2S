@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_FLAX_FIBERS",
+ "description": "TXT_KEY_BONUS_FLAX_FIBERS",
+ "civilopedia": "TXT_KEY_BONUS_FLAX_FIBERS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_CLOTH",
+   "BUILDING_TAPESTRY_MAKERS_WORKSHOP",
+   "BUILDING_WEAVER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_FLAX_FIBERS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

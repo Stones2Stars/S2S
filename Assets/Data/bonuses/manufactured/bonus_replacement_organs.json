@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_REPLACEMENT_ORGANS",
+ "description": "TXT_KEY_BONUS_REPLACEMENT_ORGANS",
+ "civilopedia": "TXT_KEY_BONUS_REPLACEMENT_ORGANS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUGMENTED_ORGAN_LAB"
+  ]
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_REPLACEMENT_ORGANS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

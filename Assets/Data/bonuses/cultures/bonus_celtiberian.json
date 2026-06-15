@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_CELTIBERIAN",
+ "description": "TXT_KEY_BONUS_CELTIBERIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_BALEARIC_SLINGERS",
+   "UNIT_VIRIATHUS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CELTIBERIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

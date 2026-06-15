@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_ROASTED_COFFEE",
+ "description": "TXT_KEY_BONUS_ROASTED_COFFEE",
+ "civilopedia": "TXT_KEY_BONUS_ROASTED_COFFEE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAFE",
+   "BUILDING_COFFEE_SHOP"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ROASTED_COFFEE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

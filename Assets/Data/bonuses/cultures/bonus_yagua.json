@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_YAGUA",
+ "description": "TXT_KEY_BONUS_YAGUA",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_RIMYURA_WARRIORS",
+   "UNIT_YAWAR_RUNA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_YAGUA"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

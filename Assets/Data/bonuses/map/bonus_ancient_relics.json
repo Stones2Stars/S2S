@@ -1,0 +1,58 @@
+{
+ "type": "BONUS_ANCIENT_RELICS",
+ "description": "TXT_KEY_BONUS_ANCIENT_RELICS",
+ "civilopedia": "TXT_KEY_BONUS_ANCIENT_RELICS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ROSETTA_STONE",
+   "BUILDING_UNESCO_HERITAGE_SITE"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": -2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ANCIENT_RELICS"
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 50,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "hills": true,
+  "flatlands": true,
+  "noRiverSide": true,
+  "validTerrains": [
+   "TERRAIN_DESERT",
+   "TERRAIN_MARSH",
+   "TERRAIN_DUNES"
+  ],
+  "validFeatures": [
+   "FEATURE_JUNGLE",
+   "FEATURE_SWAMP",
+   "FEATURE_BAMBOO"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MISC"
+ }
+}

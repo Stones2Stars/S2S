@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_SINTASHTA",
+ "description": "TXT_KEY_BONUS_SINTASHTA",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_GANDR",
+   "UNIT_SINTASHTA_CHARIOT"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SINTASHTA"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

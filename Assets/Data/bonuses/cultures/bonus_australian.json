@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_AUSTRALIAN",
+ "description": "TXT_KEY_BONUS_AUSTRALIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_DIGGER",
+   "UNIT_HENRY_PARKES",
+   "UNIT_JOHN_MONASH"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_AUSTRALIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

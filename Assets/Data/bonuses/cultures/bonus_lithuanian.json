@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_LITHUANIAN",
+ "description": "TXT_KEY_BONUS_LITHUANIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_MINDAUGAS",
+   "UNIT_PETYHORCY"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_LITHUANIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

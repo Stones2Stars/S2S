@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_VIETNAMESE",
+ "description": "TXT_KEY_BONUS_VIETNAMESE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_QUANG_TRUNG",
+   "UNIT_TRUNG_SISTERS",
+   "UNIT_VIETCONG"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_VIETNAMESE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,53 @@
+{
+ "type": "BONUS_EXTRATERRESTRIAL_MICROBES",
+ "description": "TXT_KEY_BONUS_EXTRATERRESTRIAL_MICROBES",
+ "civilopedia": "TXT_KEY_BONUS_EXTRATERRESTRIAL_MICROBES_PEDIA",
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_EXTRATERRESTRIAL_MICROBES"
+ },
+ "mapGeneration": {
+  "constAppearance": 35,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 32,
+  "area": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_TITAN",
+   "TERRAIN_EUROPA",
+   "TERRAIN_ENCELADUS",
+   "TERRAIN_MARTIAN_ICE",
+   "TERRAIN_MARTIAN_PERMAFROST",
+   "TERRAIN_MARTIAN_DESERT",
+   "TERRAIN_MARTIAN_DUNES",
+   "TERRAIN_MARTIAN_BARREN",
+   "TERRAIN_MARTIAN_PLAINS",
+   "TERRAIN_MARTIAN_ROCKY"
+  ],
+  "placementOrder": 9
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_PRODUCTION"
+ }
+}

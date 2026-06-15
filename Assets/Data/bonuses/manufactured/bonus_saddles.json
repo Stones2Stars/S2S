@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_SADDLES",
+ "description": "TXT_KEY_BONUS_SADDLES",
+ "civilopedia": "TXT_KEY_BONUS_SADDLES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_KNIGHTS_STABLE",
+   "BUILDING_MERCENARY_STABLES",
+   "BUILDING_MODERN_STABLE",
+   "BUILDING_STABLE"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SADDLES"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

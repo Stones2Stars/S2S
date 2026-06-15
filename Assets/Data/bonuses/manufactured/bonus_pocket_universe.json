@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_POCKET_UNIVERSE",
+ "description": "TXT_KEY_BONUS_POCKET_UNIVERSE",
+ "civilopedia": "TXT_KEY_BONUS_POCKET_UNIVERSE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_POCKET_UNIVERSE_HOTEL",
+   "BUILDING_POCKET_UNIVERSE_STORAGE"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_POCKET_UNIVERSE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

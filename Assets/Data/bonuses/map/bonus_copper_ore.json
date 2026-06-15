@@ -1,0 +1,76 @@
+{
+ "type": "BONUS_COPPER_ORE",
+ "description": "TXT_KEY_BONUS_COPPER_ORE",
+ "civilopedia": "TXT_KEY_BONUS_COPPER_ORE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ADVANCED_COPPERWORKS",
+   "BUILDING_CULTURE_DACIAN",
+   "BUILDING_CULTURE_HYKSOSI",
+   "BUILDING_CULTURE_KHITAN",
+   "BUILDING_CULTURE_MACEDONIAN",
+   "BUILDING_CULTURE_POYA",
+   "BUILDING_CULTURE_SPARTAN",
+   "BUILDING_CULTURE_TIWI",
+   "BUILDING_MINE_COPPER",
+   "BUILDING_MINE_ZINC",
+   "BUILDING_NATIONAL_SMELTER_COPPER",
+   "BUILDING_PRESENCE_OF_METAL",
+   "BUILDING_SMELTER_COPPER"
+  ],
+  "units": [
+   "UNIT_PO_NGBE"
+  ]
+ },
+ "production": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_COPPER_ORE"
+ },
+ "mapGeneration": {
+  "placementOrder": 1,
+  "constAppearance": 400,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 92,
+  "hills": true,
+  "peaks": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ICE"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_STRATEGIC"
+ }
+}

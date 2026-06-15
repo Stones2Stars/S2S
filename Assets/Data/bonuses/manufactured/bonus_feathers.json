@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_FEATHERS",
+ "description": "TXT_KEY_BONUS_FEATHERS",
+ "civilopedia": "TXT_KEY_BONUS_FEATHERS_PEDIA",
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_FEATHERS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

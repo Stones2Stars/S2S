@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_ASSYRIAN",
+ "description": "TXT_KEY_BONUS_ASSYRIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ASHURBANIPAL",
+   "UNIT_ASSYRIAN_REDU",
+   "UNIT_SEMIRAMIS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ASSYRIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

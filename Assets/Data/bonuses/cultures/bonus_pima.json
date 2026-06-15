@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_PIMA",
+ "description": "TXT_KEY_BONUS_PIMA",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_AKIMEL_BRIGADE",
+   "UNIT_ANTONIO"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_PIMA"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

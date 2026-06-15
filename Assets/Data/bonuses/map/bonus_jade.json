@@ -1,0 +1,80 @@
+{
+ "type": "BONUS_JADE",
+ "description": "TXT_KEY_BONUS_JADE",
+ "civilopedia": "TXT_KEY_BONUS_JADE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_LIANGZHU",
+   "BUILDING_CULTURE_MEDIAN",
+   "BUILDING_CULTURE_OLMEC",
+   "BUILDING_CULTURE_SHANG",
+   "BUILDING_FACTORY_SCULPTURES",
+   "BUILDING_GRAND_EARTH_FESTIVAL",
+   "BUILDING_JADE_CARVER",
+   "BUILDING_JADE_DEATH_MASK_CARVER",
+   "BUILDING_JADE_GATHERER",
+   "BUILDING_JADE_IMPORTER",
+   "BUILDING_JADE_MERCHANT_LOCAL",
+   "BUILDING_LIANGZHU_JADE_CARVER",
+   "BUILDING_MINE_EMERALD",
+   "BUILDING_MINE_JADE",
+   "BUILDING_MINE_ONYX",
+   "BUILDING_OLMEC_JADE_CARVER",
+   "BUILDING_SCULPTORS_WORKSHOP",
+   "BUILDING_SHANG_JADE_CARVER"
+  ],
+  "units": [
+   "UNIT_JADE_AXEMAN"
+  ]
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_JADE"
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "groupRange": 1,
+  "groupRand": 16,
+  "hills": true,
+  "peaks": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ICE"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_PRODUCTION"
+ }
+}

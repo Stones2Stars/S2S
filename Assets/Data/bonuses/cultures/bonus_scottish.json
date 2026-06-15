@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_SCOTTISH",
+ "description": "TXT_KEY_BONUS_SCOTTISH",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_HIGHLANDER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SCOTTISH"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

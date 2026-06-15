@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_YOLNGU",
+ "description": "TXT_KEY_BONUS_YOLNGU",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_MANDAWUY_YUNUPINGU",
+   "UNIT_YOLNGU_MESSENGER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_YOLNGU"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

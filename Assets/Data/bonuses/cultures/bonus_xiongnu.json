@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_XIONGNU",
+ "description": "TXT_KEY_BONUS_XIONGNU",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_HUYAN_ZHUO",
+   "UNIT_ZHUGE_KESHIK"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_XIONGNU"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

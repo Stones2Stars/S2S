@@ -1,0 +1,82 @@
+{
+ "type": "BONUS_LEAD_ORE",
+ "description": "TXT_KEY_BONUS_LEAD_ORE",
+ "civilopedia": "TXT_KEY_BONUS_LEAD_ORE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_ATHENIAN",
+   "BUILDING_CULTURE_BULGARIAN",
+   "BUILDING_CULTURE_EPIRUS",
+   "BUILDING_CULTURE_ILLYRIAN",
+   "BUILDING_CULTURE_QIN",
+   "BUILDING_CULTURE_SWAZI",
+   "BUILDING_CULTURE_TROJAN",
+   "BUILDING_FACTORY_PENCILS",
+   "BUILDING_MINE_CINNABAR",
+   "BUILDING_MINE_EMERALD",
+   "BUILDING_MINE_LEAD",
+   "BUILDING_MINE_LITHIUM",
+   "BUILDING_MINE_MANGANESE",
+   "BUILDING_NATIONAL_SMELTER_LEAD",
+   "BUILDING_PRESENCE_OF_METAL",
+   "BUILDING_SMELTER_LEAD"
+  ]
+ },
+ "production": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -2
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_LEAD_ORE"
+ },
+ "mapGeneration": {
+  "placementOrder": 4,
+  "constAppearance": 250,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 280,
+  "hills": true,
+  "peaks": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ICE"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_PRODUCTION"
+ }
+}

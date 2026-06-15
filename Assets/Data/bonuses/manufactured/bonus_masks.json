@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_MASKS",
+ "description": "TXT_KEY_BONUS_MASKS",
+ "civilopedia": "TXT_KEY_BONUS_MASKS_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_MASKS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

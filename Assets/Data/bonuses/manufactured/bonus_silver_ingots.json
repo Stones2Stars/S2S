@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_SILVER_INGOTS",
+ "description": "TXT_KEY_BONUS_SILVER_INGOTS",
+ "civilopedia": "TXT_KEY_BONUS_INGOTS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SMELTER_BRASS",
+   "BUILDING_SMELTER_ELECTRUM",
+   "BUILDING_SMITH_SILVER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SILVER_INGOTS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

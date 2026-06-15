@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_CAPAYAN",
+ "description": "TXT_KEY_BONUS_CAPAYAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_CAPAYAN_AXEMANS",
+   "UNIT_JACHAL"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CAPAYAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

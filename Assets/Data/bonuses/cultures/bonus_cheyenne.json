@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_CHEYENNE",
+ "description": "TXT_KEY_BONUS_CHEYENNE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_CHEYENNE_RIDER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CHEYENNE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

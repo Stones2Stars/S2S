@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_KENYAN",
+ "description": "TXT_KEY_BONUS_KENYAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_DEDAN_KIMATHI",
+   "UNIT_TSAVO_HUNTERS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_KENYAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

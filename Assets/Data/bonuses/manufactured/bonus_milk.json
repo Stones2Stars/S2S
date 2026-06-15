@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_MILK",
+ "description": "TXT_KEY_BONUS_MILK",
+ "civilopedia": "TXT_KEY_BONUS_MILK_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHEESE_SHOP",
+   "BUILDING_FACTORY_CHEESE",
+   "BUILDING_FACTORY_GHEE_OIL",
+   "BUILDING_GHEE_MAKER",
+   "BUILDING_ICE_CREAM_PARLOR"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_MILK"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

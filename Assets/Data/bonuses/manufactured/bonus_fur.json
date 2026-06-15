@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_FUR",
+ "description": "TXT_KEY_BONUS_FUR",
+ "civilopedia": "TXT_KEY_BONUS_FUR_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_CLOTHING",
+   "BUILDING_FACTORY_HATS",
+   "BUILDING_FERTILITY_FESTIVAL",
+   "BUILDING_HATTER",
+   "BUILDING_SEAMSTRESS",
+   "BUILDING_TEXTILE_MILL"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_FUR"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

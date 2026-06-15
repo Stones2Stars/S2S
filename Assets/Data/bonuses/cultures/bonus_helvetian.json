@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_HELVETIAN",
+ "description": "TXT_KEY_BONUS_HELVETIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_DIVICO",
+   "UNIT_TIGURINI_SCOUTS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HELVETIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

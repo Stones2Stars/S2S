@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_CREE",
+ "description": "TXT_KEY_BONUS_CREE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_CREE_TRACKER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CREE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

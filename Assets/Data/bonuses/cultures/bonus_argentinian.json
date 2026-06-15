@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_ARGENTINIAN",
+ "description": "TXT_KEY_BONUS_ARGENTINIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_JUAN_PERON",
+   "UNIT_MOUNTED_GRENADIERS",
+   "UNIT_SAN_MARTIN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ARGENTINIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

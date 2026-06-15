@@ -1,0 +1,78 @@
+{
+ "type": "BONUS_SILVER_ORE",
+ "description": "TXT_KEY_BONUS_SILVER_ORE",
+ "civilopedia": "TXT_KEY_BONUS_SILVER_ORE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_BACTRIC",
+   "BUILDING_CULTURE_BOLIVIAN",
+   "BUILDING_CULTURE_LA_PLATAN",
+   "BUILDING_CULTURE_MALAGASY",
+   "BUILDING_CULTURE_NAMA",
+   "BUILDING_CULTURE_SAFFARID",
+   "BUILDING_CULTURE_SCYTHIAN",
+   "BUILDING_CULTURE_SWISS",
+   "BUILDING_CULTURE_TIMURID",
+   "BUILDING_CULTURE_WAYUU",
+   "BUILDING_GRAND_FIRE_FESTIVAL",
+   "BUILDING_MERCANTILISM_BONUS_SILVER",
+   "BUILDING_MINE_CAESIUM",
+   "BUILDING_MINE_CINNABAR",
+   "BUILDING_MINE_SILVER",
+   "BUILDING_MINE_ZINC",
+   "BUILDING_NATIONAL_SMELTER_SILVER",
+   "BUILDING_PRESENCE_OF_METAL",
+   "BUILDING_SMELTER_SILVER"
+  ]
+ },
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 2
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SILVER_ORE"
+ },
+ "mapGeneration": {
+  "placementOrder": 5,
+  "constAppearance": 400,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 50,
+   "iRandApp2": 50,
+   "iRandApp3": 50,
+   "iRandApp4": 50
+  },
+  "tilesPer": 400,
+  "uniqueRange": 3,
+  "groupRange": 1,
+  "groupRand": 12,
+  "hills": true,
+  "peaks": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ICE"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_PRODUCTION"
+ }
+}

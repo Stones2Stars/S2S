@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_MICRONESIAN",
+ "description": "TXT_KEY_BONUS_MICRONESIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_CHARLES_WILKES",
+   "UNIT_ISOKELEKEL"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_MICRONESIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_ARMENIAN",
+ "description": "TXT_KEY_BONUS_ARMENIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_HAYK",
+   "UNIT_LEO_I",
+   "UNIT_NAKHARAR"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ARMENIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

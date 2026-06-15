@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_AB_MATTER",
+ "description": "TXT_KEY_BONUS_AB_MATTER",
+ "civilopedia": "TXT_KEY_BONUS_AB_MATTER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_STAR_ROAD",
+   "BUILDING_MILKY_WAY_CORE_TERAEARTH"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_AB_MATTER"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

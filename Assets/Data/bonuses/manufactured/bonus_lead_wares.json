@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_LEAD_WARES",
+ "description": "TXT_KEY_BONUS_LEAD_WARES",
+ "civilopedia": "TXT_KEY_BONUS_WARES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARMOURER",
+   "BUILDING_COOPER",
+   "BUILDING_NUCLEAR_PLANT",
+   "BUILDING_SALT_EVAPORATION_WORKS",
+   "BUILDING_WATER_PIPES"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_LEAD_WARES"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

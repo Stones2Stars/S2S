@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_CANDLES",
+ "description": "TXT_KEY_BONUS_CANDLES",
+ "civilopedia": "TXT_KEY_BONUS_CANDLES_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_CANDLES"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

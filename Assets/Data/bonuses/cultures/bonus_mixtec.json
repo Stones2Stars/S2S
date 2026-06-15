@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_MIXTEC",
+ "description": "TXT_KEY_BONUS_MIXTEC",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_CUACHIC"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_MIXTEC"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

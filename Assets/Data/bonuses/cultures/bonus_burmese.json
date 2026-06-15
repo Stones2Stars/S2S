@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_BURMESE",
+ "description": "TXT_KEY_BONUS_BURMESE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_FLAIL_ELEPHANT"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BURMESE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

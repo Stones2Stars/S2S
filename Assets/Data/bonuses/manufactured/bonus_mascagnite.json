@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_MASCAGNITE",
+ "description": "TXT_KEY_BONUS_MASCAGNITE",
+ "civilopedia": "TXT_KEY_BONUS_MASCAGNITE_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_MASCAGNITE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

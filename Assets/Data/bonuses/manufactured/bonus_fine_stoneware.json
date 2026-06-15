@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_FINE_STONEWARE",
+ "description": "TXT_KEY_BONUS_FINE_STONEWARE",
+ "civilopedia": "TXT_KEY_BONUS_FINE_STONEWARE_PEDIA",
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_FINE_STONEWARE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_WONDER"
+ }
+}

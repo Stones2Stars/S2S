@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_CARIB",
+ "description": "TXT_KEY_BONUS_CARIB",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_CARIB_BLOWGUNNER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CARIB"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

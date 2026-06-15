@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_FIJIAN",
+ "description": "TXT_KEY_BONUS_FIJIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_GONE_DAU",
+   "UNIT_SERU_EPENISA_CAKOBAU"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_FIJIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_NIGERIAN",
+ "description": "TXT_KEY_BONUS_NIGERIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_GOBIR_LANCER",
+   "UNIT_OBAFEMI_AWOLOWO"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_NIGERIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

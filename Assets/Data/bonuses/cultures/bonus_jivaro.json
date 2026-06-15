@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_JIVARO",
+ "description": "TXT_KEY_BONUS_JIVARO",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_HEADHUNTER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_JIVARO"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

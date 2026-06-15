@@ -1,0 +1,25 @@
+{
+ "type": "BONUS_REEDS",
+ "description": "TXT_KEY_BONUS_REEDS",
+ "civilopedia": "TXT_KEY_BONUS_REEDS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BASKETMAKER",
+   "BUILDING_BASKET_MAKERS_WORKSHOP",
+   "BUILDING_BIOFUEL_REFINERY",
+   "BUILDING_FACTORY_BASKETS",
+   "BUILDING_HYDROCARBON_REFINERY",
+   "BUILDING_ULTRAFUEL_REFINERY"
+  ],
+  "units": [
+   "UNIT_NEANDERTHAL_RAFT",
+   "UNIT_RAFT"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_REEDS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

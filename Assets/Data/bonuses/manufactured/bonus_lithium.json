@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_LITHIUM",
+ "description": "TXT_KEY_BONUS_LITHIUM",
+ "civilopedia": "TXT_KEY_BONUS_LITHIUM_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_LITHIUM"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_FRANKISH",
+ "description": "TXT_KEY_BONUS_FRANKISH",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_AXE_THROWER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_FRANKISH"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

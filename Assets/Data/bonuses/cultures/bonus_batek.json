@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_BATEK",
+ "description": "TXT_KEY_BONUS_BATEK",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_FOREST_GUARDIANS",
+   "UNIT_STAMAN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BATEK"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_POVERTY_POINT",
+ "description": "TXT_KEY_BONUS_POVERTY_POINT",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_RED_FOX_ARCHER",
+   "UNIT_RED_SPEAR"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_POVERTY_POINT"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

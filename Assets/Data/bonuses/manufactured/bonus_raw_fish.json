@@ -1,0 +1,22 @@
+{
+ "type": "BONUS_RAW_FISH",
+ "description": "TXT_KEY_BONUS_RAW_FISH",
+ "civilopedia": "TXT_KEY_BONUS_RAW_FISH_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAT_BREEDER",
+   "BUILDING_CHILD_LABOR_CREW",
+   "BUILDING_DRIED_FISH_MAKER",
+   "BUILDING_FISHMONGER",
+   "BUILDING_FISH_OIL_MAKER",
+   "BUILDING_PESTS_FLIES",
+   "BUILDING_PESTS_SEAGULLS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_RAW_FISH"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

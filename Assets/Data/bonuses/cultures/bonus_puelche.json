@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_PUELCHE",
+ "description": "TXT_KEY_BONUS_PUELCHE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_TEHUELCHE",
+   "UNIT_WANQARA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_PUELCHE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

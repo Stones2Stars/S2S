@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_GERMAN",
+ "description": "TXT_KEY_BONUS_GERMAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ERWIN_ROMMEL",
+   "UNIT_FREDERICK_BARBAROSSA",
+   "UNIT_GERMAN_PANZER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_GERMAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

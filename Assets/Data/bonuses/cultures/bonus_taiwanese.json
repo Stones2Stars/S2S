@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_TAIWANESE",
+ "description": "TXT_KEY_BONUS_TAIWANESE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_KUOMINTANG"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_TAIWANESE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

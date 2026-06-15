@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_KLAMATH",
+ "description": "TXT_KEY_BONUS_KLAMATH",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_KLAMATH_RIFLEMAN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_KLAMATH"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

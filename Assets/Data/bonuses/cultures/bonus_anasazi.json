@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_ANASAZI",
+ "description": "TXT_KEY_BONUS_ANASAZI",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ALOSKA",
+   "UNIT_ITZKUMA",
+   "UNIT_SPIRIT_WALKER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ANASAZI"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

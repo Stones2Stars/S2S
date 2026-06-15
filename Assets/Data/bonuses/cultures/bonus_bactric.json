@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_BACTRIC",
+ "description": "TXT_KEY_BONUS_BACTRIC",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_BACTRIAN_CATAPHRACT",
+   "UNIT_DEMETRIUS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BACTRIC"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

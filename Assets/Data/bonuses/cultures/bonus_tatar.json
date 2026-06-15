@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_TATAR",
+ "description": "TXT_KEY_BONUS_TATAR",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_TUGAY_BEY",
+   "UNIT_ZAGON"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_TATAR"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

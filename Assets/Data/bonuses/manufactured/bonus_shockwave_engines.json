@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_SHOCKWAVE_ENGINES",
+ "description": "TXT_KEY_BONUS_SHOCKWAVE_ENGINES",
+ "civilopedia": "TXT_KEY_BONUS_SHOCKWAVE_ENGINES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_LEVITATION_GENERATORS",
+   "BUILDING_NOVUS_REFINERY",
+   "BUILDING_SUPERSTRONG_ALLOY_FOUNDRY"
+  ],
+  "units": [
+   "UNIT_SHOCKWAVE_APC"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SHOCKWAVE_ENGINES"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_HUMAN_MOD_HEAT_TOLERANCE",
+ "description": "TXT_KEY_BONUS_HUMAN_MOD_HEAT_TOLERANCE",
+ "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HUMAN_MOD_RADIATION_TOLERANCE"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HUMAN_MOD_HEAT_TOLERANCE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_GENMODS"
+ }
+}

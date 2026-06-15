@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_ELECTRUM_INGOTS",
+ "description": "TXT_KEY_BONUS_ELECTRUM_INGOTS",
+ "civilopedia": "TXT_KEY_BONUS_INGOTS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SMITH_ELECTRUM"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ELECTRUM_INGOTS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

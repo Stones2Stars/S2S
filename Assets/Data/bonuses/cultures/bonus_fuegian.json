@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_FUEGIAN",
+ "description": "TXT_KEY_BONUS_FUEGIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_SEAL_HUNTER",
+   "UNIT_TAIYIN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_FUEGIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

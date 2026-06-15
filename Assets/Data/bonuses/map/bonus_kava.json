@@ -1,0 +1,68 @@
+{
+ "type": "BONUS_KAVA",
+ "description": "TXT_KEY_BONUS_KAVA",
+ "civilopedia": "TXT_KEY_BONUS_KAVA_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHILD_LABOR_CREW",
+   "BUILDING_CULTURE_CHAMORRAN",
+   "BUILDING_NATURE_ALTAR_KAVA",
+   "BUILDING_NATURE_CIRCLE_KAVA",
+   "BUILDING_PLANTATION_KAVA",
+   "BUILDING_TRANCE_HUT"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_KAVA"
+ },
+ "mapGeneration": {
+  "placementOrder": 8,
+  "constAppearance": 200,
+  "minAreaSize": 1,
+  "minLatitude": -30,
+  "maxLatitude": 10,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 50,
+  "uniqueRange": 5,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "normalize": true,
+  "validFeatures": [
+   "FEATURE_JUNGLE"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_LUXURY"
+ }
+}

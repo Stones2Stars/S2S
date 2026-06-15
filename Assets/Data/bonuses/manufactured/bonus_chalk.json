@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_CHALK",
+ "description": "TXT_KEY_BONUS_CHALK",
+ "civilopedia": "TXT_KEY_BONUS_CHALK_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_CHALK"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

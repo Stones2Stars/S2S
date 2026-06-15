@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_BURGUNDIAN",
+ "description": "TXT_KEY_BONUS_BURGUNDIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_GENOAN_MERCENARY",
+   "UNIT_PHILIP_THE_BOLD"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BURGUNDIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

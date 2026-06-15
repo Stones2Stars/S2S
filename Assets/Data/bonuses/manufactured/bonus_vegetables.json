@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_VEGETABLES",
+ "description": "TXT_KEY_BONUS_VEGETABLES",
+ "civilopedia": "TXT_KEY_BONUS_VEGETABLES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIOFUEL_REFINERY",
+   "BUILDING_PESTS_APHIDS",
+   "BUILDING_PESTS_GOPHERS",
+   "BUILDING_PESTS_RATS",
+   "BUILDING_PESTS_SLUGS",
+   "BUILDING_ULTRAFUEL_REFINERY"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_VEGETABLES"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

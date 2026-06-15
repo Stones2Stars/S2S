@@ -1,0 +1,80 @@
+{
+ "type": "BONUS_GOLD_ORE",
+ "description": "TXT_KEY_BONUS_GOLD_ORE",
+ "civilopedia": "TXT_KEY_BONUS_GOLD_ORE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_ANGOLAN",
+   "BUILDING_CULTURE_ARAGONESE",
+   "BUILDING_CULTURE_AUSTRALIAN",
+   "BUILDING_CULTURE_CALIFORNIAN",
+   "BUILDING_CULTURE_DANISH",
+   "BUILDING_CULTURE_MUTAPA",
+   "BUILDING_CULTURE_NOK",
+   "BUILDING_CULTURE_PERSIAN",
+   "BUILDING_CULTURE_SPANISH",
+   "BUILDING_CULTURE_THRACIAN",
+   "BUILDING_CULTURE_THREE_KINGDOMS",
+   "BUILDING_CULTURE_XIONGNU",
+   "BUILDING_CULTURE_ZAPOTEC",
+   "BUILDING_GOLD_VAULT",
+   "BUILDING_GRAND_FIRE_FESTIVAL",
+   "BUILDING_MERCANTILISM_BONUS_GOLD",
+   "BUILDING_MINE_GOLD",
+   "BUILDING_MINE_TOPAZ",
+   "BUILDING_NATIONAL_SMELTER_GOLD",
+   "BUILDING_PRESENCE_OF_METAL",
+   "BUILDING_SMELTER_GOLD"
+  ]
+ },
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 6
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_GOLD_ORE"
+ },
+ "mapGeneration": {
+  "placementOrder": 5,
+  "constAppearance": 400,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 50,
+   "iRandApp2": 50,
+   "iRandApp3": 50,
+   "iRandApp4": 50
+  },
+  "tilesPer": 400,
+  "uniqueRange": 3,
+  "groupRange": 1,
+  "groupRand": 12,
+  "hills": true,
+  "peaks": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ICE"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_PRODUCTION"
+ }
+}

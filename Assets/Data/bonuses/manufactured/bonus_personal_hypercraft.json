@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_PERSONAL_HYPERCRAFT",
+ "description": "TXT_KEY_BONUS_PERSONAL_HYPERCRAFT",
+ "civilopedia": "TXT_KEY_BONUS_PERSONAL_HYPERCRAFT_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_PERSONAL_HYPERCRAFT"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_JET_ENGINES",
+ "description": "TXT_KEY_BONUS_JET_ENGINES",
+ "civilopedia": "TXT_KEY_BONUS_JET_ENGINES_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_AIRSETTLER",
+   "UNIT_ASTRONAUTIC_TECHNICIAN",
+   "UNIT_JET_TECHNICIAN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_JET_ENGINES"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

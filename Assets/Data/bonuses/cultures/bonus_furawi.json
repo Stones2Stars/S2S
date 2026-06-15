@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_FURAWI",
+ "description": "TXT_KEY_BONUS_FURAWI",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_FURAWI_TECHNICAL",
+   "UNIT_MOHAMMED_II_TAIRAB"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_FURAWI"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

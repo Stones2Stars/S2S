@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_LIQUID_METAL",
+ "description": "TXT_KEY_BONUS_LIQUID_METAL",
+ "civilopedia": "TXT_KEY_BONUS_LIQUID_METAL_PEDIA",
+ "enables": {
+  "routes": [
+   "ROUTE_GRAVITY_TRAIN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_LIQUID_METAL"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

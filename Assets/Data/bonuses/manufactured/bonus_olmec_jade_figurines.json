@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_OLMEC_JADE_FIGURINES",
+ "description": "TXT_KEY_BONUS_OLMEC_JADE_FIGURINES",
+ "civilopedia": "TXT_KEY_BONUS_OLMEC_JADE_FIGURINES_PEDIA",
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_OLMEC_JADE_FIGURINES"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_WONDER"
+ }
+}

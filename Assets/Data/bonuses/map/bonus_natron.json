@@ -1,0 +1,48 @@
+{
+ "type": "BONUS_NATRON",
+ "description": "TXT_KEY_BONUS_NATRON",
+ "civilopedia": "TXT_KEY_BONUS_NATRON_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 5
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SALT"
+ },
+ "mapGeneration": {
+  "placementOrder": 4,
+  "constAppearance": 100,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 10,
+  "uniqueRange": 3,
+  "flatlands": true,
+  "noRiverSide": true,
+  "validTerrains": [
+   "TERRAIN_SALT_FLATS"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_PRODUCTION"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_PILAGA",
+ "description": "TXT_KEY_BONUS_PILAGA",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_MAHAQUE",
+   "UNIT_WAPITI"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_PILAGA"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

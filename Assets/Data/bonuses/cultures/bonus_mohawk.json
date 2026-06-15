@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_MOHAWK",
+ "description": "TXT_KEY_BONUS_MOHAWK",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_MOHAWK_TRACKER",
+   "UNIT_THAYENDANEGEA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_MOHAWK"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

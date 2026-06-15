@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_CHROMITE_ORE",
+ "description": "TXT_KEY_BONUS_CHROMITE_ORE",
+ "civilopedia": "TXT_KEY_BONUS_CHROMITE_ORE_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_CHROMITE_ORE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

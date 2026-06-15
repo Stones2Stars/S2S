@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_HIERACOSPHINX",
+ "description": "TXT_KEY_BONUS_HIERACOSPHINX",
+ "civilopedia": "TXT_KEY_BONUS_HIERACOSPHINX_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_HIERACOSPHINX"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_WONDER"
+ }
+}

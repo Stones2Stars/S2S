@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_CHUMASH",
+ "description": "TXT_KEY_BONUS_CHUMASH",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_BEAD_HUCKSTER",
+   "UNIT_RAFAEL_SOLARES",
+   "UNIT_TOMOL"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CHUMASH"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

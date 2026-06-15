@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_LARD",
+ "description": "TXT_KEY_BONUS_LARD",
+ "civilopedia": "TXT_KEY_BONUS_LARD_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CANDLEMAKERS_SHOP",
+   "BUILDING_FACTORY_CANDLES",
+   "BUILDING_FACTORY_OMEGA_ACIDS",
+   "BUILDING_FACTORY_SOAP",
+   "BUILDING_LICHEN_BURNER",
+   "BUILDING_SOAP_MAKER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_LARD"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

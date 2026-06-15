@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_LUBA",
+ "description": "TXT_KEY_BONUS_LUBA",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ADZE_WARRIOR"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_LUBA"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

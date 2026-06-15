@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_TRANSPARENT_ALUMINUM",
+ "description": "TXT_KEY_BONUS_TRANSPARENT_ALUMINUM",
+ "civilopedia": "TXT_KEY_BONUS_TRANSPARENT_ALUMINUM_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_TRANSPARENT_ALUMINUM"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_HIT_MOVIES",
+ "description": "TXT_KEY_BONUS_HIT_MOVIES",
+ "civilopedia": "TXT_KEY_BONUS_HIT_MOVIES_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_LARA_CROFT"
+  ]
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HIT_MOVIES"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_WONDER"
+ }
+}

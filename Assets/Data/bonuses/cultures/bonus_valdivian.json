@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_VALDIVIAN",
+ "description": "TXT_KEY_BONUS_VALDIVIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_FIGURINE_POTTER",
+   "UNIT_PASTENE"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_VALDIVIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

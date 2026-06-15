@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_WOOL",
+ "description": "TXT_KEY_BONUS_WOOL",
+ "civilopedia": "TXT_KEY_BONUS_WOOL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_CLOTH",
+   "BUILDING_TAPESTRY_MAKERS_WORKSHOP",
+   "BUILDING_WEAVER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_WOOL"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "type": "BONUS_SAND",
+ "description": "TXT_KEY_BONUS_SAND",
+ "civilopedia": "TXT_KEY_BONUS_SAND_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CEMENT_MILL",
+   "BUILDING_CONCRETE_MASON",
+   "BUILDING_FACTORY_FIBER_OPTIC_CABLES",
+   "BUILDING_FACTORY_GLASSWARE",
+   "BUILDING_FACTORY_MICROCHIPS",
+   "BUILDING_GLASSBLOWERS_WORKSHOP",
+   "BUILDING_GLAZE_MAKER",
+   "BUILDING_SAND_PAINTINGS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SAND"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

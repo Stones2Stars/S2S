@@ -1,0 +1,24 @@
+{
+ "type": "BONUS_CLAY",
+ "description": "TXT_KEY_BONUS_CLAY",
+ "civilopedia": "TXT_KEY_BONUS_CLAY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BRICK_MASON",
+   "BUILDING_FACTORY_BRICKS",
+   "BUILDING_FACTORY_POTTERY",
+   "BUILDING_HOUSING_MUD_HUTS",
+   "BUILDING_MUD_BATH",
+   "BUILDING_POTTERS_HUT",
+   "BUILDING_POTTERS_WORKSHOP",
+   "BUILDING_TABLET_MAKER",
+   "BUILDING_TOY_MAKER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CLAY"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

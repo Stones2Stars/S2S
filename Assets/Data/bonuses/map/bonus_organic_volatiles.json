@@ -1,0 +1,45 @@
+{
+ "type": "BONUS_ORGANIC_VOLATILES",
+ "description": "TXT_KEY_BONUS_ORGANIC_VOLATILES",
+ "civilopedia": "TXT_KEY_BONUS_ORGANIC_VOLATILES_PEDIA",
+ "food": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ORGANIC_VOLATILES"
+ },
+ "mapGeneration": {
+  "constAppearance": 35,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 32,
+  "area": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_ASTEROID_SURFACE",
+   "TERRAIN_KUIPER_BELT_OBJECT"
+  ],
+  "validFeatures": [
+   "FEATURE_OORT_CLOUD",
+   "FEATURE_ASTEROIDS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_INNER_SOLAR_SYSTEM",
+   "TERRAIN_OUTER_SOLAR_SYSTEM",
+   "TERRAIN_TRANSNEPTUNIAN_SPACE",
+   "TERRAIN_TRANSTELLAR_SPACE"
+  ],
+  "placementOrder": 9
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MISC"
+ }
+}

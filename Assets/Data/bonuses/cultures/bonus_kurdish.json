@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_KURDISH",
+ "description": "TXT_KEY_BONUS_KURDISH",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_KARIM_KHAN",
+   "UNIT_PESHMERGA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_KURDISH"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

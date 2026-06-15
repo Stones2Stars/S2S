@@ -1,0 +1,88 @@
+{
+ "type": "BONUS_APPLE",
+ "description": "TXT_KEY_BONUS_APPLE",
+ "civilopedia": "TXT_KEY_BONUS_APPLE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BOLETE_GATHERER",
+   "BUILDING_CIDER_HOUSE",
+   "BUILDING_CULTURE_CROATIAN",
+   "BUILDING_CULTURE_ENGLISH",
+   "BUILDING_CULTURE_MITTANNI",
+   "BUILDING_CULTURE_MOCOVI",
+   "BUILDING_FARM_ANIMAL_DUCK",
+   "BUILDING_FARM_CROP_STRAWBERRY",
+   "BUILDING_FARM_CROP_TOMATO",
+   "BUILDING_FARM_FLOWER_ROSE",
+   "BUILDING_NATURE_ALTAR_APPLE",
+   "BUILDING_NATURE_CIRCLE_APPLE",
+   "BUILDING_ORCHARD_APPLE",
+   "BUILDING_ORCHARD_APRICOT",
+   "BUILDING_ORCHARD_ATEMOYA",
+   "BUILDING_ORCHARD_BREADFRUIT",
+   "BUILDING_ORCHARD_CHERRY",
+   "BUILDING_ORCHARD_LOQUAT",
+   "BUILDING_ORCHARD_ORANGE",
+   "BUILDING_ORCHARD_PEACH",
+   "BUILDING_ORCHARD_PEAR",
+   "BUILDING_ORCHARD_PITAYA",
+   "BUILDING_ORCHARD_PLUM",
+   "BUILDING_PLANTATION_TOMATILLO"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 3
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_APPLE"
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "minLatitude": 20,
+  "maxLatitude": 60,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 200,
+  "uniqueRange": 2,
+  "groupRange": 1,
+  "groupRand": 14,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "validFeatures": [
+   "FEATURE_FOREST",
+   "FEATURE_FOREST_ANCIENT"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_LUSH",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_PLAINS"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CROP"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_TAIRONA",
+ "description": "TXT_KEY_BONUS_TAIRONA",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_CANACUMACO",
+   "UNIT_TAIRONA_REBELS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_TAIRONA"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

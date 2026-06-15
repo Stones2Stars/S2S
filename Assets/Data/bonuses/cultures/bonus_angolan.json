@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_ANGOLAN",
+ "description": "TXT_KEY_BONUS_ANGOLAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_DOS_SANTOS",
+   "UNIT_UNITA_FORCES"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ANGOLAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

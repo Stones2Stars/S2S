@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_SPANISH",
+ "description": "TXT_KEY_BONUS_SPANISH",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_EL_CID",
+   "UNIT_HERNAN_CORTES",
+   "UNIT_SPANISH_CONQUISTADOR"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SPANISH"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

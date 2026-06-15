@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_QIANG",
+ "description": "TXT_KEY_BONUS_QIANG",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_CHUO_QIANG",
+   "UNIT_QIANG_PIKEMAN",
+   "UNIT_YAO_CHANG"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_QIANG"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

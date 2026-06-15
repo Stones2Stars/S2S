@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_TANG",
+ "description": "TXT_KEY_BONUS_TANG",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_GAOZONG",
+   "UNIT_PEN_HUO_QI"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_TANG"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

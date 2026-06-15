@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_BRASS_INGOTS",
+ "description": "TXT_KEY_BONUS_BRASS_INGOTS",
+ "civilopedia": "TXT_KEY_BONUS_INGOTS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SMITH_BRASS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BRASS_INGOTS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

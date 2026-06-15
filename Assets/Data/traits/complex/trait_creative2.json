@@ -229,7 +229,25 @@
  },
  "happiness": {
   "empire": {
-   "flat": 1,
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HIT_MUSICALS",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HIT_SINGLES",
+      "scope": "empire",
+      "min": 1
+     }
+    }
+   ],
    "buildings": {
     "BUILDING_FIREWORKS_SHOP": {
      "flat": 1

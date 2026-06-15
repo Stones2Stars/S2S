@@ -1,0 +1,29 @@
+{
+ "type": "BONUS_HEAVY_WATER",
+ "description": "TXT_KEY_BONUS_HEAVY_WATER",
+ "civilopedia": "TXT_KEY_BONUS_HEAVY_WATER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FAST_BREEDER_REACTOR",
+   "BUILDING_MANHATTAN_PROJECT"
+  ],
+  "units": [
+   "UNIT_ATOMIC",
+   "UNIT_HYDROGEN",
+   "UNIT_ICBM",
+   "UNIT_TACTICAL_NUKE"
+  ]
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10,
+   "objective": 8
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HEAVY_WATER"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_WONDER"
+ }
+}

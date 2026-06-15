@@ -1,0 +1,90 @@
+{
+ "type": "BONUS_FINE_CLAY",
+ "description": "TXT_KEY_BONUS_FINE_CLAY",
+ "civilopedia": "TXT_KEY_BONUS_FINE_CLAY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BEADMAKERS_WORKSHOP",
+   "BUILDING_BEADWORKER",
+   "BUILDING_BRICK_MASON",
+   "BUILDING_CULTURE_CHUMASH",
+   "BUILDING_CULTURE_HUNGARIAN",
+   "BUILDING_CULTURE_JOSEON",
+   "BUILDING_CULTURE_KIPCHAK",
+   "BUILDING_CULTURE_LATVIAN",
+   "BUILDING_CULTURE_NOONGAR",
+   "BUILDING_CULTURE_TLATILCO",
+   "BUILDING_CULTURE_VALDIVIAN",
+   "BUILDING_FACTORY_BEADS",
+   "BUILDING_FACTORY_BRICKS",
+   "BUILDING_FACTORY_PORCELAIN_WARES",
+   "BUILDING_FACTORY_POTTERY",
+   "BUILDING_FACTORY_SCULPTURES",
+   "BUILDING_FACTORY_TERRACOTTA_WARES",
+   "BUILDING_HEALING_CLAY",
+   "BUILDING_HOUSING_HOGANS",
+   "BUILDING_MINE_POTASH",
+   "BUILDING_MING_VASE_WORKSHOP",
+   "BUILDING_MUD_BATH",
+   "BUILDING_NOK_SCULPTURE_WORKSHOP",
+   "BUILDING_PORCELAIN_WORKSHOP",
+   "BUILDING_POTTERS_HUT",
+   "BUILDING_POTTERS_WORKSHOP",
+   "BUILDING_RED_AND_BLACK_WARE_PAINTER",
+   "BUILDING_SCULPTORS_WORKSHOP",
+   "BUILDING_TABLET_MAKER",
+   "BUILDING_TERRACOTTA_WORKSHOP",
+   "BUILDING_TERRA_SIGILLATA_WORKSHOP",
+   "BUILDING_TOY_MAKER"
+  ]
+ },
+ "production": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_FINE_CLAY"
+ },
+ "mapGeneration": {
+  "placementOrder": 5,
+  "constAppearance": 200,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 80,
+  "hills": true,
+  "flatlands": true,
+  "noRiverSide": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_MARSH"
+  ],
+  "validFeatures": [
+   "FEATURE_FLOOD_PLAINS",
+   "FEATURE_OASIS",
+   "FEATURE_JUNGLE",
+   "FEATURE_SWAMP",
+   "FEATURE_BAMBOO",
+   "FEATURE_MANGROVE",
+   "FEATURE_PEAT_BOG"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_PLAINS",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_PRODUCTION"
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_WAX",
+ "description": "TXT_KEY_BONUS_WAX",
+ "civilopedia": "TXT_KEY_BONUS_WAX_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CANDLEMAKERS_SHOP",
+   "BUILDING_FACTORY_CANDLES",
+   "BUILDING_FACTORY_ELECTROACTIVE_POLYMERS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_WAX"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_MEGASTRONG_ALLOYS",
+ "description": "TXT_KEY_BONUS_MEGASTRONG_ALLOYS",
+ "civilopedia": "TXT_KEY_BONUS_MEGASTRONG_ALLOYS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ALEPH_ASSEMBLER",
+   "BUILDING_MEGASTRONG_ALLOY_WALLS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_MEGASTRONG_ALLOYS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

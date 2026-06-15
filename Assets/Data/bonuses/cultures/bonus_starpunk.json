@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_STARPUNK",
+ "description": "TXT_KEY_BONUS_STARPUNK",
+ "civilopedia": "TXT_KEY_BONUS_STARPUNK_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_NEO_PYRAMID",
+   "BUILDING_STARGATE"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_STARPUNK"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_GENMODS"
+ }
+}

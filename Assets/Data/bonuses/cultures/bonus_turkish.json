@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_TURKISH",
+ "description": "TXT_KEY_BONUS_TURKISH",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_57TH_INFANTRY_REGIMENT",
+   "UNIT_ATATURK"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_TURKISH"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

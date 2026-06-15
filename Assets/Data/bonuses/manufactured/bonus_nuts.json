@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_NUTS",
+ "description": "TXT_KEY_BONUS_NUTS",
+ "civilopedia": "TXT_KEY_BONUS_NUTS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CONFECTIONERS_WORKSHOP",
+   "BUILDING_FACTORY_MARZIPAN",
+   "BUILDING_FACTORY_NUTELLA",
+   "BUILDING_FACTORY_TANNIN",
+   "BUILDING_TANNIN_MAKER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_NUTS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

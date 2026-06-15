@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_CELLULASE_CAPSULES",
+ "description": "TXT_KEY_BONUS_CELLULASE_CAPSULES",
+ "civilopedia": "TXT_KEY_BONUS_CELLULASE_CAPSULES_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_CELLULASE_CAPSULES"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

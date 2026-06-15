@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_AVARIC",
+ "description": "TXT_KEY_BONUS_AVARIC",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_KHAGAN_CAVALRY",
+   "UNIT_KUBRAT"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_AVARIC"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

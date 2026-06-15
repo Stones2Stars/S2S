@@ -1,0 +1,29 @@
+{
+ "type": "BONUS_OLIVE_OIL",
+ "description": "TXT_KEY_BONUS_OLIVE_OIL",
+ "civilopedia": "TXT_KEY_BONUS_OLIVE_OIL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANCIENT_EMBALMER",
+   "BUILDING_FACTORY_SOAP",
+   "BUILDING_OIL_LAMPS",
+   "BUILDING_SOAP_MAKER"
+  ],
+  "units": [
+   "UNIT_AKAVAI",
+   "UNIT_ARSONIST",
+   "UNIT_POST_APOCALYPTIC_GRENADIER"
+  ]
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_OLIVE_OIL"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

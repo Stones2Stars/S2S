@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_CAESIUM_ORE",
+ "description": "TXT_KEY_BONUS_CAESIUM_ORE",
+ "civilopedia": "TXT_KEY_BONUS_CAESIUM_ORE_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_CAESIUM_ORE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

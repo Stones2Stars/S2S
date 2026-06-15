@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_HUMAN_MOD_COGNITIVE_ENHANCEMENT",
+ "description": "TXT_KEY_BONUS_HUMAN_MOD_COGNITIVE_ENHANCEMENT",
+ "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HUMAN_MOD_NOVEL_SENSES"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HUMAN_MOD_COGNITIVE_ENHANCEMENT"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_GENMODS"
+ }
+}

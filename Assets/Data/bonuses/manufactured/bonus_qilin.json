@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_QILIN",
+ "description": "TXT_KEY_BONUS_QILIN",
+ "civilopedia": "TXT_KEY_BONUS_QILIN_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_QILIN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_WONDER"
+ }
+}

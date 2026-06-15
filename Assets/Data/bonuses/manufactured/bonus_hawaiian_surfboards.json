@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_HAWAIIAN_SURFBOARDS",
+ "description": "TXT_KEY_BONUS_HAWAIIAN_SURFBOARDS",
+ "civilopedia": "TXT_KEY_BONUS_HAWAIIAN_SURFBOARDS_PEDIA",
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HAWAIIAN_SURFBOARDS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_WONDER"
+ }
+}

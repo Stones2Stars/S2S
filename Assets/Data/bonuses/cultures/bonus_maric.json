@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_MARIC",
+ "description": "TXT_KEY_BONUS_MARIC",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_MURRI_WARRIOR",
+   "UNIT_ROBERT_LUI"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_MARIC"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

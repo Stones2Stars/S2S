@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_CROATIAN",
+ "description": "TXT_KEY_BONUS_CROATIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_SAMOSTRELAC",
+   "UNIT_TOMISLAV"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CROATIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_GOTH",
+ "description": "TXT_KEY_BONUS_GOTH",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_GOTH_ALARIC",
+   "UNIT_HUSKARL"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_GOTH"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

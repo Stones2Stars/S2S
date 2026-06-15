@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_QING",
+ "description": "TXT_KEY_BONUS_QING",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_KANGXI",
+   "UNIT_UJEN_CHOOHA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_QING"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

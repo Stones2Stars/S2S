@@ -1,0 +1,77 @@
+{
+ "type": "BONUS_COFFEE",
+ "description": "TXT_KEY_BONUS_COFFEE",
+ "civilopedia": "TXT_KEY_BONUS_COFFEE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CATCHER_MACAW",
+   "BUILDING_CULTURE_CAMBEBA",
+   "BUILDING_CULTURE_COLOMBIAN",
+   "BUILDING_CULTURE_ETHIOPIAN",
+   "BUILDING_FACTORY_ROASTED_COFFEE",
+   "BUILDING_FARM_CROP_BEAN",
+   "BUILDING_FARM_CROP_BLUEBERRY",
+   "BUILDING_FARM_CROP_TURNIP",
+   "BUILDING_GIANT_COCKROACH_GATHERER",
+   "BUILDING_GROVE_BRAZIL_NUT",
+   "BUILDING_ORCHARD_DURIAN",
+   "BUILDING_PLANTATION_COFFEE",
+   "BUILDING_ROASTING_HOUSE"
+  ]
+ },
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 4
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_COFFEE"
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 200,
+  "minAreaSize": 3,
+  "maxLatitude": 30,
+  "rands": {
+   "iRandApp1": 50,
+   "iRandApp2": 50,
+   "iRandApp3": 50,
+   "iRandApp4": 50
+  },
+  "tilesPer": 72,
+  "uniqueRange": 6,
+  "groupRange": 1,
+  "groupRand": 16,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_PLAINS"
+  ],
+  "validFeatures": [
+   "FEATURE_FLOOD_PLAINS",
+   "FEATURE_FOREST",
+   "FEATURE_FOREST_ANCIENT",
+   "FEATURE_SAVANNA"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_BADLAND",
+   "TERRAIN_DESERT",
+   "TERRAIN_ROCKY",
+   "TERRAIN_SCRUB"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_LUXURY"
+ }
+}

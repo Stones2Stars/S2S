@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_MEDIAN",
+ "description": "TXT_KEY_BONUS_MEDIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_CYAXARES",
+   "UNIT_MEDE_RETINUES"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_MEDIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

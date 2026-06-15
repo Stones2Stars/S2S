@@ -1,0 +1,65 @@
+{
+ "type": "BONUS_SHRIMP",
+ "description": "TXT_KEY_BONUS_SHRIMP",
+ "civilopedia": "TXT_KEY_BONUS_SHRIMP_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_ESTONIAN",
+   "BUILDING_CULTURE_SEMINOLE",
+   "BUILDING_CULTURE_SUNDANESE",
+   "BUILDING_CULTURE_YAMATO",
+   "BUILDING_FISHERMANS_HUT",
+   "BUILDING_GRAND_MARINE_FESTIVAL",
+   "BUILDING_MARLIN_NETS",
+   "BUILDING_NET_PRAWN",
+   "BUILDING_NET_SARDINE",
+   "BUILDING_NET_SHRIMP",
+   "BUILDING_PILLBUG_GATHERER"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SHRIMP"
+ },
+ "mapGeneration": {
+  "placementOrder": 8,
+  "constAppearance": 500,
+  "minAreaSize": 10,
+  "rands": {
+   "iRandApp1": 50,
+   "iRandApp2": 50,
+   "iRandApp3": 50,
+   "iRandApp4": 50
+  },
+  "tilesPer": 92,
+  "uniqueRange": 1,
+  "validTerrains": [
+   "TERRAIN_COAST",
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_COAST_TROPICAL",
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_SEA_TROPICAL",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_DEEP_TROPICAL",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_LAKE_SHORE",
+   "TERRAIN_LAKE"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_SEAFOOD"
+ }
+}

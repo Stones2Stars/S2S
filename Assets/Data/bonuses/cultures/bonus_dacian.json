@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_DACIAN",
+ "description": "TXT_KEY_BONUS_DACIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_DECEBALUS",
+   "UNIT_FALXMEN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_DACIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

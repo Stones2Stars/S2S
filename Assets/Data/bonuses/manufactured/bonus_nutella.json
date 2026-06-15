@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_NUTELLA",
+ "description": "TXT_KEY_BONUS_NUTELLA",
+ "civilopedia": "TXT_KEY_BONUS_NUTELLA_PEDIA",
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_NUTELLA"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

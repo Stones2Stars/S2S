@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_WALLACHIAN",
+ "description": "TXT_KEY_BONUS_WALLACHIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ORDER_OF_THE_DRAGON",
+   "UNIT_VLAD_III_DRACULA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_WALLACHIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

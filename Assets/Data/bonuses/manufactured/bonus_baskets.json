@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_BASKETS",
+ "description": "TXT_KEY_BONUS_BASKETS",
+ "civilopedia": "TXT_KEY_BONUS_BASKETS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AERIAL_BASKET_ROPEWAYS",
+   "BUILDING_FERTILITY_FESTIVAL",
+   "BUILDING_FISH_TRAPS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BASKETS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

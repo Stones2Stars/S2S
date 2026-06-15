@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_SPONGES",
+ "description": "TXT_KEY_BONUS_SPONGES",
+ "civilopedia": "TXT_KEY_BONUS_SPONGES_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_SPONGES"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

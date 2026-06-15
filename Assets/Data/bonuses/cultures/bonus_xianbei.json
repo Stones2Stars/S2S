@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_XIANBEI",
+ "description": "TXT_KEY_BONUS_XIANBEI",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_DAREN",
+   "UNIT_TUOBA_LIWEI"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_XIANBEI"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_HOLY_ROMAN",
+ "description": "TXT_KEY_BONUS_HOLY_ROMAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_FREDRICK_II",
+   "UNIT_HOLY_ROMAN_LANDSKNECHT",
+   "UNIT_LORENZO_DE_MEDICI"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HOLY_ROMAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_METALLIC_HYDROGEN",
+ "description": "TXT_KEY_BONUS_METALLIC_HYDROGEN",
+ "civilopedia": "TXT_KEY_BONUS_METALLIC_HYDROGEN_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_METALLIC_HYDROGEN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

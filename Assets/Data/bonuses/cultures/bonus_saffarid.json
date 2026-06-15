@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_SAFFARID",
+ "description": "TXT_KEY_BONUS_SAFFARID",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_AL_SAFFAR",
+   "UNIT_PERSIAN_POET"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SAFFARID"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

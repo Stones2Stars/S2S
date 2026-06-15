@@ -237,7 +237,25 @@
   "empire": {
    "largestCity": {
     "flat": -1
-   }
+   },
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PARROTS",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_POULTRY",
+      "scope": "empire",
+      "min": 1
+     }
+    }
+   ]
   }
  },
  "experience": {

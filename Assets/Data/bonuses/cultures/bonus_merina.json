@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_MERINA",
+ "description": "TXT_KEY_BONUS_MERINA",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_MENALAMBA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_MERINA"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

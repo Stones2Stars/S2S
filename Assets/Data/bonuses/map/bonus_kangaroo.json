@@ -1,0 +1,71 @@
+{
+ "type": "BONUS_KANGAROO",
+ "description": "TXT_KEY_BONUS_KANGAROO",
+ "civilopedia": "TXT_KEY_BONUS_KANGAROO_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BOGONG_MOTH_GATHERER",
+   "BUILDING_BREEDING_PROGRAM_EMU",
+   "BUILDING_BREEDING_PROGRAM_KANGAROO",
+   "BUILDING_CAMP_DIPROTODON",
+   "BUILDING_CAMP_EMU",
+   "BUILDING_CAMP_KANGAROO",
+   "BUILDING_CARRION_GATHERER",
+   "BUILDING_CATCHER_LYREBIRD",
+   "BUILDING_CULTURE_ABORIGINE",
+   "BUILDING_OUTBACK_HOTEL"
+  ],
+  "units": [
+   "UNIT_NEANDERTHAL_SHEPHERD",
+   "UNIT_SHEPHERD"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_KANGAROO"
+ },
+ "mapGeneration": {
+  "placementOrder": 5,
+  "constAppearance": 200,
+  "minAreaSize": 3,
+  "minLatitude": -70,
+  "maxLatitude": 10,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 32,
+  "uniqueRange": 5,
+  "groupRange": 1,
+  "groupRand": 10,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_MARSH",
+   "TERRAIN_PLAINS",
+   "TERRAIN_SCRUB",
+   "TERRAIN_ROCKY"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_LIVESTOCK"
+ }
+}

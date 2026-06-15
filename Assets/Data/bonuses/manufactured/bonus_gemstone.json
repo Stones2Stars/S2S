@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_GEMSTONE",
+ "description": "TXT_KEY_BONUS_GEMSTONE",
+ "civilopedia": "TXT_KEY_BONUS_GEMSTONE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_GEMCUTTER"
+  ]
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 7
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_GEMSTONE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

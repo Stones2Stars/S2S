@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_MANCHURIAN",
+ "description": "TXT_KEY_BONUS_MANCHURIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_MANCHU_HORSEARCHER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_MANCHURIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

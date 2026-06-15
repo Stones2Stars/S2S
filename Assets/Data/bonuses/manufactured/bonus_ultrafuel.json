@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_ULTRAFUEL",
+ "description": "TXT_KEY_BONUS_ULTRAFUEL",
+ "civilopedia": "TXT_KEY_BONUS_ULTRAFUEL_PEDIA",
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 5,
+   "objective": 5
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ULTRAFUEL"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

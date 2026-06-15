@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_TAJIK",
+ "description": "TXT_KEY_BONUS_TAJIK",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_BURHANUDDIN_RABBANI",
+   "UNIT_OMUCHTAN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_TAJIK"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

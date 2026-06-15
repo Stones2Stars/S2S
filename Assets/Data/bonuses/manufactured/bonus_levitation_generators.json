@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_LEVITATION_GENERATORS",
+ "description": "TXT_KEY_BONUS_LEVITATION_GENERATORS",
+ "civilopedia": "TXT_KEY_BONUS_LEVITATION_GENERATORS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_NEUROINDUCTION_FIELD"
+  ],
+  "units": [
+   "UNIT_SENTINEL"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_LEVITATION_GENERATORS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

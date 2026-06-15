@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_SUMERIAN",
+ "description": "TXT_KEY_BONUS_SUMERIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ENKIDU",
+   "UNIT_LUGALZAGESI",
+   "UNIT_SUMERIAN_VULTURE"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SUMERIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

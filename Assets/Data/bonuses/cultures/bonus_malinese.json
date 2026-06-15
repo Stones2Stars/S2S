@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_MALINESE",
+ "description": "TXT_KEY_BONUS_MALINESE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_MANDEKALU",
+   "UNIT_MANSA_SAKURA",
+   "UNIT_SUNDIATA_KEITA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_MALINESE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

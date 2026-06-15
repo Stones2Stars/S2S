@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_TASMANIAN",
+ "description": "TXT_KEY_BONUS_TASMANIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_TASMANIAN_DEVILS",
+   "UNIT_TRUGANINI"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_TASMANIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_CARCASS",
+ "description": "TXT_KEY_BONUS_CARCASS",
+ "civilopedia": "TXT_KEY_BONUS_CARCASS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_PESTS_CROWS",
+   "BUILDING_POACHERS_CAMP",
+   "BUILDING_RENDERING_PLANT",
+   "BUILDING_SKINNER",
+   "BUILDING_SLAUGHTERHOUSE",
+   "BUILDING_TAXIDERMIST"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CARCASS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

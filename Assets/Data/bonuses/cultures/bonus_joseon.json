@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_JOSEON",
+ "description": "TXT_KEY_BONUS_JOSEON",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_TAEJO",
+   "UNIT_TURTLE_SHIP"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_JOSEON"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

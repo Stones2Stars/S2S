@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_BOLIVIAN",
+ "description": "TXT_KEY_BONUS_BOLIVIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_DE_SUCRE_DRAGOONS",
+   "UNIT_EVO_MORALES"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BOLIVIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

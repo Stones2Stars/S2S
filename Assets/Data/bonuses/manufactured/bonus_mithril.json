@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_MITHRIL",
+ "description": "TXT_KEY_BONUS_MITHRIL",
+ "civilopedia": "TXT_KEY_BONUS_MITHRIL_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_MITHRIL"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_WONDER"
+ }
+}

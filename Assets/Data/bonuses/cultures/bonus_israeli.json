@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_ISRAELI",
+ "description": "TXT_KEY_BONUS_ISRAELI",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ISRAELI_MACCABEE",
+   "UNIT_MACCABEUS",
+   "UNIT_SOLOMON"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ISRAELI"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

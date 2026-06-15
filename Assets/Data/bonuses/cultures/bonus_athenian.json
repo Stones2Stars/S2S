@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_ATHENIAN",
+ "description": "TXT_KEY_BONUS_ATHENIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_PERICLES",
+   "UNIT_THEMISTOCLES",
+   "UNIT_THORAX_HOPLITE"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ATHENIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_DRAVIDIAN",
+ "description": "TXT_KEY_BONUS_DRAVIDIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_KALARIPAYATT",
+   "UNIT_KHARAVELA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_DRAVIDIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

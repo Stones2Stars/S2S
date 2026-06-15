@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_BREAD",
+ "description": "TXT_KEY_BONUS_BREAD",
+ "civilopedia": "TXT_KEY_BONUS_BREAD_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BURGER_JOINT",
+   "BUILDING_DELI"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BREAD"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

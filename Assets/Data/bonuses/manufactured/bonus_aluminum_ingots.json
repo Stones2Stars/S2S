@@ -1,0 +1,22 @@
+{
+ "type": "BONUS_ALUMINUM_INGOTS",
+ "description": "TXT_KEY_BONUS_ALUMINUM_INGOTS",
+ "civilopedia": "TXT_KEY_BONUS_INGOTS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_METAMATERIAL_FOUNDRY",
+   "BUILDING_SMITH_ALUMINUM"
+  ]
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ALUMINUM_INGOTS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

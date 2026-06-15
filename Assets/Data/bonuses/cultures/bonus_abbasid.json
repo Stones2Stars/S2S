@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_ABBASID",
+ "description": "TXT_KEY_BONUS_ABBASID",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_AL_MANSUR"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ABBASID"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

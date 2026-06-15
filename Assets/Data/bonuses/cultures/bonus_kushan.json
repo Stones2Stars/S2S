@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_KUSHAN",
+ "description": "TXT_KEY_BONUS_KUSHAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_KUJULA_KADPHISES",
+   "UNIT_KUSHAN_RIDER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_KUSHAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

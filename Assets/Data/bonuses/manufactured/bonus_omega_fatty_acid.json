@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_OMEGA_FATTY_ACID",
+ "description": "TXT_KEY_BONUS_OMEGA_FATTY_ACID",
+ "civilopedia": "TXT_KEY_BONUS_OMEGA_FATTY_ACID_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_ELECTROLYTE_CELLS"
+  ]
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_OMEGA_FATTY_ACID"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

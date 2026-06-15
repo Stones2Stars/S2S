@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_HYKSOSI",
+ "description": "TXT_KEY_BONUS_HYKSOSI",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_HYKSOSI_CHARIOT",
+   "UNIT_KHYAN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HYKSOSI"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

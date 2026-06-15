@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_GUATEMALAN",
+ "description": "TXT_KEY_BONUS_GUATEMALAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ALVARADO_CAVALRY",
+   "UNIT_PEDRO_DE_ALVARADO"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_GUATEMALAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_VINES",
+ "description": "TXT_KEY_BONUS_VINES",
+ "civilopedia": "TXT_KEY_BONUS_VINES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AERIAL_BASKET_ROPEWAYS",
+   "BUILDING_BASKETMAKER",
+   "BUILDING_BASKET_MAKERS_WORKSHOP",
+   "BUILDING_FACTORY_BASKETS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_VINES"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

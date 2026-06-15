@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_FULANI",
+ "description": "TXT_KEY_BONUS_FULANI",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_FULANI_CAVALRY"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_FULANI"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

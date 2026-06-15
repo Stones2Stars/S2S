@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_URUGUAYAN",
+ "description": "TXT_KEY_BONUS_URUGUAYAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_HERNANDARIAS_REGIMENTO",
+   "UNIT_JOSE_MUJICA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_URUGUAYAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_BYZANTINE",
+ "description": "TXT_KEY_BONUS_BYZANTINE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_BASIL_II",
+   "UNIT_BYZANTINE_CATAPHRACT",
+   "UNIT_CONSTANTINE_XI"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BYZANTINE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

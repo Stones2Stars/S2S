@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_BASQUE",
+ "description": "TXT_KEY_BONUS_BASQUE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_GUDARI",
+   "UNIT_INIGO",
+   "UNIT_SANCHO"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BASQUE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

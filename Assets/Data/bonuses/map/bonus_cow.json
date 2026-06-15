@@ -1,0 +1,88 @@
+{
+ "type": "BONUS_COW",
+ "description": "TXT_KEY_BONUS_COW",
+ "civilopedia": "TXT_KEY_BONUS_COW_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAMP_AUROCHS",
+   "BUILDING_CARRION_GATHERER",
+   "BUILDING_COW_SHRINE",
+   "BUILDING_CULTURE_AMERICAN",
+   "BUILDING_CULTURE_ARGENTINIAN",
+   "BUILDING_CULTURE_HITTITE",
+   "BUILDING_CULTURE_MASAI",
+   "BUILDING_CULTURE_MINOAN",
+   "BUILDING_CULTURE_QING",
+   "BUILDING_CULTURE_SENEGALI",
+   "BUILDING_CULTURE_TIBETAN",
+   "BUILDING_CULTURE_URUGUAYAN",
+   "BUILDING_CULTURE_UZBEK",
+   "BUILDING_DIG_SITE_TRICERATOPS_FOSSILS",
+   "BUILDING_DISEASE_ANTHRAX",
+   "BUILDING_FARM_ANIMAL_COW",
+   "BUILDING_FARM_ANIMAL_OXEN",
+   "BUILDING_FARM_ANIMAL_YAK",
+   "BUILDING_INVOCATION_HUT_COW",
+   "BUILDING_NGAI_NAROK_BLESS_COW",
+   "BUILDING_RODEO",
+   "BUILDING_SHAMANISTIC_TEMPLE_COW"
+  ],
+  "units": [
+   "UNIT_NEANDERTHAL_SHEPHERD",
+   "UNIT_SHEPHERD",
+   "UNIT_TAMED_CATTLE"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_COW"
+ },
+ "mapGeneration": {
+  "placementOrder": 6,
+  "constAppearance": 200,
+  "minAreaSize": 3,
+  "maxLatitude": 50,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 92,
+  "groupRange": 1,
+  "groupRand": 10,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_LUSH",
+   "TERRAIN_GRASSLAND"
+  ],
+  "validFeatures": [
+   "FEATURE_FLOOD_PLAINS",
+   "FEATURE_VERY_TALL_GRASS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_PLAINS",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DESERT"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_LIVESTOCK"
+ }
+}

@@ -764,7 +764,129 @@
  },
  "happiness": {
   "empire": {
-   "flat": -1
+   "flat": [
+    -1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CAMEL",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DONKEY",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HORSE",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LLAMA",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHEEP",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BISON",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BEAVERS",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DEER",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ELEPHANTS",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GUINEA_PIGS",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_KANGAROO",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MAMMOTH",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_RABBIT",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SEA_LION_AND_SEAL",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WALRUS",
+      "scope": "empire",
+      "min": 1
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {

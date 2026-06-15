@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_ANTIMATTER",
+ "description": "TXT_KEY_BONUS_ANTIMATTER",
+ "civilopedia": "TXT_KEY_BONUS_ANTIMATTER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+   "BUILDING_ANTI_MATTER_BATTERY"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ANTIMATTER"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

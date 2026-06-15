@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_PELTS",
+ "description": "TXT_KEY_BONUS_PELTS",
+ "civilopedia": "TXT_KEY_BONUS_PELTS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FURRIER",
+   "BUILDING_POACHERS_CAMP",
+   "BUILDING_SLAUGHTERHOUSE"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_PELTS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

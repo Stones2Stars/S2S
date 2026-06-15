@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_XIA",
+ "description": "TXT_KEY_BONUS_XIA",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_YU_SPEARMAN",
+   "UNIT_YU_THE_GREAT"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_XIA"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_DANISH",
+ "description": "TXT_KEY_BONUS_DANISH",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_FORKBEARD"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_DANISH"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

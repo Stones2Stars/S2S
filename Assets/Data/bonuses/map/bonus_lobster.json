@@ -1,0 +1,66 @@
+{
+ "type": "BONUS_LOBSTER",
+ "description": "TXT_KEY_BONUS_LOBSTER",
+ "civilopedia": "TXT_KEY_BONUS_LOBSTER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CENTIPEDE_GATHERER",
+   "BUILDING_CULTURE_NABATEANS",
+   "BUILDING_FISHERMANS_HUT",
+   "BUILDING_GRAND_MARINE_FESTIVAL",
+   "BUILDING_NET_LOBSTER",
+   "BUILDING_NET_PRAWN",
+   "BUILDING_NET_SNAPPER",
+   "BUILDING_SWORDFISH_NETS"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_LOBSTER"
+ },
+ "mapGeneration": {
+  "placementOrder": 9,
+  "constAppearance": 500,
+  "minAreaSize": 16,
+  "rands": {
+   "iRandApp1": 50,
+   "iRandApp2": 50,
+   "iRandApp3": 50,
+   "iRandApp4": 50
+  },
+  "tilesPer": 100,
+  "uniqueRange": 5,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_COAST",
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_COAST_TROPICAL",
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_SEA_TROPICAL",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_DEEP_TROPICAL",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_SEAFOOD"
+ }
+}

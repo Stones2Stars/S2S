@@ -1,0 +1,81 @@
+{
+ "type": "BONUS_CORN",
+ "description": "TXT_KEY_BONUS_CORN",
+ "civilopedia": "TXT_KEY_BONUS_CORN_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BREEDING_PROGRAM_RACCOON",
+   "BUILDING_CORN_GATHERER",
+   "BUILDING_CULTURE_ARAWAK",
+   "BUILDING_CULTURE_HOPI",
+   "BUILDING_CULTURE_MANCHURIAN",
+   "BUILDING_CULTURE_MISSISSIPPIAN",
+   "BUILDING_FARM_ANIMAL_TURKEY",
+   "BUILDING_FARM_CROP_ARTICHOKE",
+   "BUILDING_FARM_CROP_BEAN",
+   "BUILDING_FARM_CROP_BELL_PEPPER",
+   "BUILDING_FARM_CROP_CHILI",
+   "BUILDING_FARM_CROP_CORN",
+   "BUILDING_FARM_CROP_CORN_SMUT",
+   "BUILDING_FARM_CROP_EGGPLANT",
+   "BUILDING_FARM_CROP_QUINOA",
+   "BUILDING_FARM_CROP_ZUCCHINI",
+   "BUILDING_FARM_FLOWER_SUNFLOWER",
+   "BUILDING_GROVE_CASHEW",
+   "BUILDING_HAMSTER_BREEDER",
+   "BUILDING_JUMILES_GATHERER",
+   "BUILDING_MAIZE_CEREMONY",
+   "BUILDING_NATURE_ALTAR_MAIZE_GOD",
+   "BUILDING_NATURE_CIRCLE_MAIZE_GOD",
+   "BUILDING_ORCHARD_AVOCADO",
+   "BUILDING_ORCHARD_CHERIMOYA",
+   "BUILDING_PLANTATION_TOMATILLO",
+   "BUILDING_TEMPLE_OF_KI_CORN",
+   "BUILDING_TRAP_RACCOON"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CORN"
+ },
+ "mapGeneration": {
+  "placementOrder": 6,
+  "constAppearance": 200,
+  "minAreaSize": 3,
+  "minLatitude": 20,
+  "maxLatitude": 50,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 64,
+  "area": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH"
+  ],
+  "validFeatures": [
+   "FEATURE_FLOOD_PLAINS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_PLAINS",
+   "TERRAIN_SCRUB"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CROP"
+ }
+}

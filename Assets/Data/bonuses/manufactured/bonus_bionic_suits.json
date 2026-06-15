@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_BIONIC_SUITS",
+ "description": "TXT_KEY_BONUS_BIONIC_SUITS",
+ "civilopedia": "TXT_KEY_BONUS_BIONIC_SUITS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CIRCADIAN_CHAMBER"
+  ],
+  "units": [
+   "UNIT_CYBORG",
+   "UNIT_FERAL",
+   "UNIT_HTSNIPER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BIONIC_SUITS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

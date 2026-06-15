@@ -1,0 +1,46 @@
+{
+ "type": "BONUS_METALLIC_ASTEROID",
+ "description": "TXT_KEY_BONUS_METALLIC_ASTEROID",
+ "civilopedia": "TXT_KEY_BONUS_METALLIC_ASTEROID_PEDIA",
+ "production": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_METALLIC_ASTEROID"
+ },
+ "mapGeneration": {
+  "constAppearance": 35,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 32,
+  "area": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_ASTEROID_SURFACE",
+   "TERRAIN_KUIPER_BELT_OBJECT"
+  ],
+  "validFeatures": [
+   "FEATURE_OORT_CLOUD",
+   "FEATURE_ASTEROIDS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_INNER_SOLAR_SYSTEM",
+   "TERRAIN_OUTER_SOLAR_SYSTEM",
+   "TERRAIN_TRANSNEPTUNIAN_SPACE",
+   "TERRAIN_TRANSTELLAR_SPACE"
+  ],
+  "placementOrder": 9
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_PRODUCTION",
+  "randApp4": 25
+ }
+}

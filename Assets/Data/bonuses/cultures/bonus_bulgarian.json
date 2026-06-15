@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_BULGARIAN",
+ "description": "TXT_KEY_BONUS_BULGARIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_BOYARS",
+   "UNIT_KRUM",
+   "UNIT_SIMEON"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BULGARIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

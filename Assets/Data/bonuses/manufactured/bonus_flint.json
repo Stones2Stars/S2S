@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_FLINT",
+ "description": "TXT_KEY_BONUS_FLINT",
+ "civilopedia": "TXT_KEY_BONUS_FLINT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FLINT_KNAPPER",
+   "BUILDING_SPEARPOINT_BURIAL",
+   "BUILDING_STONEWORKER",
+   "BUILDING_TALLY_STONE"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_FLINT"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

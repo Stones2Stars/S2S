@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_NOONGAR",
+ "description": "TXT_KEY_BONUS_NOONGAR",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_BUSH_TRACKERS",
+   "UNIT_PIBELMAN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_NOONGAR"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

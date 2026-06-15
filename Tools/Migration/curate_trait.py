@@ -27,10 +27,13 @@ parsed into per-PROPERTY_* families). OWNER RULINGS (2026-06-14) drive the struc
   * Categories -> DROP (dead: zero C++ readers; not authored in either trait XML; civic drops it too).
   * the culture-requirement progression (GAMEOPTION_NEXT_TRAIT_CULTURE_REQ_PERCENT) is a GAME OPTION, not a
     trait field -> not authored on the trait.
-- CREST: BonusHappinessChanges (the only fresh bonus-conditioner) FOLDS ONTO THE BONUS (curate_bonus
-  BONUS_BOOSTS, city scope, keyed by trait) -> DROPPED here. TechResearchModifiers is crest-adjacent but the
-  plan HANDOFF rules it STAYS trait-side (it surfaces on a tech only as a derived boostedBy) -> kept as
-  research.empire.byTech.{TECH}.percent.
+- CREST: BonusHappinessChanges (the only fresh bonus-conditioner) is authored ON THE TRAIT (keep-on-source,
+  modifier-spec §6 — supersedes the old "fold onto the bonus" rule; a resource is never a target): the trait
+  grants +N happiness while a specific bonus is present. The deposit is `happiness.empire.flat` (scope = the
+  MODIFIER's: the trait benefits the player's cities); the condition is the agreed full+explicit enabler atom
+  (enabler-spec §6.1/§13.7) `enabled:{type:BONUS_X, scope:empire, min:1}` ("we have ≥1", a tally count read).
+  TechResearchModifiers is crest-adjacent but the plan HANDOFF rules it STAYS trait-side (it surfaces on a tech
+  only as a derived boostedBy) -> kept as research.empire.byTech.{TECH}.percent.
 - GreatPeopleUnitType + GreatPeopleRateChange FOLD into greatPeopleRate.empire.units.{UNIT}.flat (the change is
   keyed by the GP unit; CvPlayer.cpp:28606-28610, only when >0).
 - CityStartCulture + BonusPopulationinNewCities -> a `cityFounding` family (standing empire accumulators applied
@@ -207,9 +210,10 @@ IDENTITY_FLAGS = {
     "bBarbarianSelectionOnly": "barbarianSelectionOnly",
 }
 TEXT = {"Description": "description", "Civilopedia": "civilopedia", "Help": "help", "Strategy": "strategy"}
-# DROPs: prereqs (-> store enables), CREST fold (-> curate_bonus), double-author (-> curate_specialist), dead.
+# DROPs: prereqs (-> store enables), double-author (-> curate_specialist), dead. (BonusHappinessChanges is NO
+# LONGER dropped — it is authored on the trait, gated by bonus presence; handled in the loop + merge below.)
 DROP = {"Type", "TraitPrereq", "TraitPrereqOr1", "TraitPrereqOr2", "PrereqTech",
-        "BonusHappinessChanges", "SpecialistYieldChanges", "SpecialistCommerceChanges", "Categories"}
+        "SpecialistYieldChanges", "SpecialistCommerceChanges", "Categories"}
 FAMILY_ORDER = ["food", "production", "commerce", "gold", "research", "culture", "espionage",
                 "extraYieldThreshold", "lessYieldThreshold", "happiness", "health", "growth",
                 "greatPeopleRate", "greatGeneralRate", "freeSpecialists", "experience", "conscript",
@@ -321,6 +325,7 @@ def curate(typ, rec, store):
     text, fam, props, policies, grants, art, identity, ai = {}, {}, {}, {}, {}, {}, {}, {}
     excludes, load_on, load_not, succession = [], [], [], {}
     gp_unit, gp_change = None, None
+    bonus_happy = OrderedDict()
     leftover = []
     for c in rec:
         tag, t = c.tag, engine.text(c)
@@ -392,6 +397,8 @@ def curate(typ, rec, store):
             fp = _free_promotions(c)
             if fp:
                 grants["freePromotions"] = fp
+        elif tag == "BonusHappinessChanges":              # per-bonus conditional happiness, authored on the trait
+            bonus_happy = _keyed_entries(c, None)          # {BONUS_X: +N happy while that bonus is present}
         elif tag == "PropertyManipulators":
             _properties(c, props)
         elif tag == "Flavors":
@@ -423,6 +430,20 @@ def curate(typ, rec, store):
     if gp_unit and gp_change and gp_change != 0:
         (fam.setdefault("greatPeopleRate", {}).setdefault("empire", {})
          .setdefault("units", {}).setdefault(gp_unit, {}))["flat"] = gp_change
+
+    # BonusHappinessChanges -> conditional happiness deposits on the TRAIT (modifier-spec §6 keep-on-source).
+    # Deposit = `happiness.empire.flat` (scope is the MODIFIER's: the trait benefits the player's own cities).
+    # Condition = the agreed full+explicit enabler atom (enabler-spec §6.1/§13.7): `{type:BONUS_X, scope:empire,
+    # min:1}` = "we have at least 1 of this bonus" (a tally count read, presence). Coexists with an unconditional
+    # iHappiness via the §1.5 mixed list (a bare value + condition-bearing entries).
+    if bonus_happy:
+        node = fam.setdefault("happiness", {}).setdefault("empire", {})
+        existing = node.get("flat")
+        entries = (existing if isinstance(existing, list) else [existing]) if existing is not None else []
+        for b, v in bonus_happy.items():
+            entries.append(OrderedDict([("value", v),
+                                        ("enabled", OrderedDict([("type", b), ("scope", "empire"), ("min", 1)]))]))
+        node["flat"] = entries
 
     out = OrderedDict()
     out["type"] = typ

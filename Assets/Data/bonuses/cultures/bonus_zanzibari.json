@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_ZANZIBARI",
+ "description": "TXT_KEY_BONUS_ZANZIBARI",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_SAID_BIN_SULTAN",
+   "UNIT_SAMBUK"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ZANZIBARI"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_AYMARA",
+ "description": "TXT_KEY_BONUS_AYMARA",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_KATARI",
+   "UNIT_KATARI_INSURGENTS",
+   "UNIT_VIRACOCHA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_AYMARA"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

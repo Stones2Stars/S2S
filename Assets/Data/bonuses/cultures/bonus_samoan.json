@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_SAMOAN",
+ "description": "TXT_KEY_BONUS_SAMOAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_MATAAFA_BRIGADE",
+   "UNIT_MATAAFA_IOSEFO"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SAMOAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

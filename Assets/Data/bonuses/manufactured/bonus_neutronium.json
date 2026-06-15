@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_NEUTRONIUM",
+ "description": "TXT_KEY_BONUS_NEUTRONIUM",
+ "civilopedia": "TXT_KEY_BONUS_NEUTRONIUM_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_HYPER_BATTLECRUISER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_NEUTRONIUM"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

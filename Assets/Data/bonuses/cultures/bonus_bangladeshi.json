@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_BANGLADESHI",
+ "description": "TXT_KEY_BONUS_BANGLADESHI",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_PATAMAR",
+   "UNIT_RAM_MOHAN_ROY"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BANGLADESHI"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

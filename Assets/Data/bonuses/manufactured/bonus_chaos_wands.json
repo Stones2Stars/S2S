@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_CHAOS_WANDS",
+ "description": "TXT_KEY_BONUS_CHAOS_WANDS",
+ "civilopedia": "TXT_KEY_BONUS_CHAOS_WANDS_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_CHAOS_WANDS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

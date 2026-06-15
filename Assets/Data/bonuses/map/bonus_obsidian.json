@@ -1,0 +1,98 @@
+{
+ "type": "BONUS_OBSIDIAN",
+ "description": "TXT_KEY_BONUS_OBSIDIAN",
+ "civilopedia": "TXT_KEY_BONUS_OBSIDIAN_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BARBER_SHOP",
+   "BUILDING_BEADMAKERS_WORKSHOP",
+   "BUILDING_BEADWORKER",
+   "BUILDING_BLACK_TRUFFLE_GATHERER",
+   "BUILDING_CULTURE_AZTEC",
+   "BUILDING_CULTURE_MELANESIAN",
+   "BUILDING_CULTURE_SAKA",
+   "BUILDING_FACTORY_BEADS",
+   "BUILDING_FLETCHERS_HUT",
+   "BUILDING_FLINT_KNAPPER",
+   "BUILDING_GRAND_FIRE_FESTIVAL",
+   "BUILDING_HEMATITE_GATHERER",
+   "BUILDING_MINE_JET",
+   "BUILDING_MINE_MAGNETITE",
+   "BUILDING_MONUMENT",
+   "BUILDING_OBSIDIAN_GATHERER",
+   "BUILDING_OBSIDIAN_QUARRY",
+   "BUILDING_STONEWORKER"
+  ],
+  "units": [
+   "UNIT_AZTEC_JAGUAR",
+   "UNIT_CUACHIC",
+   "UNIT_FULANI_CAVALRY",
+   "UNIT_LIGHTNING_WARRIOR",
+   "UNIT_LIGHT_CAVALRY",
+   "UNIT_MANDEKALU",
+   "UNIT_MAPINGUARI_OBSIDIAN",
+   "UNIT_NAZCA_HEADHUNTERS",
+   "UNIT_NEANDERTHAL_OBSIDIAN_AXEMAN",
+   "UNIT_NEANDERTHAL_OBSIDIAN_MACEMAN",
+   "UNIT_NEANDERTHAL_OBSIDIAN_SPEARMAN",
+   "UNIT_NEANDERTHAL_OBSIDIAN_SWORDSMAN",
+   "UNIT_OBSIDIAN_AXEMAN",
+   "UNIT_OBSIDIAN_MACEMAN",
+   "UNIT_OBSIDIAN_SPEARMAN",
+   "UNIT_OBSIDIAN_SWORDSMAN",
+   "UNIT_SAVANNA_CAVALRY",
+   "UNIT_TLATILCO_WAR_PRIEST",
+   "UNIT_TLAXCALTEC_WARRIOR",
+   "UNIT_WARDOG"
+  ]
+ },
+ "production": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_OBSIDIAN"
+ },
+ "mapGeneration": {
+  "placementOrder": 3,
+  "constAppearance": 250,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 280,
+  "hills": true,
+  "peaks": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_PRODUCTION"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_BEDOUIN",
+ "description": "TXT_KEY_BONUS_BEDOUIN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_BADIS",
+   "UNIT_MEHARISTS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BEDOUIN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

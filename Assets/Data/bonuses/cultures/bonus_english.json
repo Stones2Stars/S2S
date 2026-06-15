@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_ENGLISH",
+ "description": "TXT_KEY_BONUS_ENGLISH",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ENGLISH_REDCOAT",
+   "UNIT_FLORENCE_NIGHTINGALE",
+   "UNIT_LORD_NELSON",
+   "UNIT_ROBIN_HOOD"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ENGLISH"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_BASHKIR",
+ "description": "TXT_KEY_BONUS_BASHKIR",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_BASHKIR_SHAMAN",
+   "UNIT_SALAWAT_YULAYEV"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BASHKIR"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_SIAMESE",
+ "description": "TXT_KEY_BONUS_SIAMESE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HO_TRAI_LIBRARY"
+  ],
+  "units": [
+   "UNIT_CHULALONGKORN",
+   "UNIT_HOWDAH",
+   "UNIT_SURIYOTHAI"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SIAMESE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

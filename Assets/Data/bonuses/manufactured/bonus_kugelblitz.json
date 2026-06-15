@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_KUGELBLITZ",
+ "description": "TXT_KEY_BONUS_KUGELBLITZ",
+ "civilopedia": "TXT_KEY_BONUS_KUGELBLITZ_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_KUGELBLITZ_POWER_PLANT",
+   "BUILDING_TRANSTELLAR_HELIOFORMED_GAS_GIANT"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_KUGELBLITZ"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_KEVLAR",
+ "description": "TXT_KEY_BONUS_KEVLAR",
+ "civilopedia": "TXT_KEY_BONUS_KEVLAR_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_KEVLAR"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_LIZARDS",
+ "description": "TXT_KEY_BONUS_LIZARDS",
+ "civilopedia": "TXT_KEY_BONUS_LIZARDS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HERPETOLOGY_LAB"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_LIZARDS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

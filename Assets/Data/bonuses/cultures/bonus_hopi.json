@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_HOPI",
+ "description": "TXT_KEY_BONUS_HOPI",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_PUEBLO_REBEL",
+   "UNIT_SEKAQUAPTEWA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HOPI"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_PLATINUM_INGOTS",
+ "description": "TXT_KEY_BONUS_PLATINUM_INGOTS",
+ "civilopedia": "TXT_KEY_BONUS_INGOTS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SMITH_PLATINUM"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_PLATINUM_INGOTS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_TURKMEN",
+ "description": "TXT_KEY_BONUS_TURKMEN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_SHAH_RUKH",
+   "UNIT_TURKOMAN",
+   "UNIT_ULUGH_BEG"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_TURKMEN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

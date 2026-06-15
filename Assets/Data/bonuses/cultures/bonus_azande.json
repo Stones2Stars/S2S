@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_AZANDE",
+ "description": "TXT_KEY_BONUS_AZANDE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_NIAM_NIAM",
+   "UNIT_SANDEH"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_AZANDE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

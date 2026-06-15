@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_VENEZUELAN",
+ "description": "TXT_KEY_BONUS_VENEZUELAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_FRANCISCO",
+   "UNIT_LLANERO"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_VENEZUELAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

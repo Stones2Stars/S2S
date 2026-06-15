@@ -1,0 +1,60 @@
+{
+ "type": "BONUS_OPIUM",
+ "description": "TXT_KEY_BONUS_OPIUM",
+ "civilopedia": "TXT_KEY_BONUS_OPIUM_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_FATIMID",
+   "BUILDING_CULTURE_SUDANESE",
+   "BUILDING_GRAND_SKY_FESTIVAL",
+   "BUILDING_PLANTATION_POPPY",
+   "BUILDING_TRANCE_HUT"
+  ]
+ },
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_OPIUM"
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 200,
+  "minAreaSize": 3,
+  "minLatitude": 20,
+  "maxLatitude": 50,
+  "rands": {
+   "iRandApp1": 50,
+   "iRandApp2": 50,
+   "iRandApp3": 50,
+   "iRandApp4": 50
+  },
+  "tilesPer": 128,
+  "groupRange": 2,
+  "groupRand": 8,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_PLAINS",
+   "TERRAIN_SCRUB"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_LUXURY"
+ }
+}

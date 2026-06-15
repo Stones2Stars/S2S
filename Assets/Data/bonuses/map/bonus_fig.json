@@ -1,0 +1,79 @@
+{
+ "type": "BONUS_FIG",
+ "description": "TXT_KEY_BONUS_FIG",
+ "civilopedia": "TXT_KEY_BONUS_FIG_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_ABBASID",
+   "BUILDING_CULTURE_ADENAN",
+   "BUILDING_CULTURE_SICILIAN",
+   "BUILDING_CULTURE_WALLACHIAN",
+   "BUILDING_NATURE_ALTAR_FIGS",
+   "BUILDING_NATURE_CIRCLE_FIGS",
+   "BUILDING_PLANTATION_FIGS"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 20
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_FIG"
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "maxLatitude": 45,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "minLandPercent": 70,
+  "uniqueRange": 5,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_PLAINS"
+  ],
+  "validFeatures": [
+   "FEATURE_CACTUS",
+   "FEATURE_FLOOD_PLAINS",
+   "FEATURE_OASIS",
+   "FEATURE_SAVANNA"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CROP"
+ }
+}

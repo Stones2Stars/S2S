@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_PLASTEEL",
+ "description": "TXT_KEY_BONUS_PLASTEEL",
+ "civilopedia": "TXT_KEY_BONUS_PLASTEEL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_VENUS_SURFACE_CITY"
+  ]
+ },
+ "ai": {
+  "behaviour": {
+   "objective": 10
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_PLASTEEL"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

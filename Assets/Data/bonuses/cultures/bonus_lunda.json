@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_LUNDA",
+ "description": "TXT_KEY_BONUS_LUNDA",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_DAMBALLA",
+   "UNIT_MWAANTA_GAAND"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_LUNDA"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

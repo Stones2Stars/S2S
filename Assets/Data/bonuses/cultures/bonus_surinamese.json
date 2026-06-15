@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_SURINAMESE",
+ "description": "TXT_KEY_BONUS_SURINAMESE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_BOSNEGERS",
+   "UNIT_JULES_WIJDENBOSCH"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SURINAMESE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,62 @@
+{
+ "type": "BONUS_GUAVAS",
+ "description": "TXT_KEY_BONUS_GUAVAS",
+ "civilopedia": "TXT_KEY_BONUS_GUAVAS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_GROVE_GEVUINA",
+   "BUILDING_NATURE_ALTAR_GUAVAS",
+   "BUILDING_NATURE_CIRCLE_GUAVAS",
+   "BUILDING_ORCHARD_GUAVA",
+   "BUILDING_ORCHARD_STARFRUIT"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_GUAVAS"
+ },
+ "mapGeneration": {
+  "placementOrder": 8,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "maxLatitude": 25,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 92,
+  "uniqueRange": 4,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_LUSH"
+  ],
+  "validFeatures": [
+   "FEATURE_JUNGLE"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_MUDDY"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CROP"
+ }
+}

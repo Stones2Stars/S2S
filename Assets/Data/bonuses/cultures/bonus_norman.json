@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_NORMAN",
+ "description": "TXT_KEY_BONUS_NORMAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_NORMAN_KNIGHT",
+   "UNIT_ROLLO"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_NORMAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

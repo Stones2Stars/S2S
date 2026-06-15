@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_CHILEAN",
+ "description": "TXT_KEY_BONUS_CHILEAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_CHILEAN_CORVETTE",
+   "UNIT_OHIGGINS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CHILEAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

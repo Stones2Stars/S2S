@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_GOLD_INGOTS",
+ "description": "TXT_KEY_BONUS_GOLD_INGOTS",
+ "civilopedia": "TXT_KEY_BONUS_INGOTS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FORT_KNOX",
+   "BUILDING_SMELTER_ELECTRUM",
+   "BUILDING_SMITH_GOLD"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_GOLD_INGOTS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

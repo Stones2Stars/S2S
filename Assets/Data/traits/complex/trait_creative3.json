@@ -110,7 +110,17 @@
  },
  "happiness": {
   "empire": {
-   "flat": 1,
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HIT_MOVIES",
+      "scope": "empire",
+      "min": 1
+     }
+    }
+   ],
    "buildings": {
     "BUILDING_NEON_BOUTIQUE": {
      "flat": 1

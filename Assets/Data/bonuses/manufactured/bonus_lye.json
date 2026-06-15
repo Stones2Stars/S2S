@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_LYE",
+ "description": "TXT_KEY_BONUS_LYE",
+ "civilopedia": "TXT_KEY_BONUS_LYE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_SOAP",
+   "BUILDING_SOAP_MAKER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_LYE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

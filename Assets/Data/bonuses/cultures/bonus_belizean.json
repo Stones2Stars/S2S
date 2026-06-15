@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_BELIZEAN",
+ "description": "TXT_KEY_BONUS_BELIZEAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_GEORGE_CADLE_PRICE",
+   "UNIT_MAHOGANY_WOODCUTTER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BELIZEAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

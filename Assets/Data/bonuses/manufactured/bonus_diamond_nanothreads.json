@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_DIAMOND_NANOTHREADS",
+ "description": "TXT_KEY_BONUS_DIAMOND_NANOTHREADS",
+ "civilopedia": "TXT_KEY_BONUS_DIAMOND_NANOTHREADS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MARTIAN_SKYHOOK",
+   "BUILDING_STRATOSPHERIC_TOWER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_DIAMOND_NANOTHREADS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

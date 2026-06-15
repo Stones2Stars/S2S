@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_ROMANE",
+ "description": "TXT_KEY_BONUS_ROMANE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_BEGGAR",
+   "UNIT_STEFAN_RAZVAN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ROMANE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

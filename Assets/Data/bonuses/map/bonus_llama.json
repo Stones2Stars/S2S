@@ -1,0 +1,69 @@
+{
+ "type": "BONUS_LLAMA",
+ "description": "TXT_KEY_BONUS_LLAMA",
+ "civilopedia": "TXT_KEY_BONUS_LLAMA_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_LLAMA",
+   "BUILDING_BREEDING_PROGRAM_RHEA",
+   "BUILDING_CAMP_MEGATHERIUM",
+   "BUILDING_CAMP_RHEA",
+   "BUILDING_CARRION_GATHERER",
+   "BUILDING_CENTRAL_BREEDER_LLAMA",
+   "BUILDING_CULTURE_KOGI",
+   "BUILDING_CULTURE_QUECHUA",
+   "BUILDING_CULTURE_YANOMAMI",
+   "BUILDING_FARM_ANIMAL_ALPACA",
+   "BUILDING_FARM_ANIMAL_LLAMA",
+   "BUILDING_RIDING_SCHOOL"
+  ],
+  "units": [
+   "UNIT_LLAMA_ARCHER",
+   "UNIT_LLAMA_RIDER",
+   "UNIT_NEANDERTHAL_SHEPHERD",
+   "UNIT_PACK_LLAMA",
+   "UNIT_QHATUQ",
+   "UNIT_SHEPHERD",
+   "UNIT_TAMED_LLAMA"
+  ]
+ },
+ "production": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_LLAMA"
+ },
+ "mapGeneration": {
+  "placementOrder": 0,
+  "constAppearance": 200,
+  "minAreaSize": 4,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "uniqueRange": 1,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_SCRUB",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_STRATEGIC"
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_SEMINOLE",
+ "description": "TXT_KEY_BONUS_SEMINOLE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_SHARKTOOTH_ARCHER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SEMINOLE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

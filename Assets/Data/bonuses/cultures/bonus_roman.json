@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_ROMAN",
+ "description": "TXT_KEY_BONUS_ROMAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ROME_PRAETORIAN",
+   "UNIT_ROMULUS",
+   "UNIT_SCIPIO_AFRICANUS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ROMAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

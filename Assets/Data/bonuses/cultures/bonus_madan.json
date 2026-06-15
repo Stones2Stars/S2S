@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_MADAN",
+ "description": "TXT_KEY_BONUS_MADAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_BISON_WARDENS",
+   "UNIT_MATO_TOPE"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_MADAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

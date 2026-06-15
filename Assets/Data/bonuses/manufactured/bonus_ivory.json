@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_IVORY",
+ "description": "TXT_KEY_BONUS_IVORY",
+ "civilopedia": "TXT_KEY_BONUS_IVORY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BONEWORKER",
+   "BUILDING_COUNTING_STICKS",
+   "BUILDING_JEWELER",
+   "BUILDING_PIERCER",
+   "BUILDING_PIERCING_SHOP"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_IVORY"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

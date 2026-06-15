@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_LIANGZHU",
+ "description": "TXT_KEY_BONUS_LIANGZHU",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_LIANGZHU_JADE_CARVER"
+  ],
+  "units": [
+   "UNIT_JADE_AXEMAN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_LIANGZHU"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

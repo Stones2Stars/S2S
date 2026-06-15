@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_PUMICE_STONE",
+ "description": "TXT_KEY_BONUS_PUMICE_STONE",
+ "civilopedia": "TXT_KEY_BONUS_PUMICE_STONE_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_PUMICE_STONE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

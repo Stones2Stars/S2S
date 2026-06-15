@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_ENERGY_DRINK",
+ "description": "TXT_KEY_BONUS_ENERGY_DRINK",
+ "civilopedia": "TXT_KEY_BONUS_ENERGY_DRINK_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_STIM_PACKS",
+   "BUILDING_PLASTIC_RECLAMATION_PLANT",
+   "BUILDING_STEEL_RECLAMATION_PLANT"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ENERGY_DRINK"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

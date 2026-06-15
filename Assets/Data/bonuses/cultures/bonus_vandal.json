@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_VANDAL",
+ "description": "TXT_KEY_BONUS_VANDAL",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_GENSERIC",
+   "UNIT_VANDAL_PILLAGER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_VANDAL"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

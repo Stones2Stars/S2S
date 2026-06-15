@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_TLAXCALTEC",
+ "description": "TXT_KEY_BONUS_TLAXCALTEC",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_TLAXCALTEC_WARRIOR",
+   "UNIT_XICOTENCATL_II",
+   "UNIT_YAOTLALLI_WARRIOR"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_TLAXCALTEC"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

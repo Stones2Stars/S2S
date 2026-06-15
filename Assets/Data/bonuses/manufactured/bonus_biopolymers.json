@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_BIOPOLYMERS",
+ "description": "TXT_KEY_BONUS_BIOPOLYMERS",
+ "civilopedia": "TXT_KEY_BONUS_BIOPOLYMERS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BACTERIUM_BIOFORGE",
+   "BUILDING_FACTORY_ANDROIDS",
+   "BUILDING_FACTORY_BIONIC_SUITS",
+   "BUILDING_FACTORY_NANOACTUATORS",
+   "BUILDING_FACTORY_SERVICE_BOTS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BIOPOLYMERS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

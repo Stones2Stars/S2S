@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_ETRUSCAN",
+ "description": "TXT_KEY_BONUS_ETRUSCAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_HOPLOMACHUS",
+   "UNIT_LARS_PORSENA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ETRUSCAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

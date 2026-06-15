@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_AKA",
+ "description": "TXT_KEY_BONUS_AKA",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_KHONVOUM",
+   "UNIT_PYGMY_WARRIOR",
+   "UNIT_TORE"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_AKA"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

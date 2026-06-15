@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_ORANG_ASLI",
+ "description": "TXT_KEY_BONUS_ORANG_ASLI",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_JAHAI",
+   "UNIT_ORANG_BOWMAN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ORANG_ASLI"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

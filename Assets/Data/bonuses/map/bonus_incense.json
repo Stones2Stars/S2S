@@ -1,0 +1,70 @@
+{
+ "type": "BONUS_INCENSE",
+ "description": "TXT_KEY_BONUS_INCENSE",
+ "civilopedia": "TXT_KEY_BONUS_INCENSE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANCIENT_EMBALMER",
+   "BUILDING_CULTURE_HIMYARITE",
+   "BUILDING_CULTURE_HOLY_ROMAN",
+   "BUILDING_CULTURE_HUASTEC",
+   "BUILDING_CULTURE_SICAN",
+   "BUILDING_CULTURE_XIANBEI",
+   "BUILDING_FARM_FLOWER_SNAPDRAGON",
+   "BUILDING_GRAND_SKY_FESTIVAL",
+   "BUILDING_PLANTATION_FRANKINCENSE",
+   "BUILDING_PLANTATION_MYRRH",
+   "BUILDING_PLANTATION_SAFFRON",
+   "BUILDING_SCARAB_BEETLE_GATHERER"
+  ]
+ },
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 3
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_INCENSE"
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "uniqueRange": 4,
+  "groupRange": 1,
+  "groupRand": 16,
+  "hills": true,
+  "flatlands": true,
+  "validFeatures": [
+   "FEATURE_CACTUS",
+   "FEATURE_FLOOD_PLAINS",
+   "FEATURE_OASIS",
+   "FEATURE_SAVANNA"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES",
+   "TERRAIN_SCRUB"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_LUXURY"
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_HUMAN_MOD_TRANSAPIENT",
+ "description": "TXT_KEY_BONUS_HUMAN_MOD_TRANSAPIENT",
+ "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HUMAN_MOD_IMMORTAL"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HUMAN_MOD_TRANSAPIENT"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_GENMODS"
+ }
+}

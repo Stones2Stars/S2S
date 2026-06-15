@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_IRAQI",
+ "description": "TXT_KEY_BONUS_IRAQI",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_REPUBLICAN_GUARD",
+   "UNIT_SADDAM_HUSSEIN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_IRAQI"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

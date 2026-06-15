@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_CLAYTRONIC_ATOMS",
+ "description": "TXT_KEY_BONUS_CLAYTRONIC_ATOMS",
+ "civilopedia": "TXT_KEY_BONUS_CLAYTRONIC_ATOMS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CLAYTRONIC_FIRE_SUPPRESSION"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CLAYTRONIC_ATOMS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

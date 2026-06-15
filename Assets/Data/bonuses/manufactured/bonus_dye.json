@@ -1,0 +1,41 @@
+{
+ "type": "BONUS_DYE",
+ "description": "TXT_KEY_BONUS_DYE",
+ "civilopedia": "TXT_KEY_BONUS_DYE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMATION_STUDIO",
+   "BUILDING_ART_SUPPLY_STORE",
+   "BUILDING_CALLIGRAPHY_SCHOOL",
+   "BUILDING_COPY_STORE",
+   "BUILDING_FACTORY_BOOKS",
+   "BUILDING_FACTORY_NEWSPAPERS",
+   "BUILDING_FACTORY_TOYS",
+   "BUILDING_FRESCO_MURAL",
+   "BUILDING_INTELLIGENT_PAVEMENT",
+   "BUILDING_MOSAIC_WORKSHOP",
+   "BUILDING_PAINTBALL_ARENA",
+   "BUILDING_PORTRAIT_PAINTER",
+   "BUILDING_PRINTERS_WORKSHOP",
+   "BUILDING_STAINED_GLASS_WORKSHOP",
+   "BUILDING_TATTOOER",
+   "BUILDING_TATTOO_PARLOR"
+  ]
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 3
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_DYE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

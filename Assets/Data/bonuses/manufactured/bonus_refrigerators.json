@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_REFRIGERATORS",
+ "description": "TXT_KEY_BONUS_REFRIGERATORS",
+ "civilopedia": "TXT_KEY_BONUS_REFRIGERATORS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_APPLIANCE_STORE",
+   "BUILDING_GASTRONOMY_LAB",
+   "BUILDING_STEEL_RECLAMATION_PLANT",
+   "BUILDING_SVALBARD_GLOBAL_SEED_VAULT"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_REFRIGERATORS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_CONSCIOUS_MATERIALS",
+ "description": "TXT_KEY_BONUS_CONSCIOUS_MATERIALS",
+ "civilopedia": "TXT_KEY_BONUS_CONSCIOUS_MATERIALS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_ANIMATED_PREON_STAR"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CONSCIOUS_MATERIALS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_HUMAN_MOD_INFORMATION_BASED",
+ "description": "TXT_KEY_BONUS_HUMAN_MOD_INFORMATION_BASED",
+ "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HUMAN_MOD_PURE_ENERGY",
+   "BUILDING_HUMAN_MOD_TRANSAPIENT"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HUMAN_MOD_INFORMATION_BASED"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_GENMODS"
+ }
+}

@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_PLASMA_GENERATORS",
+ "description": "TXT_KEY_BONUS_PLASMA_GENERATORS",
+ "civilopedia": "TXT_KEY_BONUS_PLASMA_GENERATORS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_SHOCKWAVE_ENGINES"
+  ],
+  "units": [
+   "UNIT_PLASMA_THROWER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_PLASMA_GENERATORS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

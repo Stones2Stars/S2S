@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_CANTONESE",
+ "description": "TXT_KEY_BONUS_CANTONESE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_DAI_CHUI"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CANTONESE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

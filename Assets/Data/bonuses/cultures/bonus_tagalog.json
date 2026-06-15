@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_TAGALOG",
+ "description": "TXT_KEY_BONUS_TAGALOG",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_JOSE_RIZAL",
+   "UNIT_KATIPUNAN_CAVALRY"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_TAGALOG"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

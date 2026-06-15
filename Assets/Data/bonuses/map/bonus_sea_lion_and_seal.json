@@ -1,0 +1,79 @@
+{
+ "type": "BONUS_SEA_LION_AND_SEAL",
+ "description": "TXT_KEY_BONUS_SEA_LION_AND_SEAL",
+ "civilopedia": "TXT_KEY_BONUS_SEA_LION_AND_SEAL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BREEDING_PROGRAM_BELUGA",
+   "BUILDING_BREEDING_PROGRAM_ELEPHANT_SEAL",
+   "BUILDING_BREEDING_PROGRAM_SEAL",
+   "BUILDING_BREEDING_PROGRAM_SEA_OTTER",
+   "BUILDING_CAMP_BELUGA",
+   "BUILDING_CAMP_ELEPHANT_SEAL",
+   "BUILDING_CAMP_SEAL",
+   "BUILDING_CARRION_GATHERER",
+   "BUILDING_CULTURE_DENE",
+   "BUILDING_CULTURE_FUEGIAN",
+   "BUILDING_CULTURE_SCOTTISH",
+   "BUILDING_CULTURE_SOUTH_AFRICAN",
+   "BUILDING_CULTURE_VANATUAN",
+   "BUILDING_INVOCATION_HUT_SEAL",
+   "BUILDING_NET_SEA_BASS",
+   "BUILDING_SEA_TURTLE_EGG_GATHERER",
+   "BUILDING_SHAMANISTIC_TEMPLE_SEAL",
+   "BUILDING_TRAP_SEA_OTTER"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SEA_LION_AND_SEAL"
+ },
+ "mapGeneration": {
+  "placementOrder": 5,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 20,
+  "uniqueRange": 2,
+  "hills": true,
+  "flatlands": true,
+  "bonusCoastalOnly": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_ICE",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_TAIGA",
+   "TERRAIN_ROCKY",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_LIVESTOCK"
+ }
+}

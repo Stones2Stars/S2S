@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_ALEMANNIC",
+ "description": "TXT_KEY_BONUS_ALEMANNIC",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_CHROCUS",
+   "UNIT_FYRDMAN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ALEMANNIC"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

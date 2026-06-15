@@ -1,0 +1,85 @@
+{
+ "type": "BONUS_FLAX",
+ "description": "TXT_KEY_BONUS_FLAX",
+ "civilopedia": "TXT_KEY_BONUS_FLAX_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BUTTERFLY_GATHERER",
+   "BUILDING_CATCHER_HUMMINGBIRD",
+   "BUILDING_CORAL_TOOTH_MUSHROOM_GATHERER",
+   "BUILDING_CULTURE_BATAVIAN",
+   "BUILDING_CULTURE_MOHAWK",
+   "BUILDING_CULTURE_TANG",
+   "BUILDING_CULTURE_TATAR",
+   "BUILDING_FARM_FLOWER_BEGONIA",
+   "BUILDING_FARM_FLOWER_BLUEBELL",
+   "BUILDING_FARM_FLOWER_CARNATION",
+   "BUILDING_FARM_FLOWER_DAISY",
+   "BUILDING_FARM_FLOWER_FLAX",
+   "BUILDING_FARM_FLOWER_FOXGLOVE",
+   "BUILDING_FARM_FLOWER_HIBISCUS",
+   "BUILDING_FARM_FLOWER_IRIS",
+   "BUILDING_FARM_FLOWER_LILY",
+   "BUILDING_FARM_FLOWER_ORCHID",
+   "BUILDING_FARM_FLOWER_PANSY",
+   "BUILDING_FARM_FLOWER_ROSE",
+   "BUILDING_FARM_FLOWER_SNAPDRAGON",
+   "BUILDING_FARM_FLOWER_SUNFLOWER",
+   "BUILDING_FARM_FLOWER_TULIP",
+   "BUILDING_FARM_FLOWER_VIOLET",
+   "BUILDING_WEAVER"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_FLAX"
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "noRiverSide": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_MARSH",
+   "TERRAIN_MUDDY"
+  ],
+  "validFeatures": [
+   "FEATURE_FLOOD_PLAINS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_DESERT",
+   "TERRAIN_PLAINS",
+   "TERRAIN_SCRUB"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_PRODUCTION"
+ }
+}

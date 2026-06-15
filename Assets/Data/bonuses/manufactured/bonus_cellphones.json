@@ -1,0 +1,24 @@
+{
+ "type": "BONUS_CELLPHONES",
+ "description": "TXT_KEY_BONUS_CELLPHONES",
+ "civilopedia": "TXT_KEY_BONUS_CELLPHONES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CELLPHONE_STORE",
+   "BUILDING_COPPER_RECLAMATION_PLANT",
+   "BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE",
+   "BUILDING_PLASTIC_RECLAMATION_PLANT",
+   "BUILDING_QUANTIFIED_HEALTH_CENTER",
+   "BUILDING_WIRELESS_NETWORKS"
+  ],
+  "units": [
+   "UNIT_HACKER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CELLPHONES"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

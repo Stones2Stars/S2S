@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_BEADS",
+ "description": "TXT_KEY_BONUS_BEADS",
+ "civilopedia": "TXT_KEY_BONUS_BEADS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_JEWELER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BEADS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

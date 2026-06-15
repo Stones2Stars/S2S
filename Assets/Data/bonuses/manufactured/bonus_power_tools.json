@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_POWER_TOOLS",
+ "description": "TXT_KEY_BONUS_POWER_TOOLS",
+ "civilopedia": "TXT_KEY_BONUS_POWER_TOOLS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_PLASTIC_RECLAMATION_PLANT"
+  ],
+  "units": [
+   "UNIT_AUTO_ELECTRICIAN",
+   "UNIT_REPLICATION_MECHANIC"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_POWER_TOOLS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

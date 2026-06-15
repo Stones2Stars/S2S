@@ -1,0 +1,24 @@
+{
+ "type": "BONUS_STEEL_INGOTS",
+ "description": "TXT_KEY_BONUS_STEEL_INGOTS",
+ "civilopedia": "TXT_KEY_BONUS_INGOTS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUGMENTED_SPORTS_ARENA",
+   "BUILDING_FERRY_TERMINAL",
+   "BUILDING_METAMATERIAL_FOUNDRY",
+   "BUILDING_SMITH_STEEL"
+  ]
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_STEEL_INGOTS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

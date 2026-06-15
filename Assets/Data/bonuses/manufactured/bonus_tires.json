@@ -1,0 +1,24 @@
+{
+ "type": "BONUS_TIRES",
+ "description": "TXT_KEY_BONUS_TIRES",
+ "civilopedia": "TXT_KEY_BONUS_TIRES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_AIRCRAFT",
+   "BUILDING_FACTORY_AUTOMOBILES",
+   "BUILDING_ORDINANCE_TIRE_RECYCLING_PROGRAM",
+   "BUILDING_RUBBER_RECLAMATION_PLANT",
+   "BUILDING_TRACTION_ENGINE_WORKSHOP"
+  ],
+  "units": [
+   "UNIT_MOTORCYCLE",
+   "UNIT_UNMANNED_TRIKE"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_TIRES"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

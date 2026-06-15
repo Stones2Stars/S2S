@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_GOKTURK",
+ "description": "TXT_KEY_BONUS_GOKTURK",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ASHINA_ELITE",
+   "UNIT_ASHINA_JIESHESHUAI"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_GOKTURK"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

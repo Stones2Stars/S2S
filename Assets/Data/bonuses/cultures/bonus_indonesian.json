@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_INDONESIAN",
+ "description": "TXT_KEY_BONUS_INDONESIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_AROK",
+   "UNIT_INDONESIAN_SILAT"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_INDONESIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

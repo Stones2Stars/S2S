@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_KONJAN",
+ "description": "TXT_KEY_BONUS_KONJAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_AMON_BAZIRA",
+   "UNIT_RWENZURURU_SOLDIER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_KONJAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

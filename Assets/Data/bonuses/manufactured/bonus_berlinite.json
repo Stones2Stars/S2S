@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_BERLINITE",
+ "description": "TXT_KEY_BONUS_BERLINITE",
+ "civilopedia": "TXT_KEY_BONUS_BERLINITE_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_BERLINITE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

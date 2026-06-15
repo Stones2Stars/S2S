@@ -1,0 +1,91 @@
+{
+ "type": "BONUS_OIL",
+ "description": "TXT_KEY_BONUS_OIL",
+ "civilopedia": "TXT_KEY_BONUS_OIL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASPHALT_ROADS",
+   "BUILDING_CHEMICAL_PLANT",
+   "BUILDING_CULTURE_DIESELPUNK",
+   "BUILDING_CULTURE_NORWEGIAN",
+   "BUILDING_CULTURE_TEXAN",
+   "BUILDING_CULTURE_VENEZUELAN",
+   "BUILDING_DIG_SITE_PTERODACTYL_FOSSILS",
+   "BUILDING_EXPRESSWAY",
+   "BUILDING_HIGHWAY",
+   "BUILDING_KEROSENE_DISTILLERY",
+   "BUILDING_OIL_DERRICK",
+   "BUILDING_OIL_POWER_PLANT",
+   "BUILDING_OIL_REFINERY",
+   "BUILDING_PARKING_LOT",
+   "BUILDING_ROUTE_66"
+  ],
+  "routes": [
+   "ROUTE_RAILROAD"
+  ],
+  "units": [
+   "UNIT_CARGO_SHIP",
+   "UNIT_LIBERTY_MERCHANT"
+  ]
+ },
+ "production": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 20
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_OIL"
+ },
+ "mapGeneration": {
+  "placementOrder": 2,
+  "constAppearance": 400,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 400,
+  "minLandPercent": 62,
+  "uniqueRange": 6,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_MARSH",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ICE",
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_SEA_TROPICAL",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_DEEP_TROPICAL",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_LAKE"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_STRATEGIC"
+ }
+}

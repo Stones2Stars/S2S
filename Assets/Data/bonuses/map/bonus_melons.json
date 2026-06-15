@@ -1,0 +1,75 @@
+{
+ "type": "BONUS_MELONS",
+ "description": "TXT_KEY_BONUS_MELONS",
+ "civilopedia": "TXT_KEY_BONUS_MELONS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_KAZAKH",
+   "BUILDING_FARM_CROP_CALABASH",
+   "BUILDING_FARM_CROP_CANTALOUPE",
+   "BUILDING_FARM_CROP_HONEYDEW",
+   "BUILDING_FARM_CROP_LICORICE",
+   "BUILDING_FARM_CROP_WATERMELON",
+   "BUILDING_GOLIATH_BEETLE_GATHERER",
+   "BUILDING_GROVE_MONGONGO",
+   "BUILDING_NATURE_ALTAR_MELONS",
+   "BUILDING_NATURE_CIRCLE_MELONS"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 20
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_MELONS"
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 150,
+  "minAreaSize": 3,
+  "maxLatitude": 40,
+  "rands": {
+   "iRandApp1": 30,
+   "iRandApp2": 30,
+   "iRandApp3": 30,
+   "iRandApp4": 30
+  },
+  "tilesPer": 72,
+  "minLandPercent": 70,
+  "uniqueRange": 5,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_MARSH"
+  ],
+  "validFeatures": [
+   "FEATURE_JUNGLE",
+   "FEATURE_FLOOD_PLAINS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CROP"
+ }
+}

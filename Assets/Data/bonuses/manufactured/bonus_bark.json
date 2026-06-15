@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_BARK",
+ "description": "TXT_KEY_BONUS_BARK",
+ "civilopedia": "TXT_KEY_BONUS_BARK_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BASKETMAKER",
+   "BUILDING_BASKET_MAKERS_WORKSHOP",
+   "BUILDING_FACTORY_BASKETS",
+   "BUILDING_FACTORY_TANNIN",
+   "BUILDING_HOUSING_BARK_HUTS",
+   "BUILDING_TANNIN_MAKER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BARK"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

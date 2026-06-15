@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_HIT_MUSICALS",
+ "description": "TXT_KEY_BONUS_HIT_MUSICALS",
+ "civilopedia": "TXT_KEY_BONUS_HIT_MUSICALS_PEDIA",
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HIT_MUSICALS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_WONDER"
+ }
+}

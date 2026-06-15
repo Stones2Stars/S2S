@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_HIT_SINGLES",
+ "description": "TXT_KEY_BONUS_HIT_SINGLES",
+ "civilopedia": "TXT_KEY_BONUS_HIT_SINGLES_PEDIA",
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HIT_SINGLES"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_WONDER"
+ }
+}

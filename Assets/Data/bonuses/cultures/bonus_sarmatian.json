@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_SARMATIAN",
+ "description": "TXT_KEY_BONUS_SARMATIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_AMAZON_RIDER",
+   "UNIT_BATRADZ"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SARMATIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

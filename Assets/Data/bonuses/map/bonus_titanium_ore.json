@@ -1,0 +1,67 @@
+{
+ "type": "BONUS_TITANIUM_ORE",
+ "description": "TXT_KEY_BONUS_TITANIUM_ORE",
+ "civilopedia": "TXT_KEY_BONUS_TITANIUM_ORE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUNAR_TITANIUM_PROCESSING_FACILITY",
+   "BUILDING_MINE_TITANIUM",
+   "BUILDING_NATIONAL_SMELTER_TITANIUM",
+   "BUILDING_SMELTER_TITANIUM"
+  ]
+ },
+ "production": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_TITANIUM_ORE"
+ },
+ "mapGeneration": {
+  "placementOrder": 4,
+  "constAppearance": 200,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 168,
+  "uniqueRange": 3,
+  "hills": true,
+  "peaks": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ICE"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_STRATEGIC"
+ }
+}

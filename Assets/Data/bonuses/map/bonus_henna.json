@@ -1,0 +1,67 @@
+{
+ "type": "BONUS_HENNA",
+ "description": "TXT_KEY_BONUS_HENNA",
+ "civilopedia": "TXT_KEY_BONUS_HENNA_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_BASHKIR",
+   "BUILDING_CULTURE_SABBATEAN",
+   "BUILDING_HENNA_GATHERER",
+   "BUILDING_PLANTATION_HENNA",
+   "BUILDING_PLANTATION_MARSH_MALLOW"
+  ]
+ },
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 3
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HENNA"
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "maxLatitude": 30,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 92,
+  "groupRange": 1,
+  "groupRand": 16,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_PLAINS",
+   "TERRAIN_SCRUB"
+  ],
+  "validFeatures": [
+   "FEATURE_FLOOD_PLAINS",
+   "FEATURE_OASIS",
+   "FEATURE_SAVANNA"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_LUXURY"
+ }
+}

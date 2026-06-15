@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_ANDAMANESE",
+ "description": "TXT_KEY_BONUS_ANDAMANESE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ANDAMAN_PYGMIES",
+   "UNIT_KORA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ANDAMANESE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_LSD",
+ "description": "TXT_KEY_BONUS_LSD",
+ "civilopedia": "TXT_KEY_BONUS_LSD_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_LSD"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

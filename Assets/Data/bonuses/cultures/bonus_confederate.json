@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_CONFEDERATE",
+ "description": "TXT_KEY_BONUS_CONFEDERATE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_STONEWALL_BRIGADE"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CONFEDERATE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

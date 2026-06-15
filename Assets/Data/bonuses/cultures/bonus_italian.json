@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_ITALIAN",
+ "description": "TXT_KEY_BONUS_ITALIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ELMETI"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ITALIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

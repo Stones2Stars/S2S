@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_EGYPTIAN",
+ "description": "TXT_KEY_BONUS_EGYPTIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_EGYPT_WARCHARIOT",
+   "UNIT_KHAEMWASET",
+   "UNIT_THUTMOSE_III"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_EGYPTIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

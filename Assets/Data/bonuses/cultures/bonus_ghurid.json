@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_GHURID",
+ "description": "TXT_KEY_BONUS_GHURID",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ALA_AL_DIN_HUSAYN",
+   "UNIT_KETABDAR"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_GHURID"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

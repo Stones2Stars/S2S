@@ -1,0 +1,64 @@
+{
+ "type": "BONUS_SAPPHIRES",
+ "description": "TXT_KEY_BONUS_SAPPHIRES",
+ "civilopedia": "TXT_KEY_BONUS_SAPPHIRES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_BAHRAINI",
+   "BUILDING_CULTURE_LUBA",
+   "BUILDING_GRAND_EARTH_FESTIVAL",
+   "BUILDING_MINE_AMETHYST",
+   "BUILDING_MINE_FLUORITE",
+   "BUILDING_MINE_LAZULITE",
+   "BUILDING_MINE_SAPPHIRE"
+  ]
+ },
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SAPPHIRES"
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "hills": true,
+  "peaks": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ICE"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_LUXURY"
+ }
+}

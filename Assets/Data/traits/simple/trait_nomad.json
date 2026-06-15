@@ -127,7 +127,25 @@
     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE": {
      "flat": 1
     }
-   }
+   },
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HORSE",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CAMEL",
+      "scope": "empire",
+      "min": 1
+     }
+    }
+   ]
   }
  },
  "greatGeneralRate": {

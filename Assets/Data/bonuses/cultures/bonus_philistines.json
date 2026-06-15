@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_PHILISTINES",
+ "description": "TXT_KEY_BONUS_PHILISTINES",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_GOLIATH",
+   "UNIT_LIGHT_HOPLITE"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_PHILISTINES"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

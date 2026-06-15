@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_AINU",
+ "description": "TXT_KEY_BONUS_AINU",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_KAMUY",
+   "UNIT_SHAK",
+   "UNIT_SURKU"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_AINU"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

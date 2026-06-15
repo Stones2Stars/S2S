@@ -1,0 +1,91 @@
+{
+ "type": "BONUS_COAL",
+ "description": "TXT_KEY_BONUS_COAL",
+ "civilopedia": "TXT_KEY_BONUS_COAL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_COAL_FIRED_DYNAMO",
+   "BUILDING_COAL_PLANT",
+   "BUILDING_CULTURE_SAUDI",
+   "BUILDING_CULTURE_STEAMPUNK",
+   "BUILDING_DIG_SITE_ICHTHYOSTEGA_FOSSILS",
+   "BUILDING_FORGE",
+   "BUILDING_FOUNDRY",
+   "BUILDING_GRAND_CENTRAL_STATION",
+   "BUILDING_HIGH_TECH_COAL_POWER_PLANT",
+   "BUILDING_HYPOCAUSTS",
+   "BUILDING_KEROSENE_DISTILLERY",
+   "BUILDING_MINE_COAL",
+   "BUILDING_MINE_GRAPHITE",
+   "BUILDING_MINE_JET",
+   "BUILDING_MINE_MASCAGNITE",
+   "BUILDING_RAILROAD_STATION",
+   "BUILDING_SHALE_PLANT",
+   "BUILDING_SMELTER_STEEL",
+   "BUILDING_STEAMBOAT_PORT",
+   "BUILDING_STEAM_CRANE"
+  ],
+  "routes": [
+   "ROUTE_RAILROAD"
+  ],
+  "units": [
+   "UNIT_BATTLECRUISER",
+   "UNIT_DREADNOUGHT_SHIP",
+   "UNIT_HOSPITAL_SHIP",
+   "UNIT_IRONCLAD",
+   "UNIT_MASTER_SAILOR_PRE_DREADNOUGHT",
+   "UNIT_MASTER_SAILOR_STEAM_DESTROYER",
+   "UNIT_MASTER_SAILOR_WW1_DESTROYER",
+   "UNIT_NAUTILUS",
+   "UNIT_PADDLE_STEAMER",
+   "UNIT_PRE_DREADNOUGHT",
+   "UNIT_STEAM_DESTROYER",
+   "UNIT_STEAM_TANK",
+   "UNIT_WAR_WHEEL",
+   "UNIT_WW1_DESTROYER"
+  ]
+ },
+ "production": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_COAL"
+ },
+ "mapGeneration": {
+  "placementOrder": 2,
+  "constAppearance": 400,
+  "minAreaSize": 4,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 400,
+  "uniqueRange": 4,
+  "hills": true,
+  "peaks": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ICE"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_STRATEGIC"
+ }
+}

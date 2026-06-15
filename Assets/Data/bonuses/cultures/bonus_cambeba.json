@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_CAMBEBA",
+ "description": "TXT_KEY_BONUS_CAMBEBA",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_CABANAGEM_REBEL",
+   "UNIT_EDUARDO_ANGELIM"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CAMBEBA"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

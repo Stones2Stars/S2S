@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_PEAT",
+ "description": "TXT_KEY_BONUS_PEAT",
+ "civilopedia": "TXT_KEY_BONUS_PEAT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_GRAND_FIRE_FESTIVAL",
+   "BUILDING_PEAT_FIRED_DYNAMO"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_PEAT"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

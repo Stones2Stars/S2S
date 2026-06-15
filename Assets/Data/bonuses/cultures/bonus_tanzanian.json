@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_TANZANIAN",
+ "description": "TXT_KEY_BONUS_TANZANIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_BENJAMIN_MKAPA",
+   "UNIT_SERENGETI_RANGER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_TANZANIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

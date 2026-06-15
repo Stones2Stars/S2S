@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_BRAZILIAN",
+ "description": "TXT_KEY_BONUS_BRAZILIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_BRAZILIAN_BANDEIRANTE",
+   "UNIT_LUIS",
+   "UNIT_TIRADENTES"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BRAZILIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

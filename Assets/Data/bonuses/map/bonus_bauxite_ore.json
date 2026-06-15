@@ -1,0 +1,73 @@
+{
+ "type": "BONUS_BAUXITE_ORE",
+ "description": "TXT_KEY_BONUS_BAUXITE_ORE",
+ "civilopedia": "TXT_KEY_BONUS_BAUXITE_ORE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUNAR_ALUMINIUM_PROCESSING_FACILITY",
+   "BUILDING_MINE_BAUXITE",
+   "BUILDING_MINE_BERLINITE",
+   "BUILDING_MINE_CAESIUM",
+   "BUILDING_MINE_CHROMITE",
+   "BUILDING_MINE_LAZULITE",
+   "BUILDING_MINE_NICKEL",
+   "BUILDING_NATIONAL_SMELTER_ALUMINUM",
+   "BUILDING_SMELTER_ALUMINUM"
+  ]
+ },
+ "production": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BAUXITE_ORE"
+ },
+ "mapGeneration": {
+  "placementOrder": 3,
+  "constAppearance": 300,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 50,
+   "iRandApp2": 50,
+   "iRandApp3": 50,
+   "iRandApp4": 50
+  },
+  "tilesPer": 500,
+  "uniqueRange": 6,
+  "hills": true,
+  "peaks": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_MARSH",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ICE"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_STRATEGIC"
+ }
+}

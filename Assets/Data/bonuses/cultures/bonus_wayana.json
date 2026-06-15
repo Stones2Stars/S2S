@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_WAYANA",
+ "description": "TXT_KEY_BONUS_WAYANA",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_AKAVAI",
+   "UNIT_OJANA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_WAYANA"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

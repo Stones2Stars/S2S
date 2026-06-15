@@ -1,0 +1,22 @@
+{
+ "type": "BONUS_SHELLFISH",
+ "description": "TXT_KEY_BONUS_SHELLFISH",
+ "civilopedia": "TXT_KEY_BONUS_SHELLFISH_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BEADMAKERS_WORKSHOP",
+   "BUILDING_BEADWORKER",
+   "BUILDING_DRIED_FISH_MAKER",
+   "BUILDING_FACTORY_BEADS",
+   "BUILDING_FISHMONGER",
+   "BUILDING_PESTS_FLIES",
+   "BUILDING_PESTS_SEAGULLS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SHELLFISH"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

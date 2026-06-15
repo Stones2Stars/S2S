@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_SWEDISH",
+ "description": "TXT_KEY_BONUS_SWEDISH",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_GUSTAVUS_ADOLPHUS",
+   "UNIT_KAROLINER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SWEDISH"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

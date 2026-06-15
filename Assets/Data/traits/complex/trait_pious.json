@@ -107,7 +107,17 @@
   "empire": {
    "nonStateReligion": {
     "flat": -1
-   }
+   },
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "empire",
+      "min": 1
+     }
+    }
+   ]
   }
  },
  "experience": {

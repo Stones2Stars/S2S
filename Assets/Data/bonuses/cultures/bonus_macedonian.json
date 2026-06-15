@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_MACEDONIAN",
+ "description": "TXT_KEY_BONUS_MACEDONIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_HYPASPISTAI"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_MACEDONIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

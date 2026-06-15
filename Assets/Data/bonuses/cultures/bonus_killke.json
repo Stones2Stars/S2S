@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_KILLKE",
+ "description": "TXT_KEY_BONUS_KILLKE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_APU_TAMBO",
+   "UNIT_WIRUTI"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_KILLKE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_HITTITE",
+ "description": "TXT_KEY_BONUS_HITTITE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_HITTITES_HITTITE_CHARIOT",
+   "UNIT_LABARNA",
+   "UNIT_MURSILI"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HITTITE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

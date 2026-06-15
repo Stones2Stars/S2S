@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_CHARCOAL",
+ "description": "TXT_KEY_BONUS_CHARCOAL",
+ "civilopedia": "TXT_KEY_BONUS_CHARCOAL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARMOURER",
+   "BUILDING_FORGE",
+   "BUILDING_FOUNDRY",
+   "BUILDING_HYPOCAUSTS",
+   "BUILDING_SMELTER_STEEL"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CHARCOAL"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

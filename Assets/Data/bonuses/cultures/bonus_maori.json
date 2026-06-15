@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_MAORI",
+ "description": "TXT_KEY_BONUS_MAORI",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_TEWHATEWHA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_MAORI"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_EGGS",
+ "description": "TXT_KEY_BONUS_EGGS",
+ "civilopedia": "TXT_KEY_BONUS_EGGS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHILD_LABOR_CREW",
+   "BUILDING_DINER",
+   "BUILDING_PANCAKE_HOUSE"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_EGGS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

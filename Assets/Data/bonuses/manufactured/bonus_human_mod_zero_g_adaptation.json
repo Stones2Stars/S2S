@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_HUMAN_MOD_ZERO_G_ADAPTATION",
+ "description": "TXT_KEY_BONUS_HUMAN_MOD_ZERO_G_ADAPTATION",
+ "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HUMAN_MOD_ALIEN_HYBRID"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HUMAN_MOD_ZERO_G_ADAPTATION"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_GENMODS"
+ }
+}

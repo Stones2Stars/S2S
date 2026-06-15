@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_PERUVIAN",
+ "description": "TXT_KEY_BONUS_PERUVIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_AUGUSTO_LEGUIA",
+   "UNIT_PERUVIAN_CONQUISTADOR"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_PERUVIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

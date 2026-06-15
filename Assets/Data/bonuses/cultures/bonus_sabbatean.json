@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_SABBATEAN",
+ "description": "TXT_KEY_BONUS_SABBATEAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_MAGOS",
+   "UNIT_SHEBA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SABBATEAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

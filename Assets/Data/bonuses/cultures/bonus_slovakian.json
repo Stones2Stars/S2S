@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_SLOVAKIAN",
+ "description": "TXT_KEY_BONUS_SLOVAKIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_LUDOVIT_STUR",
+   "UNIT_ZBOJNIK"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SLOVAKIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

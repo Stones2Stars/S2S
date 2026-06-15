@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_BENINESE",
+ "description": "TXT_KEY_BONUS_BENINESE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_BENIN_EWUARE",
+   "UNIT_BENIN_WAR_BOW",
+   "UNIT_OZOLUA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BENINESE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

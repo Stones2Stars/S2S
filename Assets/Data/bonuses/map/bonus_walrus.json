@@ -1,0 +1,66 @@
+{
+ "type": "BONUS_WALRUS",
+ "description": "TXT_KEY_BONUS_WALRUS",
+ "civilopedia": "TXT_KEY_BONUS_WALRUS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BREEDING_PROGRAM_ELEPHANT_SEAL",
+   "BUILDING_BREEDING_PROGRAM_NARWHAL",
+   "BUILDING_BREEDING_PROGRAM_WALRUS",
+   "BUILDING_CAMP_ELEPHANT_SEAL",
+   "BUILDING_CAMP_NARWHAL",
+   "BUILDING_CAMP_WALRUS",
+   "BUILDING_CARRION_GATHERER",
+   "BUILDING_CULTURE_FINNISH",
+   "BUILDING_CULTURE_INUIT",
+   "BUILDING_CULTURE_QUERANDI",
+   "BUILDING_INVOCATION_HUT_WALRUS",
+   "BUILDING_SHAMANISTIC_TEMPLE_WALRUS"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_WALRUS"
+ },
+ "mapGeneration": {
+  "placementOrder": 5,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "minLatitude": 65,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 20,
+  "uniqueRange": 4,
+  "bonusCoastalOnly": true,
+  "flatlands": true,
+  "noRiverSide": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_ICE",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_TAIGA"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_LIVESTOCK"
+ }
+}

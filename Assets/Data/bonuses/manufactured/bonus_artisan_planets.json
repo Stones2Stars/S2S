@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_ARTISAN_PLANETS",
+ "description": "TXT_KEY_BONUS_ARTISAN_PLANETS",
+ "civilopedia": "TXT_KEY_BONUS_ARTISAN_PLANETS_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_ARTISAN_PLANETS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

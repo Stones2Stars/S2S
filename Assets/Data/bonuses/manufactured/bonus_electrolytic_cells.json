@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_ELECTROLYTIC_CELLS",
+ "description": "TXT_KEY_BONUS_ELECTROLYTIC_CELLS",
+ "civilopedia": "TXT_KEY_BONUS_ELECTROLYTIC_CELLS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_EMP_GRID",
+   "BUILDING_FACTORY_EXOSKELETONS",
+   "BUILDING_SMART_GRID",
+   "BUILDING_WIRELESS_GRID"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ELECTROLYTIC_CELLS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

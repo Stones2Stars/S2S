@@ -10,6 +10,20 @@
    }
   }
  },
+ "happiness": {
+  "empire": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "empire",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
  "stateReligion": {
   "empire": {
    "unitProduction": {

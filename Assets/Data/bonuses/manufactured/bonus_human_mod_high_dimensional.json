@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_HUMAN_MOD_HIGH_DIMENSIONAL",
+ "description": "TXT_KEY_BONUS_HUMAN_MOD_HIGH_DIMENSIONAL",
+ "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HUMAN_MOD_ARCHAILECT",
+   "BUILDING_HUMAN_MOD_ATEMPORAL",
+   "BUILDING_HUMAN_MOD_NON_SPATIAL"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HUMAN_MOD_HIGH_DIMENSIONAL"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_GENMODS"
+ }
+}

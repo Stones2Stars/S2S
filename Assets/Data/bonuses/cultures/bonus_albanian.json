@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_ALBANIAN",
+ "description": "TXT_KEY_BONUS_ALBANIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ALBANIAN_JANISSARY",
+   "UNIT_SKANDERBEG"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ALBANIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

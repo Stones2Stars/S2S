@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_BERBER",
+ "description": "TXT_KEY_BONUS_BERBER",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_CARTHAGE_NUMIDIAN_CAVALRY",
+   "UNIT_KAHINA",
+   "UNIT_YUSUF"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BERBER"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

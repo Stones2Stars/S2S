@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_PORTUGUESE",
+ "description": "TXT_KEY_BONUS_PORTUGUESE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_AFONSO_HENRIQUES",
+   "UNIT_HENRY",
+   "UNIT_PORTUGAL_CARRACK"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_PORTUGUESE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

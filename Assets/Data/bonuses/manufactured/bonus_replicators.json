@@ -1,0 +1,32 @@
+{
+ "type": "BONUS_REPLICATORS",
+ "description": "TXT_KEY_BONUS_REPLICATORS",
+ "civilopedia": "TXT_KEY_BONUS_REPLICATORS_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_SERVICE_DROID"
+  ]
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10,
+   "objective": 10
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_REPLICATORS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

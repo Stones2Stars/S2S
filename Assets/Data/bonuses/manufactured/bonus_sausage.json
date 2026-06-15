@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_SAUSAGE",
+ "description": "TXT_KEY_BONUS_SAUSAGE",
+ "civilopedia": "TXT_KEY_BONUS_SAUSAGE_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_SAUSAGE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

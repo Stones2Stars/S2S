@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_CALCULATORS",
+ "description": "TXT_KEY_BONUS_CALCULATORS",
+ "civilopedia": "TXT_KEY_BONUS_CALCULATORS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ELECTRONICS_STORE"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CALCULATORS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_SOUTH_AFRICAN",
+ "description": "TXT_KEY_BONUS_SOUTH_AFRICAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_BOER_CAVALRY",
+   "UNIT_NELSON_MANDELA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SOUTH_AFRICAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

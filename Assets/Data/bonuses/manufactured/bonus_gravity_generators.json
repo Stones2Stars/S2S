@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_GRAVITY_GENERATORS",
+ "description": "TXT_KEY_BONUS_GRAVITY_GENERATORS",
+ "civilopedia": "TXT_KEY_BONUS_GRAVITY_GENERATORS_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_GRAVITY_GENERATORS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

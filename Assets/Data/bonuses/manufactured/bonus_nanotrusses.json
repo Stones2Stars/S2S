@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_NANOTRUSSES",
+ "description": "TXT_KEY_BONUS_NANOTRUSSES",
+ "civilopedia": "TXT_KEY_BONUS_NANOTRUSSES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_PLYMOUTH_ARCOLOGY"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_NANOTRUSSES"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

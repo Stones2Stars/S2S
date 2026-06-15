@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_KITARAN",
+ "description": "TXT_KEY_BONUS_KITARAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_CHWEZI_ELITES",
+   "UNIT_RUHANGA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_KITARAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

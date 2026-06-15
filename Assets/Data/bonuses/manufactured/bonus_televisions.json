@@ -1,0 +1,24 @@
+{
+ "type": "BONUS_TELEVISIONS",
+ "description": "TXT_KEY_BONUS_TELEVISIONS",
+ "civilopedia": "TXT_KEY_BONUS_TELEVISIONS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_COPPER_RECLAMATION_PLANT",
+   "BUILDING_GLASS_RECLAMATION_PLANT",
+   "BUILDING_PLASTIC_RECLAMATION_PLANT",
+   "BUILDING_TV_STUDIO"
+  ]
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_TELEVISIONS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

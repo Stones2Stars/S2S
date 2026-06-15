@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_WELSH",
+ "description": "TXT_KEY_BONUS_WELSH",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_YEOMAN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_WELSH"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

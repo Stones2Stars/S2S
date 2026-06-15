@@ -1,0 +1,39 @@
+{
+ "type": "BONUS_POTTERY",
+ "description": "TXT_KEY_BONUS_POTTERY",
+ "civilopedia": "TXT_KEY_BONUS_POTTERY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BEE_BOMBS",
+   "BUILDING_BREWERY",
+   "BUILDING_CIDER_HOUSE",
+   "BUILDING_DAIRY_BARN",
+   "BUILDING_DISTILLERY",
+   "BUILDING_FACTORY_GHEE_OIL",
+   "BUILDING_FISH_OIL_MAKER",
+   "BUILDING_GHEE_MAKER",
+   "BUILDING_GLAZE_MAKER",
+   "BUILDING_GRANARY",
+   "BUILDING_MOSAIC_WORKSHOP",
+   "BUILDING_OLIVE_PRESS",
+   "BUILDING_WHALE_OIL_MAKER",
+   "BUILDING_WINERY"
+  ]
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 3
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_POTTERY"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

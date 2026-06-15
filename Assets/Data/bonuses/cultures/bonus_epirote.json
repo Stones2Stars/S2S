@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_EPIROTE",
+ "description": "TXT_KEY_BONUS_EPIROTE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_AGRIANIAN_AXEMAN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_EPIROTE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

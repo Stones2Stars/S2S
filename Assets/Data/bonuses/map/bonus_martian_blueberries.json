@@ -1,0 +1,40 @@
+{
+ "type": "BONUS_MARTIAN_BLUEBERRIES",
+ "description": "TXT_KEY_BONUS_MARTIAN_BLUEBERRIES",
+ "civilopedia": "TXT_KEY_BONUS_MARTIAN_BLUEBERRIES_PEDIA",
+ "production": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_MARTIAN_BLUEBERRIES"
+ },
+ "mapGeneration": {
+  "constAppearance": 35,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 32,
+  "area": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_MARTIAN_ICE",
+   "TERRAIN_MARTIAN_PERMAFROST",
+   "TERRAIN_MARTIAN_DESERT",
+   "TERRAIN_MARTIAN_DUNES",
+   "TERRAIN_MARTIAN_BARREN",
+   "TERRAIN_MARTIAN_PLAINS",
+   "TERRAIN_MARTIAN_ROCKY"
+  ],
+  "placementOrder": 9
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_PRODUCTION"
+ }
+}

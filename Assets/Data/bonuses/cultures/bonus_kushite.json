@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_KUSHITE",
+ "description": "TXT_KEY_BONUS_KUSHITE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_KANDAKE_VETERANS",
+   "UNIT_PIYE"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_KUSHITE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_SUPERSOLID_MATERIAL",
+ "description": "TXT_KEY_BONUS_SUPERSOLID_MATERIAL",
+ "civilopedia": "TXT_KEY_BONUS_SUPERSOLID_MATERIAL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ALPHA_ASSEMBLER",
+   "BUILDING_GRAVITY_TRAIN",
+   "BUILDING_SUPERCONDUCTING_GRID"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SUPERSOLID_MATERIAL"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

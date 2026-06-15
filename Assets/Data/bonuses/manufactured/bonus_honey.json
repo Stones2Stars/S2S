@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_HONEY",
+ "description": "TXT_KEY_BONUS_HONEY",
+ "civilopedia": "TXT_KEY_BONUS_HONEY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CANDY_SHOP",
+   "BUILDING_CONFECTIONERS_WORKSHOP",
+   "BUILDING_FACTORY_MARZIPAN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HONEY"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

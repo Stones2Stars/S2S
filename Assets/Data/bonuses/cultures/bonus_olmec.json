@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_OLMEC",
+ "description": "TXT_KEY_BONUS_OLMEC",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BALL_COURT",
+   "BUILDING_OLMEC_JADE_CARVER"
+  ],
+  "units": [
+   "UNIT_OLMEC_EAGLE_WARRIOR",
+   "UNIT_PO_NGBE"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_OLMEC"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

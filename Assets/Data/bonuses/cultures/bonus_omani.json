@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_OMANI",
+ "description": "TXT_KEY_BONUS_OMANI",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ARABIAN_GALLIOT",
+   "UNIT_QABOOS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_OMANI"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

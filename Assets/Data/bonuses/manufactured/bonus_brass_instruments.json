@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_BRASS_INSTRUMENTS",
+ "description": "TXT_KEY_BONUS_BRASS_INSTRUMENTS",
+ "civilopedia": "TXT_KEY_BONUS_BRASS_INSTRUMENTS_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_BRASS_INSTRUMENTS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

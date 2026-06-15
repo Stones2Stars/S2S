@@ -1,0 +1,103 @@
+{
+ "type": "BONUS_URANIUM",
+ "description": "TXT_KEY_BONUS_URANIUM",
+ "civilopedia": "TXT_KEY_BONUS_URANIUM_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CLEAN_NUCLEAR_REACTOR",
+   "BUILDING_CULTURE_ATOMPUNK",
+   "BUILDING_FAST_BREEDER_REACTOR",
+   "BUILDING_GENERATION_IV_REACTOR",
+   "BUILDING_HI_TECH_NUCLEAR_REACTOR",
+   "BUILDING_MANHATTAN_PROJECT",
+   "BUILDING_MINE_URANIUM",
+   "BUILDING_NUCLEAR_PLANT",
+   "BUILDING_NUCLEAR_POWERCOMPLEX",
+   "BUILDING_SMALL_REACTOR_FACTORY"
+  ],
+  "units": [
+   "UNIT_AEGIS_CRUISER",
+   "UNIT_ATOMIC",
+   "UNIT_ATTACK_SUBMARINE",
+   "UNIT_BATTLESHIP",
+   "UNIT_CARRIER",
+   "UNIT_EXPERIMENTAL",
+   "UNIT_HYDROGEN",
+   "UNIT_ICBM",
+   "UNIT_IRBM",
+   "UNIT_LANDING_SHIP",
+   "UNIT_LITTORAL_COMBAT_SHIP",
+   "UNIT_MASTER_SAILOR_ATTACK_SUBMARINE",
+   "UNIT_MASTER_SAILOR_BATTLESHIP",
+   "UNIT_MASTER_SAILOR_CARRIER",
+   "UNIT_MASTER_SAILOR_NUCLEAR_CARRIER",
+   "UNIT_MASTER_SAILOR_NUCLEAR_SUBMARINE",
+   "UNIT_MASTER_SAILOR_STEALTH_DESTROYER",
+   "UNIT_MISSILE_CRUISER",
+   "UNIT_MODERN_FRIGATE",
+   "UNIT_MRBM",
+   "UNIT_NUCLEAR_CARRIER",
+   "UNIT_NUCLEAR_SUBMARINE",
+   "UNIT_STEALTH_DESTROYER",
+   "UNIT_SUBMARINE",
+   "UNIT_TACTICAL_NUKE",
+   "UNIT_TRANSPORT",
+   "UNIT_UNMANNED_DESTROYER",
+   "UNIT_UNMANNED_PIRATE_SKIFF"
+  ]
+ },
+ "production": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 30
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_URANIUM"
+ },
+ "mapGeneration": {
+  "placementOrder": 2,
+  "constAppearance": 200,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 512,
+  "uniqueRange": 16,
+  "hills": true,
+  "peaks": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ICE"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_STRATEGIC"
+ }
+}

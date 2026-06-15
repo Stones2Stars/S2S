@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_NEPALESE",
+ "description": "TXT_KEY_BONUS_NEPALESE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_GURKHA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_NEPALESE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

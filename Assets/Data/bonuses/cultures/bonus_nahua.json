@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_NAHUA",
+ "description": "TXT_KEY_BONUS_NAHUA",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ALTAMIRANO",
+   "UNIT_TLATOANI_BOWMANS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_NAHUA"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

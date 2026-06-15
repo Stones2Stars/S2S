@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_WHALE_OIL",
+ "description": "TXT_KEY_BONUS_WHALE_OIL",
+ "civilopedia": "TXT_KEY_BONUS_WHALE_OIL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_OIL_LAMPS"
+  ],
+  "units": [
+   "UNIT_AKAVAI",
+   "UNIT_ARSONIST",
+   "UNIT_POST_APOCALYPTIC_GRENADIER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_WHALE_OIL"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

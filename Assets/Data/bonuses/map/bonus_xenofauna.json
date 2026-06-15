@@ -1,0 +1,45 @@
+{
+ "type": "BONUS_XENOFAUNA",
+ "description": "TXT_KEY_BONUS_XENOFAUNA",
+ "civilopedia": "TXT_KEY_BONUS_XENOFAUNA_PEDIA",
+ "food": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_XENOFAUNA"
+ },
+ "mapGeneration": {
+  "constAppearance": 35,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 32,
+  "area": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_ORION_ARM",
+   "TERRAIN_MILKY_WAY",
+   "TERRAIN_STAR_CLUSTER"
+  ],
+  "validFeatures": [
+   "FEATURE_MINI_NEPTUNE",
+   "FEATURE_SUPER_EARTH",
+   "FEATURE_DESERT_PLANET",
+   "FEATURE_OCEAN_PLANET"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_TRANSTELLAR_SPACE"
+  ],
+  "placementOrder": 9
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_LIVESTOCK"
+ }
+}

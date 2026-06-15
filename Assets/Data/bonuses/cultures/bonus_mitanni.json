@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_MITANNI",
+ "description": "TXT_KEY_BONUS_MITANNI",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_KIKKULI_CHARIOT",
+   "UNIT_SHUTTARNA_II"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_MITANNI"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

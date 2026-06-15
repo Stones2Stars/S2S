@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_PUNTIC",
+ "description": "TXT_KEY_BONUS_PUNTIC",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_PERAHU",
+   "UNIT_RESIN_CARAVAN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_PUNTIC"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

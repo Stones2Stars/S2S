@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_HAWAIIAN",
+ "description": "TXT_KEY_BONUS_HAWAIIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_POLYNESIAN_KOA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HAWAIIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

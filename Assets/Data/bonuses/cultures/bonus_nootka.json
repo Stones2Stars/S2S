@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_NOOTKA",
+ "description": "TXT_KEY_BONUS_NOOTKA",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_NOOTKA_CLUBMAN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_NOOTKA"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

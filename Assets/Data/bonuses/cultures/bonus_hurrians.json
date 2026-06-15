@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_HURRIANS",
+ "description": "TXT_KEY_BONUS_HURRIANS",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_TESHUB_PRIEST",
+   "UNIT_TISH_ATAL"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HURRIANS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

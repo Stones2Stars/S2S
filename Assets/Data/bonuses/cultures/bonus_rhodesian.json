@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_RHODESIAN",
+ "description": "TXT_KEY_BONUS_RHODESIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_IAN_SMITH",
+   "UNIT_RHODESIA_NATIVE_REGIMENT"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_RHODESIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_CINNABAR_ORE",
+ "description": "TXT_KEY_BONUS_CINNABAR_ORE",
+ "civilopedia": "TXT_KEY_BONUS_CINNABAR_ORE_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_CINNABAR_ORE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

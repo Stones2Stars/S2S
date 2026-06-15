@@ -217,7 +217,97 @@
   "empire": {
    "largestCity": {
     "flat": -1
-   }
+   },
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SEA_LION_AND_SEAL",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WALRUS",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CLAM",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CRAB",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FISH",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LOBSTER",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MUREX",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PEARLS",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHRIMP",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WHALE",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HYDROTHERMAL_VENT",
+      "scope": "empire",
+      "min": 1
+     }
+    }
+   ]
   }
  },
  "health": {

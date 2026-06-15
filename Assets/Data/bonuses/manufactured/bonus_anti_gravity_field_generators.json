@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_ANTI_GRAVITY_FIELD_GENERATORS",
+ "description": "TXT_KEY_BONUS_ANTI_GRAVITY_FIELD_GENERATORS",
+ "civilopedia": "TXT_KEY_BONUS_ANTI_GRAVITY_FIELD_GENERATORS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_GRAVITY_TRAPS",
+   "BUILDING_NOBLEGARDEN",
+   "BUILDING_PERSONAL_SPACECRAFT_FACTORY"
+  ],
+  "units": [
+   "UNIT_SENTINEL"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ANTI_GRAVITY_FIELD_GENERATORS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

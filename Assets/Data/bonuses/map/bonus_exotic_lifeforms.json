@@ -1,0 +1,36 @@
+{
+ "type": "BONUS_EXOTIC_LIFEFORMS",
+ "description": "TXT_KEY_BONUS_EXOTIC_LIFEFORMS",
+ "civilopedia": "TXT_KEY_BONUS_EXOTIC_LIFEFORMS_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_EXOTIC_LIFEFORMS"
+ },
+ "mapGeneration": {
+  "constAppearance": 35,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 32,
+  "area": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_OBSERVABLE_UNIVERSE",
+   "TERRAIN_INTERGALACTIC_VOID",
+   "TERRAIN_DISTANT_COSMOS"
+  ],
+  "placementOrder": 9
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MISC"
+ }
+}

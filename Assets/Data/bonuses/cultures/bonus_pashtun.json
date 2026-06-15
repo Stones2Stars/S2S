@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_PASHTUN",
+ "description": "TXT_KEY_BONUS_PASHTUN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_MAHSUD_ATTAN",
+   "UNIT_SHER_ALI_KHAN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_PASHTUN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

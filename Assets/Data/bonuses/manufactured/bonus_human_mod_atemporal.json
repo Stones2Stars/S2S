@@ -1,0 +1,11 @@
+{
+ "type": "BONUS_HUMAN_MOD_ATEMPORAL",
+ "description": "TXT_KEY_BONUS_HUMAN_MOD_ATEMPORAL",
+ "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
+ "art": {
+  "icon": "ART_DEF_BONUS_HUMAN_MOD_ATEMPORAL"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_GENMODS"
+ }
+}

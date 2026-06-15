@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_GEOGLYPH_PLANS",
+ "description": "TXT_KEY_BONUS_GEOGLYPH_PLANS",
+ "civilopedia": "TXT_KEY_BONUS_GEOGLYPH_PLANS_PEDIA",
+ "enables": {
+  "builds": [
+   "BUILD_GEOGLYPH"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_GEOGLYPH_PLANS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_WONDER"
+ }
+}

@@ -1,0 +1,96 @@
+{
+ "type": "BONUS_SPICES",
+ "description": "TXT_KEY_BONUS_SPICES",
+ "civilopedia": "TXT_KEY_BONUS_SPICES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CATCHER_PEACOCK",
+   "BUILDING_CRICKET_GATHERER",
+   "BUILDING_CULTURE_AYMARA",
+   "BUILDING_CULTURE_BANDANESE",
+   "BUILDING_CULTURE_BASQUE",
+   "BUILDING_CULTURE_BATEK",
+   "BUILDING_CULTURE_ETRUSCAN",
+   "BUILDING_CULTURE_INDIAN",
+   "BUILDING_CULTURE_MANI",
+   "BUILDING_CULTURE_MOROCCAN",
+   "BUILDING_FACTORY_PERFUME",
+   "BUILDING_FARM_CROP_BLACK_PEPPER",
+   "BUILDING_FARM_CROP_CHILI",
+   "BUILDING_FARM_CROP_CHIVES",
+   "BUILDING_FARM_CROP_CLOVES",
+   "BUILDING_FARM_CROP_ENOKITAKE_MUSHROOM",
+   "BUILDING_FARM_CROP_GARLIC",
+   "BUILDING_FARM_CROP_GINGER_ROOT",
+   "BUILDING_FARM_CROP_LICORICE",
+   "BUILDING_FARM_CROP_PEPPERMINT",
+   "BUILDING_FARM_CROP_RHUBARB",
+   "BUILDING_FARM_CROP_SESAME",
+   "BUILDING_FARM_FLOWER_PANSY",
+   "BUILDING_GROVE_ACACIA",
+   "BUILDING_GROVE_CINNAMOMUM",
+   "BUILDING_GROVE_GINKGO",
+   "BUILDING_GROVE_SASSAFRAS",
+   "BUILDING_ORCHARD_LIME",
+   "BUILDING_PERFUME_MAKER",
+   "BUILDING_PLANTATION_ALLSPICES",
+   "BUILDING_PLANTATION_CINNAMON",
+   "BUILDING_PLANTATION_NUTMEG",
+   "BUILDING_PLANTATION_SAFFRON"
+  ]
+ },
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 2
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SPICES"
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 144,
+  "uniqueRange": 4,
+  "groupRange": 1,
+  "groupRand": 14,
+  "hills": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_MARSH",
+   "TERRAIN_PLAINS",
+   "TERRAIN_SCRUB",
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY"
+  ],
+  "validFeatures": [
+   "FEATURE_FLOOD_PLAINS",
+   "FEATURE_SAVANNA",
+   "FEATURE_CACTUS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_DESERT"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_LUXURY"
+ }
+}

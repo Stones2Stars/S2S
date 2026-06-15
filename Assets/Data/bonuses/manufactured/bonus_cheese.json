@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_CHEESE",
+ "description": "TXT_KEY_BONUS_CHEESE",
+ "civilopedia": "TXT_KEY_BONUS_CHEESE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_PESTS_RATS",
+   "BUILDING_PIZZA_PARLOR",
+   "BUILDING_RAT_CATCHER",
+   "BUILDING_TACO_HUT"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CHEESE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

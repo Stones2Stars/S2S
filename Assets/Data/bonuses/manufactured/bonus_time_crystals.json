@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_TIME_CRYSTALS",
+ "description": "TXT_KEY_BONUS_TIME_CRYSTALS",
+ "civilopedia": "TXT_KEY_BONUS_TIME_CRYSTALS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_AESTIVATION_CENTER",
+   "BUILDING_INTERSTELLAR_DEGENERATE_ERA_SURVIVAL_PLAN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_TIME_CRYSTALS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_NOK",
+ "description": "TXT_KEY_BONUS_NOK",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_LAMBOGA",
+   "UNIT_NOK_MERCHANTS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_NOK"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

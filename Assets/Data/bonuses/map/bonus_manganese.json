@@ -1,0 +1,54 @@
+{
+ "type": "BONUS_MANGANESE",
+ "description": "TXT_KEY_BONUS_MANGANESE",
+ "civilopedia": "TXT_KEY_BONUS_MANGANESE_PEDIA",
+ "production": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_MANGANESE"
+ },
+ "mapGeneration": {
+  "placementOrder": 6,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 200,
+  "uniqueRange": 6,
+  "peaks": true,
+  "hills": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ICE"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_PRODUCTION"
+ }
+}

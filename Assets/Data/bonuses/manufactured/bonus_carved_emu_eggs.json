@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_CARVED_EMU_EGGS",
+ "description": "TXT_KEY_BONUS_CARVED_EMU_EGGS",
+ "civilopedia": "TXT_KEY_BONUS_CARVED_EMU_EGGS_PEDIA",
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CARVED_EMU_EGGS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_WONDER"
+ }
+}

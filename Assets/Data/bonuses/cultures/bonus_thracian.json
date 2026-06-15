@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_THRACIAN",
+ "description": "TXT_KEY_BONUS_THRACIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_TERES",
+   "UNIT_THRACIAN_PELTAST"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_THRACIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

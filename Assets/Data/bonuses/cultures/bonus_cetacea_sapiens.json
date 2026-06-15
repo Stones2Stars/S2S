@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_CETACEA_SAPIENS",
+ "description": "TXT_KEY_BONUS_CETACEA_SAPIENS",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DOLPHIN_COMMUNICATION_CENTER"
+  ],
+  "units": [
+   "UNIT_DOLPHIN_MECH"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CETACEA_SAPIENS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_GENMODS"
+ }
+}

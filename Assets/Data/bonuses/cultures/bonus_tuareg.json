@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_TUAREG",
+ "description": "TXT_KEY_BONUS_TUAREG",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_TUAREG_CAMEL"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_TUAREG"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

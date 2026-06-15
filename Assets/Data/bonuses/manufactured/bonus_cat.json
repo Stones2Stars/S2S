@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_CAT",
+ "description": "TXT_KEY_BONUS_CAT",
+ "civilopedia": "TXT_KEY_BONUS_CAT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_SHELTER",
+   "BUILDING_ANIMAL_TRAINER_BIG_CAT",
+   "BUILDING_CAT_SHRINE",
+   "BUILDING_CRIME_ANIMAL_ABUSE",
+   "BUILDING_PESTS_FLEAS",
+   "BUILDING_PESTS_TICKS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CAT"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

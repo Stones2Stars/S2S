@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_POLYNESIAN",
+ "description": "TXT_KEY_BONUS_POLYNESIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_CATAMARAN",
+   "UNIT_MAUI",
+   "UNIT_TUITATUI"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_POLYNESIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

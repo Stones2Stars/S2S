@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_NUMIDIAN",
+ "description": "TXT_KEY_BONUS_NUMIDIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_MASINISSA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_NUMIDIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

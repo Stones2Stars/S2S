@@ -1,13 +1,32 @@
 #!/usr/bin/env python3
 """Curate Bonus to the top-down model (#428) — thin config over curate_common (the shared core).
 
-Wave 1: Bonus's own Health/Happiness/YieldChanges validate the City-scope channel path, and the
-Building/Unit/Project -> Bonus conditioner effects fold in as entity-targeted modifiers. `enables` =
-the buildings/units that require the bonus (PrereqAndBonus / PrereqOrBonuses, indexed by the store);
-the Culture chain (a Culture national wonder grants a BONUS_* that gates the punk buildings) shows up
-here as those buildings appearing in the bonus's `enables`.
+A bonus (resource) is a pure SOURCE / CONDITIONER, positioned ABOVE plot/feature/improvement/building in the
+containment spine (building-cascade-conversion.md:281 `… resource → bonus → plot → feature → improvement →
+building → unit`). It cascades DOWN; it is NEVER a target ("the coal test", §0: sources/enablers are never
+targets). So the bonus carries ONLY:
+  - its OWN amplification deposits:
+      * `YieldChanges` -> `yield` (food/production/commerce) at **plot** scope — the on-map resource buffs the
+        TILE it sits on, downward (owner 2026-06-15: "the actual map bonus buffs the plot downwards").
+      * `iHealth`/`iHappiness` -> health/happiness at **empire** scope — the trade-connected resource benefits
+        the player's cities (a connected bonus enables/amplifies empire-wide; building-cascade-conversion.md
+        :1205-1207 trade-connected = player/empire scope).
+  - `enables` — the buildings/units/routes that REQUIRE the bonus (PrereqAndBonus / PrereqOrBonuses / vicinity,
+    store-indexed): the bonus is the CONDITIONER, so those targets surface ON it as the `enables` edge. The
+    Culture chain (a Culture national wonder GRANTS a BONUS_* that gates the punk buildings) appears here.
+  - `mapGeneration` / `identity` / `art` / text.
 
-  python3 curate_bonus.py --sample BONUS_ATOMPUNK
+**NO inbound modifier boosts.** A building/civic/trait effect CONDITIONED on a resource ("+2 production while
+this bonus is connected") is that SOURCE entity's own output, gated by the bonus via `enabled:{type:BONUS_X,
+scope, min:1}` / `per:{type:BONUS_X}` — authored ON the building/unit/project/civic/trait at THAT entity's pass,
+top-down only, NEVER inverted onto the bonus (modifier-spec §6 keep-on-source — supersedes the old pre-v3
+"invert onto the conditioner" rule; CREST RESOLVED). The prior `BONUS_BOOSTS` inversion table was that old
+approach and is removed.
+
+Tech edges are the tech's, dropped here: TechReveal/TechCityTrade -> tech.enables.bonuses (store PREREQ_FIELDS);
+TechObsolete -> tech.obsoletes.bonuses (store OBSOLETE_FIELDS, extra_drop below).
+
+  python3 curate_bonus.py --sample BONUS_COAL
   python3 curate_bonus.py --write
 """
 import os
@@ -16,32 +35,6 @@ import engine
 import curate_common as cc
 from store import REPO
 
-# Building/Unit/Project conditioner effects that invert ONTO the bonus (fold into the bonus's modifiers):
-#   (sourceEntity, field, targetType, channel, valueKeys, unit, scope)
-# Base yield/commerce SPLIT into per-identifier families (food/gold/…) by curate_common; vicinityYield stays a
-# distinct grouped concept. BonusProductionModifiers -> `buildRate` family (renamed off "production" so it can't
-# be read as the production YIELD). Scopes are first-pass (city) — to be confirmed by the verify pass.
-BONUS_BOOSTS = [
-    ("BuildingInfo", "BonusYieldChanges",           "buildings", "yield",         engine.YIELDS,    "flat",    "city"),
-    ("BuildingInfo", "BonusYieldModifiers",         "buildings", "yield",         engine.YIELDS,    "percent", "city"),
-    ("BuildingInfo", "BonusCommercePercentChanges", "buildings", "commerce",      engine.COMMERCES, "flat",    "city"),  # misnamed "Percent": a FLAT x100 commerce add (#432), not a modifier
-    ("BuildingInfo", "BonusCommerceModifiers",      "buildings", "commerce",      engine.COMMERCES, "percent", "city"),  # the genuine percent commerce modifier (verify found it missed)
-    ("BuildingInfo", "BonusHealthChanges",          "buildings", "health",        None,             "flat",    "city"),
-    ("BuildingInfo", "BonusHappinessChanges",       "buildings", "happiness",     None,             "flat",    "city"),
-    ("BuildingInfo", "VicinityBonusYieldChanges",   "buildings", "vicinityYield", engine.YIELDS,    "flat",    "city"),
-    ("BuildingInfo", "BonusProductionModifiers",    "buildings", "buildRate",     None,             "percent", "city"),
-    ("UnitInfo",     "BonusProductionModifiers",    "units",     "buildRate",     None,             "percent", "city"),
-    ("ProjectInfo",  "BonusProductionModifiers",    "projects",  "buildRate",     None,             "percent", "city"),
-    # Civic BonusCommerceModifiers: the bonus is the conditioner (have-bonus -> +commerce while the civic is
-    # active), so it inverts ONTO the bonus keyed by the civic (dropped from CivicInfo). Same convention as the
-    # building/unit/project bonus rows above; verified by the classify-civic double-author audit.
-    ("CivicInfo",    "BonusCommerceModifiers",      "civics",    "commerce",      engine.COMMERCES, "percent", "city"),
-    # Trait BonusHappinessChanges: the bonus is the conditioner (have-bonus -> +happiness while you hold the
-    # trait), so it inverts ONTO the bonus keyed by the trait (dropped from TraitInfo). The only fresh trait
-    # CREST; city scope matches the consumer (per-city via hasBonus, CvCity.cpp:4342-4357) and the
-    # building/civic fold convention. Owner ruling 2026-06-14; classify-trait wf_cc8659b5.
-    ("TraitInfo",    "BonusHappinessChanges",       "traits",    "happiness",     None,             "flat",    "city"),
-]
 
 def bonus_folder(rec, store):
     """Sub-folder by category. `cultures` isolates the removal-candidate culture bonuses; `map` = spawns
@@ -63,8 +56,19 @@ BONUS_MAP_GEN = {
     "iMinLandPercent", "bBonusCoastalOnly",
 }
 
+# Scope of the bonus's OWN deposits (verified families OVERRIDE the mapping's first-pass flat `city`):
+#   YieldChanges -> plot (the map bonus buffs its tile); iHealth/iHappiness -> empire (connected-resource benefit).
+BONUS_FAMILIES = {
+    "YieldChanges": {"scope": "plot",   "channel": "yield",     "kind": "flat",
+                     "valueKeys": ["food", "production", "commerce"]},
+    "iHealth":      {"scope": "empire", "channel": "health",    "kind": "flat"},
+    "iHappiness":   {"scope": "empire", "channel": "happiness", "kind": "flat"},
+}
+
 # TechObsolete is the obsoleting tech's edge (store OBSOLETE_FIELDS -> tech.obsoletes.bonuses), dropped here.
-CFG = cc.EntityConfig("BonusInfo", extra_drop=["TechObsolete"], era_fn=bonus_folder, map_gen=BONUS_MAP_GEN)
+CFG = cc.EntityConfig("BonusInfo", extra_drop=["TechObsolete"], era_fn=bonus_folder, map_gen=BONUS_MAP_GEN,
+                      families=BONUS_FAMILIES)
 
 if __name__ == "__main__":
-    cc.main(CFG, BONUS_BOOSTS, os.path.join(REPO, "Assets", "Data", "bonuses"))
+    # No inbound boosts — a resource is never a target (only enables/amplifies).
+    cc.main(CFG, [], os.path.join(REPO, "Assets", "Data", "bonuses"))

@@ -1,0 +1,25 @@
+{
+ "type": "BONUS_ROPE",
+ "description": "TXT_KEY_BONUS_ROPE",
+ "civilopedia": "TXT_KEY_BONUS_ROPE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AERIAL_BASKET_ROPEWAYS",
+   "BUILDING_FISHERMANS_HUT",
+   "BUILDING_GALLOWS",
+   "BUILDING_GUILLOTINE",
+   "BUILDING_JUMP_ROPE",
+   "BUILDING_LOG_ROLLER_SYSTEM",
+   "BUILDING_PULLEY_WHEEL",
+   "BUILDING_ROPE_BRIDGE",
+   "BUILDING_SHIPWRIGHT",
+   "BUILDING_TREE_PLATFORMS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ROPE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

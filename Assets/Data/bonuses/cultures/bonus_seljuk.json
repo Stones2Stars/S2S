@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_SELJUK",
+ "description": "TXT_KEY_BONUS_SELJUK",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ALP_ARSLAN",
+   "UNIT_SIPAHI"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SELJUK"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,65 @@
+{
+ "type": "BONUS_PUMPKIN",
+ "description": "TXT_KEY_BONUS_PUMPKIN",
+ "civilopedia": "TXT_KEY_BONUS_PUMPKIN_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_CHEROKEE",
+   "BUILDING_CULTURE_RED_OCHER",
+   "BUILDING_CULTURE_TUCANO",
+   "BUILDING_FARM_CROP_CANTALOUPE",
+   "BUILDING_FARM_CROP_PUMPKIN",
+   "BUILDING_NATURE_ALTAR_PUMPKIN",
+   "BUILDING_NATURE_CIRCLE_PUMPKIN"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_PUMPKIN"
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "maxLatitude": 40,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "groupRange": 1,
+  "groupRand": 14,
+  "area": true,
+  "hills": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_LUSH",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_PLAINS"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CROP"
+ }
+}

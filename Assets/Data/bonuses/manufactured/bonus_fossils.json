@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_FOSSILS",
+ "description": "TXT_KEY_BONUS_FOSSILS",
+ "civilopedia": "TXT_KEY_BONUS_FOSSILS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_PALEONTOLOGY_LAB"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_FOSSILS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

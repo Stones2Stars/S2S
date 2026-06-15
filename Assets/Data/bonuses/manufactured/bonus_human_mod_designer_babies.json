@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_HUMAN_MOD_DESIGNER_BABIES",
+ "description": "TXT_KEY_BONUS_HUMAN_MOD_DESIGNER_BABIES",
+ "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HUMAN_MOD_COGNITIVE_ENHANCEMENT",
+   "BUILDING_HUMAN_MOD_ENLIGHTENED"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HUMAN_MOD_DESIGNER_BABIES"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_GENMODS"
+ }
+}

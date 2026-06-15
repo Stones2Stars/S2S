@@ -1,0 +1,37 @@
+{
+ "type": "BONUS_ABANDONED_MEGASTRUCTURE",
+ "description": "TXT_KEY_BONUS_ABANDONED_MEGASTRUCTURE",
+ "civilopedia": "TXT_KEY_BONUS_ABANDONED_MEGASTRUCTURE_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ABANDONED_MEGASTRUCTURE"
+ },
+ "mapGeneration": {
+  "constAppearance": 35,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 32,
+  "area": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_LOCAL_GROUP",
+   "TERRAIN_VIRGO_SUPERCLUSTER",
+   "TERRAIN_OBSERVABLE_UNIVERSE",
+   "TERRAIN_DISTANT_COSMOS"
+  ],
+  "placementOrder": 9
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MISC"
+ }
+}

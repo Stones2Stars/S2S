@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_SLOVENIAN",
+ "description": "TXT_KEY_BONUS_SLOVENIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_CARANTANIAN_MERCENARY",
+   "UNIT_JOZE_PUCNIK"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SLOVENIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

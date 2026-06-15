@@ -1,0 +1,85 @@
+{
+ "type": "BONUS_GRAPES",
+ "description": "TXT_KEY_BONUS_GRAPES",
+ "civilopedia": "TXT_KEY_BONUS_GRAPES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BELLADONNA",
+   "BUILDING_CULTURE_ARMENIAN",
+   "BUILDING_CULTURE_CATALONIAN",
+   "BUILDING_CULTURE_FRENCH",
+   "BUILDING_CULTURE_GALATIAN",
+   "BUILDING_CULTURE_KLAMATH",
+   "BUILDING_CULTURE_LONGOBARDIAN",
+   "BUILDING_CULTURE_QUEBECKER",
+   "BUILDING_CULTURE_VIETNAMESE",
+   "BUILDING_FALCONER",
+   "BUILDING_FARM_CROP_BEARBERRY",
+   "BUILDING_FARM_CROP_BLACKBERRY",
+   "BUILDING_FARM_CROP_BLUEBERRY",
+   "BUILDING_FARM_CROP_CRANBERRY",
+   "BUILDING_FARM_CROP_ELDERBERRY",
+   "BUILDING_FARM_CROP_GOOSEBERRY",
+   "BUILDING_FARM_CROP_PEPPERMINT",
+   "BUILDING_FARM_CROP_PORTOBELLO_MUSHROOM",
+   "BUILDING_FARM_CROP_RASPBERRY",
+   "BUILDING_FARM_CROP_STRAWBERRY",
+   "BUILDING_NATURE_ALTAR_GRAPES",
+   "BUILDING_NATURE_CIRCLE_GRAPES",
+   "BUILDING_ORCHARD_GRAPEFRUIT",
+   "BUILDING_ORCHARD_LYCHEE",
+   "BUILDING_VINEYARD"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 2
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_GRAPES"
+ },
+ "mapGeneration": {
+  "placementOrder": 5,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "minLatitude": 20,
+  "maxLatitude": 50,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 80,
+  "groupRange": 1,
+  "groupRand": 16,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_PLAINS",
+   "TERRAIN_LUSH",
+   "TERRAIN_SCRUB"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CROP"
+ }
+}

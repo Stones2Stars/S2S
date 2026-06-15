@@ -1,0 +1,28 @@
+{
+ "type": "BONUS_FERTILIZERS",
+ "description": "TXT_KEY_BONUS_FERTILIZERS",
+ "civilopedia": "TXT_KEY_BONUS_FERTILIZERS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIOMASS_POWER_PLANT",
+   "BUILDING_PESTS_FLIES"
+  ]
+ },
+ "health": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10,
+   "objective": 10
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_FERTILIZERS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_TOLTEC",
+ "description": "TXT_KEY_BONUS_TOLTEC",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_COYOTE_RUNNER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_TOLTEC"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

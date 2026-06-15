@@ -1,0 +1,79 @@
+{
+ "type": "BONUS_RICE",
+ "description": "TXT_KEY_BONUS_RICE",
+ "civilopedia": "TXT_KEY_BONUS_RICE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_HEMUDU",
+   "BUILDING_CULTURE_MERINA",
+   "BUILDING_CULTURE_THAI",
+   "BUILDING_FARM_CROP_CELERY",
+   "BUILDING_FARM_CROP_CRANBERRY",
+   "BUILDING_FARM_CROP_EGGPLANT",
+   "BUILDING_FARM_CROP_GINGER_ROOT",
+   "BUILDING_FARM_CROP_LEEK",
+   "BUILDING_FARM_CROP_LETTUCE",
+   "BUILDING_FARM_CROP_SOYBEAN",
+   "BUILDING_FARM_CROP_STRAW_MUSHROOM",
+   "BUILDING_FARM_CROP_WASABI",
+   "BUILDING_FARM_FLOWER_LILY",
+   "BUILDING_NATURE_ALTAR_RICE_GOD",
+   "BUILDING_NATURE_CIRCLE_RICE_GOD",
+   "BUILDING_ORCHARD_PEACH",
+   "BUILDING_ORCHARD_PERSIMMON",
+   "BUILDING_RAT_BREEDER",
+   "BUILDING_RICE_BEETLE_GATHERER",
+   "BUILDING_RICE_GATHERER",
+   "BUILDING_RICE_PADDY",
+   "BUILDING_RICE_TERRACE",
+   "BUILDING_TEMPLE_OF_KI_RICE"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_RICE"
+ },
+ "mapGeneration": {
+  "placementOrder": 6,
+  "constAppearance": 200,
+  "minAreaSize": 3,
+  "maxLatitude": 50,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 64,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_MARSH"
+  ],
+  "validFeatures": [
+   "FEATURE_SWAMP",
+   "FEATURE_FLOOD_PLAINS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_PLAINS",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DESERT"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CROP"
+ }
+}

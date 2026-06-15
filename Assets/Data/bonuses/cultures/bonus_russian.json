@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_RUSSIAN",
+ "description": "TXT_KEY_BONUS_RUSSIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_IVAN_IV",
+   "UNIT_RUSSIA_COSSACK"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_RUSSIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

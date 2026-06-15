@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_ILOCANO",
+ "description": "TXT_KEY_BONUS_ILOCANO",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_BILOG",
+   "UNIT_ELPIDIO_QUIRINO"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ILOCANO"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

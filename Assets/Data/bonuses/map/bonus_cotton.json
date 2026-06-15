@@ -1,0 +1,70 @@
+{
+ "type": "BONUS_COTTON",
+ "description": "TXT_KEY_BONUS_COTTON",
+ "civilopedia": "TXT_KEY_BONUS_COTTON_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_CONFEDERATES",
+   "BUILDING_CULTURE_FULANI",
+   "BUILDING_CULTURE_MAMELUK",
+   "BUILDING_CULTURE_TURKMEN",
+   "BUILDING_FARM_CROP_CAULIFLOWER",
+   "BUILDING_FARM_CROP_CAULIFLOWER_MUSHROOM",
+   "BUILDING_FARM_FLOWER_DAISY",
+   "BUILDING_ORCHARD_KIWIFRUIT",
+   "BUILDING_PLANTATION_COTTON",
+   "BUILDING_WEAVER",
+   "BUILDING_WEAVING_SPIDER_GATHERER"
+  ]
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 4
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_COTTON"
+ },
+ "mapGeneration": {
+  "placementOrder": 6,
+  "constAppearance": 200,
+  "minAreaSize": 3,
+  "maxLatitude": 30,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 72,
+  "groupRange": 1,
+  "groupRand": 16,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_PLAINS"
+  ],
+  "validFeatures": [
+   "FEATURE_FLOOD_PLAINS",
+   "FEATURE_SAVANNA"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_PRODUCTION"
+ }
+}

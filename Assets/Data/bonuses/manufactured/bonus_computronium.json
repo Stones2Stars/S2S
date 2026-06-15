@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_COMPUTRONIUM",
+ "description": "TXT_KEY_BONUS_COMPUTRONIUM",
+ "civilopedia": "TXT_KEY_BONUS_COMPUTRONIUM_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_COMPUTRONIUM_TOWER",
+   "BUILDING_INTERSTELLAR_COMPUTRONIUM_PLANET",
+   "BUILDING_MATHEMATICAL_ORACLE"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_COMPUTRONIUM"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

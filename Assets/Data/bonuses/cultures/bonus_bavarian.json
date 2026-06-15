@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_BAVARIAN",
+ "description": "TXT_KEY_BONUS_BAVARIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_HENRY_THE_LION",
+   "UNIT_MARHATHEGNOZ"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BAVARIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

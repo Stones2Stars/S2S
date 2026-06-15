@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_MOCOVI",
+ "description": "TXT_KEY_BONUS_MOCOVI",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_MOCOVI_TRACKER",
+   "UNIT_QUADO"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_MOCOVI"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

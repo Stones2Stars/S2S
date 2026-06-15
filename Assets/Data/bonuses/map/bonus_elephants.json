@@ -1,0 +1,110 @@
+{
+ "type": "BONUS_ELEPHANTS",
+ "description": "TXT_KEY_BONUS_ELEPHANTS",
+ "civilopedia": "TXT_KEY_BONUS_ELEPHANTS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_ELEPHANT",
+   "BUILDING_BREEDING_PROGRAM_ELEPHANT",
+   "BUILDING_BREEDING_PROGRAM_GIRAFFE",
+   "BUILDING_BREEDING_PROGRAM_HIPPO",
+   "BUILDING_BREEDING_PROGRAM_OSTRICH",
+   "BUILDING_BREEDING_PROGRAM_RHINO",
+   "BUILDING_BREEDING_PROGRAM_ZEBRA",
+   "BUILDING_CAMP_ELEPHANT",
+   "BUILDING_CAMP_GIRAFFE",
+   "BUILDING_CAMP_HIPPO",
+   "BUILDING_CAMP_OSTRICH",
+   "BUILDING_CAMP_RHINO",
+   "BUILDING_CAMP_ZEBRA",
+   "BUILDING_CARRION_GATHERER",
+   "BUILDING_CENTRAL_BREEDER_ELEPHANT",
+   "BUILDING_CULTURE_DAYAK",
+   "BUILDING_CULTURE_OPHIR",
+   "BUILDING_CULTURE_PAKISTANI",
+   "BUILDING_CULTURE_SIAMESE",
+   "BUILDING_CULTURE_ZULU",
+   "BUILDING_DUNG_BEETLE_GATHERER",
+   "BUILDING_ELEPHANT_SHRINE",
+   "BUILDING_FARM_ANIMAL_ELEPHANT",
+   "BUILDING_KINGS_TOURNAMENT",
+   "BUILDING_RIDING_SCHOOL",
+   "BUILDING_ROYAL_TOURNAMENT"
+  ],
+  "units": [
+   "UNIT_BALLISTA_ELEPHANT",
+   "UNIT_BOMBARD_ELEPHANT",
+   "UNIT_ELEPHANT_GUNNER",
+   "UNIT_ELEPHANT_RIDER",
+   "UNIT_FLAIL_ELEPHANT",
+   "UNIT_HOWDAH",
+   "UNIT_MAHOUT_LANCER",
+   "UNIT_NEANDERTHAL_ELEPHANT_RIDER",
+   "UNIT_NEANDERTHAL_SHEPHERD",
+   "UNIT_SHEPHERD",
+   "UNIT_SIAM_ELEPHANT",
+   "UNIT_TAMED_ELEPHANT",
+   "UNIT_WAR_ELEPHANT"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 4
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ELEPHANTS"
+ },
+ "mapGeneration": {
+  "placementOrder": 3,
+  "constAppearance": 200,
+  "minAreaSize": 3,
+  "maxLatitude": 30,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 92,
+  "uniqueRange": 6,
+  "hills": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_LUSH",
+   "TERRAIN_GRASSLAND"
+  ],
+  "validFeatures": [
+   "FEATURE_FLOOD_PLAINS",
+   "FEATURE_FOREST",
+   "FEATURE_FOREST_ANCIENT",
+   "FEATURE_JUNGLE",
+   "FEATURE_SAVANNA",
+   "FEATURE_VERY_TALL_GRASS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_MUDDY",
+   "TERRAIN_PLAINS",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DESERT"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_STRATEGIC"
+ }
+}

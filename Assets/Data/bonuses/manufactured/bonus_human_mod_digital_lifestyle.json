@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_HUMAN_MOD_DIGITAL_LIFESTYLE",
+ "description": "TXT_KEY_BONUS_HUMAN_MOD_DIGITAL_LIFESTYLE",
+ "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HUMAN_MOD_DIGITAL_IDENTITY",
+   "BUILDING_VIRTUAL_WORLD"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HUMAN_MOD_DIGITAL_LIFESTYLE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_GENMODS"
+ }
+}

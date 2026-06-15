@@ -25,7 +25,49 @@
  },
  "happiness": {
   "empire": {
-   "flat": 1,
+   "flat": [
+    1,
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_WHALE",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_BEAVERS",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_LEAD_ORE",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_OIL",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_NATURAL_GAS",
+      "scope": "empire",
+      "min": 1
+     }
+    }
+   ],
    "largestCity": {
     "flat": 1
    }

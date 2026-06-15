@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_HAUSA",
+ "description": "TXT_KEY_BONUS_HAUSA",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_AMINA",
+   "UNIT_BAYAJIDDA",
+   "UNIT_SAVANNA_CAVALRY"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_HAUSA"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

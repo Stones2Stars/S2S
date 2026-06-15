@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_TUCANO",
+ "description": "TXT_KEY_BONUS_TUCANO",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_TUCANO_MERCHANT",
+   "UNIT_WANANO"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_TUCANO"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

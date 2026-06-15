@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_MINOAN",
+ "description": "TXT_KEY_BONUS_MINOAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_DAEDALUS",
+   "UNIT_THESEUS",
+   "UNIT_XIFOS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_MINOAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

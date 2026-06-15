@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_CHACHAPOYA",
+ "description": "TXT_KEY_BONUS_CHACHAPOYA",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_MARANON",
+   "UNIT_WARRIORS_OF_THE_CLOUDS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CHACHAPOYA"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

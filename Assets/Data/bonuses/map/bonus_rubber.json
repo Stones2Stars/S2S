@@ -1,0 +1,58 @@
+{
+ "type": "BONUS_RUBBER",
+ "description": "TXT_KEY_BONUS_RUBBER",
+ "civilopedia": "TXT_KEY_BONUS_RUBBER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BICYCLE_SHOP",
+   "BUILDING_FACTORY_RUBBER",
+   "BUILDING_PLANTATION_RUBBER",
+   "BUILDING_TRACTION_ENGINE_WORKSHOP"
+  ]
+ },
+ "production": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 15
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_RUBBER"
+ },
+ "mapGeneration": {
+  "placementOrder": 1,
+  "constAppearance": 400,
+  "minAreaSize": 3,
+  "maxLatitude": 20,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 200,
+  "uniqueRange": 4,
+  "hills": true,
+  "flatlands": true,
+  "validFeatures": [
+   "FEATURE_JUNGLE"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_STRATEGIC"
+ }
+}

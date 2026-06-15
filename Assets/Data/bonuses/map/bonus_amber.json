@@ -1,0 +1,79 @@
+{
+ "type": "BONUS_AMBER",
+ "description": "TXT_KEY_BONUS_AMBER",
+ "civilopedia": "TXT_KEY_BONUS_AMBER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AMBER_GATHERER",
+   "BUILDING_CULTURE_ALEMANNIC",
+   "BUILDING_CULTURE_FRANKS",
+   "BUILDING_CULTURE_PASHTUN",
+   "BUILDING_CULTURE_TASMANIAN",
+   "BUILDING_CULTURE_YAGUA",
+   "BUILDING_CULTURE_YOLNGU",
+   "BUILDING_GRAND_EARTH_FESTIVAL",
+   "BUILDING_MINE_AMBER",
+   "BUILDING_MINE_CITRINE",
+   "BUILDING_MINE_TOPAZ"
+  ]
+ },
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_AMBER"
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 160,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 30,
+   "iRandApp2": 30,
+   "iRandApp3": 30,
+   "iRandApp4": 30
+  },
+  "tilesPer": 200,
+  "hills": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_TAIGA"
+  ],
+  "validFeatures": [
+   "FEATURE_FOREST",
+   "FEATURE_FOREST_ANCIENT",
+   "FEATURE_JUNGLE",
+   "FEATURE_SAVANNA",
+   "FEATURE_BAMBOO",
+   "FEATURE_PEAT_BOG"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES",
+   "TERRAIN_MUDDY",
+   "TERRAIN_MARSH",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ICE"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_LUXURY"
+ }
+}

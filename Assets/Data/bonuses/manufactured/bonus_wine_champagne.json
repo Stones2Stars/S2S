@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_WINE_CHAMPAGNE",
+ "description": "TXT_KEY_BONUS_WINE_CHAMPAGNE",
+ "civilopedia": "TXT_KEY_BONUS_VINTAGE_WINE_PEDIA",
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_WINE_CHAMPAGNE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_WONDER"
+ }
+}

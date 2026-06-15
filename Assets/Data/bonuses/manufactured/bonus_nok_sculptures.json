@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_NOK_SCULPTURES",
+ "description": "TXT_KEY_BONUS_NOK_SCULPTURES",
+ "civilopedia": "TXT_KEY_BONUS_NOK_SCULPTURES_PEDIA",
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_NOK_SCULPTURES"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_WONDER"
+ }
+}

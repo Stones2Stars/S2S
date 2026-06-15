@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_SWAHILI",
+ "description": "TXT_KEY_BONUS_SWAHILI",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_SHEHE_MVITA",
+   "UNIT_SINBAD",
+   "UNIT_SIYU_WARRIOR"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SWAHILI"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

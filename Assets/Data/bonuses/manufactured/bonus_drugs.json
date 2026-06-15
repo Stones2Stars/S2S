@@ -1,0 +1,30 @@
+{
+ "type": "BONUS_DRUGS",
+ "description": "TXT_KEY_BONUS_DRUGS",
+ "civilopedia": "TXT_KEY_BONUS_DRUGS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_DRUGS",
+   "BUILDING_DRUGLORDS_MANSON",
+   "BUILDING_FACTORY_PHARMACEUTICALS",
+   "BUILDING_LASER_EYE_SURGERY_CLINIC",
+   "BUILDING_PHARMACY",
+   "BUILDING_REHABILITATION_CENTER",
+   "BUILDING_SMUGGLERS_SHANTY",
+   "BUILDING_TRANCE_HUT"
+  ],
+  "units": [
+   "UNIT_DR",
+   "UNIT_FIELD_VET",
+   "UNIT_HASHISHIN",
+   "UNIT_KALLAWAYA",
+   "UNIT_SURGEON"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_DRUGS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

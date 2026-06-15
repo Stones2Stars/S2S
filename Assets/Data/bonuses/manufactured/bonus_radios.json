@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_RADIOS",
+ "description": "TXT_KEY_BONUS_RADIOS",
+ "civilopedia": "TXT_KEY_BONUS_RADIOS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_COPPER_RECLAMATION_PLANT",
+   "BUILDING_ELECTRONICS_STORE",
+   "BUILDING_LOCAL_RADIO_STATION",
+   "BUILDING_PLASTIC_RECLAMATION_PLANT",
+   "BUILDING_RADIOPLEX"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_RADIOS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

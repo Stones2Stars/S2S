@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_BERRIES",
+ "description": "TXT_KEY_BONUS_BERRIES",
+ "civilopedia": "TXT_KEY_BONUS_BERRIES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_TANNIN",
+   "BUILDING_TANNIN_MAKER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_BERRIES"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

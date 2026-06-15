@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_AKSUMITE",
+ "description": "TXT_KEY_BONUS_AKSUMITE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_AKSUM_MERCHANTS",
+   "UNIT_ENDUBIS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_AKSUMITE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

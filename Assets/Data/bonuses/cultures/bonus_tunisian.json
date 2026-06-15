@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_TUNISIAN",
+ "description": "TXT_KEY_BONUS_TUNISIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_AL_AGHLAB",
+   "UNIT_WHEELED_TANK"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_TUNISIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

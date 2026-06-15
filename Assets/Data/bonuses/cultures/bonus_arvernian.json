@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_ARVERNIAN",
+ "description": "TXT_KEY_BONUS_ARVERNIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ARJOS",
+   "UNIT_VERCINGETORIX"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ARVERNIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

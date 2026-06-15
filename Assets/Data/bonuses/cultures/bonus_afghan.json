@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_AFGHAN",
+ "description": "TXT_KEY_BONUS_AFGHAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_AHMAD_SHAH_DURRANI",
+   "UNIT_MUJAHIDEEN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_AFGHAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_SENNAR",
+ "description": "TXT_KEY_BONUS_SENNAR",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_BADI_VII",
+   "UNIT_FUNJ_CAVALRY"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_SENNAR"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

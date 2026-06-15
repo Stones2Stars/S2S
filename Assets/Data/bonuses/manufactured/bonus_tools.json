@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_TOOLS",
+ "description": "TXT_KEY_BONUS_TOOLS",
+ "civilopedia": "TXT_KEY_BONUS_TOOLS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_WANG_ZHENS_WORKSHOP"
+  ],
+  "units": [
+   "UNIT_GEAR_MECHANIC",
+   "UNIT_SIEGE_ENGINEER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_TOOLS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

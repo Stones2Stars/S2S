@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_TOTONAC",
+ "description": "TXT_KEY_BONUS_TOTONAC",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_CENTEOTL",
+   "UNIT_MAIZE_CARAVAN"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_TOTONAC"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

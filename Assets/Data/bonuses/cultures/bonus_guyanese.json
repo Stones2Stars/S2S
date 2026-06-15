@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_GUYANESE",
+ "description": "TXT_KEY_BONUS_GUYANESE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ALFRED_A_THORNE",
+   "UNIT_SUGAR_CLIPPER"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_GUYANESE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

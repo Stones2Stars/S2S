@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_MING_VASE",
+ "description": "TXT_KEY_BONUS_MING_VASE",
+ "civilopedia": "TXT_KEY_BONUS_MING_VASE_PEDIA",
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_MING_VASE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_WONDER"
+ }
+}

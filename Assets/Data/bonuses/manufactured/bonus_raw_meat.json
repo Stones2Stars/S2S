@@ -1,0 +1,26 @@
+{
+ "type": "BONUS_RAW_MEAT",
+ "description": "TXT_KEY_BONUS_RAW_MEAT",
+ "civilopedia": "TXT_KEY_BONUS_RAW_MEAT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BURGER_JOINT",
+   "BUILDING_CAT_BREEDER",
+   "BUILDING_CHILD_LABOR_CREW",
+   "BUILDING_DELI",
+   "BUILDING_DINER",
+   "BUILDING_DOG_BREEDER",
+   "BUILDING_DRIED_MEAT_MAKER",
+   "BUILDING_FACTORY_SAUSAGE",
+   "BUILDING_PESTS_FLIES",
+   "BUILDING_SAUSAGE_SHOP",
+   "BUILDING_SMOKEHOUSE"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_RAW_MEAT"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_QIN",
+ "description": "TXT_KEY_BONUS_QIN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_SHANG_YANG",
+   "UNIT_ZHUGE_NO"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_QIN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_ECUADORIAN",
+ "description": "TXT_KEY_BONUS_ECUADORIAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_IWIA_BATTALION",
+   "UNIT_JUAN_JOSE_FLORES"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ECUADORIAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

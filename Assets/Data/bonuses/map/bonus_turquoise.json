@@ -1,0 +1,66 @@
+{
+ "type": "BONUS_TURQUOISE",
+ "description": "TXT_KEY_BONUS_TURQUOISE",
+ "civilopedia": "TXT_KEY_BONUS_TURQUOISE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_ANASAZI",
+   "BUILDING_CULTURE_KUWAITI",
+   "BUILDING_CULTURE_MASSAGETAE",
+   "BUILDING_CULTURE_MOCHE",
+   "BUILDING_CULTURE_VANDAL",
+   "BUILDING_GRAND_EARTH_FESTIVAL",
+   "BUILDING_HARAPPAN_FAKE_GEMS",
+   "BUILDING_MINE_TURQUOISE"
+  ]
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_TURQUOISE"
+ },
+ "mapGeneration": {
+  "placementOrder": 8,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "maxLatitude": 40,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 92,
+  "uniqueRange": 3,
+  "hills": true,
+  "peaks": true,
+  "noRiverSide": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_LUXURY"
+ }
+}

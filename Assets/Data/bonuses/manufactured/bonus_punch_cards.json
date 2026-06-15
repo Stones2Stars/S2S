@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_PUNCH_CARDS",
+ "description": "TXT_KEY_BONUS_PUNCH_CARDS",
+ "civilopedia": "TXT_KEY_BONUS_PUNCH_CARDS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BELL_LABS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_PUNCH_CARDS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

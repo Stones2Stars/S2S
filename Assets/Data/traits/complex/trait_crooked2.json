@@ -180,7 +180,41 @@
  },
  "happiness": {
   "empire": {
-   "flat": -1,
+   "flat": [
+    -1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HEMP",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OPIUM",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PEYOTE",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LSD",
+      "scope": "empire",
+      "min": 1
+     }
+    }
+   ],
    "largestCity": {
     "flat": -1
    }

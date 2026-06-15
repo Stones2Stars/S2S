@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_ENZYMES",
+ "description": "TXT_KEY_BONUS_ENZYMES",
+ "civilopedia": "TXT_KEY_BONUS_ENZYMES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BACTERIUM_BIOFORGE",
+   "BUILDING_STEM_CELL_LAB",
+   "BUILDING_TISSUE_ENGINEERING_LAB",
+   "BUILDING_TRANSGENICS_LAB",
+   "BUILDING_VIROTHERAPY_CLINIC"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ENZYMES"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

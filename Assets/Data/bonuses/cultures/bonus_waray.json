@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_WARAY",
+ "description": "TXT_KEY_BONUS_WARAY",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_NORBERTO_ROMUALDEZ",
+   "UNIT_WARAY_RIDERS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_WARAY"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

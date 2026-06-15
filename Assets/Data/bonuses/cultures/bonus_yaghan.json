@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_YAGHAN",
+ "description": "TXT_KEY_BONUS_YAGHAN",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_CRISTINA_CALDERON",
+   "UNIT_YAGHAN_HUNTERS"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_YAGHAN"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

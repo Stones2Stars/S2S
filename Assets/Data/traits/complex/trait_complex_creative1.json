@@ -317,7 +317,17 @@
  },
  "happiness": {
   "empire": {
-   "flat": 1,
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "empire",
+      "min": 1
+     }
+    }
+   ],
    "buildings": {
     "BUILDING_DANCE_HUT": {
      "flat": 1

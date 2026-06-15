@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_ARAWAK",
+ "description": "TXT_KEY_BONUS_ARAWAK",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_AGUEYBANA",
+   "UNIT_AGUEYBANA_II",
+   "UNIT_YURUPARI"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_ARAWAK"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

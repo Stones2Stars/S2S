@@ -1,0 +1,18 @@
+{
+ "type": "BONUS_MICROWAVE_OVENS",
+ "description": "TXT_KEY_BONUS_MICROWAVE_OVENS",
+ "civilopedia": "TXT_KEY_BONUS_MICROWAVE_OVENS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_APPLIANCE_STORE",
+   "BUILDING_COPPER_RECLAMATION_PLANT",
+   "BUILDING_PLASTIC_RECLAMATION_PLANT"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_MICROWAVE_OVENS"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+ }
+}

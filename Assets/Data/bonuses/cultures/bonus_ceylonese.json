@@ -1,0 +1,16 @@
+{
+ "type": "BONUS_CEYLONESE",
+ "description": "TXT_KEY_BONUS_CEYLONESE",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_KATARA"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_CEYLONESE"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

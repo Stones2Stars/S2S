@@ -1,0 +1,17 @@
+{
+ "type": "BONUS_KOGI",
+ "description": "TXT_KEY_BONUS_KOGI",
+ "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ALUNA_SHAMAN",
+   "UNIT_FARUK_IMAM"
+  ]
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_KOGI"
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CULTURE"
+ }
+}

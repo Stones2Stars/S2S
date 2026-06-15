@@ -1,0 +1,80 @@
+{
+ "type": "BONUS_LEMONS",
+ "description": "TXT_KEY_BONUS_LEMONS",
+ "civilopedia": "TXT_KEY_BONUS_LEMONS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHANTERELLE_GATHERER",
+   "BUILDING_FARM_CROP_ONION",
+   "BUILDING_FARM_CROP_RADISH",
+   "BUILDING_FARM_FLOWER_CARNATION",
+   "BUILDING_GROVE_WALNUT",
+   "BUILDING_NATURE_ALTAR_LEMON",
+   "BUILDING_NATURE_CIRCLE_LEMON",
+   "BUILDING_ORCHARD_AVOCADO",
+   "BUILDING_ORCHARD_GRAPEFRUIT",
+   "BUILDING_ORCHARD_KUMQUAT",
+   "BUILDING_ORCHARD_LEMON",
+   "BUILDING_ORCHARD_LIME",
+   "BUILDING_ORCHARD_ORANGE",
+   "BUILDING_ORCHARD_TANGERINE"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 4
+  }
+ },
+ "art": {
+  "icon": "ART_DEF_BONUS_LEMONS"
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "maxLatitude": 30,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "uniqueRange": 2,
+  "groupRange": 1,
+  "groupRand": 16,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_LUSH"
+  ],
+  "validFeatures": [
+   "FEATURE_FOREST",
+   "FEATURE_FOREST_ANCIENT",
+   "FEATURE_JUNGLE"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_PLAINS"
+  ]
+ },
+ "identity": {
+  "bonusClassType": "BONUSCLASS_CROP"
+ }
+}
