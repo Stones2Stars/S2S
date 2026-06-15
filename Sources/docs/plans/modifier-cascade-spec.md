@@ -84,6 +84,15 @@ appear); no family↔reserved overlap exists today (2026-06-15).
 - **`enabled` / `disabled`** — the enabler condition object, verbatim; default-absent (§3).
 - A leaf is a single entry **or a cumulative LIST of entries**.
 
+**`ai` — the AUDIENCE qualifier (OPTIONAL leaf-level; owner extension 2026-06-15).** At any leaf, the bare unit
+keys (`flat`/`percent`/…) are the **base, applying to ALL players**; an OPTIONAL sibling **`ai` block** (same
+inner `<unit>: value` shape) holds an **AI-only** deposit — an extra modifier stacked for AI players, or the
+sole value for an AI-only field. Default-absent → applies to all. Example: `unit: { percent: 100, ai: { percent:
+120 } }` = base unit-upkeep 100% for everyone, AI players an additional ×120%. Born from the Handicap human/AI
+difficulty split (the own-vs-game-handicap SOURCING that decides which record a player reads is **engine
+fetching, not data**, §0.7). The audience axis is `all` (bare, default) vs `ai`; a `human`-only audience is not
+yet needed (add consciously if a case appears).
+
 ### 1.4 Vocabulary — shared by all of the above
 - **Types** = data Types (`BONUS_*`, `UNIT_*`, `RELIGION_*`, `BUILDING_*`, …) **+ engine CATCH-ALL tokens**
   (`TURN`, `POPULATION`, `MILITARY`, `SELF`, …). Data Types resolve via `getInfoTypeForString`; the

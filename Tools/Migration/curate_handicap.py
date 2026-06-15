@@ -1,22 +1,63 @@
 #!/usr/bin/env python3
 """Curate Handicap to the top-down model (#428) — a CONFIG entity (enables nothing): modifiers only.
 
-FLAT FAMILY structure (owner ruling 2026-06-14): there is NO `modifiers` wrapper. Each modifier FAMILY —
-the *kind* of thing modified (maintenance / upkeep / diplomacy / property / happiness / health / growth /
-combat / …) — is its own top-level section, and they all share ONE uniform structure:
+⚠ FUTURE REWORK FLAG (owner, 2026-06-15): the HANDICAP SYSTEM'S STRUCTURE NEEDS HELP we cannot give it at this
+juncture (out of scope for #428). Because of that, the documentation below is deliberately VERBOSE about WHAT
+EACH FIELD CURRENTLY MEANS, so a later structural pass has the full picture. This migration only faithfully
+carries the present meaning into the locked shape; it does NOT fix the awkward parts (the human/AI duality, the
+own-vs-game-handicap sourcing, the meta `perEra` ramp, the provisional AI-economy family names). Treat the
+current structure as a faithful snapshot to improve later, not as a settled design.
 
-    <family>.<scope>.<member>.<unit> = value        (member omitted for single-concept families)
+FLAT FAMILY structure: there is NO `modifiers` wrapper. Each modifier FAMILY — the *kind* of thing modified —
+is its own top-level section, all sharing ONE uniform shape:  <family>.<scope>.<member>.<unit> = value
+(member omitted for single-concept families). Values are PERCENTAGES (`percent`) or additive amounts (`flat`)
+authored as what they ARE — never reshaped to the engine's combination math (owner rulings 2026-06-15).
 
-The human/AI duality is an `ai:` audience sub-object beside the unit. Families are distinct kinds that
-interact but never merge (you never add a 5th commerce into `yield`); the flat surface keeps each one focused.
-`grants` (one-shot setup) and `identity` (the goody list) are NOT modifier families and stay their own sections.
+THE HUMAN/AI DUALITY (the core awkwardness — read this before touching the data):
+- A leaf's BARE unit (`percent`/`flat`) is the BASE value, applying to ALL players. An optional sibling `ai:`
+  block (v3 audience qualifier) is the AI-ONLY value. Two cases occur:
+    * DUAL field (e.g. unit upkeep): bare = base for everyone; `ai` = an EXTRA modifier stacked for AI players.
+      At Deity an AI's unit upkeep is base 200% × the AI 50% modifier — AIs pay less, the human pays full.
+    * AI-ONLY field (e.g. buildCost/techCost/growth/supply/upgrade): NO bare value, only `ai` — these knobs
+      exist solely to discount the AI; the human has no equivalent handicap lever for them.
+- SOURCING IS ENGINE FETCHING, NOT DATA (so it is NOT encoded here): a human reads the BASE off their OWN
+  handicap; an AI reads the BASE off its own handicap AND the `ai` modifier off the derived GAME handicap
+  (the integer average of human handicaps). The JSON just states each handicap's base + ai values per field;
+  which record a given player reads is the reworked engine's job. Full read-site map: handicaps.md.
 
-Scope/unit/audience + the AI-only-vs-dual split are verified against Sources/Infos/CvHandicapInfo.h and
-Sources/docs/reference/handicaps.md (game-vs-own sourcing, dead fields, the maintenance computation).
-Each PROPERTY_* is its own top-level family (split, no `property` wrapper — owner ruling 2026-06-14). NB: the
-AI-economy family names (growth/techCost/workRate/buildCost/perEra) are PROVISIONAL; `research`->`techCost`
-so it can't read as the research commerce. advanced-start is NOT a modifier (a pre-game points budget; poorly
-supported) -> parked in identity.advancedStart for review.
+WHAT EACH FAMILY MEANS (current behaviour — the meanings that must survive the later rework):
+- `maintenance.empire.{distance,numCities,colony,corporation}.percent` — % scale on each gold city-maintenance
+  COMPONENT (mirrors CvCity::calculateBaseMaintenance). `colony.cap` = a hard CAP on the colony component
+  (iMaxColonyMaintenance), NOT a percent — a clamp carried in the family structure (modifier-spec §7).
+- `upkeep.empire.{unit,civic,inflation,supply,upgrade}.percent` — % scale on recurring gold upkeep costs.
+  unit/civic/inflation are DUAL (base + ai); supply/upgrade are AI-ONLY.
+- `happiness.empire.flat` / `health.empire.flat` — flat happy/health bonus in every city of the owner.
+- `growth.empire.ai.percent` — AI city food-to-grow % (AI-only; lower = AI grows faster).
+- `techCost.empire.ai.percent` — AI tech-research COST % (renamed off `research` so it can't read as the
+  research commerce). AI-only.
+- `workRate.empire.ai.percent` — AI worker build-rate %. AI-only.
+- `buildCost.empire.{train,worldTrain,construct,worldConstruct,create,worldCreate}.ai.percent` — AI build-cost
+  % per produced kind (unit / world-unit / building / world-building / wonder|project / world-wonder). AI-only.
+- `perEra.empire.ai.percent` — META: a per-era ramp applied to the WHOLE AI-economy family (× current era). A
+  modifier-of-modifiers — the least-natural field; flagged for the rework. AI-only.
+- `revolution.empire.percent` — % into the Revolution index. INCOMPLETE mechanic (WIP, tracked), NOT dead — kept.
+- `diplomacy.empire.attitude.flat` (AI attitude shift, via the TARGET's handicap); `diplomacy.empire.declareWar`
+  / `warWeariness` (AI behaviour); `diplomacy.team.{noTechTrade,techTradeKnown}.percent` (tech-trade thresholds).
+- `combat.world.{animal,barbarian,subdueAnimal}.percent` — wildlife/barbarian combat-odds modifiers (game-global,
+  so `world` scope; vs-human is the base, vs-AI is the `ai` audience). `combat.empire.freeWinsVsBarbs.flat`
+  (per-player free wins).
+- `barbarians.world.{...}` — game-global barbarian/animal SPAWN rules (densities, timings, garrison, probs).
+- `PROPERTY_*.<scope>.<unit>` — per-handicap property sources (crime/education), one family per property type.
+  NB scalar shape here differs from the gated-LIST property shape other entities use → reconcile in the
+  property/#429 pass (a flagged, deferred mismatch — not fixed now).
+- `grants[.ai]` — one-shot GAME-START provisioning (starting gold + defense/worker/explore units); humans and
+  AIs split entirely (own vs game handicap). NOT a per-turn modifier → its own section.
+- `identity.advancedStart` — the pre-game POINTS BUDGET mod (buys techs/cities/units before turn 1). NOT a
+  modifier, poorly supported in the DLL → parked in identity pending an advanced-start review.
+
+Verified against Sources/Infos/CvHandicapInfo.h + Sources/docs/reference/handicaps.md (read-sites, sourcing,
+the maintenance computation, the no-dead-fields verdict). PROVISIONAL family names: growth/techCost/workRate/
+buildCost/perEra (kept until the future rework). Manual renames logged in migration-renames.md.
 
   python3 curate_handicap.py --sample HANDICAP_CHIEFTAIN
   python3 curate_handicap.py --write
