@@ -96,7 +96,18 @@ yet needed (add consciously if a case appears).
 ### 1.4 Vocabulary — shared by all of the above
 - **Types** = data Types (`BONUS_*`, `UNIT_*`, `RELIGION_*`, `BUILDING_*`, …) **+ engine CATCH-ALL tokens**
   (`TURN`, `POPULATION`, `MILITARY`, `SELF`, …). Data Types resolve via `getInfoTypeForString`; the
-  catch-all tokens are a code-side registry of count-providers (designed in #430, extensible).
+  catch-all tokens are a code-side registry (designed in #430, extensible) resolved by the engine, never
+  info-level special-cases — so they are uniform vocabulary (no Uniformity-Law violation, §0.6/enabler §6.1).
+- **`SELF` — the ENTITY-RELATIVE token = "the owning entity's OWN type" (resolved per-entity at evaluation).**
+  Unlike the fixed tokens (`TURN`/`POPULATION`/…), `SELF` resolves against whichever entity carries it. It is
+  ONE token used wherever a Type appears, with the natural reading in each place:
+  - in a **`per`** count-scaler → the COUNT of the owning entity's own type at the scope
+    (`per:{type:SELF, scope:world}` = how many of this thing exist in the world).
+  - in a **`requires` / `enabled` / `disabled`** atom → a presence/count reference to the owning entity's own
+    type. The canonical use is the **global-uniqueness gate**: `requires.build.noneOf:[{type:SELF, scope:world}]`
+    = "none of this SAME entity exists anywhere in the world" → buildable only while unique. This is the tech
+    `bGlobal` religion-founding-once rule (enabler §3), and the mechanism world wonders use (owner, 2026-06-15:
+    "we will need it for world wonders, so it works").
 - **Scopes** = `world | team | empire | area | city | plot{improvement|feature|terrain|route} | building |
   specialist | unit`. `empire` = player = all cities. `unit` is a SELF-ACCUMULATOR (§5).
 - **Conditions** (`enabled`/`disabled`; the `requires` gate; `per`'s implicit count) = the enabler
