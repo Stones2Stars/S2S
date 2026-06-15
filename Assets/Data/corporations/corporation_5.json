@@ -1,0 +1,77 @@
+{
+ "type": "CORPORATION_5",
+ "description": "TXT_KEY_BUILDING_CORPORATION_5",
+ "civilopedia": "TXT_KEY_BUILDING_CORPORATION_5_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MINING_INC_SURVEY"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": [
+    {
+     "value": 100,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_5"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_COAL",
+       "BONUS_IRON_ORE",
+       "BONUS_COPPER_ORE",
+       "BONUS_GOLD_ORE",
+       "BONUS_SILVER_ORE",
+       "BONUS_LEAD_ORE"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "headquarters": {
+    "perCorporationLevel": 4
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 100,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_5"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_COAL",
+        "BONUS_IRON_ORE",
+        "BONUS_COPPER_ORE",
+        "BONUS_GOLD_ORE",
+        "BONUS_SILVER_ORE",
+        "BONUS_LEAD_ORE"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "spread": 50
+ },
+ "art": {
+  "tgaIndex": 4,
+  "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,5,6",
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "spreadFactor": 200,
+  "spread": 60
+ }
+}

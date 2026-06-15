@@ -1,0 +1,75 @@
+{
+ "type": "CORPORATION_FASHION",
+ "description": "TXT_KEY_BUILDING_CORPORATION_FASHION",
+ "civilopedia": "TXT_KEY_BUILDING_CORPORATION_FASHION_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FASHION_HOUSE_STORE"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "headquarters": {
+    "perCorporationLevel": 4
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 500,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_FASHION"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_SILK",
+       "BONUS_DYE",
+       "BONUS_BEAVERS",
+       "BONUS_COW",
+       "BONUS_COTTON"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 100,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_FASHION"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_SILK",
+        "BONUS_DYE",
+        "BONUS_BEAVERS",
+        "BONUS_COW",
+        "BONUS_COTTON"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "spread": 50
+ },
+ "art": {
+  "tgaIndex": 13,
+  "icon": "Art/Interface/Buttons/corporations/sparth/fashion.dds",
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "spreadFactor": 200,
+  "spread": 50
+ }
+}

@@ -1,0 +1,87 @@
+{
+ "type": "CORPORATION_MOBBY",
+ "description": "TXT_KEY_BUILDING_CORPORATION_MOBBY",
+ "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MOBBY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MOBBY_MEATS_STORE"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": [
+    {
+     "value": 200,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_MOBBY"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_SHEEP",
+       "BONUS_PIG",
+       "BONUS_COW",
+       "BONUS_DEER",
+       "BONUS_WHALE"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "headquarters": {
+    "perCorporationLevel": 4
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_MOBBY"
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 100,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_MOBBY"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_SHEEP",
+        "BONUS_PIG",
+        "BONUS_COW",
+        "BONUS_DEER",
+        "BONUS_WHALE"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "spread": 50
+ },
+ "art": {
+  "tgaIndex": 17,
+  "icon": "Art/Interface/Buttons/corporations/sparth/moby.dds",
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "spreadFactor": 200,
+  "spread": 50
+ }
+}

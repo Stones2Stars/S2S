@@ -1,0 +1,87 @@
+{
+ "type": "CORPORATION_EMPCLOTH",
+ "description": "TXT_KEY_BUILDING_CORPORATION_EMPCLOTH",
+ "civilopedia": "TXT_KEY_BUILDING_CORPORATION_EMPCLOTH_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_EMPERORS_CLOTHING_STORE"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "headquarters": {
+    "perCorporationLevel": 4
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 200,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_EMPCLOTH"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_COTTON",
+       "BONUS_DYE",
+       "BONUS_BEAVERS",
+       "BONUS_SHEEP",
+       "BONUS_SILK"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_EMPCLOTH"
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 100,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_EMPCLOTH"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_COTTON",
+        "BONUS_DYE",
+        "BONUS_BEAVERS",
+        "BONUS_SHEEP",
+        "BONUS_SILK"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "spread": 50
+ },
+ "art": {
+  "tgaIndex": 7,
+  "icon": "Art/Interface/Buttons/corporations/emperors_clothing.dds",
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "spreadFactor": 200,
+  "spread": 60
+ }
+}

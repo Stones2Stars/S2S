@@ -1,0 +1,87 @@
+{
+ "type": "CORPORATION_ADVENTURE",
+ "description": "TXT_KEY_BUILDING_CORPORATION_ADVENTURE",
+ "civilopedia": "TXT_KEY_BUILDING_CORPORATION_ADVENTURE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ADVENTURE_TOURS_FRANCHISE"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "headquarters": {
+    "perCorporationLevel": 4
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 200,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_ADVENTURE"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_ELEPHANTS",
+       "BONUS_WHALE",
+       "BONUS_CLAM",
+       "BONUS_HORSE",
+       "BONUS_ANCIENT_RELICS"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_ADVENTURE"
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 100,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_ADVENTURE"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_ELEPHANTS",
+        "BONUS_WHALE",
+        "BONUS_CLAM",
+        "BONUS_HORSE",
+        "BONUS_ANCIENT_RELICS"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "spread": 50
+ },
+ "art": {
+  "tgaIndex": 19,
+  "icon": "Art/Interface/Buttons/corporations/Adventure.dds",
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "spreadFactor": 200,
+  "spread": 30
+ }
+}

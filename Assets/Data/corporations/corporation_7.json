@@ -1,0 +1,92 @@
+{
+ "type": "CORPORATION_7",
+ "description": "TXT_KEY_BUILDING_CORPORATION_7",
+ "civilopedia": "TXT_KEY_BUILDING_CORPORATION_7_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CIVILIZED_JEWELERS_STORE"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "headquarters": {
+    "perCorporationLevel": 4
+   }
+  },
+  "city": {
+   "flat": [
+    {
+     "value": 100,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_7"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_GOLD_ORE",
+       "BONUS_SILVER_ORE",
+       "BONUS_PEARLS",
+       "BONUS_GEMSTONE"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 400,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_7"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_GOLD_ORE",
+       "BONUS_SILVER_ORE",
+       "BONUS_PEARLS",
+       "BONUS_GEMSTONE"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 100,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_7"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_GOLD_ORE",
+        "BONUS_SILVER_ORE",
+        "BONUS_PEARLS",
+        "BONUS_GEMSTONE"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "spread": 50
+ },
+ "art": {
+  "tgaIndex": 6,
+  "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,7,6",
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "spreadFactor": 200,
+  "spread": 60
+ }
+}

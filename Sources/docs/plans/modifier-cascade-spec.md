@@ -200,6 +200,10 @@ deposit, default ×1 — the same opt-in philosophy as `enabled`.
 ```
 - **`per: { type, each, scope }`** scales the deposit value by the COUNT of `type` at `scope`, in quanta of
   `each`: **effect = `value × (count(type) / each)`**.
+- **`per: { anyOf: [TYPE…], scope }`** — scale by the SUMMED count of *any* of a SET of types (owner 2026-06-15;
+  parallels the enabler `any`). **effect = `value × Σ count(t) for t in anyOf`.** Born from Corporation, whose
+  per-bonus output scales by the total of its PrereqBonuses present in the city (`YieldProduced × Σ getNumBonuses`).
+  `type` (single) and `anyOf` (set) are the two forms; `each` may accompany either.
 - **`each` — the QUANTUM, "per how many of `type`" (owner 2026-06-15: a bare `per:{type}` "does not say how
   much per").** `each: 1` = per each one; `each: 5` = per 5 (e.g. +1 happy per 5 population). **State it
   explicitly** — the block is incomplete without it (a bare `per:{type}` is ambiguous between "per 1" and "per

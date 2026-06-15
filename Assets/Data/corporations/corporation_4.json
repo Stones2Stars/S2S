@@ -1,0 +1,97 @@
+{
+ "type": "CORPORATION_4",
+ "description": "TXT_KEY_BUILDING_CORPORATION_4",
+ "civilopedia": "TXT_KEY_BUILDING_CORPORATION_4_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CREATIVE_CONSTRUCTIONS_CONTRACTORS"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": [
+    {
+     "value": 50,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_4"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_IRON_ORE",
+       "BONUS_COPPER_ORE",
+       "BONUS_MARBLE",
+       "BONUS_STONE",
+       "BONUS_BAUXITE_ORE"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "headquarters": {
+    "perCorporationLevel": 4
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 300,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_4"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_IRON_ORE",
+       "BONUS_COPPER_ORE",
+       "BONUS_MARBLE",
+       "BONUS_STONE",
+       "BONUS_BAUXITE_ORE"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 100,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_4"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_IRON_ORE",
+        "BONUS_COPPER_ORE",
+        "BONUS_MARBLE",
+        "BONUS_STONE",
+        "BONUS_BAUXITE_ORE"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "spread": 50
+ },
+ "art": {
+  "tgaIndex": 3,
+  "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,4,6",
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "spreadFactor": 200,
+  "spread": 60
+ }
+}

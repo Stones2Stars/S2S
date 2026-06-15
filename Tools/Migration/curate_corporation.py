@@ -42,19 +42,30 @@ import engine
 from curate_common import de_i
 from store import Store, REPO
 
-# tag -> (family, scope, member, unit, valueKeys). valueKeys => SPLIT base family (identifier IS the family).
+# Corporation follows the RELIGION model (owner 2026-06-15): founding creates the HQ building, then the corp
+# SPREADS like a religion (an isHasCorporation city flag) and its per-city effects apply only where active. So every
+# per-city deposit is gated by `enabled:{HAS_CORPORATION: SELF}` (the spread-presence predicate, parallel to
+# HAS_RELIGION). The `*Produced` output scales by the corp's PrereqBonuses set (C++: YieldProduced x SUM
+# getNumBonuses over the prereq bonuses) -> `per:{anyOf:[prereqBonuses], scope:city}`. The FOUND requirement
+# (PrereqBonuses needed to establish the corp) is authored on the HQ `FoundsCorporation` building at the Building
+# pass, NOT here. (FIRST PASS — corps clearly need a dedicated rework pass: the HQ-revenue HeadquarterCommerces /
+# perCorporationLevel modeling + the spread mechanics are deferred to it.)
+# tag -> (family, scope, member, unit, valueKeys, perBonus). valueKeys => SPLIT base family; perBonus => add the
+# prereq-bonus `per` scaling.
 FAMILIES = {
-    "iHealth":                    ("health",      "city",   None,           "flat",               None),
-    "iHappiness":                 ("happiness",   "city",   None,           "flat",               None),
-    "iFreeXP":                    ("experience",  "city",   None,           "flat",               None),
-    "iMilitaryProductionModifier":("production",  "city",   "military",     "percent",            None),
-    "iMaintenance":               ("maintenance", "city",   "corporation",  "perBonus",           None),
-    "CommerceChanges":            (None,          "city",   None,           "flat",               engine.COMMERCES),
-    "YieldChanges":               (None,          "city",   None,           "flat",               engine.YIELDS),
-    "CommercesProduced":          (None,          "city",   "produced",     "perBonus",           engine.COMMERCES),
-    "YieldsProduced":             (None,          "city",   "produced",     "perBonus",           engine.YIELDS),
-    "HeadquarterCommerces":       (None,          "empire", "headquarters", "perCorporationLevel",engine.COMMERCES),
+    "iHealth":                    ("health",      "city",   None,           "flat",    None,             False),
+    "iHappiness":                 ("happiness",   "city",   None,           "flat",    None,             False),
+    "iFreeXP":                    ("experience",  "city",   None,           "flat",    None,             False),
+    "iMilitaryProductionModifier":("production",  "city",   "military",     "percent", None,             False),
+    "iMaintenance":               ("maintenance", "city",   "corporation",  "flat",    None,             True),
+    "CommerceChanges":            (None,          "city",   None,           "flat",    engine.COMMERCES, False),
+    "YieldChanges":               (None,          "city",   None,           "flat",    engine.YIELDS,    False),
+    "CommercesProduced":          (None,          "city",   None,           "flat",    engine.COMMERCES, True),
+    "YieldsProduced":             (None,          "city",   None,           "flat",    engine.YIELDS,    True),
 }
+# DEFERRED to the corp rework pass (HQ revenue, scaled by countCorporationLevels): kept in its current
+# headquarters/perCorporationLevel form, ungated, pending the per-corp-level token + HQ-city modeling.
+HQ_COMMERCE = "HeadquarterCommerces"
 TEXT = {"Description": "description", "Civilopedia": "civilopedia"}
 ART = {"Button": "icon", "MovieFile": "movieFile", "MovieSound": "movieSound", "Sound": "sound",
        "iTGAIndex": "tgaIndex"}
@@ -73,19 +84,38 @@ def _put(fam, family, scope, member, unit, val):
     node[unit] = val
 
 
-def _apply_family(fam, spec, c):
-    family, scope, member, unit, keys = spec
+def _entry(value, typ, per):
+    """A per-city corp deposit: gated by the spread-presence predicate, optionally per-bonus scaled."""
+    e = OrderedDict([("value", value), ("enabled", OrderedDict([("HAS_CORPORATION", typ)]))])
+    if per:
+        e["per"] = per
+    return e
+
+
+def _put_entry(fam, family, scope, member, unit, entry):
+    node = fam.setdefault(family, {}).setdefault(scope, {})
+    if member:
+        node = node.setdefault(member, {})
+    node.setdefault(unit, []).append(entry)
+
+
+def _apply_family(fam, spec, c, typ, per_bonus):
+    family, scope, member, unit, keys, perbonus = spec
+    per = per_bonus if perbonus else None
     if keys:                                   # SPLIT base family: the identifier IS the family name
         for ident, v in engine.named_array(c, keys).items():
-            _put(fam, ident, scope, member, unit, v)
+            _put_entry(fam, ident, scope, member, unit, _entry(v, typ, per))
     else:
         t = engine.text(c)
         if engine.is_int(t) and int(t) != 0:
-            _put(fam, family, scope, member, unit, int(t))
+            _put_entry(fam, family, scope, member, unit, _entry(int(t), typ, per))
 
 
 def curate(typ, rec, store):
     text, fam, art, identity, grants, cost, leftover = {}, {}, {}, {}, {}, {}, []
+    prereq_bonuses = [b for b in (engine.text(x) for x in rec.findall("PrereqBonuses/BonusType"))
+                      if b and b != "NONE"]
+    per_bonus = OrderedDict([("anyOf", prereq_bonuses), ("scope", "city")]) if prereq_bonuses else None
     for c in rec:
         tag, t = c.tag, engine.text(c)
         if tag == "Type" or tag in DROP:
@@ -94,7 +124,10 @@ def curate(typ, rec, store):
             if t:
                 text[TEXT[tag]] = t
         elif tag in FAMILIES:
-            _apply_family(fam, FAMILIES[tag], c)
+            _apply_family(fam, FAMILIES[tag], c, typ, per_bonus)
+        elif tag == HQ_COMMERCE:                               # DEFERRED HQ revenue (corp rework pass)
+            for ident, v in engine.named_array(c, engine.COMMERCES).items():
+                _put(fam, ident, "empire", "headquarters", "perCorporationLevel", v)
         elif tag == "iSpreadCost":
             if engine.is_int(t) and int(t) != 0:
                 cost["spread"] = int(t)

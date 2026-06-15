@@ -1,0 +1,73 @@
+{
+ "type": "CORPORATION_1",
+ "description": "TXT_KEY_BUILDING_CORPORATION_1",
+ "civilopedia": "TXT_KEY_BUILDING_CORPORATION_1_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CEREAL_MILLS_FACTORY"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": [
+    {
+     "value": 75,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_1"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_WHEAT",
+       "BONUS_CORN",
+       "BONUS_RICE",
+       "BONUS_POTATOES"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "headquarters": {
+    "perCorporationLevel": 4
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 100,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_1"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_WHEAT",
+        "BONUS_CORN",
+        "BONUS_RICE",
+        "BONUS_POTATOES"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "spread": 50
+ },
+ "art": {
+  "tgaIndex": 0,
+  "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,1,6",
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "spreadFactor": 200,
+  "spread": 60
+ }
+}

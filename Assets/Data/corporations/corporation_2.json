@@ -1,0 +1,97 @@
+{
+ "type": "CORPORATION_2",
+ "description": "TXT_KEY_BUILDING_CORPORATION_2",
+ "civilopedia": "TXT_KEY_BUILDING_CORPORATION_2_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SIDS_SUSHI_RESTAURANT"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": [
+    {
+     "value": 50,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_2"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_CRAB",
+       "BONUS_CLAM",
+       "BONUS_FISH",
+       "BONUS_SHRIMP",
+       "BONUS_RICE"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "headquarters": {
+    "perCorporationLevel": 4
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 200,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_2"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_CRAB",
+       "BONUS_CLAM",
+       "BONUS_FISH",
+       "BONUS_SHRIMP",
+       "BONUS_RICE"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 100,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_2"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_CRAB",
+        "BONUS_CLAM",
+        "BONUS_FISH",
+        "BONUS_SHRIMP",
+        "BONUS_RICE"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "spread": 50
+ },
+ "art": {
+  "tgaIndex": 1,
+  "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,2,6",
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "spreadFactor": 200,
+  "spread": 60
+ }
+}

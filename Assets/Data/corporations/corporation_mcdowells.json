@@ -1,0 +1,89 @@
+{
+ "type": "CORPORATION_MCDOWELLS",
+ "description": "TXT_KEY_BUILDING_CORPORATION_MCDOWELLS",
+ "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MCDOWELLS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIG_MCDOWELLS_RESTAURANT"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": [
+    {
+     "value": 175,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_MCDOWELLS"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_PIG",
+       "BONUS_COW",
+       "BONUS_SHEEP",
+       "BONUS_POTATOES",
+       "BONUS_WHEAT",
+       "BONUS_SALT"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "headquarters": {
+    "perCorporationLevel": 4
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_MCDOWELLS"
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 100,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_MCDOWELLS"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_PIG",
+        "BONUS_COW",
+        "BONUS_SHEEP",
+        "BONUS_POTATOES",
+        "BONUS_WHEAT",
+        "BONUS_SALT"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "spread": 50
+ },
+ "art": {
+  "tgaIndex": 9,
+  "icon": "Art/Interface/Buttons/corporations/mcdowells.dds",
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "spreadFactor": 200,
+  "spread": 50
+ }
+}

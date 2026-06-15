@@ -1,0 +1,87 @@
+{
+ "type": "CORPORATION_BULLSEYE",
+ "description": "TXT_KEY_BUILDING_CORPORATION_BULLSEYE",
+ "civilopedia": "TXT_KEY_BUILDING_CORPORATION_BULLSEYE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BULLSEYE_STORE"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": [
+    {
+     "value": 100,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_BULLSEYE"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_APPLE",
+       "BONUS_BANANA",
+       "BONUS_LEMONS",
+       "BONUS_OLIVES",
+       "BONUS_POTATOES"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "headquarters": {
+    "perCorporationLevel": 4
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_BULLSEYE"
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 100,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_BULLSEYE"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_APPLE",
+        "BONUS_BANANA",
+        "BONUS_LEMONS",
+        "BONUS_OLIVES",
+        "BONUS_POTATOES"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "spread": 50
+ },
+ "art": {
+  "tgaIndex": 12,
+  "icon": "Art/Interface/Buttons/corporations/bullseye.dds",
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "spreadFactor": 200,
+  "spread": 30
+ }
+}

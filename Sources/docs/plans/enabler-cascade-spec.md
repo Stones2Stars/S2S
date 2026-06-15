@@ -286,6 +286,8 @@ resource/bonus**. Authored on the target, scope-tagged per clause:
   - **`HOLY_CITY: RELIGION_X`** — this city is X's holy city (`isHolyCity`). *(Religion `HolyCityCommerces`.)*
   - **`IS_CAPITAL: true`** — this city is the capital. *(Many capital-specific bonuses in Trait + Civic; the
     committed civic `capital` member retrofits to this later.)*
+  - **`HAS_CORPORATION: CORPORATION_X`** — this city has corporation X active (spreads like a religion,
+    `isHasCorporation`). *(Corporation per-city effects — the Religion-parallel model.)*
 
 ---
 

@@ -1,0 +1,111 @@
+{
+ "type": "CORPORATION_ULTSOLDIER",
+ "description": "TXT_KEY_BUILDING_CORPORATION_ULTSOLDIER",
+ "civilopedia": "TXT_KEY_BUILDING_CORPORATION_ULTSOLDIER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ULTIMATE_SOLDIERS_TRAINER"
+  ]
+ },
+ "production": {
+  "city": {
+   "military": {
+    "percent": [
+     {
+      "value": 15,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_ULTSOLDIER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "headquarters": {
+    "perCorporationLevel": 4
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 50,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_ULTSOLDIER"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_AMMUNITION",
+       "BONUS_STEEL_INGOTS",
+       "BONUS_SULPHUR",
+       "BONUS_RUBBER"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": -2,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_ULTSOLDIER"
+     }
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_ULTSOLDIER"
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 100,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_ULTSOLDIER"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_AMMUNITION",
+        "BONUS_STEEL_INGOTS",
+        "BONUS_SULPHUR",
+        "BONUS_RUBBER"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "spread": 50
+ },
+ "art": {
+  "tgaIndex": 22,
+  "icon": "Art/Interface/Buttons/corporations/Soldier.dds",
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "spreadFactor": 200,
+  "spread": 50
+ }
+}

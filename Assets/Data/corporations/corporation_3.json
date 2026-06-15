@@ -1,0 +1,76 @@
+{
+ "type": "CORPORATION_3",
+ "description": "TXT_KEY_BUILDING_CORPORATION_3",
+ "civilopedia": "TXT_KEY_BUILDING_CORPORATION_3_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_STANDARD_ETHANOL_DISTILLERY"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "headquarters": {
+    "perCorporationLevel": 4
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 200,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_3"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_CORN",
+       "BONUS_SUGAR",
+       "BONUS_RICE",
+       "BONUS_POTATOES"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 100,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_3"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_CORN",
+        "BONUS_SUGAR",
+        "BONUS_RICE",
+        "BONUS_POTATOES"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "grants": {
+  "bonusProduced": "BONUS_PETROLEUM_PRODUCTS"
+ },
+ "cost": {
+  "spread": 50
+ },
+ "art": {
+  "tgaIndex": 2,
+  "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,3,6",
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "spreadFactor": 200,
+  "spread": 60
+ }
+}
