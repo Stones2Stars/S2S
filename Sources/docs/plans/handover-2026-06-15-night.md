@@ -5,44 +5,15 @@ sources, infos #13–#17), one info at a time, each owner-reviewed and committed
 inclusion question** (the gate before the monsters). A large amount of MODEL LAW was locked along the way (below).
 **Next is Tier C (resources & map substrate), starting with Bonus (#18).**
 
-## ⛔⛔ BEFORE YOU TOUCH ANYTHING — READ ALL THE SURROUNDING DOCUMENTATION (non-negotiable)
-**WHY THIS EXISTS:** the handover process is the countermeasure to **context-poisoning on compaction** — when the
-conversation is summarized, nuance is lost and a resuming agent acts on a half-picture. The ONLY defence is to
-re-ground in the *written* docs every resume. An agent that skims the resume list and starts editing WILL be off
-on the model (this happened: an agent skipped `migration-renames.md` + the `classifications/`, re-derived concepts
-from scratch, mis-scoped vicinity, and committed without inspection — all preventable by reading first).
-
-**MANDATORY READING — read these IN FULL before curating or editing anything, and VERIFY your understanding
-against them (the resume list below is the minimum, NOT a menu — read all of it):**
-1. **THIS handoff** (orientation + the locked MODEL LAW below).
-2. **The two LOCKED specs** — `modifier-cascade-spec.md` (v3) + `enabler-cascade-spec.md` (v0.3). These are the law
-   for the data shapes/vocab/scopes. If a spec line contradicts an owner ruling captured later, the RULING wins —
-   flag the stale line, don't trust it blindly (e.g. §8 once said "area = vicinity", which is WRONG: vicinity =
-   **city** scope [can-work-the-resource], area = **continents**).
-3. **`building-cascade-conversion.md`** — "THE MODEL (locked 2026-06-14)", the foundational data model.
-4. **`migration-entity-ranking.md`** — the curation order + cross-cutting rules.
-5. **`migration-renames.md`** — the canonical old→new registry **AND the per-entity decisions already made**
-   (e.g. it already records civic `BonusCommerceModifiers` as empty/moot/dropped). NOT reading this = re-litigating
-   settled questions and inventing problems that don't exist.
-6. **The relevant `Tools/Migration/classifications/*.json`** for the entity in hand — the ground-truth field
-   dispositions (e.g. `trait-classification.json` flags `BonusHappinessChanges` as a CREST conditioner: stays on
-   the trait, do-NOT-invert). Read this before deciding any field's home.
-7. **The PRIOR handovers** (`handover-2026-06-15-evening.md`, `-pm.md`, etc.) for the running context.
-
-**Treat the model concepts as things to LOOK UP in these docs, never to reconstruct from memory or from how the
-C++ currently reads/loads things (the C++ is being reworked to fit the data — it is NOT ground truth, owner).**
+**Resume reading order:** (1) this handoff; (2) the two LOCKED specs — `modifier-cascade-spec.md` (v3, now with the
+`each`/`anyOf` `per` forms + the SELF token) + `enabler-cascade-spec.md` (v0.3, now with §3 **object-evaluated
+predicates** + the `noneOf`/build-negative + the grants-pulse note); (3) `migration-entity-ranking.md` (the curation
+order); (4) `migration-renames.md` (the per-entity old→new registry — has Tech/Civic/Religion/Corporation/Trait now).
 
 ---
 
 ## ⛔ THE PROCESS — non-negotiable (owner rulings, reinforced this session)
-- **STRICTLY SERIAL, one info at a time.** curate → `--write` → **OWNER VISUALLY INSPECTS THE WRITTEN JSON →
-  OWNER explicitly APPROVES → ONLY THEN commit → next.**
-- **⛔ THE OWNER MUST VISUALLY INSPECT THE JSON BEFORE EVERY COMMIT — NEVER commit without explicit approval
-  (owner ruling, reinforced).** This has been the process throughout #428 (every prior agent did it) and is the
-  point of the per-info serial flow: the owner sees the actual `Assets/Data/.../*.json` files and passes on them.
-  "The scope looks good / we move on" about the MODEL is **not** approval to commit the JSON — present the written
-  files for inspection and WAIT for an explicit go-ahead. (An agent committed Bonus #18 without this; it had to be
-  `git reset --soft` and re-presented. Don't repeat it.)
+- **STRICTLY SERIAL, one info at a time.** curate → `--write` → **OWNER reviews & PASSES** → only then commit → next.
 - **PRESENT before COMMITTING, ASK before introducing a mechanic/token/shape** — every change incl. corrections, not
   just the first cut. "It's in the vocab already" / "it follows from a ruling" ≠ pre-approved. (The SELF-in-`requires`
   incident: I added it + committed without asking; owner pushback. memory: `ask-before-new-mechanic`.)
