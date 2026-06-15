@@ -12,11 +12,26 @@ Era and GameSpeed feed the SAME world-scope families. Notable rulings (owner 202
   applied at the additive-mod stage (CvTeam:2627/2648), NOT the research base multiplier — kept a distinct
   member so the reader does not fold it into the research base.
 - food-to-grow is the `growth` family (NOT costs.food) — consistent with GameSpeed + Handicap.
+- iEventChancePerTurn -> eventChance.world.flat: carried FAITHFULLY as-is. The random-events system is
+  fully calculated in PYTHON — a "gremlin we don't touch quite yet" (owner 2026-06-15). Event handling NEEDS
+  fixing eventually, but the approach is not yet known (owner) — so leave the value/unit alone (do NOT
+  re-classify flat->percent) until the events system is tackled on its own.
 - pacing inputs (historicalStartYear/EndYear/normalSpeedTurns) are STORED identity; the turn/calendar are
   DERIVED downstream on GameSpeed/CvDate (getTurnsInEra = normalSpeedTurns*speed/100), so not modifiers here.
 - advancedStart parked in identity (mirrors Handicap; pre-game points budget, not a modifier — pending review).
-- DROP bNoAnimals (no C++ consumer). The barbarian world-gates (bNoGoodies/bNoBarbUnits/bNoBarbCities) and
-  iInitialCityMaintenancePercent are 0/absent in every era -> not emitted (zero-drop); revisit if an era sets one.
+- DROP bNoAnimals — DEAD as an era field (owner 2026-06-15): it is being RELOCATED to a game-option / BUG-option
+  (the "disable animals" feature), tracked by an existing GitHub issue. LIKELY ORIGINAL INTENT (owner, plausible):
+  era-gated — past some advanced/space era, wildlife stops spawning (no animals in the cosmos). But it was
+  DESIGNED-NOT-WIRED: the field, schema, and a pedia display (Python PediaEra.py:147 isNoAnimals) exist, yet NO
+  era sets bNoAnimals=true, so the era-gating never actually fired — hence dead-as-an-era-field and a clean
+  candidate to move to a global option. The pedia line goes away with the relocation. Not a #428 concern beyond
+  dropping it.
+- The barbarian WORLD-STATE gates (bNoGoodies/bNoBarbUnits/bNoBarbCities) are LIVE C++ rules — goody placement
+  (CvMapGenerator.cpp:772), barb-unit spawn (CvGame.cpp:7180), barb-city spawn (CvGame.cpp:6941) — so NOT dead,
+  but 0/absent in every current era -> not emitted (zero-drop). Their proper home is a WORLD-STATE section (NOT
+  identity, NOT a modifier family); that section's DESIGN IS DEFERRED to the Vote pass (Vote actually sets such
+  bools, so it gets designed against real data). If an era ever sets one it surfaces in the curator's leftover
+  report rather than silently mis-routing. iInitialCityMaintenancePercent is likewise 0 in every era (revisit if set).
 
   python3 curate_era.py --sample ERA_ANCIENT
   python3 curate_era.py --write

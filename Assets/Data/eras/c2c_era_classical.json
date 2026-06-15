@@ -1,0 +1,100 @@
+{
+ "type": "C2C_ERA_CLASSICAL",
+ "description": "TXT_KEY_ERA_CLASSICAL",
+ "strategy": "TXT_KEY_ERA_CLASSICAL_STRATEGY",
+ "costs": {
+  "world": {
+   "train": {
+    "percent": 100
+   },
+   "construct": {
+    "percent": 100
+   },
+   "create": {
+    "percent": 100
+   },
+   "research": {
+    "percent": 200
+   },
+   "researchCutBelowEra": {
+    "percent": 20
+   },
+   "build": {
+    "percent": 120
+   },
+   "improvementUpgrade": {
+    "percent": 100
+   }
+  }
+ },
+ "growth": {
+  "world": {
+   "percent": 130
+  }
+ },
+ "greatPeopleRate": {
+  "world": {
+   "percent": 210
+  }
+ },
+ "durations": {
+  "world": {
+   "anger": {
+    "percent": 80
+   }
+  }
+ },
+ "eventChance": {
+  "world": {
+   "flat": 8
+  }
+ },
+ "grants": {
+  "startingUnitMultiplier": 1,
+  "startingDefenseUnits": 1,
+  "startingWorkerUnits": 1,
+  "startingExploreUnits": 1,
+  "startingGold": 100
+ },
+ "art": {
+  "soundtrackSpace": 400,
+  "soundtracks": [
+   "AS2D_ARISTOTLESPUPIL",
+   "AS2D_AUGUSTUSRISES",
+   "AS2D_SONG_CIV_III_MID_AFRICA",
+   "AS2D_SONG_CIV_III_MID_AMERICAN",
+   "AS2D_SHININGPATH",
+   "AS2D_UN",
+   "AS2D_SONG_ALEXANDER",
+   "AS2D_SONG_ROME",
+   "AS2D_SONG_PELOPONNESIAN",
+   "AS2D_SONG_CIV_III_MID_ROME",
+   "AS2D_SONG_CIV_III_ANC_EUROPE",
+   "AS2D_SONG_CONQUESTS_ROMAN",
+   "AS2D_SONG_CONQUESTS_FANTASY1",
+   "AS2D_SONG_CONQUESTS_FANTASY2",
+   "AS2D_SONG_BARBARIAN",
+   "AS2D_SONG_OMENS"
+  ],
+  "citySoundscapes": [
+   {
+    "CITYSIZE_SMALL": "ASSS_CITY_ANCIENT_SMALL_SELECT_AMB"
+   },
+   {
+    "CITYSIZE_MEDIUM": "ASSS_CITY_ANCIENT_SMALL_SELECT_AMB"
+   },
+   {
+    "CITYSIZE_LARGE": "ASSS_CITY_ANCIENT_LARGE_SELECT_AMB"
+   }
+  ],
+  "unitVictorySound": "AS2D_VICTORY_EARLY",
+  "unitDefeatSound": "AS2D_LOSS_EARLY",
+  "icon": "Art/Interface/mainscreen/Era/Classical.dds"
+ },
+ "identity": {
+  "advancedStart": 2000,
+  "historicalStartYear": -1200,
+  "historicalEndYear": 450,
+  "normalSpeedTurns": 120
+ }
+}

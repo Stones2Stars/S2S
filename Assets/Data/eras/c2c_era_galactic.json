@@ -1,0 +1,89 @@
+{
+ "type": "C2C_ERA_GALACTIC",
+ "description": "TXT_KEY_ERA_GALACTIC",
+ "strategy": "TXT_KEY_ERA_GALACTIC_STRATEGY",
+ "costs": {
+  "world": {
+   "train": {
+    "percent": 100
+   },
+   "construct": {
+    "percent": 100
+   },
+   "create": {
+    "percent": 100
+   },
+   "research": {
+    "percent": 600
+   },
+   "researchCutBelowEra": {
+    "percent": 100
+   },
+   "build": {
+    "percent": 100
+   },
+   "improvementUpgrade": {
+    "percent": 100
+   }
+  }
+ },
+ "growth": {
+  "world": {
+   "percent": 100
+  }
+ },
+ "greatPeopleRate": {
+  "world": {
+   "percent": 130
+  }
+ },
+ "durations": {
+  "world": {
+   "anger": {
+    "percent": 80
+   }
+  }
+ },
+ "eventChance": {
+  "world": {
+   "flat": 10
+  }
+ },
+ "grants": {
+  "startingUnitMultiplier": 3,
+  "startingDefenseUnits": 3,
+  "startingWorkerUnits": 3,
+  "startingExploreUnits": 2,
+  "startingGold": 60000,
+  "freePopulation": 4
+ },
+ "art": {
+  "soundtrackSpace": 40,
+  "soundtracks": [
+   "AS2D_FINAL_FRONTIER",
+   "AS2D_HOLSTLEVINEMARS",
+   "AS2D_HOLSTLEVINEMERCURY",
+   "AS2D_HOLSTLEVINENEPTUNE"
+  ],
+  "citySoundscapes": [
+   {
+    "CITYSIZE_SMALL": "ASSS_CITY_TRANSHUMAN_SMALL_SELECT_AMB"
+   },
+   {
+    "CITYSIZE_MEDIUM": "ASSS_CITY_TRANSHUMAN_LARGE_SELECT_AMB"
+   },
+   {
+    "CITYSIZE_LARGE": "ASSS_CITY_TRANSHUMAN_LARGE_SELECT_AMB"
+   }
+  ],
+  "unitVictorySound": "AS2D_VICTORY_LATE",
+  "unitDefeatSound": "AS2D_LOSS_LATE",
+  "icon": "Art/Interface/mainscreen/Era/Galactic.dds"
+ },
+ "identity": {
+  "advancedStart": 512000,
+  "historicalStartYear": 2300,
+  "historicalEndYear": 3000,
+  "normalSpeedTurns": 140
+ }
+}

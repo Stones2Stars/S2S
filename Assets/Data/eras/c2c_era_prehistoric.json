@@ -1,0 +1,88 @@
+{
+ "type": "C2C_ERA_PREHISTORIC",
+ "description": "TXT_KEY_ERA_PREHISTORIC",
+ "strategy": "TXT_KEY_ERA_PREHISTORIC_STRATEGY",
+ "costs": {
+  "world": {
+   "train": {
+    "percent": 100
+   },
+   "construct": {
+    "percent": 100
+   },
+   "create": {
+    "percent": 100
+   },
+   "research": {
+    "percent": 100
+   },
+   "build": {
+    "percent": 140
+   },
+   "improvementUpgrade": {
+    "percent": 100
+   }
+  }
+ },
+ "growth": {
+  "world": {
+   "percent": 150
+  }
+ },
+ "greatPeopleRate": {
+  "world": {
+   "percent": 230
+  }
+ },
+ "durations": {
+  "world": {
+   "anger": {
+    "percent": 40
+   }
+  }
+ },
+ "eventChance": {
+  "world": {
+   "flat": 7
+  }
+ },
+ "grants": {
+  "startingGold": 10
+ },
+ "art": {
+  "firstSoundtrackFirst": true,
+  "soundtracks": [
+   "AS2D_DOODLEGOD",
+   "AS2D_DOODLEGODTWO",
+   "AS2D_PRIMEVALWORLDJURASSICJUNGLE",
+   "AS2D_THEPREHISTORYCHANNEL",
+   "AS2D_ANCIENT_SOUNDTRACK_1",
+   "AS2D_ANCIENT_SOUNDTRACK_2",
+   "AS2D_ANCIENT_SOUNDTRACK_3",
+   "AS2D_ANCIENT_SOUNDTRACK_4",
+   "AS2D_HORIZON",
+   "AS2D_COYOTE_MOON",
+   "AS2D_TURQUOISE_RAIN"
+  ],
+  "citySoundscapes": [
+   {
+    "CITYSIZE_SMALL": "ASSS_CITY_ANCIENT_SMALL_SELECT_AMB"
+   },
+   {
+    "CITYSIZE_MEDIUM": "ASSS_CITY_ANCIENT_SMALL_SELECT_AMB"
+   },
+   {
+    "CITYSIZE_LARGE": "ASSS_CITY_ANCIENT_LARGE_SELECT_AMB"
+   }
+  ],
+  "unitVictorySound": "AS2D_VICTORY_EARLY",
+  "unitDefeatSound": "AS2D_LOSS_EARLY",
+  "icon": "Art/Interface/mainscreen/Era/Prehistoric.dds"
+ },
+ "identity": {
+  "advancedStart": 500,
+  "historicalStartYear": -200000,
+  "historicalEndYear": -12000,
+  "normalSpeedTurns": 200
+ }
+}

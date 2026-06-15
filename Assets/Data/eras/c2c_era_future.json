@@ -1,0 +1,91 @@
+{
+ "type": "C2C_ERA_FUTURE",
+ "description": "TXT_KEY_ERA_FUTURE",
+ "strategy": "TXT_KEY_ERA_FUTURE_STRATEGY",
+ "costs": {
+  "world": {
+   "train": {
+    "percent": 100
+   },
+   "construct": {
+    "percent": 100
+   },
+   "create": {
+    "percent": 100
+   },
+   "research": {
+    "percent": 750
+   },
+   "build": {
+    "percent": 100
+   },
+   "improvementUpgrade": {
+    "percent": 100
+   }
+  }
+ },
+ "growth": {
+  "world": {
+   "percent": 100
+  }
+ },
+ "greatPeopleRate": {
+  "world": {
+   "percent": 100
+  }
+ },
+ "durations": {
+  "world": {
+   "anger": {
+    "percent": 40
+   }
+  }
+ },
+ "eventChance": {
+  "world": {
+   "flat": 10
+  }
+ },
+ "grants": {
+  "startingUnitMultiplier": 3,
+  "startingDefenseUnits": 4,
+  "startingWorkerUnits": 4,
+  "startingExploreUnits": 3,
+  "startingGold": 125000,
+  "freePopulation": 6
+ },
+ "art": {
+  "soundtrackSpace": 40,
+  "firstSoundtrackFirst": true,
+  "soundtracks": [
+   "AS2D_FINAL_FRONTIER",
+   "AS2D_HOLSTLEVINEMARS",
+   "AS2D_HOLSTLEVINEMERCURY",
+   "AS2D_HOLSTLEVINEVENUS",
+   "AS2D_HOLSTLEVINEJUPITER",
+   "AS2D_HOLSTLEVINESATURN",
+   "AS2D_HOLSTLEVINEURANUS",
+   "AS2D_HOLSTLEVINENEPTUNE"
+  ],
+  "citySoundscapes": [
+   {
+    "CITYSIZE_SMALL": "ASSS_CITY_TRANSHUMAN_SMALL_SELECT_AMB"
+   },
+   {
+    "CITYSIZE_MEDIUM": "ASSS_CITY_TRANSHUMAN_LARGE_SELECT_AMB"
+   },
+   {
+    "CITYSIZE_LARGE": "ASSS_CITY_TRANSHUMAN_LARGE_SELECT_AMB"
+   }
+  ],
+  "unitVictorySound": "AS2D_VICTORY_LATE",
+  "unitDefeatSound": "AS2D_LOSS_LATE",
+  "icon": "Art/Interface/mainscreen/Era/Transcendent.dds"
+ },
+ "identity": {
+  "advancedStart": 4096000,
+  "historicalStartYear": 6000,
+  "historicalEndYear": 7000,
+  "normalSpeedTurns": 20
+ }
+}

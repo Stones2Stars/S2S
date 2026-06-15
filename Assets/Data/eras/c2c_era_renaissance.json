@@ -1,0 +1,104 @@
+{
+ "type": "C2C_ERA_RENAISSANCE",
+ "description": "TXT_KEY_ERA_RENAISSANCE",
+ "strategy": "TXT_KEY_ERA_RENAISSANCE_STRATEGY",
+ "costs": {
+  "world": {
+   "train": {
+    "percent": 100
+   },
+   "construct": {
+    "percent": 100
+   },
+   "create": {
+    "percent": 100
+   },
+   "research": {
+    "percent": 300
+   },
+   "researchCutBelowEra": {
+    "percent": 40
+   },
+   "build": {
+    "percent": 100
+   },
+   "improvementUpgrade": {
+    "percent": 100
+   }
+  }
+ },
+ "growth": {
+  "world": {
+   "percent": 110
+  }
+ },
+ "greatPeopleRate": {
+  "world": {
+   "percent": 190
+  }
+ },
+ "durations": {
+  "world": {
+   "anger": {
+    "percent": 80
+   }
+  }
+ },
+ "eventChance": {
+  "world": {
+   "flat": 9
+  }
+ },
+ "grants": {
+  "startingUnitMultiplier": 2,
+  "startingDefenseUnits": 2,
+  "startingWorkerUnits": 1,
+  "startingExploreUnits": 1,
+  "startingGold": 4000,
+  "freePopulation": 1
+ },
+ "art": {
+  "soundtrackSpace": 160,
+  "soundtracks": [
+   "AS2D_BACH_ALLEGRO",
+   "AS2D_BACH_ALLEGRO_ASSAI",
+   "AS2D_BACH_ALLEMANDE",
+   "AS2D_BACH_BOUREE",
+   "AS2D_BACH_BRANDENBURG_2_3",
+   "AS2D_BACH_BRANDENBURG_3_1",
+   "AS2D_BACH_BRANDENBURG_4_1",
+   "AS2D_BACH_BRANDENBURG_6_1",
+   "AS2D_BACH_BRANDENBURG_6_3",
+   "AS2D_BACH_GIGUE",
+   "AS2D_BACH_LARGO",
+   "AS2D_BACH_MENUET",
+   "AS2D_BACH_SARABANDE",
+   "AS2D_BEETHOVEN_ALLEGRETTO",
+   "AS2D_BEETHOVEN_ANDANTE",
+   "AS2D_BEETHOVEN_ROMANCE_1",
+   "AS2D_MOZART_ADAGIO",
+   "AS2D_MOZART_ANDANTE",
+   "AS2D_MOZART_ROMANCE"
+  ],
+  "citySoundscapes": [
+   {
+    "CITYSIZE_SMALL": "ASSS_CITY_MIDDLE_SMALL_SELECT_AMB"
+   },
+   {
+    "CITYSIZE_MEDIUM": "ASSS_CITY_MIDDLE_SMALL_SELECT_AMB"
+   },
+   {
+    "CITYSIZE_LARGE": "ASSS_CITY_MIDDLE_LARGE_SELECT_AMB"
+   }
+  ],
+  "unitVictorySound": "AS2D_VICTORY_MIDDLE",
+  "unitDefeatSound": "AS2D_LOSS_MIDDLE",
+  "icon": "Art/Interface/mainscreen/Era/Renaissance.dds"
+ },
+ "identity": {
+  "advancedStart": 8000,
+  "historicalStartYear": 1400,
+  "historicalEndYear": 1750,
+  "normalSpeedTurns": 120
+ }
+}
