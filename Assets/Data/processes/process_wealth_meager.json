@@ -1,0 +1,12 @@
+{
+ "type": "PROCESS_WEALTH_MEAGER",
+ "description": "TXT_KEY_PROCESS_MEAGER_WEALTH",
+ "gold": {
+  "city": {
+   "percent": 30
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/Buttons/Process/processwealthmeagre.dds"
+ }
+}

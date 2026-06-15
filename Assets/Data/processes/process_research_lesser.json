@@ -1,0 +1,12 @@
+{
+ "type": "PROCESS_RESEARCH_LESSER",
+ "description": "TXT_KEY_PROCESS_LESSER_RESEARCH",
+ "research": {
+  "city": {
+   "percent": 40
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/Buttons/Process/processresearchlesser.dds"
+ }
+}

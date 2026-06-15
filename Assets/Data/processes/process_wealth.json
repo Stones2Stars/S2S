@@ -1,0 +1,12 @@
+{
+ "type": "PROCESS_WEALTH",
+ "description": "TXT_KEY_PROCESS_WEALTH",
+ "gold": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/Buttons/Process/ProcessWealth.dds"
+ }
+}

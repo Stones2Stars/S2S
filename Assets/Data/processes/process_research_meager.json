@@ -1,0 +1,12 @@
+{
+ "type": "PROCESS_RESEARCH_MEAGER",
+ "description": "TXT_KEY_PROCESS_MEAGER_RESEARCH",
+ "research": {
+  "city": {
+   "percent": 30
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/Buttons/Process/processresearchmeagre.dds"
+ }
+}

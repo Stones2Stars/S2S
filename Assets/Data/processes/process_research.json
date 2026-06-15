@@ -1,0 +1,12 @@
+{
+ "type": "PROCESS_RESEARCH",
+ "description": "TXT_KEY_PROCESS_RESEARCH",
+ "research": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/Buttons/Process/ProcessResearch.dds"
+ }
+}
