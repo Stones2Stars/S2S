@@ -152,6 +152,12 @@ PREREQ_FIELDS = [
     ("BonusInfo",          "TechCityTrade",                          "bonuses"),
 ]
 
+# --- The `enables` FAMILY (enabler-spec §5/§6): four source-side, forward-read-from-HAS objects that
+# together GENERATE the candidate frontier: CAN GET = enables - (disables u obsoletes u replaces) over HAS.
+# enables = ADD (constructive); obsoletes/replaces/disables = SUBTRACT (destructive). All four are built by
+# inverting the source XML so the resulting index is keyed by the thing you HAVE and points forward at what
+# that thing enables/removes — never an upward "who-affects-me" query (that view is the cold-path pedia index).
+
 # Obsolete edges — top-down: a tech OBSOLETES these targets (reverse of <entity>.ObsoleteTech).
 OBSOLETE_FIELDS = [
     ("BuildingInfo", "ObsoleteTech", "buildings"),
@@ -160,6 +166,25 @@ OBSOLETE_FIELDS = [
     ("BonusInfo",    "TechObsolete", "bonuses"),
     ("CorporationInfo", "ObsoleteTech", "corporations"),  # latent (no corp sets it today); hardens the edge
 ]
+
+# Replace edges — top-down SUCCESSION (enabler-spec §6, `replaces`, self-framing on the SUCCESSOR you HAVE).
+# XML authors `ReplacementBuildings` on the PREDECESSOR A: A lists the buildings [B] that, when present,
+# remove A (CvBuildingInfo.cpp:1453 getBuildingInfo(B).setReplacedBuilding(A); CvCity.cpp:14465 A removed
+# when the city hasBuilding(B)). So A->[B] in XML means "B replaces A." Inverting via _build_index keys the
+# index by the successor B (the thing you HAVE) -> replaces_of(B) = {buildings:[A]} = forward-read "having B
+# removes A." (The engine prunes a building replacing itself, CvBuildingInfo.cpp:1442-1449.)
+REPLACE_FIELDS = [
+    ("BuildingInfo", "ReplacementBuildings/BuildingType", "buildings"),
+]
+
+# Disable edges — DESTRUCTIVE reversible BANS (enabler-spec §5). LATENT: there is NO live generic XML source
+# today. The only converted `disables` is per-civ `CivilizationInfo.DisableTechs` (CvPlayer.cpp:8266 inside
+# canEverResearch) — a load-stable per-civ research OVERRIDE, re-homed to loadPrune/`obsoletes`-shaped at the
+# Civilization pass, NOT a reversible empire-scope ban. Real player-law bans (slavery/prostitution/…) are
+# interim-implemented as pseudobuilding/autobuild with disable/enable (existing machinery, kept; promoted to
+# the empire/team-scope `disables`-building tier later). Kept here as a defined-but-empty edge so the four
+# `enables`-family objects are structurally distinct and a real source is a one-line add when it lands.
+DISABLE_FIELDS = []
 
 
 def _refs(rec, path):
@@ -201,8 +226,10 @@ class Store:
         self.tables = {}      # entity -> OrderedDict{Type: merged element}
         self.provenance = {}  # entity -> {Type: [relpath, ...]}  (module attribution)
         self.module_added = {}  # entity -> set(Type) first defined in a module
-        self.enables = {}     # referencedType -> {bucket: set(referrerType)}
-        self.obsoletes = {}   # referencedType -> {bucket: set(referrerType)} from ObsoleteTech edges
+        self.enables = {}     # referencedType -> {bucket: set(referrerType)}  (CONSTRUCTIVE: ADD to CAN GET)
+        self.obsoletes = {}   # referencedType -> {bucket: set(referrerType)}  from ObsoleteTech edges (SUBTRACT)
+        self.replaces = {}    # successorType  -> {bucket: set(predecessorType)} from ReplacementBuildings (SUBTRACT)
+        self.disables = {}    # bannerType     -> {bucket: set(bannedType)}  reversible bans — LATENT today (SUBTRACT)
         self.replacements = {}  # entity -> {baseType: {"replacement": replId, "condition": <elem>}}
         self._culture_bonuses = None
         for ent, glb in (entities or ENTITIES).items():
@@ -263,6 +290,8 @@ class Store:
     def _index(self):
         self.enables = self._build_index(PREREQ_FIELDS)
         self.obsoletes = self._build_index(OBSOLETE_FIELDS)
+        self.replaces = self._build_index(REPLACE_FIELDS)
+        self.disables = self._build_index(DISABLE_FIELDS)  # empty today (no live source); see DISABLE_FIELDS
 
     def _build_index(self, fields):
         idx = {}
@@ -288,6 +317,16 @@ class Store:
     def obsoletes_of(self, typ):
         """What does `typ` obsolete? -> {bucket: [sorted referrer types]}."""
         return {b: sorted(s) for b, s in self.obsoletes.get(typ, {}).items()}
+
+    def replaces_of(self, typ):
+        """What does `typ` REPLACE (succeed)? -> {bucket: [sorted predecessor types]}. Forward-read from the
+        successor you HAVE: having `typ` removes these predecessors from CAN GET (enabler-spec §6)."""
+        return {b: sorted(s) for b, s in self.replaces.get(typ, {}).items()}
+
+    def disables_of(self, typ):
+        """What does `typ` BAN (disable, destructive/reversible)? -> {bucket: [sorted banned types]}. LATENT
+        today — no live XML source (see DISABLE_FIELDS); always {} until a real ban source lands."""
+        return {b: sorted(s) for b, s in self.disables.get(typ, {}).items()}
 
     def replacement_of(self, typ):
         """If base `typ` is conditionally replaced (AIAndy CvInfoReplacements), return
@@ -322,14 +361,23 @@ def main():
     for ent in ENTITIES:
         t = s.tables.get(ent, {})
         print("  %-18s %6d %6d" % (ent, len(t), len(s.module_added.get(ent, set()))))
-    # enabler index coverage
+    # enables-family index coverage (the four forward-read-from-HAS generation objects)
     techs = s.table("TechInfo")
     enabling = sum(1 for T in techs if s.enables.get(T))
     print("\ntechs that enable >=1 thing: %d / %d" % (enabling, len(techs)))
+    print("enables-family index sizes: enables=%d obsoletes=%d replaces=%d disables=%d (keys = the HAVE-side type)"
+          % (len(s.enables), len(s.obsoletes), len(s.replaces), len(s.disables)))
     if args.enables:
-        print("\n%s enables:" % args.enables)
-        for b, items in s.enabled_by(args.enables).items():
+        T = args.enables
+        print("\n%s enables:" % T)
+        for b, items in s.enabled_by(T).items():
             print("  %-10s %3d  e.g. %s" % (b, len(items), ", ".join(items[:5])))
+        for label, q in (("obsoletes", s.obsoletes_of), ("replaces", s.replaces_of), ("disables", s.disables_of)):
+            res = q(T)
+            if res:
+                print("%s %s:" % (T, label))
+                for b, items in res.items():
+                    print("  %-10s %3d  e.g. %s" % (b, len(items), ", ".join(items[:5])))
 
 
 if __name__ == "__main__":

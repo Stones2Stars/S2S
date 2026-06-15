@@ -332,7 +332,8 @@ DORMANCY still exists — but it is a different mechanism: the `requires`-negati
 target-side, §3), used for pseudobuildings (education/crime/tourism) that switch off/on as a condition holds. So:
 **ban = `disables` = destroyed; condition-dormancy = `requires`-negative = parked-and-resumes.**
 
-**INSTANCE FATE — how a target loses availability decides what happens to existing instances (owner, 2026-06-15):**
+**INSTANCE FATE — how a target loses availability decides what happens to existing instances (owner, 2026-06-15).
+TABLE OWNER-ACCEPTED / LOCKED 2026-06-15 (final yes given — the destroyed-vs-dormant split below is settled):**
 
 | trigger | new builds | existing instances |
 |---|---|---|

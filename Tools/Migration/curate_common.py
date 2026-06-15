@@ -228,12 +228,20 @@ def curate(typ, rec, cfg, store, boosts):
     for k in ("description", "civilopedia", "help", "quote", "strategy"):
         if k in text_fields:
             out[k] = text_fields[k]
+    # The `enables` FAMILY (enabler-spec §5/§6): four forward-read-from-HAS sections in reserved order.
+    # All come from the store's inverted indexes (keyed by the type you HAVE). `disables` is latent today.
     enables = store.enabled_by(typ)
     if enables:
         out["enables"] = OrderedDict((k, enables[k]) for k in sorted(enables))
     obsoletes = store.obsoletes_of(typ)
     if obsoletes:
         out["obsoletes"] = OrderedDict((k, obsoletes[k]) for k in sorted(obsoletes))
+    replaces = store.replaces_of(typ)
+    if replaces:
+        out["replaces"] = OrderedDict((k, replaces[k]) for k in sorted(replaces))
+    disables = store.disables_of(typ)
+    if disables:
+        out["disables"] = OrderedDict((k, disables[k]) for k in sorted(disables))
     for family in FAMILY_ORDER:                            # families at TOP LEVEL (no `modifiers` wrapper, §3)
         if family in families:
             out[family] = families[family]
@@ -278,10 +286,10 @@ def main(cfg, boosts_config, out_dir):
     n = len(result)
     has = lambda k: sum(1 for (o, _) in result.values() if k in o)
     STRUCT = {"type", "description", "civilopedia", "help", "quote", "strategy", "enables", "obsoletes",
-              "grants", "cost", "ai", "art", "mapGeneration", "identity"}
+              "replaces", "disables", "requires", "grants", "cost", "ai", "art", "mapGeneration", "identity"}
     fams = lambda o: [k for k in o if k not in STRUCT]
     print("%s curated: %d" % (cfg.entity, n))
-    for k in ("enables", "obsoletes", "grants", "ai"):
+    for k in ("enables", "obsoletes", "replaces", "disables", "grants", "ai"):
         print("  with %-9s: %d" % (k, has(k)))
     print("  with families: %d  | seen: %s"
           % (sum(1 for (o, _) in result.values() if fams(o)),
