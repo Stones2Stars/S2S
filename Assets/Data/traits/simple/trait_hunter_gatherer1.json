@@ -1,0 +1,95 @@
+{
+ "type": "TRAIT_HUNTER_GATHERER1",
+ "description": "TXT_KEY_TRAIT_HUNTER_GATHERER0",
+ "civilopedia": "TXT_KEY_TRAIT_HUNTER_GATHERER_PEDIA",
+ "enables": {
+  "traits": [
+   "TRAIT_HUNTER_GATHERER2"
+  ]
+ },
+ "food": {
+  "empire": {
+   "tradeRoute": {
+    "percent": -50
+   },
+   "improvements": {
+    "IMPROVEMENT_SCAVENGING_CAMP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HUNTING_CAMP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HUNTING_PRESERVE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WILDLIFE_SANCTUARY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_NOMADIC_HERD": {
+     "flat": 1
+    },
+    "IMPROVEMENT_PASTURE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "buildings": {
+    "BUILDING_GRANARY": {
+     "percent": 20
+    },
+    "BUILDING_MODERN_GRANARY": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": -20
+  }
+ },
+ "extraYieldThreshold": {
+  "empire": {
+   "food": {
+    "flat": 6
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 10
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_HUNTER_GATHERER",
+  "priority": -1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_GROWTH": -1
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitHunterGatherer.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_HUNTER_GATHERER_SHORT",
+  "negativeTrait": true
+ }
+}

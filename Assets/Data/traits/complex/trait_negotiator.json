@@ -1,0 +1,151 @@
+{
+ "type": "TRAIT_NEGOTIATOR",
+ "description": "TXT_KEY_TRAIT_NEGOTIATOR",
+ "civilopedia": "TXT_KEY_TRAIT_NEGOTIATOR_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_NEGOTIATOR_STRATEGY",
+ "excludes": [
+  "TRAIT_ISOLATIONIST"
+ ],
+ "food": {
+  "empire": {
+   "tradeRoute": {
+    "percent": 20
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "tradeRoute": {
+    "percent": 20
+   },
+   "military": {
+    "percent": -20
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "tradeRoute": {
+    "percent": 20
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_TRADE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": -2
+  }
+ },
+ "combat": {
+  "empire": {
+   "cityDefense": {
+    "percent": -20
+   },
+   "espionageDefense": {
+    "percent": -20
+   }
+  }
+ },
+ "unitProduction": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_TRADE": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": -20
+   },
+   "numCities": {
+    "percent": -20
+   },
+   "corporation": {
+    "percent": -20
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 1,
+   "max": {
+    "flat": 2
+   },
+   "foreign": {
+    "percent": 20
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": -10
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 20
+   },
+   "attitude": {
+    "flat": 1
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_NEGOTIATOR"
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -4
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 11
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_ESPIONAGE": -2
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitNegotiator.dds"
+ }
+}

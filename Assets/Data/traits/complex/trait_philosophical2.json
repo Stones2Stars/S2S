@@ -1,0 +1,125 @@
+{
+ "type": "TRAIT_PHILOSOPHICAL2",
+ "description": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL2",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL2_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL_STRATEGY",
+ "enables": {
+  "traits": [
+   "TRAIT_PHILOSOPHICAL3"
+  ]
+ },
+ "excludes": [
+  "TRAIT_POPULIST1"
+ ],
+ "commerce": {
+  "empire": {
+   "specialist": {
+    "perSpecialist": 1
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 50
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 10
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "anger": {
+    "percent": 25
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 10
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "spreadProbability": {
+    "percent": -10
+   },
+   "nonStateSpreadProbability": {
+    "percent": -10
+   }
+  }
+ },
+ "policies": {
+  "freeSpecialistPerWorldWonder": true
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_PHILOSOPHICAL",
+  "priority": 2
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": -1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitPhilosophical2.dds"
+ },
+ "identity": {
+  "impurePropertyManipulators": true
+ }
+}

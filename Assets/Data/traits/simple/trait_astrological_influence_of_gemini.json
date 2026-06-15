@@ -1,0 +1,33 @@
+{
+ "type": "TRAIT_ASTROLOGICAL_INFLUENCE_OF_GEMINI",
+ "description": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_GEMINI",
+ "civilopedia": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_GEMINI_PEDIA",
+ "culture": {
+  "empire": {
+   "flat": 5
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_SCIENTIST": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_INFLUENCE_OF_MERCURY": [
+    "UNITCOMBAT_SIEGE"
+   ]
+  }
+ },
+ "art": {
+  "icon": "Art/Buttons/Traits/InfluenceOfGeminiTrait.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_GEMINI_SHORT",
+  "civilizationTrait": true
+ }
+}

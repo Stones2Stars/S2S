@@ -1,0 +1,137 @@
+{
+ "type": "TRAIT_CRUEL2",
+ "description": "TXT_KEY_TRAIT_COMPLEX_CRUEL2",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_CRUEL2_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_CRUEL_STRATEGY",
+ "enables": {
+  "traits": [
+   "TRAIT_CRUEL3"
+  ]
+ },
+ "excludes": [
+  "TRAIT_HUMANITARIAN1"
+ ],
+ "production": {
+  "empire": {
+   "worldWonder": {
+    "percent": 20
+   },
+   "military": {
+    "percent": 10
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1,
+   "largestCity": {
+    "flat": -1
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -3
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -15
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "hurry": {
+  "empire": {
+   "anger": {
+    "percent": -15
+   }
+  }
+ },
+ "goldenAge": {
+  "empire": {
+   "percent": -15
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -20
+   },
+   "attitude": {
+    "flat": -1
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": 2
+   },
+   "distanceModifier": {
+    "percent": 10
+   },
+   "nationalityMod": {
+    "percent": 10
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_CRUEL2": [
+    "UNITCOMBAT_CRIMINAL",
+    "UNITCOMBAT_GUN",
+    "UNITCOMBAT_MELEE",
+    "UNITCOMBAT_MOUNTED",
+    "UNITCOMBAT_STRIKE_TEAM",
+    "UNITCOMBAT_THROWING"
+   ]
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_CRUEL",
+  "priority": -2
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -2
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": -3
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 18
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitCruel2.dds"
+ },
+ "identity": {
+  "negativeTrait": true
+ }
+}

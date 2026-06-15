@@ -1,0 +1,52 @@
+{
+ "type": "TRAIT_FANATICAL",
+ "description": "TXT_KEY_TRAIT_FANATICAL",
+ "civilopedia": "TXT_KEY_TRAIT_FANATICAL_PEDIA",
+ "research": {
+  "empire": {
+   "percent": -10,
+   "capital": {
+    "percent": -10
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "unitProduction": {
+    "percent": 20
+   },
+   "freeExperience": {
+    "flat": 3
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_FANATICAL"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_RELIGION": -1
+   },
+   {
+    "FLAVOR_PRODUCTION": -1
+   },
+   {
+    "FLAVOR_MILITARY": -2
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitFanatical.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_FANATICAL_SHORT",
+  "negativeTrait": true
+ }
+}

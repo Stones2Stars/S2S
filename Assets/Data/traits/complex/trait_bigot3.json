@@ -1,0 +1,107 @@
+{
+ "type": "TRAIT_BIGOT3",
+ "description": "TXT_KEY_TRAIT_BIGOT3",
+ "civilopedia": "TXT_KEY_TRAIT_BIGOT3_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_BIGOT_STRATEGY",
+ "excludes": [
+  "TRAIT_PROGRESSIVE1"
+ ],
+ "happiness": {
+  "empire": {
+   "flat": -1,
+   "largestCity": {
+    "flat": -1
+   },
+   "nonStateReligion": {
+    "flat": -1
+   }
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 4
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "foreign": {
+    "percent": -20
+   }
+  }
+ },
+ "goldenAge": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": -2
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "happiness": {
+    "flat": 2
+   },
+   "buildingProduction": {
+    "percent": 25
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_BIGOT",
+  "priority": -3
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": -1
+   },
+   {
+    "FLAVOR_PRODUCTION": -1
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": -1
+   },
+   {
+    "FLAVOR_GROWTH": 16
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitBigot3.dds"
+ },
+ "identity": {
+  "negativeTrait": true
+ }
+}

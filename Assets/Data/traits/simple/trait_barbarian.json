@@ -1,0 +1,39 @@
+{
+ "type": "TRAIT_BARBARIAN",
+ "description": "TXT_KEY_TRAIT_BARBARIAN",
+ "civilopedia": "TXT_KEY_TRAIT_BARBARIAN_PEDIA",
+ "culture": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "empire": {
+   "levelModifier": {
+    "percent": 25
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 75
+  }
+ },
+ "policies": {
+  "upgradeAnywhere": true
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_AGGRESSIVE": [
+    "UNITCOMBAT_MELEE"
+   ]
+  }
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitBarbarian.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_BARBARIAN_SHORT",
+  "barbarianSelectionOnly": true
+ }
+}

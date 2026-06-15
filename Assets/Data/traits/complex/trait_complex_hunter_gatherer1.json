@@ -1,0 +1,111 @@
+{
+ "type": "TRAIT_COMPLEX_HUNTER_GATHERER1",
+ "description": "TXT_KEY_TRAIT_COMPLEX_HUNTER_GATHERER1",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_HUNTER_GATHERER1_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_HUNTER_GATHERER_STRATEGY",
+ "food": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "worldWonder": {
+    "percent": -10
+   },
+   "teamWonder": {
+    "percent": -10
+   },
+   "nationalWonder": {
+    "percent": -10
+   },
+   "percent": -5
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": -4
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": -1,
+   "percent": -4
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": -1,
+   "percent": -4
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": -4
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1,
+   "largestCity": {
+    "flat": -1
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": 10
+   }
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": -50
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_HUNTER_GATHERER",
+  "priority": -1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": -1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitHunterGatherer.dds"
+ },
+ "identity": {
+  "negativeTrait": true,
+  "impurePropertyManipulators": true
+ }
+}

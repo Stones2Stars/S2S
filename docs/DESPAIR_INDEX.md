@@ -233,8 +233,13 @@ In fairness, the fix itself isn't even bad — a clean conditional whole-object 
 despair is that "what traits does this leader have" has no answer until you *also* ask a game
 option, a separate templated class, and a type that was never really there.
 
-*Status: untangled (#428) — the disguise is now its own `TRAIT_COMPLEX_*` file, the base trait
-declares `replacedBy` and keeps its own face, and the store stopped marrying strangers.*
+*Status: untangled (#428) — and then the verdict came back harsher: it was never one trait wearing a
+disguise, it was **two completely different traits hacked on top of each other** (in true TB fashion).
+So they are now split into **two separate sets** — `Assets/Data/traits/simple/` (88) and `…/complex/` (302,
+the entire complex system, which turns out to be one module: Thunderbrd) — the `replacedBy` cross-link is
+**dropped** (you don't get "replaced by" a stranger), and complex traits are slated to become their **own
+Info type behind a shared interface** in the coding pass. The store stopped marrying strangers; the divorce
+is now finalized in two separate filing cabinets.*
 
 ---
 

@@ -1,0 +1,122 @@
+{
+ "type": "TRAIT_ORGANIZED3",
+ "description": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED3",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED3_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED_STRATEGY",
+ "excludes": [
+  "TRAIT_IMPULSIVE1"
+ ],
+ "production": {
+  "empire": {
+   "teamWonder": {
+    "percent": 25
+   },
+   "specialist": {
+    "perSpecialist": 1
+   },
+   "military": {
+    "percent": 10
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "largestCity": {
+    "flat": 2
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": -15
+  }
+ },
+ "experience": {
+  "empire": {
+   "levelModifier": {
+    "percent": 5
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": -40
+   },
+   "numCities": {
+    "percent": -40
+   },
+   "corporation": {
+    "percent": -20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": -40
+   },
+   "freeCivilian": {
+    "flat": 5,
+    "perPopulation": 30
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": 100
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 25
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_ORGANIZED",
+  "priority": 3
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -3
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_GOLD": 14
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": -2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitOrganized3.dds"
+ }
+}

@@ -1,0 +1,34 @@
+{
+ "type": "TRAIT_ASTROLOGICAL_INFLUENCE_OF_LIBRA",
+ "description": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_LIBRA",
+ "civilopedia": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_LIBRA_PEDIA",
+ "culture": {
+  "empire": {
+   "flat": 5
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_GREAT_STATESMAN": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_INFLUENCE_OF_VENUS": [
+    "UNITCOMBAT_ARCHER",
+    "UNITCOMBAT_THROWING"
+   ]
+  }
+ },
+ "art": {
+  "icon": "Art/Buttons/Traits/InfluenceOfLibraTrait.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_LIBRA_SHORT",
+  "civilizationTrait": true
+ }
+}

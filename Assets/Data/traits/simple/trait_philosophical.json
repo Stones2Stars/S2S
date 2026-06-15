@@ -1,0 +1,84 @@
+{
+ "type": "TRAIT_PHILOSOPHICAL",
+ "description": "TXT_KEY_TRAIT_PHILOSOPHICAL",
+ "civilopedia": "TXT_KEY_TRAIT_PHILOSOPHICAL_PEDIA",
+ "production": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CLONING_LABORATORY": {
+     "percent": 20
+    },
+    "BUILDING_CONVENTION_CENTRE": {
+     "percent": 20
+    },
+    "BUILDING_UNIVERSITY": {
+     "percent": 20
+    },
+    "BUILDING_BATH_HOUSE": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 100
+  }
+ },
+ "goldenAge": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 20
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 20
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_PHILOSOPHICAL"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   },
+   {
+    "FLAVOR_MILITARY": -2
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitPhilosophical.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_PHILOSOPHICAL_SHORT"
+ }
+}

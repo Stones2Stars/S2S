@@ -1,0 +1,93 @@
+{
+ "type": "TRAIT_MEGALOMANIAC",
+ "description": "TXT_KEY_TRAIT_MEGALOMANIAC",
+ "civilopedia": "TXT_KEY_TRAIT_MEGALOMANIAC_PEDIA",
+ "production": {
+  "empire": {
+   "capital": {
+    "percent": 10
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "capital": {
+    "percent": 15
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": 20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 20
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 25
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": -2
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": 1
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_MEGALOMANIAC"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": -2
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitMegalomaniac.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_MEGALOMANIAC_SHORT",
+  "negativeTrait": true
+ }
+}

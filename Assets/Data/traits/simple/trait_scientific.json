@@ -1,0 +1,91 @@
+{
+ "type": "TRAIT_SCIENTIFIC",
+ "description": "TXT_KEY_TRAIT_SCIENTIFIC",
+ "civilopedia": "TXT_KEY_TRAIT_SCIENTIFIC_PEDIA",
+ "production": {
+  "empire": {
+   "buildings": {
+    "BUILDING_SCHOOL_OF_SCRIBES": {
+     "percent": 20
+    },
+    "BUILDING_OBSERVATORY": {
+     "percent": 20
+    },
+    "BUILDING_ALCHEMISTS_LAB": {
+     "percent": 20
+    },
+    "BUILDING_LABORATORY": {
+     "percent": 20
+    },
+    "BUILDING_RESEARCH_INSTITUTE": {
+     "percent": 20
+    },
+    "BUILDING_ACCELERATOR": {
+     "percent": 20
+    },
+    "BUILDING_SALON": {
+     "percent": 20
+    },
+    "BUILDING_CHURCH_SCHOOL": {
+     "percent": 20
+    },
+    "BUILDING_CHEMISTRY_LAB": {
+     "percent": 20
+    },
+    "BUILDING_LIBRARY": {
+     "percent": 20
+    },
+    "BUILDING_CHEMICALS_DISTRICT": {
+     "percent": 20
+    }
+   },
+   "military": {
+    "percent": -25
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": 1,
+   "percent": 10
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_SOLAR_PANELS": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 25
+   }
+  }
+ },
+ "policies": {
+  "upgradeAnywhere": true
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_SCIENTIFIC"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_MILITARY": -1
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitScientific.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_SCIENTIFIC_SHORT"
+ }
+}

@@ -1,0 +1,138 @@
+{
+ "type": "TRAIT_POLITICIAN3",
+ "description": "TXT_KEY_TRAIT_COMPLEX_POLITICIAN3",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_POLITICIAN3_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_POLITICIAN_STRATEGY",
+ "excludes": [
+  "TRAIT_FOREIGN1"
+ ],
+ "food": {
+  "empire": {
+   "capital": {
+    "percent": 10
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "worldWonder": {
+    "percent": -20
+   },
+   "nationalWonder": {
+    "percent": 25
+   },
+   "capital": {
+    "percent": 10
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "capital": {
+    "percent": 10
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": 1,
+   "percent": 5,
+   "capital": {
+    "percent": 10
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": 1,
+   "percent": 5,
+   "capital": {
+    "percent": 10
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "capital": {
+    "percent": 10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 20
+   },
+   "numCities": {
+    "percent": 20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 30
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": -50
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 10
+   },
+   "attitude": {
+    "flat": 2
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_POLITICIAN",
+  "priority": 3
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": -5
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   },
+   {
+    "FLAVOR_ESPIONAGE": 4
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitPolitician3.dds"
+ },
+ "identity": {
+  "impurePropertyManipulators": true
+ }
+}

@@ -1,0 +1,33 @@
+{
+ "type": "TRAIT_ASTROLOGICAL_INFLUENCE_OF_LEO",
+ "description": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_LEO",
+ "civilopedia": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_LEO_PEDIA",
+ "culture": {
+  "empire": {
+   "flat": 5
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_GREAT_GENERAL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_INFLUENCE_OF_THE_SUN": [
+    "UNITCOMBAT_MELEE"
+   ]
+  }
+ },
+ "art": {
+  "icon": "Art/Buttons/Traits/InfluenceOfLeoTrait.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_LEO_SHORT",
+  "civilizationTrait": true
+ }
+}

@@ -1,0 +1,124 @@
+{
+ "type": "TRAIT_COMPLEX_EXPANSIVE",
+ "description": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE_STRATEGY",
+ "excludes": [
+  "TRAIT_MINIMALIST"
+ ],
+ "food": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "worldWonder": {
+    "percent": -20
+   },
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": -2,
+   "percent": -10
+  }
+ },
+ "happiness": {
+  "empire": {
+   "largestCity": {
+    "flat": 2
+   }
+  }
+ },
+ "combat": {
+  "empire": {
+   "cityDefense": {
+    "percent": -10
+   }
+  }
+ },
+ "unitProduction": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_SETTLER": {
+     "percent": 100
+    },
+    "UNITCOMBAT_WORKER": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": -30
+   },
+   "numCities": {
+    "percent": -30
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeCivilian": {
+    "perPopulation": 15
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 50
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": 200
+  }
+ },
+ "revolution": {
+  "empire": {
+   "distanceModifier": {
+    "percent": -10
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_EXPANSIVE"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -1
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_SCIENCE": -8
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 16
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitExpansive.dds"
+ }
+}

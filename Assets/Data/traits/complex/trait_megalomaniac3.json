@@ -1,0 +1,138 @@
+{
+ "type": "TRAIT_MEGALOMANIAC3",
+ "description": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC3",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC3_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC_STRATEGY",
+ "excludes": [
+  "TRAIT_HUMBLE1"
+ ],
+ "food": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "production": {
+  "empire": {
+   "worldWonder": {
+    "percent": 10
+   },
+   "teamWonder": {
+    "percent": -15
+   },
+   "nationalWonder": {
+    "percent": -15
+   },
+   "flat": -1,
+   "percent": -5,
+   "military": {
+    "percent": 10
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 15
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 15
+  }
+ },
+ "combat": {
+  "empire": {
+   "espionageDefense": {
+    "percent": -15
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 15
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "anger": {
+    "percent": -10
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": -20
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": -2
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_MEGALOMANIAC",
+  "priority": -3
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -1
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   },
+   {
+    "FLAVOR_ESPIONAGE": 4
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitMegalomaniac3.dds"
+ },
+ "identity": {
+  "negativeTrait": true
+ }
+}

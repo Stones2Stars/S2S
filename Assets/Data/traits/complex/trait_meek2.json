@@ -1,0 +1,226 @@
+{
+ "type": "TRAIT_MEEK2",
+ "description": "TXT_KEY_TRAIT_MEEK2",
+ "civilopedia": "TXT_KEY_TRAIT_MEEK2_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_MEEK_STRATEGY",
+ "enables": {
+  "traits": [
+   "TRAIT_MEEK3"
+  ]
+ },
+ "excludes": [
+  "TRAIT_IMPERIALIST1"
+ ],
+ "production": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CANNON_FORGE": {
+     "percent": -25
+    },
+    "BUILDING_GARRISON": {
+     "percent": -25
+    },
+    "BUILDING_FACTORY_AMMUNITION": {
+     "percent": -25
+    },
+    "BUILDING_AMMUNITIONS_WORKSHOP": {
+     "percent": -25
+    },
+    "BUILDING_MILITARY_BASE": {
+     "percent": -25
+    },
+    "BUILDING_MILITARY_INDUSTRIAL_COMPLEX": {
+     "percent": -25
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "byTech": {
+    "TECH_GUNPOWDER": {
+     "percent": -20
+    },
+    "TECH_LEADERSHIP": {
+     "percent": -20
+    },
+    "TECH_METALLURGY": {
+     "percent": -20
+    },
+    "TECH_MATCHLOCK": {
+     "percent": -20
+    },
+    "TECH_CAVALRY_TACTICS": {
+     "percent": -20
+    },
+    "TECH_EXPLOSIVES": {
+     "percent": -20
+    },
+    "TECH_NATIONALISM": {
+     "percent": -20
+    },
+    "TECH_GRAND_WAR": {
+     "percent": -20
+    },
+    "TECH_SEMI_AUTOMATIC_WEAPONS": {
+     "percent": -20
+    },
+    "TECH_ARTILLERY": {
+     "percent": -20
+    },
+    "TECH_TRENCH_WARFARE": {
+     "percent": -20
+    },
+    "TECH_AUTOMATIC_WEAPONS": {
+     "percent": -20
+    },
+    "TECH_FISSION": {
+     "percent": -20
+    },
+    "TECH_GUERRILLA_WARFARE": {
+     "percent": -20
+    },
+    "TECH_LOGISTICS": {
+     "percent": -20
+    },
+    "TECH_MANUFACTURING": {
+     "percent": -20
+    },
+    "TECH_SEMICONDUCTORS": {
+     "percent": -20
+    },
+    "TECH_COMPOSITES": {
+     "percent": -20
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_SIEGE": {
+     "flat": -2
+    }
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": -4
+  }
+ },
+ "combat": {
+  "empire": {
+   "captureProbability": {
+    "percent": -15
+   },
+   "captureResistance": {
+    "percent": -10
+   }
+  }
+ },
+ "unitProduction": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_SIEGE": {
+     "percent": -20
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 20
+   },
+   "numCities": {
+    "percent": 20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": -10
+   },
+   "freeCivilian": {
+    "perPopulation": -15
+   },
+   "freeMilitary": {
+    "perPopulation": -15
+   },
+   "unitCivilian": {
+    "percent": 10
+   },
+   "upgradePrice": {
+    "percent": -10
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": 1
+   },
+   "enemyWarWeariness": {
+    "percent": -20
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_MEEK2": [
+    "UNITCOMBAT_COMBATANT"
+   ]
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_MEEK",
+  "priority": -2
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 12
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": -4
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitMeek2.dds"
+ },
+ "identity": {
+  "negativeTrait": true,
+  "impurePropertyManipulators": true
+ }
+}

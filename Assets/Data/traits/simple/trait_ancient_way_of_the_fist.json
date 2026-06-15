@@ -1,0 +1,33 @@
+{
+ "type": "TRAIT_ANCIENT_WAY_OF_THE_FIST",
+ "description": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_FIST",
+ "civilopedia": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_FIST_PEDIA",
+ "culture": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_GREAT_DETECTIVE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_WAY_OF_THE_FIST": [
+    "UNITCOMBAT_LAW_ENFORCEMENT"
+   ]
+  }
+ },
+ "art": {
+  "icon": "Art/Buttons/Promotions/WayOfTheFistPromotion.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_FIST_SHORT",
+  "civilizationTrait": true
+ }
+}

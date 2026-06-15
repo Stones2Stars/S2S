@@ -1,0 +1,72 @@
+{
+ "type": "TRAIT_REVOLUTIONARY",
+ "description": "TXT_KEY_TRAIT_REVOLUTIONARY",
+ "civilopedia": "TXT_KEY_TRAIT_REVOLUTIONARY_PEDIA",
+ "gold": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": 1,
+   "percent": 20
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -2
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": 30
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": 1
+   },
+   "national": {
+    "flat": 2
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_INSTIGATOR1": [
+    "UNITCOMBAT_SPY"
+   ]
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_REVOLUTIONARY"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_ESPIONAGE": -5
+   },
+   {
+    "FLAVOR_MILITARY": -3
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitRevolutionary.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_REVOLUTIONARY_SHORT",
+  "negativeTrait": true,
+  "impurePromotions": true
+ }
+}

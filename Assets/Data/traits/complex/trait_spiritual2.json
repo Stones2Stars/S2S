@@ -1,0 +1,185 @@
+{
+ "type": "TRAIT_SPIRITUAL2",
+ "description": "TXT_KEY_TRAIT_COMPLEX_SPIRITUAL2",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_SPIRITUAL2_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_SPIRITUAL_STRATEGY",
+ "enables": {
+  "traits": [
+   "TRAIT_SPIRITUAL3"
+  ]
+ },
+ "excludes": [
+  "TRAIT_ANTI_CLERICAL1",
+  "TRAIT_FANATICAL1",
+  "TRAIT_PIOUS1"
+ ],
+ "research": {
+  "empire": {
+   "byTech": {
+    "TECH_SIKHISM": {
+     "percent": 20
+    },
+    "TECH_DIVINE_RIGHT": {
+     "percent": 20
+    },
+    "TECH_ENLIGHTENMENT": {
+     "percent": 20
+    },
+    "TECH_MORMON": {
+     "percent": 20
+    },
+    "TECH_CAO_DAI": {
+     "percent": 20
+    },
+    "TECH_SCIENTOLOGY": {
+     "percent": 20
+    },
+    "TECH_BAHAI": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "nonStateReligion": {
+    "flat": 1
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_PROPHET": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_COMBATANT": {
+     "flat": -1
+    }
+   },
+   "nonStateHolyCityXP": {
+    "percent": 10
+   }
+  }
+ },
+ "unitProduction": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_COMBATANT": {
+     "percent": -10
+    },
+    "UNITCOMBAT_MISSIONARY": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "goldenAge": {
+  "empire": {
+   "percent": -30
+  }
+ },
+ "durations": {
+  "empire": {
+   "religiousAnarchy": {
+    "percent": -50
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 30
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "happiness": {
+    "flat": 1
+   },
+   "holyCityXP": {
+    "percent": 10
+   },
+   "spreadProbability": {
+    "percent": 10
+   },
+   "nonStateSpreadProbability": {
+    "percent": 10
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "holyCityGood": {
+    "flat": 5
+   },
+   "holyCityBad": {
+    "flat": -5
+   },
+   "badReligionMod": {
+    "percent": -10
+   },
+   "goodReligionMod": {
+    "percent": 10
+   }
+  }
+ },
+ "policies": {
+  "allReligionsActive": true
+ },
+ "grants": {
+  "eraAdvanceFreeSpecialist": "SPECIALIST_GREAT_PROPHET"
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_SPIRITUAL",
+  "priority": 2
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -3
+   },
+   {
+    "FLAVOR_RELIGION": 18
+   },
+   {
+    "FLAVOR_PRODUCTION": -1
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": -1
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitSpiritual2.dds"
+ }
+}

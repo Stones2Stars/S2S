@@ -1,0 +1,147 @@
+{
+ "type": "TRAIT_COMPLEX_FOREIGN",
+ "description": "TXT_KEY_TRAIT_COMPLEX_FOREIGN",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_FOREIGN_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_FOREIGN_STRATEGY",
+ "excludes": [
+  "TRAIT_POLITICIAN"
+ ],
+ "food": {
+  "empire": {
+   "capital": {
+    "percent": -5
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "worldWonder": {
+    "percent": 20
+   },
+   "teamWonder": {
+    "percent": 25
+   },
+   "nationalWonder": {
+    "percent": -25
+   },
+   "capital": {
+    "percent": -5
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "capital": {
+    "percent": -5
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": -1,
+   "percent": -5,
+   "capital": {
+    "percent": -10
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": -1,
+   "percent": -5,
+   "capital": {
+    "percent": -10
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "experience": {
+  "empire": {
+   "capital": {
+    "percent": -10
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": -2
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "corporation": {
+    "percent": -20
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "foreign": {
+    "percent": 30
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 50
+   },
+   "religiousAnarchy": {
+    "percent": 50
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": 2
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_FOREIGNER"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -1
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": -1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   },
+   {
+    "FLAVOR_ESPIONAGE": 4
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitForeigner.dds"
+ },
+ "identity": {
+  "negativeTrait": true
+ }
+}

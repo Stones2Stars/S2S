@@ -1,0 +1,151 @@
+{
+ "type": "TRAIT_ANTI_CLERICAL",
+ "description": "TXT_KEY_TRAIT_ANTI_CLERICAL",
+ "civilopedia": "TXT_KEY_TRAIT_ANTI_CLERICAL_PEDIA",
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_JEWISH_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_CHRISTIAN_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_ISLAMIC_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_HINDU_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_BUDDHIST_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_CONFUCIAN_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_TAOIST_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_HELLENIC_GYMNASIA": {
+     "flat": -1
+    },
+    "BUILDING_ZOROASTRIAN_SHRINE": {
+     "flat": -1
+    },
+    "BUILDING_TEMPLE_OF_CHONS": {
+     "flat": -1
+    },
+    "BUILDING_CALMACEC": {
+     "flat": -1
+    },
+    "BUILDING_NATURE_CIRCLE_OF_POWER": {
+     "flat": -1
+    },
+    "BUILDING_JAIN_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_TEMPLE_OF_AN": {
+     "flat": -1
+    },
+    "BUILDING_LDS_MISSIONARY_TRAINING_CENTRE": {
+     "flat": -1
+    },
+    "BUILDING_SCIENTOLOGY_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_INVOCATION_HUT": {
+     "flat": -1
+    },
+    "BUILDING_SHINTO_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_BAHAI_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_ASATRU_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_ANDEAN_MONASTERY": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "combat": {
+  "empire": {
+   "espionageDefense": {
+    "percent": 25
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "corporation": {
+    "percent": -10
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "flat": 22
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "religiousAnarchy": {
+    "percent": 100
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "buildingProduction": {
+    "percent": -5
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "holyCityGood": {
+    "flat": -1
+   },
+   "holyCityBad": {
+    "flat": 1
+   },
+   "badReligionMod": {
+    "percent": 0.6
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_ANTI_CLERICAL"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_RELIGION": 9
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": -1
+   },
+   {
+    "FLAVOR_MILITARY": -1
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitAnti-Clerical.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_ANTI_CLERICAL_SHORT",
+  "negativeTrait": true
+ }
+}

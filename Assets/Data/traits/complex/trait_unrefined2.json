@@ -1,0 +1,349 @@
+{
+ "type": "TRAIT_UNREFINED2",
+ "description": "TXT_KEY_TRAIT_UNREFINED2",
+ "civilopedia": "TXT_KEY_TRAIT_UNREFINED2_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_UNREFINED_STRATEGY",
+ "enables": {
+  "traits": [
+   "TRAIT_UNREFINED3"
+  ]
+ },
+ "excludes": [
+  "TRAIT_CREATIVE1"
+ ],
+ "production": {
+  "empire": {
+   "worldWonder": {
+    "percent": -10
+   },
+   "buildings": {
+    "BUILDING_FIREWORKS_SHOP": {
+     "percent": -25
+    },
+    "BUILDING_PORTRAIT_PAINTER": {
+     "percent": -25
+    },
+    "BUILDING_BOOK_STORE": {
+     "percent": -25
+    },
+    "BUILDING_ART_GALLERY": {
+     "percent": -25
+    },
+    "BUILDING_ART_PATRONAGE": {
+     "percent": -25
+    },
+    "BUILDING_ARTIST_COLONY": {
+     "percent": -25
+    },
+    "BUILDING_TATTOO_PARLOR": {
+     "percent": -25
+    },
+    "BUILDING_PHOTOGRAPHY_STUDIO": {
+     "percent": -25
+    },
+    "BUILDING_FACTORY_SCULPTURES": {
+     "percent": -25
+    },
+    "BUILDING_FACTORY_TERRACOTTA_WARES": {
+     "percent": -25
+    },
+    "BUILDING_OPERA_HOUSE": {
+     "percent": -25
+    },
+    "BUILDING_ART_SUPPLY_STORE": {
+     "percent": -25
+    },
+    "BUILDING_FASHION_HOUSE_STORE": {
+     "percent": -25
+    },
+    "BUILDING_ANIMAL_ACTOR_STUDIO": {
+     "percent": -25
+    },
+    "BUILDING_MOVIE_THEATRE": {
+     "percent": -25
+    },
+    "BUILDING_DRIVE_IN_MOVIE_THEATER": {
+     "percent": -25
+    },
+    "BUILDING_AMUSEMENT_PARK": {
+     "percent": -25
+    },
+    "BUILDING_ANIMATION_STUDIO": {
+     "percent": -25
+    },
+    "BUILDING_BROADCAST_TOWER": {
+     "percent": -25
+    },
+    "BUILDING_LOCAL_RADIO_STATION": {
+     "percent": -25
+    },
+    "BUILDING_ANIMATRONICS_WORKSHOP": {
+     "percent": -25
+    },
+    "BUILDING_RECORD_STORE": {
+     "percent": -25
+    },
+    "BUILDING_JAZZ_CLUB": {
+     "percent": -25
+    },
+    "BUILDING_NIGHT_CLUB": {
+     "percent": -25
+    },
+    "BUILDING_TELECOURSE_STUDIO": {
+     "percent": -25
+    },
+    "BUILDING_TV_STUDIO": {
+     "percent": -25
+    },
+    "BUILDING_RECORDING_STUDIO": {
+     "percent": -25
+    },
+    "BUILDING_MINI_GOLF_COURSE": {
+     "percent": -25
+    },
+    "BUILDING_BEAUTY_SALON": {
+     "percent": -25
+    },
+    "BUILDING_COMICBOOK_STORE": {
+     "percent": -25
+    },
+    "BUILDING_MODELING_AGENCY": {
+     "percent": -25
+    },
+    "BUILDING_COMEDY_CLUB": {
+     "percent": -25
+    },
+    "BUILDING_DESIGN_STUDIO": {
+     "percent": -25
+    },
+    "BUILDING_KARAOKE_CLUB": {
+     "percent": -25
+    },
+    "BUILDING_VIDEO_GAME_ARCADE": {
+     "percent": -25
+    },
+    "BUILDING_CGI_ANIMATION_STUDIO": {
+     "percent": -25
+    },
+    "BUILDING_MANUFACTURING_DISTRICT": {
+     "percent": -25
+    },
+    "BUILDING_COMMUNICATION_TOWER": {
+     "percent": -25
+    },
+    "BUILDING_NETWORK_NODE": {
+     "percent": -25
+    },
+    "BUILDING_ATHLETIC_MEGACOMPLEX": {
+     "percent": -25
+    },
+    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT": {
+     "percent": -25
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "percent": -25
+    },
+    "BUILDING_HYPERMARKET": {
+     "percent": -25
+    }
+   },
+   "military": {
+    "percent": 5
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "byTech": {
+    "TECH_OIL_PAINTING": {
+     "percent": -20
+    },
+    "TECH_PRINTING_PRESS": {
+     "percent": -20
+    },
+    "TECH_FREE_ARTISTRY": {
+     "percent": -20
+    },
+    "TECH_LEAD_GLASS": {
+     "percent": -20
+    },
+    "TECH_PHOTOGRAPHY": {
+     "percent": -20
+    },
+    "TECH_ROMANTICISM": {
+     "percent": -20
+    },
+    "TECH_REALISM": {
+     "percent": -20
+    },
+    "TECH_IMPRESSIONISM": {
+     "percent": -20
+    },
+    "TECH_MOTION_PICTURES": {
+     "percent": -20
+    },
+    "TECH_ANIMATION": {
+     "percent": -20
+    },
+    "TECH_RADIO": {
+     "percent": -20
+    },
+    "TECH_MODERN_ART": {
+     "percent": -20
+    },
+    "TECH_TELEVISION": {
+     "percent": -20
+    },
+    "TECH_SURREALISM": {
+     "percent": -20
+    },
+    "TECH_MASS_MEDIA": {
+     "percent": -20
+    },
+    "TECH_POP_ART": {
+     "percent": -20
+    },
+    "TECH_POSTMODERNISM": {
+     "percent": -20
+    },
+    "TECH_COUNTERCULTURE": {
+     "percent": -20
+    },
+    "TECH_3D_MODELLING": {
+     "percent": -20
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": -4,
+   "percent": -5,
+   "capital": {
+    "percent": -5
+   },
+   "specialist": {
+    "perSpecialist": -1
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -10,
+   "units": {
+    "UNIT_ARTIST": {
+     "flat": -4
+    }
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_COMBATANT": {
+     "flat": 2
+    },
+    "UNITCOMBAT_NAVAL_COMBATANT": {
+     "flat": 2
+    },
+    "UNITCOMBAT_ENTERTAINER": {
+     "flat": -2
+    }
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "empire": {
+   "cityDefense": {
+    "percent": 5
+   },
+   "captureProbability": {
+    "percent": 5
+   }
+  }
+ },
+ "unitProduction": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_ENTERTAINER": {
+     "percent": -15
+    }
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": -10
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -10
+   },
+   "enemyWarWeariness": {
+    "percent": 10
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_CREATIVE",
+  "priority": -2
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -5
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": -1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 14
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitUnrefined2.dds"
+ },
+ "identity": {
+  "negativeTrait": true
+ }
+}

@@ -1,0 +1,113 @@
+{
+ "type": "TRAIT_IMPERIALIST1",
+ "description": "TXT_KEY_TRAIT_IMPERIALIST0",
+ "civilopedia": "TXT_KEY_TRAIT_IMPERIALIST_PEDIA",
+ "enables": {
+  "traits": [
+   "TRAIT_IMPERIALIST2"
+  ]
+ },
+ "production": {
+  "empire": {
+   "buildings": {
+    "BUILDING_THINK_TANK": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "largestCity": {
+    "flat": 6
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 50
+  }
+ },
+ "experience": {
+  "empire": {
+   "inBorder": {
+    "percent": 20
+   }
+  }
+ },
+ "combat": {
+  "empire": {
+   "cityDefense": {
+    "percent": 5
+   }
+  }
+ },
+ "unitProduction": {
+  "empire": {
+   "units": {
+    "UNIT_TRIBE": {
+     "percent": 50
+    },
+    "UNIT_SETTLER": {
+     "percent": 50
+    },
+    "UNIT_COLONIST": {
+     "percent": 50
+    },
+    "UNIT_PIONEER": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "perPopulation": 20
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": -1
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -1
+   },
+   "national": {
+    "flat": -1
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_IMPERIALIST",
+  "priority": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_GOLD": -2
+   },
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitImperialist.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_IMPERIALIST_SHORT"
+ }
+}

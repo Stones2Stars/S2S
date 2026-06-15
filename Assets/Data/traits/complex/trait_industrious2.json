@@ -1,0 +1,243 @@
+{
+ "type": "TRAIT_INDUSTRIOUS2",
+ "description": "TXT_KEY_TRAIT_COMPLEX_INDUSTRIOUS2",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_INDUSTRIOUS2_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_INDUSTRIOUS_STRATEGY",
+ "enables": {
+  "traits": [
+   "TRAIT_INDUSTRIOUS3"
+  ]
+ },
+ "excludes": [
+  "TRAIT_LAZY1"
+ ],
+ "production": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_FACTORY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_MANUFACTURING_COMPLEX": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WINDMILL": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WATERMILL": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HYDRO_DAM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HYDROCARBON_WELL": {
+     "flat": 1
+    },
+    "IMPROVEMENT_OFFSHORE_PLATFORM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_MODERN_WINDMILL": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SOLAR_PANELS": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SHAFT_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_MODERN_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_EARLY_MOUNTAIN_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_MOUNTAIN_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_CORE_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_EXTRACTION_FACILITY": {
+     "flat": 1
+    }
+   },
+   "flat": 3,
+   "percent": 5
+  }
+ },
+ "research": {
+  "empire": {
+   "byTech": {
+    "TECH_METALLURGY": {
+     "percent": 20
+    },
+    "TECH_REPLACEABLE_PARTS": {
+     "percent": 20
+    },
+    "TECH_STEAM_POWER": {
+     "percent": 20
+    },
+    "TECH_MACHINE_TOOLS": {
+     "percent": 20
+    },
+    "TECH_REFINING": {
+     "percent": 20
+    },
+    "TECH_ASSEMBLY_LINE": {
+     "percent": 20
+    },
+    "TECH_STEEL": {
+     "percent": 20
+    },
+    "TECH_COMBUSTION": {
+     "percent": 20
+    },
+    "TECH_CIVIL_ENGINEERING": {
+     "percent": 20
+    },
+    "TECH_INDUSTRIALISM": {
+     "percent": 20
+    },
+    "TECH_ADVANCED_METALLURGY": {
+     "percent": 20
+    },
+    "TECH_MANUFACTURING": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "extraYieldThreshold": {
+  "empire": {
+   "production": {
+    "flat": 6
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_GREAT_ENGINEER": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_SHAFT_MINE": {
+     "percent": 50
+    },
+    "BUILD_EARLY_MOUNTAIN_MINE": {
+     "percent": 50
+    },
+    "BUILD_MOUNTAIN_MINE": {
+     "percent": 50
+    },
+    "BUILD_MODERN_MINE": {
+     "percent": 50
+    },
+    "BUILD_MANUFACTURING_COMPLEX": {
+     "percent": 50
+    },
+    "BUILD_FACTORY": {
+     "percent": 50
+    },
+    "BUILD_WINDMILL": {
+     "percent": 50
+    },
+    "BUILD_WATERMILL": {
+     "percent": 50
+    },
+    "BUILD_HYDRO_DAM": {
+     "percent": 50
+    },
+    "BUILD_HYDROCARBON_WELL": {
+     "percent": 50
+    },
+    "BUILD_OFFSHORE_PLATFORM": {
+     "percent": 50
+    },
+    "BUILD_TREEFARM": {
+     "percent": 50
+    },
+    "BUILD_MODERN_WINDMILL": {
+     "percent": 50
+    },
+    "BUILD_SOLAR_PANELS": {
+     "percent": 50
+    }
+   },
+   "percent": 25
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_FACTORY": {
+     "percent": 100
+    },
+    "IMPROVEMENT_WINDMILL": {
+     "percent": 100
+    },
+    "IMPROVEMENT_WATERMILL": {
+     "percent": 100
+    },
+    "IMPROVEMENT_SHAFT_MINE": {
+     "percent": 100
+    },
+    "IMPROVEMENT_MODERN_MINE": {
+     "percent": 100
+    }
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_INDUSTRIOUS",
+  "priority": 2
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 19
+   },
+   {
+    "FLAVOR_GOLD": -2
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": -4
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitIndustrious2.dds"
+ },
+ "identity": {
+  "impurePropertyManipulators": true
+ }
+}

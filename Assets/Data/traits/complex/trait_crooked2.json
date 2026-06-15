@@ -1,0 +1,320 @@
+{
+ "type": "TRAIT_CROOKED2",
+ "description": "TXT_KEY_TRAIT_CROOKED2",
+ "civilopedia": "TXT_KEY_TRAIT_CROOKED2_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_CROOKED_STRATEGY",
+ "enables": {
+  "traits": [
+   "TRAIT_CROOKED3"
+  ]
+ },
+ "excludes": [
+  "TRAIT_LAWFUL1"
+ ],
+ "production": {
+  "empire": {
+   "buildings": {
+    "BUILDING_HIGHWAYMANS_HIDEOUT": {
+     "percent": 25
+    },
+    "BUILDING_CONSPIRATORS_HIDEOUT": {
+     "percent": 25
+    },
+    "BUILDING_PIRATES_COVE": {
+     "percent": 25
+    },
+    "BUILDING_ACCOUNTING_FIRM": {
+     "percent": 25
+    },
+    "BUILDING_SNAKE_OIL_SALES": {
+     "percent": 25
+    },
+    "BUILDING_DIVE_BAR": {
+     "percent": 25
+    },
+    "BUILDING_LIQUOR_STORE": {
+     "percent": 25
+    },
+    "BUILDING_TATTOO_PARLOR": {
+     "percent": 25
+    },
+    "BUILDING_SALOON": {
+     "percent": 25
+    },
+    "BUILDING_POACHERS_CAMP": {
+     "percent": 25
+    },
+    "BUILDING_SPEAKEASY": {
+     "percent": 25
+    },
+    "BUILDING_CHOP_SHOP": {
+     "percent": 25
+    },
+    "BUILDING_FANATIC_COMPOUND": {
+     "percent": 25
+    },
+    "BUILDING_MOB_STOREFRONT": {
+     "percent": 25
+    },
+    "BUILDING_REBEL_CAMP": {
+     "percent": 25
+    },
+    "BUILDING_PAWN_SHOP": {
+     "percent": 25
+    },
+    "BUILDING_DRUGLORDS_MANSON": {
+     "percent": 25
+    },
+    "BUILDING_JAZZ_CLUB": {
+     "percent": 25
+    },
+    "BUILDING_NIGHT_CLUB": {
+     "percent": 25
+    },
+    "BUILDING_TERRORISTS_COMPOUND": {
+     "percent": 25
+    },
+    "BUILDING_VIP_CLUB": {
+     "percent": 25
+    },
+    "BUILDING_MOTORCYCLE_CLUB": {
+     "percent": 25
+    },
+    "BUILDING_KARAOKE_CLUB": {
+     "percent": 25
+    },
+    "BUILDING_COMPUTER_NETWORK": {
+     "percent": 25
+    },
+    "BUILDING_CASINO": {
+     "percent": 25
+    },
+    "BUILDING_COMEDY_CLUB": {
+     "percent": 25
+    },
+    "BUILDING_GENTLEMANS_CLUB": {
+     "percent": 25
+    },
+    "BUILDING_PACHINKO_ARCADE": {
+     "percent": 25
+    },
+    "BUILDING_LSD_LAB": {
+     "percent": 25
+    },
+    "BUILDING_GALACTIC_CANTINA": {
+     "percent": 25
+    },
+    "BUILDING_ANDROID_BROTHEL": {
+     "percent": 25
+    },
+    "BUILDING_MATERIALS_CONGLOMERATE": {
+     "percent": 25
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "percent": 25
+    },
+    "BUILDING_HYPERMARKET": {
+     "percent": 25
+    },
+    "BUILDING_ALTERNATIVE_MEDICINE": {
+     "percent": 25
+    },
+    "BUILDING_HEALTHCARE_MEGACOMPLEX": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "byTech": {
+    "TECH_POLITICAL_PHILOSOPHY": {
+     "percent": 20
+    },
+    "TECH_STOCK_BROKERING": {
+     "percent": 20
+    },
+    "TECH_ELIXIRS_AND_TONICS": {
+     "percent": 20
+    },
+    "TECH_DEPUTIZATION": {
+     "percent": 20
+    },
+    "TECH_FASCISM": {
+     "percent": 20
+    },
+    "TECH_GUERRILLA_WARFARE": {
+     "percent": 20
+    },
+    "TECH_CONSUMERISM": {
+     "percent": 20
+    },
+    "TECH_GLOBALIZATION": {
+     "percent": 20
+    },
+    "TECH_ELECTRONICS": {
+     "percent": 20
+    },
+    "TECH_MASS_MEDIA": {
+     "percent": 20
+    },
+    "TECH_PERSONAL_COMPUTERS": {
+     "percent": 20
+    },
+    "TECH_COMPUTER_NETWORKS": {
+     "percent": 20
+    },
+    "TECH_LEGALIZED_GAMBLING": {
+     "percent": 20
+    },
+    "TECH_COUNTERCULTURE": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1,
+   "largestCity": {
+    "flat": -1
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": -10
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 2
+    },
+    "UNITCOMBAT_LAW_ENFORCEMENT": {
+     "flat": -2
+    }
+   },
+   "inBorder": {
+    "percent": -10
+   }
+  }
+ },
+ "combat": {
+  "empire": {
+   "cityDefense": {
+    "percent": -10
+   },
+   "espionageDefense": {
+    "percent": -20
+   }
+  }
+ },
+ "unitProduction": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "percent": 20
+    },
+    "UNITCOMBAT_LAW_ENFORCEMENT": {
+     "percent": -20
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 10
+   },
+   "numCities": {
+    "percent": 10
+   },
+   "corporation": {
+    "percent": 10
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 20
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 10
+   },
+   "attitude": {
+    "flat": -1
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": 1
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_CROOKED2": [
+    "UNITCOMBAT_CRIMINAL"
+   ]
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_CROOKED",
+  "priority": 2
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": -1
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": -1
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_ESPIONAGE": 3
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitCrooked2.dds"
+ },
+ "identity": {
+  "negativeTrait": true
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "type": "TRAIT_ANCIENT_WAY_OF_THE_SHADOWS",
+ "description": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_SHADOWS",
+ "civilopedia": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_SHADOWS_PEDIA",
+ "culture": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_GREAT_SPY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_WAY_OF_THE_SHADOWS": [
+    "UNITCOMBAT_CRIMINAL",
+    "UNITCOMBAT_RUFFIAN",
+    "UNITCOMBAT_STRIKE_TEAM"
+   ]
+  }
+ },
+ "art": {
+  "icon": "Art/Buttons/Promotions/WayOfTheShadowsPromotion.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_SHADOWS_SHORT",
+  "civilizationTrait": true
+ }
+}

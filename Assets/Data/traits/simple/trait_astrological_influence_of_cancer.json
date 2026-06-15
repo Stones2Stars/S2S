@@ -1,0 +1,33 @@
+{
+ "type": "TRAIT_ASTROLOGICAL_INFLUENCE_OF_CANCER",
+ "description": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_CANCER",
+ "civilopedia": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_CANCER_PEDIA",
+ "culture": {
+  "empire": {
+   "flat": 5
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_DOCTOR": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_INFLUENCE_OF_THE_MOON": [
+    "UNITCOMBAT_HEALS_PEOPLE"
+   ]
+  }
+ },
+ "art": {
+  "icon": "Art/Buttons/Traits/InfluenceOfCancerTrait.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_CANCER_SHORT",
+  "civilizationTrait": true
+ }
+}

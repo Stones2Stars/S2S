@@ -1,0 +1,126 @@
+{
+ "type": "TRAIT_IMPULSIVE3",
+ "description": "TXT_KEY_TRAIT_IMPULSIVE3",
+ "civilopedia": "TXT_KEY_TRAIT_IMPULSIVE3_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_IMPULSIVE_STRATEGY",
+ "excludes": [
+  "TRAIT_ORGANIZED1"
+ ],
+ "production": {
+  "empire": {
+   "teamWonder": {
+    "percent": -25
+   },
+   "specialist": {
+    "perSpecialist": -1
+   },
+   "military": {
+    "percent": -10
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "largestCity": {
+    "flat": -2
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 15
+  }
+ },
+ "experience": {
+  "empire": {
+   "levelModifier": {
+    "percent": -5
+   },
+   "flat": -1
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 40
+   },
+   "numCities": {
+    "percent": 40
+   },
+   "corporation": {
+    "percent": 20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 40
+   },
+   "freeCivilian": {
+    "flat": -5,
+    "perPopulation": -30
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": -100
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": -25
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_IMPULSIVE",
+  "priority": -3
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -1
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 9
+   },
+   {
+    "FLAVOR_GOLD": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": -2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitImpulsive3.dds"
+ },
+ "identity": {
+  "negativeTrait": true
+ }
+}

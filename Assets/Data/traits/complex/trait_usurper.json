@@ -1,0 +1,140 @@
+{
+ "type": "TRAIT_USURPER",
+ "description": "TXT_KEY_TRAIT_USURPER",
+ "civilopedia": "TXT_KEY_TRAIT_USURPER_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_USURPER_STRATEGY",
+ "excludes": [
+  "TRAIT_REVOLUTIONARY"
+ ],
+ "food": {
+  "empire": {
+   "capital": {
+    "percent": -5
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "nationalWonder": {
+    "percent": -25
+   },
+   "capital": {
+    "percent": -5
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "capital": {
+    "percent": -5
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": -1,
+   "percent": -5,
+   "capital": {
+    "percent": -10
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": -1,
+   "percent": -5,
+   "capital": {
+    "percent": -10
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 40
+  }
+ },
+ "combat": {
+  "empire": {
+   "espionageDefense": {
+    "percent": -10
+   },
+   "captureResistance": {
+    "percent": -20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": -20
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": -40
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": 3
+   },
+   "national": {
+    "flat": 4
+   },
+   "distanceModifier": {
+    "percent": 30
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_USURPER"
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -3
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 2
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitUsurper.dds"
+ },
+ "identity": {
+  "negativeTrait": true
+ }
+}

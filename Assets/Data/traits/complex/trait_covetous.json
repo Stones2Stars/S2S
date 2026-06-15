@@ -1,0 +1,143 @@
+{
+ "type": "TRAIT_COVETOUS",
+ "description": "TXT_KEY_TRAIT_COVETOUS",
+ "civilopedia": "TXT_KEY_TRAIT_COVETOUS_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COVETOUS_STRATEGY",
+ "excludes": [
+  "TRAIT_PROGRESSIST"
+ ],
+ "production": {
+  "empire": {
+   "worldWonder": {
+    "percent": -20
+   },
+   "teamWonder": {
+    "percent": -25
+   },
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "commerce": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "happiness": {
+  "empire": {
+   "largestCity": {
+    "flat": -1
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "upgradePrice": {
+    "percent": 20
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 1,
+   "foreign": {
+    "percent": 20
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "anger": {
+    "percent": 25
+   },
+   "cost": {
+    "percent": 25
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": 100
+  }
+ },
+ "goldenAge": {
+  "empire": {
+   "percent": -20
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": -10
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -20
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_COVETOUS"
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_GOLD": -2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitCovetous.dds"
+ },
+ "identity": {
+  "negativeTrait": true,
+  "minAnarchy": 2
+ }
+}

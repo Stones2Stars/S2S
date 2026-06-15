@@ -1,0 +1,34 @@
+{
+ "type": "TRAIT_ASTROLOGICAL_INFLUENCE_OF_TAURUS",
+ "description": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_TAURUS",
+ "civilopedia": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_TAURUS_PEDIA",
+ "culture": {
+  "empire": {
+   "flat": 5
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_GREAT_ENGINEER": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_INFLUENCE_OF_VENUS": [
+    "UNITCOMBAT_ARCHER",
+    "UNITCOMBAT_THROWING"
+   ]
+  }
+ },
+ "art": {
+  "icon": "Art/Buttons/Traits/InfluenceOfTaurusTrait.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_TAURUS_SHORT",
+  "civilizationTrait": true
+ }
+}

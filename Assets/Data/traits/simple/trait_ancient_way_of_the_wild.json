@@ -1,0 +1,33 @@
+{
+ "type": "TRAIT_ANCIENT_WAY_OF_THE_WILD",
+ "description": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_WILD",
+ "civilopedia": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_WILD_PEDIA",
+ "culture": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_GREAT_HUNTER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_WAY_OF_THE_WILD": [
+    "UNITCOMBAT_EXPLORER"
+   ]
+  }
+ },
+ "art": {
+  "icon": "Art/Buttons/Promotions/WayOfTheWildPromotion.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_WILD_SHORT",
+  "civilizationTrait": true
+ }
+}

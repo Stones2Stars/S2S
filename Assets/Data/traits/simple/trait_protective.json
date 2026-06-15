@@ -1,0 +1,216 @@
+{
+ "type": "TRAIT_PROTECTIVE",
+ "description": "TXT_KEY_TRAIT_PROTECTIVE",
+ "civilopedia": "TXT_KEY_TRAIT_PROTECTIVE_PEDIA",
+ "production": {
+  "empire": {
+   "buildings": {
+    "BUILDING_ARCHERY_RANGE": {
+     "percent": 20
+    },
+    "BUILDING_RADAR_STATION": {
+     "percent": 20
+    },
+    "BUILDING_ANTI_MISSILE_BATTERIES": {
+     "percent": 20
+    },
+    "BUILDING_MOAT": {
+     "percent": 20
+    },
+    "BUILDING_AUTOMATED_DEFENSES": {
+     "percent": 20
+    },
+    "BUILDING_NEANDERTHAL_CAVES": {
+     "percent": 20
+    },
+    "BUILDING_BUNKER": {
+     "percent": 20
+    },
+    "BUILDING_MISSILE_LAB": {
+     "percent": 20
+    },
+    "BUILDING_PALACE_WALLS": {
+     "percent": 20
+    },
+    "BUILDING_CASTLE": {
+     "percent": 20
+    },
+    "BUILDING_PALISADE": {
+     "percent": 20
+    },
+    "BUILDING_WALLS": {
+     "percent": 20
+    },
+    "BUILDING_HIGH_WALLS": {
+     "percent": 20
+    },
+    "BUILDING_BARRICADES": {
+     "percent": 20
+    },
+    "BUILDING_BARBWIRE_FENCE": {
+     "percent": 20
+    },
+    "BUILDING_CEMENT_BARRIER": {
+     "percent": 20
+    },
+    "BUILDING_BALLISTA_TURRET": {
+     "percent": 20
+    },
+    "BUILDING_EARTH_WALL": {
+     "percent": 20
+    },
+    "BUILDING_CITY_GATEHOUSE": {
+     "percent": 20
+    },
+    "BUILDING_MAXIMUM_SECURITY_PRISON": {
+     "percent": 20
+    },
+    "BUILDING_SHOOTING_CLUB": {
+     "percent": 20
+    },
+    "BUILDING_FIRING_RANGE": {
+     "percent": 20
+    },
+    "BUILDING_AUTOMATED_FIRING_RANGE": {
+     "percent": 20
+    },
+    "BUILDING_ORBITAL_TARGETS": {
+     "percent": 20
+    },
+    "BUILDING_ARCOLOGY_SHIELDING": {
+     "percent": 20
+    },
+    "BUILDING_ADVANCED_SHIELDING": {
+     "percent": 20
+    },
+    "BUILDING_STAR_FORT": {
+     "percent": 20
+    },
+    "BUILDING_METAMATERIAL_WALLS": {
+     "percent": 20
+    },
+    "BUILDING_SUPERSTRONG_ALLOY_WALLS": {
+     "percent": 20
+    },
+    "BUILDING_MEGASTRONG_ALLOY_WALLS": {
+     "percent": 20
+    },
+    "BUILDING_ELECTRIC_FENCE": {
+     "percent": 20
+    },
+    "BUILDING_WIRELESS_ELECTRIC_FENCE": {
+     "percent": 20
+    },
+    "BUILDING_CANNON_TURRET": {
+     "percent": 20
+    },
+    "BUILDING_IMPERIAL_FORTRESS": {
+     "percent": 20
+    },
+    "BUILDING_BOMB_SHELTERS": {
+     "percent": 20
+    },
+    "BUILDING_MILITARY_INDUSTRIAL_COMPLEX": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": 30
+   }
+  }
+ },
+ "combat": {
+  "empire": {
+   "cityDefense": {
+    "percent": 25
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 10
+   },
+   "numCities": {
+    "percent": 30
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_FORT": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -20
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -1
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_CITY_GARRISON1": [
+    "UNITCOMBAT_ARCHER",
+    "UNITCOMBAT_CLONES",
+    "UNITCOMBAT_GUN",
+    "UNITCOMBAT_HITECH",
+    "UNITCOMBAT_MELEE"
+   ],
+   "PROMOTION_TRENCH1": [
+    "UNITCOMBAT_GUN"
+   ]
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_PROTECTIVE"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitProtective.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_PROTECTIVE_SHORT"
+ }
+}

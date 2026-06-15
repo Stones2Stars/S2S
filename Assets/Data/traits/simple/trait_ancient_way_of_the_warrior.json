@@ -1,0 +1,33 @@
+{
+ "type": "TRAIT_ANCIENT_WAY_OF_THE_WARRIOR",
+ "description": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_WARRIOR",
+ "civilopedia": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_WARRIOR_PEDIA",
+ "culture": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_GREAT_GENERAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_WAY_OF_THE_WARRIOR": [
+    "UNITCOMBAT_MELEE"
+   ]
+  }
+ },
+ "art": {
+  "icon": "Art/Buttons/Promotions/WayOfTheWarriorPromotion.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_WARRIOR_SHORT",
+  "civilizationTrait": true
+ }
+}

@@ -1,0 +1,218 @@
+{
+ "type": "TRAIT_DEFENSIVE",
+ "description": "TXT_KEY_TRAIT_DEFENSIVE",
+ "civilopedia": "TXT_KEY_TRAIT_DEFENSIVE_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_DEFENSIVE_STRATEGY",
+ "excludes": [
+  "TRAIT_COWARDLY"
+ ],
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_COMBATANT": {
+     "flat": 2
+    },
+    "UNITCOMBAT_NAVAL_COMBATANT": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "combat": {
+  "empire": {
+   "captureProbability": {
+    "percent": -20
+   },
+   "captureResistance": {
+    "percent": 40
+   }
+  }
+ },
+ "unitProduction": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_COMBATANT": {
+     "percent": 20
+    },
+    "UNITCOMBAT_NAVAL_COMBATANT": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeCivilian": {
+    "flat": 10
+   },
+   "unitCivilian": {
+    "percent": -10
+   },
+   "upgradePrice": {
+    "percent": 30
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_FORT": {
+     "percent": 50
+    },
+    "BUILD_COMMAND_BUNKER": {
+     "percent": 50
+    },
+    "BUILD_COMMAND_CENTER": {
+     "percent": 50
+    },
+    "BUILD_AQUATIC_FORCEFIELD": {
+     "percent": 50
+    },
+    "BUILD_AQUATIC_ANTI_AIR_DEFENSE": {
+     "percent": 50
+    },
+    "BUILD_ABATIS_THORN_HEDGE_KILL": {
+     "percent": 50
+    },
+    "BUILD_WOODEN_PALISADE": {
+     "percent": 50
+    },
+    "BUILD_WOODEN_PALISADE_KILL": {
+     "percent": 50
+    },
+    "BUILD_FORTIFIED_CAVE": {
+     "percent": 50
+    },
+    "BUILD_FORTIFIED_CAVE_KILL": {
+     "percent": 50
+    },
+    "BUILD_FORTIFIED_CAVE_WITH_CACHE": {
+     "percent": 50
+    },
+    "BUILD_WOODEN_WATCHTOWER": {
+     "percent": 50
+    },
+    "BUILD_WOODEN_WATCHTOWER_KILL": {
+     "percent": 50
+    },
+    "BUILD_STONE_WATCHTOWER": {
+     "percent": 50
+    },
+    "BUILD_STEEL_WATCHTOWER": {
+     "percent": 50
+    },
+    "BUILD_RADAR_TOWER": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_ABATIS_THORN_HEDGE": {
+     "percent": 100
+    },
+    "IMPROVEMENT_WOODEN_PALISADE": {
+     "percent": 100
+    },
+    "IMPROVEMENT_FORTIFIED_CAVE": {
+     "percent": 100
+    },
+    "IMPROVEMENT_FORTIFIED_CAVE_WITH_CACHE": {
+     "percent": 100
+    },
+    "IMPROVEMENT_FORT": {
+     "percent": 100
+    },
+    "IMPROVEMENT_COMMAND_BUNKER": {
+     "percent": 100
+    },
+    "IMPROVEMENT_WOODEN_WATCHTOWER": {
+     "percent": 100
+    },
+    "IMPROVEMENT_STONE_WATCHTOWER": {
+     "percent": 100
+    },
+    "IMPROVEMENT_STEEL_WATCHTOWER": {
+     "percent": 100
+    },
+    "IMPROVEMENT_RADAR_TOWER": {
+     "percent": 100
+    }
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -40
+   },
+   "enemyWarWeariness": {
+    "percent": -40
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_DEFENSIVE": [
+    "UNITCOMBAT_COMBATANT",
+    "UNITCOMBAT_NAVAL_COMBATANT"
+   ]
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_DEFENSIVE"
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 16
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": -1
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitDefensive.dds"
+ }
+}

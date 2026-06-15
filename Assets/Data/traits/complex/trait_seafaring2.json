@@ -1,0 +1,300 @@
+{
+ "type": "TRAIT_SEAFARING2",
+ "description": "TXT_KEY_TRAIT_COMPLEX_SEAFARING2",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_SEAFARING2_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_SEAFARING_STRATEGY",
+ "enables": {
+  "traits": [
+   "TRAIT_SEAFARING3"
+  ]
+ },
+ "food": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_FARM": {
+     "flat": -1
+    },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": -1
+    }
+   },
+   "seaPlot": {
+    "flat": 1
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_MINE": {
+     "flat": -1
+    },
+    "IMPROVEMENT_SHAFT_MINE": {
+     "flat": -1
+    },
+    "IMPROVEMENT_EARLY_MOUNTAIN_MINE": {
+     "flat": -1
+    },
+    "IMPROVEMENT_MOUNTAIN_MINE": {
+     "flat": -1
+    },
+    "IMPROVEMENT_FACTORY": {
+     "flat": -1
+    },
+    "IMPROVEMENT_MODERN_MINE": {
+     "flat": -1
+    },
+    "IMPROVEMENT_MANUFACTURING_COMPLEX": {
+     "flat": -1
+    },
+    "IMPROVEMENT_CORE_MINE": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_COTTAGE": {
+     "flat": -1
+    },
+    "IMPROVEMENT_HAMLET": {
+     "flat": -1
+    },
+    "IMPROVEMENT_VILLAGE": {
+     "flat": -1
+    },
+    "IMPROVEMENT_TOWN": {
+     "flat": -1
+    },
+    "IMPROVEMENT_SUBURBS": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "byTech": {
+    "TECH_ASTROLABE": {
+     "percent": 20
+    },
+    "TECH_ASTRONOMY": {
+     "percent": 20
+    },
+    "TECH_NAVAL_CANNON": {
+     "percent": 20
+    },
+    "TECH_NAVAL_TACTICS": {
+     "percent": 20
+    },
+    "TECH_SEXTANT": {
+     "percent": 20
+    },
+    "TECH_GRAND_WAR": {
+     "percent": 20
+    },
+    "TECH_MARINE_BIOLOGY": {
+     "percent": 20
+    },
+    "TECH_SCREW_PROPELLER": {
+     "percent": 20
+    },
+    "TECH_WATER_SPORTS": {
+     "percent": 20
+    },
+    "TECH_NAVAL_FLIGHT": {
+     "percent": 20
+    },
+    "TECH_SUBMARINE_WARFARE": {
+     "percent": 20
+    },
+    "TECH_COAST_GUARD": {
+     "percent": 20
+    },
+    "TECH_SONAR": {
+     "percent": 20
+    },
+    "TECH_DEEP_SEA_EXPLORATION": {
+     "percent": 20
+    },
+    "TECH_AQUACULTURE": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_GREAT_ADMIRAL": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "combat": {
+  "empire": {
+   "navalCargo": {
+    "flat": 1
+   },
+   "missileCargo": {
+    "flat": 2
+   }
+  }
+ },
+ "unitProduction": {
+  "empire": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": 20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 10
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "coastal": {
+    "flat": 1
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_BREAK_ICE_KILL": {
+     "percent": 25
+    },
+    "BUILD_BREAK_ICE": {
+     "percent": 25
+    },
+    "BUILD_TUNNEL": {
+     "percent": 25
+    },
+    "BUILD_BEACON_CORAL": {
+     "percent": 25
+    },
+    "BUILD_BEACON_REEF": {
+     "percent": 25
+    },
+    "BUILD_HARVEST_KELP": {
+     "percent": 25
+    },
+    "BUILD_HARVEST_KELP_KILL": {
+     "percent": 25
+    },
+    "BUILD_LIGHTHOUSE_CORAL": {
+     "percent": 25
+    },
+    "BUILD_LIGHTHOUSE_REEF": {
+     "percent": 25
+    }
+   },
+   "percent": -25
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_BEACON_CORAL": {
+     "percent": 50
+    },
+    "IMPROVEMENT_BEACON_REEF": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_AMPHIBIOUS": [
+    "UNITCOMBAT_GUN",
+    "UNITCOMBAT_HELICOPTER"
+   ],
+   "PROMOTION_SEAFARING2": [
+    "UNITCOMBAT_DIESEL_SHIPS",
+    "UNITCOMBAT_DROID_SHIPS",
+    "UNITCOMBAT_GRAVITY_DRIVE_SHIPS",
+    "UNITCOMBAT_JET_SHIPS",
+    "UNITCOMBAT_LEVITATION_SHIPS",
+    "UNITCOMBAT_NUCLEAR_SHIPS",
+    "UNITCOMBAT_SHOCKWAVE_SHIPS",
+    "UNITCOMBAT_STEAM_SHIPS",
+    "UNITCOMBAT_TROID_SHIPS",
+    "UNITCOMBAT_WOODEN_SHIPS"
+   ]
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_SEAFARING",
+  "priority": 2
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 12
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": -1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ],
+  "behaviour": {
+   "coastalAIInfluence": true
+  }
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitSeafaring2.dds"
+ }
+}

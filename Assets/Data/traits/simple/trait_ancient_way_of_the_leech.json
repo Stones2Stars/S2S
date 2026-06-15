@@ -1,0 +1,33 @@
+{
+ "type": "TRAIT_ANCIENT_WAY_OF_THE_LEECH",
+ "description": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_LEECH",
+ "civilopedia": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_LEECH_PEDIA",
+ "culture": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_DOCTOR": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_WAY_OF_THE_LEECH": [
+    "UNITCOMBAT_HEALTH_CARE"
+   ]
+  }
+ },
+ "art": {
+  "icon": "Art/Buttons/Promotions/WayOfTheLeechPromotion.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_LEECH_SHORT",
+  "civilizationTrait": true
+ }
+}

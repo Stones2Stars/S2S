@@ -1,0 +1,194 @@
+{
+ "type": "TRAIT_NATURALIST3",
+ "description": "TXT_KEY_TRAIT_NATURALIST3",
+ "civilopedia": "TXT_KEY_TRAIT_NATURALIST3_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_NATURALIST_STRATEGY",
+ "excludes": [
+  "TRAIT_SLOB1"
+ ],
+ "food": {
+  "empire": {
+   "specialist": {
+    "perSpecialist": 1
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1,
+   "largestCity": {
+    "flat": 1
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": 20
+   },
+   "corporation": {
+    "percent": 20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 10
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "cost": {
+    "percent": 25
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_TREEFARM": {
+     "percent": 25
+    },
+    "BUILD_HYBRID_FOREST": {
+     "percent": 25
+    },
+    "BUILD_SANITIZE": {
+     "percent": 25
+    },
+    "BUILD_SANITIZE_WATER": {
+     "percent": 25
+    },
+    "BUILD_PLANT_JUNGLE": {
+     "percent": 25
+    },
+    "BUILD_YOUNG_FOREST": {
+     "percent": 25
+    },
+    "BUILD_PLANT_BAMBOO": {
+     "percent": 25
+    },
+    "BUILD_PLANT_SAVANNA": {
+     "percent": 25
+    },
+    "BUILD_TERRAFORM_LUSH": {
+     "percent": 25
+    },
+    "BUILD_TERRAFORM_MUDDY": {
+     "percent": 25
+    },
+    "BUILD_TERRAFORM_GRASS": {
+     "percent": 25
+    },
+    "BUILD_TERRAFORM_PLAINS": {
+     "percent": 25
+    },
+    "BUILD_TERRAFORM_PERMAFROST": {
+     "percent": 25
+    },
+    "BUILD_TERRAFORM_ROCKY": {
+     "percent": 25
+    },
+    "BUILD_TERRAFORM_SCRUB": {
+     "percent": 25
+    },
+    "BUILD_TERRAFORM_DESERT": {
+     "percent": 25
+    },
+    "BUILD_TERRAFORM_TAIGA": {
+     "percent": 25
+    },
+    "BUILD_TERRAFORM_TUNDRA": {
+     "percent": 25
+    },
+    "BUILD_TERRAFORM_DUNES": {
+     "percent": 25
+    },
+    "BUILD_NATURE_PRESERVE": {
+     "percent": 25
+    },
+    "BUILD_GROW_FOREST": {
+     "percent": 25
+    },
+    "BUILD_SCRUB_FALLOUT": {
+     "percent": 25
+    },
+    "BUILD_CLEAR_FALLOUT_FAST": {
+     "percent": 25
+    },
+    "BUILD_FOREST_PRESERVE": {
+     "percent": 25
+    }
+   },
+   "percent": 15
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_TREEFARM": {
+     "percent": 100
+    }
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_NATURALIST3": [
+    "UNITCOMBAT_SPECIES_HUMAN",
+    "UNITCOMBAT_SPECIES_NEANDERTHAL"
+   ]
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_NATURALIST",
+  "priority": 3
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": -1
+   },
+   {
+    "FLAVOR_GOLD": -4
+   },
+   {
+    "FLAVOR_SCIENCE": -1
+   },
+   {
+    "FLAVOR_CULTURE": -1
+   },
+   {
+    "FLAVOR_GROWTH": 24
+   },
+   {
+    "FLAVOR_ESPIONAGE": -1
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitNaturalist3.dds"
+ }
+}

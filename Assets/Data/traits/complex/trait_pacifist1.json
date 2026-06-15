@@ -1,0 +1,98 @@
+{
+ "type": "TRAIT_PACIFIST1",
+ "description": "TXT_KEY_TRAIT_PACIFIST1",
+ "civilopedia": "TXT_KEY_TRAIT_PACIFIST1_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_PACIFIST_STRATEGY",
+ "enables": {
+  "traits": [
+   "TRAIT_PACIFIST2"
+  ]
+ },
+ "excludes": [
+  "TRAIT_WARMONGER1"
+ ],
+ "production": {
+  "empire": {
+   "military": {
+    "percent": -30
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "perPopulation": -15
+   },
+   "upgradePrice": {
+    "percent": 30
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 60
+   },
+   "attitude": {
+    "flat": 1
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_PACIFIST1": [
+    "UNITCOMBAT_COMBATANT",
+    "UNITCOMBAT_NAVAL_COMBATANT"
+   ]
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_PACIFIST",
+  "priority": -1
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 14
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": -5
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitPacifist.dds"
+ },
+ "identity": {
+  "negativeTrait": true,
+  "impurePropertyManipulators": true
+ }
+}

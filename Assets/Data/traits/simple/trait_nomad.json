@@ -1,0 +1,217 @@
+{
+ "type": "TRAIT_NOMAD",
+ "description": "TXT_KEY_TRAIT_NOMAD",
+ "civilopedia": "TXT_KEY_TRAIT_NOMAD_PEDIA",
+ "food": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_SCAVENGING_CAMP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_NOMADIC_HERD": {
+     "flat": 1
+    },
+    "IMPROVEMENT_PASTURE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HUNTING_CAMP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HUNTING_PRESERVE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WILDLIFE_SANCTUARY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_JUNGLE_CAMP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_DESERT_CAMP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WETLANDS_CAMP": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "buildings": {
+    "BUILDING_GER": {
+     "percent": 20
+    },
+    "BUILDING_BUTCHERY": {
+     "percent": 20
+    },
+    "BUILDING_TANNERY": {
+     "percent": 20
+    },
+    "BUILDING_BEADWORKER": {
+     "percent": 20
+    },
+    "BUILDING_STABLE": {
+     "percent": 20
+    },
+    "BUILDING_KNIGHTS_STABLE": {
+     "percent": 20
+    },
+    "BUILDING_FALCONER": {
+     "percent": 20
+    },
+    "BUILDING_MODERN_STABLE": {
+     "percent": 20
+    },
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE": {
+     "percent": 20
+    },
+    "BUILDING_MEAT_PACKING_PLANT": {
+     "percent": 20
+    },
+    "BUILDING_FACTORY_LEATHER": {
+     "percent": 20
+    },
+    "BUILDING_MANUFACTURING_DISTRICT": {
+     "percent": 20
+    },
+    "BUILDING_BEADMAKERS_WORKSHOP": {
+     "percent": 20
+    },
+    "BUILDING_FACTORY_BEADS": {
+     "percent": 20
+    },
+    "BUILDING_FALCONRY_SCHOOL": {
+     "percent": 20
+    }
+   },
+   "improvements": {
+    "IMPROVEMENT_WETLANDS_CAMP": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_DESERT_CAMP": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_BASKETMAKER": {
+     "flat": 1
+    },
+    "BUILDING_FURRIER": {
+     "flat": 1
+    },
+    "BUILDING_MANUFACTURING_DISTRICT": {
+     "flat": 1
+    },
+    "BUILDING_BASKET_MAKERS_WORKSHOP": {
+     "flat": 1
+    },
+    "BUILDING_FACTORY_BASKETS": {
+     "flat": 1
+    },
+    "BUILDING_INDUSTRIAL_FARMS": {
+     "flat": 1
+    },
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": -10
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_SCAVENGING_CAMP_KILL": {
+     "percent": 50
+    },
+    "BUILD_NOMADIC_HERD_KILL": {
+     "percent": 100
+    },
+    "BUILD_HUNTING_CAMP": {
+     "percent": 50
+    },
+    "BUILD_HUNTING_PRESERVE": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "policies": {
+  "upgradeAnywhere": true
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_FLANKING1": [
+    "UNITCOMBAT_ANIMAL",
+    "UNITCOMBAT_MOUNTED",
+    "UNITCOMBAT_RECON",
+    "UNITCOMBAT_TRACKED",
+    "UNITCOMBAT_WHEELED"
+   ],
+   "PROMOTION_PACK_HUNTER1": [
+    "UNITCOMBAT_CANINE"
+   ],
+   "PROMOTION_HUNTING_DOG1": [
+    "UNITCOMBAT_CANINE"
+   ],
+   "PROMOTION_HUNTING_DOG2": [
+    "UNITCOMBAT_CANINE"
+   ],
+   "PROMOTION_RACING_DOG1": [
+    "UNITCOMBAT_CANINE"
+   ],
+   "PROMOTION_RACING_DOG2": [
+    "UNITCOMBAT_CANINE"
+   ],
+   "PROMOTION_WOODSMAN1": [
+    "UNITCOMBAT_HUNTER",
+    "UNITCOMBAT_RECON"
+   ],
+   "PROMOTION_PACK_HUNTER2": [
+    "UNITCOMBAT_CANINE"
+   ]
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_NOMAD"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_GOLD": -1
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitNomadic.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_NOMAD_SHORT",
+  "impurePropertyManipulators": true
+ }
+}

@@ -1,0 +1,60 @@
+{
+ "type": "TRAIT_CRUEL",
+ "description": "TXT_KEY_TRAIT_CRUEL",
+ "civilopedia": "TXT_KEY_TRAIT_CRUEL_PEDIA",
+ "culture": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 15
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MONUMENT_OF_THE_DICTATOR": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "levelModifier": {
+    "percent": 20
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_CRUEL"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_PRODUCTION": -2
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_ESPIONAGE": -1
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitCruel.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_CRUEL_SHORT",
+  "negativeTrait": true
+ }
+}

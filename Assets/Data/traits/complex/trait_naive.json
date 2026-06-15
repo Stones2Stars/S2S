@@ -1,0 +1,454 @@
+{
+ "type": "TRAIT_NAIVE",
+ "description": "TXT_KEY_TRAIT_NAIVE",
+ "civilopedia": "TXT_KEY_TRAIT_NAIVE_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_NAIVE_STRATEGY",
+ "excludes": [
+  "TRAIT_DECEIVER"
+ ],
+ "production": {
+  "empire": {
+   "buildings": {
+    "BUILDING_LOOKOUT_POST": {
+     "percent": -25
+    },
+    "BUILDING_PUBLIC_STONING": {
+     "percent": -25
+    },
+    "BUILDING_EXECUTIONER": {
+     "percent": -25
+    },
+    "BUILDING_SENTRY_POST": {
+     "percent": -25
+    },
+    "BUILDING_TREE_PLATFORMS": {
+     "percent": -25
+    },
+    "BUILDING_CAPTURE_THE_FLAG": {
+     "percent": -25
+    },
+    "BUILDING_CHIEFS_HUT": {
+     "percent": -25
+    },
+    "BUILDING_NEGOTIATORS_HUT": {
+     "percent": -25
+    },
+    "BUILDING_TOWN_WATCH": {
+     "percent": -25
+    },
+    "BUILDING_HOMING_PIGEON_COOP": {
+     "percent": -25
+    },
+    "BUILDING_LOCKSMITH": {
+     "percent": -25
+    },
+    "BUILDING_HARBORMASTERS_OFFICE": {
+     "percent": -25
+    },
+    "BUILDING_MEETING_HALL": {
+     "percent": -25
+    },
+    "BUILDING_SPY_HIDEOUT": {
+     "percent": -25
+    },
+    "BUILDING_BROTHEL": {
+     "percent": -25
+    },
+    "BUILDING_STOCKS": {
+     "percent": -25
+    },
+    "BUILDING_AMBASSADORS_HOUSE": {
+     "percent": -25
+    },
+    "BUILDING_TOWN_PATROL": {
+     "percent": -25
+    },
+    "BUILDING_GALLOWS": {
+     "percent": -25
+    },
+    "BUILDING_DEBTORS_PRISON": {
+     "percent": -25
+    },
+    "BUILDING_TORTURE_CHAMBER": {
+     "percent": -25
+    },
+    "BUILDING_DUNGEON": {
+     "percent": -25
+    },
+    "BUILDING_CHANCELLORS_OFFICE": {
+     "percent": -25
+    },
+    "BUILDING_SPYMASTERS_OFFICE": {
+     "percent": -25
+    },
+    "BUILDING_GUARDHOUSE": {
+     "percent": -25
+    },
+    "BUILDING_LAW_SCHOOL": {
+     "percent": -25
+    },
+    "BUILDING_SPY_SAFE_HOUSE": {
+     "percent": -25
+    },
+    "BUILDING_GUARD_STATION": {
+     "percent": -25
+    },
+    "BUILDING_JAIL": {
+     "percent": -25
+    },
+    "BUILDING_SHERIFFS_OFFICE": {
+     "percent": -25
+    },
+    "BUILDING_DETECTIVE_AGENCY": {
+     "percent": -25
+    },
+    "BUILDING_CITY_MORGUE": {
+     "percent": -25
+    },
+    "BUILDING_POLICE_STATION": {
+     "percent": -25
+    },
+    "BUILDING_SECURITY_BUREAU": {
+     "percent": -25
+    },
+    "BUILDING_INTELLIGENCE_AGENCY": {
+     "percent": -25
+    },
+    "BUILDING_INTERROGATION_BUILDING": {
+     "percent": -25
+    },
+    "BUILDING_COAST_GUARD_STATION": {
+     "percent": -25
+    },
+    "BUILDING_LETHAL_INJECTION": {
+     "percent": -25
+    },
+    "BUILDING_GENTLEMANS_CLUB": {
+     "percent": -25
+    },
+    "BUILDING_ELECTRONIC_SECURITY_SYSTEM": {
+     "percent": -25
+    },
+    "BUILDING_POLICE_PRECINCT": {
+     "percent": -25
+    },
+    "BUILDING_FORENSICS_LAB": {
+     "percent": -25
+    },
+    "BUILDING_TRAFFIC_CAMERAS": {
+     "percent": -25
+    },
+    "BUILDING_SECURITY_CENTER": {
+     "percent": -25
+    },
+    "BUILDING_ENCRYPTED_FIREWALL": {
+     "percent": -25
+    },
+    "BUILDING_COMPUTER_SECURITY_OFFICE": {
+     "percent": -25
+    },
+    "BUILDING_SIGNALS_INTELLIGENCE_RECEIVERS": {
+     "percent": -25
+    },
+    "BUILDING_BLACKNET": {
+     "percent": -25
+    },
+    "BUILDING_MEGATOWER_POLICE_STATION_LEVEL": {
+     "percent": -25
+    },
+    "BUILDING_AI_SURVEILLANCE": {
+     "percent": -25
+    },
+    "BUILDING_DREAM_VISUALIZER": {
+     "percent": -25
+    },
+    "BUILDING_ANDROID_BROTHEL": {
+     "percent": -25
+    },
+    "BUILDING_DREAMTIME_MACHINE": {
+     "percent": -25
+    },
+    "BUILDING_CRUCIFIXION_CROSSES": {
+     "percent": -25
+    },
+    "BUILDING_GUILLOTINE": {
+     "percent": -25
+    },
+    "BUILDING_ELECTRIC_CHAIR": {
+     "percent": -25
+    },
+    "BUILDING_BIOMETRIC_SECURITY_SYSTEM": {
+     "percent": -25
+    },
+    "BUILDING_AI_LEGAL_SYSTEM": {
+     "percent": -25
+    },
+    "BUILDING_AI_POLICE_FORCE": {
+     "percent": -25
+    },
+    "BUILDING_FALCONRY_SCHOOL": {
+     "percent": -25
+    },
+    "BUILDING_TELEPORT_BOOTH": {
+     "percent": -25
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "percent": -25
+    },
+    "BUILDING_ANCIENT_CUSTOMS": {
+     "percent": -25
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "byTech": {
+    "TECH_DUALISM": {
+     "percent": -20
+    },
+    "TECH_ORATORY": {
+     "percent": -20
+    },
+    "TECH_LOCKS": {
+     "percent": -20
+    },
+    "TECH_MONARCHY": {
+     "percent": -20
+    },
+    "TECH_CODE_OF_LAWS": {
+     "percent": -20
+    },
+    "TECH_DIPLOMACY": {
+     "percent": -20
+    },
+    "TECH_LAW_ENFORCEMENT": {
+     "percent": -20
+    },
+    "TECH_EXECUTIONS": {
+     "percent": -20
+    },
+    "TECH_USURY": {
+     "percent": -20
+    },
+    "TECH_TORTURE": {
+     "percent": -20
+    },
+    "TECH_PARLIAMENTS": {
+     "percent": -20
+    },
+    "TECH_WARRANTS_AND_DECREES": {
+     "percent": -20
+    },
+    "TECH_POLITICAL_PHILOSOPHY": {
+     "percent": -20
+    },
+    "TECH_CONSTITUTION": {
+     "percent": -20
+    },
+    "TECH_DEPUTIZATION": {
+     "percent": -20
+    },
+    "TECH_CRIMINOLOGY": {
+     "percent": -20
+    },
+    "TECH_PSYCHOLOGY": {
+     "percent": -20
+    },
+    "TECH_ENCRYPTION_MACHINES": {
+     "percent": -20
+    },
+    "TECH_COMMUNISM": {
+     "percent": -20
+    },
+    "TECH_DECRYPTION_MACHINES": {
+     "percent": -20
+    },
+    "TECH_FASCISM": {
+     "percent": -20
+    },
+    "TECH_COAST_GUARD": {
+     "percent": -20
+    },
+    "TECH_LEGALIZED_GAMBLING": {
+     "percent": -20
+    },
+    "TECH_FIBER_OPTICS": {
+     "percent": -20
+    },
+    "TECH_FORENSICS": {
+     "percent": -20
+    },
+    "TECH_KNOWLEDGE_MANAGEMENT": {
+     "percent": -20
+    },
+    "TECH_WAR_SIMULATIONS": {
+     "percent": -20
+    },
+    "TECH_CYBERWARFARE": {
+     "percent": -20
+    },
+    "TECH_DIGITIZATION": {
+     "percent": -20
+    },
+    "TECH_THOUGHT_SCANNING": {
+     "percent": -20
+    },
+    "TECH_ADVANCED_COMPUTERS": {
+     "percent": -20
+    },
+    "TECH_EXOCORTEX_NETWORKS": {
+     "percent": -20
+    },
+    "TECH_PERSONAL_ROBOTS": {
+     "percent": -20
+    },
+    "TECH_NEURON_ENGINEERING": {
+     "percent": -20
+    },
+    "TECH_CYBERNETICS": {
+     "percent": -20
+    },
+    "TECH_MIND_UPLOADING": {
+     "percent": -20
+    },
+    "TECH_PRECISION_SOCIAL_ENGINEERING": {
+     "percent": -20
+    },
+    "TECH_DATA_ARCHIVAL": {
+     "percent": -20
+    },
+    "TECH_TIME_TRAVEL": {
+     "percent": -20
+    },
+    "TECH_3D_PROJECTIONS": {
+     "percent": -20
+    },
+    "TECH_ALTERNATE_HISTORY_EXPLORATION": {
+     "percent": -20
+    },
+    "TECH_REALITY_REPROGRAMMING": {
+     "percent": -20
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": -2,
+   "percent": -10,
+   "capital": {
+    "percent": -10
+   },
+   "specialist": {
+    "perSpecialist": -1
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_GREAT_SPY": {
+     "flat": -2
+    }
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_SPY": {
+     "flat": -2
+    }
+   }
+  }
+ },
+ "combat": {
+  "empire": {
+   "espionageDefense": {
+    "percent": -20
+   }
+  }
+ },
+ "unitProduction": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_SPY": {
+     "percent": -20
+    }
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": -10
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -20
+   },
+   "attitude": {
+    "flat": 1
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_NAIVE": [
+    "UNITCOMBAT_SPY"
+   ]
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_NAIVE"
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -1
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": -8
+   },
+   {
+    "FLAVOR_ESPIONAGE": 22
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitNaive.dds"
+ },
+ "identity": {
+  "negativeTrait": true,
+  "impurePropertyManipulators": true
+ }
+}

@@ -1,0 +1,138 @@
+{
+ "type": "TRAIT_ORGANIZED1",
+ "description": "TXT_KEY_TRAIT_ORGANIZED0",
+ "civilopedia": "TXT_KEY_TRAIT_ORGANIZED_PEDIA",
+ "enables": {
+  "traits": [
+   "TRAIT_ORGANIZED2"
+  ]
+ },
+ "production": {
+  "empire": {
+   "buildings": {
+    "BUILDING_FACTORY": {
+     "percent": 20
+    },
+    "BUILDING_ASSEMBLY_PLANT": {
+     "percent": 20
+    },
+    "BUILDING_MANUFACTURING_PLANT": {
+     "percent": 20
+    },
+    "BUILDING_COURTHOUSE": {
+     "percent": 20
+    },
+    "BUILDING_LAW_SCHOOL": {
+     "percent": 20
+    },
+    "BUILDING_LAW_FIRM": {
+     "percent": 20
+    },
+    "BUILDING_STRATEGIC_GRAIN_RESERVE": {
+     "percent": 20
+    },
+    "BUILDING_TOWN_HALL": {
+     "percent": 20
+    },
+    "BUILDING_VILLAGE_HALL": {
+     "percent": 20
+    },
+    "BUILDING_CITY_COUNCIL": {
+     "percent": 20
+    },
+    "BUILDING_METROPOLITAN_ADMINISTRATION": {
+     "percent": 20
+    },
+    "BUILDING_CAPITAL_ADMINISTRATION": {
+     "percent": 20
+    },
+    "BUILDING_PARTS_PLANT": {
+     "percent": 20
+    },
+    "BUILDING_AI_LEGAL_SYSTEM": {
+     "percent": 20
+    },
+    "BUILDING_MOLECULAR_ASSEMBLER": {
+     "percent": 20
+    },
+    "BUILDING_ATOMIC_ASSEMBLER": {
+     "percent": 20
+    },
+    "BUILDING_QUANTUM_ASSEMBLER": {
+     "percent": 20
+    },
+    "BUILDING_MATERIALIZER": {
+     "percent": 20
+    },
+    "BUILDING_3D_PRINTING_MILL": {
+     "percent": 20
+    },
+    "BUILDING_NANOBOTIC_PRINTING_MILL": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "capital": {
+    "percent": 20
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": -1,
+   "capital": {
+    "percent": -10
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": -20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": -20
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_ORGANIZED",
+  "priority": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": -2
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_GOLD": 1
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitOrganized.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_ORGANIZED_SHORT"
+ }
+}

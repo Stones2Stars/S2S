@@ -1,0 +1,130 @@
+{
+ "type": "TRAIT_HUMBLE",
+ "description": "TXT_KEY_TRAIT_HUMBLE",
+ "civilopedia": "TXT_KEY_TRAIT_HUMBLE_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_HUMBLE_STRATEGY",
+ "excludes": [
+  "TRAIT_MEGALOMANIAC"
+ ],
+ "food": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "worldWonder": {
+    "percent": -20
+   },
+   "teamWonder": {
+    "percent": 25
+   },
+   "nationalWonder": {
+    "percent": 25
+   },
+   "flat": 1,
+   "percent": 5,
+   "military": {
+    "percent": -20
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "combat": {
+  "empire": {
+   "espionageDefense": {
+    "percent": 10
+   },
+   "captureResistance": {
+    "percent": -20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": -10
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 20
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": 2
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_HUMBLE"
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -2
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   },
+   {
+    "FLAVOR_ESPIONAGE": 3
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitHumble.dds"
+ }
+}

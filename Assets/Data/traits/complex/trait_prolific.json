@@ -1,0 +1,107 @@
+{
+ "type": "TRAIT_PROLIFIC",
+ "description": "TXT_KEY_TRAIT_PROLIFIC",
+ "civilopedia": "TXT_KEY_TRAIT_PROLIFIC_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_PROLIFIC_STRATEGY",
+ "excludes": [
+  "TRAIT_GRIM"
+ ],
+ "food": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "military": {
+    "percent": 20
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": -2,
+   "percent": -10
+  }
+ },
+ "happiness": {
+  "empire": {
+   "largestCity": {
+    "flat": 1
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": -20
+  }
+ },
+ "hurry": {
+  "empire": {
+   "anger": {
+    "percent": 50
+   }
+  }
+ },
+ "cityFounding": {
+  "empire": {
+   "startCulture": {
+    "flat": 10
+   },
+   "startPopulation": {
+    "flat": 1
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_PROLIFIC"
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": -1
+   },
+   {
+    "FLAVOR_GOLD": -7
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 17
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitProlific.dds"
+ }
+}

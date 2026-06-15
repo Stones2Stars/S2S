@@ -1,0 +1,33 @@
+{
+ "type": "TRAIT_ASTROLOGICAL_INFLUENCE_OF_PISCES",
+ "description": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_PISCES",
+ "civilopedia": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_PISCES_PEDIA",
+ "culture": {
+  "empire": {
+   "flat": 5
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_ARTIST": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_INFLUENCE_OF_JUPITER": [
+    "UNITCOMBAT_MOUNTED"
+   ]
+  }
+ },
+ "art": {
+  "icon": "Art/Buttons/Traits/InfluenceOfPiscesTrait.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_PISCES_SHORT",
+  "civilizationTrait": true
+ }
+}

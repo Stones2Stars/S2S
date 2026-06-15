@@ -1,0 +1,33 @@
+{
+ "type": "TRAIT_ANCIENT_WAY_OF_THE_WIND",
+ "description": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_WIND",
+ "civilopedia": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_WIND_PEDIA",
+ "culture": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_GREAT_GENERAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_WAY_OF_THE_WIND": [
+    "UNITCOMBAT_THROWING"
+   ]
+  }
+ },
+ "art": {
+  "icon": "Art/Buttons/Promotions/WayOfTheWindPromotion.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_WIND_SHORT",
+  "civilizationTrait": true
+ }
+}

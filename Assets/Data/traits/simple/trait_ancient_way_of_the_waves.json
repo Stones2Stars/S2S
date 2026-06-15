@@ -1,0 +1,33 @@
+{
+ "type": "TRAIT_ANCIENT_WAY_OF_THE_WAVES",
+ "description": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_WAVES",
+ "civilopedia": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_WAVES_PEDIA",
+ "culture": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_GREAT_ADMIRAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_WAY_OF_THE_WAVES": [
+    "UNITCOMBAT_NAVAL_COMBATANT"
+   ]
+  }
+ },
+ "art": {
+  "icon": "Art/Buttons/Promotions/WayOfTheWavesPromotion.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_WAVES_SHORT",
+  "civilizationTrait": true
+ }
+}

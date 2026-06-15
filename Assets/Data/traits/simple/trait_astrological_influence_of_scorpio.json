@@ -1,0 +1,33 @@
+{
+ "type": "TRAIT_ASTROLOGICAL_INFLUENCE_OF_SCORPIO",
+ "description": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_SCORPIO",
+ "civilopedia": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_SCORPIO_PEDIA",
+ "culture": {
+  "empire": {
+   "flat": 5
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_GREAT_SPY": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_INFLUENCE_OF_MARS": [
+    "UNITCOMBAT_LAW_ENFORCEMENT"
+   ]
+  }
+ },
+ "art": {
+  "icon": "Art/Buttons/Traits/InfluenceOfScorpioTrait.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_SCORPIO_SHORT",
+  "civilizationTrait": true
+ }
+}

@@ -1,0 +1,155 @@
+{
+ "type": "TRAIT_CIVILIZED3",
+ "description": "TXT_KEY_TRAIT_CIVILIZED3",
+ "civilopedia": "TXT_KEY_TRAIT_CIVILIZED3_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_CIVILIZED_STRATEGY",
+ "excludes": [
+  "TRAIT_BARBARIC1"
+ ],
+ "food": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "worldWonder": {
+    "percent": 20
+   },
+   "teamWonder": {
+    "percent": 15
+   },
+   "nationalWonder": {
+    "percent": 15
+   },
+   "military": {
+    "percent": -15
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "experience": {
+  "empire": {
+   "levelModifier": {
+    "percent": 5
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 10
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "anger": {
+    "percent": 25
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_MAGLEV": {
+     "percent": 25
+    },
+    "BUILD_JUMPLANE": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": 50
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 15
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_CIVILIZED3": [
+    "UNITCOMBAT_COMBATANT",
+    "UNITCOMBAT_NAVAL_COMBATANT"
+   ]
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_CIVILIZED",
+  "priority": 3
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -3
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_ESPIONAGE": 4
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitCivilized3.dds"
+ },
+ "identity": {
+  "maxAnarchy": 2
+ }
+}

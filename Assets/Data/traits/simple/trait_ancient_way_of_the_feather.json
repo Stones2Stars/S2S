@@ -1,0 +1,33 @@
+{
+ "type": "TRAIT_ANCIENT_WAY_OF_THE_FEATHER",
+ "description": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_FEATHER",
+ "civilopedia": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_FEATHER_PEDIA",
+ "culture": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_GREAT_GENERAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_WAY_OF_THE_FEATHER": [
+    "UNITCOMBAT_ARCHER"
+   ]
+  }
+ },
+ "art": {
+  "icon": "Art/Buttons/Promotions/WayOfTheFeatherPromotion.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_FEATHER_SHORT",
+  "civilizationTrait": true
+ }
+}

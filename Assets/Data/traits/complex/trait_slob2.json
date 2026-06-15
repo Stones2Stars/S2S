@@ -1,0 +1,124 @@
+{
+ "type": "TRAIT_SLOB2",
+ "description": "TXT_KEY_TRAIT_SLOB2",
+ "civilopedia": "TXT_KEY_TRAIT_SLOB2_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_SLOB_STRATEGY",
+ "enables": {
+  "traits": [
+   "TRAIT_SLOB3"
+  ]
+ },
+ "excludes": [
+  "TRAIT_NATURALIST1"
+ ],
+ "food": {
+  "empire": {
+   "specialist": {
+    "perSpecialist": -1
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1,
+   "largestCity": {
+    "flat": -1
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": -10
+   },
+   "corporation": {
+    "percent": -10
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": -10
+   },
+   "unitMilitary": {
+    "percent": -10
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "cost": {
+    "percent": -15
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": -1
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_SLOB2": [
+    "UNITCOMBAT_SPECIES_HUMAN",
+    "UNITCOMBAT_SPECIES_NEANDERTHAL"
+   ]
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_SLOB",
+  "priority": -2
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": -1
+   },
+   {
+    "FLAVOR_GOLD": -4
+   },
+   {
+    "FLAVOR_SCIENCE": -1
+   },
+   {
+    "FLAVOR_CULTURE": -1
+   },
+   {
+    "FLAVOR_GROWTH": 22
+   },
+   {
+    "FLAVOR_ESPIONAGE": -1
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitSlob2.dds"
+ },
+ "identity": {
+  "negativeTrait": true
+ }
+}

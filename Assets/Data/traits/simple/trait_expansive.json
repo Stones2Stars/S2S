@@ -1,0 +1,163 @@
+{
+ "type": "TRAIT_EXPANSIVE",
+ "description": "TXT_KEY_TRAIT_EXPANSIVE",
+ "civilopedia": "TXT_KEY_TRAIT_EXPANSIVE_PEDIA",
+ "production": {
+  "empire": {
+   "buildings": {
+    "BUILDING_HAMMAM": {
+     "percent": 20
+    },
+    "BUILDING_BARAY": {
+     "percent": 20
+    },
+    "BUILDING_HARBOR": {
+     "percent": 20
+    },
+    "BUILDING_PORT": {
+     "percent": 20
+    },
+    "BUILDING_ARCOLOGY": {
+     "percent": 20
+    },
+    "BUILDING_AQUEDUCT": {
+     "percent": 20
+    },
+    "BUILDING_COMMERCIAL_PORT": {
+     "percent": 20
+    },
+    "BUILDING_INTERNATIONAL_PORT": {
+     "percent": 20
+    },
+    "BUILDING_HOUSING_COLONY_ARCOLOGY": {
+     "percent": 20
+    },
+    "BUILDING_LAUNCH_ARCOLOGY": {
+     "percent": 20
+    },
+    "BUILDING_OCEAN_ADMINISTRATION": {
+     "percent": 20
+    },
+    "BUILDING_MODERN_WATERWORKS": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "largestCity": {
+    "flat": -1
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": -20
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "inBorder": {
+    "percent": -25
+   }
+  }
+ },
+ "unitProduction": {
+  "empire": {
+   "units": {
+    "UNIT_CLONES": {
+     "percent": 50
+    },
+    "UNIT_IMMIGRANT": {
+     "percent": 50
+    },
+    "UNIT_GATHERER": {
+     "percent": 25
+    },
+    "UNIT_NEANDERTHAL_GATHERER": {
+     "percent": 25
+    },
+    "UNIT_WORKER": {
+     "percent": 25
+    },
+    "UNIT_WORKBUFFALO": {
+     "percent": 25
+    },
+    "UNIT_WORKMULE": {
+     "percent": 25
+    },
+    "UNIT_WORKELEPHANT": {
+     "percent": 25
+    },
+    "UNIT_WORKER_INDUSTRIAL": {
+     "percent": 25
+    },
+    "UNIT_WORKER_MODERN": {
+     "percent": 25
+    },
+    "UNIT_WORKER_ANDROID": {
+     "percent": 25
+    },
+    "UNIT_CONSTRUCT_SHIP": {
+     "percent": 25
+    },
+    "UNIT_PARK_RANGER": {
+     "percent": 25
+    },
+    "UNIT_ECOLOGIST": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": -15
+   },
+   "numCities": {
+    "percent": -20
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": 1
+   },
+   "distanceModifier": {
+    "percent": -50
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_EXPANSIVE"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 11
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitExpansive.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_EXPANSIVE_SHORT"
+ }
+}

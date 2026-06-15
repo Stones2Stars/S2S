@@ -1,0 +1,283 @@
+{
+ "type": "TRAIT_GREEDY2",
+ "description": "TXT_KEY_TRAIT_GREEDY2",
+ "civilopedia": "TXT_KEY_TRAIT_GREEDY2_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_GREEDY_STRATEGY",
+ "enables": {
+  "traits": [
+   "TRAIT_GREEDY3"
+  ]
+ },
+ "excludes": [
+  "TRAIT_FINANCIAL1"
+ ],
+ "production": {
+  "empire": {
+   "worldWonder": {
+    "percent": 10
+   },
+   "nationalWonder": {
+    "percent": 20
+   },
+   "buildings": {
+    "BUILDING_MONEY_PRESS": {
+     "percent": -25
+    },
+    "BUILDING_TAX_OFFICE": {
+     "percent": -25
+    },
+    "BUILDING_STOCK_MARKET": {
+     "percent": -25
+    },
+    "BUILDING_ACCOUNTING_FIRM": {
+     "percent": -25
+    },
+    "BUILDING_ANTIQUE_SHOP": {
+     "percent": -25
+    },
+    "BUILDING_CUSTOMS_OFFICE": {
+     "percent": -25
+    },
+    "BUILDING_FREE_PORT": {
+     "percent": -25
+    },
+    "BUILDING_GOLD_VAULT": {
+     "percent": -25
+    },
+    "BUILDING_CHAMBER_OF_COMMERCE": {
+     "percent": -25
+    },
+    "BUILDING_MINE_JET": {
+     "percent": -25
+    },
+    "BUILDING_MODERN_OFFICES": {
+     "percent": -25
+    },
+    "BUILDING_MINE_LAZULITE": {
+     "percent": -25
+    },
+    "BUILDING_DISCOUNT_STORE": {
+     "percent": -25
+    },
+    "BUILDING_MALL": {
+     "percent": -25
+    },
+    "BUILDING_SUPERMARKET": {
+     "percent": -25
+    },
+    "BUILDING_DEPARTMENT_STORE": {
+     "percent": -25
+    },
+    "BUILDING_SHOPPING_DISTRICT": {
+     "percent": -25
+    },
+    "BUILDING_CREDIT_UNION": {
+     "percent": -25
+    },
+    "BUILDING_INTERNATIONAL_PORT": {
+     "percent": -25
+    },
+    "BUILDING_COMMERCIAL_AIRPORT": {
+     "percent": -25
+    },
+    "BUILDING_CRUISE_SHIP_PORT": {
+     "percent": -25
+    },
+    "BUILDING_CASINO": {
+     "percent": -25
+    },
+    "BUILDING_GOLD_RECLAMATION_PLANT": {
+     "percent": -25
+    },
+    "BUILDING_PLATINUM_RECLAMATION_PLANT": {
+     "percent": -25
+    },
+    "BUILDING_SILVER_RECLAMATION_PLANT": {
+     "percent": -25
+    },
+    "BUILDING_CORE_MINE": {
+     "percent": -25
+    },
+    "BUILDING_HYPERMARKET": {
+     "percent": -25
+    },
+    "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES": {
+     "percent": -25
+    },
+    "BUILDING_METALS_MEGACOMPLEX": {
+     "percent": -25
+    },
+    "BUILDING_OCEAN_ADMINISTRATION": {
+     "percent": -25
+    },
+    "BUILDING_TELEPORT_BOOTH": {
+     "percent": -25
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": -4,
+   "percent": -5,
+   "capital": {
+    "percent": -5
+   },
+   "specialist": {
+    "perSpecialist": -1
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "byTech": {
+    "TECH_PRINTING_PRESS": {
+     "percent": -20
+    },
+    "TECH_MERCANTILISM": {
+     "percent": -20
+    },
+    "TECH_SOCIAL_CONTRACT": {
+     "percent": -20
+    },
+    "TECH_PATENT_RIGHTS": {
+     "percent": -20
+    },
+    "TECH_STOCK_BROKERING": {
+     "percent": -20
+    },
+    "TECH_ECONOMICS": {
+     "percent": -20
+    },
+    "TECH_REFINING": {
+     "percent": -20
+    },
+    "TECH_LABOR_UNIONS": {
+     "percent": -20
+    },
+    "TECH_CONSUMERISM": {
+     "percent": -20
+    },
+    "TECH_APPLIED_ECONOMICS": {
+     "percent": -20
+    },
+    "TECH_MASS_MEDIA": {
+     "percent": -20
+    },
+    "TECH_CONGLOMERATES": {
+     "percent": -20
+    },
+    "TECH_TOURISM": {
+     "percent": -20
+    },
+    "TECH_LEGALIZED_GAMBLING": {
+     "percent": -20
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -10,
+   "units": {
+    "UNIT_MERCHANT": {
+     "flat": -4
+    }
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "corporation": {
+    "percent": 20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 15
+   },
+   "freeCivilian": {
+    "flat": 5
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "cost": {
+    "percent": -25
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 15
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": 50
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": -5
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_GREEDY",
+  "priority": -2
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -1
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": -2
+   },
+   {
+    "FLAVOR_GOLD": 12
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitGreedy2.dds"
+ },
+ "identity": {
+  "negativeTrait": true
+ }
+}

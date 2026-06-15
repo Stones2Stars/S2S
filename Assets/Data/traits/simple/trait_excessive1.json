@@ -1,0 +1,80 @@
+{
+ "type": "TRAIT_EXCESSIVE1",
+ "description": "TXT_KEY_TRAIT_EXCESSIVE0",
+ "civilopedia": "TXT_KEY_TRAIT_EXCESSIVE_PEDIA",
+ "enables": {
+  "traits": [
+   "TRAIT_EXCESSIVE2"
+  ]
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -20
+  }
+ },
+ "experience": {
+  "empire": {
+   "levelModifier": {
+    "percent": 20
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_CITY_RAIDER1": [
+    "UNITCOMBAT_MELEE"
+   ],
+   "PROMOTION_IMPROVISE1": [
+    "UNITCOMBAT_SPY"
+   ],
+   "PROMOTION_IMPROVISE2": [
+    "UNITCOMBAT_SPY"
+   ]
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_EXCESSIVE",
+  "priority": -1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 2
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitExcessive.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_EXCESSIVE_SHORT",
+  "negativeTrait": true,
+  "impurePromotions": true
+ }
+}

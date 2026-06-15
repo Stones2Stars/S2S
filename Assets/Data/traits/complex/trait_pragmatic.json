@@ -1,0 +1,126 @@
+{
+ "type": "TRAIT_PRAGMATIC",
+ "description": "TXT_KEY_TRAIT_PRAGMATIC",
+ "civilopedia": "TXT_KEY_TRAIT_PRAGMATIC_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_PRAGMATIC_STRATEGY",
+ "excludes": [
+  "TRAIT_IDEALISTIC"
+ ],
+ "food": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 5,
+   "military": {
+    "percent": -10
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -2,
+   "largestCity": {
+    "flat": -1
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "combat": {
+  "empire": {
+   "cityDefense": {
+    "percent": 10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 20
+   },
+   "numCities": {
+    "percent": 20
+   },
+   "corporation": {
+    "percent": 20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 10
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_PRAGMATIC"
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": -1
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 3
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitPragmatic.dds"
+ }
+}

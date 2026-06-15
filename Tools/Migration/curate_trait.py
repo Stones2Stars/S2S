@@ -210,7 +210,6 @@ TEXT = {"Description": "description", "Civilopedia": "civilopedia", "Help": "hel
 # DROPs: prereqs (-> store enables), CREST fold (-> curate_bonus), double-author (-> curate_specialist), dead.
 DROP = {"Type", "TraitPrereq", "TraitPrereqOr1", "TraitPrereqOr2", "PrereqTech",
         "BonusHappinessChanges", "SpecialistYieldChanges", "SpecialistCommerceChanges", "Categories"}
-SOURCE_UNIT = {"CONSTANT": "perTurn", "DECAY": "decay"}
 FAMILY_ORDER = ["food", "production", "commerce", "gold", "research", "culture", "espionage",
                 "extraYieldThreshold", "lessYieldThreshold", "happiness", "health", "growth",
                 "greatPeopleRate", "greatGeneralRate", "freeSpecialists", "experience", "conscript",
@@ -292,35 +291,30 @@ def _free_promotions(node):
 
 
 def _properties(node, props):
-    """PropertyManipulators -> per-PROPERTY_* families (mirrors curate_civic._properties). Empire scope; the
-    property/scope reconciliation across entities is a flagged future pass (#429-adjacent)."""
-    for src in node:
-        if src.tag != "PropertySource":
+    """PropertyManipulators -> v3 deposits via the shared converter (engine.property_source_v3 — the standard,
+    uniform with Property/Civic/Religion). Trait sources are all CONSTANT/RELATION_ASSOCIATED."""
+    for src in node.findall("PropertySource"):
+        conv = engine.property_source_v3(src)
+        if conv is None:
             continue
-        cp = engine.clean_property_source(src)
-        prop, amount = cp.get("property"), cp.get("amountPerTurn")
-        if not prop or amount in (None, "", {}):
-            continue
-        unit = SOURCE_UNIT.get(cp.get("source", ""), str(cp.get("source", "")).lower())
-        dep = OrderedDict()
-        dep[unit] = amount
-        gate = cp.get("Active")
-        if gate not in (None, "", [], {}):
-            dep["active"] = gate
-        props.setdefault(prop, {}).setdefault("empire", []).append(dep)
+        prop, scope, unit, value = conv
+        props.setdefault(prop, OrderedDict()).setdefault(scope, OrderedDict())[unit] = value
 
 
-def _replacement_condition(cond_elem):
-    """Simplify the uniform <ReplacementCondition><Has><GOMType>GOM_OPTION</><ID>X</></Has></> to
-    {'onGameOption': X} (all 64 trait replacements are this game-option gate); else carry the raw expr."""
-    if cond_elem is None:
-        return {}
-    has = cond_elem.find("Has")
-    if has is not None:
-        gom, idv = engine.text(has.find("GOMType")), engine.text(has.find("ID"))
-        if gom == "GOM_OPTION" and idv:
-            return {"onGameOption": idv}
-    return {"condition": engine.generic(cond_elem)}
+def is_complex(typ, rec, complex_ids):
+    """SIMPLE vs COMPLEX trait split (owner 2026-06-15) — they are two separate systems hacked into one
+    CvTraitInfo (TB); complex traits become their own Info type (coding pass). complex iff: the trait is a
+    CvInfoReplacements complex variant (typ in complex_ids) OR it is gated by GAMEOPTION_LEADER_COMPLEX_TRAITS
+    (its OnGameOptions). Everything else (incl. vanilla bases that HAVE a complex counterpart) is simple."""
+    if typ in complex_ids:
+        return True
+    og = rec.find("OnGameOptions")
+    if og is not None:
+        for x in og:
+            for s in [engine.text(x)] + [engine.text(cc) for cc in x]:
+                if s and "COMPLEX" in s:
+                    return True
+    return False
 
 
 def curate(typ, rec, store):
@@ -439,14 +433,10 @@ def curate(typ, rec, store):
     enables = store.enabled_by(typ)
     if enables:
         out["enables"] = OrderedDict((k, enables[k]) for k in sorted(enables))
-    # conditional whole-trait replacement (vanilla -> complex under a game option): author the base end;
-    # the complex variant is its own Type (split out by the store); the reverse `replaces` is derived cold-path.
-    repl = store.replacement_of(typ)
-    if repl:
-        rb = OrderedDict()
-        rb["trait"] = repl["replacement"]
-        rb.update(_replacement_condition(repl.get("condition")))
-        out["replacedBy"] = rb
+    # NB: the CvInfoReplacements base->complex link is DROPPED (owner 2026-06-15): simple and complex traits are
+    # "2 completely different traits hacked on top of each other" (TB), NOT a base+variant. They become TWO SEPARATE
+    # Info types behind a shared interface (coded in the coding pass, #430); the migration splits them into
+    # simple/ + complex/ folders and authors each as an independent, full trait. No `replacedBy` cross-link.
     if excludes:
         out["excludes"] = sorted(excludes)
     for family in FAMILY_ORDER:
@@ -486,12 +476,15 @@ def main():
     args = ap.parse_args()
     store = Store()
     table = store.table("TraitInfo")
-    results, all_leftover = OrderedDict(), set()
+    complex_ids = set(v["replacement"] for v in store.replacements.get("TraitInfo", {}).values())
+    results, all_leftover, folders = OrderedDict(), set(), {}
     for typ, rec in table.items():
         obj, leftover = curate(typ, rec, store)
         results[typ] = obj
+        folders[typ] = "complex" if is_complex(typ, rec, complex_ids) else "simple"
         all_leftover.update(leftover)
-    print("TraitInfo curated: %d" % len(results))
+    nc = sum(1 for f in folders.values() if f == "complex")
+    print("TraitInfo curated: %d  (simple=%d, complex=%d)" % (len(results), len(results) - nc, nc))
     STRUCT = {"type", "description", "civilopedia", "help", "strategy", "enables", "replacedBy", "excludes",
               "policies", "grants", "succession", "loadPrune", "ai", "art", "identity"}
     fams = sorted({k for o in results.values() for k in o if k not in STRUCT and not k.startswith("PROPERTY_")})
@@ -509,11 +502,12 @@ def main():
             print(json.dumps(results.get(nm, {"(not found)": nm}), indent=1, ensure_ascii=False))
     if args.write:
         out_dir = os.path.join(REPO, "Assets", "Data", "traits")
-        os.makedirs(out_dir, exist_ok=True)
-        for typ, obj in results.items():
-            with open(os.path.join(out_dir, typ.lower() + ".json"), "w") as f:
+        for typ, obj in results.items():                       # simple/ + complex/ — two separate sets (folders)
+            folder = os.path.join(out_dir, folders[typ])
+            os.makedirs(folder, exist_ok=True)
+            with open(os.path.join(folder, typ.lower() + ".json"), "w") as f:
                 json.dump(obj, f, indent=1, ensure_ascii=False)
-        print("\nwrote %d TraitInfo JSON files under Assets/Data/traits/" % len(results))
+        print("\nwrote %d TraitInfo JSON files under Assets/Data/traits/{simple,complex}/" % len(results))
 
 
 if __name__ == "__main__":

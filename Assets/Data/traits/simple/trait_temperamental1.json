@@ -1,0 +1,79 @@
+{
+ "type": "TRAIT_TEMPERAMENTAL1",
+ "description": "TXT_KEY_TRAIT_TEMPERAMENTAL0",
+ "civilopedia": "TXT_KEY_TRAIT_TEMPERAMENTAL_PEDIA",
+ "enables": {
+  "traits": [
+   "TRAIT_TEMPERAMENTAL2",
+   "TRAIT_TEMPERAMENTAL3"
+  ]
+ },
+ "production": {
+  "empire": {
+   "military": {
+    "percent": 20
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "experience": {
+  "empire": {
+   "levelModifier": {
+    "percent": 5
+   },
+   "flat": -1
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 5
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "distanceModifier": {
+    "percent": 5
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_TEMPERAMENTAL",
+  "priority": -1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitTemperamental.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_TEMPERAMENTAL_SHORT",
+  "negativeTrait": true
+ }
+}

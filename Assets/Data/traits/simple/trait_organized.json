@@ -1,0 +1,126 @@
+{
+ "type": "TRAIT_ORGANIZED",
+ "description": "TXT_KEY_TRAIT_ORGANIZED",
+ "civilopedia": "TXT_KEY_TRAIT_ORGANIZED_PEDIA",
+ "production": {
+  "empire": {
+   "buildings": {
+    "BUILDING_FACTORY": {
+     "percent": 20
+    },
+    "BUILDING_ASSEMBLY_PLANT": {
+     "percent": 20
+    },
+    "BUILDING_MANUFACTURING_PLANT": {
+     "percent": 20
+    },
+    "BUILDING_COURTHOUSE": {
+     "percent": 20
+    },
+    "BUILDING_LAW_SCHOOL": {
+     "percent": 20
+    },
+    "BUILDING_LAW_FIRM": {
+     "percent": 20
+    },
+    "BUILDING_STRATEGIC_GRAIN_RESERVE": {
+     "percent": 20
+    },
+    "BUILDING_TOWN_HALL": {
+     "percent": 20
+    },
+    "BUILDING_VILLAGE_HALL": {
+     "percent": 20
+    },
+    "BUILDING_CITY_COUNCIL": {
+     "percent": 20
+    },
+    "BUILDING_METROPOLITAN_ADMINISTRATION": {
+     "percent": 20
+    },
+    "BUILDING_CAPITAL_ADMINISTRATION": {
+     "percent": 20
+    },
+    "BUILDING_PARTS_PLANT": {
+     "percent": 20
+    },
+    "BUILDING_AI_LEGAL_SYSTEM": {
+     "percent": 20
+    },
+    "BUILDING_MOLECULAR_ASSEMBLER": {
+     "percent": 20
+    },
+    "BUILDING_ATOMIC_ASSEMBLER": {
+     "percent": 20
+    },
+    "BUILDING_QUANTUM_ASSEMBLER": {
+     "percent": 20
+    },
+    "BUILDING_MATERIALIZER": {
+     "percent": 20
+    },
+    "BUILDING_3D_PRINTING_MILL": {
+     "percent": 20
+    },
+    "BUILDING_NANOBOTIC_PRINTING_MILL": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "capital": {
+    "percent": 20
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "capital": {
+    "percent": -10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": -20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": -50
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_ORGANIZED"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitOrganized.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_ORGANIZED_SHORT"
+ }
+}

@@ -232,3 +232,22 @@ corp SPREADS like a religion (`isHasCorporation` city flag) and its per-city eff
 | `TechPrereq` | (store) `tech.enables.corporations` | The generator — kept. |
 | `HeadquarterCommerces` | `<commerce>.empire.headquarters.perCorporationLevel` (UNCHANGED) | DEFERRED to the corp rework pass: HQ revenue scaled by `countCorporationLevels`; kept in its current form pending a per-corp-level token + HQ-city modeling. |
 | `BonusProduced`/`FreeUnit` | `grants.{bonusProduced,freeUnit}` · `iSpread*` → identity/`cost.spread` | Unchanged. HQ-founding (`FoundsCorporation`), `CorporationSpreads` (units), `GlobalCorporationCommerce` (HQ amplifier) edges deferred to Building/Unit. |
+
+## Trait  (`curate_trait.py`)  — Tier B #17, "Mount Doom" (390 records, BESPOKE)
+
+ONE `CvTraitInfo` serving TWO systems. EXE-link 0 `DllExport`; no leftovers. Empire-wide source/enabler; the
+per-field classification mirrors Civic (verified vs `CvTraitInfo`+`processTrait`). **SIMPLE vs COMPLEX SPLIT
+INTO TWO FOLDERS** (owner 2026-06-15): `Assets/Data/traits/simple/` (88) + `…/complex/` (302). The complex
+system is entirely the **Thunderbrd** module (302 complex all Thunderbrd; simple = 87 BASE + 1 Thunderbrd) — the
+only module touching traits, owner-confirmed in.
+
+| old XML | new JSON path | note |
+|---|---|---|
+| (split classifier) | folder `complex/` vs `simple/` | **complex** iff a `CvInfoReplacements` complex variant (`ReplacementID`) OR gated by `GAMEOPTION_LEADER_COMPLEX_TRAITS` (`OnGameOptions`); else **simple** (incl. the 64 vanilla bases that have a complex counterpart). "extra care" semantic split, not naive-by-module (catches the 1 Thunderbrd-simple trait). |
+| `ReplacementID`/`ReplacementCondition` | — (DROPPED, no `replacedBy`) | Simple & complex are "2 completely different traits hacked on top of each other" (TB), NOT base+variant — so the cross-link is dropped; each folder holds independent, full traits. END-STATE: complex traits become their **own Info type behind a shared interface** (coding pass #430; most loading stays shared). Despair Index #11 status updated. |
+| `OnGameOptions`/`NotOnGameOptions` | `loadPrune.{onGameOptions,notOnGameOptions}` | Complex traits carry `onGameOptions:[GAMEOPTION_LEADER_COMPLEX_TRAITS]` (materialize only with complex on). Set selection by game option (+ leaders' `DefaultTraits`/`DefaultComplexTraits` lists, LeaderHead pass), not the dropped hack-link. |
+| `TraitPrereq`/`TraitPrereqOr1/2`/`PrereqTech` | (store) `enables.traits` on the prereq trait/tech | Dev-leaders prereqs inverted top-down. |
+| `DisallowedTraitTypes` | `excludes` | Same-tier mutual exclusion (one end authored; reverse derived cold-path). |
+| `PromotionLine`/`iLinePriority` | `succession.{promotionLine,priority}` | Developing-leaders line ordering. |
+| `PropertyManipulators` | `<PROPERTY>.<scope>.<unit>` (v3) | Via shared `engine.property_source_v3` (274 sources, all CONSTANT/RELATION_ASSOCIATED → `<PROPERTY>.city.flat`). |
+| `GreatPeopleUnitType`+`iGreatPeopleRateChange`, `CityStartCulture`/`BonusPopulationinNewCities`, state-religion/policies/grants/etc. | (per the curator docstring) | Mirror Civic conventions; unchanged this pass. |

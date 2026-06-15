@@ -1,0 +1,841 @@
+{
+ "type": "TRAIT_NOMADIC3",
+ "description": "TXT_KEY_TRAIT_COMPLEX_NOMADIC3",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_NOMADIC3_PEDIA",
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_NOMADIC_STRATEGY",
+ "food": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_NOMADIC_HERD": {
+     "flat": 1
+    },
+    "IMPROVEMENT_PASTURE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_JUNGLE_CAMP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_DESERT_CAMP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WETLANDS_CAMP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CARRION_GATHERER": {
+     "percent": 25
+    },
+    "BUILDING_NEST_THIEF": {
+     "percent": 25
+    },
+    "BUILDING_HUNTING_INSTRUCTIONS": {
+     "percent": 25
+    },
+    "BUILDING_ANIMAL_SNARE_TRAPS": {
+     "percent": 25
+    },
+    "BUILDING_TRAP_BEAVER": {
+     "percent": 25
+    },
+    "BUILDING_TRAP_CHINCHILLA": {
+     "percent": 25
+    },
+    "BUILDING_TRAP_FOX": {
+     "percent": 25
+    },
+    "BUILDING_TRAP_MINK": {
+     "percent": 25
+    },
+    "BUILDING_TRAP_RABBIT": {
+     "percent": 25
+    },
+    "BUILDING_TRAP_RACCOON": {
+     "percent": 25
+    },
+    "BUILDING_TRAP_SEA_OTTER": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_ANTELOPE": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_AUROCHS": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_BISON": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_BOAR": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_CARIBOU": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_DEER": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_DIPROTODON": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_ELEPHANT": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_EMU": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_GIANT_BISON": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_GIRAFFE": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_HIPPO": {
+     "percent": 25
+    },
+    "BUILDING_HUNTERS_CAMP": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_KANGAROO": {
+     "percent": 25
+    },
+    "BUILDING_LIZARD_HUNTERS_CAMP": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_MAMMOTH": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_MEGALOCEROS": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_MEGATHERIUM": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_MOOSE": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_MOUFLON": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_MUSKOX": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_OSTRICH": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_RHEA": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_RHINO": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_WOOLLY_RHINO": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_ZEBRA": {
+     "percent": 25
+    },
+    "BUILDING_DOG_KENNELS": {
+     "percent": 25
+    },
+    "BUILDING_DOG_BREEDER": {
+     "percent": 25
+    },
+    "BUILDING_HUNTING_DOG_TRAINER": {
+     "percent": 25
+    },
+    "BUILDING_SLED_DOG_TRAINER": {
+     "percent": 25
+    },
+    "BUILDING_FARM_ANIMAL_COW": {
+     "percent": 25
+    },
+    "BUILDING_DAIRY_BARN": {
+     "percent": 25
+    },
+    "BUILDING_FARM_ANIMAL_GOAT": {
+     "percent": 25
+    },
+    "BUILDING_FARM_ANIMAL_PIG": {
+     "percent": 25
+    },
+    "BUILDING_FARM_ANIMAL_SHEEP": {
+     "percent": 25
+    },
+    "BUILDING_FARM_ANIMAL_YAK": {
+     "percent": 25
+    },
+    "BUILDING_CAT_BREEDER": {
+     "percent": 25
+    },
+    "BUILDING_GUINEA_PIG_BREEDER": {
+     "percent": 25
+    },
+    "BUILDING_HERDING_DOG_TRAINER": {
+     "percent": 25
+    },
+    "BUILDING_RABBIT_BREEDER": {
+     "percent": 25
+    },
+    "BUILDING_FARM_ANIMAL_CAMEL": {
+     "percent": 25
+    },
+    "BUILDING_CHICKEN_COOP": {
+     "percent": 25
+    },
+    "BUILDING_FARM_ANIMAL_DONKEY": {
+     "percent": 25
+    },
+    "BUILDING_FARM_ANIMAL_DUCK": {
+     "percent": 25
+    },
+    "BUILDING_FARM_ANIMAL_ELEPHANT": {
+     "percent": 25
+    },
+    "BUILDING_FARM_ANIMAL_GOOSE": {
+     "percent": 25
+    },
+    "BUILDING_FARM_ANIMAL_HORSE": {
+     "percent": 25
+    },
+    "BUILDING_FARM_ANIMAL_LLAMA": {
+     "percent": 25
+    },
+    "BUILDING_FARM_ANIMAL_OSTRICH": {
+     "percent": 25
+    },
+    "BUILDING_PARROT_AVIARY": {
+     "percent": 25
+    },
+    "BUILDING_FARM_ANIMAL_TURKEY": {
+     "percent": 25
+    },
+    "BUILDING_ANIMAL_TRAINER_CAMEL": {
+     "percent": 25
+    },
+    "BUILDING_CORMORANT_TRAINER": {
+     "percent": 25
+    },
+    "BUILDING_ANIMAL_TRAINER_ELEPHANT": {
+     "percent": 25
+    },
+    "BUILDING_ANIMAL_TRAINER_HORSE": {
+     "percent": 25
+    },
+    "BUILDING_ANIMAL_TRAINER_LLAMA": {
+     "percent": 25
+    },
+    "BUILDING_ANIMAL_TRAINER_BUFFALO": {
+     "percent": 25
+    },
+    "BUILDING_ANIMAL_TRAINER_DONKEY": {
+     "percent": 25
+    },
+    "BUILDING_BIRD_CALLER": {
+     "percent": 25
+    },
+    "BUILDING_CATCHER_BIRDS_OF_PARADISE": {
+     "percent": 25
+    },
+    "BUILDING_CATCHER_CANARY": {
+     "percent": 25
+    },
+    "BUILDING_CATCHER_COCKATOO": {
+     "percent": 25
+    },
+    "BUILDING_CATCHER_JUNGLEFOWL": {
+     "percent": 25
+    },
+    "BUILDING_CATCHER_LYREBIRD": {
+     "percent": 25
+    },
+    "BUILDING_CATCHER_MACAW": {
+     "percent": 25
+    },
+    "BUILDING_CATCHER_PARAKEET": {
+     "percent": 25
+    },
+    "BUILDING_CATCHER_PARROT": {
+     "percent": 25
+    },
+    "BUILDING_CATCHER_PEACOCK": {
+     "percent": 25
+    },
+    "BUILDING_CATCHER_QUETZAL": {
+     "percent": 25
+    },
+    "BUILDING_SEA_TURTLE_EGG_GATHERER": {
+     "percent": 25
+    },
+    "BUILDING_CATCHER_TOUCAN": {
+     "percent": 25
+    },
+    "BUILDING_CATCHER_HUMMINGBIRD": {
+     "percent": 25
+    },
+    "BUILDING_FALCONER": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_BELUGA": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_ELEPHANT_SEAL": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_NARWHAL": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_SEAL": {
+     "percent": 25
+    },
+    "BUILDING_CAMP_WALRUS": {
+     "percent": 25
+    },
+    "BUILDING_DONKEY_BREEDER": {
+     "percent": 25
+    },
+    "BUILDING_HORSE_BREEDER": {
+     "percent": 25
+    },
+    "BUILDING_FARM_ANIMAL_OXEN": {
+     "percent": 25
+    },
+    "BUILDING_HOMING_PIGEON_COOP": {
+     "percent": 25
+    },
+    "BUILDING_ANIMAL_TAMER_COMPLEX": {
+     "percent": 25
+    },
+    "BUILDING_WAR_DOG_TRAINER": {
+     "percent": 25
+    },
+    "BUILDING_FARM_ANIMAL_ALPACA": {
+     "percent": 25
+    },
+    "BUILDING_ANGORA_GOAT_BREEDER": {
+     "percent": 25
+    },
+    "BUILDING_ANGORA_RABBIT_BREEDER": {
+     "percent": 25
+    },
+    "BUILDING_WOOLLY_PIG_BREEDER": {
+     "percent": 25
+    },
+    "BUILDING_MONKEY_BREEDER": {
+     "percent": 25
+    },
+    "BUILDING_WHALERS_DOCK": {
+     "percent": 25
+    },
+    "BUILDING_GUARD_DOG_TRAINER": {
+     "percent": 25
+    },
+    "BUILDING_GERBIL_BREEDER": {
+     "percent": 25
+    },
+    "BUILDING_HAMSTER_BREEDER": {
+     "percent": 25
+    },
+    "BUILDING_MOUSE_BREEDER": {
+     "percent": 25
+    },
+    "BUILDING_RAT_BREEDER": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_ANTELOPE": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_BEAVER": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_BELUGA": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_BISON": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_BOAR": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_CARIBOU": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_CHINCHILLA": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_DEER": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_ELEPHANT_SEAL": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_ELEPHANT": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_EMU": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_FOX": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_GIRAFFE": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_HIPPO": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_KANGAROO": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_MAMMOTH": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_MINK": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_MOOSE": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_MOUFLON": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_MUSKOX": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_NARWHAL": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_OSTRICH": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_RABBIT": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_RACCOON": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_RHEA": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_RHINO": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_SEA_OTTER": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_SEAL": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_WALRUS": {
+     "percent": 25
+    },
+    "BUILDING_BREEDING_PROGRAM_ZEBRA": {
+     "percent": 25
+    },
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE": {
+     "percent": 25
+    },
+    "BUILDING_REPET": {
+     "percent": 25
+    },
+    "BUILDING_FALCONRY_SCHOOL": {
+     "percent": 25
+    },
+    "BUILDING_INDUSTRIAL_FARMS": {
+     "percent": 25
+    },
+    "BUILDING_ANIMAL_PRESERVE": {
+     "percent": 25
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "percent": 25
+    },
+    "BUILDING_ANCIENT_CUSTOMS": {
+     "percent": 25
+    }
+   },
+   "improvements": {
+    "IMPROVEMENT_SCAVENGING_CAMP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_NOMADIC_HERD": {
+     "flat": 1
+    },
+    "IMPROVEMENT_PASTURE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HUNTING_CAMP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HUNTING_PRESERVE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WILDLIFE_SANCTUARY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_HUNTING_PRESERVE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WILDLIFE_SANCTUARY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FOREST_PRESERVE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_NATURE_PRESERVE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "byTech": {
+    "TECH_PLANETARY_EXPLORATION": {
+     "percent": 20
+    },
+    "TECH_MAGNETIC_LEVITATION": {
+     "percent": 20
+    },
+    "TECH_SPACE_TOURISM": {
+     "percent": 20
+    },
+    "TECH_ECOLOGICAL_ENGINEERING": {
+     "percent": 20
+    },
+    "TECH_AUTONOMOUS_VEHICLES": {
+     "percent": 20
+    },
+    "TECH_MICROMECHANICS": {
+     "percent": 20
+    },
+    "TECH_GENESIS_BIOLOGY": {
+     "percent": 20
+    },
+    "TECH_AUTOMATED_TRAFFIC": {
+     "percent": 20
+    },
+    "TECH_NANOGENERATORS": {
+     "percent": 20
+    },
+    "TECH_PLANETARY_COLONIZATION": {
+     "percent": 20
+    },
+    "TECH_LUNAR_TOURISM": {
+     "percent": 20
+    },
+    "TECH_SUPERSONIC_RAILS": {
+     "percent": 20
+    },
+    "TECH_ENVIRONMENTAL_ECONOMICS": {
+     "percent": 20
+    },
+    "TECH_UNIVERSAL_TRANSLATOR": {
+     "percent": 20
+    },
+    "TECH_LUNAR_TRADE": {
+     "percent": 20
+    },
+    "TECH_GAIA_ECOLOGY": {
+     "percent": 20
+    },
+    "TECH_MYTHOLOGICAL_BESTIARY": {
+     "percent": 20
+    },
+    "TECH_WEATHER_CONTROL": {
+     "percent": 20
+    },
+    "TECH_PLANETARY_TERRAFORMING": {
+     "percent": 20
+    },
+    "TECH_INTERSTELLAR_TRADE": {
+     "percent": 20
+    },
+    "TECH_ECOSYNTHESIS": {
+     "percent": 20
+    },
+    "TECH_INTERGROUP_TRAVEL": {
+     "percent": 20
+    },
+    "TECH_GRAND_UNIFICATION_BIOLOGY": {
+     "percent": 20
+    },
+    "TECH_TRANSDIMENSIONAL_COMMERCE": {
+     "percent": 20
+    },
+    "TECH_SPATIAL_TRANSCENDENCE": {
+     "percent": 20
+    },
+    "TECH_MACROVERSE_TRAVERSAL": {
+     "percent": 20
+    },
+    "TECH_MEGACITIES": {
+     "percent": -20
+    },
+    "TECH_MARINE_ARCHITECTURE": {
+     "percent": -20
+    },
+    "TECH_ASTEROID_MINING": {
+     "percent": -20
+    },
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS": {
+     "percent": -20
+    },
+    "TECH_NANO_ARCHITECTURE": {
+     "percent": -20
+    },
+    "TECH_LUNAR_COLONIZATION": {
+     "percent": -20
+    },
+    "TECH_LUNAR_MANUFACTURING": {
+     "percent": -20
+    },
+    "TECH_PLANETARY_EXTRACTION": {
+     "percent": -20
+    },
+    "TECH_AUTOMATED_URBANIZATION": {
+     "percent": -20
+    },
+    "TECH_VERTICAL_FARMING": {
+     "percent": -20
+    },
+    "TECH_MEGASTRUCTURE_ENGINEERING": {
+     "percent": -20
+    },
+    "TECH_ORBITAL_MEGASTRUCTURES": {
+     "percent": -20
+    },
+    "TECH_COLONY_ARCOLOGY": {
+     "percent": -20
+    },
+    "TECH_STAR_LIFTING": {
+     "percent": -20
+    },
+    "TECH_HYPERSTRUCTURE_ENGINEERING": {
+     "percent": -20
+    }
+   }
+  }
+ },
+ "lessYieldThreshold": {
+  "empire": {
+   "commerce": {
+    "flat": 5
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1,
+   "largestCity": {
+    "flat": -1
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_GREAT_HUNTER": {
+     "flat": 6
+    }
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_EXPLORER": {
+     "flat": 2
+    },
+    "UNITCOMBAT_ANIMAL": {
+     "flat": 2
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "flat": 2
+    },
+    "UNITCOMBAT_WHEELED": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "combat": {
+  "empire": {
+   "cityDefense": {
+    "percent": -15
+   }
+  }
+ },
+ "unitProduction": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_EXPLORER": {
+     "percent": 30
+    },
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 30
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 30
+    },
+    "UNITCOMBAT_WHEELED": {
+     "percent": 30
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": -30
+   },
+   "numCities": {
+    "percent": 20
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 1,
+   "max": {
+    "flat": 2
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_SCAVENGING_CAMP_KILL": {
+     "percent": 50
+    },
+    "BUILD_NOMADIC_HERD_KILL": {
+     "percent": 50
+    },
+    "BUILD_PASTURE": {
+     "percent": 50
+    },
+    "BUILD_HUNTING_CAMP": {
+     "percent": 50
+    },
+    "BUILD_HUNTING_PRESERVE": {
+     "percent": 50
+    },
+    "BUILD_FOREST_PRESERVE": {
+     "percent": 50
+    },
+    "BUILD_WILDLIFE_SANCTUARY": {
+     "percent": 50
+    },
+    "BUILD_JUNGLE_CAMP_KILL": {
+     "percent": 50
+    },
+    "BUILD_JUNGLE_CAMP": {
+     "percent": 50
+    },
+    "BUILD_DESERT_CAMP_KILL": {
+     "percent": 50
+    },
+    "BUILD_DESERT_CAMP": {
+     "percent": 50
+    },
+    "BUILD_WETLANDS_CAMP_KILL": {
+     "percent": 50
+    },
+    "BUILD_WETLANDS_CAMP": {
+     "percent": 50
+    },
+    "BUILD_NATURE_PRESERVE": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_SCAVENGING_CAMP": {
+     "percent": 50
+    },
+    "IMPROVEMENT_NOMADIC_HERD": {
+     "percent": 50
+    },
+    "IMPROVEMENT_PASTURE": {
+     "percent": 50
+    },
+    "IMPROVEMENT_HUNTING_CAMP": {
+     "percent": 50
+    },
+    "IMPROVEMENT_HUNTING_PRESERVE": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_NOMADIC3": [
+    "UNITCOMBAT_ANIMAL",
+    "UNITCOMBAT_EXPLORER",
+    "UNITCOMBAT_MOUNTED",
+    "UNITCOMBAT_NOMAD",
+    "UNITCOMBAT_TRADE",
+    "UNITCOMBAT_WHEELED"
+   ]
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_NOMADIC",
+  "priority": 3
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 12
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": -2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitNomadic3.dds"
+ }
+}

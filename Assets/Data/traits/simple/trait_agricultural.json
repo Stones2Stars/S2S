@@ -1,0 +1,177 @@
+{
+ "type": "TRAIT_AGRICULTURAL",
+ "description": "TXT_KEY_TRAIT_AGRICULTURAL",
+ "civilopedia": "TXT_KEY_TRAIT_AGRICULTURAL_PEDIA",
+ "food": {
+  "empire": {
+   "percent": 5,
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "buildings": {
+    "BUILDING_GRANARY": {
+     "percent": 20
+    },
+    "BUILDING_MODERN_GRANARY": {
+     "percent": 20
+    },
+    "BUILDING_FOOD_PROCESSING_PLANT": {
+     "percent": 20
+    },
+    "BUILDING_WATERMILL": {
+     "percent": 20
+    },
+    "BUILDING_WINDMILL": {
+     "percent": 20
+    },
+    "BUILDING_DONKEY_MILL": {
+     "percent": 20
+    },
+    "BUILDING_OXEN_MILL": {
+     "percent": 20
+    },
+    "BUILDING_QUERN": {
+     "percent": 20
+    },
+    "BUILDING_BAKERY": {
+     "percent": 20
+    },
+    "BUILDING_FARM_ANIMAL_OXEN": {
+     "percent": 20
+    },
+    "BUILDING_TOWN_WELL": {
+     "percent": 20
+    },
+    "BUILDING_ARTESIAN_WELL": {
+     "percent": 20
+    },
+    "BUILDING_IRRIGATION_CANALS": {
+     "percent": 20
+    },
+    "BUILDING_CHINAMPA": {
+     "percent": 20
+    },
+    "BUILDING_GREAT_CHINAMPA": {
+     "percent": 20
+    },
+    "BUILDING_RICE_TERRACE": {
+     "percent": 20
+    },
+    "BUILDING_TERRACE": {
+     "percent": 20
+    },
+    "BUILDING_MODERN_MILL": {
+     "percent": 20
+    },
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT": {
+     "percent": 20
+    },
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE": {
+     "percent": 20
+    },
+    "BUILDING_INDUSTRIAL_FARMS": {
+     "percent": 20
+    },
+    "BUILDING_RIVER_ADMINISTRATION": {
+     "percent": 20
+    },
+    "BUILDING_FARMSCRAPER_III": {
+     "percent": 20
+    },
+    "BUILDING_MODERN_WATERWORKS": {
+     "percent": 20
+    },
+    "BUILDING_FARMSCRAPER_I": {
+     "percent": 20
+    },
+    "BUILDING_FARMSCRAPER_II": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "extraYieldThreshold": {
+  "empire": {
+   "food": {
+    "flat": 5
+   }
+  }
+ },
+ "combat": {
+  "empire": {
+   "cityDefense": {
+    "percent": -15
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": 25
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_FARM": {
+     "percent": 50
+    },
+    "BUILD_MUSHROOM_GATHERER": {
+     "percent": 50
+    },
+    "BUILD_MUSHROOM_GATHERER_KILL": {
+     "percent": 50
+    },
+    "BUILD_PLANT_PICKING_CAMP": {
+     "percent": 50
+    },
+    "BUILD_PLANT_GATHERING_CAMP_KILL": {
+     "percent": 50
+    },
+    "BUILD_PLANTATION": {
+     "percent": 50
+    },
+    "BUILD_ORCHARD": {
+     "percent": 50
+    },
+    "BUILD_FRUIT_GATHERING_CAMP_KILL": {
+     "percent": 50
+    },
+    "BUILD_FRUIT_PICKING_CAMP": {
+     "percent": 50
+    },
+    "BUILD_WINERY": {
+     "percent": 50
+    }
+   },
+   "percent": 20
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_AGRICULTURAL"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_MILITARY": -1
+   },
+   {
+    "FLAVOR_GOLD": -1
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Buttons/Traits/TraitAggricultural.dds"
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_AGRICULTURAL_SHORT"
+ }
+}
