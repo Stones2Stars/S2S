@@ -1,0 +1,759 @@
+{
+ "batch": "lighter-four",
+ "entities": [
+  {
+   "entity": "SpecialUnitInfo",
+   "isPoco": false,
+   "approach": "common-config",
+   "classFiles": [
+    "C:\\code\\s2s\\s2s\\Sources\\Infos\\CvSpecialUnitInfo.h",
+    "C:\\code\\s2s\\s2s\\Sources\\Infos\\CvSpecialUnitInfo.cpp"
+   ],
+   "enablerEdges": [
+    "bValid -> world"
+   ],
+   "fields": [
+    {
+     "field": "Type",
+     "verdict": "identity",
+     "member": "(CvInfoBase)",
+     "xmlTag": "Type",
+     "family": "identity",
+     "authored": true,
+     "evidence": "CvTaggedSaveFormatWrapper.cpp:848 (info.getType() written as the name-keyed save remap token); CvInfoBase",
+     "note": "Intrinsic type token. Inherited identity. Also the FK target named by trait/project edges (kept-keyed-by-target on THOSE entities)."
+    },
+    {
+     "field": "Description",
+     "verdict": "text",
+     "member": "(CvInfoBase)",
+     "xmlTag": "Description",
+     "family": "text",
+     "authored": true,
+     "evidence": "CvGameTextMgr.cpp:7012 (GC.getSpecialUnitInfo(eSpecialUnit).getDescription() in trait help); getTextKeyWide() at CvGameTextMgr.cpp:1605/9572/9577/9582/13351/18965",
+     "note": "TXT_KEY display string / civilopedia text. Inherited from CvInfoBase."
+    },
+    {
+     "field": "bValid",
+     "verdict": "enabler-edge",
+     "member": "m_bValid",
+     "xmlTag": "bValid",
+     "family": "enables",
+     "scope": "world",
+     "unit": "enabler",
+     "authored": true,
+     "evidence": "CvGame.cpp:323 and CvGame.cpp:11616 — if isValid() then makeSpecialUnitValid((SpecialUnitTypes)iI)",
+     "note": "LIVE. At game init, a valid special-unit class is made available game-wide. This is the baseline availability enabler (project's EveryoneSpecialUnit grant later flips invalid ones on). World-scope enable. Authored 1 on all 7 records."
+    },
+    {
+     "field": "bCityLoad",
+     "verdict": "identity",
+     "member": "m_bCityLoad",
+     "xmlTag": "bCityLoad",
+     "family": "identity",
+     "scope": "city",
+     "unit": "flat",
+     "authored": true,
+     "evidence": "CvUnit.cpp:5650 — if GC.getSpecialUnitInfo(getSpecialUnitType()).isCityLoad() && !pPlot->isCity(...) return false (cargo can only board/dock at a city)",
+     "note": "LIVE behaviour flag (intrinsic loading rule for the cargo class, e.g. SPECIALUNIT_MISSILE=1). Not an empire policy flag and not a summed modifier — an intrinsic per-class behaviour boolean, so identity catch-all. Note: deliberately omitted from getCheckSum (CvSpecialUnitInfo.cpp:122 historical, harmless)."
+    },
+    {
+     "field": "bSMLoadSame",
+     "verdict": "drop-dead-structure",
+     "member": "m_bSMLoadSame",
+     "xmlTag": "bSMLoadSame",
+     "family": "(none)",
+     "authored": true,
+     "evidence": "Sources-wide grep for isSMLoadSame/SMLoadSame finds ONLY the definition (CvSpecialUnitInfo.cpp:65-67), getDataMembers (cpp:91), getCheckSum (cpp:124) and the .h decl (h:27/47) — NO consumer call site anywhere",
+     "note": "DEAD STRUCTURE. Authored only on SPECIALUNIT_PEOPLE (bSMLoadSame=1) but never read by any C++ consumer. Size-Matters 'load same' was never wired. DROP."
+    },
+    {
+     "field": "iCombatPercent",
+     "verdict": "keep-modifier",
+     "member": "m_iCombatPercent",
+     "xmlTag": "iCombatPercent",
+     "family": "combat",
+     "scope": "city",
+     "unit": "percent",
+     "scaled": "none",
+     "authored": true,
+     "evidence": "CvUnit.cpp:28842 — processLoadedSpecialUnit: changeExtraCombatPercent(kSpecialUnit.getCombatPercent()*iChange); called on load/unload from transport at CvUnit.cpp:17014/17050",
+     "note": "LIVE combat modifier. percent, NOT x100 (raw % added to extraCombatPercent). MAPPING SCOPE 'city' IS WRONG — it lands on the CARGO UNIT's own combat strength while loaded onto a transport, a per-unit (unit-while-loaded) modifier, not a city bucket. Authored only on SPECIALUNIT_CAPTIVE (-5)."
+    },
+    {
+     "field": "iWithdrawalChange",
+     "verdict": "keep-modifier",
+     "member": "m_iWithdrawalChange",
+     "xmlTag": "iWithdrawalChange",
+     "family": "withdrawal",
+     "scope": "city",
+     "unit": "flat",
+     "scaled": "none",
+     "authored": true,
+     "evidence": "CvUnit.cpp:28843 — processLoadedSpecialUnit: changeExtraWithdrawal(kSpecialUnit.getWithdrawalChange()*iChange)",
+     "note": "LIVE withdrawal modifier. flat (added to extraWithdrawal). MAPPING SCOPE 'city' IS WRONG — same as iCombatPercent: lands on the loaded cargo unit's own withdrawal odds, not a city. Authored only on SPECIALUNIT_CAPTIVE (-10). Family 'withdrawal' (sibling of combat); keep as its own member or under a combat group per the entity's family convention."
+    }
+   ],
+   "notes": "NOT A POCO (POCO CAVEAT confirmed). The first-pass mapping under-classified: it tagged everything but two channels as identity, but reading the consumers shows two LIVE gameplay modifier families (combat percent + withdrawal flat) applied to the cargo unit while loaded (CvUnit.cpp:28842-28843 via processLoadedSpecialUnit, invoked at 17014/17050), PLUS a live world enabler (bValid -> makeSpecialUnitValid, CvGame.cpp:323/11616) and a live behaviour gate (bCityLoad, CvUnit.cpp:5650). A pure data-holder has none of these. The hint's guess \"likely a POCO like SpecialBuilding\" is disproved for SpecialUnit specifically — SPECIALUNIT_CAPTIVE carries real combat/withdrawal modifiers.\n\nCRITICAL SCOPE CORRECTION: the mapping puts iCombatPercent and iWithdrawalChange at scope=city; that is WRONG. Both land on the cargo unit's OWN strength/withdrawal while it is loaded on a transport — a per-unit (unit-while-loaded) modifier, not a city-scope deposit. Recommend authoring them under the entity's combat family with no city scope; the cascade target is the loaded unit, applied symmetrically on load(+1)/unload(-1).\n\nRecommended approach: common-config. The surface is tiny (5 authored members + inherited Type/Description) and matches the standard primitive-channel + enabler + identity-flag shape that common-config handles; no hand-written FK vectors, no keyed-by-target edges OWNED by this entity, so a bespoke curator is unwarranted. (If common-config cannot yet express the unit-while-loaded landing target distinct from a scope bucket, that is a config-vocabulary gap to note, not a reason to go bespoke.)\n\nDOUBLE-AUTHOR (this entity owns NONE): every cross-entity edge naming SpecialUnit is owned elsewhere and SpecialUnitInfo is only the referenced TARGET:\n - trait: SpecialUnitProductionModifierTypes keyed BY SpecialUnit -> unitProduction.empire.specialUnits.{SPECIALUNIT}.percent (curate_trait.py:185; trait-classification 5365-5384). Owned by trait.\n - project: EveryoneSpecialUnit -> grantsSpecialUnit one-shot makeSpecialUnitValid on completion (curate_project.py:67; light-batch 1277-1280). Owned by project.\nSpecialUnitInfo authors no keyed/cross-entity edges of its own; its Type is merely the FK target those edges point at.\n\nDROP: bSMLoadSame (dead structure, no consumer anywhere in Sources)."
+  },
+  {
+   "entity": "CultureLevelInfo",
+   "isPoco": false,
+   "approach": "bespoke",
+   "classFiles": [
+    "C:\\code\\s2s\\s2s\\Sources\\Infos\\CvCultureLevelInfo.h",
+    "C:\\code\\s2s\\s2s\\Sources\\Infos\\CvCultureLevelInfo.cpp"
+   ],
+   "enablerEdges": [
+    "BuildingInfo.PrereqCultureLevel -> buildings"
+   ],
+   "fields": [
+    {
+     "field": "Type",
+     "xmlTag": "Type",
+     "member": "(CvInfoBase)",
+     "verdict": "identity",
+     "scope": "n/a",
+     "authored": true,
+     "evidence": "Assets/XML/GameInfo/CIV4CultureLevelInfo.xml:15",
+     "note": "Entity id (CULTURELEVEL_*). Standard identity."
+    },
+    {
+     "field": "Description",
+     "xmlTag": "Description",
+     "member": "(CvInfoBase)",
+     "verdict": "text",
+     "scope": "n/a",
+     "authored": true,
+     "evidence": "CvCity.cpp:10557",
+     "note": "TXT_KEY for the border-expansion / culture-level player messages (getTextKeyWide). Standard text."
+    },
+    {
+     "field": "iCityDefenseModifier",
+     "xmlTag": "iCityDefenseModifier",
+     "member": "m_iCityDefenseModifier",
+     "verdict": "keep-modifier",
+     "family": "combat",
+     "scope": "city",
+     "unit": "percent",
+     "keyedBy": "this culture level (the source level the city is currently at)",
+     "scaled": "none",
+     "authored": true,
+     "evidence": "CvCity.cpp:10184 (getCultureLevelDefence -> getCityDefenseModifier; feeds getDefenseModifier/getTotalDefense at 10190)",
+     "note": "Real per-turn combat-defense % the city gets for being at this culture level. The ONLY live additive-style modifier on the entity, hence not a POCO. Lands on the CITY, gated by the level -> stays on CultureLevel as combat.city.defense.percent (mapping's city/defense/percent is right). Scope is APPLICATION (city), not the entity. NOT x100. The UnitInfo.getCityDefenseModifier hits in the grep are a DIFFERENT class (unit combat help) -- do not conflate."
+    },
+    {
+     "field": "iCityRadius",
+     "xmlTag": "iCityRadius",
+     "member": "m_iCityRadius",
+     "verdict": "identity",
+     "scope": "city",
+     "unit": "flat",
+     "scaled": "none",
+     "authored": true,
+     "evidence": "CvCity.cpp:19747 (getNumCityPlots: iRadius 1/2/3 -> NUM_CITY_PLOTS tiers; overridden by getWorkableRadiusOverride)",
+     "note": "REPLACE/override value (the city's workable radius for this level), NOT additive -> classifies OUT of the cascade per blueprint section 3 (non-additive; setWorkableRadiusOverride is the override sibling). Author as an intrinsic per-level identity value (e.g. identity.cityRadius). Mapping's city/cityRadius/flat channel is WRONG (it is not a summed flat)."
+    },
+    {
+     "field": "iMaxWorldWonders",
+     "xmlTag": "iMaxWorldWonders",
+     "member": "m_iMaxWorldWonders",
+     "verdict": "identity",
+     "scope": "city",
+     "unit": "flat",
+     "scaled": "none",
+     "authored": true,
+     "evidence": "CvCity.cpp:2100 (getMaxNumWorldWonders); pedia CvGameTextMgr.cpp:17998",
+     "note": "Per-city CAP (max world wonders allowed at this level), a clamp/limit, NOT additive and NOT percent -> classifies OUT of the cascade (non-additive). Author as a per-level identity cap. Mapping's flat channel is WRONG (it is a max, not a summed flat)."
+    },
+    {
+     "field": "iMaxTeamWonders",
+     "xmlTag": "iMaxTeamWonders",
+     "member": "m_iMaxTeamWonders",
+     "verdict": "identity",
+     "scope": "city",
+     "unit": "flat",
+     "scaled": "none",
+     "authored": true,
+     "evidence": "CvCity.cpp:2123 (getMaxNumTeamWonders); pedia CvGameTextMgr.cpp:18006",
+     "note": "Per-city CAP (max team wonders). Same as iMaxWorldWonders: non-additive limit -> identity cap, not a cascade family."
+    },
+    {
+     "field": "iMaxNationalWonders",
+     "xmlTag": "iMaxNationalWonders",
+     "member": "m_iMaxNationalWonders",
+     "verdict": "identity",
+     "scope": "city",
+     "unit": "flat",
+     "scaled": "none",
+     "authored": true,
+     "evidence": "CvCity.cpp:2146 (getMaxNumNationalWonders, non-OCC branch); pedia CvGameTextMgr.cpp:18013",
+     "note": "Per-city CAP (max national wonders, normal game). Non-additive limit -> identity cap."
+    },
+    {
+     "field": "iMaxNationalWondersOCC",
+     "xmlTag": "iMaxNationalWondersOCC",
+     "member": "m_iMaxNationalWondersOCC",
+     "verdict": "identity",
+     "scope": "city",
+     "unit": "flat",
+     "scaled": "none",
+     "authored": true,
+     "evidence": "CvCity.cpp:2146 (getMaxNumNationalWonders, GAMEOPTION_CHALLENGE_ONE_CITY branch); pedia CvGameTextMgr.cpp:18013",
+     "note": "Per-city CAP used only under the One-City-Challenge option. Non-additive limit -> identity cap (sibling of iMaxNationalWonders, selected by game option at the consumer)."
+    },
+    {
+     "field": "SpeedThresholds",
+     "xmlTag": "SpeedThresholds (per-GameSpeed iThreshold list)",
+     "member": "m_paiSpeedThreshold (int[] by GameSpeed; hand-read via SetVariableListTagPair)",
+     "verdict": "identity",
+     "scope": "world",
+     "unit": "flat",
+     "scaled": "none",
+     "authored": true,
+     "evidence": "CvGame.cpp:9264 (getCultureThreshold -> getSpeedThreshold(getGameSpeedType())); consumed CvCity.cpp:10527/10529 (getCultureThreshold) and 10638 (updateCultureLevel)",
+     "note": "Core data: culture points to REACH this level, per game speed. Owner ruling (plan section 7 line 1069): COLLAPSE to a single BASE threshold + explicit per-speed OVERRIDES only when present; per-speed fan-out is DERIVED via base x GameSpeed scale. CAUTION: GameSpeed.cultureThresholdScalePercent DOES NOT EXIST YET (verified CvGameSpeedInfo has only iUnitYieldScalePercent) -> FORWARD design field GameSpeed must gain in the reader/#430 phase, NOT an existing edge. XML curve is clean geometric (Eternity=base=10x normal; each faster speed = base x speedPct/100 per file comment lines 4-12), so base = the Eternity value, overrides only where the ratio breaks. Values are raw culture points, NOT x100 (call site multiplies by 100, e.g. CvCity.cpp:13008). Author under identity (identity.cultureThreshold = base + optional per-speed overrides)."
+    },
+    {
+     "field": "PrereqGameOption",
+     "xmlTag": "PrereqGameOption",
+     "member": "m_iPrereqGameOption (addEnumAsInt)",
+     "verdict": "policy",
+     "scope": "world",
+     "scaled": "none",
+     "authored": true,
+     "evidence": "CvGlobals.cpp:3587 (cacheGameSpecificValues: level ACTIVE only if this option is set, else getLevel()==-1)",
+     "note": "Whole-entity AVAILABILITY gate: a game-option (e.g. GAMEOPTION_CULTURE_REALISTIC_SPREAD) turning the level on/off for the current game. Conditioner on the entity's existence, not a modifier family. Author as a boolean/option gate (policy section, or identity.prereqGameOption). Same field name exists on Tech/Building/Unit/Corp/Event/Mission/Espionage (different classes); the CultureLevel consumer is CvGlobals.cpp:3587."
+    },
+    {
+     "field": "Level / getLevel / setLevel",
+     "xmlTag": "(none - not authored)",
+     "member": "m_iLevel",
+     "verdict": "drop-dead-structure",
+     "scope": "n/a",
+     "authored": false,
+     "evidence": "CvGlobals.cpp:3589/3591 (setLevel assigned at runtime); read as getLevel()>-1 in CvCity.cpp:10527,10638",
+     "note": "RUNTIME-DERIVED active index, NOT XML data (no XML tag, ctor inits to -1, absent from getDataMembers/read). cacheGameSpecificValues assigns a sequential active index per game (or -1 if PrereqGameOption off). Pure derived state -> drop from JSON; the engine recomputes the active set from PrereqGameOption on load."
+    },
+    {
+     "field": "ReplacementID + ReplacementCondition",
+     "xmlTag": "ReplacementID, ReplacementCondition",
+     "member": "(none in CvCultureLevelInfo)",
+     "verdict": "identity",
+     "scope": "n/a",
+     "authored": true,
+     "evidence": "Assets/XML/GameInfo/CIV4CultureLevelInfo.xml:113-120 (CULTURELEVEL_ALT_POOR row); NOT read by CvCultureLevelInfo.cpp (no member/getter/read entry)",
+     "note": "The CvInfoReplacements whole-Info conditional-replacement mechanism (the Trait-note discovery): a conditional alternate Info selected by a GOM condition (here GAMEOPTION_CULTURE_1_CITY_TILE_FOUNDING). Handled at the loader/CvInfoBase level, NOT this class. LIVE structure (the ALT_POOR row exists) -> KEEP faithfully as a replacement/succession edge (identity-level, parallel to building replacedBy), authored on the replacement record. Mapping put ReplacementID under identity (correct); ReplacementCondition (the GOM gate) must ride with it. Do NOT drop."
+    }
+   ],
+   "notes": "NOT a POCO: it carries one live additive-style modifier (iCityDefenseModifier -> combat.city.defense.percent, CvCity.cpp:10184) and acts as a CONDITIONER/enabler that gates buildings (BuildingInfo.PrereqCultureLevel). It is a config/global entity in the GameSpeed/Handicap/Era family, so a BESPOKE curator (like curate_handicap.py / curate_gamespeed.py) is the right approach -- the SpeedThresholds collapse and the per-level caps are not standard cascade families and won't ride curate_common's channel machinery.\n\nKEY VERDICTS / divergences from the first-pass mapping (mapping is a FILTER, not gospel -- under-classified again here):\n1. Only ONE field is a true modifier family: iCityDefenseModifier (combat/defense, city, percent). Everything the mapping filed as a city/flat channel (iCityRadius, iMaxWorldWonders, iMaxTeamWonders, iMaxNationalWonders, iMaxNationalWondersOCC) is actually a NON-ADDITIVE replace/cap -> classifies OUT of the cascade as per-level IDENTITY (blueprint section 3: caps/overrides are not additive channels). Do not author them as flat families.\n2. SpeedThresholds -> identity (base + per-speed overrides), per owner ruling section 7 line 1069. WATCH OUT: GameSpeed.cultureThresholdScalePercent referenced by that ruling DOES NOT EXIST yet (verified CvGameSpeedInfo has only iUnitYieldScalePercent) -- a future GameSpeed field to add in the reader/#430 phase; the collapse is a forward design, not an existing edge. Thresholds are raw culture points, NOT x100.\n3. getLevel()/m_iLevel is runtime-derived (CvGlobals.cpp:3589) -> drop it.\n4. PrereqGameOption is a whole-entity availability gate (policy/identity), the same field that computes the runtime active level.\n5. ReplacementID/ReplacementCondition are NOT read by CvCultureLevelInfo -- they are the CvInfoReplacements conditional-whole-Info-replacement edge (the Trait-note discovery); LIVE (CULTURELEVEL_ALT_POOR), keep faithfully as a replacement edge, do NOT drop.\n\nDOUBLE-AUTHOR / cross-entity edge to register: BuildingInfo has a PrereqCultureLevel field (Tools/Migration/mapping/BuildingInfo.json:173) -- a building gated by HAVING a culture level. Per the stay-vs-invert rule the culture level is the CONDITIONER (a gate you must possess, not a target the building modifies), so it INVERTS onto CultureLevel as enables.buildings, owned by the entity migrated FIRST (CultureLevel, a config entity, migrates before the Building monster). It is NOT yet wired: store.PREREQ_FIELDS (Tools/Migration/store.py:62-144) has no PrereqCultureLevel entry and CultureLevelInfo is not in store.ENTITIES. To wire: add CultureLevelInfo to ENTITIES and add (\"BuildingInfo\",\"PrereqCultureLevel\",\"buildings\") to PREREQ_FIELDS so the reverse enabler index attributes the punk/era buildings to their required culture level. No existing curate_*.py names CultureLevel, so there is no existing double-author to drop -- this is a NEW edge to add.\n\nNO free-units-on-revolt or other per-level grant effects exist on this entity (checked all getters): the only per-level effects are the city-defense %, the workable-radius override, the four wonder caps, and the per-speed culture thresholds. iLevel is runtime-derived bookkeeping. Config/global-ish entity, ~19 records (CULTURELEVEL_NONE..MONUMENTAL plus the REALISTIC_SPREAD-gated and ALT_POOR-replacement rows)."
+  },
+  {
+   "entity": "VoteInfo",
+   "isPoco": false,
+   "approach": "bespoke",
+   "classFiles": [
+    "C:\\code\\s2s\\s2s\\Sources\\Infos\\CvVoteInfo.h",
+    "C:\\code\\s2s\\s2s\\Sources\\Infos\\CvVoteInfo.cpp"
+   ],
+   "enablerEdges": [
+    "ForceCivics -> empire (forces Civic when resolution passes)",
+    "DiploVotes -> world (which VoteSource may raise this resolution)"
+   ],
+   "fields": [
+    {
+     "field": "Type",
+     "xmlTag": "Type",
+     "verdict": "identity",
+     "member": "(CvInfoBase)",
+     "evidence": "Assets/XML/GameInfo/CIV4VoteInfo.xml:5",
+     "note": "Intrinsic resolution id (e.g. VOTE_SECRETARY_GENERAL); CvInfoBase, name-keyed."
+    },
+    {
+     "field": "Description",
+     "xmlTag": "Description",
+     "verdict": "text",
+     "member": "(CvInfoBase)",
+     "evidence": "Assets/XML/GameInfo/CIV4VoteInfo.xml:6",
+     "note": "TXT_KEY display string; civilopedia/help text."
+    },
+    {
+     "field": "PopulationThreshold",
+     "xmlTag": "iPopulationThreshold",
+     "verdict": "policy",
+     "member": "m_iPopulationThreshold",
+     "scope": "world",
+     "unit": "percent",
+     "scaled": "none",
+     "family": "voteThreshold",
+     "authored": true,
+     "evidence": "Sources/CvGame.cpp:2951 (countPossibleVote * threshold / 100)",
+     "note": "Pass-threshold as percent of eligible votes. Live; tunable resolution parameter, not a modifier family deposit. scope=world (per-resolution tally rule)."
+    },
+    {
+     "field": "StateReligionVotePercent",
+     "xmlTag": "iStateReligionVotePercent",
+     "verdict": "policy",
+     "member": "m_iStateReligionVotePercent",
+     "scope": "empire",
+     "unit": "percent",
+     "scaled": "none",
+     "family": "voteThreshold",
+     "authored": true,
+     "evidence": "Sources/CvPlayer.cpp:23906 (iVotes *= (100 + getStateReligionVotePercent()); /=100)",
+     "note": "Per-player vote-weight bonus when player's state religion matches the vote-source religion (AP/Pope votes use 100). Live; resolution tally parameter applied at the empire/player level."
+    },
+    {
+     "field": "TradeRoutes",
+     "xmlTag": "iTradeRoutes",
+     "verdict": "keep-modifier",
+     "member": "m_iTradeRoutes",
+     "scope": "world",
+     "unit": "flat",
+     "scaled": "none",
+     "family": "tradeRoutes",
+     "authored": true,
+     "evidence": "Sources/CvGame.cpp:7923 (changeTradeRoutes(kVote.getTradeRoutes()*iChange)); AI at Sources/CvPlayerAI.cpp:7229",
+     "note": "REAL modifier: when the resolution passes it deposits into the game-wide extra-trade-route pool (Single Currency = +1). Genuine family deposit, world scope. Mapping's 'tradeRoutes/flat' is correct here."
+    },
+    {
+     "field": "MinVoters",
+     "xmlTag": "iMinVoters",
+     "verdict": "policy",
+     "member": "m_iMinVoters",
+     "scope": "world",
+     "unit": "flat",
+     "scaled": "none",
+     "family": "voteThreshold",
+     "authored": true,
+     "evidence": "Sources/CvGame.cpp:4235 (if (iNumVoters < getMinVoters()) ... resolution unavailable)",
+     "note": "Minimum eligible voters before this resolution can be raised. Live; resolution availability gate (all data = 3)."
+    },
+    {
+     "field": "SecretaryGeneral",
+     "xmlTag": "bSecretaryGeneral",
+     "verdict": "policy",
+     "member": "m_bSecretaryGeneral",
+     "scope": "world",
+     "unit": "enabler",
+     "scaled": "none",
+     "family": "voteRole",
+     "authored": true,
+     "evidence": "Sources/CvGame.cpp:2984/2999/3014/9697/9755 (SG election + canHaveSecretaryGeneral + clearSecretaryGeneral)",
+     "note": "Marks this resolution as the Secretary-General/Pope/Chair election for its vote source. Live structural mode flag driving SG plumbing; classify policy (resolution-class flag), borders identity."
+    },
+    {
+     "field": "Victory",
+     "xmlTag": "bVictory",
+     "verdict": "policy",
+     "member": "m_bVictory",
+     "scope": "world",
+     "unit": "enabler",
+     "scaled": "none",
+     "family": "voteRole",
+     "authored": true,
+     "evidence": "Sources/CvGame.cpp:4166/7571 (bVictory branch + diplo-victory win check); AI Sources/CvPlayerAI.cpp:7148",
+     "note": "Marks this resolution as the diplomatic-victory vote (passing it wins). Live; resolution-class flag, world scope."
+    },
+    {
+     "field": "FreeTrade",
+     "xmlTag": "bFreeTrade",
+     "verdict": "policy",
+     "member": "m_bFreeTrade",
+     "scope": "world",
+     "unit": "enabler",
+     "scaled": "none",
+     "family": "voteEffect",
+     "authored": true,
+     "evidence": "Sources/CvGame.cpp:7924 (changeFreeTradeCount(...)); consumed Sources/CvTeam.cpp:3807; AI Sources/CvPlayerAI.cpp:7297",
+     "note": "On pass, toggles game-wide free-trade state. Live policy (world boolean state)."
+    },
+    {
+     "field": "NoNukes",
+     "xmlTag": "bNoNukes",
+     "verdict": "policy",
+     "member": "m_bNoNukes",
+     "scope": "world",
+     "unit": "enabler",
+     "scaled": "none",
+     "family": "voteEffect",
+     "authored": true,
+     "evidence": "Sources/CvGame.cpp:7925 (changeNoNukesCount(...)); consumed CvPlayer.cpp:6743/6859, CvGameTextMgr.cpp:14876; AI CvPlayerAI.cpp:7242",
+     "note": "On pass, toggles game-wide no-nukes ban. Live policy (world boolean state)."
+    },
+    {
+     "field": "CityVoting",
+     "xmlTag": "bCityVoting",
+     "verdict": "policy",
+     "member": "m_bCityVoting",
+     "scope": "world",
+     "unit": "enabler",
+     "scaled": "none",
+     "family": "voteMode",
+     "authored": true,
+     "evidence": "Sources/CvPlayer.cpp:23890 (getVotes(): isCityVoting() -> votes = religion-city/city count)",
+     "note": "Vote-weighting mode: tally by cities, not population. LIVE consumer despite all-zero in current data -> keep, NOT drop-dead-structure (POCO/dead-data caveat)."
+    },
+    {
+     "field": "CivVoting",
+     "xmlTag": "bCivVoting",
+     "verdict": "policy",
+     "member": "m_bCivVoting",
+     "scope": "world",
+     "unit": "enabler",
+     "scaled": "none",
+     "family": "voteMode",
+     "authored": true,
+     "evidence": "Sources/CvPlayer.cpp:23883 (getVotes(): isCivVoting() -> 1 vote per civ)",
+     "note": "Vote-weighting mode: one vote per civ. LIVE consumer despite all-zero in current data -> keep, NOT drop-dead-structure."
+    },
+    {
+     "field": "DefensivePact",
+     "xmlTag": "bDefensivePact",
+     "verdict": "policy",
+     "member": "m_bDefensivePact",
+     "scope": "team",
+     "unit": "enabler",
+     "scaled": "none",
+     "family": "voteEffect",
+     "authored": true,
+     "evidence": "Sources/CvGame.cpp:7954/9324 (forces defensive pacts among voting members); canDo CvPlayer.cpp:23954; AI CvPlayerAI.cpp:7349",
+     "note": "On pass, forces defensive pacts between voting members. Live policy; effect lands on teams (team scope)."
+    },
+    {
+     "field": "OpenBorders",
+     "xmlTag": "bOpenBorders",
+     "verdict": "policy",
+     "member": "m_bOpenBorders",
+     "scope": "team",
+     "unit": "enabler",
+     "scaled": "none",
+     "family": "voteEffect",
+     "authored": true,
+     "evidence": "Sources/CvGame.cpp:7936/9316 (forces open borders among members); canDo CvPlayer.cpp:23936; AI CvPlayerAI.cpp:7331",
+     "note": "On pass, forces open borders between voting members. Live policy; team scope."
+    },
+    {
+     "field": "ForcePeace",
+     "xmlTag": "bForcePeace",
+     "verdict": "policy",
+     "member": "m_bForcePeace",
+     "scope": "team",
+     "unit": "enabler",
+     "scaled": "none",
+     "family": "voteEffect",
+     "authored": true,
+     "evidence": "Sources/CvGame.cpp:7972/9332 (forces peace on target); canDo CvPlayer.cpp:23965; AI CvPlayerAI.cpp:7368",
+     "note": "On pass, forces peace involving the named target. Live policy; team scope."
+    },
+    {
+     "field": "ForceNoTrade",
+     "xmlTag": "bForceNoTrade",
+     "verdict": "policy",
+     "member": "m_bForceNoTrade",
+     "scope": "team",
+     "unit": "enabler",
+     "scaled": "none",
+     "family": "voteEffect",
+     "authored": true,
+     "evidence": "Sources/CvGame.cpp:7988/9350 (forces trade embargo on target); canDo CvPlayer.cpp:24020; AI CvPlayerAI.cpp:7557",
+     "note": "On pass, forces a trade embargo on the target. Live policy; team scope."
+    },
+    {
+     "field": "ForceWar",
+     "xmlTag": "bForceWar",
+     "verdict": "policy",
+     "member": "m_bForceWar",
+     "scope": "team",
+     "unit": "enabler",
+     "scaled": "none",
+     "family": "voteEffect",
+     "authored": true,
+     "evidence": "Sources/CvGame.cpp:8006/9368 (declares war on target); canDo CvPlayer.cpp:23994; AI CvPlayerAI.cpp:7591",
+     "note": "On pass, declares war on the target. Live policy; team scope."
+    },
+    {
+     "field": "AssignCity",
+     "xmlTag": "bAssignCity",
+     "verdict": "policy",
+     "member": "m_bAssignCity",
+     "scope": "city",
+     "unit": "enabler",
+     "scaled": "none",
+     "family": "voteEffect",
+     "authored": true,
+     "evidence": "Sources/CvGame.cpp:8023/9386/5724 (transfers the named city to the target); canDo CvPlayer.cpp:24031; AI CvPlayerAI.cpp:7683",
+     "note": "On pass, reassigns the named city to the target player. Live policy; city scope (sub-city target)."
+    },
+    {
+     "field": "ForceCivics",
+     "xmlTag": "ForceCivics",
+     "verdict": "enabler-edge",
+     "member": "m_aeForceCivic",
+     "scope": "empire",
+     "unit": "enabler",
+     "keyedBy": "CivicTypes",
+     "scaled": "none",
+     "family": "forceCivics",
+     "authored": true,
+     "evidence": "Sources/CvGame.cpp:7929 (changeForceCivicCount((CivicTypes)iI, isForceCivic(iI)?...)); consumed CvPlayer.cpp:8456-8511 canDoCivics, AI CvPlayerAI.cpp:7198",
+     "note": "On pass, forces the listed civic(s) on all members empire-wide. Live enabler edge VoteInfo -> Civic. No double-author (no curate_*.py names this)."
+    },
+    {
+     "field": "DiploVotes",
+     "xmlTag": "DiploVotes/DiploVote",
+     "verdict": "enabler-edge",
+     "member": "m_aeVoteSourceTypes",
+     "scope": "world",
+     "unit": "enabler",
+     "keyedBy": "VoteSourceTypes",
+     "scaled": "none",
+     "family": "voteSource",
+     "authored": true,
+     "evidence": "Sources/CvGame.cpp:2983/9306, CvPlayer.cpp:23878, CvTeamAI.cpp:939 (isVoteSourceType gate); mapping mislabels as identity",
+     "note": "Gate: which VoteSource(s) (UN/AP/Congress of Vienna) may raise this resolution. LIVE gameplay gate, NOT identity. Enabler edge VoteInfo -> VoteSource; VoteInfo owns it (VoteSourceInfo not yet migrated, no mapping file -> no double-author)."
+    }
+   ],
+   "notes": "VoteInfo is a SOURCE for diplomatic-victory / UN-AP-Congress resolutions, NOT a POCO. Every one of the 18 authored data members has a live C++ consumer (verified: no getter is dead). The first-pass mapping/VoteInfo.json is wrong twice over: (1) it collapses every effect flag into a generic 'voteEffect/enabler' and puts everything at 'game' scope, and (2) it mislabels DiploVotes as identity when it is the live VoteSource gate. Corrected model: thresholds (PopulationThreshold/MinVoters/StateReligionVotePercent) = policy tally-rule parameters (world, except StateReligionVotePercent which is applied per-player = empire); TradeRoutes = a genuine modifier deposited into the game-wide trade-route pool on pass (the only true modifier-family field, world/tradeRoutes/flat); the effect bools = policies (world/team/city boolean state toggled when the resolution passes, applied in CvGame::setVoteOutcome ~7923-8023, gated by canDoResolution in CvPlayer.cpp, valued by AI_doVoteOnVote in CvPlayerAI.cpp ~7148-7683); SecretaryGeneral/Victory/CivVoting/CityVoting = resolution-class/vote-mode policy flags. ForceCivics = enabler edge -> Civic (changeForceCivicCount, CvGame.cpp:7929). DiploVotes = enabler edge -> VoteSource (the isVoteSourceType gate). All ×100 / scaling = none (raw ints/percents). No double-author conflict: grep of all committed curate_*.py for vote/DiploVote/VoteSource/ForceCivic returned nothing, so VoteInfo owns its DiploVotes and ForceCivics edges. RECOMMENDATION: bespoke curator -- this entity is unusual (a 'resolution' source whose effects deposit into game/team state and which couples to a not-yet-migrated VoteSource entity); it does not fit the pocos-config or common-config molds and needs explicit voteEffect-policy + two enabler-edge handling. Migration-ordering note: when VoteSourceInfo is later migrated, it must DROP the reverse Vote<->VoteSource edge (VoteInfo authored it first)."
+  },
+  {
+   "entity": "CivilizationInfo",
+   "isPoco": false,
+   "approach": "bespoke",
+   "classFiles": [
+    "C:\\code\\s2s\\s2s\\Sources\\Infos\\CvCivilizationInfo.h",
+    "C:\\code\\s2s\\s2s\\Sources\\Infos\\CvCivilizationInfo.cpp"
+   ],
+   "enablerEdges": [
+    "DisableTechs -> empire (anti-enable: per-civ permanent research ban, CvPlayer.cpp:8266 canEverResearch=false)"
+   ],
+   "fields": [
+    {
+     "field": "Type",
+     "xmlTag": "Type",
+     "member": "(CvInfoBase m_szType)",
+     "verdict": "identity",
+     "scope": "n/a",
+     "evidence": "CvCivilizationInfo.cpp:322 CvInfoBase::read; the canonical type key",
+     "note": "Base-class identity key, handled by CvInfoBase, not getDataMembers."
+    },
+    {
+     "field": "Description",
+     "xmlTag": "Description",
+     "member": "(CvInfoBase m_szTextKey)",
+     "verdict": "text",
+     "scope": "n/a",
+     "evidence": "CvCivilizationInfo.cpp:322 CvInfoBase::read",
+     "note": "Long name TXT_KEY, base-class text."
+    },
+    {
+     "field": "ShortDescription",
+     "xmlTag": "ShortDescription",
+     "member": "m_szShortDescriptionKey",
+     "verdict": "text",
+     "scope": "n/a",
+     "evidence": "CvCivilizationInfo.cpp:330 read; getShortDescription cpp:152-161 (gender/plurality forms)",
+     "note": "CvWString, hand-read (wrappers only do CvString). Localized short name forms."
+    },
+    {
+     "field": "Adjective",
+     "xmlTag": "Adjective",
+     "member": "m_szAdjectiveKey",
+     "verdict": "text",
+     "scope": "n/a",
+     "evidence": "CvCivilizationInfo.cpp:331 read; getAdjective cpp:170-179",
+     "note": "CvWString, hand-read. 'American', etc."
+    },
+    {
+     "field": "Civilopedia",
+     "xmlTag": "Civilopedia",
+     "member": "(CvInfoBase m_szCivilopediaKey)",
+     "verdict": "text",
+     "scope": "n/a",
+     "evidence": "CvCivilizationInfo.cpp:322 CvInfoBase::read",
+     "note": "Base-class civilopedia text key."
+    },
+    {
+     "field": "DefaultPlayerColor",
+     "xmlTag": "DefaultPlayerColor",
+     "member": "m_iDefaultPlayerColor",
+     "verdict": "art",
+     "scope": "n/a",
+     "keyedBy": "PlayerColorTypes",
+     "evidence": "CvGame.cpp:9098, CvInitCore.cpp:1868, CvPlayer.cpp:1653 — sets player color on civ assignment",
+     "note": "Live, but purely cosmetic color identity. addEnumAsInt; not in legacy checksum (cpp:300 note)."
+    },
+    {
+     "field": "ArtDefineTag",
+     "xmlTag": "ArtDefineTag",
+     "member": "m_szArtDefineTag",
+     "verdict": "art",
+     "scope": "n/a",
+     "evidence": "getFlagTexture cpp:188-191, getArtInfo cpp:259-262, getButton cpp:265-269 -> ARTFILEMGR.getCivilizationArtInfo",
+     "note": "Hand-read; modular merge must precede CvInfoBase::copyNonDefaults (cpp:399-403). Keys into CvArtInfoCivilization (flag/button)."
+    },
+    {
+     "field": "ArtStyleType",
+     "xmlTag": "ArtStyleType",
+     "member": "m_iArtStyleType",
+     "verdict": "art",
+     "scope": "n/a",
+     "keyedBy": "ArtStyleTypes",
+     "evidence": "CvInitCore.cpp:1869, CvPlayer.cpp:1697/3667 — sets player art style (building graphics set)",
+     "note": "addEnumAsInt; not in legacy checksum."
+    },
+    {
+     "field": "UnitArtStyleType",
+     "xmlTag": "UnitArtStyleType",
+     "member": "m_iUnitArtStyleType",
+     "verdict": "art",
+     "scope": "n/a",
+     "keyedBy": "UnitArtStyleTypes",
+     "evidence": "CvPlayer.cpp:3677/25772, CvUnit.cpp:22074 — selects unit art variant",
+     "note": "addEnumAsInt; not in legacy checksum."
+    },
+    {
+     "field": "CivilizationSelectionSound",
+     "xmlTag": "CivilizationSelectionSound",
+     "member": "m_iSelectionSoundScriptId",
+     "verdict": "art",
+     "scope": "n/a",
+     "evidence": "CvUnit.cpp:22278 — unit selection sound fallback to civ sound",
+     "note": "Hand-read via gDLL->getAudioTagIndex (runtime audio-tag table, cpp:336-337)."
+    },
+    {
+     "field": "CivilizationActionSound",
+     "xmlTag": "CivilizationActionSound",
+     "member": "m_iActionSoundScriptId",
+     "verdict": "art",
+     "scope": "n/a",
+     "evidence": "CvSelectionGroup.cpp:547 — group action sound fallback to civ sound",
+     "note": "Hand-read via audio-tag table (cpp:338-339)."
+    },
+    {
+     "field": "bPlayable",
+     "xmlTag": "bPlayable",
+     "member": "m_bPlayable",
+     "verdict": "policy",
+     "scope": "world",
+     "evidence": "CvInitCore.cpp:1570, CvGame.cpp:3952, CvXMLLoadUtilitySet.cpp:943 — gates whether a human may pick this civ",
+     "note": "Boolean eligibility flag (can a human player select this civ). identity-adjacent; treat as a world-level selection policy."
+    },
+    {
+     "field": "bAIPlayable",
+     "xmlTag": "bAIPlayable",
+     "member": "m_bAIPlayable",
+     "verdict": "policy",
+     "scope": "world",
+     "evidence": "CvPlayer.cpp:23171, CvXMLLoadUtilitySet.cpp:949, Infos/CvUnitInfo.cpp:203 — gates AI civ assignment",
+     "note": "Boolean: can the AI be assigned this civ. In legacy checksum (cpp:305)."
+    },
+    {
+     "field": "bStronglyRestricted",
+     "xmlTag": "bStronglyRestricted",
+     "member": "m_bStronglyRestricted",
+     "verdict": "policy",
+     "scope": "empire",
+     "evidence": "CvCity.cpp:2205 & 2547 — when set on an NPC civ, blocks building/training anything not explicitly EnabledCivilization-allowed",
+     "note": "Live NPC build-restriction flag (an empire-level capability gate, the inverse of an enable). In checksum (cpp:309)."
+    },
+    {
+     "field": "FreeBuildings",
+     "xmlTag": "FreeBuildings",
+     "member": "m_aiCivilizationBuildings",
+     "verdict": "grant",
+     "scope": "city",
+     "keyedBy": "BuildingTypes",
+     "evidence": "CvCity.cpp:391-396 changeHasBuilding(...,true) on first/NPC city; CvPlayer.cpp:5805 & 11353 re-grant to (re)capital",
+     "note": "Persistent intrinsic capital buildings (Palace + civ-class buildings), re-asserted when the capital moves — a standing grant of capital buildings, not a removable modifier. Also read by Infos/CvUnitInfo.cpp:204/211 to gate unit availability. Mapping mis-filed under 'identity'; this is a live grant edge. add(...,L\"FreeBuildings\")."
+    },
+    {
+     "field": "FreeTechs",
+     "xmlTag": "FreeTechs",
+     "member": "m_aeCivilizationFreeTechs",
+     "verdict": "grant",
+     "scope": "team",
+     "keyedBy": "TechTypes",
+     "evidence": "CvGame.cpp:1226-1229 setHasTech(...,true) at game start; CvGame.cpp:3953 civ-availability scan; CvGameTextMgr.cpp:7799 civilopedia",
+     "note": "One-shot starting techs granted to the team at game init. DOUBLE-AUTHOR check: tech curator (curate_tech.py) owns no civ-keyed free-tech edge (grep clean), so the civ owns this grant. Mapping mis-filed under 'identity'."
+    },
+    {
+     "field": "DisableTechs",
+     "xmlTag": "DisableTechs",
+     "member": "m_aeCivilizationDisableTechs",
+     "verdict": "policy",
+     "scope": "empire",
+     "keyedBy": "TechTypes",
+     "evidence": "CvPlayer.cpp:8266 canEverResearch() returns false for these techs",
+     "note": "Per-civ permanent research ban (anti-enable / negative capability gate at the player level). Mapping proposed inverting to CvTechInfo.disabledForCivilizations[]; under the locked top-down model keep it civ-owned as an empire-scope policy/anti-enabler edge (registered in enablerEdges)."
+    },
+    {
+     "field": "InitialCivics",
+     "xmlTag": "InitialCivics",
+     "member": "m_piCivilizationInitialCivics",
+     "verdict": "grant",
+     "scope": "empire",
+     "keyedBy": "CivicOptionTypes -> CivicTypes",
+     "evidence": "CvPlayer.cpp:479 & 1534 & 18665 setCivics() at player init; CvPlayerAI.cpp:10028 favored-civic check; CvPlayer.cpp:14357 revolt comparison",
+     "note": "Starting civic loadout per civic-option slot (one-shot empire state at game start). Bespoke read keyed into a fixed CivicOption-length array (cpp:347-388). In checksum (cpp:310)."
+    },
+    {
+     "field": "Leaders",
+     "xmlTag": "Leaders",
+     "member": "m_aeLeaders",
+     "verdict": "identity",
+     "scope": "world",
+     "keyedBy": "LeaderHeadTypes",
+     "evidence": "CvInitCore.cpp:1883 & CvPlayer.cpp:23189 — restricts which leaders may be paired with this civ (unless GAMEOPTION_LEADER_UNRESTRICTED); getNumLeaders for random leader gen",
+     "note": "Civ<->leader eligibility roster (enables leader selection for this civ). In checksum (cpp:311)."
+    },
+    {
+     "field": "Cities",
+     "xmlTag": "Cities",
+     "member": "m_paszCityNames / m_iNumCityNames",
+     "verdict": "text",
+     "scope": "n/a",
+     "evidence": "CvPlayer.cpp:2905-2921 — picks city names from this list when founding cities",
+     "note": "City-name pool (localized TXT_KEY list). Hand-read string list (cpp:341-345); modular-extended in copyNonDefaults. Pure naming data."
+    },
+    {
+     "field": "DerivativeCiv",
+     "xmlTag": "DerivativeCiv",
+     "member": "m_iDerivativeCiv",
+     "verdict": "identity",
+     "scope": "n/a",
+     "keyedBy": "CivilizationTypes",
+     "evidence": "CvPlayer.cpp:23255 getDerivativeCiv() == it->first — civ-split/derivation lineage",
+     "note": "Self-referential CivilizationTypes link (which civ this derives into). addEnum (delayed resolution). In checksum (cpp:304)."
+    },
+    {
+     "field": "iSpawnRateModifier",
+     "xmlTag": "iSpawnRateModifier",
+     "member": "m_iSpawnRateModifier",
+     "verdict": "keep-modifier",
+     "family": "spawnRate",
+     "scope": "empire",
+     "unit": "percent",
+     "scaled": "none",
+     "authored": true,
+     "evidence": "CvGame.cpp:6363 adjustedSpawnRate *= 100 + getSpawnRateModifier()",
+     "note": "TRUE landing differs from mapping: consumer applies (100 + mod)/100, so unit=PERCENT not flat; scope=empire (per-player), NOT a flat 'spawnRate'. Family spawnRate.empire.percent. NOT scaled x100 (raw percent points). In checksum (cpp:307)."
+    },
+    {
+     "field": "iSpawnRateNPCPeaceModifier",
+     "xmlTag": "iSpawnRateNPCPeaceModifier",
+     "member": "m_iSpawnRateNPCPeaceModifier",
+     "verdict": "keep-modifier",
+     "family": "spawnRate",
+     "scope": "empire",
+     "unit": "percent",
+     "scaled": "none",
+     "authored": true,
+     "evidence": "CvGame.cpp:6359 adjustedSpawnRate *= 100 + getSpawnRateNPCPeaceModifier()",
+     "note": "Same family as iSpawnRateModifier, NPC-at-peace member. (100 + mod)/100 percent at empire scope. Suggest member 'npcPeace' to disambiguate the two members within spawnRate.empire.percent. In checksum (cpp:308)."
+    }
+   ],
+   "notes": "isPoco=FALSE despite the first-pass mapping only declaring 2 channels (the spawnRate pair) — the POCO CAVEAT applies hard here. Reading the consumers shows CivilizationInfo actively GRANTS gameplay state at game start (FreeTechs -> setHasTech, FreeBuildings -> changeHasBuilding, InitialCivics -> setCivics), GATES capability (DisableTechs -> canEverResearch=false, bStronglyRestricted -> NPC build lockdown, bPlayable/bAIPlayable -> civ selection), DEPOSITS a real modifier family (spawnRate.empire.percent), and ENABLES the leader roster. So it is a SOURCE, not a pure data-holder.\\n\\nRecommended approach: BESPOKE. common-config cannot express this entity: (1) the read() is heavily hand-written outside CvInfoUtil (CvWString descriptions, audio-tag-resolved sounds, the InitialCivics CivicOption-keyed array, the Cities string list, the pre-base ArtDefineTag merge) — see cpp:62-68 doc comment; (2) it carries three distinct grant edges with different landing scopes (team techs / city buildings / empire civics) that pocos-config/common-config buckets don't model; (3) getCheckSum is deliberately explicit (cpp:299-315) and order-sensitive for the asset checksum. A bespoke curate_civilization.py mirroring the curate_tech/civic precedent is the right call.\\n\\nKey TRUE-scope corrections vs mapping/CivilizationInfo.json:\\n- spawnRate fields: mapping said scope=player, kind=flat. Consumer (CvGame.cpp:6359/6363) proves PERCENT (×(100+mod)/100) and empire scope. Use family spawnRate.empire.percent with two members (general + npcPeace).\\n- FreeBuildings / FreeTechs / InitialCivics: mapping dumped all under 'identity'. They are GRANTS (live game-start state deposits), with scopes city / team / empire respectively. Not identity.\\n- DisableTechs: mapping proposed inverting onto CvTechInfo. Under the locked top-down model keep it CIV-owned as an empire-scope anti-enabler/policy (it removes research capability). Registered as an enablerEdge.\\n- bStronglyRestricted: not pure identity — it is a live empire-level NPC build-capability gate (CvCity.cpp:2205/2547); classified policy.\\n\\nDouble-author: grep of all committed curate_*.py for 'civilization' returned only curate_trait.py's unrelated bCivilizationTrait flag. No prior curator claims any civ-keyed edge, so this civ owns FreeTechs, FreeBuildings, InitialCivics, DisableTechs, Leaders edges (migrated-first).\\n\\nDead structure: NONE found — every getter (incl. the cosmetic art/color/sound ones and DerivativeCiv) has at least one live non-class consumer. Nothing to drop. (DisableTechs is genuinely live via canEverResearch; do not treat as dead even though it is rarely populated.)\\n\\nXML sample (CIV4CivilizationInfos.xml, CIVILIZATION_AMERICA) confirms field set and that FreeBuildings always leads with BUILDING_PALACE — reinforcing the 'standing capital grant' reading."
+  }
+ ]
+}

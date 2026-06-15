@@ -1,0 +1,15 @@
+{
+  "entity": "RouteInfo",
+  "rootElement": "RouteInfo",
+  "glob": "**/CIV4RouteInfos.xml",
+  "channels": {},
+  "inversionsOut": {
+    "TechMovementChanges": {"destEntity": "CvTechInfo", "shape": "routeMovementChanges.{ROUTE}"}
+  },
+  "enablerEdges": {},
+  "prereqs": ["PrereqOrBonuses"],
+  "cost": ["iAdvancedStartCost"],
+  "art": ["Button"],
+  "identity": ["Type", "Description", "iValue", "iMovement", "iFlatMovement", "BonusType", "Yields", "bSeaTunnel"],
+  "boostsIn": ["improvementYieldChanges"]
+}

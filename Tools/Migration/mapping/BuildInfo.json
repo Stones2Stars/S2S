@@ -1,0 +1,39 @@
+{
+  "entity": "BuildInfo",
+  "rootElement": "BuildInfo",
+  "glob": "**/CIV4BuildInfos.xml",
+  "channels": {},
+  "inversionsOut": {},
+  "enablerEdges": {},
+  "prereqs": [
+    "PrereqTech",
+    "PrereqBonusTypes",
+    "FeatureStructs",
+    "TerrainStructs"
+  ],
+  "cost": [
+    "iTime",
+    "iCost"
+  ],
+  "art": [
+    "Button",
+    "EntityEvent",
+    "HotKey",
+    "iHotKeyPriority",
+    "bShiftDown",
+    "bCtrlDown",
+    "bAltDown"
+  ],
+  "identity": [
+    "Type",
+    "Description",
+    "Help",
+    "bKill",
+    "ImprovementType",
+    "RouteType",
+    "TerrainChange",
+    "FeatureChange",
+    "ObsoleteTech"
+  ],
+  "boostsIn": []
+}

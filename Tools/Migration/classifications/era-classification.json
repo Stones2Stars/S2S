@@ -1,0 +1,344 @@
+{
+  "summary": "Understand CvEraInfo + classify every field for the #428 flat-family JSON migration",
+  "agentCount": 5,
+  "logs": [],
+  "result": {
+    "classification": {
+      "fields": [
+        {
+          "field": "Type",
+          "disposition": "identity",
+          "cleanName": "type",
+          "notes": "CvInfoBase entity key (C2C_ERA_PREHISTORIC). The JSON 'type'; era identifier across Python (getType()). Required."
+        },
+        {
+          "field": "Description",
+          "disposition": "text",
+          "cleanName": "description",
+          "notes": "CvInfoBase display name (TXT_KEY_ERA_PREHISTORIC). Hoist to top-level 'description' like the GameSpeed/Handicap curators do (text, not buried in identity)."
+        },
+        {
+          "field": "Strategy",
+          "disposition": "text",
+          "cleanName": "strategy",
+          "notes": "CvInfoBase pedia blurb (TXT_KEY_..._STRATEGY); PediaEra.py:159 only. Display text -> top-level text key 'strategy'."
+        },
+        {
+          "field": "Button",
+          "disposition": "art",
+          "cleanName": "icon",
+          "notes": "CvInfoBase art ref (Art/Interface/.../Prehistoric.dds). Renamed to 'icon' per the model's ART_RENAME. PediaEra.py:51."
+        },
+        {
+          "field": "iHistoricalStartYear",
+          "disposition": "identity",
+          "cleanName": "historicalStartYear",
+          "notes": "PACING/calendar. STORED raw on Era; the turn/calendar are DERIVED downstream (CvGameSpeedInfo.cpp:93 tick span = (End-Start)*360; CvDate.cpp:30-35; CvGame.cpp:10100). Eras must be contiguous (start==prev end, asserted CvDate:32). NOT a modifier — keep as stored identity/calendar input."
+        },
+        {
+          "field": "iHistoricalEndYear",
+          "disposition": "identity",
+          "cleanName": "historicalEndYear",
+          "notes": "PACING/calendar, paired with start. STORED raw; same downstream consumers (CvDate.cpp:30/35, CvGameSpeedInfo.cpp:93). identity."
+        },
+        {
+          "field": "iNormalSpeedTurns",
+          "disposition": "identity",
+          "cleanName": "normalSpeedTurns",
+          "notes": "PACING. Era length at 100% speed. STORED raw on Era; this is the spec's named DERIVED-source: CvGameSpeedInfo::getTurnsInEra (cpp:59 = round(normalSpeedTurns*speedPercent/100)) and getEraStartTurn/getTotalTurns/getTicksPerTurnInEra all derive from it. The derived getter lives on GameSpeed, NOT here. identity/calendar. This is a base AMOUNT on the info, not a modifier."
+        },
+        {
+          "field": "iGrowthPercent",
+          "disposition": "modifier-family",
+          "family": "growth",
+          "scope": "world",
+          "unit": "percent",
+          "notes": "Singleton family 'growth' (NO member). Mirrors GameSpeed's separate top-level 'growth' and Handicap's 'growth'. Multiplies city food-to-grow threshold AFTER GameSpeed's speed scale (CvPlayer.cpp:24437, applied after 24434). Config/global -> WORLD scope (mapping's 'game' corrected to 'world'). Plain percent. value e.g. 150."
+        },
+        {
+          "field": "iTrainPercent",
+          "disposition": "modifier-family",
+          "family": "costs",
+          "scope": "world",
+          "member": "hammer",
+          "unit": "percent",
+          "notes": "Universal era cost scale on UNIT base hammer cost (CvPlayer.cpp:6964, era from the produced UNIT's era), applied alongside GameSpeed getHammerCostPercent. Routes into the SAME costs.world.hammer member GameSpeed feeds (NOT Handicap's AI-only buildCost.train ramp). 'world' (mapping's game/trainCost corrected)."
+        },
+        {
+          "field": "iConstructPercent",
+          "disposition": "modifier-family",
+          "family": "costs",
+          "scope": "world",
+          "member": "hammer",
+          "unit": "percent",
+          "notes": "Era cost scale on BUILDING base production cost (CvPlayer.cpp:7097, building/era keyed). Same costs.world.hammer family as iTrain. world scope."
+        },
+        {
+          "field": "iCreatePercent",
+          "disposition": "modifier-family",
+          "family": "costs",
+          "scope": "world",
+          "member": "hammer",
+          "unit": "percent",
+          "notes": "Era cost scale on PROJECT base production cost (CvPlayer.cpp:7156-7159, project tech-prereq era keyed). Same costs.world.hammer family. world scope. NB: train/construct/create all share costs.world.hammer.percent — they cannot coexist as distinct values in a single per-era deposit, so the curator must split the hammer member by produced-thing (e.g. costs.world.hammer.{train,construct,create}.percent) to preserve all three. FLAG: this exceeds GameSpeed's flat hammer.percent shape; reconcile member granularity with the consumption rewrite."
+        },
+        {
+          "field": "iResearchPercent",
+          "disposition": "modifier-family",
+          "family": "costs",
+          "scope": "world",
+          "member": "research",
+          "unit": "percent",
+          "notes": "Era cost scale on TECH base research cost (CvTeam.cpp:2642, tech's-era keyed), alongside GameSpeed getSpeedPercent (2639). Same costs.world.research member GameSpeed feeds. world scope (mapping's game/researchCost corrected)."
+        },
+        {
+          "field": "iBuildPercent",
+          "disposition": "modifier-family",
+          "family": "costs",
+          "scope": "world",
+          "member": "build",
+          "unit": "percent",
+          "notes": "Worker improvement/route BUILD-TIME scale (CvPlot.cpp:3613, getStartEra keyed; PediaBuild.py:85). A build-time cost -> costs family, new member 'build' (no GameSpeed equivalent; not hammer/research/food). world scope. value e.g. 140."
+        },
+        {
+          "field": "iImprovementPercent",
+          "disposition": "modifier-family",
+          "family": "costs",
+          "scope": "world",
+          "member": "improvementUpgrade",
+          "unit": "percent",
+          "notes": "Improvement maturation/UPGRADE-TIME scale (CvGame.cpp:3273, getCurrentEra keyed) — DISTINCT from iBuildPercent (build time vs upgrade time). costs family, member 'improvementUpgrade'. world scope (mapping's improvementBuild renamed for clarity vs iBuild)."
+        },
+        {
+          "field": "iGreatPeoplePercent",
+          "disposition": "modifier-family",
+          "family": "greatPeopleRate",
+          "scope": "world",
+          "unit": "percent",
+          "notes": "Singleton family 'greatPeopleRate' (NO member). Multiplies the Great People / Great General THRESHOLD (CvPlayer.cpp:9158 GG, 9175 GP, getStartEra keyed). A threshold/cost-style multiplier; no GameSpeed sibling. world scope (mapping's game corrected). value e.g. 230."
+        },
+        {
+          "field": "iAnarchyPercent",
+          "disposition": "modifier-family",
+          "family": "durations",
+          "scope": "world",
+          "member": "anger",
+          "unit": "percent",
+          "notes": "Multiplies total anarchy turn length (CvPlayer.cpp:8987/9026, after player/civic mods, getCurrentEra keyed). Exactly GameSpeed's durations.world.anger sibling. world scope (mapping's game/anarchy corrected). value e.g. 40."
+        },
+        {
+          "field": "iEventChancePerTurn",
+          "disposition": "modifier-family",
+          "family": "eventChance",
+          "scope": "world",
+          "unit": "flat",
+          "notes": "Singleton family 'eventChance' (NO member). Per-turn global random-event probability gate (CvPlayer.cpp:22483, getCurrentEra keyed; PediaEra.py:130). A flat probability, NOT a cost. unit FLAT (not percent). world scope. value e.g. 7."
+        },
+        {
+          "field": "iCuttingEdgeCutsTechCostModifier",
+          "disposition": "modifier-family",
+          "family": "costs",
+          "scope": "world",
+          "member": "research",
+          "unit": "percent",
+          "notes": "Tech-cost CUT for researching below your era; CvTeam.cpp:2627 SUMS it across each era band in [tech era, player era) and reduces tech cost (iMod at 2648). A per-era additive accumulator feeding tech research cost -> costs.research family. SCOPE CORRECTION: mapping routes it scope:'player'/techCost, but Era is a config-global and the consumer sums era bands (not a per-player deposit) -> world. FLAG: it co-occupies costs.world.research with iResearchPercent but is a CUT/accumulator (different semantics: summed reduction vs base multiplier) — keep a distinct member or sub-key (e.g. costs.world.research.cuttingEdge) so it is not conflated with the research base multiplier. absent on PREHISTORIC, =10 from ANCIENT."
+        },
+        {
+          "field": "iInitialCityMaintenancePercent",
+          "disposition": "modifier-family",
+          "family": "maintenance",
+          "scope": "city",
+          "member": "initial",
+          "unit": "flat",
+          "notes": "A flat baseline ADDED to every city's maintenance accumulator before computed maintenance (CvCity.cpp:7603; CvDLLWidgetData:5025 + CvGameTextMgr:24983 render). Selected by the city-OWNER's currentEra -> conceptually city scope (per the world>team>empire>area>city spine; mirrors Handicap's maintenance members but applied per-city). New member 'initial'. unit FLAT. IT SITS IN THE x100 maintenance accumulator -> carry the value FAITHFULLY at x100 fixed-point per #432 (do NOT de-scale). read() clamps <0 to 0 (CvEraInfo.cpp:299/344) -> apply the same clamp when curating. NOT in any era's XML (defaults 0) — field shape kept, migrated value is the default."
+        },
+        {
+          "field": "iStartingGold",
+          "disposition": "grants",
+          "cleanName": "startingGold",
+          "notes": "One-shot at game start (getStartEra). CvPlayer::initFreeState:1865 adds to the per-player handicap startingGold then scales by GameSpeed. grants.startingGold — SAME key as the Handicap curator's GRANTS. PediaEra.py:94. value e.g. 10."
+        },
+        {
+          "field": "iStartingUnitMultiplier",
+          "disposition": "grants",
+          "cleanName": "startingUnitMultiplier",
+          "notes": "One-shot. A MULTIPLIER on the free start-unit counts (CvPlayer::initFreeUnits:1916 multiplies settlers/defense/worker/explore; CvGame.cpp:3934-3935 init-pop sizing). grants.startingUnitMultiplier (a multiplier on the other grant counts, not a standalone Handicap key). PediaEra.py:105."
+        },
+        {
+          "field": "iStartingDefenseUnits",
+          "disposition": "grants",
+          "cleanName": "startingDefenseUnits",
+          "notes": "One-shot free units; CvPlayer.cpp:1927 ADDS to the per-player handicap StartingDefenseUnits, x StartingUnitMultiplier, at start era. grants.startingDefenseUnits — SAME key as Handicap (the two grants stack). absent on PREHISTORIC/ANCIENT, =1 from CLASSICAL. PediaEra.py:108."
+        },
+        {
+          "field": "iStartingWorkerUnits",
+          "disposition": "grants",
+          "cleanName": "startingWorkerUnits",
+          "notes": "One-shot free units; CvPlayer.cpp:1936, same add-to-handicap pattern. grants.startingWorkerUnits (mirrors Handicap). absent early, =1 from CLASSICAL. PediaEra.py:115."
+        },
+        {
+          "field": "iStartingExploreUnits",
+          "disposition": "grants",
+          "cleanName": "startingExploreUnits",
+          "notes": "One-shot free units; CvPlayer.cpp:1944, same pattern. grants.startingExploreUnits (mirrors Handicap). PediaEra.py:122."
+        },
+        {
+          "field": "iFreePopulation",
+          "disposition": "grants",
+          "cleanName": "freePopulation",
+          "notes": "One-shot starting-city population bonus (CvCity.cpp:374 setPopulation(INITIAL + FreePopulation); CvGame.cpp:3935, CvPlayer.cpp:17472/24417 sizing) at start era. grants.freePopulation (no Handicap sibling; era-specific). absent early, =1 from RENAISSANCE. PediaEra.py:141."
+        },
+        {
+          "field": "iAdvancedStartPoints",
+          "disposition": "identity",
+          "cleanName": "advancedStart",
+          "notes": "PRE-GAME points budget, NOT a modifier. ONLY Era consumer is CvInitCore.cpp:1649 (resetAdvancedStartPoints) x WorldInfo.AdvancedStartPointsMod (the many getAdvancedStartPoints() hits elsewhere are CvPlayer runtime balance, not this getter). MIRROR the Handicap curator's parking: identity.advancedStart pending the advanced-start mechanic review. (Could equally be a grant; flagged as open question. Handicap parked it in identity, so follow that for consistency.) value e.g. 500."
+        },
+        {
+          "field": "bNoGoodies",
+          "disposition": "modifier-family",
+          "family": "barbarians",
+          "scope": "world",
+          "member": "noGoodies",
+          "unit": "enabler",
+          "notes": "World-global gate suppressing goody-hut placement (CvMapGenerator.cpp:772, getStartEra). A capability/gate, not additive — carry as a world barbarians/spawn toggle, unit 'enabler' (the boolean-gate unit per the spec's unit list). Mirrors how Handicap homes barb/spawn rules in barbarians.world. NOT in any era XML (defaults false) -> keep field shape, value default false. PediaEra.py:103. OPEN: 'enabler' here is a non-additive world flag; if the cascade engine has no boolean channel, this may instead belong in a top-level 'rules'/'enables'-adjacent world-flag section — flag for the model owner."
+        },
+        {
+          "field": "bNoBarbUnits",
+          "disposition": "modifier-family",
+          "family": "barbarians",
+          "scope": "world",
+          "member": "noBarbUnits",
+          "unit": "enabler",
+          "notes": "World-global gate suppressing barbarian unit spawns (CvGame.cpp:7180 with GAMEOPTION_BARBARIAN_NONE, getCurrentEra). barbarians.world toggle, unit enabler. NOT in XML (defaults false). PediaEra.py:149. Same OPEN flag as bNoGoodies re: boolean-gate placement."
+        },
+        {
+          "field": "bNoBarbCities",
+          "disposition": "modifier-family",
+          "family": "barbarians",
+          "scope": "world",
+          "member": "noBarbCities",
+          "unit": "enabler",
+          "notes": "World-global gate suppressing barbarian city founding (CvGame.cpp:6941 createBarbarianCities, getCurrentEra). barbarians.world toggle, unit enabler. NOT in XML (defaults false). PediaEra.py:151. Same OPEN flag."
+        },
+        {
+          "field": "bNoAnimals",
+          "disposition": "drop",
+          "notes": "NEAR-DEAD: declared+Python-exposed (CyInfoInterface3) but NO C++ gameplay consumer (grep-confirmed across Sources/); only PediaEra.py:147 reads it for a display string. No animal-suppression wiring exists. Per 'drop dead STRUCTURE not live DATA' it is borderline — but there is no live data (never set in any era's XML) AND no live gameplay path -> DROP the gameplay intent. At most carry as a display-only identity flag; recommend drop, candidate for the post-migration purge."
+        },
+        {
+          "field": "AudioUnitVictoryScript",
+          "disposition": "art",
+          "cleanName": "unitVictorySound",
+          "notes": "Audio 2D-script tag used as the message sound when a unit wins combat (CvUnit.cpp 2877/3363/21319/21337, getCurrentEra). art section audio ref. de-Hungarian: drop the 'Script' suffix to 'unitVictorySound' (or keep 'audioUnitVictoryScript' if the curator prefers literal). e.g. AS2D_VICTORY_EARLY."
+        },
+        {
+          "field": "AudioUnitDefeatScript",
+          "disposition": "art",
+          "cleanName": "unitDefeatSound",
+          "notes": "Audio 2D-script tag, message sound when a unit loses combat (CvUnit.cpp 1397/1417/2857/3391/21321/21342/24339, getCurrentEra). art section audio ref. e.g. AS2D_LOSS_EARLY."
+        },
+        {
+          "field": "EraInfoSoundtracks/EraInfoSoundtrack",
+          "disposition": "art",
+          "cleanName": "soundtracks",
+          "notes": "ARRAY, hand-read in read() (CvEraInfo.cpp:304-327, NOT via CvInfoUtil/getDataMembers). XML is a STRING LIST of track names resolved at load via gDLL->getAudioTagIndex(...,AUDIOTAG_2DSCRIPT) into runtime int indices (-1 if audio off). CvGameInterface.cpp:2762-2770 picks the active-era track. art section. CARRY THE ORIGINAL NAME STRINGS (the int indices are runtime resolution, not data). getNumSoundtracks is the derived list length — NOT a separate field. e.g. AS2D_DOODLEGOD."
+        },
+        {
+          "field": "CitySoundscapes/CitySoundscape{CitySizeType,SoundscapeScript}",
+          "disposition": "art",
+          "cleanName": "citySoundscapes",
+          "notes": "ARRAY of {CitySizeType, SoundscapeScript} pairs, hand-read via SetVariableListTagPairForAudioScripts(GC.getNumCitySizeTypes()) (CvEraInfo.cpp:329). Per-city-size ambient soundscape script ids (CvCity.cpp:19581 getCitySoundscapeSciptId(getCitySizeType()), owner currentEra). art section — carry as a CitySize-keyed map of original tag NAMES, not resolved ids. e.g. {CITYSIZE_SMALL: ASSS_CITY_ANCIENT_SMALL_SELECT_AMB}."
+        },
+        {
+          "field": "iSoundtrackSpace",
+          "disposition": "art",
+          "cleanName": "soundtrackSpace",
+          "notes": "Min turns between era soundtrack plays (CvGame::getSoundtrackSpace, CvGameInterface.cpp:2773-2775, max 1, active player's currentEra; DllExport so the EXE calls it). Audio config -> art section (audio playback parameter). OMITTED FROM legacy checksum (intentional, CvEraInfo.cpp:387-391) — does not affect storage. absent early, =400 from CLASSICAL."
+        },
+        {
+          "field": "bFirstSoundtrackFirst",
+          "disposition": "art",
+          "cleanName": "firstSoundtrackFirst",
+          "notes": "Audio behaviour flag forcing soundtrack[0] on era entry (CvGameInterface.cpp:2766). Belongs WITH the soundtracks art section (the first-pass mapping put it in identity — move to art, it is an audio-playback ordering flag). OMITTED from legacy checksum (intentional). value e.g. 1/true."
+        },
+        {
+          "field": "getNumSoundtracks",
+          "disposition": "derived-drop",
+          "notes": "DERIVED count = length of the EraInfoSoundtracks list, set during read(); has no getDataMembers entry and no XML tag. NOT separately migrated — recovered from the soundtracks array length."
+        },
+        {
+          "field": "getTurnsInEra (GameSpeed, downstream)",
+          "disposition": "derived-drop",
+          "notes": "NOT an Era field. CvGameSpeedInfo.cpp:59 = max(1,(Era.NormalSpeedTurns*speedPercent+50)/100). The spec's named DERIVED accessor — confirms iNormalSpeedTurns is the stored base. Stores nothing on Era; do not migrate as Era data."
+        },
+        {
+          "field": "getEraStartTurn / getTotalTurns (GameSpeed, downstream)",
+          "disposition": "derived-drop",
+          "notes": "NOT on Era. CvGameSpeedInfo.cpp:70/82 accumulate getTurnsInEra over prior eras. Derived; no Era storage."
+        },
+        {
+          "field": "getTicksPerTurnInEra / CvDate calendar (downstream)",
+          "disposition": "derived-drop",
+          "notes": "NOT on Era. CvGameSpeedInfo.cpp:93-94 + CvDate.cpp:30-35 derive ticks/calendar from (Era.HistoricalEndYear-HistoricalStartYear)*360 and the derived turn count. Pure derivation from the two stored year fields; stores nothing on Era."
+        }
+      ],
+      "summary": "Per-field DISPOSITION for the Era JSON curator, flat-family model (#428), verified against getDataMembers (CvEraInfo.cpp:41-74 — 29 routed fields + 4 hand-read audio arrays + CvInfoBase Type/Description/Strategy/Button), the live consumers, the GameSpeed curator (curate_gamespeed.py) and Handicap curator (curate_handicap.py).\n\nERA IS A CONFIG/GLOBAL ENTITY: enables NOTHING (no 'enables'), and every percent/flat modifier deposits at WORLD scope atop the cascade — correcting the first-pass mapping/EraInfo.json which wrongly uses scope 'game' (10 channels) and 'player' (iCuttingEdge). All world.\n\nMODIFIER FAMILIES (reconciled to GameSpeed's world vocabulary, since Era + GameSpeed feed the SAME families):\n- costs.world.hammer.percent = iTrainPercent(unit, CvPlayer:6964) + iConstructPercent(building, 7097) + iCreatePercent(project, 7156). These three share the hammer member; to keep all three the curator must sub-key the hammer member by produced-thing (train/construct/create) — exceeds GameSpeed's flat hammer.percent shape (FLAGGED).\n- costs.world.research.percent = iResearchPercent(tech, CvTeam:2642) and iCuttingEdgeCutsTechCostModifier (summed across era bands, CvTeam:2627 — RECLASSIFIED from mapping's player->world; keep a distinct sub-key e.g. research.cuttingEdge since it is a summed CUT, not the base multiplier).\n- costs.world.build.percent = iBuildPercent (worker build time, CvPlot:3613); costs.world.improvementUpgrade.percent = iImprovementPercent (upgrade time, CvGame:3273 — distinct from build).\n- growth.world.percent = iGrowthPercent (food-to-grow, CvPlayer:24437) — a SEPARATE top-level SINGLETON family per GameSpeed (food AFTER base, not costs.food).\n- durations.world.anger.percent = iAnarchyPercent (CvPlayer:8987/9026) — GameSpeed's durations.anger sibling.\n- greatPeopleRate.world.percent = iGreatPeoplePercent (threshold, CvPlayer:9158/9175) — own SINGLETON.\n- eventChance.world.flat = iEventChancePerTurn (CvPlayer:22483) — own SINGLETON, FLAT not percent.\n- maintenance.city.initial.flat = iInitialCityMaintenancePercent (CvCity:7603, per-city baseline selected by owner era; x100 fixed-point carried FAITHFULLY per #432; clamp <0->0 per read()/copyNonDefaults).\n\nGRANTS (one-shot at getStartEra, mirroring Handicap's GRANTS keys exactly so the two stack): grants.startingGold (iStartingGold), grants.startingDefenseUnits, grants.startingWorkerUnits, grants.startingExploreUnits (each ADDED to the per-player handicap like-named grant, CvPlayer:1927/1936/1944), grants.startingUnitMultiplier (a multiplier ON those counts, CvPlayer:1916), grants.freePopulation (CvCity:374).\n\nIDENTITY/CALENDAR (stored raw INPUTS; turn/calendar derive downstream on GameSpeed/CvDate): historicalStartYear, historicalEndYear, normalSpeedTurns. identity.advancedStart = iAdvancedStartPoints (pre-game points budget, NOT a modifier; only Era consumer CvInitCore:1649 — parked in identity mirroring Handicap pending the advanced-start review; OPEN: could be a grant). Plus Type(type), Description(description/text), Strategy(strategy/text), Button(icon/art).\n\nART: soundtracks (string-list, carry NAMES not runtime ids — hand-read CvEraInfo:304-327), citySoundscapes (CitySize-keyed name map), unitVictorySound/unitDefeatSound (AudioUnit*Script), soundtrackSpace (iSoundtrackSpace), firstSoundtrackFirst (MOVED from the mapping's identity into art — it is an audio-playback ordering flag).\n\nWORLD ENABLER/BARBARIAN GATES (non-additive flags at barbarians.world, unit 'enabler'): bNoGoodies (CvMapGenerator:772), bNoBarbUnits (CvGame:7180), bNoBarbCities (CvGame:6941). NOT present in any era's XML (default false) — keep field shape, default value.\n\nDROP: bNoAnimals — NO C++ gameplay consumer (grep-confirmed), only PediaEra.py:147 display; no live data and no wiring -> drop (post-migration purge candidate).\n\nDERIVED-DROP (store nothing on Era): getNumSoundtracks (list length), and the downstream GameSpeed/CvDate accessors getTurnsInEra/getEraStartTurn/getTotalTurns/getTicksPerTurnInEra/calendar (the spec's named derivations from NormalSpeedTurns + the year span).\n\nThe 4 unauthored-but-LIVE engine fields (bNoGoodies/bNoBarbUnits/bNoBarbCities/iInitialCityMaintenancePercent) have no value in any era's XML; they retain their field shape with the default per 'drop dead STRUCTURE never live DATA'. bNoAnimals is the one true drop (dead structure + no data).",
+      "openQuestions": [
+        "Boolean WORLD GATES (bNoGoodies/bNoBarbUnits/bNoBarbCities): I routed them to barbarians.world.<member> with unit 'enabler', matching where Handicap homes barb/spawn rules. But these are non-additive on/off gates, and the cascade is fundamentally an additive numeric model. Does the engine have a boolean 'enabler' channel inside a modifier family, or should era-keyed world gameplay TOGGLES live in a separate non-cascade 'rules'/world-flag section (closer to the spec's enables/obsoletes neighborhood)? Needs the model owner's call.",
+        "costs.world.hammer member granularity: GameSpeed deposits a single flat costs.world.hammer.percent, but Era needs THREE distinct hammer multipliers (train/construct/create) keyed by the produced thing's type. Confirm the curator should sub-key the hammer member (costs.world.hammer.{train,construct,create}.percent) — and whether GameSpeed should be re-shaped to match, or whether the cascade engine resolves them by produced-entity type at read time.",
+        "iCuttingEdgeCutsTechCostModifier shares costs.world.research with iResearchPercent but has DIFFERENT semantics: it is SUMMED across each era band in [techEra, playerEra) as a CUT (CvTeam:2627), not a base multiplier. Confirm a distinct member/sub-key (e.g. costs.world.research.cuttingEdge) so the cascade engine applies it as a banded accumulator, not conflated with the base research scale.",
+        "iAdvancedStartPoints: parked in identity.advancedStart to mirror the Handicap curator, but functionally it is a one-shot game-start budget (a grant). Confirm whether the standing advanced-start mechanic review wants it in identity (consistency with Handicap) or grants (functional truth).",
+        "iInitialCityMaintenancePercent scope: I assigned 'city' (per the world>team>empire>area>city spine, since it is applied per-city via the owner's era), but the selection is era-global. Confirm city vs world. Also confirm the x100 fixed-point value is carried faithfully (#432) and the read()-side clamp(<0->0) is reproduced by the curator. (Field is unauthored in all 16 eras -> migrated value is the default 0.)",
+        "The 4 unauthored-but-live fields (bNoGoodies/bNoBarbUnits/bNoBarbCities/iInitialCityMaintenancePercent): keep the field shape at default (per 'drop dead STRUCTURE, never live DATA' — the capability is live even if no era sets a value), or omit entirely since 0/false is the additive/no-op identity? The other curators DROP zero-valued modifiers (Handicap: 'int(t)!=0' guard) — so a default-valued modifier would simply not be emitted, which is consistent. bNoAnimals is the only field I recommend dropping outright (dead structure: no consumer + no data)."
+      ]
+    },
+    "check": {
+      "verdict": "SOUND overall. I adversarially re-verified every field against CvEraInfo.{h,cpp} (getDataMembers cpp:41-74 = 29 routed fields + 2 hand-read audio arrays + CvInfoBase Type/Description/Strategy/Button) and the cited live consumers. Every consumer citation in the classification is ACCURATE (spot-checked CvPlayer:6964/7097/7156/8987/9026/9158/9175/24437/22483/1865/1916/1927-1944, CvTeam:2627/2642, CvPlot:3613, CvGame:3273/6941/7180, CvMapGenerator:772, CvCity:7603, CvInitCore:1649). The dispositions, scope corrections (config-global -> world, not the mapping's 'game'/'player'), the era-keying distinctions (getStartEra vs getCurrentEra), the x100 fixed-point carry for InitialCityMaintenance, and the bNoAnimals DROP are all correct and confirmed against source.\n\nTwo confirmations worth stating plainly: (1) bNoAnimals genuinely has ZERO C++ gameplay consumer — only the Python binding CyInfoInterface3.cpp:318 and PediaEra display — so DROP is right. (2) The Era getAdvancedStartPoints() getter is read ONLY at CvInitCore.cpp:1649; every other getAdvancedStartPoints() hit in the grep is the unrelated CvPlayer runtime-balance method. The classification's claim is exactly right.\n\nThe classification's biggest strength is that it does NOT blindly mirror GameSpeed's flat costs.world.hammer.percent — it correctly flags that Era needs train/construct/create as distinct multipliers and that cuttingEdge has different (summed-band) semantics from the research base. Those are the two real model-shaping decisions and they are surfaced honestly as open questions rather than papered over. My issues below are refinements, not refutations.",
+      "issues": [
+        {
+          "field": "iTrainPercent / iConstructPercent / iCreatePercent",
+          "problem": "The classification routes all three into costs.world.hammer with sub-keys {train,construct,create}, calling it a single shared 'hammer' member. But the live consumers are NOT a single hammer scale: getTrainPercent (CvPlayer:6964) keys the era off the PRODUCED UNIT's era (getUnitInfo(eUnit).getEraInfo()), getConstructPercent (7097) off the OWNER's getCurrentEra(), and getCreatePercent (7156-7159) off the PROJECT's tech-prereq era. So they are not just three values of one member — they are selected by three DIFFERENT era-resolution rules against three different produced-thing types. Collapsing them under one 'hammer' member name understates that; the first-pass mapping actually kept them as distinct channels (trainCost/constructCost/createCost), which is arguably closer to the truth.",
+          "fix": "Keep the three as distinct cost members keyed by produced-thing (costs.world.{train,construct,create}.percent OR keep the hammer parent with three sub-members), AND record in the curator/spec that each carries its own era-selection rule (produced-unit era / owner current era / project-prereq era) so the consumption rewrite resolves the correct era per produced thing. Do NOT let the 'shared hammer member' framing imply they are interchangeable. Escalate the GameSpeed-vs-Era member-granularity reconciliation to the model owner as already flagged.",
+          "severity": "medium"
+        },
+        {
+          "field": "iCuttingEdgeCutsTechCostModifier",
+          "problem": "Correctly reclassified from the mapping's scope:player to world and correctly flagged as a SUMMED banded accumulator distinct from iResearchPercent. But the proposed home costs.world.research.cuttingEdge buries a critical semantic: it is applied at CvTeam:2648 as iMod (an additive percent fed through getModifiedIntValue alongside the AI research handicap), i.e. multiplicatively as (100+iMod), whereas iResearchPercent is applied at 2642 as a direct iCost *= pct / 100 base multiplier. They occupy the same 'research cost' concept but are TWO different math stages (base multiply vs additive-mod stage). A reader that treats both as costs.world.research percents and sums them would be WRONG.",
+          "fix": "Keep cuttingEdge in a distinct member/sub-key (good) AND annotate its unit/semantics as an additive-accumulator-percent applied at the iMod stage, not a base multiplier — so the consumption rewrite does not fold it into the same multiply as iResearchPercent. Consider a clearer member name than nesting under 'research' (e.g. its own costs.world.researchCutBelowEra member) to prevent conflation.",
+          "severity": "medium"
+        },
+        {
+          "field": "AudioUnitVictoryScript / AudioUnitDefeatScript",
+          "problem": "Classification proposes de-Hungarian renames unitVictorySound/unitDefeatSound. But these tags are routed through CvInfoUtil getDataMembers (cpp:72-73) as plain strings, and ART_RENAME in curate_common.py only maps {Button->icon, ArtDefineTag->icon}; the generic art path uses de_i(tag) which only strips a leading 'i' / lowercases the first char -> it would produce 'audioUnitVictoryScript', NOT 'unitVictorySound'. The proposed clean name requires an explicit per-field rename entry that does not yet exist. Minor, but the curator must add it or the output will not match the classification's cleanName.",
+          "fix": "If the clean name is wanted, add an explicit rename (audioUnitVictoryScript->unitVictorySound, audioUnitDefeatScript->unitDefeatSound) in the Era curator's art handling; otherwise accept the de_i default 'audioUnitVictoryScript'/'audioUnitDefeatScript'. Pick one and make the curator match — do not assume the generic path yields unitVictorySound.",
+          "severity": "low"
+        },
+        {
+          "field": "EraInfoSoundtracks / CitySoundscapes / getNumSoundtracks",
+          "problem": "Correct that these are hand-read (cpp:304-329) outside getDataMembers and must carry original NAME strings (not runtime int indices). One precision gap: the classification says getNumSoundtracks is derived from list length, which is true, but copyNonDefaults (cpp:349-371) APPENDS module soundtrack lists (not replace) — so the fully-merged entity the curator sees may already be the concatenation. That is the correct source (curate the merged state per the model), just confirm the store/merge reproduces the append rather than a replace-by-tag, or soundtrack lists will be truncated to base-only.",
+          "fix": "Verify store.py's module merge for EraInfo reproduces the soundtrack-list APPEND behaviour of copyNonDefaults (cpp:349-371), not a replace. If the v1 replace-by-tag merge is in effect (noted as a deferred refinement in the plan), soundtracks/citySoundscapes from modules would be lost — flag this as a merge-fidelity check before writing.",
+          "severity": "low"
+        },
+        {
+          "field": "bNoGoodies / bNoBarbUnits / bNoBarbCities",
+          "problem": "Routing world on/off gates into barbarians.world.<member> with unit 'enabler' is reasonable, but bNoGoodies is a GOODY-HUT suppression (CvMapGenerator:772), not a barbarian-spawn rule — it sits in the 'barbarians' family only by loose association. The Handicap curator's barbarians family is specifically spawn rules (animalAttackProb, tilesPerCity, defenders...). Goody huts are a separate map-generation concern. Lumping it under barbarians is a category smudge.",
+          "fix": "Either (a) keep bNoBarbUnits/bNoBarbCities in barbarians.world but move bNoGoodies to a more honest home (a world map-generation/rules toggle), or (b) accept all three as world boolean rules pending the model owner's ruling on whether boolean world gates belong in a cascade family at all (the classification already raises this open question — good). Do not silently treat goody-hut suppression as a barbarian rule.",
+          "severity": "low"
+        },
+        {
+          "field": "iStartingUnitMultiplier",
+          "problem": "Disposition grants.startingUnitMultiplier is right, but the note frames it only as a multiplier on the OTHER grant counts. The consumer (CvPlayer:1916, clamped via std::max(1,...)) also multiplies the SETTLER count (addStartUnitAI(UNITAI_SETTLE, iMult) at 1920) and CHALLENGE_ONE_CITY forces it to 1. So it is a multiplier on ALL free-unit grants including settlers, with a floor of 1 and a game-option override. The grants model should capture that it is a coefficient applied to the grant counts at materialization, not a standalone count.",
+          "fix": "Document in the curator that startingUnitMultiplier is the coefficient applied (floored at 1) to ALL starting-unit grant counts (settler/defense/worker/explore), so the grants consumer multiplies, not adds. No value-classification change — just ensure the grant-apply semantics are recorded so the reader does not treat it as another additive count.",
+          "severity": "low"
+        },
+        {
+          "field": "Strategy",
+          "problem": "Disposition text -> top-level 'strategy' is fine, but neither reference curator (GameSpeed, Handicap) actually emits a 'strategy' key — they hoist only Description/Help. So 'strategy' is a NEW top-level text key with no established precedent in the two cited mirrors. Not wrong, just note it is a new convention, not a mirror of the references the classification claims to follow.",
+          "fix": "Acceptable to add top-level 'strategy' (it is display text, belongs out of identity), but state it as a new text key rather than implying GameSpeed/Handicap already do it. Confirm the text-section convention can hold more than description/help.",
+          "severity": "low"
+        }
+      ]
+    }
+  }
+}

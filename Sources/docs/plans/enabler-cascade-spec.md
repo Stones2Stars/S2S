@@ -10,8 +10,8 @@ of the #428 cascade. Supersedes v0.1 (which mis-modelled the enabler as a modifi
 - **v0.3's correction (owner, 2026-06-15) — ONE `requires` gate + the BUILD/OPERATE (dormancy) insight.** Two
   refinements landed this session, in order:
   1. *(explored, then folded)* A sticky/fluid analysis suggested splitting the gate into a structural part and a
-     fluid part. **Withdrawn:** there is **ONE `requires` object**, a complex BoolExpr (`all`/`any`/`none`) over
-     **every** prereq kind (tech, civic, religion, resource, bonus, building). The fragmentation we were modelling
+     fluid part. **Withdrawn:** there is **ONE `requires` object**, a positive-only BoolExpr (`all`/`any` + `min`/`max`
+     counts) over the means. The fragmentation we were modelling
      (`enabledWhen` vs `requires`, the sticky/fluid divide) is just an artifact of the legacy prereq zoo —
      PrereqTech / PrereqAndBonus / PrereqVicinityBonus / PrereqCivic / Obsolete* / the disabled-building chain,
      decades of ad-hoc authoring. Collapsing it into one uniform gate is the point.
@@ -72,11 +72,12 @@ the atom kind:**
   destroyed, is the candidate frontier CAN GET — bounded by HAS, read **FORWARD** (no reverse lookup). **Tech is
   authored HERE, never in `requires`** — putting it on the target would force a tech→targets reverse index (the
   reverse-lookup clusterfuck).
-- **`requires` — REVERSIBLE conditions** (forward, on the target): **enabling / disabling** — civic adopted /
-  resource connected / religion present → buildable & operating; revolted / cut / inquisited → greyed & dormant.
-  A complex BoolExpr (`all`/`any`/`none`) over the reversible kinds (civic, religion, resource/bonus, reversible
-  building states). Gates the generated candidates AND re-checks built things for dormancy (§3). Checked forward
-  (set-membership against HAS). `enabledWhen` and the sticky/fluid divide were legacy artifacts — collapsed here.
+- **`requires` — POSITIVE reversible MEANS** (forward, on the target): civic adopted / resource connected / religion
+  present → buildable & operating; revolted / cut / inquisited → greyed & dormant. A positive-only BoolExpr
+  (`all`/`any` + `min`/`max` counts) over the means. Gates the generated candidates AND re-checks built things for
+  dormancy (§3). Checked forward (set-membership against HAS). The *negative* side (bans, removal) is NOT in
+  `requires` — it is the source-side `disables`/`obsoletes`/`replaces` tracks (§5/§6). `enabledWhen` and the
+  sticky/fluid divide were legacy artifacts — collapsed away.
 
 So: **destructive or hard-constructive → `enables`; reversible enable/disable → `requires`** — and the two coexist
 on the same entity.
@@ -115,10 +116,10 @@ scope (§8). Output: the scoped HAS sets.
   = the candidate set. This is the **derived `enables`/reverse index**'s hot-path job. **Bounded by HAS** — you
   never scan all ~3869 buildings, only what HAS could reach. The union *over-produces* (it proposes X from one of
   X's prereqs even if X needs others) — a candidate net, not a gate.
-- **VERIFY — HAS THE MEANS TO (per candidate, the ONE gate):** each candidate checks its own **`requires ⊆ HAS`** —
-  the full BoolExpr: AND (`all`) across every prereq kind, OR (`any`) groups, and NOT (`none`) for obsoletion /
-  replacement. This is where the AND/OR/NOT and the over-production filter live, authoritatively, on the target.
-  Candidates that pass are buildable; the rest grey or hide (§4).
+- **VERIFY — HAS THE MEANS TO (per candidate, the gate):** each candidate checks its own **`requires ⊆ HAS`** — the
+  positive-only BoolExpr of means: AND (`all`) + OR (`any`) over civic/religion/resource + `min`/`max` counts. (No
+  negatives here: bans are the source-side `disables` track and permanent removal is `obsoletes`/`replaces`, both
+  subtracted during generation, §5/§6.) Candidates that pass are buildable; the rest grey or hide (§4).
 
 Why both, why neither alone: **generation** keeps the work bounded by HAS (cheap union); **`requires`** is the
 authoritative gate (the AND/OR/NOT and the negatives the union can't express). Neither alone suffices — the union
@@ -177,12 +178,18 @@ grounded in today's two building checkpoints:**
   CvCity.cpp:14364). Must hold to build AND to keep running; re-checked every recompute on a built thing — failing
   → **DORMANT** (disabled, not demolished; wakes when it returns, §11).
 
-**Applicability — `requires.operate` is for PERSISTENT STATE only; units use `requires.build` alone (owner,
-2026-06-15).** Per §0, units are *leaf actions* that exit the model once built — there is no ongoing operation to
-gate — so a unit only ever carries `requires.build`. `requires.operate` (dormancy) applies to persistent city
-state, i.e. buildings. (Future caveat: there has been lobbying to disable units on a missing input — e.g. tanks
-with no fuel. The structure already supports it: if units ever gain operational state, that is just a
-`requires.operate` on the unit — no model change. Not modelled now.)
+**Applicability — `requires.operate` is for PERSISTENT STATE; units use `requires.build` today (owner,
+2026-06-15).** Per §0, units are *leaf actions* that exit the model once built, so a unit carries `requires.build`
+now; `requires.operate` (dormancy) applies to persistent city state, i.e. buildings. Three DISTINCT unit behaviors
+fall out cleanly, and the split is exactly why retiring `disables` (for `obsoletes` + `requires`) matters:
+- **`obsoletes` a unit** → removed from CAN GET (no NEW builds), but **existing units STAY ON THE MAP** — obsoletion
+  touches buildability only, never the instance. (Instance destruction is the deferred outcome system, §0/§11; the
+  design choice is keep-on-map.)
+- **`requires.build` unmet** → can't build now (greyed); existing units unaffected.
+- **`requires.operate` on a unit (FUTURE — e.g. tanks need fuel)** → would **disable an existing unit going
+  forward** (dormant/inactive when the input is missing) while it **stays on the map** — a reversible turn-off, the
+  return-trip `disables` could never express. The structure already supports it (just a `requires.operate` on the
+  unit); not modelled now.
 
 Each part is a positive BoolExpr (`all` + `any` OR-groups) over the means kinds — **civic, religion,
 resource/bonus**. Authored on the target, scope-tagged per clause:
@@ -197,12 +204,48 @@ resource/bonus**. Authored on the target, scope-tagged per clause:
 - **Build-time gate (greying) = `build` ∧ `operate`** — you need both present to construct; either missing → greyed
   with that resource named. **Operate-time gate (dormancy) = `operate` only** — a built thing re-checks just the
   continuous part. That is the whole distinction the object carries.
-- **⛔ TECH IS NOT IN `requires` (either part).** Tech is a permanent CONSTRUCTIVE action → `enables` (the
-  generator), read forward. A tech prereq on the target would force a tech→targets **reverse index** — the
-  reverse-lookup clusterfuck. So `canBuild`'s STRUCTURAL part (tech, prereq buildings, obsolete/replace) feeds the
-  **`enables` side** (generation; unmet → HIDDEN); only `canBuild`'s RESOURCE part goes in `requires.build`.
-- **⛔ NO DESTRUCTION IN `requires`.** Obsoletion/replacement are DESTRUCTIVE → `enables`-side `disables`/`replaces`
-  (§6), removed in generation. `requires` is positive-only; no `none`.
+- **TECH drives GENERATION via `enables`, never as a `requires` GENERATION driver — but CAN appear in `requires` for
+  the per-candidate CONFIRM (owner, 2026-06-15).** Tech is a permanent CONSTRUCTIVE action → `enables`, read forward.
+  Relying on a `requires`-tech to *generate* would force a tech→targets **reverse index** (the reverse-lookup
+  clusterfuck) — so generation is always `enables`-driven, and `canBuild`'s structural unlock (tech, prereq
+  buildings, obsolete/replace) feeds the `enables` side. **BUT** once a candidate is in the frontier, a tech MAY
+  appear in its `requires.build.all`/`requires.build.any` as a **confirm** — the same `requires.build` every entity
+  uses, no tech special-casing. The tech-tree multi-parent case (§13.8): the child is proposed by `enables` from one
+  parent, and `requires.build.all: [TECH_1, TECH_2]` confirms it's actually researchable — a forward check on the
+  already-generated candidate's own small parent-list, **no reverse index**. Rule: never let `requires`-tech *drive*
+  generation (always have the `enables` edge); it only confirms.
+- **`requires` is MOSTLY positive, but admits a NEGATIVE for reversible DORMANCY (owner, 2026-06-15) — don't
+  exclude it.** The common case is positive means (`all`/`any` presence + `min`/`max` counts). But a **negative
+  clause is allowed**: `disableIfAny` / `disableIfAll` — "go DORMANT while a forbidder/condition is present" —
+  **reversible and non-destructive** (the **pseudobuilding** case: education / crime / tourism thresholds switching
+  on and off; condition met → dormant, clears → reactivates).
+  - **This is DISTINCT from the source-side `disables` ban**, which is **DESTRUCTIVE** (destroys instances, §5/§6).
+    The split is by **FATE**: a `requires`-negative → **DORMANT (kept, reverses)**; a `disables` → **DESTROYED**. And
+    by **author**: `requires`-negative is on the TARGET ("I go dormant while X"); `disables` is on the SOURCE/law
+    ("I destroy X").
+  - Permanent removal (obsoletion / replacement) is also source-side (`obsoletes`/`replaces`), never a `requires`
+    clause. So `requires` covers the REVERSIBLE space (positive means + dormancy negatives); the `enables` family
+    covers the PERMANENT space (construct / destroy / supersede).
+  - **Pseudobuildings = the in-city representation of PROPERTY EFFECTS (owner, 2026-06-15).** Primarily (only?) used
+    to show the effect of a city's **properties** (`PROPERTY_CRIME`/`EDUCATION`/`DISEASE`/tourism — the `CvProperties`
+    system) at a threshold band. So their real home ties to the **property system (#429)** — a property-effect /
+    threshold-band entity, not a fake building. Behaviourally they're just **cascade participants** (carry `requires`
+    incl. the dormancy negative + `enables`/etc., same requirement management — no behavioural difference from a
+    building). Formalizing them as their own class is a **UX/presentation question**, a separate easily-solvable issue.
+    **Name = `PropertyEffect` (owner, 2026-06-15)** — parallels the existing `BuildingEffect` convention. **GROUNDED:
+    today's pseudobuildings ARE the `BUILDING_EFFECT_*` family** (e.g. `BUILDING_EFFECT_HERITAGE_BIG_CATS`) —
+    effect-markers hacked in as real buildings; `PropertyEffect` formalizes them OUT of the building roster into their
+    own class (much of `BuildingEffect` gets repurposed this way). NB: bare `effect` was rejected — `CvEffectInfo` is
+    EXE-bound (`DllExport getPath()` imported by the engine for the `.nif`), so it can't be renamed/repurposed.
+  - **`BaseEffect` hierarchy — a SEPARATE, LATER issue; do NOT touch during the migration (owner, 2026-06-15).** The
+    `BUILDING_EFFECT_*` pseudobuildings **work fine as-is for now** — the cascade just treats them as buildings, so
+    leave them alone. The future improvement is ORGANIZATIONAL: `PropertyEffect`, `BuildingEffect`, and the other
+    effect kinds each become their OWN Info deriving from a shared **`BaseEffect`** base class. A sibling refactor,
+    tracked apart from the enabler cascade (#428/#430), not blocking — noted here only because `PropertyEffect` is one
+    of its members.
+- **Surface rule (owner):** the modder-facing authoring surface = exactly what the engine implements; the exotic
+  remainder (mixed-polarity OR, OR-of-negatives) stays OFF the surface — documented as possible future, never as
+  existing.
 - **A clean per-case LEVER: grey (`requires`) or hide (`enables`) — and it is a UI question, not operational
   (owner, 2026-06-15).** Both placements work identically in the engine; the only difference is what the player
   sees, so authoring the resource on one side or the other is a **clean, per-case display choice**:
@@ -214,11 +257,11 @@ resource/bonus**. Authored on the target, scope-tagged per clause:
   to `enables` when hiding is the better UX for that case. (§4.)
 - **Positive only, checked FORWARD** — does HAS contain this atom? (set membership; no reverse lookup). Atoms carry
   `connection` (trade/vicinity) and a scope (§8).
-- **Scope resolution → `requires` reads STATISTICS (owner, 2026-06-15; folds in §7/§8).** A **city**-scope means
+- **Scope resolution → `requires` reads TALLY (owner, 2026-06-15; folds in §7/§8).** A **city**-scope means
   checks the local city HAS; an **empire/team/world**-scope means — presence (`∈ HAS` = `count ≥ 1`) AND count
-  thresholds (`≥ N of X`, e.g. the old `PrereqNumOfBuildings`) — resolves against the **statistics module**, the
+  thresholds (`≥ N of X`, e.g. the old `PrereqNumOfBuildings`) — resolves against the **tally module**, the
   additive roll-up of per-city "X is had" reports. So verify never crosses city isolation: it reads the local HAS
-  for city clauses and statistics for higher scopes, uniformly. This is the same module wanted anyway for
+  for city clauses and tally for higher scopes, uniformly. This is the same module wanted anyway for
   demographics/AI/score (§8).
 - **Leaf atom** = `{<kind>: "TYPE", scope, connection?, disposition}` where `<kind>` ∈
   `civic | religion | bonus | …` (never `tech`). The `all`/`any` nodes nest to form the BoolExpr.
@@ -233,7 +276,8 @@ The gate is per-clause, not pass/fail; each clause carries a **disposition** (`g
 - **in CAN GET ∧ all `requires` clauses met → LISTED** (buildable).
 - **in CAN GET ∧ only `greyable` clauses unmet** (a missing connectable resource, an unadopted civic) → **GREYED**
   ("needs `BONUS_COPPER`" / "needs `CIVIC_GUILDS`").
-- **in CAN GET ∧ a `hiding` clause unmet** (wrong era, obsoleted via a `none` clause) → **HIDDEN**.
+- **in CAN GET ∧ a `hiding` clause unmet** (wrong era) → **HIDDEN**. (Permanent removal — `obsoletes`/`disables`/
+  `replaces` — drops it from CAN GET entirely, so that's the "not in CAN GET" case above, not a greying clause.)
 
 Disposition is a property of the clause kind, set once: resource/bonus/civic that the player can go acquire →
 `greyable` ("you could get this"); era/obsolete/structural-impossible → `hiding`. So the same `requires` evaluation
@@ -258,50 +302,166 @@ win — and it's why "recompute on the fly" is fine: the *single* recompute repl
 
 ## 5. Base relationship objects — the `enables` family (PERMANENT) + `requires` (REVERSIBLE)
 
-**Authored schema (owner): any item can carry these base relationship sections — `enables`, `disables`,
+**Authored schema (owner): any item can carry these base relationship sections — `enables`, `obsoletes`,
 `replaces`, `requires` (and more to come).** They sort by the **nature of the action** (§1), into two cascades that
 COEXIST on the same entity:
 
-- **The `enables` family — PERMANENT actions, forward on the source, drives GENERATION:**
-  - **`enables`** — a **constructive** action: what this entity permanently unlocks (`enables.{buildings,units,
-    builds,techs,…}`). Tech lives here. Read forward over HAS → the candidate union.
-  - **`disables`** (≈ `obsoletes`) and **`replaces`** — **destructive** actions: what this entity permanently
-    removes (`disables`: obsoletion; `replaces`: a successor destroying its predecessor). Read forward → SUBTRACTED
-    from the candidate union. (§6.)
-  - So **CAN GET = union(`enables` over HAS) − (things `disables`/`replaces` over HAS)** — generation is the whole
-    permanent family, read forward, bounded by HAS. No reverse lookup.
-- **`requires` — REVERSIBLE conditions, forward on the target, drives the GATE:** "do I have the means" (§3).
-  Positive civic/religion/resource conditions; checked forward per candidate against HAS.
+- **The `enables` family — FOUR source-side base objects, forward on the source, drives GENERATION
+  (owner, 2026-06-15):**
+  - **`enables`** — **constructive**: what this entity unlocks (`enables.{buildings,units,builds,techs,…}`). Tech
+    lives here. Read forward over HAS → ADDED to the candidate union.
+  - **`disables`** — **destructive, ACTIVE removal (a ban)**: what this entity FORBIDS-and-DESTROYS. Ban the death
+    penalty → the electric chair is *removed* and its space *repurposed*; ban prostitution → the brothels are torn
+    down. Removes the target from CAN GET while the disabler is in HAS **and destroys existing instances**. **NOT
+    dormancy** — repeal later and you must **REBUILD** (pay the cost); nothing mothballed silently resumes.
+  - **`obsoletes`** — **destructive, PASSIVE supersession**: a tech/era makes the target outdated. Removes it from
+    CAN GET, but **existing instances PERSIST** (obsolete units linger on the map). *Could technically be a
+    `disables`, but kept SEPARATE for modder-clear semantics* — progress-supersedes vs policy-forbids (owner).
+  - **`replaces`** — **destructive, SUCCESSION**: a successor takes the predecessor's slot (predecessor gone once any
+    successor is present; transitive chain, §6).
+  - So **CAN GET = union(`enables` over HAS) − (`disables` ∪ `obsoletes` ∪ `replaces` over HAS)** — generation is the
+    whole source-side family, read forward, bounded by HAS. No reverse lookup.
+- **`requires` — the TARGET-side gate: "do I have the MEANS" (§3).** Positive means (civic/religion/resource via
+  `all`/`any`) + `min`/`max` counts; checked forward per candidate against HAS/tally.
 
-**Each EDGE is authored ONCE, on its natural end** — `enables`/`disables`/`replaces` on the source (the actor),
+**`disables` is a DESTRUCTIVE ban — it tears the thing down (owner, 2026-06-15).** A ban does not park a building
+dormant — it **destroys** it. Ban the death penalty → the electric chair is removed and its space repurposed; ban
+prostitution → the brothels are demolished. **Repeal later and you must REBUILD** (pay the cost) — nothing mothballed
+silently resumes. That destruction (not a pause) is exactly why `disables` is its OWN source-side track. **Reversible
+DORMANCY still exists — but it is a different mechanism: the `requires`-negative** (`disableIfAny`/`disableIfAll`,
+target-side, §3), used for pseudobuildings (education/crime/tourism) that switch off/on as a condition holds. So:
+**ban = `disables` = destroyed; condition-dormancy = `requires`-negative = parked-and-resumes.**
+
+**INSTANCE FATE — how a target loses availability decides what happens to existing instances (owner, 2026-06-15):**
+
+| trigger | new builds | existing instances |
+|---|---|---|
+| **`disables`** (ban — death-penalty / prostitution) | forbidden while the disabler is in HAS | **DESTROYED** — removed, space repurposed; repeal ⇒ **REBUILD** from scratch, no mothball-resume |
+| **`requires`-negative met** (`disableIfAny`/`disableIfAll` — pseudobuilding: crime/education/tourism) | greyed | **DORMANT** — parked, reactivates when the condition clears (reversible, non-destructive) |
+| **`obsoletes`** (tech supersedes) | forbidden | **TARGET DECIDES** — see below (defunct/destroyed, or lose-bonus-keep-as-attraction) |
+| **`replaces`** (successor) | forbidden | replaced by the successor |
+| **positive `requires` fails** (lose iron / revolt away a required civic) | greyed | **DORMANT** — building persists, output gated, resumes if the means returns |
+
+So **disabling is destructive; means-loss is dormancy** — different triggers, different fate.
+
+**The CHARACTER of the two, crisply (owner, 2026-06-15):**
+- **`disables` = a hard "be gone, spawn of darkness".** The source COMMANDS destruction; the target gets no say —
+  it is removed, full stop (the ban tears it down).
+- **`obsoletes` = a soft "meh, we don't need you anymore, do whatever".** Just a SIGNAL; then it's **up to the
+  obsoleted entity to REACT.**
+
+**So OBSOLETION FATE is a TARGET-side decision, NOT in the chain-down.** The `obsoletes` edge on the source only
+says "X is now obsolete." **WHAT happens to X's instances is authored ON X** — a `whenObsolete` property on the
+target: some buildings go **defunct/destroyed**, while **wonders and walls especially LOSE their specific bonus but
+REMAIN** (a tourist/culture attraction). Obsoletion fate is per-target, declared by the target, and lives in the
+deferred outcome/instance-lifecycle system (§11) — the obsoleting tech never dictates it. (`disables`, by contrast,
+dictates: destroyed.)
+
+**Precedence — `replaces` overrides the obsolete-stay choice (owner, 2026-06-15).** If a target is BOTH obsoleted
+AND replaced, `replaces` wins: the successor has taken its slot, so the predecessor is **genuinely gone even if its
+`whenObsolete` wanted it to stay** (a replaced thing cannot linger as an attraction — the successor is standing
+where it was). That case is already covered by the `replaces` track; `whenObsolete` only governs when nothing
+replaced the target.
+
+**Authoring + scope.** A ban is authored as `disables` on the LAW/doctrine (one law lists what it forbids), is
+**EMPIRE/TEAM-scope and standing** (applies player-wide, flips only on adopt/repeal), and is processed in generation
+(subtract from CAN GET + destroy instances) — NOT a per-city per-turn condition, NOT a `requires` gate. Bans act on
+something **otherwise available** — default-available (prostitution/alcohol/drugs, never enabled) or
+explicitly-enabled-then-bannable (slavery/cannibalism); the enable is orthogonal (net = available AND not-disabled).
+
+**PEDIA — why keeping `obsoletes` ≠ `disables` pays off (owner, 2026-06-15).** It keeps the useful target-side
+**"Obsoleted by [tech]"** line (when will this lapse), while we **need NO "potentially disabled by [law]" line** — a
+ban is a player policy choice listed on the LAW's side ("this doctrine bans X, Y"), not a defensive worry-line on
+every bannable building.
+
+**WHY THIS MATTERS — a correct home for traditionally-SHOEHORNED concepts.** Empire-wide moral/legal bans (slavery,
+cannibalism, prostitution, death penalty) never had a principled seat — hacked in wherever. They are now just
+**`disables` from an empire-scope source**. A direct validation of the rework; a lens for the audit (watch for other
+shoehorned concepts that now have a home).
+
+**THE EMPIRE/TEAM-WIDE PROJECTS/BUILDINGS tier (owner, 2026-06-15) — a long-latent concept this exploration finally
+DEFINED.** The general idea: *constructables that live at empire/team scope instead of city scope* — "buildings"
+and "projects" one tier up. They fit the existing enabler model with **NO new machinery**: the only requirement is
+that buildings/projects can exist above city scope (the scope spine §8 already has team/empire). The tier carries
+the **FULL enabler-model edge set** at empire scope — it is NOT just one flavor:
+- **Constructive STAGE-GATES (the `enables` edge):** an empire/team project that, once built, unlocks a major new
+  capability — **milestone/progression gates.** The prime class is the **space line**: you cannot settle the moon
+  until the empire-level **moon-base project** exists; you cannot reach Mars until the **mission-to-mars project**
+  is built; and onward (each milestone project in team-HAS → `enables` the next capability/region). This is the
+  #421 *Lunar Landing → Lunar Base → unlock region* stage-gate (retiring the dedicated Cislunar map for a gated
+  multimap region; for when space is nailed down). The same shape serves any "you can't do X until you've built
+  the empire-wide Y" gate.
+- **BANS (the `disables` edge) — the "doctrine" flavor:** ban-list + modifiers, below.
+- **Empire-wide MODIFIERS:** the **#421 team-buildings** (effects via a shared pool).
+
+**This REPLACES today's autobuild clunk (owner, 2026-06-15).** Currently an empire-wide effect is faked by building
+*one* building that **autobuilds itself into every city** (the `FreeBuilding` / per-city autobuild mechanism, ~345
+uses). The tier replaces that with **ONE building at empire/team scope** — no N per-city copies, no autobuild fan-out
+— exactly the #421 "retire per-city autobuilds" win. The empire effect lives where it conceptually is (the empire),
+not smeared across every city.
+
+So **"doctrine" is just the ban flavor, not the tier name** (and not load-bearing — see the naming note above; the
+*tier* name is TBD). A **ban-flavored** team/player "building" is shaped like this:
+- It is **persistent HAS state**, enacted (`requires.build`) and removable/repealable — like building then
+  demolishing a building, one tier up.
+- It authors its **`disables` list** (the `buildings`/`units`/`builds` it forbids) — concretely "a list of banned
+  buildings and actions". While the doctrine is in HAS, generation subtracts those targets from CAN GET **and
+  destroys their instances** (§5/§6, destructive). Repeal removes the doctrine from HAS → those targets are
+  buildable again, but destroyed instances must be REBUILT (no mothball-resume).
+- It carries **`modifiers`** for its empire-wide effects (the "some modifiers attached").
+- It does NOT carry the *allow* — banned things are default-available (prostitution/alcohol/drugs) or enabled by a
+  separate source (slavery/cannibalism); the doctrine is the ban-list + modifiers only.
+
+So "new entity or civic?" resolves to **neither — a higher-scope building.** The building entity + the existing
+scope model (§8, team/empire) already express it; we only need buildings to exist above city scope. (Dovetails with
+the **#421 team-buildings** concept — empire-wide "buildings" with team-level effects. Name TBC: doctrine / edict /
+institution / team-building.)
+
+**INTERIM vs END-STATE — keep the existing machinery; the tier is its OWN later issue (owner, 2026-06-15).** The
+empire/team `disables`-building above is the END-STATE. **For now, bans/repeals are implemented like effects** — a
+**pseudobuilding/autobuild with a disable/enable** (the existing per-city machinery) — and **promoted UP the
+hierarchy later**. Crucially, **the whole team/player-level "buildings" TIER is its own ISSUE** (related to the
+effects / `BaseEffect` issue, §3), and **the existing machinery can be made to work with the new cascade WITHOUT
+refactor — so we KEEP it.** The migration does NOT block on building the tier; bans/doctrines + the tier sit in the
+same "works now, organize-and-promote later" bucket as `PropertyEffect`/`BaseEffect`. (Owner likes the interim
+less, but it's the pragmatic path.)
+
+(The lone *converted* `disables` — a per-civ research ban — is PERMANENT and per-civ, so it is NOT the empire-scope
+player-law ban: re-home it to `obsoletes`-shaped permanent removal or `loadPrune`/`policies`. The `disables` ban is
+the destructive empire-scope law-ban — repeal re-allows *building*, but already-destroyed instances stay gone.)
+
+**Each EDGE is authored ONCE, on its natural end** — `enables`/`obsoletes`/`replaces` on the source (the actor),
 `requires` on the target (the thing needing means). **The reverse view of each is derived at load and KEPT, but is
 COLD-PATH only** — it powers the pedia / web-Civilopedia ("Unlocks", "Obsoletes", "Required by"), and it is **never
-read on the hot path**: generation reads `enables`/`disables`/`replaces` forward; the gate reads `requires` forward.
+read on the hot path**: generation reads `enables`/`obsoletes`/`replaces` forward; the gate reads `requires` forward.
 This is the answer to the reverse-lookup concern (owner, 2026-06-15) — inversion happens once at load for the pedia,
 never per-recompute.
 
 **No single "`requires` ⇄ `enables`" mirror.** They are *different relationships* — `enables` = a permanent unlock
 (tech→building), `requires` = a reversible means (building→resource) — not two ends of one edge. (An interim draft
 that paired them, and an earlier one that put tech/obsoletion in `requires`, are both withdrawn; §1.) An item
-commonly carries several of these objects at once: a building `enables` the units it unlocks, may `disables`/
+commonly carries several of these objects at once: a building `enables` the units it unlocks, may `obsoletes`/
 `replaces` a predecessor, and `requires` the resources/civics it needs to operate.
 
 ---
 
-## 6. Source-side base objects (`disables`, `replaces`) + auxiliary sections
+## 6. Source-side base objects (`obsoletes`, `replaces`) + auxiliary sections
 
-`disables` and `replaces` are the two **DESTRUCTIVE members of the `enables` family** (§5) — permanent actions,
+`obsoletes` and `replaces` are the two **DESTRUCTIVE members of the `enables` family** (§5) — permanent actions,
 forward on the source, **processed during generation** (they SUBTRACT from CAN GET). They are **not** `requires`
-clauses (`requires` is positive means only, §3). The rest below are **auxiliary** (provisioning / config /
-identity — not availability edges). Shapes verified on disk:
-- **`disables` (base object; ≈ `obsoletes`)** — the ANTI-ENABLE, per-type sections mirroring `enables`:
-  `disables:{buildings:[],units:[],builds:[],bonuses:[],techs:[],…}`. **Obsoletion is the prime scenario**
-  (`tech.disables.buildings` = the old `ObsoleteTech`); the same shape carries others — per-civ research ban
-  (`civilization.disables.techs`, an OVERRIDE), and more. Source-authored; read forward in generation to remove the
-  named targets from CAN GET.
-- **`replaces` (base object; self-framing)** — per-type successor sections mirroring `enables`/`disables`:
+clauses (`requires` is positive means only, §3). The retired `disables` is NOT a third member — reversible turn-off
+is `requires` going false (§5). The rest below are **auxiliary** (provisioning / config / identity — not
+availability edges). Shapes verified on disk:
+- **`obsoletes` (base object; the old `Obsolete*`)** — the ANTI-ENABLE, per-type sections mirroring `enables`:
+  `obsoletes:{buildings:[],units:[],builds:[],bonuses:[],techs:[],…}` (330 files already use this shape, e.g.
+  `tech.obsoletes.units` = the old `ObsoleteTech`). **NB: obsoleting an INSTANCE-bearing target (a unit) removes it
+  from CAN GET only — existing instances stay on the map** (the instance lifecycle is the deferred outcome system,
+  §0/§11; design choice = keep-on-map). The per-civ research ban (the lone converted `disables`, an OVERRIDE) is an
+  `obsoletes`-shaped permanent removal — re-home it here (or to `loadPrune`/`policies` if it is a setup gate).
+  Source-authored; read forward in generation to remove the named targets from CAN GET.
+- **`replaces` (base object; self-framing)** — per-type successor sections mirroring `enables`/`obsoletes`:
   `replaces:{buildings:[BUILDING_X],…}` ("I take X's slot"; conditional form carries `onGameOption`, load-stable) —
-  destructive (it destroys the predecessor), same reason as `disables`. Source-authored; the **transitive successor
+  destructive (it destroys the predecessor), same reason as `obsoletes`. Source-authored; the **transitive successor
   chain** (`A→B→C` ⇒ A removed once any successor is present) is precomputed once at load and applied in generation.
   **Unit `upgradesTo` is NOT `replaces`** — it is constructive/MANUAL (an *available action*; the old unit isn't
   auto-removed), so it lives under `succession` (below).
@@ -311,7 +471,7 @@ identity — not availability edges). Shapes verified on disk:
   SpecialBuilding, Heritage.
 - **`loadPrune`** *(auxiliary)* — load-stable game-option gate (§10). `loadPrune:{onGameOptions:[],notOnGameOptions:[]}`
   (241 files). If false at load, the entity/channel is **not materialized** — never enters `have` or the candidate
-  set. Sibling of `disables` (load-time data removal vs live query).
+  set. Sibling of `obsoletes` (load-time data removal vs live query).
 - **`policies`** *(auxiliary)* — civ meta-capability (non-cascade structural).
   `policies:{playable,aiPlayable,stronglyRestricted}` (128 civ files). Who may play / AI build-lockdown.
 - **`succession` / `excludes`** *(auxiliary, structural)* — `succession:{upgradesTo:["UNIT_X"],promotionLine:"…"}`
@@ -327,10 +487,12 @@ identity — not availability edges). Shapes verified on disk:
 (≥N of X), `ProjectInfo PrereqProjects/iNeeded` (N of Y). These are **count thresholds**, not presence atoms — a
 clause like `{"countOf":"BUILDING_X", "min":N}` or `{"waivesCap":"SPECIALBUILDING_Y"}`. A set-based `have` can't
 answer counts directly. The `have` COUNT of buildings lives in the isolated CITY, so an empire/team-wide "≥N of X
-across my cities" can't be answered from a single city's `have`. **RESOLVED (owner): a separate STATISTICS
-module.** It lives OUTSIDE the have-builder. As the have-builder gathers each city's `have`, it **reports to
-statistics that "X is had, somewhere"**; statistics aggregates the empire/team-wide counts. A count-threshold
-clause (`{countOf:"BUILDING_X","min":N,"scope":"empire"}`) reads the **statistics** count, not a city's `have`.
+across my cities" can't be answered from a single city's `have`. **RESOLVED (owner): a separate TALLY
+module.** *(Named `tally` — owner 2026-06-15; over earlier "statistics" and over "census", which collides with the
+existing benchmark-census project.)* It tallies how many of each thing the empire holds (counts + presence), and
+lives OUTSIDE the have-builder. As the have-builder gathers each city's `have`, it **reports to
+tally that "X is had, somewhere"**; tally aggregates the empire/team-wide counts. A count-threshold
+clause (`{countOf:"BUILDING_X","min":N,"scope":"empire"}`) reads the **tally** count, not a city's `have`.
 The have-builder stays per-city and isolated — it only emits a report side-channel; the cross-city aggregate lives
 in the separate module, which **we want anyway** (demographics, AI strategy, score). Same decoupling as caching
 (§2): a sibling consumer of the have-builder's output, never a complication of the model.
@@ -343,7 +505,8 @@ in the separate module, which **we want anyway** (demographics, AI strategy, sco
 obsolescence, building progression) feed **generation** (what's in CAN GET); the `requires` lookups (civic,
 religion, connectable bonuses) feed the **gate**.
 - **team** — tech presence + tech-obsolescence → generation; **trade-connected bonus presence** → `requires`.
-- **empire** — civic / religion / corporation → `requires` (reversible means); per-civ `disables` → generation.
+- **empire** — civic / religion / corporation → `requires` (reversible means); per-civ research ban
+  (`obsoletes`-shaped) → generation.
 - **area** — VICINITY bonus presence (`hasVicinityBonus`) → `requires`.
 - **city** — in-city buildings → generation/`requires` as applicable; the city is where the per-candidate
   `requires` gate is finally evaluated.
@@ -356,23 +519,23 @@ materialization** — each city's `have` = the team's trade-connected bonuses (a
 bonuses (added later). So there is no empire-vs-city confusion: trade-connected = a **team** clause; vicinity = an
 **area/city** clause. Two scopes, gathered at two points in the right-then-down pass.
 
-**Statistics IS the higher-scope `have` (owner).** The scoped `have` splits cleanly: **city**-scope `have` is the
-per-city isolated gather; the **empire / team / world** scopes' `have` is the **statistics module** (§7),
+**Tally IS the higher-scope `have` (owner).** The scoped `have` splits cleanly: **city**-scope `have` is the
+per-city isolated gather; the **empire / team / world** scopes' `have` is the **tally module** (§7),
 aggregated from the per-city "X is had, somewhere" reports the have-builder emits. So a `requires` clause at
-empire/team scope consults **statistics**, and that uniformly covers BOTH presence (`∈ have` = `count ≥ 1`) and
-count-thresholds (`count ≥ N`) — no special case. The have-builder feeds statistics; verify reads the right scope
-per clause (local gather for city, statistics for empire/team/world). Statistics thus *becomes* the empire state
+empire/team scope consults **tally**, and that uniformly covers BOTH presence (`∈ have` = `count ≥ 1`) and
+count-thresholds (`count ≥ N`) — no special case. The have-builder feeds tally; verify reads the right scope
+per clause (local gather for city, tally for empire/team/world). Tally thus *becomes* the empire state
 `requires` wants — counting and presence in one place, and a module we want anyway (demographics / AI / score).
 
-**Statistics REUSES the modifier machinery — multi-level + ADDITIVE (owner).** It is not a new mechanism: it
+**Tally REUSES the modifier machinery — multi-level + ADDITIVE (owner).** It is not a new mechanism: it
 lives at every scope level and **aggregates UP the spine additively, exactly as modifiers sum down it.** A "had X"
 report at a city is an additive deposit that rolls up to empire/team/world counts. So **one additive-scope machine
-serves both cascades** — modifiers sum *effect-magnitudes*, statistics sum *presence-counts*. Consequently
-**`requires` only ever reads the team/empire statistics** (plus the local city `have`): the verify gate consults
+serves both cascades** — modifiers sum *effect-magnitudes*, tally sum *presence-counts*. Consequently
+**`requires` only ever reads the team/empire tally** (plus the local city `have`): the verify gate consults
 the aggregated count/presence at the clause's scope, and never has to itself cross city isolation.
 
-**Statistics bottom out at the CITY (like modifiers) — a clean fun-fact boundary (owner).** Because the leaf is
-the city, the **city-level statistics are a well-defined place to record and query per-city facts** — not only the
+**Tally bottom out at the CITY (like modifiers) — a clean fun-fact boundary (owner).** Because the leaf is
+the city, the **city-level tally are a well-defined place to record and query per-city facts** — not only the
 current-state counts `requires` reads, but **lifetime/historical** ones ("how many knights has this city produced
 in its lifetime?", buildings ever built, …). So the one structure serves THREE readers: the **enabler** (current
 counts/presence), **demographics / UI / AI** (lifetime + aggregated fun-facts), and the additive roll-up yields
@@ -391,7 +554,7 @@ gathered. This is the enabler's *only* use of the two-axis topology — as a **g
 
 ## 10. Gates — prune-at-load vs match-at-runtime
 - **LOAD-STABLE → PRUNE** (`loadPrune`, the `CvInfoReplacements` conditional swap, WorldBuilder/BUG toggles,
-  per-civ `disables.techs`): rare, deliberate-setup changes → resolve at load, don't materialize if false →
+  per-civ research ban): rare, deliberate-setup changes → resolve at load, don't materialize if false →
   smaller `have`/candidate sets, zero runtime checks. Rebuild-on-change amortizes to ~never.
 - **DYNAMIC → MATCH** (tech/civic/bonus presence; handicap under flexible difficulty): flips during play → the
   two-pass match each recompute.
@@ -410,15 +573,16 @@ Outcome/instance lifecycle (unit survival, building demolition, wonder residual,
 **NOTHING IS FLIPPED (owner, 2026-06-15).** The converted `enables.{buildings,units,…}` on the sources (techs etc.)
 is **correct as authored** — it is the constructive generator (§5), read forward. v0.2's "flip `enables`→`requires`"
 is withdrawn. The retrofit is formalization + adding the `requires` (means) side where it's missing:
-- **Keep `enables` on sources** (the constructive generator), and keep `disables`/`replaces` on sources (the
+- **Keep `enables` on sources** (the constructive generator), and keep `obsoletes`/`replaces` on sources (the
   destructive members, §6). Their reverse views are derived at load for the pedia (cold path) — no hand
   re-authoring, no hot-path inversion.
 - **Author `requires` (the MEANS) on targets** — positive civic/religion/resource conditions only. The ~21
   converted infos are mostly sources (tech/civic/religion/era/…), so few carry a `requires`; the bulk lands at the
   **Building / Unit** pass (old `PrereqAndBonus`/`PrereqVicinityBonus` → `requires`). Confirm the means gaps for
   `hurries`, `specialists`, `specialBuildingsWaived` at their passes.
-- **Obsoletion/replacement is NOT a `requires` clause** — it is `disables`/`replaces` on the source (destructive,
-  §6), removing the candidate from CAN GET in generation. (Withdraws v0.2's "fold into the target's `none`".)
+- **No NEGATIVES on the target** — obsoletion/replacement/bans are all SOURCE-side `obsoletes`/`replaces`/`disables`
+  (§5/§6), removing the candidate from CAN GET in generation; `requires` is positive means only. (Withdraws v0.2's
+  "fold removal into a target `none` clause" and this session's interim `requires.disableIfAny` quantifier.)
 - **Name `loadPrune` + `policies`** as their own sections (already on disk, unnamed).
 - Tag each `requires` clause with scope + greyable/hiding disposition (§4).
 
@@ -426,7 +590,7 @@ is withdrawn. The retrofit is formalization + adding the `requires` (means) side
 
 ## 13. Open decisions (for hole-poking)
 1. **Where each edge is authored — RESOLVED (owner, 2026-06-15), by the NATURE of the action.** Permanent actions
-   (constructive `enables`, destructive `disables`/`replaces`, incl. all tech) are authored **forward on the source**
+   (constructive `enables`, destructive `obsoletes`/`replaces`, incl. all tech) are authored **forward on the source**
    and drive generation; reversible **means** (`requires`: civic/religion/resource) are authored **on the target**
    and drive the gate. They COEXIST on an entity. Hot path is forward both ways — reverse indices are cold-path
    (pedia) only, so there is **no reverse-lookup clusterfuck** and `enabledWhen` is not needed (the interim
@@ -437,13 +601,13 @@ is withdrawn. The retrofit is formalization + adding the `requires` (means) side
      part → `enables` (generation, hides if unmet); the RESOURCE/means part → ONE `requires` set that greys at build
      and dorms at operate (PrereqBonuses are a presence check, never consumed, so no separate build-only set). No
      `persist` flag needed (§3).
-2. **Count/threshold/waive — RESOLVED (owner, §7/§8):** a separate **statistics** module (wanted anyway for
+2. **Count/threshold/waive — RESOLVED (owner, §7/§8):** a separate **tally** module (wanted anyway for
    demographics/AI/score) *is* the empire/team-scope `have`. The have-builder reports "X is had, somewhere" as it
-   gathers; statistics aggregates; empire/team `requires` clauses (presence AND count) read statistics. The
+   gathers; tally aggregates; empire/team `requires` clauses (presence AND count) read tally. The
    have-builder stays per-city isolated. *(GROUNDED — sweep 2026-06-14: SIX count-threshold types, ALL cross-city,
    ZERO per-city — `PrereqNumOfBuildings`/`getNumCitiesPrereq`/`getUnitLevelPrereq`/`getNumTeamsPrereq`/
    `PrereqProjects iNeeded`/the CIVIC city-limit (CvPlayer.cpp:6707/6754/6763/6685/6872/8466) + the SpecialBuilding
-   group-cap waive — empirically VALIDATING the separate statistics module: a city's set-`have` answers none.)*
+   group-cap waive — empirically VALIDATING the separate tally module: a city's set-`have` answers none.)*
 3. **Trade-connected bonus scope — RESOLVED (owner):** TEAM scope, gathered early into `have`; the per-city
    `hasBonus` count is the local materialization, not an empire-vs-city confusion (§8).
 4. **Runtime `have`-change triggers + state-retraction — GROUNDED (sweep 2026-06-14).** Cadence CONFIRMED: many
@@ -461,6 +625,69 @@ is withdrawn. The retrofit is formalization + adding the `requires` (means) side
    dedicated `policies` section.
 6. **OR-group authoring shape — RESOLVED (owner):** handled by the `requires` full BoolExpr — OR-groups are `any`
    nodes inside it (§3); no separate shaping. *(Pedia rendering of the BoolExpr is a deferred UI detail.)*
+7. **Logic-gate coverage — MAPPED, the surface is COMPLETE (owner, 2026-06-15).** Availability has a REVERSIBLE
+   space (`requires`, target) and a PERMANENT space (the `enables` family, source):
+
+   | space | where | forms |
+   |---|---|---|
+   | **REVERSIBLE — `requires` (target gate)** | per candidate | POSITIVE `all`/`any` + `min`/`max` counts; NEGATIVE `disableIfAny`/`disableIfAll` (→ dormancy) |
+   | **PERMANENT — `enables` family (source)** | subtracted in generation | `enables` (construct); `disables` (ban→destroy), `obsoletes` (supersede), `replaces` (succeed) |
+
+   So `requires` carries **BOTH** a positive side (the common case — must-have means) **and** a negative side
+   (`disableIfAny`/`disableIfAll` — "go DORMANT while a forbidder/condition is present"; the pseudobuilding case:
+   education/crime/tourism). The `requires`-negative is **REVERSIBLE/non-destructive** (dormancy); the source-side
+   **`disables`** is **DESTRUCTIVE** — same "negative" intuition, different FATE (§3). (An interim pass wrongly
+   withdrew the `requires`-negative; it is RESTORED — positive is just the common case, negatives are not excluded.)
+
+   **`requires` evaluates in TWO STAGES — predictable, hence CACHEABLE: COMBINATOR then CONDITIONS (owner,
+   2026-06-15).** Every `requires` resolves the SAME way (deterministic, no special cases):
+   - **Stage 1 — the combinator: `all`/`any` × positive/negative.** Pure boolean structure — how the clauses combine
+     (AND=`all`, OR=`any`) and polarity (must-have, or DORMANT-if-present via `disableIfAny`/`disableIfAll`); fixed by
+     the clause shape before any state is read. Nesting gives OR-of-ANDs, so top-level alternative requirement-sets
+     need no special form.
+   - **Stage 2 — the conditions under that gate.** Each atom's check against state: a **presence** test (`∈ HAS`,
+     read directly at scope — no tally), or a **count** test **`min(TYPE, N)`** / **`max(TYPE, N)`** (read at scope:
+     city = local count, empire/team = **TALLY**, the only tally consumer). `min(BUILDING_BARRACKS,12)` = West Point
+     prereq; `max(UNIT_COMMANDER,5)` = instance CAP (`getMaxPlayerInstances` family). Both grounded + first-class.
+     exact-N = `min(X,N) ∧ max(X,N)` — a combination, no separate primitive.
+   - **Predictable ⇒ CACHEABLE.** The verdict is a pure function of (combinator, conditions, state) → cache it *if
+     measured worthwhile*, with predictable invalidation. Caching stays the optional wrapper of §2, never the model.
+     - **Routing by Type PREFIX:** the id prefix — `BUILDING_` / `UNIT_` / `UNITGROUP_` / `BONUS_` / … — selects which
+       tally bucket to count. No separate `kind` field; the namespace prefix self-routes. (Relies on every Type id
+       carrying its category prefix — generally true, worth enforcing; the same prefix discriminates atoms throughout.)
+     - **VOLUMETRIC-READY — author resource presence as `min(BONUS_COAL, 1)`.** Presence is the N=1 degenerate case
+       of the count form; doing this consistently leaves **immediate room to go volumetric with ZERO model rework**
+       (resources gain amounts → change the `1` to an `N`). Unifies all count-capable kinds under one `min`/`max`.
+   - **Spec-implementation parity — build a NAMED form even if rarely used (owner).** #430 implements every named
+     form as a real, unit-tested branch from day one — `disableIfAll` and `max` get built+tested alongside the common
+     `disableIfAny`/`min`, even where data leans the other way — because a spec-named form the engine no-ops is latent
+     breakage that bites the first modder to use it.
+   - **UNIVERSAL EVALUATION ORDER.** Every process: **generate CAN GET** = `enables` − (`disables` ∪ `obsoletes` ∪
+     `replaces`) over HAS → **`requires` gate** (positive means present AND negative forbidders absent). PERMANENT
+     removal happens in generation (source tracks → destroyed/superseded); REVERSIBLE dormancy is in the gate (a
+     `requires`-negative met → dormant, a positive unmet → greyed/dormant). Clean inverse of the old "disable before
+     enable" tangle (§1).
+   - **OFF the surface** (documented as possible future, never as existing): mixed-polarity disjunction ("have A OR
+     not B"), OR-of-negatives. None grounded; build only if a real case appears.
+8. **Tech-tree multi-parent AND/OR — GAP found + RESOLVED (owner, 2026-06-15).** **Gap:** `store.py` inverts BOTH
+   `AndPreReqs/PrereqTech` and `OrPreReqs/PrereqTech` into the *same* flat `enables.techs` (store.py:68-69), so
+   `enables` cannot distinguish AND from OR, and the converted tech JSON dropped each child's prereq grouping
+   (`requires` is in 0 files) — "this tech needs BOTH parents" is currently unrepresentable, and flat-`enables`
+   generation over-produces (one parent proposes the child). **This is essentially TECH-ONLY:** techs are the kind
+   whose multi-parent AND is purely generation-side and structurally common (the tech tree); buildings/units carry a
+   single tech unlock + put their real AND/OR over resources/civics in `requires` (which already captures it). (The
+   rare `TechTypes` multi-tech building/unit rides the same fix.) **Resolution (owner): use the SAME `requires.build` mechanism
+   everything else uses — no tech special-casing.** A child tech carries **`requires.build.all: [TECH_1, TECH_2]`**
+   (or `requires.build.any` for OR-prereqs) — tech atoms, exactly like a building's `requires.build`. `enables`
+   proposes the child into the frontier from one parent; `requires.build.all` confirms it actually has all parents →
+   researchable. **Not the reverse-lookup problem** — the candidate is already generated, so `requires` checks its
+   own small parent-list forward against HAS-techs (§3). No new mechanism, no `enabledWhen`. It's `requires.**build**`
+   (researching is a one-time action like `canBuild`); techs are monotonic so there's no `operate`/dormancy side —
+   confirm only. **Retrofit action:** the tech curator must RETAIN the child's `AndPreReqs`/`OrPreReqs` as
+   `requires.build.all`/`requires.build.any` tech clauses (currently dropped on inversion); keep the flat `enables`
+   for generation. **Efficiency (the point):** several parent techs propose the child onto a SMALL frontier; the
+   `requires.build.all` confirm runs only over **that frontier subset**, NOT by re-scanning every tech's prereqs
+   every turn (the old O(all-techs) check) — the bounded-by-HAS win, applied to the tech tree.
 
 ---
 
@@ -502,7 +729,7 @@ index) / partly replaced.
 
 **F. Imperative replace/disable machinery — REPLACED by DERIVATION:** `CvCity::setHasBuilding` removal block —
 `getExtendsBuilding` extension cascade (14432-14445) + `setDisabledBuilding` replace/re-enable chain-walk
-(14448-14477) — become two derived behaviours, NOT imperative walks: the **destructive** `replaces`/`disables` chain
+(14448-14477) — become two derived behaviours, NOT imperative walks: the **destructive** `obsoletes`/`replaces` chain
 drops the candidate from CAN GET in generation (§6), and the **operational/dormancy** check ("disabled ≠ absent" —
 a built thing whose `requires` means fail goes dormant but persists, §3) is just the per-candidate gate re-run on
 things you HAVE.
@@ -514,7 +741,7 @@ things you HAVE.
 ---
 
 *Status: model GROUNDED and design-complete (v0.3 — HAS → CAN GET → HAS THE MEANS TO; `enables` family =
-PERMANENT actions [constructive `enables` + destructive `disables`/`replaces`, incl. tech] forward on the source
+PERMANENT actions [constructive `enables` + destructive `obsoletes`/`replaces`, incl. tech] forward on the source
 → generation; `requires` = REVERSIBLE means [civic/religion/resource] on the target → gate + dormancy; the two
 COEXIST; hot path forward-only, reverse indices cold-path/pedia only). Next: (a) retrofit per §12 — NO flip; keep
 the `enables` family on sources, author `requires` means on targets, name `loadPrune`/`policies`; (b) prove
@@ -525,6 +752,6 @@ model + §3 `requires` means + §5/§6 `enables` family + §4 greying + this §1
 prerequisites (e.g. obsidian-weapon / waterproof-concrete / lead-glass) — a tech's predecessors carry the edge
 forward via `enables`, so the prereq fields on the tech itself are redundant and can be shed (the model no longer
 needs them for any reverse lookup). This is safe **because the whole thing — constructive `enables`, destructive
-`disables`/`replaces`, and the `requires` means gate — lives in ONE UNIFORM CHAIN** (the single cascade, one
+`obsoletes`/`replaces`, and the `requires` means gate — lives in ONE UNIFORM CHAIN** (the single cascade, one
 trigger, §4): there is no scattered per-prereq mechanism left that a shed field could silently break. Capture in
 the tech retrofit / dead-structure pass.*

@@ -1,0 +1,31 @@
+{
+  "entity": "VoteInfo",
+  "rootElement": "VoteInfo",
+  "glob": "**/CIV4VoteInfo.xml",
+  "channels": {
+    "iPopulationThreshold": {"scope": "game", "channel": "voteThreshold", "kind": "flat"},
+    "bCityVoting": {"scope": "game", "channel": "voteMode", "kind": "enabler"},
+    "bCivVoting": {"scope": "game", "channel": "voteMode", "kind": "enabler"},
+    "iMinVoters": {"scope": "game", "channel": "voteThreshold", "kind": "flat"},
+    "iStateReligionVotePercent": {"scope": "game", "channel": "voteThreshold", "kind": "percent"},
+    "iTradeRoutes": {"scope": "game", "channel": "tradeRoutes", "kind": "flat"},
+    "bSecretaryGeneral": {"scope": "game", "channel": "voteEffect", "kind": "enabler"},
+    "bVictory": {"scope": "game", "channel": "voteEffect", "kind": "enabler"},
+    "bFreeTrade": {"scope": "game", "channel": "voteEffect", "kind": "enabler"},
+    "bNoNukes": {"scope": "game", "channel": "voteEffect", "kind": "enabler"},
+    "bDefensivePact": {"scope": "game", "channel": "voteEffect", "kind": "enabler"},
+    "bOpenBorders": {"scope": "game", "channel": "voteEffect", "kind": "enabler"},
+    "bForcePeace": {"scope": "game", "channel": "voteEffect", "kind": "enabler"},
+    "bForceNoTrade": {"scope": "game", "channel": "voteEffect", "kind": "enabler"},
+    "bForceWar": {"scope": "game", "channel": "voteEffect", "kind": "enabler"},
+    "bAssignCity": {"scope": "game", "channel": "voteEffect", "kind": "enabler"},
+    "ForceCivics": {"scope": "game", "channel": "forceCivics", "kind": "enabler"}
+  },
+  "inversionsOut": {},
+  "enablerEdges": {},
+  "prereqs": [],
+  "cost": [],
+  "art": [],
+  "identity": ["Type", "Description", "DiploVotes"],
+  "boostsIn": []
+}

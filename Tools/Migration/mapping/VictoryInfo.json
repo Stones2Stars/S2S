@@ -1,0 +1,32 @@
+{
+  "entity": "VictoryInfo",
+  "rootElement": "VictoryInfo",
+  "glob": "**/CIV4VictoryInfo.xml",
+  "channels": {},
+  "inversionsOut": {},
+  "enablerEdges": {},
+  "prereqs": [],
+  "cost": [],
+  "art": [
+    "VictoryMovie"
+  ],
+  "identity": [
+    "Type",
+    "Description",
+    "Civilopedia",
+    "bConquest",
+    "bTargetScore",
+    "bPermanent",
+    "bEndScore",
+    "bDiploVote",
+    "bTotalVictory",
+    "iLandPercent",
+    "iPopulationPercentLead",
+    "iMinLandPercent",
+    "iNumCultureCities",
+    "iReligionPercent",
+    "iVictoryDelayTurns",
+    "CityCulture"
+  ],
+  "boostsIn": []
+}

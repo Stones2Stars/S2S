@@ -1,0 +1,15 @@
+{
+  "entity": "ProcessInfo",
+  "rootElement": "ProcessInfo",
+  "glob": "**/CIV4ProcessInfo.xml",
+  "channels": {
+    "ProductionToCommerceModifiers": {"scope": "city", "channel": "commerce", "kind": "percent", "valueKeys": ["gold", "research", "culture", "espionage"]}
+  },
+  "inversionsOut": {},
+  "enablerEdges": {},
+  "prereqs": ["TechPrereq"],
+  "cost": [],
+  "art": ["Button"],
+  "identity": ["Type", "Description"],
+  "boostsIn": []
+}

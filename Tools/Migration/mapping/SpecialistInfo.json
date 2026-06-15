@@ -1,0 +1,24 @@
+{
+  "entity": "SpecialistInfo",
+  "rootElement": "SpecialistInfo",
+  "glob": "**/CIV4SpecialistInfos.xml",
+  "channels": {
+    "Yields": {"scope": "city", "channel": "yield", "kind": "flat", "valueKeys": ["food", "production", "commerce"]},
+    "YieldChanges": {"scope": "city", "channel": "yield", "kind": "flat", "valueKeys": ["food", "production", "commerce"]},
+    "Commerces": {"scope": "city", "channel": "commerce", "kind": "flat", "valueKeys": ["gold", "research", "culture", "espionage"]},
+    "iHappinessPercent": {"scope": "city", "channel": "happiness", "kind": "percent"},
+    "iHealthPercent": {"scope": "city", "channel": "health", "kind": "percent"},
+    "iGreatPeopleRateChange": {"scope": "city", "channel": "greatPeopleRate", "kind": "flat"},
+    "iInvestigation": {"scope": "city", "channel": "investigation", "kind": "flat"},
+    "UnitCombatExperienceTypes": {"scope": "city", "channel": "experience", "kind": "flat"}
+  },
+  "inversionsOut": {
+    "TechHappinessTypes": {"destEntity": "CvTechInfo", "shape": "specialistBoosts.{SPECIALIST}.happiness"}
+  },
+  "enablerEdges": {},
+  "prereqs": [],
+  "cost": [],
+  "art": ["Texture", "Button"],
+  "identity": ["Type", "Description", "Civilopedia", "Categories", "PropertyManipulators", "bVisible", "bSlave", "GreatPeopleUnitType"],
+  "boostsIn": ["specialistBoosts"]
+}

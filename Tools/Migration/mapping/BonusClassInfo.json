@@ -1,0 +1,13 @@
+{
+  "entity": "BonusClassInfo",
+  "rootElement": "BonusClassInfo",
+  "glob": "**/CIV4BonusClassInfos.xml",
+  "channels": {},
+  "inversionsOut": {},
+  "enablerEdges": {},
+  "prereqs": [],
+  "cost": [],
+  "art": [],
+  "identity": ["Type", "iUniqueRange"],
+  "boostsIn": []
+}

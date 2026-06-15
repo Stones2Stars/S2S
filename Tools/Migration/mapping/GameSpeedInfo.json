@@ -1,0 +1,16 @@
+{
+  "entity": "GameSpeedInfo",
+  "rootElement": "GameSpeedInfo",
+  "glob": "**/CIV4GameSpeedInfo.xml",
+  "channels": {
+    "iSpeedPercent": {"scope": "game", "channel": "gamePace", "kind": "percent"},
+    "iUnitYieldScalePercent": {"scope": "game", "channel": "unitYieldScale", "kind": "percent"}
+  },
+  "inversionsOut": {},
+  "enablerEdges": {},
+  "prereqs": [],
+  "cost": [],
+  "art": [],
+  "identity": ["Type", "Description", "Help"],
+  "boostsIn": []
+}

@@ -279,7 +279,7 @@ system; **not** the `BONUS` map resource). Fit verdicts:
 | `getStartingGold` | gold the player starts with | own | **No** — one-time setup |
 | `getAdvancedStartPointsMod` | % on the advanced-start point budget | own | **No** — one-time setup |
 | `getStartingDefenseUnits` / `WorkerUnits` / `ExploreUnits` | free units at game start (humans) | own | **No** — one-time setup |
-| `getRevolutionIndexPercent` | nothing — defined but **unused** in the DLL | own | **No** — dead |
+| `getRevolutionIndexPercent` | not applied **yet** — Revolution mechanic is WIP (tracked) | own | **No (for now)** — incomplete, not dead |
 | `getAttitudeChange` | flat shift to AI diplomatic attitude | target's | **No** — behavioural/diplo |
 | `getNoTechTradeModifier` / `getTechTradeKnownModifier` | tech-trade availability thresholds | team | **No** — diplo rule |
 | `getAITrainPercent` / `WorldTrainPercent` | AI unit-build cost % | **game** | **MODIFIER\*** |
@@ -333,10 +333,10 @@ and setup halves do not.
   cost field reads it; `getAIResearchPercent` is read on `CvTeam` but pulls from
   `GC.getGame()` (`CvTeam.cpp:2654`). The team average is used only by team-scoped
   diplomacy/trade reads and display.
-- **`getRevolutionIndexPercent` is dead in the DLL.** It exists as XML data, a getter
-  (`CvHandicapInfo.cpp:429`), and a Python binding (`CyInfoInterface2.cpp:82`), but no
-  C++ path applies it. Listed under "fields that change" above only because it is
-  per-player by category — in practice it changes nothing in the DLL.
+- **`getRevolutionIndexPercent` is INCOMPLETE, not dead (owner, 2026-06-14).** It exists as XML data, a getter
+  (`CvHandicapInfo.cpp:429`), and a Python binding (`CyInfoInterface2.cpp:82`), but no C++ path applies it
+  **yet** — the Revolution mechanic is unfinished (there is a tracking issue to wire it up), so this is a
+  WIP gap to complete, not a field to purge. (Earlier this note read "dead"; corrected.)
 - **Increasing vs flexible difficulty differ on AIs.** `doIncreasingDifficulty` raises
   *humans only* (`CvGame.cpp:10081`). `doFlexibleDifficulty` can raise/lower AIs but only
   if `MODDERGAMEOPTION_AI_USE_FLEXIBLE_DIFFICULTY` is set (`CvGame.cpp:10144`).

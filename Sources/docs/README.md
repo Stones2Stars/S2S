@@ -47,11 +47,13 @@ This folder is split by intent:
 | [calendar-and-gamespeed](reference/calendar-and-gamespeed.md) | Era-driven turn counts & calendar (`CvEraInfo` pacing fields, `CvGameSpeedInfo` derived accessors, `CvDate` interpolation, Adapt channels) |
 | [MapScript_Process](reference/MapScript_Process.md) | End-to-end lifecycle of a C2C mapscript (`C2C_World`) |
 | [handicaps](reference/handicaps.md) | The difficulty system: per-player vs game handicap, the human-field/AI-field split, a per-field "what each value does" reference (+ #423 cascade-migration fit), and what setting a non-Noble AI actually changes |
+| [unitcombat](reference/unitcombat.md) | What `UnitCombatType` is: a core Civ4 combat-class axis (promotion-gating, vs-class bonuses, AI) that C2C grew into a 636-entry, many-to-many, ~150-field "innate-promotion tag" class mirroring `CvPromotionInfo`; + its #428 migration fit |
 
 ## Plans — work in flight
 
 | Doc | Subject |
 |---|---|
+| [handover-2026-06-14-pm](plans/handover-2026-06-14-pm.md) | ⏩ **Session resume (2026-06-14 PM):** Trait done, equipment combat-purge, SpecialBuilding re-curate flag, combat-class audit (#435), lighter-four classified; the "no true POCO" + "unreferenced ≠ dead" rules; queue |
 | [ai-architecture-north-star](plans/ai-architecture-north-star.md) | The coherence frame for the AI/data rework: goal, hard constraints, module taxonomy, roadmap |
 | [ai-vs-human-benchmarking](plans/ai-vs-human-benchmarking.md) | Live playthrough observation: does the AI run ahead of or lag the player; competence-not-handicaps principle |
 | [codebase-bug-hunt](plans/codebase-bug-hunt.md) | Standing C++/Python bug-sweep initiative + GitHub issue convention |

@@ -1,0 +1,17 @@
+{
+  "entity": "ReligionInfo",
+  "rootElement": "ReligionInfo",
+  "glob": "**/CIV4ReligionInfo.xml",
+  "channels": {
+    "GlobalReligionCommerces": {"scope": "player", "channel": "commerce", "kind": "flat", "valueKeys": ["gold", "research", "culture", "espionage"]},
+    "HolyCityCommerces": {"scope": "city", "channel": "commerce", "kind": "flat", "valueKeys": ["gold", "research", "culture", "espionage"]},
+    "StateReligionCommerces": {"scope": "player", "channel": "commerce", "kind": "flat", "valueKeys": ["gold", "research", "culture", "espionage"]}
+  },
+  "inversionsOut": {},
+  "enablerEdges": {},
+  "prereqs": ["TechPrereq"],
+  "cost": [],
+  "art": ["MovieSound", "iTGAIndex", "Button", "TechButton", "GenericTechButton", "MovieFile", "Sound"],
+  "identity": ["Type", "Description", "Civilopedia", "iSpreadFactor", "iFreeUnits", "FreeUnit", "Adjective", "Flavors"],
+  "boostsIn": ["buildingBoosts"]
+}

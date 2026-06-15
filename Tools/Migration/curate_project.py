@@ -1,0 +1,210 @@
+#!/usr/bin/env python3
+"""Curate Project (#428) — a buildable wonder/megaproject. BESPOKE (per-field scopes), modelled on curate_era.
+Its effects are deposited on completion by CvTeam::processProjectChange (CvTeam.cpp:4508-4577), which pins the
+scope of every field — verified line-by-line against that function:
+
+- TEAM scope: iNukeInterception (changeNukeInterception, 4513), iTechShare (changeTechShareCount, 4517).
+- EMPIRE scope (per-player ON the team, inside `player.getTeam()==getID()`): iGlobalHappiness/iGlobalHealth,
+  iInflationModifier, the four maintenance modifiers, CommerceModifiers (4559-4570).
+- WORLD scope (EVERY alive player, OUTSIDE the team check): iWorldHappiness/iWorldHealth/iWorldTradeRoutes
+  (4572-4574). The first-pass mapping mis-scoped these as team — the C++ is explicit they are world.
+
+Modeling calls made this pass (light-batch-classification.json + the C++):
+- The victory-launch cluster (VictoryThresholds/VictoryMinThresholds per-victory + iVictoryDelayPercent +
+  iSuccessRate) is a NON-CASCADE structural `victory` section, NOT a modifier family: these don't sum down a
+  scope spine or deposit onto leaves — they are per-victory launch parameters read by victory resolution
+  (CvTeam::getVictoryDelay/getLaunchSuccessRate, CvGame::testVictory). Forcing them into the additive-family
+  vocabulary with a fake scope/unit would misrepresent them.
+- iCost -> a `cost` section ({create: N}): the project's intrinsic base hammer cost. The universal `costs`
+  family (GameSpeed/Era costs.world.create.percent) MULTIPLIES this base; the base lives on the info.
+- BonusProductionModifiers -> DROP. The committed Bonus curator already folds it onto the BONUS as
+  buildRate.city.projects.{PROJECT}.percent (same convention as building/unit BonusProductionModifiers).
+  Authoring it on the project too would double-count; the cross-entity convention (Bonus migrated first) wins.
+  (This overrides the classification's open-question proposal to home it on the project.)
+- YieldModifiers -> DROP: DEAD structure. CvProjectInfo has no YieldModifier member/getter/consumer; the
+  <YieldModifiers> XML element is never read (only <CommerceModifiers> is). bTechShareWithHalfCivs -> DROP: DEAD
+  (no consumer outside CvProjectInfo's own getter/checksum).
+- TechPrereq -> DROP, store inverts to tech.enables.projects. PrereqProjects -> DROP, store inverts to the
+  prerequisite project's enables.projects (the SS_* parts need PROJECT_APOLLO_PROGRAM), so this project emits an
+  `enables` block via store.enabled_by. NB the per-edge iNeeded count (all 1 today) is NOT carried by the
+  set-based enables index; a count>1 would need a count-bearing edge. AnyonePrereqProject -> DROP (unused in
+  current data; if ever set it needs its own store edge). VictoryPrereq -> identity.launchesVictory (the victory
+  this project's creation LAUNCHES — not a build prereq; the reverse 'launchedBy' is a cold-path derived edge).
+- EveryoneSpecialUnit/EveryoneSpecialBuilding -> grants (one-shot makeSpecial*Valid on completion).
+
+Family/member names for nukeInterception (combat) and techShare (diplomacy) are PROVISIONAL (owner: nail down
+later); techShare sits with handicap's diplomacy.noTechTrade/techTradeKnown tech-diffusion members.
+
+  python3 curate_project.py --sample PROJECT_SDI PROJECT_SS_ENGINE PROJECT_THE_INTERNET
+  python3 curate_project.py --write
+"""
+import argparse
+import json
+import os
+from collections import OrderedDict
+
+import engine
+from curate_common import de_i
+from store import Store, REPO
+
+# tag -> (family, scope, member, unit). member None = singleton family.
+FAMILIES = {
+    "iNukeInterception":              ("combat",      "team",   "nukeInterception", "percent"),
+    "iTechShare":                     ("diplomacy",   "team",   "techShare",        "flat"),
+    "iGlobalMaintenanceModifier":     ("maintenance", "empire", "all",              "percent"),
+    "iDistanceMaintenanceModifier":   ("maintenance", "empire", "distance",         "percent"),
+    "iNumCitiesMaintenanceModifier":  ("maintenance", "empire", "numCities",        "percent"),
+    "iConnectedCityMaintenanceModifier": ("maintenance", "empire", "connectedCity", "percent"),
+    "iInflationModifier":             ("upkeep",      "empire", "inflation",        "percent"),
+    "iGlobalHappiness":               ("happiness",   "empire", None,               "flat"),
+    "iGlobalHealth":                  ("health",      "empire", None,               "flat"),
+    "iWorldHappiness":                ("happiness",   "world",  None,               "flat"),
+    "iWorldHealth":                   ("health",      "world",  None,               "flat"),
+    "iWorldTradeRoutes":              ("tradeRoutes", "world",  None,               "flat"),
+}
+# CommerceModifiers: SPLIT per-identifier commerce families (gold/research/culture/espionage), empire/percent.
+SPLIT_COMMERCE = {"CommerceModifiers": ("empire", "percent")}
+GRANTS = {"EveryoneSpecialUnit": "grantsSpecialUnit", "EveryoneSpecialBuilding": "grantsSpecialBuilding"}
+TEXT = {"Description": "description", "Civilopedia": "civilopedia"}
+ART = {"Button": "icon", "MovieDefineTag": "movie", "CreateSound": "createSound"}
+# intrinsic identity, with clean names. iCost handled separately (own `cost` section).
+IDENTITY = {"iMaxGlobalInstances": "maxGlobalInstances", "iMaxTeamInstances": "maxTeamInstances",
+            "VictoryPrereq": "launchesVictory", "MapCategoryTypes": "mapCategories", "Categories": "categories"}
+# dead structure (no consumer) + derived enabler/prereq edges (store-inverted) -> never authored.
+DROP = {"YieldModifiers", "bTechShareWithHalfCivs", "BonusProductionModifiers",
+        "TechPrereq", "AnyonePrereqProject", "PrereqProjects"}
+# the per-victory launch cluster -> a non-cascade `victory` section.
+VICTORY_KEYED = {"VictoryThresholds": "thresholds", "VictoryMinThresholds": "minThresholds"}
+VICTORY_SCALAR = {"iVictoryDelayPercent": "delayPercent", "iSuccessRate": "successRate"}
+FAMILY_ORDER = ["combat", "diplomacy", "maintenance", "upkeep", "happiness", "health", "tradeRoutes",
+                "gold", "research", "culture", "espionage"]
+
+
+def _put(fam, family, scope, member, unit, val):
+    node = fam.setdefault(family, {}).setdefault(scope, {})
+    if member:
+        node = node.setdefault(member, {})
+    node[unit] = val
+
+
+def _keyed_ints(node):
+    """<Foo><FooEntry><XType>K</XType><iVal>n</iVal></FooEntry>...> -> {K: n} (first *Type child = key)."""
+    out = OrderedDict()
+    for entry in list(node):
+        key, val = None, None
+        for c in entry:
+            if key is None and c.tag.endswith("Type"):
+                key = engine.text(c)
+            elif engine.is_int(engine.text(c)):
+                val = int(engine.text(c))
+        if key and val is not None:
+            out[key] = val
+    return out
+
+
+def curate(typ, rec, store):
+    text, fam, grants, art, identity, victory, cost, leftover = {}, {}, {}, {}, {}, {}, {}, []
+    for c in rec:
+        tag, t = c.tag, engine.text(c)
+        if tag == "Type" or tag in DROP:
+            continue
+        elif tag in TEXT:
+            if t:
+                text[TEXT[tag]] = t
+        elif tag in FAMILIES:
+            if engine.is_int(t) and int(t) != 0:
+                family, scope, member, unit = FAMILIES[tag]
+                _put(fam, family, scope, member, unit, int(t))
+        elif tag in SPLIT_COMMERCE:
+            scope, unit = SPLIT_COMMERCE[tag]
+            for member, v in engine.named_array(c, engine.COMMERCES).items():  # member IS the family (split)
+                _put(fam, member, scope, None, unit, v)
+        elif tag == "iCost":
+            if engine.is_int(t) and int(t) != 0:
+                cost["create"] = int(t)
+        elif tag in VICTORY_KEYED:
+            keyed = _keyed_ints(c)
+            if keyed:
+                victory[VICTORY_KEYED[tag]] = keyed
+        elif tag in VICTORY_SCALAR:
+            if engine.is_int(t) and int(t) != 0:
+                victory[VICTORY_SCALAR[tag]] = int(t)
+        elif tag in GRANTS:
+            v = int(t) if engine.is_int(t) else (t or None)
+            if v not in (None, "", "NONE"):
+                grants[GRANTS[tag]] = v
+        elif tag in ART:
+            v = engine.generic(c)
+            if v not in (None, "", [], {}):
+                art[ART[tag]] = v
+        elif tag in IDENTITY:
+            if t or list(c):
+                identity[IDENTITY[tag]] = engine.generic(c)
+        elif tag[:1] == "b":                              # capability flag (bSpaceship/bAllowsNukes) -> identity bool
+            if t in ("1", "true", "True"):
+                identity[tag[1].lower() + tag[2:]] = True
+        else:
+            if list(c) or t:
+                leftover.append(tag)
+                identity[engine.FIELD_RENAME.get(tag, de_i(tag))] = engine.generic(c)
+
+    out = OrderedDict()
+    out["type"] = typ
+    for k in ("description", "civilopedia"):
+        if k in text:
+            out[k] = text[k]
+    enables = store.enabled_by(typ)                        # project -> project (PrereqProjects; Apollo -> SS_* parts)
+    if enables:
+        out["enables"] = OrderedDict((k, enables[k]) for k in sorted(enables))
+    for family in FAMILY_ORDER:
+        if family in fam:
+            out[family] = fam[family]
+    for family in fam:
+        if family not in out:
+            out[family] = fam[family]
+    if victory:
+        out["victory"] = victory
+    if grants:
+        out["grants"] = grants
+    if cost:
+        out["cost"] = cost
+    if art:
+        out["art"] = art
+    if identity:
+        out["identity"] = identity
+    return out, leftover
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--sample", nargs="*", help="print these types (default: first 1)")
+    ap.add_argument("--write", action="store_true")
+    args = ap.parse_args()
+    store = Store()
+    table = store.table("ProjectInfo")
+    results, all_leftover = OrderedDict(), set()
+    for typ, rec in table.items():
+        obj, leftover = curate(typ, rec, store)
+        results[typ] = obj
+        all_leftover.update(leftover)
+    print("ProjectInfo curated: %d" % len(results))
+    if all_leftover:
+        print("  leftover-to-identity (review): %s" % ", ".join(sorted(all_leftover)))
+    else:
+        print("  (every XML tag classified — no leftovers)")
+    if args.sample is not None:
+        for nm in (args.sample or list(results)[:1]):
+            print("\n=== %s ===" % nm)
+            print(json.dumps(results.get(nm, {"(not found)": nm}), indent=1, ensure_ascii=False))
+    if args.write:
+        out_dir = os.path.join(REPO, "Assets", "Data", "projects")
+        if not os.path.isdir(out_dir):
+            os.makedirs(out_dir)
+        for typ, obj in results.items():
+            with open(os.path.join(out_dir, typ.lower() + ".json"), "w") as f:
+                json.dump(obj, f, indent=1, ensure_ascii=False)
+        print("\nwrote %d ProjectInfo JSON files under Assets/Data/projects" % len(results))
+
+
+if __name__ == "__main__":
+    main()

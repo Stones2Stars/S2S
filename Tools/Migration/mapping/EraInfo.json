@@ -1,0 +1,47 @@
+{
+  "entity": "EraInfo",
+  "rootElement": "EraInfo",
+  "glob": "**/CIV4EraInfos.xml",
+  "channels": {
+    "iGrowthPercent": {"scope": "game", "channel": "growth", "kind": "percent"},
+    "iTrainPercent": {"scope": "game", "channel": "trainCost", "kind": "percent"},
+    "iConstructPercent": {"scope": "game", "channel": "constructCost", "kind": "percent"},
+    "iCreatePercent": {"scope": "game", "channel": "createCost", "kind": "percent"},
+    "iResearchPercent": {"scope": "game", "channel": "researchCost", "kind": "percent"},
+    "iBuildPercent": {"scope": "game", "channel": "buildCost", "kind": "percent"},
+    "iImprovementPercent": {"scope": "game", "channel": "improvementBuild", "kind": "percent"},
+    "iGreatPeoplePercent": {"scope": "game", "channel": "greatPeopleRate", "kind": "percent"},
+    "iAnarchyPercent": {"scope": "game", "channel": "anarchy", "kind": "percent"},
+    "iCuttingEdgeCutsTechCostModifier": {"scope": "player", "channel": "techCost", "kind": "percent"},
+    "iEventChancePerTurn": {"scope": "game", "channel": "eventChance", "kind": "flat"}
+  },
+  "inversionsOut": {},
+  "enablerEdges": {},
+  "prereqs": [],
+  "cost": [],
+  "art": [
+    "EraInfoSoundtracks",
+    "CitySoundscapes",
+    "AudioUnitVictoryScript",
+    "AudioUnitDefeatScript",
+    "Button",
+    "iSoundtrackSpace"
+  ],
+  "identity": [
+    "Type",
+    "Description",
+    "Strategy",
+    "iAdvancedStartPoints",
+    "iStartingUnitMultiplier",
+    "iStartingExploreUnits",
+    "iStartingGold",
+    "iHistoricalStartYear",
+    "iHistoricalEndYear",
+    "iNormalSpeedTurns",
+    "iStartingDefenseUnits",
+    "iStartingWorkerUnits",
+    "iFreePopulation",
+    "bFirstSoundtrackFirst"
+  ],
+  "boostsIn": []
+}

@@ -1,0 +1,1315 @@
+{
+  "summary": "Classify 7 enabler-chain light/medium entities for the #428 flat-family JSON migration",
+  "agentCount": 7,
+  "logs": [],
+  "result": [
+    {
+      "entity": "ReligionInfo",
+      "isEnablerChain": true,
+      "summary": "ReligionInfo (Sources/Infos/CvReligionInfo.{h,cpp}) is a CvHotkeyInfo subclass. Its real gameplay payload is THREE per-commerce tables, all of which the first-pass mapping mis-scoped. (1) StateReligionCommerces: mapping says \"player\" but the live consumer (CvCity.cpp:12503, `if isHasReligion(eReligion)`) deposits it in EVERY city that HAS this religion present -> commerce, CITY scope, flat. (2) HolyCityCommerces: deposits only in this religion's holy city (CvCity.cpp:12507) -> commerce, CITY scope, flat (mapping correct). (3) GlobalReligionCommerces: mapping says \"player\" but it is NOT per-player — it is the religion's contribution to its \"shrine\": consumed wherever a building's getGlobalReligionCommerce() points at this religion (CvCity.cpp:12185/12288), the per-commerce value scaled by GC.getGame().countReligionLevels (a WORLD-wide tally across all players). The value LANDS in the city holding the shrine building, so scope=city, but its magnitude is world-scaled and building-gated — flagged in notes/openQuestions. All three are flat per-commerce int tables keyed gold/research/culture/espionage (engine.COMMERCES). TechPrereq is the founding gate (CvTeam.cpp:5339 founds the religion when the tech is discovered) -> a prereq field that the store INVERTS to tech.enables; this religion IS an enabler-chain member (isEnablerChain=true), so I drop TechPrereq from the authored object. FreeUnit + iFreeUnits are a one-shot award to the founder (CvPlayer.cpp:8838-8846) -> grants. iSpreadFactor is a per-religion spread-decay scalar (CvCity.cpp:16736/16796) -> identity config. Flavors -> ai. Adjective/AdjectiveKey + Description/Civilopedia -> text. TechButton/GenericTechButton/Button/MovieFile/MovieSound/Sound/iTGAIndex -> art. m_iMissionType and m_iChar/m_iHolyCityChar are runtime-assigned (setMissionType/setChar), NOT XML-backed -> drop. m_shrineBuildings is a DERIVED runtime reverse-index (buildings with HolyCity set call addShrineBuilding at load, CvBuildingInfo.cpp:1464) -> store-derived, not authored. PropertyManipulators -> per-PROPERTY_* property family (shared CvPropertyManipulators infra). INBOUND BOOST: BuildingInfo.ReligionChanges (IDValueMap<ReligionTypes,int>, the ONLY per-specific-religion-keyed table in the codebase) is a per-religion \"religion influence\"/spread-weight deposit in the building's city (CvCity.cpp:4695 changeReligionInfluence) — the cascade spec (building-cascade-conversion.md:788) explicitly rules this INVERTS onto CvReligionInfo. Note: the many StateReligion* fields on Civics/Traits/Buildings (StateReligionHappiness, StateReligionGreatPeopleRateModifier, etc.) target the ABSTRACT \"state religion\" concept, NOT a specific ReligionInfo, so they do NOT fold onto any individual religion.",
+      "ownFields": [
+        {
+          "field": "StateReligionCommerces",
+          "cleanName": "stateReligionCommerce",
+          "disposition": "modifier-family",
+          "family": "commerce",
+          "scope": "city",
+          "unit": "flat",
+          "notes": "SPLIT family (gold/research/culture/espionage = engine.COMMERCES). Mapping said scope=player — WRONG. Live consumer CvCity.cpp:12503 deposits in EVERY city that isHasReligion(thisReligion); conditional on religion-presence, per-city => CITY scope. Raw per-commerce int (engine multiplies into x100 paths downstream); carry faithfully per #432."
+        },
+        {
+          "field": "HolyCityCommerces",
+          "cleanName": "holyCityCommerce",
+          "disposition": "modifier-family",
+          "family": "commerce",
+          "scope": "city",
+          "unit": "flat",
+          "notes": "SPLIT family. Deposits only in this religion's holy city (CvCity.cpp:12507, isHolyCity). CITY scope (mapping correct). Raw per-commerce int."
+        },
+        {
+          "field": "GlobalReligionCommerces",
+          "cleanName": "globalReligionCommerce",
+          "disposition": "modifier-family",
+          "family": "commerce",
+          "scope": "city",
+          "unit": "flat",
+          "notes": "SPLIT family. Mapping said scope=player — WRONG, it is NOT per-player. This is the religion's SHRINE contribution: consumed in whichever city holds a building whose getGlobalReligionCommerce() == thisReligion (CvCity.cpp:12185/12288), the per-commerce value multiplied by countReligionLevels (WORLD-wide religion tally). Value LANDS in the shrine city => city scope, but building-gated and world-scaled. See openQuestions: the curator may need a distinct 'shrine'/world-scaled commerce family rather than plain city commerce."
+        },
+        {
+          "field": "TechPrereq",
+          "cleanName": "techPrereq",
+          "disposition": "drop",
+          "notes": "Founding gate (CvTeam.cpp:5339 founds religion when tech discovered; also CvUnit.cpp:8465 prophet, CvPlayer.cpp:8795). PREREQ field -> store INVERTS to tech.enables; dropped from the authored object per curate_common cfg.drop. This religion IS an enabler-chain member (isEnablerChain=true)."
+        },
+        {
+          "field": "FreeUnit",
+          "cleanName": "freeUnit",
+          "disposition": "grants",
+          "notes": "Delayed-resolution UNIT_* FK (m_iFreeUnit). With iFreeUnits, one-shot award to the founding player when the religion is founded (CvPlayer.cpp:8838-8846). -> grants (e.g. grants.freeUnit + grants.numFreeUnits)."
+        },
+        {
+          "field": "iFreeUnits",
+          "cleanName": "numFreeUnits",
+          "disposition": "grants",
+          "notes": "Count of FreeUnit awarded on founding (CvPlayer.cpp:8838/8844). Pairs with FreeUnit as the one-shot grant. Mapping listed under identity — WRONG, it is a grant quantity."
+        },
+        {
+          "field": "iSpreadFactor",
+          "cleanName": "spreadFactor",
+          "disposition": "identity",
+          "notes": "Per-religion spread decay/randomization scalar (CvCity.cpp:16736 decay = spreadFactor + iExp*iExp; 16796 max(1,spreadFactor) spread threshold). Religion's own config property, not a scoped modifier deposit -> identity."
+        },
+        {
+          "field": "Flavors",
+          "cleanName": "flavors",
+          "disposition": "ai",
+          "notes": "AI flavour values (m_piFlavorValue, SetVariableListTagPair). -> ai group (flavours)."
+        },
+        {
+          "field": "Adjective",
+          "cleanName": "adjective",
+          "disposition": "text",
+          "notes": "AdjectiveKey (CvWString m_szAdjectiveKey). Display/text key used in vote-source and event text (CvGame.cpp:9228, CvPlayer.cpp:21250). -> text."
+        },
+        {
+          "field": "Description",
+          "cleanName": "description",
+          "disposition": "text",
+          "notes": "Inherited display text key."
+        },
+        {
+          "field": "Civilopedia",
+          "cleanName": "civilopedia",
+          "disposition": "text",
+          "notes": "Inherited civilopedia text key."
+        },
+        {
+          "field": "Type",
+          "cleanName": "type",
+          "disposition": "identity",
+          "notes": "Stable identifier; curate_common always drops Type from the authored body (it is the record key)."
+        },
+        {
+          "field": "TechButton",
+          "cleanName": "techButton",
+          "disposition": "art",
+          "notes": "Required-read icon path (m_szTechButton; read() uses GetChildXmlValByName, the only required string). -> art."
+        },
+        {
+          "field": "GenericTechButton",
+          "cleanName": "genericTechButton",
+          "disposition": "art"
+        },
+        {
+          "field": "Button",
+          "cleanName": "button",
+          "disposition": "art",
+          "notes": "Inherited hotkey-info button icon; getButtonDisabled derives the _D.dds variant at runtime (CvReligionInfo.cpp:151) — derived, not a separate field."
+        },
+        {
+          "field": "MovieFile",
+          "cleanName": "movieFile",
+          "disposition": "art"
+        },
+        {
+          "field": "MovieSound",
+          "cleanName": "movieSound",
+          "disposition": "art"
+        },
+        {
+          "field": "Sound",
+          "cleanName": "sound",
+          "disposition": "art"
+        },
+        {
+          "field": "iTGAIndex",
+          "cleanName": "tgaIndex",
+          "disposition": "art",
+          "notes": "Font/TGA glyph index; feeds runtime m_iChar/m_iHolyCityChar (setChar = 8550 + tgaIndex*2). ctor default -1 is the never-read TGA-filler sentinel (RemoveTGAFiller). Art/glyph indexing."
+        },
+        {
+          "field": "Categories",
+          "cleanName": "categories",
+          "disposition": "identity",
+          "notes": "m_aiCategories (vector<int>). isCategory()/getCategory() are generic info-category tags (no Religion-specific consumer found; same pattern as Bonus/Building categories). -> identity (classification tags)."
+        },
+        {
+          "field": "PropertyManipulators",
+          "cleanName": "propertyManipulators",
+          "disposition": "modifier-family",
+          "family": "property",
+          "scope": "city",
+          "unit": "flat",
+          "notes": "Shared CvPropertyManipulators (m_PropertyManipulators). Splits to per-PROPERTY_* family. Handled by the common property-family path, not a religion-specific field. unit/scope follow the manipulator's own source/decay shape."
+        },
+        {
+          "field": "MissionType",
+          "cleanName": "missionType",
+          "disposition": "drop",
+          "notes": "m_iMissionType is RUNTIME-assigned via setMissionType(), NOT XML-backed (confirmed CvReligionInfo.cpp:259-260). Not in getDataMembers. drop."
+        },
+        {
+          "field": "Char",
+          "cleanName": "char",
+          "disposition": "drop",
+          "notes": "m_iChar/m_iHolyCityChar runtime-derived from tgaIndex (setChar/setHolyCityChar), not XML-backed. drop."
+        },
+        {
+          "field": "ShrineBuildings",
+          "cleanName": "shrineBuildings",
+          "disposition": "drop",
+          "notes": "m_shrineBuildings is a DERIVED runtime reverse-index: buildings with HolyCity set push themselves in via addShrineBuilding at load (CvBuildingInfo.cpp:1464). Store-derived, NOT authored. Confirms the religion is a TARGET of BuildingInfo.HolyCity/ReligionType (the shrine relationship)."
+        }
+      ],
+      "inboundBoosts": [
+        {
+          "sourceEntity": "BuildingInfo",
+          "field": "ReligionChanges",
+          "family": "religionInfluence",
+          "scope": "city",
+          "member": "buildings",
+          "unit": "flat",
+          "notes": "The ONLY per-specific-religion-keyed table in the codebase (IDValueMap<ReligionTypes,int> m_religionChange, CvBuildingInfo.h:767). Consumer CvCity.cpp:4695 changeReligionInfluence(pair.first, pair.second*iChange) — a building deposits spread/influence weight for a SPECIFIC religion in its city. The cascade spec (Sources/docs/plans/building-cascade-conversion.md:788) explicitly mandates: 'ReligionChanges -> INVERT to CvReligionInfo (conditioner rule).' Folds onto THIS religion keyed by source building: <family>.city.buildings.<BUILDING>.flat. Family name 'religionInfluence' (spread weight) is provisional — see openQuestions; confirm against the universal singleton-family vocabulary."
+        }
+      ],
+      "openQuestions": [
+        "GlobalReligionCommerces scope: the value LANDS in the shrine city (=> city scope) but is gated by a building owning getGlobalReligionCommerce()==thisReligion AND multiplied by countReligionLevels (a WORLD-wide tally). Is the right model a plain commerce.city family, or a distinct world-scaled 'shrine commerce' family? It is semantically a city deposit whose magnitude scales with a world count — the curator needs an owner ruling on whether to encode the world-scaling multiplier or treat it as opaque shrine commerce. The mapping's 'player' scope is definitely wrong either way.",
+        "Inbound-boost family name for BuildingInfo.ReligionChanges: changeReligionInfluence is religion-spread weight, not a yield/commerce/happiness. Provisionally named 'religionInfluence' (singleton family, no member). Confirm the canonical family key in the universal singleton-family list (there may already be a 'spread'/'influence' family from Civic/Trait spread-modifier consumers).",
+        "StateReligion* fields on Civics/Traits/Buildings (StateReligionHappiness, StateReligionGreatPeopleRateModifier, StateReligionUnitProductionModifier, StateReligionFreeExperience, StateReligionBuildingCommerce, etc.) target the ABSTRACT 'state religion' role, NOT a specific ReligionInfo — confirmed they fold onto the SOURCE (player-scope state-religion modifiers), NOT onto any individual religion. Listed here so a later pass does not mistakenly invert them onto ReligionInfo.",
+        "Categories: no Religion-specific consumer of isCategory/getCategory was found (only the generic info-category pattern shared with Bonus/Building). Confirm whether religion categories are read anywhere gameplay-relevant or are purely organizational identity tags.",
+        "iTGAIndex / glyph chars: classified as art/glyph indexing. Confirm the curator's art group handles a font-index int (vs a path string); the runtime m_iChar derivation lives in C++ and is not authored."
+      ]
+    },
+    {
+      "entity": "RouteInfo",
+      "isEnablerChain": false,
+      "summary": "RouteInfo is a small, mostly-static plot-feature entity: a route deposits movement cost + (optionally) tile yields onto the plot it occupies, ranks itself via iValue, and is itself GATED by a prerequisite bonus / OR-bonus list (so it is a DEPENDENT in the bonus->route enabler chain, never an enabler key — store.enabled_by(\"ROUTE_*\") is empty, so it gets no `enables` block). The first-pass mapping dumped almost everything into `identity`, under-classifying the two real gameplay channels: (1) iMovement/iFlatMovement are the route's intrinsic per-plot traversal cost (consumed in CvPlot::movementCost / CvGameCoreUtils path heuristics), a `movement` world-scope modifier-family deposit, NOT identity; (2) Yields is a per-PLOT base-yield SPLIT-family deposit (food/production/commerce), added to the tile when the route is present (CvPlayer::calculatePlotRouteYieldDifference, CvPlot::calculateYield) — NOT identity. TechMovementChanges is carried in the route's XML but is an INVERSION-OUT: it is a per-TECH movement improvement (CvTeam::processTech accumulates team.getRouteChange), and curate_tech.py already folds it onto the TECH as movement.team.routes.{ROUTE}.flat — so it is DROPPED from the route's authored JSON. PrereqBonus(BonusType) + PrereqOrBonuses are prereq fields -> dropped (surface as the bonus's enables.routes). iValue (tier comparator), bSeaTunnel (water-crossing capability flag), Categories (classification trio — defined on the class but never populated for routes in XML and never read via getRouteInfo), and the unused PropertyManipulators stay in identity. iAdvancedStartCost is the advanced-start placement cost. Sole inbound boost: ImprovementInfo.RouteYieldChanges (the improvement's per-route yield bonus, applied per-plot when that improvement sits on this route) folds onto the route as a SPLIT yield family keyed by the source improvement.",
+      "ownFields": [
+        {
+          "field": "iMovement",
+          "disposition": "modifier-family",
+          "cleanName": "movementCost",
+          "family": "movement",
+          "scope": "world",
+          "member": "cost",
+          "unit": "flat",
+          "notes": "Route's own per-plot traversal cost (x100 fixed-point: 100 = 1 move = MOVE_DENOMINATOR; lower = faster). Consumed in CvPlot.cpp:4528/4540 movementCost, CvGameCoreUtils.cpp:1818 path heuristic, combined at runtime with team.getRouteChange(route) (the per-tech accumulator). NOT identity (mapping mistake). 'movement' is a singleton family in FAMILY_ORDER; iMovement vs iFlatMovement need distinguishing members (cost / flatCost). OPEN: this is the route's intrinsic own-stat, arguably identity rather than a cascading pool deposit — see openQuestions."
+        },
+        {
+          "field": "iFlatMovement",
+          "disposition": "modifier-family",
+          "cleanName": "flatMovementCost",
+          "family": "movement",
+          "scope": "world",
+          "member": "flatCost",
+          "unit": "flat",
+          "notes": "Flat (speed-independent) movement cap: CvPlot.cpp:4540 uses max(from,to flatCost)*baseMoves, then min() against the regular cost. x100 fixed-point. Same family as iMovement, distinct member."
+        },
+        {
+          "field": "Yields",
+          "disposition": "modifier-family",
+          "cleanName": "yields",
+          "family": "food/production/commerce (SPLIT)",
+          "scope": "plot",
+          "unit": "flat",
+          "notes": "Route's own base-yield deposit onto the tile it occupies. CvPlayer.cpp:7692 subtracts getRouteInfo(route).getYieldChange(eYield); CvPlot calculateYield adds it when route present. SPLIT family per engine.YIELDS=[food,production,commerce] -> e.g. ROUTE_JUMPLANE = food/production/commerce .plot.flat = 1 each; ROUTE_MAGLEV = commerce.plot.flat=1. Scope is PLOT (sub-city leaf), NOT city — a route yield is a tile yield. NOT identity (mapping mistake). Zero entries dropped."
+        },
+        {
+          "field": "iAdvancedStartCost",
+          "disposition": "modifier-family",
+          "cleanName": "advancedStart",
+          "family": "costs",
+          "scope": "world",
+          "member": "build",
+          "unit": "flat",
+          "notes": "Point cost to place this route in Advanced Start (CvPlayer.cpp:17615 getAdvancedStartRouteCost). Mapping listed it under generic `cost`. Closest fine-grained costs member is the route's placement/build cost; parking as costs.world.build is tentative — see openQuestions (may warrant its own advancedStart member, mirroring Era/Handicap which parked advancedStart in identity)."
+        },
+        {
+          "field": "iValue",
+          "disposition": "identity",
+          "cleanName": "value",
+          "notes": "Route TIER/ranking scalar (trail=1..gravityTrain=10). Used ONLY as a comparator: CvPlot.cpp:3493 (better-route check), CvPlayerAI/CvSelectionGroup best-route selection, CvUnitAI build-value weighting (iValue*..). Pure ranking, not a deposited modifier -> identity."
+        },
+        {
+          "field": "bSeaTunnel",
+          "disposition": "identity",
+          "cleanName": "seaTunnel",
+          "notes": "Boolean capability: route lets LAND units cross water tiles / blocks spurious water-route cleanup (CvPlot::isSeaTunnel, canMoveInto domain checks, build validity in CvPlayer.cpp:7574). Pure boolean flag, no scope/unit shape -> identity boolean (true emitted, false omitted). Only ROUTE_TUNNEL sets it."
+        },
+        {
+          "field": "Categories",
+          "disposition": "identity",
+          "cleanName": "categories",
+          "notes": "getCategory/isCategory/getNumCategories trio exists on the class, but NO consumer reads them via getRouteInfo(...) anywhere in Sources/, and the <Categories> element is never populated for ANY route in CIV4RouteInfos.xml. Effectively dead on routes. Curator zero-drops the empty list, so nothing emits. Flagged for drop-confirmation in openQuestions."
+        },
+        {
+          "field": "PropertyManipulators",
+          "disposition": "identity",
+          "cleanName": "propertyManipulators",
+          "notes": "m_PropertyManipulators is in getDataMembers (every Info has it) but no route in CIV4RouteInfos.xml populates it. Mirrors Improvement/Bonus curators which park PropertyManipulators in identity. Empty for all routes -> nothing emitted in practice."
+        },
+        {
+          "field": "TechMovementChanges",
+          "disposition": "drop",
+          "cleanName": "techMovementChanges",
+          "family": "movement (on TECH)",
+          "scope": "team",
+          "member": "routes.{ROUTE}",
+          "unit": "flat",
+          "notes": "INVERSION-OUT. Lives in the route's XML but is a per-TECH movement improvement: CvTeam.cpp:6068 processTech loops routes and accumulates changeRouteChange(route, getTechMovementChange(eTech)*iChange) — a team-scoped running total. mapping inversionsOut + curate_tech.py ALREADY fold it onto the TECH as movement.team.routes.{ROUTE}.flat (RouteInfo boost row in TECH_BOOSTS). So it is DROPPED from the route's own JSON. Only ROUTE_VACTRAIN sets one (TECH_SKYROADS, -4)."
+        },
+        {
+          "field": "BonusType",
+          "disposition": "drop",
+          "cleanName": "prereqBonus",
+          "notes": "PREREQ field (single AND prerequisite bonus to BUILD the route): CvPlot.cpp:3505 canBuildRoute gate (isAdjacentPlotGroupConnectedBonus). Store registers RouteInfo.BonusType as an enabler edge -> surfaces as the BONUS's enables.routes, NOT on the route. Dropped from the authored route JSON (cfg.drop via mapping prereqs). Makes the route a DEPENDENT, not an enabler."
+        },
+        {
+          "field": "PrereqOrBonuses",
+          "disposition": "drop",
+          "cleanName": "prereqOrBonuses",
+          "notes": "PREREQ OR-list (any one of these bonuses lets the route be built): CvPlot.cpp:3512 canBuildRoute. Store edge RouteInfo.PrereqOrBonuses/BonusType -> bonus.enables.routes. Dropped from the route JSON (top-down: lives as the bonuses' enables)."
+        },
+        {
+          "field": "Type",
+          "disposition": "identity",
+          "cleanName": "type",
+          "notes": "Identity-by-filename (curator writes <type>.lower().json and sets out['type']=typ). In cfg.drop as a field but re-emitted as the canonical type key."
+        },
+        {
+          "field": "Description",
+          "disposition": "text",
+          "cleanName": "description",
+          "notes": "TXT_KEY display name -> hoisted to top-level `description`."
+        },
+        {
+          "field": "Button",
+          "disposition": "art",
+          "cleanName": "icon",
+          "notes": "Button .dds path -> art.icon (ART_RENAME Button->icon)."
+        },
+        {
+          "field": "m_zobristValue",
+          "disposition": "drop",
+          "cleanName": "zobristValue",
+          "notes": "RUNTIME-only field, seeded from getSorenRand() in the constructor (NOT XML-backed). Not in getDataMembers as an XML member. Never authored -> never emitted."
+        }
+      ],
+      "inboundBoosts": [
+        {
+          "sourceEntity": "ImprovementInfo",
+          "field": "RouteYieldChanges",
+          "family": "food/production/commerce (SPLIT)",
+          "scope": "plot",
+          "member": "{IMPROVEMENT}",
+          "unit": "flat",
+          "notes": "targetType=improvements (the TARGET key is the source improvement type). The ONLY inbound boost. An improvement carries a per-route yield bonus (m_ppiRouteYieldChanges, CvImprovementInfo::getRouteYieldChanges(route, yield)) applied to a plot when that improvement sits on a tile carrying THIS route: CvPlayer.cpp:7690 calculatePlotRouteYieldDifference, CvPlot.cpp:8230/8246/12159 calculateYield, plus AI valuation (CvPlayerAI.cpp:4903/23475, CvUnitAI.cpp:21937). mapping/ImprovementInfo.json inversionsOut RouteYieldChanges -> destEntity CvRouteInfo, shape improvementYieldChanges.{IMPROVEMENT}. Folds onto the route as SPLIT yield: <food|production|commerce>.plot.improvements.{IMPROVEMENT}.flat. SCOPE: I set plot (a per-tile route+improvement combined yield), the faithful choice — but the existing ImprovementInfo->Tech yield boosts in curate_tech.py use team/city; the boosts_config row added for routes must pick the scope. NOTE: RouteInfo.json mapping labels this boost `improvementYieldChanges` in boostsIn — same data; the family is the split yield (food/production/commerce), not a literal `improvementYieldChanges` family."
+        }
+      ],
+      "openQuestions": [
+        "iMovement/iFlatMovement scope+disposition: classified as movement.world.{cost,flatCost}.flat, but these are the route's INTRINSIC own-stats (defining mechanical property), not a deposit into a cascading player/city/plot pool. They could equally be identity own-stats (like Terrain/Feature getMovementCost, which are also per-class intrinsic costs). Need an owner ruling on whether intrinsic traversal cost is a `movement` family member or identity. If movement-family, confirm the singleton family accepts members cost/flatCost (FAMILY_ORDER lists `movement` with no members today).",
+        "iAdvancedStartCost member: parked as costs.world.build, but Era/Handicap parked their advancedStart points in IDENTITY (pending review there too). Routes' advanced-start cost is a distinct per-route placement price; it may want its own costs member (e.g. advancedStart) rather than reusing `build` (which is the worker build-TIME member). Confirm against the costs fine-grained taxonomy.",
+        "Categories on RouteInfo is dead: the getCategory/isCategory trio compiles but has zero route consumers and zero XML data. Confirm it should simply be omitted (curator already zero-drops the empty list) rather than emitted as an empty identity.categories.",
+        "RouteYieldChanges inbound-boost scope: I chose `plot` (faithful — it is a per-tile yield), but the established ImprovementInfo boosts in curate_tech.py use team/city scope. Confirm the boosts_config row for RouteInfo should use plot (sub-city leaf), and that accumulate_boosts' SPLIT-family path emits member.scope.targetType.TARGET.unit = food.plot.improvements.{IMPROVEMENT}.flat as intended.",
+        "Yields scope = plot (sub-city leaf) vs city: confirmed it is a tile yield (added to the plot, not the city center), so `plot` is correct — but every other curated entity so far deposits base yields at `city`. Confirm `plot` is an accepted scope leaf in the spec's spine (world>team>empire>area>city + specialist/plot/building leaves)."
+      ]
+    },
+    {
+      "entity": "ProcessInfo",
+      "summary": "CvProcessInfo is one of the smallest Info classes in the codebase: getDataMembers (CvProcessInfo.cpp:61-67) enumerates exactly two XML-backed fields — m_iTechPrereq (enum) and m_paiProductionToCommerceModifier (commerce array) — plus the CvInfoBase base fields Type/Description/Button. A Process is a per-CITY production-conversion choice (each city may run a \"Wealth/Research/Culture/Spy\" process instead of building something): spent hammers convert to commerce at the per-commerce rate in ProductionToCommerceModifiers. SOURCE/SCOPE: the conversion rate is read at the city when production is spent (CvCity::changeProduction CvCity.cpp:3807-3825) — gold/espionage credited to the player total, research to the team, culture to the city — so the modifier is an intrinsic CITY-scope deposit. TechPrereq is a pure enabler gate (CvPlayer::canMaintain CvPlayer.cpp:6887 = isHasTech(prereq)); under the top-down model it is NOT authored on the Process — it inverts to the tech's `enables`/derived reverse index, so Process IS an enabler-chain member (tech -> process). NO inbound boosts exist: a repo-wide grep found no ProcessYield/ProcessCommerce/ProcessModifier field on any entity; buildings touch processes only via runtime getProductionProcess (the city's currently-selected process), never an Info field. The mapping's channel-count (commerce=city/percent, prereqs=[TechPrereq], art=[Button], identity=[Type,Description]) matches the real consumers — no under-classification here. The commerce array is a SPLIT family: it must become per-identifier families gold/research/culture/espionage (no `commerce` wrapper, no member), unit=percent (value 50 = \"50% of production -> that commerce\"; the consumer's /100 is percent application, NOT x100 fixed-point — values are stored as natural percents 30/40/50, so no #432 de-scaling concern here).",
+      "isEnablerChain": true,
+      "ownFields": [
+        {
+          "field": "ProductionToCommerceModifiers",
+          "cleanName": "productionToCommerce",
+          "disposition": "modifier-family",
+          "family": "gold/research/culture/espionage (SPLIT — per-identifier, no wrapper, no member)",
+          "scope": "city",
+          "member": "(none — split family; the commerce identifier IS the family name)",
+          "unit": "percent",
+          "notes": "C2C commerce array [gold,research,culture,espionage]. Curator: split into up-to-four top-level families (gold/research/culture/espionage), shape <commerceName>.city.percent. SEMANTIC NUANCE: this is a production->commerce CONVERSION rate (production hammers turn into commerce), not a multiplier of existing commerce — see openQuestions. unit=percent (consumer multiplies by hammers then /100 at CvCity.cpp:3812-3825). Stored value is the natural percent (30/40/50), NOT x100 fixed-point, so no de-scaling. Only PROCESS_IDLE omits the field entirely (legitimate: do-nothing process)."
+        },
+        {
+          "field": "TechPrereq",
+          "cleanName": "(derived — not authored)",
+          "disposition": "drop",
+          "notes": "Top-down enabler edge: the TECH enables the PROCESS (consumed only as a gate — CvPlayer::canMaintain CvPlayer.cpp:6887 isHasTech(getTechPrereq); also CvPlayerAI process-value scans 5109/5138). Under THE MODEL prereqs are NOT authored on the dependent; this inverts to the tech's `enables` + the derived reverse index (enabledByTech). DROP from the authored Process object; the store derives it. Confirms Process as an enabler-chain member."
+        },
+        {
+          "field": "Type",
+          "cleanName": "type",
+          "disposition": "identity",
+          "notes": "CvInfoBase identity key (PROCESS_WEALTH, ...). The Type stem; clean, no Hungarian."
+        },
+        {
+          "field": "Description",
+          "cleanName": "description",
+          "disposition": "text",
+          "notes": "CvInfoBase TXT_KEY_ description tag; localization text channel."
+        },
+        {
+          "field": "Button",
+          "cleanName": "icon",
+          "disposition": "art",
+          "notes": "CvInfoBase button art path (Art/Interface/Buttons/Process/*.dds). Per ART_RENAME the display-art reference unifies to `icon`. Process uses a DIRECT path (like tech), not an ArtDefineTag — fine for now; the future art-define alignment is a separate low-priority cleanup."
+        }
+      ],
+      "inboundBoosts": [],
+      "openQuestions": [
+        "CONVERSION vs MULTIPLIER semantics: ProductionToCommerceModifiers is a production->commerce CONVERSION rate (hammers become commerce), not a multiplier of existing commerce like a generic commerce.percent city modifier. Folding it into the gold/research/culture/espionage families using unit=percent matches the spec's SPLIT-family vocabulary and the mapping, BUT a downstream consumer that blindly treats `gold.city.percent` as 'multiply existing gold by X%' would be WRONG here. Consider whether Process needs its own concept (e.g. a productionToCommerce conversion family/section) rather than reusing the generic commerce families. The cascade engine (#430) author should disambiguate; flagging rather than silently merging.",
+        "Destination of proceeds is split across scopes (gold/espionage -> player, research -> team, culture -> city) even though the RATE lives at the city. The flat-family model keys the modifier by where it is READ (city), which is correct for the deposit, but the per-commerce routing of the converted output is consumer behaviour not captured by scope alone. Confirm this routing is engine-side logic, not data the JSON must carry.",
+        "PROCESS_IDLE has no ProductionToCommerceModifiers and no TechPrereq — purely a do-nothing 'stop production' option. After dropping TechPrereq and (for IDLE) the absent commerce field, its authored object is just identity+text+art. Confirm an empty-modifier Process is acceptable to the store (no spurious enabler edge)."
+      ]
+    },
+    {
+      "entity": "HeritageInfo",
+      "summary": "HeritageInfo is a per-PLAYER acquired \"heritage\" (folklore/myth/taxon tiers). It is stored on CvPlayer::m_myHeritage, added via CvPlayer::setHeritage (driven by a unit's <Heritage> grant through CvUnit::addHeritage), and contributes EMPIRE-wide effects. Its only two real modifier-sources are EraCommerceChanges (an era-gated empire-wide commerce deposit, x100 fixed-point) and PropertyManipulators (per-player property deposits). Everything else is acquisition prerequisites (PrereqTech / PrereqOrHeritage / bNeedLanguage) that invert to derived enabler edges, plus identity/text/art. There are NO inbound modifier-boosts: no entity carries a per-Heritage modifier field (grep for Heritage{Yield,Commerce,...}Changes returns nothing). The mapping's first pass is essentially correct on channels but mislabels scope (\"player\" -> empire) and buries EraCommerceChanges era-keying. The runtime-only m_iMissionType is not XML-backed and is dropped.",
+      "isEnablerChain": true,
+      "ownFields": [
+        {
+          "field": "EraCommerceChanges",
+          "disposition": "modifier-family",
+          "family": "commerce",
+          "scope": "empire",
+          "unit": "flat",
+          "notes": "SPLIT family: commerce -> gold/research/culture/espionage (no wrapper, no member; identifier IS the family). XML CentiCommerce is a positional 4-array (gold,research,culture,espionage) carried x100 FAITHFULLY (#432) -> named keys, never enum array. Era is a THRESHOLD CONDITION, not a scope: processHeritage (CvPlayer.cpp:30973) applies changeExtraCommerce100 for every band where currentEra >= EraType; setCurrentEra (CvPlayer.cpp:12422) recomputes via getHeritageCommerceEraChange (era==band). The deposit lands in CvPlayer::m_extraCommerce[] = a per-player/EMPIRE-wide commerce array, NOT per-city. Value is an era-keyed map: e.g. {prehistoric:{research:40,culture:10}, ancient:{research:-10,culture:10}, ...}. unit=flat (additive extra commerce). gold col is 0 in all sampled rows."
+        },
+        {
+          "field": "PropertyManipulators",
+          "disposition": "modifier-family",
+          "family": "PROPERTY_*",
+          "scope": "empire",
+          "unit": "perTurn",
+          "notes": "SPLIT per-PROPERTY family: each PropertySource -> its own top-level family named by PropertyType (e.g. PROPERTY_EDUCATION), no `property` wrapper, no member (owner ruling 2026-06-14; mirror curate_handicap.py lines 141-152). Consumed at the PLAYER level by CvGameObjectPlayer::foreachManipulator (CvGameObject.cpp:653) alongside civics/religion/traits/handicap -> EMPIRE scope. Sampled sources: PROPERTYSOURCE_CONSTANT -> unit perTurn, iAmountPerTurn=1, gated by an <Active><Has>{GOM_TECH:TECH_WRITING}</Has></Active> predicate. The Active/Has condition must be preserved (a gate, not dropped). Rare: only 44 of ~290 Heritages carry these (the Myths/Unicorn-style tier)."
+        },
+        {
+          "field": "PrereqTech",
+          "disposition": "drop",
+          "notes": "ACQUISITION PREREQ, not a modifier and not authored. Consumed ONLY in CvPlayer::canAddHeritage (CvPlayer.cpp:30919) as a hard gate (team must have the tech). Upward prereq ref -> inverts to a DERIVED top-down `enables` edge owned by the store (tech enables heritage); HeritageInfo does NOT author it. Makes HeritageInfo an enabler-chain MEMBER (tech rank -> heritage). Mapping put it under prereqs[] - correct that it is derived-not-stored on this object."
+        },
+        {
+          "field": "PrereqOrHeritage",
+          "disposition": "drop",
+          "notes": "ACQUISITION PREREQ (OR over other Heritages). Consumed ONLY in CvPlayer::canAddHeritage (CvPlayer.cpp:30928): if any listed Heritage is held, this one is acquirable. Hand-written delayed-resolution vector (stays out of getDataMembers). Upward heritage->heritage prereq -> inverts to a DERIVED enabler edge (the Taxon tier requires a Folklore tier, e.g. HERITAGE_TAXON_AMPHIBIA requires HERITAGE_FOLKLORE_DART_FROG). Not authored on this object; store derives it. Confirms enabler-chain membership (heritage->heritage edges plus tech->heritage)."
+        },
+        {
+          "field": "bNeedLanguage",
+          "disposition": "drop",
+          "cleanName": "needLanguage",
+          "notes": "ACQUISITION PREREQ flag. Consumed ONLY in CvPlayer::canAddHeritage (CvPlayer.cpp:30914): if set, player must have m_bHasLanguage. Boolean prereq predicate, not a modifier -> a derived enabler-gate condition. CANDIDATE: fold into the derived prereq model as a `needsLanguage` predicate rather than author. Set on ~all Folklore-tier entries. Default false (no <bNeedLanguage>0> ever written). If kept as authored it is identity/prereq boolean (needLanguage:true), NOT any modifier family. Leaning drop->derive-into-prereq-index."
+        },
+        {
+          "field": "Type",
+          "disposition": "identity",
+          "cleanName": "type",
+          "notes": "Entity identifier (HERITAGE_*). Becomes the JSON `type`/filename key."
+        },
+        {
+          "field": "Description",
+          "disposition": "text",
+          "cleanName": "description",
+          "notes": "TXT_KEY display name."
+        },
+        {
+          "field": "Civilopedia",
+          "disposition": "text",
+          "cleanName": "civilopedia",
+          "notes": "TXT_KEY pedia text reference."
+        },
+        {
+          "field": "Button",
+          "disposition": "art",
+          "cleanName": "icon",
+          "notes": "Direct .dds button path (CvHotkeyInfo base supplies it). Unified to `icon` per the shared ART_RENAME convention (tech direct Button path AND bonus/building ArtDefineTag both -> icon)."
+        },
+        {
+          "field": "MissionType",
+          "disposition": "drop",
+          "notes": "RUNTIME-ONLY, NOT XML-backed: CvHeritageInfo::m_iMissionType defaults NO_MISSION and is assigned later via setMissionType (generated CvAction/CvMission wiring). Not in getDataMembers, not in the XML schema. Drop from curated JSON."
+        }
+      ],
+      "inboundBoosts": [],
+      "openQuestions": [
+        "EraCommerceChanges shape: confirm the era-keyed map representation (era -> {commerce keys}) is the intended JSON form vs. flattening. The two consumers differ in era semantics: processHeritage uses currentEra >= band (threshold), getHeritageCommerceEraChange uses era == band (per-band delta on era transition); net effect is a per-era TOTAL extra commerce. Recommend authoring the per-era bands verbatim and letting the engine apply the threshold rule.",
+        "bNeedLanguage disposition: keep as authored identity boolean (needLanguage:true) or fold into the derived prereq/enabler index as a `needsLanguage` acquisition predicate? It is purely a canAddHeritage gate, so it belongs with the derived prereq logic, not as a standalone modifier. Decide with the prereq-model owner.",
+        "PropertyManipulators Active/Has gate: the per-source <Active><Has>{GOM_TECH:TECH_*}</Has></Active> predicate gates whether the deposit is live. Confirm how the flat-family property model expresses a conditional deposit (curate_handicap clean_property_source captures source/property/on/relation/amountPerTurn; handicap samples may be unconditional). Heritage sources ARE conditional, so the gate must be carried into the family leaf.",
+        "EraType prefix normalization: EraCommerceChanges keys are C2C_ERA_*; mirror curate_era era_fn (strip C2C_ERA_/ERA_, lowercase) when keying the era map for consistency with the era entity files."
+      ]
+    },
+    {
+      "entity": "SpecialistInfo",
+      "summary": "CvSpecialistInfo is a sub-city LEAF entity (one of specialist/plot/building) but, as a modifier SOURCE, every effect it carries deposits at CITY scope: CvCity::processSpecialist (CvCity.cpp:5130-5198) applies each field per specialist-count when a specialist is assigned to a city. The mapping's first pass is broadly right on city scope but mis-classifies several fields. Two channel-count-isn't-POCO corrections: (1) iHealthPercent / iHappinessPercent are FLAT health/happiness despite the 'Percent' name — CvCity.cpp:5169-5184 routes them to changeSpecialistGoodHealth/BadHealth and changeSpecialistHappiness/Unhappiness as raw flat additions split by sign; the /100 at CvCityAI.cpp:882-883 is only AI scaling, not the deposit. (2) PropertyManipulators is NOT identity — per curate_handicap.py each PropertySource becomes a per-PROPERTY_* split family (no wrapper), so the specialist deposits properties at city scope. Yields/Commerces are SPLIT families. TechHappinessTypes/TechHealthTypes are OWN tech-CONDITIONED happiness/health deposits authored on the specialist (per-tech map; CvCity.cpp:22998/23084 gate on team-has-tech) — curate_tech.py's specialistBoosts.{SPECIALIST}.happiness is the DERIVED reverse-index view on the tech, NOT a re-home of the authored field. GreatPeopleUnitType is an FK identity. m_iMissionType is runtime-assigned (setMissionType), NOT XML-backed — absent from getDataMembers and dropped. Inbound boosts: Civic (SpecialistYield/CommercePercentChanges — percent), Building and Trait (SpecialistYield/CommerceChange — flat), Building Local variants, plus FreeSpecialistCount sources fold onto this specialist keyed by source. Mapping also MISSED iExperience, iInsidiousness, and Flavors as own fields.",
+      "isEnablerChain": false,
+      "ownFields": [
+        {
+          "field": "Yields",
+          "cleanName": "food/production/commerce",
+          "disposition": "modifier-family",
+          "family": "food|production|commerce",
+          "scope": "city",
+          "unit": "flat",
+          "notes": "SPLIT base-yield families (no wrapper, identifier IS the family). m_piYieldChange via addYields; consumed CvCity.cpp:5143 changeSpecialistYieldTotal per specialist count. Flat per-specialist."
+        },
+        {
+          "field": "Commerces",
+          "cleanName": "gold/research/culture/espionage",
+          "disposition": "modifier-family",
+          "family": "gold|research|culture|espionage",
+          "scope": "city",
+          "unit": "flat",
+          "notes": "SPLIT commerce families. m_piCommerceChange via addCommerce; consumed CvCity.cpp:5155-5160 changeSpecialistCommerceTimes100 per specialist count. Flat. The commented YieldChanges duplicate at line 5148 is dead — only Commerces is live."
+        },
+        {
+          "field": "iGreatPeopleRateChange",
+          "cleanName": "greatPeopleRate",
+          "disposition": "modifier-family",
+          "family": "greatPeopleRate",
+          "scope": "city",
+          "unit": "flat",
+          "notes": "SINGLETON family. CvCity.cpp:5136/5139 changeGreatPeopleUnitRate + changeBaseGreatPeopleRate per specialist count."
+        },
+        {
+          "field": "iHealthPercent",
+          "cleanName": "health",
+          "disposition": "modifier-family",
+          "family": "health",
+          "scope": "city",
+          "unit": "flat",
+          "notes": "CORRECTION: mapping said percent; it is FLAT. CvCity.cpp:5169-5176 changeSpecialistGoodHealth (>0) / BadHealth (<0) — raw flat add split by sign. The /100 in CvCityAI is AI weighting only. Health is a flat-only family."
+        },
+        {
+          "field": "iHappinessPercent",
+          "cleanName": "happiness",
+          "disposition": "modifier-family",
+          "family": "happiness",
+          "scope": "city",
+          "unit": "flat",
+          "notes": "CORRECTION: mapping said percent; it is FLAT. CvCity.cpp:5177-5184 changeSpecialistHappiness (>0) / Unhappiness (<0). Flat-only family."
+        },
+        {
+          "field": "iExperience",
+          "cleanName": "experience",
+          "disposition": "modifier-family",
+          "family": "experience",
+          "scope": "city",
+          "unit": "flat",
+          "notes": "Free XP. CvCity.cpp:5186 changeSpecialistFreeExperience per specialist count. Mapping OMITTED this entirely (missed field)."
+        },
+        {
+          "field": "iInsidiousness",
+          "cleanName": "insidiousness",
+          "disposition": "modifier-family",
+          "family": "insidiousness",
+          "scope": "city",
+          "unit": "flat",
+          "notes": "SINGLETON espionage-ish family. CvCity.cpp:5188 changeSpecialistInsidiousness. Mapping MISSED this (only had iInvestigation)."
+        },
+        {
+          "field": "iInvestigation",
+          "cleanName": "investigation",
+          "disposition": "modifier-family",
+          "family": "investigation",
+          "scope": "city",
+          "unit": "flat",
+          "notes": "SINGLETON. CvCity.cpp:5189 changeSpecialistInvestigation per specialist count."
+        },
+        {
+          "field": "UnitCombatExperienceTypes",
+          "cleanName": "experience",
+          "disposition": "modifier-family",
+          "family": "experience",
+          "scope": "city",
+          "member": "byUnitCombat",
+          "unit": "flat",
+          "notes": "Per-UNITCOMBAT free XP keyed map {UNITCOMBAT_*: flat}. CvCity.cpp:5191-5197 changeUnitCombatFreeExperience. GATED by GAMEOPTION_UNIT_XP_FROM_SPECIALISTS for visible specialists (getUnitCombatExperienceType returns the zero Null twin if the option is off and isVisible). The Null twin is a runtime mechanism; only the real {unitCombat,iModifier} pairs are authored data. Hand-written read (two parallel vectors)."
+        },
+        {
+          "field": "TechHappinessTypes",
+          "cleanName": "happiness",
+          "disposition": "modifier-family",
+          "family": "happiness",
+          "scope": "city",
+          "member": "byTech",
+          "unit": "flat",
+          "notes": "AUTHORED on the specialist: per-tech happiness map {TECH_*: flat}, deposited at city scope when team has that tech (CvCity.cpp:22994-23002). curate_tech.py TECH_BOOSTS lists this under the TECH's specialistBoosts — that is the DERIVED reverse-index view, NOT a relocation of the authored field. Keep authored here as a tech-conditioned happiness deposit."
+        },
+        {
+          "field": "TechHealthTypes",
+          "cleanName": "health",
+          "disposition": "modifier-family",
+          "family": "health",
+          "scope": "city",
+          "member": "byTech",
+          "unit": "flat",
+          "notes": "AUTHORED here: per-tech health map deposited at city scope when team has the tech (CvCity.cpp:23084). Same reverse-index relationship to curate_tech.py as TechHappinessTypes. Note mapping's inversionsOut listed only TechHappinessTypes (forgot TechHealthTypes) — both invert into the tech reverse index."
+        },
+        {
+          "field": "PropertyManipulators",
+          "cleanName": "property",
+          "disposition": "modifier-family",
+          "family": "PROPERTY_* (one split family per property)",
+          "scope": "city",
+          "unit": "perTurn|decay|flat (from value element)",
+          "notes": "CORRECTION: mapping put this under identity; it is a set of per-PROPERTY_* SPLIT families (engine.clean_property_source / curate_handicap.py:141-152). The specialist is a property source depositing at its city scope. unit comes from the value element (iAmountPerTurn->perTurn, Decay->decay)."
+        },
+        {
+          "field": "GreatPeopleUnitType",
+          "cleanName": "greatPeopleUnit",
+          "disposition": "identity",
+          "scope": "city",
+          "notes": "FK to the great-person UNIT this specialist's GP bar produces (CvCity.cpp:5132-5136). Delayed-resolution int FK, hand-written. Identity reference (could be a produces/grants edge, but the model's enabler spine has no specialist->unit rank; keep as typed identity ref)."
+        },
+        {
+          "field": "Categories",
+          "cleanName": "categories",
+          "disposition": "identity",
+          "notes": "m_aiCategories — MapCategoryTypes membership list. map_workflow.js: categories -> identity. isCategory/getCategory are pure membership reads."
+        },
+        {
+          "field": "bVisible",
+          "cleanName": "visible",
+          "disposition": "identity",
+          "notes": "JSON boolean. Drives the UnitCombatExperienceTypes Null-twin gate (getUnitCombatExperienceType) and pedia display; a classification flag, not a modifier."
+        },
+        {
+          "field": "bSlave",
+          "cleanName": "slave",
+          "disposition": "identity",
+          "notes": "JSON boolean classification flag."
+        },
+        {
+          "field": "Texture",
+          "cleanName": "icon",
+          "disposition": "art",
+          "notes": "m_szTexture display-art path -> art (unify to 'icon' per ART_RENAME)."
+        },
+        {
+          "field": "Button",
+          "cleanName": "icon",
+          "disposition": "art",
+          "notes": "Hotkey/button art inherited from CvHotkeyInfo. -> art."
+        },
+        {
+          "field": "Flavors",
+          "cleanName": "ai.flavours",
+          "disposition": "ai",
+          "notes": "m_piFlavorValue -> ai.flavours (curate_common handles 'Flavors'). Mapping OMITTED this (missed field). Hand-written SetVariableListTagPair read."
+        },
+        {
+          "field": "Type",
+          "cleanName": "type",
+          "disposition": "identity",
+          "notes": "Type key (identity)."
+        },
+        {
+          "field": "Description",
+          "cleanName": "description",
+          "disposition": "text",
+          "notes": "Display text (CvHotkeyInfo/CvInfoBase)."
+        },
+        {
+          "field": "Civilopedia",
+          "cleanName": "civilopedia",
+          "disposition": "text",
+          "notes": "Pedia text."
+        },
+        {
+          "field": "Help",
+          "cleanName": "help",
+          "disposition": "text",
+          "notes": "Inherited tooltip text (CvInfoBase). -> text."
+        },
+        {
+          "field": "iMissionType",
+          "disposition": "drop",
+          "notes": "RUNTIME-assigned via setMissionType (constructor comment + getDataMembers omit it). NOT XML-backed. The getActionInfo().getMissionType() usages in CvDLLWidgetData are CvActionInfo, unrelated. DROP — not data."
+        }
+      ],
+      "inboundBoosts": [
+        {
+          "sourceEntity": "CivicInfo",
+          "field": "SpecialistYieldPercentChanges",
+          "family": "food|production|commerce",
+          "scope": "city",
+          "unit": "percent",
+          "notes": "Per-specialist percent yield boost. CvCivicInfo getSpecialistYieldPercentChanges(specialist, yield); consumed via CvPlayer.getSpecialistYieldPercentChanges and applied at CvCity.cpp:5143. Folds onto this specialist as <yieldFamily>.city.percent. SPLIT into food/production/commerce."
+        },
+        {
+          "sourceEntity": "CivicInfo",
+          "field": "SpecialistCommercePercentChanges",
+          "family": "gold|research|culture|espionage",
+          "scope": "city",
+          "unit": "percent",
+          "notes": "Per-specialist percent commerce boost (getSpecialistCommercePercentChanges(specialist, commerce); applied CvCity.cpp:5158). SPLIT commerce families, percent."
+        },
+        {
+          "sourceEntity": "BuildingInfo",
+          "field": "SpecialistYieldChange",
+          "family": "food|production|commerce",
+          "scope": "city",
+          "unit": "flat",
+          "notes": "Global per-specialist flat yield add (m_ppaiSpecialistYieldChange, getSpecialistYieldChange(specialist, yield)). Folds onto this specialist keyed by building. Applied to all this player's cities."
+        },
+        {
+          "sourceEntity": "BuildingInfo",
+          "field": "SpecialistCommerceChange",
+          "family": "gold|research|culture|espionage",
+          "scope": "city",
+          "unit": "flat",
+          "notes": "Global per-specialist flat commerce add (m_ppaiSpecialistCommerceChange)."
+        },
+        {
+          "sourceEntity": "BuildingInfo",
+          "field": "LocalSpecialistYieldChange",
+          "family": "food|production|commerce",
+          "scope": "city",
+          "unit": "flat",
+          "notes": "Per-specialist flat yield add in the city housing the building (CvCity.cpp:4796-4798 changeLocalSpecialistExtraYield). Local (this-city) variant of the inbound boost."
+        },
+        {
+          "sourceEntity": "BuildingInfo",
+          "field": "LocalSpecialistCommerceChange",
+          "family": "gold|research|culture|espionage",
+          "scope": "city",
+          "unit": "flat",
+          "notes": "Per-specialist flat commerce add local to the building's city (CvCity.cpp:4803-4805)."
+        },
+        {
+          "sourceEntity": "TraitInfo",
+          "field": "SpecialistYieldChange",
+          "family": "food|production|commerce",
+          "scope": "empire",
+          "unit": "flat",
+          "notes": "Trait per-specialist flat yield add (m_ppaiSpecialistYieldChange, getSpecialistYieldChange(specialist, yield)). Trait is a player/empire-scope source; folds onto this specialist keyed by trait."
+        },
+        {
+          "sourceEntity": "TraitInfo",
+          "field": "SpecialistCommerceChange",
+          "family": "gold|research|culture|espionage",
+          "scope": "empire",
+          "unit": "flat",
+          "notes": "Trait per-specialist flat commerce add (m_ppaiSpecialistCommerceChange)."
+        },
+        {
+          "sourceEntity": "CivicInfo",
+          "field": "FreeSpecialistCount",
+          "family": "freeSpecialists",
+          "scope": "city",
+          "unit": "flat",
+          "notes": "Per-specialist count of free specialists granted (m_piFreeSpecialistCount indexed by specialist). A per-this-specialist change carried by the civic. Open question whether this is a modifier family or a grant on the source."
+        },
+        {
+          "sourceEntity": "TechInfo",
+          "field": "FreeSpecialistCount",
+          "family": "freeSpecialists",
+          "scope": "city",
+          "unit": "flat",
+          "notes": "Per-specialist free-specialist count granted by a tech (CvTechInfo m_piFreeSpecialistCount). Folds onto this specialist keyed by tech."
+        },
+        {
+          "sourceEntity": "EventInfo",
+          "field": "FreeSpecialistCount",
+          "family": "freeSpecialists",
+          "scope": "city",
+          "unit": "flat",
+          "notes": "Per-specialist free-specialist count from an event (CvEventInfo m_piFreeSpecialistCount). Event-driven; may instead live as a grant on EventInfo rather than an inbound modifier — open question."
+        }
+      ],
+      "openQuestions": [
+        "TechHappinessTypes/TechHealthTypes are tech-CONDITIONED happiness/health authored on the specialist. Is the canonical home the specialist (a member:byTech happiness/health deposit) or the tech (curate_tech.py already lists them as the tech's specialistBoosts)? I classified them as authored OWN fields of the specialist with the tech as a condition, and curate_tech's entry as the derived reverse-index view. Confirm which side authors vs derives so the value isn't written twice.",
+        "Scope of inbound boosts: Civic/Trait SpecialistYield/CommerceChanges are player/empire-level sources but the EFFECT lands per-city (when a specialist sits in a city). Should the folded inbound boost record scope=city (where the deposit resolves) or scope=empire/team (the source's native scope)? I used city for building-local + the per-city deposit, empire for trait — needs the verify pass to settle one convention.",
+        "FreeSpecialistCount (Civic/Tech/Event) grants N free specialists of THIS type — modifier family folded onto the specialist, or a grant/identity on the source (Tech/Civic/Event)? It is one-shot-ish, not a per-turn yield; EventInfo's especially looks grant-shaped.",
+        "SpecialistExtraYield/SpecialistExtraCommerce on Trait/Civic are NOT per-specialist-indexed (single array over yields/commerces applied to ALL specialists) — empire-wide specialist-yield bonuses, not per-THIS-specialist. They belong on the SOURCE (trait/civic) targeting the generic 'specialist' leaf, NOT folded onto an individual specialist. Confirm they are excluded from this entity's inboundBoosts (I excluded them).",
+        "UnitCombatExperienceTypes Null-twin: the gameplay gate (GAMEOPTION_UNIT_XP_FROM_SPECIALISTS + isVisible) is runtime; the authored data is just {unitCombat: iModifier}. Confirm the curator emits only the real modifiers and the option-gate stays a consumer-side rule (not a second authored zero map).",
+        "GreatPeopleUnitType: identity FK vs a top-down 'produces/grants' edge. The enabler spine has no specialist->unit rank, so I left it identity, but the store may want a derived produces edge for the pedia. Confirm.",
+        "Are iInsidiousness/iInvestigation truly distinct singleton families, or members of a shared 'espionage'/'intelligence' grouped family? They are stored/consumed independently (changeSpecialistInsidiousness/Investigation) so I made them singletons; naming is provisional per the model's 'nail down later'."
+      ]
+    },
+    {
+      "entity": "CorporationInfo",
+      "summary": "CorporationInfo is a per-city INSTITUTION source (corps spread city-to-city; effects apply in each city where the corp is active). The first-pass mapping mis-classified the four distinct commerce/yield families by lumping them all into a single flat city.commerce/city.yield, and under-classified the spread-mechanic config, maintenance, and the enabler chain. Verified against the live consumers in CvCity.cpp (calculateCorporationMaintenanceTimes100 ~7807, getCorporationYieldByCorporation ~12575, getCorporationCommerceByCorporation ~12596, updateCorporationBonus ~12681, applyCorporationModifiers ~15182), CvGame.cpp (spread/can-spread ~11163/11247/11514), and CvCity.cpp updateBuildingCommerce ~12190 (globalCorporationCommerce). FOUR separate commerce/yield families exist and must NOT be merged: (1) CommerceChanges/YieldChanges = FLAT per-city add when corp active; (2) CommercesProduced/YieldsProduced = PER-BONUS (scaled by getNumBonuses(prereqBonus) x world CorporationMaintenancePercent), a perPopulation-analog 'perBonus' unit, NOT flat; (3) HeadquarterCommerce = the HQ-revenue lever (drives per-city corp MAINTENANCE cost, corp TAX revenue, and a HQ building's globalCorporationCommerce x countCorporationLevels) — empire/world scope, NOT a per-city commerce. iMaintenance is a per-prereq-bonus maintenance rate (scaled by bonus count, world%, population). The three spread fields (iSpread influence-decay multiplier, iSpreadFactor + iSpreadCost unit-spread costs) are spread-mechanic config, not yield modifiers. BonusProduced is an enabler (free resource granted in corp cities). Prereqs (TechPrereq, ObsoleteTech, PrereqGameOption, PrereqBonuses, PrereqBuildings) + CompetingCorporations + Categories drive the derived enabler/exclusion chain — do NOT author enables/obsoletes; this entity IS an enabler-chain member. PropertyManipulators present (property family). Channel-count-isn't-POCO caveat applied: the mapping's flat-commerce channel list was wrong on semantics; trusted the C++ consumer.",
+      "isEnablerChain": true,
+      "ownFields": [
+        {
+          "field": "iMaintenance",
+          "disposition": "modifier-family",
+          "family": "maintenance",
+          "scope": "city",
+          "member": "corporation",
+          "unit": "perBonus",
+          "cleanName": "maintenance",
+          "notes": "calculateCorporationMaintenanceTimes100 ~7825: getMaintenance() * iNumBonuses(prereqBonuses) * world CorporationMaintenancePercent /100, then *(17+pop)/18, then handicap. Per-prereq-bonus maintenance rate — NOT a flat city maintenance. Mapping said city/maintenance/flat (wrong unit)."
+        },
+        {
+          "field": "iHealth",
+          "disposition": "modifier-family",
+          "family": "health",
+          "scope": "city",
+          "unit": "flat",
+          "cleanName": "health",
+          "notes": "Flat city health while corp active. SINGLETON family (no member). Mapping correct on scope/family."
+        },
+        {
+          "field": "iHappiness",
+          "disposition": "modifier-family",
+          "family": "happiness",
+          "scope": "city",
+          "unit": "flat",
+          "cleanName": "happiness",
+          "notes": "Flat city happiness while corp active. SINGLETON family. Mapping correct."
+        },
+        {
+          "field": "iFreeXP",
+          "disposition": "modifier-family",
+          "family": "experience",
+          "scope": "city",
+          "unit": "flat",
+          "cleanName": "experience",
+          "notes": "applyCorporationModifiers ~15203: changeFreeExperience(getFreeXP()*sign). Free city XP while corp active. SINGLETON family. Mapping correct."
+        },
+        {
+          "field": "iMilitaryProductionModifier",
+          "disposition": "modifier-family",
+          "family": "production",
+          "scope": "city",
+          "member": "military",
+          "unit": "percent",
+          "cleanName": "militaryProduction",
+          "notes": "applyCorporationModifiers ~15202: changeMilitaryProductionModifier(*sign); CvCity ~3882 multiplies military-unit production. Percent prod modifier restricted to military units. Mapping had channel 'militaryProduction' percent — reframe as production family, military member, percent."
+        },
+        {
+          "field": "CommerceChanges",
+          "disposition": "modifier-family",
+          "family": "commerce",
+          "scope": "city",
+          "unit": "flat",
+          "cleanName": "commerce",
+          "notes": "getCorporationCommerceByCorporation ~12606: getCommerceChange(eIndex)*100 base, flat per-city commerce while corp active. SPLIT into named keys gold/research/culture/espionage (never enum array). x100 fixed-point NOT applied here (raw int *100 at runtime); carry raw value faithfully. This is the genuinely-flat city commerce."
+        },
+        {
+          "field": "YieldChanges",
+          "disposition": "modifier-family",
+          "family": "production",
+          "scope": "city",
+          "unit": "flat",
+          "cleanName": "yield",
+          "notes": "getCorporationYieldByCorporation ~12584: getYieldChange(eIndex)*100 base flat per-city yield while corp active. SPLIT base-yield family -> food/production/commerce named keys. NOTE legacy read allocates a zero array when tag absent (m_piYieldChange non-NULL guarantee); a present-but-all-zero table is meaningful for checksum but emits nothing. Mapping lumped under city/yield/flat which is right for THIS family only."
+        },
+        {
+          "field": "CommercesProduced",
+          "disposition": "modifier-family",
+          "family": "commerce",
+          "scope": "city",
+          "member": "produced",
+          "unit": "perBonus",
+          "cleanName": "commerceProduced",
+          "notes": "getCorporationCommerceByCorporation ~12613: getCommerceProduced(eIndex) * getNumBonuses(eBonus) * world CorporationMaintenancePercent /100, summed over prereqBonuses. PER-BONUS scaling — distinct unit from CommerceChanges (flat). SPLIT named gold/research/culture/espionage. Mapping wrongly merged this with CommerceChanges as flat."
+        },
+        {
+          "field": "YieldsProduced",
+          "disposition": "modifier-family",
+          "family": "production",
+          "scope": "city",
+          "member": "produced",
+          "unit": "perBonus",
+          "cleanName": "yieldProduced",
+          "notes": "getCorporationYieldByCorporation ~12590: getYieldProduced(eIndex) * getNumBonuses(eBonus) * world% /100 over prereqBonuses. PER-BONUS, distinct from YieldChanges flat. SPLIT food/production/commerce. Mapping wrongly merged as flat city yield."
+        },
+        {
+          "field": "HeadquarterCommerces",
+          "disposition": "modifier-family",
+          "family": "commerce",
+          "scope": "empire",
+          "member": "headquarters",
+          "unit": "perCorporationLevel",
+          "cleanName": "headquarterCommerce",
+          "notes": "NOT a per-city commerce. Three consumers: (1) calculateCorporationMaintenanceTimes100 ~7814 sums it x100 into corp maintenance cost; (2) corp TAX revenue ~21678; (3) a building's getGlobalCorporationCommerce ~12193 adds getHeadquarterCommerce * countCorporationLevels (empire-wide HQ revenue scaled by global spread). The HQ-revenue lever — empire/world scope, scales by corporation levels, NOT a per-city flat add as the mapping claimed. SPLIT gold/research/culture/espionage."
+        },
+        {
+          "field": "BonusProduced",
+          "disposition": "grants",
+          "family": "bonusProduced",
+          "scope": "city",
+          "unit": "enabler",
+          "cleanName": "bonusProduced",
+          "notes": "updateCorporationBonus ~12702: grants the produced bonus resource in cities with the corp active (gated by isBonusObsolete + getTechCityTrade). One-shot enabler grant of a free BONUS_* resource, not a modifier deposit. Mapping had it as channel bonusProduced/enabler — reclassify as grants."
+        },
+        {
+          "field": "iSpread",
+          "disposition": "identity",
+          "family": "spread",
+          "scope": "world",
+          "cleanName": "spread",
+          "unit": "percent",
+          "notes": "CvGame ~11205/11247 and CvCity ~21492/21560: getCorporationInfluence * getSpread() /100 — the influence-to-spread conversion percent governing how aggressively the corp spreads. Spread-MECHANIC config, NOT a yield. Mapping put it in identity; keep as spread-config identity (world-scope global). Distinct from iSpreadFactor/iSpreadCost."
+        },
+        {
+          "field": "iSpreadFactor",
+          "disposition": "identity",
+          "family": "spread",
+          "scope": "world",
+          "cleanName": "spreadFactor",
+          "unit": "percent",
+          "notes": "CvUnit ~8686: spread-unit cost scaling iCost *= 100+getSpreadFactor() per existing corp. Spread-mechanic config. Mapping had it in identity — keep as spread-config identity."
+        },
+        {
+          "field": "iSpreadCost",
+          "disposition": "modifier-family",
+          "family": "costs",
+          "scope": "world",
+          "member": "spread",
+          "cleanName": "spreadCost",
+          "unit": "flat",
+          "notes": "CvUnit ~8671 / CvCityAI ~9058 / CvPlayerAI ~3985: base gold cost to spread the corp via a corporate unit. A produced-action cost — costs family, 'spread' member (analogous to FINE-GRAINED train/construct members). Mapping put it under 'cost' list; home it in the costs family at world/global config scope."
+        },
+        {
+          "field": "Categories",
+          "disposition": "identity",
+          "cleanName": "categories",
+          "notes": "getCategory/isCategory ~302: corp grouping/category membership (Civilopedia + grouping filters). Identity catch-all (list of category enums). Mapping omitted entirely — a missed field."
+        },
+        {
+          "field": "CompetingCorporations",
+          "disposition": "identity",
+          "cleanName": "competingCorporations",
+          "notes": "isCompetingCorporation ~217; setHasCorporation ~15227 evicts a competing corp from a city when this one arrives (mutual-exclusion). A corp->corp exclusion edge (readPass3 name->index). Belongs with the derived enabler/exclusion chain; store as identity edge list. Mapping omitted — missed field."
+        },
+        {
+          "field": "TechPrereq",
+          "disposition": "drop",
+          "cleanName": "techPrereq",
+          "notes": "Prereq: CvGame can-found/spread gating. DERIVED enabler chain — store derives enables/obsoletes; do not author. Confirmed enabler-chain member."
+        },
+        {
+          "field": "ObsoleteTech",
+          "disposition": "drop",
+          "cleanName": "obsoleteTech",
+          "notes": "Prereq/obsolete: derived obsoletes edge. Do not author; confirm enabler-chain membership only."
+        },
+        {
+          "field": "PrereqGameOption",
+          "disposition": "drop",
+          "cleanName": "prereqGameOption",
+          "notes": "CvGame ~11514 canFound gate on game option. Prereq edge — derived. Mapping omitted it from prereqs (listed only Tech/Bonus/Building); add to prereq/enabler chain."
+        },
+        {
+          "field": "PrereqBonuses",
+          "disposition": "drop",
+          "cleanName": "prereqBonuses",
+          "notes": "The bonus resources the corp consumes — drive maintenance, produced yields/commerce scaling, and AI value. Prereq edge (also the scaling key for the perBonus families above). Derived enabler chain."
+        },
+        {
+          "field": "PrereqBuildings",
+          "disposition": "drop",
+          "cleanName": "prereqBuildings",
+          "notes": "readPass3 name+value list of buildings required. Prereq edge — derived enabler chain. Do not author."
+        },
+        {
+          "field": "FreeUnit",
+          "disposition": "grants",
+          "cleanName": "freeUnit",
+          "notes": "readPass3 m_iFreeUnit (hand-written, ctor NO_UNIT). A free unit granted on founding the corp. One-shot grant. Mapping omitted — missed field."
+        },
+        {
+          "field": "PropertyManipulators",
+          "disposition": "modifier-family",
+          "family": "property",
+          "scope": "city",
+          "unit": "flat",
+          "cleanName": "property",
+          "notes": "m_PropertyManipulators (CvPropertyManipulators). SPLIT per-PROPERTY_* family. Active in cities with the corp. Mapping omitted entirely — missed gameplay field (channel-count-isn't-POCO)."
+        },
+        {
+          "field": "MovieFile",
+          "disposition": "art",
+          "cleanName": "movieFile",
+          "notes": "Founding movie. Art/audio."
+        },
+        {
+          "field": "MovieSound",
+          "disposition": "art",
+          "cleanName": "movieSound",
+          "notes": "Founding movie sound. Art/audio."
+        },
+        {
+          "field": "Sound",
+          "disposition": "art",
+          "cleanName": "sound",
+          "notes": "Corp sound. Art/audio."
+        },
+        {
+          "field": "iTGAIndex",
+          "disposition": "art",
+          "cleanName": "tgaIndex",
+          "notes": "GameFont TGA glyph index (ctor -1 never-read TGA-filler sentinel; setChar/setHeadquarterChar derive glyph chars from it). Art. m_iChar/m_iHeadquarterChar are RUNTIME-assigned (not XML) — do not emit."
+        },
+        {
+          "field": "Button",
+          "disposition": "art",
+          "cleanName": "button",
+          "notes": "Icon button (from CvHotkeyInfo base). Art."
+        },
+        {
+          "field": "Type",
+          "disposition": "identity",
+          "cleanName": "type",
+          "notes": "Identity key."
+        },
+        {
+          "field": "Description",
+          "disposition": "text",
+          "cleanName": "description",
+          "notes": "Display name text key."
+        },
+        {
+          "field": "Civilopedia",
+          "disposition": "text",
+          "cleanName": "civilopedia",
+          "notes": "Civilopedia text key."
+        }
+      ],
+      "inboundBoosts": [
+        {
+          "sourceEntity": "BuildingInfo",
+          "field": "FoundsCorporation",
+          "family": "enables",
+          "scope": "world",
+          "member": "foundsCorporation",
+          "notes": "BuildingInfo.getFoundsCorporation (CvBuildingInfo.h:151). The building whose construction founds this corp's headquarters (CvCity ~14577 setHeadquarters; CvGame ~11431 canFound). This is the inbound founding edge that ties a building to THIS corp — an enabler/grants edge, not a numeric per-corp change table. Folds onto this corp as the 'founded by <building>' enabler edge. Mapping boostsIn was empty — missed."
+        },
+        {
+          "sourceEntity": "BuildingInfo",
+          "field": "GlobalCorporationCommerce",
+          "family": "commerce",
+          "scope": "empire",
+          "member": "headquarters",
+          "unit": "perCorporationLevel",
+          "notes": "BuildingInfo.getGlobalCorporationCommerce (CvBuildingInfo.h:153). updateBuildingCommerce ~12193: building adds getCorporationInfo(corp).getHeadquarterCommerce(eIndex) * countCorporationLevels. The building READS this corp's HeadquarterCommerce and amplifies it empire-wide — an inbound amplifier edge targeting THIS corp's HQ commerce. Reference edge (building->corp), not a per-corp numeric deposit on the building. Mapping missed."
+        },
+        {
+          "sourceEntity": "BuildingInfo",
+          "field": "PrereqCorporation",
+          "family": "enables",
+          "scope": "city",
+          "member": "prereqCorporation",
+          "notes": "BuildingInfo.getPrereqCorporation (CvBuildingInfo.h:150). applyCorporationModifiers ~15187 enables/disables such buildings as the corp arrives/leaves a city. This is the building requiring THIS corp — an inbound prereq/enabler edge (building enabled by corp). Reverse of the corp's own prereqs. Mapping missed."
+        },
+        {
+          "sourceEntity": "UnitInfo",
+          "field": "CorporationSpreads",
+          "family": "enables",
+          "scope": "world",
+          "member": "spreadsCorporation",
+          "unit": "enabler",
+          "notes": "UnitInfo.getCorporationSpreads(corp) (CvUnitInfo.h:460, per-corp array). CvGame ~11163 canEverSpread, CvCity ~2258 spread, CvCityAI ~9040 trains spreaders. Units that can spread THIS corp — an inbound enabler edge (which units act as this corp's missionary/executive). Per-corp value>0 means 'this unit spreads this corp'. Mapping missed."
+        }
+      ],
+      "openQuestions": [
+        "HeadquarterCommerce scope/unit modeling: it is consumed three ways (per-city maintenance cost, per-city corp-tax revenue, and a building's globalCorporationCommerce x countCorporationLevels empire-wide). Is the curator's commerce family rich enough to express a 'headquarters revenue, scaled by corporation level' member, or does this need an empire-scope sub-member distinct from city commerce? Modeled here as commerce.empire.headquarters/perCorporationLevel.",
+        "perBonus unit: CommercesProduced/YieldsProduced/iMaintenance all scale by getNumBonuses(prereqBonus) x world CorporationMaintenancePercent. Does the unit vocabulary (flat/percent/perPopulation/...) have a 'perBonus'/'perResource' unit, or should these be modeled as a generic scaled-by-source unit? Used 'perBonus' as the descriptive unit.",
+        "Three spread fields (iSpread, iSpreadFactor, iSpreadCost) are spread-mechanic config. iSpreadCost homed in costs.spread; iSpread/iSpreadFactor left as a 'spread' identity-config family. Confirm whether the model wants a dedicated spread/durations family for these vs identity-config.",
+        "x100 fixed-point (#432): CommerceChanges/YieldChanges/HeadquarterCommerce are stored as raw ints and multiplied by 100 at runtime (not pre-scaled in XML). Carry the raw author values, not x100 — confirm this matches the faithful-fixed-point rule for this entity (the *100 is a runtime convention, not stored fixed-point).",
+        "YieldChanges legacy non-NULL quirk: read() allocates a zero NUM_YIELD_TYPES array when the <YieldChanges> tag is absent (getYieldChangeArray non-NULL guarantee, checksum impact). An all-zero present table is semantically equivalent to absent for emission — confirm the curator should drop all-zero yield families rather than emit empty entries.",
+        "Categories + CompetingCorporations are corp<->corp grouping/exclusion edges classified as identity; confirm whether CompetingCorporations should instead be surfaced as a derived exclusion edge alongside enables/obsoletes rather than authored identity."
+      ]
+    },
+    {
+      "entity": "ProjectInfo",
+      "isEnablerChain": true,
+      "summary": "ProjectInfo is a buildable \"wonder/megaproject\" entity. Its modifier effects are deposited on completion by CvTeam::processProjectChange / the per-player loop in CvTeam.cpp (~4508-4576): the project sits on the building CvTeam, and its effects fan out at three distinct scopes that the first-pass mapping/ProjectInfo.json gets BACKWARDS. (1) TEAM scope: nukeInterception and techShare are team-level state (changeNukeInterception/changeTechShareCount on CvTeam). (2) EMPIRE scope (per-player-on-team, inside `player.getTeam()==getID()`): globalHappiness, globalHealth, inflationModifier, the 4 maintenance modifiers, and commerceModifier — each deposited onto EVERY player on the building team. (3) WORLD scope (every alive player game-wide, OUTSIDE the team check): worldHappiness, worldHealth, worldTradeRoutes. The mapping mis-scoped these as \"team\" (they are world) and lumped nuke/techShare as \"player\" (they are team). Project IS an enabler-chain member: store.py registers ProjectInfo.TechPrereq into the \"projects\" enabler index, so a tech `enables` projects (derive `enabledBy` reverse-edge; do NOT author). BonusProductionModifier is the project's OWN per-owned-bonus build-rate (CvCity::getProductionModifier 3940-3946, CvPlayer 27192-27199) — an entity-targeted cost modifier folded onto the project keyed by the bonus, NOT an inversion-out and NOT an inbound boost. NO other entity carries a per-Project change field, so inboundBoosts is EMPTY (verified: no ProjectYieldChange/ProjectCommerceChange/ProjectProductionModifier anywhere; getSpaceProductionModifier is a building's own isSpaceship-keyed field, belongs to the building). EveryoneSpecialUnit/EveryoneSpecialBuilding are one-shot makeSpecial*Valid calls = grants. The victory* fields (VictoryPrereq/Threshold/MinThreshold/DelayPercent/SuccessRate) are victory-launch mechanics consumed at team level (CvTeam getVictoryDelay/getLaunchSuccessRate, CvGame.testVictory) — real gameplay the mapping under-classified into prereqs/identity (the channel-count-isn't-POCO caveat). x100: none of these fields are x100 fixed-point (all are whole percents/counts), so #432 does not touch Project.",
+      "ownFields": [
+        {
+          "field": "Type",
+          "disposition": "identity",
+          "cleanName": "type",
+          "notes": "entity type key"
+        },
+        {
+          "field": "Description",
+          "disposition": "text"
+        },
+        {
+          "field": "Civilopedia",
+          "disposition": "text"
+        },
+        {
+          "field": "Help",
+          "disposition": "text",
+          "notes": "if present in XML (CvInfoBase text); pedia text"
+        },
+        {
+          "field": "Button",
+          "disposition": "art",
+          "cleanName": "icon",
+          "notes": "ART_RENAME: Button -> icon"
+        },
+        {
+          "field": "MovieDefineTag (m_szMovieArtDef)",
+          "disposition": "art",
+          "cleanName": "movie",
+          "notes": "getMovieArtDef -> spaceship/victory movie art-define"
+        },
+        {
+          "field": "CreateSound (m_szCreateSound)",
+          "disposition": "art",
+          "cleanName": "createSound",
+          "notes": "audio played on completion"
+        },
+        {
+          "field": "TechPrereq (m_iTechPrereq)",
+          "disposition": "drop",
+          "notes": "DERIVED: the enabler edge. store.py homes ProjectInfo.TechPrereq into the tech->projects enabler index, so the tech authors `enables.projects` and Project carries a derived `enabledBy` reverse-edge. Do NOT author on Project. This is the one upward arrow; it inverts to the conditioner (tech)."
+        },
+        {
+          "field": "VictoryPrereq (m_iVictoryPrereq)",
+          "disposition": "identity",
+          "cleanName": "launchesVictory",
+          "notes": "NOT a build-prereq (mapping mislabels it `prereqs`). It is the victory this project's creation LAUNCHES (CvCity.cpp:16033 popup BUTTONPOPUP_LAUNCH; CvGameInterface:2721). Structural FK to a VictoryInfo - identity/launch target. Reverse 'launchedBy' belongs in the victory reverse-index."
+        },
+        {
+          "field": "AnyonePrereqProject (m_iAnyoneProjectPrereq)",
+          "disposition": "drop",
+          "notes": "readPass3 prereq machinery (any team having this project gates buildability). An enabler/prereq edge -> derive into the reverse index from the source side; not an authored modifier. (readPass3 + m_aszExtraXMLforPass3 are load machinery, not data.)"
+        },
+        {
+          "field": "PrereqProjects (m_piProjectsNeeded / readPass3 pair)",
+          "disposition": "drop",
+          "notes": "per-project count threshold gating this project (readPass3). Enabler/prereq edge (project->project) -> derive into the reverse enabler index; not an authored modifier on this object."
+        },
+        {
+          "field": "iCost (m_iProductionCost)",
+          "disposition": "identity",
+          "cleanName": "cost.create",
+          "member": "create",
+          "family": "costs",
+          "notes": "base production (hammer) cost to CREATE the project. The base cost lives intrinsically on the info; the universal `costs` family (GameSpeed/Era) MULTIPLIES it (costs.world.create.percent). Author as the project's intrinsic create cost (cost group / identity)."
+        },
+        {
+          "field": "iMaxGlobalInstances (m_iMaxGlobalInstances)",
+          "disposition": "identity",
+          "cleanName": "maxGlobalInstances",
+          "notes": "world-wonder cap; default -1 = unlimited (CvGameCoreUtils:414 isWorldProject). Instance cap, intrinsic identity."
+        },
+        {
+          "field": "iMaxTeamInstances (m_iMaxTeamInstances)",
+          "disposition": "identity",
+          "cleanName": "maxTeamInstances",
+          "notes": "team-wonder cap; default -1 (CvGameCoreUtils:419 isTeamProject). Instance cap, intrinsic identity."
+        },
+        {
+          "field": "iNukeInterception (m_iNukeInterception)",
+          "disposition": "modifier-family",
+          "family": "combat",
+          "member": "nukeInterception",
+          "scope": "team",
+          "unit": "percent",
+          "notes": "TEAM scope: CvTeam::processProjectChange:4513 changeNukeInterception (team-level SDI %). Consumed via GET_TEAM(...).getNukeInterception() (CvUnit nuke resolution, CvPlayerAI vote/SDI). Mapping wrongly scoped 'player'. Member name provisional (combat.nukeInterception vs a defense family)."
+        },
+        {
+          "field": "iTechShare (m_iTechShare)",
+          "disposition": "modifier-family",
+          "family": "diplomacy",
+          "member": "techShare",
+          "scope": "team",
+          "unit": "flat",
+          "notes": "TEAM scope: CvTeam:4515-4517 changeTechShareCount(techShare-1) — team gets techs known by N civs it has met (Internet/Great Library-style). Mapping wrongly scoped 'player'. Value is a civ-count threshold (flat). Family provisional (diplomacy/techDiffusion)."
+        },
+        {
+          "field": "bTechShareWithHalfCivs (m_bTechShareWithHalfCivs)",
+          "disposition": "modifier-family",
+          "family": "diplomacy",
+          "member": "techShareWithHalfCivs",
+          "scope": "team",
+          "unit": "enabler",
+          "notes": "MISSING from mapping channels entirely. Boolean companion to techShare. Verify a live consumer exists before keeping (only getter found is in CvProjectInfo; if truly unread, candidate to DROP as dead structure). Carry as enabler-style flag if live."
+        },
+        {
+          "field": "iGlobalMaintenanceModifier (m_iGlobalMaintenanceModifier)",
+          "disposition": "modifier-family",
+          "family": "maintenance",
+          "member": "all",
+          "scope": "empire",
+          "unit": "percent",
+          "notes": "EMPIRE scope: per-player-on-team changeMaintenanceModifier (CvTeam:4562). Whole-maintenance modifier (the 'all' member, mirrors handicap). Mapping had 'maintenance.percent' but scope 'player' (=empire, ok)."
+        },
+        {
+          "field": "iDistanceMaintenanceModifier (m_iDistanceMaintenanceModifier)",
+          "disposition": "modifier-family",
+          "family": "maintenance",
+          "member": "distance",
+          "scope": "empire",
+          "unit": "percent",
+          "notes": "EMPIRE scope: CvTeam:4563 changeDistanceMaintenanceModifier. MISSING from mapping channels. CvCity:7648-7655 applies it to the distance maintenance component."
+        },
+        {
+          "field": "iNumCitiesMaintenanceModifier (m_iNumCitiesMaintenanceModifier)",
+          "disposition": "modifier-family",
+          "family": "maintenance",
+          "member": "numCities",
+          "scope": "empire",
+          "unit": "percent",
+          "notes": "EMPIRE scope: CvTeam:4564. CvCity:7725 applies to numCities maintenance component."
+        },
+        {
+          "field": "iConnectedCityMaintenanceModifier (m_iConnectedCityMaintenanceModifier)",
+          "disposition": "modifier-family",
+          "family": "maintenance",
+          "member": "connectedCity",
+          "scope": "empire",
+          "unit": "percent",
+          "notes": "EMPIRE scope: CvTeam:4565. MISSING from mapping channels. CvCity:7584 / CvPlayer::getConnectedCityMaintenanceModifier."
+        },
+        {
+          "field": "iGlobalHappiness (m_iGlobalHappiness)",
+          "disposition": "modifier-family",
+          "family": "happiness",
+          "scope": "empire",
+          "unit": "flat",
+          "notes": "EMPIRE scope: CvTeam:4559 player.changeProjectHappiness on every player ON the team. Singleton family (no member), flat only. Mapping had scope 'player' (=empire, ok)."
+        },
+        {
+          "field": "iGlobalHealth (m_iGlobalHealth)",
+          "disposition": "modifier-family",
+          "family": "health",
+          "scope": "empire",
+          "unit": "flat",
+          "notes": "EMPIRE scope: CvTeam:4560 player.changeProjectHealth on every team player. Singleton family, flat. Mapping scope 'player' (=empire, ok)."
+        },
+        {
+          "field": "iInflationModifier (m_iInflationModifier)",
+          "disposition": "modifier-family",
+          "family": "upkeep",
+          "member": "inflation",
+          "scope": "empire",
+          "unit": "percent",
+          "notes": "EMPIRE scope: CvTeam:4561 player.changeProjectInflation. MISSING from mapping channels. Matches handicap.upkeep.inflation member. (CvPlayerAI:13112 applies inflation against preinflated costs.)"
+        },
+        {
+          "field": "iWorldHappiness (m_iWorldHappiness)",
+          "disposition": "modifier-family",
+          "family": "happiness",
+          "scope": "world",
+          "unit": "flat",
+          "notes": "WORLD scope (NOT team — mapping is wrong): CvTeam:4572 player.changeWorldHappiness for EVERY alive player game-wide, outside the team check. Global anger/happy applied in CvCity:5642/5702 via owner.getWorldHappiness()."
+        },
+        {
+          "field": "iWorldHealth (m_iWorldHealth)",
+          "disposition": "modifier-family",
+          "family": "health",
+          "scope": "world",
+          "unit": "flat",
+          "notes": "WORLD scope (mapping wrongly says team): CvTeam:4573 changeWorldHealth on all alive players. CvCity:5841/5869."
+        },
+        {
+          "field": "iWorldTradeRoutes (m_iWorldTradeRoutes)",
+          "disposition": "modifier-family",
+          "family": "tradeRoutes",
+          "scope": "world",
+          "unit": "flat",
+          "notes": "WORLD scope (mapping wrongly says team): CvTeam:4574 player.changeTradeRoutes on all alive players game-wide. Singleton family tradeRoutes (provisional name)."
+        },
+        {
+          "field": "CommerceModifiers (m_piCommerceModifier, addCommerce)",
+          "disposition": "modifier-family",
+          "family": "gold/research/culture/espionage (SPLIT)",
+          "scope": "empire",
+          "unit": "percent",
+          "notes": "EMPIRE scope: CvTeam:4567-4570 per-player-on-team changeCommerceRateModifierfromBuildings per COMMERCE type. SPLIT into per-identifier families gold/research/culture/espionage (no `commerce` wrapper, no positional array): e.g. gold.empire.percent, research.empire.percent. NAMED keys, never [n,n,n,n]."
+        },
+        {
+          "field": "BonusProductionModifiers (m_piBonusProductionModifier, SetVariableListTagPair)",
+          "disposition": "modifier-family",
+          "family": "costs",
+          "member": "create",
+          "scope": "city",
+          "unit": "percent",
+          "notes": "ENTITY-TARGETED on the project, keyed by OWNED bonus: 'if the building city has BONUS_X, this project builds +N% faster' (CvCity::getProductionModifier:3940-3946; CvPlayer:27192-27199 resource-consumption). Fold onto the SOURCE keyed by target type: costs.city.bonus.{BONUS}.create.percent (keyed map, x100? NO - whole percent). NOT an inversion-out to CvBonusInfo (mapping's inversionsOut is WRONG direction — the field is the project's own) and NOT an inbound boost."
+        },
+        {
+          "field": "VictoryThresholds (m_piVictoryThreshold, per-victory)",
+          "disposition": "modifier-family",
+          "family": "victory",
+          "member": "threshold",
+          "scope": "team",
+          "unit": "flat",
+          "notes": "Real gameplay (channel-count-isn't-POCO): per-victory project-count target. CvTeam getVictoryDelay:4936 / getLaunchSuccessRate:4973 / CvGame.cpp:7657 testVictory; CvTeamAI:1507 strategy. Keyed by VICTORY. Mapping mislabeled as identity. Family `victory` provisional (victory-progress is a coherent team-level concern)."
+        },
+        {
+          "field": "VictoryMinThresholds (m_piVictoryMinThreshold, per-victory)",
+          "disposition": "modifier-family",
+          "family": "victory",
+          "member": "minThreshold",
+          "scope": "team",
+          "unit": "flat",
+          "notes": "Per-victory minimum count to launch (getVictoryMinThreshold defaults to threshold if 0). CvTeam:4933/4969/4992, CvGame:7657. Keyed by VICTORY. Mapping mislabeled identity."
+        },
+        {
+          "field": "iVictoryDelayPercent (m_iVictoryDelayPercent)",
+          "disposition": "modifier-family",
+          "family": "victory",
+          "member": "delayPercent",
+          "scope": "team",
+          "unit": "percent",
+          "notes": "Extra victory countdown delay when project count is between min and full threshold (CvTeam::getVictoryDelay:4944). Gameplay, not identity (mapping mislabeled)."
+        },
+        {
+          "field": "iSuccessRate (m_iSuccessRate)",
+          "disposition": "modifier-family",
+          "family": "victory",
+          "member": "successRate",
+          "scope": "team",
+          "unit": "percent",
+          "notes": "Launch success-rate penalty per missing project below threshold (CvTeam::getLaunchSuccessRate:4975). Gameplay, not identity (mapping mislabeled)."
+        },
+        {
+          "field": "bSpaceship (m_bSpaceship)",
+          "disposition": "identity",
+          "cleanName": "spaceship",
+          "notes": "Boolean flag: marks this project as a spaceship part. Gates spaceProductionModifier add (CvCity::getProductionModifier:3935, CvPlayer:7295), spaceship screen, isSpaceship checks across CvGameInterface/CvPlayerAI. JSON boolean true. Intrinsic identity (a capability flag, not an additive channel)."
+        },
+        {
+          "field": "bAllowsNukes (m_bAllowsNukes)",
+          "disposition": "identity",
+          "cleanName": "allowsNukes",
+          "notes": "Boolean: completing this project enables nukes globally (Manhattan-style). Checked in canCreate / isNoNukes gates (CvPlayer:6859, CvGameTextMgr). Capability flag -> identity boolean (could be modeled as a grants/enabler; leaning identity capability flag like spaceship). JSON boolean."
+        },
+        {
+          "field": "EveryoneSpecialUnit (m_iEveryoneSpecialUnit)",
+          "disposition": "grants",
+          "cleanName": "grantsSpecialUnit",
+          "notes": "One-shot on completion: GC.getGame().makeSpecialUnitValid (CvTeam:4530-4533). Fires once, does not sum/cascade -> grants. EnumAsInt FK to SpecialUnitInfo."
+        },
+        {
+          "field": "EveryoneSpecialBuilding (m_iEveryoneSpecialBuilding)",
+          "disposition": "grants",
+          "cleanName": "grantsSpecialBuilding",
+          "notes": "One-shot on completion: makeSpecialBuildingValid (CvTeam:4535-4538). grants. EnumAsInt FK to SpecialBuildingInfo. (CvGameTextMgr:18418 derives a building's via-special-building unlock from this.)"
+        },
+        {
+          "field": "MapCategoryTypes (m_aeMapCategoryTypes)",
+          "disposition": "identity",
+          "cleanName": "mapCategories",
+          "notes": "Map-category membership vector (shared with bonus/unit/improvement/terrain). Gates where buildable by map category. Identity list (or a future shared mapGeneration/eligibility group)."
+        },
+        {
+          "field": "Categories (m_aiCategories)",
+          "disposition": "identity",
+          "cleanName": "categories",
+          "notes": "Generic category tags (isCategory/getCategory). UI/filter grouping. Identity list. Verify a gameplay consumer; if only cosmetic grouping keep as identity."
+        }
+      ],
+      "inboundBoosts": [],
+      "openQuestions": [
+        "bTechShareWithHalfCivs: the ONLY reference found is CvProjectInfo's own getter (isTechShareWithHalfCivs) — no consumer in CvTeam/CvGame/CvPlayer. Likely DEAD structure (a stillborn variant of techShare). Confirm no consumer, then DROP per the drop-dead-structure rule; if any consumer exists, keep as team-scope enabler flag.",
+        "Family naming for the victory-launch cluster (threshold/minThreshold/delayPercent/successRate): grouping them as a `victory` family is my proposal — these are a cohesive team-level victory-progress concern, but the spec's provisional family list does not name one. Owner to confirm `victory` vs folding into `durations`/leaving as a non-cascade structural section (they gate launch, are per-VICTORY keyed, and are read by victory resolution, not summed into yield/commerce channels).",
+        "nukeInterception family: placed under `combat` (member nukeInterception) but it is really a strategic-defense counter (team SDI %). Could warrant its own `defense` family. Provisional.",
+        "techShare / techShareWithHalfCivs family: placed under `diplomacy` but it is tech DIFFUSION (gaining techs known to N met civs), not attitude/war. A `techDiffusion` family may be cleaner. Provisional.",
+        "tradeRoutes (worldTradeRoutes) singleton family name — provisional; confirm against where other entities (buildings) deposit world trade routes so the family name is shared.",
+        "bAllowsNukes / bSpaceship: classified as identity capability flags. Alternative is to model bAllowsNukes as a world-scope `grants`/enabler (it flips a global game capability on completion). Confirm identity-flag vs grant.",
+        "VictoryPrereq is the victory this project LAUNCHES (not a build prereq). Confirm it should live in identity as `launchesVictory` and that the victory<->project reverse edge ('launchedBy') is derived into the cold-path reverse index, not authored.",
+        "mapping/ProjectInfo.json inversionsOut.BonusProductionModifiers (-> CvBonusInfo projectProductionModifier.{PROJECT}) is the WRONG direction per the model: the field is the project's OWN per-owned-bonus build-rate, so it folds onto the project as costs.city.bonus.{BONUS}.create.percent. Confirm we discard the inversion-out and home it on the project.",
+        "iCost member: classified as costs.create (a project is CREATEd). Confirm `create` is the right fine-grained cost member for projects (vs a project-specific member), so the world `costs` multiplier (GameSpeed/Era costs.world.create.percent) lines up."
+      ]
+    }
+  ]
+}

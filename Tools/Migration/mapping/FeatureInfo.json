@@ -1,0 +1,28 @@
+{
+  "entity": "FeatureInfo",
+  "rootElement": "FeatureInfo",
+  "glob": "**/CIV4FeatureInfos.xml",
+  "channels": {
+    "YieldChanges": {"scope":"city","channel":"yield","kind":"flat","valueKeys":["food","production","commerce"]},
+    "RiverYieldChange": {"scope":"city","channel":"yield","kind":"flat","valueKeys":["food","production","commerce"]},
+    "iHealthPercent": {"scope":"city","channel":"health","kind":"percent"},
+    "iDefense": {"scope":"city","channel":"defense","kind":"percent"},
+    "iMovement": {"scope":"city","channel":"movement","kind":"flat"},
+    "iSeeThrough": {"scope":"city","channel":"visibility","kind":"flat"}
+  },
+  "inversionsOut": {},
+  "enablerEdges": {},
+  "prereqs": [],
+  "cost": ["iAdvancedStartRemoveCost"],
+  "art": ["ArtDefineTag", "FootstepSounds", "WorldSoundscapeAudioScript", "GrowthSound", "EffectType", "iEffectProbability", "bGraphicalOnly"],
+  "identity": [
+    "Type", "Description", "Civilopedia", "TerrainBooleans",
+    "PropertyManipulators",
+    "iAppearance", "iDisappearance", "iGrowth", "iSpread", "iPopDestroys",
+    "iWarmingDefense", "iCultureDistance",
+    "bNoCity", "bNukeImmune", "bIgnoreTerrainCulture", "bNoImprovement", "bNoBonus",
+    "bRequiresFlatlands", "bCountsAsPeak", "bAddsFreshWater", "bImpassable",
+    "bNoCoast", "bNoRiver", "bRequiresRiver", "bCoastalOnly", "bNoAdjacent"
+  ],
+  "boostsIn": ["featureHappinessChanges"]
+}
