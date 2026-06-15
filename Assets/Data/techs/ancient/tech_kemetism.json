@@ -23,6 +23,12 @@
      "type": "TECH_MUMMIFICATION",
      "scope": "team"
     }
+   ],
+   "noneOf": [
+    {
+     "type": "SELF",
+     "scope": "world"
+    }
    ]
   }
  },
@@ -52,7 +58,6 @@
   "icon": "Art/Interface/Buttons/TechTree/Kemetism.dds"
  },
  "identity": {
-  "global": true,
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "gridX": 24,

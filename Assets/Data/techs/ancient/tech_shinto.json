@@ -19,6 +19,12 @@
      "type": "TECH_LEISURE",
      "scope": "team"
     }
+   ],
+   "noneOf": [
+    {
+     "type": "SELF",
+     "scope": "world"
+    }
    ]
   }
  },
@@ -52,7 +58,6 @@
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",
-  "global": true,
   "worth": 8,
   "gridX": 28,
   "gridY": 3

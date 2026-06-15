@@ -19,6 +19,12 @@
      "type": "TECH_EQUINE_DOMESTICATION",
      "scope": "team"
     }
+   ],
+   "noneOf": [
+    {
+     "type": "SELF",
+     "scope": "world"
+    }
    ]
   }
  },
@@ -48,7 +54,6 @@
   "icon": "Art/Interface/Buttons/TechTree/tengriism.dds"
  },
  "identity": {
-  "global": true,
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "gridX": 22,

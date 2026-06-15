@@ -101,11 +101,18 @@ def requires_fn(rec, store):
         build["all"] = all_atoms
     if any_groups:
         build["any"] = any_groups
+    # bGlobal (owner 2026-06-15) — the religion-uniqueness RACE gate. Not identity: a `requires` NEGATIVE at WORLD
+    # scope — "NOT the same tech already researched anywhere" (CvPlayer::canEverResearch: a global tech is barred
+    # once countKnownTechNumTeams>0). The 29 bGlobal techs are EXACTLY the 29 religion-prereq techs ("religions go
+    # under this heading"). SELF = this same tech; world scope = any team. `noneOf` = the negative clause container.
+    g = rec.find("bGlobal")
+    if g is not None and engine.text(g) in ("1", "true", "True"):
+        build["noneOf"] = [OrderedDict([("type", "SELF"), ("scope", "world")])]
     return {"build": build} if build else None
 
 
 CFG = cc.EntityConfig("TechInfo", cost_rename={"iCost": "research"}, grants=GRANTS, era_fn=era_fn,
-                      requires_fn=requires_fn)
+                      requires_fn=requires_fn, extra_drop={"bGlobal"})
 
 if __name__ == "__main__":
     cc.main(CFG, TECH_BOOSTS, os.path.join(REPO, "Assets", "Data", "techs"))

@@ -15,6 +15,12 @@
      "type": "TECH_FRANCHISES",
      "scope": "team"
     }
+   ],
+   "noneOf": [
+    {
+     "type": "SELF",
+     "scope": "world"
+    }
    ]
   }
  },
@@ -47,7 +53,6 @@
   "era": "C2C_ERA_ATOMIC",
   "gridX": 77,
   "gridY": 7,
-  "global": true,
   "worth": 8
  }
 }

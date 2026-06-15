@@ -19,6 +19,12 @@
      "type": "TECH_MONOTHEISM",
      "scope": "team"
     }
+   ],
+   "noneOf": [
+    {
+     "type": "SELF",
+     "scope": "world"
+    }
    ]
   }
  },
@@ -48,7 +54,6 @@
   "icon": "Art/Interface/Buttons/TechTree/Zoroastrianism.dds"
  },
  "identity": {
-  "global": true,
   "era": "C2C_ERA_ANCIENT",
   "worth": 8,
   "gridX": 30,

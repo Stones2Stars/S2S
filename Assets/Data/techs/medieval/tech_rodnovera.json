@@ -15,6 +15,12 @@
      "type": "TECH_MEDIEVAL_LIFESTYLE",
      "scope": "team"
     }
+   ],
+   "noneOf": [
+    {
+     "type": "SELF",
+     "scope": "world"
+    }
    ]
   }
  },
@@ -44,7 +50,6 @@
   "icon": "Art/Interface/Buttons/techtree/Rodnovery.dds"
  },
  "identity": {
-  "global": true,
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 8,
   "gridX": 42,

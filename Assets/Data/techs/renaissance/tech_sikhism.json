@@ -15,6 +15,12 @@
      "type": "TECH_HUMANISM",
      "scope": "team"
     }
+   ],
+   "noneOf": [
+    {
+     "type": "SELF",
+     "scope": "world"
+    }
    ]
   }
  },
@@ -45,7 +51,6 @@
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",
-  "global": true,
   "gridX": 52,
   "gridY": 11,
   "worth": 8

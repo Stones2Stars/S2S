@@ -218,7 +218,15 @@ resource/bonus**. Authored on the target, scope-tagged per clause:
   exclude it.** The common case is positive means (`all`/`any` presence + `min`/`max` counts). But a **negative
   clause is allowed**: `disableIfAny` / `disableIfAll` — "go DORMANT while a forbidder/condition is present" —
   **reversible and non-destructive** (the **pseudobuilding** case: education / crime / tourism thresholds switching
-  on and off; condition met → dormant, clears → reactivates).
+  on and off; condition met → dormant, clears → reactivates). **Authoring container = `noneOf`** (the locked memory's
+  name; `noneOf:[A,B]` ≡ `disableIfAny:[A,B]` = "requires NONE of A,B present"), parallel to the positive `all`/`any`.
+  - **The negative clause is NOT operate-only — it can sit in `requires.build` for one-time RACE/uniqueness gates
+    (owner, 2026-06-15, the Tech `bGlobal` instance).** Tech `bGlobal` (the 29 religion-founding techs; "religions go
+    under this heading") = **`requires.build.noneOf:[{type:SELF, scope:world}]`** — "researchable only while NOT the
+    same tech (SELF) already researched anywhere in the WORLD" (`CvPlayer::canEverResearch` bars it once
+    `countKnownTechNumTeams>0`). So the negative space covers BOTH reversible dormancy (operate, pseudobuildings) AND
+    one-time build-availability races (build, global-uniqueness). `SELF` + `world` scope is the canonical
+    "globally-unique / can only be done once" idiom; tech is monotonic so it's `build` (no operate side).
   - **This is DISTINCT from the source-side `disables` ban**, which is **DESTRUCTIVE** (destroys instances, §5/§6).
     The split is by **FATE**: a `requires`-negative → **DORMANT (kept, reverses)**; a `disables` → **DESTROYED**. And
     by **author**: `requires`-negative is on the TARGET ("I go dormant while X"); `disables` is on the SOURCE/law

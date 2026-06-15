@@ -15,6 +15,12 @@
      "type": "TECH_FUNDAMENTALISM",
      "scope": "team"
     }
+   ],
+   "noneOf": [
+    {
+     "type": "SELF",
+     "scope": "world"
+    }
    ]
   }
  },
@@ -44,7 +50,6 @@
   "icon": "Art/Interface/Buttons/TechTree/Islam.dds"
  },
  "identity": {
-  "global": true,
   "era": "C2C_ERA_MEDIEVAL",
   "worth": 8,
   "gridX": 44,

@@ -19,6 +19,12 @@
      "type": "TECH_MERITOCRACY",
      "scope": "team"
     }
+   ],
+   "noneOf": [
+    {
+     "type": "SELF",
+     "scope": "world"
+    }
    ]
   }
  },
@@ -48,7 +54,6 @@
   "icon": "Art/Interface/Buttons/TechTree/Confucianism.dds"
  },
  "identity": {
-  "global": true,
   "era": "C2C_ERA_CLASSICAL",
   "worth": 8,
   "gridX": 37,
