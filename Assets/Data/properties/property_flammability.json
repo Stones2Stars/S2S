@@ -1,0 +1,18 @@
+{
+ "type": "PROPERTY_FLAMMABILITY",
+ "description": "TXT_KEY_PROPERTY_FLAMMABILITY",
+ "text": {
+  "value": "TXT_KEY_PROPERTY_FLAMMABILITY_DISPLAY",
+  "change": "TXT_KEY_PROPERTY_FLAMMABILITY_CHANGE",
+  "changeAllCities": "TXT_KEY_PROPERTY_FLAMMABILITY_CHANGE_ALL_CITIES",
+  "prereqMin": "TXT_KEY_PROPERTY_FLAMMABILITY_PREREQ_MIN",
+  "prereqMax": "TXT_KEY_PROPERTY_FLAMMABILITY_PREREQ_MAX"
+ },
+ "ai": {
+  "weight": -50,
+  "scale": "city"
+ },
+ "identity": {
+  "fontButtonIndex": 1
+ }
+}

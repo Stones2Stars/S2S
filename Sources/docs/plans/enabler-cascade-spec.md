@@ -481,6 +481,41 @@ availability edges). Shapes verified on disk:
 - **EXPLORATORY (not in data):** civ-capability `allows`/`unique` — `allows` is a forward enabler edge growing the
   same generator. Grow into; not data now.
 
+### 6.1 ENABLE → check-for-immediate-GRANT → AUTO-BUILD → `requires` active (owner, 2026-06-15; formalized for reuse)
+A recurring edge case — the **property effect-buildings** are the first real instance, but the owner ruled it
+worth FORMALIZING for other potential edge cases. Four coupled rules:
+1. **A grant cannot fire until its target is ENABLED.** Grants are gated by enablement (you cannot grant a thing
+   that is not yet available).
+2. **ENABLING triggers a grant-CHECK (the trigger).** When something becomes enabled (enters CAN GET), the engine
+   must CHECK whether it should be **immediately GRANTED somewhere** — i.e. whether a `grants` edge applies to the
+   now-enabled target. If so, fire the grant immediately.
+3. **AUTO-BUILD:** a thing granted-on-enable is AUTOMATICALLY BUILT / placed, never player-constructed (the
+   existing FreeBuilding / autobuild idea, made an explicit trigger). The flag rides the TARGET (the building).
+4. **`requires` decides ACTIVE:** the auto-built thing then runs its normal `requires` gate for active/dormant.
+**Worked example — property effect-buildings:** TECH `enables` `BUILDING_CRIME_LYING` → on enable, the engine
+checks for a grant → `PROPERTY_CRIME` `grants` it (`grants.buildings` = a PURE LIST of granted buildings) → it is
+AUTO-BUILT → the BUILDING's OWN `requires` section `{type:PROPERTY_CRIME, scope:city, min:1}` decides
+active/dormant (the §3 pseudobuilding / `PropertyEffect` dormancy). **`grants` and `requires` are SEPARATE
+reserved sections** (owner 2026-06-15): `grants` LISTS the granted buildings; the `requires` (WHEN it is active)
+lives on the BUILDING — the thing it gates — NEVER mixed into the property's grants. The parser reads
+`building.requires`; the property json carries only the grant list.
+
+**EVERY `requires` atom is FULL + EXPLICIT + self-describing (owner 2026-06-15).** A `requires` carries its own
+`type` + `scope` (+ `min`/`max`) ALWAYS — `{type:PROPERTY_CRIME, scope:city, min:1}`, never a bare `{min:1}`. The
+parser must NEVER infer context (it must not have to know "this atom sits in the crime property, so add the crime
+parts"). Explicitness is what makes `requires` uniform across sources and keeps the parser free of special cases.
+The enable→grant-check + auto-build WIRING is #430 engine machinery (§0.6), not info data.
+
+**⛔ THE UNIFORMITY LAW (owner 2026-06-15) — applies to EVERY info, no exceptions.** *"The moment we start doing
+special things with enabling, granting, or requirement for any particular info, is the moment the clowns with
+rollerskates come flying in and ruin our whole day."* `enables` / `grants` / `requires` use the **exact same
+uniform structure for every info** — a property is not special, a building is not special, nothing is. No
+per-info shapes, no parser branch that knows "this is the crime property," no bespoke gate. If a case seems to
+need special handling (as the property effect-buildings first appeared to), the answer is to express it with the
+UNIFORM primitives (grant a list + a building-side explicit `requires` atom), never to special-case the info.
+This is the same law as §0.6 (no machinery in data) and the "no parser special-case" rule — stated as the bright
+line it is: special-casing one info is how the whole model rots.
+
 ---
 
 ## 7. Under-modeled: COUNT / THRESHOLD / WAIVE (flagged)
