@@ -23,6 +23,15 @@ REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 XML_DIR = os.path.join(REPO, "Assets", "XML")
 MOD_DIR = os.path.join(REPO, "Assets", "Modules")
 
+# Module sub-paths EXCLUDED from the migration — confirmed CASE BY CASE (owner 2026-06-15), NOT a blanket
+# WIP-name heuristic. `zWIP` is work-in-progress and NOT loaded in real games (it brought in PROPERTY_FRUIT/HUNT/
+# MATERIAL/LORE from NomadDemo, "Antiquities (broken)", etc.) -> confirmed out. The authority for what the game
+# actually loads is `Assets/Modules/MLF_CIV4ModularLoadingControls.xml`; the OTHER top-level modules (Bad_Karma,
+# NotSoGood, P2K_Multimaps_Test, Alt_Timelines, Cultures, Pepper2000, Thunderbrd) still need per-module
+# confirmation before any are excluded — do NOT blanket-drop on folder names. Add a sub-path here only once
+# confirmed. Match is on the normalised (forward-slash, lowercase) path.
+EXCLUDED_MODULE_SUBPATHS = ["/modules/zwip/"]
+
 # entity record-element -> filename glob (matched under BOTH Assets/XML and Assets/Modules).
 ENTITIES = {
     "TechInfo":        "*CIV4TechInfos.xml",
@@ -56,6 +65,7 @@ ENTITIES = {
     "HurryInfo":         "*CIV4HurryInfo.xml",
     "VictoryInfo":       "*CIV4VictoryInfo.xml",
     "CultureLevelInfo":  "*CIV4CultureLevelInfo.xml",   # per-city-level config; enables buildings (PrereqCultureLevel)
+    "PropertyInfo":      "*CIV4PropertyInfos.xml",       # defines the PROPERTY_* channels (crime/education/…)
     "VoteInfo":          "*CIV4VoteInfo.xml",            # diplo-vote resolutions (config for the voting subsystem)
     "CivilizationInfo":  "*CIV4CivilizationInfos.xml",   # game-start grants + per-civ policy/art (source entity)
 }
@@ -240,7 +250,13 @@ class Store:
         found = []
         for base in (XML_DIR, MOD_DIR):
             found.extend(glob.glob(os.path.join(base, "**", glb), recursive=True))
-        return sorted(f for f in found if "schema" not in f.lower())
+        out = []
+        for f in found:
+            norm = f.replace("\\", "/").lower()
+            if "schema" in norm or any(ex in norm for ex in EXCLUDED_MODULE_SUBPATHS):
+                continue
+            out.append(f)
+        return sorted(out)
 
     def _load(self, ent, glb):
         table, prov, modadd = OrderedDict(), {}, set()
