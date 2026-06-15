@@ -23,14 +23,21 @@ REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 XML_DIR = os.path.join(REPO, "Assets", "XML")
 MOD_DIR = os.path.join(REPO, "Assets", "Modules")
 
-# Module sub-paths EXCLUDED from the migration — confirmed CASE BY CASE (owner 2026-06-15), NOT a blanket
-# WIP-name heuristic. `zWIP` is work-in-progress and NOT loaded in real games (it brought in PROPERTY_FRUIT/HUNT/
-# MATERIAL/LORE from NomadDemo, "Antiquities (broken)", etc.) -> confirmed out. The authority for what the game
-# actually loads is `Assets/Modules/MLF_CIV4ModularLoadingControls.xml`; the OTHER top-level modules (Bad_Karma,
-# NotSoGood, P2K_Multimaps_Test, Alt_Timelines, Cultures, Pepper2000, Thunderbrd) still need per-module
-# confirmation before any are excluded — do NOT blanket-drop on folder names. Add a sub-path here only once
-# confirmed. Match is on the normalised (forward-slash, lowercase) path.
-EXCLUDED_MODULE_SUBPATHS = ["/modules/zwip/"]
+# Module sub-paths EXCLUDED from the migration — confirmed CASE BY CASE against the MLF authority
+# (`Assets/Modules/MLF_CIV4ModularLoadingControls.xml`, config Modules_Main_1 + the nested per-module MLFs), owner
+# 2026-06-15. The MLF `bLoad` flag is the truth for what the GAME loads. Verdicts (per-module sweep):
+#   INCLUDE (bLoad=1): Cultures, Pepper2000, Thunderbrd (all under its loaded `Traits` sub), Alt_Timelines (all
+#     punk subs =1), NotSoGood.
+#   EXCLUDE (bLoad=0): zWIP; Bad_Karma (top-level on, but ALL content subs — Building_Meltdown / Fantasy[/
+#     KillerRabbit] / War_Of_The_Worlds / Locusts_Normal / Andromeda_Strain / Bandits_and_Pirates — are bLoad=0,
+#     so nothing it carries loads; owner: "bad_karma should be removed").
+#   EXCLUDE — P2K_Multimaps_Test (bLoad=0): RESOLVED 2026-06-15 — its 92 "space" units are a 100% DUPLICATE of
+#     Pepper2000 units (bLoad=1, loaded); ZERO are P2K-unique (owner's hunch: "someone copied p2k's units into the
+#     main mod" — confirmed, into Pepper2000). So the space content is fully in-game via Pepper2000 regardless;
+#     excluding the dead duplicate makes the migration use the game's canonical Pepper2000 definitions instead of
+#     merging them with the disabled copy. Net roster change: zero. (Owner: "yes, do that.")
+# Match is on the normalised (forward-slash, lowercase) path.
+EXCLUDED_MODULE_SUBPATHS = ["/modules/zwip/", "/modules/bad_karma/", "/modules/p2k_multimaps_test/"]
 
 # entity record-element -> filename glob (matched under BOTH Assets/XML and Assets/Modules).
 ENTITIES = {
