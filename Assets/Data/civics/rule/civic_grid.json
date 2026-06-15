@@ -1,0 +1,93 @@
+{
+ "type": "CIVIC_GRID",
+ "description": "TXT_KEY_CIVIC_GRID",
+ "civilopedia": "TXT_KEY_CIVIC_GRID_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_GRID_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_EYE_IN_THE_SKY",
+   "BUILDING_GREAT_FIREWALL",
+   "BUILDING_SAFETY_GREAT_FIREWALL"
+  ]
+ },
+ "production": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": -15
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "happiness": {
+  "empire": {
+   "largestCity": {
+    "flat": -2
+   },
+   "flat": -1,
+   "civicAnger": {
+    "percent": 10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 10
+   },
+   "numCities": {
+    "percent": 10
+   },
+   "homeArea": {
+    "percent": 10
+   },
+   "otherArea": {
+    "percent": 10
+   },
+   "corporation": {
+    "percent": 5
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -15
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "democracyLevel": {
+    "flat": -25
+   }
+  }
+ },
+ "grants": {
+  "revolution": 50
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/rule_grid.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_RULE",
+  "anarchyLength": 2,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

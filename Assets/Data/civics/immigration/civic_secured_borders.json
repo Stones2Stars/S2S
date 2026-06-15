@@ -1,0 +1,82 @@
+{
+ "type": "CIVIC_SECURED_BORDERS",
+ "description": "TXT_KEY_CIVIC_SECURED_BORDERS",
+ "civilopedia": "TXT_KEY_CIVIC_SECURED_BORDERS_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_SECURED_BORDERS_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_ILLEGAL_IMMIGRATION"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 2,
+   "tradeRoute": {
+    "percent": 5
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "military": {
+    "percent": 5
+   },
+   "percent": 2,
+   "tradeRoute": {
+    "percent": 5
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 2,
+   "tradeRoute": {
+    "percent": 5
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1,
+   "buildings": {
+    "BUILDING_DEPARTMENT_OF_FOREIGN_POLICY": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "foreign": {
+    "percent": 20
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": -1
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "policies": {
+  "fixedBorders": true
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/immigration_secure_borders.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_IMMIGRATION",
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

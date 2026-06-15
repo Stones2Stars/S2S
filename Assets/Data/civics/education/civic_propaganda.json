@@ -1,0 +1,106 @@
+{
+ "type": "CIVIC_PROPAGANDA",
+ "description": "TXT_KEY_CIVIC_PROPAGANDA",
+ "civilopedia": "TXT_KEY_CIVIC_PROPAGANDA_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_PROPAGANDA_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_EYE_IN_THE_SKY",
+   "BUILDING_GREAT_FIREWALL",
+   "BUILDING_PROPAGANDA_NET",
+   "BUILDING_PROPAGANDA_OFFICE",
+   "BUILDING_SAFETY_GREAT_FIREWALL"
+  ]
+ },
+ "production": {
+  "empire": {
+   "military": {
+    "percent": 10
+   },
+   "percent": 3
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": -1
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": -2
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_PRESS_AGENCY": {
+     "flat": 1
+    },
+    "BUILDING_BROADCAST_TOWER": {
+     "flat": 1
+    },
+    "BUILDING_COMMUNICATION_TOWER": {
+     "flat": 1
+    },
+    "BUILDING_NETWORK_NODE": {
+     "flat": 1
+    },
+    "BUILDING_ADVERTISING_AGENCY": {
+     "flat": 1
+    },
+    "BUILDING_MADISON_AVENUE": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "empire": {
+   "captureProbability": {
+    "percent": 15
+   },
+   "captureResistance": {
+    "percent": 25
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -10
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -3
+   },
+   "national": {
+    "flat": -3
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/education_propaganda.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_EDUCATION",
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

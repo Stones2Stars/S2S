@@ -1,0 +1,185 @@
+{
+ "type": "CIVIC_DIVINE_CULT",
+ "description": "TXT_KEY_CIVIC_DIVINE_CULT",
+ "civilopedia": "TXT_KEY_CIVIC_DIVINE_CULT_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_DIVINE_CULT_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ALAMUT",
+   "BUILDING_DIVINE_MONUMENT",
+   "BUILDING_MARTIAN_MONUMENT",
+   "BUILDING_SHRINE",
+   "BUILDING_TELEVANGELIST_STUDIO",
+   "BUILDING_TLALOCS_ALTAR"
+  ],
+  "specialists": [
+   "SPECIALIST_PRIEST"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "commerce": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_MOAI": {
+     "flat": 1
+    }
+   },
+   "percent": 1
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": 1
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 2,
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "nonStateReligion": {
+    "flat": -1
+   },
+   "buildings": {
+    "BUILDING_SACRIFICIAL_ALTAR": {
+     "flat": 1
+    },
+    "BUILDING_MONUMENT": {
+     "flat": 2
+    },
+    "BUILDING_OBELISK": {
+     "flat": 2
+    },
+    "BUILDING_TOTEM_POLE": {
+     "flat": 2
+    },
+    "BUILDING_STELE": {
+     "flat": 2
+    },
+    "BUILDING_MONUMENT_OF_THE_DICTATOR": {
+     "flat": 2
+    },
+    "BUILDING_ROYAL_MONUMENT": {
+     "flat": 2
+    },
+    "BUILDING_FUNERARY_SERVICES": {
+     "flat": 2
+    },
+    "BUILDING_PALACE": {
+     "flat": 1
+    },
+    "BUILDING_FORBIDDEN_PALACE": {
+     "flat": 1
+    },
+    "BUILDING_THE_GREAT_PYRAMID": {
+     "flat": 1
+    },
+    "BUILDING_MAUSOLEUM_OF_MAUSSOLLOS": {
+     "flat": 1
+    },
+    "BUILDING_TAJ_MAHAL": {
+     "flat": 1
+    },
+    "BUILDING_PYRAMID_OF_THE_MAGICIAN": {
+     "flat": 2
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 5
+   },
+   "numCities": {
+    "percent": 5
+   },
+   "homeArea": {
+    "percent": 2
+   },
+   "otherArea": {
+    "percent": 2
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "flat": 5
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -10
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "happiness": {
+    "flat": 2
+   },
+   "unitProduction": {
+    "percent": 10
+   },
+   "buildingProduction": {
+    "percent": 10
+   },
+   "freeExperience": {
+    "flat": 1
+   }
+  }
+ },
+ "policies": {
+  "noNonStateReligionSpread": true,
+  "stateReligion": true
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/religion_divine_cult.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_RELIGION",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

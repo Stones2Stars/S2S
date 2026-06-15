@@ -1,0 +1,122 @@
+{
+ "type": "CIVIC_SEPARATION_OF_POWER",
+ "description": "TXT_KEY_CIVIC_SEPARATION_OF_POWER",
+ "civilopedia": "TXT_KEY_CIVIC_SEPARATION_OF_POWER_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_SEPARATION_OF_POWER_STRATEGY",
+ "food": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 4
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 5,
+   "domestic": {
+    "percent": 10
+   }
+  }
+ },
+ "combat": {
+  "empire": {
+   "captureProbability": {
+    "percent": 10
+   },
+   "captureResistance": {
+    "percent": 10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 9
+   },
+   "numCities": {
+    "percent": 12
+   },
+   "homeArea": {
+    "percent": 6
+   },
+   "otherArea": {
+    "percent": 5
+   },
+   "corporation": {
+    "percent": 3
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 10
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -2
+   },
+   "national": {
+    "flat": -3
+   },
+   "distanceModifier": {
+    "percent": -10
+   },
+   "democracyLevel": {
+    "flat": 20
+   }
+  }
+ },
+ "grants": {
+  "revolution": 10
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/power_separation_of_powers.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_POWER",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

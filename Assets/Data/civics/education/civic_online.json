@@ -1,0 +1,66 @@
+{
+ "type": "CIVIC_ONLINE",
+ "description": "TXT_KEY_CIVIC_ONLINE",
+ "civilopedia": "TXT_KEY_CIVIC_ONLINE_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_ONLINE_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ONLINE_UNIVERSITY"
+  ]
+ },
+ "production": {
+  "empire": {
+   "buildings": {
+    "BUILDING_COMPUTER_NETWORK": {
+     "percent": 20
+    },
+    "BUILDING_INFO_NET": {
+     "percent": 20
+    },
+    "BUILDING_DESIGN_STUDIO": {
+     "percent": 20
+    },
+    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 7
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/education_e_education.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_EDUCATION",
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

@@ -1,0 +1,71 @@
+{
+ "type": "CIVIC_PROTOCOL",
+ "description": "TXT_KEY_CIVIC_PROTOCOL",
+ "civilopedia": "TXT_KEY_CIVIC_PROTOCOL_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_PROTOCOL_STRATEGY",
+ "espionage": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1,
+   "taxRate": {
+    "percent": 10
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": 5
+   },
+   "homeArea": {
+    "percent": 5
+   },
+   "otherArea": {
+    "percent": 7
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 35
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -2
+   },
+   "national": {
+    "flat": -3
+   },
+   "distanceModifier": {
+    "percent": -10
+   },
+   "democracyLevel": {
+    "flat": 20
+   }
+  }
+ },
+ "grants": {
+  "revolution": 10
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/power_protocol.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_POWER",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

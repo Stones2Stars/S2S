@@ -66,22 +66,20 @@ UNBOUNDED_MAX = 100000   # PropertyBuilding iMaxValue sentinel = "no upper bound
 
 
 def _modifiers(rec, prop):
-    """The property's BASIC modifiers (PropertySource) deposited into its OWN channel family, by scope.
-    PropertyPropagator (DIFFUSE) is the leaking mechanic -> DROPPED (#429)."""
+    """The property's BASIC modifiers (PropertySource) deposited into its OWN channel family, by scope, via the
+    shared v3 converter (engine.property_source_v3 — the standard, so Property/Civic/… are uniform). DECAY->percent,
+    CONSTANT/ATTRIBUTE_CONSTANT->flat (+ `per` when attribute-scaled). PropertyPropagator (DIFFUSE) -> DROPPED (#429)."""
     fam = OrderedDict()
     pm = rec.find("PropertyManipulators")
     if pm is None:
         return fam
     for src in pm.findall("PropertySource"):
-        st = engine.text(src.find("PropertySourceType"))
-        scope = SCOPE.get(engine.text(src.find("GameObjectType")), "city")
-        pct = engine.text(src.find("iPercent"))
-        amt = engine.text(src.find("iAmount") if src.find("iAmount") is not None else src.find("iAmountPerTurn"))
-        unit = SOURCE_UNIT.get(st, "percent" if engine.is_int(pct) else "flat")
-        val = int(pct) if engine.is_int(pct) else (int(amt) if engine.is_int(amt) else None)
-        if val is None or val == 0:
+        conv = engine.property_source_v3(src)
+        if conv is None:
             continue
-        fam.setdefault(scope, OrderedDict())[unit] = val
+        p, scope, unit, value = conv
+        if p == prop:                                          # the property's OWN sources (self-deposit)
+            fam.setdefault(scope, OrderedDict())[unit] = value
     return {prop: fam} if fam else {}
 
 

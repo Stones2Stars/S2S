@@ -1,0 +1,68 @@
+{
+ "type": "CIVIC_TELEPATHIC",
+ "description": "TXT_KEY_CIVIC_TELEPATHIC",
+ "civilopedia": "TXT_KEY_CIVIC_TELEPATHIC_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_TELEPATHIC_STRATEGY",
+ "gold": {
+  "empire": {
+   "percent": 15
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 15
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 15
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "civics": {
+    "CIVIC_NONVERBAL": {
+     "flat": -3
+    },
+    "CIVIC_NATIVE_LANGUAGE": {
+     "flat": -2
+    },
+    "CIVIC_TRADE_LANGUAGE": {
+     "flat": -1
+    },
+    "CIVIC_CODIFIED": {
+     "flat": 1
+    },
+    "CIVIC_WORLD_LANGUAGE": {
+     "flat": 2
+    },
+    "CIVIC_UNIVERSAL_TRANSLATOR": {
+     "flat": 3
+    },
+    "CIVIC_TELEPATHIC": {
+     "flat": 4
+    },
+    "CIVIC_XENOSEMIOTIC": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/language_telepathy.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_LANGUAGE",
+  "upkeepLevel": "UPKEEP_EXTREME"
+ }
+}

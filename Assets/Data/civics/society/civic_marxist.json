@@ -1,0 +1,175 @@
+{
+ "type": "CIVIC_MARXIST",
+ "description": "TXT_KEY_CIVIC_MARXIST",
+ "civilopedia": "TXT_KEY_CIVIC_MARXIST_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_MARXIST_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_EYE_IN_THE_SKY",
+   "BUILDING_GREAT_FIREWALL",
+   "BUILDING_PALACE_OF_THE_SOVIETS",
+   "BUILDING_SAFETY_GREAT_FIREWALL",
+   "BUILDING_SOCIAL_JUSTICE_ORGANIZATION"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": -2,
+   "tradeRoute": {
+    "percent": 1
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 2,
+   "tradeRoute": {
+    "percent": 1
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": -2,
+   "tradeRoute": {
+    "percent": 2
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": -3,
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "capital": {
+    "percent": 1
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 3,
+   "capital": {
+    "percent": 4
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "largestCity": {
+    "flat": -1
+   },
+   "buildings": {
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
+     "flat": -5
+    },
+    "BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE": {
+     "flat": -5
+    },
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "buildings": {
+    "BUILDING_FOUNDRY": {
+     "flat": -1
+    },
+    "BUILDING_METALS_MEGACOMPLEX": {
+     "flat": -1
+    },
+    "BUILDING_FACTORY": {
+     "flat": -1
+    },
+    "BUILDING_INDUSTRIAL_PARK": {
+     "flat": -1
+    },
+    "BUILDING_MANUFACTURING_PLANT": {
+     "flat": -1
+    },
+    "BUILDING_WILLOW_RUN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "freeSpecialists": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "empire": {
+   "captureProbability": {
+    "percent": -5
+   },
+   "captureResistance": {
+    "percent": -10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 20
+   },
+   "numCities": {
+    "percent": 20
+   },
+   "homeArea": {
+    "percent": 5
+   },
+   "otherArea": {
+    "percent": 5
+   },
+   "corporation": {
+    "percent": 5
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "flat": 5,
+    "perPopulation": 15
+   },
+   "freeCivilian": {
+    "perPopulation": 21
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -1
+   }
+  }
+ },
+ "policies": {
+  "noCorporations": true
+ },
+ "grants": {
+  "revolution": -25
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/society_marxist.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_SOCIETY",
+  "anarchyLength": 2,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

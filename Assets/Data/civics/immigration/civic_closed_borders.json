@@ -1,0 +1,65 @@
+{
+ "type": "CIVIC_CLOSED_BORDERS",
+ "description": "TXT_KEY_CIVIC_CLOSED_BORDERS",
+ "civilopedia": "TXT_KEY_CIVIC_CLOSED_BORDERS_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_CLOSED_BORDERS_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_BERLIN_WALL",
+   "BUILDING_CRIME_ILLEGAL_IMMIGRATION"
+  ]
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 5
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -1
+   },
+   "national": {
+    "flat": -1
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "policies": {
+  "fixedBorders": true,
+  "noForeignCorporations": true
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/immigration_closed_borders.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_IMMIGRATION",
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

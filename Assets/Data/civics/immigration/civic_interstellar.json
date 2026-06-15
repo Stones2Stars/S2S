@@ -1,0 +1,92 @@
+{
+ "type": "CIVIC_INTERSTELLAR",
+ "description": "TXT_KEY_CIVIC_INTERSTELLAR",
+ "civilopedia": "TXT_KEY_CIVIC_INTERSTELLAR_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_INTERSTELLAR_STRATEGY",
+ "food": {
+  "empire": {
+   "tradeRoute": {
+    "percent": 5
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "tradeRoute": {
+    "percent": 5
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 5,
+   "tradeRoute": {
+    "percent": 10
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": -20
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 20
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": 1
+   },
+   "national": {
+    "flat": 1
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/immigration_interstellar.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_IMMIGRATION",
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

@@ -1,0 +1,159 @@
+{
+ "type": "CIVIC_BANDITRY",
+ "description": "TXT_KEY_CIVIC_BANDITRY",
+ "civilopedia": "TXT_KEY_CIVIC_BANDITRY_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_BANDITRY_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CIVIC_BANDITRY",
+   "BUILDING_SMUGGLERS_SHANTY"
+  ]
+ },
+ "production": {
+  "empire": {
+   "military": {
+    "percent": 5
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "capital": {
+    "percent": 3
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": -1,
+   "capital": {
+    "percent": -1
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": -1,
+   "capital": {
+    "percent": -2
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "capital": {
+    "percent": 3
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "experience": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": 5
+   }
+  }
+ },
+ "combat": {
+  "empire": {
+   "captureResistance": {
+    "percent": -20
+   }
+  }
+ },
+ "unitProduction": {
+  "empire": {
+   "units": {
+    "UNIT_THIEF": {
+     "percent": 10
+    },
+    "UNIT_ROGUE": {
+     "percent": 10
+    },
+    "UNIT_AMBUSHER": {
+     "percent": 10
+    },
+    "UNIT_ASSASSIN": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 10
+   },
+   "numCities": {
+    "percent": 10
+   },
+   "homeArea": {
+    "percent": 1
+   },
+   "otherArea": {
+    "percent": 1
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "flat": 5,
+    "perPopulation": 15
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitudeShare": {
+    "flat": 1
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_ESPIONAGE": 5
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/military_banditry.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_MILITARY",
+  "upkeepLevel": "UPKEEP_LOW"
+ }
+}

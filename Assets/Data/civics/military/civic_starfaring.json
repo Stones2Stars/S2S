@@ -1,0 +1,103 @@
+{
+ "type": "CIVIC_STARFARING",
+ "description": "TXT_KEY_CIVIC_STARFARING",
+ "civilopedia": "TXT_KEY_CIVIC_STARFARING_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_STARFARING_STRATEGY",
+ "gold": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "experience": {
+  "empire": {
+   "flat": 10
+  }
+ },
+ "combat": {
+  "empire": {
+   "captureProbability": {
+    "percent": -50
+   },
+   "captureResistance": {
+    "percent": 25
+   }
+  }
+ },
+ "unitProduction": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_ORBITAL_AIRCRAFT": {
+     "percent": 20
+    },
+    "UNITCOMBAT_EARLY_SPACESHIP": {
+     "percent": 20
+    },
+    "UNITCOMBAT_SOLAR_SAIL_SPACESHIP": {
+     "percent": 20
+    },
+    "UNITCOMBAT_NUCLEAR_SPACESHIP": {
+     "percent": 20
+    },
+    "UNITCOMBAT_ANTIMATTER_SPACESHIP": {
+     "percent": 20
+    },
+    "UNITCOMBAT_WORMHOLE_SPACESHIP": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -20
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -2
+   },
+   "national": {
+    "flat": -2
+   }
+  }
+ },
+ "grants": {
+  "revolution": -12
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/military_omniimperialism.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_MILITARY",
+  "anarchyLength": 2,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

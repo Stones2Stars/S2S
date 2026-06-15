@@ -1,0 +1,147 @@
+{
+ "type": "CIVIC_CHURCH",
+ "description": "TXT_KEY_CIVIC_CHURCH",
+ "civilopedia": "TXT_KEY_CIVIC_CHURCH_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_CHURCH_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_FOUNDLING_HOSPITAL"
+  ]
+ },
+ "research": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1,
+   "buildings": {
+    "BUILDING_JEWISH_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_CHRISTIAN_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_ISLAMIC_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_HINDU_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_BUDDHIST_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_CONFUCIAN_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_TAOIST_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_HELLENIC_GYMNASIA": {
+     "flat": 1
+    },
+    "BUILDING_ZOROASTRIAN_SHRINE": {
+     "flat": 1
+    },
+    "BUILDING_TEMPLE_OF_CHONS": {
+     "flat": 1
+    },
+    "BUILDING_CALMACEC": {
+     "flat": 1
+    },
+    "BUILDING_SHAOLIN_TEMPLE": {
+     "flat": 2
+    },
+    "BUILDING_PATTAKY_OF_OLOFIN": {
+     "flat": 1
+    },
+    "BUILDING_HOUNFOR": {
+     "flat": -1
+    },
+    "BUILDING_SHAMANS_YURTA": {
+     "flat": 1
+    },
+    "BUILDING_SIKH_GURDWARA": {
+     "flat": 1
+    },
+    "BUILDING_SHINTO_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_INVOCATION_HUT": {
+     "flat": 1
+    },
+    "BUILDING_SCIENTOLOGY_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_IDOL": {
+     "flat": -1
+    },
+    "BUILDING_NGAI_BLESS": {
+     "flat": 1
+    },
+    "BUILDING_LDS_MISSIONARY_TRAINING_CENTRE": {
+     "flat": 1
+    },
+    "BUILDING_TEMPLE_OF_AN": {
+     "flat": 1
+    },
+    "BUILDING_JAIN_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_NATURE_CIRCLE_OF_POWER": {
+     "flat": -1
+    },
+    "BUILDING_CAO_DAI_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_CANAANITE_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_BAHAI_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_ASATRU_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_ANDEAN_MONASTERY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "greatPeopleRate": {
+    "percent": 20
+   },
+   "buildingProduction": {
+    "percent": 10
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "goodReligionMod": {
+    "percent": 0.3
+   }
+  }
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/welfare_church.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_WELFARE",
+  "upkeepLevel": "UPKEEP_LOW"
+ }
+}

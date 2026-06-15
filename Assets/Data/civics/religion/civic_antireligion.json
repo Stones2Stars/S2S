@@ -1,0 +1,113 @@
+{
+ "type": "CIVIC_ANTIRELIGION",
+ "description": "TXT_KEY_CIVIC_ANTIRELIGION",
+ "civilopedia": "TXT_KEY_CIVIC_ANTIRELIGION_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_ANTIRELIGION_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHURCH_OF_THE_STATE"
+  ]
+ },
+ "research": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": -2,
+   "capital": {
+    "percent": -2
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "nonStateReligion": {
+    "flat": -1
+   },
+   "buildings": {
+    "BUILDING_EINSTEINS_LABORATORY": {
+     "flat": 1
+    },
+    "BUILDING_UNIVERSITY_OF_SANKORE": {
+     "flat": -2
+    }
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "combat": {
+  "empire": {
+   "captureProbability": {
+    "percent": -10
+   },
+   "captureResistance": {
+    "percent": -10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "homeArea": {
+    "percent": 5
+   },
+   "otherArea": {
+    "percent": 5
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -5
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "greatPeopleRate": {
+    "percent": -20
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -2
+   },
+   "national": {
+    "flat": -2
+   },
+   "religiousFreedom": {
+    "flat": -10
+   }
+  }
+ },
+ "policies": {
+  "allowInquisitions": true,
+  "noNonStateReligionSpread": true
+ },
+ "grants": {
+  "revolution": -10
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/religion_atheist.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_RELIGION",
+  "anarchyLength": 2,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

@@ -1,0 +1,126 @@
+{
+ "type": "CIVIC_FOLKLORE",
+ "description": "TXT_KEY_CIVIC_FOLKLORE",
+ "civilopedia": "TXT_KEY_CIVIC_FOLKLORE_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_FOLKLORE_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_KIVA",
+   "BUILDING_SHRINE",
+   "BUILDING_WHALE_SHRINE"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 1,
+   "buildings": {
+    "BUILDING_MONUMENT": {
+     "percent": 20
+    },
+    "BUILDING_OBELISK": {
+     "percent": 20
+    },
+    "BUILDING_TOTEM_POLE": {
+     "percent": 20
+    },
+    "BUILDING_STELE": {
+     "percent": 20
+    },
+    "BUILDING_MONUMENT_OF_THE_DICTATOR": {
+     "percent": 20
+    },
+    "BUILDING_ROYAL_MONUMENT": {
+     "percent": 20
+    },
+    "BUILDING_FUNERARY_SERVICES": {
+     "percent": 20
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_MOAI": {
+     "flat": 1
+    }
+   },
+   "landmark": {
+    "flat": 1
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": -1
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": 1
+   },
+   "buildings": {
+    "BUILDING_HIERACOSPHINX_BREEDER": {
+     "percent": 200
+    },
+    "BUILDING_JACKALOPE_BREEDER": {
+     "percent": 200
+    },
+    "BUILDING_PEGASUS_BREEDER": {
+     "percent": 200
+    },
+    "BUILDING_PHOENIX_BREEDER": {
+     "percent": 200
+    },
+    "BUILDING_QILIN_BREEDER": {
+     "percent": 200
+    },
+    "BUILDING_QUETZALCOATL_BREEDER": {
+     "percent": 200
+    },
+    "BUILDING_RAINBOW_SERPENT_BREEDER": {
+     "percent": 200
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_SAGE": {
+     "flat": 1
+    },
+    "BUILDING_ALTERNATIVE_MEDICINE": {
+     "flat": 1
+    },
+    "BUILDING_HEALTHCARE_MEGACOMPLEX": {
+     "flat": 1
+    }
+   },
+   "landmark": {
+    "flat": 1
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/religion_folklore.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_RELIGION"
+ }
+}

@@ -1,0 +1,124 @@
+{
+ "type": "CIVIC_COMMUNALISM",
+ "description": "TXT_KEY_CIVIC_COMMUNALISM",
+ "civilopedia": "TXT_KEY_CIVIC_COMMUNALISM_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_COMMUNALISM_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_WET_NURSE"
+  ]
+ },
+ "food": {
+  "empire": {
+   "tradeRoute": {
+    "percent": 2
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_COTTAGE": {
+     "flat": -1
+    },
+    "IMPROVEMENT_HAMLET": {
+     "flat": -1
+    },
+    "IMPROVEMENT_VILLAGE": {
+     "flat": -1
+    },
+    "IMPROVEMENT_TOWN": {
+     "flat": -1
+    },
+    "IMPROVEMENT_SUBMERGED_TOWN": {
+     "flat": -1
+    },
+    "IMPROVEMENT_SUBURBS": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": -5,
+   "capital": {
+    "percent": -5
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": 1
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": -5,
+   "capital": {
+    "percent": -5
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": 10
+   },
+   "otherArea": {
+    "percent": 1
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "policies": {
+  "noCorporations": true,
+  "noForeignTrade": true
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/economy_communalism.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_ECONOMY"
+ }
+}

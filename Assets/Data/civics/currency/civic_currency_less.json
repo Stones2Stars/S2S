@@ -1,0 +1,89 @@
+{
+ "type": "CIVIC_CURRENCY_LESS",
+ "description": "TXT_KEY_CIVIC_CURRENCY_LESS",
+ "civilopedia": "TXT_KEY_CIVIC_CURRENCY_LESS_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_CURRENCY_LESS_STRATEGY",
+ "production": {
+  "empire": {
+   "military": {
+    "percent": -10
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": -2,
+   "capital": {
+    "percent": -5
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": -2,
+   "capital": {
+    "percent": -5
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": -2,
+   "capital": {
+    "percent": -1
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": -5,
+   "capital": {
+    "percent": -5
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/currency_no_currency.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_CURRENCY"
+ }
+}

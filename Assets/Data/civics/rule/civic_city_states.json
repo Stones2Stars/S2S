@@ -1,0 +1,136 @@
+{
+ "type": "CIVIC_CITY_STATES",
+ "description": "TXT_KEY_CIVIC_CITY_STATES",
+ "civilopedia": "TXT_KEY_CIVIC_CITY_STATES_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_CITY_STATES_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_SEASTEAD"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 1,
+   "tradeRoute": {
+    "percent": 2
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "military": {
+    "percent": 5
+   },
+   "percent": 1,
+   "tradeRoute": {
+    "percent": 2
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 1,
+   "tradeRoute": {
+    "percent": 2
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 2,
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 2,
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_WALLS": {
+     "flat": 1
+    },
+    "BUILDING_HIGH_WALLS": {
+     "flat": 1
+    },
+    "BUILDING_BARRICADES": {
+     "flat": 1
+    },
+    "BUILDING_CEMENT_BARRIER": {
+     "flat": 1
+    },
+    "BUILDING_METAMATERIAL_WALLS": {
+     "flat": 1
+    },
+    "BUILDING_SUPERSTRONG_ALLOY_WALLS": {
+     "flat": 1
+    },
+    "BUILDING_MEGASTRONG_ALLOY_WALLS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 10
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "flat": 5,
+    "perPopulation": 15
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "unitProduction": {
+    "percent": 5
+   },
+   "buildingProduction": {
+    "percent": 5
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "distanceMod": {
+    "flat": 30
+   }
+  }
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/rule_city_states.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_RULE",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_LOW"
+ }
+}

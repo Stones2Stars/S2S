@@ -1,0 +1,139 @@
+{
+ "type": "CIVIC_BIOLOGICAL_CASTES",
+ "description": "TXT_KEY_CIVIC_BIOLOGICAL_CASTES",
+ "civilopedia": "TXT_KEY_CIVIC_BIOLOGICAL_CASTES_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_BIOLOGICAL_CASTES_STRATEGY",
+ "food": {
+  "empire": {
+   "percent": 5,
+   "improvements": {
+    "IMPROVEMENT_FARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FISHING_BOATS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 5,
+   "improvements": {
+    "IMPROVEMENT_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SHAFT_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_MODERN_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_CORE_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_QUARRY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_LUMBERMILL": {
+     "flat": 1
+    },
+    "IMPROVEMENT_TREEFARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HYBRID_FOREST": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 3,
+   "specialist": {
+    "perSpecialist": 1
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": -50
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "happiness": {
+  "empire": {
+   "largestCity": {
+    "flat": -1
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -50
+  }
+ },
+ "combat": {
+  "empire": {
+   "captureProbability": {
+    "percent": 10
+   },
+   "captureResistance": {
+    "percent": 20
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 10
+   },
+   "numCities": {
+    "percent": 10
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": 2
+   },
+   "laborFreedom": {
+    "flat": -3
+   }
+  }
+ },
+ "grants": {
+  "revolution": 10
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/society_biocaste.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_SOCIETY",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

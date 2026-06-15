@@ -1,0 +1,257 @@
+{
+ "type": "CIVIC_FEUDAL",
+ "description": "TXT_KEY_CIVIC_FEUDAL",
+ "civilopedia": "TXT_KEY_CIVIC_FEUDAL_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_FEUDAL_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHANCELLORS_OFFICE",
+   "BUILDING_CIVIC_FEUDAL",
+   "BUILDING_COURT_CHAPLAINS_OFFICE",
+   "BUILDING_FIELD_OF_THE_CLOTH_OF_GOLD",
+   "BUILDING_GRAND_ESTATE",
+   "BUILDING_HIGHWAYMANS_HIDEOUT",
+   "BUILDING_KINGS_COUNCIL",
+   "BUILDING_KINGS_TOURNAMENT",
+   "BUILDING_MARSHALS_OFFICE",
+   "BUILDING_PIRATES_COVE",
+   "BUILDING_ROYAL_TOMB",
+   "BUILDING_SMUGGLERS_SHANTY",
+   "BUILDING_SPYMASTERS_OFFICE",
+   "BUILDING_STEWARDS_OFFICE"
+  ],
+  "units": [
+   "UNIT_ASSAULT_SHIP",
+   "UNIT_BARBARY_CORSAIR",
+   "UNIT_DRAGON_SHIP_PIRATE",
+   "UNIT_LIBURNA",
+   "UNIT_MALACCAN_PIRATE",
+   "UNIT_MASTER_SAILOR_UBOAT",
+   "UNIT_PRIVATEER",
+   "UNIT_RAZZIA_PIRATES",
+   "UNIT_SAMBUK",
+   "UNIT_TAHITIAN_RIDERS",
+   "UNIT_TORPEDO_BOAT",
+   "UNIT_UBOAT",
+   "UNIT_UNMANNED_PIRATE_SKIFF"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 3,
+   "capital": {
+    "percent": 4
+   },
+   "improvements": {
+    "IMPROVEMENT_FARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 3,
+   "capital": {
+    "percent": 3
+   },
+   "buildings": {
+    "BUILDING_WALLS": {
+     "percent": 20
+    },
+    "BUILDING_HIGH_WALLS": {
+     "percent": 20
+    },
+    "BUILDING_BARRICADES": {
+     "percent": 20
+    },
+    "BUILDING_CEMENT_BARRIER": {
+     "percent": 20
+    },
+    "BUILDING_METAMATERIAL_WALLS": {
+     "percent": 20
+    },
+    "BUILDING_SUPERSTRONG_ALLOY_WALLS": {
+     "percent": 20
+    },
+    "BUILDING_MEGASTRONG_ALLOY_WALLS": {
+     "percent": 20
+    },
+    "BUILDING_CASTLE": {
+     "percent": 20
+    },
+    "BUILDING_STAR_FORT": {
+     "percent": 20
+    },
+    "BUILDING_IMPERIAL_FORTRESS": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": 5
+   },
+   "improvements": {
+    "IMPROVEMENT_FARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 2,
+   "capital": {
+    "percent": 4
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 2,
+   "capital": {
+    "percent": -2
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 2,
+   "capital": {
+    "percent": -1
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 2,
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE": {
+     "flat": -1
+    },
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "experience": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "combat": {
+  "empire": {
+   "captureProbability": {
+    "percent": -5
+   },
+   "captureResistance": {
+    "percent": -5
+   },
+   "cityDefense": {
+    "percent": 20
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 10
+   },
+   "numCities": {
+    "percent": 10
+   },
+   "homeArea": {
+    "percent": 3
+   },
+   "otherArea": {
+    "percent": 4
+   },
+   "corporation": {
+    "percent": 4
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "perPopulation": 15
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 5
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "unitProduction": {
+    "percent": 5
+   },
+   "buildingProduction": {
+    "percent": 5
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": 2
+   },
+   "laborFreedom": {
+    "flat": -3
+   }
+  }
+ },
+ "grants": {
+  "revolution": 10
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/society_feudal.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_SOCIETY",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

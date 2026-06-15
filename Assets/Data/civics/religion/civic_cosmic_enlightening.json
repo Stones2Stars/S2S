@@ -1,0 +1,121 @@
+{
+ "type": "CIVIC_COSMIC_ENLIGHTENING",
+ "description": "TXT_KEY_CIVIC_COSMIC_ENLIGHTENING",
+ "civilopedia": "TXT_KEY_CIVIC_COSMIC_ENLIGHTENING_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_COSMIC_ENLIGHTENING_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_MARTIAN_MONUMENT",
+   "BUILDING_MONOLITH"
+  ],
+  "specialists": [
+   "SPECIALIST_PRIEST"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "capital": {
+    "percent": 10
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "happiness": {
+  "empire": {
+   "nonStateReligion": {
+    "flat": -1
+   }
+  }
+ },
+ "combat": {
+  "empire": {
+   "captureProbability": {
+    "percent": 20
+   },
+   "captureResistance": {
+    "percent": 10
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "flat": 5
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -10
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "happiness": {
+    "flat": 2
+   },
+   "unitProduction": {
+    "percent": 10
+   },
+   "buildingProduction": {
+    "percent": 10
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": 2
+   },
+   "national": {
+    "flat": -1
+   },
+   "holyCityGood": {
+    "flat": 3
+   },
+   "holyCityBad": {
+    "flat": 1
+   },
+   "badReligionMod": {
+    "percent": 0.5
+   },
+   "goodReligionMod": {
+    "percent": 0.7
+   },
+   "violentMod": {
+    "percent": 0.3
+   },
+   "religiousFreedom": {
+    "flat": -3
+   }
+  }
+ },
+ "policies": {
+  "allowInquisitions": true,
+  "noCapitalUnhappiness": true,
+  "noNonStateReligionSpread": true,
+  "stateReligion": true
+ },
+ "grants": {
+  "revolution": 25
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/religion_cosmic.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_RELIGION",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

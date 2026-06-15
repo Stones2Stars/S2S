@@ -1,0 +1,173 @@
+{
+ "type": "CIVIC_RELIGIOUS",
+ "description": "TXT_KEY_CIVIC_RELIGIOUS",
+ "civilopedia": "TXT_KEY_CIVIC_RELIGIOUS_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_RELIGIOUS_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUGUR",
+   "BUILDING_CHURCH_SCHOOL",
+   "BUILDING_SCRIPTORIUM",
+   "BUILDING_SEMINARY"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 4
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 4,
+   "buildings": {
+    "BUILDING_JEWISH_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_CHRISTIAN_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_ISLAMIC_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_HINDU_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_BUDDHIST_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_CONFUCIAN_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_TAOIST_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_HELLENIC_GYMNASIA": {
+     "percent": 20
+    },
+    "BUILDING_ZOROASTRIAN_SHRINE": {
+     "percent": 20
+    },
+    "BUILDING_TEMPLE_OF_CHONS": {
+     "percent": 20
+    },
+    "BUILDING_CALMACEC": {
+     "percent": 20
+    },
+    "BUILDING_HOUNFOR": {
+     "percent": 20
+    },
+    "BUILDING_SHINTO_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_INVOCATION_HUT": {
+     "percent": 20
+    },
+    "BUILDING_SCIENTOLOGY_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_NATURE_CIRCLE_OF_POWER": {
+     "percent": 20
+    },
+    "BUILDING_CAO_DAI_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_CANAANITE_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_BAHAI_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_ASATRU_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_ANDEAN_MONASTERY": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "gold": {
+  "empire": {
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 5,
+   "capital": {
+    "percent": 7
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 5,
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "capital": {
+    "percent": 3
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 5
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "greatPeopleRate": {
+    "percent": 5
+   },
+   "happiness": {
+    "flat": 1
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "holyCityGood": {
+    "flat": 1
+   },
+   "holyCityBad": {
+    "flat": 1
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/education_religious.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_EDUCATION",
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

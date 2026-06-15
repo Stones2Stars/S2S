@@ -1,0 +1,117 @@
+{
+ "type": "CIVIC_SINGLE_PARTY",
+ "description": "TXT_KEY_CIVIC_SINGLE_PARTY",
+ "civilopedia": "TXT_KEY_CIVIC_SINGLE_PARTY_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_SINGLE_PARTY_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_EYE_IN_THE_SKY",
+   "BUILDING_GREAT_FIREWALL",
+   "BUILDING_SAFETY_GREAT_FIREWALL"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": -2
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "combat": {
+  "empire": {
+   "captureResistance": {
+    "percent": -5
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 15
+   },
+   "numCities": {
+    "percent": 10
+   },
+   "homeArea": {
+    "percent": 6
+   },
+   "otherArea": {
+    "percent": 7
+   },
+   "corporation": {
+    "percent": 7
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "perPopulation": 30
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -10
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": -1
+   },
+   "violentMod": {
+    "percent": -0.3
+   },
+   "democracyLevel": {
+    "flat": -25
+   }
+  }
+ },
+ "grants": {
+  "revolution": 10
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/power_single_party.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_POWER",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

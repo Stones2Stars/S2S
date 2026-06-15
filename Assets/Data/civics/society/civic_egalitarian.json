@@ -1,0 +1,233 @@
+{
+ "type": "CIVIC_EGALITARIAN",
+ "description": "TXT_KEY_CIVIC_EGALITARIAN",
+ "civilopedia": "TXT_KEY_CIVIC_EGALITARIAN_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_EGALITARIAN_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CIVIC_EGALITARIAN",
+   "BUILDING_STATUE_OF_LIBERTY"
+  ],
+  "specialists": [
+   "SPECIALIST_ARTIST"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "production": {
+  "empire": {
+   "military": {
+    "percent": -5
+   },
+   "percent": 3
+  }
+ },
+ "commerce": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_COTTAGE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HAMLET": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VILLAGE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_TOWN": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SUBURBS": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WILDLIFE_SANCTUARY": {
+     "flat": 2
+    },
+    "IMPROVEMENT_SUBMERGED_TOWN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 5,
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": -2,
+   "capital": {
+    "percent": -2
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "civicAnger": {
+    "percent": -25
+   },
+   "nonStateReligion": {
+    "flat": 1
+   },
+   "buildings": {
+    "BUILDING_SLAVE_MARKET": {
+     "flat": -5
+    },
+    "BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE": {
+     "flat": -2
+    },
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION": {
+     "flat": 1
+    },
+    "BUILDING_LABOR_UNION": {
+     "flat": 1
+    },
+    "BUILDING_BROADCAST_TOWER": {
+     "flat": 1
+    },
+    "BUILDING_COMMUNICATION_TOWER": {
+     "flat": 2
+    },
+    "BUILDING_NETWORK_NODE": {
+     "flat": 3
+    },
+    "BUILDING_BARRACKS": {
+     "flat": -1
+    },
+    "BUILDING_GARRISON": {
+     "flat": -1
+    },
+    "BUILDING_MILITARY_BASE": {
+     "flat": -1
+    },
+    "BUILDING_INTELLIGENCE_AGENCY": {
+     "flat": -1
+    },
+    "BUILDING_THE_KREMLIN": {
+     "flat": -1
+    },
+    "BUILDING_COIT_TOWER": {
+     "flat": 2
+    },
+    "BUILDING_WOODSTOCK": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "buildings": {
+    "BUILDING_BURNING_MAN": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "combat": {
+  "empire": {
+   "captureProbability": {
+    "percent": -10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 20
+   },
+   "numCities": {
+    "percent": 20
+   },
+   "homeArea": {
+    "percent": 5
+   },
+   "otherArea": {
+    "percent": 5
+   },
+   "corporation": {
+    "percent": 3
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 20
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "greatPeopleRate": {
+    "percent": -5
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -1
+   },
+   "national": {
+    "flat": -1
+   }
+  }
+ },
+ "policies": {
+  "disallowInquisitions": true
+ },
+ "grants": {
+  "revolution": -50
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/society_egalitarism.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_SOCIETY",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

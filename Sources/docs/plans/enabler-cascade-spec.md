@@ -483,6 +483,13 @@ availability edges). Shapes verified on disk:
   `grants:{buildings:[],civics:[],techs:[],units:[],specialists:[],freePromotions:{PROMOTION_X:[UNITCOMBAT_Y]}}`
   (`freePromotions` keyed by PROMOTION → list of UnitCombats). Sources: Civilization, Trait, Project, Religion,
   SpecialBuilding, Heritage.
+  - **`grants` also carries one-time NUMERIC PULSES, not only entity lists (owner, 2026-06-15: "grants feels like
+    the natural place to put those pulses").** A non-entity one-shot effect fired on an event is a grant too — the
+    first instance is the Civic `iRevIdxSwitchTo` → `grants.revolution` (a signed revolution-index burst applied on
+    *switching to* that civic). This is the same home the **outcomes** system will use for one-time yields (e.g. a
+    merchant's trade-mission granting a one-time gold/yield burst). So `grants` is the general one-shot home:
+    entity provisions (the lists above) AND numeric pulses (`grants.<channel>: value`), both fired by the engine
+    event-hook system (§ modifier-spec §7), never summed/propagated.
 - **`loadPrune`** *(auxiliary)* — load-stable game-option gate (§10). `loadPrune:{onGameOptions:[],notOnGameOptions:[]}`
   (241 files). If false at load, the entity/channel is **not materialized** — never enters `have` or the candidate
   set. Sibling of `obsoletes` (load-time data removal vs live query).

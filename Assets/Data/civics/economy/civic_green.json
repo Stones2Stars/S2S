@@ -1,0 +1,178 @@
+{
+ "type": "CIVIC_GREEN",
+ "description": "TXT_KEY_CIVIC_GREEN",
+ "civilopedia": "TXT_KEY_CIVIC_GREEN_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_GREEN_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CENTRAL_BANK",
+   "BUILDING_CHAMBER_OF_COMMERCE",
+   "BUILDING_ELECTRONIC_WASTE_RECYCLING_DEPOT",
+   "BUILDING_GARDEN_CITY"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 3,
+   "tradeRoute": {
+    "percent": 1
+   },
+   "improvements": {
+    "IMPROVEMENT_TREEFARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FOREST_PRESERVE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_ORCHARD": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HYBRID_FOREST": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "military": {
+    "percent": -5
+   },
+   "improvements": {
+    "IMPROVEMENT_MODERN_WINDMILL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": -2,
+   "improvements": {
+    "IMPROVEMENT_FOREST_PRESERVE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_ORCHARD": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_MODERN_WINDMILL": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SEA_MILL": {
+     "flat": 1
+    },
+    "IMPROVEMENT_TIDAL_HARNESS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "perMilitaryUnit": {
+    "perMilitaryUnit": -1
+   },
+   "buildings": {
+    "BUILDING_BURNING_MAN": {
+     "flat": 2
+    }
+   },
+   "features": {
+    "FEATURE_JUNGLE": {
+     "flat": 1
+    },
+    "FEATURE_FOREST": {
+     "flat": 1
+    }
+   },
+   "landmark": {
+    "flat": 1
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 2,
+   "buildings": {
+    "BUILDING_PUBLIC_TRANSPORTATION": {
+     "flat": 1
+    },
+    "BUILDING_TELEPORT_BOOTH": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 15
+   },
+   "numCities": {
+    "percent": 15
+   },
+   "homeArea": {
+    "percent": 7
+   },
+   "otherArea": {
+    "percent": 7
+   },
+   "corporation": {
+    "percent": 30
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "inflation": {
+    "percent": 5
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 10
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "environmentalProtection": {
+    "flat": 10
+   }
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "grants": {
+  "revolution": -10
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/economy_green.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_ECONOMY",
+  "anarchyLength": 2,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

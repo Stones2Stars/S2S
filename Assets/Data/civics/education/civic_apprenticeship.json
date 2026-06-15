@@ -1,0 +1,72 @@
+{
+ "type": "CIVIC_APPRENTICESHIP",
+ "description": "TXT_KEY_CIVIC_APPRENTICESHIP",
+ "civilopedia": "TXT_KEY_CIVIC_APPRENTICESHIP_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_APPRENTICESHIP_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_APPRENTICE_WORKSHOP"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 4
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 5,
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 3,
+   "capital": {
+    "percent": 3
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
+ "freeSpecialists": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/education_apprenticeship.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_EDUCATION",
+  "upkeepLevel": "UPKEEP_LOW"
+ }
+}

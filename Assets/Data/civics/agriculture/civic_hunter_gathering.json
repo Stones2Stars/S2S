@@ -1,0 +1,70 @@
+{
+ "type": "CIVIC_HUNTER_GATHERING",
+ "description": "TXT_KEY_CIVIC_HUNTER_GATHERING",
+ "civilopedia": "TXT_KEY_CIVIC_HUNTER_GATHERING_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_HUNTER_GATHERING_STRATEGY",
+ "food": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": -3
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": -3
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": 50
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/agriculture_no_agriculture.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_AGRICULTURE"
+ }
+}

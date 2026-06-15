@@ -1,0 +1,114 @@
+{
+ "type": "CIVIC_FREE_CHURCH",
+ "description": "TXT_KEY_CIVIC_FREE_CHURCH",
+ "civilopedia": "TXT_KEY_CIVIC_FREE_CHURCH_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_FREE_CHURCH_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUGUR",
+   "BUILDING_CHURCH_SCHOOL",
+   "BUILDING_REVIVALIST_CHURCH",
+   "BUILDING_SCRIPTORIUM",
+   "BUILDING_SEMINARY",
+   "BUILDING_TELEVANGELIST_STUDIO"
+  ],
+  "specialBuildingsWaived": [
+   "SPECIALBUILDING_MONASTERY"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "percent": 3,
+   "capital": {
+    "percent": 4
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 2,
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 3,
+   "capital": {
+    "percent": 4
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "nonStateReligion": {
+    "flat": 1
+   },
+   "buildings": {
+    "BUILDING_APOSTOLIC_PALACE": {
+     "flat": 3
+    },
+    "BUILDING_SISTINE_CHAPEL": {
+     "flat": 1
+    },
+    "BUILDING_HAGIA_SOPHIA": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -5
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "greatPeopleRate": {
+    "percent": 20
+   },
+   "happiness": {
+    "flat": 1
+   },
+   "buildingProduction": {
+    "percent": 20
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "holyCityGood": {
+    "flat": 2
+   },
+   "holyCityBad": {
+    "flat": 3
+   },
+   "badReligionMod": {
+    "percent": 0.2
+   },
+   "goodReligionMod": {
+    "percent": 0.5
+   },
+   "religiousFreedom": {
+    "flat": 5
+   }
+  }
+ },
+ "policies": {
+  "stateReligion": true
+ },
+ "grants": {
+  "revolution": -10
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/religion_free_religion.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_RELIGION",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_LOW"
+ }
+}

@@ -1,0 +1,174 @@
+{
+ "type": "CIVIC_VASSALAGE",
+ "description": "TXT_KEY_CIVIC_VASSALAGE",
+ "civilopedia": "TXT_KEY_CIVIC_VASSALAGE_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_VASSALAGE_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_GRAND_MANOR",
+   "BUILDING_NONSUCH_PALACE",
+   "BUILDING_PALACE_OF_BEAULIEU"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 5,
+   "capital": {
+    "percent": 5
+   },
+   "tradeRoute": {
+    "percent": 3
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 5,
+   "capital": {
+    "percent": 5
+   },
+   "tradeRoute": {
+    "percent": 3
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 3,
+   "capital": {
+    "percent": 5
+   },
+   "tradeRoute": {
+    "percent": 3
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 3,
+   "capital": {
+    "percent": 4
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": 1
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 3,
+   "capital": {
+    "percent": 3
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1,
+   "civicAnger": {
+    "percent": 20
+   },
+   "nonStateReligion": {
+    "flat": -1
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 10,
+   "domestic": {
+    "percent": 10
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 5
+  }
+ },
+ "combat": {
+  "empire": {
+   "captureProbability": {
+    "percent": 20
+   },
+   "captureResistance": {
+    "percent": 5
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 20
+   },
+   "numCities": {
+    "percent": -5
+   },
+   "homeArea": {
+    "percent": 2
+   },
+   "otherArea": {
+    "percent": 5
+   },
+   "corporation": {
+    "percent": 3
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeCivilian": {
+    "flat": 10,
+    "perPopulation": 45
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 10
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "happiness": {
+    "flat": 1
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": 2
+   },
+   "violentMod": {
+    "percent": 0.1
+   }
+  }
+ },
+ "grants": {
+  "revolution": 35
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/rule_vassalage.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_RULE",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

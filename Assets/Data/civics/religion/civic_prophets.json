@@ -1,0 +1,90 @@
+{
+ "type": "CIVIC_PROPHETS",
+ "description": "TXT_KEY_CIVIC_PROPHETS",
+ "civilopedia": "TXT_KEY_CIVIC_PROPHETS_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_PROPHETS_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUGUR",
+   "BUILDING_MYSTICS_HUT",
+   "BUILDING_SHRINE"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_THE_ORACLE": {
+     "flat": 2
+    },
+    "BUILDING_STONEHENGE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": 5
+   }
+  }
+ },
+ "unitProduction": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_MISSIONARY": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "greatPeopleRate": {
+    "percent": 10
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "religiousFreedom": {
+    "flat": 3
+   }
+  }
+ },
+ "policies": {
+  "stateReligion": true
+ },
+ "grants": {
+  "revolution": -15,
+  "freeSpecialists": {
+   "SPECIALIST_PRIEST": 2
+  }
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/religion_prophets.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_RELIGION"
+ }
+}

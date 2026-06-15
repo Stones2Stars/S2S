@@ -1,0 +1,53 @@
+{
+ "type": "CIVIC_AGRICULTURAL_GUILDS",
+ "description": "TXT_KEY_CIVIC_AGRICULTURAL_GUILDS",
+ "civilopedia": "TXT_KEY_CIVIC_AGRICULTURAL_GUILDS_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_AGRICULTURAL_GUILDS_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_FARMERS_MARKET"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 2,
+   "tradeRoute": {
+    "percent": 3
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 2,
+   "tradeRoute": {
+    "percent": 2
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 3,
+   "tradeRoute": {
+    "percent": 4
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/agriculture_guilds.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_AGRICULTURE",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

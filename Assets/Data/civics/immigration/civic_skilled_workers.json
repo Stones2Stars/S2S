@@ -1,0 +1,94 @@
+{
+ "type": "CIVIC_SKILLED_WORKERS",
+ "description": "TXT_KEY_CIVIC_SKILLED_WORKERS",
+ "civilopedia": "TXT_KEY_CIVIC_SKILLED_WORKERS_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_SKILLED_WORKERS_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_ILLEGAL_IMMIGRATION"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 5,
+   "tradeRoute": {
+    "percent": 5
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 5,
+   "tradeRoute": {
+    "percent": 5
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 5,
+   "tradeRoute": {
+    "percent": 5
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_DEPARTMENT_OF_FOREIGN_POLICY": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -6
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "policies": {
+  "fixedBorders": true
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/immigration_skilled_workers_only.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_IMMIGRATION",
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

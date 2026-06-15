@@ -1,0 +1,96 @@
+{
+ "type": "CIVIC_SERFDOM",
+ "description": "TXT_KEY_CIVIC_SERFDOM",
+ "civilopedia": "TXT_KEY_CIVIC_SERFDOM_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_SERFDOM_STRATEGY",
+ "food": {
+  "empire": {
+   "percent": 3,
+   "tradeRoute": {
+    "percent": 2
+   },
+   "improvements": {
+    "IMPROVEMENT_FARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 3,
+   "tradeRoute": {
+    "percent": 1
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 2,
+   "tradeRoute": {
+    "percent": 2
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "capital": {
+    "percent": 2
+   },
+   "specialist": {
+    "perSpecialist": 1
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitudeShare": {
+    "flat": 1
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": 1
+   },
+   "laborFreedom": {
+    "flat": 4
+   }
+  }
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/labor_serf.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_WORKFORCE",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

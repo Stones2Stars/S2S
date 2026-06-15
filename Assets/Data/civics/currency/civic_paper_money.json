@@ -1,0 +1,108 @@
+{
+ "type": "CIVIC_PAPER_MONEY",
+ "description": "TXT_KEY_CIVIC_PAPER_MONEY",
+ "civilopedia": "TXT_KEY_CIVIC_PAPER_MONEY_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_PAPER_MONEY_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_MONEY_PRESS"
+  ],
+  "hurries": [
+   "HURRY_GOLD"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 1,
+   "tradeRoute": {
+    "percent": 1
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 4,
+   "tradeRoute": {
+    "percent": 3
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 5,
+   "capital": {
+    "percent": 2
+   },
+   "buildings": {
+    "BUILDING_BANK": {
+     "percent": 5
+    },
+    "BUILDING_CENTRAL_BANK": {
+     "percent": 3
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "capital": {
+    "percent": 1
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "capital": {
+    "percent": 2
+   },
+   "buildings": {
+    "BUILDING_BANK": {
+     "percent": -2
+    },
+    "BUILDING_CENTRAL_BANK": {
+     "percent": -3
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 10
+   },
+   "numCities": {
+    "percent": 10
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "inflation": {
+    "percent": 5
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "foreign": {
+    "percent": -5
+   }
+  }
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/currency_paper_money.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_CURRENCY",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

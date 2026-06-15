@@ -1,0 +1,74 @@
+{
+ "type": "CIVIC_HYPERINTELLIGENT",
+ "description": "TXT_KEY_CIVIC_HYPERINTELLIGENT",
+ "civilopedia": "TXT_KEY_CIVIC_HYPERINTELLIGENT_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_HYPERINTELLIGENT_STRATEGY",
+ "enables": {
+  "specialists": [
+   "SPECIALIST_ENGINEER"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 33
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": -1
+   }
+  }
+ },
+ "policies": {
+  "upgradeAnywhere": true
+ },
+ "grants": {
+  "freeSpecialists": {
+   "SPECIALIST_ANDROID_WORKER": 3
+  }
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/labor_hyperintelligent.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_WORKFORCE",
+  "anarchyLength": 3,
+  "upkeepLevel": "UPKEEP_EXTREME"
+ }
+}

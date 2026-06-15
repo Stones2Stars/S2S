@@ -98,7 +98,9 @@ SCALAR = {
     "fRevIdxDistanceMod":              ("revolution", "empire", "distanceMod",       "flat"),
     "iRevIdxHolyCityGood":             ("revolution", "empire", "holyCityGood","flat"),
     "iRevIdxHolyCityBad":              ("revolution", "empire", "holyCityBad", "flat"),
-    "iRevIdxSwitchTo":                 ("revolution", "empire", "switchTo",    "flat"),
+    # iRevIdxSwitchTo is NOT here — it's a one-time BURST on civic-switch, not a continuous modifier, so it goes
+    # to `grants` (owner 2026-06-15: revolting to a civic raises future revolution chance; grants is the home for
+    # one-time pulses, the same shape the outcomes system will use for one-time yields). Handled in curate().
     "iRevLaborFreedom":                ("revolution", "empire", "laborFreedom","flat"),
     "iRevReligiousFreedom":            ("revolution", "empire", "religiousFreedom", "flat"),
     "iRevEnvironmentalProtection":     ("revolution", "empire", "environmentalProtection", "flat"),
@@ -161,7 +163,6 @@ IDENTITY = {"Upkeep": "upkeepLevel", "CivicOptionType": "civicOption", "iAnarchy
 # inverts onto the bonus (curate_bonus BONUS_BOOSTS); dropped here. Plus prereq + double-author + dead caches.
 DROP = {"TechPrereq", "BonusCommerceModifiers", "SpecialistCommercePercentChanges", "SpecialistYieldPercentChanges",
         "Categories", "isAnyImprovementYieldChange"}
-SOURCE_UNIT = {"CONSTANT": "perTurn", "DECAY": "decay"}
 FAMILY_ORDER = ["food", "production", "commerce", "gold", "research", "culture", "espionage", "yield",
                 "happiness", "health", "growth", "experience", "greatPeopleRate", "greatGeneralRate",
                 "freeSpecialists", "conscript", "combat", "unitProduction", "maintenance", "upkeep",
@@ -233,20 +234,16 @@ def _enable_list(node):
 
 
 def _properties(node, props):
-    for src in node:
-        if src.tag != "PropertySource":
+    """Civic PropertySources -> v3 property deposits via the shared converter (engine.property_source_v3 — the
+    STANDARD, owner 2026-06-15). Uniform with the Property pass: <PROPERTY>.<scope>.<unit> where unit is flat/
+    percent (+ `per` when attribute-scaled). scope from GameObjectType (city/plot), NOT a hardcoded empire;
+    RELATION_ASSOCIATED (the civic's effect on its own cities) is the cascade default, dropped by the converter."""
+    for src in node.findall("PropertySource"):
+        conv = engine.property_source_v3(src)
+        if conv is None:
             continue
-        cp = engine.clean_property_source(src)
-        prop, amount = cp.get("property"), cp.get("amountPerTurn")
-        if not prop or amount in (None, "", {}):
-            continue
-        unit = SOURCE_UNIT.get(cp.get("source", ""), str(cp.get("source", "")).lower())
-        dep = OrderedDict()
-        dep[unit] = amount
-        gate = cp.get("Active")
-        if gate not in (None, "", [], {}):
-            dep["active"] = gate
-        props.setdefault(prop, {}).setdefault("empire", []).append(dep)
+        prop, scope, unit, value = conv
+        props.setdefault(prop, OrderedDict()).setdefault(scope, OrderedDict())[unit] = value
 
 
 def curate(typ, rec, store):
@@ -293,6 +290,10 @@ def curate(typ, rec, store):
             lst = _enable_list(c)
             if lst:
                 enables[ENABLE_LISTS[tag]] = sorted(lst)
+        elif tag == "iRevIdxSwitchTo":
+            v = _num(t)                                    # one-time revolution-index BURST on switching to this
+            if v not in (None, 0, 0.0):                    # civic (signed) -> grants (owner 2026-06-15), not a
+                grants["revolution"] = v                   # continuous revolution modifier
         elif tag == "FreeSpecialistCounts":
             m = _keyed_entries(c, None)
             if m:

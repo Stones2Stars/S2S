@@ -1,0 +1,68 @@
+{
+ "type": "CIVIC_UNIVERSAL_TRANSLATOR",
+ "description": "TXT_KEY_CIVIC_UNIVERSAL_TRANSLATOR",
+ "civilopedia": "TXT_KEY_CIVIC_UNIVERSAL_TRANSLATOR_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_UNIVERSAL_TRANSLATOR_STRATEGY",
+ "gold": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": -3
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "civics": {
+    "CIVIC_NONVERBAL": {
+     "flat": -3
+    },
+    "CIVIC_NATIVE_LANGUAGE": {
+     "flat": -2
+    },
+    "CIVIC_TRADE_LANGUAGE": {
+     "flat": -1
+    },
+    "CIVIC_CODIFIED": {
+     "flat": 1
+    },
+    "CIVIC_WORLD_LANGUAGE": {
+     "flat": 2
+    },
+    "CIVIC_UNIVERSAL_TRANSLATOR": {
+     "flat": 3
+    },
+    "CIVIC_TELEPATHIC": {
+     "flat": 4
+    },
+    "CIVIC_XENOSEMIOTIC": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/language_universal_translator.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_LANGUAGE",
+  "upkeepLevel": "UPKEEP_EXTREME"
+ }
+}

@@ -1,0 +1,83 @@
+{
+ "type": "CIVIC_OBEDIENCE",
+ "description": "TXT_KEY_CIVIC_OBEDIENCE",
+ "civilopedia": "TXT_KEY_CIVIC_OBEDIENCE_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_OBEDIENCE_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_BRANDING_HUT"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "capital": {
+    "percent": -2
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "capital": {
+    "percent": -2
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "capital": {
+    "percent": -2
+   }
+  }
+ },
+ "combat": {
+  "empire": {
+   "captureProbability": {
+    "percent": 10
+   },
+   "captureResistance": {
+    "percent": -10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 10
+   }
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/rule_obedience.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_RULE"
+ }
+}

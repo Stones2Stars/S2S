@@ -1,0 +1,85 @@
+{
+ "type": "CIVIC_INTERPRETERS",
+ "description": "TXT_KEY_CIVIC_INTERPRETERS",
+ "civilopedia": "TXT_KEY_CIVIC_INTERPRETERS_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_INTERPRETERS_STRATEGY",
+ "gold": {
+  "empire": {
+   "percent": 4,
+   "capital": {
+    "percent": 4
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 4,
+   "capital": {
+    "percent": 4
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 4,
+   "capital": {
+    "percent": 4
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 5
+   },
+   "numCities": {
+    "percent": 7
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "civics": {
+    "CIVIC_NONVERBAL": {
+     "flat": -3
+    },
+    "CIVIC_NATIVE_LANGUAGE": {
+     "flat": -2
+    },
+    "CIVIC_TRADE_LANGUAGE": {
+     "flat": -1
+    },
+    "CIVIC_CODIFIED": {
+     "flat": 1
+    },
+    "CIVIC_WORLD_LANGUAGE": {
+     "flat": 2
+    },
+    "CIVIC_UNIVERSAL_TRANSLATOR": {
+     "flat": 3
+    },
+    "CIVIC_TELEPATHIC": {
+     "flat": 4
+    },
+    "CIVIC_XENOSEMIOTIC": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/language_interpreters.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_LANGUAGE",
+  "upkeepLevel": "UPKEEP_LOW"
+ }
+}

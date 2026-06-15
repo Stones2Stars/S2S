@@ -1,0 +1,52 @@
+{
+ "type": "CIVIC_MIND_CONTROL",
+ "description": "TXT_KEY_CIVIC_MIND_CONTROL",
+ "civilopedia": "TXT_KEY_CIVIC_MIND_CONTROL_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_MIND_CONTROL_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CIVIC_MIND_CONTROL",
+   "BUILDING_MIND_CONTROL_CENTER"
+  ]
+ },
+ "happiness": {
+  "empire": {
+   "flat": -5,
+   "buildings": {
+    "BUILDING_FACTORY_SOYLENT_GREEN": {
+     "flat": -5
+    },
+    "BUILDING_MATERIALIZATION_COMPLEX": {
+     "flat": -5
+    }
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "buildings": {
+    "BUILDING_FACTORY_SOYLENT_GREEN": {
+     "flat": -5
+    },
+    "BUILDING_MATERIALIZATION_COMPLEX": {
+     "flat": -4
+    }
+   }
+  }
+ },
+ "combat": {
+  "empire": {
+   "captureResistance": {
+    "percent": 100
+   }
+  }
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/rule_mind_control.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_RULE",
+  "anarchyLength": 3,
+  "upkeepLevel": "UPKEEP_EXTREME"
+ }
+}

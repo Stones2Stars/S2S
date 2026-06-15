@@ -130,6 +130,65 @@ def clean_property_source(src):
     return out
 
 
+# --- v3 property-source converter (#428, the STANDARD, owner 2026-06-15 "make it the new version at once") -------
+# ONE shared converter for <PropertySource> -> a v3 modifier deposit, used by EVERY entity carrying
+# PropertyManipulators (Property/Civic now; Heritage/Building/Unit later) so property deposits are uniform with
+# the modifier vocabulary (modifier-spec §1.3/§4), never a bespoke perTurn/mult shape.
+PROP_SCOPE = {"GAMEOBJECT_CITY": "city", "GAMEOBJECT_PLOT": "plot", "GAMEOBJECT_PLAYER": "empire",
+              "GAMEOBJECT_UNIT": "unit", "GAMEOBJECT_AREA": "area"}
+PROP_SOURCE_UNIT = {"PROPERTYSOURCE_DECAY": "percent",            # % move toward targetLevel
+                    "PROPERTYSOURCE_CONSTANT": "flat",            # flat per-turn add (scalar or Mult-scaled)
+                    "PROPERTYSOURCE_ATTRIBUTE_CONSTANT": "flat"}  # flat per-attribute add
+
+
+def property_source_v3(src):
+    """Convert one <PropertySource> to (property, scope, unit, value) in the v3 modifier vocabulary, or None.
+    value = an int, OR {value, per:{type,scope}} when scaled by a per-count ATTRIBUTE (POPULATION). DECAY->percent
+    (iPercent), CONSTANT/ATTRIBUTE_CONSTANT->flat (iAmountPerTurn; Mult or AttributeType => `per`). scope from
+    GameObjectType. RELATION_ASSOCIATED (a source applying to the player's associated cities) is the cascade
+    default and dropped; any OTHER RelationType raises (none exist today — surface it rather than silently mis-map)."""
+    prop = text(src.find("PropertyType"))
+    if not prop or prop == "NONE":
+        return None
+    rel = text(src.find("RelationType"))
+    if rel and rel not in ("NONE", "RELATION_ASSOCIATED"):
+        raise ValueError("property_source_v3: unhandled RelationType %r on %s" % (rel, prop))
+    stype = text(src.find("PropertySourceType"))
+    unit = PROP_SOURCE_UNIT.get(stype)
+    if unit is None:
+        raise ValueError("property_source_v3: unhandled PropertySourceType %r on %s" % (stype, prop))
+    scope = PROP_SCOPE.get(text(src.find("GameObjectType")), "city")
+    per_type = None
+    if unit == "percent":
+        v = text(src.find("iPercent"))
+        value = int(v) if is_int(v) else None
+    else:
+        amt = src.find("iAmountPerTurn")
+        if amt is None:
+            amt = src.find("iAmount")
+        attr = src.find("AttributeType")
+        if attr is not None:                                   # ATTRIBUTE_CONSTANT: value=amount, per=attribute
+            per_type = text(attr)
+            value = int(text(amt)) if (amt is not None and is_int(text(amt))) else None
+        elif amt is not None and amt.find("Mult") is not None:  # CONSTANT with Mult(attribute, constant)
+            mult = amt.find("Mult")
+            per_type = text(mult.find("AttributeType"))
+            c = text(mult.find("Constant"))
+            value = int(c) if is_int(c) else None
+        else:                                                  # plain scalar per-turn amount
+            value = int(text(amt)) if (amt is not None and is_int(text(amt))) else None
+    if value is None or value == 0:
+        return None
+    if per_type:                                               # ATTRIBUTE_POPULATION -> POPULATION catch-all token
+        # `each` = "per how many of `type`" (the quantum). The property engine computes attribute x amount
+        # (CvPropertySource: getAttribute(eAttr) * iAmountPerTurn) => per EACH 1 of the attribute, so each=1 here;
+        # `value` is the per-quantum magnitude. effect = value * (count(type) / each). (modifier-spec §4)
+        value = OrderedDict([("value", value),
+                             ("per", OrderedDict([("type", per_type.replace("ATTRIBUTE_", "")),
+                                                  ("each", 1), ("scope", scope)]))])
+    return prop, scope, unit, value
+
+
 def named_array(elem, keys):
     """<YieldChanges><iYield>1</iYield>...</> -> {food:1,...} (positional short keys, zeros dropped)."""
     vals = [int(text(c)) for c in elem if is_int(text(c))]

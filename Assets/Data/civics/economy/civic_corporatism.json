@@ -1,0 +1,101 @@
+{
+ "type": "CIVIC_CORPORATISM",
+ "description": "TXT_KEY_CIVIC_CORPORATISM",
+ "civilopedia": "TXT_KEY_CIVIC_CORPORATISM_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_CORPORATISM_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CENTRAL_BANK",
+   "BUILDING_CHAMBER_OF_COMMERCE"
+  ],
+  "hurries": [
+   "HURRY_GOLD"
+  ],
+  "specialBuildingsWaived": [
+   "SPECIALBUILDING_CORPORATION_HQ"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 2,
+   "tradeRoute": {
+    "percent": 2
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 2,
+   "tradeRoute": {
+    "percent": 2
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 3,
+   "tradeRoute": {
+    "percent": 3
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 4
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": 5
+   },
+   "homeArea": {
+    "percent": 4
+   },
+   "otherArea": {
+    "percent": 6
+   },
+   "corporation": {
+    "percent": -75
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "inflation": {
+    "percent": 15
+   }
+  }
+ },
+ "grants": {
+  "revolution": 15
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/economy_corporatist.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_ECONOMY",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

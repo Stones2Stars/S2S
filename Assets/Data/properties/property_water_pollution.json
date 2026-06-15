@@ -11,7 +11,14 @@
  "PROPERTY_WATER_POLLUTION": {
   "city": {
    "percent": 6,
-   "flat": 1
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
+   }
   },
   "plot": {
    "percent": 6

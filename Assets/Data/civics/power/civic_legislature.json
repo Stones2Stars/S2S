@@ -1,0 +1,143 @@
+{
+ "type": "CIVIC_LEGISLATURE",
+ "description": "TXT_KEY_CIVIC_LEGISLATURE",
+ "civilopedia": "TXT_KEY_CIVIC_LEGISLATURE_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_LEGISLATURE_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_HOUSE_OF_PARLIAMENT",
+   "BUILDING_POLIS_COUNCIL"
+  ],
+  "hurries": [
+   "HURRY_GOLD"
+  ]
+ },
+ "food": {
+  "empire": {
+   "tradeRoute": {
+    "percent": 4
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "military": {
+    "percent": 10
+   },
+   "tradeRoute": {
+    "percent": 4
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "tradeRoute": {
+    "percent": 3
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_AGORA": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": 5
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "combat": {
+  "empire": {
+   "captureProbability": {
+    "percent": 5
+   },
+   "captureResistance": {
+    "percent": 5
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 7
+   },
+   "numCities": {
+    "percent": 10
+   },
+   "homeArea": {
+    "percent": 4
+   },
+   "otherArea": {
+    "percent": 4
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "greatPeopleRate": {
+    "percent": 5
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": -2
+   },
+   "democracyLevel": {
+    "flat": 10
+   }
+  }
+ },
+ "policies": {
+  "canDoElection": true
+ },
+ "grants": {
+  "revolution": -20
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/power_legislature.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_POWER",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

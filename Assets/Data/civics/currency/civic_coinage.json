@@ -1,0 +1,141 @@
+{
+ "type": "CIVIC_COINAGE",
+ "description": "TXT_KEY_CIVIC_COINAGE",
+ "civilopedia": "TXT_KEY_CIVIC_COINAGE_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_COINAGE_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_NATIONAL_MINT"
+  ],
+  "hurries": [
+   "HURRY_GOLD"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": 2
+   },
+   "tradeRoute": {
+    "percent": 1
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": 2
+   },
+   "tradeRoute": {
+    "percent": 1
+   },
+   "buildings": {
+    "BUILDING_BAZAAR": {
+     "percent": 10
+    },
+    "BUILDING_MALL": {
+     "percent": 15
+    },
+    "BUILDING_MARKET": {
+     "percent": 10
+    },
+    "BUILDING_GROCER": {
+     "percent": 15
+    },
+    "BUILDING_SUPERMARKET": {
+     "percent": 20
+    },
+    "BUILDING_HYPERMARKET": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": 4
+   },
+   "tradeRoute": {
+    "percent": 2
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 2,
+   "capital": {
+    "percent": 3
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "capital": {
+    "percent": 1
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 10
+   },
+   "numCities": {
+    "percent": 5
+   },
+   "homeArea": {
+    "percent": 1
+   },
+   "otherArea": {
+    "percent": 3
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "foreign": {
+    "percent": 5
+   }
+  }
+ },
+ "grants": {
+  "revolution": -5
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/currency_coinage.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_CURRENCY",
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

@@ -1,0 +1,143 @@
+{
+ "type": "CIVIC_UNIVERSAL_EMPIRE",
+ "description": "TXT_KEY_CIVIC_UNIVERSAL_EMPIRE",
+ "civilopedia": "TXT_KEY_CIVIC_UNIVERSAL_EMPIRE_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_UNIVERSAL_EMPIRE_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_TIME_ABYSS"
+  ],
+  "specialists": [
+   "SPECIALIST_SPY"
+  ]
+ },
+ "production": {
+  "empire": {
+   "military": {
+    "percent": 15
+   },
+   "percent": 20
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 25,
+   "specialist": {
+    "perSpecialist": 1
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -3
+  }
+ },
+ "experience": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 5
+  }
+ },
+ "combat": {
+  "empire": {
+   "captureProbability": {
+    "percent": -10
+   },
+   "captureResistance": {
+    "percent": -10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 25
+   },
+   "numCities": {
+    "percent": 25
+   },
+   "homeArea": {
+    "percent": 10
+   },
+   "otherArea": {
+    "percent": 20
+   },
+   "corporation": {
+    "percent": 10
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -50
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": 2
+   },
+   "democracyLevel": {
+    "flat": -30
+   }
+  }
+ },
+ "grants": {
+  "revolution": -200
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/government_intergalactic_empire.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_GOVERNMENT",
+  "anarchyLength": 2,
+  "upkeepLevel": "UPKEEP_EXTREME",
+  "weLoveTheKing": "TXT_KEY_CIVIC_WE_LOVE_DICTATOR"
+ }
+}

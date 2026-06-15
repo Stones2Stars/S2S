@@ -1,0 +1,139 @@
+{
+ "type": "CIVIC_GOLD_STANDARD",
+ "description": "TXT_KEY_CIVIC_GOLD_STANDARD",
+ "civilopedia": "TXT_KEY_CIVIC_GOLD_STANDARD_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_GOLD_STANDARD_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_GOLD_VAULT"
+  ],
+  "hurries": [
+   "HURRY_GOLD"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 3,
+   "capital": {
+    "percent": 2
+   },
+   "tradeRoute": {
+    "percent": 5
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 3,
+   "capital": {
+    "percent": 2
+   },
+   "tradeRoute": {
+    "percent": 5
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 5,
+   "capital": {
+    "percent": 5
+   },
+   "tradeRoute": {
+    "percent": 5
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 7,
+   "capital": {
+    "percent": 3
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 5,
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 2,
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": 3
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1,
+   "civicAnger": {
+    "percent": -1
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "corporation": {
+    "percent": -10
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "inflation": {
+    "percent": -5
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 1,
+   "foreign": {
+    "percent": 10
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": -1
+   }
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "weight": 1
+  }
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/currency_gold_standard.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_CURRENCY",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

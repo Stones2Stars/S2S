@@ -191,14 +191,20 @@ what keeps the construct from becoming a nesting fiesta.
 
 ---
 
-## 4. Count-scaling — `per: { type, scope }`
+## 4. Count-scaling — `per: { type, each, scope }`
 "Increase/decrease in something based on the NUMBER of something else." An OPTIONAL count-scaler on a
 deposit, default ×1 — the same opt-in philosophy as `enabled`.
 ```jsonc
-"food": { "city": { "flat": { "value": 1, "per": { "type": "BONUS_COAL", "scope": "plot" } } } }   // +1 food per coal on the plot
-"gold": { "city": { "flat": { "value": 1, "per": { "type": "RELIGION_*", "scope": "world" } } } }  // +1 gold per WORLD religion
+"food": { "city": { "flat": { "value": 1, "per": { "type": "BONUS_COAL", "each": 1, "scope": "plot" } } } }   // +1 food per coal on the plot
+"happiness": { "city": { "flat": { "value": 1, "per": { "type": "POPULATION", "each": 5, "scope": "city" } } } } // +1 happy per 5 population
 ```
-- **`per: { type, scope }`** multiplies the deposit value by the COUNT of `type` at `scope`.
+- **`per: { type, each, scope }`** scales the deposit value by the COUNT of `type` at `scope`, in quanta of
+  `each`: **effect = `value × (count(type) / each)`**.
+- **`each` — the QUANTUM, "per how many of `type`" (owner 2026-06-15: a bare `per:{type}` "does not say how
+  much per").** `each: 1` = per each one; `each: 5` = per 5 (e.g. +1 happy per 5 population). **State it
+  explicitly** — the block is incomplete without it (a bare `per:{type}` is ambiguous between "per 1" and "per
+  N"). (Property-source attribute scaling is always `each: 1` — the engine computes `attribute × amount`, a
+  per-each-one multiply; `value` = that per-unit amount.)
 - **`scope`** defaults to the deposit's own scope; state it only when the count comes from a *different*
   scope. Cross-city scopes (empire/team/world) resolve via the **tally module** (the same additive roll-up
   the enabler `requires` count-thresholds read — one module, two readers); `city`/`plot` = the local count.

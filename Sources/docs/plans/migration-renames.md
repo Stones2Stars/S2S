@@ -173,3 +173,26 @@ bool→channel renames (`bTechTrading`→`techTrading`, `bIrrigation`→`irrigat
 | `bDisable` | `identity.disable` | ⚑ FLAG: a LIVE unconditional research kill (`canEverResearch` hard-false); only `TECH_DUMMY`. Load-stable disable → arguably `loadPrune`-like, but doesn't fit its `{onGameOptions}` shape; kept faithfully in identity pending an owner home decision. |
 | `bGlobal` | `requires.build.noneOf[].{type:SELF,scope:world}` | The religion-uniqueness research RACE gate (owner 2026-06-15: "requires : world : not : same_tech : researched"; "religions go under this heading"). A `requires` **NEGATIVE**: researchable only while NOT already researched anywhere in the world (`canEverResearch` bars a global tech once `countKnownTechNumTeams>0`, `CvPlayer:8268`). `SELF` = this same tech; `world` scope = any team; `noneOf` = the negative-clause container (≡ enabler-spec §3 `disableIfAny`, the locked memory's `requires.noneOf`). The 29 `bGlobal` techs are EXACTLY the 29 religion-prereq techs — one fix covers the whole religion-founding-once rule. Coexists with the positive `requires.build.all`/`.any` prereqs. |
 | `bRepeat` | `identity.repeat` | Repeatable tech (Future Tech). Faithful flag. |
+
+## Civic  (`curate_civic.py`)  — Tier B #14, "first heavy" (175 records, BESPOKE)
+
+An EMPIRE-wide source: nearly every modifier deposits through `CvPlayer::processCivics` → player accumulators, so
+scope is `empire` (the bespoke curator carries the per-field classification from the classify-civic workflow,
+verified vs `CvCivicInfo.{h,cpp}` + the CvCity/CvPlayer/CvTeam consumers). EXE-link: **0 `DllExport` on
+`CvCivicInfo`** (unconstrained). Every XML tag classified (no leftovers). **No `requires`** (only `TechPrereq`
+gates civics → store inverts to `tech.enables.civics`); civics are never an obsolete/replace target. The bulk
+(yield/commerce split families, maintenance/upkeep cost-style, happiness/health/combat/experience/great-people,
+`enables` = capability lists [`SpecialistValids`/`Hurrys`/`SpecialBuildingNotRequireds`] + store-derived
+`PrereqCivic` buildings/units) is de-Hungarianized field→family.member, not re-logged. Structural / manual:
+
+| old XML | new JSON path | note |
+|---|---|---|
+| `iRevIdxSwitchTo` | `grants.revolution` (bare signed value) | **MOVED from the `revolution` family to `grants`** (owner 2026-06-15: "grants feels like the natural place to put those pulses"). It's a ONE-TIME revolution-index BURST applied on *switching to* the civic (revolting to a civic raises future revolution chance), unlike the other ~13 *continuous* `revolution` fields which stay. Establishes `grants` as the home for non-entity one-time pulses (the same shape the outcomes system will use for one-time yields). Bare value (signed; e.g. `-100` Despotism) to match existing grants (`freeTechs:1`, `freeSpecialists:{…}`). |
+| `PropertyManipulators`/`PropertySource` | `<PROPERTY>.<scope>.<unit>` (v3) | Converted via the shared **`engine.property_source_v3`** (the STANDARD, owner 2026-06-15: "no standard setup yet, make it the new version at once") — NOT the old `perTurn`/`mult` shape. `CONSTANT`→`flat`, `DECAY`→`percent`, attribute-scaled (`ATTRIBUTE_CONSTANT` or `<Mult>`)→`flat:{value,per:{type:POPULATION,scope}}`. scope from `GameObjectType` (`city`/`plot`, **not** the old hardcoded `empire`); `RELATION_ASSOCIATED` (the civic acting on its own cities) is the cascade default, dropped. Uniform with the Property pass. |
+| revolution `iRev*`/`fRev*` (the rest) | `revolution.empire.{member}.{flat\|percent}` | RevolutionDCM — KEPT faithful (logic lives in Python only because the original modder didn't know C++; values feed a Python→C++ port). `f*` are floats, carried verbatim. |
+| state-religion `iStateReligion*` | `stateReligion.empire.{member}.{unit}` | Grouped family, gated on having a state religion (gate carried by the family name — no city/player-state predicate in the enabler vocab yet; civic-OWNED, not inverted onto any ReligionInfo). |
+| policy bools (`bStateReligion`/`bNoForeignTrade`/`bAllowInquisitions`/…) | `policies.{name}` | ~17 player-STATE toggles (not additive numbers, not availability). ⚑ shares the section name with Civilization's `policies` (playable/aiPlayable) — different concept, same keyword. |
+| `BonusCommerceModifiers` | — (DROPPED) | EMPTY on the only civic that has the tag (CIVIC_BANDITRY `<BonusCommerceModifiers/>`); zero data → the §6 keep-on-source-vs-invert question is moot, no double-author. |
+| `FreeSpecialistCounts` | `grants.freeSpecialists.{SPECIALIST}` | Keyed free-specialist counts → grants (one-shot provision). |
+| capital-restricted (`CapitalYieldModifiers`/`CapitalCommerceModifiers`) | `<family>.empire.capital.{unit}` | Modeled as a `capital` member (no `isCapital` predicate in the enabler vocab yet — accept, future refinement). |
+| `Upkeep`/`CivicOptionType`/`iAnarchyLength`/`WeLoveTheKing` | `identity.{upkeepLevel,civicOption,anarchyLength,weLoveTheKing}` | Config/identity. Folder = the `CivicOptionType` short name (category split). |

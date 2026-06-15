@@ -1,0 +1,171 @@
+{
+ "type": "CIVIC_INQUISITORIAL",
+ "description": "TXT_KEY_CIVIC_INQUISITORIAL",
+ "civilopedia": "TXT_KEY_CIVIC_INQUISITORIAL_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_INQUISITORIAL_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ALAMUT",
+   "BUILDING_EYE_IN_THE_SKY",
+   "BUILDING_FANATIC_COMPOUND",
+   "BUILDING_GREAT_FIREWALL",
+   "BUILDING_MARTIAN_MONUMENT",
+   "BUILDING_SAFETY_GREAT_FIREWALL",
+   "BUILDING_TELEVANGELIST_STUDIO"
+  ],
+  "units": [
+   "UNIT_INQUISITOR"
+  ]
+ },
+ "production": {
+  "empire": {
+   "military": {
+    "percent": 5
+   },
+   "percent": -3
+  }
+ },
+ "gold": {
+  "empire": {
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "capital": {
+    "percent": 1
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": -2,
+   "capital": {
+    "percent": -1
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 5,
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_KINGS_CRUSADE": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": 5
+   }
+  }
+ },
+ "combat": {
+  "empire": {
+   "captureProbability": {
+    "percent": -20
+   },
+   "captureResistance": {
+    "percent": 20
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 10
+   },
+   "numCities": {
+    "percent": 10
+   },
+   "homeArea": {
+    "percent": 2
+   },
+   "otherArea": {
+    "percent": 3
+   },
+   "corporation": {
+    "percent": 5
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "flat": 9,
+    "perPopulation": 30
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -20
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "greatPeopleRate": {
+    "percent": 5
+   },
+   "happiness": {
+    "flat": 3
+   },
+   "unitProduction": {
+    "percent": 20
+   },
+   "freeExperience": {
+    "flat": 2
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "holyCityGood": {
+    "flat": 3
+   },
+   "holyCityBad": {
+    "flat": 3
+   },
+   "badReligionMod": {
+    "percent": 1.0
+   },
+   "goodReligionMod": {
+    "percent": 1.0
+   },
+   "religiousFreedom": {
+    "flat": -9
+   }
+  }
+ },
+ "policies": {
+  "allowInquisitions": true,
+  "noNonStateReligionSpread": true,
+  "stateReligion": true
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/religion_intolerant.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_RELIGION",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

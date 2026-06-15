@@ -1,0 +1,116 @@
+{
+ "type": "CIVIC_REGULATED",
+ "description": "TXT_KEY_CIVIC_REGULATED",
+ "civilopedia": "TXT_KEY_CIVIC_REGULATED_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_REGULATED_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CENTRAL_BANK",
+   "BUILDING_CHAMBER_OF_COMMERCE"
+  ],
+  "hurries": [
+   "HURRY_GOLD"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 2,
+   "tradeRoute": {
+    "percent": 2
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 3,
+   "tradeRoute": {
+    "percent": 3
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 2,
+   "tradeRoute": {
+    "percent": 4
+   },
+   "improvements": {
+    "IMPROVEMENT_COTTAGE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HAMLET": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VILLAGE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_TOWN": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SUBURBS": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SUBMERGED_TOWN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CENTRAL_BANK": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "homeArea": {
+    "percent": 4
+   },
+   "otherArea": {
+    "percent": 5
+   },
+   "corporation": {
+    "percent": -10
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "inflation": {
+    "percent": -10
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "sharedCivic": {
+    "percent": 5
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "environmentalProtection": {
+    "flat": -1
+   }
+  }
+ },
+ "policies": {
+  "communism": true
+ },
+ "grants": {
+  "revolution": -10
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/economy_regulated.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_ECONOMY",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

@@ -1,0 +1,126 @@
+{
+ "type": "CIVIC_CONSCRIPTION",
+ "description": "TXT_KEY_CIVIC_CONSCRIPTION",
+ "civilopedia": "TXT_KEY_CIVIC_CONSCRIPTION_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_CONSCRIPTION_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_DRAFT_OFFICE"
+  ]
+ },
+ "production": {
+  "empire": {
+   "military": {
+    "percent": 10
+   },
+   "capital": {
+    "percent": 3
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": -2
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "capital": {
+    "percent": 1
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 7
+  }
+ },
+ "combat": {
+  "empire": {
+   "captureResistance": {
+    "percent": -10
+   }
+  }
+ },
+ "unitProduction": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 20
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 20
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 20
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 15
+   },
+   "numCities": {
+    "percent": 15
+   },
+   "homeArea": {
+    "percent": 3
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "perPopulation": 30
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": 2
+   },
+   "violentMod": {
+    "percent": -1
+   }
+  }
+ },
+ "policies": {
+  "militaryFoodProduction": true
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/military_conscription.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_MILITARY",
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

@@ -1,0 +1,146 @@
+{
+ "type": "CIVIC_JUNTA",
+ "description": "TXT_KEY_CIVIC_JUNTA",
+ "civilopedia": "TXT_KEY_CIVIC_JUNTA_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_JUNTA_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERROGATION_BUILDING"
+  ]
+ },
+ "food": {
+  "empire": {
+   "tradeRoute": {
+    "percent": 2
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "military": {
+    "percent": 10
+   },
+   "tradeRoute": {
+    "percent": 2
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "tradeRoute": {
+    "percent": 2
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "capital": {
+    "percent": 1
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "capital": {
+    "percent": 1
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_BARRACKS": {
+     "flat": 1
+    },
+    "BUILDING_GARRISON": {
+     "flat": 1
+    },
+    "BUILDING_MILITARY_BASE": {
+     "flat": 1
+    },
+    "BUILDING_WALLS": {
+     "flat": 1
+    },
+    "BUILDING_HIGH_WALLS": {
+     "flat": 1
+    },
+    "BUILDING_BARRICADES": {
+     "flat": 1
+    },
+    "BUILDING_CEMENT_BARRIER": {
+     "flat": 1
+    },
+    "BUILDING_METAMATERIAL_WALLS": {
+     "flat": 1
+    },
+    "BUILDING_SUPERSTRONG_ALLOY_WALLS": {
+     "flat": 1
+    },
+    "BUILDING_MEGASTRONG_ALLOY_WALLS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": 5
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 12
+   },
+   "numCities": {
+    "percent": 15
+   },
+   "homeArea": {
+    "percent": 3
+   },
+   "otherArea": {
+    "percent": 3
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "perPopulation": 20
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": 2
+   },
+   "violentMod": {
+    "percent": -0.3
+   },
+   "democracyLevel": {
+    "flat": -20
+   }
+  }
+ },
+ "grants": {
+  "revolution": 50
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/power_junta.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_POWER",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

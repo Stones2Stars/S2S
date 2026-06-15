@@ -1,0 +1,43 @@
+{
+ "type": "CIVIC_POST_BORDERS",
+ "description": "TXT_KEY_CIVIC_POST_BORDERS",
+ "civilopedia": "TXT_KEY_CIVIC_POST_BORDERS_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_POST_BORDERS_STRATEGY",
+ "food": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 7
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/immigration_post_borders.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_IMMIGRATION",
+  "upkeepLevel": "UPKEEP_EXTREME"
+ }
+}

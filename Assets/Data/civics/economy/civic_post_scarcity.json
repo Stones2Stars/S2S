@@ -1,0 +1,97 @@
+{
+ "type": "CIVIC_POST_SCARCITY",
+ "description": "TXT_KEY_CIVIC_POST_SCARCITY",
+ "civilopedia": "TXT_KEY_CIVIC_POST_SCARCITY_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_POST_SCARCITY_STRATEGY",
+ "enables": {
+  "hurries": [
+   "HURRY_GOLD"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": 10
+   },
+   "corporation": {
+    "percent": -10
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "cost": {
+    "percent": 33
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -3
+   },
+   "national": {
+    "flat": 3
+   },
+   "violentMod": {
+    "percent": -0.3
+   },
+   "environmentalProtection": {
+    "flat": -1
+   },
+   "democracyLevel": {
+    "flat": -8
+   }
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "policies": {
+  "noCorporations": true,
+  "noForeignCorporations": true
+ },
+ "grants": {
+  "revolution": 70
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/economy_post_scarcity2.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_ECONOMY",
+  "anarchyLength": 2,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

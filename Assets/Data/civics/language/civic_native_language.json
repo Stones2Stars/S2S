@@ -1,0 +1,71 @@
+{
+ "type": "CIVIC_NATIVE_LANGUAGE",
+ "description": "TXT_KEY_CIVIC_NATIVE_LANGUAGE",
+ "civilopedia": "TXT_KEY_CIVIC_NATIVE_LANGUAGE_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_NATIVE_LANGUAGE_STRATEGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_COMMUNITY_DISCUSSIONS"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 1,
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "civics": {
+    "CIVIC_NONVERBAL": {
+     "flat": -3
+    },
+    "CIVIC_NATIVE_LANGUAGE": {
+     "flat": -2
+    },
+    "CIVIC_TRADE_LANGUAGE": {
+     "flat": -1
+    },
+    "CIVIC_CODIFIED": {
+     "flat": 1
+    },
+    "CIVIC_WORLD_LANGUAGE": {
+     "flat": 2
+    },
+    "CIVIC_UNIVERSAL_TRANSLATOR": {
+     "flat": 3
+    },
+    "CIVIC_TELEPATHIC": {
+     "flat": 4
+    },
+    "CIVIC_XENOSEMIOTIC": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/language_native.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_LANGUAGE"
+ }
+}

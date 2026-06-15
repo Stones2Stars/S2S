@@ -1,0 +1,80 @@
+{
+ "type": "CIVIC_PHRONESIS",
+ "description": "TXT_KEY_CIVIC_PHRONESIS",
+ "civilopedia": "TXT_KEY_CIVIC_PHRONESIS_PEDIA",
+ "strategy": "TXT_KEY_CIVIC_PHRONESIS_STRATEGY",
+ "production": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 15
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1,
+   "civicAnger": {
+    "percent": -25
+   }
+  }
+ },
+ "combat": {
+  "empire": {
+   "captureProbability": {
+    "percent": -10
+   },
+   "captureResistance": {
+    "percent": 20
+   }
+  }
+ },
+ "grants": {
+  "revolution": 20
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   }
+  ]
+ },
+ "art": {
+  "icon": "art/Interface/buttons/civics/sparth/rule_programmed_morality.dds"
+ },
+ "identity": {
+  "civicOption": "CIVICOPTION_RULE",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_EXTREME"
+ }
+}
