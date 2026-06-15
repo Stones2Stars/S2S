@@ -85,7 +85,16 @@ Promotion/UnitCombat/LeaderHead) · E (the monsters: SpecialBuilding→**Buildin
 - Specs: `modifier-cascade-spec.md` (v3) · `enabler-cascade-spec.md` (v0.3 + §6.1 + Uniformity Law).
 - Order: `migration-entity-ranking.md`. Renames: `migration-renames.md`. Plan: `building-cascade-conversion.md`.
 - Prior handoff: `handover-2026-06-15-pm.md` (the locked structures going in).
-- Despair: added #8 "Four Calculators, Five Opinions" (the 4-5 disagreeing combat-odds calculators).
+- Despair (DEFERRED — owner, needs real archaeology, "for another time"): a "**4 (5?) combat calculators**"
+  entry was drafted then PULLED to get the facts straight. They were present at the START of the rework and
+  discussed in one of the FIRST sessions — but **this predates the established git routines**, so the git history
+  will NOT reliably capture it (the calcs couldn't be found in-tree). **The primary record is the EARLY-SESSION
+  CONVERSATION TRANSCRIPTS**, not `git log` — start the archaeology there. Threads to pull:
+  separate combat calcs for **unit build-worthiness**, **stack strength**, the **AI attack go/no-go heuristic**
+  (`AI_attackOdds` returns a loss-ratio "goodness", not a win-%), and a **purely-visual `CvGameTextMgr`
+  recompute** that re-derived odds just to draw the bar; the **OOS came from two MP clients disagreeing on what
+  the AI wanted** (not async fighting); the new binomial `getCombatOdds` (`CvCombatModel`) consolidated them and
+  was fixed EARLY. Get the count + specifics right before it goes in the index.
 
 ## Git state
 Branch `json-data-migration`; Tier A all committed (12 infos + the foundation/toolkit + the zWIP filter). Working
