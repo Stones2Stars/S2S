@@ -1,0 +1,107 @@
+{
+ "type": "RELIGION_YORUBA",
+ "description": "TXT_KEY_TECH_YORUBA",
+ "civilopedia": "TXT_KEY_TECH_YORUBA_PEDIA",
+ "adjective": "TXT_KEY_TECH_YORUBA_ADJECTIVE",
+ "enables": {
+  "buildings": [
+   "BUILDING_PATTAKY_OF_OBATALA",
+   "BUILDING_PATTAKY_OF_OGGUN",
+   "BUILDING_PATTAKY_OF_OLOFIN",
+   "BUILDING_PATTAKY_OF_OLOKUN",
+   "BUILDING_PATTAKY_OF_OSHOSI"
+  ],
+  "units": [
+   "UNIT_YORUBA_MISSIONARY"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_YORUBA"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_YORUBA"
+     }
+    }
+   ]
+  }
+ },
+ "religionInfluence": {
+  "city": {
+   "buildings": {
+    "BUILDING_PATTAKY_OF_OBATALA": {
+     "flat": 2
+    },
+    "BUILDING_PATTAKY_OF_OGGUN": {
+     "flat": 2
+    },
+    "BUILDING_PATTAKY_OF_OLOFIN": {
+     "flat": 2
+    },
+    "BUILDING_PATTAKY_OF_OLOKUN": {
+     "flat": 2
+    },
+    "BUILDING_PATTAKY_OF_OSHOSI": {
+     "flat": 2
+    },
+    "BUILDING_PATTAKY_OF_OLODUMARE": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "shrine": {
+  "gold": 1
+ },
+ "grants": {
+  "freeUnit": "UNIT_YORUBA_MISSIONARY",
+  "numFreeUnits": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "tgaIndex": 18,
+  "icon": "Art/Interface/Buttons/Religions/Yoruba.dds",
+  "techButton": "Art/Interface/Buttons/TechTree/Found_Yoruba.dds",
+  "genericTechButton": "Art/Interface/Buttons/TechTree/Yoruba.dds",
+  "movieFile": "Art/Cutscene/Yoruba_Generic_Found.nif",
+  "movieSound": "AS2D_BUILD_YORUBA_MOVIE",
+  "sound": "AS2D_BUILD_YORUBA"
+ },
+ "identity": {
+  "spreadFactor": 10
+ }
+}

@@ -1,0 +1,70 @@
+{
+ "type": "RELIGION_RODNOVERA",
+ "description": "TXT_KEY_TECH_RODNOVERA",
+ "civilopedia": "TXT_KEY_TECH_RODNOVERA_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHRAM",
+   "BUILDING_GAJ",
+   "BUILDING_IDOL"
+  ],
+  "units": [
+   "UNIT_RODNOVERY_MISSIONARY"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_RODNOVERA"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_RODNOVERA"
+     }
+    }
+   ]
+  }
+ },
+ "religionInfluence": {
+  "city": {
+   "buildings": {
+    "BUILDING_CHRAM": {
+     "flat": 3
+    },
+    "BUILDING_IDOL": {
+     "flat": 2
+    },
+    "BUILDING_GAJ": {
+     "flat": 2
+    },
+    "BUILDING_ARKONA": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "shrine": {
+  "gold": 1
+ },
+ "grants": {
+  "freeUnit": "UNIT_RODNOVERY_MISSIONARY",
+  "numFreeUnits": 1
+ },
+ "art": {
+  "tgaIndex": 25,
+  "icon": "Art/Interface/Buttons/Religions/Rodnovery.dds",
+  "techButton": "Art/Interface/Buttons/TechTree/Found_Rodnovery.dds",
+  "genericTechButton": "Art/Interface/Buttons/TechTree/Rodnovery.dds",
+  "movieFile": "Art/Cutscene/Rodnovery_Generic_Found.nif",
+  "movieSound": "AS2D_BUILD_RODNOVERY_MOVIE",
+  "sound": "AS2D_BUILD_RODNOVERY"
+ },
+ "identity": {
+  "spreadFactor": 100
+ }
+}

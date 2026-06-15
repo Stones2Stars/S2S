@@ -42,15 +42,20 @@ import curate_common as cc
 from curate_common import de_i
 from store import Store, REPO
 
-# the 3 conditional commerce tables -> a condition member of the SPLIT commerce families.
-COMMERCE_TABLES = {"StateReligionCommerces": "stateReligion", "HolyCityCommerces": "holyCity",
-                   "GlobalReligionCommerces": "shrine"}
+# Conditional commerce (v0.3, owner 2026-06-15): the gate tables become `enabled` deposits using OBJECT-EVALUATED
+# PREDICATES (the city/player self-reports the runtime state the static Info can't hold). The data names the
+# predicate + the specific religion as the single conditional; the engine owns the compound logic (for
+# STATE_RELIGION the C++ relaxes to "present AND (is-state-religion OR no-state-religion OR non-state-commerce)").
+COMMERCE_PREDICATE = {"StateReligionCommerces": "STATE_RELIGION", "HolyCityCommerces": "HOLY_CITY"}
+# GlobalReligionCommerce is NOT a city gate — it's value x countReligionLevels(religion) (WORLD-scaled) consumed
+# through a shrine building. PARKED to the Building pass (the religion<->shrine-building routing + the world
+# religion-levels count token live there); the raw per-commerce values are kept faithfully in a `shrine` section.
+SHRINE_TABLE = "GlobalReligionCommerces"
 TEXT = {"Description": "description", "Civilopedia": "civilopedia", "Adjective": "adjective"}
 ART = {"Button": "icon", "TechButton": "techButton", "GenericTechButton": "genericTechButton",
        "MovieFile": "movieFile", "MovieSound": "movieSound", "Sound": "sound", "iTGAIndex": "tgaIndex"}
 GRANTS = {"FreeUnit": "freeUnit", "iFreeUnits": "numFreeUnits"}
 IDENTITY = {"iSpreadFactor": "spreadFactor"}
-SOURCE_UNIT = {"CONSTANT": "perTurn", "DECAY": "decay"}
 DROP = {"TechPrereq"}
 FAMILY_ORDER = ["gold", "research", "culture", "espionage", "religionInfluence"]
 
@@ -61,25 +66,19 @@ RELIGION_BOOSTS = [
 
 
 def _properties(node, props):
-    """PropertyManipulators -> {PROPERTY_X: {empire: [ {unit: amount, active?: <gate>} ]}} (gate preserved)."""
-    for src in node:
-        if src.tag != "PropertySource":
+    """PropertyManipulators -> v3 deposits via the shared converter (engine.property_source_v3 — the standard).
+    Religions carry no PropertySources today (defensive); kept uniform with Property/Civic."""
+    for src in node.findall("PropertySource"):
+        conv = engine.property_source_v3(src)
+        if conv is None:
             continue
-        cp = engine.clean_property_source(src)
-        prop, amount = cp.get("property"), cp.get("amountPerTurn")
-        if not prop or amount in (None, "", {}):
-            continue
-        unit = SOURCE_UNIT.get(cp.get("source", ""), str(cp.get("source", "")).lower())
-        dep = OrderedDict()
-        dep[unit] = amount
-        gate = cp.get("Active")
-        if gate not in (None, "", [], {}):
-            dep["active"] = gate
-        props.setdefault(prop, {}).setdefault("empire", []).append(dep)
+        prop, scope, unit, value = conv
+        props.setdefault(prop, OrderedDict()).setdefault(scope, OrderedDict())[unit] = value
 
 
 def curate(typ, rec, store, boosts):
     text, fam, props, grants, art, identity, ai, leftover = {}, {}, {}, {}, {}, {}, {}, []
+    shrine = OrderedDict()
     for c in rec:
         tag, t = c.tag, engine.text(c)
         if tag == "Type" or tag in DROP:
@@ -87,10 +86,14 @@ def curate(typ, rec, store, boosts):
         elif tag in TEXT:
             if t:
                 text[TEXT[tag]] = t
-        elif tag in COMMERCE_TABLES:
-            member = COMMERCE_TABLES[tag]
+        elif tag in COMMERCE_PREDICATE:                        # state-religion / holy-city -> `enabled` deposits
+            predicate = COMMERCE_PREDICATE[tag]                # using an OBJECT-EVALUATED predicate {PRED: religion}
             for commerce, v in engine.named_array(c, engine.COMMERCES).items():   # commerce IS the family (split)
-                (fam.setdefault(commerce, {}).setdefault("city", {}).setdefault(member, {}))["flat"] = v
+                entry = OrderedDict([("value", v), ("enabled", OrderedDict([(predicate, typ)]))])
+                fam.setdefault(commerce, {}).setdefault("city", {}).setdefault("flat", []).append(entry)
+        elif tag == SHRINE_TABLE:                              # GlobalReligionCommerce -> parked `shrine` values
+            for commerce, v in engine.named_array(c, engine.COMMERCES).items():   # (Building wires world-scaling)
+                shrine[commerce] = v
         elif tag == "PropertyManipulators":
             _properties(c, props)
         elif tag == "Flavors":
@@ -141,6 +144,8 @@ def curate(typ, rec, store, boosts):
             out[family] = fam[family]
     for prop in sorted(props):
         out[prop] = props[prop]
+    if shrine:                                                 # parked GlobalReligionCommerce values (Building pass
+        out["shrine"] = shrine                                 # wires the world-scaling + shrine-building routing)
     if grants:
         out["grants"] = grants
     if ai:

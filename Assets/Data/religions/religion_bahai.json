@@ -1,0 +1,90 @@
+{
+ "type": "RELIGION_BAHAI",
+ "description": "TXT_KEY_TECH_BAHAI",
+ "civilopedia": "TXT_KEY_TECH_BAHAI_PEDIA",
+ "adjective": "TXT_KEY_TECH_BAHAI_ADJECTIVE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BAHAI_DAR_BE_MEHR",
+   "BUILDING_BAHAI_MONASTERY",
+   "BUILDING_BAHAI_TEMPLE"
+  ],
+  "units": [
+   "UNIT_BAHAI_MISSIONARY"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_BAHAI"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_BAHAI"
+     }
+    }
+   ]
+  }
+ },
+ "religionInfluence": {
+  "city": {
+   "buildings": {
+    "BUILDING_SHRINE_OF_BAB": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "shrine": {
+  "gold": 1
+ },
+ "grants": {
+  "freeUnit": "UNIT_BAHAI_MISSIONARY",
+  "numFreeUnits": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "tgaIndex": 13,
+  "icon": "Art/Interface/Buttons/Religions/Bahai.dds",
+  "techButton": "Art/Interface/Buttons/TechTree/Found_Bahai.dds",
+  "genericTechButton": "Art/Interface/Buttons/TechTree/Bahai.dds",
+  "movieFile": "Art/Cutscene/Bahai_Generic_Found.nif",
+  "movieSound": "AS2D_BUILD_NORDDIC_MOVIE",
+  "sound": "AS2D_BUILD_ZORO"
+ },
+ "identity": {
+  "spreadFactor": 5
+ }
+}

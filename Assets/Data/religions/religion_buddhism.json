@@ -1,0 +1,130 @@
+{
+ "type": "RELIGION_BUDDHISM",
+ "description": "TXT_KEY_TECH_BUDDHISM",
+ "civilopedia": "TXT_KEY_TECH_BUDDHISM_PEDIA",
+ "adjective": "TXT_KEY_TECH_BUDDHISM_ADJECTIVE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BEZEKLIK_CAVES",
+   "BUILDING_BUDDHIST_MONASTERY",
+   "BUILDING_BUDDHIST_STUPA",
+   "BUILDING_BUDDHIST_TEMPLE",
+   "BUILDING_KOTOKU_IN",
+   "BUILDING_NARAS_GIANT_BUDDHA",
+   "BUILDING_PALACE_OF_POTALA"
+  ],
+  "units": [
+   "UNIT_BUDDHIST_MISSIONARY"
+  ]
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_BUDDHISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_BUDDHISM"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_BUDDHISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_BUDDHISM"
+     }
+    }
+   ]
+  }
+ },
+ "religionInfluence": {
+  "city": {
+   "buildings": {
+    "BUILDING_BEZEKLIK_CAVES": {
+     "flat": 2
+    },
+    "BUILDING_KOTOKU_IN": {
+     "flat": 3
+    },
+    "BUILDING_NARAS_GIANT_BUDDHA": {
+     "flat": 2
+    },
+    "BUILDING_PALACE_OF_POTALA": {
+     "flat": 1
+    },
+    "BUILDING_BUDDHIST_STUPA": {
+     "flat": 3
+    },
+    "BUILDING_BUDDHIST_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_BUDDHIST_TEMPLE": {
+     "flat": 2
+    },
+    "BUILDING_THE_MAHABODHI": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "shrine": {
+  "gold": 1,
+  "culture": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "tgaIndex": 4,
+  "icon": "Art/Interface/Buttons/Religions/Buddhism.dds",
+  "techButton": "Art/Interface/Buttons/TechTree/Found_Buddhism.dds",
+  "genericTechButton": "Art/Interface/Buttons/TechTree/Buddhism.dds",
+  "movieFile": "Art/Movies/Religion/Buddhism/Bud_Found.nif",
+  "movieSound": "AS2D_BUILD_BUDDHIST_MOVIE",
+  "sound": "AS2D_BUILD_BUDDHIST"
+ },
+ "identity": {
+  "spreadFactor": 35
+ }
+}

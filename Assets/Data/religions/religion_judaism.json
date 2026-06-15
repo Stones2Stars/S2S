@@ -1,0 +1,122 @@
+{
+ "type": "RELIGION_JUDAISM",
+ "description": "TXT_KEY_TECH_JUDAISM",
+ "civilopedia": "TXT_KEY_TECH_JUDAISM_PEDIA",
+ "adjective": "TXT_KEY_TECH_JUDAISM_ADJECTIVE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARK_OF_THE_COVENANT",
+   "BUILDING_JEWISH_MONASTERY",
+   "BUILDING_JEWISH_SYNAGOGUE",
+   "BUILDING_JEWISH_TEMPLE",
+   "BUILDING_MASADA",
+   "BUILDING_SOLOMONS_TEMPLE"
+  ],
+  "units": [
+   "UNIT_JEWISH_MISSIONARY"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_JUDAISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_JUDAISM"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_JUDAISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_JUDAISM"
+     }
+    }
+   ]
+  }
+ },
+ "religionInfluence": {
+  "city": {
+   "buildings": {
+    "BUILDING_MASADA": {
+     "flat": 3
+    },
+    "BUILDING_SOLOMONS_TEMPLE": {
+     "flat": 6
+    },
+    "BUILDING_JEWISH_SYNAGOGUE": {
+     "flat": 3
+    },
+    "BUILDING_JEWISH_MONASTERY": {
+     "flat": 2
+    },
+    "BUILDING_JEWISH_TEMPLE": {
+     "flat": 1
+    },
+    "BUILDING_THE_TEMPLE_OF_SOLOMON": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "shrine": {
+  "gold": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "art": {
+  "tgaIndex": 0,
+  "icon": "Art/Interface/Buttons/Religions/Judaism.dds",
+  "techButton": "Art/Interface/Buttons/TechTree/Found_Judaism.dds",
+  "genericTechButton": "Art/Interface/Buttons/TechTree/Judaism.dds",
+  "movieFile": "Art/Movies/Religion/Judaism/Jud_Found.nif",
+  "movieSound": "AS2D_BUILD_JEWISH_MOVIE",
+  "sound": "AS2D_BUILD_JEWISH"
+ },
+ "identity": {
+  "spreadFactor": 30
+ }
+}

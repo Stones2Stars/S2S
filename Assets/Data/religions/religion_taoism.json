@@ -1,0 +1,117 @@
+{
+ "type": "RELIGION_TAOISM",
+ "description": "TXT_KEY_TECH_TAOISM",
+ "civilopedia": "TXT_KEY_TECH_TAOISM_PEDIA",
+ "adjective": "TXT_KEY_TECH_TAOISM_ADJECTIVE",
+ "enables": {
+  "buildings": [
+   "BUILDING_QUANZHEN_SCHOOL",
+   "BUILDING_TAOIST_MONASTERY",
+   "BUILDING_TAOIST_PAGODA",
+   "BUILDING_TAOIST_TEMPLE",
+   "BUILDING_TEMPLE_OF_HEAVEN",
+   "BUILDING_WUDANG_MOUNTAIN"
+  ],
+  "units": [
+   "UNIT_TAOIST_MISSIONARY"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_TAOISM"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_TAOISM"
+     }
+    }
+   ]
+  }
+ },
+ "religionInfluence": {
+  "city": {
+   "buildings": {
+    "BUILDING_QUANZHEN_SCHOOL": {
+     "flat": 4
+    },
+    "BUILDING_TEMPLE_OF_HEAVEN": {
+     "flat": 3
+    },
+    "BUILDING_WUDANG_MOUNTAIN": {
+     "flat": 4
+    },
+    "BUILDING_TAOIST_PAGODA": {
+     "flat": 3
+    },
+    "BUILDING_TAOIST_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_TAOIST_TEMPLE": {
+     "flat": 2
+    },
+    "BUILDING_THE_DAI_MIAO": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "shrine": {
+  "gold": 1
+ },
+ "grants": {
+  "freeUnit": "UNIT_TAOIST_MISSIONARY",
+  "numFreeUnits": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "tgaIndex": 6,
+  "icon": "Art/Interface/Buttons/Religions/Taoism.dds",
+  "techButton": "Art/Interface/Buttons/TechTree/Found_Taoism.dds",
+  "genericTechButton": "Art/Interface/Buttons/TechTree/Taoism.dds",
+  "movieFile": "Art/Movies/Religion/Taoism/Tao_Found.nif",
+  "movieSound": "AS2D_BUILD_TAOIST_MOVIE",
+  "sound": "AS2D_BUILD_TAOIST"
+ },
+ "identity": {
+  "spreadFactor": 50
+ }
+}

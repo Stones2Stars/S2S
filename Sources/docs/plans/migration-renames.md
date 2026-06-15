@@ -196,3 +196,22 @@ gates civics → store inverts to `tech.enables.civics`); civics are never an ob
 | `FreeSpecialistCounts` | `grants.freeSpecialists.{SPECIALIST}` | Keyed free-specialist counts → grants (one-shot provision). |
 | capital-restricted (`CapitalYieldModifiers`/`CapitalCommerceModifiers`) | `<family>.empire.capital.{unit}` | Modeled as a `capital` member (no `isCapital` predicate in the enabler vocab yet — accept, future refinement). |
 | `Upkeep`/`CivicOptionType`/`iAnarchyLength`/`WeLoveTheKing` | `identity.{upkeepLevel,civicOption,anarchyLength,weLoveTheKing}` | Config/identity. Folder = the `CivicOptionType` short name (category split). |
+
+## Religion  (`curate_religion.py`)  — Tier B #15 (29 records, BESPOKE)
+
+A foundable faith / source-conditioner. EXE-link **0 `DllExport`**; every XML tag classified, no leftovers; no
+`requires` (only `TechPrereq`, store-inverted to `tech.enables.religions`); never an obsolete/replace target.
+`enables` = store-derived `PrereqReligion` buildings/units (the religion is the CONDITIONER). `religionInfluence`
+inbound boost (Building `ReligionChanges`) kept target-keyed. `Adjective`→text; `iSpreadFactor`→identity;
+`FreeUnit`+`iFreeUnits`→`grants` (only when count>0 — the award is count-gated, CvPlayer:8838). Structural:
+
+| old XML | new JSON path | note |
+|---|---|---|
+| `StateReligionCommerces` | `<commerce>.city.flat[].{value, enabled:{STATE_RELIGION:RELIGION_X}}` | Conditional commerce → an `enabled` deposit with the OBJECT-EVALUATED predicate `STATE_RELIGION` (owner 2026-06-15: "STATE_RELIGION: religion"). The engine's predicate owns the C++ compound (present AND (is-state-religion OR no-state-religion OR non-state-commerce), CvCity~12498) — data just names predicate + the specific religion; the city/player self-reports. Was condition-as-member. |
+| `HolyCityCommerces` | `<commerce>.city.flat[].{value, enabled:{HOLY_CITY:RELIGION_X}}` | Same: `HOLY_CITY` predicate (the city self-reports `isHolyCity`, CvCity~12507). Multiple conditioned deposits to one commerce/scope/unit → a LIST of entries (modifier-spec §1.3). |
+| `GlobalReligionCommerces` | `shrine.{commerce}` (raw values) — PARKED to Building | NOT a city gate: `value × countReligionLevels(religion)` WORLD-scaled, consumed through a *shrine building* (CvCity~12185). Owner: "shrine is building, deal with it then." Raw per-commerce values parked in a `shrine` section; the world-scaling + religion↔shrine-building routing (+ the world religion-levels count token) are authored at the Building pass. |
+| `PropertyManipulators` | `<PROPERTY>.<scope>.<unit>` (v3) | Via the shared `engine.property_source_v3` (no-op — religions carry no PropertySources; kept uniform). |
+
+*Predicate vocabulary established here (enabler-spec §3 object-evaluated predicates): `HAS_RELIGION:religion`,
+`STATE_RELIGION:religion`, `HOLY_CITY:religion`, `IS_CAPITAL:true` — engine/object-resolved, reused by Civic/Trait
+(capital bonuses) and the later civic `capital`/`stateReligion` retrofits.*

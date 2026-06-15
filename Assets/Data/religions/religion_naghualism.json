@@ -1,0 +1,109 @@
+{
+ "type": "RELIGION_NAGHUALISM",
+ "description": "TXT_KEY_TECH_NAGHUALISM",
+ "civilopedia": "TXT_KEY_TECH_NAGHUALISM_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BALL_COURT",
+   "BUILDING_CALMACEC",
+   "BUILDING_PYRAMID_OF_THE_MAGICIAN",
+   "BUILDING_PYRAMID_OF_THE_MOON",
+   "BUILDING_PYRAMID_OF_THE_SUN",
+   "BUILDING_TEMPLE_OF_QUETZALCOATL",
+   "BUILDING_TEMPLE_OF_TLALOC",
+   "BUILDING_TLALOCS_ALTAR"
+  ],
+  "units": [
+   "UNIT_NAGUALISM_MISSIONARY"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_NAGHUALISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_NAGHUALISM"
+     }
+    }
+   ]
+  }
+ },
+ "religionInfluence": {
+  "city": {
+   "buildings": {
+    "BUILDING_PYRAMID_OF_THE_MOON": {
+     "flat": 6
+    },
+    "BUILDING_PYRAMID_OF_THE_SUN": {
+     "flat": 6
+    },
+    "BUILDING_PYRAMID_OF_THE_MAGICIAN": {
+     "flat": 3
+    },
+    "BUILDING_TEMPLE_OF_TLALOC": {
+     "flat": 3
+    },
+    "BUILDING_CALMACEC": {
+     "flat": 1
+    },
+    "BUILDING_TEMPLE_OF_QUETZALCOATL": {
+     "flat": 2
+    },
+    "BUILDING_TEOTIHUACAN": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "shrine": {
+  "gold": 1,
+  "culture": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "tgaIndex": 10,
+  "icon": "Art/Interface/Buttons/religions/MesoAmerica.dds",
+  "techButton": "Art/Interface/Buttons/TechTree/Found_naghualism.dds",
+  "genericTechButton": "Art/Interface/Buttons/TechTree/Naghualism.dds",
+  "movieFile": "Art/Cutscene/Nagualismo/mes_found.nif",
+  "movieSound": "AS2D_BUILD_TOLTEC_MOVIE",
+  "sound": "AS2D_BUILD_TOLTEC"
+ },
+ "identity": {
+  "spreadFactor": 45
+ }
+}

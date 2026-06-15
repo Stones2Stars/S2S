@@ -1,0 +1,92 @@
+{
+ "type": "RELIGION_VOODOO",
+ "description": "TXT_KEY_TECH_VOODOO",
+ "civilopedia": "TXT_KEY_TECH_VOODOO_PEDIA",
+ "adjective": "TXT_KEY_TECH_VOODOO_ADJECTIVE",
+ "enables": {
+  "buildings": [
+   "BUILDING_HELLSMOUTH_SANCTUARY",
+   "BUILDING_HOUNFOR",
+   "BUILDING_LOA_HWE",
+   "BUILDING_VOODOO_MARKET"
+  ],
+  "units": [
+   "UNIT_HELLSMOUTH_DOG",
+   "UNIT_UNDEAD_WORKER",
+   "UNIT_VOODOO_MISSIONARY"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_VOODOO"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_VOODOO"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_VOODOO"
+     }
+    }
+   ]
+  }
+ },
+ "shrine": {
+  "gold": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "tgaIndex": 26,
+  "icon": "Art/Interface/Buttons/Religions/Voodoo.dds",
+  "techButton": "Art/Interface/Buttons/TechTree/Found_Voodoo.dds",
+  "genericTechButton": "Art/Interface/Buttons/TechTree/Voodoo.dds",
+  "movieFile": "Art/Cutscene/Voodoo_Generic_Found.nif",
+  "movieSound": "AS2D_BUILD_VOODOO_MOVIE",
+  "sound": "AS2D_BUILD_VOODOO"
+ },
+ "identity": {
+  "spreadFactor": 1
+ }
+}

@@ -1,0 +1,111 @@
+{
+ "type": "RELIGION_SCIENTOLOGY",
+ "description": "TXT_KEY_TECH_SCIENTOLOGY",
+ "civilopedia": "TXT_KEY_TECH_SCIENTOLOGY_PEDIA",
+ "adjective": "TXT_KEY_TECH_SCIENTOLOGY_ADJECTIVE",
+ "enables": {
+  "buildings": [
+   "BUILDING_SCIENTOLOGY_CATHEDRAL",
+   "BUILDING_SCIENTOLOGY_MONASTERY",
+   "BUILDING_SCIENTOLOGY_TEMPLE"
+  ],
+  "units": [
+   "UNIT_SCIENTOLOGY_MISSIONARY"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_SCIENTOLOGY"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_SCIENTOLOGY"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_SCIENTOLOGY"
+     }
+    }
+   ]
+  }
+ },
+ "religionInfluence": {
+  "city": {
+   "buildings": {
+    "BUILDING_SCIENTOLOGY_CATHEDRAL": {
+     "flat": 3
+    },
+    "BUILDING_SCIENTOLOGY_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_SCIENTOLOGY_TEMPLE": {
+     "flat": 2
+    },
+    "BUILDING_SCIENTOLOGY_SEDE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "shrine": {
+  "gold": 2
+ },
+ "grants": {
+  "freeUnit": "UNIT_SCIENTOLOGY_MISSIONARY",
+  "numFreeUnits": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 7
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "tgaIndex": 28,
+  "icon": "Art/Interface/Buttons/Religions/Martianism.dds",
+  "techButton": "Art/Interface/Buttons/TechTree/Found_scientology.dds",
+  "genericTechButton": "Art/Interface/Buttons/TechTree/Martianism.dds",
+  "movieFile": "Art/Cutscene/Scientology_Generic_Found.nif",
+  "movieSound": "AS2D_BUILD_NORDDIC_MOVIE",
+  "sound": "AS2D_BUILD_ZORO"
+ },
+ "identity": {
+  "spreadFactor": 5
+ }
+}

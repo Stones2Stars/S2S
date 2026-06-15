@@ -1,0 +1,116 @@
+{
+ "type": "RELIGION_ASATRU",
+ "description": "TXT_KEY_TECH_ASATRU",
+ "civilopedia": "TXT_KEY_TECH_ASATRU_PEDIA",
+ "adjective": "TXT_KEY_TECH_ASATRU_ADJECTIVE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASATRU_CATHEDRAL",
+   "BUILDING_ASATRU_MONASTERY",
+   "BUILDING_ASATRU_TEMPLE",
+   "BUILDING_FREYA_SANCTUARY",
+   "BUILDING_HEIMDALL_SANCTUARY",
+   "BUILDING_LOKI_SANCTUARY",
+   "BUILDING_THOR_ALTAR",
+   "BUILDING_THOR_SANCTUARY"
+  ],
+  "units": [
+   "UNIT_ASATRU_MISSIONARY",
+   "UNIT_LOKI"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_ASATRU"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_ASATRU"
+     }
+    }
+   ]
+  }
+ },
+ "religionInfluence": {
+  "city": {
+   "buildings": {
+    "BUILDING_FREYA_SANCTUARY": {
+     "flat": 2
+    },
+    "BUILDING_HEIMDALL_SANCTUARY": {
+     "flat": 2
+    },
+    "BUILDING_LOKI_SANCTUARY": {
+     "flat": 2
+    },
+    "BUILDING_THOR_SANCTUARY": {
+     "flat": 2
+    },
+    "BUILDING_ASATRU_CATHEDRAL": {
+     "flat": 2
+    },
+    "BUILDING_ASATRU_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_ASATRU_TEMPLE": {
+     "flat": 1
+    },
+    "BUILDING_THOR_ALTAR": {
+     "flat": 1
+    },
+    "BUILDING_THE_ODINS_SANCTUARY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "shrine": {
+  "gold": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "tgaIndex": 20,
+  "icon": "Art/Interface/Buttons/Religions/Asatru.dds",
+  "techButton": "Art/Interface/Buttons/TechTree/Found_Asatru.dds",
+  "genericTechButton": "Art/Interface/Buttons/TechTree/Asatru.dds",
+  "movieFile": "Art/Cutscene/Nor_Found.nif",
+  "movieSound": "AS2D_BUILD_NORDIC_MOVIE",
+  "sound": "AS2D_BUILD_NORDIC"
+ },
+ "identity": {
+  "spreadFactor": 20
+ }
+}

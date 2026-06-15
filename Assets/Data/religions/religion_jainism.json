@@ -1,0 +1,69 @@
+{
+ "type": "RELIGION_JAINISM",
+ "description": "TXT_KEY_TECH_JAINISM",
+ "civilopedia": "TXT_KEY_TECH_JAINISM_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_JAIN_CATHEDRAL",
+   "BUILDING_JAIN_MONASTERY",
+   "BUILDING_JAIN_TEMPLE"
+  ],
+  "units": [
+   "UNIT_JAINISM_MISSIONARY"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_JAINISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_JAINISM"
+     }
+    }
+   ]
+  }
+ },
+ "religionInfluence": {
+  "city": {
+   "buildings": {
+    "BUILDING_JAIN_CATHEDRAL": {
+     "flat": 3
+    },
+    "BUILDING_JAIN_MONASTERY": {
+     "flat": 2
+    },
+    "BUILDING_JAIN_TEMPLE": {
+     "flat": 2
+    },
+    "BUILDING_STATUE_OF_GOMATESHWARA": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "shrine": {
+  "gold": 1
+ },
+ "grants": {
+  "freeUnit": "UNIT_JAINISM_MISSIONARY",
+  "numFreeUnits": 1
+ },
+ "art": {
+  "tgaIndex": 16,
+  "icon": "Art/Interface/Buttons/Religions/Jainism.dds",
+  "techButton": "Art/Interface/Buttons/TechTree/Found_Jainism.dds",
+  "genericTechButton": "Art/Interface/Buttons/TechTree/Jainism.dds",
+  "movieFile": "Art/Cutscene/Jainism_Generic_Found.nif",
+  "sound": "AS2D_BUILD_HINDU"
+ },
+ "identity": {
+  "spreadFactor": 100
+ }
+}

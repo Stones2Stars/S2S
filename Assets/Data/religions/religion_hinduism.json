@@ -1,0 +1,122 @@
+{
+ "type": "RELIGION_HINDUISM",
+ "description": "TXT_KEY_TECH_HINDUISM",
+ "civilopedia": "TXT_KEY_TECH_HINDUISM_PEDIA",
+ "adjective": "TXT_KEY_TECH_HINDUISM_ADJECTIVE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AKSHARDHAM",
+   "BUILDING_BRAHMIN_LIBRARY",
+   "BUILDING_COW_SHRINE",
+   "BUILDING_ELEPHANT_SHRINE",
+   "BUILDING_HINDU_MANDIR",
+   "BUILDING_HINDU_MONASTERY",
+   "BUILDING_HINDU_TEMPLE",
+   "BUILDING_MEENAKSHI_TEMPLE",
+   "BUILDING_THE_BRIHADEESWARAR_TEMPLE"
+  ],
+  "units": [
+   "UNIT_HINDU_MISSIONARY"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_HINDUISM"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 6,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_HINDUISM"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_HINDUISM"
+     }
+    }
+   ]
+  }
+ },
+ "religionInfluence": {
+  "city": {
+   "buildings": {
+    "BUILDING_AKSHARDHAM": {
+     "flat": 6
+    },
+    "BUILDING_THE_BRIHADEESWARAR_TEMPLE": {
+     "flat": 3
+    },
+    "BUILDING_MEENAKSHI_TEMPLE": {
+     "flat": 6
+    },
+    "BUILDING_HINDU_MANDIR": {
+     "flat": 3
+    },
+    "BUILDING_HINDU_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_HINDU_TEMPLE": {
+     "flat": 1
+    },
+    "BUILDING_THE_KASHI_VISHWANATH": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "shrine": {
+  "gold": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "tgaIndex": 3,
+  "icon": "Art/Interface/Buttons/Religions/Hinduism.dds",
+  "techButton": "Art/Interface/Buttons/TechTree/Found_Hinduism.dds",
+  "genericTechButton": "Art/Interface/Buttons/TechTree/Hinduism.dds",
+  "movieFile": "Art/Movies/Religion/Hinduism/Hin_Found.nif",
+  "movieSound": "AS2D_BUILD_HINDU_MOVIE",
+  "sound": "AS2D_BUILD_HINDU"
+ },
+ "identity": {
+  "spreadFactor": 20
+ }
+}

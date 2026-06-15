@@ -1,0 +1,123 @@
+{
+ "type": "RELIGION_CHRISTIANITY",
+ "description": "TXT_KEY_TECH_CHRISTIANITY",
+ "civilopedia": "TXT_KEY_TECH_CHRISTIANITY_PEDIA",
+ "adjective": "TXT_KEY_TECH_CHRISTIANITY_ADJECTIVE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHRISTIAN_CATHEDRAL",
+   "BUILDING_CHRISTIAN_MONASTERY",
+   "BUILDING_CHRISTIAN_TEMPLE",
+   "BUILDING_CITADEL",
+   "BUILDING_HOLY_SEE_LIBRARY",
+   "BUILDING_KINGS_CRUSADE",
+   "BUILDING_REVIVALIST_CHURCH",
+   "BUILDING_SAINT_MARKS_BASILICA"
+  ],
+  "units": [
+   "UNIT_CHRISTIAN_MISSIONARY",
+   "UNIT_CRUSADER"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_CHRISTIANITY"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 6,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_CHRISTIANITY"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_CHRISTIANITY"
+     }
+    }
+   ]
+  }
+ },
+ "religionInfluence": {
+  "city": {
+   "buildings": {
+    "BUILDING_SAINT_MARKS_BASILICA": {
+     "flat": 6
+    },
+    "BUILDING_HOLY_SEE_LIBRARY": {
+     "flat": 6
+    },
+    "BUILDING_CHRISTIAN_CATHEDRAL": {
+     "flat": 3
+    },
+    "BUILDING_CHRISTIAN_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_CHRISTIAN_TEMPLE": {
+     "flat": 2
+    },
+    "BUILDING_THE_CHURCH_OF_THE_NATIVITY": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "shrine": {
+  "gold": 1
+ },
+ "grants": {
+  "freeUnit": "UNIT_CHRISTIAN_MISSIONARY",
+  "numFreeUnits": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "tgaIndex": 1,
+  "icon": "Art/Interface/Buttons/Religions/Christianity.dds",
+  "techButton": "Art/Interface/Buttons/TechTree/Found_Christianity.dds",
+  "genericTechButton": "Art/Interface/Buttons/TechTree/Christianity.dds",
+  "movieFile": "Art/Movies/Religion/Christianity/Chr_Found.nif",
+  "movieSound": "AS2D_BUILD_CHRISTIAN_MOVIE",
+  "sound": "AS2D_BUILD_CHRISTIAN"
+ },
+ "identity": {
+  "spreadFactor": 50
+ }
+}

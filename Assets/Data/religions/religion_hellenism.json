@@ -1,0 +1,116 @@
+{
+ "type": "RELIGION_HELLENISM",
+ "description": "TXT_KEY_TECH_HELLENISM",
+ "civilopedia": "TXT_KEY_TECH_HELLENISM_PEDIA",
+ "adjective": "TXT_KEY_TECH_HELLENISM_ADJECTIVE",
+ "enables": {
+  "buildings": [
+   "BUILDING_HELLENIC_GYMNASIA",
+   "BUILDING_HELLENIC_PANTHEON",
+   "BUILDING_HELLENIC_TEMPLE",
+   "BUILDING_ODEON",
+   "BUILDING_PHIDIAS_STATUE_WORKSHOP",
+   "BUILDING_THE_ERECHTHEUM",
+   "BUILDING_THE_NECROMANTEION",
+   "BUILDING_THE_PARTHENON"
+  ],
+  "units": [
+   "UNIT_HELLENIC_MISSIONARY"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_HELLENISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_HELLENISM"
+     }
+    }
+   ]
+  }
+ },
+ "religionInfluence": {
+  "city": {
+   "buildings": {
+    "BUILDING_THE_ERECHTHEUM": {
+     "flat": 2
+    },
+    "BUILDING_PHIDIAS_STATUE_WORKSHOP": {
+     "flat": 2
+    },
+    "BUILDING_THE_NECROMANTEION": {
+     "flat": 2
+    },
+    "BUILDING_THE_PARTHENON": {
+     "flat": 3
+    },
+    "BUILDING_HELLENIC_PANTHEON": {
+     "flat": 3
+    },
+    "BUILDING_HELLENIC_GYMNASIA": {
+     "flat": 1
+    },
+    "BUILDING_HELLENIC_TEMPLE": {
+     "flat": 1
+    },
+    "BUILDING_THE_STATUE_OF_ZEUS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "shrine": {
+  "research": 1
+ },
+ "grants": {
+  "freeUnit": "UNIT_HELLENIC_MISSIONARY",
+  "numFreeUnits": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "tgaIndex": 8,
+  "icon": "Art/Interface/Buttons/Religions/Hellenism.dds",
+  "techButton": "Art/Interface/Buttons/TechTree/Found_Hellenism.dds",
+  "genericTechButton": "Art/Interface/Buttons/TechTree/Hellenism.dds",
+  "movieFile": "Art/Cutscene/Greek_found.nif",
+  "movieSound": "AS2D_BUILD_OLYMP_MOVIE",
+  "sound": "AS2D_BUILD_OLYMP"
+ },
+ "identity": {
+  "spreadFactor": 40
+ }
+}

@@ -273,6 +273,19 @@ resource/bonus**. Authored on the target, scope-tagged per clause:
   demographics/AI/score (§8).
 - **Leaf atom** = `{<kind>: "TYPE", scope, connection?, disposition}` where `<kind>` ∈
   `civic | religion | bonus | …` (never `tech`). The `all`/`any` nodes nest to form the BoolExpr.
+- **OBJECT-EVALUATED PREDICATES (owner, 2026-06-15).** Some conditions need runtime object state the static Info
+  cannot hold (is this city the holy city? the capital? is this the player's state religion?). These are authored
+  as a single conditional **`{PREDICATE: parameter}`** (or `{PREDICATE: true}` when unparameterized); the **object
+  itself (city/player) answers it at evaluation** — "the city does not have the info in the data, it says itself
+  whether it is." The engine's predicate owns any compound logic (e.g. `STATE_RELIGION` encapsulates the C++
+  relaxation "present AND (is-state-religion OR no-state-religion OR non-state-commerce)"). Same shape inside
+  `requires` and the modifier `enabled`/`disabled`. Vocabulary so far (extensible, engine-resolved like the §
+  catch-all tokens — not info special-cases):
+  - **`HAS_RELIGION: RELIGION_X`** — the city has religion X present (`isHasReligion`).
+  - **`STATE_RELIGION: RELIGION_X`** — X is the player's (effective) state religion. *(Religion `StateReligionCommerces`.)*
+  - **`HOLY_CITY: RELIGION_X`** — this city is X's holy city (`isHolyCity`). *(Religion `HolyCityCommerces`.)*
+  - **`IS_CAPITAL: true`** — this city is the capital. *(Many capital-specific bonuses in Trait + Civic; the
+    committed civic `capital` member retrofits to this later.)*
 
 ---
 

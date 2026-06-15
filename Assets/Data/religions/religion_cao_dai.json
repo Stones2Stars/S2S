@@ -1,0 +1,91 @@
+{
+ "type": "RELIGION_CAO_DAI",
+ "description": "TXT_KEY_TECH_CAO_DAI",
+ "civilopedia": "TXT_KEY_TECH_CAO_DAI_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAO_DAI_CATHEDRAL",
+   "BUILDING_CAO_DAI_MONASTERY",
+   "BUILDING_CAO_DAI_TEMPLE"
+  ],
+  "units": [
+   "UNIT_CAODAI_MISSIONARY"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_CAO_DAI"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_CAO_DAI"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 5,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_CAO_DAI"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_CAO_DAI"
+     }
+    }
+   ]
+  }
+ },
+ "religionInfluence": {
+  "city": {
+   "buildings": {
+    "BUILDING_CAO_DAI_CATHEDRAL": {
+     "flat": 3
+    },
+    "BUILDING_CAO_DAI_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_CAO_DAI_TEMPLE": {
+     "flat": 2
+    },
+    "BUILDING_GREAT_TEMPLE_TAY_NINH": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "shrine": {
+  "gold": 1,
+  "culture": 3
+ },
+ "art": {
+  "tgaIndex": 24,
+  "icon": "Art/Interface/Buttons/religions/Caodai.dds",
+  "techButton": "Art/Interface/Buttons/TechTree/Found_Caodai.dds",
+  "genericTechButton": "Art/Interface/Buttons/TechTree/Caodai.dds",
+  "movieFile": "Art/Cutscene/Druid_Generic_Found.nif",
+  "movieSound": "AS2D_BUILD_DRUID_MOVIE",
+  "sound": "AS2D_BUILD_BUDDHIST"
+ },
+ "identity": {
+  "spreadFactor": 50
+ }
+}

@@ -1,0 +1,102 @@
+{
+ "type": "RELIGION_SHINTO",
+ "description": "TXT_KEY_TECH_SHINTO",
+ "civilopedia": "TXT_KEY_TECH_SHINTO_PEDIA",
+ "adjective": "TXT_KEY_TECH_SHINTO_ADJECTIVE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ITSUKUSHIMA_SHRINE",
+   "BUILDING_MATSUMOTO_CASTLE",
+   "BUILDING_SHINTO_JINGU",
+   "BUILDING_SHINTO_MONASTERY",
+   "BUILDING_SHINTO_TEMPLE"
+  ],
+  "units": [
+   "UNIT_SHINTO_MISSIONARY"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_SHINTO"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_SHINTO"
+     }
+    }
+   ]
+  }
+ },
+ "religionInfluence": {
+  "city": {
+   "buildings": {
+    "BUILDING_SHINTO_JINGU": {
+     "flat": 3
+    },
+    "BUILDING_SHINTO_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_SHINTO_TEMPLE": {
+     "flat": 2
+    },
+    "BUILDING_THE_ISE_JINGU": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "shrine": {
+  "gold": 1,
+  "culture": 1
+ },
+ "grants": {
+  "freeUnit": "UNIT_SHINTO_MISSIONARY",
+  "numFreeUnits": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "tgaIndex": 19,
+  "icon": "Art/Interface/Buttons/Religions/Shintoism.dds",
+  "techButton": "Art/Interface/Buttons/TechTree/Found_Shintoism.dds",
+  "genericTechButton": "Art/Interface/Buttons/TechTree/Shintoism.dds",
+  "movieFile": "Art/Cutscene/Shinto_Generic_Found.nif",
+  "movieSound": "AS2D_BUILD_SHINTO_MOVIE",
+  "sound": "AS2D_BUILD_SHINTO"
+ },
+ "identity": {
+  "spreadFactor": 20
+ }
+}

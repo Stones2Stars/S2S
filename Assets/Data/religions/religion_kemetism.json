@@ -1,0 +1,130 @@
+{
+ "type": "RELIGION_KEMETISM",
+ "description": "TXT_KEY_TECH_KEMETISM",
+ "civilopedia": "TXT_KEY_TECH_KEMETISM_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAT_SHRINE",
+   "BUILDING_OBELISK",
+   "BUILDING_TEMPLE_OF_CHONS",
+   "BUILDING_TEMPLE_OF_ISIS",
+   "BUILDING_TEMPLE_OF_MUT",
+   "BUILDING_TEMPLE_OF_OSIRIS",
+   "BUILDING_TEMPLE_OF_PTAH",
+   "BUILDING_TEMPLE_OF_RA",
+   "BUILDING_TEMPLE_OF_SETH",
+   "BUILDING_TEMPLE_OF_TOTH"
+  ],
+  "units": [
+   "UNIT_EGYPT_MYTH_MISSIONARY",
+   "UNIT_RA_FIST",
+   "UNIT_RA_KNIGHT"
+  ]
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_KEMETISM"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_KEMETISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_KEMETISM"
+     }
+    }
+   ]
+  }
+ },
+ "religionInfluence": {
+  "city": {
+   "buildings": {
+    "BUILDING_TEMPLE_OF_PTAH": {
+     "flat": 4
+    },
+    "BUILDING_TEMPLE_OF_TOTH": {
+     "flat": 4
+    },
+    "BUILDING_TEMPLE_OF_ISIS": {
+     "flat": 3
+    },
+    "BUILDING_TEMPLE_OF_OSIRIS": {
+     "flat": 3
+    },
+    "BUILDING_TEMPLE_OF_SETH": {
+     "flat": 3
+    },
+    "BUILDING_TEMPLE_OF_MUT": {
+     "flat": 3
+    },
+    "BUILDING_TEMPLE_OF_CHONS": {
+     "flat": 1
+    },
+    "BUILDING_TEMPLE_OF_RA": {
+     "flat": 2
+    },
+    "BUILDING_THE_KARNAK_TEMPLE_COMPLEX": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "shrine": {
+  "culture": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "tgaIndex": 9,
+  "icon": "Art/Interface/Buttons/Religions/Egypt.dds",
+  "techButton": "Art/Interface/Buttons/TechTree/Found_kemetism.dds",
+  "genericTechButton": "Art/Interface/Buttons/TechTree/Kemetism.dds",
+  "movieFile": "Art/Cutscene/Egyptian_Found.nif",
+  "movieSound": "AS2D_BUILD_RA_MOVIE",
+  "sound": "AS2D_BUILD_RA"
+ },
+ "identity": {
+  "spreadFactor": 20
+ }
+}

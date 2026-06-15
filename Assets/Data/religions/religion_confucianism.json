@@ -1,0 +1,132 @@
+{
+ "type": "RELIGION_CONFUCIANISM",
+ "description": "TXT_KEY_TECH_CONFUCIANISM",
+ "civilopedia": "TXT_KEY_TECH_CONFUCIANISM_PEDIA",
+ "adjective": "TXT_KEY_TECH_CONFUCIANISM_ADJECTIVE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CONFUCIAN_ACADEMY",
+   "BUILDING_CONFUCIAN_MONASTERY",
+   "BUILDING_CONFUCIAN_SCHOOL",
+   "BUILDING_CONFUCIAN_TEMPLE",
+   "BUILDING_DOSAN_SEOWON"
+  ],
+  "units": [
+   "UNIT_CONFUCIAN_MISSIONARY"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_CONFUCIANISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_CONFUCIANISM"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_CONFUCIANISM"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_CONFUCIANISM"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_CONFUCIANISM"
+     }
+    }
+   ]
+  }
+ },
+ "religionInfluence": {
+  "city": {
+   "buildings": {
+    "BUILDING_CONFUCIAN_SCHOOL": {
+     "flat": 6
+    },
+    "BUILDING_CONFUCIAN_ACADEMY": {
+     "flat": 1
+    },
+    "BUILDING_CONFUCIAN_MONASTERY": {
+     "flat": 1
+    },
+    "BUILDING_THE_KONG_MIAO": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "shrine": {
+  "gold": 1,
+  "culture": 1
+ },
+ "grants": {
+  "freeUnit": "UNIT_CONFUCIAN_MISSIONARY",
+  "numFreeUnits": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "tgaIndex": 5,
+  "icon": "Art/Interface/Buttons/Religions/Confucianism.dds",
+  "techButton": "Art/Interface/Buttons/TechTree/Found_Confucianism.dds",
+  "genericTechButton": "Art/Interface/Buttons/TechTree/Confucianism.dds",
+  "movieFile": "Art/Movies/Religion/Confucianism/Con_Found.nif",
+  "movieSound": "AS2D_BUILD_CONFUCIAN_MOVIE",
+  "sound": "AS2D_BUILD_CONFUCIAN"
+ },
+ "identity": {
+  "spreadFactor": 50
+ }
+}

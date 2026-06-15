@@ -1,0 +1,85 @@
+{
+ "type": "RELIGION_SIKHISM",
+ "description": "TXT_KEY_TECH_SIKHISM",
+ "civilopedia": "TXT_KEY_TECH_SIKHISM_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SIKH_CATHEDRAL",
+   "BUILDING_SIKH_GURDWARA"
+  ],
+  "units": [
+   "UNIT_SIKH_MISSIONARY"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_SIKHISM"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_SIKHISM"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_SIKHISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_SIKHISM"
+     }
+    }
+   ]
+  }
+ },
+ "religionInfluence": {
+  "city": {
+   "buildings": {
+    "BUILDING_SIKH_CATHEDRAL": {
+     "flat": 2
+    },
+    "BUILDING_SIKH_GURDWARA": {
+     "flat": 2
+    },
+    "BUILDING_THE_GOLDEN_TEMPLE": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "shrine": {
+  "gold": 1
+ },
+ "art": {
+  "tgaIndex": 17,
+  "icon": "Art/Interface/Buttons/Religions/sikhism.dds",
+  "techButton": "Art/Interface/Buttons/TechTree/Found_sikhism.dds",
+  "genericTechButton": "Art/Interface/Buttons/TechTree/Sikhism.dds",
+  "movieFile": "Art/Cutscene/Sikh_generic_found.nif",
+  "sound": "AS2D_BUILD_HINDU"
+ },
+ "identity": {
+  "spreadFactor": 16
+ }
+}

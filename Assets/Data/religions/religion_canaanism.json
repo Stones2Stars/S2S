@@ -1,0 +1,58 @@
+{
+ "type": "RELIGION_CANAANISM",
+ "description": "TXT_KEY_TECH_CANAANISM",
+ "civilopedia": "TXT_KEY_TECH_CANAANISM_PEDIA",
+ "adjective": "TXT_KEY_TECH_CANAANISM_ADJECTIVE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CANAANITE_CATHEDRAL",
+   "BUILDING_CANAANITE_MONASTERY",
+   "BUILDING_CANAANITE_TEMPLE"
+  ],
+  "units": [
+   "UNIT_CANAANITE_MISSIONARY"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_CANAANISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_CANAANISM"
+     }
+    }
+   ]
+  }
+ },
+ "religionInfluence": {
+  "city": {
+   "buildings": {
+    "BUILDING_CANAANITE_SHRINE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "shrine": {
+  "gold": 1
+ },
+ "art": {
+  "tgaIndex": 23,
+  "icon": "Art/Interface/Buttons/religions/Canaanism.dds",
+  "techButton": "Art/Interface/Buttons/TechTree/Found_Canaanism.dds",
+  "genericTechButton": "Art/Interface/Buttons/TechTree/Canaanism.dds",
+  "movieFile": "Art/CutScene/Canaanism_Generic_Found.nif",
+  "movieSound": "AS2D_BUILD_CANAANITE_MOVIE",
+  "sound": "AS2D_BUILD_CANAANITE"
+ },
+ "identity": {
+  "spreadFactor": 15
+ }
+}

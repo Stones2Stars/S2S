@@ -1,0 +1,115 @@
+{
+ "type": "RELIGION_MESOPOTAMISM",
+ "description": "TXT_KEY_TECH_MESOPOTAMISM",
+ "civilopedia": "TXT_KEY_TECH_MESOPOTAMISM_PEDIA",
+ "adjective": "TXT_KEY_TECH_MESOPOTAMISM_ADJECTIVE",
+ "enables": {
+  "buildings": [
+   "BUILDING_HAMMURABI_STELE_OF_LAWS",
+   "BUILDING_NIMRUD_PALACE",
+   "BUILDING_TEMPLE_OF_AN",
+   "BUILDING_TEMPLE_OF_ENKI",
+   "BUILDING_TEMPLE_OF_ENLIL",
+   "BUILDING_TEMPLE_OF_INANNA",
+   "BUILDING_TEMPLE_OF_KI",
+   "BUILDING_TEMPLE_OF_KI_CORN",
+   "BUILDING_TEMPLE_OF_KI_POTATO",
+   "BUILDING_TEMPLE_OF_KI_RICE",
+   "BUILDING_TEMPLE_OF_KI_WHEAT",
+   "BUILDING_THE_ISHTAR_GATE",
+   "BUILDING_ZIGGURAT"
+  ],
+  "units": [
+   "UNIT_MESO_MISSIONARY"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "HOLY_CITY": "RELIGION_MESOPOTAMISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_MESOPOTAMISM"
+     }
+    }
+   ]
+  }
+ },
+ "religionInfluence": {
+  "city": {
+   "buildings": {
+    "BUILDING_HAMMURABI_STELE_OF_LAWS": {
+     "flat": 2
+    },
+    "BUILDING_NIMRUD_PALACE": {
+     "flat": 6
+    },
+    "BUILDING_TEMPLE_OF_AN": {
+     "flat": 1
+    },
+    "BUILDING_TEMPLE_OF_ENKI": {
+     "flat": 1
+    },
+    "BUILDING_TEMPLE_OF_ENLIL": {
+     "flat": 1
+    },
+    "BUILDING_TEMPLE_OF_INANNA": {
+     "flat": 1
+    },
+    "BUILDING_TEMPLE_OF_KI": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "shrine": {
+  "gold": 1,
+  "culture": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "art": {
+  "tgaIndex": 15,
+  "icon": "Art/Interface/Buttons/Religions/Mesopotamian.dds",
+  "techButton": "Art/Interface/Buttons/TechTree/found_mesopotamism.dds",
+  "genericTechButton": "Art/Interface/Buttons/TechTree/Mesopotamian.dds",
+  "movieFile": "Art/Cutscene/Mesopotamian_Generic_Found.nif",
+  "movieSound": "AS2D_BUILD_MESOPOTAMIAN_MOVIE",
+  "sound": "AS2D_BUILD_MESOPOTAMIAN"
+ },
+ "identity": {
+  "spreadFactor": 20
+ }
+}
