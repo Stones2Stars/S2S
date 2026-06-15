@@ -19,12 +19,13 @@ import engine
 import curate_common as cc
 from store import Store, REPO
 
-# 2026-06-14 PM audit (wf verify-pocos): of the 6 fast-pathed "POCOs", only CivicOption is a true text+identity
-# holder (and even it is the civic category/slot AXIS, not "nothing"). The rest got proper curators or defer to
-# their parent monster: CultureLevel->curate_culturelevel, Hurry->curate_hurry, Victory->curate_victory,
-# BonusClass->curate_bonusclass; PromotionLine->Promotion pass, SpecialBuilding->Building pass (the latter two
-# stay here as mis-homed placeholders until their parent re-curates them). See the plan doc "AUDIT DONE" note.
-POCOS = ["CivicOptionInfo", "PromotionLineInfo", "SpecialBuildingInfo"]
+# 2026-06-14 PM audit (wf verify-pocos): of the 6 fast-pathed "POCOs", only CivicOption was a true text+identity
+# holder. The rest got proper curators or defer to their parent monster: CultureLevel->curate_culturelevel,
+# Hurry->curate_hurry, Victory->curate_victory, BonusClass->curate_bonusclass, and CivicOption->curate_civicoption
+# (split out at its Tier-A turn, info #10, 2026-06-15). PromotionLine->Promotion pass, SpecialBuilding->Building
+# pass — these two RIDE THEIR PARENT MONSTER and are NOT emitted here on their own turn; they remain mis-homed
+# placeholders until their parent re-curates them. So this batch now holds only the two deferred placeholders.
+POCOS = ["PromotionLineInfo", "SpecialBuildingInfo"]
 
 
 def folder(entity):
