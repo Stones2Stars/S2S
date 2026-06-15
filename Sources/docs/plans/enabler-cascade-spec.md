@@ -578,17 +578,21 @@ religion, connectable bonuses) feed the **gate**.
 - **team** — tech presence + tech-obsolescence → generation; **trade-connected bonus presence** → `requires`.
 - **empire** — civic / religion / corporation → `requires` (reversible means); per-civ research ban
   (`obsoletes`-shaped) → generation.
-- **area** — VICINITY bonus presence (`hasVicinityBonus`) → `requires`.
-- **city** — in-city buildings → generation/`requires` as applicable; the city is where the per-candidate
-  `requires` gate is finally evaluated.
+- **area** — CONTINENT / landmass scope (the far-coarse end of the spectrum). **NOT vicinity** (owner,
+  2026-06-15: "area is continents, far on the other side of the spectrum").
+- **city** — in-city buildings → generation/`requires`; **VICINITY bonus presence** (`hasVicinityBonus` — the
+  city can WORK the resource, i.e. it sits on a plot in the city's work radius, which is what lets a special
+  building be built there) → `requires`, at **CITY scope** (owner, 2026-06-15: "vicinity is a city scope, NOT
+  area"). The city is also where the per-candidate `requires` gate is finally evaluated.
 - **world** — game-wide presence + game-option gates (mostly load-prune, §10).
 
 **Trade-connected bonus — RESOLVED (owner): TEAM scope, gathered EARLY.** A trade-connected bonus comes in via the
 **team** and is added to `have` *earlier* than your local/vicinity bonuses (it's high on the spine; pass 1 gathers
 it before the area/city bonuses, §9). The per-city `CvCity::hasBonus = getNumBonuses()>0` is just the **local
 materialization** — each city's `have` = the team's trade-connected bonuses (added early) + its own vicinity
-bonuses (added later). So there is no empire-vs-city confusion: trade-connected = a **team** clause; vicinity = an
-**area/city** clause. Two scopes, gathered at two points in the right-then-down pass.
+bonuses (added later). So there is no empire-vs-city confusion: trade-connected = a **team** clause; vicinity = a
+**city** clause (the city can work the resource). Two scopes, gathered at two points in the right-then-down pass.
+(`area` is a THIRD, unrelated scope — continents/landmasses — never vicinity.)
 
 **Tally IS the higher-scope `have` (owner).** The scoped `have` splits cleanly: **city**-scope `have` is the
 per-city isolated gather; the **empire / team / world** scopes' `have` is the **tally module** (§7),

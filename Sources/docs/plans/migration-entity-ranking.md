@@ -36,6 +36,19 @@ consequences"); every info is a tightly-coupled curation with hidden ripples, wh
 be verified before the next. (Secondary: the config→…→monsters ordering only holds value if entities settle
 one at a time so later ones conform to earlier edges — the inversion rule.)
 
+**⛔ TWO HANDOVER/RESUME GATES — every handover MUST state them, every resuming agent MUST honor them (owner
+ruling 2026-06-15; the handover process is the countermeasure to context-poisoning on compaction, and it must
+not drift):**
+1. **READ ALL THE SURROUNDING DOCUMENTATION before touching anything** — not just a skim of the resume list.
+   Mandatory each resume: the two specs, `building-cascade-conversion.md`, this ranking, **`migration-renames.md`
+   (the canonical old→new registry + the decisions already made)**, the entity's
+   `Tools/Migration/classifications/*.json`, and the prior handovers. Look concepts UP in the docs; never
+   reconstruct them from memory or from how the C++ currently reads/loads (the C++ is reworked to fit the data,
+   NOT ground truth). A spec line that conflicts with a later owner ruling is stale — flag it, the ruling wins.
+2. **THE OWNER VISUALLY INSPECTS THE WRITTEN JSON AND EXPLICITLY APPROVES BEFORE EVERY COMMIT.** curate →
+   `--write` → owner inspects the actual `Assets/Data/.../*.json` → explicit approval → commit. Approval of the
+   MODEL/scope in discussion is NOT approval to commit the JSON. Never commit without the inspection + go-ahead.
+
 **⛔ THREE GOVERNING RULINGS for what the JSON IS (owner, 2026-06-15) — they OVERRIDE any "make it match the
 code" instinct:**
 1. **Author the data for WHAT IT IS, not how the current C++ fetches/combines it.** Choose the unit/shape from
