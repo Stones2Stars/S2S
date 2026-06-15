@@ -1,0 +1,15 @@
+{
+ "type": "VOTE_DEFENSIVE_PACT_CV",
+ "description": "TXT_KEY_VOTE_CONGVIENNA_DEFENSIVE_PACT",
+ "voteSource": [
+  "DIPLOVOTE_CVIENNA"
+ ],
+ "threshold": {
+  "population": 62,
+  "minVoters": 3,
+  "stateReligionPercent": 100
+ },
+ "effect": {
+  "defensivePact": true
+ }
+}

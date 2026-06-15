@@ -1,0 +1,15 @@
+{
+ "type": "VOTE_ASSIGN_CITY",
+ "description": "TXT_KEY_VOTE_ASSIGN_CITY",
+ "voteSource": [
+  "DIPLOVOTE_POPE"
+ ],
+ "threshold": {
+  "population": 62,
+  "minVoters": 3,
+  "stateReligionPercent": 100
+ },
+ "effect": {
+  "assignCity": true
+ }
+}

@@ -1,0 +1,15 @@
+{
+ "type": "VOTE_CONGVIENNA_FORCE_WAR",
+ "description": "TXT_KEY_VOTE_CONGVIENNA_FORCE_WAR",
+ "voteSource": [
+  "DIPLOVOTE_CVIENNA"
+ ],
+ "threshold": {
+  "population": 62,
+  "minVoters": 3,
+  "stateReligionPercent": 100
+ },
+ "effect": {
+  "forceWar": true
+ }
+}

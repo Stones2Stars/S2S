@@ -28,10 +28,13 @@ Era and GameSpeed feed the SAME world-scope families. Notable rulings (owner 202
   dropping it.
 - The barbarian WORLD-STATE gates (bNoGoodies/bNoBarbUnits/bNoBarbCities) are LIVE C++ rules — goody placement
   (CvMapGenerator.cpp:772), barb-unit spawn (CvGame.cpp:7180), barb-city spawn (CvGame.cpp:6941) — so NOT dead,
-  but 0/absent in every current era -> not emitted (zero-drop). Their proper home is a WORLD-STATE section (NOT
-  identity, NOT a modifier family); that section's DESIGN IS DEFERRED to the Vote pass (Vote actually sets such
-  bools, so it gets designed against real data). If an era ever sets one it surfaces in the curator's leftover
-  report rather than silently mis-routing. iInitialCityMaintenancePercent is likewise 0 in every era (revisit if set).
+  but 0/absent in every current era -> not emitted (zero-drop). These are world-RULE GATES (NOT identity, NOT a
+  modifier family). NB they have NO home yet: the Vote pass was expected to resolve this but did NOT — Vote's
+  bools turned out to be a DIFFERENT mechanic (on-pass vote OUTCOMES handled by processVote, not world-rule
+  gates; 2026-06-15). So a world-state-gate concept would need SEPARATE planning if wanted (owner stance, cf.
+  the "no cascading config section" ruling) — moot today since no era sets one. If an era ever sets one it
+  surfaces in the curator's leftover report rather than silently mis-routing.
+  iInitialCityMaintenancePercent is likewise 0 in every era (revisit if set).
 
   python3 curate_era.py --sample ERA_ANCIENT
   python3 curate_era.py --write

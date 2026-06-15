@@ -12,7 +12,20 @@ vote RESULT). So the effect fields below feed processVote, not a cascade.
 **A vote (really a "DiplomaticProposal" — rename DEFERRED to another day, owner 2026-06-14) participates in
 NEITHER cascade: no cascade modifier, no cascade enabler. It is a self-contained PROPOSAL — all its data lives ON
 it as intrinsic config for the EXISTING vote subsystem (CvGame voting), and it is "relatively neatly packaged":**
-- `voteSource` — which VoteSource(s)/council may raise this proposal (DiploVotes; DIPLOVOTE_UN/POPE/CVIENNA).
+
+⚠ This SUPERSEDES the ranking's "Vote world-state bools → enables-family" note (re-verify vs the C++, 2026-06-15):
+the C++ trace shows the bools are on-pass OUTCOMES applied DIRECTLY by the hardcoded processVote ladder
+(CvGame.cpp:7924 changeFreeTradeCount(kVote.isFreeTrade()?…), isForceCivic, …). They are NOT modifiers or
+enablers IN AND OF THEMSELVES (owner 2026-06-15) — processVote handles the outcome (the data-vs-machinery
+boundary, modifier-spec §0.6): the vote carries the `effect` PAYLOAD, processVote is the machinery that applies
+it. So `effect` is bespoke config (like Victory's `condition`), not a cascade section. No DllExport on CvVoteInfo (not
+EXE-bound; verified 2026-06-15). NB Vote does NOT resolve Era's deferred world-state question: Era's
+bNoGoodies/bNoBarbUnits/bNoBarbCities are world-RULE GATES, a DIFFERENT mechanic from these vote outcomes — that
+world-state-gate concept has no home and would need SEPARATE planning if wanted (owner stance, cf. config
+sections); moot today since no era sets one.
+- `voteSource` — which VoteSource(s)/council may raise this proposal (DiploVotes). The three sources are the
+  diplomatic-voting bodies: DIPLOVOTE_UN = the United Nations, DIPLOVOTE_POPE = the Apostolic Palace, and
+  DIPLOVOTE_CVIENNA = the Congress of Vienna — the UN + the two diplomatic WONDERS (owner, 2026-06-15).
   Intrinsic to the proposal (which council it belongs to), read by `isVoteSourceType`; NOT a cascade enabler.
 - `threshold` — pass rules: `iPopulationThreshold` (% of eligible votes), `iMinVoters` (min eligible),
   `iStateReligionVotePercent` (per-player vote-weight bonus when state religion matches; 0 dropped).

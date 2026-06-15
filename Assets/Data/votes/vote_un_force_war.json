@@ -1,0 +1,14 @@
+{
+ "type": "VOTE_UN_FORCE_WAR",
+ "description": "TXT_KEY_UN_VOTE_FORCE_WAR",
+ "voteSource": [
+  "DIPLOVOTE_UN"
+ ],
+ "threshold": {
+  "population": 62,
+  "minVoters": 3
+ },
+ "effect": {
+  "forceWar": true
+ }
+}

@@ -1,0 +1,15 @@
+{
+ "type": "VOTE_CONGVIENNA_FORCE_NO_TRADE",
+ "description": "TXT_KEY_VOTE_CONGVIENNA_FORCE_NO_TRADE",
+ "voteSource": [
+  "DIPLOVOTE_CVIENNA"
+ ],
+ "threshold": {
+  "population": 62,
+  "minVoters": 3,
+  "stateReligionPercent": 100
+ },
+ "effect": {
+  "forceNoTrade": true
+ }
+}

@@ -1,0 +1,15 @@
+{
+ "type": "VOTE_FORCE_WAR",
+ "description": "TXT_KEY_VOTE_FORCE_WAR",
+ "voteSource": [
+  "DIPLOVOTE_POPE"
+ ],
+ "threshold": {
+  "population": 62,
+  "minVoters": 3,
+  "stateReligionPercent": 100
+ },
+ "effect": {
+  "forceWar": true
+ }
+}

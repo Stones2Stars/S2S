@@ -1,0 +1,14 @@
+{
+ "type": "VOTE_NO_NUKES",
+ "description": "TXT_KEY_VOTE_NO_NUKES",
+ "voteSource": [
+  "DIPLOVOTE_UN"
+ ],
+ "threshold": {
+  "population": 51,
+  "minVoters": 3
+ },
+ "effect": {
+  "noNukes": true
+ }
+}

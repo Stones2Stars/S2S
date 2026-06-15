@@ -1,0 +1,12 @@
+{
+ "type": "VOTE_VICTORY",
+ "description": "TXT_KEY_VOTE_VICTORY",
+ "voteSource": [
+  "DIPLOVOTE_UN"
+ ],
+ "threshold": {
+  "population": 62,
+  "minVoters": 3
+ },
+ "role": "victory"
+}
