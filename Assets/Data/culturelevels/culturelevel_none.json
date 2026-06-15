@@ -1,0 +1,12 @@
+{
+ "type": "CULTURELEVEL_NONE",
+ "description": "TXT_KEY_CULTURELEVEL_NONE",
+ "identity": {
+  "cityRadius": 2,
+  "maxWorldWonders": 1,
+  "maxTeamWonders": 1,
+  "maxNationalWonders": 2,
+  "maxNationalWondersOCC": 4,
+  "cultureThreshold": 0
+ }
+}

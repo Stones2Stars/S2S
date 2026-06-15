@@ -1,0 +1,19 @@
+{
+ "type": "CULTURELEVEL_PHENOMENAL",
+ "description": "TXT_KEY_CULTURELEVEL_PHENOMENAL",
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 45
+   }
+  }
+ },
+ "identity": {
+  "cityRadius": 3,
+  "maxWorldWonders": 12,
+  "maxTeamWonders": 14,
+  "maxNationalWonders": 25,
+  "maxNationalWondersOCC": 50,
+  "cultureThreshold": 532480
+ }
+}

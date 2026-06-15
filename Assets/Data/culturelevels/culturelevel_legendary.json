@@ -1,0 +1,19 @@
+{
+ "type": "CULTURELEVEL_LEGENDARY",
+ "description": "TXT_KEY_CULTURELEVEL_LEGENDARY",
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 35
+   }
+  }
+ },
+ "identity": {
+  "cityRadius": 3,
+  "maxWorldWonders": 8,
+  "maxTeamWonders": 7,
+  "maxNationalWonders": 20,
+  "maxNationalWondersOCC": 40,
+  "cultureThreshold": 33280
+ }
+}

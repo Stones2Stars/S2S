@@ -1,0 +1,24 @@
+{
+ "type": "CULTURELEVEL_STUPENDOUS",
+ "description": "TXT_KEY_CULTURELEVEL_STUPENDOUS",
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 42
+   }
+  }
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_CULTURE_REALISTIC_SPREAD"
+  ]
+ },
+ "identity": {
+  "cityRadius": 3,
+  "maxWorldWonders": 11,
+  "maxTeamWonders": 13,
+  "maxNationalWonders": 23,
+  "maxNationalWondersOCC": 46,
+  "cultureThreshold": 266240
+ }
+}

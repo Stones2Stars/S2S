@@ -1,0 +1,29 @@
+{
+ "type": "CULTURELEVEL_ELEGANT",
+ "description": "TXT_KEY_CULTURELEVEL_ELEGANT",
+ "enables": {
+  "buildings": [
+   "BUILDING_MARTIAN_GOVERNING_COUNCIL"
+  ]
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 21
+   }
+  }
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_CULTURE_REALISTIC_SPREAD"
+  ]
+ },
+ "identity": {
+  "cityRadius": 2,
+  "maxWorldWonders": 5,
+  "maxTeamWonders": 5,
+  "maxNationalWonders": 14,
+  "maxNationalWondersOCC": 28,
+  "cultureThreshold": 4160
+ }
+}

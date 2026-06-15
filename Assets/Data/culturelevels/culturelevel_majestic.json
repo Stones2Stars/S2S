@@ -1,0 +1,24 @@
+{
+ "type": "CULTURELEVEL_MAJESTIC",
+ "description": "TXT_KEY_CULTURELEVEL_MAJESTIC",
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 47
+   }
+  }
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_CULTURE_REALISTIC_SPREAD"
+  ]
+ },
+ "identity": {
+  "cityRadius": 3,
+  "maxWorldWonders": 13,
+  "maxTeamWonders": 15,
+  "maxNationalWonders": 27,
+  "maxNationalWondersOCC": 54,
+  "cultureThreshold": 1064960
+ }
+}

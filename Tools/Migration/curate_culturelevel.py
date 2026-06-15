@@ -12,8 +12,9 @@ light-four-classification.json) shows:
   (wired in store.PREREQ_FIELDS; CultureLevel is the conditioner you must HAVE, so it inverts onto the level).
 - everything else is NON-ADDITIVE per-level intrinsic -> `identity` (section 3: caps/overrides are not cascade
   families): `iCityRadius` (REPLACE/override workable radius), the 4 wonder CAPS (max world/team/national[/OCC]).
-- `PrereqGameOption` -> a per-game availability gate (load-prune; also computes the runtime active level,
-  CvGlobals.cpp:3587) -> `identity.prereqGameOption`.
+- `PrereqGameOption` -> a load-stable per-game availability gate (also computes the runtime active level,
+  CvGlobals.cpp:3587) -> `loadPrune.onGameOptions` (the enabler-spec §6/§12 auxiliary section — named as its own
+  section, NOT parked in identity; 2026-06-15 retrofit).
 - `m_iLevel` is RUNTIME-derived (no XML tag) -> not emitted. `ReplacementID`/`ReplacementCondition` are the
   CvInfoReplacements conditional-whole-Info edge (handled by store): the base CULTURELEVEL_POOR carries
   `replacedBy` -> CULTURELEVEL_ALT_POOR under GAMEOPTION_CULTURE_1_CITY_TILE_FOUNDING; ALT_POOR curates as its
@@ -22,11 +23,12 @@ light-four-classification.json) shows:
 SpeedThresholds COLLAPSE (owner ruling 2026-06-14): the per-speed table is REDUNDANT precomputation of
 `base(Normal) * GameSpeed.iSpeedPercent/100` — the values are identical to iSpeedPercent and the GameSpeed XML
 even notes the coupling ("If you remove any of these you need to update CultureLevelInfos.xml"). So the scale
-"belongs in GameSpeed" (owner): it is emitted there as `cultureThreshold.world.percent` = iSpeedPercent
-(curate_gamespeed.py), and CultureLevel keeps ONLY the NORMAL base count. The reader derives
-`threshold(level, speed) = base * GameSpeed.cultureThreshold.world.percent / 100`. 0 levels break the ratio (all
-geometric); a hypothetical non-geometric level is kept losslessly as a per-speed override. Raw culture points,
-NOT x100 (the call site x100s, e.g. CvCity.cpp:13008).
+"belongs in GameSpeed" (owner): GameSpeed carries it as its master pace percentage, and CultureLevel keeps ONLY
+the NORMAL base count. The reader derives `threshold(level, speed) = base * GameSpeed.speed.world.percent / 100`.
+NB (2026-06-15): GameSpeed was COLLAPSED to a single `speed.world.percent` (info #1) — the earlier separate
+`cultureThreshold` member is GONE; the derivation reads `GameSpeed.speed` (same value, iSpeedPercent). 0 levels
+break the ratio (all geometric — verified, override count 0); a hypothetical non-geometric level is kept
+losslessly as a per-speed override. Raw culture points, NOT x100 (the call site x100s, e.g. CvCity.cpp:13008).
 
   python3 curate_culturelevel.py --sample CULTURELEVEL_FLEDGLING
   python3 curate_culturelevel.py --write
@@ -106,6 +108,9 @@ def curate(typ, rec, store):
         # top-level `defense` family, member `amount` = additive extra-defense %. The sibling `min` member
         # (the floor clamp some buildings raise above 0, e.g. >=25%) is authored at the Building pass (iMinDefense).
         out["defense"] = {"city": {"amount": {"percent": int(cdm)}}}
+    pgo = engine.text(rec.find("PrereqGameOption"))
+    if pgo and pgo != "NONE":                                # load-stable game-option gate -> loadPrune (§6/§12)
+        out["loadPrune"] = OrderedDict([("onGameOptions", [pgo])])
     rb = _replaced_by(typ, store)
     if rb:
         out["replacedBy"] = rb
@@ -120,9 +125,6 @@ def curate(typ, rec, store):
     thr = _collapse_thresholds(rec)
     if thr is not None:
         identity["cultureThreshold"] = thr
-    pgo = engine.text(rec.find("PrereqGameOption"))
-    if pgo and pgo != "NONE":                                # per-game availability gate (load-prune)
-        identity["prereqGameOption"] = pgo
     if identity:
         out["identity"] = identity
     return out

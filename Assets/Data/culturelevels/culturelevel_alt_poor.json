@@ -1,0 +1,19 @@
+{
+ "type": "CULTURELEVEL_ALT_POOR",
+ "description": "TXT_KEY_CULTURELEVEL_POOR",
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 3
+   }
+  }
+ },
+ "identity": {
+  "cityRadius": 2,
+  "maxWorldWonders": 1,
+  "maxTeamWonders": 1,
+  "maxNationalWonders": 4,
+  "maxNationalWondersOCC": 8,
+  "cultureThreshold": 20
+ }
+}

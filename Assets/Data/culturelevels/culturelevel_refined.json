@@ -1,0 +1,24 @@
+{
+ "type": "CULTURELEVEL_REFINED",
+ "description": "TXT_KEY_CULTURELEVEL_REFINED",
+ "enables": {
+  "buildings": [
+   "BUILDING_CITY_COUNCIL"
+  ]
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 18
+   }
+  }
+ },
+ "identity": {
+  "cityRadius": 2,
+  "maxWorldWonders": 4,
+  "maxTeamWonders": 4,
+  "maxNationalWonders": 12,
+  "maxNationalWondersOCC": 24,
+  "cultureThreshold": 2080
+ }
+}

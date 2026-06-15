@@ -1,0 +1,19 @@
+{
+ "type": "CULTURELEVEL_MONUMENTAL",
+ "description": "TXT_KEY_CULTURELEVEL_MONUMENTAL",
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "identity": {
+  "cityRadius": 3,
+  "maxWorldWonders": 14,
+  "maxTeamWonders": 16,
+  "maxNationalWonders": 31,
+  "maxNationalWondersOCC": 62,
+  "cultureThreshold": 2129920
+ }
+}

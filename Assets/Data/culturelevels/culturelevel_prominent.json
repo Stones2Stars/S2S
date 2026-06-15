@@ -1,0 +1,24 @@
+{
+ "type": "CULTURELEVEL_PROMINENT",
+ "description": "TXT_KEY_CULTURELEVEL_PROMINENT",
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 15
+   }
+  }
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_CULTURE_REALISTIC_SPREAD"
+  ]
+ },
+ "identity": {
+  "cityRadius": 2,
+  "maxWorldWonders": 3,
+  "maxTeamWonders": 3,
+  "maxNationalWonders": 10,
+  "maxNationalWondersOCC": 20,
+  "cultureThreshold": 1040
+ }
+}

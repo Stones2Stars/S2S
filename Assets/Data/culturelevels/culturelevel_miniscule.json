@@ -1,0 +1,24 @@
+{
+ "type": "CULTURELEVEL_MINISCULE",
+ "description": "TXT_KEY_CULTURELEVEL_MINISCULE",
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 5
+   }
+  }
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_CULTURE_REALISTIC_SPREAD"
+  ]
+ },
+ "identity": {
+  "cityRadius": 2,
+  "maxWorldWonders": 1,
+  "maxTeamWonders": 1,
+  "maxNationalWonders": 5,
+  "maxNationalWondersOCC": 10,
+  "cultureThreshold": 65
+ }
+}
