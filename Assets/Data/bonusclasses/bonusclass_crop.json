@@ -1,0 +1,6 @@
+{
+ "type": "BONUSCLASS_CROP",
+ "mapGeneration": {
+  "uniqueRange": 2
+ }
+}

@@ -115,3 +115,12 @@ bespoke `conversion` section.
 | `iGoldPerProduction` | `conversion.goldPerProduction` | Gold spent per hammer rushed (the gold-rush rate; HURRY_GOLD). Mutually exclusive with the pop rate per hurry. |
 | `iProductionPerPopulation` | `conversion.productionPerPopulation` | Hammers gained per population sacrificed (the pop/slavery-rush rate; HURRY_POPULATION). |
 | `bAnger` | `causesAnger` | Using this hurry inflicts temporary hurry-anger (manual rename for clarity). |
+
+## BonusClass  (`curate_bonusclass.py`)
+
+A pure structural bonus-CATEGORY axis (the categorization is consumed bonus-side via `bonusClassType`). The class
+entity carries exactly ONE field; classes with no constraint emit a bare `{type}` (faithful — the category exists).
+
+| old XML | new JSON path | note |
+|---|---|---|
+| `iUniqueRange` | `mapGeneration.uniqueRange` | Min map-gen spacing preventing same-class bonuses stacking (a C2C_World mapscript feature, `CvMapGenerator:60-101`). Re-homed from a parked `identity` into the `mapGeneration` group (parallels the bonus's own uniqueRange). 0 = no constraint, dropped. |

@@ -1,0 +1,6 @@
+{
+ "type": "BONUSCLASS_LIVESTOCK",
+ "mapGeneration": {
+  "uniqueRange": 3
+ }
+}
