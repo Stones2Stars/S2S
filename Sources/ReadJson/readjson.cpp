@@ -256,7 +256,18 @@ static std::string render_cond(const picojson::value& v) {
     if (mget(o, "enabled")) conj.push_back("only while " + render_cond(*mget(o, "enabled")));
     if (!conj.empty()) return join(conj, " AND ");
     if (mget(o, "type")) return render_atom(o);
-    if (o.size() == 1) return o.begin()->first + " " + num(o.begin()->second);   // {PRED: param}
+    if (o.size() == 1) {   // {PRED: param} — param may be a value, or an object like {min:N}/{min,max}
+        const std::string& k = o.begin()->first;
+        const picojson::value& p = o.begin()->second;
+        if (p.is<picojson::object>()) {
+            const picojson::object& po = p.get<picojson::object>();
+            std::string s = k;
+            if (mget(po, "min")) s += " >=" + num(*mget(po, "min"));
+            if (mget(po, "max")) s += " <=" + num(*mget(po, "max"));
+            return s;
+        }
+        return k + " " + num(p);
+    }
     return "?";
 }
 // flatten a modifier family to readable "scope.member.unit=value [while cond]" leaves
