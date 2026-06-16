@@ -1,0 +1,30 @@
+{
+ "type": "TERRAIN_DISTANT_COSMOS",
+ "description": "TXT_KEY_TERRAIN_DISTANT_COSMOS",
+ "civilopedia": "TXT_KEY_TERRAIN_DISTANT_COSMOS_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_DISTANT_COSMOS",
+  "icon": "Art/Interface/Buttons/WorldBuilder/distant_cosmos.dds"
+ },
+ "identity": {
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

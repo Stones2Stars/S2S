@@ -1,0 +1,36 @@
+{
+ "type": "TERRAIN_LUNAR_REGOLITH",
+ "description": "TXT_KEY_TERRAIN_LUNAR_REGOLITH",
+ "civilopedia": "TXT_KEY_TERRAIN_LUNAR_REGOLITH_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "buildTime": {
+  "plot": {
+   "percent": 25
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_LUNAR_REGOLITH",
+  "icon": "Art/Interface\\Buttons\\WorldBuilder\\lunarbarren.dds",
+  "worldSoundscapeAudioScript": "ASSS_TUNDRA_SELECT_AMB"
+ },
+ "identity": {
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

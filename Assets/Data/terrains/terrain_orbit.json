@@ -1,0 +1,31 @@
+{
+ "type": "TERRAIN_ORBIT",
+ "description": "TXT_KEY_TERRAIN_ORBIT",
+ "civilopedia": "TXT_KEY_TERRAIN_ORBIT_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_CISLUNAR_SPACE",
+  "icon": "Art/Interface/Buttons/WorldBuilder/Space.dds"
+ },
+ "identity": {
+  "found": true,
+  "impassable": true,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

@@ -272,6 +272,38 @@ modifiers on the TARGET they boost (keep-on-source, modifier-spec §6), authored
 | map-gen fields (`iPlacementOrder`/`iConstAppearance`/`Rands`/`iTilesPer`/`bHills`/`TerrainBooleans`/…) | `mapGeneration.{…}` | Placement/spawn config grouped out of the identity catch-all (de-Hungarianized). |
 | Building/Unit/Project/Civic/Trait `Bonus*Changes`/`Bonus*Modifiers` | — (NOT on the bonus) | Conditioned-on-bonus modifiers stay on the SOURCE (keep-on-source, §6), gated by the bonus; authored at the Building/Unit/Project pass (Civic empty/moot; Trait `BonusHappinessChanges` authored on the trait — see Trait above). The old `BONUS_BOOSTS` fold is REMOVED. |
 
+## Terrain  (`curate_terrain.py`)  — Tier C #20 (102 records: 42 base + 60 module space/planet terrains)
+
+A plot-leaf **TARGET** that CARRIES ITS OWN modifiers onto the plot it forms (owner 2026-06-16: the hill delivers
+hammers; a feature then modifies the plot on top). Every effect is a terrain-OWN deposit at **`plot` scope**; **NO
+inbound boost folds onto the terrain** — per the **deliveryguy ownership rule** (modifier-spec §6.1) a
+`Building.TerrainYieldChanges` stays on the building (it delivers the buff), a `Civic.TerrainYieldChanges` on the
+civic, an improvement/feature/route on itself. EXE-link: **1 `DllExport` (`getArtDefineTag`, an art FK) —
+unconstrained for data**. Enables nothing (`store.enabled_by(TERRAIN_*)` empty → no `enables`/`requires`/`grants`).
+`Categories`/`PropertyManipulators`/`bImpassable` are authored on **0/42** terrains → never emitted (consumers exist
+but no terrain populates them; `Categories` is also a dead TB-combat list). Per-field dispositions:
+`classifications/terrain-classification.json`. Mechanical de-Hungarian (`Description`→`description`) not re-logged.
+
+| old XML | new JSON path | note |
+|---|---|---|
+| `Yields` | `<yield>.plot.flat` (food/production/commerce) | The terrain's OWN base tile yield (grassland food, ocean food+commerce), summed into the plot's base-yield accumulator (`CvPlot.cpp:8077`). SPLIT per-yield families. The documented buried-in-identity trap (the first-pass mapping parked it in identity). |
+| `iMovement` | `movement.plot.flat` | The terrain's base per-plot move cost — **a `movement` FAMILY** (owner 2026-06-16: "movement is a family"). Terrain seeds the per-plot cost (`CvPlot.cpp:4555`); features/hills add on top. *(Distinct from Route #19, whose own move cost was authored `identity.movementCost` — routes combine by override/min; flagged for possible alignment.)* |
+| `iDefense` | `defense.plot.amount.percent` | Terrain's intrinsic tile-defense % — **a `defense` FAMILY** (owner 2026-06-16: a family, "improvable by a fort"; `member: amount`, the same member CultureLevel's `defense.city.amount.percent` uses). Terrain seeds the per-plot defense (`CvPlot.cpp:4400`); feature/hills/peak add. |
+| `iCultureDistance` | `cultureDistance.plot.flat` | **NEW `cultureDistance` family** (owner 2026-06-16: a summable family for the `REALISTIC_CULTURE` game option; "the base for the later culture-equilibrium structure — a sensible start"). `CvCity.cpp:6302+` accumulates `getCultureDistance()` across worked plots into a city total. |
+| `iBuildModifier` | `buildTime.plot.percent` | **NEW `buildTime` family** (owner 2026-06-16: ties to `workRate`/work-capacity — *"buildTime directly influences the turns a worker uses on a plot… work capacity and buildTime should be in the same family"*; the `buildTime`↔`workRate` unification is later structural work, flagged). `CvPlot.cpp:3607` multiplies the build time of work done on this terrain. |
+| `iHealthPercent` | — (DROPPED, cat i dead) | Dead on terrain: every `getHealthPercent` reader is Feature/Specialist/Improvement/Building, none against a terrain (pre-existing note `modifier-cascade-mapping.json:2667`); no Python reader. The capability lives on those entities. 9/42 populated but inert. |
+| `ArtDefineTag` | `art.artDefineTag` | The **ON-MAP terrain graphics** FK → `CIV4ArtDefines_Terrain.xml` (a separate art tier; owner 2026-06-16). Kept DISTINCT from the UI icon via a per-entity `art_rename` (the global `ArtDefineTag`→`icon` would collide with `Button`→`icon`, a silent loss). |
+| `Button` | `art.icon` | The UI icon (`.dds`). |
+| `FootstepSounds` / `WorldSoundscapeAudioScript` | `art.{footstepSounds, worldSoundscapeAudioScript}` | Audio art, kept faithfully (the atomic cutover replaces `CIV4TerrainInfos.xml`, so the audio must travel in the JSON). Verbose; **reorganizing audio art is deferred to the later art-data pass** (owner 2026-06-16: "leave the sounds, we deal with organizing that later"). |
+| `ClimateZoneType` / `iDistanceToLand` / `bFound` / `bFoundCoast` / `bFoundFreshWater` / `bFreshWaterTerrain` | `identity.{climateZoneType, distanceToLand, found, foundCoast, foundFreshWater, freshWaterTerrain}` | World-gen classification, city-found gates, fresh-water provision — read directly, never summed. |
+| `MapCategoryTypes` | `identity.mapCategories` | Live placement-gate classification array (`CvPlot::getMapCategories` → `isMapCategory<>` set-membership); matched by attribute, not summed → identity. Renamed for clarity. |
+| `Categories` / `PropertyManipulators` / `bImpassable` | — (not emitted) | 0/42 authored (see intro). |
+
+*Toolkit: registered `TerrainInfo` in `store.ENTITIES`; added `defense`/`cultureDistance`/`buildTime` to
+`FAMILY_ORDER` and an `art_rename` hook to `EntityConfig`/`curate_common`. RIVER is **not** a terrain field — it is a
+plot edge-attribute modelled as a conditional modifier gated by the new `HAS_RIVER` predicate, carried by its
+deliveryguy (feature/improvement/building) at those passes (enabler-spec §3, modifier-spec §6.1).*
+
 ## Route  (`curate_route.py`)  — Tier C #19 (21 records: 12 base + 9 module-added space routes)
 
 A small plot-leaf entity: a route lays movement cost + (optionally) its own tile yields onto the plot it

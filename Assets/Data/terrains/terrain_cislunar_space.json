@@ -1,0 +1,30 @@
+{
+ "type": "TERRAIN_CISLUNAR_SPACE",
+ "description": "TXT_KEY_TERRAIN_CISLUNAR_SPACE",
+ "civilopedia": "TXT_KEY_TERRAIN_CISLUNAR_SPACE_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_CISLUNAR_SPACE",
+  "icon": "Art/Interface/Buttons/WorldBuilder/Space.dds"
+ },
+ "identity": {
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

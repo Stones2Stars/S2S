@@ -34,10 +34,10 @@ AI_BEHAVIOUR = {"iAITradeModifier": "tradeModifier", "iAIWeight": "weight", "iAI
 # families (maintenance/upkeep/diplomacy/combat/vicinityYield) stay GROUPED with members.
 SPLIT_FAMILIES = {"yield", "commerce"}
 # Output order for the flat family sections (those present); any not listed (e.g. PROPERTY_*) fall in after.
-FAMILY_ORDER = ["food", "production", "commerce", "gold", "research", "culture", "espionage", "vicinityYield",
-                "buildRate", "happiness", "health", "growth", "techCost", "workRate", "movement",
-                "freeSpecialists", "experience", "maintenance", "upkeep", "perEra", "revolution", "diplomacy",
-                "combat", "barbarians"]
+FAMILY_ORDER = ["food", "production", "commerce", "gold", "research", "culture", "cultureDistance", "espionage",
+                "vicinityYield", "buildRate", "buildTime", "happiness", "health", "growth", "techCost",
+                "workRate", "movement", "defense", "freeSpecialists", "experience", "maintenance", "upkeep",
+                "perEra", "revolution", "diplomacy", "combat", "barbarians"]
 
 
 def de_i(tag):
@@ -170,7 +170,7 @@ def apply_channel(families, spec, c):
 class EntityConfig:
     """Per-entity config, mostly read from mapping/<Entity>.json (channels/cost/art/prereqs)."""
     def __init__(self, entity, cost_rename=None, grants=None, era_fn=None, extra_drop=None, map_gen=None,
-                 families=None, id_rename=None, to_identity=None, requires_fn=None):
+                 families=None, id_rename=None, to_identity=None, requires_fn=None, art_rename=None):
         m = json.load(open(os.path.join(MAPDIR, entity + ".json")))
         self.entity = entity
         # `families` = verified per-field modifier specs (from the classification) that OVERRIDE the first-pass
@@ -182,6 +182,10 @@ class EntityConfig:
         # mapping's cost/art classification. Used to keep the advanced-start mechanic grouped under
         # identity.advancedStart across entities (Handicap/Era/Route/…) until that mechanic is reviewed.
         self.to_identity = to_identity or {}
+        # per-entity art-key override (tag -> clean name), taking precedence over the global ART_RENAME. Used
+        # when an entity carries MULTIPLE art refs the global map would collide (Terrain: the on-map graphics
+        # `ArtDefineTag` must stay distinct from the UI `Button` icon, which both default to `icon`).
+        self.art_rename = art_rename or {}
         self.cost_fields = set(m.get("cost", []))
         self.art_fields = set(m.get("art", []))
         # prereqs are DROPPED from the authored object (top-down: they become other entities' `enables`/
@@ -226,7 +230,7 @@ def curate(typ, rec, cfg, store, boosts):
             if engine.is_int(t) and int(t) != 0:
                 cost[cfg.cost_rename.get(tag, de_i(tag))] = int(t)
         elif tag in cfg.art_fields:
-            art[ART_RENAME.get(tag, de_i(tag))] = engine.generic(c)
+            art[cfg.art_rename.get(tag) or ART_RENAME.get(tag, de_i(tag))] = engine.generic(c)
         elif tag[:1] == "b" and len(tag) > 2 and tag[1:2].isupper():
             if t in ("1", "true", "True"):                 # boolean flag -> clean name + true (false omitted)
                 name = cfg.id_rename.get(tag) or B_FLAG_NAMES.get(tag, tag[1].lower() + tag[2:])

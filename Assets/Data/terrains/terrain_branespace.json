@@ -1,0 +1,30 @@
+{
+ "type": "TERRAIN_BRANESPACE",
+ "description": "TXT_KEY_TERRAIN_BRANESPACE",
+ "civilopedia": "TXT_KEY_TERRAIN_BRANESPACE_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_BRANESPACE",
+  "icon": "Art/Interface/Buttons/WorldBuilder/branespace.dds"
+ },
+ "identity": {
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

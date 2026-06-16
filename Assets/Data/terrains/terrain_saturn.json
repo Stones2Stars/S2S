@@ -1,0 +1,37 @@
+{
+ "type": "TERRAIN_SATURN",
+ "description": "TXT_KEY_TERRAIN_SATURN",
+ "civilopedia": "TXT_KEY_TERRAIN_SATURN_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "buildTime": {
+  "plot": {
+   "percent": 50
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_SATURN",
+  "icon": "Art/Interface/Buttons/baseterrain/saturn.dds",
+  "worldSoundscapeAudioScript": "ASSS_TUNDRA_SELECT_AMB"
+ },
+ "identity": {
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM",
+   "MAPCATEGORY_JOVIAN"
+  ]
+ }
+}

@@ -1,0 +1,31 @@
+{
+ "type": "TERRAIN_SUN",
+ "description": "TXT_KEY_TERRAIN_SUN",
+ "civilopedia": "TXT_KEY_TERRAIN_SUN_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_SUN",
+  "icon": "Art/Interface/Buttons/WorldBuilder/sun.dds"
+ },
+ "identity": {
+  "impassable": true,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM",
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

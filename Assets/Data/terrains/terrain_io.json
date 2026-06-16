@@ -1,0 +1,31 @@
+{
+ "type": "TERRAIN_IO",
+ "description": "TXT_KEY_TERRAIN_IO",
+ "civilopedia": "TXT_KEY_TERRAIN_IO_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_IO",
+  "icon": "Art/Interface/Buttons/WorldBuilder/io.dds"
+ },
+ "identity": {
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM",
+   "MAPCATEGORY_JOVIAN"
+  ]
+ }
+}

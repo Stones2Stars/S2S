@@ -1,0 +1,31 @@
+{
+ "type": "TERRAIN_RED_GIANT",
+ "description": "TXT_KEY_TERRAIN_RED_GIANT",
+ "civilopedia": "TXT_KEY_TERRAIN_RED_GIANT_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_RED_GIANT",
+  "icon": "Art/Interface/Buttons/WorldBuilder/red_giant.dds"
+ },
+ "identity": {
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC",
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

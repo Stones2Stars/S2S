@@ -1,0 +1,22 @@
+{
+ "type": "TERRAIN_NONE",
+ "description": "TXT_KEY_TERRAIN_NONE",
+ "civilopedia": "TXT_KEY_TERRAIN_NONE_PEDIA",
+ "cultureDistance": {
+  "plot": {
+   "flat": 20
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_NONE",
+  "icon": "Art/Interface/Buttons/WorldBuilder/Space.dds"
+ },
+ "identity": {
+  "found": true
+ }
+}

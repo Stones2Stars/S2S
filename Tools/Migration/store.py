@@ -75,6 +75,7 @@ ENTITIES = {
     "PropertyInfo":      "*CIV4PropertyInfos.xml",       # defines the PROPERTY_* channels (crime/education/…)
     "VoteInfo":          "*CIV4VoteInfo.xml",            # diplo-vote resolutions (config for the voting subsystem)
     "CivilizationInfo":  "*CIV4CivilizationInfos.xml",   # game-start grants + per-civ policy/art (source entity)
+    "TerrainInfo":       "*CIV4TerrainInfos.xml",        # plot-leaf TARGET (forms the plot's base yields); enables nothing
 }
 
 # Enabler reverse-index config: a record of <sourceEntity> that references type X via <fieldPath> means

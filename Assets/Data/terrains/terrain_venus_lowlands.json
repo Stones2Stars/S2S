@@ -1,0 +1,36 @@
+{
+ "type": "TERRAIN_VENUS_LOWLANDS",
+ "description": "TXT_KEY_TERRAIN_VENUS_LOWLANDS",
+ "civilopedia": "TXT_KEY_TERRAIN_VENUS_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "buildTime": {
+  "plot": {
+   "percent": 50
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_VENUS_LOWLANDS",
+  "icon": "Art/Interface/Buttons/baseterrain/venus.dds",
+  "worldSoundscapeAudioScript": "ASSS_TUNDRA_SELECT_AMB"
+ },
+ "identity": {
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

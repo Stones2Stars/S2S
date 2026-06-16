@@ -1,0 +1,114 @@
+{
+ "type": "TERRAIN_HILL",
+ "description": "TXT_KEY_TERRAIN_HILL",
+ "civilopedia": "TXT_KEY_TERRAIN_HILL_PEDIA",
+ "buildTime": {
+  "plot": {
+   "percent": 25
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_HILL",
+  "icon": "Art/Interface\\Buttons\\WorldBuilder\\Terrain_Hill.dds",
+  "footstepSounds": [
+   {
+    "FOOTSTEP_AUDIO_HUMAN": ""
+   },
+   {
+    "FOOTSTEP_AUDIO_HUMAN_LOW": ""
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL": ""
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL_LOW": ""
+   },
+   {
+    "FOOTSTEP_AUDIO_HORSE": ""
+   },
+   {
+    "LOOPSTEP_WHEELS": ""
+   },
+   {
+    "ENDSTEP_WHEELS": ""
+   },
+   {
+    "LOOPSTEP_WHEELS_2": ""
+   },
+   {
+    "ENDSTEP_WHEELS_2": ""
+   },
+   {
+    "LOOPSTEP_TANK": ""
+   },
+   {
+    "ENDSTEP_TANK": ""
+   },
+   {
+    "LOOPSTEP_MOD_ARMOUR": ""
+   },
+   {
+    "ENDSTEP_MOD_ARMOUR": ""
+   },
+   {
+    "LOOPSTEP_OCEAN1": ""
+   },
+   {
+    "ENDSTEP_OCEAN1": ""
+   },
+   {
+    "LOOPSTEP_OCEAN2": ""
+   },
+   {
+    "ENDSTEP_OCEAN2": ""
+   },
+   {
+    "LOOPSTEP_DESTOYER": ""
+   },
+   {
+    "ENDSTEP_DESTROYER": ""
+   },
+   {
+    "LOOPSTEP_IRONCLAD": ""
+   },
+   {
+    "ENDSTEP_IRONCLAD": ""
+   },
+   {
+    "LOOPSTEP_TRANSPORT": ""
+   },
+   {
+    "ENDSTEP_TRANSPORT": ""
+   },
+   {
+    "LOOPSTEP_SUBMARINE": ""
+   },
+   {
+    "ENDSTEP_SUBMARINE": ""
+   },
+   {
+    "LOOPSTEP_GUNSHIP": ""
+   },
+   {
+    "ENDSTEP_GUNSHIP": ""
+   },
+   {
+    "LOOPSTEP_ARTILLERY": ""
+   },
+   {
+    "ENDSTEP_ARTILLERY": ""
+   },
+   {
+    "LOOPSTEP_WHEELS_3": ""
+   },
+   {
+    "ENDSTEP_WHEELS_3": ""
+   }
+  ]
+ }
+}

@@ -1,0 +1,36 @@
+{
+ "type": "TERRAIN_MARTIAN_PERMAFROST",
+ "description": "TXT_KEY_TERRAIN_MARTIAN_PERMAFROST",
+ "civilopedia": "TXT_KEY_TERRAIN_MARTIAN_PERMAFROST_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "buildTime": {
+  "plot": {
+   "percent": 50
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_PERMAFROST",
+  "icon": "Art/Interface/Buttons/baseterrain/DuneIce.dds",
+  "worldSoundscapeAudioScript": "ASSS_TUNDRA_SELECT_AMB"
+ },
+ "identity": {
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

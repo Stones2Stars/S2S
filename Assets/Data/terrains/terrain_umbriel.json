@@ -1,0 +1,31 @@
+{
+ "type": "TERRAIN_UMBRIEL",
+ "description": "TXT_KEY_TERRAIN_UMBRIEL",
+ "civilopedia": "TXT_KEY_TERRAIN_UMBRIEL_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_UMBRIEL",
+  "icon": "Art/Interface/Buttons/WorldBuilder/umbriel.dds"
+ },
+ "identity": {
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM",
+   "MAPCATEGORY_JOVIAN"
+  ]
+ }
+}

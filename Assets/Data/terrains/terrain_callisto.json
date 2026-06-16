@@ -1,0 +1,31 @@
+{
+ "type": "TERRAIN_CALLISTO",
+ "description": "TXT_KEY_TERRAIN_CALLISTO",
+ "civilopedia": "TXT_KEY_TERRAIN_CALLISTO_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_CALLISTO",
+  "icon": "Art/Interface/Buttons/WorldBuilder/callisto.dds"
+ },
+ "identity": {
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM",
+   "MAPCATEGORY_JOVIAN"
+  ]
+ }
+}

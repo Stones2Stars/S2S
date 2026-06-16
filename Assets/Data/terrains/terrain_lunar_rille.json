@@ -1,0 +1,43 @@
+{
+ "type": "TERRAIN_LUNAR_RILLE",
+ "description": "TXT_KEY_TERRAIN_LUNAR_RILLE",
+ "civilopedia": "TXT_KEY_TERRAIN_LUNAR_RILLE_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "buildTime": {
+  "plot": {
+   "percent": 25
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": -25
+   }
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_LUNAR_RILLE",
+  "icon": "Art/Interface\\Buttons\\WorldBuilder\\lunarRilles.dds",
+  "worldSoundscapeAudioScript": "ASSS_TUNDRA_SELECT_AMB"
+ },
+ "identity": {
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

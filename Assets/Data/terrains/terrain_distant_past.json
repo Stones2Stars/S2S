@@ -1,0 +1,30 @@
+{
+ "type": "TERRAIN_DISTANT_PAST",
+ "description": "TXT_KEY_TERRAIN_DISTANT_PAST",
+ "civilopedia": "TXT_KEY_TERRAIN_DISTANT_PAST_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_DISTANT_PAST",
+  "icon": "Art/Interface/Buttons/WorldBuilder/distant_past.dds"
+ },
+ "identity": {
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

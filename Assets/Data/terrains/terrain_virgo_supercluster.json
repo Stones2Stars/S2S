@@ -1,0 +1,30 @@
+{
+ "type": "TERRAIN_VIRGO_SUPERCLUSTER",
+ "description": "TXT_KEY_TERRAIN_VIRGO_SUPERCLUSTER",
+ "civilopedia": "TXT_KEY_TERRAIN_VIRGO_SUPERCLUSTER_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_VIRGO_SUPERCLUSTER",
+  "icon": "Art/Interface/Buttons/WorldBuilder/virgo_supercluster.dds"
+ },
+ "identity": {
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

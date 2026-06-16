@@ -1,0 +1,30 @@
+{
+ "type": "TERRAIN_INNER_SOLAR_SYSTEM",
+ "description": "TXT_KEY_TERRAIN_INNER_SOLAR_SYSTEM",
+ "civilopedia": "TXT_KEY_TERRAIN_INNER_SOLAR_SYSTEM_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_INNER_SOLAR_SYSTEM",
+  "icon": "Art/Interface/Buttons/WorldBuilder/inner_solar_system.dds"
+ },
+ "identity": {
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

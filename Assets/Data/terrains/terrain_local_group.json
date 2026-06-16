@@ -1,0 +1,30 @@
+{
+ "type": "TERRAIN_LOCAL_GROUP",
+ "description": "TXT_KEY_TERRAIN_LOCAL_GROUP",
+ "civilopedia": "TXT_KEY_TERRAIN_LOCAL_GROUP_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_LOCAL_GROUP",
+  "icon": "Art/Interface/Buttons/WorldBuilder/local_group.dds"
+ },
+ "identity": {
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

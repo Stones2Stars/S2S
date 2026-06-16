@@ -1,0 +1,31 @@
+{
+ "type": "TERRAIN_SUN_LIKE_STAR",
+ "description": "TXT_KEY_TERRAIN_SUN_LIKE_STAR",
+ "civilopedia": "TXT_KEY_TERRAIN_SUN_LIKE_STAR_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_SUN_LIKE_STAR",
+  "icon": "Art/Interface/Buttons/WorldBuilder/g_type.dds"
+ },
+ "identity": {
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC",
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

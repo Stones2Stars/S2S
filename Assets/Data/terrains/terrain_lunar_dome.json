@@ -1,0 +1,31 @@
+{
+ "type": "TERRAIN_LUNAR_DOME",
+ "description": "TXT_KEY_TERRAIN_LUNAR_DOME",
+ "civilopedia": "TXT_KEY_TERRAIN_LUNAR_DOME_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_LUNAR_DOME",
+  "icon": "Art/Interface/Buttons/WorldBuilder/lunarbasalt.dds",
+  "worldSoundscapeAudioScript": "ASSS_GRASSLAND_SELECT_AMB"
+ },
+ "identity": {
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

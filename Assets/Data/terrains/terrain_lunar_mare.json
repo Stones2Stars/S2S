@@ -1,0 +1,38 @@
+{
+ "type": "TERRAIN_LUNAR_MARE",
+ "description": "TXT_KEY_TERRAIN_LUNAR_MARE",
+ "civilopedia": "TXT_KEY_TERRAIN_LUNAR_MARE_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 25
+   }
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_LUNAR_MARE",
+  "icon": "Art/Interface\\Buttons\\WorldBuilder\\lunarMaria.dds",
+  "worldSoundscapeAudioScript": "ASSS_PLAINS_SELECT_AMB"
+ },
+ "identity": {
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

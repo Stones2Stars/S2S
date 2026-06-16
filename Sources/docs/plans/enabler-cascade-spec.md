@@ -288,6 +288,12 @@ resource/bonus**. Authored on the target, scope-tagged per clause:
     committed civic `capital` member retrofits to this later.)*
   - **`HAS_CORPORATION: CORPORATION_X`** — this city has corporation X active (spreads like a religion,
     `isHasCorporation`). *(Corporation per-city effects — the Religion-parallel model.)*
+  - **`HAS_RIVER: true`** — this **PLOT** has a river (edge-attribute, `CvPlot::isRiver`; the PLOT self-reports,
+    extending the predicate's object set beyond city/player to the plot). River is "just added on" — NOT its own
+    feature or terrain — so a river-side yield is a **CONDITIONAL modifier gated by this predicate** rather than a
+    river entity (owner 2026-06-16). *(`FeatureInfo.RiverYieldChange`, `ImprovementInfo.RiverSideYieldChange`,
+    `BuildingInfo.RiverPlotYieldChanges` — each authored on its **deliveryguy** at that entity's pass; the
+    ownership rule is modifier-spec §6.1. There is no river field on `CvTerrainInfo`.)*
 
 ---
 

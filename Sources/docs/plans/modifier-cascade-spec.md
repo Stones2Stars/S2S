@@ -241,6 +241,47 @@ curation pass (§9 banked).**
   authored as a `production` deposit on the building/unit/project gated/scaled by the bonus. Action: drop
   the `buildRate` fold from `curate_bonus`; author on the source at the Building/Unit/Project pass.
 
+### 6.1 The DELIVERYGUY — who OWNS an entity-keyed modifier (owner ruling 2026-06-16)
+Resolved while curating Route (#19) and Terrain (#20). **The root test is SEMANTIC SENSE (owner 2026-06-16): where
+does this modifier sensibly belong?** The anchoring case is that **a thing ON A PLOT OWNS ITS OWN MODIFIERS** — *"it
+doesn't make sense that things on a plot don't own their own modifiers."* The operational reading of that sense:
+"an X-keyed-by-Y modifier — does it live on X or fold onto Y?" → **"who actually BRINGS this modifier to the table?"**
+(the deliverer) — that entity OWNS it — **"and then what ENABLES it?"** (the condition). Not the atom kind; the
+*ownership*, judged by what reads sensibly.
+
+**The toolkit now supports BOTH expression modes, and the choice between them IS the semantic judgement, not a rigid
+rule (owner 2026-06-16):** (a) **keep-on-source** — the source owns the modifier and references the other entity as a
+*condition* (`enabled` presence / `per` count); (b) **fold-onto-the-owner** — the modifier lives on the entity that
+semantically owns it (the deliveryguy / the thing on the plot), keyed by the source. Both are first-class and equally
+expressible; per case, author it wherever it **makes semantic sense** as the home.
+- **Abstract enabler-sources (civic, trait, religion) OWN their buffs**, even when keyed by a target or *improved
+  by* a resource. *"+happiness from this civic, if you also have `BONUS_X`"* is the **civic's** buff, conditioned on
+  the resource via `enabled`/`per` — it **STAYS on the civic**. (The "something to make it work" is the existing
+  conditioning machinery, §3/§4 — no new mechanism.) This is the keep-on-source case of §6.
+- **A physical/structural source that DELIVERS a modifier owns it where it is the deliveryguy.** A route making an
+  improvement better → the **route** is the deliveryguy → the boost lives on the route (Route #19:
+  `ImprovementInfo.RouteYieldChanges` folds onto the route, keyed by improvement). A building making a *terrain's*
+  tiles yield more → the **building** is the deliveryguy → it **STAYS on the building** keyed by terrain (it is
+  **NOT** folded onto the terrain — Terrain #20 carries no inbound boost). Likewise a building scaling with
+  river-tile count owns *that* (`per`-scaled, on the building).
+- **Plot-substrate entities (terrain, feature, improvement, route) CARRY THEIR OWN modifiers at `plot` scope.** The
+  terrain forms the plot's base (hill → hammers); a feature then modifies it (forest: −food, +hammers — *first the
+  plot has the terrain's modifiers, then the feature modifies them*); improvement/route layer on. Each owns its own
+  contribution; a terrain/feature is the deliveryguy for its OWN intrinsic output, never for another entity's
+  modifier. *(A bonus is **not** a plot-modifier owner in this sense — it is a resource/conditioner sitting on the
+  plot, above it in the spine.)*
+- **RIVER is a CONDITIONAL modifier, not its own entity** — a plot edge-attribute "just added on" (not a feature,
+  not a terrain). Each river-side yield (`FeatureInfo.RiverYieldChange`, `ImprovementInfo.RiverSideYieldChange`,
+  `BuildingInfo.RiverPlotYieldChanges`) stays on its **deliveryguy**, gated by the new **`HAS_RIVER`** plot-state
+  predicate (enabler-spec §3). There is no river field on `CvTerrainInfo`.
+
+So §6.1 REFINES §6: keep-on-source is the deliveryguy rule for abstract enablers; the deliveryguy can ALSO be a
+physical plot-substrate entity (route/improvement) onto which a boost folds. The discriminator is **ownership (who
+delivers)**, not whether the keyed entity is "conditioner" vs "target". *(Consequence flagged for the Building pass:
+`BuildingInfo.{TerrainYieldChanges, ImprovementYieldChanges, …}` — currently set to invert onto the target in
+`mapping/BuildingInfo.json` — are deliveryguy-owned by the BUILDING and should be authored on the building keyed by
+the target, NOT inverted. Re-decide each at the Building pass against this rule.)*
+
 ---
 
 ## 7. Resolved accommodations (the former mechanical tail)

@@ -1,0 +1,30 @@
+{
+ "type": "TERRAIN_HYPERSPACE",
+ "description": "TXT_KEY_TERRAIN_HYPERSPACE",
+ "civilopedia": "TXT_KEY_TERRAIN_HYPERSPACE_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_HYPERSPACE",
+  "icon": "Art/Interface/Buttons/WorldBuilder/hyperspace.dds"
+ },
+ "identity": {
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

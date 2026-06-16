@@ -1,0 +1,31 @@
+{
+ "type": "TERRAIN_GANYMEDE",
+ "description": "TXT_KEY_TERRAIN_GANYMEDE",
+ "civilopedia": "TXT_KEY_TERRAIN_GANYMEDE_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_GANYMEDE",
+  "icon": "Art/Interface/Buttons/WorldBuilder/ganymede.dds"
+ },
+ "identity": {
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM",
+   "MAPCATEGORY_JOVIAN"
+  ]
+ }
+}

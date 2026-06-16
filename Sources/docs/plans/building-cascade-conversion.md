@@ -274,6 +274,14 @@ dropping that happens during the move. Don't make "should this entity exist" cal
   stale). Defer to the post-migration purge; migrate the `building→bonus→building` chain faithfully meanwhile.
   **Now ISOLATED in `Assets/Data/bonuses/cultures/` — 410 of 907 bonuses (~45%!) are culture bonuses**, so
   removal is one contained folder. (The rest split `map/` = spawns on the map vs `manufactured/` = produced.)
+- **Plot-substrate entities that blur the TERRAIN / FEATURE / BONUS boundary (owner observation 2026-06-16):**
+  a few entities sit ambiguously across Terrain/Feature/Bonus, and there is a legit case to RECLASSIFY some into
+  `Bonus` (or `Feature`) where that fits better. The named example is **`tar`** — owner: *"I think tar is terrain,
+  it may also be feature… point is… yes"* (i.e. its exact bucket is itself unsettled, which is the point). Per the
+  content-vs-structure rule (§0), **#428 migrates each FAITHFULLY in its CURRENT entity** (structure-only migration —
+  do NOT make "should this be a terrain/feature/bonus" calls mid-move); the reclassification is a deliberate
+  **POST-migration CONTENT pass**. Capture the specific candidates (tar, …) during the Terrain/Feature curation and
+  revisit here. Mirrors the culture-intermediary-bonuses deferral above.
 - **Cascading enablers** — a source declares what it `enables` downstream; availability flows DOWN.
   Nothing queries upward. **Canonical top-down enabler order (owner proposal, 2026-06-14)** — the
   topological spine of the enabler DAG; every enabler edge runs top→down in this order, which is also

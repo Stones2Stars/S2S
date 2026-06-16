@@ -1,0 +1,31 @@
+{
+ "type": "TERRAIN_TRITON",
+ "description": "TXT_KEY_TERRAIN_TRITON",
+ "civilopedia": "TXT_KEY_TERRAIN_TRITON_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "art": {
+  "artDefineTag": "ART_DEF_TERRAIN_TRITON",
+  "icon": "Art/Interface/Buttons/WorldBuilder/triton.dds"
+ },
+ "identity": {
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM",
+   "MAPCATEGORY_JOVIAN"
+  ]
+ }
+}
