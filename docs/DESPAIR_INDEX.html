@@ -330,7 +330,40 @@
 </article>
 
 <article class="entry">
-  <h2>12. International Civil Asset Forfeiture</h2>
+  <h2>12. The Settler's Phantom Mortgage</h2>
+  <div class="score-row"><span class="score">57 cp</span><span class="meter"><i style="width:57%"></i></span></div>
+  <p>Open a settler's <code>UnitInfo</code>, change its production cost, build a settler. The
+  price barely moves. The number you edited (<code>iCost</code>) is real, but it is a sliver —
+  the <em>actual</em> cost of a settler is computed five files away, and it is <strong>the
+  appraised value of the city the settler has not founded yet</strong>.</p>
+  <p><code>getProductionNeeded(unit)</code> ends with <code>iBaseCost + 100 *
+  getUnitExtraCost(eUnit)</code> (<code>CvPlayer.cpp:7002</code>), and the comment directly
+  above says the quiet part out loud: <em>"The getUnitExtraCost() is where we get the cost for a
+  settler unit (that's ALL this does). The cost scales to GROWTH factors rather than training
+  factors."</em> That extra cost is not unit data at all — for every <code>isFound()</code> unit
+  it is force-set to <code>getNewCityProductionValue()</code>: the production cost of the free
+  start-era buildings a new city ships with, plus the advanced-start city and per-population
+  costs, all scaled by game speed and era <em>growth</em> percent. It is the very same function
+  that prices an Advanced-Start city purchase. A settler costs what a city is worth, because
+  under the hood a settler <strong>is</strong> a city you have not placed yet.</p>
+  <p>The number lives in a per-player vector and is refreshed at exactly two moments — player
+  reset and a <strong>handicap change</strong> (<code>CvPlayer.cpp:1555</code>,
+  <code>CvGame.cpp:4731</code>) — so the growth-scaling it advertises is quietly frozen between
+  difficulty re-rates: it reads <code>getCurrentEra()</code>, but no era advance ever asks it to
+  look again. Whether that staleness is intended or merely never noticed is its own small
+  despair.</p>
+  <p>Freshly topical: the data migration faithfully maps <code>iCost &rarr; cost.production</code>
+  — perfectly honest about the field, perfectly wrong about the unit — and wrong for exactly the
+  eight founders the settler-grants pass just spent a session wiring buildings onto. The one
+  number a modder would reach for is a decoy standing in front of a price tag written in another
+  building's hammers.</p>
+  <p class="status">Status: working as designed, now documented for the #430 cost pass (the
+  cascade must not trust a founder's <code>cost.production</code>). A settler has never once been
+  priced by its own data sheet.</p>
+</article>
+
+<article class="entry">
+  <h2>13. International Civil Asset Forfeiture</h2>
   <div class="score-row"><span class="score">55 cp</span><span class="meter"><i style="width:55%"></i></span></div>
   <p>Foreign police cars were observed parked on the human player's <strong>resource
   tiles</strong>, mission hover proudly reading <em>"Maintain property control."</em> The
@@ -353,7 +386,7 @@
 </article>
 
 <article class="entry">
-  <h2>13. The .vcxproj of Lies</h2>
+  <h2>14. The .vcxproj of Lies</h2>
   <div class="score-row"><span class="score">47 cp</span><span class="meter"><i style="width:47%"></i></span></div>
   <p>The Visual Studio project file confidently states <code>PlatformToolset: v142</code>.
   The actual compiler is the <strong>Microsoft Visual C++ Toolkit 2003</strong> (MSVC 7.1).

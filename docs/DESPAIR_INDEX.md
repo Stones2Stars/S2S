@@ -243,7 +243,40 @@ is now finalized in two separate filing cabinets.*
 
 ---
 
-## 12. International Civil Asset Forfeiture — 55 cp
+## 12. The Settler's Phantom Mortgage — 57 cp
+
+Open a settler's `UnitInfo`, change its production cost, build a settler. The price barely
+moves. The number you edited (`iCost`) is real, but it is a sliver — the *actual* cost of a
+settler is computed five files away, and it is **the appraised value of the city the settler
+has not founded yet**.
+
+`getProductionNeeded(unit)` ends with `iBaseCost + 100 * getUnitExtraCost(eUnit)`
+(`CvPlayer.cpp:7002`), and the comment directly above says the quiet part out loud:
+*"The getUnitExtraCost() is where we get the cost for a settler unit (that's ALL this does). The
+cost scales to GROWTH factors rather than training factors."* That extra cost is not unit data at
+all — for every `isFound()` unit it is force-set to `getNewCityProductionValue()`: the production
+cost of the free start-era buildings a new city ships with, plus the advanced-start city and
+per-population costs, all scaled by game speed and era *growth* percent. It is the very same
+function that prices an Advanced-Start city purchase. A settler costs what a city is worth,
+because under the hood a settler **is** a city you have not placed yet.
+
+The number lives in a per-player vector and is refreshed at exactly two moments — player reset
+and a **handicap change** (`CvPlayer.cpp:1555`, `CvGame.cpp:4731`) — so the growth-scaling it
+advertises is quietly frozen between difficulty re-rates: it reads `getCurrentEra()`, but no era
+advance ever asks it to look again. Whether that staleness is intended or merely never noticed is
+its own small despair.
+
+Freshly topical: the data migration faithfully maps `iCost → cost.production` — perfectly honest
+about the field, perfectly wrong about the unit — and wrong for exactly the eight founders the
+settler-grants pass just spent a session wiring buildings onto. The one number a modder would
+reach for is a decoy standing in front of a price tag written in another building's hammers.
+
+*Status: working as designed, now documented for the #430 cost pass (the cascade must not trust a
+founder's `cost.production`). A settler has never once been priced by its own data sheet.*
+
+---
+
+## 13. International Civil Asset Forfeiture — 55 cp
 
 Foreign police cars were observed parked on the human player's **resource tiles**, mission
 hover proudly reading *"Maintain property control."* The mechanism: when a property-control
@@ -265,7 +298,7 @@ fortified. The uranium has been returned.*
 
 ---
 
-## 13. The .vcxproj of Lies — 47 cp
+## 14. The .vcxproj of Lies — 47 cp
 
 The Visual Studio project file confidently states `PlatformToolset: v142`. The actual
 compiler is the **Microsoft Visual C++ Toolkit 2003** (MSVC 7.1). The project file drives
