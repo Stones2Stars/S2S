@@ -43,8 +43,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/rule_engineered_population.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/rule_engineered_population.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_RULE",

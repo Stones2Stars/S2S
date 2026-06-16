@@ -35,6 +35,7 @@ import os
 from collections import OrderedDict
 
 import engine
+import curate_common as cc
 from curate_common import de_i
 from store import Store, REPO
 
@@ -247,7 +248,7 @@ def _properties(node, props):
 
 
 def curate(typ, rec, store):
-    text, fam, props, policies, enables, grants, art, identity, ai = {}, {}, {}, {}, {}, {}, {}, {}, {}
+    text, fam, props, policies, enables, grants, art_blocks, identity, ai = {}, {}, {}, {}, {}, {}, {}, {}, {}
     leftover = []
     for c in rec:
         tag, t = c.tag, engine.text(c)
@@ -308,9 +309,7 @@ def curate(typ, rec, store):
             if engine.is_int(t) and int(t) != 0:
                 ai.setdefault("behaviour", {})["weight"] = int(t)
         elif tag == "Button":
-            v = engine.generic(c)
-            if v not in (None, "", [], {}, "NONE"):
-                art["icon"] = v
+            cc.put_art(art_blocks, tag, engine.generic(c))   # -> ui.art.icon via ART_BLOCK
         elif tag in IDENTITY:
             if engine.is_int(t):
                 if int(t) != 0:
@@ -348,8 +347,7 @@ def curate(typ, rec, store):
         out["grants"] = grants
     if ai:
         out["ai"] = ai
-    if art:
-        out["art"] = art
+    cc.emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity
     return out, leftover

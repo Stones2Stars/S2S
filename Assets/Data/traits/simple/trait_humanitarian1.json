@@ -142,8 +142,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitHumanitarian.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitHumanitarian.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_HUMANITARIAN_SHORT"

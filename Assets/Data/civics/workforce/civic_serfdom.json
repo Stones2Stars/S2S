@@ -85,8 +85,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/labor_serf.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/labor_serf.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_WORKFORCE",

@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Africanelephant.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Africanelephant.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

@@ -55,8 +55,10 @@
   "fixedBorders": true,
   "noForeignCorporations": true
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/immigration_closed_borders.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/immigration_closed_borders.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_IMMIGRATION",

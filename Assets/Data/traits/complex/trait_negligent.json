@@ -450,8 +450,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitNegligent.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitNegligent.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

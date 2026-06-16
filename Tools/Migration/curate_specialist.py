@@ -57,7 +57,8 @@ FAMILIES = {
     "iExperience":           ("experience",      "city", None, "flat", None),
 }
 TEXT = {"Description": "description", "Civilopedia": "civilopedia", "Help": "help"}
-ART = {"Texture": "icon", "Button": "button"}
+# Texture + Button -> ui.art.texture / ui.art.icon via ART_BLOCK (kept DISTINCT: 2 specialists differ; both UI).
+ART = {"Texture", "Button"}
 IDENTITY = {"GreatPeopleUnitType": "greatPeopleUnit", "Categories": "categories"}
 BOOL_ID = {"bSlave": "slave", "bVisible": "visible"}
 SOURCE_UNIT = {"CONSTANT": "perTurn", "DECAY": "decay"}
@@ -128,7 +129,7 @@ def _properties(node, props):
 
 
 def curate(typ, rec, boosts):
-    text, fam, props, art, identity, ai, leftover = {}, {}, {}, {}, {}, {}, []
+    text, fam, props, art_blocks, identity, ai, leftover = {}, {}, {}, {}, {}, {}, []
     for c in rec:
         tag, t = c.tag, engine.text(c)
         if tag == "Type" or tag in DROP:
@@ -147,9 +148,7 @@ def curate(typ, rec, boosts):
             if v:
                 ai["flavours"] = v
         elif tag in ART:
-            v = engine.generic(c)
-            if v not in (None, "", [], {}, "NONE"):       # drop the "NONE" sentinel (consistency; none in base data)
-                art[ART[tag]] = v
+            cc.put_art(art_blocks, tag, engine.generic(c))   # Texture->ui.art.texture, Button->ui.art.icon (ART_BLOCK)
         elif tag in IDENTITY:
             if t or list(c):
                 identity[IDENTITY[tag]] = engine.generic(c)
@@ -179,8 +178,7 @@ def curate(typ, rec, boosts):
         out[prop] = props[prop]
     if ai:
         out["ai"] = ai
-    if art:
-        out["art"] = art
+    cc.emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity
     return out, leftover

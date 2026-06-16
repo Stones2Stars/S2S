@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_LIGHT_YELLOW",
-  "artDefine": "ART_DEF_CIVILIZATION_ZULU",
-  "artStyle": "ARTSTYLE_AFRICA",
-  "unitArtStyle": "UNIT_ARTSTYLE_AFRICAN",
-  "selectionSound": "AS3D_ZULU_SELECT",
-  "actionSound": "AS3D_ZULU_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_LIGHT_YELLOW",
+   "icon": "ART_DEF_CIVILIZATION_ZULU",
+   "style": "ARTSTYLE_AFRICA",
+   "unitStyle": "UNIT_ARTSTYLE_AFRICAN"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_ZULU_SELECT",
+  "action": "AS3D_ZULU_ORDER"
  },
  "identity": {
   "leaders": [

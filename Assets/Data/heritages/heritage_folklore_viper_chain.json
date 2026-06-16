@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Viper.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Viper.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

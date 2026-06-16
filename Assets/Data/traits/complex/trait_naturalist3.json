@@ -188,7 +188,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitNaturalist3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitNaturalist3.dds"
+  }
  }
 }

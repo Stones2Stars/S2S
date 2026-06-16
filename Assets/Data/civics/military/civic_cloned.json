@@ -78,8 +78,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/military_cloning.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/military_cloning.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_MILITARY",

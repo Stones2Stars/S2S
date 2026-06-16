@@ -309,8 +309,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/government_theocracy.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/government_theocracy.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_GOVERNMENT",

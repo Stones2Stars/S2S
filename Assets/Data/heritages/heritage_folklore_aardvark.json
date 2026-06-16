@@ -44,8 +44,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Aardvark.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Aardvark.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

@@ -129,7 +129,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitExpansive2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitExpansive2.dds"
+  }
  }
 }

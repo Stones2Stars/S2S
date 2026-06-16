@@ -57,7 +57,12 @@
   "startingGold": 80000,
   "freePopulation": 5
  },
- "art": {
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/mainscreen/Era/Cosmic.dds"
+  }
+ },
+ "sound": {
   "soundtrackSpace": 40,
   "soundtracks": [
    "AS2D_FINAL_FRONTIER",
@@ -76,9 +81,8 @@
     "CITYSIZE_LARGE": "ASSS_CITY_TRANSHUMAN_LARGE_SELECT_AMB"
    }
   ],
-  "unitVictorySound": "AS2D_VICTORY_LATE",
-  "unitDefeatSound": "AS2D_LOSS_LATE",
-  "icon": "Art/Interface/mainscreen/Era/Cosmic.dds"
+  "unitVictory": "AS2D_VICTORY_LATE",
+  "unitDefeat": "AS2D_LOSS_LATE"
  },
  "identity": {
   "advancedStart": 1024000,

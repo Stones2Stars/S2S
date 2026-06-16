@@ -44,8 +44,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Macaw.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Macaw.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

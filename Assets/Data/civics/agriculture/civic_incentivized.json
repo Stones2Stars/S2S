@@ -62,8 +62,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/agriculture_subsidized.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/agriculture_subsidized.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_AGRICULTURE",

@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Raccoon.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Raccoon.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Buildings/PaleolithicMammothMyth.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Buildings/PaleolithicMammothMyth.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

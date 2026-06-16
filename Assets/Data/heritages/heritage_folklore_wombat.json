@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Wombat.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Wombat.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

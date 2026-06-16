@@ -80,8 +80,11 @@ composition.** Nailing this is what ends the JSON re-flopping.
 
 ### 1.1 Top-level object — reserved sections + flat modifier families
 An entity's top level is a fixed set of **RESERVED SECTION keywords** — `enables` · `obsoletes` ·
-`replaces` · `requires` · `grants` · `text` · `cost` · `art` · `identity` · `ai` — and **every other
-top-level key is a MODIFIER FAMILY** (`food`, `production`, `commerce`, `gold`, `research`, `culture`,
+`replaces` · `requires` · `grants` · `text` · `cost` · `ui` · `world` · `sound` · `identity` · `ai` — and
+**every other top-level key is a MODIFIER FAMILY**
+*(the former single `art` section was split into the three dedicated top-level blocks `ui` / `world` / `sound`
+per §0.8 — `art` is a SUB-block within `ui`/`world` so non-art members sit beside it; canonical tag→path map is
+`curate_common.ART_BLOCK`)* — (`food`, `production`, `commerce`, `gold`, `research`, `culture`,
 `espionage`, `happiness`, `health`, `growth`, `buildRate`, `maintenance`, `upkeep`, `defense`, `combat`,
 `tradeRoutes`, …, plus one per `PROPERTY_*`). **No `modifier:` wrapper** (minimal nesting). The reserved set
 makes "section vs family" deterministic — a family named like a reserved word is an explicit build-time

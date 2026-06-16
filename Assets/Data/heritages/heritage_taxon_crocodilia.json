@@ -69,7 +69,9 @@
    }
   ]
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Buildings/totem_Crocodile.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Buildings/totem_Crocodile.dds"
+  }
  }
 }

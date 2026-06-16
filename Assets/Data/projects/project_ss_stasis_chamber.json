@@ -10,8 +10,10 @@
  "cost": {
   "create": 62440
  },
- "art": {
-  "icon": ",Art/Interface/Buttons/Buildings/SS_StasisChamber.dds,Art/Interface/Buttons/Buildings_Atlas.dds,6,10"
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Buildings/SS_StasisChamber.dds,Art/Interface/Buttons/Buildings_Atlas.dds,6,10"
+  }
  },
  "identity": {
   "mapCategories": [

@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_RED_BLUE",
-  "artDefine": "ART_DEF_CIVILIZATION_SIAM",
-  "artStyle": "ARTSTYLE_SOUTH_EAST_ASIA",
-  "unitArtStyle": "UNIT_ARTSTYLE_KHMER",
-  "selectionSound": "AS3D_KHMER_SELECT",
-  "actionSound": "AS3D_KHMER_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_RED_BLUE",
+   "icon": "ART_DEF_CIVILIZATION_SIAM",
+   "style": "ARTSTYLE_SOUTH_EAST_ASIA",
+   "unitStyle": "UNIT_ARTSTYLE_KHMER"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_KHMER_SELECT",
+  "action": "AS3D_KHMER_ORDER"
  },
  "identity": {
   "leaders": [

@@ -64,7 +64,9 @@
    }
   ]
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Buildings/totem_koala.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Buildings/totem_koala.dds"
+  }
  }
 }

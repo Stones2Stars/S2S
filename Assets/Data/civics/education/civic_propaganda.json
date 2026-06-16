@@ -96,8 +96,10 @@
    "flat": 2
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/education_propaganda.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/education_propaganda.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_EDUCATION",

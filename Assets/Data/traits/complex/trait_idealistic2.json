@@ -126,8 +126,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitIdealistic2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitIdealistic2.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

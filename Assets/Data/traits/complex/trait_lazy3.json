@@ -213,8 +213,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitLazy3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitLazy3.dds"
+  }
  },
  "identity": {
   "negativeTrait": true,

@@ -135,7 +135,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitAggressive2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitAggressive2.dds"
+  }
  }
 }

@@ -133,8 +133,10 @@
  "grants": {
   "revolution": 75
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/rule_martial_law.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/rule_martial_law.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_RULE",

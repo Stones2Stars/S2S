@@ -22,8 +22,10 @@
  "cost": {
   "create": 33160
  },
- "art": {
-  "icon": "art/Interface/Buttons/Projects/LaserDefenses.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/Buttons/Projects/LaserDefenses.dds"
+  }
  },
  "identity": {
   "mapCategories": [

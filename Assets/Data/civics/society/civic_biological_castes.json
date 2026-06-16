@@ -128,8 +128,10 @@
  "grants": {
   "revolution": 10
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/society_biocaste.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/society_biocaste.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_SOCIETY",

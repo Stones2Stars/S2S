@@ -143,8 +143,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitGrim2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitGrim2.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

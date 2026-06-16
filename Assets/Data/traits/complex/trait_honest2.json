@@ -150,7 +150,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitHonest2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitHonest2.dds"
+  }
  }
 }

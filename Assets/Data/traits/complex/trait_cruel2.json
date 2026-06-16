@@ -128,8 +128,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitCruel2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCruel2.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

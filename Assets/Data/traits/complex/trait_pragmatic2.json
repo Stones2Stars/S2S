@@ -126,7 +126,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitPragmatic2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPragmatic2.dds"
+  }
  }
 }

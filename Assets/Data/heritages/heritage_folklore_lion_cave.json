@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/cavelion.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/cavelion.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

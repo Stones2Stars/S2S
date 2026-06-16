@@ -54,8 +54,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/welfare_superhuman.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/welfare_superhuman.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_WELFARE",

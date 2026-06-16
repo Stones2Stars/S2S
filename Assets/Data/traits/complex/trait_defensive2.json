@@ -218,7 +218,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitDefensive2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitDefensive2.dds"
+  }
  }
 }

@@ -18,8 +18,10 @@
  "cost": {
   "create": 12840
  },
- "art": {
-  "icon": ",Art/Interface/Buttons/Buildings/Genemaping.dds,Art/Interface/Buttons/RoM_Building_Atlas.dds,1,4"
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Buildings/Genemaping.dds,Art/Interface/Buttons/RoM_Building_Atlas.dds,1,4"
+  }
  },
  "identity": {
   "mapCategories": [

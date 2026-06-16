@@ -355,7 +355,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitPreeminent2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPreeminent2.dds"
+  }
  }
 }

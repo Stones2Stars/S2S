@@ -222,8 +222,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitDeceiver2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitDeceiver2.dds"
+  }
  },
  "identity": {
   "impurePropertyManipulators": true

@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_RED",
-  "artDefine": "ART_DEF_CIVILIZATION_JAPAN",
-  "artStyle": "ARTSTYLE_JAPAN",
-  "unitArtStyle": "UNIT_ARTSTYLE_JAPAN",
-  "selectionSound": "AS3D_JAPAN_SELECT",
-  "actionSound": "AS3D_JAPAN_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_RED",
+   "icon": "ART_DEF_CIVILIZATION_JAPAN",
+   "style": "ARTSTYLE_JAPAN",
+   "unitStyle": "UNIT_ARTSTYLE_JAPAN"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_JAPAN_SELECT",
+  "action": "AS3D_JAPAN_ORDER"
  },
  "identity": {
   "leaders": [

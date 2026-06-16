@@ -36,8 +36,10 @@
  "cost": {
   "create": 31800
  },
- "art": {
-  "icon": ",Art/Interface/Buttons/Buildings/Longevity.dds,Art/Interface/Buttons/RoM_Building_Atlas.dds,1,5"
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Buildings/Longevity.dds,Art/Interface/Buttons/RoM_Building_Atlas.dds,1,5"
+  }
  },
  "identity": {
   "mapCategories": [

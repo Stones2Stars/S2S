@@ -76,13 +76,19 @@
   "gold": 1,
   "culture": 3
  },
- "art": {
-  "tgaIndex": 24,
-  "icon": "Art/Interface/Buttons/religions/Caodai.dds",
-  "techButton": "Art/Interface/Buttons/TechTree/Found_Caodai.dds",
-  "genericTechButton": "Art/Interface/Buttons/TechTree/Caodai.dds",
-  "movieFile": "Art/Cutscene/Druid_Generic_Found.nif",
-  "movieSound": "AS2D_BUILD_DRUID_MOVIE",
+ "ui": {
+  "art": {
+   "tgaIndex": 24,
+   "icon": "Art/Interface/Buttons/religions/Caodai.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Caodai.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Caodai.dds",
+   "movie": {
+    "file": "Art/Cutscene/Druid_Generic_Found.nif",
+    "sound": "AS2D_BUILD_DRUID_MOVIE"
+   }
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_BUDDHIST"
  },
  "identity": {

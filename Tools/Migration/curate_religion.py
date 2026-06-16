@@ -52,8 +52,8 @@ COMMERCE_PREDICATE = {"StateReligionCommerces": "STATE_RELIGION", "HolyCityComme
 # religion-levels count token live there); the raw per-commerce values are kept faithfully in a `shrine` section.
 SHRINE_TABLE = "GlobalReligionCommerces"
 TEXT = {"Description": "description", "Civilopedia": "civilopedia", "Adjective": "adjective"}
-ART = {"Button": "icon", "TechButton": "techButton", "GenericTechButton": "genericTechButton",
-       "MovieFile": "movieFile", "MovieSound": "movieSound", "Sound": "sound", "iTGAIndex": "tgaIndex"}
+# art tags this entity carries — routed to ui/world/sound via the canonical curate_common.ART_BLOCK.
+ART = {"Button", "TechButton", "GenericTechButton", "MovieFile", "MovieSound", "Sound", "iTGAIndex"}
 GRANTS = {"FreeUnit": "freeUnit", "iFreeUnits": "numFreeUnits"}
 IDENTITY = {"iSpreadFactor": "spreadFactor"}
 DROP = {"TechPrereq"}
@@ -77,7 +77,7 @@ def _properties(node, props):
 
 
 def curate(typ, rec, store, boosts):
-    text, fam, props, grants, art, identity, ai, leftover = {}, {}, {}, {}, {}, {}, {}, []
+    text, fam, props, grants, art_blocks, identity, ai, leftover = {}, {}, {}, {}, {}, {}, {}, []
     shrine = OrderedDict()
     for c in rec:
         tag, t = c.tag, engine.text(c)
@@ -105,9 +105,7 @@ def curate(typ, rec, store, boosts):
             if v not in (None, "", "NONE", 0):
                 grants[GRANTS[tag]] = v
         elif tag in ART:
-            v = engine.generic(c)
-            if v not in (None, "", [], {}, "NONE"):       # drop the "NONE" sentinel (e.g. <MovieSound>NONE)
-                art[ART[tag]] = v
+            cc.put_art(art_blocks, tag, engine.generic(c))   # -> ui/world/sound via ART_BLOCK (+ drop empty/NONE)
         elif tag in IDENTITY:
             if engine.is_int(t):
                 if int(t) != 0:
@@ -150,8 +148,7 @@ def curate(typ, rec, store, boosts):
         out["grants"] = grants
     if ai:
         out["ai"] = ai
-    if art:
-        out["art"] = art
+    cc.emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity
     return out, leftover

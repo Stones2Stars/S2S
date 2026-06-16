@@ -45,9 +45,11 @@
    }
   ]
  },
- "art": {
-  "icon": "Art/Interface/MainScreen/CityScreen/slave_sanitation.dds",
-  "button": "Art/Interface/MainScreen/CityScreen/slave_commerce.dds"
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/slave_sanitation.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/slave_commerce.dds"
+  }
  },
  "identity": {
   "categories": [

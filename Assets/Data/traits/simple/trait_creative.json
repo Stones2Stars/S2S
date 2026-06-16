@@ -207,8 +207,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitCreative.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCreative.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_CREATIVE_SHORT"

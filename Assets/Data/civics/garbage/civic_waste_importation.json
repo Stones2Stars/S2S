@@ -78,8 +78,10 @@
    "flat": 5
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/garbage_waste_importation.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/garbage_waste_importation.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_GARBAGE",

@@ -92,8 +92,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/welfare_survival.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/welfare_survival.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_WELFARE"

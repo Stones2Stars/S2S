@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/GHARIAL.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/GHARIAL.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

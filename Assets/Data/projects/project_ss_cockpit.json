@@ -10,8 +10,10 @@
  "cost": {
   "create": 57640
  },
- "art": {
-  "icon": ",Art/Interface/Buttons/Buildings/SS_Cockpit.dds,Art/Interface/Buttons/Buildings_Atlas.dds,5,6"
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Buildings/SS_Cockpit.dds,Art/Interface/Buttons/Buildings_Atlas.dds,5,6"
+  }
  },
  "identity": {
   "mapCategories": [

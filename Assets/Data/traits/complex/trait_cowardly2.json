@@ -222,8 +222,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitCowardly2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCowardly2.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

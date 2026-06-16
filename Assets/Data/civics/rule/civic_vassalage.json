@@ -163,8 +163,10 @@
  "grants": {
   "revolution": 35
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/rule_vassalage.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/rule_vassalage.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_RULE",

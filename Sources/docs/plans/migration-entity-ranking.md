@@ -239,9 +239,11 @@ grows as more accumulate):
 - **Predicate modularity** (enabler-spec §3): treat Religion / Corporations / Traits (simple + complex) — and any
   concept we define as a system — as isolated systems; bare-string predicate forms; per-system self-documentation;
   ignore-not-false degradation. (The `workedBy: SELF` predicate also lands here / at Buildings.)
-- **Art sub-blocks** (building-cascade-conversion, "DEFERRED — ART SUB-BLOCKS"): flat `art.*` →
-  `art.ui.icon` / `art.world.icon` / `art.sound.{footsteps,soundscape,…}` across EVERY art-bearing entity (Bonus
-  already migrated; Units the heaviest).
+- **Art blocks — DONE 2026-06-16 (for all migrated entities).** Flat `art.*` → the three **top-level** blocks
+  `ui` / `world` / `sound` (`art` a sub-block within `ui`/`world`; canonical map `curate_common.ART_BLOCK`, shared
+  `put_art`/`emit_art` helpers). Applied to the cc-curated set AND all 11 art-bearing bespoke curators; entities not
+  yet curated (Unit — heaviest — Building, Improvement, …) adopt it natively via `ART_BLOCK` at their pass. No
+  retrofit owed. (building-cascade-conversion "ART BLOCKS … DONE".)
 - **Any shape an entity locked AFTER an earlier entity was committed** — e.g. the family names
   defense/movement/cultureDistance/buildTime/`vision` (blessed at Terrain/Feature), the deliveryguy/semantic-sense
   ownership rule (modifier-spec §6.1), the dedicated-block rule (§0.8).

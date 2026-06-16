@@ -65,8 +65,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/currency_energy.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/currency_energy.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_CURRENCY",

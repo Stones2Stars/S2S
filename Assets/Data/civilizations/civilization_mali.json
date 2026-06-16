@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_PEACH",
-  "artDefine": "ART_DEF_CIVILIZATION_MALI",
-  "artStyle": "ARTSTYLE_AFRICA",
-  "unitArtStyle": "UNIT_ARTSTYLE_MALI",
-  "selectionSound": "AS3D_MALI_SELECT",
-  "actionSound": "AS3D_MALI_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_PEACH",
+   "icon": "ART_DEF_CIVILIZATION_MALI",
+   "style": "ARTSTYLE_AFRICA",
+   "unitStyle": "UNIT_ARTSTYLE_MALI"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_MALI_SELECT",
+  "action": "AS3D_MALI_ORDER"
  },
  "identity": {
   "leaders": [

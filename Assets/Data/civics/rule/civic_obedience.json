@@ -74,8 +74,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/rule_obedience.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/rule_obedience.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_RULE"

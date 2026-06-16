@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Lynx.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Lynx.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

@@ -103,7 +103,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitHumanitarian3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitHumanitarian3.dds"
+  }
  }
 }

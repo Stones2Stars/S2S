@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_LIGHT_PURPLE",
-  "artDefine": "ART_DEF_CIVILIZATION_SCANDINAVIAS",
-  "artStyle": "ARTSTYLE_NORSE",
-  "unitArtStyle": "UNIT_ARTSTYLE_VIKING",
-  "selectionSound": "AS3D_VIKING_SELECT",
-  "actionSound": "AS3D_VIKING_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_LIGHT_PURPLE",
+   "icon": "ART_DEF_CIVILIZATION_SCANDINAVIAS",
+   "style": "ARTSTYLE_NORSE",
+   "unitStyle": "UNIT_ARTSTYLE_VIKING"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_VIKING_SELECT",
+  "action": "AS3D_VIKING_ORDER"
  },
  "identity": {
   "leaders": [

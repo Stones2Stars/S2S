@@ -4,7 +4,9 @@
  "conversion": {
   "goldPerProduction": 3
  },
- "art": {
-  "icon": "Art/Interface/MainScreen/CityScreen/hurry_commerce.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/MainScreen/CityScreen/hurry_commerce.dds"
+  }
  }
 }

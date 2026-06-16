@@ -118,8 +118,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/military_militia.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/military_militia.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_MILITARY"

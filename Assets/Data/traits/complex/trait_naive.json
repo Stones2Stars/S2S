@@ -444,8 +444,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitNaive.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitNaive.dds"
+  }
  },
  "identity": {
   "negativeTrait": true,

@@ -52,6 +52,7 @@ import os
 from collections import OrderedDict
 
 import engine
+import curate_common as cc
 from curate_common import de_i
 from store import Store, REPO
 
@@ -322,7 +323,7 @@ def is_complex(typ, rec, complex_ids):
 
 
 def curate(typ, rec, store):
-    text, fam, props, policies, grants, art, identity, ai = {}, {}, {}, {}, {}, {}, {}, {}
+    text, fam, props, policies, grants, art_blocks, identity, ai = {}, {}, {}, {}, {}, {}, {}, {}
     excludes, load_on, load_not, succession = [], [], [], {}
     gp_unit, gp_change = None, None
     bonus_happy = OrderedDict()
@@ -409,9 +410,7 @@ def curate(typ, rec, store):
             if t in ("1", "true", "True"):
                 ai.setdefault("behaviour", {})["coastalAIInfluence"] = True
         elif tag == "Button":
-            v = engine.generic(c)
-            if v not in (None, "", [], {}, "NONE"):
-                art["icon"] = v
+            cc.put_art(art_blocks, tag, engine.generic(c))   # -> ui.art.icon via ART_BLOCK
         elif tag == "ShortDescription":
             if t:
                 identity["shortDescription"] = t
@@ -483,8 +482,7 @@ def curate(typ, rec, store):
         out["loadPrune"] = lp
     if ai:
         out["ai"] = ai
-    if art:
-        out["art"] = art
+    cc.emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity
     return out, leftover

@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_ISRAEL",
-  "artDefine": "ART_DEF_CIVILIZATION_ISRAEL",
-  "artStyle": "ARTSTYLE_EGYPT",
-  "unitArtStyle": "UNIT_ARTSTYLE_MIDDLE_EAST",
-  "selectionSound": "AS3D_ARABIA_SELECT",
-  "actionSound": "AS3D_ARABIA_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_ISRAEL",
+   "icon": "ART_DEF_CIVILIZATION_ISRAEL",
+   "style": "ARTSTYLE_EGYPT",
+   "unitStyle": "UNIT_ARTSTYLE_MIDDLE_EAST"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_ARABIA_SELECT",
+  "action": "AS3D_ARABIA_ORDER"
  },
  "identity": {
   "leaders": [

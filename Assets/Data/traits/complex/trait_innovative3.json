@@ -125,8 +125,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitInnovative3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitInnovative3.dds"
+  }
  },
  "identity": {
   "minAnarchy": 3

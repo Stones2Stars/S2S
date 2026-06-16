@@ -69,8 +69,10 @@
  "grants": {
   "revolution": 15
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/labor_engineered.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/labor_engineered.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_WORKFORCE",

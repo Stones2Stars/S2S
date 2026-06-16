@@ -8,8 +8,10 @@
  "cost": {
   "create": 9440
  },
- "art": {
-  "icon": "Art/Interface/Buttons/buildings/IMF.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/buildings/IMF.dds"
+  }
  },
  "identity": {
   "mapCategories": [

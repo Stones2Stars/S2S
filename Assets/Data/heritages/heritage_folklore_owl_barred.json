@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Barredowl.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Barredowl.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

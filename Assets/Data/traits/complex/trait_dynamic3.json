@@ -205,7 +205,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitDynamic3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitDynamic3.dds"
+  }
  }
 }

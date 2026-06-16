@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_GRAY",
-  "artDefine": "ART_DEF_CIVILIZATION_GERMANY",
-  "artStyle": "ARTSTYLE_EUROPE",
-  "unitArtStyle": "UNIT_ARTSTYLE_GERMAN",
-  "selectionSound": "AS3D_GERMANY_SELECT",
-  "actionSound": "AS3D_GERMANY_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_GRAY",
+   "icon": "ART_DEF_CIVILIZATION_GERMANY",
+   "style": "ARTSTYLE_EUROPE",
+   "unitStyle": "UNIT_ARTSTYLE_GERMAN"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_GERMANY_SELECT",
+  "action": "AS3D_GERMANY_ORDER"
  },
  "identity": {
   "leaders": [

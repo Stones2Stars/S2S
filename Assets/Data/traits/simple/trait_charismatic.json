@@ -112,8 +112,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitCharismatic.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCharismatic.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_CHARISMATIC_SHORT"

@@ -36,9 +36,11 @@
    }
   ]
  },
- "art": {
-  "icon": "Art/Interface/MainScreen/CityScreen/slave_crime_prevention.dds",
-  "button": "Art/Interface/MainScreen/CityScreen/slave_military.dds"
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/slave_crime_prevention.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/slave_military.dds"
+  }
  },
  "identity": {
   "categories": [

@@ -150,8 +150,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitLiar2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitLiar2.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

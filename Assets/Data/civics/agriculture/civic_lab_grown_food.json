@@ -62,8 +62,10 @@
    "flat": -10
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/agriculture_farm_algae.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/agriculture_farm_algae.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_AGRICULTURE",

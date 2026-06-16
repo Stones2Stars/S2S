@@ -64,7 +64,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Craft/Art/bugcatcher.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Craft/Art/bugcatcher.dds"
+  }
  }
 }

@@ -132,8 +132,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitMinimalist2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitMinimalist2.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

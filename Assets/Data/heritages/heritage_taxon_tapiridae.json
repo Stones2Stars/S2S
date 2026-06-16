@@ -64,7 +64,9 @@
    }
   ]
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/tapir.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/tapir.dds"
+  }
  }
 }

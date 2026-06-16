@@ -88,8 +88,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitPacifist.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPacifist.dds"
+  }
  },
  "identity": {
   "negativeTrait": true,

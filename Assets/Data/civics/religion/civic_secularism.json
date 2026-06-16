@@ -84,8 +84,10 @@
  "grants": {
   "revolution": -15
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/religion_secular.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/religion_secular.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_RELIGION",

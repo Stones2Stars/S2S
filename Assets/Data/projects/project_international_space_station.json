@@ -8,9 +8,13 @@
  "cost": {
   "create": 13480
  },
- "art": {
-  "movie": "ART_DEF_MOVIE_ISS",
-  "icon": "art/Interface/Buttons/Projects/iss.dds"
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ISS"
+   },
+   "icon": "art/Interface/Buttons/Projects/iss.dds"
+  }
  },
  "identity": {
   "mapCategories": [

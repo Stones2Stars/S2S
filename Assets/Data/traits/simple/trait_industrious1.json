@@ -152,8 +152,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitIndustrious.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitIndustrious.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_INDUSTRIOUS_SHORT",

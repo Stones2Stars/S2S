@@ -30,8 +30,10 @@
    "flat": 2
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/garbage_burn.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/garbage_burn.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_GARBAGE",

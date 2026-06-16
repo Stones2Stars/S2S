@@ -137,8 +137,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/welfare_church.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/welfare_church.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_WELFARE",

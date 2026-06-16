@@ -101,13 +101,19 @@
    }
   ]
  },
- "art": {
-  "tgaIndex": 8,
-  "icon": "Art/Interface/Buttons/Religions/Hellenism.dds",
-  "techButton": "Art/Interface/Buttons/TechTree/Found_Hellenism.dds",
-  "genericTechButton": "Art/Interface/Buttons/TechTree/Hellenism.dds",
-  "movieFile": "Art/Cutscene/Greek_found.nif",
-  "movieSound": "AS2D_BUILD_OLYMP_MOVIE",
+ "ui": {
+  "art": {
+   "tgaIndex": 8,
+   "icon": "Art/Interface/Buttons/Religions/Hellenism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Hellenism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Hellenism.dds",
+   "movie": {
+    "file": "Art/Cutscene/Greek_found.nif",
+    "sound": "AS2D_BUILD_OLYMP_MOVIE"
+   }
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_OLYMP"
  },
  "identity": {

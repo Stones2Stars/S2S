@@ -570,8 +570,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitUnsanitary.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitUnsanitary.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

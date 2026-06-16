@@ -102,8 +102,10 @@
  "grants": {
   "revolution": -10
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/religion_atheist.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/religion_atheist.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_RELIGION",

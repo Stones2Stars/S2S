@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_PINK",
-  "artDefine": "ART_DEF_CIVILIZATION_SPAIN",
-  "artStyle": "ARTSTYLE_IBERIA",
-  "unitArtStyle": "UNIT_ARTSTYLE_SPANISH",
-  "selectionSound": "AS3D_SPAIN_SELECT",
-  "actionSound": "AS3D_SPAIN_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_PINK",
+   "icon": "ART_DEF_CIVILIZATION_SPAIN",
+   "style": "ARTSTYLE_IBERIA",
+   "unitStyle": "UNIT_ARTSTYLE_SPANISH"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_SPAIN_SELECT",
+  "action": "AS3D_SPAIN_ORDER"
  },
  "identity": {
   "leaders": [

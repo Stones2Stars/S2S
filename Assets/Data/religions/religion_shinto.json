@@ -87,13 +87,19 @@
    }
   ]
  },
- "art": {
-  "tgaIndex": 19,
-  "icon": "Art/Interface/Buttons/Religions/Shintoism.dds",
-  "techButton": "Art/Interface/Buttons/TechTree/Found_Shintoism.dds",
-  "genericTechButton": "Art/Interface/Buttons/TechTree/Shintoism.dds",
-  "movieFile": "Art/Cutscene/Shinto_Generic_Found.nif",
-  "movieSound": "AS2D_BUILD_SHINTO_MOVIE",
+ "ui": {
+  "art": {
+   "tgaIndex": 19,
+   "icon": "Art/Interface/Buttons/Religions/Shintoism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Shintoism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Shintoism.dds",
+   "movie": {
+    "file": "Art/Cutscene/Shinto_Generic_Found.nif",
+    "sound": "AS2D_BUILD_SHINTO_MOVIE"
+   }
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_SHINTO"
  },
  "identity": {

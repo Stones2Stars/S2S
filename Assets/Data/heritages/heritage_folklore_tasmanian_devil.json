@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Tdevil.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Tdevil.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

@@ -124,8 +124,10 @@
  "grants": {
   "revolution": -10
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/economy_free_market.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/economy_free_market.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_ECONOMY",

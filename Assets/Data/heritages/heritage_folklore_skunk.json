@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Skunk.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Skunk.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

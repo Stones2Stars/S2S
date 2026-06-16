@@ -56,7 +56,12 @@
   "startingExploreUnits": 1,
   "startingGold": 1000
  },
- "art": {
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/mainscreen/Era/Medieval.dds"
+  }
+ },
+ "sound": {
   "soundtrackSpace": 200,
   "soundtracks": [
    "AS2D_DRONOLANSTOWER",
@@ -104,9 +109,8 @@
     "CITYSIZE_LARGE": "ASSS_CITY_MIDDLE_LARGE_SELECT_AMB"
    }
   ],
-  "unitVictorySound": "AS2D_VICTORY_MIDDLE",
-  "unitDefeatSound": "AS2D_LOSS_MIDDLE",
-  "icon": "Art/Interface/mainscreen/Era/Medieval.dds"
+  "unitVictory": "AS2D_VICTORY_MIDDLE",
+  "unitDefeat": "AS2D_LOSS_MIDDLE"
  },
  "identity": {
   "advancedStart": 4000,

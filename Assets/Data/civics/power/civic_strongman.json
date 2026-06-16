@@ -108,8 +108,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/power_strongman.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/power_strongman.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_POWER"

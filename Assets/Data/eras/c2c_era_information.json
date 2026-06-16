@@ -57,9 +57,14 @@
   "startingGold": 30000,
   "freePopulation": 3
  },
- "art": {
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/mainscreen/Era/Information.dds"
+  }
+ },
+ "sound": {
   "soundtrackSpace": 80,
-  "firstSoundtrackFirst": true,
+  "introSoundtrack": true,
   "soundtracks": [
    "AS2D_ANFORTAS_WOUND",
    "AS2D_CHAIRMAN_DANCES",
@@ -87,9 +92,8 @@
     "CITYSIZE_LARGE": "ASSS_CITY_LATE_LARGE_SELECT_AMB"
    }
   ],
-  "unitVictorySound": "AS2D_VICTORY_LATE",
-  "unitDefeatSound": "AS2D_LOSS_LATE",
-  "icon": "Art/Interface/mainscreen/Era/Information.dds"
+  "unitVictory": "AS2D_VICTORY_LATE",
+  "unitDefeat": "AS2D_LOSS_LATE"
  },
  "identity": {
   "advancedStart": 64000,

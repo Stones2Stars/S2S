@@ -42,8 +42,10 @@
    "flat": 2
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/garbage_landfills.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/garbage_landfills.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_GARBAGE",

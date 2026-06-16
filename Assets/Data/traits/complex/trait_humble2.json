@@ -130,7 +130,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitHumble2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitHumble2.dds"
+  }
  }
 }

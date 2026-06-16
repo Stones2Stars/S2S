@@ -58,8 +58,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitExcessive.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitExcessive.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_EXCESSIVE_SHORT",

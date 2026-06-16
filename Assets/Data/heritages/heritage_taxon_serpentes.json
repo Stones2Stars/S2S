@@ -70,7 +70,9 @@
    }
   ]
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Buildings/totem_snake.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Buildings/totem_snake.dds"
+  }
  }
 }

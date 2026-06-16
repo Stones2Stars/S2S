@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_DENMARK",
-  "artDefine": "ART_DEF_CIVILIZATION_DENMARK",
-  "artStyle": "ARTSTYLE_EUROPE",
-  "unitArtStyle": "UNIT_ARTSTYLE_DENMARK",
-  "selectionSound": "AS3D_VIKING_SELECT",
-  "actionSound": "AS3D_VIKING_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_DENMARK",
+   "icon": "ART_DEF_CIVILIZATION_DENMARK",
+   "style": "ARTSTYLE_EUROPE",
+   "unitStyle": "UNIT_ARTSTYLE_DENMARK"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_VIKING_SELECT",
+  "action": "AS3D_VIKING_ORDER"
  },
  "identity": {
   "leaders": [

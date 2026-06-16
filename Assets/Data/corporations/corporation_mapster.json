@@ -64,9 +64,13 @@
  "cost": {
   "spread": 50
  },
- "art": {
-  "tgaIndex": 14,
-  "icon": "Art/Interface/Buttons/corporations/sparth/mapster.dds",
+ "ui": {
+  "art": {
+   "tgaIndex": 14,
+   "icon": "Art/Interface/Buttons/corporations/sparth/mapster.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_BANK"
  },
  "identity": {

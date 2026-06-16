@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_BROWN",
-  "artDefine": "ART_DEF_CIVILIZATION_MONGOL",
-  "artStyle": "ARTSTYLE_MONGOLIA",
-  "unitArtStyle": "UNIT_ARTSTYLE_MONGOL",
-  "selectionSound": "AS3D_MONGOL_SELECT",
-  "actionSound": "AS3D_MONGOL_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_BROWN",
+   "icon": "ART_DEF_CIVILIZATION_MONGOL",
+   "style": "ARTSTYLE_MONGOLIA",
+   "unitStyle": "UNIT_ARTSTYLE_MONGOL"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_MONGOL_SELECT",
+  "action": "AS3D_MONGOL_ORDER"
  },
  "identity": {
   "leaders": [

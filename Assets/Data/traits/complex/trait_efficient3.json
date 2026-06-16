@@ -103,8 +103,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitEfficient3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitEfficient3.dds"
+  }
  },
  "identity": {
   "impurePropertyManipulators": true

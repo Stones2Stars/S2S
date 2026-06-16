@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_DARK_PURPLE",
-  "artDefine": "ART_DEF_CIVILIZATION_ROME",
-  "artStyle": "ARTSTYLE_GRECO_ROMAN",
-  "unitArtStyle": "UNIT_ARTSTYLE_ROME",
-  "selectionSound": "AS3D_ROME_SELECT",
-  "actionSound": "AS3D_ROME_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_DARK_PURPLE",
+   "icon": "ART_DEF_CIVILIZATION_ROME",
+   "style": "ARTSTYLE_GRECO_ROMAN",
+   "unitStyle": "UNIT_ARTSTYLE_ROME"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_ROME_SELECT",
+  "action": "AS3D_ROME_ORDER"
  },
  "identity": {
   "leaders": [

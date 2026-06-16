@@ -463,7 +463,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitCreative2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCreative2.dds"
+  }
  }
 }

@@ -80,8 +80,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/labor_socialized.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/labor_socialized.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_WORKFORCE",

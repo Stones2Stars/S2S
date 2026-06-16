@@ -111,8 +111,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitTemperamental2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitTemperamental2.dds"
+  }
  },
  "identity": {
   "negativeTrait": true,

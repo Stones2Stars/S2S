@@ -139,8 +139,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitAggressive.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitAggressive.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_AGGRESSIVE_SHORT",

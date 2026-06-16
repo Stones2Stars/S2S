@@ -255,8 +255,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/society_burgeois.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/society_burgeois.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_SOCIETY",

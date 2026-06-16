@@ -153,8 +153,10 @@
  "grants": {
   "revolution": -15
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/welfare_public_works.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/welfare_public_works.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_WELFARE",

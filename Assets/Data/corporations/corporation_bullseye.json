@@ -75,9 +75,13 @@
  "cost": {
   "spread": 50
  },
- "art": {
-  "tgaIndex": 12,
-  "icon": "Art/Interface/Buttons/corporations/bullseye.dds",
+ "ui": {
+  "art": {
+   "tgaIndex": 12,
+   "icon": "Art/Interface/Buttons/corporations/bullseye.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_BANK"
  },
  "identity": {

@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Penguin_b.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Penguin_b.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

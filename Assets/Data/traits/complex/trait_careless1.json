@@ -280,8 +280,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitCareless.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCareless.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

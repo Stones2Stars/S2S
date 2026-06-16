@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_DARK_PINK",
-  "artDefine": "ART_DEF_CIVILIZATION_CHINA",
-  "artStyle": "ARTSTYLE_ASIA",
-  "unitArtStyle": "UNIT_ARTSTYLE_ASIAN",
-  "selectionSound": "AS3D_CHINA_SELECT",
-  "actionSound": "AS3D_CHINA_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_DARK_PINK",
+   "icon": "ART_DEF_CIVILIZATION_CHINA",
+   "style": "ARTSTYLE_ASIA",
+   "unitStyle": "UNIT_ARTSTYLE_ASIAN"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_CHINA_SELECT",
+  "action": "AS3D_CHINA_ORDER"
  },
  "identity": {
   "leaders": [

@@ -339,8 +339,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitAnti-Clerical.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitAnti-Clerical.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

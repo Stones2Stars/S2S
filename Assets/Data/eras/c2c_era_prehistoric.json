@@ -49,8 +49,13 @@
  "grants": {
   "startingGold": 10
  },
- "art": {
-  "firstSoundtrackFirst": true,
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/mainscreen/Era/Prehistoric.dds"
+  }
+ },
+ "sound": {
+  "introSoundtrack": true,
   "soundtracks": [
    "AS2D_DOODLEGOD",
    "AS2D_DOODLEGODTWO",
@@ -75,9 +80,8 @@
     "CITYSIZE_LARGE": "ASSS_CITY_ANCIENT_LARGE_SELECT_AMB"
    }
   ],
-  "unitVictorySound": "AS2D_VICTORY_EARLY",
-  "unitDefeatSound": "AS2D_LOSS_EARLY",
-  "icon": "Art/Interface/mainscreen/Era/Prehistoric.dds"
+  "unitVictory": "AS2D_VICTORY_EARLY",
+  "unitDefeat": "AS2D_LOSS_EARLY"
  },
  "identity": {
   "advancedStart": 500,

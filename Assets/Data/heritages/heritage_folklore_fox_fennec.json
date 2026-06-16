@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Fennecfox.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Fennecfox.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

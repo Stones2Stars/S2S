@@ -56,7 +56,12 @@
   "startingExploreUnits": 1,
   "startingGold": 100
  },
- "art": {
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/mainscreen/Era/Classical.dds"
+  }
+ },
+ "sound": {
   "soundtrackSpace": 400,
   "soundtracks": [
    "AS2D_ARISTOTLESPUPIL",
@@ -87,9 +92,8 @@
     "CITYSIZE_LARGE": "ASSS_CITY_ANCIENT_LARGE_SELECT_AMB"
    }
   ],
-  "unitVictorySound": "AS2D_VICTORY_EARLY",
-  "unitDefeatSound": "AS2D_LOSS_EARLY",
-  "icon": "Art/Interface/mainscreen/Era/Classical.dds"
+  "unitVictory": "AS2D_VICTORY_EARLY",
+  "unitDefeat": "AS2D_LOSS_EARLY"
  },
  "identity": {
   "advancedStart": 2000,

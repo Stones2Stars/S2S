@@ -241,8 +241,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitZealot2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitZealot2.dds"
+  }
  },
  "identity": {
   "negativeTrait": true,

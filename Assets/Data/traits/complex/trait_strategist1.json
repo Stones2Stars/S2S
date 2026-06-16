@@ -284,7 +284,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitStrategist.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitStrategist.dds"
+  }
  }
 }

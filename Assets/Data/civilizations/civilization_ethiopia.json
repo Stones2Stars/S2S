@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_MIDDLE_GREEN",
-  "artDefine": "ART_DEF_CIVILIZATION_ETHIOPIA",
-  "artStyle": "ARTSTYLE_AFRICA",
-  "unitArtStyle": "UNIT_ARTSTYLE_NUBIA",
-  "selectionSound": "AS3D_ETHIOPIA_SELECT",
-  "actionSound": "AS3D_ETHIOPIA_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_MIDDLE_GREEN",
+   "icon": "ART_DEF_CIVILIZATION_ETHIOPIA",
+   "style": "ARTSTYLE_AFRICA",
+   "unitStyle": "UNIT_ARTSTYLE_NUBIA"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_ETHIOPIA_SELECT",
+  "action": "AS3D_ETHIOPIA_ORDER"
  },
  "identity": {
   "leaders": [

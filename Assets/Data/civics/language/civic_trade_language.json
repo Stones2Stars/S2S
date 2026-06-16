@@ -67,8 +67,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/language_trade.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/language_trade.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_LANGUAGE",

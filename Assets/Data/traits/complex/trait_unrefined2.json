@@ -340,8 +340,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitUnrefined2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitUnrefined2.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

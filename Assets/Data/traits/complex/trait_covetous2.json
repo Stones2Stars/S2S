@@ -139,8 +139,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitCovetous2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCovetous2.dds"
+  }
  },
  "identity": {
   "negativeTrait": true,

@@ -75,9 +75,13 @@
  "cost": {
   "spread": 50
  },
- "art": {
-  "tgaIndex": 19,
-  "icon": "Art/Interface/Buttons/corporations/Adventure.dds",
+ "ui": {
+  "art": {
+   "tgaIndex": 19,
+   "icon": "Art/Interface/Buttons/corporations/Adventure.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_BANK"
  },
  "identity": {

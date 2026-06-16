@@ -92,8 +92,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/currency_banknote.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/currency_banknote.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_CURRENCY",

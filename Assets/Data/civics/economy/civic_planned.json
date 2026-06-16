@@ -114,8 +114,10 @@
  "grants": {
   "revolution": 10
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/economy_planned.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/economy_planned.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_ECONOMY",

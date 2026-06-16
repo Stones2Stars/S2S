@@ -54,8 +54,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitCruel.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCruel.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_CRUEL_SHORT",

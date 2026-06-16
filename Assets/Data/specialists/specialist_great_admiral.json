@@ -156,9 +156,11 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/MainScreen/CityScreen/specialist_great_admiral.dds",
-  "button": "Art/Interface/MainScreen/CityScreen/specialist_great_admiral.dds"
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/specialist_great_admiral.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/specialist_great_admiral.dds"
+  }
  },
  "identity": {
   "categories": [

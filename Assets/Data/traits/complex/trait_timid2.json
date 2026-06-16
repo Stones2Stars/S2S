@@ -135,7 +135,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitTimid2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitTimid2.dds"
+  }
  }
 }

@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_LIGHT_GREEN",
-  "artDefine": "ART_DEF_CIVILIZATION_ARABIA",
-  "artStyle": "ARTSTYLE_ARABIA",
-  "unitArtStyle": "UNIT_ARTSTYLE_MIDDLE_EAST",
-  "selectionSound": "AS3D_ARABIA_SELECT",
-  "actionSound": "AS3D_ARABIA_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_LIGHT_GREEN",
+   "icon": "ART_DEF_CIVILIZATION_ARABIA",
+   "style": "ARTSTYLE_ARABIA",
+   "unitStyle": "UNIT_ARTSTYLE_MIDDLE_EAST"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_ARABIA_SELECT",
+  "action": "AS3D_ARABIA_ORDER"
  },
  "identity": {
   "leaders": [

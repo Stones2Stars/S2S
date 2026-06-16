@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Tortoise.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Tortoise.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

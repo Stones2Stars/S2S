@@ -10,8 +10,10 @@
  "cost": {
   "create": 53240
  },
- "art": {
-  "icon": ",Art/Interface/Buttons/Buildings/SS_DockingBay.dds,Art/Interface/Buttons/Buildings_Atlas.dds,6,6"
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Buildings/SS_DockingBay.dds,Art/Interface/Buttons/Buildings_Atlas.dds,6,6"
+  }
  },
  "identity": {
   "mapCategories": [

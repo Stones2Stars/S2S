@@ -102,8 +102,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitHunterGatherer3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitHunterGatherer3.dds"
+  }
  },
  "identity": {
   "negativeTrait": true,

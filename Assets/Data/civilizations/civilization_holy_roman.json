@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_DARK_LEMON",
-  "artDefine": "ART_DEF_CIVILIZATION_HOLY_ROMAN",
-  "artStyle": "ARTSTYLE_EUROPE",
-  "unitArtStyle": "UNIT_ARTSTYLE_GERMAN",
-  "selectionSound": "AS3D_HOLY_ROMAN_SELECT",
-  "actionSound": "AS3D_HOLY_ROMAN_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_DARK_LEMON",
+   "icon": "ART_DEF_CIVILIZATION_HOLY_ROMAN",
+   "style": "ARTSTYLE_EUROPE",
+   "unitStyle": "UNIT_ARTSTYLE_GERMAN"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_HOLY_ROMAN_SELECT",
+  "action": "AS3D_HOLY_ROMAN_ORDER"
  },
  "identity": {
   "leaders": [

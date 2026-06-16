@@ -122,13 +122,19 @@
    }
   ]
  },
- "art": {
-  "tgaIndex": 21,
-  "icon": "Art/Interface/Buttons/Religions/Druidism.dds",
-  "techButton": "Art/Interface/Buttons/TechTree/found_druidism.dds",
-  "genericTechButton": "Art/Interface/Buttons/TechTree/Druidism.dds",
-  "movieFile": "Art/Cutscene/Druid_Generic_Found.nif",
-  "movieSound": "AS2D_BUILD_DRUID_MOVIE",
+ "ui": {
+  "art": {
+   "tgaIndex": 21,
+   "icon": "Art/Interface/Buttons/Religions/Druidism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/found_druidism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Druidism.dds",
+   "movie": {
+    "file": "Art/Cutscene/Druid_Generic_Found.nif",
+    "sound": "AS2D_BUILD_DRUID_MOVIE"
+   }
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_DRUID"
  },
  "identity": {

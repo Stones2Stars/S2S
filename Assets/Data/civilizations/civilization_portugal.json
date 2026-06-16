@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_DARK_DARK_GREEN",
-  "artDefine": "ART_DEF_CIVILIZATION_PORTUGAL",
-  "artStyle": "ARTSTYLE_IBERIA",
-  "unitArtStyle": "UNIT_ARTSTYLE_SPANISH",
-  "selectionSound": "AS3D_PORTUGAL_SELECT",
-  "actionSound": "AS3D_PORTUGAL_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_DARK_DARK_GREEN",
+   "icon": "ART_DEF_CIVILIZATION_PORTUGAL",
+   "style": "ARTSTYLE_IBERIA",
+   "unitStyle": "UNIT_ARTSTYLE_SPANISH"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_PORTUGAL_SELECT",
+  "action": "AS3D_PORTUGAL_ORDER"
  },
  "identity": {
   "leaders": [

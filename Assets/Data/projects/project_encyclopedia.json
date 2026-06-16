@@ -17,9 +17,13 @@
  "cost": {
   "create": 4120
  },
- "art": {
-  "movie": "ART_DEF_MOVIE_ENCYCLOPEDIA",
-  "icon": "Art/Interface/Buttons/Buildings/CodeCivil.dds"
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ENCYCLOPEDIA"
+   },
+   "icon": "Art/Interface/Buttons/Buildings/CodeCivil.dds"
+  }
  },
  "identity": {
   "mapCategories": [

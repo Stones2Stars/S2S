@@ -188,9 +188,11 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/mainscreen/cityscreen/great_statesman.dds",
-  "button": "Art/Interface/mainscreen/cityscreen/great_statesman.dds"
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/mainscreen/cityscreen/great_statesman.dds",
+   "icon": "Art/Interface/mainscreen/cityscreen/great_statesman.dds"
+  }
  },
  "identity": {
   "categories": [

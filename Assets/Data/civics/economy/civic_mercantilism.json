@@ -141,8 +141,10 @@
   "noForeignCorporations": true,
   "noForeignTrade": true
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/economy_mercantile.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/economy_mercantile.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_ECONOMY",

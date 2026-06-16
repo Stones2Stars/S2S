@@ -88,8 +88,10 @@
    "flat": 3
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/agriculture_corporate.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/agriculture_corporate.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_AGRICULTURE",

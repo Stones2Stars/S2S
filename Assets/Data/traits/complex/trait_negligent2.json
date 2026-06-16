@@ -279,8 +279,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitNegligent2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitNegligent2.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

@@ -223,8 +223,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/military_pacifism.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/military_pacifism.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_MILITARY",

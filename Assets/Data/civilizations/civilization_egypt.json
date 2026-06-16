@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_YELLOW",
-  "artDefine": "ART_DEF_CIVILIZATION_EGYPT",
-  "artStyle": "ARTSTYLE_EGYPT",
-  "unitArtStyle": "UNIT_ARTSTYLE_EGYPT",
-  "selectionSound": "AS3D_EGYPT_SELECT",
-  "actionSound": "AS3D_EGYPT_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_YELLOW",
+   "icon": "ART_DEF_CIVILIZATION_EGYPT",
+   "style": "ARTSTYLE_EGYPT",
+   "unitStyle": "UNIT_ARTSTYLE_EGYPT"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_EGYPT_SELECT",
+  "action": "AS3D_EGYPT_ORDER"
  },
  "identity": {
   "leaders": [

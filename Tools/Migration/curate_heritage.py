@@ -33,6 +33,7 @@ import os
 from collections import OrderedDict
 
 import engine
+import curate_common as cc
 from curate_common import de_i
 from store import Store, REPO
 
@@ -79,7 +80,7 @@ def _properties(node, props):
 
 
 def curate(typ, rec, store):
-    text, fam, props, art, identity, leftover = {}, {}, {}, {}, {}, []
+    text, fam, props, art_blocks, identity, leftover = {}, {}, {}, {}, {}, []
     for c in rec:
         tag, t = c.tag, engine.text(c)
         if tag == "Type" or tag in DROP:
@@ -92,9 +93,7 @@ def curate(typ, rec, store):
         elif tag == "PropertyManipulators":
             _properties(c, props)
         elif tag == "Button":
-            v = engine.generic(c)
-            if v:
-                art["icon"] = v
+            cc.put_art(art_blocks, tag, engine.generic(c))   # -> ui.art.icon via ART_BLOCK
         elif tag == "bNeedLanguage":
             if t in ("1", "true", "True"):
                 identity["needsLanguage"] = True
@@ -116,8 +115,7 @@ def curate(typ, rec, store):
             out[family] = fam[family]
     for prop in sorted(props):                 # PROPERTY_* families after the commerce families
         out[prop] = props[prop]
-    if art:
-        out["art"] = art
+    cc.emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity
     return out, leftover

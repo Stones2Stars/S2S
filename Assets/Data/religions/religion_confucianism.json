@@ -117,13 +117,19 @@
    }
   ]
  },
- "art": {
-  "tgaIndex": 5,
-  "icon": "Art/Interface/Buttons/Religions/Confucianism.dds",
-  "techButton": "Art/Interface/Buttons/TechTree/Found_Confucianism.dds",
-  "genericTechButton": "Art/Interface/Buttons/TechTree/Confucianism.dds",
-  "movieFile": "Art/Movies/Religion/Confucianism/Con_Found.nif",
-  "movieSound": "AS2D_BUILD_CONFUCIAN_MOVIE",
+ "ui": {
+  "art": {
+   "tgaIndex": 5,
+   "icon": "Art/Interface/Buttons/Religions/Confucianism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Confucianism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Confucianism.dds",
+   "movie": {
+    "file": "Art/Movies/Religion/Confucianism/Con_Found.nif",
+    "sound": "AS2D_BUILD_CONFUCIAN_MOVIE"
+   }
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_CONFUCIAN"
  },
  "identity": {

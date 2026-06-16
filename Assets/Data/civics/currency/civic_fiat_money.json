@@ -99,8 +99,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/currency_fiat.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/currency_fiat.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_CURRENCY",

@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Wolverine.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Wolverine.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

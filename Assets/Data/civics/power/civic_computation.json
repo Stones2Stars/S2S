@@ -78,8 +78,10 @@
  "grants": {
   "revolution": 10
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/power_computation.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/power_computation.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_POWER",

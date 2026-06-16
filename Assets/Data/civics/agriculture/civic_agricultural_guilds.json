@@ -42,8 +42,10 @@
    "percent": 2
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/agriculture_guilds.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/agriculture_guilds.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_AGRICULTURE",

@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Buildings/PaleolithicDogMyth.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Buildings/PaleolithicDogMyth.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

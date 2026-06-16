@@ -131,9 +131,11 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/MainScreen/CityScreen/Great_Artist.dds",
-  "button": "Art/Interface/MainScreen/CityScreen/Great_Artist.dds"
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/Great_Artist.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/Great_Artist.dds"
+  }
  },
  "identity": {
   "categories": [

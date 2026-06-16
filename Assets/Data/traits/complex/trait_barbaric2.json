@@ -155,8 +155,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitBarbaric2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitBarbaric2.dds"
+  }
  },
  "identity": {
   "negativeTrait": true,

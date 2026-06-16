@@ -711,7 +711,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitLawful.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitLawful.dds"
+  }
  }
 }

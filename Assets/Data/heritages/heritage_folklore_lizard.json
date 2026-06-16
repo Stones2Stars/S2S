@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Lizard.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Lizard.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

@@ -184,8 +184,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitEfficient2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitEfficient2.dds"
+  }
  },
  "identity": {
   "impurePropertyManipulators": true

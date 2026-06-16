@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_HITTITES",
-  "artDefine": "ART_DEF_CIVILIZATION_HITTITES",
-  "artStyle": "ARTSTYLE_EGYPT",
-  "unitArtStyle": "UNIT_ARTSTYLE_BABYLON",
-  "selectionSound": "AS3D_EGYPT_SELECT",
-  "actionSound": "AS3D_EGYPT_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_HITTITES",
+   "icon": "ART_DEF_CIVILIZATION_HITTITES",
+   "style": "ARTSTYLE_EGYPT",
+   "unitStyle": "UNIT_ARTSTYLE_BABYLON"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_EGYPT_SELECT",
+  "action": "AS3D_EGYPT_ORDER"
  },
  "identity": {
   "leaders": [

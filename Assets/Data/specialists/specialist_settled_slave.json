@@ -335,9 +335,11 @@
    }
   ]
  },
- "art": {
-  "icon": "Art/Interface/MainScreen/CityScreen/slave.dds",
-  "button": "Art/Interface/MainScreen/CityScreen/slave.dds"
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/slave.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/slave.dds"
+  }
  },
  "identity": {
   "categories": [

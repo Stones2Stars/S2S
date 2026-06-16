@@ -89,8 +89,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/government_anarchism.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/government_anarchism.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_GOVERNMENT",

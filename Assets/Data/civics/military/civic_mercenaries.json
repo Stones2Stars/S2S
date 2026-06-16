@@ -65,8 +65,10 @@
  "grants": {
   "revolution": 100
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/military_mercenaries.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/military_mercenaries.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_MILITARY",

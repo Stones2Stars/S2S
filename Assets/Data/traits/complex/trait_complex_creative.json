@@ -930,7 +930,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitCreative.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCreative.dds"
+  }
  }
 }

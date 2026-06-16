@@ -835,7 +835,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitNomadic3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitNomadic3.dds"
+  }
  }
 }

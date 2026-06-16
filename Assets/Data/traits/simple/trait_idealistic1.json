@@ -48,8 +48,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitIdealistic.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitIdealistic.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_IDEALISTIC_SHORT",

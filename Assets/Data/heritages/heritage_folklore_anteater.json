@@ -44,8 +44,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Anteater.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Anteater.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

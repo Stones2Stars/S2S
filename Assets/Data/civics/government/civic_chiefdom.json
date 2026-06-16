@@ -159,8 +159,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/government_chiefdom.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/government_chiefdom.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_GOVERNMENT",

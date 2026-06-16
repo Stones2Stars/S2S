@@ -95,8 +95,10 @@
  "grants": {
   "revolution": 25
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/rule_magistrates.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/rule_magistrates.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_RULE",

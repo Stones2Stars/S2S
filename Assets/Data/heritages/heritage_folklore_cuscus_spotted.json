@@ -44,8 +44,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Cuscus.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Cuscus.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

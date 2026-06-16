@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Beaver.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Beaver.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

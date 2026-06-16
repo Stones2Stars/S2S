@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Cobra.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Cobra.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

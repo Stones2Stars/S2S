@@ -125,8 +125,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/rule_city_states.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/rule_city_states.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_RULE",

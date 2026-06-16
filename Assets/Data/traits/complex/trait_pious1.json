@@ -229,7 +229,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitPious.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPious.dds"
+  }
  }
 }

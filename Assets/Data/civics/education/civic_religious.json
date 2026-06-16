@@ -163,8 +163,10 @@
    "flat": 5
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/education_religious.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/education_religious.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_EDUCATION",

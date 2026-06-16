@@ -110,8 +110,10 @@
  "grants": {
   "revolution": 25
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/religion_cosmic.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/religion_cosmic.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_RELIGION",

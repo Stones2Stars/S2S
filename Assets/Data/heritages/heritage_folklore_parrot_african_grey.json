@@ -44,8 +44,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/africangrey.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/africangrey.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

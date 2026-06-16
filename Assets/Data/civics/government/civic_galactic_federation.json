@@ -119,8 +119,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/government_galactic_federation.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/government_galactic_federation.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_GOVERNMENT",

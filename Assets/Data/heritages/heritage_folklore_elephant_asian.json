@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/elephant.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/elephant.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

@@ -90,8 +90,10 @@
  "grants": {
   "revolution": 15
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/economy_corporatist.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/economy_corporatist.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_ECONOMY",

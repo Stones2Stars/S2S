@@ -386,8 +386,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitGluttonous.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitGluttonous.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

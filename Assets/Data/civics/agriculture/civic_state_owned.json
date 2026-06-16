@@ -70,8 +70,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/agriculture_state_run_agriculture.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/agriculture_state_run_agriculture.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_AGRICULTURE",

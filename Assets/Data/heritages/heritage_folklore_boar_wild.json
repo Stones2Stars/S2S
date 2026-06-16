@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/button_boar.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/button_boar.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

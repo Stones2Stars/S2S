@@ -209,8 +209,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitSpiritual.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitSpiritual.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_SPIRITUAL_SHORT"

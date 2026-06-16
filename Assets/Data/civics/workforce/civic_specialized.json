@@ -141,8 +141,10 @@
    "percent": 5
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/labor_skilled.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/labor_skilled.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_WORKFORCE",

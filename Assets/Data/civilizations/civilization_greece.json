@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_LIGHT_BLUE",
-  "artDefine": "ART_DEF_CIVILIZATION_GREECE",
-  "artStyle": "ARTSTYLE_GRECO_ROMAN",
-  "unitArtStyle": "UNIT_ARTSTYLE_GREEK",
-  "selectionSound": "AS3D_GREECE_SELECT",
-  "actionSound": "AS3D_GREECE_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_LIGHT_BLUE",
+   "icon": "ART_DEF_CIVILIZATION_GREECE",
+   "style": "ARTSTYLE_GRECO_ROMAN",
+   "unitStyle": "UNIT_ARTSTYLE_GREEK"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_GREECE_SELECT",
+  "action": "AS3D_GREECE_ORDER"
  },
  "identity": {
   "leaders": [

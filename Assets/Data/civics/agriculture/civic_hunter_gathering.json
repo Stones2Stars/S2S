@@ -61,8 +61,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/agriculture_no_agriculture.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/agriculture_no_agriculture.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_AGRICULTURE"

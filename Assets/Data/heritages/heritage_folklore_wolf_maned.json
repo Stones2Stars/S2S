@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Manedwolf.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Manedwolf.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

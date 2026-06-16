@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Buildings/totem_monitorlizard.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Buildings/totem_monitorlizard.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

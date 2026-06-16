@@ -114,8 +114,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/economy_guilds.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/economy_guilds.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_ECONOMY",

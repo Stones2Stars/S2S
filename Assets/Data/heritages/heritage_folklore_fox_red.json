@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Buildings/totem_ethowolf.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Buildings/totem_ethowolf.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

@@ -174,8 +174,10 @@
   "noNonStateReligionSpread": true,
   "stateReligion": true
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/religion_divine_cult.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/religion_divine_cult.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_RELIGION",

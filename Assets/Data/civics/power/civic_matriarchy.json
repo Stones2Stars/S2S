@@ -92,8 +92,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/power_matriarchy.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/power_matriarchy.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_POWER",

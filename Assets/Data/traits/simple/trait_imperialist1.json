@@ -104,8 +104,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitImperialist.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitImperialist.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_IMPERIALIST_SHORT"

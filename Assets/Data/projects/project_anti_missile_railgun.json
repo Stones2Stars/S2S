@@ -19,8 +19,10 @@
  "cost": {
   "create": 21000
  },
- "art": {
-  "icon": "art/Interface/Buttons/Projects/AntiMissile_Railgun.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/Buttons/Projects/AntiMissile_Railgun.dds"
+  }
  },
  "identity": {
   "mapCategories": [

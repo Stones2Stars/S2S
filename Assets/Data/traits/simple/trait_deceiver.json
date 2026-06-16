@@ -116,8 +116,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitDeceptive.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitDeceptive.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_DECEIVER_SHORT"

@@ -63,8 +63,10 @@
    "flat": 4
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/immigration_open_borders.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/immigration_open_borders.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_IMMIGRATION",

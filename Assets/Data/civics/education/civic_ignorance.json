@@ -67,8 +67,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/education_ignorance.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/education_ignorance.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_EDUCATION"

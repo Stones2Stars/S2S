@@ -156,8 +156,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitIsolationist2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitIsolationist2.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

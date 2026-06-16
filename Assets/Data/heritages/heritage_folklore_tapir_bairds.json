@@ -50,8 +50,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Tapir.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Tapir.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

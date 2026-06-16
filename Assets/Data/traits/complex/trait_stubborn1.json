@@ -293,8 +293,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitStubborn.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitStubborn.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

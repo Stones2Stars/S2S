@@ -111,13 +111,19 @@
    }
   ]
  },
- "art": {
-  "tgaIndex": 11,
-  "icon": "Art/Interface/Buttons/Religions/Andeanism.dds",
-  "techButton": "Art/Interface/Buttons/techtree/Found_Andeanism.dds",
-  "genericTechButton": "Art/Interface/Buttons/TechTree/Andeanism.dds",
-  "movieFile": "Art/Cutscene/Andean_Generic_Found.nif",
-  "movieSound": "AS2D_BUILD_ANDEAN_MOVIE",
+ "ui": {
+  "art": {
+   "tgaIndex": 11,
+   "icon": "Art/Interface/Buttons/Religions/Andeanism.dds",
+   "techButton": "Art/Interface/Buttons/techtree/Found_Andeanism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Andeanism.dds",
+   "movie": {
+    "file": "Art/Cutscene/Andean_Generic_Found.nif",
+    "sound": "AS2D_BUILD_ANDEAN_MOVIE"
+   }
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_ANDEAN"
  },
  "identity": {

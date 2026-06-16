@@ -440,8 +440,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitAerial2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitAerial2.dds"
+  }
  },
  "identity": {
   "impurePropertyManipulators": true

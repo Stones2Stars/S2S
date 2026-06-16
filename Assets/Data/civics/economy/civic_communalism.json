@@ -115,8 +115,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/economy_communalism.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/economy_communalism.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_ECONOMY"

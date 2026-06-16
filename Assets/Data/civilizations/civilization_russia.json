@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_DARK_RED",
-  "artDefine": "ART_DEF_CIVILIZATION_RUSSIA",
-  "artStyle": "ARTSTYLE_RUSSIA",
-  "unitArtStyle": "UNIT_ARTSTYLE_RUSSIA",
-  "selectionSound": "AS3D_RUSSIA_SELECT",
-  "actionSound": "AS3D_RUSSIA_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_DARK_RED",
+   "icon": "ART_DEF_CIVILIZATION_RUSSIA",
+   "style": "ARTSTYLE_RUSSIA",
+   "unitStyle": "UNIT_ARTSTYLE_RUSSIA"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_RUSSIA_SELECT",
+  "action": "AS3D_RUSSIA_ORDER"
  },
  "identity": {
   "leaders": [

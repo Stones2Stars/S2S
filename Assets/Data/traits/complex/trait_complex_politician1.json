@@ -124,8 +124,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitPolitician.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPolitician.dds"
+  }
  },
  "identity": {
   "impurePropertyManipulators": true

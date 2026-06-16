@@ -352,7 +352,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitPreeminent.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPreeminent.dds"
+  }
  }
 }

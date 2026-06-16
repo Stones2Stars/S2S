@@ -287,8 +287,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitAgricultural3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitAgricultural3.dds"
+  }
  },
  "identity": {
   "impurePropertyManipulators": true

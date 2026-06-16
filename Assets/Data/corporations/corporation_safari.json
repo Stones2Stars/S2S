@@ -106,9 +106,13 @@
  "cost": {
   "spread": 50
  },
- "art": {
-  "tgaIndex": 20,
-  "icon": "Art/Interface/Buttons/corporations/Safari.dds",
+ "ui": {
+  "art": {
+   "tgaIndex": 20,
+   "icon": "Art/Interface/Buttons/corporations/Safari.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_BANK"
  },
  "identity": {

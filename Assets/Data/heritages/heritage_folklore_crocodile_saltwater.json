@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Saltcroc.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Saltcroc.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

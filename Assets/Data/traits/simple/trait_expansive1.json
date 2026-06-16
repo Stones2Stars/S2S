@@ -160,8 +160,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitExpansive.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitExpansive.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_EXPANSIVE_SHORT"

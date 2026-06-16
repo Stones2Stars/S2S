@@ -57,8 +57,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/economy_subsistence.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/economy_subsistence.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_ECONOMY"

@@ -352,8 +352,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitAloof.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitAloof.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

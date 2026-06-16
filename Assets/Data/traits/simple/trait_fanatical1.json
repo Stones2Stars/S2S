@@ -62,8 +62,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitFanatical.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitFanatical.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_FANATICAL_SHORT",

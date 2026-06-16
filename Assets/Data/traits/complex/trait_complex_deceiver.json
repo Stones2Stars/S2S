@@ -442,8 +442,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitDeceiver.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitDeceiver.dds"
+  }
  },
  "identity": {
   "impurePropertyManipulators": true

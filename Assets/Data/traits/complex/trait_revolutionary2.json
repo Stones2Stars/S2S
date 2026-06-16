@@ -159,8 +159,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitRevolutionary2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitRevolutionary2.dds"
+  }
  },
  "identity": {
   "impurePropertyManipulators": true

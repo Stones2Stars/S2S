@@ -115,13 +115,19 @@
    }
   ]
  },
- "art": {
-  "tgaIndex": 9,
-  "icon": "Art/Interface/Buttons/Religions/Egypt.dds",
-  "techButton": "Art/Interface/Buttons/TechTree/Found_kemetism.dds",
-  "genericTechButton": "Art/Interface/Buttons/TechTree/Kemetism.dds",
-  "movieFile": "Art/Cutscene/Egyptian_Found.nif",
-  "movieSound": "AS2D_BUILD_RA_MOVIE",
+ "ui": {
+  "art": {
+   "tgaIndex": 9,
+   "icon": "Art/Interface/Buttons/Religions/Egypt.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_kemetism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Kemetism.dds",
+   "movie": {
+    "file": "Art/Cutscene/Egyptian_Found.nif",
+    "sound": "AS2D_BUILD_RA_MOVIE"
+   }
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_RA"
  },
  "identity": {

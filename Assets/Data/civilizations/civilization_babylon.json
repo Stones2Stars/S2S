@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_MIDDLE_PURPLE",
-  "artDefine": "ART_DEF_CIVILIZATION_BABYLON",
-  "artStyle": "ARTSTYLE_CRESCENT",
-  "unitArtStyle": "UNIT_ARTSTYLE_BABYLON",
-  "selectionSound": "AS3D_BABYLON_SELECT",
-  "actionSound": "AS3D_BABYLON_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_MIDDLE_PURPLE",
+   "icon": "ART_DEF_CIVILIZATION_BABYLON",
+   "style": "ARTSTYLE_CRESCENT",
+   "unitStyle": "UNIT_ARTSTYLE_BABYLON"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_BABYLON_SELECT",
+  "action": "AS3D_BABYLON_ORDER"
  },
  "identity": {
   "leaders": [

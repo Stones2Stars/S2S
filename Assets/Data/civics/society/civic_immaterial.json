@@ -73,8 +73,10 @@
  "grants": {
   "revolution": -25
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/society_immaterial.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/society_immaterial.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_SOCIETY",

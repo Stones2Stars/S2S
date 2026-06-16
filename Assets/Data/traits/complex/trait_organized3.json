@@ -116,7 +116,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitOrganized3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitOrganized3.dds"
+  }
  }
 }

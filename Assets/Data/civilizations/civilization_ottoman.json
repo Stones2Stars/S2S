@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_DARK_GREEN",
-  "artDefine": "ART_DEF_CIVILIZATION_OTTOMANS",
-  "artStyle": "ARTSTYLE_CRESCENT",
-  "unitArtStyle": "UNIT_ARTSTYLE_OTTOMAN",
-  "selectionSound": "AS3D_OTTOMAN_SELECT",
-  "actionSound": "AS3D_OTTOMAN_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_DARK_GREEN",
+   "icon": "ART_DEF_CIVILIZATION_OTTOMANS",
+   "style": "ARTSTYLE_CRESCENT",
+   "unitStyle": "UNIT_ARTSTYLE_OTTOMAN"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_OTTOMAN_SELECT",
+  "action": "AS3D_OTTOMAN_ORDER"
  },
  "identity": {
   "leaders": [

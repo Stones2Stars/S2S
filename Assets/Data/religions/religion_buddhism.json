@@ -115,13 +115,19 @@
    }
   ]
  },
- "art": {
-  "tgaIndex": 4,
-  "icon": "Art/Interface/Buttons/Religions/Buddhism.dds",
-  "techButton": "Art/Interface/Buttons/TechTree/Found_Buddhism.dds",
-  "genericTechButton": "Art/Interface/Buttons/TechTree/Buddhism.dds",
-  "movieFile": "Art/Movies/Religion/Buddhism/Bud_Found.nif",
-  "movieSound": "AS2D_BUILD_BUDDHIST_MOVIE",
+ "ui": {
+  "art": {
+   "tgaIndex": 4,
+   "icon": "Art/Interface/Buttons/Religions/Buddhism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Buddhism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Buddhism.dds",
+   "movie": {
+    "file": "Art/Movies/Religion/Buddhism/Bud_Found.nif",
+    "sound": "AS2D_BUILD_BUDDHIST_MOVIE"
+   }
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_BUDDHIST"
  },
  "identity": {

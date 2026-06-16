@@ -822,7 +822,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitNomadic2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitNomadic2.dds"
+  }
  }
 }

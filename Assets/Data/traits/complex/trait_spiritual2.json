@@ -179,7 +179,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitSpiritual2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitSpiritual2.dds"
+  }
  }
 }

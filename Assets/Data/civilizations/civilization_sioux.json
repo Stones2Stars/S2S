@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_LIGHT_BROWN",
-  "artDefine": "ART_DEF_CIVILIZATION_SIOUX",
-  "artStyle": "ARTSTYLE_NATIVE_AMERICA",
-  "unitArtStyle": "UNIT_ARTSTYLE_NATIVE_AMERICA",
-  "selectionSound": "AS3D_NATIVE_AMERICA_SELECT",
-  "actionSound": "AS3D_NATIVE_AMERICA_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_LIGHT_BROWN",
+   "icon": "ART_DEF_CIVILIZATION_SIOUX",
+   "style": "ARTSTYLE_NATIVE_AMERICA",
+   "unitStyle": "UNIT_ARTSTYLE_NATIVE_AMERICA"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_NATIVE_AMERICA_SELECT",
+  "action": "AS3D_NATIVE_AMERICA_ORDER"
  },
  "identity": {
   "leaders": [

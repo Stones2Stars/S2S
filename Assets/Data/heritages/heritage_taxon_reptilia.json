@@ -64,7 +64,9 @@
    }
   ]
  },
- "art": {
-  "icon": "Art/Interface/Buttons/buildings/totem_komododragon.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/buildings/totem_komododragon.dds"
+  }
  }
 }

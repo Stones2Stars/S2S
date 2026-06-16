@@ -64,7 +64,9 @@
    }
   ]
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Buildings/totem_tiger.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Buildings/totem_tiger.dds"
+  }
  }
 }

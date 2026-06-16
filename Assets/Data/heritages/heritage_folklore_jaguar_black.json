@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Panther.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Panther.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

@@ -85,8 +85,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitHunterGatherer.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitHunterGatherer.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_HUNTER_GATHERER_SHORT",

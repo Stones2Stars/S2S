@@ -35,8 +35,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/garbage_off_planet_dumping.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/garbage_off_planet_dumping.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_GARBAGE",

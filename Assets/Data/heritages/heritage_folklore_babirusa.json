@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Babirusa.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Babirusa.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

@@ -27,6 +27,7 @@ import os
 from collections import OrderedDict
 
 import engine
+from curate_common import put_art, emit_art   # by-name: a local `cc` var below shadows the usual `cc` alias
 from store import Store, REPO
 
 # boolean kind/property flags -> clean condition keys (only `true` emitted)
@@ -61,9 +62,9 @@ def curate(typ, rec):
             cond[key] = int(v)
     if cond:
         out["condition"] = cond
-    mv = engine.text(rec.find("VictoryMovie"))
-    if mv:
-        out["art"] = {"movie": mv}
+    art_blocks = {}
+    put_art(art_blocks, "VictoryMovie", engine.text(rec.find("VictoryMovie")))   # -> ui.art.movie.file via ART_BLOCK
+    emit_art(out, art_blocks)
     return out
 
 
@@ -74,9 +75,9 @@ def main():
     args = ap.parse_args()
     table = Store().table("VictoryInfo")
     results = OrderedDict((typ, curate(typ, rec)) for typ, rec in table.items())
-    print("VictoryInfo curated: %d  | with condition: %d  | with art: %d"
+    print("VictoryInfo curated: %d  | with condition: %d  | with ui: %d"
           % (len(results), sum(1 for o in results.values() if "condition" in o),
-             sum(1 for o in results.values() if "art" in o)))
+             sum(1 for o in results.values() if "ui" in o)))
     if args.sample is not None:
         for nm in (args.sample or list(results)):
             print("\n=== %s ===" % nm)

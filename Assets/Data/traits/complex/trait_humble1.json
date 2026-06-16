@@ -125,7 +125,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitHumble.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitHumble.dds"
+  }
  }
 }

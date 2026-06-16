@@ -18,8 +18,10 @@
    "flat": 12
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/education_rapid.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/education_rapid.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_EDUCATION",

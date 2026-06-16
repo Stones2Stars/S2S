@@ -105,8 +105,10 @@
    "SPECIALIST_SCIENTIST": 2
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/government_technocracy.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/government_technocracy.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_GOVERNMENT",

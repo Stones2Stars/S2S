@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_LIGHT_ORANGE",
-  "artDefine": "ART_DEF_CIVILIZATION_CELTS",
-  "artStyle": "ARTSTYLE_EUROPE",
-  "unitArtStyle": "UNIT_ARTSTYLE_CELTIC",
-  "selectionSound": "AS3D_CELTS_SELECT",
-  "actionSound": "AS3D_CELTS_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_LIGHT_ORANGE",
+   "icon": "ART_DEF_CIVILIZATION_CELTS",
+   "style": "ARTSTYLE_EUROPE",
+   "unitStyle": "UNIT_ARTSTYLE_CELTIC"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_CELTS_SELECT",
+  "action": "AS3D_CELTS_ORDER"
  },
  "identity": {
   "leaders": [

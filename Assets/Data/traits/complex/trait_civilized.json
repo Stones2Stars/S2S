@@ -169,8 +169,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitCivilized.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCivilized.dds"
+  }
  },
  "identity": {
   "maxAnarchy": 4

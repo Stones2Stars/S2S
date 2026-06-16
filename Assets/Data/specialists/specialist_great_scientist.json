@@ -112,9 +112,11 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/MainScreen/CityScreen/Great_Scientist.dds",
-  "button": "Art/Interface/MainScreen/CityScreen/Great_Scientist.dds"
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/Great_Scientist.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/Great_Scientist.dds"
+  }
  },
  "identity": {
   "categories": [

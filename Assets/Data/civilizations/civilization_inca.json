@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_DARK_YELLOW",
-  "artDefine": "ART_DEF_CIVILIZATION_INCA",
-  "artStyle": "ARTSTYLE_SOUTH_AMERICA",
-  "unitArtStyle": "UNIT_ARTSTYLE_SOUTH_AMERICA",
-  "selectionSound": "AS3D_INCA_SELECT",
-  "actionSound": "AS3D_INCA_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_DARK_YELLOW",
+   "icon": "ART_DEF_CIVILIZATION_INCA",
+   "style": "ARTSTYLE_SOUTH_AMERICA",
+   "unitStyle": "UNIT_ARTSTYLE_SOUTH_AMERICA"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_INCA_SELECT",
+  "action": "AS3D_INCA_ORDER"
  },
  "identity": {
   "leaders": [

@@ -134,8 +134,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitMegalomaniac2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitMegalomaniac2.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

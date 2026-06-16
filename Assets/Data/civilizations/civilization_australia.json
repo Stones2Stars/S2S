@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_AUSTRALIA",
-  "artDefine": "ART_DEF_CIVILIZATION_AUSTRALIA",
-  "artStyle": "ARTSTYLE_SOUTH_PACIFIC",
-  "unitArtStyle": "UNIT_ARTSTYLE_AUSTRALIA",
-  "selectionSound": "AS3D_ENGLAND_SELECT",
-  "actionSound": "AS3D_ENGLAND_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_AUSTRALIA",
+   "icon": "ART_DEF_CIVILIZATION_AUSTRALIA",
+   "style": "ARTSTYLE_SOUTH_PACIFIC",
+   "unitStyle": "UNIT_ARTSTYLE_AUSTRALIA"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_ENGLAND_SELECT",
+  "action": "AS3D_ENGLAND_ORDER"
  },
  "identity": {
   "leaders": [

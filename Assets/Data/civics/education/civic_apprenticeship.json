@@ -62,8 +62,10 @@
    "flat": 6
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/education_apprenticeship.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/education_apprenticeship.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_EDUCATION",

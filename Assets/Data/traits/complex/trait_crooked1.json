@@ -290,8 +290,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitCrooked.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCrooked.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

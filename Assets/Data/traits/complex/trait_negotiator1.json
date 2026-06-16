@@ -148,7 +148,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitNegotiator.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitNegotiator.dds"
+  }
  }
 }

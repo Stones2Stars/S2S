@@ -197,8 +197,10 @@
    "coastalAIInfluence": true
   }
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitSeafaring.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitSeafaring.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_SEAFARING_SHORT"

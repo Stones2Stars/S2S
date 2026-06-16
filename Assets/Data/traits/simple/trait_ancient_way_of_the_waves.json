@@ -23,8 +23,10 @@
    ]
   }
  },
- "art": {
-  "icon": "Art/Buttons/Promotions/WayOfTheWavesPromotion.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/WayOfTheWavesPromotion.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_ANCIENT_WAY_OF_THE_WAVES_SHORT",

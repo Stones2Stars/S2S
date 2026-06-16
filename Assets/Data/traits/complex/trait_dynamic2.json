@@ -277,7 +277,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitDynamic2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitDynamic2.dds"
+  }
  }
 }

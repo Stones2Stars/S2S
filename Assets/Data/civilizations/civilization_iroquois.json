@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_IROQUOIS",
-  "artDefine": "ART_DEF_CIVILIZATION_IROQUOIS",
-  "artStyle": "ARTSTYLE_NATIVE_AMERICA",
-  "unitArtStyle": "UNIT_ARTSTYLE_IROQUOIS",
-  "selectionSound": "AS3D_NATIVE_AMERICA_SELECT",
-  "actionSound": "AS3D_NATIVE_AMERICA_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_IROQUOIS",
+   "icon": "ART_DEF_CIVILIZATION_IROQUOIS",
+   "style": "ARTSTYLE_NATIVE_AMERICA",
+   "unitStyle": "UNIT_ARTSTYLE_IROQUOIS"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_NATIVE_AMERICA_SELECT",
+  "action": "AS3D_NATIVE_AMERICA_ORDER"
  },
  "identity": {
   "leaders": [

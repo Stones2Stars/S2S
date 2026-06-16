@@ -30,11 +30,13 @@
    }
   }
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_ANIMAL",
-  "artDefine": "ART_DEF_CIVILIZATION_NPC_PREY",
-  "artStyle": "ARTSTYLE_BARBARIAN",
-  "unitArtStyle": "UNIT_ARTSTYLE_BARBARIAN"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_ANIMAL",
+   "icon": "ART_DEF_CIVILIZATION_NPC_PREY",
+   "style": "ARTSTYLE_BARBARIAN",
+   "unitStyle": "UNIT_ARTSTYLE_BARBARIAN"
+  }
  },
  "identity": {
   "leaders": [

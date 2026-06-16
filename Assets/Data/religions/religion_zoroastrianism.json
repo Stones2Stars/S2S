@@ -89,13 +89,19 @@
    }
   ]
  },
- "art": {
-  "tgaIndex": 7,
-  "icon": "Art/Interface/Buttons/Religions/Zoroastrianism.dds",
-  "techButton": "Art/Interface/Buttons/TechTree/Found_Zoroastrianism.dds",
-  "genericTechButton": "Art/Interface/Buttons/TechTree/Zoroastrianism.dds",
-  "movieFile": "Art/Cutscene/Zoro_Found.nif",
-  "movieSound": "AS2D_BUILD_ZORO_MOVIE",
+ "ui": {
+  "art": {
+   "tgaIndex": 7,
+   "icon": "Art/Interface/Buttons/Religions/Zoroastrianism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Zoroastrianism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Zoroastrianism.dds",
+   "movie": {
+    "file": "Art/Cutscene/Zoro_Found.nif",
+    "sound": "AS2D_BUILD_ZORO_MOVIE"
+   }
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_ZORO"
  },
  "identity": {

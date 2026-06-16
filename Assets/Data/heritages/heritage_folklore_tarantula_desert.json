@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Tarantula_Desert.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Tarantula_Desert.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

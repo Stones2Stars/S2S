@@ -222,8 +222,10 @@
  "grants": {
   "revolution": -50
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/society_egalitarism.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/society_egalitarism.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_SOCIETY",

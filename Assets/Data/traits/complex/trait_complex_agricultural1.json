@@ -306,8 +306,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitAgricultural.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitAgricultural.dds"
+  }
  },
  "identity": {
   "impurePropertyManipulators": true

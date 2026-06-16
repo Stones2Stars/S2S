@@ -102,7 +102,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitProlific3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitProlific3.dds"
+  }
  }
 }

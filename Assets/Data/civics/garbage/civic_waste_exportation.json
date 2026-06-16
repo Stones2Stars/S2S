@@ -50,8 +50,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/garbage_waste_exportation.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/garbage_waste_exportation.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_GARBAGE",

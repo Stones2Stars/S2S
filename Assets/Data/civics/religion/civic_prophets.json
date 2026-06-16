@@ -81,8 +81,10 @@
    "SPECIALIST_PRIEST": 2
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/religion_prophets.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/religion_prophets.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_RELIGION"

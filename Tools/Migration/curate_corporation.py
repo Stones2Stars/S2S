@@ -39,6 +39,7 @@ import os
 from collections import OrderedDict
 
 import engine
+import curate_common as cc
 from curate_common import de_i
 from store import Store, REPO
 
@@ -67,8 +68,8 @@ FAMILIES = {
 # headquarters/perCorporationLevel form, ungated, pending the per-corp-level token + HQ-city modeling.
 HQ_COMMERCE = "HeadquarterCommerces"
 TEXT = {"Description": "description", "Civilopedia": "civilopedia"}
-ART = {"Button": "icon", "MovieFile": "movieFile", "MovieSound": "movieSound", "Sound": "sound",
-       "iTGAIndex": "tgaIndex"}
+# art tags -> ui/world/sound via the canonical curate_common.ART_BLOCK.
+ART = {"Button", "MovieFile", "MovieSound", "Sound", "iTGAIndex"}
 IDENTITY = {"iSpread": "spread", "iSpreadFactor": "spreadFactor", "Categories": "categories",
             "CompetingCorporations": "competingCorporations"}
 GRANTS = {"BonusProduced": "bonusProduced", "FreeUnit": "freeUnit"}
@@ -112,7 +113,7 @@ def _apply_family(fam, spec, c, typ, per_bonus):
 
 
 def curate(typ, rec, store):
-    text, fam, art, identity, grants, cost, leftover = {}, {}, {}, {}, {}, {}, []
+    text, fam, art_blocks, identity, grants, cost, leftover = {}, {}, {}, {}, {}, {}, []
     prereq_bonuses = [b for b in (engine.text(x) for x in rec.findall("PrereqBonuses/BonusType"))
                       if b and b != "NONE"]
     per_bonus = OrderedDict([("anyOf", prereq_bonuses), ("scope", "city")]) if prereq_bonuses else None
@@ -136,9 +137,7 @@ def curate(typ, rec, store):
             if v and v != "NONE":
                 grants[GRANTS[tag]] = v
         elif tag in ART:
-            v = engine.generic(c)
-            if v not in (None, "", [], {}, "NONE"):
-                art[ART[tag]] = v
+            cc.put_art(art_blocks, tag, engine.generic(c))   # -> ui/world/sound via ART_BLOCK (+ drop empty/NONE)
         elif tag in IDENTITY:
             if engine.is_int(t):
                 if int(t) != 0:
@@ -168,8 +167,7 @@ def curate(typ, rec, store):
         out["grants"] = grants
     if cost:
         out["cost"] = cost
-    if art:
-        out["art"] = art
+    cc.emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity
     return out, leftover

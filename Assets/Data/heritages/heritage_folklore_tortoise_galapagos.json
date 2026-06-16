@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Galapagos_Tortoise.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Galapagos_Tortoise.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

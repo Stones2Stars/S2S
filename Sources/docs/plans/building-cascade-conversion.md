@@ -182,21 +182,29 @@ Property (diffusion/`ChangePropagators` — #429-adjacent) · LeaderHead (90+ AI
 MONSTERS **Building** (101ch + 22 inversions + 47 prereqs; inter-building A→B + OR/NOT `ConstructCondition`) +
 **Unit** LAST.
 
-**DEFERRED — ART SUB-BLOCKS `art.ui` / `art.world` / `art.sound` (a SEPARATE later pass; owner 2026-06-16).** The
-flat `art` section will regroup into three dedicated sub-blocks — **`art.ui`** (on-screen icons/buttons),
-**`art.world`** (on-map / 3D graphics, the `ArtDefineTag` model ref), **`art.sound`** (audio, NESTED by kind:
-**`art.sound.footsteps`**, `art.sound.soundscape`, effect/growth sounds — owner 2026-06-16). This is an instance of
-the dedicated-block rule (modifier-spec §0.8) applied to art, and it
-**dissolves the "icon headache"**: both are named `icon`, disambiguated by the block — **`art.ui.icon`** (the UI icon,
-from `Button`) and **`art.world.icon`** (the actual on-map icon, from `ArtDefineTag`) — owner 2026-06-16. No more
-ambiguity about which `icon` is which (the reason Terrain needed the bespoke `ArtDefineTag→artDefineTag` vs
-`Button→icon` split, and Feature collapsed both to `icon`; both retrofit to `art.world.icon`/`art.ui.icon` in that
-pass). **CROSS-CUTTING — this retrofit touches EVERY already-migrated and upcoming art-bearing entity (owner
-2026-06-16):** Bonus #18 is already migrated (its `ArtDefineTag → art.icon` becomes `art.world.icon`), and the
-art-heaviest of all is the **Unit** pass (models + icons + sounds); Buildings, Improvements, etc. all regroup in the
-one art pass. Until then, #428
-leaves `art` flat (`art.icon`/`art.artDefineTag`/`art.footstepSounds`/…); empty/`NONE` audio is already filtered out
-(only real sounds emitted — `curate_common.drop_empty_audio`). Related to the art-DATA-entities deferral below.
+**ART BLOCKS `ui` / `world` / `sound` — DONE for all migrated entities (owner 2026-06-16; final shape locked).** The
+flat `art` section regrouped into THREE **top-level** dedicated blocks (NOT `art.ui`/`art.world`/`art.sound` — the
+SUBSYSTEM is the top-level block, with `art` a SUB-block *within* `ui`/`world` so non-art members like key-triggers
+sit BESIDE art):
+- **`ui`** — on-screen surface. `ui.art.icon` (UI icon ← `Button`/`Texture`), `ui.art.texture` (a 2nd distinct UI
+  icon where one exists — Specialist), `ui.art.movie.{file,sound}`, `ui.art.{techButton,genericTechButton,advisor,
+  fontButton,tgaIndex}`, plus non-art `ui.{hotkey,altDown,…}` key triggers.
+- **`world`** — on-map / 3D. `world.art.icon` (on-map graphic ← `ArtDefineTag`), `world.art.{style,unitStyle,
+  playerColor}`, `world.art.effect.{type,probability}`.
+- **`sound`** — FLAT (audio is itself the asset): `sound.{footsteps,soundscape,construct,onCompletion,sound,action,
+  selection,unitVictory,unitDefeat,soundtracks,introSoundtrack,citySoundscapes,…}`.
+
+This is the dedicated-block rule (modifier-spec §0.8) applied to art, and it **dissolves the "icon headache"**: both
+icons are named `icon`, disambiguated by the block — **`ui.art.icon`** (UI, from `Button`) vs **`world.art.icon`**
+(on-map, from `ArtDefineTag`) — so the old per-entity `art_rename` hack (Terrain's `ArtDefineTag→artDefineTag`,
+Feature collapsing both to `icon`) is GONE; the block split resolves the collision uniformly. **Canonical tag→dotted-path
+map = `curate_common.ART_BLOCK`**; bespoke curators route through the shared `curate_common.put_art`/`emit_art`
+helpers, cc-curated entities through `curate()` — one shape everywhere. Empty/`NONE` audio is dropped
+(`curate_common.drop_empty_audio`). **STATUS:** applied to every migrated entity — the cc-curated set (tech/bonus/
+route/terrain/feature/process/bonusclass/civicoption/pocos) AND all 11 art-bearing bespoke curators (trait/civic/
+hurry/heritage/victory/religion/corporation/specialist/era/project/civilization), 2026-06-16. Entities not yet
+curated (Unit — the art-heaviest: models+icons+sounds — Building, Improvement, …) adopt the shape NATIVELY via
+`ART_BLOCK` when their pass runs; no retrofit owed. Related to the art-DATA-entities deferral below.
 
 **DEFERRED — ART-DATA ENTITIES (a SEPARATE pass, NOT the gameplay cascade; verified 2026-06-14):** A gameplay
 Info's on-screen ICON and its on-MAP / 3D art are DIFFERENT entities. Verified on Route: `CvRouteInfo` (the
@@ -406,7 +414,7 @@ not gated instrumentation, so the keep-instrumentation rule does not apply). The
 | `modifiers` | modifier | scope-wide: `modifiers.{scope}.{channel}.{unit}`. **Entity-targeted** ones (the old `buildingBoosts`) fold in under the scope, keyed by target type — `modifiers.{scope}.{targetType}.{TARGET}.{channel}.{unit}` — so there is ONE `modifiers` section, no separate `boosts` (convention: one modifier vocabulary). Keys are clean (no `i`/`b` Hungarian prefixes); flags are JSON booleans (`tradeable: true`). |
 | `grants` | top-down, NOT cascading | one-shot event grants (FirstFreeUnit, free techs) — fire once, don't sum/propagate |
 | `ai` | — | ALL AI metadata in one group, subgrouped (unified cross-entity model): `ai.flavours` (FLAVOR list) + `ai.behaviour` (`tradeModifier`/`weight`, …) + future subgroups (attitude, strategy) |
-| text / `cost` / `art` / `identity` | — | intrinsic ("what am I", empire-agnostic). `identity` is the shrinking catch-all (era, grid, the `worth`/`militaryWorth` demographics — a future `score` group candidate) |
+| text / `cost` / `ui` / `world` / `sound` / `identity` | — | intrinsic ("what am I", empire-agnostic). Art split into the three dedicated blocks `ui`/`world`/`sound` (`art` a sub-block within `ui`/`world`; §0.8, canonical map `curate_common.ART_BLOCK`). `identity` is the shrinking catch-all (era, grid, the `worth`/`militaryWorth` demographics — a future `score` group candidate) |
 
 `enabledBy`/`obsoletedBy`/`boostedBy` and prereq-style upward refs **never appear in the authored
 object** — they are derived into the on-load reverse index (§4).

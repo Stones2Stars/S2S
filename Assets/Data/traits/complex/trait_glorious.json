@@ -174,8 +174,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitGlorious.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitGlorious.dds"
+  }
  },
  "identity": {
   "impurePropertyManipulators": true

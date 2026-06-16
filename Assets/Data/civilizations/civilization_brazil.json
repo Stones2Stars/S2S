@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_BRAZIL",
-  "artDefine": "ART_DEF_CIVILIZATION_BRAZIL",
-  "artStyle": "ARTSTYLE_IBERIA",
-  "unitArtStyle": "UNIT_ARTSTYLE_SOUTH_AMERICA",
-  "selectionSound": "AS3D_PORTUGAL_SELECT",
-  "actionSound": "AS3D_PORTUGAL_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_BRAZIL",
+   "icon": "ART_DEF_CIVILIZATION_BRAZIL",
+   "style": "ARTSTYLE_IBERIA",
+   "unitStyle": "UNIT_ARTSTYLE_SOUTH_AMERICA"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_PORTUGAL_SELECT",
+  "action": "AS3D_PORTUGAL_ORDER"
  },
  "identity": {
   "leaders": [

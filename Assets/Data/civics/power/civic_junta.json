@@ -135,8 +135,10 @@
  "grants": {
   "revolution": 50
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/power_junta.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/power_junta.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_POWER",

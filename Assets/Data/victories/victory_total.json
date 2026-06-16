@@ -7,7 +7,11 @@
   "totalVictory": true,
   "landPercent": 100
  },
- "art": {
-  "movie": "ART_DEF_MOVIE_MASTERY_VICTORY"
+ "ui": {
+  "art": {
+   "movie": {
+    "file": "ART_DEF_MOVIE_MASTERY_VICTORY"
+   }
+  }
  }
 }

@@ -108,7 +108,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitCharismatic2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCharismatic2.dds"
+  }
  }
 }

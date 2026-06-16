@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Cheetah.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Cheetah.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

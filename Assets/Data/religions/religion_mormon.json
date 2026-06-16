@@ -80,13 +80,19 @@
    }
   ]
  },
- "art": {
-  "tgaIndex": 27,
-  "icon": "Art/Interface/Buttons/Religions/Mormonism.dds",
-  "techButton": "Art/Interface/Buttons/TechTree/found_mormon.dds",
-  "genericTechButton": "Art/Interface/Buttons/TechTree/Mormonism.dds",
-  "movieFile": "Art/Cutscene/Mormon_Generic_Found.nif",
-  "movieSound": "AS2D_BUILD_SHAMAN_MOVIE",
+ "ui": {
+  "art": {
+   "tgaIndex": 27,
+   "icon": "Art/Interface/Buttons/Religions/Mormonism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/found_mormon.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Mormonism.dds",
+   "movie": {
+    "file": "Art/Cutscene/Mormon_Generic_Found.nif",
+    "sound": "AS2D_BUILD_SHAMAN_MOVIE"
+   }
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_JEWISH"
  },
  "identity": {

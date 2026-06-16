@@ -302,8 +302,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitImperialist.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitImperialist.dds"
+  }
  },
  "identity": {
   "impurePropertyManipulators": true

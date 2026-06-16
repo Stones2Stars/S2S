@@ -91,8 +91,10 @@
    "SPECIALIST_ARTIST": 1
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/welfare_paradise.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/welfare_paradise.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_WELFARE",

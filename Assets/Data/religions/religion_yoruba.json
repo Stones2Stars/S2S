@@ -92,13 +92,19 @@
    }
   ]
  },
- "art": {
-  "tgaIndex": 18,
-  "icon": "Art/Interface/Buttons/Religions/Yoruba.dds",
-  "techButton": "Art/Interface/Buttons/TechTree/Found_Yoruba.dds",
-  "genericTechButton": "Art/Interface/Buttons/TechTree/Yoruba.dds",
-  "movieFile": "Art/Cutscene/Yoruba_Generic_Found.nif",
-  "movieSound": "AS2D_BUILD_YORUBA_MOVIE",
+ "ui": {
+  "art": {
+   "tgaIndex": 18,
+   "icon": "Art/Interface/Buttons/Religions/Yoruba.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Yoruba.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Yoruba.dds",
+   "movie": {
+    "file": "Art/Cutscene/Yoruba_Generic_Found.nif",
+    "sound": "AS2D_BUILD_YORUBA_MOVIE"
+   }
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_YORUBA"
  },
  "identity": {

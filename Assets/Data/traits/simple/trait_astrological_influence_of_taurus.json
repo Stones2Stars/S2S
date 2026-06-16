@@ -24,8 +24,10 @@
    ]
   }
  },
- "art": {
-  "icon": "Art/Buttons/Traits/InfluenceOfTaurusTrait.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Traits/InfluenceOfTaurusTrait.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_TAURUS_SHORT",

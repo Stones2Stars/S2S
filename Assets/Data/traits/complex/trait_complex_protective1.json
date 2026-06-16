@@ -435,7 +435,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitProtective.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitProtective.dds"
+  }
  }
 }

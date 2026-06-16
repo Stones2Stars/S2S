@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Buildings/totem_seaturtle.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Buildings/totem_seaturtle.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

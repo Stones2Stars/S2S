@@ -270,7 +270,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitCreative3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCreative3.dds"
+  }
  }
 }

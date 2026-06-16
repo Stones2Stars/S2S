@@ -41,8 +41,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/rule_mind_control.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/rule_mind_control.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_RULE",

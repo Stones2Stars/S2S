@@ -5,7 +5,9 @@
   "productionPerPopulation": 250
  },
  "causesAnger": true,
- "art": {
-  "icon": "Art/Interface/MainScreen/CityScreen/hurry_slavery.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/MainScreen/CityScreen/hurry_slavery.dds"
+  }
  }
 }

@@ -81,8 +81,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/currency_metals.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/currency_metals.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_CURRENCY",

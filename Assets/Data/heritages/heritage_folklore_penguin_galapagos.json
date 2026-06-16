@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Galapagospenguin.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Galapagospenguin.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

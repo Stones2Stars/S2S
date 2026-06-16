@@ -62,8 +62,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/rule_polystate.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/rule_polystate.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_RULE",

@@ -118,8 +118,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/military_vassalage.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/military_vassalage.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_MILITARY",

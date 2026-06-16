@@ -69,8 +69,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitTemperamental.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitTemperamental.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_TEMPERAMENTAL_SHORT",

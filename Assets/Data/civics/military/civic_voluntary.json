@@ -86,8 +86,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/military_volunteer_army.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/military_volunteer_army.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_MILITARY",

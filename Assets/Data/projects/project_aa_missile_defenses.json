@@ -22,8 +22,10 @@
  "cost": {
   "create": 12840
  },
- "art": {
-  "icon": "art/Interface/Buttons/Projects/MissileAAGun.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/Buttons/Projects/MissileAAGun.dds"
+  }
  },
  "identity": {
   "mapCategories": [

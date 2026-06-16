@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/warthog.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/warthog.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

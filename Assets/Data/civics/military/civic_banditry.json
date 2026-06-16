@@ -149,8 +149,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/military_banditry.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/military_banditry.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_MILITARY",

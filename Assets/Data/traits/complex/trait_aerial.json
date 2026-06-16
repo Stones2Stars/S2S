@@ -887,8 +887,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitAerial.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitAerial.dds"
+  }
  },
  "identity": {
   "impurePropertyManipulators": true

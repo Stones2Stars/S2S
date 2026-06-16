@@ -283,8 +283,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitFinancial2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitFinancial2.dds"
+  }
  },
  "identity": {
   "impurePropertyManipulators": true

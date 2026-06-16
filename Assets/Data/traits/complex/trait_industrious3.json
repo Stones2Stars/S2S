@@ -213,8 +213,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitIndustrious3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitIndustrious3.dds"
+  }
  },
  "identity": {
   "impurePropertyManipulators": true

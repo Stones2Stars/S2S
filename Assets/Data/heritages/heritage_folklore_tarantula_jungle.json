@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Tarantula_Jungle.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Tarantula_Jungle.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

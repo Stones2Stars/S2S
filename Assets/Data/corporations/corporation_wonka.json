@@ -87,9 +87,13 @@
  "cost": {
   "spread": 50
  },
- "art": {
-  "tgaIndex": 16,
-  "icon": "Art/Interface/Buttons/corporations/sparth/wonka.dds",
+ "ui": {
+  "art": {
+   "tgaIndex": 16,
+   "icon": "Art/Interface/Buttons/corporations/sparth/wonka.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_BANK"
  },
  "identity": {

@@ -92,9 +92,13 @@
  "cost": {
   "spread": 50
  },
- "art": {
-  "tgaIndex": 11,
-  "icon": "Art/Interface/Buttons/corporations/eastwest_trade.dds",
+ "ui": {
+  "art": {
+   "tgaIndex": 11,
+   "icon": "Art/Interface/Buttons/corporations/eastwest_trade.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_BANK"
  },
  "identity": {

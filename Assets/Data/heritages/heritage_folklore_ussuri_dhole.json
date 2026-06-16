@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Dhole.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Dhole.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

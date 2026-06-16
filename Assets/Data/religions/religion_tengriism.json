@@ -70,13 +70,19 @@
    }
   ]
  },
- "art": {
-  "tgaIndex": 14,
-  "icon": "Art/Interface/Buttons/Religions/Siberian.dds",
-  "techButton": "Art/Interface/Buttons/TechTree/Found_tengriism.dds",
-  "genericTechButton": "Art/Interface/Buttons/Religions/Siberian.dds",
-  "movieFile": "Art/Cutscene/Tengri_Generic_Found.nif",
-  "movieSound": "AS2D_BUILD_SIBERIAN_MOVIE",
+ "ui": {
+  "art": {
+   "tgaIndex": 14,
+   "icon": "Art/Interface/Buttons/Religions/Siberian.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_tengriism.dds",
+   "genericTechButton": "Art/Interface/Buttons/Religions/Siberian.dds",
+   "movie": {
+    "file": "Art/Cutscene/Tengri_Generic_Found.nif",
+    "sound": "AS2D_BUILD_SIBERIAN_MOVIE"
+   }
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_SIBERIAN"
  },
  "identity": {

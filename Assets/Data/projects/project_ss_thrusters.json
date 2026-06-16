@@ -14,8 +14,10 @@
  "cost": {
   "create": 60040
  },
- "art": {
-  "icon": ",Art/Interface/Buttons/Buildings/SS_Thrusters.dds,Art/Interface/Buttons/Buildings_Atlas.dds,7,10"
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Buildings/SS_Thrusters.dds,Art/Interface/Buttons/Buildings_Atlas.dds,7,10"
+  }
  },
  "identity": {
   "mapCategories": [

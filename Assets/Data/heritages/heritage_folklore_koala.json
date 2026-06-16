@@ -44,8 +44,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Koala.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Koala.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

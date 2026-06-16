@@ -6,7 +6,11 @@
   "minLandPercent": 51,
   "populationPercentLead": 25
  },
- "art": {
-  "movie": "ART_DEF_MOVIE_VICTORY_DOMINATION"
+ "ui": {
+  "art": {
+   "movie": {
+    "file": "ART_DEF_MOVIE_VICTORY_DOMINATION"
+   }
+  }
  }
 }

@@ -57,7 +57,12 @@
   "startingGold": 4000,
   "freePopulation": 1
  },
- "art": {
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/mainscreen/Era/Renaissance.dds"
+  }
+ },
+ "sound": {
   "soundtrackSpace": 160,
   "soundtracks": [
    "AS2D_BACH_ALLEGRO",
@@ -91,9 +96,8 @@
     "CITYSIZE_LARGE": "ASSS_CITY_MIDDLE_LARGE_SELECT_AMB"
    }
   ],
-  "unitVictorySound": "AS2D_VICTORY_MIDDLE",
-  "unitDefeatSound": "AS2D_LOSS_MIDDLE",
-  "icon": "Art/Interface/mainscreen/Era/Renaissance.dds"
+  "unitVictory": "AS2D_VICTORY_MIDDLE",
+  "unitDefeat": "AS2D_LOSS_MIDDLE"
  },
  "identity": {
   "advancedStart": 8000,

@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Wallaby.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Wallaby.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

@@ -162,9 +162,11 @@
    "flat": 3
   }
  },
- "art": {
-  "icon": "Art/Interface/MainScreen/CityScreen/scientist.dds",
-  "button": "Art/Interface/MainScreen/CityScreen/scientist.dds"
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/scientist.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/scientist.dds"
+  }
  },
  "identity": {
   "visible": true,

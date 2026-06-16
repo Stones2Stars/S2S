@@ -8,11 +8,31 @@ curator (the cold-modder rule means new names are chosen for clarity, so the old
 readers pass — and modders/pedia — need).
 
 **Two kinds of rename:**
-- **Mechanical de-Hungarianization** (`iGridX`→`gridX`, `bTrade`→`tradeable`, `ArtDefineTag`→`icon`) is applied
-  uniformly by `engine.de_i` / `engine.FIELD_RENAME` / `curate_common.{B_FLAG_NAMES,ART_RENAME,AI_BEHAVIOUR}`.
+- **Mechanical de-Hungarianization** (`iGridX`→`gridX`, `bTrade`→`tradeable`, `Button`→`ui.art.icon`) is applied
+  uniformly by `engine.de_i` / `engine.FIELD_RENAME` / `curate_common.{B_FLAG_NAMES,ART_BLOCK,AI_BEHAVIOUR}`.
   Those shared maps ARE the documentation for the mechanical class — not re-logged per field here.
 - **Semantic / structural renames** (the JSON key means something different, or a field is re-homed to a new
   family/section) are logged per entity below. These are the ones a reader can't infer mechanically.
+
+---
+
+## Art blocks — `ui` / `world` / `sound` (#428 restructure, cross-cutting; DONE 2026-06-16)
+
+All art/audio maps to the THREE **top-level** blocks (NOT a single `art` section; `art` is a SUB-block within
+`ui`/`world` so non-art members sit beside it — modifier-spec §0.8). The **canonical tag→dotted-path map is
+`curate_common.ART_BLOCK`** (it IS the documentation; the per-entity rows below no longer re-log art). cc-curated
+entities route art through `curate()`; bespoke curators through the shared `curate_common.put_art`/`emit_art`
+helpers — one shape everywhere. Empty/`NONE` audio dropped (`drop_empty_audio`). The block split resolves the
+"icon headache" (UI `ui.art.icon` ← `Button` vs on-map `world.art.icon` ← `ArtDefineTag`), retiring the old
+per-entity `art_rename` hack. The non-mechanical (semantic) art tokens worth logging:
+
+| old XML tag | new JSON path | note |
+|---|---|---|
+| `Texture` | `ui.art.texture` | A 2nd DISTINCT UI icon (Specialist city-screen citizen icon), kept apart from `Button`→`ui.art.icon` — both are UI (interface `.dds`, neither on-map; verified consumers), and 2 specialists carry differing values so they must not collapse. |
+| `DefaultPlayerColor` | `world.art.playerColor` | Civ render colour (an EXE-bound `int` FK), beside the civ's other `world.art` (icon/style/unitStyle). |
+| `CreateSound` | `sound.onCompletion` | Project audio played when the project is COMPLETED (`CvCity.cpp:16205`) — named by what it is, not the misleading "create". (No project populates it today.) |
+| `bFirstSoundtrackFirst` | `sound.introSoundtrack` | Era flag: lead with the era's first soundtrack on entry (`CvGameInterface.cpp:2766`). A sibling flag over `sound.soundtracks`; owner's better future shape is a soundtracks OBJECT with a per-track `firstPlayed` (out of scope). |
+| `VictoryMovie` | `ui.art.movie.file` | Grouped under `movie` (file + sound together). |
 
 ---
 
@@ -156,7 +176,7 @@ Tech is the constructive generator: nearly every cross-entity `enables`/`obsolet
 the tech (keyed by the thing you HAVE), so most fields don't appear on the tech file at all — they live on the
 targets' generation. The tech's OWN fields split into: the **`requires.build` CONFIRM** (its prereqs, read back
 off the child — §13.8); **downward modifier deposits** (`TECH_BOOSTS`, the entity-targeted `Tech*Changes` inverted
-onto the tech, kept-on-source per CREST §6); de-Hungarianized `cost`/`art`/`ai`/`identity`. **EXE-link: 0
+onto the tech, kept-on-source per CREST §6); de-Hungarianized `cost`/`ui`(art)/`ai`/`identity`. **EXE-link: 0
 `DllExport` on `CvTechInfo` — unconstrained** (data is free; the engine readJson-maps it). The trade-enabler
 bool→channel renames (`bTechTrading`→`techTrading`, `bIrrigation`→`irrigation`, …) are mechanical mapping
 `channel` entries (mapping/TechInfo.json), not re-logged. Structural / manual mappings:
@@ -292,9 +312,9 @@ but no terrain populates them; `Categories` is also a dead TB-combat list). Per-
 | `iCultureDistance` | `cultureDistance.plot.flat` | **NEW `cultureDistance` family** (owner 2026-06-16: a summable family for the `REALISTIC_CULTURE` game option; "the base for the later culture-equilibrium structure — a sensible start"). `CvCity.cpp:6302+` accumulates `getCultureDistance()` across worked plots into a city total. |
 | `iBuildModifier` | `buildTime.plot.percent` | **NEW `buildTime` family** (owner 2026-06-16: ties to `workRate`/work-capacity — *"buildTime directly influences the turns a worker uses on a plot… work capacity and buildTime should be in the same family"*; the `buildTime`↔`workRate` unification is later structural work, flagged). `CvPlot.cpp:3607` multiplies the build time of work done on this terrain. |
 | `iHealthPercent` | — (DROPPED, cat i dead) | Dead on terrain: every `getHealthPercent` reader is Feature/Specialist/Improvement/Building, none against a terrain (pre-existing note `modifier-cascade-mapping.json:2667`); no Python reader. The capability lives on those entities. 9/42 populated but inert. |
-| `ArtDefineTag` | `art.artDefineTag` | The **ON-MAP terrain graphics** FK → `CIV4ArtDefines_Terrain.xml` (a separate art tier; owner 2026-06-16). Kept DISTINCT from the UI icon via a per-entity `art_rename` (the global `ArtDefineTag`→`icon` would collide with `Button`→`icon`, a silent loss). |
-| `Button` | `art.icon` | The UI icon (`.dds`). |
-| `FootstepSounds` / `WorldSoundscapeAudioScript` | `art.{footstepSounds, worldSoundscapeAudioScript}` | Audio art, kept faithfully (the atomic cutover replaces `CIV4TerrainInfos.xml`, so the audio must travel in the JSON). Verbose; **reorganizing audio art is deferred to the later art-data pass** (owner 2026-06-16: "leave the sounds, we deal with organizing that later"). |
+| `ArtDefineTag` | `world.art.icon` | The **ON-MAP terrain graphics** FK → `CIV4ArtDefines_Terrain.xml`. Lands in the `world` block (on-map/3D art); the icon-headache is resolved by the BLOCK split, not the old per-entity `art_rename` (now obsolete): `world.art.icon` (on-map) vs `ui.art.icon` (UI `Button`) can no longer collide. Art-block restructure (DONE 2026-06-16; see the Art-blocks note). |
+| `Button` | `ui.art.icon` | The UI icon (`.dds`). |
+| `FootstepSounds` / `WorldSoundscapeAudioScript` | `sound.footsteps` / `sound.soundscape` | Audio → the flat `sound` block (audio is itself the asset; canonical names via `curate_common.ART_BLOCK`). The earlier "defer audio reorg" note is RESOLVED — the `sound` block IS the organization. |
 | `ClimateZoneType` / `iDistanceToLand` / `bFound` / `bFoundCoast` / `bFoundFreshWater` / `bFreshWaterTerrain` | `identity.{climateZoneType, distanceToLand, found, foundCoast, foundFreshWater, freshWaterTerrain}` | World-gen classification, city-found gates, fresh-water provision — read directly, never summed. |
 | `MapCategoryTypes` | `identity.mapCategories` | Live placement-gate classification array (`CvPlot::getMapCategories` → `isMapCategory<>` set-membership); matched by attribute, not summed → identity. Renamed for clarity. |
 | `Categories` / `PropertyManipulators` / `bImpassable` | — (not emitted) | 0/42 authored (see intro). |
@@ -338,7 +358,7 @@ that delivers them owns them, conditioned on the feature — Feature carries no 
 | `PropertyManipulators` | `properties[]` (PARKED raw) | `RELATION_NEAR` pollution = **spatial leakage → #429**; the atomic cutover replaces the XML, so the sources are preserved verbatim (via `clean_property_source`), not dropped, pending the #429 redesign. ⚑ FLAG. |
 | `OnUnitChangeTo` | `grants.onUnitChangeTo` | A feature that transforms a unit on entry (module-only, 0 in base XML). ⚑ FLAG: `grants` vs a dedicated transform edge — owner pass if it ever carries data. |
 | `iAdvancedStartRemoveCost` | `cost.advancedStartRemoveCost` | Gold cost to remove the feature in advanced start. |
-| `ArtDefineTag` (on-map art) / `EffectType` / `iEffectProbability` / `GrowthSound` / `FootstepSounds` / `WorldSoundscapeAudioScript` | `art.*` | Art + audio (`ArtDefineTag` → `icon`; feature carries no separate UI Button). Audio reorganization deferred to the art pass. |
+| `ArtDefineTag` / `EffectType` / `iEffectProbability` / `GrowthSound` / `FootstepSounds` / `WorldSoundscapeAudioScript` | `world.art.icon` / `world.art.effect.{type,probability}` / `sound.{growth,footsteps,soundscape}` | Art + audio split into the `world`/`sound` blocks (`ArtDefineTag` → `world.art.icon`, the on-map graphic; feature carries no separate UI `Button`). Canonical map `curate_common.ART_BLOCK`; the "defer audio reorg" note is RESOLVED by the `sound` block. Art-block restructure DONE 2026-06-16. |
 | `iAppearance` / `iDisappearance` / `iGrowth` / `iSpread` / `iPopDestroys` / `bCanGrowAnywhere` / `bRequires*` / `bNo*` / placement flags / `bGraphicalOnly` / `TerrainBooleans` | `identity.*` | World-gen RNG / lifecycle / placement config (read directly). `bGraphicalOnly` is a base-class flag (moved out of the mapping's `art` → identity). |
 
 *Toolkit: registered `FeatureInfo` in `store.ENTITIES`; `curate_feature.py` (bespoke) reuses the `post_process` hook
@@ -351,8 +371,8 @@ occupies, ranks itself by `iValue`, and is GATED by a prerequisite bonus — so 
 bonus→route enabler chain (`store.enabled_by(ROUTE_*)` is empty → **no `enables` block**, no `requires`).
 EXE-link: **0 `DllExport` on `CvRouteInfo`** (unconstrained; readJson-mapped). `Categories` (getCategory trio
 compiles but no route consumer reads it via `getRouteInfo`, and no route populates `<Categories>`) and
-`PropertyManipulators` (empty on every route) are dead/empty → dropped. Mechanical de-Hungarian (`Button`→`icon`,
-`Description`→`description`) not re-logged. Structural / manual:
+`PropertyManipulators` (empty on every route) are dead/empty → dropped. Mechanical de-Hungarian
+(`Button`→`ui.art.icon` via the art-block restructure, `Description`→`description`) not re-logged. Structural / manual:
 
 | old XML | new JSON path | note |
 |---|---|---|

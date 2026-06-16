@@ -8,9 +8,13 @@
  "cost": {
   "create": 11800
  },
- "art": {
-  "movie": "ART_DEF_MOVIE_HUBBLE",
-  "icon": "art/Interface/Buttons/Projects/hubble.dds"
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_HUBBLE"
+   },
+   "icon": "art/Interface/Buttons/Projects/hubble.dds"
+  }
  },
  "identity": {
   "mapCategories": [

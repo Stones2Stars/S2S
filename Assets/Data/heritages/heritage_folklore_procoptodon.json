@@ -50,8 +50,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Procoptodon.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Procoptodon.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

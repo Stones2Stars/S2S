@@ -160,8 +160,10 @@
   "noNonStateReligionSpread": true,
   "stateReligion": true
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/religion_intolerant.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/religion_intolerant.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_RELIGION",

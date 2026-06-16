@@ -108,13 +108,19 @@
    }
   ]
  },
- "art": {
-  "tgaIndex": 1,
-  "icon": "Art/Interface/Buttons/Religions/Christianity.dds",
-  "techButton": "Art/Interface/Buttons/TechTree/Found_Christianity.dds",
-  "genericTechButton": "Art/Interface/Buttons/TechTree/Christianity.dds",
-  "movieFile": "Art/Movies/Religion/Christianity/Chr_Found.nif",
-  "movieSound": "AS2D_BUILD_CHRISTIAN_MOVIE",
+ "ui": {
+  "art": {
+   "tgaIndex": 1,
+   "icon": "Art/Interface/Buttons/Religions/Christianity.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Christianity.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Christianity.dds",
+   "movie": {
+    "file": "Art/Movies/Religion/Christianity/Chr_Found.nif",
+    "sound": "AS2D_BUILD_CHRISTIAN_MOVIE"
+   }
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_CHRISTIAN"
  },
  "identity": {

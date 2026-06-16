@@ -79,8 +79,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/military_time_drafting.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/military_time_drafting.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_MILITARY",

@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Rockhopper.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Rockhopper.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

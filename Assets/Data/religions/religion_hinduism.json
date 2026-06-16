@@ -107,13 +107,19 @@
    }
   ]
  },
- "art": {
-  "tgaIndex": 3,
-  "icon": "Art/Interface/Buttons/Religions/Hinduism.dds",
-  "techButton": "Art/Interface/Buttons/TechTree/Found_Hinduism.dds",
-  "genericTechButton": "Art/Interface/Buttons/TechTree/Hinduism.dds",
-  "movieFile": "Art/Movies/Religion/Hinduism/Hin_Found.nif",
-  "movieSound": "AS2D_BUILD_HINDU_MOVIE",
+ "ui": {
+  "art": {
+   "tgaIndex": 3,
+   "icon": "Art/Interface/Buttons/Religions/Hinduism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Hinduism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Hinduism.dds",
+   "movie": {
+    "file": "Art/Movies/Religion/Hinduism/Hin_Found.nif",
+    "sound": "AS2D_BUILD_HINDU_MOVIE"
+   }
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_HINDU"
  },
  "identity": {

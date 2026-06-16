@@ -96,13 +96,19 @@
    }
   ]
  },
- "art": {
-  "tgaIndex": 28,
-  "icon": "Art/Interface/Buttons/Religions/Martianism.dds",
-  "techButton": "Art/Interface/Buttons/TechTree/Found_scientology.dds",
-  "genericTechButton": "Art/Interface/Buttons/TechTree/Martianism.dds",
-  "movieFile": "Art/Cutscene/Scientology_Generic_Found.nif",
-  "movieSound": "AS2D_BUILD_NORDDIC_MOVIE",
+ "ui": {
+  "art": {
+   "tgaIndex": 28,
+   "icon": "Art/Interface/Buttons/Religions/Martianism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_scientology.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Martianism.dds",
+   "movie": {
+    "file": "Art/Cutscene/Scientology_Generic_Found.nif",
+    "sound": "AS2D_BUILD_NORDDIC_MOVIE"
+   }
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_ZORO"
  },
  "identity": {

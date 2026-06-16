@@ -116,8 +116,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/military_conscription.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/military_conscription.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_MILITARY",

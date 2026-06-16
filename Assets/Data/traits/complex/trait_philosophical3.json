@@ -111,8 +111,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitPhilosophical3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPhilosophical3.dds"
+  }
  },
  "identity": {
   "impurePropertyManipulators": true

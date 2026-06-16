@@ -101,7 +101,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitProgressive3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitProgressive3.dds"
+  }
  }
 }

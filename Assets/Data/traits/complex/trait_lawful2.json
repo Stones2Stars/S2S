@@ -319,7 +319,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitLawful2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitLawful2.dds"
+  }
  }
 }

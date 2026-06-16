@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Caiman.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Caiman.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

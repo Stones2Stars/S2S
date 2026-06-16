@@ -15,8 +15,10 @@
  "cost": {
   "create": 16040
  },
- "art": {
-  "icon": ",Art/Interface/Buttons/Techtree/TheoryofEverything.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,4,2"
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Techtree/TheoryofEverything.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,4,2"
+  }
  },
  "identity": {
   "mapCategories": [

@@ -152,8 +152,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/rule_meritocracy.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/rule_meritocracy.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_RULE",

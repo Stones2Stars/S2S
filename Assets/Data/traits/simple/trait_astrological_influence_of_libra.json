@@ -24,8 +24,10 @@
    ]
   }
  },
- "art": {
-  "icon": "Art/Buttons/Traits/InfluenceOfLibraTrait.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Traits/InfluenceOfLibraTrait.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_LIBRA_SHORT",

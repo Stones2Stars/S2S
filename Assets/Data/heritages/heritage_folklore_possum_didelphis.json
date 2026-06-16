@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Opossum.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Opossum.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

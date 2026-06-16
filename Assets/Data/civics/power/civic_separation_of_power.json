@@ -111,8 +111,10 @@
  "grants": {
   "revolution": 10
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/power_separation_of_powers.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/power_separation_of_powers.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_POWER",

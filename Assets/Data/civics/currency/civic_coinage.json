@@ -131,8 +131,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/currency_coinage.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/currency_coinage.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_CURRENCY",

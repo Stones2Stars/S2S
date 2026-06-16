@@ -46,8 +46,10 @@
  "policies": {
   "fixedBorders": true
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/immigration_digital_citizenship.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/immigration_digital_citizenship.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_IMMIGRATION",

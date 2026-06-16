@@ -131,13 +131,19 @@
    }
   ]
  },
- "art": {
-  "tgaIndex": 2,
-  "icon": "Art/Interface/Buttons/Religions/Islam.dds",
-  "techButton": "Art/Interface/Buttons/TechTree/Found_Islam.dds",
-  "genericTechButton": "Art/Interface/Buttons/TechTree/Islam.dds",
-  "movieFile": "Art/Movies/Religion/Islam/Isl_Found.nif",
-  "movieSound": "AS2D_BUILD_ISLAMIC_MOVIE",
+ "ui": {
+  "art": {
+   "tgaIndex": 2,
+   "icon": "Art/Interface/Buttons/Religions/Islam.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Islam.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Islam.dds",
+   "movie": {
+    "file": "Art/Movies/Religion/Islam/Isl_Found.nif",
+    "sound": "AS2D_BUILD_ISLAMIC_MOVIE"
+   }
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_ISLAMIC"
  },
  "identity": {

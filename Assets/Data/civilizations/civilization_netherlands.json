@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_DARK_ORANGE",
-  "artDefine": "ART_DEF_CIVILIZATION_NETHERLANDS",
-  "artStyle": "ARTSTYLE_EUROPE",
-  "unitArtStyle": "UNIT_ARTSTYLE_DUTCH",
-  "selectionSound": "AS3D_NETHERLANDS_SELECT",
-  "actionSound": "AS3D_NETHERLANDS_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_DARK_ORANGE",
+   "icon": "ART_DEF_CIVILIZATION_NETHERLANDS",
+   "style": "ARTSTYLE_EUROPE",
+   "unitStyle": "UNIT_ARTSTYLE_DUTCH"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_NETHERLANDS_SELECT",
+  "action": "AS3D_NETHERLANDS_ORDER"
  },
  "identity": {
   "leaders": [

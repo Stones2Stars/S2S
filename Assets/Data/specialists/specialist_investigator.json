@@ -121,9 +121,11 @@
    }
   ]
  },
- "art": {
-  "icon": "Art/Interface/MainScreen/CityScreen/Investigator.dds",
-  "button": "Art/Interface/MainScreen/CityScreen/Investigator.dds"
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/Investigator.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/Investigator.dds"
+  }
  },
  "identity": {
   "visible": true,

@@ -126,8 +126,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitMinimalist.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitMinimalist.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

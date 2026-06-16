@@ -94,13 +94,19 @@
    }
   ]
  },
- "art": {
-  "tgaIndex": 10,
-  "icon": "Art/Interface/Buttons/religions/MesoAmerica.dds",
-  "techButton": "Art/Interface/Buttons/TechTree/Found_naghualism.dds",
-  "genericTechButton": "Art/Interface/Buttons/TechTree/Naghualism.dds",
-  "movieFile": "Art/Cutscene/Nagualismo/mes_found.nif",
-  "movieSound": "AS2D_BUILD_TOLTEC_MOVIE",
+ "ui": {
+  "art": {
+   "tgaIndex": 10,
+   "icon": "Art/Interface/Buttons/religions/MesoAmerica.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_naghualism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Naghualism.dds",
+   "movie": {
+    "file": "Art/Cutscene/Nagualismo/mes_found.nif",
+    "sound": "AS2D_BUILD_TOLTEC_MOVIE"
+   }
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_TOLTEC"
  },
  "identity": {

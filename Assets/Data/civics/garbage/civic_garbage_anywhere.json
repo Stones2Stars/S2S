@@ -66,8 +66,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/garbage_anywhere.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/garbage_anywhere.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_GARBAGE"

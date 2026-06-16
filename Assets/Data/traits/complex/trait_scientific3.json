@@ -341,8 +341,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitScientific3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitScientific3.dds"
+  }
  },
  "identity": {
   "impurePropertyManipulators": true

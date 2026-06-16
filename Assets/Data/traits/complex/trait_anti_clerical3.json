@@ -181,8 +181,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitAnti-Clerical3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitAnti-Clerical3.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

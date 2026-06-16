@@ -147,8 +147,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitAnti-Clerical.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitAnti-Clerical.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_ANTI_CLERICAL_SHORT",

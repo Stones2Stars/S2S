@@ -340,7 +340,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitMedical.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitMedical.dds"
+  }
  }
 }

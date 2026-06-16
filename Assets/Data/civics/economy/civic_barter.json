@@ -69,8 +69,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/economy_barter.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/economy_barter.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_ECONOMY"

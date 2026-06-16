@@ -23,8 +23,10 @@
    ]
   }
  },
- "art": {
-  "icon": "Art/Buttons/Traits/InfluenceOfGeminiTrait.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Traits/InfluenceOfGeminiTrait.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_GEMINI_SHORT",

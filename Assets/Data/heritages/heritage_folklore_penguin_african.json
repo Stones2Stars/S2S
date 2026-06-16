@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Africanpenguin.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Africanpenguin.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

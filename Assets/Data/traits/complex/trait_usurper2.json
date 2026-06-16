@@ -137,8 +137,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitUsurper2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitUsurper2.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

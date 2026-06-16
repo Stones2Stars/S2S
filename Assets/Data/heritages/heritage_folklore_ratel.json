@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Ratel.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Ratel.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

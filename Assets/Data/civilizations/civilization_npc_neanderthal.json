@@ -50,11 +50,13 @@
    "TECH_SEDENTARY_LIFESTYLE"
   ]
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_NEANDERTHAL",
-  "artDefine": "ART_DEF_CIVILIZATION_NEANDERTHAL",
-  "artStyle": "ARTSTYLE_EUROPE",
-  "unitArtStyle": "UNIT_ARTSTYLE_VIKING"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_NEANDERTHAL",
+   "icon": "ART_DEF_CIVILIZATION_NEANDERTHAL",
+   "style": "ARTSTYLE_EUROPE",
+   "unitStyle": "UNIT_ARTSTYLE_VIKING"
+  }
  },
  "identity": {
   "leaders": [

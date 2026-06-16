@@ -375,9 +375,11 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/MainScreen/CityScreen/Priest.dds",
-  "button": "Art/Interface/MainScreen/CityScreen/Priest.dds"
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/Priest.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/Priest.dds"
+  }
  },
  "identity": {
   "visible": true,

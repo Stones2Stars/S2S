@@ -14,8 +14,10 @@
  "cost": {
   "create": 55240
  },
- "art": {
-  "icon": ",Art/Interface/Buttons/Buildings/SS_Casing.dds,Art/Interface/Buttons/Buildings_Atlas.dds,4,6"
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Buildings/SS_Casing.dds,Art/Interface/Buttons/Buildings_Atlas.dds,4,6"
+  }
  },
  "identity": {
   "mapCategories": [

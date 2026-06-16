@@ -61,8 +61,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitRevolutionary.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitRevolutionary.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_REVOLUTIONARY_SHORT",

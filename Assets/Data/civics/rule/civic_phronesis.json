@@ -69,8 +69,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/rule_programmed_morality.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/rule_programmed_morality.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_RULE",

@@ -83,8 +83,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitMegalomaniac.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitMegalomaniac.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_MEGALOMANIAC_SHORT",

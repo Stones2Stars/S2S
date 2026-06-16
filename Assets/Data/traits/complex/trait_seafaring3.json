@@ -243,7 +243,9 @@
    "coastalAIInfluence": true
   }
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitSeafaring3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitSeafaring3.dds"
+  }
  }
 }

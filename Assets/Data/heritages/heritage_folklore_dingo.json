@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Dingo.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Dingo.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

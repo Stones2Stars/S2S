@@ -178,8 +178,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/society_tribal.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/society_tribal.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_SOCIETY",

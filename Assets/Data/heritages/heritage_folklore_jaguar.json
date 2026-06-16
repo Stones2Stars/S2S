@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Jaguar.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Jaguar.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

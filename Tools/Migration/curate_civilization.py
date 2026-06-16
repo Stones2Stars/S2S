@@ -37,6 +37,7 @@ import os
 from collections import OrderedDict
 
 import engine
+import curate_common as cc
 from store import Store, REPO
 
 # The JSON writer uses the DEFAULT (game-matching) encoding on purpose (see write()). A string that cannot be
@@ -64,11 +65,11 @@ GRANTS = OrderedDict([      # container tag -> (child tag, grant key)
 SPAWN = OrderedDict([("iSpawnRateModifier", "general"), ("iSpawnRateNPCPeaceModifier", "npcPeace")])
 POLICIES = OrderedDict([("bPlayable", "playable"), ("bAIPlayable", "aiPlayable"),
                         ("bStronglyRestricted", "stronglyRestricted")])
-ART = OrderedDict([
-    ("DefaultPlayerColor", "playerColor"), ("ArtDefineTag", "artDefine"),
-    ("ArtStyleType", "artStyle"), ("UnitArtStyleType", "unitArtStyle"),
-    ("CivilizationSelectionSound", "selectionSound"), ("CivilizationActionSound", "actionSound"),
-])
+# art/audio tags -> ui/world/sound via the canonical curate_common.ART_BLOCK:
+#   DefaultPlayerColor->world.art.playerColor, ArtDefineTag->world.art.icon, ArtStyleType->world.art.style,
+#   UnitArtStyleType->world.art.unitStyle, Civilization{Selection,Action}Sound->sound.{selection,action}.
+ART = ("DefaultPlayerColor", "ArtDefineTag", "ArtStyleType", "UnitArtStyleType",
+       "CivilizationSelectionSound", "CivilizationActionSound")
 # every tag we knowingly handle — anything else gets flagged (leftover check)
 KNOWN = ({"Type", "Cities", "Leaders", "DisableTechs", "DerivativeCiv"} | set(TEXT) | set(GRANTS)
          | set(SPAWN) | set(POLICIES) | set(ART))
@@ -113,13 +114,10 @@ def curate(typ, rec):
     dt = _list(rec, "DisableTechs", "DisableTech")
     if dt:
         out["disables"] = {"techs": dt}   # `disables` OBJECT, symmetric with `grants` — extensible to other kinds later
-    art = OrderedDict()
-    for tag, key in ART.items():
-        t = engine.text(rec.find(tag))
-        if t and t != "NONE":
-            art[key] = t
-    if art:
-        out["art"] = art
+    art_blocks = {}
+    for tag in ART:
+        cc.put_art(art_blocks, tag, engine.text(rec.find(tag)))   # -> ui/world/sound via ART_BLOCK (+ drop empty/NONE)
+    cc.emit_art(out, art_blocks)
     identity = OrderedDict()
     leaders = _list(rec, "Leaders", "Leader")
     if leaders:

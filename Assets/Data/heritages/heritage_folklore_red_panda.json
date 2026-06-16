@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Redpanda.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Redpanda.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

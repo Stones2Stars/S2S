@@ -91,8 +91,10 @@
    "flat": 4
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/education_military.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/education_military.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_EDUCATION",

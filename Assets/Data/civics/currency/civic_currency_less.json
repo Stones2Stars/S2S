@@ -80,8 +80,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/currency_no_currency.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/currency_no_currency.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_CURRENCY"

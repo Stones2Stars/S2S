@@ -118,8 +118,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/power_divine_right.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/power_divine_right.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_POWER",

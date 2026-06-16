@@ -345,8 +345,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitCrooked2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCrooked2.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

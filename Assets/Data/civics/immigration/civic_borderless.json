@@ -41,8 +41,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/immigration_no_borders.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/immigration_no_borders.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_IMMIGRATION"

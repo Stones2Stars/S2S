@@ -290,9 +290,11 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/MainScreen/CityScreen/Great_Priest.dds",
-  "button": "Art/Interface/MainScreen/CityScreen/Great_Priest.dds"
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/Great_Priest.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/Great_Priest.dds"
+  }
  },
  "identity": {
   "categories": [

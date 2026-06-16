@@ -164,8 +164,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/rule_federal.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/rule_federal.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_RULE",

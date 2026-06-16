@@ -55,8 +55,10 @@
    "flat": 5
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/education_corporate.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/education_corporate.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_EDUCATION",

@@ -35,13 +35,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_NEANDERTHAL_EMPIRE",
-  "artDefine": "ART_DEF_CIVILIZATION_NEANDERTHAL_EMPIRE",
-  "artStyle": "ARTSTYLE_NEANDERTHAL",
-  "unitArtStyle": "UNIT_ARTSTYLE_VIKING",
-  "selectionSound": "AS3D_NEAN_SELECT",
-  "actionSound": "AS3D_NEAN_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_NEANDERTHAL_EMPIRE",
+   "icon": "ART_DEF_CIVILIZATION_NEANDERTHAL_EMPIRE",
+   "style": "ARTSTYLE_NEANDERTHAL",
+   "unitStyle": "UNIT_ARTSTYLE_VIKING"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_NEAN_SELECT",
+  "action": "AS3D_NEAN_ORDER"
  },
  "identity": {
   "leaders": [

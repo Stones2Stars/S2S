@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_DARK_INDIGO",
-  "artDefine": "ART_DEF_CIVILIZATION_SUMERIA",
-  "artStyle": "ARTSTYLE_CRESCENT",
-  "unitArtStyle": "UNIT_ARTSTYLE_BABYLON",
-  "selectionSound": "AS3D_SUMERIA_SELECT",
-  "actionSound": "AS3D_SUMERIA_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_DARK_INDIGO",
+   "icon": "ART_DEF_CIVILIZATION_SUMERIA",
+   "style": "ARTSTYLE_CRESCENT",
+   "unitStyle": "UNIT_ARTSTYLE_BABYLON"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_SUMERIA_SELECT",
+  "action": "AS3D_SUMERIA_ORDER"
  },
  "identity": {
   "leaders": [

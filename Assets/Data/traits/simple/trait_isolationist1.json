@@ -80,8 +80,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitIsolationist.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitIsolationist.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_ISOLATIONIST_SHORT",

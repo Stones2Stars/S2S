@@ -282,7 +282,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitMedical3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitMedical3.dds"
+  }
  }
 }

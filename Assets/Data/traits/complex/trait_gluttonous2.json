@@ -299,8 +299,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitGluttonous2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitGluttonous2.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

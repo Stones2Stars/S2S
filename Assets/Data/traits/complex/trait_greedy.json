@@ -574,8 +574,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitGreedy.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitGreedy.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

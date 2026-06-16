@@ -44,6 +44,7 @@ import os
 from collections import OrderedDict
 
 import engine
+import curate_common as cc
 from curate_common import de_i
 from store import Store, REPO
 
@@ -66,7 +67,8 @@ FAMILIES = {
 SPLIT_COMMERCE = {"CommerceModifiers": ("empire", "percent")}
 GRANTS = {"EveryoneSpecialUnit": "grantsSpecialUnit", "EveryoneSpecialBuilding": "grantsSpecialBuilding"}
 TEXT = {"Description": "description", "Civilopedia": "civilopedia"}
-ART = {"Button": "icon", "MovieDefineTag": "movie", "CreateSound": "createSound"}
+# art tags -> ui/world/sound via ART_BLOCK (CreateSound -> sound.onCompletion; MovieDefineTag -> ui.art.movie.defineTag).
+ART = {"Button", "MovieDefineTag", "CreateSound"}
 # intrinsic identity, with clean names. iCost handled separately (own `cost` section).
 IDENTITY = {"iMaxGlobalInstances": "maxGlobalInstances", "iMaxTeamInstances": "maxTeamInstances",
             "VictoryPrereq": "launchesVictory", "MapCategoryTypes": "mapCategories", "Categories": "categories"}
@@ -103,7 +105,7 @@ def _keyed_ints(node):
 
 
 def curate(typ, rec, store):
-    text, fam, grants, art, identity, victory, cost, leftover = {}, {}, {}, {}, {}, {}, {}, []
+    text, fam, grants, art_blocks, identity, victory, cost, leftover = {}, {}, {}, {}, {}, {}, {}, []
     for c in rec:
         tag, t = c.tag, engine.text(c)
         if tag == "Type" or tag in DROP:
@@ -134,9 +136,7 @@ def curate(typ, rec, store):
             if v not in (None, "", "NONE"):
                 grants[GRANTS[tag]] = v
         elif tag in ART:
-            v = engine.generic(c)
-            if v not in (None, "", [], {}):
-                art[ART[tag]] = v
+            cc.put_art(art_blocks, tag, engine.generic(c))   # -> ui/world/sound via ART_BLOCK
         elif tag in IDENTITY:
             if t or list(c):
                 identity[IDENTITY[tag]] = engine.generic(c)
@@ -168,8 +168,7 @@ def curate(typ, rec, store):
         out["grants"] = grants
     if cost:
         out["cost"] = cost
-    if art:
-        out["art"] = art
+    cc.emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity
     return out, leftover

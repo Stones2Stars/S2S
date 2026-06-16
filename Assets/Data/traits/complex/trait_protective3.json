@@ -305,7 +305,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitProtective3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitProtective3.dds"
+  }
  }
 }

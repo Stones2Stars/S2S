@@ -84,8 +84,10 @@
  "policies": {
   "fixedBorders": true
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/immigration_skilled_workers_only.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/immigration_skilled_workers_only.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_IMMIGRATION",

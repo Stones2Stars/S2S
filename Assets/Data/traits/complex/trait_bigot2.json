@@ -93,8 +93,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitBigot2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitBigot2.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

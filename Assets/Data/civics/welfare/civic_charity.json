@@ -96,8 +96,10 @@
  "grants": {
   "revolution": -5
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/welfare_charity.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/welfare_charity.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_WELFARE"

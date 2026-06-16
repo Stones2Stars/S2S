@@ -35,8 +35,10 @@
    "flat": 2
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/garbage_waste_to_sea.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/garbage_waste_to_sea.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_GARBAGE",

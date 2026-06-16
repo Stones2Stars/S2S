@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Wallaroo.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Wallaroo.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

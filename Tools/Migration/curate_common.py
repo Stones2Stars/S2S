@@ -34,7 +34,12 @@ ART_RENAME = {"Button": "icon", "ArtDefineTag": "icon"}
 # ui.art.movie.{file,sound}. tag -> full dotted path. Unknown art tag -> ui.art.<de_i> (visible; categorize at its pass).
 ART_BLOCK = {
     # --- ui.art (on-screen icons / buttons / movies / glyphs) ---
-    "Button": "ui.art.icon", "Texture": "ui.art.icon",
+    # Button + Texture are BOTH UI 2D icons, but DISTINCT slots: among gameplay infos only Specialist carries a
+    # <Texture> (the city-screen/advisor citizen icon, Python interface), beside its base-class <Button> (the
+    # pedia/WorldBuilder button) — verified both consumed only by interface screens, neither on-map; 2 specialists
+    # have differing values, so they must NOT collapse to one key (owner 2026-06-16). (The other <Texture> users are
+    # the separate, unmigrated CIV4ArtDefines_Unit art tier, not cc-curated.)
+    "Button": "ui.art.icon", "Texture": "ui.art.texture",
     "TechButton": "ui.art.techButton", "GenericTechButton": "ui.art.genericTechButton",
     "Advisor": "ui.art.advisor",
     "MovieFile": "ui.art.movie.file", "MovieSound": "ui.art.movie.sound",
@@ -47,13 +52,18 @@ ART_BLOCK = {
     "ArtDefineTag": "world.art.icon",
     "EffectType": "world.art.effect.type", "iEffectProbability": "world.art.effect.probability",  # cosmetic bird-scatter (async RNG, active-player-only) + its trigger chance — grouped (verified CvUnit.cpp:4996)
     "ArtStyleType": "world.art.style", "UnitArtStyleType": "world.art.unitStyle",
+    "DefaultPlayerColor": "world.art.playerColor",  # civ render colour (EXE-bound int FK), beside the civ's world art
     # --- sound (flat: audio is itself the asset) ---
     "FootstepSounds": "sound.footsteps", "WorldSoundscapeAudioScript": "sound.soundscape",
     "GrowthSound": "sound.growth", "ConstructSound": "sound.construct",
+    "CreateSound": "sound.onCompletion",   # Project: audio played when the project is COMPLETED (CvCity.cpp:16205)
     "Sound": "sound.sound", "SoundMP": "sound.soundMP",
     "CivilizationActionSound": "sound.action", "CivilizationSelectionSound": "sound.selection",
     "AudioUnitVictoryScript": "sound.unitVictory", "AudioUnitDefeatScript": "sound.unitDefeat",
     "EraInfoSoundtracks": "sound.soundtracks", "CitySoundscapes": "sound.citySoundscapes",
+    # Era: make the era's FIRST listed soundtrack play first on era entry. A sibling flag over `sound.soundtracks`;
+    # owner's better future shape is a soundtracks OBJECT carrying a per-track `firstPlayed` (out of scope, #428).
+    "bFirstSoundtrackFirst": "sound.introSoundtrack",
     "iSoundtrackSpace": "sound.soundtrackSpace",
     "DiplomacyIntroMusicPeace": "sound.diploIntroMusicPeace", "DiplomacyIntroMusicWar": "sound.diploIntroMusicWar",
     "DiplomacyMusicPeace": "sound.diploMusicPeace", "DiplomacyMusicWar": "sound.diploMusicWar",
@@ -100,6 +110,24 @@ def _set_path(d, dotted, val):
     for k in keys[:-1]:
         d = d.setdefault(k, {})
     d[keys[-1]] = val
+
+
+def put_art(art_blocks, tag, val):
+    """Route a raw art value to its ui/world/sound block via ART_BLOCK (tag -> dotted path), dropping empty/'NONE'
+    audio (drop_empty_audio). The shared art emitter for BESPOKE curators — mirrors curate()'s art handling so EVERY
+    entity lands the SAME top-level ui/world/sound shape (owner art restructure 2026-06-16). `tag` is the ORIGINAL XML
+    tag (ART_BLOCK keys on it, not the de-Hungarian name). Unknown art tag -> ui.art.<de_i> (visible; categorize later)."""
+    av = drop_empty_audio(val)
+    if av is not None:
+        _set_path(art_blocks, ART_BLOCK.get(tag, "ui.art." + de_i(tag)), av)
+
+
+def emit_art(out, art_blocks):
+    """Emit the populated ui/world/sound blocks (reserved order) onto the output object — the bespoke-curator twin of
+    curate()'s art emit. No-op for an empty block."""
+    for blk in ("ui", "world", "sound"):
+        if art_blocks.get(blk):
+            out[blk] = art_blocks[blk]
 
 
 def _merge_val(a, b):

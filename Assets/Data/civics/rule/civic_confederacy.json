@@ -177,8 +177,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/rule_confederacy.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/rule_confederacy.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_RULE",

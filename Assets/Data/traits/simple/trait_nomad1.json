@@ -225,8 +225,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitNomadic.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitNomadic.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_NOMAD_SHORT",

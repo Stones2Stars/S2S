@@ -80,8 +80,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/religion_irreligion.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/religion_irreligion.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_RELIGION"

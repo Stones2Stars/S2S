@@ -105,8 +105,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitSlob.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitSlob.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

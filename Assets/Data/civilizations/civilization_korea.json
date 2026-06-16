@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_DARK_CYAN",
-  "artDefine": "ART_DEF_CIVILIZATION_KOREA",
-  "artStyle": "ARTSTYLE_ASIA",
-  "unitArtStyle": "UNIT_ARTSTYLE_KOREAN",
-  "selectionSound": "AS3D_KOREA_SELECT",
-  "actionSound": "AS3D_KOREA_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_DARK_CYAN",
+   "icon": "ART_DEF_CIVILIZATION_KOREA",
+   "style": "ARTSTYLE_ASIA",
+   "unitStyle": "UNIT_ARTSTYLE_KOREAN"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_KOREA_SELECT",
+  "action": "AS3D_KOREA_ORDER"
  },
  "identity": {
   "leaders": [

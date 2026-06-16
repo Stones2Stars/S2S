@@ -246,8 +246,10 @@
  "grants": {
   "revolution": 10
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/society_feudal.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/society_feudal.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_SOCIETY",

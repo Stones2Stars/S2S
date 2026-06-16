@@ -102,13 +102,19 @@
    }
   ]
  },
- "art": {
-  "tgaIndex": 6,
-  "icon": "Art/Interface/Buttons/Religions/Taoism.dds",
-  "techButton": "Art/Interface/Buttons/TechTree/Found_Taoism.dds",
-  "genericTechButton": "Art/Interface/Buttons/TechTree/Taoism.dds",
-  "movieFile": "Art/Movies/Religion/Taoism/Tao_Found.nif",
-  "movieSound": "AS2D_BUILD_TAOIST_MOVIE",
+ "ui": {
+  "art": {
+   "tgaIndex": 6,
+   "icon": "Art/Interface/Buttons/Religions/Taoism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Taoism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Taoism.dds",
+   "movie": {
+    "file": "Art/Movies/Religion/Taoism/Tao_Found.nif",
+    "sound": "AS2D_BUILD_TAOIST_MOVIE"
+   }
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_TAOIST"
  },
  "identity": {

@@ -48,9 +48,11 @@
    }
   ]
  },
- "art": {
-  "icon": "Art/Interface/MainScreen/CityScreen/slave_tutor.dds",
-  "button": "Art/Interface/MainScreen/CityScreen/slave_tutor.dds"
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/slave_tutor.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/slave_tutor.dds"
+  }
  },
  "identity": {
   "categories": [

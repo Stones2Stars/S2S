@@ -77,8 +77,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitForeign.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitForeign.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_FOREIGN_SHORT",

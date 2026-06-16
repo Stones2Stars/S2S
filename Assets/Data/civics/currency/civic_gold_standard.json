@@ -128,8 +128,10 @@
    "weight": 1
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/currency_gold_standard.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/currency_gold_standard.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_CURRENCY",

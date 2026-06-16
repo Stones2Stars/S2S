@@ -231,8 +231,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitEfficient.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitEfficient.dds"
+  }
  },
  "identity": {
   "impurePropertyManipulators": true

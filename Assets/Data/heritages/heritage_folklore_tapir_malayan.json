@@ -51,8 +51,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/mtapir.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/mtapir.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

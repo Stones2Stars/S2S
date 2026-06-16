@@ -164,8 +164,10 @@
  "grants": {
   "revolution": -25
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/society_marxist.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/society_marxist.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_SOCIETY",

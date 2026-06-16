@@ -50,8 +50,10 @@
    "flat": -10
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/currency_post_currency.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/currency_post_currency.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_CURRENCY",

@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_BLUE",
-  "artDefine": "ART_DEF_CIVILIZATION_AMERICA",
-  "artStyle": "ARTSTYLE_ANGLO_AMERICA",
-  "unitArtStyle": "UNIT_ARTSTYLE_AMERICAN",
-  "selectionSound": "AS3D_AMERICA_SELECT",
-  "actionSound": "AS3D_AMERICA_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_BLUE",
+   "icon": "ART_DEF_CIVILIZATION_AMERICA",
+   "style": "ARTSTYLE_ANGLO_AMERICA",
+   "unitStyle": "UNIT_ARTSTYLE_AMERICAN"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_AMERICA_SELECT",
+  "action": "AS3D_AMERICA_ORDER"
  },
  "identity": {
   "leaders": [

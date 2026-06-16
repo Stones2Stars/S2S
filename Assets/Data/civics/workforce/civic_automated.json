@@ -77,8 +77,10 @@
    "SPECIALIST_ANDROID_WORKER": 3
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/labor_post_labor.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/labor_post_labor.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_WORKFORCE",

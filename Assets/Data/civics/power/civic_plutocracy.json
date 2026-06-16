@@ -101,8 +101,10 @@
  "grants": {
   "revolution": -20
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/power_plutocracy.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/power_plutocracy.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_POWER",

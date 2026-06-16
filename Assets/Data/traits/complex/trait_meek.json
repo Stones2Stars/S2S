@@ -309,8 +309,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitMeek.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitMeek.dds"
+  }
  },
  "identity": {
   "negativeTrait": true,

@@ -185,9 +185,11 @@
    }
   ]
  },
- "art": {
-  "icon": "Art/Interface/MainScreen/CityScreen/lawyer.dds",
-  "button": "Art/Interface/MainScreen/CityScreen/lawyer.dds"
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/lawyer.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/lawyer.dds"
+  }
  },
  "identity": {
   "visible": true,

@@ -384,8 +384,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitFinancial.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitFinancial.dds"
+  }
  },
  "identity": {
   "impurePropertyManipulators": true

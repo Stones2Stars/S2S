@@ -58,8 +58,10 @@
    "percent": -10
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/agriculture_privatized_agriculture.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/agriculture_privatized_agriculture.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_AGRICULTURE",

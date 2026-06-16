@@ -182,9 +182,11 @@
    }
   ]
  },
- "art": {
-  "icon": "Art/Interface/buttons/specialists/great_doctor.dds",
-  "button": "Art/Interface/buttons/specialists/great_doctor.dds"
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/buttons/specialists/great_doctor.dds",
+   "icon": "Art/Interface/buttons/specialists/great_doctor.dds"
+  }
  },
  "identity": {
   "categories": [

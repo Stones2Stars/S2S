@@ -103,8 +103,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitWarmonger2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitWarmonger2.dds"
+  }
  },
  "identity": {
   "impurePropertyManipulators": true

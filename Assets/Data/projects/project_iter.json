@@ -8,9 +8,13 @@
  "cost": {
   "create": 18440
  },
- "art": {
-  "movie": "ART_DEF_MOVIE_FUSION_PLANT",
-  "icon": "Art/Interface/Buttons/buildings/ITER.dds"
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_FUSION_PLANT"
+   },
+   "icon": "Art/Interface/Buttons/buildings/ITER.dds"
+  }
  },
  "identity": {
   "mapCategories": [

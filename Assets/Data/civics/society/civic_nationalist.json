@@ -220,8 +220,10 @@
  "grants": {
   "revolution": -50
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/society_nationalism.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/society_nationalism.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_SOCIETY",

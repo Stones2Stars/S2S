@@ -18,9 +18,13 @@
  "cost": {
   "create": 21000
  },
- "art": {
-  "movie": "ART_DEF_MOVIE_CANCER",
-  "icon": ",Art/Interface/Buttons/Buildings/Cancer.dds,Art/Interface/Buttons/RoM_Building_Atlas.dds,5,2"
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CANCER"
+   },
+   "icon": ",Art/Interface/Buttons/Buildings/Cancer.dds,Art/Interface/Buttons/RoM_Building_Atlas.dds,5,2"
+  }
  },
  "identity": {
   "mapCategories": [

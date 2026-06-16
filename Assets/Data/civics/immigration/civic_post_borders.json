@@ -33,8 +33,10 @@
    "flat": -15
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/immigration_post_borders.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/immigration_post_borders.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_IMMIGRATION",

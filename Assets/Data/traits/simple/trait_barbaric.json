@@ -77,8 +77,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitBarbaric.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitBarbaric.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_BARBARIC_SHORT",

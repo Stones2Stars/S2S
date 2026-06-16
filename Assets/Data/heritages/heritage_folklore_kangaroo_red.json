@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/kangaroo.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/kangaroo.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

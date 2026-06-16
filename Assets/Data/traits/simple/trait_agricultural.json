@@ -168,8 +168,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitAggricultural.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitAggricultural.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_AGRICULTURAL_SHORT"

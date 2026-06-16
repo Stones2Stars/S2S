@@ -23,8 +23,10 @@
    ]
   }
  },
- "art": {
-  "icon": "Art/Buttons/Traits/InfluenceOfCapricornTrait.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Traits/InfluenceOfCapricornTrait.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_ASTROLOGICAL_INFLUENCE_OF_CAPRICORN_SHORT",

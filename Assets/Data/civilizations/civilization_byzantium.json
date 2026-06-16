@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_DARK_GRAY",
-  "artDefine": "ART_DEF_CIVILIZATION_BYZANTIUM",
-  "artStyle": "ARTSTYLE_GRECO_ROMAN",
-  "unitArtStyle": "UNIT_ARTSTYLE_BYZANTIUM",
-  "selectionSound": "AS3D_BYZANTIUM_SELECT",
-  "actionSound": "AS3D_BYZANTIUM_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_DARK_GRAY",
+   "icon": "ART_DEF_CIVILIZATION_BYZANTIUM",
+   "style": "ARTSTYLE_GRECO_ROMAN",
+   "unitStyle": "UNIT_ARTSTYLE_BYZANTIUM"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_BYZANTIUM_SELECT",
+  "action": "AS3D_BYZANTIUM_ORDER"
  },
  "identity": {
   "leaders": [

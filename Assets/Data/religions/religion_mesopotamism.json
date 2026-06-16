@@ -100,13 +100,19 @@
    }
   ]
  },
- "art": {
-  "tgaIndex": 15,
-  "icon": "Art/Interface/Buttons/Religions/Mesopotamian.dds",
-  "techButton": "Art/Interface/Buttons/TechTree/found_mesopotamism.dds",
-  "genericTechButton": "Art/Interface/Buttons/TechTree/Mesopotamian.dds",
-  "movieFile": "Art/Cutscene/Mesopotamian_Generic_Found.nif",
-  "movieSound": "AS2D_BUILD_MESOPOTAMIAN_MOVIE",
+ "ui": {
+  "art": {
+   "tgaIndex": 15,
+   "icon": "Art/Interface/Buttons/Religions/Mesopotamian.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/found_mesopotamism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Mesopotamian.dds",
+   "movie": {
+    "file": "Art/Cutscene/Mesopotamian_Generic_Found.nif",
+    "sound": "AS2D_BUILD_MESOPOTAMIAN_MOVIE"
+   }
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_MESOPOTAMIAN"
  },
  "identity": {

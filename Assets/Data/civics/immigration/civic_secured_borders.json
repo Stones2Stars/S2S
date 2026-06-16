@@ -72,8 +72,10 @@
  "policies": {
   "fixedBorders": true
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/immigration_secure_borders.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/immigration_secure_borders.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_IMMIGRATION",

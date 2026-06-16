@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/puffadder.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/puffadder.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

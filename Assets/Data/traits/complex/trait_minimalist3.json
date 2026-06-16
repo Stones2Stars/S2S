@@ -127,8 +127,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitMinimalist3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitMinimalist3.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

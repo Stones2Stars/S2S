@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/crocodile_small.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/crocodile_small.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

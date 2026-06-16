@@ -85,9 +85,13 @@
  "cost": {
   "spread": 50
  },
- "art": {
-  "tgaIndex": 3,
-  "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,4,6",
+ "ui": {
+  "art": {
+   "tgaIndex": 3,
+   "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,4,6"
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_BANK"
  },
  "identity": {

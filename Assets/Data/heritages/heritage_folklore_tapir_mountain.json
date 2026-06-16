@@ -50,8 +50,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/mttapir.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/mttapir.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

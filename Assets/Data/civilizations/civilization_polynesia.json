@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_POLYNESIA",
-  "artDefine": "ART_DEF_CIVILIZATION_POLYNESIA",
-  "artStyle": "ARTSTYLE_SOUTH_EAST_ASIA",
-  "unitArtStyle": "UNIT_ARTSTYLE_POLYNESIA",
-  "selectionSound": "AS3D_INDIA_SELECT",
-  "actionSound": "AS3D_INDIA_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_POLYNESIA",
+   "icon": "ART_DEF_CIVILIZATION_POLYNESIA",
+   "style": "ARTSTYLE_SOUTH_EAST_ASIA",
+   "unitStyle": "UNIT_ARTSTYLE_POLYNESIA"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_INDIA_SELECT",
+  "action": "AS3D_INDIA_ORDER"
  },
  "identity": {
   "leaders": [

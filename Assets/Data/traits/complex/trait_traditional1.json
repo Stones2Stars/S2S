@@ -201,8 +201,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitTraditional.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitTraditional.dds"
+  }
  },
  "identity": {
   "negativeTrait": true,

@@ -132,8 +132,10 @@
  "grants": {
   "revolution": -20
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/power_legislature.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/power_legislature.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_POWER",

@@ -82,8 +82,10 @@
  "grants": {
   "revolution": 50
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/rule_grid.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/rule_grid.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_RULE",

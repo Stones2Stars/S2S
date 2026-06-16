@@ -54,9 +54,14 @@
   "startingGold": 125000,
   "freePopulation": 6
  },
- "art": {
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/mainscreen/Era/Transcendent.dds"
+  }
+ },
+ "sound": {
   "soundtrackSpace": 40,
-  "firstSoundtrackFirst": true,
+  "introSoundtrack": true,
   "soundtracks": [
    "AS2D_FINAL_FRONTIER",
    "AS2D_HOLSTLEVINEMARS",
@@ -78,9 +83,8 @@
     "CITYSIZE_LARGE": "ASSS_CITY_TRANSHUMAN_LARGE_SELECT_AMB"
    }
   ],
-  "unitVictorySound": "AS2D_VICTORY_LATE",
-  "unitDefeatSound": "AS2D_LOSS_LATE",
-  "icon": "Art/Interface/mainscreen/Era/Transcendent.dds"
+  "unitVictory": "AS2D_VICTORY_LATE",
+  "unitDefeat": "AS2D_LOSS_LATE"
  },
  "identity": {
   "advancedStart": 4096000,

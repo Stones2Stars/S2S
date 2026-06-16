@@ -154,8 +154,10 @@
  "grants": {
   "revolution": 10
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/society_caste.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/society_caste.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_SOCIETY",

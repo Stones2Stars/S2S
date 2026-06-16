@@ -117,8 +117,10 @@
    "percent": 2
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/religion_folklore.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/religion_folklore.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_RELIGION"

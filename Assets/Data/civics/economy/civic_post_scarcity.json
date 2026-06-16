@@ -86,8 +86,10 @@
  "grants": {
   "revolution": 70
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/economy_post_scarcity2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/economy_post_scarcity2.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_ECONOMY",

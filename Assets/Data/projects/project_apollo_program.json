@@ -16,8 +16,10 @@
  "cost": {
   "create": 12320
  },
- "art": {
-  "icon": ",Art/Interface/Buttons/Buildings/ApolloProgram.dds,Art/Interface/Buttons/Buildings_Atlas.dds,3,1"
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Buildings/ApolloProgram.dds,Art/Interface/Buttons/Buildings_Atlas.dds,3,1"
+  }
  },
  "identity": {
   "mapCategories": [

@@ -332,8 +332,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitIndustrious.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitIndustrious.dds"
+  }
  },
  "identity": {
   "impurePropertyManipulators": true

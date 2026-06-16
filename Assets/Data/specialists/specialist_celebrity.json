@@ -162,9 +162,11 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/MainScreen/CityScreen/celebrity.dds",
-  "button": "Art/Interface/MainScreen/CityScreen/celebrity.dds"
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/celebrity.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/celebrity.dds"
+  }
  },
  "identity": {
   "visible": true,

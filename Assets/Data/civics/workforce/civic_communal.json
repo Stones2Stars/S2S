@@ -84,8 +84,10 @@
  "policies": {
   "noCorporations": true
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/labor_community.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/labor_community.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_WORKFORCE",

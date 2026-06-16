@@ -227,8 +227,10 @@
  "grants": {
   "revolution": -15
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/society_proletaryat.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/society_proletaryat.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_SOCIETY",

@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Badger.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Badger.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

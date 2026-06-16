@@ -90,8 +90,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/labor_unorganized.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/labor_unorganized.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_WORKFORCE"

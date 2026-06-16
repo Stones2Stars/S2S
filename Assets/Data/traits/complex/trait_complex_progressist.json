@@ -115,8 +115,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitInnovative.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitInnovative.dds"
+  }
  },
  "identity": {
   "minAnarchy": 2

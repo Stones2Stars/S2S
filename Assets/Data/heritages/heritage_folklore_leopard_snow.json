@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/SnowLeopard.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/SnowLeopard.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

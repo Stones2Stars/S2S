@@ -97,8 +97,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/military_unmanned_warfare.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/military_unmanned_warfare.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_MILITARY",

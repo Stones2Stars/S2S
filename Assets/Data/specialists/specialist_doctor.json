@@ -187,9 +187,11 @@
    }
   ]
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Specialists/doctor.dds",
-  "button": "Art/Interface/Buttons/Specialists/doctor.dds"
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/Buttons/Specialists/doctor.dds",
+   "icon": "Art/Interface/Buttons/Specialists/doctor.dds"
+  }
  },
  "identity": {
   "visible": true,

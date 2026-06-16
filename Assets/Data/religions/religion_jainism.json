@@ -55,12 +55,18 @@
   "freeUnit": "UNIT_JAINISM_MISSIONARY",
   "numFreeUnits": 1
  },
- "art": {
-  "tgaIndex": 16,
-  "icon": "Art/Interface/Buttons/Religions/Jainism.dds",
-  "techButton": "Art/Interface/Buttons/TechTree/Found_Jainism.dds",
-  "genericTechButton": "Art/Interface/Buttons/TechTree/Jainism.dds",
-  "movieFile": "Art/Cutscene/Jainism_Generic_Found.nif",
+ "ui": {
+  "art": {
+   "tgaIndex": 16,
+   "icon": "Art/Interface/Buttons/Religions/Jainism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Jainism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Jainism.dds",
+   "movie": {
+    "file": "Art/Cutscene/Jainism_Generic_Found.nif"
+   }
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_HINDU"
  },
  "identity": {

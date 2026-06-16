@@ -226,7 +226,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitPious2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPious2.dds"
+  }
  }
 }

@@ -230,9 +230,11 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/MainScreen/CityScreen/noble.dds",
-  "button": "Art/Interface/MainScreen/CityScreen/noble.dds"
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/noble.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/noble.dds"
+  }
  },
  "identity": {
   "visible": true,

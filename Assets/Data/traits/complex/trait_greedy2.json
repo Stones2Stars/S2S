@@ -274,8 +274,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitGreedy2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitGreedy2.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

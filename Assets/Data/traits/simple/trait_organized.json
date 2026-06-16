@@ -117,8 +117,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitOrganized.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitOrganized.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_ORGANIZED_SHORT"

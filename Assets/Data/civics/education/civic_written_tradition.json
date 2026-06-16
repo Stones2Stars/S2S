@@ -57,8 +57,10 @@
    "flat": 3
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/education_writing_tradition.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/education_writing_tradition.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_EDUCATION",

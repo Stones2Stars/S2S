@@ -93,8 +93,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitPacifist3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPacifist3.dds"
+  }
  },
  "identity": {
   "negativeTrait": true,

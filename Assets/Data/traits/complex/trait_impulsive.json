@@ -120,8 +120,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitImpulsive.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitImpulsive.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

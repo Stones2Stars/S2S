@@ -75,9 +75,13 @@
  "cost": {
   "spread": 50
  },
- "art": {
-  "tgaIndex": 15,
-  "icon": "Art/Interface/Buttons/corporations/BurgerWorld.dds",
+ "ui": {
+  "art": {
+   "tgaIndex": 15,
+   "icon": "Art/Interface/Buttons/corporations/BurgerWorld.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_BANK"
  },
  "identity": {

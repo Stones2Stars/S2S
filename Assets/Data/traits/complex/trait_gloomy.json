@@ -175,8 +175,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitGloomy.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitGloomy.dds"
+  }
  },
  "identity": {
   "negativeTrait": true,

@@ -193,9 +193,11 @@
    "flat": 3
   }
  },
- "art": {
-  "icon": "Art/Interface/MainScreen/CityScreen/android.dds",
-  "button": "Art/Interface/MainScreen/CityScreen/android.dds"
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/android.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/android.dds"
+  }
  },
  "identity": {
   "categories": [

@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/NileCroc.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/NileCroc.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

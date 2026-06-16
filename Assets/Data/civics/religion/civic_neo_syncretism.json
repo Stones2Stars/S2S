@@ -52,8 +52,10 @@
  "grants": {
   "revolution": -15
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/religion_syncretism.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/religion_syncretism.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_RELIGION",

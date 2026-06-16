@@ -134,8 +134,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitForeigner.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitForeigner.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

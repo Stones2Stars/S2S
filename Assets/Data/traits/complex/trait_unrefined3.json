@@ -221,7 +221,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitUnrefined3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitUnrefined3.dds"
+  }
  }
 }

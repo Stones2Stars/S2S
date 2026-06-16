@@ -68,8 +68,10 @@
    "flat": 2
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/education_oral_tradition.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/education_oral_tradition.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_EDUCATION"

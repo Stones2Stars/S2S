@@ -255,7 +255,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitAloof3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitAloof3.dds"
+  }
  }
 }

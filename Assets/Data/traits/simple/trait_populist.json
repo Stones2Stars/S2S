@@ -81,8 +81,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitPopulist.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPopulist.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_POPULIST_SHORT",

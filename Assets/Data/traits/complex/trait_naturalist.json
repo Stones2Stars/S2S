@@ -234,7 +234,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitNaturalist.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitNaturalist.dds"
+  }
  }
 }

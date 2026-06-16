@@ -49,8 +49,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Units/Seaotter.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Seaotter.dds"
+  }
  },
  "identity": {
   "needsLanguage": true

@@ -207,8 +207,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitProtective.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitProtective.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_PROTECTIVE_SHORT"

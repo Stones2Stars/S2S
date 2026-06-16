@@ -81,8 +81,10 @@
    "flat": 7
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/education_compulsory.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/education_compulsory.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_EDUCATION",

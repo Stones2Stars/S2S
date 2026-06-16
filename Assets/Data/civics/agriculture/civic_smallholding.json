@@ -49,8 +49,10 @@
    "percent": 25
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/agriculture_subsistence_agriculture.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/agriculture_subsistence_agriculture.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_AGRICULTURE",

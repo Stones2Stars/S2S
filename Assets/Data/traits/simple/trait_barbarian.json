@@ -29,8 +29,10 @@
    ]
   }
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitBarbarian.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitBarbarian.dds"
+  }
  },
  "identity": {
   "shortDescription": "TXT_KEY_TRAIT_BARBARIAN_SHORT",

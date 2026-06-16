@@ -8,8 +8,10 @@
  "cost": {
   "create": 15400
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Buildings/Cloned_mammal.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Buildings/Cloned_mammal.dds"
+  }
  },
  "identity": {
   "mapCategories": [

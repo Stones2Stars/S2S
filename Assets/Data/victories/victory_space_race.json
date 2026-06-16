@@ -4,7 +4,11 @@
  "condition": {
   "delayTurns": 20
  },
- "art": {
-  "movie": "ART_DEF_MOVIE_VICTORY_SPACE_RACE"
+ "ui": {
+  "art": {
+   "movie": {
+    "file": "ART_DEF_MOVIE_VICTORY_SPACE_RACE"
+   }
+  }
  }
 }

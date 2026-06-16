@@ -45,6 +45,7 @@ import os
 from collections import OrderedDict
 
 import engine
+import curate_common as cc
 from curate_common import de_i
 from store import Store, REPO
 
@@ -69,10 +70,10 @@ GRANTS = {
     "iStartingExploreUnits": "startingExploreUnits", "iFreePopulation": "freePopulation",
 }
 TEXT = {"Description": "description", "Strategy": "strategy"}
-# art refs (display/audio). string/list/map carried as-is; the b-flag -> boolean; the int -> int.
-ART = {"Button": "icon", "AudioUnitVictoryScript": "unitVictorySound", "AudioUnitDefeatScript": "unitDefeatSound",
-       "EraInfoSoundtracks": "soundtracks", "CitySoundscapes": "citySoundscapes",
-       "iSoundtrackSpace": "soundtrackSpace", "bFirstSoundtrackFirst": "firstSoundtrackFirst"}
+# art/audio tags -> ui/world/sound via the canonical curate_common.ART_BLOCK (incl. bFirstSoundtrackFirst ->
+# sound.introSoundtrack, the b-flag making the era lead with its first soundtrack on entry).
+ART = {"Button", "AudioUnitVictoryScript", "AudioUnitDefeatScript", "EraInfoSoundtracks",
+       "CitySoundscapes", "iSoundtrackSpace", "bFirstSoundtrackFirst"}
 IDENTITY = {"iHistoricalStartYear": "historicalStartYear", "iHistoricalEndYear": "historicalEndYear",
             "iNormalSpeedTurns": "normalSpeedTurns", "iAdvancedStartPoints": "advancedStart"}
 DROP = {"bNoAnimals"}
@@ -87,7 +88,7 @@ def _put(fam, family, scope, member, unit, val):
 
 
 def curate(typ, rec):
-    text, fam, grants, art, identity, leftover = {}, {}, {}, {}, {}, []
+    text, fam, grants, art_blocks, identity, leftover = {}, {}, {}, {}, {}, []
     for c in rec:
         tag, t = c.tag, engine.text(c)
         if tag == "Type" or tag in DROP:
@@ -103,13 +104,11 @@ def curate(typ, rec):
             if engine.is_int(t) and int(t) != 0:
                 grants[GRANTS[tag]] = int(t)
         elif tag in ART:
-            if tag[:1] == "b":                            # boolean audio flag
+            if tag[:1] == "b":                            # boolean audio flag (-> sound.introSoundtrack)
                 if t in ("1", "true", "True"):
-                    art[ART[tag]] = True
+                    cc.put_art(art_blocks, tag, True)
             else:
-                v = engine.generic(c)
-                if v not in (None, "", [], {}):
-                    art[ART[tag]] = v
+                cc.put_art(art_blocks, tag, engine.generic(c))   # -> ui/world/sound via ART_BLOCK
         elif tag in IDENTITY:
             if t or list(c):
                 identity[IDENTITY[tag]] = engine.generic(c)
@@ -136,8 +135,7 @@ def curate(typ, rec):
             out[family] = fam[family]
     if grants:
         out["grants"] = grants
-    if art:
-        out["art"] = art
+    cc.emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity
     return out, leftover

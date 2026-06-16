@@ -107,13 +107,19 @@
    }
   ]
  },
- "art": {
-  "tgaIndex": 0,
-  "icon": "Art/Interface/Buttons/Religions/Judaism.dds",
-  "techButton": "Art/Interface/Buttons/TechTree/Found_Judaism.dds",
-  "genericTechButton": "Art/Interface/Buttons/TechTree/Judaism.dds",
-  "movieFile": "Art/Movies/Religion/Judaism/Jud_Found.nif",
-  "movieSound": "AS2D_BUILD_JEWISH_MOVIE",
+ "ui": {
+  "art": {
+   "tgaIndex": 0,
+   "icon": "Art/Interface/Buttons/Religions/Judaism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Judaism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Judaism.dds",
+   "movie": {
+    "file": "Art/Movies/Religion/Judaism/Jud_Found.nif",
+    "sound": "AS2D_BUILD_JEWISH_MOVIE"
+   }
+  }
+ },
+ "sound": {
   "sound": "AS2D_BUILD_JEWISH"
  },
  "identity": {

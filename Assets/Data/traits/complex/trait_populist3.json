@@ -103,8 +103,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitPopulist3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPopulist3.dds"
+  }
  },
  "identity": {
   "negativeTrait": true,

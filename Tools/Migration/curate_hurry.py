@@ -22,6 +22,7 @@ import os
 from collections import OrderedDict
 
 import engine
+import curate_common as cc
 from store import Store, REPO
 
 
@@ -41,9 +42,9 @@ def curate(typ, rec):
         out["conversion"] = conversion
     if engine.text(rec.find("bAnger")) in ("1", "true", "True"):
         out["causesAnger"] = True
-    btn = engine.text(rec.find("Button"))
-    if btn:
-        out["art"] = {"icon": btn}
+    art_blocks = {}
+    cc.put_art(art_blocks, "Button", engine.text(rec.find("Button")))   # -> ui.art.icon via ART_BLOCK
+    cc.emit_art(out, art_blocks)
     return out
 
 

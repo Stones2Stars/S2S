@@ -182,8 +182,10 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitExcessive.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitExcessive.dds"
+  }
  },
  "identity": {
   "negativeTrait": true

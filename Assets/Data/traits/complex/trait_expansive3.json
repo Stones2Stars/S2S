@@ -124,7 +124,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitExpansive3.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitExpansive3.dds"
+  }
  }
 }

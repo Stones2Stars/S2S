@@ -217,7 +217,9 @@
    }
   ]
  },
- "art": {
-  "icon": "art/Buttons/Traits/TraitStrategist2.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitStrategist2.dds"
+  }
  }
 }

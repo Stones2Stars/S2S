@@ -33,8 +33,10 @@
    "flat": -30
   }
  },
- "art": {
-  "icon": "art/Interface/buttons/civics/sparth/agriculture_farm_atom.dds"
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/agriculture_farm_atom.dds"
+  }
  },
  "identity": {
   "civicOption": "CIVICOPTION_AGRICULTURE",

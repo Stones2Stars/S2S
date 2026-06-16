@@ -33,13 +33,17 @@
   "playable": true,
   "aiPlayable": true
  },
- "art": {
-  "playerColor": "PLAYERCOLOR_GREEN",
-  "artDefine": "ART_DEF_CIVILIZATION_AZTEC",
-  "artStyle": "ARTSTYLE_MESO_AMERICA",
-  "unitArtStyle": "UNIT_ARTSTYLE_MESO_AMERICA",
-  "selectionSound": "AS3D_AZTEC_SELECT",
-  "actionSound": "AS3D_AZTEC_ORDER"
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_GREEN",
+   "icon": "ART_DEF_CIVILIZATION_AZTEC",
+   "style": "ARTSTYLE_MESO_AMERICA",
+   "unitStyle": "UNIT_ARTSTYLE_MESO_AMERICA"
+  }
+ },
+ "sound": {
+  "selection": "AS3D_AZTEC_SELECT",
+  "action": "AS3D_AZTEC_ORDER"
  },
  "identity": {
   "leaders": [

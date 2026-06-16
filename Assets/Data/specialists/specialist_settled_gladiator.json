@@ -41,9 +41,11 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/mainscreen/cityscreen/specialist_gladiator.dds",
-  "button": "Art/Interface/mainscreen/cityscreen/specialist_gladiator.dds"
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/mainscreen/cityscreen/specialist_gladiator.dds",
+   "icon": "Art/Interface/mainscreen/cityscreen/specialist_gladiator.dds"
+  }
  },
  "identity": {
   "categories": [
