@@ -25,11 +25,17 @@ build-time error (modifier-spec §1.1).
 | **Availability** (the *enabler*) | `enables` · `obsoletes` · `replaces` · `disables` · `requires` | what this unlocks / removes (source side) and what it needs to be built & to keep operating (target side) |
 | **Provisions** | `grants` | one-shot / recurring things this hands out (units, buildings, pulses) |
 | **Effects** (the *modifier*) | every **family** key (`food`, `production`, `happiness`, `maintenance`, `strength`, one per `PROPERTY_*`, …) | per-turn magnitudes this deposits onto targets |
-| **Intrinsic** ("what am I") | `text`(description/help/civilopedia/message) · `cost` · `ui` · `world` · `sound` · `identity` · `ai` | empire-agnostic self-description, art, AI metadata, the shrinking `identity` catch-all |
-| **Auxiliary structural** (non-cascade) | `loadPrune` · `policies` · `succession` · `excludes` · `produces` · `condition` · `effect` · `vision` · `outcomes` · `capabilities` · `mapGeneration` · `replacedBy` | gate-but-don't-cascade data read by their own systems (load prune, the LOS resolver, the outcome system, …) |
+| **Intrinsic** ("what am I") | `identity` (incl. **TEXT**: `description`/`help`/`civilopedia`/`message`/`quote`/`strategy`/`adjective`/`shortDescription`) · `cost` · `ui` · `world` · `sound` · `ai` | empire-agnostic self-description, art, AI metadata. **TEXT fields live under `identity`** (decision A 2026-06-16) — text *is* "what am I". |
+| **Capabilities** (boolean abilities — scope by SECTION NAME, never checked) | `capabilities` (**TEAM**, tech-unlocked: found-on-peaks, pass-peaks, move-on-water, tech-trading, irrigation, bridge-building, river-trade) · `skills` (**UNIT**, innate: blitz, walk-on-mountains, fly-over-water/helicopter, amphibious, can-move-impassable, …) | decision B 2026-06-16: a civ has *capabilities*, a unit has *skills* — DIFFERENT mechanics (team-wide unlock vs innate), the name carries the scope so the parser never infers it. |
+| **Auxiliary structural** (non-cascade) | `loadPrune` · `policies` · `succession` · `excludes` · `produces` · `condition` · `effect` · `vision` · `outcomes` · `mapGeneration` · `replacedBy` · **bespoke**: `promotionLine` · `buildUp` · `shrine` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` · `cityFounding` · `unitCapability` | gate-but-don't-cascade data read by their own systems (load prune, the LOS resolver, the outcome system, …). The bespoke entries (decision C) are object-valued but NOT scope-keyed families. |
 
 The **three machines read only the cascade sections** (`enables`-family, `requires`, the modifier families, the count-bearing
 clauses, `grants`); the auxiliary + intrinsic sections feed their own systems. `readJson` parses *all* of them.
+
+**The unambiguous classification rule (harness-enforced):** a non-reserved top-level key is a **modifier family iff its value
+is an OBJECT** (then it is scope-keyed, §4.3); a non-reserved key with a **bare value** (bool/string/number) is a capability/
+skill flag or a text field, never a family. So "family vs flag" is decided structurally by the value, and team-vs-unit
+capability scope is decided by the section name (`capabilities`/`skills`) — neither requires the parser to infer scope.
 
 ---
 

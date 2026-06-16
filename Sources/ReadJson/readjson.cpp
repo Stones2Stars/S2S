@@ -38,12 +38,18 @@ static const char* RESERVED_SECTIONS[] = {
     "loadPrune", "policies", "succession", "excludes", "produces", "condition", "effect",
     "vision", "outcomes", "capabilities", "mapGeneration", "replacedBy", 0
 };
-// intrinsic / auxiliary sections — NOT read by the 3 machines; light-touch (no grammar check).
+// intrinsic / auxiliary sections — NOT read by the 3 machines; light-touch (no grammar check). Includes the
+// settled TEXT fields (→ identity, taxonomy decision A) and the enumerated BESPOKE entity sections (decision C).
 static const char* INTRINSIC[] = {
-    "type", "text", "description", "help", "civilopedia", "message",
+    "type", "text", "description", "help", "civilopedia", "message", "quote", "strategy", "adjective", "shortDescription",
     "cost", "ui", "world", "sound", "identity", "ai",
     "loadPrune", "policies", "succession", "excludes", "produces", "condition", "effect",
-    "vision", "outcomes", "capabilities", "mapGeneration", "replacedBy", 0
+    "vision", "outcomes", "mapGeneration", "replacedBy",
+    // capabilities (TEAM, tech-unlocked) vs skills (UNIT, innate) — scope encoded by the section NAME (decision B):
+    "capabilities", "skills",
+    // bespoke entity sections (object-valued but NOT scope-keyed modifier families):
+    "promotionLine", "buildUp", "shrine", "properties", "voteSource", "threshold", "role", "victory",
+    "targetLevel", "conversion", "cityFounding", "unitCapability", 0
 };
 static const char* SCOPES[] = {
     "world", "team", "empire", "area", "city", "plot",
@@ -78,7 +84,7 @@ static bool has(const std::set<std::string>& s, const std::string& k) { return s
 // ===================== report =====================
 struct Report {
     std::map<std::string, int> folders, topKeys, families, requiresKeys, scopes, units,
-        atomKeys, members, enablesBuckets, grantsKeys, predicates, connections;
+        atomKeys, members, enablesBuckets, grantsKeys, predicates, connections, flagsOrText;
     std::map<std::string, int> flagKinds;     // flag message -> count (collapsed)
     std::vector<std::string>   flagSamples;    // first N concrete "file :: path :: msg"
     int parsed, failed;
@@ -313,7 +319,8 @@ static void walk_entity(const picojson::value& v, Report& r) {
         else if (k == "enables" || k == "obsoletes" || k == "replaces" || k == "disables") check_enables(it->second, k, r);
         else if (k == "grants")                                           check_grants(it->second, k, r);
         else if (has(S_INTRINSIC, k))                                     { /* intrinsic — light touch */ }
-        else                                                              { r.families[k] += 1; check_family(it->second, k, k, r); }  // a modifier family
+        else if (it->second.is<picojson::object>())                       { r.families[k] += 1; check_family(it->second, k, k, r); }  // object value -> a modifier family
+        else                                                              { r.flagsOrText[k] += 1; }  // bare flag/string/number -> capability (→capabilities/skills) or text (→identity), NOT a family
     }
 }
 
@@ -402,7 +409,8 @@ int main(int argc, char** argv) {
     for (size_t i = 0; i < r.parseErrors.size() && i < 40; ++i) std::printf("  FAIL  %s\n", r.parseErrors[i].c_str());
 
     print_map("entities per folder", r.folders);
-    print_map("FAMILIES (top-level, non-reserved)", r.families);
+    print_map("FAMILIES (top-level, non-reserved, object-valued)", r.families);
+    print_map("BARE flags/text (top-level non-object -> capabilities/skills or identity)", r.flagsOrText);
     print_map("requires sub-keys", r.requiresKeys);
     print_map("scopes (in context)", r.scopes);
     print_map("units (at leaves)", r.units);
