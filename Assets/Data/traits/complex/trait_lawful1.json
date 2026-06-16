@@ -11,7 +11,7 @@
  "excludes": [
   "TRAIT_CROOKED1"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_EXILE_PRACTICES": {
@@ -242,6 +242,11 @@
     "BUILDING_HYPERMARKET": {
      "percent": 25
     }
+   },
+   "unitCombats": {
+    "UNITCOMBAT_LAW_ENFORCEMENT": {
+     "percent": 20
+    }
    }
   }
  },
@@ -418,15 +423,6 @@
    }
   }
  },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_LAW_ENFORCEMENT": {
-     "percent": 20
-    }
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -455,6 +451,18 @@
   "empire": {
    "local": {
     "flat": -1
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
    }
   }
  },

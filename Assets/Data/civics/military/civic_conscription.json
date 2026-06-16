@@ -10,9 +10,6 @@
  },
  "production": {
   "empire": {
-   "military": {
-    "percent": 10
-   },
    "capital": {
     "percent": 3
    }
@@ -58,24 +55,6 @@
    }
   }
  },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_MELEE": {
-     "percent": 20
-    },
-    "UNITCOMBAT_ARCHER": {
-     "percent": 20
-    },
-    "UNITCOMBAT_MOUNTED": {
-     "percent": 20
-    },
-    "UNITCOMBAT_GUN": {
-     "percent": 20
-    }
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -103,6 +82,27 @@
    },
    "violentMod": {
     "percent": -1
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": 10
+   },
+   "unitCombats": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 20
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 20
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 20
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": 20
+    }
    }
   }
  },

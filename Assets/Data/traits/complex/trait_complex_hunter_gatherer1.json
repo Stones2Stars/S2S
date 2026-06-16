@@ -10,6 +10,11 @@
  },
  "production": {
   "empire": {
+   "percent": -5
+  }
+ },
+ "buildRate": {
+  "empire": {
    "worldWonder": {
     "percent": -10
    },
@@ -18,8 +23,7 @@
    },
    "nationalWonder": {
     "percent": -10
-   },
-   "percent": -5
+   }
   }
  },
  "gold": {
@@ -67,6 +71,42 @@
  "improvementUpgradeRate": {
   "empire": {
    "percent": -50
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 6,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 6,
+     "scope": "city"
+    }
+   }
   }
  },
  "succession": {

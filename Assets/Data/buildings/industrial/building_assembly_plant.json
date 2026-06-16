@@ -20,8 +20,12 @@
  },
  "production": {
   "city": {
+   "percent": 20
+  }
+ },
+ "buildRate": {
+  "self": {
    "percent": [
-    20,
     {
      "value": 50,
      "enabled": {

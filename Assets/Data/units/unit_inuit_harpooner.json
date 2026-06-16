@@ -18,16 +18,26 @@
    ]
   }
  },
- "production": {
-  "unit": {
-   "bonuses": {
-    "BONUS_BONE": {
-     "percent": 15
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_BONE",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_IVORY": {
-     "percent": 15
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_IVORY",
+      "scope": "city",
+      "min": 1
+     }
     }
-   }
+   ]
   }
  },
  "firstStrike": {

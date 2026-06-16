@@ -24,8 +24,18 @@
    "BUILDING_WATCH_TOWER"
   ]
  },
- "production": {
+ "gold": {
   "city": {
+   "flat": -1
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "buildRate": {
+  "self": {
    "percent": [
     {
      "value": 50,
@@ -36,16 +46,6 @@
      }
     }
    ]
-  }
- },
- "gold": {
-  "city": {
-   "flat": -1
-  }
- },
- "espionage": {
-  "city": {
-   "flat": 2
   }
  },
  "defense": {

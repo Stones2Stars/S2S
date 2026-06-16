@@ -36,20 +36,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 100,
-     "enabled": {
-      "type": "BONUS_STONE",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ]
-  }
- },
  "gold": {
   "city": {
    "flat": -50
@@ -70,6 +56,20 @@
       "existedFor": {
        "min": 1000
       }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
      }
     }
    ]

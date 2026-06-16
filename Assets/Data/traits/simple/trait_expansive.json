@@ -2,7 +2,7 @@
  "type": "TRAIT_EXPANSIVE",
  "description": "TXT_KEY_TRAIT_EXPANSIVE",
  "civilopedia": "TXT_KEY_TRAIT_EXPANSIVE_PEDIA",
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_HAMMAM": {
@@ -41,37 +41,7 @@
     "BUILDING_MODERN_WATERWORKS": {
      "percent": 20
     }
-   }
-  }
- },
- "happiness": {
-  "empire": {
-   "largestCity": {
-    "flat": -1
-   }
-  }
- },
- "health": {
-  "empire": {
-   "flat": 2
-  }
- },
- "greatGeneralRate": {
-  "empire": {
-   "domestic": {
-    "percent": -20
-   }
-  }
- },
- "experience": {
-  "empire": {
-   "inBorder": {
-    "percent": -25
-   }
-  }
- },
- "unitProduction": {
-  "empire": {
+   },
    "units": {
     "UNIT_CLONES": {
      "percent": 50
@@ -115,6 +85,32 @@
     "UNIT_ECOLOGIST": {
      "percent": 25
     }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "largestCity": {
+    "flat": -1
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": -20
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "inBorder": {
+    "percent": -25
    }
   }
  },

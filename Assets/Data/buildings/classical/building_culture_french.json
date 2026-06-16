@@ -46,120 +46,60 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_STATUE_OF_LIBERTY",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_EIFFEL_TOWER",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_NOTRE_DAME",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_VERSAILLES",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_LOUVRE_MUSEUM",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_LASCAUX_PAINTS",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_MAGINOT_LINE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_FIELD_OF_THE_CLOTH_OF_GOLD",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CANNES_FILM_FESTIVAL",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_GIVERNY",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_MONTE_CARLO",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ORIENT_EXPRESS",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TROYES_TRADE_FAIR",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_PERE_LACHAISE_CEMETERY",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ARC_DE_TRIOMPHE",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_STATUE_OF_LIBERTY": {
+     "percent": 10
+    },
+    "BUILDING_EIFFEL_TOWER": {
+     "percent": 10
+    },
+    "BUILDING_NOTRE_DAME": {
+     "percent": 10
+    },
+    "BUILDING_VERSAILLES": {
+     "percent": 10
+    },
+    "BUILDING_LOUVRE_MUSEUM": {
+     "percent": 10
+    },
+    "BUILDING_LASCAUX_PAINTS": {
+     "percent": 10
+    },
+    "BUILDING_MAGINOT_LINE": {
+     "percent": 10
+    },
+    "BUILDING_FIELD_OF_THE_CLOTH_OF_GOLD": {
+     "percent": 10
+    },
+    "BUILDING_CANNES_FILM_FESTIVAL": {
+     "percent": 10
+    },
+    "BUILDING_GIVERNY": {
+     "percent": 10
+    },
+    "BUILDING_MONTE_CARLO": {
+     "percent": 10
+    },
+    "BUILDING_ORIENT_EXPRESS": {
+     "percent": 10
+    },
+    "BUILDING_TROYES_TRADE_FAIR": {
+     "percent": 10
+    },
+    "BUILDING_PERE_LACHAISE_CEMETERY": {
+     "percent": 10
+    },
+    "BUILDING_ARC_DE_TRIOMPHE": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

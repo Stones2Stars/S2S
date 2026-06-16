@@ -28,6 +28,18 @@
    "flat": 5
   }
  },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 5,
+     "scope": "city"
+    }
+   }
+  }
+ },
  "cost": {
   "production": 3525
  },

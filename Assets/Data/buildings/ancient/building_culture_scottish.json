@@ -34,22 +34,18 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BELL_ROCK_LIGHTHOUSE",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_BELL_ROCK_LIGHTHOUSE": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

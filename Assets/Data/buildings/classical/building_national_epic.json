@@ -17,20 +17,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 100,
-     "enabled": {
-      "type": "BONUS_MARBLE",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": [
@@ -41,6 +27,20 @@
       "existedFor": {
        "min": 1000
       }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "min": 1
      }
     }
    ]

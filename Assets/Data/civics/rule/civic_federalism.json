@@ -16,29 +16,6 @@
    "percent": 5,
    "tradeRoute": {
     "percent": 3
-   },
-   "buildings": {
-    "BUILDING_HARBOR": {
-     "percent": 20
-    },
-    "BUILDING_PORT": {
-     "percent": 20
-    },
-    "BUILDING_COMMERCIAL_PORT": {
-     "percent": 20
-    },
-    "BUILDING_INTERNATIONAL_PORT": {
-     "percent": 20
-    },
-    "BUILDING_TOLL_HOUSE": {
-     "percent": 20
-    },
-    "BUILDING_CUSTOMS_OFFICE": {
-     "percent": 20
-    },
-    "BUILDING_OCEAN_ADMINISTRATION": {
-     "percent": 20
-    }
    }
   }
  },
@@ -133,6 +110,33 @@
    },
    "democracyLevel": {
     "flat": 2
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_HARBOR": {
+     "percent": 20
+    },
+    "BUILDING_PORT": {
+     "percent": 20
+    },
+    "BUILDING_COMMERCIAL_PORT": {
+     "percent": 20
+    },
+    "BUILDING_INTERNATIONAL_PORT": {
+     "percent": 20
+    },
+    "BUILDING_TOLL_HOUSE": {
+     "percent": 20
+    },
+    "BUILDING_CUSTOMS_OFFICE": {
+     "percent": 20
+    },
+    "BUILDING_OCEAN_ADMINISTRATION": {
+     "percent": 20
+    }
    }
   }
  },

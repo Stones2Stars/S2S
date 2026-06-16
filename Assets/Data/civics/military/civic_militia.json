@@ -15,13 +15,6 @@
    }
   }
  },
- "production": {
-  "empire": {
-   "military": {
-    "percent": -10
-   }
-  }
- },
  "gold": {
   "empire": {
    "percent": -2,
@@ -84,6 +77,13 @@
   "empire": {
    "attitudeShare": {
     "flat": 1
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": -10
    }
   }
  },

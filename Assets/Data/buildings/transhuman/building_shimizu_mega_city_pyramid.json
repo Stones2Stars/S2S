@@ -37,17 +37,6 @@
  "production": {
   "city": {
    "flat": 5
-  },
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CLIMATE_CONTROLLED_ARCOLOGY",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "commerce": {
@@ -63,6 +52,15 @@
  "research": {
   "city": {
    "flat": 3
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CLIMATE_CONTROLLED_ARCOLOGY": {
+     "percent": 10
+    }
+   }
   }
  },
  "cost": {

@@ -14,6 +14,12 @@
  },
  "production": {
   "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "buildRate": {
+  "empire": {
    "worldWonder": {
     "percent": -20
    },
@@ -23,8 +29,6 @@
    "nationalWonder": {
     "percent": 25
    },
-   "flat": 1,
-   "percent": 5,
    "military": {
     "percent": -20
    }
@@ -85,6 +89,18 @@
   "empire": {
    "attitude": {
     "flat": 2
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
    }
   }
  },

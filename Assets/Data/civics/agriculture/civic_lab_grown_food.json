@@ -11,18 +11,6 @@
    }
   }
  },
- "production": {
-  "empire": {
-   "buildings": {
-    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE": {
-     "percent": 10
-    },
-    "BUILDING_FOOD_MANUFACTURING_DISTRICT": {
-     "percent": 10
-    }
-   }
-  }
- },
  "gold": {
   "empire": {
    "percent": 3
@@ -49,6 +37,18 @@
   "empire": {
    "numCities": {
     "percent": 5
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE": {
+     "percent": 10
+    },
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT": {
+     "percent": 10
+    }
    }
   }
  },

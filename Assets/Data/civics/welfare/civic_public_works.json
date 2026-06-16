@@ -9,33 +9,6 @@
    "BUILDING_WORKHOUSE"
   ]
  },
- "production": {
-  "empire": {
-   "buildings": {
-    "BUILDING_PAVED_ROADS": {
-     "percent": 20
-    },
-    "BUILDING_ASPHALT_ROADS": {
-     "percent": 20
-    },
-    "BUILDING_SKYROAD_CONTROL_TOWER": {
-     "percent": 20
-    },
-    "BUILDING_TELEPORT_BOOTH": {
-     "percent": 20
-    },
-    "BUILDING_PUBLIC_TRANSPORTATION": {
-     "percent": 20
-    },
-    "BUILDING_PERSONAL_RAPID_TRAIN": {
-     "percent": 20
-    },
-    "BUILDING_SEWER_SYSTEM": {
-     "percent": 20
-    }
-   }
-  }
- },
  "gold": {
   "empire": {
    "capital": {
@@ -147,6 +120,33 @@
    },
    "national": {
     "flat": -1
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_PAVED_ROADS": {
+     "percent": 20
+    },
+    "BUILDING_ASPHALT_ROADS": {
+     "percent": 20
+    },
+    "BUILDING_SKYROAD_CONTROL_TOWER": {
+     "percent": 20
+    },
+    "BUILDING_TELEPORT_BOOTH": {
+     "percent": 20
+    },
+    "BUILDING_PUBLIC_TRANSPORTATION": {
+     "percent": 20
+    },
+    "BUILDING_PERSONAL_RAPID_TRAIN": {
+     "percent": 20
+    },
+    "BUILDING_SEWER_SYSTEM": {
+     "percent": 20
+    }
    }
   }
  },

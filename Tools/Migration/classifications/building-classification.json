@@ -534,7 +534,7 @@
         },
         {
           "name": "iMilitaryProductionModifier",
-          "home": "militaryProduction.city.percent",
+          "home": "buildRate.city.military.percent",
           "disposition": "modifier",
           "consumers": "CvCity getYieldMod... (CvCity.cpp:10374); AI (CvCityAI.cpp:2050,2072,2080); GUI filter (CvBuildingFilters.cpp:37)",
           "creativeMechanic": false,
@@ -545,7 +545,7 @@
         },
         {
           "name": "iSpaceProductionModifier",
-          "home": "spaceProduction.city.percent",
+          "home": "buildRate.city.space.percent",
           "disposition": "modifier",
           "consumers": "CvCity getYieldMod... (CvCity.cpp:10375); AI valuation (CvCityAI.cpp:2073); pedia",
           "creativeMechanic": false,
@@ -556,7 +556,7 @@
         },
         {
           "name": "iGlobalSpaceProductionModifier",
-          "home": "spaceProduction.empire.percent",
+          "home": "buildRate.empire.space.percent",
           "disposition": "modifier",
           "consumers": "CvCity getYieldMod... (CvCity.cpp:10376); AI valuation (CvCityAI.cpp:2074); pedia",
           "creativeMechanic": false,
@@ -2506,16 +2506,16 @@
         },
         {
           "name": "BuildingProductionModifiers",
-          "home": "production.city.percent[].{value, enabled:{type:BUILDING_X, scope:city}}",
+          "home": "buildRate.city.buildings.{BUILDING}.percent",
           "disposition": "modifier",
-          "consumers": "Sources/CvCity.cpp (buildRate reads)",
+          "consumers": "Sources/CvCity.cpp getProductionModifier(eBuilding) — the keyed building is the TARGET being sped up",
           "creativeMechanic": false,
-          "confidence": "med",
-          "notes": "Building-keyed production modifier. Gated by keyed-building presence."
+          "confidence": "high",
+          "notes": "Speed building a TARGET building (keyed) — a build-rate, NOT a city-wide condition. Owner 2026-06-16: buildRate, not production.city. Was the corruption (keyed target misread as an enabled condition)."
         },
         {
           "name": "GlobalBuildingProductionModifiers",
-          "home": "production.empire.percent[].{value, enabled:{type:BUILDING_X, scope:empire}}",
+          "home": "buildRate.empire.buildings.{BUILDING}.percent",
           "disposition": "modifier",
           "consumers": "Sources/CvCity.cpp (empire-wide buildRate)",
           "creativeMechanic": false,
@@ -2659,12 +2659,12 @@
         },
         {
           "name": "BonusProductionModifiers",
-          "home": "production.city.percent[].{value, enabled:{type:BONUS_X, scope:city, min:1}}",
+          "home": "buildRate.self.percent[].{value, enabled:{type:BONUS_X, scope:city, min:1}}",
           "disposition": "modifier",
-          "consumers": "Sources/CvBuildingInfo.cpp (~1959); getBonusProductionModifier; Sources/CvCity.cpp; Sources/CvGameTextMgr.cpp; Sources/CvPlayer.cpp; Sources/CvPlayerAI.cpp",
+          "consumers": "Sources/CvBuildingInfo.cpp (~1959); getBonusProductionModifier; CvCity::getProductionModifier(eBuilding) shrinks the build cost",
           "creativeMechanic": false,
           "confidence": "high",
-          "notes": "Bonus-gated production %. Keep-on-building per spec §6."
+          "notes": "Build THIS faster while a bonus is present (Versailles+marble). SELF build-rate gated by bonus presence. Owner 2026-06-16: buildRate.self, NOT production.city (the Versailles corruption). Same on Unit/Project."
         },
         {
           "name": "ImprovementYieldChanges",

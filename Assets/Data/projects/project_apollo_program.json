@@ -13,6 +13,20 @@
    "PROJECT_SS_THRUSTERS"
   ]
  },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
  "cost": {
   "create": 12320
  },

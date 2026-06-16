@@ -24,22 +24,20 @@
  "production": {
   "city": {
    "flat": 200
-  },
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TERRAFORMED_MERCURY",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "research": {
   "city": {
    "flat": 300
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_TERRAFORMED_MERCURY": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

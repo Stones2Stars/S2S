@@ -8,8 +8,13 @@
   "TRAIT_PIOUS1",
   "TRAIT_SPIRITUAL1"
  ],
- "production": {
+ "buildRate": {
   "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_MISSIONARY": {
+     "percent": -25
+    }
+   },
    "military": {
     "percent": 5
    }
@@ -64,15 +69,6 @@
    "flat": 1,
    "nonStateHolyCityXP": {
     "percent": -5
-   }
-  }
- },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_MISSIONARY": {
-     "percent": -25
-    }
    }
   }
  },

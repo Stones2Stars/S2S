@@ -25,40 +25,6 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_MARTIAN_MEGACITY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_MARTIAN_AMMONIA_BOMBARDMENT",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_MARTIAN_ORBITAL_MIRROR_ARRAY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_MARTIAN_ARCOLOGY",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "gold": {
   "empire": {
    "buildings": {
@@ -73,6 +39,24 @@
     },
     "BUILDING_MARTIAN_SPACEPORT": {
      "flat": 5
+    }
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MARTIAN_MEGACITY": {
+     "percent": 10
+    },
+    "BUILDING_MARTIAN_AMMONIA_BOMBARDMENT": {
+     "percent": 10
+    },
+    "BUILDING_MARTIAN_ORBITAL_MIRROR_ARRAY": {
+     "percent": 10
+    },
+    "BUILDING_MARTIAN_ARCOLOGY": {
+     "percent": 10
     }
    }
   }

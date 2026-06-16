@@ -92,11 +92,11 @@
   "city": {
    "buildings": {
     "BUILDING_UNIVERSITY": {
-     "flat": [
-      {
-       "SPECIALIST_ENGINEER": 1
+     "specialists": {
+      "SPECIALIST_ENGINEER": {
+       "flat": 1
       }
-     ]
+     }
     }
    }
   }

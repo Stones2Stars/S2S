@@ -24,68 +24,42 @@
  },
  "production": {
   "city": {
-   "percent": [
-    10,
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_WALLS",
-      "scope": "city"
-     }
+   "percent": 10
+  }
+ },
+ "buildRate": {
+  "city": {
+   "military": {
+    "percent": -10
+   },
+   "buildings": {
+    "BUILDING_WALLS": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_HIGH_WALLS",
-      "scope": "city"
-     }
+    "BUILDING_HIGH_WALLS": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BARRICADES",
-      "scope": "city"
-     }
+    "BUILDING_BARRICADES": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CEMENT_BARRIER",
-      "scope": "city"
-     }
+    "BUILDING_CEMENT_BARRIER": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_METAMATERIAL_WALLS",
-      "scope": "city"
-     }
+    "BUILDING_METAMATERIAL_WALLS": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SUPERSTRONG_ALLOY_WALLS",
-      "scope": "city"
-     }
+    "BUILDING_SUPERSTRONG_ALLOY_WALLS": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_MEGASTRONG_ALLOY_WALLS",
-      "scope": "city"
-     }
+    "BUILDING_MEGASTRONG_ALLOY_WALLS": {
+     "percent": 10
     }
-   ]
+   }
   }
  },
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "militaryProduction": {
-  "city": {
-   "percent": -10
   }
  },
  "cost": {

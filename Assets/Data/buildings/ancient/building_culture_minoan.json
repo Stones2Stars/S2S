@@ -27,22 +27,18 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_LABYRINTH_OF_KNOSSOS",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_LABYRINTH_OF_KNOSSOS": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

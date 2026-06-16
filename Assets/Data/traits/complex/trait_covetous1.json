@@ -13,11 +13,15 @@
  ],
  "production": {
   "empire": {
-   "worldWonder": {
-    "percent": -10
-   },
    "flat": -1,
    "percent": -5
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "worldWonder": {
+    "percent": -10
+   }
   }
  },
  "commerce": {

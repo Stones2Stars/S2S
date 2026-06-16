@@ -178,7 +178,13 @@
  },
  "PROPERTY_EDUCATION": {
   "city": {
-   "flat": 2
+   "flat": {
+    "value": 1,
+    "enabled": {
+     "type": "TECH_BIOLOGY",
+     "scope": "team"
+    }
+   }
   }
  },
  "cost": {

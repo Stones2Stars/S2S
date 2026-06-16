@@ -179,18 +179,15 @@ def curate(typ, rec):
         elif tag in ADVANCED_START:                       # not a modifier -> parked in identity, needs review
             if engine.is_int(t) and int(t) != 0:
                 identity.setdefault("advancedStart", {})[ADVANCED_START[tag]] = int(t)
-        elif tag == "PropertyManipulators":               # each PROPERTY_* is its OWN family: PROPERTY_X.<scope>.<unit>
+        elif tag == "PropertyManipulators":               # each PROPERTY_* is its OWN family (v3 — like any yield)
             for src in c:
                 if src.tag != "PropertySource":
                     continue
-                cp = engine.clean_property_source(src)    # {source, property, on, relation, amountPerTurn}
-                on, prop = cp.get("on", ""), cp.get("property")
-                scope = GAMEOBJECT_SCOPE.get(on, on.replace("GAMEOBJECT_", "").lower())
-                unit = SOURCE_UNIT.get(cp.get("source", ""), cp.get("source", "").lower())
-                val = cp.get("amountPerTurn")
-                # relation is containment (ASSOCIATED/SAME_PLOT) -> folded into scope; NEAR would be #429 leakage
-                if prop and val not in (None, "", {}):
-                    _put(fam, prop, scope, None, unit, None, val)   # family = the property type (split, no wrapper)
+                conv = engine.property_source_v3(src)     # CONSTANT->flat, DECAY->percent, attr-scaled->per, active->enabled
+                if conv is None:
+                    continue
+                prop, scope, unit, value = conv
+                _put(fam, prop, scope, None, unit, None, value)   # family = the property type (split, no wrapper)
         elif tag == "Goodies":
             g = engine.generic(c)
             if g:

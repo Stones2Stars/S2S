@@ -181,11 +181,9 @@
   }
  },
  "PROPERTY_DISEASE": {
-  "city": [
-   {
-    "perTurn": -2
-   }
-  ]
+  "city": {
+   "flat": -2
+  }
  },
  "ui": {
   "art": {

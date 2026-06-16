@@ -11,7 +11,7 @@
  "excludes": [
   "TRAIT_BIGOT1"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "military": {
     "percent": -20
@@ -68,6 +68,42 @@
   "empire": {
    "enemyWarWeariness": {
     "percent": -20
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
    }
   }
  },

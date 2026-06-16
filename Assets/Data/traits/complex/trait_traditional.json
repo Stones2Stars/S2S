@@ -6,7 +6,7 @@
  "excludes": [
   "TRAIT_SCIENTIFIC"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_STORYTELLER": {
@@ -544,6 +544,18 @@
    },
    "religiousAnarchy": {
     "percent": 50
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
    }
   }
  },

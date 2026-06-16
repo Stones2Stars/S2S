@@ -33,22 +33,20 @@
  "production": {
   "city": {
    "flat": 100
-  },
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TERRAFORMED_GANYMEDE",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "gold": {
   "city": {
    "flat": 300
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_TERRAFORMED_GANYMEDE": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

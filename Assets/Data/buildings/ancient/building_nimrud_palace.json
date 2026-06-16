@@ -21,20 +21,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 100,
-     "enabled": {
-      "type": "BONUS_STONE",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": [
@@ -54,6 +40,25 @@
  "espionage": {
   "city": {
    "percent": 20
+  }
+ },
+ "buildRate": {
+  "city": {
+   "military": {
+    "percent": 25
+   }
+  },
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
   }
  },
  "happiness": {
@@ -104,11 +109,6 @@
  "hurryCost": {
   "city": {
    "percent": 50
-  }
- },
- "militaryProduction": {
-  "city": {
-   "percent": 25
   }
  },
  "religion": {

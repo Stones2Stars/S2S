@@ -38,19 +38,6 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_BROADCAST_NODE",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "research": {
   "city": {
    "flat": 20
@@ -64,6 +51,15 @@
    "buildings": {
     "BUILDING_ASTROBIOLOGY_LAB": {
      "flat": 5
+    }
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_BROADCAST_NODE": {
+     "percent": 10
     }
    }
   }

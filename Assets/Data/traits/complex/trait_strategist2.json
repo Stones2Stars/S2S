@@ -11,7 +11,7 @@
  "excludes": [
   "TRAIT_CARELESS1"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_SHOOTING_CLUB": {

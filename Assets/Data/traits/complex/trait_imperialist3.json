@@ -6,7 +6,7 @@
  "excludes": [
   "TRAIT_MEEK1"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_COMBAT_SIMULATOR": {
@@ -14,6 +14,11 @@
     },
     "BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR": {
      "percent": 25
+    }
+   },
+   "unitCombats": {
+    "UNITCOMBAT_SIEGE": {
+     "percent": 20
     }
    }
   }
@@ -90,15 +95,6 @@
    }
   }
  },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_SIEGE": {
-     "percent": 20
-    }
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -123,6 +119,18 @@
   "empire": {
    "attitude": {
     "flat": -1
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
    }
   }
  },

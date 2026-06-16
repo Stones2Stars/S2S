@@ -18,19 +18,6 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_MODERN_OFFICES",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "commerce": {
   "city": {
    "flat": 5
@@ -39,6 +26,15 @@
  "culture": {
   "city": {
    "flat": 7
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MODERN_OFFICES": {
+     "percent": 10
+    }
+   }
   }
  },
  "greatPeopleRate": {

@@ -17,19 +17,6 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_ECUMENOPOLIS",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "commerce": {
   "city": {
    "flat": 5
@@ -48,6 +35,15 @@
  "culture": {
   "city": {
    "flat": 20
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_ECUMENOPOLIS": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

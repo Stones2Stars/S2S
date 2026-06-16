@@ -319,8 +319,25 @@ line-hierarchy check) as each promotion is added to the one unit. Full vocabular
 - A **bonus/religion/civic-conditioned** effect STAYS on source A, referencing the conditioner via
   `enabled: min(BONUS_X,1)` (presence) or `per: {type: BONUS_X}` (count). **Nothing inverts onto B.**
 - The one committed `BonusProductionModifiers → Bonus.buildRate` fold is **UN-FOLDED** to this rule:
-  authored as a `production` deposit on the building/unit/project gated/scaled by the bonus. Action: drop
-  the `buildRate` fold from `curate_bonus`; author on the source at the Building/Unit/Project pass.
+  authored on the building/unit/project itself, gated/scaled by the bonus. Action: drop the `buildRate` fold from
+  `curate_bonus`; author on the source at the Building/Unit/Project pass. **(Done — see §6.2 for the home.)**
+
+### 6.2 `production` (total city OUTPUT) vs `buildRate` (build a TARGET faster) — owner ruling 2026-06-16
+**Two distinct concepts the first-pass migration flattened into `production.city` (the "Versailles bug",
+DESPAIR_INDEX #12).** Pinned against the C++ (applied in different places):
+- **`production` = TOTAL CITY OUTPUT** — `CvCity::getYieldRate100(PRODUCTION)`: a hammer ADD (`production.city.flat` ←
+  `YieldChanges[PRODUCTION]`) or a city-wide multiplier on *everything* (`production.city.percent` ←
+  `YieldModifiers[PRODUCTION]` = Factory, Power/Area/Capital yield-rate). Scales every build, every turn.
+- **`buildRate` = FASTER TO BUILD A TARGET/CATEGORY** — `CvCity::getProductionModifier(eItem)` shrinks the COST of the
+  *specific* item under construction; never the per-turn yield. Homes by what's produced: **`buildRate.self`**
+  (build THIS faster, gated by a bonus — Versailles+marble, Worker+donkey; `BonusProductionModifiers`),
+  `buildRate.{scope}.{units|buildings|domains|unitCombats}.{TARGET}` (keyed), `buildRate.{scope}.{military|space|
+  worldWonder|teamWonder|nationalWonder}` (category). `buildRate` already existed (§1 family list) for unit/domain
+  mods; the ruling unifies **all** "faster-to-build" fields into it, reserving `production.city` for total output.
+  The one-off `militaryProduction`/`spaceProduction` families are folded into `buildRate`. **Rule of thumb:** if it
+  changes how fast a *particular thing* is built → `buildRate`; if it changes the city's *whole hammer output* →
+  `production.city`. (Curators corrected across building/unit/civic/project/trait; full table in
+  `migration-renames.md` "Production vs buildRate".)
 
 ### 6.1 The DELIVERYGUY — who OWNS an entity-keyed modifier (owner ruling 2026-06-16)
 Resolved while curating Route (#19) and Terrain (#20). **The root test is SEMANTIC SENSE (owner 2026-06-16): where

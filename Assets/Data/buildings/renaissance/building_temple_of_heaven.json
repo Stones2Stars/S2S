@@ -41,20 +41,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 100,
-     "enabled": {
-      "type": "BONUS_MARBLE",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": [
@@ -71,6 +57,20 @@
   },
   "empire": {
    "percent": 6
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
   }
  },
  "happiness": {

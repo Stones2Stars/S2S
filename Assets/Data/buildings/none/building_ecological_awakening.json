@@ -25,6 +25,30 @@
    "percent": 5
   }
  },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 5,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 5,
+     "scope": "city"
+    }
+   }
+  }
+ },
  "cost": {
   "production": 3525
  },

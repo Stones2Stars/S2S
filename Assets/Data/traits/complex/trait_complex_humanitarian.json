@@ -6,7 +6,7 @@
  "excludes": [
   "TRAIT_CRUEL"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "military": {
     "percent": -10
@@ -70,6 +70,30 @@
    },
    "nationalityMod": {
     "percent": -10
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
    }
   }
  },

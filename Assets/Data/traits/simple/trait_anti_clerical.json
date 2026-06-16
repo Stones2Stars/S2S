@@ -119,6 +119,18 @@
    }
   }
  },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 6,
+     "scope": "city"
+    }
+   }
+  }
+ },
  "succession": {
   "promotionLine": "PROMOTIONLINE_ANTI_CLERICAL"
  },

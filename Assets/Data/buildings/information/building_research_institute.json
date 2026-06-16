@@ -38,6 +38,13 @@
    "percent": 25
   }
  },
+ "buildRate": {
+  "city": {
+   "space": {
+    "percent": 50
+   }
+  }
+ },
  "health": {
   "city": {
    "flat": -1
@@ -46,11 +53,6 @@
  "greatPeopleRate": {
   "city": {
    "flat": 2
-  }
- },
- "spaceProduction": {
-  "city": {
-   "percent": 50
   }
  },
  "PROPERTY_AIR_POLLUTION": {

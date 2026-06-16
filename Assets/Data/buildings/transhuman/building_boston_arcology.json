@@ -34,26 +34,6 @@
    "flat": 5
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ADVANCED_FLOODWALL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_OCEAN_ADMINISTRATION",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "gold": {
   "city": {
    "flat": 15
@@ -62,6 +42,18 @@
  "research": {
   "city": {
    "flat": 15
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_ADVANCED_FLOODWALL": {
+     "percent": 10
+    },
+    "BUILDING_OCEAN_ADMINISTRATION": {
+     "percent": 10
+    }
+   }
   }
  },
  "cost": {

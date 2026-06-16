@@ -8,7 +8,7 @@
    "TRAIT_AERIAL2"
   ]
  },
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_SMOKE_SIGNALS": {
@@ -173,6 +173,14 @@
     "BUILDING_ANCIENT_CUSTOMS": {
      "percent": 25
     }
+   },
+   "unitCombats": {
+    "UNITCOMBAT_THROWING": {
+     "percent": 20
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 20
+    }
    }
   }
  },
@@ -280,18 +288,6 @@
    }
   }
  },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_THROWING": {
-     "percent": 20
-    },
-    "UNITCOMBAT_ARCHER": {
-     "percent": 20
-    }
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -325,6 +321,18 @@
  "improvementUpgradeRate": {
   "empire": {
    "percent": -25
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 3,
+     "scope": "city"
+    }
+   }
   }
  },
  "grants": {

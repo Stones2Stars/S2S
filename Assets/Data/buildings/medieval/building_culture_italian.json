@@ -26,22 +26,18 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CAPUCHIN_CRYPT",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_CAPUCHIN_CRYPT": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

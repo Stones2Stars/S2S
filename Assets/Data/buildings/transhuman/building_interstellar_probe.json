@@ -17,19 +17,6 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_DATA_COLLECTION",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "research": {
   "city": {
    "flat": 20
@@ -38,6 +25,15 @@
  "espionage": {
   "city": {
    "flat": 10
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_DATA_COLLECTION": {
+     "percent": 10
+    }
+   }
   }
  },
  "cost": {

@@ -10,15 +10,7 @@
  },
  "production": {
   "empire": {
-   "percent": 5,
-   "buildings": {
-    "BUILDING_UNIVERSAL_LIBRARY": {
-     "percent": 20
-    },
-    "BUILDING_ENCYCLOPEDIA_GALACTICA": {
-     "percent": 20
-    }
-   }
+   "percent": 5
   }
  },
  "research": {
@@ -30,6 +22,18 @@
   "empire": {
    "numCities": {
     "percent": 60
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_UNIVERSAL_LIBRARY": {
+     "percent": 20
+    },
+    "BUILDING_ENCYCLOPEDIA_GALACTICA": {
+     "percent": 20
+    }
    }
   }
  },

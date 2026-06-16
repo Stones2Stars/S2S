@@ -2,7 +2,7 @@
  "type": "TRAIT_SEAFARING",
  "description": "TXT_KEY_TRAIT_SEAFARING",
  "civilopedia": "TXT_KEY_TRAIT_SEAFARING_PEDIA",
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_NAVAL_ACADEMY": {
@@ -65,18 +65,7 @@
     "BUILDING_OCEAN_ADMINISTRATION": {
      "percent": 20
     }
-   }
-  }
- },
- "combat": {
-  "empire": {
-   "cityDefense": {
-    "percent": -20
-   }
-  }
- },
- "unitProduction": {
-  "empire": {
+   },
    "units": {
     "UNIT_WORKBOAT": {
      "percent": 25
@@ -93,6 +82,13 @@
     "UNIT_WORKBOAT_MODERN": {
      "percent": 25
     }
+   }
+  }
+ },
+ "combat": {
+  "empire": {
+   "cityDefense": {
+    "percent": -20
    }
   }
  },

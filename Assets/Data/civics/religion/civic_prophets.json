@@ -49,15 +49,6 @@
    }
   }
  },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_MISSIONARY": {
-     "percent": 20
-    }
-   }
-  }
- },
  "stateReligion": {
   "empire": {
    "greatPeopleRate": {
@@ -69,6 +60,15 @@
   "empire": {
    "religiousFreedom": {
     "flat": 3
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_MISSIONARY": {
+     "percent": 20
+    }
    }
   }
  },

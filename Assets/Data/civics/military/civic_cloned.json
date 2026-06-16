@@ -10,26 +10,6 @@
    }
   }
  },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_CLONES": {
-     "percent": 20
-    },
-    "UNITCOMBAT_GUN": {
-     "percent": 20
-    }
-   },
-   "units": {
-    "UNIT_CYBORG": {
-     "percent": 20
-    },
-    "UNIT_AUTOMATONS": {
-     "percent": 20
-    }
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "homeArea": {
@@ -47,6 +27,26 @@
    },
    "national": {
     "flat": -2
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_CLONES": {
+     "percent": 20
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": 20
+    }
+   },
+   "units": {
+    "UNIT_CYBORG": {
+     "percent": 20
+    },
+    "UNIT_AUTOMATONS": {
+     "percent": 20
+    }
    }
   }
  },

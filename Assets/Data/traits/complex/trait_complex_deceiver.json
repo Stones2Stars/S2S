@@ -6,7 +6,7 @@
  "excludes": [
   "TRAIT_NAIVE"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_LOOKOUT_POST": {
@@ -198,6 +198,11 @@
     "BUILDING_ANCIENT_CUSTOMS": {
      "percent": 25
     }
+   },
+   "unitCombats": {
+    "UNITCOMBAT_SPY": {
+     "percent": 20
+    }
    }
   }
  },
@@ -378,15 +383,6 @@
    }
   }
  },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_SPY": {
-     "percent": 20
-    }
-   }
-  }
- },
  "durations": {
   "empire": {
    "civicAnarchy": {
@@ -401,6 +397,30 @@
    },
    "enemyWarWeariness": {
     "percent": -20
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
    }
   }
  },

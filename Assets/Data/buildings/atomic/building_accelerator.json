@@ -28,14 +28,16 @@
    "flat": 5
   }
  },
+ "buildRate": {
+  "city": {
+   "space": {
+    "percent": 5
+   }
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "spaceProduction": {
-  "city": {
-   "percent": 5
   }
  },
  "PROPERTY_FLAMMABILITY": {

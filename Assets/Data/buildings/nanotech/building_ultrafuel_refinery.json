@@ -78,44 +78,7 @@
  "production": {
   "city": {
    "flat": 40,
-   "percent": [
-    25,
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_EXPRESSWAY",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_PAVED_ROADS",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ASPHALT_ROADS",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SKYROAD_CONTROL_TOWER",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TELEPORT_BOOTH",
-      "scope": "city"
-     }
-    }
-   ]
+   "percent": 25
   }
  },
  "gold": {
@@ -187,6 +150,23 @@
      "percent": 10
     },
     "UNIT_DECAREME": {
+     "percent": 10
+    }
+   },
+   "buildings": {
+    "BUILDING_EXPRESSWAY": {
+     "percent": 10
+    },
+    "BUILDING_PAVED_ROADS": {
+     "percent": 10
+    },
+    "BUILDING_ASPHALT_ROADS": {
+     "percent": 10
+    },
+    "BUILDING_SKYROAD_CONTROL_TOWER": {
+     "percent": 10
+    },
+    "BUILDING_TELEPORT_BOOTH": {
      "percent": 10
     }
    }

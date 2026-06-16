@@ -17,10 +17,10 @@ Modeling calls made this pass (light-batch-classification.json + the C++):
   vocabulary with a fake scope/unit would misrepresent them.
 - iCost -> a `cost` section ({create: N}): the project's intrinsic base hammer cost. The universal `costs`
   family (GameSpeed/Era costs.world.create.percent) MULTIPLIES this base; the base lives on the info.
-- BonusProductionModifiers -> DROP. The committed Bonus curator already folds it onto the BONUS as
-  buildRate.city.projects.{PROJECT}.percent (same convention as building/unit BonusProductionModifiers).
-  Authoring it on the project too would double-count; the cross-entity convention (Bonus migrated first) wins.
-  (This overrides the classification's open-question proposal to home it on the project.)
+- BonusProductionModifiers -> buildRate.self (build THIS project faster WHILE a bonus is present; owner 2026-06-16).
+  SELF build-rate gated by bonus presence, unified with building/unit into the buildRate family. (The earlier
+  "DROP, the Bonus curator folds it" note was STALE: curate_bonus's BONUS_BOOSTS fold was removed under the §6
+  keep-on-source ruling, so the project's build-faster-with-bonus was being silently LOST — restored here.)
 - YieldModifiers -> DROP: DEAD structure. CvProjectInfo has no YieldModifier member/getter/consumer; the
   <YieldModifiers> XML element is never read (only <CommerceModifiers> is). bTechShareWithHalfCivs -> DROP: DEAD
   (no consumer outside CvProjectInfo's own getter/checksum).
@@ -73,12 +73,12 @@ ART = {"Button", "MovieDefineTag", "CreateSound"}
 IDENTITY = {"iMaxGlobalInstances": "maxGlobalInstances", "iMaxTeamInstances": "maxTeamInstances",
             "VictoryPrereq": "launchesVictory", "MapCategoryTypes": "mapCategories", "Categories": "categories"}
 # dead structure (no consumer) + derived enabler/prereq edges (store-inverted) -> never authored.
-DROP = {"YieldModifiers", "bTechShareWithHalfCivs", "BonusProductionModifiers",
+DROP = {"YieldModifiers", "bTechShareWithHalfCivs",
         "TechPrereq", "AnyonePrereqProject", "PrereqProjects"}
 # the per-victory launch cluster -> a non-cascade `victory` section.
 VICTORY_KEYED = {"VictoryThresholds": "thresholds", "VictoryMinThresholds": "minThresholds"}
 VICTORY_SCALAR = {"iVictoryDelayPercent": "delayPercent", "iSuccessRate": "successRate"}
-FAMILY_ORDER = ["combat", "diplomacy", "maintenance", "upkeep", "happiness", "health", "tradeRoutes",
+FAMILY_ORDER = ["buildRate", "combat", "diplomacy", "maintenance", "upkeep", "happiness", "health", "tradeRoutes",
                 "gold", "research", "culture", "espionage"]
 
 
@@ -121,6 +121,13 @@ def curate(typ, rec, store):
             scope, unit = SPLIT_COMMERCE[tag]
             for member, v in engine.named_array(c, engine.COMMERCES).items():  # member IS the family (split)
                 _put(fam, member, scope, None, unit, v)
+        elif tag == "BonusProductionModifiers":
+            # build THIS project faster WHILE a bonus is present -> buildRate.self (owner 2026-06-16; unified with
+            # building/unit). SELF build-rate gated by bonus presence, NOT folded onto the bonus (BONUS_BOOSTS gone).
+            lst = fam.setdefault("buildRate", {}).setdefault("self", {}).setdefault("percent", [])
+            for bonus, v in _keyed_ints(c).items():
+                lst.append(OrderedDict([("value", v),
+                                        ("enabled", OrderedDict([("type", bonus), ("scope", "city"), ("min", 1)]))]))
         elif tag == "iCost":
             if engine.is_int(t) and int(t) != 0:
                 cost["create"] = int(t)

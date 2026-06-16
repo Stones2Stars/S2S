@@ -72,11 +72,11 @@ SCALAR = {
     "iGreatGeneralRateModifier":       ("greatGeneralRate", "empire", "", "percent"),
     "iDomesticGreatGeneralRateModifier":("greatGeneralRate", "empire", "domestic", "percent"),
     "iFreeSpecialist":                 ("freeSpecialists", "empire", "", "flat"),
-    # production (build-rate; mirrors civic: production=military/building, unitProduction=unit) — NOT the yield
-    "iMilitaryProductionModifier":     ("production", "empire", "military", "percent"),
-    "iMaxGlobalBuildingProductionModifier": ("production", "empire", "worldWonder", "percent"),
-    "iMaxTeamBuildingProductionModifier":   ("production", "empire", "teamWonder", "percent"),
-    "iMaxPlayerBuildingProductionModifier": ("production", "empire", "nationalWonder", "percent"),
+    # build-rate (owner 2026-06-16: production=total city OUTPUT; buildRate=faster to build a target/category).
+    "iMilitaryProductionModifier":     ("buildRate", "empire", "military", "percent"),
+    "iMaxGlobalBuildingProductionModifier": ("buildRate", "empire", "worldWonder", "percent"),
+    "iMaxTeamBuildingProductionModifier":   ("buildRate", "empire", "teamWonder", "percent"),
+    "iMaxPlayerBuildingProductionModifier": ("buildRate", "empire", "nationalWonder", "percent"),
     # maintenance / upkeep
     "iDistanceMaintenanceModifier":    ("maintenance", "empire", "distance", "percent"),
     "iNumCitiesMaintenanceModifier":   ("maintenance", "empire", "numCities", "percent"),
@@ -181,14 +181,14 @@ KEYED = {
     "ImprovementUpgradeModifierTypes":    ("improvementUpgradeRate", "empire", "improvements", "percent", None),
     "BuildWorkerSpeedModifierTypes":      ("workRate",       "empire", "builds",         "percent", None),
     "DomainFreeExperiences":              ("experience",     "empire", "domains",        "flat",    None),
-    "DomainProductionModifiers":          ("unitProduction", "empire", "domains",        "percent", None),
-    "BuildingProductionModifierTypes":    ("production",     "empire", "buildings",      "percent", None),
-    "SpecialBuildingProductionModifierTypes": ("production", "empire", "specialBuildings","percent", None),
+    "DomainProductionModifiers":          ("buildRate",      "empire", "domains",        "percent", None),
+    "BuildingProductionModifierTypes":    ("buildRate",      "empire", "buildings",      "percent", None),
+    "SpecialBuildingProductionModifierTypes": ("buildRate", "empire", "specialBuildings","percent", None),
     "BuildingHappinessModifierTypes":     ("happiness",      "empire", "buildings",      "flat",    None),
-    "UnitProductionModifierTypes":        ("unitProduction", "empire", "units",          "percent", None),
-    "SpecialUnitProductionModifierTypes": ("unitProduction", "empire", "specialUnits",   "percent", None),
+    "UnitProductionModifierTypes":        ("buildRate",      "empire", "units",          "percent", None),
+    "SpecialUnitProductionModifierTypes": ("buildRate",      "empire", "specialUnits",   "percent", None),
     "UnitCombatFreeExperiences":          ("experience",     "empire", "unitCombats",    "flat",    None),
-    "UnitCombatProductionModifiers":      ("unitProduction", "empire", "unitCombats",    "percent", None),
+    "UnitCombatProductionModifiers":      ("buildRate",      "empire", "unitCombats",    "percent", None),
     "CivicOptionNoUpkeepTypes":           ("upkeep",         "empire", "civicOptions",   "enabler", None),
     "TechResearchModifiers":              ("research",       "empire", "byTech",         "percent", None),  # CREST: stays (HANDOFF)
 }
@@ -215,7 +215,7 @@ TEXT = {"Description": "description", "Civilopedia": "civilopedia", "Help": "hel
 # LONGER dropped — it is authored on the trait, gated by bonus presence; handled in the loop + merge below.)
 DROP = {"Type", "TraitPrereq", "TraitPrereqOr1", "TraitPrereqOr2", "PrereqTech",
         "SpecialistYieldChanges", "SpecialistCommerceChanges", "Categories"}
-FAMILY_ORDER = ["food", "production", "commerce", "gold", "research", "culture", "espionage",
+FAMILY_ORDER = ["food", "production", "buildRate", "commerce", "gold", "research", "culture", "espionage",
                 "extraYieldThreshold", "lessYieldThreshold", "happiness", "health", "growth",
                 "greatPeopleRate", "greatGeneralRate", "freeSpecialists", "experience", "conscript",
                 "combat", "unitProduction", "maintenance", "upkeep", "tradeRoutes", "hurry", "workRate",

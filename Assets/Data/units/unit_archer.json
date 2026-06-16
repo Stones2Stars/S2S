@@ -2,19 +2,34 @@
  "type": "UNIT_ARCHER",
  "description": "TXT_KEY_UNIT_ARCHER",
  "civilopedia": "TXT_KEY_UNIT_ARCHER_PEDIA",
- "production": {
-  "unit": {
-   "bonuses": {
-    "BONUS_OBSIDIAN": {
-     "percent": 10
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_OBSIDIAN",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_PRIME_TIMBER": {
-     "percent": 10
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_FEATHERS": {
-     "percent": 5
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_FEATHERS",
+      "scope": "city",
+      "min": 1
+     }
     }
-   }
+   ]
   }
  },
  "strength": {

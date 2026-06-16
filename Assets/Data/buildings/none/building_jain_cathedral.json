@@ -32,8 +32,18 @@
    ]
   }
  },
- "production": {
+ "culture": {
   "city": {
+   "percent": 2
+  }
+ },
+ "buildRate": {
+  "city": {
+   "military": {
+    "percent": -20
+   }
+  },
+  "self": {
    "percent": [
     {
      "value": 100,
@@ -44,11 +54,6 @@
      }
     }
    ]
-  }
- },
- "culture": {
-  "city": {
-   "percent": 2
   }
  },
  "happiness": {
@@ -73,11 +78,6 @@
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "militaryProduction": {
-  "city": {
-   "percent": -20
   }
  },
  "religion": {

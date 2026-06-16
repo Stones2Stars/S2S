@@ -15,6 +15,13 @@
  },
  "production": {
   "empire": {
+   "goldenAge": {
+    "flat": -2
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
    "buildings": {
     "BUILDING_ENCRYPTED_FIREWALL": {
      "percent": 25
@@ -73,9 +80,6 @@
     "BUILDING_RENEWABLE_MEGACOMPLEX": {
      "percent": 25
     }
-   },
-   "goldenAge": {
-    "flat": -2
    }
   }
  },

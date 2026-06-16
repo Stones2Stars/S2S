@@ -6,7 +6,7 @@
  "excludes": [
   "TRAIT_WARMONGER1"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "military": {
     "percent": -30
@@ -45,6 +45,18 @@
   "empire": {
    "warWeariness": {
     "percent": 90
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
    }
   }
  },

@@ -11,15 +11,6 @@
    "BUILDING_WASTE_INCINERATOR_POWER_PLANT"
   ]
  },
- "production": {
-  "empire": {
-   "buildings": {
-    "BUILDING_LANDFILL": {
-     "percent": 20
-    }
-   }
-  }
- },
  "diplomacy": {
   "empire": {
    "civics": {
@@ -28,6 +19,15 @@
     },
     "CIVIC_WASTE_EXPORTATION": {
      "flat": -1
+    }
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_LANDFILL": {
+     "percent": 20
     }
    }
   }

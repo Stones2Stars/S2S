@@ -7,7 +7,7 @@
    "TRAIT_ORGANIZED2"
   ]
  },
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_FACTORY": {

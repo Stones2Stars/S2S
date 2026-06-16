@@ -113,6 +113,18 @@
    }
   }
  },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
+   }
+  }
+ },
  "succession": {
   "promotionLine": "PROMOTIONLINE_HONEST",
   "priority": 2

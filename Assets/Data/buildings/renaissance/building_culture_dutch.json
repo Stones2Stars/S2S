@@ -46,22 +46,18 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_EAST_INDIA_COMPANY",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_EAST_INDIA_COMPANY": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

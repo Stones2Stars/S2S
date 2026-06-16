@@ -18,19 +18,6 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CALLISTO_RESUPPLY_BASE",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "research": {
   "city": {
    "flat": 20
@@ -46,6 +33,15 @@
  "culture": {
   "city": {
    "flat": 10
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CALLISTO_RESUPPLY_BASE": {
+     "percent": 10
+    }
+   }
   }
  },
  "cost": {

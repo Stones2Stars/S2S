@@ -62,20 +62,6 @@
    }
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 50,
-     "enabled": {
-      "type": "BONUS_WATERPROOF_CEMENT",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ]
-  }
- },
  "commerce": {
   "city": {
    "terrains": {
@@ -89,6 +75,20 @@
      "flat": 1
     }
    }
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_WATERPROOF_CEMENT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
   }
  },
  "hurryCost": {

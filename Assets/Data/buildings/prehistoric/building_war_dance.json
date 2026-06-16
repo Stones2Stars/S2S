@@ -32,14 +32,16 @@
    "flat": 1
   }
  },
+ "buildRate": {
+  "city": {
+   "military": {
+    "percent": 5
+   }
+  }
+ },
  "warWeariness": {
   "city": {
    "percent": -5
-  }
- },
- "militaryProduction": {
-  "city": {
-   "percent": 5
   }
  },
  "world": {

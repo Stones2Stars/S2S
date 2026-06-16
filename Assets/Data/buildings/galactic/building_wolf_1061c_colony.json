@@ -44,29 +44,21 @@
    "flat": 20
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_FARM",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_SETTLEMENT",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "gold": {
   "city": {
    "flat": 50
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_FARM": {
+     "percent": 10
+    },
+    "BUILDING_INTERSTELLAR_SETTLEMENT": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

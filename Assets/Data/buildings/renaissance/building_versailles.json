@@ -15,18 +15,6 @@
   }
  },
  "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 100,
-     "enabled": {
-      "type": "BONUS_MARBLE",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ]
-  },
   "specialist": {
    "specialists": {
     "SPECIALIST_NOBLE": {
@@ -45,6 +33,20 @@
       "existedFor": {
        "min": 1000
       }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "min": 1
      }
     }
    ]

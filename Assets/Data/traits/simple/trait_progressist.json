@@ -2,7 +2,7 @@
  "type": "TRAIT_PROGRESSIST",
  "description": "TXT_KEY_TRAIT_PROGRESSIST",
  "civilopedia": "TXT_KEY_TRAIT_PROGRESSIST_PEDIA",
- "unitProduction": {
+ "buildRate": {
   "empire": {
    "units": {
     "UNIT_CYBORG": {

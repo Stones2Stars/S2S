@@ -46,16 +46,26 @@
    ]
   }
  },
- "production": {
-  "unit": {
-   "bonuses": {
-    "BONUS_IRON_WARES": {
-     "percent": 15
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_FLINT": {
-     "percent": 15
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_FLINT",
+      "scope": "city",
+      "min": 1
+     }
     }
-   }
+   ]
   }
  },
  "strength": {

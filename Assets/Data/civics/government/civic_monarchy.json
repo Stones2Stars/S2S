@@ -51,10 +51,145 @@
  },
  "production": {
   "empire": {
+   "percent": 3
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 3,
+   "capital": {
+    "percent": 2
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 2,
+   "capital": {
+    "percent": 3
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 5,
+   "capital": {
+    "percent": 3
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cityLimit": {
+    "flat": 12
+   },
+   "cityOverLimit": {
+    "flat": 5
+   },
+   "buildings": {
+    "BUILDING_BARRACKS": {
+     "flat": 1
+    },
+    "BUILDING_GARRISON": {
+     "flat": 1
+    },
+    "BUILDING_MILITARY_BASE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 20
+   },
+   "numCities": {
+    "percent": 20
+   },
+   "homeArea": {
+    "percent": 5
+   },
+   "otherArea": {
+    "percent": 4
+   },
+   "corporation": {
+    "percent": 5
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "perPopulation": 15
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "civics": {
+    "CIVIC_MONARCHY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "happiness": {
+    "flat": 1
+   },
+   "unitProduction": {
+    "percent": 5
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": 2
+   },
+   "national": {
+    "flat": 3
+   },
+   "distanceModifier": {
+    "percent": 30
+   },
+   "democracyLevel": {
+    "flat": -30
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
    "military": {
     "percent": 10
    },
-   "percent": 3,
    "buildings": {
     "BUILDING_CASTLE": {
      "percent": 10
@@ -152,81 +287,7 @@
     "BUILDING_HOLOGRAPHIC_SCHOOL": {
      "percent": 0
     }
-   }
-  }
- },
- "commerce": {
-  "empire": {
-   "percent": 2
-  }
- },
- "gold": {
-  "empire": {
-   "percent": 3,
-   "capital": {
-    "percent": 2
-   }
-  }
- },
- "research": {
-  "empire": {
-   "percent": 2
-  }
- },
- "culture": {
-  "empire": {
-   "percent": 2,
-   "capital": {
-    "percent": 3
-   }
-  }
- },
- "espionage": {
-  "empire": {
-   "percent": 5,
-   "capital": {
-    "percent": 3
-   }
-  }
- },
- "happiness": {
-  "empire": {
-   "cityLimit": {
-    "flat": 12
    },
-   "cityOverLimit": {
-    "flat": 5
-   },
-   "buildings": {
-    "BUILDING_BARRACKS": {
-     "flat": 1
-    },
-    "BUILDING_GARRISON": {
-     "flat": 1
-    },
-    "BUILDING_MILITARY_BASE": {
-     "flat": 1
-    }
-   }
-  }
- },
- "experience": {
-  "empire": {
-   "flat": 1
-  }
- },
- "greatGeneralRate": {
-  "empire": {
-   "percent": 10
-  }
- },
- "conscript": {
-  "empire": {
-   "flat": 3
-  }
- },
- "unitProduction": {
-  "empire": {
    "units": {
     "UNIT_NOBLE": {
      "percent": 20
@@ -234,67 +295,6 @@
     "UNIT_LORD": {
      "percent": 20
     }
-   }
-  }
- },
- "maintenance": {
-  "empire": {
-   "distance": {
-    "percent": 20
-   },
-   "numCities": {
-    "percent": 20
-   },
-   "homeArea": {
-    "percent": 5
-   },
-   "otherArea": {
-    "percent": 4
-   },
-   "corporation": {
-    "percent": 5
-   }
-  }
- },
- "upkeep": {
-  "empire": {
-   "freeMilitary": {
-    "perPopulation": 15
-   }
-  }
- },
- "diplomacy": {
-  "empire": {
-   "civics": {
-    "CIVIC_MONARCHY": {
-     "flat": 1
-    }
-   }
-  }
- },
- "stateReligion": {
-  "empire": {
-   "happiness": {
-    "flat": 1
-   },
-   "unitProduction": {
-    "percent": 5
-   }
-  }
- },
- "revolution": {
-  "empire": {
-   "local": {
-    "flat": 2
-   },
-   "national": {
-    "flat": 3
-   },
-   "distanceModifier": {
-    "percent": 30
-   },
-   "democracyLevel": {
-    "flat": -30
    }
   }
  },

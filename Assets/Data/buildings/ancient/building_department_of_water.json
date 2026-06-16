@@ -41,7 +41,16 @@
  },
  "production": {
   "city": {
-   "flat": 4,
+   "flat": 4
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "buildRate": {
+  "self": {
    "percent": [
     {
      "value": 50,
@@ -52,11 +61,6 @@
      }
     }
    ]
-  }
- },
- "gold": {
-  "city": {
-   "flat": -10
   }
  },
  "hurryCost": {

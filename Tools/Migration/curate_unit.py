@@ -421,11 +421,15 @@ def pass2(typ, rec, store, fams, caps, grants, vision, identity):
                     node[unit] += value
                 else:
                     node[unit] = value
-    # BonusProductionModifiers -> production.unit keyed by bonus (keep-on-unit, §6: build faster with bonus Y)
+    # BonusProductionModifiers -> buildRate.self (build THIS unit faster WHILE a bonus is present; owner 2026-06-16).
+    # SELF build-rate gated by bonus presence, NOT city output and NOT keyed-by-bonus-as-target; unified with the
+    # building curator into the buildRate family (same shape as curate_building COND_KEYED bonus -> buildRate.self).
     bpm = rec.find("BonusProductionModifiers")
     if bpm is not None:
+        lst = fams.setdefault("buildRate", OrderedDict()).setdefault("self", OrderedDict()).setdefault("percent", [])
         for k, v in _pairs(bpm):
-            fams.setdefault("production", OrderedDict()).setdefault("unit", OrderedDict()).setdefault("bonuses", OrderedDict()).setdefault(k, OrderedDict())["percent"] = v
+            lst.append(OrderedDict([("value", v),
+                                    ("enabled", OrderedDict([("type", k), ("scope", "city"), ("min", 1)]))]))
     # cargo (which the unit carries) -> identity.cargo (capacity is base; the carry-kinds are config)
     cargo = OrderedDict()
     for tag, key in (("DomainCargo", "domain"), ("SpecialCargo", "special"), ("SMNotSpecialCargo", "smNotSpecial")):

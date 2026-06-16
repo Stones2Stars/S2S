@@ -10,18 +10,7 @@
  },
  "production": {
   "empire": {
-   "percent": 2,
-   "buildings": {
-    "BUILDING_LIBRARY": {
-     "percent": 20
-    },
-    "BUILDING_SCHOOL_OF_SCRIBES": {
-     "percent": 20
-    },
-    "BUILDING_UNIVERSITY": {
-     "percent": 20
-    }
-   }
+   "percent": 2
   }
  },
  "commerce": {
@@ -49,6 +38,21 @@
    "percent": 3,
    "capital": {
     "percent": 5
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_LIBRARY": {
+     "percent": 20
+    },
+    "BUILDING_SCHOOL_OF_SCRIBES": {
+     "percent": 20
+    },
+    "BUILDING_UNIVERSITY": {
+     "percent": 20
+    }
    }
   }
  },

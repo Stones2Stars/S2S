@@ -21,20 +21,25 @@
    ]
   }
  },
- "production": {
-  "unit": {
-   "bonuses": {
-    "BONUS_CAT": {
-     "percent": 15
-    }
-   }
-  }
- },
  "espionage": {
   "unit": {
    "investigation": {
     "flat": 30
    }
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_CAT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
   }
  },
  "strength": {

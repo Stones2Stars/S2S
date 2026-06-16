@@ -6,7 +6,7 @@
  "excludes": [
   "TRAIT_GREEDY"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_JADE_CARVER": {
@@ -544,6 +544,18 @@
   "empire": {
    "civicAnarchy": {
     "percent": 10
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
    }
   }
  },

@@ -26,22 +26,18 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CONGRESS_OF_VIENNA",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_CONGRESS_OF_VIENNA": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

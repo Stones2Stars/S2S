@@ -12,8 +12,13 @@
    ]
   }
  },
- "production": {
+ "culture": {
   "city": {
+   "percent": 2
+  }
+ },
+ "buildRate": {
+  "self": {
    "percent": [
     {
      "value": 10,
@@ -40,11 +45,6 @@
      }
     }
    ]
-  }
- },
- "culture": {
-  "city": {
-   "percent": 2
   }
  },
  "happiness": {

@@ -270,11 +270,11 @@
   "city": {
    "buildings": {
     "BUILDING_WONDER_OF_NATURE_MT_EVEREST": {
-     "flat": [
-      {
-       "SPECIALIST_MERCHANT": 2
+     "specialists": {
+      "SPECIALIST_MERCHANT": {
+       "flat": 2
       }
-     ]
+     }
     }
    }
   }

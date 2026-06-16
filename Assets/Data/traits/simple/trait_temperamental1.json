@@ -8,7 +8,7 @@
    "TRAIT_TEMPERAMENTAL3"
   ]
  },
- "production": {
+ "buildRate": {
   "empire": {
    "military": {
     "percent": 20

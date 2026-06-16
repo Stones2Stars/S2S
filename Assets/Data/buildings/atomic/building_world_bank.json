@@ -22,8 +22,13 @@
    ]
   }
  },
- "production": {
-  "city": {
+ "commerce": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "buildRate": {
+  "self": {
    "percent": [
     {
      "value": 100,
@@ -34,11 +39,6 @@
      }
     }
    ]
-  }
- },
- "commerce": {
-  "empire": {
-   "percent": 5
   }
  },
  "greatPeopleRate": {

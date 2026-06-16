@@ -27,22 +27,20 @@
  "production": {
   "city": {
    "flat": 10
-  },
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_MEGATOWER_HOTEL_LEVEL",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "commerce": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MEGATOWER_HOTEL_LEVEL": {
+     "percent": 10
+    }
+   }
   }
  },
  "cost": {

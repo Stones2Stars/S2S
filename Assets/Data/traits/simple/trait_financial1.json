@@ -7,7 +7,7 @@
    "TRAIT_FINANCIAL2"
   ]
  },
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_COMMERCIAL_PORT": {

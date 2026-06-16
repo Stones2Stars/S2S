@@ -11,7 +11,7 @@
  "excludes": [
   "TRAIT_CREATIVE1"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "worldWonder": {
     "percent": -10
@@ -192,6 +192,11 @@
      "percent": -25
     }
    },
+   "unitCombats": {
+    "UNITCOMBAT_ENTERTAINER": {
+     "percent": -15
+    }
+   },
    "military": {
     "percent": 5
    }
@@ -365,15 +370,6 @@
    }
   }
  },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_ENTERTAINER": {
-     "percent": -15
-    }
-   }
-  }
- },
  "upkeep": {
   "empire": {
    "civic": {
@@ -393,6 +389,18 @@
    },
    "enemyWarWeariness": {
     "percent": 10
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
    }
   }
  },

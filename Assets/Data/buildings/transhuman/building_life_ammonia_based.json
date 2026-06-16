@@ -25,36 +25,26 @@
  "production": {
   "city": {
    "flat": 100
-  },
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TERRAFORMED_TRITON",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TERRAFORMED_TITANIA",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TERRAFORMED_OBERON",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "research": {
   "city": {
    "flat": 300
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_TERRAFORMED_TRITON": {
+     "percent": 10
+    },
+    "BUILDING_TERRAFORMED_TITANIA": {
+     "percent": 10
+    },
+    "BUILDING_TERRAFORMED_OBERON": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

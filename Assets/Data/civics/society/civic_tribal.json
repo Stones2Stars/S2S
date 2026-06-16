@@ -131,27 +131,6 @@
    }
   }
  },
- "unitProduction": {
-  "empire": {
-   "units": {
-    "UNIT_TRIBE": {
-     "percent": 20
-    },
-    "UNIT_SETTLER": {
-     "percent": 20
-    },
-    "UNIT_COLONIST": {
-     "percent": 20
-    },
-    "UNIT_PIONEER": {
-     "percent": 20
-    },
-    "UNIT_AIRSETTLER": {
-     "percent": 20
-    }
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -175,6 +154,27 @@
   "empire": {
    "warWeariness": {
     "percent": 10
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "units": {
+    "UNIT_TRIBE": {
+     "percent": 20
+    },
+    "UNIT_SETTLER": {
+     "percent": 20
+    },
+    "UNIT_COLONIST": {
+     "percent": 20
+    },
+    "UNIT_PIONEER": {
+     "percent": 20
+    },
+    "UNIT_AIRSETTLER": {
+     "percent": 20
+    }
    }
   }
  },

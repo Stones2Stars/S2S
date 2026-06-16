@@ -17,18 +17,6 @@
    ]
   }
  },
- "production": {
-  "unit": {
-   "bonuses": {
-    "BONUS_PRIME_TIMBER": {
-     "percent": 5
-    },
-    "BONUS_FLINT": {
-     "percent": 5
-    }
-   }
-  }
- },
  "culture": {
   "unit": {
    "garrison": {
@@ -41,6 +29,28 @@
    "insidiousness": {
     "flat": 5
    }
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_FLINT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
   }
  },
  "strength": {

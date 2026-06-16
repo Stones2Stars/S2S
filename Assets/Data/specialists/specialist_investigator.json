@@ -115,11 +115,9 @@
   }
  },
  "PROPERTY_CRIME": {
-  "city": [
-   {
-    "perTurn": -4
-   }
-  ]
+  "city": {
+   "flat": -4
+  }
  },
  "ui": {
   "art": {

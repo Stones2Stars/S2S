@@ -40,20 +40,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 100,
-     "enabled": {
-      "type": "BONUS_COPPER_WARES",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ]
-  }
- },
  "commerce": {
   "empire": {
    "flat": 1
@@ -69,6 +55,20 @@
       "existedFor": {
        "min": 1000
       }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_COPPER_WARES",
+      "scope": "city",
+      "min": 1
      }
     }
    ]

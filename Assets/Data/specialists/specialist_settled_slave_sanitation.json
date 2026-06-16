@@ -18,32 +18,24 @@
   }
  },
  "PROPERTY_AIR_POLLUTION": {
-  "city": [
-   {
-    "perTurn": -1
-   }
-  ]
+  "city": {
+   "flat": -1
+  }
  },
  "PROPERTY_CRIME": {
-  "city": [
-   {
-    "perTurn": 1
-   }
-  ]
+  "city": {
+   "flat": 1
+  }
  },
  "PROPERTY_DISEASE": {
-  "city": [
-   {
-    "perTurn": -1
-   }
-  ]
+  "city": {
+   "flat": -1
+  }
  },
  "PROPERTY_WATER_POLLUTION": {
-  "city": [
-   {
-    "perTurn": -1
-   }
-  ]
+  "city": {
+   "flat": -1
+  }
  },
  "ui": {
   "art": {

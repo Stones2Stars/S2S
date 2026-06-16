@@ -68,20 +68,6 @@
    }
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 100,
-     "enabled": {
-      "type": "BONUS_WATERPROOF_CEMENT",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ]
-  }
- },
  "commerce": {
   "city": {
    "flat": 4,
@@ -179,6 +165,20 @@
  "culture": {
   "city": {
    "flat": 3
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_WATERPROOF_CEMENT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
   }
  },
  "hurryCost": {

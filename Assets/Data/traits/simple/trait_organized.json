@@ -2,7 +2,7 @@
  "type": "TRAIT_ORGANIZED",
  "description": "TXT_KEY_TRAIT_ORGANIZED",
  "civilopedia": "TXT_KEY_TRAIT_ORGANIZED_PEDIA",
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_FACTORY": {

@@ -45,6 +45,13 @@
    "percent": 10
   }
  },
+ "buildRate": {
+  "city": {
+   "military": {
+    "percent": 25
+   }
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 2
@@ -63,11 +70,6 @@
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "militaryProduction": {
-  "city": {
-   "percent": 25
   }
  },
  "cost": {

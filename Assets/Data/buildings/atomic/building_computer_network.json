@@ -95,8 +95,19 @@
    ]
   }
  },
- "production": {
+ "commerce": {
   "city": {
+   "percent": 1
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10,
+   "percent": 1
+  }
+ },
+ "buildRate": {
+  "self": {
    "percent": [
     {
      "value": 50,
@@ -115,17 +126,6 @@
      }
     }
    ]
-  }
- },
- "commerce": {
-  "city": {
-   "percent": 1
-  }
- },
- "research": {
-  "city": {
-   "flat": 10,
-   "percent": 1
   }
  },
  "happiness": {

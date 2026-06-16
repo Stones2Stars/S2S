@@ -34,36 +34,24 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CABARET_VOLTAIRE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ZURICH_ORBITAL",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CERN_ACCELERATOR",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_CABARET_VOLTAIRE": {
+     "percent": 10
+    },
+    "BUILDING_ZURICH_ORBITAL": {
+     "percent": 10
+    },
+    "BUILDING_CERN_ACCELERATOR": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

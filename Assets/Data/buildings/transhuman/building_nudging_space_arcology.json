@@ -42,31 +42,21 @@
  "production": {
   "city": {
    "percent": 30
-  },
+  }
+ },
+ "buildRate": {
   "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_FARMSCRAPER_I",
-      "scope": "empire"
-     }
+   "buildings": {
+    "BUILDING_FARMSCRAPER_I": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_FARMSCRAPER_II",
-      "scope": "empire"
-     }
+    "BUILDING_FARMSCRAPER_II": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_FARMSCRAPER_III",
-      "scope": "empire"
-     }
+    "BUILDING_FARMSCRAPER_III": {
+     "percent": 10
     }
-   ]
+   }
   }
  },
  "cost": {

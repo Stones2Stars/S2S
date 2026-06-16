@@ -15,7 +15,11 @@
   "empire": {
    "specialist": {
     "perSpecialist": -1
-   },
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
    "military": {
     "percent": -10
    }

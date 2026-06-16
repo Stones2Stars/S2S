@@ -23,6 +23,13 @@
    "flat": 10
   }
  },
+ "buildRate": {
+  "city": {
+   "military": {
+    "percent": 35
+   }
+  }
+ },
  "happiness": {
   "city": {
    "flat": -3
@@ -31,11 +38,6 @@
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "militaryProduction": {
-  "city": {
-   "percent": 35
   }
  },
  "PROPERTY_EDUCATION": {

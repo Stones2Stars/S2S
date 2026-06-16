@@ -151,11 +151,11 @@
   "city": {
    "buildings": {
     "BUILDING_WONDER_OF_NATURE_PRAVCICKA_BRANA": {
-     "flat": [
-      {
-       "SPECIALIST_ARTIST": 1
+     "specialists": {
+      "SPECIALIST_ARTIST": {
+       "flat": 1
       }
-     ]
+     }
     }
    }
   }

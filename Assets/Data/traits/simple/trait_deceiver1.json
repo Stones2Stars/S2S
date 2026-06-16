@@ -7,7 +7,7 @@
    "TRAIT_DECEIVER2"
   ]
  },
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_BROTHEL": {

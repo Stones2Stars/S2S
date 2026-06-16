@@ -25,29 +25,21 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CHEMISTRY_LAB",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CHEMICALS_DISTRICT",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "research": {
   "city": {
    "flat": 30
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CHEMISTRY_LAB": {
+     "percent": 10
+    },
+    "BUILDING_CHEMICALS_DISTRICT": {
+     "percent": 10
+    }
+   }
   }
  },
  "grants": {

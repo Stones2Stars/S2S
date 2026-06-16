@@ -36,43 +36,27 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_DANCE_HALL",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_NIGHT_CLUB",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BALLROOM",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_IMPERIAL_FORTRESS",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 1
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_DANCE_HALL": {
+     "percent": 10
+    },
+    "BUILDING_NIGHT_CLUB": {
+     "percent": 10
+    },
+    "BUILDING_BALLROOM": {
+     "percent": 10
+    },
+    "BUILDING_IMPERIAL_FORTRESS": {
+     "percent": 10
+    }
+   }
   }
  },
  "greatPeopleRate": {

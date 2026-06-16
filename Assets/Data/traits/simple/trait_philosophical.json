@@ -2,7 +2,7 @@
  "type": "TRAIT_PHILOSOPHICAL",
  "description": "TXT_KEY_TRAIT_PHILOSOPHICAL",
  "civilopedia": "TXT_KEY_TRAIT_PHILOSOPHICAL_PEDIA",
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_CLONING_LABORATORY": {

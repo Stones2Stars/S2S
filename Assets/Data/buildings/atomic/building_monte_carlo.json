@@ -44,20 +44,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 100,
-     "enabled": {
-      "type": "BONUS_GOLD_WARES",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ]
-  }
- },
  "gold": {
   "city": {
    "percent": 12
@@ -83,6 +69,20 @@
      "flat": 4
     }
    }
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_GOLD_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
   }
  },
  "happiness": {

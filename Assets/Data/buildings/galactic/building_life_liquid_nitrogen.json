@@ -33,22 +33,20 @@
  "production": {
   "city": {
    "flat": 100
-  },
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_EDEN",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "research": {
   "city": {
    "flat": 300
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_EDEN": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

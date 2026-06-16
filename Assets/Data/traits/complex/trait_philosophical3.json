@@ -71,6 +71,18 @@
    }
   }
  },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
+   }
+  }
+ },
  "policies": {
   "freeSpecialistPerTeamProject": true
  },

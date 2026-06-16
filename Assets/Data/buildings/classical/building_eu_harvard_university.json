@@ -36,20 +36,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 100,
-     "enabled": {
-      "type": "BONUS_STONE",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ]
-  }
- },
  "gold": {
   "city": {
    "flat": -50
@@ -78,6 +64,20 @@
  "espionage": {
   "city": {
    "percent": 5
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
   }
  },
  "maintenance": {

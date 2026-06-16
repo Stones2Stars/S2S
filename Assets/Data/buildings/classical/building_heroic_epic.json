@@ -13,20 +13,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 100,
-     "enabled": {
-      "type": "BONUS_MARBLE",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": [
@@ -42,17 +28,31 @@
    ]
   }
  },
+ "buildRate": {
+  "city": {
+   "military": {
+    "percent": 100
+   }
+  },
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 1
   }
  },
  "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
- "militaryProduction": {
   "city": {
    "percent": 100
   }

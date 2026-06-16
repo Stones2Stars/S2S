@@ -21,20 +21,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 100,
-     "enabled": {
-      "type": "BONUS_YGGDRASIL_SEEDS",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ]
-  }
- },
  "research": {
   "city": {
    "flat": 600
@@ -50,6 +36,20 @@
  "espionage": {
   "city": {
    "flat": 45
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_YGGDRASIL_SEEDS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
   }
  },
  "hurryCost": {

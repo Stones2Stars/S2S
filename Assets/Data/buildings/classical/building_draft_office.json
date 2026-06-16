@@ -12,6 +12,13 @@
    ]
   }
  },
+ "buildRate": {
+  "city": {
+   "military": {
+    "percent": 25
+   }
+  }
+ },
  "happiness": {
   "city": {
    "flat": -1
@@ -20,11 +27,6 @@
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "militaryProduction": {
-  "city": {
-   "percent": 25
   }
  },
  "populationGrowthRate": {

@@ -5,9 +5,6 @@
  "strategy": "TXT_KEY_CIVIC_GALACTIC_FEDERATION_STRATEGY",
  "production": {
   "empire": {
-   "military": {
-    "percent": 10
-   },
    "percent": 15
   }
  },
@@ -85,6 +82,13 @@
    },
    "democracyLevel": {
     "flat": 7
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": 10
    }
   }
  },

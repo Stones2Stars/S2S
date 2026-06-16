@@ -31,6 +31,10 @@
  "obsoletes": {
   "builds": [
    "BUILD_EARLY_MOUNTAIN_MINE"
+  ],
+  "promotions": [
+   "PROMOTION_MOUNTAINEER",
+   "PROMOTION_MOUNTAIN_LEADER"
   ]
  },
  "requires": {

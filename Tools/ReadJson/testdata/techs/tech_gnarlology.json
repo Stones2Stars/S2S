@@ -1,0 +1,35 @@
+{
+  "type": "TECH_GNARLOLOGY",
+
+  "identity": {
+    "description": "TXT_KEY_TECH_GNARLOLOGY",
+    "era": "C2C_ERA_RENAISSANCE",
+    "worth": 5,
+    "militaryWorth": 3
+  },
+  "cost": { "research": 1200 },
+
+  "enables": {
+    "buildings": ["BUILDING_TEMPLE_OF_GNARL"],
+    "units": ["UNIT_SIR_GNARLALOT"],
+    "bonuses": ["BONUS_GNARLITE"],
+    "civics": ["CIVIC_GNARCHY"],
+    "religions": ["RELIGION_GNARLODOXY"],
+    "builds": ["BUILD_GNARL_MINE"]
+  },
+  "obsoletes": { "buildings": ["BUILDING_OLD_SHRINE"] },
+
+  "requires": {
+    "build": {
+      "all": [ { "type": "TECH_GNARL_BASICS", "scope": "team" } ],
+      "any": [
+        [ { "type": "TECH_PHILOSOPHY", "scope": "team" },
+          { "type": "TECH_DIVINE_RIGHT", "scope": "team" } ]
+      ]
+    }
+  },
+
+  "gold": { "city": { "buildings": { "BUILDING_TEMPLE_OF_GNARL": { "flat": 2 } } } },
+
+  "ui": { "art": { "icon": "ART_DEF_TECH_GNARLOLOGY" } }
+}

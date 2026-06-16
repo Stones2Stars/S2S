@@ -36,20 +36,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 100,
-     "enabled": {
-      "type": "BONUS_STONE",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": [
@@ -64,6 +50,20 @@
     }
    ],
    "percent": 5
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
   }
  },
  "happiness": {

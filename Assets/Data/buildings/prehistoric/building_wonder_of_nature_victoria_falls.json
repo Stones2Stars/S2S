@@ -110,7 +110,13 @@
  },
  "PROPERTY_TOURISM": {
   "city": {
-   "flat": 5
+   "flat": {
+    "value": 5,
+    "enabled": {
+     "type": "TECH_EXPLORATION",
+     "scope": "team"
+    }
+   }
   }
  },
  "grants": {

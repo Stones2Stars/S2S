@@ -187,7 +187,7 @@ bool→channel renames (`bTechTrading`→`techTrading`, `bIrrigation`→`irrigat
 | `OrPreReqs/PrereqTech` | `requires.build.any[][]` OR-group **OR** folded into `.all` | An OR-group (at-least-one). **A single-member OR-group FOLDS into `all`** ("at least one of {X}" ≡ "X required") — lossless, and 934 of 939 techs have a 1-member `OrPreReqs`, so the fold keeps the output clean; only 5 genuine multi-way ORs stay in `any`. `any` is a LIST OF OR-GROUPS (each AND-ed with the rest), so a tech OR-group and a building OR-group remain distinct requirements (modifier-spec §3 nested form). |
 | `PrereqOrBuildings/PrereqOrBuilding` {`BuildingType`,`iNumBuildingNeeded`} | `requires.build.any[][].{type,scope:empire,min}` | **Was DROPPED — now captured.** A LIVE research gate (`CvPlayer::hasValidBuildings`→`canResearch`): need ≥`iNumBuildingNeeded` of one of these buildings. `getBuildingCount` is empire-wide → `scope:empire`; buildings ARE count-capable → explicit `min`. (Only 2 techs: waterproof-concrete / lead-glass.) The AND form `PrereqBuildings`→`requires.build.all` is handled too (no data today). |
 | `FreeSpecialistCounts` {`SpecialistType`,`iFreeSpecialistCount`} | `freeSpecialists.empire.specialists.{SPECIALIST}.flat` | **Was SILENTLY DROPPED** (mapped as a scalar channel, but it's a Type-keyed container). An UNWIRED MODIFIER (modifier-spec §8-ii): read by AI valuation (`CvPlayerAI:4628`) + pedia (`CvGameTextMgr:12098`) but never granted in `processTech` → REVIVED as a modifier. Emitted via new generic keyed-container support in `curate_common.apply_channel` (mapping `targetType` hint). 1 tech (TECH_DERIVATIVES). |
-| `Tech{Yield,Commerce,Happiness,Health,Specialist}Changes` etc. (on Building/Specialist/Improvement/Route) | `<family>.<scope>.<targetType>.{TARGET}.…` ON THE TECH | DOWNWARD deposits — the entity-targeted `Tech*Changes` are inverted onto the tech (the conditioner/source), keyed by the target they boost (kept-on-source, CREST §6 / §0.4). `RouteInfo.TechMovementChanges`→`movement` is the modifier-spec §8 "→ tech (inverted)" case. `iCost`→`cost.research`. |
+| `Tech{Yield,Commerce,Happiness,Health,Specialist}Changes` etc. (on Building/Specialist/Improvement/Route) | `<family>.<scope>.<targetType>.{TARGET}.…` ON THE TECH | DOWNWARD deposits — the entity-targeted `Tech*Changes` are inverted onto the tech (the conditioner/source), keyed by the target they boost (kept-on-source, CREST §6 / §0.4). `RouteInfo.TechMovementChanges`→`movement` is the modifier-spec §8 "→ tech (inverted)" case. `iCost`→`cost.research`. **`BuildingInfo.TechSpecialistChanges` is 2D-KEYED** (building × specialist via `SpecialistCounts`) → `freeSpecialists.city.buildings.{BUILDING}.specialists.{SPECIALIST}.flat` (hole #4, owner 2026-06-16): the specialist is a SECOND target dimension BEFORE the unit, not a `{SPEC:N}` map under `flat`. Enabled by an optional 8th `subTargetType` field on the `TECH_BOOSTS` tuple → `curate_common.accumulate_boosts` nests `targetType.{TARGET}.subt.{KEY}.unit` (config-gated, backward-compatible). Cleared the last 12 flags → real data 0. |
 | `FirstFreeUnit` / `FirstFreeProphet` / `iFirstFreeTechs` | `grants.{firstFreeUnit,firstFreeProphet,freeTechs}` | FIRST-TO-RESEARCH race rewards (not universal grants) — bespoke keys preserve the "first" semantics pending the §10-banked `firstToResearch` predicate. ⚑ FLAG: differs from the enabler-spec §6 plain `grants.{units,techs}` lists; owner call whether to restructure later. |
 | `iAsset` / `iPower` | `identity.{worth,militaryWorth}` | Applied on research as player assets/tech-power (`processTech changeAssets/changeTechPower`), but score-like → identity (engine.FIELD_RENAME). |
 | `bDisable` | `identity.disable` | ⚑ FLAG: a LIVE unconditional research kill (`canEverResearch` hard-false); only `TECH_DUMMY`. Load-stable disable → arguably `loadPrune`-like, but doesn't fit its `{onGameOptions}` shape; kept faithfully in identity pending an owner home decision. |
@@ -697,7 +697,7 @@ SOURCE->unit enabler edges (tech/building-prereq/bonus/religion/civic + Obsolete
 | GP-action magnitudes (`iBaseDiscover`/`iDiscoverMultiplier`/`iBaseHurry`/…/`iGreatWorkCulture`/`iBaseFoodChange`) | `grants.greatPersonAction.{discover,hurry,trade,greatWork,food}.{base,multiplier}` | One-time great-person action magnitudes. |
 | `KillOutcomes` / `Actions` | `outcomes.{kill,actions}` | The CvOutcome mission system, carried FAITHFULLY (`engine.generic`) — DEFS = the `CvOutcome` Tier-G straggler; the outcome-system pass (#430) refines (same as UnitCombat #29). |
 | `iInstanceCostModifier` | `costs.empire.perInstance` `{percent, per:{type:SELF}}` | Cost rises per existing instance (the priority count-scaled cost case). `iCost`->`cost.production`, `iBaseUpkeep`->`cost.upkeep`. |
-| `BonusProductionModifiers` | `production.unit.bonuses.{BONUS}.percent` | Build-faster-with-bonus, keep-on-unit (§6). |
+| `BonusProductionModifiers` | `buildRate.self.percent[].{value, enabled:{type:BONUS_X,scope:city,min:1}}` | **Build THIS unit faster while a bonus is present** (Worker +5% w/ donkey/camel/cow/horse; `CvCity::getProductionModifier(eUnit)` shrinks the build cost). A **SELF** build-rate, NOT `production` (= total city OUTPUT). Owner 2026-06-16; unified with building/project into the `buildRate` family. **Supersedes** the earlier `production.unit.bonuses.{BONUS}.percent`. See "Production vs buildRate" at the end of this file. |
 | `PropertyManipulators` | per-`PROPERTY_*` family (v3) | Crime/disease/etc. unit->city emission. |
 | `Capture` | `identity.captures` | The subdue/capture-into unit FK (subdued animals). |
 | `Domain`/`DefaultUnitAI`/`UnitAIs`/`NotUnitAIs`/`SubCombatTypes`/`FormationType`/`bMilitary*`/`iXPValue*`/`iAsset`->worth/`iPower`->militaryWorth/… | `identity.{…}` / `capabilities.{…}` | Domain, AI roles, combat classes, military flags, XP/score. ~50 capability bools -> `capabilities`. `DCMAirBomb1-5` -> `capabilities.dcmAirBomb` (tier = count set). Tech-passability/heritage/cargo-kinds/advancedStart -> identity (parked). |
@@ -734,7 +734,7 @@ addition is caught, never silently mis-converted — owner: "if parsing is too c
 | `Has GOM_TECH X` | `{type:TECH_X, scope:team}` | Per-candidate confirm (Tech/Building precedent). |
 | `Has GOM_BONUS X` | `{type:BONUS_X, scope:city, connection:"trade\|vicinity"}` | City has the resource (matches `requires_building`/`requires_unit` bonus atoms). |
 | `Has GOM_BUILDING X` | `{type:BUILDING_X, scope:city}` | In-city building presence (matches existing in-city building atoms). |
-| `Has GOM_FEATURE X` | `{HAS_FEATURE: FEATURE_X}` | **NEW parameterized predicate** (uniform w/ `HAS_BONUS`/`HAS_CORPORATION`). ⚑ diverges from Improvement #22's `{feature:[…]}` membership → Phase-F reconcile. |
+| `Has GOM_FEATURE X` | `{HAS_FEATURE: FEATURE_X}` | **CANONICAL parameterized predicate** (uniform w/ `HAS_BONUS`/`HAS_CORPORATION`). ✅ Improvement #22's `{feature:[…]}` is the membership SUGAR that desugars to `any`-of-`HAS_FEATURE` (owner 2026-06-16, hole #1 RESOLVED — see "Production vs buildRate" siblings + data-model-spec §2.5). |
 | `Has GOM_TERRAIN X` | `{HAS_TERRAIN: TERRAIN_X}` | **NEW parameterized predicate.** ⚑ diverges from Improvement #22's `{terrain:[…]}` → Phase-F. |
 | `Is TAG_COASTAL` | `IS_COASTAL` | **NEW bare predicate** (`CvCity::isCoastal`). ⚑ diverges from Improvement #22's `COASTAL_LAND` plot token → Phase-F. |
 | `And` / `Or` / `Not` | `all` / `any` (one OR-group) / `noneOf` | `Not` unused today; built for completeness. |
@@ -760,5 +760,98 @@ different path).
 
 *Toolkit: `boolexpr.py` (shared, imported by `curate_building` + `curate_unit`); `curate_building.requires_building`
 merges `ConstructCondition`; `curate_unit.requires_unit` merges `TrainCondition`; `curate_unit.found_buildings(store)`
-builds the list. `_survey_boolexpr.py` was a throwaway vocabulary survey (deleted). ⚑ Phase-F: reconcile
-`IS_COASTAL`/`HAS_FEATURE`/`HAS_TERRAIN` with Improvement #22's `COASTAL_LAND`/`{feature\|terrain:[…]}`.*
+builds the list. `_survey_boolexpr.py` was a throwaway vocabulary survey (deleted). ✅ Membership reconcile RESOLVED
+2026-06-16 (owner, hole #1): `HAS_TERRAIN`/`HAS_FEATURE`/`HAS_BONUS` canonical; `{terrain\|feature\|bonus:[…]}` is sugar
+(any-of-`HAS_X`); `COASTAL_LAND` unused (0)→moot; `IS_COASTAL` (city) stays distinct. Cleared 229 flags; data unchanged.*
+
+## Production vs buildRate — the production-modifier cluster (owner ruling 2026-06-16; cross-entity)
+
+**Two distinct concepts the first-pass migration flattened into `production.city` — the "Versailles bug" (DESPAIR_INDEX
+#12 sibling):** a production-modifier may scale the **whole city's hammer output** OR speed the **construction of a
+specific target**. Verified in the C++ (the two are applied in different places):
+- **`production` = TOTAL CITY OUTPUT.** `CvCity::getYieldRate100(PRODUCTION) = (base + specialistYield) ×
+  getBaseYieldRateModifier(PRODUCTION) + 100·extraYield`. Authored as `production.city.flat` (a hammer ADD —
+  `YieldChanges[PRODUCTION]`) + `production.city.percent` (the city-wide multiplier on *everything* —
+  `YieldModifiers[PRODUCTION]` = Factory, Power/Area/Capital/Bonus yield-rate). Scales every build, every turn.
+- **`buildRate` = FASTER TO BUILD A TARGET/CATEGORY.** `CvCity::getProductionModifier(eItem)` shrinks the COST of the
+  *specific* item under construction (CvCity.cpp:3611-3621/3857-3946); never touches the per-turn yield number. The
+  `buildRate` family **already existed** (modifier-spec §1.1; unit/domain/unitCombat production mods were already here).
+
+**Owner ruling: `production.city` = total output ONLY; everything "faster to build a target/category" → `buildRate`,
+keyed/scoped by what is produced.** Full corrected cluster (all entities):
+
+| old XML field (on Building/Unit/Civic/Project/Trait) | new home | consumer / note |
+|---|---|---|
+| `BonusProductionModifiers` (build THIS faster w/ a bonus — Versailles+marble, Worker+donkey) | `buildRate.self.percent[].{value, enabled:{type:BONUS_X,scope:city,min:1}}` | `getBonusProductionModifier`; the bonus is a CONDITION (city has it), the target is SELF. **Was the bug:** emitted `production.city.percent enabled:{bonus}`. Building/Unit/Project all identical. |
+| `BuildingProductionModifiers` / `GlobalBuildingProductionModifiers` (speed a TARGET building) | `buildRate.{city,empire}.buildings.{BUILDING}.percent` | `getBuildingProductionModifier(eBuilding)` — the keyed building is the TARGET being sped up. **Was the bug:** the target was misread as an `enabled` condition at `production.city`. |
+| `UnitProductionModifiers` / `UnitCombatProductionModifiers` / `DomainProductionModifiers` | `buildRate.{scope}.{units\|unitCombats\|domains}.{TARGET}.percent` | already `buildRate` (not corrupt) — kept. |
+| `iMilitaryProductionModifier` | `buildRate.{scope}.military.percent` | was a one-off `militaryProduction` family → folded into `buildRate` (category member). |
+| `iSpaceProductionModifier` / `iGlobalSpaceProductionModifier` | `buildRate.{city,empire}.space.percent` | was a one-off `spaceProduction` family → folded into `buildRate`. |
+| Trait `iMax{Global,Team,Player}BuildingProductionModifier` (wonder-class build-rate) | `buildRate.empire.{worldWonder,teamWonder,nationalWonder}.percent` | wonder-category build-rate; was `production`. |
+| `YieldModifiers[PRODUCTION]` (Factory), `YieldChanges[PRODUCTION]` (a building's flat hammers) | `production.city.{percent,flat}` | the ONLY legitimate `production.city` — total city output. Unchanged. |
+
+**LEFT AS-IS (verdict, NOT corrupt):** the `stateReligion`-grouped `iStateReligion{Unit,Building}ProductionModifier`
+(Civic + Trait) stay members of the `stateReligion` family (`stateReligion.empire.{unitProduction,buildingProduction}`)
+— they are state-religion-gated build-rate correctly bundled with the family's other members (happiness/GP/experience),
+the gate carried by the family name; moving them to `buildRate` would break that grouping and need an explicit
+`HAS_STATE_RELIGION` gate. Flagged for Phase-F only if member-name tidying is wanted.
+
+**Curators updated (2026-06-16; regen owed):** `curate_building.py` (SCALAR military/space; COND_KEYED Bonus→`buildRate.self`;
+Building/GlobalBuilding moved COND_KEYED→TARGET_KEYED), `curate_unit.py` (Bonus→`buildRate.self`), `curate_civic.py`
+(military + Building/Unit/UnitCombat), `curate_project.py` (Bonus **restored** from a stale DROP → `buildRate.self`;
+curate_bonus's `BONUS_BOOSTS` fold it referenced was already removed, so it was being silently lost),
+`curate_trait.py` (military/wonder + the keyed building/unit/domain/specialBuilding/specialUnit/unitCombat mods).
+Harness `Tools/ReadJson/readjson.cpp` gained the `self` scope. ⚑ **RERUN owed** (shell down at capture time): re-run
+the five curators + `--write`, owner-inspect the regenerated JSON, then commit — so live data is only rewritten correctly.
+Tests: `building_torture_wonder.json` (BUILDING_TEMPLE_OF_GNARL) + `unit_sir_gnarlalot.json` demonstrate the split.
+
+## Property sources → v3 (property IS a yield-like family; owner ruling 2026-06-16, hole #5)
+
+**Property behaves "like any other yield" — same `flat`/`percent`/`per`/`enabled` deposit shape; it just has more varied
+GENERATION methods (owner 2026-06-16).** All map onto the v3 vocabulary via `engine.property_source_v3`:
+- `PROPERTYSOURCE_CONSTANT` (`iAmountPerTurn`) → **`flat`**.
+- `PROPERTYSOURCE_DECAY` → currently **`percent`** (`iPercent`; all decay sources today), though decay's magnitude can
+  equally be flat/other — the unit is just read like any modifier. **The JSON does NOT know or care about the equilibrium
+  (owner 2026-06-16): it emits plain modifiers onto the property; the ENGINE owns the toward-`targetLevel` handling**
+  (§0.6) — exactly as it should. `targetLevel` is property-specific in SIGN (positive for `PROPERTY_EDUCATION` — want it
+  high; negative for `PROPERTY_CRIME`/`PROPERTY_DISEASE` — want them low) and is the isolated equilibrium field (renames
+  §Property), an engine concern, never the deposit's.
+- attribute-scaled (`AttributeType` / `Mult(attr,C)` / `Div(Mult(attr,C),D)` / `Div(attr,D)`) → **`per`:{type, each, scope}**,
+  **REDUCED to a sensible fraction** (owner 2026-06-16): positive `each`, sign on `value`, lowest terms (same rational →
+  identical integer result). The XML's integer-only `Mult(attr,1)`/`Div(…,-N)` contortions — an invented math-language
+  that was literally a **first draft of this very JSON modifier system**, faking fractions an integer XML couldn't express
+  — collapse to "value per `each` of type": e.g. handicap crime `(POP×5)/2` → `{value:5, per:{type:POPULATION, each:2}}`;
+  `−POP/3` → `{value:-1, per:{…, each:3}}`. No negative `each` survives. **We deliberately do NOT resurrect the
+  formula-language (owner 2026-06-16):** the only legitimate multiplication is "scale a value by a COUNT" (× popcount),
+  which is exactly `per:{type, each}` (`value × count / each`) — one bounded linear operation. Arbitrary `Mult`/`Div`
+  nesting could compound to runaway values fast; the bounded `per` is the sane sufficient form (same principle as the
+  `&`/`|` deferral — keep the data vocabulary bounded).
+- an `<Active>` BoolExpr gate → **`enabled`** (via `boolexpr.convert_field` — e.g. heritage `active:[GOM_TECH]` →
+  `flat:[{value:1, enabled:{type:TECH_EDUCATION, scope:team}}, …]`, multiple sources = a LIST of entries).
+- scope from `GameObjectType`, **default `city`** when absent (property effects are city-level).
+
+**This RETIRED a rogue-agent shape (owner 2026-06-16).** `curate_handicap` + `curate_heritage` had used the old raw
+`engine.clean_property_source` (`perTurn`/`mult`/`div`/`attribute`/`active` formula trees + a hardcoded `empire` scope) — a
+non-sanctioned invention. Both now route through `property_source_v3` (the documented standard, like civic). Cleared 68
+conformance flags. `clean_property_source` survives ONLY for **feature/improvement** (their `RELATION_NEAR` spatial
+sources that v3 rejects → #429-parked raw) + `engine.generic` (the `outcomes` trees, deferred to the #430 outcome
+pass). Every other property-bearing entity (handicap/heritage/civic/trait/building/unit/specialist) is now v3 —
+property is uniformly first-class.
+
+**Heritage scope CORRECTED `empire` → `city` (owner-confirmed):** education is a city property; v3 reads
+`GameObjectType`-or-default-`city` (the old `empire` was the rogue hardcode). **The empire-wide feel is emulated by the
+autobuild placing a per-city copy** (FreeBuilding / effect-building), NOT an empire deposit. ⚑ FUTURE: a number of these
+per-city-autobuilt modifiers will move UP to **empire/team scope** in the **#421 team-buildings** cleanup (retiring the
+autobuild fan-out) — so city-scope-now is interim-correct, not the end state.
+
+**NET WIN — properties are now FIRST-CLASS (the #428 properties-first-class goal, achieved):** a property is just another
+yield, like commerce/culture/food. Invent a brand-new `PROPERTY_X` and it works with **ZERO per-property data plumbing** —
+deposit modifiers onto `PROPERTY_X.<scope>.<unit>` exactly like any yield, give it a `targetLevel`, and the engine's
+equilibrium machinery (§0.6) does the rest. The varied generation methods (constant/decay/attribute-scaled/active-gated)
+all collapse onto the one shared v3 vocabulary; nothing about a property is special at the data layer.
+
+**ESSENCE (owner 2026-06-16): a property is simply a YIELD THE EXE DOES NOT HANDLE.** Where food/production/commerce +
+the four commerces are **EXE-bound** (a fixed, immutable enum the reader maps name↔index for the closed `.exe`'s ABI
+arrays — cascade-engine-430.md §3), properties carry no such binding: they are **DLL-owned, unlimited, and in whatever
+form we want**. Same cascade vocabulary; the *only* difference is the EXE binds the former and not the latter — which is
+precisely the freedom that lets us make properties first-class and invent more at will, with no plumbing.

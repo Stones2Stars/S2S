@@ -42,17 +42,15 @@
  "production": {
   "city": {
    "flat": 1000
-  },
+  }
+ },
+ "buildRate": {
   "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERGALACTIC_SUPERCLUSTER_COLONY",
-      "scope": "empire"
-     }
+   "buildings": {
+    "BUILDING_INTERGALACTIC_SUPERCLUSTER_COLONY": {
+     "percent": 10
     }
-   ]
+   }
   }
  },
  "hurryCost": {

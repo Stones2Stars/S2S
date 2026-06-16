@@ -26,92 +26,48 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CIRCUS_MAXIMUS",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_FLAVIAN_AMPHITHEATRE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_HADRIANS_WALL",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_PONT_DU_GARD",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_LEANING_TOWER_OF_PISA",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_LEONARDOS_WORKSHOP",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_MARCO_POLOS_EMBASSY",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_PIAZZA_SAN_MARCO",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SAINT_MARKS_BASILICA",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_VENETIAN_ARSENAL",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_VIA_APPIA",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_CIRCUS_MAXIMUS": {
+     "percent": 10
+    },
+    "BUILDING_FLAVIAN_AMPHITHEATRE": {
+     "percent": 10
+    },
+    "BUILDING_HADRIANS_WALL": {
+     "percent": 10
+    },
+    "BUILDING_PONT_DU_GARD": {
+     "percent": 10
+    },
+    "BUILDING_LEANING_TOWER_OF_PISA": {
+     "percent": 10
+    },
+    "BUILDING_LEONARDOS_WORKSHOP": {
+     "percent": 10
+    },
+    "BUILDING_MARCO_POLOS_EMBASSY": {
+     "percent": 10
+    },
+    "BUILDING_PIAZZA_SAN_MARCO": {
+     "percent": 10
+    },
+    "BUILDING_SAINT_MARKS_BASILICA": {
+     "percent": 10
+    },
+    "BUILDING_VENETIAN_ARSENAL": {
+     "percent": 10
+    },
+    "BUILDING_VIA_APPIA": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

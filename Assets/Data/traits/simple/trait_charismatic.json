@@ -2,7 +2,7 @@
  "type": "TRAIT_CHARISMATIC",
  "description": "TXT_KEY_TRAIT_CHARISMATIC",
  "civilopedia": "TXT_KEY_TRAIT_CHARISMATIC_PEDIA",
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_RECRUITMENT_CENTER": {

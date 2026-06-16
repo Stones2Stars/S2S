@@ -11,7 +11,7 @@
  "excludes": [
   "TRAIT_GREEDY1"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_MONEY_PRESS": {
@@ -243,6 +243,18 @@
   "empire": {
    "civicAnarchy": {
     "percent": 5
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 3,
+     "scope": "city"
+    }
    }
   }
  },

@@ -6,7 +6,7 @@
  "excludes": [
   "TRAIT_FINANCIAL"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "worldWonder": {
     "percent": 20
@@ -535,6 +535,18 @@
   "empire": {
    "civicAnarchy": {
     "percent": -10
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
    }
   }
  },

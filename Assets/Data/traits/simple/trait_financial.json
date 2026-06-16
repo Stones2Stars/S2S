@@ -2,7 +2,7 @@
  "type": "TRAIT_FINANCIAL",
  "description": "TXT_KEY_TRAIT_FINANCIAL",
  "civilopedia": "TXT_KEY_TRAIT_FINANCIAL_PEDIA",
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_COMMERCIAL_PORT": {

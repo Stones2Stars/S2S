@@ -34,57 +34,33 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BURJ_AL_ARAB",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SULTAN_QABOOS_GRAND_MOSQUE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_PETRA",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_KINGDOM_CENTRE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BURJ_KHALIFA",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_DUBAI_WORLD_CENTRAL",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_BURJ_AL_ARAB": {
+     "percent": 10
+    },
+    "BUILDING_SULTAN_QABOOS_GRAND_MOSQUE": {
+     "percent": 10
+    },
+    "BUILDING_PETRA": {
+     "percent": 10
+    },
+    "BUILDING_KINGDOM_CENTRE": {
+     "percent": 10
+    },
+    "BUILDING_BURJ_KHALIFA": {
+     "percent": 10
+    },
+    "BUILDING_DUBAI_WORLD_CENTRAL": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

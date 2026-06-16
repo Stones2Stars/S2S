@@ -47,64 +47,36 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_HIMEJI_SAMURAI_CASTLE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_NARAS_GIANT_BUDDHA",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_KOTOKU_IN",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TSUKIJI_FISH_MARKET",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TOKYO_SKY_TREE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TOKYO_TOWER",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CHUO_SHINKANSEN",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_HIMEJI_SAMURAI_CASTLE": {
+     "percent": 10
+    },
+    "BUILDING_NARAS_GIANT_BUDDHA": {
+     "percent": 10
+    },
+    "BUILDING_KOTOKU_IN": {
+     "percent": 10
+    },
+    "BUILDING_TSUKIJI_FISH_MARKET": {
+     "percent": 10
+    },
+    "BUILDING_TOKYO_SKY_TREE": {
+     "percent": 10
+    },
+    "BUILDING_TOKYO_TOWER": {
+     "percent": 10
+    },
+    "BUILDING_CHUO_SHINKANSEN": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

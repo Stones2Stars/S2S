@@ -11,7 +11,7 @@
  "excludes": [
   "TRAIT_DECEIVER1"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_LOOKOUT_POST": {
@@ -140,6 +140,11 @@
     "BUILDING_ANCIENT_CUSTOMS": {
      "percent": -25
     }
+   },
+   "unitCombats": {
+    "UNITCOMBAT_SPY": {
+     "percent": -20
+    }
    }
   }
  },
@@ -227,15 +232,6 @@
    }
   }
  },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_SPY": {
-     "percent": -20
-    }
-   }
-  }
- },
  "durations": {
   "empire": {
    "civicAnarchy": {
@@ -250,6 +246,18 @@
    },
    "attitude": {
     "flat": 1
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
    }
   }
  },

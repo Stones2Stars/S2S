@@ -19,19 +19,6 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "gold": {
   "city": {
    "flat": 100
@@ -40,6 +27,15 @@
  "research": {
   "city": {
    "flat": 50
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_PLANETARY_LANDING": {
+     "percent": 10
+    }
+   }
   }
  },
  "grants": {

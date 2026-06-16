@@ -8,14 +8,18 @@
  ],
  "production": {
   "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "buildRate": {
+  "empire": {
    "worldWonder": {
     "percent": -30
    },
    "teamWonder": {
     "percent": -25
-   },
-   "flat": -1,
-   "percent": -5
+   }
   }
  },
  "commerce": {

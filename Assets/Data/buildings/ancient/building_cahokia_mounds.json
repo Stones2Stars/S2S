@@ -30,38 +30,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 50,
-     "enabled": {
-      "type": "BONUS_FINE_CLAY",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ]
-  },
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TUMULUS",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ANCIENT_CUSTOMS",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": [
@@ -83,6 +51,30 @@
     },
     "BUILDING_ANCIENT_CUSTOMS": {
      "flat": 2
+    }
+   }
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_FINE_CLAY",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_TUMULUS": {
+     "percent": 10
+    },
+    "BUILDING_ANCIENT_CUSTOMS": {
+     "percent": 10
     }
    }
   }

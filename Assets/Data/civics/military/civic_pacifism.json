@@ -8,13 +8,6 @@
    "SPECIALIST_ARTIST"
   ]
  },
- "production": {
-  "empire": {
-   "military": {
-    "percent": -20
-   }
-  }
- },
  "gold": {
   "empire": {
    "percent": 3
@@ -192,6 +185,13 @@
    },
    "violentMod": {
     "percent": 1
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": -20
    }
   }
  },

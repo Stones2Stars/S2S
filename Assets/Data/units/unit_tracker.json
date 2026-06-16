@@ -2,16 +2,26 @@
  "type": "UNIT_TRACKER",
  "description": "TXT_KEY_UNIT_TRACKER",
  "civilopedia": "TXT_KEY_UNIT_HUNTER_PEDIA",
- "production": {
-  "unit": {
-   "bonuses": {
-    "BONUS_ROPE": {
-     "percent": 10
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_ROPE",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_FLINT": {
-     "percent": 10
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_FLINT",
+      "scope": "city",
+      "min": 1
+     }
     }
-   }
+   ]
   }
  },
  "strength": {

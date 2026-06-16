@@ -21,17 +21,6 @@
  "production": {
   "city": {
    "flat": 15
-  },
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_STRATOSPHERIC_TOWER",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "gold": {
@@ -49,6 +38,15 @@
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_STRATOSPHERIC_TOWER": {
+     "percent": 10
+    }
+   }
   }
  },
  "cost": {

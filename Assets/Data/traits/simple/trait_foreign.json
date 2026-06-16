@@ -2,7 +2,7 @@
  "type": "TRAIT_FOREIGN",
  "description": "TXT_KEY_TRAIT_FOREIGN",
  "civilopedia": "TXT_KEY_TRAIT_FOREIGN_PEDIA",
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_FREE_PORT": {

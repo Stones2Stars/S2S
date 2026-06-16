@@ -3,7 +3,7 @@
  "description": "TXT_KEY_TRAIT_AERIAL3",
  "civilopedia": "TXT_KEY_TRAIT_AERIAL3_PEDIA",
  "strategy": "TXT_KEY_TRAIT_AERIAL_STRATEGY",
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_TEST_PILOT_INSTITUTE": {
@@ -134,6 +134,11 @@
     },
     "BUILDING_TOURISM_MEGACOMPLEX": {
      "percent": 25
+    }
+   },
+   "domains": {
+    "DOMAIN_AIR": {
+     "percent": 20
     }
    }
   }
@@ -278,15 +283,6 @@
    }
   }
  },
- "unitProduction": {
-  "empire": {
-   "domains": {
-    "DOMAIN_AIR": {
-     "percent": 20
-    }
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -326,6 +322,18 @@
   "empire": {
    "airUnitCapacity": {
     "flat": 2
+   }
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": {
+    "value": 2,
+    "per": {
+     "type": "POPULATION",
+     "each": 3,
+     "scope": "city"
+    }
    }
   }
  },

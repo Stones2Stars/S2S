@@ -46,71 +46,39 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_J_S_BACHS_CATHEDRAL",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BRANDENBURG_GATE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_NEUSCHWANSTEIN",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_EINSTEINS_LABORATORY",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BAUHAUS_SCHOOL",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BAYREUTH_FESTSPIELHAUS",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BERLIN_WALL",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_REICHSTAG",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_J_S_BACHS_CATHEDRAL": {
+     "percent": 10
+    },
+    "BUILDING_BRANDENBURG_GATE": {
+     "percent": 10
+    },
+    "BUILDING_NEUSCHWANSTEIN": {
+     "percent": 10
+    },
+    "BUILDING_EINSTEINS_LABORATORY": {
+     "percent": 10
+    },
+    "BUILDING_BAUHAUS_SCHOOL": {
+     "percent": 10
+    },
+    "BUILDING_BAYREUTH_FESTSPIELHAUS": {
+     "percent": 10
+    },
+    "BUILDING_BERLIN_WALL": {
+     "percent": 10
+    },
+    "BUILDING_REICHSTAG": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

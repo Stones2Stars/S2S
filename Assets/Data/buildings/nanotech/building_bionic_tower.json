@@ -32,17 +32,6 @@
  "production": {
   "city": {
    "flat": 5
-  },
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_MEGATOWER_BIODOME_PARK_CROWN_SECTION",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "commerce": {
@@ -58,6 +47,15 @@
  "research": {
   "city": {
    "flat": 1
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MEGATOWER_BIODOME_PARK_CROWN_SECTION": {
+     "percent": 10
+    }
+   }
   }
  },
  "cost": {

@@ -13,13 +13,18 @@
    ]
   }
  },
- "production": {
-  "unit": {
-   "bonuses": {
-    "BONUS_ALUMINUM_WARES": {
-     "percent": 20
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 20,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
     }
-   }
+   ]
   }
  },
  "withdrawal": {

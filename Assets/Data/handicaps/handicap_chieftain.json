@@ -185,35 +185,25 @@
  },
  "PROPERTY_CRIME": {
   "city": {
-   "perTurn": {
-    "div": [
-     {
-      "mult": [
-       {
-        "attribute": "ATTRIBUTE_POPULATION"
-       },
-       3
-      ]
-     },
-     2
-    ]
+   "flat": {
+    "value": 3,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
    }
   }
  },
  "PROPERTY_EDUCATION": {
   "city": {
-   "perTurn": {
-    "div": [
-     {
-      "mult": [
-       {
-        "attribute": "ATTRIBUTE_POPULATION"
-       },
-       2
-      ]
-     },
-     -3
-    ]
+   "flat": {
+    "value": -2,
+    "per": {
+     "type": "POPULATION",
+     "each": 3,
+     "scope": "city"
+    }
    }
   }
  },

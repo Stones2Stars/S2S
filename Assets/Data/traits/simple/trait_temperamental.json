@@ -2,7 +2,7 @@
  "type": "TRAIT_TEMPERAMENTAL",
  "description": "TXT_KEY_TRAIT_TEMPERAMENTAL",
  "civilopedia": "TXT_KEY_TRAIT_TEMPERAMENTAL_PEDIA",
- "production": {
+ "buildRate": {
   "empire": {
    "military": {
     "percent": 20

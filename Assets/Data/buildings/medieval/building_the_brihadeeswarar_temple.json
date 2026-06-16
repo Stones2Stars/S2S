@@ -26,20 +26,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 100,
-     "enabled": {
-      "type": "BONUS_STONE",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ]
-  }
- },
  "gold": {
   "empire": {
    "percent": 1
@@ -71,6 +57,20 @@
  "espionage": {
   "empire": {
    "percent": 3
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
   }
  },
  "happiness": {

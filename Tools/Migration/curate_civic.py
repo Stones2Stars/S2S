@@ -65,7 +65,7 @@ SCALAR = {
     "iWorkerSpeedModifier":            ("workRate", "empire", "", "percent"),
     "iImprovementUpgradeRateModifier": ("improvementUpgradeRate", "empire", "", "percent"),
     # military / great-people
-    "iMilitaryProductionModifier":     ("production", "empire", "military", "percent"),
+    "iMilitaryProductionModifier":     ("buildRate", "empire", "military", "percent"),
     "iExtraCityDefense":               ("combat", "empire", "cityDefense",        "percent"),
     "iNationalCaptureProbabilityModifier": ("combat", "empire", "captureProbability", "percent"),
     "iNationalCaptureResistanceModifier":  ("combat", "empire", "captureResistance",  "percent"),
@@ -135,13 +135,13 @@ SPLIT_ARRAY = {
 KEYED = {
     "BuildingHappinessChanges":     ("happiness",  "empire", "buildings",   "flat",    None),
     "BuildingHealthChanges":        ("health",     "empire", "buildings",   "flat",    None),
-    "BuildingProductionModifiers":  ("production", "empire", "buildings",   "percent", None),
+    "BuildingProductionModifiers":  ("buildRate",  "empire", "buildings",   "percent", None),
     "BuildingCommerceModifiers":    (None,         "empire", "buildings",   "percent", COMMERCES),  # split commerce
     "FeatureHappinessChanges":      ("happiness",  "empire", "features",    "flat",    None),
     "ImprovementYieldChanges":      (None,         "empire", "improvements","flat",    YIELDS),      # split yield
     "TerrainYieldChanges":          (None,         "empire", "terrains",    "flat",    YIELDS),      # split yield
-    "UnitProductionModifiers":      ("unitProduction", "empire", "units",      "percent", None),
-    "UnitCombatProductionModifiers":("unitProduction", "empire", "unitCombats","percent", None),
+    "UnitProductionModifiers":      ("buildRate", "empire", "units",      "percent", None),
+    "UnitCombatProductionModifiers":("buildRate", "empire", "unitCombats","percent", None),
     "CivicAttitudeChanges":         ("diplomacy",  "empire", "civics",      "flat",    None),
 }
 LANDMARK_YIELD = "LandmarkYieldChanges"   # flat split yield gated on landmark improvements (condition member)

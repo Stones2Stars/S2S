@@ -9,6 +9,36 @@
  },
  "production": {
   "empire": {
+   "tradeRoute": {
+    "percent": 30
+   },
+   "improvements": {
+    "IMPROVEMENT_EARLY_QUARRY": {
+     "flat": 2
+    },
+    "IMPROVEMENT_QUARRY": {
+     "flat": 4
+    },
+    "IMPROVEMENT_CORE_MINE": {
+     "flat": 5
+    },
+    "IMPROVEMENT_MODERN_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SHAFT_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_STONE_TOOLS_WORKSHOP": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
    "worldWonder": {
     "percent": 20
    },
@@ -17,9 +47,6 @@
    },
    "nationalWonder": {
     "percent": 20
-   },
-   "tradeRoute": {
-    "percent": 30
    },
    "buildings": {
     "BUILDING_TOWNCLOCK": {
@@ -54,29 +81,6 @@
     },
     "BUILDING_ANCIENT_CUSTOMS": {
      "percent": 20
-    }
-   },
-   "improvements": {
-    "IMPROVEMENT_EARLY_QUARRY": {
-     "flat": 2
-    },
-    "IMPROVEMENT_QUARRY": {
-     "flat": 4
-    },
-    "IMPROVEMENT_CORE_MINE": {
-     "flat": 5
-    },
-    "IMPROVEMENT_MODERN_MINE": {
-     "flat": 1
-    },
-    "IMPROVEMENT_SHAFT_MINE": {
-     "flat": 1
-    },
-    "IMPROVEMENT_MINE": {
-     "flat": 1
-    },
-    "IMPROVEMENT_STONE_TOOLS_WORKSHOP": {
-     "flat": 1
     }
    }
   }
@@ -134,6 +138,42 @@
    "improvements": {
     "IMPROVEMENT_WORKSHOP": {
      "percent": 100
+    }
+   }
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
     }
    }
   }

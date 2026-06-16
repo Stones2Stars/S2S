@@ -10,7 +10,16 @@
  ],
  "production": {
   "empire": {
-   "flat": 1,
+   "flat": 1
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_MISSIONARY": {
+     "percent": -25
+    }
+   },
    "military": {
     "percent": 10
    }
@@ -229,15 +238,6 @@
    "flat": 1,
    "nonStateHolyCityXP": {
     "percent": -10
-   }
-  }
- },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_MISSIONARY": {
-     "percent": -25
-    }
    }
   }
  },

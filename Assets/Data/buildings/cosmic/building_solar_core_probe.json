@@ -30,8 +30,13 @@
    ]
   }
  },
- "production": {
+ "research": {
   "city": {
+   "flat": 900
+  }
+ },
+ "buildRate": {
+  "self": {
    "percent": [
     {
      "value": 100,
@@ -42,11 +47,6 @@
      }
     }
    ]
-  }
- },
- "research": {
-  "city": {
-   "flat": 900
   }
  },
  "hurryCost": {

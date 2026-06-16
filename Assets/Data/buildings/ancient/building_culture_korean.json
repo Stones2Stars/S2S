@@ -46,36 +46,24 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CHEOMSEONGDAE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_DOSAN_SEOWON",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SONGDO_INTERNATIONAL_BUSINESS_DISTRICT",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_CHEOMSEONGDAE": {
+     "percent": 10
+    },
+    "BUILDING_DOSAN_SEOWON": {
+     "percent": 10
+    },
+    "BUILDING_SONGDO_INTERNATIONAL_BUSINESS_DISTRICT": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

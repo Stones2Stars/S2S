@@ -35,24 +35,6 @@
  "production": {
   "city": {
    "flat": 30
-  },
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_METROPOLIS",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "gold": {
@@ -63,6 +45,18 @@
  "research": {
   "city": {
    "flat": 50
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY": {
+     "percent": 10
+    },
+    "BUILDING_INTERSTELLAR_METROPOLIS": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

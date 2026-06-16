@@ -17,19 +17,6 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_PLANETARY_AWARENESS",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "gold": {
   "city": {
    "flat": -25
@@ -38,6 +25,15 @@
  "research": {
   "city": {
    "percent": 5
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_PLANETARY_AWARENESS": {
+     "percent": 10
+    }
+   }
   }
  },
  "revolution": {

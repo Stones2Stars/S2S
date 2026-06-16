@@ -10,9 +10,6 @@
  },
  "production": {
   "empire": {
-   "military": {
-    "percent": 5
-   },
    "percent": 3
   }
  },
@@ -55,6 +52,13 @@
     "CIVIC_WASTE_EXPORTATION": {
      "flat": -1
     }
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": 5
    }
   }
  },

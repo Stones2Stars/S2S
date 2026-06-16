@@ -6,6 +6,18 @@
  "excludes": [
   "TRAIT_COWARDLY"
  ],
+ "buildRate": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_COMBATANT": {
+     "percent": 20
+    },
+    "UNITCOMBAT_NAVAL_COMBATANT": {
+     "percent": 20
+    }
+   }
+  }
+ },
  "greatGeneralRate": {
   "empire": {
    "percent": 20
@@ -35,18 +47,6 @@
    },
    "captureResistance": {
     "percent": 40
-   }
-  }
- },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_COMBATANT": {
-     "percent": 20
-    },
-    "UNITCOMBAT_NAVAL_COMBATANT": {
-     "percent": 20
-    }
    }
   }
  },

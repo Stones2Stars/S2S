@@ -22,19 +22,6 @@
    "flat": 10
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_KEPLER_22B_COLONY",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "gold": {
   "city": {
    "percent": [
@@ -58,6 +45,15 @@
  "research": {
   "city": {
    "flat": 75
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_KEPLER_22B_COLONY": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

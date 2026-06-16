@@ -2,6 +2,20 @@
  "type": "PROJECT_SS_THRUSTERS",
  "description": "TXT_KEY_PROJECT_SS_THRUSTERS",
  "civilopedia": "TXT_KEY_PROJECT_SS_THRUSTERS_PEDIA",
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
  "victory": {
   "thresholds": {
    "VICTORY_SPACE_RACE": 5

@@ -32,7 +32,7 @@
    }
   }
  },
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_GRANARY": {

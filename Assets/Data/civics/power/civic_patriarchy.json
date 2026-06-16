@@ -13,9 +13,6 @@
  },
  "production": {
   "empire": {
-   "military": {
-    "percent": 10
-   },
    "percent": 4,
    "tradeRoute": {
     "percent": 2
@@ -90,6 +87,13 @@
    },
    "otherArea": {
     "percent": 3
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": 10
    }
   }
  },

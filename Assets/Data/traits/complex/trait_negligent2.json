@@ -20,6 +20,13 @@
  },
  "production": {
   "empire": {
+   "goldenAge": {
+    "flat": 2
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
    "buildings": {
     "BUILDING_STAR_FORT": {
      "percent": -25
@@ -93,9 +100,6 @@
     "BUILDING_IMPERIAL_FORTRESS": {
      "percent": -25
     }
-   },
-   "goldenAge": {
-    "flat": 2
    }
   }
  },

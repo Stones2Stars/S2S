@@ -22,50 +22,30 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_PATTAKY_OF_OBATALA",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_PATTAKY_OF_OGGUN",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_PATTAKY_OF_OLOFIN",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_PATTAKY_OF_OLOKUN",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_PATTAKY_OF_OSHOSI",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 10
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_PATTAKY_OF_OBATALA": {
+     "percent": 10
+    },
+    "BUILDING_PATTAKY_OF_OGGUN": {
+     "percent": 10
+    },
+    "BUILDING_PATTAKY_OF_OLOFIN": {
+     "percent": 10
+    },
+    "BUILDING_PATTAKY_OF_OLOKUN": {
+     "percent": 10
+    },
+    "BUILDING_PATTAKY_OF_OSHOSI": {
+     "percent": 10
+    }
+   }
   }
  },
  "happiness": {

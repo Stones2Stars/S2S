@@ -157,6 +157,9 @@
  },
  "buildRate": {
   "city": {
+   "military": {
+    "percent": 25
+   },
    "units": {
     "UNIT_ICBM": {
      "percent": 20
@@ -203,11 +206,6 @@
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "militaryProduction": {
-  "city": {
-   "percent": 25
   }
  },
  "PROPERTY_FLAMMABILITY": {

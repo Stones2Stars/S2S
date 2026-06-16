@@ -52,29 +52,21 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SNOWCASTLE_OF_KEMI",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SVALBARD_GLOBAL_SEED_VAULT",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_SNOWCASTLE_OF_KEMI": {
+     "percent": 10
+    },
+    "BUILDING_SVALBARD_GLOBAL_SEED_VAULT": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

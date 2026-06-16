@@ -6,7 +6,7 @@
  "excludes": [
   "TRAIT_SCIENTIFIC1"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_GASTRONOMY_LAB": {
@@ -274,6 +274,18 @@
    },
    "religiousAnarchy": {
     "percent": 50
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
    }
   }
  },

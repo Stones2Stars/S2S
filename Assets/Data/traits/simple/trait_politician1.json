@@ -7,7 +7,7 @@
    "TRAIT_POLITICIAN2"
   ]
  },
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_BALLROOM": {

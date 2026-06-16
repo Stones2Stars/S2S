@@ -74,7 +74,13 @@
  },
  "PROPERTY_EDUCATION": {
   "city": {
-   "flat": 0
+   "flat": {
+    "value": -2,
+    "enabled": {
+     "type": "TECH_PRINTING_PRESS",
+     "scope": "team"
+    }
+   }
   }
  },
  "cost": {

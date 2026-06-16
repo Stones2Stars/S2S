@@ -19,11 +19,23 @@
  },
  "production": {
   "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "buildRate": {
+  "empire": {
    "worldWonder": {
     "percent": -20
    },
-   "flat": 1,
-   "percent": 5
+   "unitCombats": {
+    "UNITCOMBAT_SETTLER": {
+     "percent": 50
+    },
+    "UNITCOMBAT_WORKER": {
+     "percent": 25
+    }
+   }
   }
  },
  "research": {
@@ -43,18 +55,6 @@
   "empire": {
    "cityDefense": {
     "percent": -10
-   }
-  }
- },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_SETTLER": {
-     "percent": 50
-    },
-    "UNITCOMBAT_WORKER": {
-     "percent": 25
-    }
    }
   }
  },

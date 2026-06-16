@@ -2,16 +2,26 @@
  "type": "UNIT_SPIKED_CLUBMAN",
  "description": "TXT_KEY_UNIT_SPIKED_CLUBMAN",
  "civilopedia": "TXT_KEY_UNIT_SPIKED_CLUBMAN_PEDIA",
- "production": {
-  "unit": {
-   "bonuses": {
-    "BONUS_PRIME_TIMBER": {
-     "percent": 15
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_FLINT": {
-     "percent": 15
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_FLINT",
+      "scope": "city",
+      "min": 1
+     }
     }
-   }
+   ]
   }
  },
  "strength": {

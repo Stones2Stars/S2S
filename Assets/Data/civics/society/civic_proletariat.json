@@ -35,41 +35,6 @@
     "IMPROVEMENT_HYBRID_FOREST": {
      "flat": 1
     }
-   },
-   "buildings": {
-    "BUILDING_GRANARY": {
-     "percent": 20
-    },
-    "BUILDING_MODERN_GRANARY": {
-     "percent": 20
-    },
-    "BUILDING_BUTCHERY": {
-     "percent": 20
-    },
-    "BUILDING_MEAT_PACKING_PLANT": {
-     "percent": 20
-    },
-    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE": {
-     "percent": 20
-    },
-    "BUILDING_BAKERY": {
-     "percent": 20
-    },
-    "BUILDING_FOOD_MANUFACTURING_DISTRICT": {
-     "percent": 20
-    },
-    "BUILDING_FISHERMANS_HUT": {
-     "percent": 20
-    },
-    "BUILDING_AQUAFARM": {
-     "percent": 20
-    },
-    "BUILDING_ARTESIAN_WELL": {
-     "percent": 20
-    },
-    "BUILDING_MODERN_WATERWORKS": {
-     "percent": 20
-    }
    }
   }
  },
@@ -221,6 +186,45 @@
   "empire": {
    "local": {
     "flat": -1
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_GRANARY": {
+     "percent": 20
+    },
+    "BUILDING_MODERN_GRANARY": {
+     "percent": 20
+    },
+    "BUILDING_BUTCHERY": {
+     "percent": 20
+    },
+    "BUILDING_MEAT_PACKING_PLANT": {
+     "percent": 20
+    },
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE": {
+     "percent": 20
+    },
+    "BUILDING_BAKERY": {
+     "percent": 20
+    },
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT": {
+     "percent": 20
+    },
+    "BUILDING_FISHERMANS_HUT": {
+     "percent": 20
+    },
+    "BUILDING_AQUAFARM": {
+     "percent": 20
+    },
+    "BUILDING_ARTESIAN_WELL": {
+     "percent": 20
+    },
+    "BUILDING_MODERN_WATERWORKS": {
+     "percent": 20
+    }
    }
   }
  },

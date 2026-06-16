@@ -8,13 +8,6 @@
    "HURRY_GOLD"
   ]
  },
- "production": {
-  "empire": {
-   "military": {
-    "percent": 10
-   }
-  }
- },
  "gold": {
   "empire": {
    "percent": 5,
@@ -92,6 +85,13 @@
    },
    "democracyLevel": {
     "flat": 10
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": 10
    }
   }
  },

@@ -27,8 +27,36 @@
    ]
   }
  },
- "production": {
-  "city": {
+ "buildRate": {
+  "empire": {
+   "space": {
+    "percent": 25
+   },
+   "buildings": {
+    "BUILDING_CISLUNAR_FACTORY": {
+     "percent": 10
+    },
+    "BUILDING_CISLUNAR_SPORTS_ARENA": {
+     "percent": 10
+    },
+    "BUILDING_SOLAR_POWER_SATELLITE": {
+     "percent": 10
+    },
+    "BUILDING_MILITARY_SATELLITES": {
+     "percent": 10
+    },
+    "BUILDING_COMMUNICATIONS_SATELLITE": {
+     "percent": 10
+    },
+    "BUILDING_ORBITAL_HOTEL": {
+     "percent": 10
+    },
+    "BUILDING_TOURISM_MEGACOMPLEX": {
+     "percent": 10
+    }
+   }
+  },
+  "self": {
    "percent": [
     {
      "value": 100,
@@ -36,59 +64,6 @@
       "type": "BONUS_NANOTUBES",
       "scope": "city",
       "min": 1
-     }
-    }
-   ]
-  },
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CISLUNAR_FACTORY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CISLUNAR_SPORTS_ARENA",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SOLAR_POWER_SATELLITE",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_MILITARY_SATELLITES",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_COMMUNICATIONS_SATELLITE",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ORBITAL_HOTEL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TOURISM_MEGACOMPLEX",
-      "scope": "empire"
      }
     }
    ]
@@ -102,11 +77,6 @@
  "hurryCost": {
   "city": {
    "percent": 300
-  }
- },
- "spaceProduction": {
-  "empire": {
-   "percent": 25
   }
  },
  "cost": {

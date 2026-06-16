@@ -20,6 +20,13 @@
  },
  "production": {
   "empire": {
+   "capital": {
+    "percent": -5
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
    "worldWonder": {
     "percent": 20
    },
@@ -28,9 +35,6 @@
    },
    "nationalWonder": {
     "percent": -15
-   },
-   "capital": {
-    "percent": -5
    }
   }
  },

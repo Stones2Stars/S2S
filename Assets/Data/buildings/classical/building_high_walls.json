@@ -42,8 +42,18 @@
    ]
   }
  },
- "production": {
+ "gold": {
   "city": {
+   "flat": -12
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "buildRate": {
+  "self": {
    "percent": [
     {
      "value": 100,
@@ -54,16 +64,6 @@
      }
     }
    ]
-  }
- },
- "gold": {
-  "city": {
-   "flat": -12
-  }
- },
- "culture": {
-  "city": {
-   "flat": 1
   }
  },
  "happiness": {

@@ -18,9 +18,6 @@
  },
  "production": {
   "empire": {
-   "military": {
-    "percent": 5
-   },
    "percent": 1,
    "tradeRoute": {
     "percent": 2
@@ -122,6 +119,13 @@
   "empire": {
    "distanceMod": {
     "flat": 30
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": 5
    }
   }
  },

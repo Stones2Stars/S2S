@@ -26,14 +26,16 @@
    "flat": 20
   }
  },
+ "buildRate": {
+  "city": {
+   "military": {
+    "percent": 40
+   }
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 10000
-  }
- },
- "militaryProduction": {
-  "city": {
-   "percent": 40
   }
  },
  "cost": {

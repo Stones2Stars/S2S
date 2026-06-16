@@ -12,8 +12,13 @@
    "BUILDING_PALISADE"
   ]
  },
- "production": {
+ "gold": {
   "city": {
+   "flat": -3
+  }
+ },
+ "buildRate": {
+  "self": {
    "percent": [
     {
      "value": 100,
@@ -32,11 +37,6 @@
      }
     }
    ]
-  }
- },
- "gold": {
-  "city": {
-   "flat": -3
   }
  },
  "happiness": {

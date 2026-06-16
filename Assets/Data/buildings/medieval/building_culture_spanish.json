@@ -26,43 +26,27 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ALHAMBRA",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_MAGELLANS_VOYAGE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_EL_CAMINO_DE_SANTIAGO",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_EL_ESCORIAL",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_ALHAMBRA": {
+     "percent": 10
+    },
+    "BUILDING_MAGELLANS_VOYAGE": {
+     "percent": 10
+    },
+    "BUILDING_EL_CAMINO_DE_SANTIAGO": {
+     "percent": 10
+    },
+    "BUILDING_EL_ESCORIAL": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

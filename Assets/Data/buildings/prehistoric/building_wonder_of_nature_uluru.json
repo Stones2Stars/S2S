@@ -22,24 +22,6 @@
  "production": {
   "city": {
    "flat": 3
-  },
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CAVE_PAINTINGS",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_FRESCO_MURAL",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "commerce": {
@@ -89,6 +71,18 @@
    ]
   }
  },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CAVE_PAINTINGS": {
+     "percent": 10
+    },
+    "BUILDING_FRESCO_MURAL": {
+     "percent": 10
+    }
+   }
+  }
+ },
  "happiness": {
   "city": {
    "flat": 3
@@ -111,7 +105,13 @@
  },
  "PROPERTY_TOURISM": {
   "city": {
-   "flat": 5
+   "flat": {
+    "value": 5,
+    "enabled": {
+     "type": "TECH_EXPLORATION",
+     "scope": "team"
+    }
+   }
   }
  },
  "cost": {

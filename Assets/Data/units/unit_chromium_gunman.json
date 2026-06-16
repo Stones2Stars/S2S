@@ -47,16 +47,26 @@
    ]
   }
  },
- "production": {
-  "unit": {
-   "bonuses": {
-    "BONUS_TITANIUM_WARES": {
-     "percent": 15
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_TITANIUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_STEEL_WARES": {
-     "percent": 15
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_STEEL_WARES",
+      "scope": "city",
+      "min": 1
+     }
     }
-   }
+   ]
   }
  },
  "strength": {

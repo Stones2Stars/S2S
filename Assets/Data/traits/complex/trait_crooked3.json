@@ -6,7 +6,7 @@
  "excludes": [
   "TRAIT_LAWFUL1"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_ECSTASY_LAB": {
@@ -35,6 +35,14 @@
     },
     "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
      "percent": 25
+    }
+   },
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "percent": 20
+    },
+    "UNITCOMBAT_LAW_ENFORCEMENT": {
+     "percent": -20
     }
    }
   }
@@ -128,18 +136,6 @@
    }
   }
  },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_CRIMINAL": {
-     "percent": 20
-    },
-    "UNITCOMBAT_LAW_ENFORCEMENT": {
-     "percent": -20
-    }
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -174,6 +170,18 @@
   "empire": {
    "local": {
     "flat": 1
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
    }
   }
  },

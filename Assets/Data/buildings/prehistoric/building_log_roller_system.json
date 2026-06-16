@@ -60,6 +60,13 @@
    "flat": 5
   }
  },
+ "buildRate": {
+  "city": {
+   "military": {
+    "percent": 15
+   }
+  }
+ },
  "workRate": {
   "empire": {
    "percent": 25
@@ -68,11 +75,6 @@
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "militaryProduction": {
-  "city": {
-   "percent": 15
   }
  },
  "cost": {

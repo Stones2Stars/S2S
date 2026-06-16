@@ -34,6 +34,13 @@
    "flat": -250
   }
  },
+ "buildRate": {
+  "city": {
+   "military": {
+    "percent": -50
+   }
+  }
+ },
  "health": {
   "city": {
    "flat": 10
@@ -49,11 +56,6 @@
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "militaryProduction": {
-  "city": {
-   "percent": -50
   }
  },
  "PROPERTY_AIR_POLLUTION": {

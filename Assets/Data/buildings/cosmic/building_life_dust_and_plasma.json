@@ -25,24 +25,6 @@
  "production": {
   "city": {
    "flat": 25
-  },
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SMALL_MAGELLANIC_CLOUD_COLONY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_LARGE_MAGELLANIC_CLOUD_COLONY",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "commerce": {
@@ -62,6 +44,18 @@
      }
     }
    ]
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_SMALL_MAGELLANIC_CLOUD_COLONY": {
+     "percent": 10
+    },
+    "BUILDING_LARGE_MAGELLANIC_CLOUD_COLONY": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

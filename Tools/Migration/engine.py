@@ -143,10 +143,16 @@ PROP_SOURCE_UNIT = {"PROPERTYSOURCE_DECAY": "percent",            # % move towar
 
 def property_source_v3(src):
     """Convert one <PropertySource> to (property, scope, unit, value) in the v3 modifier vocabulary, or None.
-    value = an int, OR {value, per:{type,scope}} when scaled by a per-count ATTRIBUTE (POPULATION). DECAY->percent
-    (iPercent), CONSTANT/ATTRIBUTE_CONSTANT->flat (iAmountPerTurn; Mult or AttributeType => `per`). scope from
-    GameObjectType. RELATION_ASSOCIATED (a source applying to the player's associated cities) is the cascade
-    default and dropped; any OTHER RelationType raises (none exist today — surface it rather than silently mis-map)."""
+    Property is a YIELD-LIKE family (owner 2026-06-16: "classed like any other yield") — the JSON just emits plain
+    modifiers onto the property; it does NOT know or care about the equilibrium. The ENGINE owns the toward-targetLevel
+    handling (§0.6; targetLevel is property-specific in sign — +ve for EDUCATION, -ve for CRIME/DISEASE). Generation
+    methods map onto the v3 vocabulary: CONSTANT/ATTRIBUTE_CONSTANT->flat (iAmountPerTurn); DECAY->percent (iPercent; all
+    decay sources today — though a decay magnitude can equally be flat/other, the unit is just read like any modifier);
+    attribute-scaled (AttributeType, Mult(attr,C), or Div(Mult(attr,C),D)) -> `per`:{type,each,scope} (each=D, the Div
+    quantum); an <Active> BoolExpr gate -> `enabled` (via boolexpr.convert_field). scope from GameObjectType, DEFAULT
+    `city` when absent (property effects are city-level; an empire-wide feel is emulated by autobuilding a per-city copy,
+    NOT an empire deposit — owner; a number move to empire/team level in the #421 team-buildings cleanup).
+    RELATION_ASSOCIATED/SAME_PLOT are the containment default (dropped); any OTHER raises."""
     prop = text(src.find("PropertyType"))
     if not prop or prop == "NONE":
         return None
@@ -164,7 +170,8 @@ def property_source_v3(src):
         raise ValueError("property_source_v3: unhandled PropertySourceType %r on %s" % (stype, prop))
     scope = PROP_SCOPE.get(text(src.find("GameObjectType")), "city")
     per_type = None
-    if unit == "percent":
+    each = 1
+    if unit == "percent":                                      # DECAY: % move toward targetLevel (the decaying rule)
         v = text(src.find("iPercent"))
         value = int(v) if is_int(v) else None
     else:
@@ -175,6 +182,20 @@ def property_source_v3(src):
         if attr is not None:                                   # ATTRIBUTE_CONSTANT: value=amount, per=attribute
             per_type = text(attr)
             value = int(text(amt)) if (amt is not None and is_int(text(amt))) else None
+        elif amt is not None and amt.find("Div") is not None:  # CONSTANT with Div(...) -> per (each = the divisor)
+            div = amt.find("Div")
+            mult = div.find("Mult")
+            dcon = div.find("Constant")
+            each = int(text(dcon)) if (dcon is not None and is_int(text(dcon))) else 1
+            if mult is not None:                               # Div(Mult(attr,C), D): value=C, each=D
+                per_type = text(mult.find("AttributeType"))
+                c = text(mult.find("Constant"))
+                value = int(c) if is_int(c) else None
+            elif div.find("AttributeType") is not None:        # Div(attr, D): 1 per D of attr -> value=1, each=D
+                per_type = text(div.find("AttributeType"))
+                value = 1
+            else:
+                raise ValueError("property_source_v3: unhandled Div shape on %s" % prop)
         elif amt is not None and amt.find("Mult") is not None:  # CONSTANT with Mult(attribute, constant)
             mult = amt.find("Mult")
             per_type = text(mult.find("AttributeType"))
@@ -184,13 +205,29 @@ def property_source_v3(src):
             value = int(text(amt)) if (amt is not None and is_int(text(amt))) else None
     if value is None or value == 0:
         return None
-    if per_type:                                               # ATTRIBUTE_POPULATION -> POPULATION catch-all token
-        # `each` = "per how many of `type`" (the quantum). The property engine computes attribute x amount
-        # (CvPropertySource: getAttribute(eAttr) * iAmountPerTurn) => per EACH 1 of the attribute, so each=1 here;
-        # `value` is the per-quantum magnitude. effect = value * (count(type) / each). (modifier-spec §4)
+    if per_type and value is not None:                         # ATTRIBUTE_X -> X catch-all token; `each` = the quantum
+        # REDUCE to a sensible rate (owner 2026-06-16): the XML's Mult(attr,1)/Div(...,-N) contortions (written to fit
+        # the formula-node tree) collapse to "value per `each` of type" — positive `each`, sign on `value`, lowest
+        # terms. Same rational => identical integer result; effect = value * (count(type)/each). (modifier-spec §4)
+        if each < 0:
+            value, each = -value, -each
+        if each:
+            from math import gcd
+            g = gcd(abs(value), each) or 1
+            value, each = value // g, each // g
         value = OrderedDict([("value", value),
                              ("per", OrderedDict([("type", per_type.replace("ATTRIBUTE_", "")),
-                                                  ("each", 1), ("scope", scope)]))])
+                                                  ("each", each), ("scope", scope)]))])
+    # Active gate (a BoolExpr the source fires under) -> `enabled` (owner 2026-06-16: uniform v3, NOT a raw `active`).
+    active = src.find("Active")
+    if active is not None and len(active):
+        import boolexpr                                        # lazy: boolexpr imports engine (avoid an import cycle)
+        gate = boolexpr.convert_field(active)
+        if gate is not None:
+            if isinstance(value, dict):
+                value["enabled"] = gate
+            else:
+                value = OrderedDict([("value", value), ("enabled", gate)])
     return prop, scope, unit, value
 
 

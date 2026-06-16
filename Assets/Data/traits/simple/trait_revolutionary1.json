@@ -41,6 +41,18 @@
    }
   }
  },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 5,
+     "scope": "city"
+    }
+   }
+  }
+ },
  "grants": {
   "freePromotions": {
    "PROMOTION_INSTIGATOR1": [

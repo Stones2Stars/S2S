@@ -2,7 +2,7 @@
  "type": "TRAIT_AGGRESSIVE",
  "description": "TXT_KEY_TRAIT_AGGRESSIVE",
  "civilopedia": "TXT_KEY_TRAIT_AGGRESSIVE_PEDIA",
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_BARRACKS": {
@@ -113,7 +113,14 @@
  },
  "PROPERTY_CRIME": {
   "city": {
-   "flat": 5
+   "flat": {
+    "value": 5,
+    "enabled": {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 301
+    }
+   }
   }
  },
  "grants": {

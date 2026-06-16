@@ -28,26 +28,24 @@
  },
  "production": {
   "city": {
-   "percent": [
-    20,
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SKYSCRAPER",
-      "scope": "city"
-     }
+   "percent": 20
+  }
+ },
+ "buildRate": {
+  "city": {
+   "military": {
+    "percent": -15
+   },
+   "buildings": {
+    "BUILDING_SKYSCRAPER": {
+     "percent": 10
     }
-   ]
+   }
   }
  },
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "militaryProduction": {
-  "city": {
-   "percent": -15
   }
  },
  "cost": {

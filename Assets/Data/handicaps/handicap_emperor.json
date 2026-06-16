@@ -201,25 +201,25 @@
  },
  "PROPERTY_CRIME": {
   "city": {
-   "perTurn": {
-    "mult": [
-     {
-      "attribute": "ATTRIBUTE_POPULATION"
-     },
-     4
-    ]
+   "flat": {
+    "value": 4,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
    }
   }
  },
  "PROPERTY_EDUCATION": {
   "city": {
-   "perTurn": {
-    "mult": [
-     {
-      "attribute": "ATTRIBUTE_POPULATION"
-     },
-     -3
-    ]
+   "flat": {
+    "value": -3,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
    }
   }
  },

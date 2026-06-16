@@ -53,32 +53,38 @@ static const char* INTRINSIC[] = {
 };
 static const char* SCOPES[] = {
     "world", "team", "empire", "area", "city", "plot",
-    "improvement", "feature", "terrain", "route", "building", "specialist", "unit", 0
+    "improvement", "feature", "terrain", "route", "building", "specialist", "unit",
+    "self", 0  // "self" = the entity's OWN production/construction (buildRate.self — build THIS faster); owner 2026-06-16
 };
 static const char* UNITS[] = { "flat", "percent", "multiplier", "postMultiplier", "rawPercent", 0 };
 static const char* ATOM_KEYS[] = { "type", "scope", "min", "max", "connection", "role", "each", 0 };
 static const char* PER_KEYS[] = { "type", "anyOf", "each", "scope", 0 };
 static const char* ENABLES_BUCKETS[] = {
     "buildings", "units", "builds", "techs", "civics", "religions", "corporations", "projects",
-    "processes", "promotions", "promotionLines", "heritages", "specialBuildings", "improvements",
-    "bonuses", "routes", "votes", "hurries", "traits", "specialists", "outcomes", 0
+    "processes", "promotions", "promotionLines", "heritages", "specialBuildings", "specialBuildingsWaived",
+    "improvements", "bonuses", "routes", "votes", "hurries", "traits", "specialists", "outcomes", 0
 };
 static const char* PRED_BARE[] = {
     "IS_WATER", "IS_FRESHWATER", "IS_FLATLANDS", "IS_HILLS", "IS_PEAK", "HAS_RIVER", "HAS_IRRIGATION",
     "COASTAL_LAND", "IS_COASTAL", "IS_CAPITAL", "HAS_POWER", "HAS_STATE_RELIGION", "STATE_RELIGION_IN_CITY",
-    "IS_CITY", 0
+    "IS_CITY",
+    "HAS_FEATURE", 0  // dual-mode: bare = "has ANY feature"; {HAS_FEATURE:X} (in PRED_PARAM) = "has this one" (hole #2)
 };
 static const char* PRED_PARAM[] = {
     "HAS_FEATURE", "HAS_TERRAIN", "HAS_BONUS", "HAS_RELIGION", "STATE_RELIGION", "HOLY_CITY",
     "HAS_CORPORATION", "latitude", "natureYield", "workedBy", "existedFor", 0
 };
+// {terrain|feature|bonus:[Type,...]} = membership SUGAR; desugars to any-of HAS_<KEY> (owner 2026-06-16, hole #1).
+// HAS_TERRAIN/HAS_FEATURE/HAS_BONUS (in PRED_PARAM) are the canonical single-valued predicates; the list is the
+// compact authoring form (improvement placement make-valid sets).
+static const char* MEMBERSHIP[] = { "terrain", "feature", "bonus", 0 };
 
 static std::set<std::string> mk(const char** a) {
     std::set<std::string> s;
     for (int i = 0; a[i]; ++i) s.insert(a[i]);
     return s;
 }
-static std::set<std::string> S_RESERVED, S_INTRINSIC, S_SCOPES, S_UNITS, S_ATOMK, S_PERK, S_BUCKETS, S_PBARE, S_PPARAM;
+static std::set<std::string> S_RESERVED, S_INTRINSIC, S_SCOPES, S_UNITS, S_ATOMK, S_PERK, S_BUCKETS, S_PBARE, S_PPARAM, S_MEMBERSHIP;
 static bool has(const std::set<std::string>& s, const std::string& k) { return s.find(k) != s.end(); }
 
 // ===================== report =====================
@@ -132,7 +138,14 @@ static void check_condition(const picojson::value& v, const std::string& path, R
     if (comb) return;
     if (o.find("type") != o.end()) { check_atom(o, path, r); return; }
     // else: a parameterized predicate {PRED: param}
-    if (o.size() == 1) { std::string k = o.begin()->first; r.predicates[k] += 1; if (!has(S_PPARAM, k)) r.flag(path, "unknown predicate object '" + k + "'"); return; }
+    if (o.size() == 1) {
+        std::string k = o.begin()->first;
+        if (has(S_MEMBERSHIP, k)) {  // {terrain|feature|bonus:[...]} membership sugar = any-of HAS_<KEY> (#1, owner 2026-06-16)
+            if (!o.begin()->second.is<picojson::array>()) r.flag(path, "membership '" + k + "' not array");
+            return;
+        }
+        r.predicates[k] += 1; if (!has(S_PPARAM, k)) r.flag(path, "unknown predicate object '" + k + "'"); return;
+    }
     r.flag(path, "unrecognized condition object");
 }
 
@@ -256,9 +269,14 @@ static std::string render_cond(const picojson::value& v) {
     if (mget(o, "enabled")) conj.push_back("only while " + render_cond(*mget(o, "enabled")));
     if (!conj.empty()) return join(conj, " AND ");
     if (mget(o, "type")) return render_atom(o);
-    if (o.size() == 1) {   // {PRED: param} — param may be a value, or an object like {min:N}/{min,max}
+    if (o.size() == 1) {   // {PRED: param} — param may be a value, an object {min:N}, or a membership list [Type,...]
         const std::string& k = o.begin()->first;
         const picojson::value& p = o.begin()->second;
+        if (p.is<picojson::array>()) {   // {terrain|feature|bonus:[...]} membership sugar
+            const picojson::array& a = p.get<picojson::array>();
+            std::vector<std::string> items; for (size_t i = 0; i < a.size(); ++i) items.push_back(sval(a[i]));
+            return k + " one of [" + join(items, ", ") + "]";
+        }
         if (p.is<picojson::object>()) {
             const picojson::object& po = p.get<picojson::object>();
             std::string s = k;
@@ -373,7 +391,7 @@ static void print_map(const char* title, const std::map<std::string, int>& m) {
 int main(int argc, char** argv) {
     S_RESERVED = mk(RESERVED_SECTIONS); S_INTRINSIC = mk(INTRINSIC); S_SCOPES = mk(SCOPES);
     S_UNITS = mk(UNITS); S_ATOMK = mk(ATOM_KEYS); S_PERK = mk(PER_KEYS); S_BUCKETS = mk(ENABLES_BUCKETS);
-    S_PBARE = mk(PRED_BARE); S_PPARAM = mk(PRED_PARAM);
+    S_PBARE = mk(PRED_BARE); S_PPARAM = mk(PRED_PARAM); S_MEMBERSHIP = mk(MEMBERSHIP);
 
     std::string root = "Assets/Data", renderType; bool doComplex = false;
     for (int i = 1; i < argc; ++i) {

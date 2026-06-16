@@ -2,16 +2,26 @@
  "type": "UNIT_WOODEN_SPEARMAN",
  "description": "TXT_KEY_UNIT_WOODEN_SPEARMAN",
  "civilopedia": "TXT_KEY_UNIT_WOODEN_SPEARMAN_PEDIA",
- "production": {
-  "unit": {
-   "bonuses": {
-    "BONUS_WOOD": {
-     "percent": 15
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_PRIME_TIMBER": {
-     "percent": 15
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
     }
-   }
+   ]
   }
  },
  "strength": {

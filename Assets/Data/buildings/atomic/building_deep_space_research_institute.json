@@ -37,14 +37,16 @@
    "flat": 10
   }
  },
+ "buildRate": {
+  "city": {
+   "space": {
+    "percent": 20
+   }
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "spaceProduction": {
-  "city": {
-   "percent": 20
   }
  },
  "PROPERTY_EDUCATION": {

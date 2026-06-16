@@ -50,24 +50,24 @@
   }
  },
  "PROPERTY_EDUCATION": {
-  "empire": [
-   {
-    "perTurn": 1,
-    "active": [
-     {
-      "GOM_TECH": "TECH_EDUCATION"
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_EDUCATION",
+      "scope": "team"
      }
-    ]
-   },
-   {
-    "perTurn": 1,
-    "active": [
-     {
-      "GOM_TECH": "TECH_BIOLOGY"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_BIOLOGY",
+      "scope": "team"
      }
-    ]
-   }
-  ]
+    }
+   ]
+  }
  },
  "ui": {
   "art": {

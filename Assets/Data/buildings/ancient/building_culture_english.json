@@ -47,113 +47,57 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_GLOBE_THEATRE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_HADRIANS_WALL",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ISAAC_NEWTONS_COLLEGE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_EU_OXFORD_UNIVERSITY",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_STONEHENGE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_EAST_INDIA_COMPANY",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_KINGS_CRUSADE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BIG_BEN",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_FIELD_OF_THE_CLOTH_OF_GOLD",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_LONDON_EYE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_221B_BAKER_STREET",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CRYSTAL_PALACE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SCARBOROUGH_FAIR",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_WESTMINSTER_ABBEY",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_GLOBE_THEATRE": {
+     "percent": 10
+    },
+    "BUILDING_HADRIANS_WALL": {
+     "percent": 10
+    },
+    "BUILDING_ISAAC_NEWTONS_COLLEGE": {
+     "percent": 10
+    },
+    "BUILDING_EU_OXFORD_UNIVERSITY": {
+     "percent": 10
+    },
+    "BUILDING_STONEHENGE": {
+     "percent": 10
+    },
+    "BUILDING_EAST_INDIA_COMPANY": {
+     "percent": 10
+    },
+    "BUILDING_KINGS_CRUSADE": {
+     "percent": 10
+    },
+    "BUILDING_BIG_BEN": {
+     "percent": 10
+    },
+    "BUILDING_FIELD_OF_THE_CLOTH_OF_GOLD": {
+     "percent": 10
+    },
+    "BUILDING_LONDON_EYE": {
+     "percent": 10
+    },
+    "BUILDING_221B_BAKER_STREET": {
+     "percent": 10
+    },
+    "BUILDING_CRYSTAL_PALACE": {
+     "percent": 10
+    },
+    "BUILDING_SCARBOROUGH_FAIR": {
+     "percent": 10
+    },
+    "BUILDING_WESTMINSTER_ABBEY": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

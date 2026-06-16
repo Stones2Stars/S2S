@@ -9,6 +9,13 @@
    }
   }
  },
+ "buildRate": {
+  "city": {
+   "military": {
+    "percent": -20
+   }
+  }
+ },
  "happiness": {
   "city": {
    "flat": -2
@@ -17,11 +24,6 @@
  "revolution": {
   "city": {
    "flat": 25
-  }
- },
- "militaryProduction": {
-  "city": {
-   "percent": -20
   }
  },
  "world": {

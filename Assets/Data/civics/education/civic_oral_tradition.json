@@ -8,33 +8,6 @@
    "BUILDING_CREATION_MYTH"
   ]
  },
- "production": {
-  "empire": {
-   "buildings": {
-    "BUILDING_STORYTELLER": {
-     "percent": 20
-    },
-    "BUILDING_KNOWLEDGE_INHERITANCE": {
-     "percent": 20
-    },
-    "BUILDING_SCHOOL_OF_SCRIBES": {
-     "percent": 20
-    },
-    "BUILDING_LIBRARY": {
-     "percent": 20
-    },
-    "BUILDING_LYCEUM": {
-     "percent": 20
-    },
-    "BUILDING_ELEMENTARY_SCHOOL": {
-     "percent": 20
-    },
-    "BUILDING_HOLOGRAPHIC_SCHOOL": {
-     "percent": 20
-    }
-   }
-  }
- },
  "gold": {
   "empire": {
    "percent": -1,
@@ -61,6 +34,33 @@
  "espionage": {
   "empire": {
    "percent": -1
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_STORYTELLER": {
+     "percent": 20
+    },
+    "BUILDING_KNOWLEDGE_INHERITANCE": {
+     "percent": 20
+    },
+    "BUILDING_SCHOOL_OF_SCRIBES": {
+     "percent": 20
+    },
+    "BUILDING_LIBRARY": {
+     "percent": 20
+    },
+    "BUILDING_LYCEUM": {
+     "percent": 20
+    },
+    "BUILDING_ELEMENTARY_SCHOOL": {
+     "percent": 20
+    },
+    "BUILDING_HOLOGRAPHIC_SCHOOL": {
+     "percent": 20
+    }
+   }
   }
  },
  "PROPERTY_EDUCATION": {

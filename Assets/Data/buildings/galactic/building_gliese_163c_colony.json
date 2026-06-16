@@ -48,19 +48,6 @@
    "flat": 5
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_CAPITOL",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "commerce": {
   "city": {
    "flat": 20
@@ -74,6 +61,15 @@
  "culture": {
   "city": {
    "flat": 10
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_CAPITOL": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

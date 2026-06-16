@@ -29,31 +29,21 @@
  "production": {
   "city": {
    "flat": 50
-  },
+  }
+ },
+ "buildRate": {
   "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
-      "scope": "empire"
-     }
+   "buildings": {
+    "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_MINING_PLANET",
-      "scope": "empire"
-     }
+    "BUILDING_INTERSTELLAR_MINING_PLANET": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_ARTIFICIAL_MOON",
-      "scope": "empire"
-     }
+    "BUILDING_INTERSTELLAR_ARTIFICIAL_MOON": {
+     "percent": 10
     }
-   ]
+   }
   }
  },
  "hurryCost": {

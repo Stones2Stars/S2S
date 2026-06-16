@@ -39,19 +39,6 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_DEEP_SPACE_SOLAR_IMPORTER_EXPORTER",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "commerce": {
   "city": {
    "flat": 10
@@ -60,6 +47,15 @@
  "research": {
   "city": {
    "flat": 50
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_DEEP_SPACE_SOLAR_IMPORTER_EXPORTER": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

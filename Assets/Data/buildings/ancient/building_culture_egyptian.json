@@ -40,57 +40,33 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_THE_GREAT_PYRAMID",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_THE_GREAT_LIGHTHOUSE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_THE_GREAT_LIBRARY",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_THE_GREAT_SPHINX",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ABU_SIMBEL",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ROSETTA_STONE",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_THE_GREAT_PYRAMID": {
+     "percent": 10
+    },
+    "BUILDING_THE_GREAT_LIGHTHOUSE": {
+     "percent": 10
+    },
+    "BUILDING_THE_GREAT_LIBRARY": {
+     "percent": 10
+    },
+    "BUILDING_THE_GREAT_SPHINX": {
+     "percent": 10
+    },
+    "BUILDING_ABU_SIMBEL": {
+     "percent": 10
+    },
+    "BUILDING_ROSETTA_STONE": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

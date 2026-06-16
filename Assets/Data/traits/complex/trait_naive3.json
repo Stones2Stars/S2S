@@ -6,7 +6,7 @@
  "excludes": [
   "TRAIT_DECEIVER1"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_ELECTRONIC_SECURITY_SYSTEM": {
@@ -59,6 +59,11 @@
     },
     "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
      "percent": -25
+    }
+   },
+   "unitCombats": {
+    "UNITCOMBAT_SPY": {
+     "percent": -20
     }
    }
   }
@@ -168,15 +173,6 @@
    }
   }
  },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_SPY": {
-     "percent": -20
-    }
-   }
-  }
- },
  "durations": {
   "empire": {
    "civicAnarchy": {
@@ -191,6 +187,30 @@
    },
    "attitude": {
     "flat": 1
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
    }
   }
  },

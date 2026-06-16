@@ -333,9 +333,12 @@ resource/bonus**. Authored on the target, scope-tagged per clause:
     TAG_COASTAL`→`IS_COASTAL`** (a bare city-is-coastal predicate, `CvCity::isCoastal`), `And`→`all`, `Or`→`any`,
     `GreaterEqual(ATTRIBUTE_POPULATION,N)`→`{type:POPULATION,scope:city,min:N}`. The converter RAISES on any node/GOM/tag
     outside this set (so a future module addition is caught, never silently mis-converted — owner: "if parsing is too
-    cumbersome we hand-recreate with grants by hand"). ⚑ **PHASE-F RECONCILE:** `HAS_FEATURE`/`HAS_TERRAIN`/`IS_COASTAL`
-    DIVERGE from Improvement #22's placement-gate forms (`{feature:[…]}`/`{terrain:[…]}` membership + `COASTAL_LAND`
-    plot predicate) — same underlying systems, two surfaces; unify in the Phase-F predicate-modularity pass.
+    cumbersome we hand-recreate with grants by hand"). ✅ **MEMBERSHIP RECONCILE — RESOLVED 2026-06-16 (owner, hole #1):**
+    `HAS_TERRAIN`/`HAS_FEATURE`/`HAS_BONUS` are the **canonical** single-valued predicates (uniform w/ `HAS_RELIGION`/
+    `HAS_CORPORATION`); Improvement #22's `{terrain|feature|bonus:[…]}` is the compact **membership SUGAR** desugaring to
+    `any`-of-the-predicate (no data churn — the lists stay). `COASTAL_LAND` is UNUSED in real data (0) → moot; `IS_COASTAL`
+    (`CvCity::isCoastal`, city-coastal) stays, distinct from any plot predicate. Bare `HAS_FEATURE` ("has ANY feature")
+    coexists with the list ("one of THESE"). Cleared 229 conformance flags. (data-model-spec §2.5.)
 - **PREDICATES ARE ORGANIZED BY SYSTEM — each is a system's ISOLATED QUERY-SURFACE (owner, 2026-06-16).** A system
   exposes its runtime state through its own predicate(s), which any data references to gate on that system *without
   coupling to its internals*: `HAS_RIVER` (river), `HAS_RELIGION`/`STATE_RELIGION`/`HOLY_CITY` (religion),

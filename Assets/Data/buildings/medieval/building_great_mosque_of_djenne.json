@@ -46,16 +46,6 @@
  },
  "production": {
   "city": {
-   "percent": [
-    {
-     "value": 100,
-     "enabled": {
-      "type": "BONUS_STONE",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ],
    "terrains": {
     "TERRAIN_DESERT": {
      "flat": 2
@@ -64,206 +54,6 @@
      "flat": 1
     }
    }
-  },
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_JEWISH_SYNAGOGUE",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ISLAMIC_MOSQUE",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_HINDU_MANDIR",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BUDDHIST_STUPA",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CONFUCIAN_ACADEMY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CHRISTIAN_CATHEDRAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TAOIST_PAGODA",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_HELLENIC_PANTHEON",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ZOROASTRIAN_PANTHEON",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TEMPLE_OF_MUT",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TEMPLE_OF_TLALOC",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_VOODOO_MARKET",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_EJE_SONG",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_KING_GESAR_SONG",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TENGRI_SONG",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SIKH_CATHEDRAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SHINTO_JINGU",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SPIRITS_ALLIANCE",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SPIRITS_LEGACY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SCIENTOLOGY_CATHEDRAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_JAIN_CATHEDRAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_NATURE_ALLIANCE",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_NATURE_LEGACY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CAO_DAI_CATHEDRAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CANAANITE_CATHEDRAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BAHAI_DAR_BE_MEHR",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ASATRU_CATHEDRAL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ANDEAN_CATHEDRAL",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "commerce": {
@@ -291,6 +81,108 @@
      }
     }
    ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_JEWISH_SYNAGOGUE": {
+     "percent": 10
+    },
+    "BUILDING_ISLAMIC_MOSQUE": {
+     "percent": 10
+    },
+    "BUILDING_HINDU_MANDIR": {
+     "percent": 10
+    },
+    "BUILDING_BUDDHIST_STUPA": {
+     "percent": 10
+    },
+    "BUILDING_CONFUCIAN_ACADEMY": {
+     "percent": 10
+    },
+    "BUILDING_CHRISTIAN_CATHEDRAL": {
+     "percent": 10
+    },
+    "BUILDING_TAOIST_PAGODA": {
+     "percent": 10
+    },
+    "BUILDING_HELLENIC_PANTHEON": {
+     "percent": 10
+    },
+    "BUILDING_ZOROASTRIAN_PANTHEON": {
+     "percent": 10
+    },
+    "BUILDING_TEMPLE_OF_MUT": {
+     "percent": 10
+    },
+    "BUILDING_TEMPLE_OF_TLALOC": {
+     "percent": 10
+    },
+    "BUILDING_VOODOO_MARKET": {
+     "percent": 10
+    },
+    "BUILDING_EJE_SONG": {
+     "percent": 10
+    },
+    "BUILDING_KING_GESAR_SONG": {
+     "percent": 10
+    },
+    "BUILDING_TENGRI_SONG": {
+     "percent": 10
+    },
+    "BUILDING_SIKH_CATHEDRAL": {
+     "percent": 10
+    },
+    "BUILDING_SHINTO_JINGU": {
+     "percent": 10
+    },
+    "BUILDING_SPIRITS_ALLIANCE": {
+     "percent": 10
+    },
+    "BUILDING_SPIRITS_LEGACY": {
+     "percent": 10
+    },
+    "BUILDING_SCIENTOLOGY_CATHEDRAL": {
+     "percent": 10
+    },
+    "BUILDING_JAIN_CATHEDRAL": {
+     "percent": 10
+    },
+    "BUILDING_NATURE_ALLIANCE": {
+     "percent": 10
+    },
+    "BUILDING_NATURE_LEGACY": {
+     "percent": 10
+    },
+    "BUILDING_CAO_DAI_CATHEDRAL": {
+     "percent": 10
+    },
+    "BUILDING_CANAANITE_CATHEDRAL": {
+     "percent": 10
+    },
+    "BUILDING_BAHAI_DAR_BE_MEHR": {
+     "percent": 10
+    },
+    "BUILDING_ASATRU_CATHEDRAL": {
+     "percent": 10
+    },
+    "BUILDING_ANDEAN_CATHEDRAL": {
+     "percent": 10
+    }
+   }
   }
  },
  "greatPeopleRate": {

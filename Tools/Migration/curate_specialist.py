@@ -112,20 +112,23 @@ def _unit_combat_xp(node, fam):
 
 
 def _properties(node, props):
+    """PropertyManipulators -> PROPERTY_X.<scope>.<unit> via the shared v3 converter (property = a yield-like family;
+    CONSTANT->flat, DECAY->percent, attribute-scaled->per [reduced], Active BoolExpr->enabled). Multiple sources to one
+    (prop,scope,unit) accumulate as a LIST of entries; a lone source stays a scalar."""
     for src in node:
         if src.tag != "PropertySource":
             continue
-        cp = engine.clean_property_source(src)
-        prop, amount = cp.get("property"), cp.get("amountPerTurn")
-        if not prop or amount in (None, "", {}):
+        conv = engine.property_source_v3(src)
+        if conv is None:
             continue
-        unit = SOURCE_UNIT.get(cp.get("source", ""), str(cp.get("source", "")).lower())
-        dep = OrderedDict()
-        dep[unit] = amount
-        gate = cp.get("Active")
-        if gate not in (None, "", [], {}):
-            dep["active"] = gate
-        props.setdefault(prop, {}).setdefault("city", []).append(dep)
+        prop, scope, unit, value = conv
+        leaf = props.setdefault(prop, OrderedDict()).setdefault(scope, OrderedDict())
+        if unit in leaf:
+            if not isinstance(leaf[unit], list):
+                leaf[unit] = [leaf[unit]]
+            leaf[unit].append(value)
+        else:
+            leaf[unit] = value
 
 
 def curate(typ, rec, boosts):

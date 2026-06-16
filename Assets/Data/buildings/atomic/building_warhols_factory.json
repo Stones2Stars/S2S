@@ -18,26 +18,6 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ART_GALLERY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ART_PATRONAGE",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "gold": {
   "empire": {
    "buildings": {
@@ -69,6 +49,18 @@
     },
     "SPECIALIST_GREAT_ARTIST": {
      "flat": 4
+    }
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_ART_GALLERY": {
+     "percent": 10
+    },
+    "BUILDING_ART_PATRONAGE": {
+     "percent": 10
     }
    }
   }

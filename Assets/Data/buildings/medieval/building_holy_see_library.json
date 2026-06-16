@@ -26,20 +26,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 100,
-     "enabled": {
-      "type": "BONUS_MARBLE",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ]
-  }
- },
  "research": {
   "city": {
    "flat": 4,
@@ -64,6 +50,20 @@
  "espionage": {
   "city": {
    "percent": 50
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
   }
  },
  "happiness": {

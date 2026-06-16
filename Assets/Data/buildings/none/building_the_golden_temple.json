@@ -2,20 +2,6 @@
  "type": "BUILDING_THE_GOLDEN_TEMPLE",
  "description": "TXT_KEY_BUILDING_THE_GOLDEN_TEMPLE",
  "civilopedia": "TXT_KEY_BUILDING_THE_GOLDEN_TEMPLE_PEDIA",
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 100,
-     "enabled": {
-      "type": "BONUS_GOLD_WARES",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": [
@@ -26,6 +12,20 @@
       "existedFor": {
        "min": 1000
       }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_GOLD_WARES",
+      "scope": "city",
+      "min": 1
      }
     }
    ]

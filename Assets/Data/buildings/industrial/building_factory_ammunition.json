@@ -64,14 +64,16 @@
    "flat": 5
   }
  },
+ "buildRate": {
+  "city": {
+   "military": {
+    "percent": 10
+   }
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "militaryProduction": {
-  "city": {
-   "percent": 10
   }
  },
  "PROPERTY_FLAMMABILITY": {

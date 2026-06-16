@@ -48,11 +48,11 @@
   "city": {
    "buildings": {
     "BUILDING_UNIVERSITY": {
-     "flat": [
-      {
-       "SPECIALIST_SCIENTIST": 1
+     "specialists": {
+      "SPECIALIST_SCIENTIST": {
+       "flat": 1
       }
-     ]
+     }
     }
    }
   }

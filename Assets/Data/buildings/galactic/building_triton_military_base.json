@@ -25,48 +25,32 @@
    ]
   }
  },
- "production": {
+ "buildRate": {
+  "city": {
+   "military": {
+    "percent": 100
+   }
+  },
   "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY",
-      "scope": "empire"
-     }
+   "buildings": {
+    "BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_DEEP_SPACE_DEATH_RAY",
-      "scope": "empire"
-     }
+    "BUILDING_DEEP_SPACE_DEATH_RAY": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_DEEP_SPACE_CLOAKING",
-      "scope": "empire"
-     }
+    "BUILDING_DEEP_SPACE_CLOAKING": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_DEEP_SPACE_DOCKING_BAY",
-      "scope": "empire"
-     }
+    "BUILDING_DEEP_SPACE_DOCKING_BAY": {
+     "percent": 10
     }
-   ]
+   }
   }
  },
  "hurryCost": {
   "city": {
    "percent": 10000
-  }
- },
- "militaryProduction": {
-  "city": {
-   "percent": 100
   }
  },
  "cost": {

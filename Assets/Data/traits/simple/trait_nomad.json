@@ -40,6 +40,15 @@
  },
  "production": {
   "empire": {
+   "improvements": {
+    "IMPROVEMENT_WETLANDS_CAMP": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
    "buildings": {
     "BUILDING_GER": {
      "percent": 20
@@ -85,11 +94,6 @@
     },
     "BUILDING_FALCONRY_SCHOOL": {
      "percent": 20
-    }
-   },
-   "improvements": {
-    "IMPROVEMENT_WETLANDS_CAMP": {
-     "flat": 1
     }
    }
   }
@@ -169,6 +173,18 @@
     },
     "BUILD_HUNTING_PRESERVE": {
      "percent": 50
+    }
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 3,
+     "scope": "city"
     }
    }
   }

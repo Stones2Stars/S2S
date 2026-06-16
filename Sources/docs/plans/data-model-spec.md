@@ -76,10 +76,20 @@ none-present). Leaves are one of:
 - **parameterized** `{PRED: param}`: `{HAS_FEATURE:FEATURE_X}` · `{HAS_TERRAIN:TERRAIN_X}` · `{HAS_BONUS:BONUS_X}` ·
   `{HAS_RELIGION:RELIGION_X}` · `{STATE_RELIGION:RELIGION_X}` · `{HOLY_CITY:RELIGION_X}` · `{HAS_CORPORATION:CORP_X}` ·
   `{latitude:{min,max}}` · `{natureYield:{…}}` · `{workedBy:SELF}`.
+- **membership SUGAR** `{terrain|feature|bonus:[Type,…]}` — the compact authoring form for "the plot's terrain/feature/
+  bonus is ONE OF these" (improvement placement make-valid sets, e.g. valid on 17 terrains). **Desugars to `any`-of-the
+  canonical single-valued predicate** (`{terrain:[A,B]}` ≡ `any:[{HAS_TERRAIN:A},{HAS_TERRAIN:B}]`). The `HAS_TERRAIN`/
+  `HAS_FEATURE`/`HAS_BONUS` predicate is canonical (one engine predicate per system, uniform w/ `HAS_RELIGION`/
+  `HAS_CORPORATION`); the list is the bounded sugar (owner 2026-06-16, hole #1 RESOLVED). Bare `HAS_FEATURE` ("has ANY
+  feature") coexists, complementary to the list ("has one of THESE").
 - **negation** = the `disabled` twin / `noneOf` container (never a `false` value). A **missing/unknown predicate is IGNORED,
-  not false** (a retired system's references go quiet, never spuriously disable — enabler-spec §3). ⚑ The `IS_COASTAL` /
-  `HAS_FEATURE` / `HAS_TERRAIN` (BoolExpr converter) vs `COASTAL_LAND` / `{feature|terrain:[…]}` (Improvement placement)
-  split is a Phase-F reconcile.
+  not false** (a retired system's references go quiet, never spuriously disable — enabler-spec §3).
+  - *(Phase-F membership reconcile RESOLVED 2026-06-16: `HAS_TERRAIN`/`HAS_FEATURE`/`HAS_BONUS` canonical + `{…:[…]}` sugar,
+    above. `COASTAL_LAND` is UNUSED in real data (0 occurrences) → moot; `IS_COASTAL` (city-coastal, `CvCity::isCoastal`)
+    stays, distinct from a plot predicate.)*
+- **⚑ DEFERRED (maybe), owner 2026-06-16:** a string DSL `&`/`|` for compound HAS sequences was considered and put OFF
+  until the structure is fully nailed — it would reintroduce operator-precedence/parens (the BoolExpr expression-tree the
+  structured `all`/`any`/`noneOf` replaced) and a second condition surface. Revisit only after the structure settles.
 - **`IS_CAPITAL` is computed from BUILDING presence (owner 2026-06-16).** The engine answers `IS_CAPITAL` as "the city has a
   Palace or palace-adjacent (government-center) building" — i.e. from the presence of an `identity.{capital,governmentCenter}`
   building (and it hard-moves the capital to wherever the Palace is). The palace-type buildings then gate on its negation —

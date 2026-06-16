@@ -6,7 +6,7 @@
  "excludes": [
   "TRAIT_TRADITIONAL"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "teamWonder": {
     "percent": 50
@@ -565,6 +565,18 @@
    },
    "nonStateSpreadProbability": {
     "percent": -25
+   }
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
    }
   }
  },

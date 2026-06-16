@@ -28,6 +28,18 @@
    }
   }
  },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 5,
+     "scope": "city"
+    }
+   }
+  }
+ },
  "succession": {
   "promotionLine": "PROMOTIONLINE_CRUEL"
  },

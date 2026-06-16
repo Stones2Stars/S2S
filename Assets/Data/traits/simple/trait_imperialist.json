@@ -2,11 +2,25 @@
  "type": "TRAIT_IMPERIALIST",
  "description": "TXT_KEY_TRAIT_IMPERIALIST",
  "civilopedia": "TXT_KEY_TRAIT_IMPERIALIST_PEDIA",
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_THINK_TANK": {
      "percent": 20
+    }
+   },
+   "units": {
+    "UNIT_TRIBE": {
+     "percent": 50
+    },
+    "UNIT_SETTLER": {
+     "percent": 50
+    },
+    "UNIT_COLONIST": {
+     "percent": 50
+    },
+    "UNIT_PIONEER": {
+     "percent": 50
     }
    }
   }
@@ -34,24 +48,6 @@
   "empire": {
    "cityDefense": {
     "percent": 5
-   }
-  }
- },
- "unitProduction": {
-  "empire": {
-   "units": {
-    "UNIT_TRIBE": {
-     "percent": 50
-    },
-    "UNIT_SETTLER": {
-     "percent": 50
-    },
-    "UNIT_COLONIST": {
-     "percent": 50
-    },
-    "UNIT_PIONEER": {
-     "percent": 50
-    }
    }
   }
  },

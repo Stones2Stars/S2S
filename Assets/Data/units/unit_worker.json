@@ -2,22 +2,42 @@
  "type": "UNIT_WORKER",
  "description": "TXT_KEY_UNIT_WORKER",
  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
- "production": {
-  "unit": {
-   "bonuses": {
-    "BONUS_DONKEY": {
-     "percent": 5
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_DONKEY",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_CAMEL": {
-     "percent": 5
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_CAMEL",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_COW": {
-     "percent": 5
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_COW",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_HORSE": {
-     "percent": 5
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_HORSE",
+      "scope": "city",
+      "min": 1
+     }
     }
-   }
+   ]
   }
  },
  "capabilities": {

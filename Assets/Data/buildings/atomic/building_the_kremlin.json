@@ -18,8 +18,8 @@
    ]
   }
  },
- "production": {
-  "city": {
+ "buildRate": {
+  "self": {
    "percent": [
     {
      "value": 100,

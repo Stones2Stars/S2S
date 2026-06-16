@@ -23,19 +23,6 @@
    "flat": 4
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CISLUNAR_CONTROL_SYSTEM",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "research": {
   "city": {
    "flat": 20
@@ -44,6 +31,15 @@
  "culture": {
   "city": {
    "flat": 10
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CISLUNAR_CONTROL_SYSTEM": {
+     "percent": 10
+    }
+   }
   }
  },
  "happiness": {

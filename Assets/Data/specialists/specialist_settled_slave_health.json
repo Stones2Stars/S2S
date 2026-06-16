@@ -23,18 +23,14 @@
   }
  },
  "PROPERTY_CRIME": {
-  "city": [
-   {
-    "perTurn": 1
-   }
-  ]
+  "city": {
+   "flat": 1
+  }
  },
  "PROPERTY_DISEASE": {
-  "city": [
-   {
-    "perTurn": -3
-   }
-  ]
+  "city": {
+   "flat": -3
+  }
  },
  "ui": {
   "art": {

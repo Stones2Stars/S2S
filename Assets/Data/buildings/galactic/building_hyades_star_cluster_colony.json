@@ -27,26 +27,6 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_STELLAR_SAIL_NETWORK",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_STAR_CLUSTER_COLONY",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "commerce": {
   "city": {
    "flat": 25
@@ -60,6 +40,18 @@
  "research": {
   "city": {
    "flat": 50
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_STELLAR_SAIL_NETWORK": {
+     "percent": 10
+    },
+    "BUILDING_INTERSTELLAR_STAR_CLUSTER_COLONY": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

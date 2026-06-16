@@ -22,17 +22,6 @@
  "production": {
   "city": {
    "flat": 3
-  },
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CREATION_MYTH",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "commerce": {
@@ -74,6 +63,15 @@
    "flat": 5
   }
  },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CREATION_MYTH": {
+     "percent": 10
+    }
+   }
+  }
+ },
  "happiness": {
   "city": {
    "flat": 3
@@ -96,7 +94,13 @@
  },
  "PROPERTY_TOURISM": {
   "city": {
-   "flat": 5
+   "flat": {
+    "value": 5,
+    "enabled": {
+     "type": "TECH_EXPLORATION",
+     "scope": "team"
+    }
+   }
   }
  },
  "cost": {

@@ -28,26 +28,6 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_OCEAN_CITY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_OCEAN_ARCOLOGY",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "commerce": {
   "city": {
    "flat": 8
@@ -61,6 +41,18 @@
  "culture": {
   "city": {
    "flat": 8
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_OCEAN_CITY": {
+     "percent": 10
+    },
+    "BUILDING_OCEAN_ARCOLOGY": {
+     "percent": 10
+    }
+   }
   }
  },
  "cost": {

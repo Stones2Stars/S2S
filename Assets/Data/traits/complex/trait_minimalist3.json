@@ -14,11 +14,23 @@
  },
  "production": {
   "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "buildRate": {
+  "empire": {
    "nationalWonder": {
     "percent": 35
    },
-   "flat": -1,
-   "percent": -5,
+   "unitCombats": {
+    "UNITCOMBAT_SETTLER": {
+     "percent": -25
+    },
+    "UNITCOMBAT_WORKER": {
+     "percent": -25
+    }
+   },
    "military": {
     "percent": -10
    }
@@ -41,18 +53,6 @@
   "empire": {
    "cityDefense": {
     "percent": 15
-   }
-  }
- },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_SETTLER": {
-     "percent": -25
-    },
-    "UNITCOMBAT_WORKER": {
-     "percent": -25
-    }
    }
   }
  },

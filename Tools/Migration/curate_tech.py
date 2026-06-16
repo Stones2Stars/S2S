@@ -22,7 +22,7 @@ TECH_BOOSTS = [
     ("BuildingInfo",    "TechCommerceModifiers", "buildings",    "commerce",        engine.COMMERCES, "percent", "city"),
     ("BuildingInfo",    "TechHappinessChanges",  "buildings",    "happiness",       None,             "flat",    "city"),
     ("BuildingInfo",    "TechHealthChanges",     "buildings",    "health",          None,             "flat",    "city"),
-    ("BuildingInfo",    "TechSpecialistChanges", "buildings",    "freeSpecialists", None,             "flat",    "city"),
+    ("BuildingInfo",    "TechSpecialistChanges", "buildings",    "freeSpecialists", None,             "flat",    "city", "specialists"),  # 2nd key: specialist type -> .specialists.{S}.flat
     ("SpecialistInfo",  "TechHappinessTypes",    "specialists",  "happiness",       None,             "flat",    "city"),
     ("SpecialistInfo",  "TechHealthTypes",       "specialists",  "health",          None,             "flat",    "city"),
     ("ImprovementInfo", "TechYieldChanges",      "improvements", "yield",           engine.YIELDS,    "flat",    "team"),

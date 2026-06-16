@@ -13,129 +13,61 @@
    ]
   }
  },
- "production": {
+ "buildRate": {
   "empire": {
-   "percent": [
-    {
-     "value": -50,
-     "enabled": {
-      "type": "BUILDING_STREET_CLEANER",
-      "scope": "empire"
-     }
+   "buildings": {
+    "BUILDING_STREET_CLEANER": {
+     "percent": -50
     },
-    {
-     "value": -50,
-     "enabled": {
-      "type": "BUILDING_TREADMILL_CRANE",
-      "scope": "empire"
-     }
+    "BUILDING_TREADMILL_CRANE": {
+     "percent": -50
     },
-    {
-     "value": -50,
-     "enabled": {
-      "type": "BUILDING_STEAM_CRANE",
-      "scope": "empire"
-     }
+    "BUILDING_STEAM_CRANE": {
+     "percent": -50
     },
-    {
-     "value": -50,
-     "enabled": {
-      "type": "BUILDING_MODERN_CRANE",
-      "scope": "empire"
-     }
+    "BUILDING_MODERN_CRANE": {
+     "percent": -50
     },
-    {
-     "value": -50,
-     "enabled": {
-      "type": "BUILDING_HIGH_TECH_CRANE",
-      "scope": "empire"
-     }
+    "BUILDING_HIGH_TECH_CRANE": {
+     "percent": -50
     },
-    {
-     "value": -50,
-     "enabled": {
-      "type": "BUILDING_WATERMILL",
-      "scope": "empire"
-     }
+    "BUILDING_WATERMILL": {
+     "percent": -50
     },
-    {
-     "value": -50,
-     "enabled": {
-      "type": "BUILDING_WINDMILL",
-      "scope": "empire"
-     }
+    "BUILDING_WINDMILL": {
+     "percent": -50
     },
-    {
-     "value": -50,
-     "enabled": {
-      "type": "BUILDING_DONKEY_MILL",
-      "scope": "empire"
-     }
+    "BUILDING_DONKEY_MILL": {
+     "percent": -50
     },
-    {
-     "value": -50,
-     "enabled": {
-      "type": "BUILDING_LUMBER_MILL",
-      "scope": "empire"
-     }
+    "BUILDING_LUMBER_MILL": {
+     "percent": -50
     },
-    {
-     "value": -50,
-     "enabled": {
-      "type": "BUILDING_AGROFOREST",
-      "scope": "empire"
-     }
+    "BUILDING_AGROFOREST": {
+     "percent": -50
     },
-    {
-     "value": -50,
-     "enabled": {
-      "type": "BUILDING_MODERN_MILL",
-      "scope": "empire"
-     }
+    "BUILDING_MODERN_MILL": {
+     "percent": -50
     },
-    {
-     "value": -50,
-     "enabled": {
-      "type": "BUILDING_OXEN_MILL",
-      "scope": "empire"
-     }
+    "BUILDING_OXEN_MILL": {
+     "percent": -50
     },
-    {
-     "value": -50,
-     "enabled": {
-      "type": "BUILDING_SMELTER_STEEL",
-      "scope": "empire"
-     }
+    "BUILDING_SMELTER_STEEL": {
+     "percent": -50
     },
-    {
-     "value": -50,
-     "enabled": {
-      "type": "BUILDING_ADVANCED_IRONWORKS",
-      "scope": "empire"
-     }
+    "BUILDING_ADVANCED_IRONWORKS": {
+     "percent": -50
     },
-    {
-     "value": -50,
-     "enabled": {
-      "type": "BUILDING_METALS_MEGACOMPLEX",
-      "scope": "empire"
-     }
+    "BUILDING_METALS_MEGACOMPLEX": {
+     "percent": -50
     },
-    {
-     "value": -50,
-     "enabled": {
-      "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
-      "scope": "empire"
-     }
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT": {
+     "percent": -50
     },
-    {
-     "value": -50,
-     "enabled": {
-      "type": "BUILDING_FACTORY",
-      "scope": "empire"
-     }
+    "BUILDING_FACTORY": {
+     "percent": -50
     }
-   ]
+   }
   }
  },
  "world": {

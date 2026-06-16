@@ -18,19 +18,6 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CISLUNAR_INFLATABLE_HABITAT",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "gold": {
   "city": {
    "flat": -3
@@ -39,6 +26,15 @@
  "research": {
   "city": {
    "flat": 10
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CISLUNAR_INFLATABLE_HABITAT": {
+     "percent": 10
+    }
+   }
   }
  },
  "cost": {

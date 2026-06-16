@@ -2,6 +2,20 @@
  "type": "PROJECT_INTERNATIONAL_SPACE_STATION",
  "description": "TXT_KEY_PROJECT_INTERNATIONAL_SPACE_STATION",
  "civilopedia": "TXT_KEY_PROJECT_INTERNATIONAL_SPACE_STATION_PEDIA",
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
  "grants": {
   "grantsSpecialBuilding": "SPECIALBUILDING_SPACE_LABORATORY"
  },

@@ -44,17 +44,13 @@
    "flat": 15
   }
  },
- "production": {
+ "buildRate": {
   "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_BASE_DESERT_PLANET",
-      "scope": "empire"
-     }
+   "buildings": {
+    "BUILDING_INTERSTELLAR_BASE_DESERT_PLANET": {
+     "percent": 10
     }
-   ]
+   }
   }
  },
  "hurryCost": {

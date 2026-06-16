@@ -58,8 +58,13 @@
    ]
   }
  },
- "production": {
+ "culture": {
   "city": {
+   "flat": 1
+  }
+ },
+ "buildRate": {
+  "self": {
    "percent": [
     {
      "value": 50,
@@ -78,11 +83,6 @@
      }
     }
    ]
-  }
- },
- "culture": {
-  "city": {
-   "flat": 1
   }
  },
  "hurryCost": {

@@ -2,7 +2,7 @@
  "type": "TRAIT_SPIRITUAL",
  "description": "TXT_KEY_TRAIT_SPIRITUAL",
  "civilopedia": "TXT_KEY_TRAIT_SPIRITUAL_PEDIA",
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_ZIGGURAT": {

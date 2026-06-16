@@ -32,31 +32,6 @@
  "production": {
   "city": {
    "flat": 50
-  },
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_EVENT_HORIZON_CITY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_BLACK_HOLE_EMS",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_BLACK_HOLE_COLONY",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "research": {
@@ -67,6 +42,21 @@
  "espionage": {
   "city": {
    "flat": 50
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_EVENT_HORIZON_CITY": {
+     "percent": 10
+    },
+    "BUILDING_INTERSTELLAR_BLACK_HOLE_EMS": {
+     "percent": 10
+    },
+    "BUILDING_INTERSTELLAR_BLACK_HOLE_COLONY": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

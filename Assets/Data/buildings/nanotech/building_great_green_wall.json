@@ -38,17 +38,13 @@
    "flat": 20
   }
  },
- "production": {
+ "buildRate": {
   "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ATMOSPHERIC_WATER_GENERATOR",
-      "scope": "empire"
-     }
+   "buildings": {
+    "BUILDING_ATMOSPHERIC_WATER_GENERATOR": {
+     "percent": 10
     }
-   ]
+   }
   }
  },
  "PROPERTY_AIR_POLLUTION": {

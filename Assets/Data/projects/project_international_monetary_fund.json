@@ -2,6 +2,20 @@
  "type": "PROJECT_INTERNATIONAL_MONETARY_FUND",
  "description": "TXT_KEY_PROJECT_INTERNATIONAL_MONETARY_FUND",
  "civilopedia": "TXT_KEY_PROJECT_INTERNATIONAL_MONETARY_FUND_PEDIA",
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_GOLD_ORE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
  "grants": {
   "grantsSpecialBuilding": "SPECIALBUILDING_WORLD_BANK"
  },

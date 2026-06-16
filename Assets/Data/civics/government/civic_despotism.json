@@ -41,9 +41,6 @@
  },
  "production": {
   "empire": {
-   "military": {
-    "percent": 10
-   },
    "percent": 2,
    "capital": {
     "percent": 3
@@ -138,6 +135,13 @@
    },
    "democracyLevel": {
     "flat": -30
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": 10
    }
   }
  },

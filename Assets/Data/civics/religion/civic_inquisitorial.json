@@ -19,9 +19,6 @@
  },
  "production": {
   "empire": {
-   "military": {
-    "percent": 5
-   },
    "percent": -3
   }
  },
@@ -152,6 +149,13 @@
    },
    "religiousFreedom": {
     "flat": -9
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": 5
    }
   }
  },

@@ -6,7 +6,7 @@
  "excludes": [
   "TRAIT_STRATEGIST1"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_POISON_CRAFTER": {

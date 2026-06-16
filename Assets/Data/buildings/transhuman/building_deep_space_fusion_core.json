@@ -30,7 +30,11 @@
       "scope": "team"
      }
     }
-   ],
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
    "percent": [
     {
      "value": 100,

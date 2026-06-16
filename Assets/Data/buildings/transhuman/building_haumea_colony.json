@@ -44,22 +44,18 @@
    "flat": 10
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_DEEP_SPACE_FARM",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "commerce": {
   "city": {
    "flat": 10
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_DEEP_SPACE_FARM": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

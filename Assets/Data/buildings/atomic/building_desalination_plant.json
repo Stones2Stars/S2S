@@ -24,8 +24,13 @@
    ]
   }
  },
- "production": {
+ "commerce": {
   "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "self": {
    "percent": [
     {
      "value": 50,
@@ -36,11 +41,6 @@
      }
     }
    ]
-  }
- },
- "commerce": {
-  "city": {
-   "flat": 5
   }
  },
  "health": {

@@ -12,64 +12,154 @@
    ]
   }
  },
- "production": {
-  "unit": {
-   "bonuses": {
-    "BONUS_HENNA": {
-     "percent": 1
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HENNA",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_INDIGO": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_INDIGO",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_PAPYRUS": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PAPYRUS",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_OPIUM": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OPIUM",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_TOBACCO": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TOBACCO",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_PARROTS": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PARROTS",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_COCA": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COCA",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_PEARLS": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PEARLS",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_AMBER": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_AMBER",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_RUBIES": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_RUBIES",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_DIAMOND": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DIAMOND",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_SAPPHIRES": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SAPPHIRES",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_JADE": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_JADE",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_TURQUOISE": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TURQUOISE",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_HORSE": {
-     "percent": 2
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_HORSE",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_DONKEY": {
-     "percent": 2
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_DONKEY",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_LLAMA": {
-     "percent": 2
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_LLAMA",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_CAMEL": {
-     "percent": 2
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_CAMEL",
+      "scope": "city",
+      "min": 1
+     }
     }
-   }
+   ]
   }
  },
  "capabilities": {

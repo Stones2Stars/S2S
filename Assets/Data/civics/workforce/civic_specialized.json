@@ -13,9 +13,6 @@
  },
  "production": {
   "empire": {
-   "military": {
-    "percent": 5
-   },
    "percent": 3,
    "tradeRoute": {
     "percent": 2
@@ -139,6 +136,13 @@
  "improvementUpgradeRate": {
   "empire": {
    "percent": 5
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": 5
+   }
   }
  },
  "ui": {

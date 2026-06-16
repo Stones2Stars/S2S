@@ -15,6 +15,13 @@
  },
  "production": {
   "empire": {
+   "tradeRoute": {
+    "percent": -10
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
    "worldWonder": {
     "percent": 50
    },
@@ -23,9 +30,6 @@
    },
    "nationalWonder": {
     "percent": 50
-   },
-   "tradeRoute": {
-    "percent": -10
    },
    "buildings": {
     "BUILDING_FLINT_KNAPPER": {

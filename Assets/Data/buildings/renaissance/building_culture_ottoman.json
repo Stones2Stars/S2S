@@ -26,43 +26,27 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BLUE_MOSQUE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_HAGIA_SOPHIA",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TOPKAPI_PALACE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ORIENT_EXPRESS",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_BLUE_MOSQUE": {
+     "percent": 10
+    },
+    "BUILDING_HAGIA_SOPHIA": {
+     "percent": 10
+    },
+    "BUILDING_TOPKAPI_PALACE": {
+     "percent": 10
+    },
+    "BUILDING_ORIENT_EXPRESS": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

@@ -15,6 +15,13 @@
  },
  "production": {
   "empire": {
+   "goldenAge": {
+    "flat": 8
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
    "worldWonder": {
     "percent": 20
    },
@@ -40,9 +47,6 @@
     "SPECIALBUILDING_MONASTERY_II": {
      "percent": 25
     }
-   },
-   "goldenAge": {
-    "flat": 8
    }
   }
  },
@@ -125,6 +129,18 @@
    },
    "holyCityBad": {
     "flat": -5
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
    }
   }
  },

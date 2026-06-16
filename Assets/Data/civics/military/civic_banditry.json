@@ -9,13 +9,6 @@
    "BUILDING_SMUGGLERS_SHANTY"
   ]
  },
- "production": {
-  "empire": {
-   "military": {
-    "percent": 5
-   }
-  }
- },
  "commerce": {
   "empire": {
    "capital": {
@@ -75,24 +68,6 @@
    }
   }
  },
- "unitProduction": {
-  "empire": {
-   "units": {
-    "UNIT_THIEF": {
-     "percent": 10
-    },
-    "UNIT_ROGUE": {
-     "percent": 10
-    },
-    "UNIT_AMBUSHER": {
-     "percent": 10
-    },
-    "UNIT_ASSASSIN": {
-     "percent": 10
-    }
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -121,6 +96,27 @@
   "empire": {
    "attitudeShare": {
     "flat": 1
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": 5
+   },
+   "units": {
+    "UNIT_THIEF": {
+     "percent": 10
+    },
+    "UNIT_ROGUE": {
+     "percent": 10
+    },
+    "UNIT_AMBUSHER": {
+     "percent": 10
+    },
+    "UNIT_ASSASSIN": {
+     "percent": 10
+    }
    }
   }
  },

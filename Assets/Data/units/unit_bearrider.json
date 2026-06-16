@@ -25,22 +25,42 @@
    ]
   }
  },
- "production": {
-  "unit": {
-   "bonuses": {
-    "BONUS_FLINT": {
-     "percent": 5
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_FLINT",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_PRIME_TIMBER": {
-     "percent": 5
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_STONE": {
-     "percent": 5
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_OBSIDIAN": {
-     "percent": 5
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_OBSIDIAN",
+      "scope": "city",
+      "min": 1
+     }
     }
-   }
+   ]
   }
  },
  "costs": {

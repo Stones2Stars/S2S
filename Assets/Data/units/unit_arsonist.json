@@ -45,31 +45,66 @@
    ]
   }
  },
- "production": {
-  "unit": {
-   "bonuses": {
-    "BONUS_ALCOHOL": {
-     "percent": 5
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_FISH_OIL": {
-     "percent": 5
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_FISH_OIL",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_GHEE_OIL": {
-     "percent": 5
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_GHEE_OIL",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_KEROSENE": {
-     "percent": 5
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_KEROSENE",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_OLIVE_OIL": {
-     "percent": 5
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_OLIVE_OIL",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_TAR": {
-     "percent": 5
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_TAR",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_WHALE_OIL": {
-     "percent": 5
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_WHALE_OIL",
+      "scope": "city",
+      "min": 1
+     }
     }
-   }
+   ]
   }
  },
  "strength": {

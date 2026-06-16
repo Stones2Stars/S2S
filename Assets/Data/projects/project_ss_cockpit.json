@@ -2,6 +2,20 @@
  "type": "PROJECT_SS_COCKPIT",
  "description": "TXT_KEY_PROJECT_SS_COCKPIT",
  "civilopedia": "TXT_KEY_PROJECT_SS_COCKPIT_PEDIA",
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_COPPER_ORE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
  "victory": {
   "thresholds": {
    "VICTORY_SPACE_RACE": 1

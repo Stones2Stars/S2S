@@ -8,6 +8,13 @@
  ],
  "production": {
   "empire": {
+   "tradeRoute": {
+    "percent": 10
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
    "worldWonder": {
     "percent": -40
    },
@@ -16,9 +23,6 @@
    },
    "nationalWonder": {
     "percent": -40
-   },
-   "tradeRoute": {
-    "percent": 10
    },
    "buildings": {
     "BUILDING_THINK_TANK": {

@@ -27,6 +27,13 @@
    ]
   }
  },
+ "buildRate": {
+  "city": {
+   "military": {
+    "percent": 15
+   }
+  }
+ },
  "experience": {
   "city": {
    "domains": {
@@ -39,11 +46,6 @@
  "greatPeopleRate": {
   "city": {
    "flat": 1
-  }
- },
- "militaryProduction": {
-  "city": {
-   "percent": 15
   }
  },
  "cost": {

@@ -3,7 +3,7 @@
  "description": "TXT_KEY_TRAIT_AERIAL",
  "civilopedia": "TXT_KEY_TRAIT_AERIAL_PEDIA",
  "strategy": "TXT_KEY_TRAIT_AERIAL_STRATEGY",
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_SMOKE_SIGNALS": {
@@ -396,6 +396,34 @@
     "BUILDING_TOURISM_MEGACOMPLEX": {
      "percent": 25
     }
+   },
+   "domains": {
+    "DOMAIN_AIR": {
+     "percent": 10
+    }
+   },
+   "unitCombats": {
+    "UNITCOMBAT_THROWING": {
+     "percent": 10
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 10
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": 10
+    },
+    "UNITCOMBAT_SIEGE": {
+     "percent": 10
+    },
+    "UNITCOMBAT_ROCKET_LAUNCHER": {
+     "percent": 10
+    },
+    "UNITCOMBAT_BALLOON": {
+     "percent": 10
+    },
+    "UNITCOMBAT_HELICOPTER": {
+     "percent": 10
+    }
    }
   }
  },
@@ -733,38 +761,6 @@
    }
   }
  },
- "unitProduction": {
-  "empire": {
-   "domains": {
-    "DOMAIN_AIR": {
-     "percent": 10
-    }
-   },
-   "unitCombats": {
-    "UNITCOMBAT_THROWING": {
-     "percent": 10
-    },
-    "UNITCOMBAT_ARCHER": {
-     "percent": 10
-    },
-    "UNITCOMBAT_GUN": {
-     "percent": 10
-    },
-    "UNITCOMBAT_SIEGE": {
-     "percent": 10
-    },
-    "UNITCOMBAT_ROCKET_LAUNCHER": {
-     "percent": 10
-    },
-    "UNITCOMBAT_BALLOON": {
-     "percent": 10
-    },
-    "UNITCOMBAT_HELICOPTER": {
-     "percent": 10
-    }
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -823,6 +819,18 @@
   "empire": {
    "airUnitCapacity": {
     "flat": 1
+   }
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
    }
   }
  },

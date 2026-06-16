@@ -11,6 +11,18 @@
  "excludes": [
   "TRAIT_TIMID1"
  ],
+ "buildRate": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_COMBATANT": {
+     "percent": 20
+    },
+    "UNITCOMBAT_NAVAL_COMBATANT": {
+     "percent": 20
+    }
+   }
+  }
+ },
  "greatGeneralRate": {
   "empire": {
    "percent": 10,
@@ -49,18 +61,6 @@
    },
    "captureResistance": {
     "percent": 10
-   }
-  }
- },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_COMBATANT": {
-     "percent": 20
-    },
-    "UNITCOMBAT_NAVAL_COMBATANT": {
-     "percent": 20
-    }
    }
   }
  },

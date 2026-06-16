@@ -6,6 +6,18 @@
  "excludes": [
   "TRAIT_AGGRESSIVE1"
  ],
+ "buildRate": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_COMBATANT": {
+     "percent": -25
+    },
+    "UNITCOMBAT_NAVAL_COMBATANT": {
+     "percent": -25
+    }
+   }
+  }
+ },
  "greatGeneralRate": {
   "empire": {
    "percent": -10,
@@ -44,18 +56,6 @@
    },
    "captureResistance": {
     "percent": -10
-   }
-  }
- },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_COMBATANT": {
-     "percent": -25
-    },
-    "UNITCOMBAT_NAVAL_COMBATANT": {
-     "percent": -25
-    }
    }
   }
  },

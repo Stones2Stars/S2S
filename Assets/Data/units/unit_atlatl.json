@@ -2,16 +2,26 @@
  "type": "UNIT_ATLATL",
  "description": "TXT_KEY_UNIT_ATLATL",
  "civilopedia": "TXT_KEY_UNIT_ATLATL_PEDIA",
- "production": {
-  "unit": {
-   "bonuses": {
-    "BONUS_OBSIDIAN": {
-     "percent": 25
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 25,
+     "enabled": {
+      "type": "BONUS_OBSIDIAN",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_PRIME_TIMBER": {
-     "percent": 15
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
     }
-   }
+   ]
   }
  },
  "strength": {

@@ -6,7 +6,7 @@
  "excludes": [
   "TRAIT_MEDICAL"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_ALPHA_FEMALE": {
@@ -288,6 +288,11 @@
     "BUILDING_ANCIENT_CUSTOMS": {
      "percent": -25
     }
+   },
+   "unitCombats": {
+    "UNITCOMBAT_HEALTH_CARE": {
+     "percent": -20
+    }
    }
   }
  },
@@ -480,15 +485,6 @@
    }
   }
  },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_HEALTH_CARE": {
-     "percent": -20
-    }
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -522,6 +518,18 @@
   "empire": {
    "warWeariness": {
     "percent": 20
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
    }
   }
  },

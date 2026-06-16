@@ -1,6 +1,6 @@
 # build.ps1 — compile the isolated readjson harness with the VENDORED VC7.1 toolchain (#428 step 1).
 # Strict C++03 / MSVC 7.1 (despair #13 — fbuild.bff is truth, the .vcxproj's v142 is a lie).
-# Produces Sources/ReadJson/readjson.exe. Run from anywhere; paths resolve off this script.
+# Produces Tools/ReadJson/readjson.exe. Run from anywhere; paths resolve off this script.
 $ErrorActionPreference = 'Stop'
 $here    = $PSScriptRoot
 $root    = (Resolve-Path "$here\..\..").Path                       # repo root

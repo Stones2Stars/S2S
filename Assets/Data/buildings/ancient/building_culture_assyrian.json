@@ -26,29 +26,21 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_NIMRUD_PALACE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_LIBRARY_OF_NINEVEH",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_NIMRUD_PALACE": {
+     "percent": 10
+    },
+    "BUILDING_LIBRARY_OF_NINEVEH": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

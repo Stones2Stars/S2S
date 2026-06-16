@@ -7,7 +7,7 @@
    "TRAIT_CHARISMATIC2"
   ]
  },
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_RECRUITMENT_CENTER": {

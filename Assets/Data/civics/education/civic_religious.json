@@ -18,72 +18,7 @@
  },
  "production": {
   "empire": {
-   "percent": 4,
-   "buildings": {
-    "BUILDING_JEWISH_MONASTERY": {
-     "percent": 20
-    },
-    "BUILDING_CHRISTIAN_MONASTERY": {
-     "percent": 20
-    },
-    "BUILDING_ISLAMIC_MONASTERY": {
-     "percent": 20
-    },
-    "BUILDING_HINDU_MONASTERY": {
-     "percent": 20
-    },
-    "BUILDING_BUDDHIST_MONASTERY": {
-     "percent": 20
-    },
-    "BUILDING_CONFUCIAN_MONASTERY": {
-     "percent": 20
-    },
-    "BUILDING_TAOIST_MONASTERY": {
-     "percent": 20
-    },
-    "BUILDING_HELLENIC_GYMNASIA": {
-     "percent": 20
-    },
-    "BUILDING_ZOROASTRIAN_SHRINE": {
-     "percent": 20
-    },
-    "BUILDING_TEMPLE_OF_CHONS": {
-     "percent": 20
-    },
-    "BUILDING_CALMACEC": {
-     "percent": 20
-    },
-    "BUILDING_HOUNFOR": {
-     "percent": 20
-    },
-    "BUILDING_SHINTO_MONASTERY": {
-     "percent": 20
-    },
-    "BUILDING_INVOCATION_HUT": {
-     "percent": 20
-    },
-    "BUILDING_SCIENTOLOGY_MONASTERY": {
-     "percent": 20
-    },
-    "BUILDING_NATURE_CIRCLE_OF_POWER": {
-     "percent": 20
-    },
-    "BUILDING_CAO_DAI_MONASTERY": {
-     "percent": 20
-    },
-    "BUILDING_CANAANITE_MONASTERY": {
-     "percent": 20
-    },
-    "BUILDING_BAHAI_MONASTERY": {
-     "percent": 20
-    },
-    "BUILDING_ASATRU_MONASTERY": {
-     "percent": 20
-    },
-    "BUILDING_ANDEAN_MONASTERY": {
-     "percent": 20
-    }
-   }
+   "percent": 4
   }
  },
  "commerce": {
@@ -155,6 +90,75 @@
    },
    "holyCityBad": {
     "flat": 1
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_JEWISH_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_CHRISTIAN_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_ISLAMIC_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_HINDU_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_BUDDHIST_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_CONFUCIAN_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_TAOIST_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_HELLENIC_GYMNASIA": {
+     "percent": 20
+    },
+    "BUILDING_ZOROASTRIAN_SHRINE": {
+     "percent": 20
+    },
+    "BUILDING_TEMPLE_OF_CHONS": {
+     "percent": 20
+    },
+    "BUILDING_CALMACEC": {
+     "percent": 20
+    },
+    "BUILDING_HOUNFOR": {
+     "percent": 20
+    },
+    "BUILDING_SHINTO_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_INVOCATION_HUT": {
+     "percent": 20
+    },
+    "BUILDING_SCIENTOLOGY_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_NATURE_CIRCLE_OF_POWER": {
+     "percent": 20
+    },
+    "BUILDING_CAO_DAI_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_CANAANITE_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_BAHAI_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_ASATRU_MONASTERY": {
+     "percent": 20
+    },
+    "BUILDING_ANDEAN_MONASTERY": {
+     "percent": 20
+    }
    }
   }
  },

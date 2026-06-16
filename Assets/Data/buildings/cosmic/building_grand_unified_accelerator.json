@@ -17,28 +17,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 100,
-     "enabled": {
-      "type": "BONUS_AB_MATTER",
-      "scope": "city",
-      "min": 1
-     }
-    },
-    {
-     "value": 50,
-     "enabled": {
-      "type": "BONUS_ANTIMATTER",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ]
-  }
- },
  "gold": {
   "city": {
    "flat": -20
@@ -67,6 +45,28 @@
      "enabled": {
       "type": "TECH_CONTROLLED_INFLATION",
       "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_AB_MATTER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_ANTIMATTER",
+      "scope": "city",
+      "min": 1
      }
     }
    ]

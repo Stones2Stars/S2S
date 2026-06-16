@@ -1,0 +1,30 @@
+{
+  "type": "RELIGION_GNARLODOXY",
+
+  "identity": {
+    "description": "TXT_KEY_RELIGION_GNARLODOXY",
+    "adjective": "TXT_KEY_RELIGION_GNARLODOXY_ADJ",
+    "spreadFactor": 100
+  },
+
+  "enables": {
+    "buildings": ["BUILDING_TEMPLE_OF_GNARL"],
+    "units": ["UNIT_GNARL_MISSIONARY"]
+  },
+
+  "gold": {
+    "city": {
+      "flat": [
+        { "value": 3, "enabled": { "STATE_RELIGION": "RELIGION_GNARLODOXY" } },
+        { "value": 5, "enabled": { "HOLY_CITY": "RELIGION_GNARLODOXY" } }
+      ]
+    }
+  },
+  "culture": {
+    "city": { "flat": { "value": 2, "enabled": { "HAS_RELIGION": "RELIGION_GNARLODOXY" } } }
+  },
+
+  "grants": { "freeUnits": 1 },
+
+  "ui": { "art": { "icon": "ART_DEF_RELIGION_GNARLODOXY" } }
+}

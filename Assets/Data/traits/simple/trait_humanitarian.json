@@ -2,7 +2,7 @@
  "type": "TRAIT_HUMANITARIAN",
  "description": "TXT_KEY_TRAIT_HUMANITARIAN",
  "civilopedia": "TXT_KEY_TRAIT_HUMANITARIAN_PEDIA",
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_GROVE": {
@@ -122,6 +122,18 @@
    },
    "enemyWarWeariness": {
     "percent": 20
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": {
+    "value": -2,
+    "per": {
+     "type": "POPULATION",
+     "each": 3,
+     "scope": "city"
+    }
    }
   }
  },

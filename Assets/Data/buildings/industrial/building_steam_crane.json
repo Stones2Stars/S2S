@@ -35,96 +35,54 @@
  },
  "production": {
   "city": {
-   "percent": [
-    20,
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SKYSCRAPER",
-      "scope": "city"
-     }
+   "percent": 20
+  }
+ },
+ "buildRate": {
+  "city": {
+   "military": {
+    "percent": -10
+   },
+   "buildings": {
+    "BUILDING_SKYSCRAPER": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CASTLE",
-      "scope": "city"
-     }
+    "BUILDING_CASTLE": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_STAR_FORT",
-      "scope": "city"
-     }
+    "BUILDING_STAR_FORT": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_WALLS",
-      "scope": "city"
-     }
+    "BUILDING_WALLS": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_HIGH_WALLS",
-      "scope": "city"
-     }
+    "BUILDING_HIGH_WALLS": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BARRICADES",
-      "scope": "city"
-     }
+    "BUILDING_BARRICADES": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CEMENT_BARRIER",
-      "scope": "city"
-     }
+    "BUILDING_CEMENT_BARRIER": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_METAMATERIAL_WALLS",
-      "scope": "city"
-     }
+    "BUILDING_METAMATERIAL_WALLS": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SUPERSTRONG_ALLOY_WALLS",
-      "scope": "city"
-     }
+    "BUILDING_SUPERSTRONG_ALLOY_WALLS": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_MEGASTRONG_ALLOY_WALLS",
-      "scope": "city"
-     }
+    "BUILDING_MEGASTRONG_ALLOY_WALLS": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_IMPERIAL_FORTRESS",
-      "scope": "city"
-     }
+    "BUILDING_IMPERIAL_FORTRESS": {
+     "percent": 10
     }
-   ]
+   }
   }
  },
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "militaryProduction": {
-  "city": {
-   "percent": -10
   }
  },
  "cost": {

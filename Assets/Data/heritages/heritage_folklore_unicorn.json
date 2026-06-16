@@ -45,24 +45,24 @@
   }
  },
  "PROPERTY_EDUCATION": {
-  "empire": [
-   {
-    "perTurn": 1,
-    "active": [
-     {
-      "GOM_TECH": "TECH_WRITING"
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WRITING",
+      "scope": "team"
      }
-    ]
-   },
-   {
-    "perTurn": 1,
-    "active": [
-     {
-      "GOM_TECH": "TECH_LITERATURE"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_LITERATURE",
+      "scope": "team"
      }
-    ]
-   }
-  ]
+    }
+   ]
+  }
  },
  "ui": {
   "art": {

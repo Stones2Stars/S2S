@@ -69,6 +69,15 @@
    }
   }
  },
+ "buildRate": {
+  "empire": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "percent": 10
+    }
+   }
+  }
+ },
  "commerce": {
   "empire": {
    "improvements": {
@@ -256,15 +265,6 @@
   "empire": {
    "navalCargo": {
     "flat": 1
-   }
-  }
- },
- "unitProduction": {
-  "empire": {
-   "domains": {
-    "DOMAIN_SEA": {
-     "percent": 10
-    }
    }
   }
  },

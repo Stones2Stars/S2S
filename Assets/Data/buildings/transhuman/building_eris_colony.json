@@ -47,17 +47,15 @@
  "production": {
   "city": {
    "flat": 20
-  },
+  }
+ },
+ "buildRate": {
   "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_DEEP_SPACE_ECOSYSTEM",
-      "scope": "empire"
-     }
+   "buildings": {
+    "BUILDING_DEEP_SPACE_ECOSYSTEM": {
+     "percent": 10
     }
-   ]
+   }
   }
  },
  "hurryCost": {

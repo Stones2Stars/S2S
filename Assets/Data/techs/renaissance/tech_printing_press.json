@@ -77,11 +77,11 @@
   "city": {
    "buildings": {
     "BUILDING_UNIVERSITY": {
-     "flat": [
-      {
-       "SPECIALIST_ARTIST": 1
+     "specialists": {
+      "SPECIALIST_ARTIST": {
+       "flat": 1
       }
-     ]
+     }
     }
    }
   }

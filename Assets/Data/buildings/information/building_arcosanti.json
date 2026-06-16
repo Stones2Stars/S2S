@@ -26,36 +26,24 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ARCOLOGY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_LAUNCH_ARCOLOGY",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "commerce": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_ARCOLOGY": {
+     "percent": 10
+    },
+    "BUILDING_HOUSING_COLONY_ARCOLOGY": {
+     "percent": 10
+    },
+    "BUILDING_LAUNCH_ARCOLOGY": {
+     "percent": 10
+    }
+   }
   }
  },
  "PROPERTY_AIR_POLLUTION": {

@@ -39,17 +39,7 @@
  },
  "production": {
   "city": {
-   "percent": [
-    25,
-    {
-     "value": 100,
-     "enabled": {
-      "type": "BONUS_MICROCHIPS",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ]
+   "percent": 25
   }
  },
  "gold": {
@@ -60,6 +50,20 @@
  "espionage": {
   "city": {
    "flat": 1
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_MICROCHIPS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
   }
  },
  "happiness": {

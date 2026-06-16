@@ -2,6 +2,36 @@
  "type": "PROJECT_ANTI_MISSILE_RAILGUN",
  "description": "TXT_KEY_PROJECT_ANTI_MISSILE_RAILGUN",
  "civilopedia": "TXT_KEY_PROJECT_MISSILE_DEFENCE_PEDIA",
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 25,
+     "enabled": {
+      "type": "BONUS_MICROCHIPS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 25,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 25,
+     "enabled": {
+      "type": "BONUS_GOLD_ORE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
  "combat": {
   "team": {
    "nukeInterception": {

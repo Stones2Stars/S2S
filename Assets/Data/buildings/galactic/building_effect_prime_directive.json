@@ -12,9 +12,11 @@
    "flat": 10
   }
  },
- "militaryProduction": {
+ "buildRate": {
   "city": {
-   "percent": -20
+   "military": {
+    "percent": -20
+   }
   }
  },
  "world": {

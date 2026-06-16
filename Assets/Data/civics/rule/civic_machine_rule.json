@@ -18,20 +18,6 @@
    "percent": 10,
    "capital": {
     "percent": 5
-   },
-   "buildings": {
-    "BUILDING_AI_INVESTMENT": {
-     "percent": 20
-    },
-    "BUILDING_AI_LEGAL_SYSTEM": {
-     "percent": 20
-    },
-    "BUILDING_AI_POLICE_FORCE": {
-     "percent": 20
-    },
-    "BUILDING_AI_SURVEILLANCE": {
-     "percent": 20
-    }
    }
   }
  },
@@ -92,6 +78,24 @@
    },
    "distanceModifier": {
     "percent": 10
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_AI_INVESTMENT": {
+     "percent": 20
+    },
+    "BUILDING_AI_LEGAL_SYSTEM": {
+     "percent": 20
+    },
+    "BUILDING_AI_POLICE_FORCE": {
+     "percent": 20
+    },
+    "BUILDING_AI_SURVEILLANCE": {
+     "percent": 20
+    }
    }
   }
  },

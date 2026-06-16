@@ -20,6 +20,13 @@
  },
  "production": {
   "empire": {
+   "capital": {
+    "percent": 10
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
    "nationalWonder": {
     "percent": 15
    },
@@ -117,9 +124,6 @@
     "BUILDING_HOLOGRAPHIC_SCHOOL": {
      "percent": 25
     }
-   },
-   "capital": {
-    "percent": 10
    }
   }
  },

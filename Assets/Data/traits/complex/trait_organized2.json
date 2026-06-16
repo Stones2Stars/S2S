@@ -13,11 +13,15 @@
  ],
  "production": {
   "empire": {
-   "teamWonder": {
-    "percent": 25
-   },
    "specialist": {
     "perSpecialist": 1
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "teamWonder": {
+    "percent": 25
    },
    "military": {
     "percent": 10

@@ -37,8 +37,18 @@
    ]
   }
  },
- "production": {
+ "research": {
   "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "buildRate": {
+  "self": {
    "percent": [
     {
      "value": 100,
@@ -49,16 +59,6 @@
      }
     }
    ]
-  }
- },
- "research": {
-  "city": {
-   "flat": 3
-  }
- },
- "culture": {
-  "city": {
-   "percent": 2
   }
  },
  "happiness": {

@@ -15,11 +15,15 @@
  },
  "production": {
   "empire": {
-   "nationalWonder": {
-    "percent": -25
-   },
    "capital": {
     "percent": -5
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "nationalWonder": {
+    "percent": -25
    }
   }
  },
@@ -92,6 +96,18 @@
    },
    "distanceModifier": {
     "percent": 30
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
    }
   }
  },

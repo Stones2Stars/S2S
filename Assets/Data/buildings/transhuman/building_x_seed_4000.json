@@ -37,17 +37,6 @@
  "production": {
   "city": {
    "flat": 5
-  },
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_REWILDERNESS",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "commerce": {
@@ -58,6 +47,15 @@
  "gold": {
   "city": {
    "flat": 10
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_REWILDERNESS": {
+     "percent": 10
+    }
+   }
   }
  },
  "cost": {

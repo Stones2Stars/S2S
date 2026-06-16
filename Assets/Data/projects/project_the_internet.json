@@ -2,6 +2,28 @@
  "type": "PROJECT_THE_INTERNET",
  "description": "TXT_KEY_PROJECT_THE_INTERNET",
  "civilopedia": "TXT_KEY_PROJECT_THE_INTERNET_PEDIA",
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_COPPER_WIRES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_FIBER_OPTIC_CABLES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
  "tradeRoutes": {
   "world": {
    "flat": 1

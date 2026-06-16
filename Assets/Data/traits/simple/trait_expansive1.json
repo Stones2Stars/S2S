@@ -7,7 +7,7 @@
    "TRAIT_EXPANSIVE2"
   ]
  },
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_HAMMAM": {
@@ -46,37 +46,7 @@
     "BUILDING_MODERN_WATERWORKS": {
      "percent": 20
     }
-   }
-  }
- },
- "happiness": {
-  "empire": {
-   "largestCity": {
-    "flat": -1
-   }
-  }
- },
- "health": {
-  "empire": {
-   "flat": 3
-  }
- },
- "greatGeneralRate": {
-  "empire": {
-   "domestic": {
-    "percent": -20
-   }
-  }
- },
- "experience": {
-  "empire": {
-   "inBorder": {
-    "percent": -25
-   }
-  }
- },
- "unitProduction": {
-  "empire": {
+   },
    "units": {
     "UNIT_CLONES": {
      "percent": 50
@@ -120,6 +90,32 @@
     "UNIT_ECOLOGIST": {
      "percent": 25
     }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "largestCity": {
+    "flat": -1
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": -20
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "inBorder": {
+    "percent": -25
    }
   }
  },

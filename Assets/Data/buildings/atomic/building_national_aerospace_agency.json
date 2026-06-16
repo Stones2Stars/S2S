@@ -35,8 +35,13 @@
    ]
   }
  },
- "production": {
+ "gold": {
   "city": {
+   "flat": -2
+  }
+ },
+ "buildRate": {
+  "self": {
    "percent": [
     {
      "value": 100,
@@ -47,14 +52,7 @@
      }
     }
    ]
-  }
- },
- "gold": {
-  "city": {
-   "flat": -2
-  }
- },
- "buildRate": {
+  },
   "city": {
    "domains": {
     "DOMAIN_AIR": {

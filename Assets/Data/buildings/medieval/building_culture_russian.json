@@ -52,64 +52,36 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_HERMITAGE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_THE_KREMLIN",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BOLSHOI",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_PALACE_OF_THE_SOVIETS",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_YASNAYA_POLYANA",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_THE_MOTHERLAND_CALLS",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_HELSINKI_CATHEDRAL",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_HERMITAGE": {
+     "percent": 10
+    },
+    "BUILDING_THE_KREMLIN": {
+     "percent": 10
+    },
+    "BUILDING_BOLSHOI": {
+     "percent": 10
+    },
+    "BUILDING_PALACE_OF_THE_SOVIETS": {
+     "percent": 10
+    },
+    "BUILDING_YASNAYA_POLYANA": {
+     "percent": 10
+    },
+    "BUILDING_THE_MOTHERLAND_CALLS": {
+     "percent": 10
+    },
+    "BUILDING_HELSINKI_CATHEDRAL": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

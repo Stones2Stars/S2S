@@ -33,6 +33,13 @@
    "percent": 25
   }
  },
+ "buildRate": {
+  "city": {
+   "space": {
+    "percent": 10
+   }
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 2
@@ -41,11 +48,6 @@
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "spaceProduction": {
-  "city": {
-   "percent": 10
   }
  },
  "cost": {

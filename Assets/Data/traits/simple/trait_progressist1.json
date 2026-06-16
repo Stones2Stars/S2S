@@ -7,7 +7,7 @@
    "TRAIT_INNOVATIVE2"
   ]
  },
- "unitProduction": {
+ "buildRate": {
   "empire": {
    "units": {
     "UNIT_CYBORG": {

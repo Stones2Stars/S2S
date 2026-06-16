@@ -29,6 +29,33 @@
  },
  "production": {
   "empire": {
+   "improvements": {
+    "IMPROVEMENT_SCAVENGING_CAMP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_NOMADIC_HERD": {
+     "flat": 1
+    },
+    "IMPROVEMENT_PASTURE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HUNTING_CAMP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HUNTING_PRESERVE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WILDLIFE_SANCTUARY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
    "buildings": {
     "BUILDING_CARRION_GATHERER": {
      "percent": 25
@@ -460,27 +487,18 @@
      "percent": 25
     }
    },
-   "improvements": {
-    "IMPROVEMENT_SCAVENGING_CAMP": {
-     "flat": 1
+   "unitCombats": {
+    "UNITCOMBAT_EXPLORER": {
+     "percent": 10
     },
-    "IMPROVEMENT_NOMADIC_HERD": {
-     "flat": 1
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 10
     },
-    "IMPROVEMENT_PASTURE": {
-     "flat": 1
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 10
     },
-    "IMPROVEMENT_HUNTING_CAMP": {
-     "flat": 1
-    },
-    "IMPROVEMENT_HUNTING_PRESERVE": {
-     "flat": 1
-    },
-    "IMPROVEMENT_WILDLIFE_SANCTUARY": {
-     "flat": 1
-    },
-    "IMPROVEMENT_VERTICAL_FARM": {
-     "flat": 1
+    "UNITCOMBAT_WHEELED": {
+     "percent": 10
     }
    }
   }
@@ -1157,24 +1175,6 @@
   "empire": {
    "cityDefense": {
     "percent": -20
-   }
-  }
- },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_EXPLORER": {
-     "percent": 10
-    },
-    "UNITCOMBAT_ANIMAL": {
-     "percent": 10
-    },
-    "UNITCOMBAT_MOUNTED": {
-     "percent": 10
-    },
-    "UNITCOMBAT_WHEELED": {
-     "percent": 10
-    }
    }
   }
  },

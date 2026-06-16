@@ -34,8 +34,23 @@
    ]
   }
  },
- "production": {
+ "culture": {
   "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
    "percent": [
     {
      "value": 70,
@@ -51,21 +66,6 @@
       "type": "BONUS_MARBLE",
       "scope": "city",
       "min": 1
-     }
-    }
-   ]
-  }
- },
- "culture": {
-  "city": {
-   "flat": [
-    4,
-    {
-     "value": 4,
-     "enabled": {
-      "existedFor": {
-       "min": 1000
-      }
      }
     }
    ]

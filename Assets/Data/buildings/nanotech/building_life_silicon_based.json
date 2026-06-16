@@ -18,19 +18,6 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TERRAFORMED_LUNA",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "commerce": {
   "city": {
    "flat": [
@@ -76,6 +63,15 @@
      }
     }
    ]
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_TERRAFORMED_LUNA": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

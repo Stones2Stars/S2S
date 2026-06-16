@@ -38,21 +38,6 @@
    ]
   }
  },
- "production": {
-  "unit": {
-   "bonuses": {
-    "BONUS_COPPER_WARES": {
-     "percent": 15
-    },
-    "BONUS_BRONZE_WARES": {
-     "percent": 15
-    },
-    "BONUS_IRON_WARES": {
-     "percent": 15
-    }
-   }
-  }
- },
  "culture": {
   "unit": {
    "garrison": {
@@ -65,6 +50,36 @@
    "investigation": {
     "flat": 15
    }
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_COPPER_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_BRONZE_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
   }
  },
  "strength": {

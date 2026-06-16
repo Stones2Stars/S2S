@@ -33,24 +33,18 @@
  "production": {
   "city": {
    "flat": 50
-  },
+  }
+ },
+ "buildRate": {
   "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_TERRAFORMED_PLANET",
-      "scope": "empire"
-     }
+   "buildings": {
+    "BUILDING_INTERSTELLAR_TERRAFORMED_PLANET": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_BASE_OCEAN_PLANET",
-      "scope": "empire"
-     }
+    "BUILDING_INTERSTELLAR_BASE_OCEAN_PLANET": {
+     "percent": 10
     }
-   ]
+   }
   }
  },
  "hurryCost": {

@@ -18,29 +18,21 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_COMMERCIAL_SPACEPORT",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_STARPORT",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "research": {
   "city": {
    "flat": 25
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_COMMERCIAL_SPACEPORT": {
+     "percent": 10
+    },
+    "BUILDING_STARPORT": {
+     "percent": 10
+    }
+   }
   }
  },
  "cost": {

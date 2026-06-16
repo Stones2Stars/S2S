@@ -18,19 +18,6 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TERRAFORMED_VENUS",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "gold": {
   "city": {
    "flat": 300
@@ -39,6 +26,15 @@
  "research": {
   "city": {
    "flat": 600
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_TERRAFORMED_VENUS": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

@@ -43,22 +43,18 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "gold": {
   "city": {
    "flat": 500
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

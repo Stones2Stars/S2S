@@ -22,19 +22,6 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_SHKADOV_THRUSTER",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "gold": {
   "city": {
    "flat": 25
@@ -43,6 +30,15 @@
  "culture": {
   "city": {
    "flat": 100
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_SHKADOV_THRUSTER": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

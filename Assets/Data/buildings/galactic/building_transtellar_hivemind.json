@@ -27,6 +27,13 @@
    "flat": 30
   }
  },
+ "buildRate": {
+  "city": {
+   "military": {
+    "percent": 10
+   }
+  }
+ },
  "revolution": {
   "city": {
    "flat": -20
@@ -35,11 +42,6 @@
  "hurryCost": {
   "city": {
    "percent": 10000
-  }
- },
- "militaryProduction": {
-  "city": {
-   "percent": 10
   }
  },
  "PROPERTY_CRIME": {

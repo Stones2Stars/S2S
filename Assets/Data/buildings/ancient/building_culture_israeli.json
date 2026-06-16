@@ -34,29 +34,21 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SOLOMONS_TEMPLE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_PETRA",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_SOLOMONS_TEMPLE": {
+     "percent": 10
+    },
+    "BUILDING_PETRA": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

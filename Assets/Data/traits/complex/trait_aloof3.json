@@ -15,11 +15,15 @@
  },
  "production": {
   "empire": {
-   "nationalWonder": {
-    "percent": -25
-   },
    "capital": {
     "percent": -15
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "nationalWonder": {
+    "percent": -25
    }
   }
  },

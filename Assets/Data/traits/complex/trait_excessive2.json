@@ -11,7 +11,7 @@
  "excludes": [
   "TRAIT_EFFICIENT1"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "worldWonder": {
     "percent": 20

@@ -54,22 +54,18 @@
    "flat": 100
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "research": {
   "city": {
    "flat": 50
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERGALACTIC_GALACTIC_COLONY": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

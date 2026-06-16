@@ -32,9 +32,6 @@
  },
  "production": {
   "empire": {
-   "military": {
-    "percent": 5
-   },
    "percent": 3,
    "improvements": {
     "IMPROVEMENT_MINE": {
@@ -148,6 +145,13 @@
    },
    "laborFreedom": {
     "flat": -3
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": 5
    }
   }
  },

@@ -6,6 +6,18 @@
  "excludes": [
   "TRAIT_DEFENSIVE"
  ],
+ "buildRate": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_COMBATANT": {
+     "percent": -20
+    },
+    "UNITCOMBAT_NAVAL_COMBATANT": {
+     "percent": -20
+    }
+   }
+  }
+ },
  "happiness": {
   "empire": {
    "perMilitaryUnit": {
@@ -42,18 +54,6 @@
    },
    "captureResistance": {
     "percent": -40
-   }
-  }
- },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_COMBATANT": {
-     "percent": -20
-    },
-    "UNITCOMBAT_NAVAL_COMBATANT": {
-     "percent": -20
-    }
    }
   }
  },

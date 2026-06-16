@@ -56,21 +56,6 @@
    }
   }
  },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_MELEE": {
-     "percent": 20
-    },
-    "UNITCOMBAT_ARCHER": {
-     "percent": 20
-    },
-    "UNITCOMBAT_THROWING": {
-     "percent": 20
-    }
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -96,6 +81,21 @@
   "empire": {
    "attitudeShare": {
     "flat": 1
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 20
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 20
+    },
+    "UNITCOMBAT_THROWING": {
+     "percent": 20
+    }
    }
   }
  },

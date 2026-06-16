@@ -16,9 +16,6 @@
  },
  "production": {
   "empire": {
-   "military": {
-    "percent": 20
-   },
    "percent": 3
   }
  },
@@ -83,6 +80,13 @@
   "empire": {
    "warWeariness": {
     "percent": -10
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": 20
    }
   }
  },

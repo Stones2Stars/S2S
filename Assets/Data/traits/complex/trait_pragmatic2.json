@@ -18,7 +18,11 @@
  },
  "production": {
   "empire": {
-   "percent": 5,
+   "percent": 5
+  }
+ },
+ "buildRate": {
+  "empire": {
    "military": {
     "percent": -7
    }
@@ -86,6 +90,42 @@
   "empire": {
    "civic": {
     "percent": 13
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 8,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 8,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 8,
+     "scope": "city"
+    }
    }
   }
  },

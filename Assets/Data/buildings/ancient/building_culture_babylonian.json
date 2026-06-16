@@ -34,36 +34,24 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_THE_HANGING_GARDENS",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_THE_ISHTAR_GATE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_HAMMURABI_STELE_OF_LAWS",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_THE_HANGING_GARDENS": {
+     "percent": 10
+    },
+    "BUILDING_THE_ISHTAR_GATE": {
+     "percent": 10
+    },
+    "BUILDING_HAMMURABI_STELE_OF_LAWS": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

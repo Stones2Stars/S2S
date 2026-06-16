@@ -20,19 +20,6 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TERRAFORMED_EUROPA",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "research": {
   "city": {
    "flat": 400
@@ -41,6 +28,15 @@
  "culture": {
   "city": {
    "flat": 100
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_TERRAFORMED_EUROPA": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

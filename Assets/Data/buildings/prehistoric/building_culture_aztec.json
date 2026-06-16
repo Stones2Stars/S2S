@@ -34,36 +34,24 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_PYRAMID_OF_THE_MOON",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_PYRAMID_OF_THE_SUN",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TLALOCS_ALTAR",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_PYRAMID_OF_THE_MOON": {
+     "percent": 10
+    },
+    "BUILDING_PYRAMID_OF_THE_SUN": {
+     "percent": 10
+    },
+    "BUILDING_TLALOCS_ALTAR": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

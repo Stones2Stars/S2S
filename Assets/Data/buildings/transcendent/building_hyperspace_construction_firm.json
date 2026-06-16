@@ -24,9 +24,11 @@
    "flat": 10
   }
  },
- "militaryProduction": {
+ "buildRate": {
   "city": {
-   "percent": -35
+   "military": {
+    "percent": -35
+   }
   }
  },
  "cost": {

@@ -43,20 +43,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 50,
-     "enabled": {
-      "type": "BONUS_GOLD_WARES",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": [
@@ -73,6 +59,18 @@
   }
  },
  "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_GOLD_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  },
   "city": {
    "units": {
     "UNIT_PIONEER": {

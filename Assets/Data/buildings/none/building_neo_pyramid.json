@@ -31,17 +31,6 @@
  "production": {
   "city": {
    "flat": 30
-  },
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERGALACTIC_TEMPORAL_RIFT",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "research": {
@@ -52,6 +41,15 @@
    "buildings": {
     "BUILDING_CLAYTRONIC_CITY": {
      "flat": 3
+    }
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERGALACTIC_TEMPORAL_RIFT": {
+     "percent": 10
     }
    }
   }

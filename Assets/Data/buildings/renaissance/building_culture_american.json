@@ -38,358 +38,159 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_STATUE_OF_LIBERTY",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_MT_RUSHMORE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_EINSTEINS_LABORATORY",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BROADWAY",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_HOLLYWOOD",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CARHENGE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_EDISONS_WORKSHOP",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_THE_PENTAGON",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ROCK_N_ROLL",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SETI_PROGRAM",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SILICON_VALLEY",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_UNITED_NATIONS",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_WALL_STREET",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_MA_WEST_POINT",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_WORLD_TRADE_CENTER",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_FORT_KNOX",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_GATEWAY_ARCH",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_EMPIRE_STATE_BUILDING",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_PEARL_HARBOR",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_COIT_TOWER",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_LAS_VEGAS_STRIP",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ALCATRAZ",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_DISNEYLAND",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_RIVER_ROUGE_COMPLEX",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_WILLOW_RUN",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ALAMO",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BURNING_MAN",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_GOLDEN_SPIKE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_WOODSTOCK",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_WARHOLS_FACTORY",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_WOODSTOCK",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_WALK_OF_FAME",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ROUTE_66",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_MADISON_AVENUE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_KENTUCKY_DERBY",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ELLIS_ISLAND",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_WILLIS_TOWER",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_AON_CENTER",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_WORLD_TOWER",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TRANSAMERICA_TOWER",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BONNEVILLE_SPEEDWAY",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CAPITOL_RECORDS_TOWER",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CIRCUS_CIRCUS_CASINO",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CORAL_CASTLE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_GETTY_CENTER",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_GRAUMANS_CHINESE_THEATRE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_LA_BREA_TAR_PITS",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_LUXOR_CASINO",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_STRATOSPHERE_CASINO",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_STATUE_OF_LIBERTY": {
+     "percent": 10
+    },
+    "BUILDING_MT_RUSHMORE": {
+     "percent": 10
+    },
+    "BUILDING_EINSTEINS_LABORATORY": {
+     "percent": 10
+    },
+    "BUILDING_BROADWAY": {
+     "percent": 10
+    },
+    "BUILDING_HOLLYWOOD": {
+     "percent": 10
+    },
+    "BUILDING_CARHENGE": {
+     "percent": 10
+    },
+    "BUILDING_EDISONS_WORKSHOP": {
+     "percent": 10
+    },
+    "BUILDING_THE_PENTAGON": {
+     "percent": 10
+    },
+    "BUILDING_ROCK_N_ROLL": {
+     "percent": 10
+    },
+    "BUILDING_SETI_PROGRAM": {
+     "percent": 10
+    },
+    "BUILDING_SILICON_VALLEY": {
+     "percent": 10
+    },
+    "BUILDING_UNITED_NATIONS": {
+     "percent": 10
+    },
+    "BUILDING_WALL_STREET": {
+     "percent": 10
+    },
+    "BUILDING_MA_WEST_POINT": {
+     "percent": 10
+    },
+    "BUILDING_WORLD_TRADE_CENTER": {
+     "percent": 10
+    },
+    "BUILDING_FORT_KNOX": {
+     "percent": 10
+    },
+    "BUILDING_GATEWAY_ARCH": {
+     "percent": 10
+    },
+    "BUILDING_EMPIRE_STATE_BUILDING": {
+     "percent": 10
+    },
+    "BUILDING_PEARL_HARBOR": {
+     "percent": 10
+    },
+    "BUILDING_COIT_TOWER": {
+     "percent": 10
+    },
+    "BUILDING_LAS_VEGAS_STRIP": {
+     "percent": 10
+    },
+    "BUILDING_ALCATRAZ": {
+     "percent": 10
+    },
+    "BUILDING_DISNEYLAND": {
+     "percent": 10
+    },
+    "BUILDING_RIVER_ROUGE_COMPLEX": {
+     "percent": 10
+    },
+    "BUILDING_WILLOW_RUN": {
+     "percent": 10
+    },
+    "BUILDING_ALAMO": {
+     "percent": 10
+    },
+    "BUILDING_BURNING_MAN": {
+     "percent": 10
+    },
+    "BUILDING_GOLDEN_SPIKE": {
+     "percent": 10
+    },
+    "BUILDING_WOODSTOCK": {
+     "percent": 20
+    },
+    "BUILDING_WARHOLS_FACTORY": {
+     "percent": 10
+    },
+    "BUILDING_WALK_OF_FAME": {
+     "percent": 10
+    },
+    "BUILDING_ROUTE_66": {
+     "percent": 10
+    },
+    "BUILDING_MADISON_AVENUE": {
+     "percent": 10
+    },
+    "BUILDING_KENTUCKY_DERBY": {
+     "percent": 10
+    },
+    "BUILDING_ELLIS_ISLAND": {
+     "percent": 10
+    },
+    "BUILDING_WILLIS_TOWER": {
+     "percent": 10
+    },
+    "BUILDING_AON_CENTER": {
+     "percent": 10
+    },
+    "BUILDING_WORLD_TOWER": {
+     "percent": 10
+    },
+    "BUILDING_TRANSAMERICA_TOWER": {
+     "percent": 10
+    },
+    "BUILDING_BONNEVILLE_SPEEDWAY": {
+     "percent": 10
+    },
+    "BUILDING_CAPITOL_RECORDS_TOWER": {
+     "percent": 10
+    },
+    "BUILDING_CIRCUS_CIRCUS_CASINO": {
+     "percent": 10
+    },
+    "BUILDING_CORAL_CASTLE": {
+     "percent": 10
+    },
+    "BUILDING_GETTY_CENTER": {
+     "percent": 10
+    },
+    "BUILDING_GRAUMANS_CHINESE_THEATRE": {
+     "percent": 10
+    },
+    "BUILDING_LA_BREA_TAR_PITS": {
+     "percent": 10
+    },
+    "BUILDING_LUXOR_CASINO": {
+     "percent": 10
+    },
+    "BUILDING_STRATOSPHERE_CASINO": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

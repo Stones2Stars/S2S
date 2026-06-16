@@ -75,9 +75,9 @@ SCALAR_FAMILIES = {
     "iGlobalHurryModifier": ("hurryCost", "empire", None, "percent"),
     "iHurryAngerModifier": ("hurryAnger", "city", None, "percent"),
     # production specials
-    "iMilitaryProductionModifier": ("militaryProduction", "city", None, "percent"),
-    "iSpaceProductionModifier": ("spaceProduction", "city", None, "percent"),
-    "iGlobalSpaceProductionModifier": ("spaceProduction", "empire", None, "percent"),
+    "iMilitaryProductionModifier": ("buildRate", "city", "military", "percent"),
+    "iSpaceProductionModifier": ("buildRate", "city", "space", "percent"),
+    "iGlobalSpaceProductionModifier": ("buildRate", "empire", "space", "percent"),
     "iWorkerSpeedModifier": ("workRate", "empire", None, "percent"),
     # trade routes
     "iTradeRoutes": ("tradeRoutes", "city", None, "flat"),
@@ -252,11 +252,9 @@ COND_KEYED = {
     "BonusYieldChanges":           (None, "city", engine.YIELDS, "flat", "bonus"),
     "BonusYieldModifiers":         (None, "city", engine.YIELDS, "percent", "bonus"),
     "BonusCommercePercentChanges": (None, "city", engine.COMMERCES, "percent", "bonus"),
-    "BonusProductionModifiers":    ("production", "city", None, "percent", "bonus"),
+    "BonusProductionModifiers":    ("buildRate", "self", None, "percent", "bonus"),
     "VicinityBonusYieldChanges":   (None, "city", engine.YIELDS, "flat", "vicinityBonus"),
     "BuildingHappinessChanges":    ("happiness", "city", None, "flat", "building"),
-    "BuildingProductionModifiers": ("production", "city", None, "percent", "building"),
-    "GlobalBuildingProductionModifiers": ("production", "empire", None, "percent", "building"),
     "GlobalBuildingCostModifiers": ("costs", "empire", None, "percent", "building"),
     "PowerYieldModifiers":         (None, "city", engine.YIELDS, "percent", "power"),
 }
@@ -279,6 +277,8 @@ TARGET_KEYED = {
     "UnitProductionModifiers":       ("buildRate", "city", "units", None, "percent"),
     "UnitCombatProdModifiers":       ("buildRate", "city", "unitCombats", None, "percent"),
     "DomainProductionModifiers":     ("buildRate", "city", "domains", None, "percent"),
+    "BuildingProductionModifiers":   ("buildRate", "city", "buildings", None, "percent"),
+    "GlobalBuildingProductionModifiers": ("buildRate", "empire", "buildings", None, "percent"),
     "UnitCombatDefenseAgainstModifiers": ("defense", "city", "unitCombats", None, "flat"),
     "ImprovementFreeSpecialists":    ("freeSpecialists", "city", "improvements", None, "flat"),
 }

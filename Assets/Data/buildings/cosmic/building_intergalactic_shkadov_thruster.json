@@ -20,33 +20,6 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SLOAN_GREAT_WALL_COLONY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CFA2_GREAT_WALL_COLONY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_HERCULES_CORONA_BOREALIS_GREAT_WALL_COLONY",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "commerce": {
   "city": {
    "flat": [
@@ -59,6 +32,21 @@
      }
     }
    ]
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_SLOAN_GREAT_WALL_COLONY": {
+     "percent": 10
+    },
+    "BUILDING_CFA2_GREAT_WALL_COLONY": {
+     "percent": 10
+    },
+    "BUILDING_HERCULES_CORONA_BOREALIS_GREAT_WALL_COLONY": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

@@ -32,17 +32,15 @@
  "production": {
   "city": {
    "flat": 40
-  },
+  }
+ },
+ "buildRate": {
   "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SUPERCONDUCTING_GRID",
-      "scope": "empire"
-     }
+   "buildings": {
+    "BUILDING_SUPERCONDUCTING_GRID": {
+     "percent": 10
     }
-   ]
+   }
   }
  },
  "cost": {

@@ -44,14 +44,16 @@
    "flat": 10
   }
  },
+ "buildRate": {
+  "empire": {
+   "space": {
+    "percent": 20
+   }
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "spaceProduction": {
-  "empire": {
-   "percent": 20
   }
  },
  "PROPERTY_DISEASE": {

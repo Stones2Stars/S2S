@@ -23,8 +23,13 @@
    ]
   }
  },
- "production": {
+ "research": {
   "city": {
+   "percent": 25
+  }
+ },
+ "buildRate": {
+  "self": {
    "percent": [
     {
      "value": 50,
@@ -43,11 +48,6 @@
      }
     }
    ]
-  }
- },
- "research": {
-  "city": {
-   "percent": 25
   }
  },
  "experience": {

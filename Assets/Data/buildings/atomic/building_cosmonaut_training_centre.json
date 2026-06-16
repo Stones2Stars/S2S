@@ -28,6 +28,16 @@
    "percent": 17
   }
  },
+ "buildRate": {
+  "city": {
+   "military": {
+    "percent": 50
+   },
+   "space": {
+    "percent": 15
+   }
+  }
+ },
  "health": {
   "city": {
    "flat": 5
@@ -36,16 +46,6 @@
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "militaryProduction": {
-  "city": {
-   "percent": 50
-  }
- },
- "spaceProduction": {
-  "city": {
-   "percent": 15
   }
  },
  "cost": {

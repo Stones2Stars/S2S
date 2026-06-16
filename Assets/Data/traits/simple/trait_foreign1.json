@@ -7,7 +7,7 @@
    "TRAIT_FOREIGN2"
   ]
  },
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_FREE_PORT": {

@@ -18,22 +18,18 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CISLUNAR_SOLAR_ARRAY",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "research": {
   "city": {
    "flat": 18
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CISLUNAR_SOLAR_ARRAY": {
+     "percent": 10
+    }
+   }
   }
  },
  "cost": {

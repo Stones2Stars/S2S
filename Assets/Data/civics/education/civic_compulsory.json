@@ -10,18 +10,7 @@
  },
  "production": {
   "empire": {
-   "percent": 4,
-   "buildings": {
-    "BUILDING_ELEMENTARY_SCHOOL": {
-     "percent": 20
-    },
-    "BUILDING_HOLOGRAPHIC_SCHOOL": {
-     "percent": 20
-    },
-    "BUILDING_UNIVERSITY": {
-     "percent": 20
-    }
-   }
+   "percent": 4
   }
  },
  "commerce": {
@@ -73,6 +62,21 @@
   "empire": {
    "national": {
     "flat": -2
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_ELEMENTARY_SCHOOL": {
+     "percent": 20
+    },
+    "BUILDING_HOLOGRAPHIC_SCHOOL": {
+     "percent": 20
+    },
+    "BUILDING_UNIVERSITY": {
+     "percent": 20
+    }
    }
   }
  },

@@ -2,7 +2,7 @@
  "type": "TRAIT_SCIENTIFIC",
  "description": "TXT_KEY_TRAIT_SCIENTIFIC",
  "civilopedia": "TXT_KEY_TRAIT_SCIENTIFIC_PEDIA",
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_SCHOOL_OF_SCRIBES": {

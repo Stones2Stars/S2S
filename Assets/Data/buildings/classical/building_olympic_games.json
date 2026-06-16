@@ -44,6 +44,13 @@
    "flat": 10
   }
  },
+ "buildRate": {
+  "city": {
+   "military": {
+    "percent": -90
+   }
+  }
+ },
  "happiness": {
   "city": {
    "flat": 10
@@ -55,11 +62,6 @@
  "greatPeopleRate": {
   "city": {
    "flat": 4
-  }
- },
- "militaryProduction": {
-  "city": {
-   "percent": -90
   }
  },
  "tradeRoutes": {

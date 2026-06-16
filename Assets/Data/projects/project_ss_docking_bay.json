@@ -2,6 +2,20 @@
  "type": "PROJECT_SS_DOCKING_BAY",
  "description": "TXT_KEY_PROJECT_SS_DOCKING_BAY",
  "civilopedia": "TXT_KEY_PROJECT_SS_DOCKING_BAY_PEDIA",
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
  "victory": {
   "thresholds": {
    "VICTORY_SPACE_RACE": 1

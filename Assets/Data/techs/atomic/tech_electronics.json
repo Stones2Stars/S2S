@@ -100,11 +100,11 @@
   "city": {
    "buildings": {
     "BUILDING_SPY_NETWORK": {
-     "flat": [
-      {
-       "SPECIALIST_SPY": 1
+     "specialists": {
+      "SPECIALIST_SPY": {
+       "flat": 1
       }
-     ]
+     }
     }
    }
   }

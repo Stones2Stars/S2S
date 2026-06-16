@@ -33,26 +33,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_KNIGHTS_STABLE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_MODERN_STABLE",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "commerce": {
   "city": {
    "flat": 4
@@ -61,6 +41,18 @@
  "culture": {
   "city": {
    "flat": 4
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_KNIGHTS_STABLE": {
+     "percent": 10
+    },
+    "BUILDING_MODERN_STABLE": {
+     "percent": 10
+    }
+   }
   }
  },
  "happiness": {

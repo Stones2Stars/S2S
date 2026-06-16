@@ -6,7 +6,7 @@
  "excludes": [
   "TRAIT_HUMANITARIAN1"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "worldWonder": {
     "percent": 10
@@ -71,6 +71,30 @@
    },
    "nationalityMod": {
     "percent": 10
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 3,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 3,
+     "scope": "city"
+    }
    }
   }
  },

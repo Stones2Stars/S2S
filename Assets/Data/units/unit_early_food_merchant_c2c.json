@@ -2,166 +2,434 @@
  "type": "UNIT_EARLY_FOOD_MERCHANT_C2C",
  "description": "TXT_KEY_UNIT_EARLY_FOOD_MERCHANT",
  "civilopedia": "TXT_KEY_CONCEPT_FOOD_CARAVAN_PEDIA",
- "production": {
-  "unit": {
-   "bonuses": {
-    "BONUS_WHALE": {
-     "percent": 1
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WHALE",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_SHRIMP": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHRIMP",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_MUREX": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MUREX",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_LOBSTER": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LOBSTER",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_FISH": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FISH",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_CRAB": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CRAB",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_CLAM": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CLAM",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_WALRUS": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WALRUS",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_SEA_LION_AND_SEAL": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SEA_LION_AND_SEAL",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_RABBIT": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_RABBIT",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_POULTRY": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_POULTRY",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_MUSHROOMS": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MUSHROOMS",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_GRAPES": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GRAPES",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_VANILLA": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_VANILLA",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_PRICKLY_PEAR": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PRICKLY_PEAR",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_PEYOTE": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PEYOTE",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_KAVA": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_KAVA",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_COCOA": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COCOA",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_OLIVES": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OLIVES",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_POMEGRANATE": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_POMEGRANATE",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_PISTACHIO": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PISTACHIO",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_PAPAYA": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PAPAYA",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_MANGO": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MANGO",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_LEMONS": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LEMONS",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_GUAVAS": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GUAVAS",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_FIG": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FIG",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_DATES": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DATES",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_COCONUT": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COCONUT",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_BANANA": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BANANA",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_APPLE": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_APPLE",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_ALMONDS": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ALMONDS",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_WHEAT": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WHEAT",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_SQUASH": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SQUASH",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_RICE": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_RICE",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_PUMPKIN": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PUMPKIN",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_POTATOES": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_POTATOES",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_MELONS": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MELONS",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_CORN": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CORN",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_BARLEY": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BARLEY",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_BISON": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BISON",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_DEER": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DEER",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_GUINEA_PIGS": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GUINEA_PIGS",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_KANGAROO": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_KANGAROO",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_MAMMOTH": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MAMMOTH",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_BEAVERS": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_RABBIT",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_PIG": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BEAVERS",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_SHEEP": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PIG",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_COW": {
-     "percent": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHEEP",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_HORSE": {
-     "percent": 2
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COW",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_DONKEY": {
-     "percent": 2
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_HORSE",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_LLAMA": {
-     "percent": 2
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_DONKEY",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_CAMEL": {
-     "percent": 2
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_LLAMA",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_CAMEL",
+      "scope": "city",
+      "min": 1
+     }
     }
-   }
+   ]
   }
  },
  "capabilities": {

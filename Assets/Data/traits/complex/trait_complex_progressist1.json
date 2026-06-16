@@ -8,11 +8,15 @@
  ],
  "production": {
   "empire": {
-   "nationalWonder": {
-    "percent": -25
-   },
    "flat": 1,
    "percent": 5
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "nationalWonder": {
+    "percent": -25
+   }
   }
  },
  "commerce": {

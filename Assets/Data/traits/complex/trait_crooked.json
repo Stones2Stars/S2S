@@ -6,7 +6,7 @@
  "excludes": [
   "TRAIT_LAWFUL"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_THIEVES_HIDEOUT": {
@@ -200,6 +200,14 @@
     },
     "BUILDING_HEALTHCARE_MEGACOMPLEX": {
      "percent": 25
+    }
+   },
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "percent": 20
+    },
+    "UNITCOMBAT_LAW_ENFORCEMENT": {
+     "percent": -20
     }
    }
   }
@@ -416,18 +424,6 @@
    }
   }
  },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_CRIMINAL": {
-     "percent": 20
-    },
-    "UNITCOMBAT_LAW_ENFORCEMENT": {
-     "percent": -20
-    }
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -462,6 +458,18 @@
   "empire": {
    "local": {
     "flat": 1
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
    }
   }
  },

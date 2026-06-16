@@ -20,14 +20,18 @@
  },
  "production": {
   "empire": {
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
    "worldWonder": {
     "percent": -20
    },
    "nationalWonder": {
     "percent": 25
-   },
-   "capital": {
-    "percent": 5
    }
   }
  },
@@ -94,6 +98,18 @@
    },
    "attitude": {
     "flat": 1
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
    }
   }
  },

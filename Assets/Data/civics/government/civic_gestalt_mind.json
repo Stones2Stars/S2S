@@ -10,12 +10,7 @@
  },
  "production": {
   "empire": {
-   "percent": 5,
-   "buildings": {
-    "BUILDING_NETWORK_NODE": {
-     "percent": 20
-    }
-   }
+   "percent": 5
   }
  },
  "commerce": {
@@ -105,6 +100,15 @@
    },
    "democracyLevel": {
     "flat": 10
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_NETWORK_NODE": {
+     "percent": 20
+    }
    }
   }
  },

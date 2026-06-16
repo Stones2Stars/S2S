@@ -23,7 +23,24 @@
    }
   }
  },
- "unitProduction": {
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -20
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -2
+   },
+   "national": {
+    "flat": -2
+   }
+  }
+ },
+ "buildRate": {
   "empire": {
    "unitCombats": {
     "UNITCOMBAT_ORBITAL_AIRCRAFT": {
@@ -44,23 +61,6 @@
     "UNITCOMBAT_WORMHOLE_SPACESHIP": {
      "percent": 20
     }
-   }
-  }
- },
- "diplomacy": {
-  "empire": {
-   "warWeariness": {
-    "percent": -20
-   }
-  }
- },
- "revolution": {
-  "empire": {
-   "local": {
-    "flat": -2
-   },
-   "national": {
-    "flat": -2
    }
   }
  },

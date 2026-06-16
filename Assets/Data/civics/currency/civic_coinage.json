@@ -30,26 +30,6 @@
    },
    "tradeRoute": {
     "percent": 1
-   },
-   "buildings": {
-    "BUILDING_BAZAAR": {
-     "percent": 10
-    },
-    "BUILDING_MALL": {
-     "percent": 15
-    },
-    "BUILDING_MARKET": {
-     "percent": 10
-    },
-    "BUILDING_GROCER": {
-     "percent": 15
-    },
-    "BUILDING_SUPERMARKET": {
-     "percent": 20
-    },
-    "BUILDING_HYPERMARKET": {
-     "percent": 25
-    }
    }
   }
  },
@@ -115,6 +95,30 @@
   "empire": {
    "foreign": {
     "percent": 5
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_BAZAAR": {
+     "percent": 10
+    },
+    "BUILDING_MALL": {
+     "percent": 15
+    },
+    "BUILDING_MARKET": {
+     "percent": 10
+    },
+    "BUILDING_GROCER": {
+     "percent": 15
+    },
+    "BUILDING_SUPERMARKET": {
+     "percent": 20
+    },
+    "BUILDING_HYPERMARKET": {
+     "percent": 25
+    }
    }
   }
  },

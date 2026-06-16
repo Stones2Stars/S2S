@@ -34,36 +34,24 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TEMPLE_OF_AH_CACAO",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CHICHEN_ITZA",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_PYRAMID_OF_THE_MAGICIAN",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_TEMPLE_OF_AH_CACAO": {
+     "percent": 10
+    },
+    "BUILDING_CHICHEN_ITZA": {
+     "percent": 10
+    },
+    "BUILDING_PYRAMID_OF_THE_MAGICIAN": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

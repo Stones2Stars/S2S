@@ -21,43 +21,27 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_FIRE_PIT",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_IMU",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BONFIRE",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CHARCOAL_BURNER",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_FIRE_PIT": {
+     "percent": 10
+    },
+    "BUILDING_IMU": {
+     "percent": 10
+    },
+    "BUILDING_BONFIRE": {
+     "percent": 10
+    },
+    "BUILDING_CHARCOAL_BURNER": {
+     "percent": 10
+    }
+   }
   }
  },
  "happiness": {

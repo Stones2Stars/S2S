@@ -45,6 +45,13 @@
    "flat": 3
   }
  },
+ "buildRate": {
+  "city": {
+   "military": {
+    "percent": 25
+   }
+  }
+ },
  "warWeariness": {
   "city": {
    "percent": -5
@@ -53,11 +60,6 @@
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "militaryProduction": {
-  "city": {
-   "percent": 25
   }
  },
  "PROPERTY_EDUCATION": {

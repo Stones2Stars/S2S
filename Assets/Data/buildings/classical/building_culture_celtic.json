@@ -46,57 +46,33 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_STONEHENGE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ADAM_SMITHS_TRADING_COMPANY",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_EDINBURGH_CASTLE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SCAPA_FLOW",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BLARNEY_CASTLE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_HILL_OF_TARA",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_STONEHENGE": {
+     "percent": 10
+    },
+    "BUILDING_ADAM_SMITHS_TRADING_COMPANY": {
+     "percent": 10
+    },
+    "BUILDING_EDINBURGH_CASTLE": {
+     "percent": 10
+    },
+    "BUILDING_SCAPA_FLOW": {
+     "percent": 10
+    },
+    "BUILDING_BLARNEY_CASTLE": {
+     "percent": 10
+    },
+    "BUILDING_HILL_OF_TARA": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

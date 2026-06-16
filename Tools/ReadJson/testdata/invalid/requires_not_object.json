@@ -1,0 +1,4 @@
+{
+  "type": "BUILDING_BROKEN_REQUIRES",
+  "requires": "I should be an object with build/operate, not a string"
+}

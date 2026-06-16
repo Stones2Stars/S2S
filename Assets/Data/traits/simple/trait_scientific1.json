@@ -7,7 +7,7 @@
    "TRAIT_SCIENTIFIC2"
   ]
  },
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_SCHOOL_OF_SCRIBES": {

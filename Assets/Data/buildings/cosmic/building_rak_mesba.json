@@ -17,19 +17,6 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TRANSTELLAR_ALDERSON_DISK",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "gold": {
   "city": {
    "flat": 100
@@ -48,6 +35,15 @@
  "espionage": {
   "city": {
    "flat": 20
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_TRANSTELLAR_ALDERSON_DISK": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

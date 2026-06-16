@@ -31,24 +31,16 @@
    "flat": 10
   }
  },
- "production": {
+ "buildRate": {
   "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_AEROPONICS_ARCOLOGY",
-      "scope": "empire"
-     }
+   "buildings": {
+    "BUILDING_INTERSTELLAR_AEROPONICS_ARCOLOGY": {
+     "percent": 10
     },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INTERSTELLAR_FARM_PLANET",
-      "scope": "empire"
-     }
+    "BUILDING_INTERSTELLAR_FARM_PLANET": {
+     "percent": 10
     }
-   ]
+   }
   }
  },
  "maintenance": {

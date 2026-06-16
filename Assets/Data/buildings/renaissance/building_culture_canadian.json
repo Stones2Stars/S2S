@@ -56,29 +56,21 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_CN_TOWER",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_NATIONAL_NIGHT_OF_HOCKEY",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_CN_TOWER": {
+     "percent": 10
+    },
+    "BUILDING_NATIONAL_NIGHT_OF_HOCKEY": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

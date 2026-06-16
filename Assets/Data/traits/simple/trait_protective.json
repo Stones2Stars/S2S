@@ -2,7 +2,7 @@
  "type": "TRAIT_PROTECTIVE",
  "description": "TXT_KEY_TRAIT_PROTECTIVE",
  "civilopedia": "TXT_KEY_TRAIT_PROTECTIVE_PEDIA",
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_ARCHERY_RANGE": {
@@ -165,6 +165,18 @@
   "empire": {
    "local": {
     "flat": -1
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
    }
   }
  },

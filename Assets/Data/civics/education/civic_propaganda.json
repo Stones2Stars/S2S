@@ -14,9 +14,6 @@
  },
  "production": {
   "empire": {
-   "military": {
-    "percent": 10
-   },
    "percent": 3
   }
  },
@@ -88,6 +85,13 @@
    },
    "national": {
     "flat": -3
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": 10
    }
   }
  },

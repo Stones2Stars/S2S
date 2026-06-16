@@ -2,6 +2,20 @@
  "type": "PROJECT_AA_MISSILE_DEFENSES",
  "description": "TXT_KEY_PROJECT_AA_MISSILE_DEFENSES",
  "civilopedia": "TXT_KEY_PROJECT_MISSILE_DEFENCE_PEDIA",
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
  "combat": {
   "team": {
    "nukeInterception": {

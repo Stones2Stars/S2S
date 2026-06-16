@@ -21,17 +21,6 @@
  "production": {
   "city": {
    "flat": 5
-  },
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_MEGATOWER_MALL_LEVEL",
-      "scope": "empire"
-     }
-    }
-   ]
   }
  },
  "gold": {
@@ -47,6 +36,15 @@
  "culture": {
   "city": {
    "flat": 7
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MEGATOWER_MALL_LEVEL": {
+     "percent": 10
+    }
+   }
   }
  },
  "cost": {

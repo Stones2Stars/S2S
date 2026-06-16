@@ -1,0 +1,24 @@
+{
+  "type": "BONUS_GNARLITE",
+
+  "identity": {
+    "description": "TXT_KEY_BONUS_GNARLITE",
+    "bonusClassType": "BONUSCLASS_GNARL"
+  },
+
+  "enables": {
+    "buildings": ["BUILDING_TEMPLE_OF_GNARL"],
+    "units": ["UNIT_SIR_GNARLALOT"],
+    "routes": ["ROUTE_GNARL_RAIL"]
+  },
+
+  "production": { "plot": { "flat": 1 } },
+  "commerce": { "plot": { "flat": 2 } },
+  "health": { "empire": { "flat": 1 } },
+  "happiness": { "empire": { "flat": 1 } },
+
+  "mapGeneration": { "uniqueRange": 3, "placementOrder": 2, "tilesPer": 64 },
+
+  "ui": { "art": { "icon": "ART_DEF_BONUS_GNARLITE" } },
+  "world": { "art": { "icon": "ART_DEF_BONUS_GNARLITE" } }
+}

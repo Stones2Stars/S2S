@@ -26,127 +26,63 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_GREAT_WALL_OF_CHINA",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SILK_ROAD",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_THREE_GORGES_DAM",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TERRACOTTA_ARMY",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_WUDANG_MOUNTAIN",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_QUANZHEN_SCHOOL",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BEZEKLIK_CAVES",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SUN_TZUS_ART_OF_WAR",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_PORCELAIN_TOWER",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TEMPLE_OF_HEAVEN",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BIRDS_NEST_STADIUM",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_FAMEN_TEMPLE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_TAIPEI_101",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_MARCO_POLOS_EMBASSY",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_SHAOLIN_TEMPLE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_BANK_OF_CHINA_TOWER",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_GREAT_WALL_OF_CHINA": {
+     "percent": 10
+    },
+    "BUILDING_SILK_ROAD": {
+     "percent": 10
+    },
+    "BUILDING_THREE_GORGES_DAM": {
+     "percent": 10
+    },
+    "BUILDING_TERRACOTTA_ARMY": {
+     "percent": 10
+    },
+    "BUILDING_WUDANG_MOUNTAIN": {
+     "percent": 10
+    },
+    "BUILDING_QUANZHEN_SCHOOL": {
+     "percent": 10
+    },
+    "BUILDING_BEZEKLIK_CAVES": {
+     "percent": 10
+    },
+    "BUILDING_SUN_TZUS_ART_OF_WAR": {
+     "percent": 10
+    },
+    "BUILDING_PORCELAIN_TOWER": {
+     "percent": 10
+    },
+    "BUILDING_TEMPLE_OF_HEAVEN": {
+     "percent": 10
+    },
+    "BUILDING_BIRDS_NEST_STADIUM": {
+     "percent": 10
+    },
+    "BUILDING_FAMEN_TEMPLE": {
+     "percent": 10
+    },
+    "BUILDING_TAIPEI_101": {
+     "percent": 10
+    },
+    "BUILDING_MARCO_POLOS_EMBASSY": {
+     "percent": 10
+    },
+    "BUILDING_SHAOLIN_TEMPLE": {
+     "percent": 10
+    },
+    "BUILDING_BANK_OF_CHINA_TOWER": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

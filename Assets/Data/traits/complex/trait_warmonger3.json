@@ -6,7 +6,7 @@
  "excludes": [
   "TRAIT_PACIFIST1"
  ],
- "production": {
+ "buildRate": {
   "empire": {
    "military": {
     "percent": 35
@@ -47,6 +47,18 @@
   "empire": {
    "warWeariness": {
     "percent": -70
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
    }
   }
  },

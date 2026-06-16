@@ -23,31 +23,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 100,
-     "enabled": {
-      "type": "BONUS_ALUMINUM_WARES",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ]
-  },
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_LABORATORY",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "research": {
   "city": {
    "flat": [
@@ -63,6 +38,32 @@
    ]
   }
  },
+ "buildRate": {
+  "city": {
+   "space": {
+    "percent": 50
+   }
+  },
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_LABORATORY": {
+     "percent": 10
+    }
+   }
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 2
@@ -71,11 +72,6 @@
  "hurryCost": {
   "city": {
    "percent": 300
-  }
- },
- "spaceProduction": {
-  "city": {
-   "percent": 50
   }
  },
  "cost": {

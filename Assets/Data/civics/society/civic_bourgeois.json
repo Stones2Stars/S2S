@@ -38,23 +38,6 @@
     "IMPROVEMENT_VERTICAL_FARM": {
      "flat": 1
     }
-   },
-   "buildings": {
-    "BUILDING_BUTCHERY": {
-     "percent": 20
-    },
-    "BUILDING_MEAT_PACKING_PLANT": {
-     "percent": 20
-    },
-    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE": {
-     "percent": 20
-    },
-    "BUILDING_FISHERMANS_HUT": {
-     "percent": 20
-    },
-    "BUILDING_AQUAFARM": {
-     "percent": 20
-    }
    }
   }
  },
@@ -252,6 +235,27 @@
   "empire": {
    "warWeariness": {
     "percent": 5
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_BUTCHERY": {
+     "percent": 20
+    },
+    "BUILDING_MEAT_PACKING_PLANT": {
+     "percent": 20
+    },
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE": {
+     "percent": 20
+    },
+    "BUILDING_FISHERMANS_HUT": {
+     "percent": 20
+    },
+    "BUILDING_AQUAFARM": {
+     "percent": 20
+    }
    }
   }
  },

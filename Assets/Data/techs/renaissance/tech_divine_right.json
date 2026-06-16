@@ -85,11 +85,11 @@
   "city": {
    "buildings": {
     "BUILDING_UNIVERSITY": {
-     "flat": [
-      {
-       "SPECIALIST_PRIEST": 1
+     "specialists": {
+      "SPECIALIST_PRIEST": {
+       "flat": 1
       }
-     ]
+     }
     }
    }
   }

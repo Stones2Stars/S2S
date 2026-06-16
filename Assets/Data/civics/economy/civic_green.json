@@ -38,9 +38,6 @@
  },
  "production": {
   "empire": {
-   "military": {
-    "percent": -5
-   },
    "improvements": {
     "IMPROVEMENT_MODERN_WINDMILL": {
      "flat": 1
@@ -151,6 +148,13 @@
   "empire": {
    "environmentalProtection": {
     "flat": 10
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": -5
    }
   }
  },

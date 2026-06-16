@@ -21,8 +21,10 @@ OWNER RULINGS 2026-06-16 (recorded in enabler-cascade-spec §3 + migration-renam
   - `Is TAG_COASTAL`     -> "IS_COASTAL"                                    (bare city-is-coastal predicate)
   - `And`->all, `Or`->any (one OR-group), `Not`->noneOf
   - `GreaterEqual(ATTRIBUTE_POPULATION, N)` -> {type:POPULATION, scope:city, min:N}   (established count kind, Building #32)
-  ⚑ HAS_FEATURE/HAS_TERRAIN/IS_COASTAL DIVERGE from Improvement #22's {feature:[...]}/{terrain:[...]} membership +
-    COASTAL_LAND plot token — flagged for the Phase-F predicate-modularity reconciliation (enabler-spec §12 / ranking Phase F).
+  RESOLVED 2026-06-16 (owner, hole #1): HAS_TERRAIN/HAS_FEATURE/HAS_BONUS are the CANONICAL single-valued predicates;
+    Improvement #22's {terrain|feature|bonus:[...]} is the compact membership SUGAR (desugars to any-of-the-predicate, no
+    data churn). So this converter's HAS_FEATURE/HAS_TERRAIN are already canonical. COASTAL_LAND unused in real data (0) →
+    moot; IS_COASTAL (CvCity::isCoastal) stays distinct. (data-model-spec §2.5, enabler-spec §3.)
 """
 from collections import OrderedDict
 import engine
@@ -59,12 +61,20 @@ def _is_pred(tag):
 
 
 def _int_compare(tag, elem):
-    """The integer-comparison nodes. Only ATTRIBUTE_POPULATION >= Constant appears (UNIT_IMMIGRANT)."""
-    attr = engine.text(elem.find("AttributeType"))
+    """Integer-comparison nodes -> a count atom at CITY scope. Subject is an ATTRIBUTE (e.g. POPULATION, the
+    UNIT_IMMIGRANT case) OR a PROPERTY (e.g. PROPERTY_CRIME — a threshold band, the pseudobuilding/PropertyEffect
+    case). Greater=> min N+1, GreaterEqual=> min N, Less=> max N-1, LessEqual=> max N, Equal=> min=max=N."""
     cnode = elem.find("Constant")
     const = int(engine.text(cnode)) if cnode is not None and engine.is_int(engine.text(cnode)) else None
-    if tag == "GreaterEqual" and attr == "ATTRIBUTE_POPULATION" and const is not None:
-        return _atom("POPULATION", "city", min=const)
+    prop = engine.text(elem.find("PropertyType"))
+    attr = engine.text(elem.find("AttributeType"))
+    if const is not None and (prop or attr):
+        typ = prop if prop else ("POPULATION" if attr == "ATTRIBUTE_POPULATION" else attr.replace("ATTRIBUTE_", ""))
+        if tag == "Greater":      return _atom(typ, "city", min=const + 1)
+        if tag == "GreaterEqual": return _atom(typ, "city", min=const)
+        if tag == "Less":         return _atom(typ, "city", max=const - 1)
+        if tag == "LessEqual":    return _atom(typ, "city", max=const)
+        if tag == "Equal":        return _atom(typ, "city", min=const, max=const)
     raise ValueError("boolexpr: unhandled integer comparison <%s> attr=%s const=%s "
                      "— extend the converter or hand-recreate" % (tag, attr, const))
 
@@ -95,7 +105,7 @@ def convert(node):
         return _has_leaf(engine.text(node.find("GOMType")), engine.text(node.find("ID")))
     if tag == "Is":
         return _is_pred(engine.text(node))
-    if tag in ("Greater", "GreaterEqual", "Equal"):
+    if tag in ("Greater", "GreaterEqual", "Less", "LessEqual", "Equal"):
         return _int_compare(tag, node)
     raise ValueError("boolexpr: unhandled node <%s> — extend the converter or hand-recreate" % tag)
 

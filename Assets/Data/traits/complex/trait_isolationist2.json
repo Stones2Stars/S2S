@@ -20,11 +20,20 @@
  },
  "production": {
   "empire": {
+   "tradeRoute": {
+    "percent": -20
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
    "nationalWonder": {
     "percent": 15
    },
-   "tradeRoute": {
-    "percent": -20
+   "unitCombats": {
+    "UNITCOMBAT_TRADE": {
+     "percent": -10
+    }
    },
    "military": {
     "percent": -15
@@ -72,15 +81,6 @@
    }
   }
  },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_TRADE": {
-     "percent": -10
-    }
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -116,6 +116,18 @@
   "empire": {
    "attitude": {
     "flat": -1
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
    }
   }
  },

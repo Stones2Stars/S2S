@@ -30,8 +30,18 @@
    ]
   }
  },
- "production": {
+ "culture": {
   "city": {
+   "flat": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "buildRate": {
+  "self": {
    "percent": [
     {
      "value": 100,
@@ -42,16 +52,6 @@
      }
     }
    ]
-  }
- },
- "culture": {
-  "city": {
-   "flat": 1
-  }
- },
- "espionage": {
-  "city": {
-   "percent": 1
   }
  },
  "defense": {

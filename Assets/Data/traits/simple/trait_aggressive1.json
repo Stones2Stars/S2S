@@ -7,7 +7,7 @@
    "TRAIT_AGGRESSIVE2"
   ]
  },
- "production": {
+ "buildRate": {
   "empire": {
    "buildings": {
     "BUILDING_BARRACKS": {
@@ -103,7 +103,14 @@
  },
  "PROPERTY_CRIME": {
   "city": {
-   "flat": 5
+   "flat": {
+    "value": 5,
+    "enabled": {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 301
+    }
+   }
   }
  },
  "grants": {

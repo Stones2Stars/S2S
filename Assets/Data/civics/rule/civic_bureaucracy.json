@@ -21,26 +21,6 @@
    "percent": 1,
    "tradeRoute": {
     "percent": 3
-   },
-   "buildings": {
-    "BUILDING_VILLAGE_HALL": {
-     "percent": 20
-    },
-    "BUILDING_TOWN_HALL": {
-     "percent": 20
-    },
-    "BUILDING_CITY_COUNCIL": {
-     "percent": 20
-    },
-    "BUILDING_METROPOLITAN_ADMINISTRATION": {
-     "percent": 20
-    },
-    "BUILDING_CAPITAL_ADMINISTRATION": {
-     "percent": 20
-    },
-    "BUILDING_FORBIDDEN_PALACE": {
-     "percent": 20
-    }
    }
   }
  },
@@ -114,6 +94,30 @@
   "empire": {
    "distanceModifier": {
     "percent": 10
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_VILLAGE_HALL": {
+     "percent": 20
+    },
+    "BUILDING_TOWN_HALL": {
+     "percent": 20
+    },
+    "BUILDING_CITY_COUNCIL": {
+     "percent": 20
+    },
+    "BUILDING_METROPOLITAN_ADMINISTRATION": {
+     "percent": 20
+    },
+    "BUILDING_CAPITAL_ADMINISTRATION": {
+     "percent": 20
+    },
+    "BUILDING_FORBIDDEN_PALACE": {
+     "percent": 20
+    }
    }
   }
  },

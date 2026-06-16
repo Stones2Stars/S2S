@@ -2,19 +2,34 @@
  "type": "UNIT_STONE_AXEMAN",
  "description": "TXT_KEY_UNIT_STONE_AXEMAN",
  "civilopedia": "TXT_KEY_UNIT_STONE_AXEMAN_PEDIA",
- "production": {
-  "unit": {
-   "bonuses": {
-    "BONUS_STONE": {
-     "percent": 15
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_OBSIDIAN": {
-     "percent": 15
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_OBSIDIAN",
+      "scope": "city",
+      "min": 1
+     }
     },
-    "BONUS_FLINT": {
-     "percent": 15
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_FLINT",
+      "scope": "city",
+      "min": 1
+     }
     }
-   }
+   ]
   }
  },
  "strength": {

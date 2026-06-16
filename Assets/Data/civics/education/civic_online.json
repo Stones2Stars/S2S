@@ -8,24 +8,6 @@
    "BUILDING_ONLINE_UNIVERSITY"
   ]
  },
- "production": {
-  "empire": {
-   "buildings": {
-    "BUILDING_COMPUTER_NETWORK": {
-     "percent": 20
-    },
-    "BUILDING_INFO_NET": {
-     "percent": 20
-    },
-    "BUILDING_DESIGN_STUDIO": {
-     "percent": 20
-    },
-    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT": {
-     "percent": 20
-    }
-   }
-  }
- },
  "gold": {
   "empire": {
    "percent": 5
@@ -49,6 +31,24 @@
  "health": {
   "empire": {
    "flat": -1
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_COMPUTER_NETWORK": {
+     "percent": 20
+    },
+    "BUILDING_INFO_NET": {
+     "percent": 20
+    },
+    "BUILDING_DESIGN_STUDIO": {
+     "percent": 20
+    },
+    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT": {
+     "percent": 20
+    }
+   }
   }
  },
  "PROPERTY_EDUCATION": {

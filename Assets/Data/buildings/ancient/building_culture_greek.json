@@ -26,99 +26,51 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_THE_COLOSSUS",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_THE_ORACLE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_PLATOS_ACADEMY",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ARCHIMEDES_WORKSHOP",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_THE_NECROMANTEION",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_OLYMPIC_GAMES",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_HIPPOCRATIC_OATH",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_THE_PARTHENON",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_PHIDIAS_STATUE_WORKSHOP",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_THEATRE_OF_DIONYSUS",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_PERGAMON_ALTAR",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_ROSETTA_STONE",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_THE_COLOSSUS": {
+     "percent": 10
+    },
+    "BUILDING_THE_ORACLE": {
+     "percent": 10
+    },
+    "BUILDING_PLATOS_ACADEMY": {
+     "percent": 10
+    },
+    "BUILDING_ARCHIMEDES_WORKSHOP": {
+     "percent": 10
+    },
+    "BUILDING_THE_NECROMANTEION": {
+     "percent": 10
+    },
+    "BUILDING_OLYMPIC_GAMES": {
+     "percent": 10
+    },
+    "BUILDING_HIPPOCRATIC_OATH": {
+     "percent": 10
+    },
+    "BUILDING_THE_PARTHENON": {
+     "percent": 10
+    },
+    "BUILDING_PHIDIAS_STATUE_WORKSHOP": {
+     "percent": 10
+    },
+    "BUILDING_THEATRE_OF_DIONYSUS": {
+     "percent": 10
+    },
+    "BUILDING_PERGAMON_ALTAR": {
+     "percent": 10
+    },
+    "BUILDING_ROSETTA_STONE": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

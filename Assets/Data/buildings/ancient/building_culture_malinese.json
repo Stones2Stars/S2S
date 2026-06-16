@@ -26,36 +26,24 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_GREAT_MOSQUE_OF_DJENNE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_UNIVERSITY_OF_SANKORE",
-      "scope": "city"
-     }
-    },
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_GREAT_MOSQUE_OF_DESERT",
-      "scope": "city"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_GREAT_MOSQUE_OF_DJENNE": {
+     "percent": 10
+    },
+    "BUILDING_UNIVERSITY_OF_SANKORE": {
+     "percent": 10
+    },
+    "BUILDING_GREAT_MOSQUE_OF_DESERT": {
+     "percent": 10
+    }
+   }
   }
  },
  "hurryCost": {

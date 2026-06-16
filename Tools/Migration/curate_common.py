@@ -171,13 +171,23 @@ def accumulate_boosts(store, boosts_config):
     layout, §3), ready to fold: {ref: {family: {scope: {targetType: {TARGET: {member?: {unit: val}}}}}}}.
     `channel` is the family; named keys become members; `tgt_t` (the entity carrying the field) is the TARGET."""
     boosts = {}
-    for src_ent, fld, target_type, family, keys, unit, scope in boosts_config:
+    for cfg in boosts_config:
+        src_ent, fld, target_type, family, keys, unit, scope = cfg[:7]
+        subt = cfg[7] if len(cfg) > 7 else None            # optional 2nd keyed dimension (e.g. specialists)
         scope = "empire" if scope == "player" else ("world" if scope == "game" else scope)
         for tgt_t, rec in store.table(src_ent).items():
             node = rec.find(fld)
             if node is None:
                 continue
             for ref, u, val in _boost_entries(node, keys, unit):
+                if subt and isinstance(val, list):         # nest a keyed sub-dimension: targetType.TARGET.subt.{KEY}.unit
+                    base = (boosts.setdefault(ref, {}).setdefault(family, {}).setdefault(scope, {})
+                            .setdefault(target_type, {}).setdefault(tgt_t, {}).setdefault(subt, {}))
+                    for d in val:
+                        for sk, sv in (d.items() if isinstance(d, dict) else []):
+                            leaf = base.setdefault(sk, {})
+                            leaf[u] = _merge_val(leaf[u], sv) if u in leaf else sv
+                    continue
                 if isinstance(val, dict):                  # named members (food/gold/…)
                     for member, v in val.items():
                         if family in SPLIT_FAMILIES:       # member IS the family: member.scope.targetType.TARGET.unit

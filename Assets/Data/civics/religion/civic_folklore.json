@@ -17,33 +17,7 @@
  },
  "production": {
   "empire": {
-   "percent": 1,
-   "buildings": {
-    "BUILDING_MONUMENT": {
-     "percent": 20
-    },
-    "BUILDING_OBELISK": {
-     "percent": 20
-    },
-    "BUILDING_TOTEM_POLE": {
-     "percent": 20
-    },
-    "BUILDING_STELE": {
-     "percent": 20
-    },
-    "BUILDING_MONUMENT_OF_THE_DICTATOR": {
-     "percent": 20
-    },
-    "BUILDING_ROYAL_MONUMENT": {
-     "percent": 20
-    },
-    "BUILDING_FUNERARY_SERVICES": {
-     "percent": 20
-    },
-    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
-     "percent": 20
-    }
-   }
+   "percent": 1
   }
  },
  "commerce": {
@@ -115,6 +89,36 @@
  "greatPeopleRate": {
   "empire": {
    "percent": 2
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MONUMENT": {
+     "percent": 20
+    },
+    "BUILDING_OBELISK": {
+     "percent": 20
+    },
+    "BUILDING_TOTEM_POLE": {
+     "percent": 20
+    },
+    "BUILDING_STELE": {
+     "percent": 20
+    },
+    "BUILDING_MONUMENT_OF_THE_DICTATOR": {
+     "percent": 20
+    },
+    "BUILDING_ROYAL_MONUMENT": {
+     "percent": 20
+    },
+    "BUILDING_FUNERARY_SERVICES": {
+     "percent": 20
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "percent": 20
+    }
+   }
   }
  },
  "ui": {

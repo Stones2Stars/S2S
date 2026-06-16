@@ -8,6 +8,18 @@
   "TRAIT_FANATICAL1",
   "TRAIT_PIOUS1"
  ],
+ "buildRate": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_COMBATANT": {
+     "percent": -10
+    },
+    "UNITCOMBAT_MISSIONARY": {
+     "percent": 50
+    }
+   }
+  }
+ },
  "research": {
   "empire": {
    "byTech": {
@@ -65,18 +77,6 @@
    },
    "nonStateHolyCityXP": {
     "percent": 20
-   }
-  }
- },
- "unitProduction": {
-  "empire": {
-   "unitCombats": {
-    "UNITCOMBAT_COMBATANT": {
-     "percent": -10
-    },
-    "UNITCOMBAT_MISSIONARY": {
-     "percent": 50
-    }
    }
   }
  },

@@ -22,8 +22,18 @@
    ]
   }
  },
- "production": {
+ "research": {
   "city": {
+   "flat": 1500
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "buildRate": {
+  "self": {
    "percent": [
     {
      "value": 100,
@@ -34,16 +44,6 @@
      }
     }
    ]
-  }
- },
- "research": {
-  "city": {
-   "flat": 1500
-  }
- },
- "culture": {
-  "city": {
-   "flat": 100
   }
  },
  "hurryCost": {

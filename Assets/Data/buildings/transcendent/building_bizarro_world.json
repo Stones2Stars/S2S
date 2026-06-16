@@ -18,19 +18,6 @@
    ]
   }
  },
- "production": {
-  "empire": {
-   "percent": [
-    {
-     "value": 10,
-     "enabled": {
-      "type": "BUILDING_INVERSE_CITY",
-      "scope": "empire"
-     }
-    }
-   ]
-  }
- },
  "culture": {
   "city": {
    "flat": 50
@@ -39,6 +26,15 @@
  "espionage": {
   "city": {
    "flat": 50
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INVERSE_CITY": {
+     "percent": 10
+    }
+   }
   }
  },
  "grants": {

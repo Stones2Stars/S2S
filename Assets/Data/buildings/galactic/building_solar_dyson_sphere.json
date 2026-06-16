@@ -22,20 +22,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "percent": [
-    {
-     "value": 100,
-     "enabled": {
-      "type": "BONUS_ANTIMATTER",
-      "scope": "city",
-      "min": 1
-     }
-    }
-   ]
-  }
- },
  "gold": {
   "city": {
    "flat": 1000,
@@ -53,6 +39,20 @@
  "research": {
   "city": {
    "flat": 500
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ANTIMATTER",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
   }
  },
  "hurryCost": {
