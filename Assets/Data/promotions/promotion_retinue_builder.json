@@ -1,0 +1,43 @@
+{
+ "type": "PROMOTION_RETINUE_BUILDER",
+ "description": "TXT_KEY_PROMOTION_RETINUE_BUILDER",
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 33
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "collateral": {
+  "unit": {
+   "protection": {
+    "percent": 50
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": -10
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Retinue/builder.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_GET_RETINUE"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_HERO"
+  ]
+ }
+}

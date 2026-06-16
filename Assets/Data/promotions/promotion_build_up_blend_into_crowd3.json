@@ -1,0 +1,54 @@
+{
+ "type": "PROMOTION_BUILD_UP_BLEND_INTO_CROWD3",
+ "description": "TXT_KEY_PROMOTION_BUILD_UP_BLEND_INTO_CROWD3",
+ "vision": {
+  "invisibleImprovement": [
+   {
+    "invisible": "INVISIBLE_DISGUISED",
+    "improvement": "IMPROVEMENT_COTTAGE",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_DISGUISED",
+    "improvement": "IMPROVEMENT_HAMLET",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_DISGUISED",
+    "improvement": "IMPROVEMENT_VILLAGE",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_DISGUISED",
+    "improvement": "IMPROVEMENT_TOWN",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_DISGUISED",
+    "improvement": "IMPROVEMENT_SUBURBS",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_DISGUISED",
+    "improvement": "IMPROVEMENT_CITY",
+    "intensity": 1
+   }
+  ]
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_BLEND_INTO_CROWD": 5
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_HIDE_SEEK"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/BlendIntoCrowd3BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

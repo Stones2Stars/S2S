@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_INSTIGATOR3",
+ "description": "TXT_KEY_PROMOTION_INSTIGATOR3",
+ "heal": {
+  "unit": {
+   "neutral": {
+    "flat": 100
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_INSTIGATOR": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Instigator3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_PING"
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "type": "PROMOTION_CROWS_NEST3",
+ "description": "TXT_KEY_PROMOTION_CROWS_NEST3",
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_NAVAL_DISGUISE": 1,
+   "INVISIBLE_SUBMARINE": 1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CROWS_NEST": 3
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_HIDE_SEEK"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/CrowsNest3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

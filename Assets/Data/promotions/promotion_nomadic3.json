@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_NOMADIC3",
+ "description": "TXT_KEY_PROMOTION_NOMADIC3",
+ "withdrawal": {
+  "unit": {
+   "percent": 20
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_NOMADIC_PROMOTION": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionNomadic3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_ANIMAL",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_TRADE",
+   "UNITCOMBAT_NOMAD",
+   "UNITCOMBAT_WHEELED"
+  ]
+ }
+}

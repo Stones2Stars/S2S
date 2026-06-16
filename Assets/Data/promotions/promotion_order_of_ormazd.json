@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_ORDER_OF_ORMAZD",
+ "description": "TXT_KEY_PROMOTION_ORDER_OF_ORMAZD",
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 15
+   },
+   "cityDefense": {
+    "percent": 15
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/zoroastrianism_promo.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "stateReligionPrereq": "RELIGION_ZOROASTRIANISM",
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_THROWING"
+  ]
+ }
+}

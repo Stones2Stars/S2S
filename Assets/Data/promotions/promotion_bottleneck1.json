@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_BOTTLENECK1",
+ "description": "TXT_KEY_PROMOTION_BOTTLENECK1",
+ "strength": {
+  "unit": {
+   "perVolumeMore": {
+    "percent": 10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BOTTLENECK": 1
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Bottleneck1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

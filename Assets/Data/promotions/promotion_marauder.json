@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_MARAUDER",
+ "description": "TXT_KEY_PROMOTION_MARAUDER",
+ "help": "TXT_KEY_PROMOTION_MARAUDER_HELP",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/Buttons/Promotions/Marauder.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HELICOPTER",
+   "UNITCOMBAT_WOODEN_SHIPS",
+   "UNITCOMBAT_HERO"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_CIVILIAN"
+  ]
+ }
+}

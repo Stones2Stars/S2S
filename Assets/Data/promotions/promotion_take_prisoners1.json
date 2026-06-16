@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_TAKE_PRISONERS1",
+ "description": "TXT_KEY_PROMOTION_TAKE_PRISONERS1",
+ "strength": {
+  "unit": {
+   "percent": -10
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_TAKE_PRISONERS": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/TakePrisoner1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

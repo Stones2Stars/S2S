@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_SLEUTH9",
+ "description": "TXT_KEY_PROMOTION_SLEUTH9",
+ "espionage": {
+  "unit": {
+   "investigation": {
+    "flat": 30
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SLEUTH": 9
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Sleuth9Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

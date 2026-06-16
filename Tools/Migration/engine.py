@@ -151,7 +151,12 @@ def property_source_v3(src):
     if not prop or prop == "NONE":
         return None
     rel = text(src.find("RelationType"))
-    if rel and rel not in ("NONE", "RELATION_ASSOCIATED"):
+    # RELATION_ASSOCIATED (a source applying to the player's associated cities) AND RELATION_SAME_PLOT (a unit/
+    # building emitting onto the plot/city it occupies — crime/disease/education unit->city emission) are both the
+    # cascade CONTAINMENT DEFAULT: the deposit lands at its GameObjectType scope (plot/city) and cascades down via
+    # containment, so the relation is dropped and scope comes from GameObjectType (owner 2026-06-16: "scoped like
+    # other property yields, like a modifier"). Any OTHER relation (e.g. RELATION_NEAR = spatial leakage -> #429) raises.
+    if rel and rel not in ("NONE", "RELATION_ASSOCIATED", "RELATION_SAME_PLOT"):
         raise ValueError("property_source_v3: unhandled RelationType %r on %s" % (rel, prop))
     stype = text(src.find("PropertySourceType"))
     unit = PROP_SOURCE_UNIT.get(stype)

@@ -1,0 +1,42 @@
+{
+ "type": "PROMOTION_RAD_SHELLS",
+ "description": "TXT_KEY_PROMOTION_RADIOACTIVE_SHELLS",
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 10
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -20
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_TRACKED": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Radshell.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_TRACKED",
+   "UNITCOMBAT_ASSAULT_MECH"
+  ]
+ }
+}

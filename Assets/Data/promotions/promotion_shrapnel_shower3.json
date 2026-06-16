@@ -1,0 +1,40 @@
+{
+ "type": "PROMOTION_SHRAPNEL_SHOWER3",
+ "description": "TXT_KEY_PROMOTION_SHRAPNEL_SHOWER3",
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 6
+   },
+   "rangedDamage": {
+    "flat": 20
+   },
+   "rangedDamageLimit": {
+    "flat": 20
+   },
+   "rangedDamageMaxUnits": {
+    "flat": 1
+   },
+   "dcmRange": {
+    "flat": 1
+   },
+   "dcmAccuracy": {
+    "flat": 20
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SHRAPNEL_SHOWER": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/ShrapnelShower3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "rBombardPrereq": true
+ }
+}

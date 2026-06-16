@@ -1,0 +1,38 @@
+{
+ "type": "PROMOTION_TRANSPORT2",
+ "description": "TXT_KEY_PROMOTION_TRANSPORT2",
+ "strength": {
+  "unit": {
+   "percent": -20
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_TRANSPORT": 2
+ },
+ "loadPrune": {
+  "notOnGameOptions": [
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Cruiser_transport.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,2,13"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_WOODEN_SHIPS"
+  ],
+  "cargoPrereq": true
+ }
+}

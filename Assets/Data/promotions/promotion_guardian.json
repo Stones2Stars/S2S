@@ -1,0 +1,28 @@
+{
+ "type": "PROMOTION_GUARDIAN",
+ "description": "TXT_KEY_PROMOTION_GUARDIAN",
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Guardian.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "stateReligionPrereq": "RELIGION_NGAIISM",
+  "unitCombats": [
+   "UNITCOMBAT_ANIMAL",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_WOODEN_SHIPS"
+  ]
+ }
+}

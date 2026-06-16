@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_RED_TAPE1",
+ "description": "TXT_KEY_PROMOTION_RED_TAPE1",
+ "espionage": {
+  "unit": {
+   "insidiousness": {
+    "flat": 2
+   }
+  }
+ },
+ "vision": {
+  "invisibilityIntensity": {
+   "INVISIBLE_POLITICAL": 1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_RED_TAPE": 1
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_HIDE_SEEK"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/RedTape1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

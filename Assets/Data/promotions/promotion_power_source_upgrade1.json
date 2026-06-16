@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_POWER_SOURCE_UPGRADE1",
+ "description": "TXT_KEY_PROMOTION_POWER_SOURCE_UPGRADE1",
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_ROBOT": {
+     "percent": 10
+    },
+    "UNITCOMBAT_ASSAULT_MECH": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "terrainDoubleMove": {
+   "TERRAIN_PLAINS": true
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_POWER_SOURCE_UPGRADE": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat2.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,5,7"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

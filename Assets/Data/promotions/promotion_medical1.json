@@ -1,0 +1,38 @@
+{
+ "type": "PROMOTION_MEDICAL1",
+ "description": "TXT_KEY_PROMOTION_MEDICAL1",
+ "heal": {
+  "unit": {
+   "sameTile": {
+    "flat": 3
+   },
+   "support": {
+    "flat": 1
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  },
+  "plot": {
+   "flat": -5
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MEDICAL_PROMOTION": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionMedical.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_HEALTH_CARE"
+  ]
+ }
+}

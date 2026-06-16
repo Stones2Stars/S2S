@@ -1,0 +1,25 @@
+{
+ "type": "PROMOTION_SHIP_COMMAND1",
+ "description": "TXT_KEY_PROMOTION_SHIP_COMMAND1",
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SHIP_COMMAND": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/commodoreCommand1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "controlPoints": 1
+ }
+}

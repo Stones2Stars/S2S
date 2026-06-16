@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_DECEPTION3",
+ "description": "TXT_KEY_PROMOTION_DECEPTION3",
+ "air": {
+  "unit": {
+   "evasion": {
+    "percent": 10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_DECEPTION": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Deception3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_PING"
+ }
+}

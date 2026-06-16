@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_LOW_PROFILE3",
+ "description": "TXT_KEY_PROMOTION_LOW_PROFILE3",
+ "vision": {
+  "invisibilityIntensity": {
+   "INVISIBLE_SIZE": 1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_LOW_PROFILE": 3
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_HIDE_SEEK",
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/LowProfile3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_QUALITY_DIVINE"
+  ]
+ }
+}

@@ -1,0 +1,39 @@
+{
+ "type": "PROMOTION_HOWL",
+ "description": "TXT_KEY_PROMOTION_HOWL",
+ "strength": {
+  "unit": {
+   "unnerve": {
+    "percent": 15
+   },
+   "enclose": {
+    "percent": 15
+   },
+   "unitCombat": {
+    "UNITCOMBAT_EXPLORER": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/howl.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_CANINE"
+  ]
+ }
+}

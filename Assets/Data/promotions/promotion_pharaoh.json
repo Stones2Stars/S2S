@@ -1,0 +1,34 @@
+{
+ "type": "PROMOTION_PHARAOH",
+ "description": "TXT_KEY_PROMOTION_PHARAOH",
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/egypt_promo.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "stateReligionPrereq": "RELIGION_KEMETISM",
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_THROWING"
+  ]
+ }
+}

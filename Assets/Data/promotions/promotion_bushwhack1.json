@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_BUSHWHACK1",
+ "description": "TXT_KEY_PROMOTION_BUSHWHACK1",
+ "strength": {
+  "unit": {
+   "stealth": {
+    "percent": 10
+   },
+   "stealthStrikes": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUSHWHACK": 1
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_WITHOUT_WARNING"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Bushwhack1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

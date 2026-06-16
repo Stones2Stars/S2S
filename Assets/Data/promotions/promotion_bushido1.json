@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_BUSHIDO1",
+ "description": "TXT_KEY_PROMOTION_BUSHIDO1",
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 10
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUSHIDO": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Bushido1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "stateReligionPrereq": "RELIGION_SHINTO"
+ }
+}

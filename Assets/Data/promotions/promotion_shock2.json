@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_SHOCK2",
+ "description": "TXT_KEY_PROMOTION_SHOCK2",
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SHOCK": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Shock2.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,1,12"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_SIEGE"
+  ]
+ }
+}

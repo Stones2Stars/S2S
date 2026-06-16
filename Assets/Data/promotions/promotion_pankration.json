@@ -1,0 +1,51 @@
+{
+ "type": "PROMOTION_PANKRATION",
+ "description": "TXT_KEY_PROMOTION_PANKRATION",
+ "upkeep": {
+  "unit": {
+   "upgradeDiscount": {
+    "percent": 20
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "percent": 5,
+   "unitCombat": {
+    "UNITCOMBAT_RECON": {
+     "percent": 20
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 10
+    },
+    "UNITCOMBAT_MELEE": {
+     "percent": 20
+    },
+    "UNITCOMBAT_THROWING": {
+     "percent": 15
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/hellenism_promo.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "stateReligionPrereq": "RELIGION_HELLENISM",
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_THROWING"
+  ]
+ }
+}

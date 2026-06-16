@@ -1,0 +1,44 @@
+{
+ "type": "PROMOTION_MORALE5",
+ "description": "TXT_KEY_PROMOTION_MORALE5",
+ "experience": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 10
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": 4
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MORALE": 5
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/morale5.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

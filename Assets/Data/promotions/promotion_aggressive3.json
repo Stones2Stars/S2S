@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_AGGRESSIVE3",
+ "description": "TXT_KEY_PROMOTION_AGGRESSIVE3",
+ "strength": {
+  "unit": {
+   "attack": {
+    "percent": 15
+   },
+   "defense": {
+    "percent": -5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_AGGRESSIVE_PROMOTION": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionAggressive3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_NAVAL_COMBATANT"
+  ]
+ }
+}

@@ -1,0 +1,38 @@
+{
+ "type": "PROMOTION_WANTED",
+ "description": "TXT_KEY_PROMOTION_WANTED",
+ "help": "TXT_KEY_PROMOTION_WANTED_HELP",
+ "capabilities": {
+  "upgradeAnywhere": true,
+  "assassin": true
+ },
+ "vision": {
+  "negates": [
+   "INVISIBLE_CAMOUFLAGE",
+   "INVISIBLE_INVISIBLE"
+  ]
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_WANTED": 1
+ },
+ "loadPrune": {
+  "notOnGameOptions": [
+   "GAMEOPTION_COMBAT_HIDE_SEEK"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Wanted1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "negatesInvisibility": [
+   "INVISIBLE_CAMOUFLAGE",
+   "INVISIBLE_INVISIBLE"
+  ],
+  "setOnInvestigated": true
+ }
+}

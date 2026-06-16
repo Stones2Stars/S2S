@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_RACING_DOG3",
+ "description": "TXT_KEY_PROMOTION_RACING_DOG3",
+ "movement": {
+  "unit": {
+   "moves": {
+    "flat": 1
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "stealth": {
+    "percent": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_RACING_DOG": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/racingdog3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

@@ -1,0 +1,43 @@
+{
+ "type": "PROMOTION_RETINUE_ADVENTURER",
+ "description": "TXT_KEY_PROMOTION_RETINUE_ADVENTURER",
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "capabilities": {
+  "terrainDoubleMove": {
+   "TERRAIN_DESERT": true,
+   "TERRAIN_ICE": true
+  },
+  "featureDoubleMove": {
+   "FEATURE_JUNGLE": true,
+   "FEATURE_FOREST": true
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Retinue/blackwater.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_GET_RETINUE"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_HERO"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ]
+ }
+}

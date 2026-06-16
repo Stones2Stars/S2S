@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_REINFORCED_STRUCTURE",
+ "description": "TXT_KEY_PROMOTION_REINFORCED_STRUCTURE",
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 15
+   },
+   "cityDefense": {
+    "percent": 15
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": -10
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CityRaider1.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,4,9"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_ROBOT",
+   "UNITCOMBAT_ASSAULT_MECH"
+  ]
+ }
+}

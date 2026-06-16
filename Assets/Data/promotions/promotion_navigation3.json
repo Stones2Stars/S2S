@@ -1,0 +1,28 @@
+{
+ "type": "PROMOTION_NAVIGATION3",
+ "description": "TXT_KEY_PROMOTION_NAVIGATION3",
+ "movement": {
+  "unit": {
+   "moves": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_NAVIGATION": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Navigation3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_LAND"
+  ]
+ }
+}

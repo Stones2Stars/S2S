@@ -1,0 +1,34 @@
+{
+ "type": "PROMOTION_HEAL2",
+ "description": "TXT_KEY_PROMOTION_HEAL2",
+ "heal": {
+  "unit": {
+   "sameTile": {
+    "flat": 4
+   },
+   "adjacentTile": {
+    "flat": 2
+   },
+   "support": {
+    "flat": 1
+   },
+   "victoryAdjacent": {
+    "flat": 4
+   },
+   "victoryStack": {
+    "flat": 8
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_HEAL": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Heal2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

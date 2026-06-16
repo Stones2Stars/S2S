@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_CONNIVING3",
+ "description": "TXT_KEY_PROMOTION_CONNIVING3",
+ "espionage": {
+  "unit": {
+   "insidiousness": {
+    "flat": 12
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CONNIVING": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Conniving3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

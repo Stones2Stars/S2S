@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_MIGHT11",
+ "description": "TXT_KEY_PROMOTION_MIGHT11",
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 25
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 20
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MIGHT": 11
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Might11Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "levelPrereq": 23,
+  "unitCombats": [
+   "UNITCOMBAT_QUALITY_EPIC",
+   "UNITCOMBAT_QUALITY_DIVINE"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_ANIMAL"
+  ]
+ }
+}

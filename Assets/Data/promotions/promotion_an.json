@@ -1,0 +1,44 @@
+{
+ "type": "PROMOTION_AN",
+ "description": "TXT_KEY_PROMOTION_AN",
+ "heal": {
+  "unit": {
+   "enemy": {
+    "flat": 7
+   },
+   "neutral": {
+    "flat": 7
+   },
+   "friendly": {
+    "flat": 7
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 10
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat1.dds,Art/Interface/Buttons/GodsOfOld_Atlas.dds,6,8"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "stateReligionPrereq": "RELIGION_MESOPOTAMISM",
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_WOODEN_SHIPS"
+  ]
+ }
+}

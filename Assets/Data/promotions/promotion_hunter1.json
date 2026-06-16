@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_HUNTER1",
+ "description": "TXT_KEY_PROMOTION_HUNTER1",
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_HUNTER": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/hunter1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ]
+ }
+}

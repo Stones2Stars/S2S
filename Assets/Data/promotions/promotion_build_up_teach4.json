@@ -1,0 +1,23 @@
+{
+ "type": "PROMOTION_BUILD_UP_TEACH4",
+ "description": "TXT_KEY_PROMOTION_BUILD_UP_TEACH4",
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_TEACH": 4
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Teach4BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "minEra": "C2C_ERA_INDUSTRIAL"
+ }
+}

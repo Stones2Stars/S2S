@@ -1,0 +1,20 @@
+{
+ "type": "PROMOTION_INSPIRE5",
+ "description": "TXT_KEY_PROMOTION_INSPIRE5",
+ "revoltProtection": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_INSPIRE": 5
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Inspire5Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

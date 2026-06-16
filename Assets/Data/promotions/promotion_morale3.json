@@ -1,0 +1,39 @@
+{
+ "type": "PROMOTION_MORALE3",
+ "description": "TXT_KEY_PROMOTION_MORALE3",
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 10
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "percent": 15
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": 2
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MORALE": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/morale3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_DISEASE_CONTROL8",
+ "description": "TXT_KEY_PROMOTION_DISEASE_CONTROL8",
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -16
+  },
+  "plot": {
+   "flat": -8
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_DISEASE_CONTROL": 8
+ },
+ "ai": {
+  "unitCombatWeights": {
+   "UNITCOMBAT_HEALTH_CARE": 50
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/DiseaseControl8Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "minEra": "C2C_ERA_INFORMATION"
+ }
+}

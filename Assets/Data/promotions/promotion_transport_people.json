@@ -1,0 +1,50 @@
+{
+ "type": "PROMOTION_TRANSPORT_PEOPLE",
+ "description": "TXT_KEY_PROMOTION_TRANSPORT_PEOPLE",
+ "strength": {
+  "unit": {
+   "percent": -5
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 1
+   },
+   "smSpace": {
+    "flat": 3
+   }
+  }
+ },
+ "grants": {
+  "unitCombats": [
+   "UNITCOMBAT_PROMOTED_TRANSPORT_PEOPLE"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/TransportPeople.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "domainCargoChange": "DOMAIN_LAND",
+  "specialCargoChange": "SPECIALUNIT_PEOPLE",
+  "unitCombats": [
+   "UNITCOMBAT_WOODEN_SHIPS",
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_TRANSPORT",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_TROOPS",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_MISSILES",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_SEAPLANES",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_FIGHTERS",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_CAPTIVES"
+  ]
+ }
+}

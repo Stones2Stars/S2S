@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_COMBAT_AI3",
+ "description": "TXT_KEY_PROMOTION_COMBAT_AI3",
+ "experience": {
+  "unit": {
+   "percent": 15
+  }
+ },
+ "strength": {
+  "unit": {
+   "percent": 14
+  }
+ },
+ "heal": {
+  "unit": {
+   "friendly": {
+    "flat": 10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_COMBAT_AI": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat1.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,6,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

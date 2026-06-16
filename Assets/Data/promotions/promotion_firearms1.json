@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_FIREARMS1",
+ "description": "TXT_KEY_PROMOTION_FIREARMS1",
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_FIREARMS": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/firearms1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

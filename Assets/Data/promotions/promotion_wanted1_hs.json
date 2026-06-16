@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_WANTED1_HS",
+ "description": "TXT_KEY_PROMOTION_WANTED1",
+ "help": "TXT_KEY_PROMOTION_WANTED_HELP",
+ "capabilities": {
+  "upgradeAnywhere": true,
+  "assassin": true
+ },
+ "vision": {
+  "invisibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": -1,
+   "INVISIBLE_DISGUISED": -1,
+   "INVISIBLE_POLITICAL": -1,
+   "INVISIBLE_NAVAL_DISGUISE": -1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_WANTED_HS": 1
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_HIDE_SEEK"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Wanted1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "setOnInvestigated": true
+ }
+}

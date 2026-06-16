@@ -1,0 +1,44 @@
+{
+ "type": "PROMOTION_CITY_GARRISON4",
+ "description": "TXT_KEY_PROMOTION_GARRISON4",
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": -20
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "attack": {
+    "percent": -20
+   },
+   "cityDefense": {
+    "percent": 30
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "protection": {
+    "percent": 20
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_GARRISON": 4
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/citygarrison4.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "notOnUnitCombats": [
+   "UNITCOMBAT_CIVILIAN"
+  ]
+ }
+}

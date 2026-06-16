@@ -1,0 +1,38 @@
+{
+ "type": "PROMOTION_BERZERKER1",
+ "description": "TXT_KEY_PROMOTION_BERZERKER1",
+ "strength": {
+  "unit": {
+   "percent": -5,
+   "attack": {
+    "percent": 15
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -5
+   },
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BERZERKER": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Berzerker1.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,6,2"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_ANIMAL"
+  ]
+ }
+}

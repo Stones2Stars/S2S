@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_SPLIT_INTO_COMPANIES",
+ "description": "TXT_KEY_PROMOTION_SPLIT_INTO_COMPANIES",
+ "strength": {
+  "unit": {
+   "group": {
+    "flat": -1
+   }
+  }
+ },
+ "grants": {
+  "unitCombats": [
+   "UNITCOMBAT_GROUP_COMPANY"
+  ],
+  "removesUnitCombats": [
+   "UNITCOMBAT_GROUP_BATTALION"
+  ]
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/UnitCombatClasses/Group4UnitCombat.fw.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "replacesUnitCombat": "UNITCOMBAT_GROUP_BATTALION",
+  "forOffset": true
+ }
+}

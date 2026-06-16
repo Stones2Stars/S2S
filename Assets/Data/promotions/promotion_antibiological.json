@@ -1,0 +1,34 @@
+{
+ "type": "PROMOTION_ANTIBIOLOGICAL",
+ "description": "TXT_KEY_PROMOTION_ANTIBIOLOGICAL",
+ "strength": {
+  "unit": {
+   "percent": -15,
+   "unitCombat": {
+    "UNITCOMBAT_BIOLOGICAL": {
+     "percent": 75
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Formation.dds,Art/Interface/Buttons/NextWar_Atlas.dds,7,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_TRACKED",
+   "UNITCOMBAT_HELICOPTER",
+   "UNITCOMBAT_DREADNOUGHT",
+   "UNITCOMBAT_ASSAULT_MECH",
+   "UNITCOMBAT_CLONES"
+  ]
+ }
+}

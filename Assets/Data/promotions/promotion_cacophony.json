@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_CACOPHONY",
+ "description": "TXT_KEY_PROMOTION_CACOPHONY",
+ "strength": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Cacophony.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_COMMANDER"
+  ]
+ }
+}

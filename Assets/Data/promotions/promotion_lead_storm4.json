@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_LEAD_STORM4",
+ "description": "TXT_KEY_PROMOTION_LEAD_STORM4",
+ "bombard": {
+  "unit": {
+   "rangedDamage": {
+    "flat": 25
+   },
+   "rangedDamageLimit": {
+    "flat": 25
+   },
+   "rangedDamageMaxUnits": {
+    "flat": 1
+   },
+   "dcmAccuracy": {
+    "flat": 25
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_LEAD_STORM": 4
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/LeadStorm4Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "notOnUnitCombats": [
+   "UNITCOMBAT_WEAPON_DIST_RIFLE"
+  ],
+  "rBombardPrereq": true
+ }
+}

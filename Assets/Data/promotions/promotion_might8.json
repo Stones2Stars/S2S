@@ -1,0 +1,39 @@
+{
+ "type": "PROMOTION_MIGHT8",
+ "description": "TXT_KEY_PROMOTION_MIGHT8",
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 25
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 7
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MIGHT": 8
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Might8Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "levelPrereq": 17,
+  "unitCombats": [
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_QUALITY_EPIC",
+   "UNITCOMBAT_QUALITY_DIVINE"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_ANIMAL"
+  ]
+ }
+}

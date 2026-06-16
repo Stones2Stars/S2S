@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_ARMOR_UPGRADE3",
+ "description": "TXT_KEY_PROMOTION_ARMOR_UPGRADE3",
+ "movement": {
+  "unit": {
+   "moves": {
+    "flat": -1
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityDefense": {
+    "percent": 30
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "protection": {
+    "percent": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_ARMOR_UPGRADE": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CityGarrison3.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,7,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

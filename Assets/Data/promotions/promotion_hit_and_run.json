@@ -1,0 +1,46 @@
+{
+ "type": "PROMOTION_HIT_AND_RUN",
+ "description": "TXT_KEY_PROMOTION_HIT_AND_RUN",
+ "movement": {
+  "unit": {
+   "moveDiscount": {
+    "flat": 1
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/hit_and_run.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_EXPLORER"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_WOODEN_SHIPS",
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS",
+   "UNITCOMBAT_SUBMARINE"
+  ]
+ }
+}

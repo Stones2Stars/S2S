@@ -1,0 +1,57 @@
+{
+ "type": "PROMOTION_POLICING5",
+ "description": "TXT_KEY_PROMOTION_POLICING5",
+ "espionage": {
+  "unit": {
+   "investigation": {
+    "flat": 5
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "stealth": {
+    "percent": 2
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  },
+  "plot": {
+   "flat": -5
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_POLICING": 5
+ },
+ "ai": {
+  "unitCombatWeights": {
+   "UNITCOMBAT_LAW_ENFORCEMENT": 50
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/CrimeControl5Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "minEra": "C2C_ERA_INDUSTRIAL"
+ }
+}

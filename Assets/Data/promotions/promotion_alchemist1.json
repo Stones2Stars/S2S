@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_ALCHEMIST1",
+ "description": "TXT_KEY_PROMOTION_ALCHEMIST1",
+ "heal": {
+  "unit": {
+   "friendly": {
+    "flat": 50
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_ALCHEMIST": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Alchemist1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_PING"
+ }
+}

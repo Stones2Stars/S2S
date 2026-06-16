@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_SELF_HEAL3",
+ "description": "TXT_KEY_PROMOTION_SELF_HEAL3",
+ "strength": {
+  "unit": {
+   "maxHP": {
+    "flat": 3
+   }
+  }
+ },
+ "heal": {
+  "unit": {
+   "selfModifier": {
+    "percent": 2
+   },
+   "victory": {
+    "flat": 3
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SELF_HEAL": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/SelfHeal3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

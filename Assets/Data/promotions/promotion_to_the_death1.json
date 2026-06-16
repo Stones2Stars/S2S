@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_TO_THE_DEATH1",
+ "description": "TXT_KEY_PROMOTION_TO_THE_DEATH1",
+ "strength": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 20
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_TO_THE_DEATH": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/ToTheDeath1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "type": "PROMOTION_MASTER_HUNTER1",
+ "description": "TXT_KEY_PROMOTION_MASTER_HUNTER1",
+ "capabilities": {
+  "blitz": true
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MASTER_HUNTER": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Master_hunter1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

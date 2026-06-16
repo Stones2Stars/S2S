@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_TRENCH3",
+ "description": "TXT_KEY_PROMOTION_TRENCH3",
+ "collateral": {
+  "unit": {
+   "protection": {
+    "percent": 25
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -5
+   },
+   "resistance": {
+    "flat": 10
+   }
+  }
+ },
+ "capabilities": {
+  "immuneToFirstStrikes": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_TRENCH": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/trench3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

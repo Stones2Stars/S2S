@@ -1,0 +1,54 @@
+{
+ "type": "PROMOTION_TORPEDOES",
+ "description": "TXT_KEY_PROMOTION_TORPEDOES",
+ "air": {
+  "unit": {
+   "range": {
+    "flat": -1
+   },
+   "intercept": {
+    "percent": -10
+   },
+   "evasion": {
+    "percent": -15
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": 100
+    },
+    "UNITCOMBAT_STEAM_SHIPS": {
+     "percent": 75
+    },
+    "UNITCOMBAT_DIESEL_SHIPS": {
+     "percent": 75
+    },
+    "UNITCOMBAT_NUCLEAR_SHIPS": {
+     "percent": 50
+    },
+    "UNITCOMBAT_SUBMARINE": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Navigation1.dds,Art/RoM_Promotions_atlas.dds,4,2"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_EARLY_FIGHTERS",
+   "UNITCOMBAT_JET_FIGHTERS",
+   "UNITCOMBAT_SUPERSONIC_PLANES",
+   "UNITCOMBAT_STEALTH"
+  ]
+ }
+}

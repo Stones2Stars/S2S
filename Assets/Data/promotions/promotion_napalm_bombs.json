@@ -1,0 +1,62 @@
+{
+ "type": "PROMOTION_NAPALM_BOMBS",
+ "description": "TXT_KEY_PROMOTION_NAPALM_BOMBS",
+ "strength": {
+  "unit": {
+   "percent": -10,
+   "unitCombat": {
+    "UNITCOMBAT_ARCHER": {
+     "percent": 200
+    },
+    "UNITCOMBAT_MELEE": {
+     "percent": 200
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 100
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": 50
+    },
+    "UNITCOMBAT_SIEGE": {
+     "percent": 50
+    },
+    "UNITCOMBAT_WHEELED": {
+     "percent": 35
+    },
+    "UNITCOMBAT_TRACKED": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 20
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -30
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Napalm.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,1,10"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_EARLY_BOMBERS",
+   "UNITCOMBAT_BOMBERS",
+   "UNITCOMBAT_STEALTH",
+   "UNITCOMBAT_SIEGE"
+  ]
+ }
+}

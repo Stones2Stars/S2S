@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_BUILD_UP_CLEVERNESS4",
+ "description": "TXT_KEY_PROMOTION_BUILD_UP_CLEVERNESS4",
+ "espionage": {
+  "unit": {
+   "insidiousness": {
+    "flat": 2
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_CLEVERNESS": 4
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Cleverness4Buildup.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

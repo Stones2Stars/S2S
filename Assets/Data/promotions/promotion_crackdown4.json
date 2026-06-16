@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_CRACKDOWN4",
+ "description": "TXT_KEY_PROMOTION_CRACKDOWN4",
+ "strength": {
+  "unit": {
+   "stealth": {
+    "percent": 20
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CRACKDOWN": 4
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_WITHOUT_WARNING"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Crackdown4Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

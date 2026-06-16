@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_AIR_DEFENSE3",
+ "description": "TXT_KEY_PROMOTION_AIR_DEFENSE3",
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 15
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_HELICOPTER": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_AIR_DEFENSE": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/defence3.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,5,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_INFLUENCE_OF_SATURN",
+ "description": "TXT_KEY_PROMOTION_INFLUENCE_OF_SATURN",
+ "strength": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "vision": {
+  "range": {
+   "flat": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/InfluenceOfSaturnPromotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_WOODEN_SHIPS"
+  ]
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_ENTRAPMENT1",
+ "description": "TXT_KEY_PROMOTION_ENTRAPMENT1",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_ENTRAPMENT": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Ensnare1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

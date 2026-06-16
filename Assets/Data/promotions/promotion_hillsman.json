@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_HILLSMAN",
+ "description": "TXT_KEY_PROMOTION_HILLSMAN",
+ "capabilities": {
+  "hillsDoubleMove": true,
+  "terrainDoubleMove": {
+   "TERRAIN_PEAK": true
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Hillsman.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_HUNTER",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_CLONES"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ]
+ }
+}

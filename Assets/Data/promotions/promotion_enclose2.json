@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_ENCLOSE2",
+ "description": "TXT_KEY_PROMOTION_ENCLOSE2",
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_STRIKE_TEAM": {
+     "percent": 20
+    },
+    "UNITCOMBAT_RECON": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_ENCLOSE": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Enclose2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

@@ -1,0 +1,25 @@
+{
+ "type": "PROMOTION_CAUTIOUS1",
+ "description": "TXT_KEY_PROMOTION_CAUTIOUS1",
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CAUTIOUS": 1
+ },
+ "grants": {
+  "unitCombats": [
+   "UNITCOMBAT_PROMOTED_CAUTIOUS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Cautious1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

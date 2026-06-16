@@ -1,0 +1,26 @@
+{
+ "type": "PROMOTION_GEMINI",
+ "description": "TXT_KEY_PROMOTION_GEMINI",
+ "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
+ "heal": {
+  "unit": {
+   "victory": {
+    "flat": 15
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/StarSigns/gemini.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ],
+  "starsign": true
+ }
+}

@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_ACCURACY",
+ "description": "TXT_KEY_PROMOTION_ACCURACY",
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 2
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_ACCURACY": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Accuracy.dds,Art/Interface/Buttons/Promotions_Atlas.dds,1,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_EARLY_BOMBERS",
+   "UNITCOMBAT_BOMBERS",
+   "UNITCOMBAT_STEALTH",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS"
+  ]
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_COMBAT6",
+ "description": "TXT_KEY_PROMOTION_COMBAT6",
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 60
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_COMBAT": 6
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat6.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,7,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

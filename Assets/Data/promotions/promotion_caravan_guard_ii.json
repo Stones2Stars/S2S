@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_CARAVAN_GUARD_II",
+ "description": "TXT_KEY_CARAVAN_GUARD_II",
+ "strength": {
+  "unit": {
+   "percent": 5,
+   "defense": {
+    "percent": 5
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CARAVAN_GUARD": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CaravanGuard2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

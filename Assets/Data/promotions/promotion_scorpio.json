@@ -1,0 +1,24 @@
+{
+ "type": "PROMOTION_SCORPIO",
+ "description": "TXT_KEY_PROMOTION_SCORPIO",
+ "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
+ "survivor": {
+  "unit": {
+   "percent": 20
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/StarSigns/scorpio.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ],
+  "starsign": true
+ }
+}

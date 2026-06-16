@@ -1,0 +1,40 @@
+{
+ "type": "PROMOTION_SCORCHED_EARTH3",
+ "description": "TXT_KEY_PROMOTION_SCORCHED_EARTH3",
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 7
+   },
+   "rangedDamage": {
+    "flat": 25
+   },
+   "rangedDamageLimit": {
+    "flat": 25
+   },
+   "rangedDamageMaxUnits": {
+    "flat": 1
+   },
+   "dcmRange": {
+    "flat": 1
+   },
+   "dcmAccuracy": {
+    "flat": 25
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SCORCHED_EARTH": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/ScorchedEarth3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "rBombardPrereq": true
+ }
+}

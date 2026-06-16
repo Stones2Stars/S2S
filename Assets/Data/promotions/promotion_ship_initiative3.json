@@ -1,0 +1,39 @@
+{
+ "type": "PROMOTION_SHIP_INITIATIVE3",
+ "description": "TXT_KEY_PROMOTION_SHIP_INITIATIVE3",
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 10
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   },
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "heal": {
+  "unit": {
+   "sameTile": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SHIP_INITIATIVE": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/shipInitiative3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

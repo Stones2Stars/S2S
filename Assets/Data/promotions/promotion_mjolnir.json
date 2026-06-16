@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_MJOLNIR",
+ "description": "TXT_KEY_PROMOTION_MJOLNIR",
+ "experience": {
+  "unit": {
+   "percent": 15
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 15
+   }
+  }
+ },
+ "pillage": {
+  "unit": {
+   "flat": 15
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Mjolnir.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "stateReligionPrereq": "RELIGION_ASATRU",
+  "unitCombats": [
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_WOODEN_SHIPS"
+  ]
+ }
+}

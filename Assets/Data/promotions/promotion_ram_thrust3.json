@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_RAM_THRUST3",
+ "description": "TXT_KEY_PROMOTION_RAM_THRUST3",
+ "strength": {
+  "unit": {
+   "breakdownChance": {
+    "flat": 20
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_RAM_THRUST": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/RamThrust3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

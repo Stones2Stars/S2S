@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_HILL_WORKER3",
+ "description": "TXT_KEY_PROMOTION_HILL_WORKER3",
+ "workRate": {
+  "unit": {
+   "hills": {
+    "percent": 20
+   },
+   "terrain": {
+    "TERRAIN_PEAK": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_HILL_WORKER": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/workerhills3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

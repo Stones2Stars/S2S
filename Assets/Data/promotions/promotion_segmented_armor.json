@@ -1,0 +1,24 @@
+{
+ "type": "PROMOTION_SEGMENTED_ARMOR",
+ "description": "TXT_KEY_PROMOTION_SEGMENTED_ARMOR",
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_ARCHER": {
+     "percent": 20
+    },
+    "UNITCOMBAT_THROWING": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Segmented_armor.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

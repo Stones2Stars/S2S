@@ -1,0 +1,51 @@
+{
+ "type": "PROMOTION_LOOSE_FORMATION",
+ "description": "TXT_KEY_PROMOTION_LOOSE_FORMATION",
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": -10
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 15
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/loose.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_EXPLORER"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_WOODEN_SHIPS",
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS",
+   "UNITCOMBAT_SUBMARINE"
+  ]
+ }
+}

@@ -1,0 +1,48 @@
+{
+ "type": "PROMOTION_SNIPER",
+ "description": "TXT_KEY_PROMOTION_SNIPER",
+ "movement": {
+  "unit": {
+   "moveDiscount": {
+    "flat": 1
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -20
+   },
+   "resistance": {
+    "flat": -10
+   }
+  }
+ },
+ "capabilities": {
+  "blitz": true,
+  "enemyRoute": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/OldSniper.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_ASSAULT_MECH",
+   "UNITCOMBAT_ROBOT"
+  ]
+ }
+}

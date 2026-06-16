@@ -1,0 +1,20 @@
+{
+ "type": "PROMOTION_BACK_DOWN4",
+ "description": "TXT_KEY_PROMOTION_BACK_DOWN4",
+ "withdrawal": {
+  "unit": {
+   "percent": 20
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BACK_DOWN": 4
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/BackDown4Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

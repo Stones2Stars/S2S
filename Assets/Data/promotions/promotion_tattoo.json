@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_TATTOO",
+ "description": "TXT_KEY_PROMOTION_TATTOO",
+ "strength": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Craft/art/tattooprom.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_HUNTER",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_THROWING"
+  ]
+ }
+}

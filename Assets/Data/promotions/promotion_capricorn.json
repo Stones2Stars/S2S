@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_CAPRICORN",
+ "description": "TXT_KEY_PROMOTION_CAPRICORN",
+ "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
+ "capabilities": {
+  "amphib": true,
+  "river": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/StarSigns/capricorn.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ],
+  "starsign": true
+ }
+}

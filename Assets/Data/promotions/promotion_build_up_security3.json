@@ -1,0 +1,25 @@
+{
+ "type": "PROMOTION_BUILD_UP_SECURITY3",
+ "description": "TXT_KEY_PROMOTION_BUILD_UP_SECURITY3",
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_SECURITY": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Security3BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "minEra": "C2C_ERA_INDUSTRIAL"
+ }
+}

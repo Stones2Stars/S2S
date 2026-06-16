@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_BUILD_UP_ANTI_AIR5",
+ "description": "TXT_KEY_PROMOTION_BUILD_UP_ANTI_AIR5",
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_ANTI_AIR": 5
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/AntiAir5BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

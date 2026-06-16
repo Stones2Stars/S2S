@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_STING2",
+ "description": "TXT_KEY_PROMOTION_STING2",
+ "strength": {
+  "unit": {
+   "perSizeMore": {
+    "percent": 15
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_STING": 2
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Sting2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

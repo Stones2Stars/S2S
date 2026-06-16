@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_WAY_OF_THE_CENTAUR",
+ "description": "TXT_KEY_PROMOTION_WAY_OF_THE_CENTAUR",
+ "strength": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/WayOfTheCentaurPromotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_MOUNTED"
+  ]
+ }
+}

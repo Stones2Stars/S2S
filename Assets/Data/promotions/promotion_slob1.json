@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_SLOB1",
+ "description": "TXT_KEY_PROMOTION_SLOB1",
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 1
+  },
+  "plot": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 1
+  },
+  "plot": {
+   "flat": 1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SLOB_PROMOTION": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionSlob.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_SPECIES_NEANDERTHAL"
+  ]
+ }
+}

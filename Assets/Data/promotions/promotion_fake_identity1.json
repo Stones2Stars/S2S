@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_FAKE_IDENTITY1",
+ "description": "TXT_KEY_PROMOTION_FAKE_IDENTITY1",
+ "espionage": {
+  "unit": {
+   "insidiousness": {
+    "flat": 2
+   }
+  }
+ },
+ "capabilities": {
+  "blendIntoCity": true
+ },
+ "vision": {
+  "invisibilityIntensity": {
+   "INVISIBLE_DISGUISED": 1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_FAKE_IDENTITY": 1
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_HIDE_SEEK"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/FakeIdentity1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

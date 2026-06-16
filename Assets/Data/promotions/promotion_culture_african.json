@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTION_CULTURE_AFRICAN",
+ "description": "TXT_KEY_PROMOTION_CULTURE_AFRICAN",
+ "ui": {
+  "art": {
+   "icon": "art/Embassy/art/cultureafrican.dds"
+  }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_SETTLER"
+  ]
+ }
+}

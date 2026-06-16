@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_REPAIR_AIRCRAFT1",
+ "description": "TXT_KEY_PROMOTION_REPAIR_AIRCRAFT1",
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 1
+   },
+   "victoryStack": {
+    "flat": 1
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_AIRCRAFT": {
+     "heal": 2
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_REPAIR_AIRCRAFT": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/RepairAircraft1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

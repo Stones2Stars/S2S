@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_HAKA",
+ "description": "TXT_KEY_PROMOTION_HAKA",
+ "strength": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Haka.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_COMMANDER"
+  ]
+ }
+}

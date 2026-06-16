@@ -1,0 +1,59 @@
+{
+ "type": "PROMOTION_COLD4",
+ "description": "TXT_KEY_PROMOTION_COLD4",
+ "strength": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_TAIGA": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_TUNDRA": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_PERMAFROST": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_ICE": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_COLD": 4
+ },
+ "ui": {
+  "art": {
+   "icon": "art/buttons/promotions/arcticcombat4.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ]
+ }
+}

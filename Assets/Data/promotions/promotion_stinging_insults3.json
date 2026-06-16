@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_STINGING_INSULTS3",
+ "description": "TXT_KEY_PROMOTION_STINGING_INSULTS3",
+ "strength": {
+  "unit": {
+   "taunt": {
+    "flat": 200
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 15
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_STINGING_INSULTS": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Insult3Promotion.fw.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

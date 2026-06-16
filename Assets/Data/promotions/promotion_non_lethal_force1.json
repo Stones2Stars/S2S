@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_NON_LETHAL_FORCE1",
+ "description": "TXT_KEY_PROMOTION_NON_LETHAL_FORCE1",
+ "strength": {
+  "unit": {
+   "percent": -10
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_NON_LETHAL_FORCE": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/NonLethalForce1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

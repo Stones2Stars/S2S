@@ -1,0 +1,25 @@
+{
+ "type": "PROMOTION_STALL1",
+ "description": "TXT_KEY_PROMOTION_STALL1",
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_STALL": 1
+ },
+ "grants": {
+  "unitCombats": [
+   "UNITCOMBAT_PROMOTED_STALL"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Stall1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_TRANSPORT_TROOPS2",
+ "description": "TXT_KEY_PROMOTION_TRANSPORT_TROOPS2",
+ "strength": {
+  "unit": {
+   "percent": -20
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 1
+   },
+   "smSpace": {
+    "flat": 100
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_TRANSPORT_TROOPS": 2
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/TransportTroops2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

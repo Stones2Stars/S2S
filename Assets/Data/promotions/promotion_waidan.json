@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_WAIDAN",
+ "description": "TXT_KEY_PROMOTION_WAIDAN",
+ "upkeep": {
+  "unit": {
+   "upgradeDiscount": {
+    "percent": 25
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "percent": 20
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/taoism_promo.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "stateReligionPrereq": "RELIGION_TAOISM",
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_THROWING"
+  ]
+ }
+}

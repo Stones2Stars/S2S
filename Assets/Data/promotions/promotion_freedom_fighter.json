@@ -1,0 +1,15 @@
+{
+ "type": "PROMOTION_FREEDOM_FIGHTER",
+ "description": "TXT_KEY_PROMOTION_FREEDOM_FIGHTER",
+ "capabilities": {
+  "barbCoExist": true
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/FreedomFighterPromotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

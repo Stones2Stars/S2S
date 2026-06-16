@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_COVERT_OPERATIONS2",
+ "description": "TXT_KEY_PROMOTION_COVERT_OPERATIONS2",
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 10
+   }
+  }
+ },
+ "vision": {
+  "invisibilityIntensity": {
+   "INVISIBLE_INVISIBLE": 1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_COVERT_OPERATIONS": 2
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_HIDE_SEEK"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/CovertOperations2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

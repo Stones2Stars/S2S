@@ -1,0 +1,16 @@
+{
+ "type": "PROMOTION_LIVE1",
+ "description": "TXT_KEY_PROMOTION_LIVE1",
+ "help": "TXT_KEY_PROMOTION_LIVE1_HELP",
+ "promotionLine": {
+  "PROMOTIONLINE_LIVE": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Phoenix1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

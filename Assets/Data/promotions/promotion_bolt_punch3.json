@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_BOLT_PUNCH3",
+ "description": "TXT_KEY_PROMOTION_BOLT_PUNCH3",
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 3
+   },
+   "rangedDamage": {
+    "flat": 20
+   },
+   "rangedDamageLimit": {
+    "flat": 10
+   },
+   "dcmRange": {
+    "flat": 1
+   },
+   "dcmAccuracy": {
+    "flat": 25
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BOLT_PUNCH": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/BoltPunch3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "rBombardPrereq": true
+ }
+}

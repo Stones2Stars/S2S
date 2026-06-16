@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_SELF_HEAL4",
+ "description": "TXT_KEY_PROMOTION_SELF_HEAL4",
+ "strength": {
+  "unit": {
+   "maxHP": {
+    "flat": 4
+   }
+  }
+ },
+ "heal": {
+  "unit": {
+   "enemy": {
+    "flat": 1
+   },
+   "selfModifier": {
+    "percent": 2
+   },
+   "victory": {
+    "flat": 3
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SELF_HEAL": 4
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/SelfHeal4Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

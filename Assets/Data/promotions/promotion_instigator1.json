@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_INSTIGATOR1",
+ "description": "TXT_KEY_PROMOTION_INSTIGATOR1",
+ "heal": {
+  "unit": {
+   "enemy": {
+    "flat": 50
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_INSTIGATOR": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Instigator1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_PING"
+ }
+}

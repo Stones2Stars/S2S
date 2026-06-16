@@ -1,0 +1,33 @@
+{
+ "type": "PROMOTION_SENTRY",
+ "description": "TXT_KEY_PROMOTION_SENTRY",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   }
+  }
+ },
+ "vision": {
+  "range": {
+   "flat": 1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SENTRY": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Sentry.dds,Art/Interface/Buttons/Promotions_Atlas.dds,5,6"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_HUNTER",
+   "UNITCOMBAT_MOUNTED"
+  ]
+ }
+}

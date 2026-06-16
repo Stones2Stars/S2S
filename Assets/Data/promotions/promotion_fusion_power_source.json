@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_FUSION_POWER_SOURCE",
+ "description": "TXT_KEY_PROMOTION_FUSION_POWER_SOURCE",
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_ROBOT": {
+     "percent": 15
+    },
+    "UNITCOMBAT_ASSAULT_MECH": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat1.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,8,7"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_ROBOT",
+   "UNITCOMBAT_ASSAULT_MECH"
+  ]
+ }
+}

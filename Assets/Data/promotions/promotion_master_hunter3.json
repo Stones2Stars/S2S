@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_MASTER_HUNTER3",
+ "description": "TXT_KEY_PROMOTION_MASTER_HUNTER3",
+ "capabilities": {
+  "enemyRoute": true
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MASTER_HUNTER": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Master_hunter3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "levelPrereq": 10,
+  "unitCombats": [
+   "UNITCOMBAT_HUNTER"
+  ]
+ }
+}

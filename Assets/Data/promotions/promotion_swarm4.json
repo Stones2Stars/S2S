@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_SWARM4",
+ "description": "TXT_KEY_PROMOTION_SWARM4",
+ "strength": {
+  "unit": {
+   "perVolumeLess": {
+    "percent": 25
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SWARM": 4
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Swarm4Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

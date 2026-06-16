@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_SUPPRESIVE_FIRE",
+ "description": "TXT_KEY_PROMOTION_SUPPRESIVE_FIRE",
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_GUN": {
+     "percent": 15
+    },
+    "UNITCOMBAT_TRACKED": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/supression.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_GUN"
+  ]
+ }
+}

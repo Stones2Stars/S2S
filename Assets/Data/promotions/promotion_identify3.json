@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_IDENTIFY3",
+ "description": "TXT_KEY_PROMOTION_IDENTIFY3",
+ "espionage": {
+  "unit": {
+   "investigation": {
+    "flat": 6
+   }
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_DISGUISED": 1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_IDENTIFY": 3
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_HIDE_SEEK"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Identify3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

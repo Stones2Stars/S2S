@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_PYROTECHNICS3",
+ "description": "TXT_KEY_PROMOTION_PYROTECHNICS3",
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 2
+   },
+   "rangedDamage": {
+    "flat": 15
+   },
+   "rangedDamageLimit": {
+    "flat": 20
+   },
+   "rangedDamageMaxUnits": {
+    "flat": 1
+   },
+   "dcmAccuracy": {
+    "flat": 10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_PYROTECHNICS": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Pyrotechnics3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "rBombardPrereq": true
+ }
+}

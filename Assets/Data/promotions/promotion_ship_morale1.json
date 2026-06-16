@@ -1,0 +1,34 @@
+{
+ "type": "PROMOTION_SHIP_MORALE1",
+ "description": "TXT_KEY_PROMOTION_SHIP_MORALE1",
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 10
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MORALE_SHIPS": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/shipMorale1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

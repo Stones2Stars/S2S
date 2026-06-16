@@ -1,0 +1,49 @@
+{
+ "type": "PROMOTION_OVERWHELM",
+ "description": "TXT_KEY_PROMOTION_OVERWHELM",
+ "strength": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 10
+   },
+   "resistance": {
+    "flat": -10
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Flanking2.dds,Art/Interface/Buttons/Warlords_Atlas_1.dds,1,16"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_TRACKED",
+   "UNITCOMBAT_DREADNOUGHT",
+   "UNITCOMBAT_STRIKE_TEAM"
+  ]
+ }
+}

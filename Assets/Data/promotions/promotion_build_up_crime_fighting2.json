@@ -1,0 +1,26 @@
+{
+ "type": "PROMOTION_BUILD_UP_CRIME_FIGHTING2",
+ "description": "TXT_KEY_PROMOTION_BUILD_UP_CRIME_FIGHTING2",
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -2
+  },
+  "plot": {
+   "flat": -2
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_CRIME_FIGHTING": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/CrimeFighting2BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "minEra": "C2C_ERA_ANCIENT"
+ }
+}

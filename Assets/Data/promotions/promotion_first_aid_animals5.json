@@ -1,0 +1,34 @@
+{
+ "type": "PROMOTION_FIRST_AID_ANIMALS5",
+ "description": "TXT_KEY_PROMOTION_FIRST_AID_ANIMALS5",
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 1
+   },
+   "victoryAdjacent": {
+    "flat": 3
+   },
+   "victoryStack": {
+    "flat": 5
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_ANIMALS": {
+     "heal": 6,
+     "adjacentHeal": 3
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_FIRST_AID_ANIMALS": 5
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/HealAnimals5Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

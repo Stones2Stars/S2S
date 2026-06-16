@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_CITY_GARRISON1",
+ "description": "TXT_KEY_PROMOTION_GARRISON1",
+ "strength": {
+  "unit": {
+   "cityDefense": {
+    "percent": 20
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_GARRISON": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CityGarrison1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,2,2"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

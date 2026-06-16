@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_SLAVE_MASTER5",
+ "description": "TXT_KEY_PROMOTION_SLAVE_MASTER5",
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 10
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 4
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SLAVE_MASTER": 5
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/SlaveMaster5Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

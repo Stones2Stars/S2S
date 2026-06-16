@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_PATROL",
+ "description": "TXT_KEY_PROMOTION_PATROL",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": 3
+  }
+ },
+ "vision": {
+  "range": {
+   "flat": 1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_PATROL": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/patrol1.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,6,14"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_ANIMAL"
+  ]
+ }
+}

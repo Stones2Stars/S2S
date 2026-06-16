@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_CHARGE2",
+ "description": "TXT_KEY_PROMOTION_CHARGE2",
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CHARGE": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Charge2.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,1,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_MELEE"
+  ]
+ }
+}

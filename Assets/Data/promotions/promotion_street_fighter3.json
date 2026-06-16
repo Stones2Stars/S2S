@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_STREET_FIGHTER3",
+ "description": "TXT_KEY_PROMOTION_STREET_FIGHTER3",
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 20
+   },
+   "cityDefense": {
+    "percent": 20
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_STREET_FIGHTER": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/StreetFighterPromotion3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

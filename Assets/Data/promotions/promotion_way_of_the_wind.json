@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_WAY_OF_THE_WIND",
+ "description": "TXT_KEY_PROMOTION_WAY_OF_THE_WIND",
+ "strength": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/WayOfTheWindPromotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_THROWING"
+  ]
+ }
+}

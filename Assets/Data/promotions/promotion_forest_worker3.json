@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_FOREST_WORKER3",
+ "description": "TXT_KEY_PROMOTION_FOREST_WORKER3",
+ "workRate": {
+  "unit": {
+   "feature": {
+    "FEATURE_FOREST": {
+     "percent": 20
+    },
+    "FEATURE_BAMBOO": {
+     "percent": 20
+    },
+    "FEATURE_JUNGLE": {
+     "percent": 20
+    },
+    "FEATURE_FOREST_ANCIENT": {
+     "percent": 20
+    },
+    "FEATURE_FOREST_YOUNG": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_FOREST_WORKER": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/workerforest3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

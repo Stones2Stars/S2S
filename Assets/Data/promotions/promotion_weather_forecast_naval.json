@@ -1,0 +1,64 @@
+{
+ "type": "PROMOTION_WEATHER_FORECAST_NAVAL",
+ "description": "TXT_KEY_PROMOTION_WEATHER_FORECAST_NAVAL",
+ "movement": {
+  "unit": {
+   "moves": {
+    "flat": 1
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_COAST": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_OCEAN": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_COAST_TROPICAL": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_COAST_POLAR": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_OCEAN_TROPICAL": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_OCEAN_POLAR": {
+     "defense": {
+      "percent": 10
+     }
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Weather_Forecasts.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_WOODEN_SHIPS",
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS",
+   "UNITCOMBAT_SUBMARINE"
+  ]
+ }
+}

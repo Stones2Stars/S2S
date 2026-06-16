@@ -1,0 +1,34 @@
+{
+ "type": "PROMOTION_CIVILIZED1",
+ "description": "TXT_KEY_PROMOTION_CIVILIZED1",
+ "strength": {
+  "unit": {
+   "attack": {
+    "percent": -5
+   },
+   "defense": {
+    "percent": 10
+   },
+   "vsBarbs": {
+    "percent": 15
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CIVILIZED_PROMOTION": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionCivilized.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_NAVAL_COMBATANT"
+  ]
+ }
+}

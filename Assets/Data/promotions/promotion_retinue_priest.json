@@ -1,0 +1,49 @@
+{
+ "type": "PROMOTION_RETINUE_PRIEST",
+ "description": "TXT_KEY_PROMOTION_RETINUE_PRIEST",
+ "heal": {
+  "unit": {
+   "enemy": {
+    "flat": 15
+   },
+   "neutral": {
+    "flat": 15
+   },
+   "friendly": {
+    "flat": 15
+   },
+   "sameTile": {
+    "flat": 15
+   },
+   "adjacentTile": {
+    "flat": 15
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 25
+   },
+   "resistance": {
+    "flat": -10
+   }
+  }
+ },
+ "capabilities": {
+  "alwaysHeal": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Retinue/priest.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_GET_RETINUE"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_HERO"
+  ]
+ }
+}

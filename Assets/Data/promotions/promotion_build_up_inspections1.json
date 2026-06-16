@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_BUILD_UP_INSPECTIONS1",
+ "description": "TXT_KEY_PROMOTION_BUILD_UP_INSPECTIONS1",
+ "espionage": {
+  "unit": {
+   "investigation": {
+    "flat": 2
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_INSPECTIONS": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Inspections1Buildup.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

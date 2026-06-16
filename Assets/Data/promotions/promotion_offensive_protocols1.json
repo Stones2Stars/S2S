@@ -1,0 +1,40 @@
+{
+ "type": "PROMOTION_OFFENSIVE_PROTOCOLS1",
+ "description": "TXT_KEY_PROMOTION_OFFENSIVE_PROTOCOLS1",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -5
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_GUN": {
+     "percent": 20
+    },
+    "UNITCOMBAT_CLONES": {
+     "percent": 20
+    },
+    "UNITCOMBAT_SIEGE": {
+     "percent": 20
+    },
+    "UNITCOMBAT_HITECH": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_OFFENSIVE_PROTOCOLS": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/antitank1.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,5,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

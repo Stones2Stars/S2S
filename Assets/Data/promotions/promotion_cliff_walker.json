@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_CLIFF_WALKER",
+ "description": "TXT_KEY_PROMOTION_CLIFF_WALKER",
+ "strength": {
+  "unit": {
+   "hillsAttack": {
+    "percent": 10
+   },
+   "hillsDefense": {
+    "percent": 10
+   },
+   "terrain": {
+    "TERRAIN_PEAK": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/himalayas.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

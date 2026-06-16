@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_SOPHISTICATION3",
+ "description": "TXT_KEY_PROMOTION_SOPHISTICATION3",
+ "strength": {
+  "unit": {
+   "percent": 5,
+   "vsBarbs": {
+    "percent": 25
+   },
+   "unitCombat": {
+    "UNITCOMBAT_STRIKE_TEAM": {
+     "percent": 10
+    },
+    "UNITCOMBAT_RUFFIAN": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SOPHISTICATION": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Sophistication3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

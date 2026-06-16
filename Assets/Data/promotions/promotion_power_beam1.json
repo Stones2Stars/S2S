@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_POWER_BEAM1",
+ "description": "TXT_KEY_PROMOTION_POWER_BEAM1",
+ "bombard": {
+  "unit": {
+   "rangedDamage": {
+    "flat": 25
+   },
+   "rangedDamageLimit": {
+    "flat": 10
+   },
+   "dcmAccuracy": {
+    "flat": 10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_POWER_BEAM": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/PowerBeam1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "rBombardPrereq": true
+ }
+}

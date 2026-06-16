@@ -1,0 +1,34 @@
+{
+ "type": "PROMOTION_REPAIR_NAVAL5",
+ "description": "TXT_KEY_PROMOTION_REPAIR_NAVAL5",
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 1
+   },
+   "victoryAdjacent": {
+    "flat": 3
+   },
+   "victoryStack": {
+    "flat": 5
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_NAVAL": {
+     "heal": 6,
+     "adjacentHeal": 3
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_REPAIR_NAVAL": 5
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/RepairNaval5Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

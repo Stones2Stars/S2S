@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_LAWFUL",
+ "description": "TXT_KEY_PROMOTION_LAWFUL",
+ "espionage": {
+  "unit": {
+   "investigation": {
+    "flat": 10
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  },
+  "plot": {
+   "flat": -5
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionLawful.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_LAW_ENFORCEMENT"
+  ]
+ }
+}

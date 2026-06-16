@@ -206,8 +206,15 @@ and is settled when its turn comes:
     applicability gates parked in identity (→ Promotion pass). Dropped the dead OA-mod affliction line.
     `*ContractChanceChanges`/Categories/etc. dropped. The line NEVER enables a building / adds no modifier (the
     individual PROMOTION owns property modifiers). ⚑ `buildUp` baselines + applicability re-homing land at #28.
-28. **Promotion** ☐ heavy — `TechPrereq`, `PrereqBonusTypes`, `PrereqPlotBonusTypes`. Combat bonuses buried in
-    identity; the promotion owns city/plot property modifiers. **Unit-plane self-accumulator (§5).**
+28. **Promotion** ✅ **(curated 2026-06-16, `curate_promotion.py`; 1229 records)** — the unit-plane stat SOURCE.
+    DEFINED the §5 unit-stat family vocabulary (shared by UnitCombat #29 + SpecialUnit): **`strength`** = the combat
+    family (general/flat/SM/situational/vs-keyed + S&D/TB sub-stats) + withdrawal/firstStrike/bombard/collateral/air/
+    heal/movement/experience/workRate/cargo/upkeep/vision/`capture`(gradient)/poison/espionage/trap. **CAPABILITIES =
+    separate boolean group**; LOS tables → non-cascade `vision` resolver (§7); **properties → scoped modifier deposits**
+    (`PROPERTY_X.{plot,city}.flat`, via `property_source_v3` extended for `SAME_PLOT`); **`promotionLine:{LINE:rank}`**
+    object (accumulator-shaped); availability PARKED in identity (deferred to the unit-plane enabling pass). Drops:
+    BATTLEWORN trio + Categories + the `iStealthCombatModifier` typo. `ObsoleteTech` → new store edge. Full map: renames
+    §Promotion. Original notes: **Unit-plane self-accumulator (§5).**
     `iDamageperTurn`/`iWeakenperTurn` → drop (dead BATTLEWORN). Invisibility/visibility LOS tables (the 2D
     `{Terrain|Feature|Improvement}[Range]` × InvisibleType) → non-cascade sub-object for the visibility
     RESOLVER (§0.6), NOT additive modifiers. `FreePromotionUnitCombatTypes` → `grants`.

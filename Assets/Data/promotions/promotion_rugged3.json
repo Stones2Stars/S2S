@@ -1,0 +1,76 @@
+{
+ "type": "PROMOTION_RUGGED3",
+ "description": "TXT_KEY_PROMOTION_RUGGED3",
+ "strength": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_BARREN": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_SCRUB": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_JAGGED": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_ROCKY": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_BADLAND": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "terrainDoubleMove": {
+   "TERRAIN_BARREN": true,
+   "TERRAIN_SCRUB": true,
+   "TERRAIN_ROCKY": true,
+   "TERRAIN_BADLAND": true,
+   "TERRAIN_JAGGED": true
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_RUGGED": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Tweaks/art/ruggedcombat3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ]
+ }
+}

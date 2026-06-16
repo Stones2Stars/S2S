@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_PROTECTIVE",
+ "description": "TXT_KEY_PROMOTION_PROTECTIVE",
+ "strength": {
+  "unit": {
+   "cityDefense": {
+    "percent": 20
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionProtective.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_MISSIONARY",
+   "UNITCOMBAT_EXECUTIVE"
+  ]
+ }
+}

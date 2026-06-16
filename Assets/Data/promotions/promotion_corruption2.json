@@ -1,0 +1,47 @@
+{
+ "type": "PROMOTION_CORRUPTION2",
+ "description": "TXT_KEY_PROMOTION_CORRUPTION2",
+ "espionage": {
+  "unit": {
+   "insidiousness": {
+    "flat": 2
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "stealth": {
+    "percent": 5
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": -2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "plot": {
+   "flat": 4
+  },
+  "city": {
+   "flat": 4
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CORRUPTION": 2
+ },
+ "ai": {
+  "unitCombatWeights": {
+   "UNITCOMBAT_CRIMINAL": 50
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Corruption2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

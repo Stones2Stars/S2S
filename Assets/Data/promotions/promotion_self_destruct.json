@@ -1,0 +1,34 @@
+{
+ "type": "PROMOTION_SELF_DESTRUCT",
+ "description": "TXT_KEY_PROMOTION_SELF_DESTRUCT",
+ "strength": {
+  "unit": {
+   "kamikaze": {
+    "percent": 100
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 100
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat1.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,8,9"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_ROBOT",
+   "UNITCOMBAT_ASSAULT_MECH",
+   "UNITCOMBAT_DREADNOUGHT",
+   "UNITCOMBAT_NANITE"
+  ]
+ }
+}

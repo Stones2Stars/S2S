@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_SPLIT_INTO_MILLIONS",
+ "description": "TXT_KEY_PROMOTION_SPLIT_INTO_MILLIONS",
+ "strength": {
+  "unit": {
+   "group": {
+    "flat": -1
+   }
+  }
+ },
+ "grants": {
+  "unitCombats": [
+   "UNITCOMBAT_GROUP_MILLIONS"
+  ],
+  "removesUnitCombats": [
+   "UNITCOMBAT_GROUP_BILLIONS"
+  ]
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/UnitCombatClasses/Group10UnitCombat.fw.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "replacesUnitCombat": "UNITCOMBAT_GROUP_BILLIONS",
+  "forOffset": true
+ }
+}

@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_SPOT1",
+ "description": "TXT_KEY_PROMOTION_SPOT1",
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_SIZE": 1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SPOT": 1
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_HIDE_SEEK",
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Spot1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_QUALITY_EPIC",
+   "UNITCOMBAT_QUALITY_DIVINE"
+  ]
+ }
+}

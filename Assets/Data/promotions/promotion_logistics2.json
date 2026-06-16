@@ -1,0 +1,25 @@
+{
+ "type": "PROMOTION_LOGISTICS2",
+ "description": "TXT_KEY_PROMOTION_LOGISTICS2",
+ "movement": {
+  "unit": {
+   "moveDiscount": {
+    "flat": 1
+   }
+  }
+ },
+ "capabilities": {
+  "enemyRoute": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_LOGISTICS": 2
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Logistics2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_PING"
+ }
+}

@@ -1,0 +1,76 @@
+{
+ "type": "PROMOTION_SEA_CREATURE1",
+ "description": "TXT_KEY_PROMOTION_SEA_CREATURE1",
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_OCEAN_TROPICAL": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_COAST_TROPICAL": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_OCEAN_POLAR": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_COAST_POLAR": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_OCEAN": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_COAST": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SEA_CREATURE": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/seacreature1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

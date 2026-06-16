@@ -1,0 +1,20 @@
+{
+ "type": "PROMOTION_REMOVE_STANDOUT_STATUS",
+ "description": "TXT_KEY_PROMOTION_REMOVE_STANDOUT_STATUS",
+ "help": "TXT_KEY_PROMOTION_DEPLETE_MP_HELP",
+ "promotionLine": {
+  "PROMOTIONLINE_STANDOUT": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/RemoveStandOutStatus.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "status": true,
+  "removeAfterSet": true
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_SIDESTEP1",
+ "description": "TXT_KEY_PROMOTION_SIDESTEP1",
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_THROWING": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SIDESTEP": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/SidestepPromotion1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_ANIMAL",
+   "UNITCOMBAT_GUN"
+  ]
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_RESCUE_DOG1",
+ "description": "TXT_KEY_PROMOTION_RESCUE_DOG1",
+ "strength": {
+  "unit": {
+   "percent": -5
+  }
+ },
+ "heal": {
+  "unit": {
+   "sameTile": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_RESCUE_DOG": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/rescuedog1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

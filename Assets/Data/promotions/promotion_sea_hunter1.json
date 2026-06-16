@@ -1,0 +1,40 @@
+{
+ "type": "PROMOTION_SEA_HUNTER1",
+ "description": "TXT_KEY_PROMOTION_SEA_HUNTER1",
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_SEA_ANIMAL": {
+     "percent": 25
+    },
+    "UNITCOMBAT_MOTILITY_AERIAL": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SEA_HUNTER": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/seahunter1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_LAND"
+  ]
+ }
+}

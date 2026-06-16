@@ -1,0 +1,25 @@
+{
+ "type": "PROMOTION_COMMAND6",
+ "description": "TXT_KEY_PROMOTION_COMMAND6",
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_COMMAND": 6
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/CommanderCommand6.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "controlPoints": 1
+ }
+}

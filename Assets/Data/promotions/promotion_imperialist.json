@@ -1,0 +1,38 @@
+{
+ "type": "PROMOTION_IMPERIALIST",
+ "description": "TXT_KEY_PROMOTION_IMPERIALIST",
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 20
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionImperialist.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_MISSIONARY",
+   "UNITCOMBAT_EXECUTIVE"
+  ]
+ }
+}

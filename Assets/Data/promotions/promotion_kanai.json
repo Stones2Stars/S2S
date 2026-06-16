@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_KANAI",
+ "description": "TXT_KEY_PROMOTION_KANAI",
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 2
+   }
+  }
+ },
+ "capabilities": {
+  "immuneToFirstStrikes": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/jewish_promo.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "stateReligionPrereq": "RELIGION_JUDAISM",
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_THROWING"
+  ]
+ }
+}

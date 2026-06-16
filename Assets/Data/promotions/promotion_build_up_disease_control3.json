@@ -1,0 +1,26 @@
+{
+ "type": "PROMOTION_BUILD_UP_DISEASE_CONTROL3",
+ "description": "TXT_KEY_PROMOTION_BUILD_UP_DISEASE_CONTROL3",
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -3
+  },
+  "plot": {
+   "flat": -3
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_DISEASE_CONTROL": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/DiseaseControl3BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "minEra": "C2C_ERA_CLASSICAL"
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_DARING_ESCAPE3",
+ "description": "TXT_KEY_PROMOTION_DARING_ESCAPE3",
+ "withdrawal": {
+  "unit": {
+   "percent": 15
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 30
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_DARING_ESCAPE": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/DaringEscape3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

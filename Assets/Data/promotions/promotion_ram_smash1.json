@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_RAM_SMASH1",
+ "description": "TXT_KEY_PROMOTION_RAM_SMASH1",
+ "strength": {
+  "unit": {
+   "breakdownDamage": {
+    "flat": 2
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_RAM_SMASH": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/RamSmash1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

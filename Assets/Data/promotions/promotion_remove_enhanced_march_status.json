@@ -1,0 +1,20 @@
+{
+ "type": "PROMOTION_REMOVE_ENHANCED_MARCH_STATUS",
+ "description": "TXT_KEY_PROMOTION_REMOVE_ENHANCED_MARCH_STATUS",
+ "help": "TXT_KEY_PROMOTION_DEPLETE_MP_HELP",
+ "promotionLine": {
+  "PROMOTIONLINE_ENHANCED_MARCH": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/RemoveEnhancedMarchStatus.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "status": true,
+  "removeAfterSet": true
+ }
+}

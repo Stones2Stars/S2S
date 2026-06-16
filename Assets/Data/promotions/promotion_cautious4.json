@@ -1,0 +1,20 @@
+{
+ "type": "PROMOTION_CAUTIOUS4",
+ "description": "TXT_KEY_PROMOTION_CAUTIOUS4",
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CAUTIOUS": 4
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Cautious4Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

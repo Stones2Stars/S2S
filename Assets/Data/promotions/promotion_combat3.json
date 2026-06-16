@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_COMBAT3",
+ "description": "TXT_KEY_PROMOTION_COMBAT3",
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 30
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_COMBAT": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat3.dds,Art/Interface/Buttons/Promotions_Atlas.dds,2,6"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

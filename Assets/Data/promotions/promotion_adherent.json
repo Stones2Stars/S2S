@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_ADHERENT",
+ "description": "TXT_KEY_PROMOTION_ADHERENT",
+ "revoltProtection": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Adherent.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_HUNTER",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_ROBOT",
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_TRACKED",
+   "UNITCOMBAT_CLONES",
+   "UNITCOMBAT_ASSAULT_MECH",
+   "UNITCOMBAT_DREADNOUGHT",
+   "UNITCOMBAT_THROWING"
+  ]
+ }
+}

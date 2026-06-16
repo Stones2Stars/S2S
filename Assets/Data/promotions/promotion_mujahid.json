@@ -1,0 +1,40 @@
+{
+ "type": "PROMOTION_MUJAHID",
+ "description": "TXT_KEY_PROMOTION_MUJAHID",
+ "strength": {
+  "unit": {
+   "percent": 15,
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 15
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/islam_promo.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "stateReligionPrereq": "RELIGION_ISLAM",
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_THROWING"
+  ]
+ }
+}

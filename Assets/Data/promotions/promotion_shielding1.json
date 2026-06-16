@@ -1,0 +1,157 @@
+{
+ "type": "PROMOTION_SHIELDING1",
+ "description": "TXT_KEY_PROMOTION_SHIELDING1",
+ "collateral": {
+  "unit": {
+   "protection": {
+    "percent": 10
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": -10
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_GRASSLAND": {
+     "defense": {
+      "percent": 15
+     }
+    },
+    "TERRAIN_PLAINS": {
+     "defense": {
+      "percent": 15
+     }
+    },
+    "TERRAIN_ICE": {
+     "defense": {
+      "percent": 15
+     }
+    },
+    "TERRAIN_TUNDRA": {
+     "defense": {
+      "percent": 15
+     }
+    },
+    "TERRAIN_MARSH": {
+     "defense": {
+      "percent": 15
+     }
+    },
+    "TERRAIN_DESERT": {
+     "defense": {
+      "percent": 15
+     }
+    },
+    "TERRAIN_COAST": {
+     "defense": {
+      "percent": 25
+     }
+    },
+    "TERRAIN_OCEAN": {
+     "defense": {
+      "percent": 25
+     }
+    },
+    "TERRAIN_PEAK": {
+     "defense": {
+      "percent": 25
+     }
+    },
+    "TERRAIN_HILL": {
+     "defense": {
+      "percent": 25
+     }
+    },
+    "TERRAIN_COAST_TROPICAL": {
+     "defense": {
+      "percent": 25
+     }
+    },
+    "TERRAIN_COAST_POLAR": {
+     "defense": {
+      "percent": 25
+     }
+    },
+    "TERRAIN_OCEAN_TROPICAL": {
+     "defense": {
+      "percent": 25
+     }
+    },
+    "TERRAIN_OCEAN_POLAR": {
+     "defense": {
+      "percent": 25
+     }
+    }
+   },
+   "feature": {
+    "FEATURE_ICE": {
+     "defense": {
+      "percent": 25
+     }
+    },
+    "FEATURE_OASIS": {
+     "defense": {
+      "percent": 25
+     }
+    },
+    "FEATURE_FLOOD_PLAINS": {
+     "defense": {
+      "percent": 25
+     }
+    },
+    "FEATURE_JUNGLE": {
+     "defense": {
+      "percent": 25
+     }
+    },
+    "FEATURE_FOREST": {
+     "defense": {
+      "percent": 25
+     }
+    },
+    "FEATURE_BAMBOO": {
+     "defense": {
+      "percent": 25
+     }
+    },
+    "FEATURE_FOREST_YOUNG": {
+     "defense": {
+      "percent": 25
+     }
+    },
+    "FEATURE_FOREST_BURNT": {
+     "defense": {
+      "percent": 25
+     }
+    },
+    "FEATURE_FOREST_ANCIENT": {
+     "defense": {
+      "percent": 25
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_MISSILE": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SHIELDING": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/stalwart1.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,1,2"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

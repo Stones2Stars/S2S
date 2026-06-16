@@ -1,0 +1,23 @@
+{
+ "type": "PROMOTION_FLANKING3",
+ "description": "TXT_KEY_PROMOTION_FLANKING3",
+ "withdrawal": {
+  "unit": {
+   "percent": 15
+  }
+ },
+ "capabilities": {
+  "immuneToFirstStrikes": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_FLANKING": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Flanking3.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,5,5"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

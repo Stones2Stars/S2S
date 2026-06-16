@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_MARTIAL_ARTS",
+ "description": "TXT_KEY_PROMOTION_MARTIAL_ARTS1",
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 15
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 5
+    },
+    "UNITCOMBAT_THROWING": {
+     "percent": 5
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MARTIAL_ARTS": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Sports/Buttons/Martial_Arts1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "stateReligionPrereq": "RELIGION_TAOISM",
+  "notOnDomains": [
+   "DOMAIN_SEA"
+  ]
+ }
+}

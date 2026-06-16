@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_LOOTER",
+ "description": "TXT_KEY_PROMOTION_LOOTER",
+ "pillage": {
+  "unit": {
+   "flat": 50
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/looter.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_ROBOT",
+   "UNITCOMBAT_WOODEN_SHIPS",
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS",
+   "UNITCOMBAT_THROWING"
+  ]
+ }
+}

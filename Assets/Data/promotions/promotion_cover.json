@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_COVER",
+ "description": "TXT_KEY_PROMOTION_COVER",
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_ARCHER": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_COVER": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Cover.dds,Art/Interface/Buttons/Promotions_Atlas.dds,2,5"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MOUNTED"
+  ]
+ }
+}

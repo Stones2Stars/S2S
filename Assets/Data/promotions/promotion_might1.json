@@ -1,0 +1,44 @@
+{
+ "type": "PROMOTION_MIGHT1",
+ "description": "TXT_KEY_PROMOTION_MIGHT1",
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 25
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MIGHT": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Might1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "levelPrereq": 3,
+  "unitCombats": [
+   "UNITCOMBAT_QUALITY_INFERIOR",
+   "UNITCOMBAT_QUALITY_POOR",
+   "UNITCOMBAT_QUALITY_MEDIOCRE",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_QUALITY_EPIC",
+   "UNITCOMBAT_QUALITY_DIVINE"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_ANIMAL"
+  ]
+ }
+}

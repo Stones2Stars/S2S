@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_FUEL_TANK",
+ "description": "TXT_KEY_PROMOTION_FUEL_TANK",
+ "strength": {
+  "unit": {
+   "percent": -15
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 2
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Range.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,5,10"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_JET_FIGHTERS",
+   "UNITCOMBAT_BOMBERS",
+   "UNITCOMBAT_SUPERSONIC_PLANES",
+   "UNITCOMBAT_STEALTH"
+  ]
+ }
+}

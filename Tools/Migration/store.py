@@ -188,6 +188,7 @@ OBSOLETE_FIELDS = [
     ("BuildInfo",    "ObsoleteTech", "builds"),
     ("BonusInfo",    "TechObsolete", "bonuses"),
     ("CorporationInfo", "ObsoleteTech", "corporations"),  # latent (no corp sets it today); hardens the edge
+    ("PromotionInfo", "ObsoleteTech", "promotions"),      # a tech can obsolete a promotion (#428 #28; owner-approved)
 ]
 
 # Replace edges — top-down SUCCESSION (enabler-spec §6, `replaces`, self-framing on the SUCCESSOR you HAVE).

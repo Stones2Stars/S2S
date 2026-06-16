@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_NAIVE",
+ "description": "TXT_KEY_PROMOTION_NAIVE",
+ "withdrawal": {
+  "unit": {
+   "percent": -20
+  }
+ },
+ "air": {
+  "unit": {
+   "evasion": {
+    "percent": -20
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionNaive.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_PING"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_SPY"
+  ]
+ }
+}

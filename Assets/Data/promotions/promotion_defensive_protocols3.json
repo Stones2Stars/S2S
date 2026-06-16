@@ -1,0 +1,20 @@
+{
+ "type": "PROMOTION_DEFENSIVE_PROTOCOLS3",
+ "description": "TXT_KEY_PROMOTION_DEFENSIVE_PROTOCOLS3",
+ "withdrawal": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_DEFENSIVE_PROTOCOLS": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Flanking3.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,3,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

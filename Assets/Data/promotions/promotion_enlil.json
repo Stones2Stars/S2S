@@ -1,0 +1,42 @@
+{
+ "type": "PROMOTION_ENLIL",
+ "description": "TXT_KEY_PROMOTION_ENLIL",
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_ARCHER": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat1.dds,Art/Interface/Buttons/GodsOfOld_Atlas.dds,7,7"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "stateReligionPrereq": "RELIGION_MESOPOTAMISM",
+  "unitCombats": [
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_THROWING"
+  ]
+ }
+}

@@ -1,0 +1,75 @@
+{
+ "type": "PROMOTION_TRADITION_WORK_ETHIC",
+ "description": "TXT_KEY_PROMOTION_TRADITION_WORK_ETHIC",
+ "workRate": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_GRASSLAND": {
+     "percent": 10
+    },
+    "TERRAIN_LUSH": {
+     "percent": 10
+    },
+    "TERRAIN_PLAINS": {
+     "percent": 10
+    },
+    "TERRAIN_BARREN": {
+     "percent": 10
+    },
+    "TERRAIN_ROCKY": {
+     "percent": 10
+    },
+    "TERRAIN_BADLAND": {
+     "percent": 10
+    },
+    "TERRAIN_JAGGED": {
+     "percent": 10
+    },
+    "TERRAIN_DESERT": {
+     "percent": 10
+    },
+    "TERRAIN_SCRUB": {
+     "percent": 10
+    },
+    "TERRAIN_DUNES": {
+     "percent": 10
+    },
+    "TERRAIN_SALT_FLATS": {
+     "percent": 10
+    },
+    "TERRAIN_TAIGA": {
+     "percent": 10
+    },
+    "TERRAIN_TUNDRA": {
+     "percent": 10
+    },
+    "TERRAIN_PERMAFROST": {
+     "percent": 10
+    },
+    "TERRAIN_ICE": {
+     "percent": 10
+    },
+    "TERRAIN_MARSH": {
+     "percent": 10
+    },
+    "TERRAIN_MUDDY": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/trad_work_ethic.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_COMBAT_WORKER",
+   "UNITCOMBAT_WORKER"
+  ]
+ }
+}

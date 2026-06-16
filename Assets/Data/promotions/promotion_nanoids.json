@@ -1,0 +1,28 @@
+{
+ "type": "PROMOTION_NANOIDS",
+ "description": "TXT_KEY_PROMOTION_NANOIDS",
+ "heal": {
+  "unit": {
+   "selfModifier": {
+    "percent": 10
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat5.dds,Art/Interface/Buttons/NextWar_Atlas.dds,8,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_ROBOT",
+   "UNITCOMBAT_CLONES",
+   "UNITCOMBAT_DREADNOUGHT",
+   "UNITCOMBAT_ASSAULT_MECH"
+  ]
+ }
+}

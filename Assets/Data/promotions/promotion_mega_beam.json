@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_MEGA_BEAM",
+ "description": "TXT_KEY_PROMOTION_MEGA_BEAM",
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 10
+   },
+   "rangedDamage": {
+    "flat": 25
+   },
+   "rangedDamageLimit": {
+    "flat": 25
+   },
+   "rangedDamageMaxUnits": {
+    "flat": 1
+   },
+   "dcmRange": {
+    "flat": 1
+   },
+   "dcmAccuracy": {
+    "flat": 25
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/MegaBeam1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "rBombardPrereq": true
+ }
+}

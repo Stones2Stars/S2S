@@ -1,0 +1,54 @@
+{
+ "type": "PROMOTION_TRANSPORT_FIGHTERS",
+ "description": "TXT_KEY_PROMOTION_TRANSPORT_FIGHTERS",
+ "strength": {
+  "unit": {
+   "percent": -15
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 1
+   },
+   "smSpace": {
+    "flat": 30
+   }
+  }
+ },
+ "grants": {
+  "unitCombats": [
+   "UNITCOMBAT_PROMOTED_TRANSPORT_FIGHTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/TransportFighters.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "domainCargoChange": "DOMAIN_AIR",
+  "specialCargoChange": "SPECIALUNIT_FIGHTER",
+  "smNotSpecialCargoChange": "SPECIALUNIT_MISSILE",
+  "unitCombats": [
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_CRUISER",
+   "UNITCOMBAT_SUBMARINE",
+   "UNITCOMBAT_DESTROYER",
+   "UNITCOMBAT_BATTLESHIP",
+   "UNITCOMBAT_TRANSPORT",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_TROOPS",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_PEOPLE",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_MISSILES",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_SEAPLANES",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_CAPTIVES"
+  ]
+ }
+}

@@ -1,0 +1,38 @@
+{
+ "type": "PROMOTION_OBSERVERS",
+ "description": "TXT_KEY_PROMOTION_OBSERVERS",
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_EXPLORER": {
+     "percent": 15
+    },
+    "UNITCOMBAT_STRIKE_TEAM": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/observer.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_EXPLORER"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ]
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_TRANSPORT_FIGHTERS2",
+ "description": "TXT_KEY_PROMOTION_TRANSPORT_FIGHTERS2",
+ "strength": {
+  "unit": {
+   "percent": -15
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 1
+   },
+   "smSpace": {
+    "flat": 30
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_TRANSPORT_FIGHTERS": 2
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/TransportFighters2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

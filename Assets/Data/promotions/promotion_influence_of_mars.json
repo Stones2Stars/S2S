@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_INFLUENCE_OF_MARS",
+ "description": "TXT_KEY_PROMOTION_INFLUENCE_OF_MARS",
+ "strength": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -3
+  },
+  "plot": {
+   "flat": -2
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/InfluenceOfMarsPromotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_LAW_ENFORCEMENT"
+  ]
+ }
+}

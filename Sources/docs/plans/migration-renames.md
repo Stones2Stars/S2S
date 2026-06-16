@@ -547,3 +547,71 @@ de-Hungarian within each subgroup not re-logged.
 
 *Toolkit: `curate_leaderhead.py` (bespoke); `LeaderHeadInfo` added to `store.ENTITIES`. The `ai` subgroup vocabulary
 is provisional (reworked at the load-writing phase) — captured here as the reader's old→new lookup, not a spec lock.*
+
+## Promotion  (`curate_promotion.py`)  — Tier D #28 (1229 records, BESPOKE)
+
+A **unit-plane stat SOURCE**: every effect is a **`unit`-scope SELF-ACCUMULATOR** deposit (source==target via
+`CvUnit::processPromotion`'s `changeExtra*`/`change*Count` stack, modifier-spec §5), verified field-by-field against
+that consumer + `processUnitCombat` + the capture/hidden-nationality Python. EXE-link **0 `DllExport`** on
+`CvPromotionInfo` → unconstrained. Shares the unit-stat vocabulary with **UnitCombat #29** + SpecialUnit (Unit pass).
+**This JSON is the STATIC DEFINITION of the promotion, NOT the promotion-as-on-a-unit** — but every shape is
+**accumulator-shaped so adding a promotion to a unit is clean O(1) CONCATENATION** (sum `unit`-scope deposits, union
+capabilities, merge the `promotionLine` map), never apply-time post-processing (owner 2026-06-16). The first-pass
+mapping dumped ~all fields into `identity`/`prereqs` (the documented under-classification trap) — the bespoke curator
+carries the real vocabulary. Coverage-checked: every XML tag handled.
+
+**THE UNIT-STAT FAMILY VOCABULARY (owner-blessed 2026-06-16; names PROVISIONAL — a reader-pass refines them).** All
+at **`unit` scope**.
+- **`strength`** — THE combat family: *"the strength of something, or weakness ON / INTO / AGAINST something"* (owner).
+  Members: `percent`←`iCombatPercent` · `flat`←`iStrengthChange` · `sizeModifier`←`iStrengthModifier`(SM) ·
+  `attack`/`defense`←`i{Attack,Defense}CombatModifierChange` · `vsBarbs` · `religious` · `stealth` · `damageModifier`
+  · `maxHP`(SM, post-migration review) · `quality`/`group`(SM) · `perSize{More,Less}`/`perVolume{More,Less}`(SM) ·
+  `unnerve`/`enclose`/`lunge`/`dynamicDefense`(S&D `SURROUND_DESTROY`, live/deferred) · `endurance`/`taunt`/
+  `breakdownChance`/`breakdownDamage` · `kamikaze`/`combatLimit`/`stealthStrikes` · **situational** `cityAttack`/
+  `cityDefense`/`hillsAttack`/`hillsDefense` · **vs-keyed** `terrain.{T}.{attack,defense}`,`feature.{F}.{attack,defense}`,
+  `unitCombat.{UC}`,`domain.{D}`,`flanking.{UC}`.
+- **`withdrawal`** `firstStrike`{strikes,chance} `bombard`{rate,rangedDamage[/Limit/MaxUnits],dcmRange,dcmAccuracy}
+  `collateral`{damage,limit,maxUnits,protection} `air`{range,intercept,evasion,combatLimit}
+  `heal`{enemy,neutral,friendly,sameTile,adjacentTile,selfModifier,support,victory[/Adjacent/Stack],unitCombat.{UC}}
+  `movement`{moves,moveDiscount,dropRange} `experience` `workRate`{rate,hills,peaks,terrain.{T},feature.{F},build.{B}}
+  `cargo`{space,smSpace,volume,volumeModifier} `upkeep`{modifier,extra100,upgradeDiscount} `vision`{range + the LOS
+  resolver, below}.
+- **`capture`** {probability,resistance} — captive-taking of units (+subdued animals); a **GRADIENT** (numeric: the
+  engine nets `captureProbabilityTotal - captureResistanceTotal` into a 0-99% chance, summed across unit/promotion/
+  commander/national/local), its OWN family (owner). ⚑ owner design intent: capture (military captives) and **subdue**
+  (animals) *should* be separate mechanics later — a hunter good at trapping animals shouldn't freely take military
+  captives; not changed in #428 (faithful), recorded for a future pass.
+- **`poison`** {probability} — the (inert) **afflictions** mechanic ("nothing can be poisoned"); kept-for-now.
+- **`espionage`** {insidiousness (= revolutions, owner), investigation (= crime, owner)}. **`trap`** {damageMax,
+  damageMin,complexity,numTriggers,disable.{UC},avoidance.{UC},trigger.{UC}} (dedicated sub-system block).
+  Singletons: **`revoltProtection`** `pillage` `survivor`. per-`PROPERTY_*` (below).
+
+**CAPABILITIES — a SEPARATE group of BOOLEANS (owner): grant=`true` / revoke=`false`** (the `Add`/`Subtract` & `Remove`
+pairs). `change*Count`-verified. Plain bools (blitz/amphib/river/…); pair grant-or-revoke (stampede±, attackOnlyCities±,
+ignoreNoEntryLevel±, ignoreZoneofControl±, fliesToMove±); the count-int abilities (excile, **passage** [non-combat
+units enter foreign land w/o granting military passage], noNonOwnedCityEntry, barbCoExist, blendIntoCity,
+upgradeAnywhere, hiddenNationality, assassin, stealthDefense, defenseOnly, noInvisibility, triggerBeforeAttack,
+noDefensiveBonus, gatherHerd, animalIgnoresBorders — `>0` ⇒ has it); per-type ability maps (terrainDoubleMove.{T},
+featureDoubleMove.{F}, trapImmunity.{UC}, trapTarget.{UC}, trapSetWith.{PROMOTION}).
+
+| old XML | new JSON path | note |
+|---|---|---|
+| `PropertyManipulators`/`PropertySource` | `<PROPERTY>.<scope>.flat` (v3) | The live crime/disease/education **unit→city/plot emission** translated to the SCOPED MODIFIER system (owner 2026-06-16: "scoped like other property yields, like a modifier"). `PROPERTYSOURCE_CONSTANT`→flat; scope from `GameObjectType` (`GAMEOBJECT_PLOT`→`plot`, `GAMEOBJECT_CITY`→`city`); a promotion emitting to BOTH = **two modifiers** (`PROPERTY_CRIME.{city,plot}.flat`). `RELATION_SAME_PLOT` is the containment default → **`engine.property_source_v3` extended** to drop it (like `ASSOCIATED`). Feeds the PromotionLine `buildUp.property` baselines (EDUCATE→EDUCATION, CRIME_FIGHTING→CRIME, DISEASE_CONTROL→DISEASE). |
+| `PromotionLine` + `iLinePriority` | `promotionLine: {PROMOTIONLINE_X: rank}` | Line membership as a `{LINE: rank}` **OBJECT** (owner 2026-06-16). `iLinePriority` is a **RANK** within the line (COMBAT1=1, COMBAT2=2, …), NOT a priority. Object (keyed by line) is accumulator-friendly: a unit's promotions MERGE their maps into one `{LINE: rank, …}` → a clean **bottom→up rank overwrite** + line-hierarchy check (owner). ~261 of 1229 promotions have NO line → omitted. |
+| `OnGameOptions`/`NotOnGameOptions` | `loadPrune.{onGameOptions,notOnGameOptions}` | Load-stable game-option gate. The 192 option-gated promotions link to **LIVE** optional mechanics (SIZE_MATTERS 83 / HIDE_SEEK 70 / WITHOUT_WARNING 39) — conditionally active, **none dead-by-dead-option**. |
+| `SubCombatChangeTypes`/`RemovesUnitCombatTypes`/`FreetoUnitCombats`/`AddsBuildTypes`/`SetSpecialUnit` | `grants.{unitCombats,removesUnitCombats,freeToUnitCombats,builds,specialUnit}` | What the promotion CONFERS on the unit. |
+| `VisibilityIntensity*`/`InvisibilityIntensity*` + `Invisible/Visible{Terrain,Feature,Improvement}[Range]Changes` + `NegatesInvisibilityTypes` + `iVisibilityChange` | `vision.{visibilityIntensity,…, invisibleTerrain[],…, negates, range}` | The hide-&-seek **LOS RESOLVER** — a non-cascade structured `vision` block (modifier-spec §7/§0.6), read by the visibility resolver, NOT additive families. |
+| `AIWeightbyUnitCombatTypes` | `ai.unitCombatWeights: {UC: weight}` | AI weighting (how the AI values this promotion per unitcombat) → the `ai` group. |
+| `TechPrereq`/`PrereqBonusTypes`/`PrereqPlotBonusTypes` | (store) `tech`/`bonus.enables.promotions` | The promotion is a generated candidate of its tech/bonus → store-inverted, DROPPED here. |
+| `PromotionPrereq`/`PromotionPrereqOr1`/`Or2` | — (DROPPED) | Promotion-on-promotion prereq → the enabling lives on the **tech it requires**; the chain ORDER is carried by `promotionLine`+rank (owner #4 2026-06-16). |
+| `ObsoleteTech` | (store) `tech.obsoletes.promotions` | A tech can obsolete a promotion → **new `OBSOLETE_FIELDS` edge** (owner-approved), DROPPED here. |
+| `UnitCombats`/`NotOnDomainTypes`/`NotOnUnitCombatTypes`/`Prereq{Terrain,Feature,Improvement,PlotBonus,LocalBuilding}Types`/`StateReligionPrereq`/`Min`/`MaxEraType`/`iLevelPrereq`/cargo·rBombard·normInvisible prereqs/command/leader/renames/replacesUnitCombat/celebrityHappy/zeroesXP/status flags | `identity.*` | **PARKED**: the promotion's applicability/plot/state gates + config flags, deferred to the unit-plane enabling pass (as PromotionLine #27 parked its gates — the broader enabling picture is still being shaped). `celebrityHappy` is really a city-happiness modifier (byOccupant, §5) → structured properly at the Unit pass. `zeroesXP` = the XP-reset cost of a quality upgrade (engine acts at acquire-time). |
+| `iDamageperTurn`/`iStrAdjperTurn`/`iWeakenperTurn` | — (DROPPED) | **BATTLEWORN, nuked** (owner): `#define`d-out mechanic, not even applied in `processPromotion` (pedia-render only). |
+| `Categories` / `iStealthCombatModifier` / `Qualified`/`DisqualifiedUnitCombatTypes` | — (DROPPED) | Dead (`Categories`); XML **typo** (`iStealthCombatModifier` — engine reads `…Change`, ignored in-game, 2 recs); pedia-derived (`doPostLoadCaching`). |
+
+*Toolkit: `curate_promotion.py` (bespoke; modeled on `curate_build.py`) with a **coverage check** (reports any XML tag
+handled by no table — caught 3 misses + the typo). `store.py` gained the `PromotionInfo.ObsoleteTech`→`promotions`
+`OBSOLETE_FIELDS` edge; `engine.property_source_v3` extended to accept `RELATION_SAME_PLOT` as the containment default
+(alongside `ASSOCIATED`). `PromotionInfo` was already registered + its prereq edges in `PREREQ_FIELDS`. ⚑ NEXT:
+UnitCombat #29 reuses this vocabulary (the designated definer of the §5 banked gap) + holds the SM `*Base` ranks (kept
+as-is, §0.6) + the `CvOutcomeList` kill/action system; SpecialUnit shares it at the Unit pass.*

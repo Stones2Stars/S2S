@@ -1,0 +1,28 @@
+{
+ "type": "PROMOTION_BUILD_UP_MAINTENANCE_HANGAR5",
+ "description": "TXT_KEY_PROMOTION_BUILD_UP_MAINTENANCE_HANGAR5",
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 1
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_AIRCRAFT": {
+     "heal": 3,
+     "adjacentHeal": 1
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_MAINTENANCE_HANGAR": 5
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/MaintenanceHangar5BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

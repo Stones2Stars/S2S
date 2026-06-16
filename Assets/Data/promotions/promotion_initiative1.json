@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_INITIATIVE1",
+ "description": "TXT_KEY_PROMOTION_INITIATIVE1",
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 10
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "heal": {
+  "unit": {
+   "sameTile": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_INITIATIVE": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/initiative1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

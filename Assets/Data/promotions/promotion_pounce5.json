@@ -1,0 +1,33 @@
+{
+ "type": "PROMOTION_POUNCE5",
+ "description": "TXT_KEY_PROMOTION_POUNCE5",
+ "strength": {
+  "unit": {
+   "stealth": {
+    "percent": 25
+   },
+   "lunge": {
+    "percent": 30
+   },
+   "stealthStrikes": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_POUNCE": 5
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_WITHOUT_WARNING"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Pounce5Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

@@ -1,0 +1,42 @@
+{
+ "type": "PROMOTION_AUTOMATIC_REPAIRS3",
+ "description": "TXT_KEY_PROMOTION_AUTOMATIC_REPAIRS3",
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 30
+   }
+  }
+ },
+ "heal": {
+  "unit": {
+   "neutral": {
+    "flat": 10
+   },
+   "friendly": {
+    "flat": 10
+   },
+   "sameTile": {
+    "flat": 10
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_REPAIRS": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CityRaider4.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,3,9"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

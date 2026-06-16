@@ -1,0 +1,25 @@
+{
+ "type": "PROMOTION_CARAVAN_MOVEMENT_I",
+ "description": "TXT_KEY_CARAVAN_MOVEMENT_I",
+ "movement": {
+  "unit": {
+   "moves": {
+    "flat": 1
+   }
+  }
+ },
+ "capabilities": {
+  "enemyRoute": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CARAVAN_MOVEMENT": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CaravanMovement1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_COMPLEX_AGGRESSIVE",
+ "description": "TXT_KEY_PROMOTION_AGGRESSIVE0",
+ "strength": {
+  "unit": {
+   "attack": {
+    "percent": 20
+   },
+   "defense": {
+    "percent": -5
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionAggressive.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_NAVAL_COMBATANT"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_MISSIONARY",
+   "UNITCOMBAT_EXECUTIVE"
+  ]
+ }
+}

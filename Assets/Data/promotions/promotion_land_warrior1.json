@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_LAND_WARRIOR1",
+ "description": "TXT_KEY_PROMOTION_LAND_WARRIOR1",
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "domain": {
+    "DOMAIN_LAND": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "vision": {
+  "range": {
+   "flat": 1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_LAND_WARRIOR": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/roadwar1.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,4,8"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

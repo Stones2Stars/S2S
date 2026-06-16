@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_BOMBARDING3",
+ "description": "TXT_KEY_PROMOTION_BOMBARDING3",
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BOMBARDING": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/bombarding3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTION_CULTURE_MIDDLE_EASTERN",
+ "description": "TXT_KEY_PROMOTION_CULTURE_MIDDLE_EASTERN",
+ "ui": {
+  "art": {
+   "icon": "art/Embassy/art/culturemiddleeastern.dds"
+  }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_SETTLER"
+  ]
+ }
+}

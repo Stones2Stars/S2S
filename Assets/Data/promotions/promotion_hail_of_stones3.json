@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_HAIL_OF_STONES3",
+ "description": "TXT_KEY_PROMOTION_HAIL_OF_STONES3",
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 4
+   },
+   "rangedDamage": {
+    "flat": 25
+   },
+   "rangedDamageLimit": {
+    "flat": 20
+   },
+   "rangedDamageMaxUnits": {
+    "flat": 1
+   },
+   "dcmAccuracy": {
+    "flat": 15
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_HAIL_OF_STONES": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/HailOfStones3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "rBombardPrereq": true
+ }
+}

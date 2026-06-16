@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_BUILD_UP_SET_FOR_CHARGE4",
+ "description": "TXT_KEY_PROMOTION_BUILD_UP_SET_FOR_CHARGE4",
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noInvisibility": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_SET_FOR_CHARGE": 4
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/SetForCharge4BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

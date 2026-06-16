@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_TACTICS1",
+ "description": "TXT_KEY_PROMOTION_TACTICS1",
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 10
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 15
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 2
+   },
+   "resistance": {
+    "flat": -5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_TACTICS": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/tactics1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_TRACK_SCENT3",
+ "description": "TXT_KEY_PROMOTION_TRACK_SCENT3",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   }
+  }
+ },
+ "vision": {
+  "range": {
+   "flat": 1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_TRACK_SCENT": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/trackscent3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

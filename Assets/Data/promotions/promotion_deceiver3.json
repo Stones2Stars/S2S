@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_DECEIVER3",
+ "description": "TXT_KEY_PROMOTION_DECEIVER3",
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "air": {
+  "unit": {
+   "evasion": {
+    "percent": 10
+   }
+  }
+ },
+ "capabilities": {
+  "alwaysHeal": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_DECEIVER_PROMOTION": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionDeceiver3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_PING"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_SPY"
+  ]
+ }
+}

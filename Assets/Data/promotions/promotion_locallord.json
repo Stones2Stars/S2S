@@ -1,0 +1,60 @@
+{
+ "type": "PROMOTION_LOCALLORD",
+ "description": "TXT_KEY_PROMOTION_LOCALLORD",
+ "upkeep": {
+  "unit": {
+   "upgradeDiscount": {
+    "percent": 10
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityDefense": {
+    "percent": 10
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "heal": {
+  "unit": {
+   "friendly": {
+    "flat": 10
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 10
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/LocalLord.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_TRACKED",
+   "UNITCOMBAT_ASSAULT_MECH"
+  ]
+ }
+}

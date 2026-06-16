@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_HUNTING_STRIKE2",
+ "description": "TXT_KEY_PROMOTION_HUNTING_STRIKE2",
+ "strength": {
+  "unit": {
+   "stealth": {
+    "percent": 15
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_HUNTING_STRIKE": 2
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_WITHOUT_WARNING"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/HuntingStrike2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

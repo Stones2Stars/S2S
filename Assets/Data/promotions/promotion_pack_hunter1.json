@@ -1,0 +1,38 @@
+{
+ "type": "PROMOTION_PACK_HUNTER1",
+ "description": "TXT_KEY_PROMOTION_PACK_HUNTER1",
+ "strength": {
+  "unit": {
+   "percent": 5,
+   "unnerve": {
+    "percent": 50
+   },
+   "lunge": {
+    "percent": 20
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 2
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_PACK_HUNTER": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/packhunting1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

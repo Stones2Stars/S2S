@@ -1,0 +1,43 @@
+{
+ "type": "PROMOTION_RETINUE_MESSENGER",
+ "description": "TXT_KEY_PROMOTION_RETINUE_MESSENGER",
+ "help": "TXT_KEY_PROMOTION_RETINUE_MESSENGER_HELP",
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   },
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 10
+   },
+   "resistance": {
+    "flat": -10
+   }
+  }
+ },
+ "vision": {
+  "range": {
+   "flat": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Retinue/messenger.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_GET_RETINUE"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_HERO"
+  ]
+ }
+}

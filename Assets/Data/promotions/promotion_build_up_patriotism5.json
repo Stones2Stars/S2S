@@ -1,0 +1,20 @@
+{
+ "type": "PROMOTION_BUILD_UP_PATRIOTISM5",
+ "description": "TXT_KEY_PROMOTION_BUILD_UP_PATRIOTISM5",
+ "revoltProtection": {
+  "unit": {
+   "percent": 2
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_PATRIOTISM": 5
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Patriotism5Buildup.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

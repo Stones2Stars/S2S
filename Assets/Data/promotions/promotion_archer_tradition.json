@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_ARCHER_TRADITION",
+ "description": "TXT_KEY_PROMOTION_ARCHER_TRADITION",
+ "strength": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/trad_archer.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_ARCHER"
+  ]
+ }
+}

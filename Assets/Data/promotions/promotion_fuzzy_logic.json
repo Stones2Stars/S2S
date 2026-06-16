@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_FUZZY_LOGIC",
+ "description": "TXT_KEY_PROMOTION_FUZZY_LOGIC",
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   },
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Drill1.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,1,5"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_ASSAULT_MECH",
+   "UNITCOMBAT_ROBOT"
+  ]
+ }
+}

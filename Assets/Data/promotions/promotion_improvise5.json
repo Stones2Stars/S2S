@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_IMPROVISE5",
+ "description": "TXT_KEY_PROMOTION_IMPROVISE5",
+ "upkeep": {
+  "unit": {
+   "upgradeDiscount": {
+    "percent": 10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_IMPROVISE": 5
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Improvise5.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_PING"
+ }
+}

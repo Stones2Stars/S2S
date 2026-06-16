@@ -1,0 +1,42 @@
+{
+ "type": "PROMOTION_TOPGUN",
+ "description": "TXT_KEY_PROMOTION_TOPGUN",
+ "experience": {
+  "unit": {
+   "percent": 20
+  }
+ },
+ "strength": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 1
+   },
+   "evasion": {
+    "percent": 10
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/topgun.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,2,14"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_EARLY_FIGHTERS",
+   "UNITCOMBAT_EARLY_BOMBERS",
+   "UNITCOMBAT_JET_FIGHTERS",
+   "UNITCOMBAT_BOMBERS",
+   "UNITCOMBAT_SUPERSONIC_PLANES",
+   "UNITCOMBAT_STEALTH"
+  ]
+ }
+}

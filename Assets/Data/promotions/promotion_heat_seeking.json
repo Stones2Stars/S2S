@@ -1,0 +1,41 @@
+{
+ "type": "PROMOTION_HEAT_SEEKING",
+ "description": "TXT_KEY_PROMOTION_HEAT_SEEKING",
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_HELICOPTER": {
+     "percent": 15
+    },
+    "UNITCOMBAT_TRACKED": {
+     "percent": 15
+    },
+    "UNITCOMBAT_WHEELED": {
+     "percent": 15
+    },
+    "UNITCOMBAT_ASSAULT_MECH": {
+     "percent": 15
+    },
+    "UNITCOMBAT_ROBOT": {
+     "percent": 15
+    },
+    "UNITCOMBAT_SIEGE": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Heat_seeking.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_MISSILE"
+  ]
+ }
+}

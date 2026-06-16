@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_ARROW_BARRAGE1",
+ "description": "TXT_KEY_PROMOTION_ARROW_BARRAGE1",
+ "bombard": {
+  "unit": {
+   "rangedDamage": {
+    "flat": 5
+   },
+   "rangedDamageLimit": {
+    "flat": 5
+   },
+   "dcmAccuracy": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_ARROW_BARRAGE": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/ArrowBarrage1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "rBombardPrereq": true
+ }
+}

@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_DRILL1",
+ "description": "TXT_KEY_PROMOTION_DRILL1",
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 20
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_DRILL": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Drill1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,2,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

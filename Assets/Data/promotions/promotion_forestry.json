@@ -1,0 +1,40 @@
+{
+ "type": "PROMOTION_FORESTRY",
+ "description": "TXT_KEY_PROMOTION_FORESTRY",
+ "capabilities": {
+  "featureDoubleMove": {
+   "FEATURE_JUNGLE": true,
+   "FEATURE_FOREST": true,
+   "FEATURE_BAMBOO": true,
+   "FEATURE_FOREST_YOUNG": true,
+   "FEATURE_FOREST_BURNT": true,
+   "FEATURE_FOREST_ANCIENT": true
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Forestry.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_HUNTER",
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_CLONES"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ]
+ }
+}

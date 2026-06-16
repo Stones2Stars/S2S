@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_FIRST_AID_ANIMALS1",
+ "description": "TXT_KEY_PROMOTION_FIRST_AID_ANIMALS1",
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 1
+   },
+   "victoryStack": {
+    "flat": 1
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_ANIMALS": {
+     "heal": 2
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_FIRST_AID_ANIMALS": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/HealAnimals1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

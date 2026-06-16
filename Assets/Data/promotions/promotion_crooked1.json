@@ -1,0 +1,40 @@
+{
+ "type": "PROMOTION_CROOKED1",
+ "description": "TXT_KEY_PROMOTION_CROOKED1",
+ "espionage": {
+  "unit": {
+   "insidiousness": {
+    "flat": 5
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  },
+  "plot": {
+   "flat": 5
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CROOKED_PROMOTION": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionCrooked.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_CRIMINAL"
+  ]
+ }
+}

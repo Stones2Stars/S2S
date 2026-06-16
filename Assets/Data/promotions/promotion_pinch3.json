@@ -1,0 +1,24 @@
+{
+ "type": "PROMOTION_PINCH3",
+ "description": "TXT_KEY_PROMOTION_PINCH3",
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_GUN": {
+     "percent": 30
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_PINCH": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Pinch3.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,4,10"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_CITY_RAIDER2",
+ "description": "TXT_KEY_PROMOTION_CITYRAIDER2",
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 15
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CITYRAIDER": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CityRaider2.dds,Art/Interface/Buttons/Promotions_Atlas.dds,6,2"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_TRACKED"
+  ]
+ }
+}

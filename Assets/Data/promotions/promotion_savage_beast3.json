@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_SAVAGE_BEAST3",
+ "description": "TXT_KEY_PROMOTION_SAVAGE_BEAST3",
+ "strength": {
+  "unit": {
+   "attack": {
+    "percent": 15
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": -10
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SAVAGE_BEAST": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/SavageBeast3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

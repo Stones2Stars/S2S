@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_COMBAT5",
+ "description": "TXT_KEY_PROMOTION_COMBAT5",
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 50
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_COMBAT": 5
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat5.dds,Art/Interface/Buttons/Promotions_Atlas.dds,4,6"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

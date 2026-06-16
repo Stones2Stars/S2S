@@ -1,0 +1,20 @@
+{
+ "type": "PROMOTION_STALL4",
+ "description": "TXT_KEY_PROMOTION_STALL4",
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_STALL": 4
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Stall4Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

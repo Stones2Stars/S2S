@@ -1,0 +1,42 @@
+{
+ "type": "PROMOTION_BUSHIDO3",
+ "description": "TXT_KEY_PROMOTION_BUSHIDO3",
+ "upkeep": {
+  "unit": {
+   "upgradeDiscount": {
+    "percent": 10
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 25
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "pillage": {
+  "unit": {
+   "flat": 15
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUSHIDO": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Bushido3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "stateReligionPrereq": "RELIGION_SHINTO"
+ }
+}

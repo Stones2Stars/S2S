@@ -1,0 +1,42 @@
+{
+ "type": "PROMOTION_AMPHIBIOUS",
+ "description": "TXT_KEY_PROMOTION_AMPHIBIOUS",
+ "strength": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "capabilities": {
+  "amphib": true,
+  "river": true
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Amphibious.dds,Art/Interface/Buttons/Promotions_Atlas.dds,3,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_ASSAULT_MECH",
+   "UNITCOMBAT_CLONES",
+   "UNITCOMBAT_HELICOPTER"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ]
+ }
+}

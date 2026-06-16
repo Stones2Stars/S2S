@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_URBAN_TACTICS1",
+ "description": "TXT_KEY_PROMOTION_URBAN_TACTICS1",
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 20
+   },
+   "cityDefense": {
+    "percent": 10
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_URBAN_TACTICS": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/roadwar1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

@@ -1,0 +1,28 @@
+{
+ "type": "PROMOTION_BUILD_UP_HEALTH_CARE1",
+ "description": "TXT_KEY_PROMOTION_BUILD_UP_HEALTH_CARE1",
+ "heal": {
+  "unit": {
+   "sameTile": {
+    "flat": 3
+   },
+   "adjacentTile": {
+    "flat": 1
+   },
+   "support": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_HEALTH_CARE": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/HealthCare1BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

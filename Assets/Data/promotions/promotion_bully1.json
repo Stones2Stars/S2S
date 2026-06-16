@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_BULLY1",
+ "description": "TXT_KEY_PROMOTION_BULLY1",
+ "strength": {
+  "unit": {
+   "perSizeLess": {
+    "percent": 10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BULLY": 1
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Bully1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

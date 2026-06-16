@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_RECOVER_TECH2",
+ "description": "TXT_KEY_PROMOTION_RECOVER_TECH2",
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 1
+   },
+   "victoryStack": {
+    "flat": 2
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_TECH": {
+     "heal": 3
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_RECOVER_TECH": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/RecoverTech2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

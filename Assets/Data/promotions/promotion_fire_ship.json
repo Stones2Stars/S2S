@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_FIRE_SHIP",
+ "description": "TXT_KEY_PROMOTION_FIRE_SHIP",
+ "strength": {
+  "unit": {
+   "kamikaze": {
+    "percent": 50
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Fireship.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_WOODEN_SHIPS"
+  ]
+ }
+}

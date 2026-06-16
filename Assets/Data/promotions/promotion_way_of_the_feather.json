@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_WAY_OF_THE_FEATHER",
+ "description": "TXT_KEY_PROMOTION_WAY_OF_THE_FEATHER",
+ "strength": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/WayOfTheFeatherPromotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_ARCHER"
+  ]
+ }
+}

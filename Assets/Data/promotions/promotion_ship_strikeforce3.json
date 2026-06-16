@@ -1,0 +1,43 @@
+{
+ "type": "PROMOTION_SHIP_STRIKEFORCE3",
+ "description": "TXT_KEY_PROMOTION_SHIP_STRIKEFORCE3",
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 10
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 20
+   }
+  }
+ },
+ "heal": {
+  "unit": {
+   "enemy": {
+    "flat": 5
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SHIP_STRIKEFORCE": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/shipStrikeForce3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

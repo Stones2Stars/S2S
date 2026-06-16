@@ -1,0 +1,34 @@
+{
+ "type": "PROMOTION_PATROL2",
+ "description": "TXT_KEY_PROMOTION_PATROL2",
+ "movement": {
+  "unit": {
+   "moves": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 10
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": 4
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_PATROL": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/patrol2.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,7,14"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

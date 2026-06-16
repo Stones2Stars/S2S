@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_STEALTH1",
+ "description": "TXT_KEY_PROMOTION_STEALTH1",
+ "strength": {
+  "unit": {
+   "stealth": {
+    "percent": 10
+   },
+   "stealthStrikes": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_STEALTH": 1
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_WITHOUT_WARNING"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/roadwar1.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,4,11"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

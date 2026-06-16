@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_GOAD1",
+ "description": "TXT_KEY_PROMOTION_GOAD1",
+ "strength": {
+  "unit": {
+   "taunt": {
+    "flat": 25
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_GOAD": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Goad1Promotion.fw.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

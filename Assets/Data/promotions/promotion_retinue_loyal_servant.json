@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_RETINUE_LOYAL_SERVANT",
+ "description": "TXT_KEY_PROMOTION_RETINUE_LOYAL_SERVANT",
+ "movement": {
+  "unit": {
+   "moves": {
+    "flat": 1
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 25
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Retinue/servant.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_GET_RETINUE"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_HERO"
+  ]
+ }
+}

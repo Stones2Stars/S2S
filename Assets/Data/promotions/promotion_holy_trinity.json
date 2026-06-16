@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_HOLY_TRINITY",
+ "description": "TXT_KEY_PROMOTION_HOLY_TRINITY",
+ "experience": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "heal": {
+  "unit": {
+   "friendly": {
+    "flat": 10
+   }
+  }
+ },
+ "capabilities": {
+  "river": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/hinduism_promo.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "stateReligionPrereq": "RELIGION_HINDUISM",
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_THROWING"
+  ]
+ }
+}

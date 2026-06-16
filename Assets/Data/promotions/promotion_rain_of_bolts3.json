@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_RAIN_OF_BOLTS3",
+ "description": "TXT_KEY_PROMOTION_RAIN_OF_BOLTS3",
+ "bombard": {
+  "unit": {
+   "rangedDamage": {
+    "flat": 15
+   },
+   "rangedDamageLimit": {
+    "flat": 15
+   },
+   "dcmAccuracy": {
+    "flat": 20
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_RAIN_OF_BOLTS": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/RainOfBolts3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "rBombardPrereq": true
+ }
+}

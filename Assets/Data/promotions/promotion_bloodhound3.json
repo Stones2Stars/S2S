@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_BLOODHOUND3",
+ "description": "TXT_KEY_PROMOTION_BLOODHOUND3",
+ "strength": {
+  "unit": {
+   "percent": 5,
+   "unitCombat": {
+    "UNITCOMBAT_CRIMINAL": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BLOODHOUND": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/bloodhound3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

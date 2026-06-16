@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_INFLUENCE_OF_MERCURY",
+ "description": "TXT_KEY_PROMOTION_INFLUENCE_OF_MERCURY",
+ "strength": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 5
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/InfluenceOfMercuryPromotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_SIEGE"
+  ]
+ }
+}

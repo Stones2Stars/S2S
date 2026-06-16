@@ -1,0 +1,25 @@
+{
+ "type": "PROMOTION_HAWK_EYES1",
+ "description": "TXT_KEY_PROMOTION_HAWK_EYES1",
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_HAWK_EYES": 1
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_HIDE_SEEK"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/HawkEyes1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

@@ -1,0 +1,25 @@
+{
+ "type": "PROMOTION_FOMENT5",
+ "description": "TXT_KEY_PROMOTION_FOMENT5",
+ "revoltProtection": {
+  "unit": {
+   "percent": -10
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_FOMENT": 5
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Foment5Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

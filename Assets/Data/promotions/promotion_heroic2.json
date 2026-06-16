@@ -1,0 +1,53 @@
+{
+ "type": "PROMOTION_HEROIC2",
+ "description": "TXT_KEY_PROMOTION_HEROIC2",
+ "upkeep": {
+  "unit": {
+   "upgradeDiscount": {
+    "percent": 50
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "percent": 20
+  }
+ },
+ "collateral": {
+  "unit": {
+   "protection": {
+    "percent": 20
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": 10
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Hero2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HELICOPTER",
+   "UNITCOMBAT_STRIKE_TEAM"
+  ]
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "type": "PROMOTION_ESCAPE1",
+ "description": "TXT_KEY_PROMOTION_ESCAPE1",
+ "withdrawal": {
+  "unit": {
+   "percent": 40
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_ESCAPE": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Escape1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_PING"
+ }
+}

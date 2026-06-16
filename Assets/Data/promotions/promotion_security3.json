@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_SECURITY3",
+ "description": "TXT_KEY_PROMOTION_SECURITY3",
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 10
+   }
+  }
+ },
+ "vision": {
+  "range": {
+   "flat": 1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SECURITY": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Security3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_PING"
+ }
+}

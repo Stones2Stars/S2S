@@ -1,0 +1,41 @@
+{
+ "type": "PROMOTION_AERIAL_WEAPONRY",
+ "description": "TXT_KEY_PROMOTION_AERIAL_WEAPONRY",
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rangedDamage": {
+    "flat": 10
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 10
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionAerialWeaponry.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_ROCKET_LAUNCHER"
+  ]
+ }
+}

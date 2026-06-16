@@ -1,0 +1,33 @@
+{
+ "type": "PROMOTION_AGGRESSIVE",
+ "description": "TXT_KEY_PROMOTION_AGGRESSIVE",
+ "strength": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -10
+   },
+   "resistance": {
+    "flat": 10
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Aggressive.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_NAVAL_COMBATANT"
+  ]
+ }
+}

@@ -1,0 +1,50 @@
+{
+ "type": "PROMOTION_WINTERBORN",
+ "description": "TXT_KEY_PROMOTION_WINTERBORN",
+ "strength": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_TAIGA": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_TUNDRA": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_PERMAFROST": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_ICE": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Markofthescorpion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

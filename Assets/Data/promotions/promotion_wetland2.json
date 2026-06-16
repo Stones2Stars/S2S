@@ -1,0 +1,51 @@
+{
+ "type": "PROMOTION_WETLAND2",
+ "description": "TXT_KEY_PROMOTION_WETLAND2",
+ "strength": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_LUSH": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_MUDDY": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_MARSH": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_WETLAND": 2
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Tweaks/art/wetlandcombat2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ]
+ }
+}

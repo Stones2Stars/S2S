@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_SNEAK",
+ "description": "TXT_KEY_PROMOTION_SNEAK",
+ "help": "TXT_KEY_PROMOTION_SNEAK_HELP",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": -5
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/sneak.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_STRIKE_TEAM"
+  ]
+ }
+}

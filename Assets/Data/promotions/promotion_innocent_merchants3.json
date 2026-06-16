@@ -1,0 +1,25 @@
+{
+ "type": "PROMOTION_INNOCENT_MERCHANTS3",
+ "description": "TXT_KEY_PROMOTION_INNOCENT_MERCHANTS3",
+ "vision": {
+  "invisibilityIntensity": {
+   "INVISIBLE_NAVAL_DISGUISE": 1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_INNOCENT_MERCHANTS": 3
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_HIDE_SEEK"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/InnocentMerchants3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

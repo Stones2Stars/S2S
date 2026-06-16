@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_SENTRY3",
+ "description": "TXT_KEY_PROMOTION_SENTRY3",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   }
+  }
+ },
+ "vision": {
+  "range": {
+   "flat": 1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SENTRY": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Sentry3.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,5,11"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

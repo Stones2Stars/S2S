@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_RETINUE_SCHOLAR",
+ "description": "TXT_KEY_PROMOTION_RETINUE_SCHOLAR",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 10
+   }
+  }
+ },
+ "pillage": {
+  "unit": {
+   "flat": 300
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Retinue/scholar.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_GET_RETINUE"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_HERO"
+  ]
+ }
+}

@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_MANUEVERING1",
+ "description": "TXT_KEY_PROMOTION_MANUEVERING1",
+ "movement": {
+  "unit": {
+   "moveDiscount": {
+    "flat": 1
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MANUEVERING": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Manuevering1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

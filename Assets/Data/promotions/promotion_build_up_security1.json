@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_BUILD_UP_SECURITY1",
+ "description": "TXT_KEY_PROMOTION_BUILD_UP_SECURITY1",
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 5
+   }
+  }
+ },
+ "vision": {
+  "range": {
+   "flat": 1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_SECURITY": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Security1BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

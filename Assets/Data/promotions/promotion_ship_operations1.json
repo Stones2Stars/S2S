@@ -1,0 +1,25 @@
+{
+ "type": "PROMOTION_SHIP_OPERATIONS1",
+ "description": "TXT_KEY_PROMOTION_SHIP_OPERATIONS1",
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SHIP_OPERATIONS": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/shipOperations1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "controlPoints": 5
+ }
+}

@@ -1,0 +1,40 @@
+{
+ "type": "PROMOTION_SIMPLY_AVERAGE",
+ "description": "TXT_KEY_PROMOTION_SIMPLY_AVERAGE",
+ "strength": {
+  "unit": {
+   "quality": {
+    "flat": -1
+   }
+  }
+ },
+ "grants": {
+  "unitCombats": [
+   "UNITCOMBAT_QUALITY_STANDARD"
+  ],
+  "removesUnitCombats": [
+   "UNITCOMBAT_QUALITY_SUPERIOR"
+  ]
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/UnitCombatClasses/Quality5UnitCombat.fw.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "replacesUnitCombat": "UNITCOMBAT_QUALITY_SUPERIOR",
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_ANIMAL"
+  ],
+  "forOffset": true
+ }
+}

@@ -1,0 +1,28 @@
+{
+ "type": "PROMOTION_GREAT_HUNTER",
+ "description": "TXT_KEY_PROMOTION_GREAT_HUNTER",
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Great_Hunter.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

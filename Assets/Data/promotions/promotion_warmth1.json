@@ -1,0 +1,51 @@
+{
+ "type": "PROMOTION_WARMTH1",
+ "description": "TXT_KEY_PROMOTION_WARMTH1",
+ "strength": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_DESERT": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_DUNES": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_SALT_FLATS": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_WARMTH": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Warmth1.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,7,12"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ]
+ }
+}

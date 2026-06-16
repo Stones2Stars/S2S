@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_AMBUSH3",
+ "description": "TXT_KEY_PROMOTION_AMBUSH3",
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_TRACKED": {
+     "percent": 30
+    },
+    "UNITCOMBAT_WHEELED": {
+     "percent": 30
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_AMBUSH": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Ambush3.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,5,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

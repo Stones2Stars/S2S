@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_GENERAL_STAFF10",
+ "description": "TXT_KEY_PROMOTION_GENERAL_STAFF10",
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 10
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "percent": 2
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_GENERAL_STAFF": 10
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/CommanderGeneralStaff10.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

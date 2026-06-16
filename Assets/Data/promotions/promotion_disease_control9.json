@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_DISEASE_CONTROL9",
+ "description": "TXT_KEY_PROMOTION_DISEASE_CONTROL9",
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -18
+  },
+  "plot": {
+   "flat": -9
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_DISEASE_CONTROL": 9
+ },
+ "ai": {
+  "unitCombatWeights": {
+   "UNITCOMBAT_HEALTH_CARE": 50
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/DiseaseControl9Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "minEra": "C2C_ERA_NANOTECH"
+ }
+}

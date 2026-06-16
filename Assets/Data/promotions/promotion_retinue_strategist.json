@@ -1,0 +1,43 @@
+{
+ "type": "PROMOTION_RETINUE_STRATEGIST",
+ "description": "TXT_KEY_PROMOTION_RETINUE_STRATEGIST",
+ "strength": {
+  "unit": {
+   "percent": 5,
+   "unitCombat": {
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 33
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": 33
+    },
+    "UNITCOMBAT_HELICOPTER": {
+     "percent": 33
+    }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 10
+   }
+  }
+ },
+ "capabilities": {
+  "enemyRoute": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Retinue/strategist.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_GET_RETINUE"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_HERO"
+  ]
+ }
+}

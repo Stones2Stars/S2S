@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_CARAVAN_SHALLOW_DRAFT",
+ "description": "TXT_KEY_CARAVAN_SHALLOW_DRAFT",
+ "capabilities": {
+  "featureDoubleMove": {
+   "FEATURE_REEF": true,
+   "FEATURE_REEF_BEACON": true,
+   "FEATURE_REEF_LIGHTHOUSE": true,
+   "FEATURE_CORAL_REEF": true,
+   "FEATURE_CORAL_REEF_BEACON": true,
+   "FEATURE_CORAL_REEF_LIGHTHOUSE": true,
+   "FEATURE_PLATY_GREAT_BARRIER": true,
+   "FEATURE_GREAT_BARRIER_REEF_BEACON": true,
+   "FEATURE_GREAT_BARRIER_REEF_LIGHTHOUSE": true
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/ShallowDraft.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_TRADE"
+  ]
+ }
+}

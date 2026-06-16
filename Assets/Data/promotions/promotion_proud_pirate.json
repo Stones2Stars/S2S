@@ -1,0 +1,40 @@
+{
+ "type": "PROMOTION_PROUD_PIRATE",
+ "description": "TXT_KEY_PROMOTION_PROUD_PIRATE",
+ "strength": {
+  "unit": {
+   "percent": 20
+  }
+ },
+ "capabilities": {
+  "hiddenNationality": true
+ },
+ "vision": {
+  "invisibilityIntensity": {
+   "INVISIBLE_NAVAL_DISGUISE": -1
+  }
+ },
+ "grants": {
+  "unitCombats": [
+   "UNITCOMBAT_PIRATE"
+  ]
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_HIDE_SEEK"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/ProudPiratePromotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_PIRATE"
+  ]
+ }
+}

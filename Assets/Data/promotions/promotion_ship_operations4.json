@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_SHIP_OPERATIONS4",
+ "description": "TXT_KEY_PROMOTION_SHIP_OPERATIONS4",
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 10
+   }
+  }
+ },
+ "heal": {
+  "unit": {
+   "enemy": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SHIP_OPERATIONS": 4
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/shipOperations4.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "controlPoints": 10
+ }
+}

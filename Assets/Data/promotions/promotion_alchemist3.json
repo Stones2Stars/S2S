@@ -1,0 +1,18 @@
+{
+ "type": "PROMOTION_ALCHEMIST3",
+ "description": "TXT_KEY_PROMOTION_ALCHEMIST3",
+ "capabilities": {
+  "amphib": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_ALCHEMIST": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Alchemist3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_PING"
+ }
+}

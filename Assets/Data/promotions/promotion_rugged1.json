@@ -1,0 +1,67 @@
+{
+ "type": "PROMOTION_RUGGED1",
+ "description": "TXT_KEY_PROMOTION_RUGGED1",
+ "strength": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_BARREN": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_SCRUB": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_JAGGED": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_ROCKY": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_BADLAND": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_RUGGED": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Tweaks/art/ruggedcombat1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ]
+ }
+}

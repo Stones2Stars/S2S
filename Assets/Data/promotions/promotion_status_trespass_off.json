@@ -1,0 +1,23 @@
+{
+ "type": "PROMOTION_STATUS_TRESPASS_OFF",
+ "description": "TXT_KEY_STATUS_TRESPASS_OFF",
+ "promotionLine": {
+  "PROMOTIONLINE_TRESPASS": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/buttons/Promotions/StatusTrespassOff.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_CRIMINAL"
+  ],
+  "status": true,
+  "quick": true,
+  "removeAfterSet": true
+ }
+}

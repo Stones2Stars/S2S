@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_POUNCE4",
+ "description": "TXT_KEY_PROMOTION_POUNCE4",
+ "strength": {
+  "unit": {
+   "stealth": {
+    "percent": 20
+   },
+   "lunge": {
+    "percent": 25
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_POUNCE": 4
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_WITHOUT_WARNING"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Pounce4Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

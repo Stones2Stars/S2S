@@ -1,0 +1,23 @@
+{
+ "type": "PROMOTION_BUILD_UP_SCHEMES5",
+ "description": "TXT_KEY_PROMOTION_BUILD_UP_SCHEMES5",
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  },
+  "plot": {
+   "flat": 5
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_SCHEMES": 5
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Schemes5Buildup.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

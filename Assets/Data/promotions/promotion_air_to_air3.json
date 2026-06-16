@@ -1,0 +1,25 @@
+{
+ "type": "PROMOTION_AIR_TO_AIR3",
+ "description": "TXT_KEY_PROMOTION_AIR_TO_AIR3",
+ "air": {
+  "unit": {
+   "range": {
+    "flat": -1
+   },
+   "intercept": {
+    "percent": 15
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_AIR_TO_AIR": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/jetplane.dds,Art/RoM_Promotions_atlas.dds,3,2"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

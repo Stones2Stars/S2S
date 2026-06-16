@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_WAR_CRY",
+ "description": "TXT_KEY_PROMOTION_WAR_CRY",
+ "strength": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/WarCry.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_COMMANDER"
+  ]
+ }
+}

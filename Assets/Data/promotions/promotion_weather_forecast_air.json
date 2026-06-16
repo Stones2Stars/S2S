@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_WEATHER_FORECAST_AIR",
+ "description": "TXT_KEY_PROMOTION_WEATHER_FORECAST_AIR",
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 2
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Weather_Forecasts.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_EARLY_FIGHTERS",
+   "UNITCOMBAT_EARLY_BOMBERS",
+   "UNITCOMBAT_JET_FIGHTERS",
+   "UNITCOMBAT_BOMBERS",
+   "UNITCOMBAT_SUPERSONIC_PLANES",
+   "UNITCOMBAT_STEALTH"
+  ]
+ }
+}

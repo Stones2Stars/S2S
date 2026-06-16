@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_MEEK3",
+ "description": "TXT_KEY_PROMOTION_MEEK3",
+ "strength": {
+  "unit": {
+   "cityDefense": {
+    "percent": -15
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": -5
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MEEK_PROMOTION": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionMeek3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT"
+  ]
+ }
+}

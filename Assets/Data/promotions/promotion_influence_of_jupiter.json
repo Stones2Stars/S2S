@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_INFLUENCE_OF_JUPITER",
+ "description": "TXT_KEY_PROMOTION_INFLUENCE_OF_JUPITER",
+ "strength": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/InfluenceOfJupiterPromotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_MOUNTED"
+  ]
+ }
+}

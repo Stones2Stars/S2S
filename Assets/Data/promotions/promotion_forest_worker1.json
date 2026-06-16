@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_FOREST_WORKER1",
+ "description": "TXT_KEY_PROMOTION_FOREST_WORKER1",
+ "workRate": {
+  "unit": {
+   "feature": {
+    "FEATURE_FOREST": {
+     "percent": 20
+    },
+    "FEATURE_BAMBOO": {
+     "percent": 20
+    },
+    "FEATURE_FOREST_YOUNG": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_FOREST_WORKER": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/workerforest1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

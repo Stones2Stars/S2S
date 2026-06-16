@@ -1,0 +1,24 @@
+{
+ "type": "PROMOTION_SHOCK3",
+ "description": "TXT_KEY_PROMOTION_SHOCK3",
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 30
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SHOCK": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Shock3.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,2,12"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

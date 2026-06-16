@@ -1,0 +1,25 @@
+{
+ "type": "PROMOTION_DEVOTION",
+ "description": "TXT_KEY_PROMOTION_DEVOTION",
+ "strength": {
+  "unit": {
+   "religious": {
+    "percent": 20
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionDevotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_NAVAL_COMBATANT"
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "type": "PROMOTION_RETINUE_BARD",
+ "description": "TXT_KEY_PROMOTION_RETINUE_BARD",
+ "heal": {
+  "unit": {
+   "enemy": {
+    "flat": 6
+   },
+   "neutral": {
+    "flat": 6
+   },
+   "friendly": {
+    "flat": 6
+   },
+   "sameTile": {
+    "flat": 3
+   },
+   "adjacentTile": {
+    "flat": 3
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": -10
+   }
+  }
+ },
+ "capabilities": {
+  "immuneToFirstStrikes": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Retinue/bard.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_GET_RETINUE"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_HERO"
+  ]
+ }
+}

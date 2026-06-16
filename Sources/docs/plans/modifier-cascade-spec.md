@@ -263,8 +263,17 @@ unit-scope deposit is a **self-accumulator** (source == target, via the existing
 additive stack) — NOT a downward cascade. Cross-edges use `byOccupant` (a host-scope family summed over
 plot-occupant units — celebrity/garrison/military-happiness) and `byCargo` (host-unit, SpecialUnit→carrier).
 Size promotions are the worked example (§0.1). **The unit-stat FAMILY vocabulary (combat/withdrawal/bombard/
-air-defense/movement/first-strike/…) is not yet enumerated — owned by the Unit / Promotion / UnitCombat
-curation pass (§9 banked).**
+air-defense/movement/first-strike/…) — DEFINED at Promotion #28 (2026-06-16), shared by UnitCombat #29 + SpecialUnit.**
+The combat family is **`strength`** ("the strength of something, or weakness on/into/against something", owner) — it
+absorbs general/flat/SM/situational(city·hills)/vs-keyed(terrain·feature·unitCombat·domain·flanking) + the S&D/TB
+combat sub-stats; alongside `withdrawal`/`firstStrike`/`bombard`/`collateral`/`air`/`heal`/`movement`/`experience`/
+`workRate`/`cargo`/`upkeep`/`vision`/`capture`(gradient)/`poison`/`espionage`/`trap`. Two unit-plane shapes settled:
+(a) **CAPABILITIES = a separate BOOLEAN group** (grant=`true`/revoke=`false`) — pure abilities, not magnitude
+modifiers (§3 "pure capabilities"); (b) the hide-&-seek **LOS tables → a non-cascade `vision` resolver sub-object**
+(§7), not additive families. **DESIGN PRINCIPLE (owner 2026-06-16): the unit-plane definition is authored for O(1)
+runtime CONCATENATION onto the unit, never apply-time post-processing** — the static promotion's `unit`-scope deposits
+SUM, capabilities UNION, and the **`promotionLine: {LINE: rank}` object** MERGES (a clean bottom→up rank overwrite +
+line-hierarchy check) as each promotion is added to the one unit. Full vocabulary + per-field map: renames §Promotion.
 
 ---
 

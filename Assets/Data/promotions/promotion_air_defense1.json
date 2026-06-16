@@ -1,0 +1,38 @@
+{
+ "type": "PROMOTION_AIR_DEFENSE1",
+ "description": "TXT_KEY_PROMOTION_AIR_DEFENSE1",
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 5
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_HELICOPTER": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_AIR_DEFENSE": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/defence1.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,3,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_ASSAULT_MECH"
+  ]
+ }
+}

@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_FERAL1",
+ "description": "TXT_KEY_PROMOTION_FERAL1",
+ "strength": {
+  "unit": {
+   "attack": {
+    "percent": 20
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": -5
+  }
+ },
+ "capabilities": {
+  "animalIgnoresBorders": true,
+  "stealthDefense": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_FERAL": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Feral1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}

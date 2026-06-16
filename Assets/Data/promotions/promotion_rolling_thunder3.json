@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_ROLLING_THUNDER3",
+ "description": "TXT_KEY_PROMOTION_ROLLING_THUNDER3",
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 5
+   },
+   "rangedDamage": {
+    "flat": 25
+   },
+   "rangedDamageLimit": {
+    "flat": 20
+   },
+   "rangedDamageMaxUnits": {
+    "flat": 1
+   },
+   "dcmAccuracy": {
+    "flat": 15
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_ROLLING_THUNDER": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/RollingThunder3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "rBombardPrereq": true
+ }
+}

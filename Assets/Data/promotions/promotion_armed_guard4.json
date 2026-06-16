@@ -1,0 +1,40 @@
+{
+ "type": "PROMOTION_ARMED_GUARD4",
+ "description": "TXT_KEY_PROMOTION_ARMED_GUARD4",
+ "strength": {
+  "unit": {
+   "defense": {
+    "percent": 10
+   },
+   "dynamicDefense": {
+    "percent": 10
+   },
+   "unitCombat": {
+    "UNITCOMBAT_CRIMINAL": {
+     "percent": 10
+    },
+    "UNITCOMBAT_STRIKE_TEAM": {
+     "percent": 10
+    },
+    "UNITCOMBAT_RUFFIAN": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "defenseOnly": true,
+  "noInvisibility": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_ARMED_GUARD": 4
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/ArmedGuard4Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ }
+}
