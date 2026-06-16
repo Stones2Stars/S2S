@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_DOOM",
+ "description": "TXT_KEY_UNITCOMBAT_DOOM",
+ "capabilities": {
+  "cannotMergeSplit": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/doomsday_devices.dds"
+  }
+ }
+}

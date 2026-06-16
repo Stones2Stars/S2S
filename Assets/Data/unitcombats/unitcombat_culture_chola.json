@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_CHOLA",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_CHOLA",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_chola.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_CHOLA"
+ }
+}

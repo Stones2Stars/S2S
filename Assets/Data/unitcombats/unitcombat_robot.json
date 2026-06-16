@@ -1,0 +1,24 @@
+{
+ "type": "UNITCOMBAT_ROBOT",
+ "description": "TXT_KEY_UNITCOMBAT_ROBOT",
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 50
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": 3
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/assault_mechs.dds"
+  }
+ },
+ "identity": {
+  "forMilitary": true
+ }
+}

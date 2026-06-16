@@ -1,0 +1,19 @@
+{
+ "type": "UNITCOMBAT_BATTLESHIP",
+ "description": "TXT_KEY_UNITCOMBAT_BATTLESHIP",
+ "capabilities": {
+  "terrainDoubleMove": {
+   "TERRAIN_OCEAN_POLAR": true,
+   "TERRAIN_OCEAN": true,
+   "TERRAIN_OCEAN_TROPICAL": true
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/battleships.dds"
+  }
+ },
+ "identity": {
+  "forNavalMilitary": true
+ }
+}

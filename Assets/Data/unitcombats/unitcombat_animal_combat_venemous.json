@@ -1,0 +1,19 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_COMBAT_VENEMOUS",
+ "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_VENEMOUS",
+ "strength": {
+  "unit": {
+   "stealthStrikes": {
+    "flat": 1
+   }
+  }
+ },
+ "capabilities": {
+  "stealthDefense": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_venomus.dds"
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_IRISH",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_IRISH",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_ireland.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_IRISH"
+ }
+}

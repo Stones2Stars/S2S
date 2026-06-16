@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_REPTILE_LIZARD",
+ "description": "TXT_KEY_UNITCOMBAT_REPTILE_LIZARD",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/reptile.dds"
+  }
+ }
+}

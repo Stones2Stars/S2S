@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_GUATEMALA",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_GUATEMALA",
+ "ui": {
+  "art": {
+   "icon": "Art/categories/culture_newcultures.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_GUATEMALAN"
+ }
+}

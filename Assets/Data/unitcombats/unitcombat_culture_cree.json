@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_CREE",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_CREE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_cree.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_CREE"
+ }
+}

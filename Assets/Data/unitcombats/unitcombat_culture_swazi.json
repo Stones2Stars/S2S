@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_SWAZI",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_SWAZI",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_swazi.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_SWAZI"
+ }
+}

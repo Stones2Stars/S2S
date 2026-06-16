@@ -1,0 +1,130 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+ "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+ "vision": {
+  "invisibleTerrain": [
+   {
+    "invisible": "INVISIBLE_SUBMARINE",
+    "terrain": "TERRAIN_COAST_POLAR",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_SUBMARINE",
+    "terrain": "TERRAIN_COAST",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_SUBMARINE",
+    "terrain": "TERRAIN_COAST_TROPICAL",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_SUBMARINE",
+    "terrain": "TERRAIN_OCEAN_POLAR",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_SUBMARINE",
+    "terrain": "TERRAIN_OCEAN",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_SUBMARINE",
+    "terrain": "TERRAIN_OCEAN_TROPICAL",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_SUBMARINE",
+    "terrain": "TERRAIN_SEA_DEEP",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_SUBMARINE",
+    "terrain": "TERRAIN_SEA_DEEP_POLAR",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_SUBMARINE",
+    "terrain": "TERRAIN_SEA_DEEP_TROPICAL",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_SUBMARINE",
+    "terrain": "TERRAIN_SEA",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_SUBMARINE",
+    "terrain": "TERRAIN_SEA_POLAR",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_SUBMARINE",
+    "terrain": "TERRAIN_SEA_TROPICAL",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_SUBMARINE",
+    "terrain": "TERRAIN_TRENCH",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_SUBMARINE",
+    "terrain": "TERRAIN_TRENCH_POLAR",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_SUBMARINE",
+    "terrain": "TERRAIN_TRENCH_TROPICAL",
+    "intensity": 1
+   }
+  ],
+  "invisibleFeature": [
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_CORAL_REEF",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_CORAL_REEF_BEACON",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_CORAL_REEF_LIGHTHOUSE",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_KELP",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_REEF",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_REEF_BEACON",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_REEF_LIGHTHOUSE",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_SEA_GRASS",
+    "intensity": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_submerged.dds"
+  }
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "type": "UNITCOMBAT_WEAPON_DIST_LONGBOW",
+ "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_LONGBOW",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/wields_distance.dds"
+  }
+ },
+ "identity": {
+  "base": {
+   "rangedBombardDamage": 30,
+   "rangedBombardLimit": 25,
+   "rangedBombardMaxUnits": 2,
+   "dcmRange": 1,
+   "dcmAccuracy": 30
+  }
+ }
+}

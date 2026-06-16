@@ -1,0 +1,14 @@
+{
+ "type": "UNITCOMBAT_ASSISTED_DOG",
+ "description": "TXT_KEY_UNITCOMBAT_ASSISTED_DOG",
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/assisted_by_dog.dds"
+  }
+ }
+}

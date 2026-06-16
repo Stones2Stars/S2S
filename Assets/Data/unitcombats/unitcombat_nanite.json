@@ -1,0 +1,25 @@
+{
+ "type": "UNITCOMBAT_NANITE",
+ "description": "TXT_KEY_UNITCOMBAT_NANITE",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -30
+   },
+   "resistance": {
+    "flat": 70
+   }
+  }
+ },
+ "capabilities": {
+  "fliesToMove": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nanites.dds"
+  }
+ },
+ "identity": {
+  "forMilitary": true
+ }
+}

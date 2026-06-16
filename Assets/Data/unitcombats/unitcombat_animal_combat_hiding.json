@@ -1,0 +1,22 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_COMBAT_HIDING",
+ "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_HIDING",
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "capabilities": {
+  "stealthDefense": true
+ },
+ "vision": {
+  "invisibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_hiding.dds"
+  }
+ }
+}

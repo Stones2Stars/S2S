@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_ETHIOPIAN",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_ETHIOPIAN",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_ethiopia.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_ETHIOPIAN"
+ }
+}

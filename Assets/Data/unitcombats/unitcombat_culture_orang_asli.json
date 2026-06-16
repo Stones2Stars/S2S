@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_ORANG_ASLI",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_ORANG_ASLI",
+ "ui": {
+  "art": {
+   "icon": "Art/categories/culture_newcultures.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_ORANG_ASLI"
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_PARTHIAN",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_PARTHIAN",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_parthia.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_PARTHIAN"
+ }
+}

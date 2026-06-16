@@ -57,6 +57,7 @@ ENTITIES = {
     "ProcessInfo":       "*CIV4ProcessInfo.xml",
     "PromotionInfo":     "*CIV4PromotionInfos.xml",
     "PromotionLineInfo": "*CIV4PromotionLineInfos.xml",
+    "UnitCombatInfo":    "*CIV4UnitCombatInfos.xml",
     "HeritageInfo":      "*HeritageInfos.xml",
     "SpecialBuildingInfo": "*CIV4SpecialBuildingInfos.xml",
     # config/global entities — participate in NO enabler edges (enable nothing); registered for

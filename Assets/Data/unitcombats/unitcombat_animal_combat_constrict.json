@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_COMBAT_CONSTRICT",
+ "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_CONSTRICT",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_constriction.dds"
+  }
+ }
+}

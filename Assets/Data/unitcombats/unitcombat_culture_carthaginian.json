@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_CARTHAGINIAN",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_CARTHAGINIAN",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_carthage.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_CARTHAGINIAN"
+ }
+}

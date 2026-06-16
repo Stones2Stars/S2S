@@ -1,0 +1,38 @@
+{
+ "type": "UNITCOMBAT_SIZE_GARGANTUAN",
+ "description": "TXT_KEY_UNITCOMBAT_SIZE_GARGANTUAN",
+ "strength": {
+  "unit": {
+   "damageModifier": {
+    "percent": 30
+   }
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_SIZE": -3
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_SIZE": -10,
+   "INVISIBLE_CAMOUFLAGE": -3
+  },
+  "visibilityIntensityRange": {
+   "INVISIBLE_SIZE": 3
+  }
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/size_gargantuan.dds"
+  }
+ },
+ "identity": {
+  "base": {
+   "size": 8
+  }
+ }
+}

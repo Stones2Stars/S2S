@@ -1,0 +1,21 @@
+{
+ "type": "UNITCOMBAT_WEAPON_DIST_CANNONBALL",
+ "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_CANNONBALL",
+ "capabilities": {
+  "rBombardDirect": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/wields_distance.dds"
+  }
+ },
+ "identity": {
+  "base": {
+   "rangedBombardDamage": 70,
+   "rangedBombardLimit": 40,
+   "rangedBombardMaxUnits": 2,
+   "dcmRange": 1,
+   "dcmAccuracy": 50
+  }
+ }
+}

@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_AMPHIBIAN",
+ "description": "TXT_KEY_UNITCOMBAT_ANIMAL_AMPHIBIAN",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/amphibian.dds"
+  }
+ }
+}

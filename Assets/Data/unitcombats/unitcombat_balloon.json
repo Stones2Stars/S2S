@@ -1,0 +1,31 @@
+{
+ "type": "UNITCOMBAT_BALLOON",
+ "description": "TXT_KEY_UNITCOMBAT_BALLOON",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -20
+   },
+   "resistance": {
+    "flat": -20
+   }
+  }
+ },
+ "capabilities": {
+  "fliesToMove": true
+ },
+ "vision": {
+  "invisibilityIntensity": {
+   "INVISIBLE_SUBMARINE": 2,
+   "INVISIBLE_SUBMERGED": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/balloons.dds"
+  }
+ },
+ "identity": {
+  "forMilitary": true
+ }
+}

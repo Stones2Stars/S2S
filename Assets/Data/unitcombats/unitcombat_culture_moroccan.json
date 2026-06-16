@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_MOROCCAN",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_MOROCCAN",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_morocca.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_MOROCCAN"
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "type": "UNITCOMBAT_MOUNT_RHINO",
+ "description": "TXT_KEY_UNITCOMBAT_MOUNT_RHINO",
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 15
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/mount_rhino.dds"
+  }
+ }
+}

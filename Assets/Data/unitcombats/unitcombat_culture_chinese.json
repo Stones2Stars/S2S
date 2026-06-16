@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_CHINESE",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_CHINESE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_china.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_CHINESE"
+ }
+}

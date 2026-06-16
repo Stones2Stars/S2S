@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_BENGALI",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_BENGALI",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_bengal.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_BENGALI"
+ }
+}

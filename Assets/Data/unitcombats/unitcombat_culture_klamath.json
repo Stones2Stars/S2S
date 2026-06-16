@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_KLAMATH",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_KLAMATH",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_klamath.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_KLAMATH"
+ }
+}

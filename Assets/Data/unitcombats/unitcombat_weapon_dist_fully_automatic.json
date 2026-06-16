@@ -1,0 +1,21 @@
+{
+ "type": "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+ "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+ "capabilities": {
+  "rBombardDirect": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/wields_distance.dds"
+  }
+ },
+ "identity": {
+  "base": {
+   "rangedBombardDamage": 80,
+   "rangedBombardLimit": 60,
+   "rangedBombardMaxUnits": 1,
+   "dcmRange": 1,
+   "dcmAccuracy": 60
+  }
+ }
+}

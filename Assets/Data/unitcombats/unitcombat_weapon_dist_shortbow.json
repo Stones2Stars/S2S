@@ -1,0 +1,18 @@
+{
+ "type": "UNITCOMBAT_WEAPON_DIST_SHORTBOW",
+ "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_SHORTBOW",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/wields_distance.dds"
+  }
+ },
+ "identity": {
+  "base": {
+   "rangedBombardDamage": 20,
+   "rangedBombardLimit": 15,
+   "rangedBombardMaxUnits": 2,
+   "dcmRange": 1,
+   "dcmAccuracy": 20
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_HELICOPTER",
+ "description": "TXT_KEY_UNITCOMBAT_HELICOPTER",
+ "capabilities": {
+  "fliesToMove": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/helicopters.dds"
+  }
+ }
+}

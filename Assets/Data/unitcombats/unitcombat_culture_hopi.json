@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_HOPI",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_HOPI",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_hopi.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_HOPI"
+ }
+}

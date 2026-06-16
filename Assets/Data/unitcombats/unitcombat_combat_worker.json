@@ -1,0 +1,15 @@
+{
+ "type": "UNITCOMBAT_COMBAT_WORKER",
+ "description": "TXT_KEY_UNITCOMBAT_COMBAT_WORKER",
+ "capabilities": {
+  "cannotMergeSplit": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/combat_worker.dds"
+  }
+ },
+ "identity": {
+  "forMilitary": true
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_FULANI",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_FULANI",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_fulani.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_FULANI"
+ }
+}

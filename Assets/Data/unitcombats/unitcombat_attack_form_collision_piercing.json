@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_ATTACK_FORM_COLLISION_PIERCING",
+ "description": "TXT_KEY_UNITCOMBAT_ATTACK_FORM_COLLISION_PIERCING",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/attack_h2h.dds"
+  }
+ }
+}

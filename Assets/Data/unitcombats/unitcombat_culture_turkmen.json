@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_TURKMEN",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_TURKMEN",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_turkmen.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_TURKMEN"
+ }
+}

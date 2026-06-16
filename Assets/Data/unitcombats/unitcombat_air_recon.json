@@ -1,0 +1,19 @@
+{
+ "type": "UNITCOMBAT_AIR_RECON",
+ "description": "TXT_KEY_UNITCOMBAT_AIR_RECON",
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_SUBMARINE": 2,
+   "INVISIBLE_SUBMERGED": 2,
+   "INVISIBLE_CAMOUFLAGE": 2
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/air_recons.dds"
+  }
+ },
+ "identity": {
+  "forMilitary": true
+ }
+}

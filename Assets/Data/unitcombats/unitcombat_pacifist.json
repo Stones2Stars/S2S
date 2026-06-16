@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_PACIFIST",
+ "description": "TXT_KEY_UNITCOMBAT_PACIFIST",
+ "capabilities": {
+  "cannotMergeSplit": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Categories/Pacifist.dds"
+  }
+ }
+}

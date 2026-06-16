@@ -1,0 +1,18 @@
+{
+ "type": "UNITCOMBAT_RECKLESS_ANIMAL",
+ "description": "TXT_KEY_UNITCOMBAT_RECKLESS_ANIMAL",
+ "capabilities": {
+  "animalIgnoresBorders": true,
+  "defenseOnly": true
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_ANIMAL_RECKLESS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_pounce.dds"
+  }
+ }
+}

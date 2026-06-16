@@ -1,0 +1,17 @@
+{
+ "type": "UNITCOMBAT_NUCLEAR_SHIPS",
+ "description": "TXT_KEY_UNITCOMBAT_NUCLEAR_SHIPS",
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_NAVAL_DISGUISE": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nuclear_ships.dds"
+  }
+ },
+ "identity": {
+  "forNavalMilitary": true
+ }
+}

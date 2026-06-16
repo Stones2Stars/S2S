@@ -1,0 +1,25 @@
+{
+ "type": "UNITCOMBAT_NAVAL_COMBATANT",
+ "description": "TXT_KEY_UNITCOMBAT_NAVAL_COMBATANT",
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_SUBMARINE": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/admiral.dds"
+  }
+ },
+ "identity": {
+  "forNavalMilitary": true,
+  "ggPointsForUnits": [
+   "UNIT_GREAT_ADMIRAL"
+  ],
+  "defaultStatuses": [
+   "PROMOTION_STANDOUT_STATUS",
+   "PROMOTION_STANDOUT_STATUS_HS",
+   "PROMOTION_STANDOUT_STATUS_HS_SM"
+  ]
+ }
+}

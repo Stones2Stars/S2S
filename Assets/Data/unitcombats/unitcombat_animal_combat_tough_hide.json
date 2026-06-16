@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+ "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_tough_hide.dds"
+  }
+ }
+}

@@ -1,0 +1,40 @@
+{
+ "type": "UNITCOMBAT_SIZE_FINE",
+ "description": "TXT_KEY_UNITCOMBAT_SIZE_FINE",
+ "strength": {
+  "unit": {
+   "damageModifier": {
+    "percent": -40
+   }
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_SIZE": -5
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_SIZE": 6
+  },
+  "visibilityIntensityRange": {
+   "INVISIBLE_SIZE": -4
+  },
+  "visibilityIntensitySameTile": {
+   "INVISIBLE_SIZE": 12
+  }
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/size_fine.dds"
+  }
+ },
+ "identity": {
+  "base": {
+   "size": 1
+  }
+ }
+}

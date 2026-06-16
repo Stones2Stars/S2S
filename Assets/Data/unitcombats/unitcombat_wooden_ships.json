@@ -1,0 +1,28 @@
+{
+ "type": "UNITCOMBAT_WOODEN_SHIPS",
+ "description": "TXT_KEY_UNITCOMBAT_WOODEN_SHIPS",
+ "capabilities": {
+  "terrainDoubleMove": {
+   "TERRAIN_COAST_POLAR": true,
+   "TERRAIN_COAST": true,
+   "TERRAIN_COAST_TROPICAL": true,
+   "TERRAIN_COAST_DEEP": true,
+   "TERRAIN_COAST_DEEP_TROPICAL": true,
+   "TERRAIN_COAST_DEEP_POLAR": true,
+   "TERRAIN_LAKE_SHORE": true
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_NAVAL_DISGUISE": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/wooden_ships.dds"
+  }
+ },
+ "identity": {
+  "forNavalMilitary": true
+ }
+}

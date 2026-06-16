@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_MANCHURIAN",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_MANCHURIAN",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_manchuria.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_MANCHURIAN"
+ }
+}

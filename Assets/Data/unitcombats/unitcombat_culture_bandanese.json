@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_BANDANESE",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_BANDANESE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_bandane.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_BANDANESE"
+ }
+}

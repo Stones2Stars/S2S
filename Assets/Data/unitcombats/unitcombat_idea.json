@@ -1,0 +1,13 @@
+{
+ "type": "UNITCOMBAT_IDEA",
+ "description": "TXT_KEY_UNITCOMBAT_IDEA",
+ "capabilities": {
+  "cannotMergeSplit": true,
+  "alwaysInvisible": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/idea.dds"
+  }
+ }
+}

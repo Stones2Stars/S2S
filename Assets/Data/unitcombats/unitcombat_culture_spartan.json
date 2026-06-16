@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_SPARTAN",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_SPARTAN",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_spartan.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_SPARTAN"
+ }
+}

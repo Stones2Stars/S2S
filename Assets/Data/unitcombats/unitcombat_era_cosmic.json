@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_ERA_COSMIC",
+ "description": "TXT_KEY_UNITCOMBAT_ERA_COSMIC",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/era_future.dds"
+  }
+ },
+ "identity": {
+  "era": "C2C_ERA_COSMIC"
+ }
+}

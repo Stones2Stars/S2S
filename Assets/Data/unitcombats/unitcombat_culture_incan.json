@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_INCAN",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_INCAN",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_inca.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_INCAN"
+ }
+}

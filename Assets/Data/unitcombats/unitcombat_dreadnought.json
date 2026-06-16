@@ -1,0 +1,22 @@
+{
+ "type": "UNITCOMBAT_DREADNOUGHT",
+ "description": "TXT_KEY_UNITCOMBAT_DREADNOUGHT",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 10
+   },
+   "resistance": {
+    "flat": -5
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/dreadnoughts.dds"
+  }
+ },
+ "identity": {
+  "forMilitary": true
+ }
+}

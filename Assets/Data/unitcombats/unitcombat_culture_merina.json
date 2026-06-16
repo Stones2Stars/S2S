@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_MERINA",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_MERINA",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_merina.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_MERINA"
+ }
+}

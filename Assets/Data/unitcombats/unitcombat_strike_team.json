@@ -1,0 +1,142 @@
+{
+ "type": "UNITCOMBAT_STRIKE_TEAM",
+ "description": "TXT_KEY_UNITCOMBAT_STRIKE_TEAM",
+ "strength": {
+  "unit": {
+   "attack": {
+    "percent": 20
+   },
+   "defense": {
+    "percent": -20
+   },
+   "stealth": {
+    "percent": 10
+   },
+   "cityAttack": {
+    "percent": -25
+   },
+   "cityDefense": {
+    "percent": -25
+   },
+   "hillsAttack": {
+    "percent": 20
+   },
+   "stealthStrikes": {
+    "flat": 1
+   },
+   "terrain": {
+    "TERRAIN_ROCKY": {
+     "attack": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_BADLAND": {
+     "attack": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_JAGGED": {
+     "attack": {
+      "percent": 20
+     }
+    }
+   },
+   "feature": {
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": 20
+     }
+    },
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": 20
+     }
+    },
+    "FEATURE_FOREST_BURNT": {
+     "attack": {
+      "percent": 20
+     }
+    },
+    "FEATURE_FOREST_ANCIENT": {
+     "attack": {
+      "percent": 20
+     }
+    },
+    "FEATURE_SWAMP": {
+     "attack": {
+      "percent": 20
+     }
+    },
+    "FEATURE_BAMBOO": {
+     "attack": {
+      "percent": 20
+     }
+    },
+    "FEATURE_SAVANNA": {
+     "attack": {
+      "percent": 5
+     }
+    },
+    "FEATURE_MANGROVE": {
+     "attack": {
+      "percent": 20
+     }
+    },
+    "FEATURE_VERY_TALL_GRASS": {
+     "attack": {
+      "percent": 20
+     }
+    },
+    "FEATURE_CAVES": {
+     "attack": {
+      "percent": 20
+     }
+    },
+    "FEATURE_CITY_RUINS": {
+     "attack": {
+      "percent": 20
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALTH_CARE": {
+     "percent": 25
+    },
+    "UNITCOMBAT_CANINE": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 20
+   }
+  }
+ },
+ "capabilities": {
+  "immuneToFirstStrikes": true,
+  "cannotMergeSplit": true
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/strike_teams.dds"
+  }
+ },
+ "identity": {
+  "forMilitary": true,
+  "defaultStatuses": [
+   "PROMOTION_REMOVE_STANDOUT_STATUS",
+   "PROMOTION_SURPRISE_STATUS"
+  ]
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "type": "UNITCOMBAT_WEAPON_DIST_RIFLE",
+ "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_RIFLE",
+ "capabilities": {
+  "rBombardDirect": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/wields_distance.dds"
+  }
+ },
+ "identity": {
+  "base": {
+   "rangedBombardDamage": 50,
+   "rangedBombardLimit": 40,
+   "rangedBombardMaxUnits": 1,
+   "dcmRange": 1,
+   "dcmAccuracy": 50
+  }
+ }
+}

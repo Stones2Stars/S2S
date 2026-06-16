@@ -1,0 +1,46 @@
+{
+ "type": "UNITCOMBAT_GROUP_COUNTLESS",
+ "description": "TXT_KEY_UNITCOMBAT_GROUP_COUNTLESS",
+ "experience": {
+  "unit": {
+   "percent": -160
+  }
+ },
+ "heal": {
+  "unit": {
+   "selfModifier": {
+    "percent": -52
+   }
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_SIZE": 4
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_SIZE": -9,
+   "INVISIBLE_CAMOUFLAGE": -9
+  },
+  "visibilityIntensityRange": {
+   "INVISIBLE_SIZE": 3
+  },
+  "visibilityIntensitySameTile": {
+   "INVISIBLE_SIZE": 3
+  }
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/group_countless.dds"
+  }
+ },
+ "identity": {
+  "base": {
+   "group": 13
+  }
+ }
+}

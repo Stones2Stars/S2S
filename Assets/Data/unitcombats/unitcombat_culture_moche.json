@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_MOCHE",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_MOCHE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_moche.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_MOCHE"
+ }
+}

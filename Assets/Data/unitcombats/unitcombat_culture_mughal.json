@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_MUGHAL",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_MUGHAL",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_mughal.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_MUGHAL"
+ }
+}

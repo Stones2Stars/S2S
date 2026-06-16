@@ -1,0 +1,38 @@
+{
+ "type": "UNITCOMBAT_SIZE_COLOSSAL",
+ "description": "TXT_KEY_UNITCOMBAT_SIZE_COLOSSAL",
+ "strength": {
+  "unit": {
+   "damageModifier": {
+    "percent": 40
+   }
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_SIZE": -5
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_SIZE": -20,
+   "INVISIBLE_CAMOUFLAGE": -4
+  },
+  "visibilityIntensityRange": {
+   "INVISIBLE_SIZE": 5
+  }
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/size_colossal.dds"
+  }
+ },
+ "identity": {
+  "base": {
+   "size": 9
+  }
+ }
+}

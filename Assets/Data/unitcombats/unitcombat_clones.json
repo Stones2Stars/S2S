@@ -1,0 +1,22 @@
+{
+ "type": "UNITCOMBAT_CLONES",
+ "description": "TXT_KEY_UNITCOMBAT_CLONES",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 10
+   },
+   "resistance": {
+    "flat": 50
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/clones.dds"
+  }
+ },
+ "identity": {
+  "forMilitary": true
+ }
+}

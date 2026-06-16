@@ -1,0 +1,21 @@
+{
+ "type": "UNITCOMBAT_BIRD_SEABIRD",
+ "description": "TXT_KEY_UNITCOMBAT_BIRD_SEABIRD",
+ "strength": {
+  "unit": {
+   "damageModifier": {
+    "percent": -95
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 60
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/birds.dds"
+  }
+ }
+}

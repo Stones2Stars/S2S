@@ -1,0 +1,17 @@
+{
+ "type": "UNITCOMBAT_SWARMSHIP",
+ "description": "TXT_KEY_UNITCOMBAT_SWARMSHIP",
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_NAVAL_DISGUISE": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/swarm_ships.dds"
+  }
+ },
+ "identity": {
+  "forNavalMilitary": true
+ }
+}

@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_WHALE",
+ "description": "TXT_KEY_UNITCOMBAT_WHALE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/whales.dds"
+  }
+ }
+}

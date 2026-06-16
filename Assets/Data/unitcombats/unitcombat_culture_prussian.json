@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_PRUSSIAN",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_PRUSSIAN",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_prusia.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_PRUSSIAN"
+ }
+}

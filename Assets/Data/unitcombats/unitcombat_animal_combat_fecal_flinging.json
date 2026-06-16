@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_COMBAT_FECAL_FLINGING",
+ "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_FECAL_FLINGING",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_fecal_flinging.dds"
+  }
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "type": "UNITCOMBAT_WEAPON_DIST_COILGUN",
+ "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_COILGUN",
+ "capabilities": {
+  "rBombardDirect": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/wields_distance.dds"
+  }
+ },
+ "identity": {
+  "base": {
+   "rangedBombardDamage": 85,
+   "rangedBombardLimit": 65,
+   "rangedBombardMaxUnits": 1,
+   "dcmRange": 2,
+   "dcmAccuracy": 65
+  }
+ }
+}

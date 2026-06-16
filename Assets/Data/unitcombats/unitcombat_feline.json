@@ -1,0 +1,80 @@
+{
+ "type": "UNITCOMBAT_FELINE",
+ "description": "TXT_KEY_UNITCOMBAT_FELINE",
+ "strength": {
+  "unit": {
+   "attack": {
+    "percent": 15
+   },
+   "defense": {
+    "percent": -15
+   },
+   "stealth": {
+    "percent": 10
+   },
+   "unnerve": {
+    "percent": 10
+   },
+   "lunge": {
+    "percent": 25
+   },
+   "dynamicDefense": {
+    "percent": 5
+   },
+   "perSizeMore": {
+    "percent": -5
+   },
+   "perSizeLess": {
+    "percent": 5
+   },
+   "cityAttack": {
+    "percent": -30
+   },
+   "stealthStrikes": {
+    "flat": 1
+   },
+   "unitCombat": {
+    "UNITCOMBAT_STRIKE_TEAM": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -20
+   },
+   "resistance": {
+    "flat": 75
+   }
+  }
+ },
+ "capabilities": {
+  "cannotMergeSplit": true
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/felines.dds"
+  }
+ },
+ "identity": {
+  "forMilitary": true,
+  "defaultStatuses": [
+   "PROMOTION_REMOVE_STANDOUT_STATUS"
+  ]
+ }
+}

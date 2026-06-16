@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_AINU",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_AINU",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_ainu.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_AINU"
+ }
+}

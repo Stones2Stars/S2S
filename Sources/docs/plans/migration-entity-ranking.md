@@ -218,7 +218,15 @@ and is settled when its turn comes:
     `iDamageperTurn`/`iWeakenperTurn` → drop (dead BATTLEWORN). Invisibility/visibility LOS tables (the 2D
     `{Terrain|Feature|Improvement}[Range]` × InvisibleType) → non-cascade sub-object for the visibility
     RESOLVER (§0.6), NOT additive modifiers. `FreePromotionUnitCombatTypes` → `grants`.
-29. **UnitCombat** ☐ heavy — combat mods buried (mis-classified as identity by the grounding). Free-experience,
+29. **UnitCombat** ✅ **(curated 2026-06-16, `curate_unitcombat.py`; 814 records)** — the unit-combat-CLASS;
+    REUSES Promotion #28's §5 vocabulary VERBATIM (the curator IMPORTS its tables, so they can't drift). `*Base`
+    ranks → `identity.base` (§0.6 create-unit data; ⚑ Size-Matters clusters here → a dedicated cross-entity SM-module
+    pass). `KillOutcomes`/`Actions` → `outcomes` (a DEFERRED mission-triggered/unit-accumulated grant — distinct from
+    `grants`=now-if-enabled; the commerce burst is `AdaptUnitYield`/`missionYieldMultiplier`-scaled like a merchant
+    mission → outcome-system pass + merchant `UnitInfo` later). religion/culture/era + `forMilitary`/`forNaval` + GGpts
+    + defaultStatuses → identity (parked). `PropertyManipulators` empty/dead (0 emitted, §8-i confirmed). Drops:
+    Categories + the wrong-tag FeatureAttacks/FeatureDefenses/iWithdrawalProb. Registered in `store.ENTITIES`. Full
+    map: renames §UnitCombat. Original notes: combat mods buried (mis-classified as identity by the grounding). Free-experience,
     extra-strength deposits → unit-plane. `m_PropertyManipulators` → drop (dead write, not iterated).
     `bForMilitary`/`bForNavalMilitary` → identity (AI tags). Holds the Size-Matters base ranks
     (`getQualityBase`/`GroupBase`/`SizeBase`, `-10` sentinel) — **create-unit-subroutine data (§0.6), kept

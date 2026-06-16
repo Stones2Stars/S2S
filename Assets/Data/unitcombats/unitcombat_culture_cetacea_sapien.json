@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_CETACEA_SAPIEN",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_CETACEA_SAPIEN",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_dolphin.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_CETACEA_SAPIENS"
+ }
+}

@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_HEALS_ANIMALS",
+ "description": "TXT_KEY_UNITCOMBAT_HEALS_ANIMALS",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/disassembly.dds"
+  }
+ }
+}

@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+ "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_power_kick.dds"
+  }
+ }
+}

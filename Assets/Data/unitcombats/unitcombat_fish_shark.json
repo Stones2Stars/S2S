@@ -1,0 +1,14 @@
+{
+ "type": "UNITCOMBAT_FISH_SHARK",
+ "description": "TXT_KEY_UNITCOMBAT_FISH_SHARK",
+ "withdrawal": {
+  "unit": {
+   "percent": 15
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/fish.dds"
+  }
+ }
+}

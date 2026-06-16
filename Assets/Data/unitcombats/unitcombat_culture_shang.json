@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_SHANG",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_SHANG",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_shang.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_SHANG"
+ }
+}

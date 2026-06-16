@@ -1,0 +1,16 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_COMBAT_ROARING",
+ "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_ROARING",
+ "strength": {
+  "unit": {
+   "taunt": {
+    "flat": 30
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_roaring.dds"
+  }
+ }
+}

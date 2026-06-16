@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_TAMIL",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_TAMIL",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_tamil.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_TAMIL"
+ }
+}

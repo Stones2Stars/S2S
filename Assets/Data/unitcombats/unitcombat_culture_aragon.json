@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_ARAGON",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_ARAGON",
+ "ui": {
+  "art": {
+   "icon": "Art/categories/culture_newcultures.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_ARAGONESE"
+ }
+}

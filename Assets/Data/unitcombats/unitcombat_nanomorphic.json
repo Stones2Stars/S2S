@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_NANOMORPHIC",
+ "description": "TXT_KEY_UNITCOMBAT_NANOMORPHIC",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nanomnorphic.dds"
+  }
+ }
+}

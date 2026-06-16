@@ -1,0 +1,24 @@
+{
+ "type": "UNITCOMBAT_DESTROYER",
+ "description": "TXT_KEY_UNITCOMBAT_DESTROYER",
+ "capabilities": {
+  "terrainDoubleMove": {
+   "TERRAIN_OCEAN_POLAR": true,
+   "TERRAIN_OCEAN": true,
+   "TERRAIN_OCEAN_TROPICAL": true
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_SUBMARINE": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/destroyers.dds"
+  }
+ },
+ "identity": {
+  "forNavalMilitary": true
+ }
+}

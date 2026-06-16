@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_HAITIAN",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_HAITIAN",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_haittan.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_HAITIAN"
+ }
+}

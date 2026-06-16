@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_ASSISTED_MULE",
+ "description": "TXT_KEY_UNITCOMBAT_ASSISTED_MULE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/assisted_by_mule.dds"
+  }
+ }
+}

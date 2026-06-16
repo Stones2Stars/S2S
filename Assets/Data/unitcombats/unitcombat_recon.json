@@ -1,0 +1,41 @@
+{
+ "type": "UNITCOMBAT_RECON",
+ "description": "TXT_KEY_UNITCOMBAT_RECON",
+ "strength": {
+  "unit": {
+   "damageModifier": {
+    "percent": -20
+   },
+   "taunt": {
+    "flat": 50
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": -20
+   }
+  }
+ },
+ "capabilities": {
+  "featureDoubleMove": {
+   "FEATURE_REEF": true,
+   "FEATURE_CORAL_REEF": true
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/recons.dds"
+  }
+ },
+ "identity": {
+  "forMilitary": true,
+  "forNavalMilitary": true
+ }
+}

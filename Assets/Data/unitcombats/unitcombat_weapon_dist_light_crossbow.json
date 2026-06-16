@@ -1,0 +1,21 @@
+{
+ "type": "UNITCOMBAT_WEAPON_DIST_LIGHT_CROSSBOW",
+ "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_LIGHT_CROSSBOW",
+ "capabilities": {
+  "rBombardDirect": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/wields_distance.dds"
+  }
+ },
+ "identity": {
+  "base": {
+   "rangedBombardDamage": 25,
+   "rangedBombardLimit": 20,
+   "rangedBombardMaxUnits": 1,
+   "dcmRange": 1,
+   "dcmAccuracy": 25
+  }
+ }
+}

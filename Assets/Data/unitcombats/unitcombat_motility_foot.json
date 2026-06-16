@@ -1,0 +1,179 @@
+{
+ "type": "UNITCOMBAT_MOTILITY_FOOT",
+ "description": "TXT_KEY_UNITCOMBAT_MOTILITY_FOOT",
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "vision": {
+  "visibilityIntensitySameTile": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  },
+  "invisibleFeature": [
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_JUNGLE",
+    "intensity": 2
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_FOREST",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_FOREST_ANCIENT",
+    "intensity": 2
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_BAMBOO",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_MANGROVE",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_VERY_TALL_GRASS",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_SWAMP",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_CITY_RUINS",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_ARCOLOGY_RUINS",
+    "intensity": 1
+   }
+  ],
+  "visibleImprovement": [
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "improvement": "IMPROVEMENT_FORT",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "improvement": "IMPROVEMENT_WOODEN_WATCHTOWER",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "improvement": "IMPROVEMENT_STONE_WATCHTOWER",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "improvement": "IMPROVEMENT_STEEL_WATCHTOWER",
+    "intensity": 1
+   }
+  ],
+  "visibleTerrainRange": [
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "terrain": "TERRAIN_PEAK",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "terrain": "TERRAIN_HILL",
+    "intensity": 1
+   }
+  ],
+  "visibleFeatureRange": [
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_MANGROVE",
+    "intensity": -1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_BAMBOO",
+    "intensity": -1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_SWAMP",
+    "intensity": -1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_FOREST_ANCIENT",
+    "intensity": -1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_FOREST_BURNT",
+    "intensity": -1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_FOREST_YOUNG",
+    "intensity": -1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_FOREST",
+    "intensity": -1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_JUNGLE",
+    "intensity": -1
+   }
+  ],
+  "visibleImprovementRange": [
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "improvement": "IMPROVEMENT_VILLAGE",
+    "intensity": -1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "improvement": "IMPROVEMENT_TOWN",
+    "intensity": -1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "improvement": "IMPROVEMENT_SUBURBS",
+    "intensity": -1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "improvement": "IMPROVEMENT_CITY",
+    "intensity": -1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "improvement": "IMPROVEMENT_WOODEN_WATCHTOWER",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "improvement": "IMPROVEMENT_STONE_WATCHTOWER",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "improvement": "IMPROVEMENT_STEEL_WATCHTOWER",
+    "intensity": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/mobility.dds"
+  }
+ }
+}

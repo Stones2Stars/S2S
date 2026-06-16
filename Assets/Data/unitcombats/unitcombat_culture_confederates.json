@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_CONFEDERATES",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_CONFEDERATES",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_confederate.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_CONFEDERATE"
+ }
+}

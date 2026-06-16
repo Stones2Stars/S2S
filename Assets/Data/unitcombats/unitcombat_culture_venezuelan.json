@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_VENEZUELAN",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_VENEZUELAN",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_venezuela.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_VENEZUELAN"
+ }
+}

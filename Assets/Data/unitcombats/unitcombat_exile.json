@@ -1,0 +1,21 @@
+{
+ "type": "UNITCOMBAT_EXILE",
+ "description": "TXT_KEY_UNIT_EXILE",
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "capabilities": {
+  "ignoreZoneofControl": true,
+  "excile": true,
+  "barbCoExist": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Categories/Exile.dds"
+  }
+ }
+}

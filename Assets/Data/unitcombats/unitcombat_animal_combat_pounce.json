@@ -1,0 +1,22 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+ "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+ "strength": {
+  "unit": {
+   "stealth": {
+    "percent": 10
+   },
+   "stealthStrikes": {
+    "flat": 1
+   }
+  }
+ },
+ "capabilities": {
+  "stealthDefense": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_pounce.dds"
+  }
+ }
+}

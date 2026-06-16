@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_MAMMAL",
+ "description": "TXT_KEY_UNITCOMBAT_ANIMAL_MAMMAL",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/mammal.dds"
+  }
+ }
+}

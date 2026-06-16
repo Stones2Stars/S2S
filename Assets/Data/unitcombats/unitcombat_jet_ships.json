@@ -1,0 +1,17 @@
+{
+ "type": "UNITCOMBAT_JET_SHIPS",
+ "description": "TXT_KEY_UNITCOMBAT_JET_SHIPS",
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_NAVAL_DISGUISE": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/jet_ships.dds"
+  }
+ },
+ "identity": {
+  "forNavalMilitary": true
+ }
+}

@@ -1,0 +1,128 @@
+{
+ "type": "UNITCOMBAT_RUFFIAN",
+ "description": "TXT_KEY_UNITCOMBAT_RUFFIAN",
+ "strength": {
+  "unit": {
+   "stealth": {
+    "percent": 10
+   },
+   "hillsDefense": {
+    "percent": 10
+   },
+   "stealthStrikes": {
+    "flat": 1
+   },
+   "terrain": {
+    "TERRAIN_ROCKY": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_BADLAND": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_JAGGED": {
+     "defense": {
+      "percent": 10
+     }
+    }
+   },
+   "feature": {
+    "FEATURE_FOREST": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "FEATURE_JUNGLE": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "FEATURE_FOREST_BURNT": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "FEATURE_FOREST_ANCIENT": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "FEATURE_SWAMP": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "FEATURE_BAMBOO": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "FEATURE_MANGROVE": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "FEATURE_VERY_TALL_GRASS": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "FEATURE_CAVES": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "FEATURE_CITY_RUINS": {
+     "defense": {
+      "percent": 10
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_CIVILIAN": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 25
+   },
+   "resistance": {
+    "flat": -10
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": -2
+  }
+ },
+ "capabilities": {
+  "cannotMergeSplit": true
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/ruffian.dds"
+  }
+ },
+ "identity": {
+  "defaultStatuses": [
+   "PROMOTION_REMOVE_STANDOUT_STATUS",
+   "PROMOTION_SURPRISE_STATUS"
+  ]
+ }
+}

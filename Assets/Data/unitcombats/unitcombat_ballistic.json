@@ -1,0 +1,15 @@
+{
+ "type": "UNITCOMBAT_BALLISTIC",
+ "description": "TXT_KEY_UNITCOMBAT_BALLISTIC",
+ "capabilities": {
+  "cannotMergeSplit": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/ballistic.dds"
+  }
+ },
+ "identity": {
+  "forMilitary": true
+ }
+}

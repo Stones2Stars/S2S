@@ -1,0 +1,28 @@
+{
+ "type": "UNITCOMBAT_CIVILIAN",
+ "description": "TXT_KEY_UNITCOMBAT_CIVILIAN",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 15
+   },
+   "resistance": {
+    "flat": -30
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_COMBATANT": {
+     "percent": -25
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/civilians.dds"
+  }
+ }
+}

@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_PROMOTED_TRANSPORT_FIGHTERS",
+ "description": "TXT_KEY_UNITCOMBAT_PROMOTED_TRANSPORT_FIGHTERS",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/transport_fighters.dds"
+  }
+ }
+}

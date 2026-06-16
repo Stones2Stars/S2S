@@ -1,0 +1,46 @@
+{
+ "type": "UNITCOMBAT_GROUP_HORDE",
+ "description": "TXT_KEY_UNITCOMBAT_GROUP_HORDE",
+ "experience": {
+  "unit": {
+   "percent": -60
+  }
+ },
+ "heal": {
+  "unit": {
+   "selfModifier": {
+    "percent": -12
+   }
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_SIZE": 2
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_SIZE": -4,
+   "INVISIBLE_CAMOUFLAGE": -4
+  },
+  "visibilityIntensityRange": {
+   "INVISIBLE_SIZE": 1
+  },
+  "visibilityIntensitySameTile": {
+   "INVISIBLE_SIZE": 2
+  }
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/group_horde.dds"
+  }
+ },
+ "identity": {
+  "base": {
+   "group": 8
+  }
+ }
+}

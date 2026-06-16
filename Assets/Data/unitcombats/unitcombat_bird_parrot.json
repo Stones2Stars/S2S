@@ -1,0 +1,21 @@
+{
+ "type": "UNITCOMBAT_BIRD_PARROT",
+ "description": "TXT_KEY_UNITCOMBAT_BIRD_PARROT",
+ "strength": {
+  "unit": {
+   "damageModifier": {
+    "percent": -95
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 50
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/birds.dds"
+  }
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "type": "UNITCOMBAT_SPECIES_NEANDERTHAL",
+ "description": "TXT_KEY_UNITCOMBAT_SPECIES_NEANDERTHAL",
+ "capabilities": {
+  "stealthDefense": true
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_POLITICAL": 5
+  },
+  "visibilityIntensitySameTile": {
+   "INVISIBLE_DISGUISED": 1
+  },
+  "invisibleFeature": [
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_CAVES",
+    "intensity": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/species_neanderthal.dds"
+  }
+ }
+}

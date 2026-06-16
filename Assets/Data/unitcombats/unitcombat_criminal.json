@@ -1,0 +1,132 @@
+{
+ "type": "UNITCOMBAT_CRIMINAL",
+ "description": "TXT_KEY_UNITCOMBAT_CRIMINAL",
+ "espionage": {
+  "unit": {
+   "insidiousness": {
+    "flat": 1
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "attack": {
+    "percent": 10
+   },
+   "defense": {
+    "percent": -10
+   },
+   "stealth": {
+    "percent": 10
+   },
+   "stealthStrikes": {
+    "flat": 1
+   },
+   "unitCombat": {
+    "UNITCOMBAT_TRADE": {
+     "percent": 100
+    }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -10
+   },
+   "resistance": {
+    "flat": -10
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": -3
+  }
+ },
+ "capabilities": {
+  "cannotMergeSplit": true
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1,
+   "INVISIBLE_DISGUISED": 1
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_DISGUISED": 1
+  },
+  "invisibleImprovement": [
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "improvement": "IMPROVEMENT_CITY",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_DISGUISED",
+    "improvement": "IMPROVEMENT_CITY",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "improvement": "IMPROVEMENT_COTTAGE",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_DISGUISED",
+    "improvement": "IMPROVEMENT_COTTAGE",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "improvement": "IMPROVEMENT_HAMLET",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_DISGUISED",
+    "improvement": "IMPROVEMENT_HAMLET",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "improvement": "IMPROVEMENT_VILLAGE",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_DISGUISED",
+    "improvement": "IMPROVEMENT_VILLAGE",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "improvement": "IMPROVEMENT_TOWN",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_DISGUISED",
+    "improvement": "IMPROVEMENT_TOWN",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "improvement": "IMPROVEMENT_SUBURBS",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_DISGUISED",
+    "improvement": "IMPROVEMENT_SUBURBS",
+    "intensity": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/criminals.dds"
+  }
+ },
+ "identity": {
+  "forMilitary": true,
+  "defaultStatuses": [
+   "PROMOTION_REMOVE_STANDOUT_STATUS"
+  ]
+ }
+}

@@ -1,0 +1,19 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+ "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+ "strength": {
+  "unit": {
+   "stealth": {
+    "percent": 10
+   }
+  }
+ },
+ "capabilities": {
+  "stealthDefense": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_charging.dds"
+  }
+ }
+}

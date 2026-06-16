@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+ "description": "TXT_KEY_UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/wields_h2h.dds"
+  }
+ }
+}

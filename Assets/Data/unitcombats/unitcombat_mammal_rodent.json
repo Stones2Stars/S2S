@@ -1,0 +1,23 @@
+{
+ "type": "UNITCOMBAT_MAMMAL_RODENT",
+ "description": "TXT_KEY_UNITCOMBAT_MAMMAL_RODENT",
+ "withdrawal": {
+  "unit": {
+   "percent": 20
+  }
+ },
+ "vision": {
+  "invisibleTerrain": [
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "terrain": "TERRAIN_MARSH",
+    "intensity": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/mammal.dds"
+  }
+ }
+}

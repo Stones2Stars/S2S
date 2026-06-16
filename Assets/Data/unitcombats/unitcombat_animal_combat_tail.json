@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_COMBAT_TAIL",
+ "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_TAIL",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_tail_swipe.dds"
+  }
+ }
+}

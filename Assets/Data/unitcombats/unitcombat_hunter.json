@@ -1,0 +1,37 @@
+{
+ "type": "UNITCOMBAT_HUNTER",
+ "description": "TXT_KEY_UNITCOMBAT_HUNTER",
+ "strength": {
+  "unit": {
+   "stealth": {
+    "percent": 10
+   },
+   "stealthStrikes": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 20
+   },
+   "resistance": {
+    "flat": -10
+   }
+  }
+ },
+ "vision": {
+  "invisibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  },
+  "visibilityIntensityRange": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/hunters.dds"
+  }
+ }
+}

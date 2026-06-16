@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_SIBERIAN",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_SIBERIAN",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_siberian.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_SIBERIAN"
+ }
+}

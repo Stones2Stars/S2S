@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_ASSISTED_ELEPHANT",
+ "description": "TXT_KEY_UNITCOMBAT_ASSISTED_ELEPHANT",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/assisted_by_elephant.dds"
+  }
+ }
+}

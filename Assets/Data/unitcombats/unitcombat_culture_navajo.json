@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_NAVAJO",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_NAVAJO",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_navajo.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_NAVAJO"
+ }
+}

@@ -615,3 +615,28 @@ handled by no table — caught 3 misses + the typo). `store.py` gained the `Prom
 (alongside `ASSOCIATED`). `PromotionInfo` was already registered + its prereq edges in `PREREQ_FIELDS`. ⚑ NEXT:
 UnitCombat #29 reuses this vocabulary (the designated definer of the §5 banked gap) + holds the SM `*Base` ranks (kept
 as-is, §0.6) + the `CvOutcomeList` kill/action system; SpecialUnit shares it at the Unit pass.*
+
+## UnitCombat  (`curate_unitcombat.py`)  — Tier D #29 (814 records, BESPOKE)
+
+The unit-COMBAT-CLASS (`UNITCOMBAT_MELEE`/`ARCHER`/…) — a unit-plane stat SOURCE that deposits onto a unit via
+`CvUnit::processUnitCombat` (the §5 self-accumulator). **REUSES the Promotion #28 unit-stat vocabulary VERBATIM** —
+the curator IMPORTS Promotion's `STRENGTH`/`FAMILIES`/`CAP_*`/`VISION_*` tables (the two entities jointly DEFINE the
+§5 vocabulary; importing enforces they can't drift). EXE-link **0 `DllExport`** → unconstrained. Newly registered in
+`store.ENTITIES`. Coverage-checked. Same as Promotion: `*Change` stats → the same families (strength/…/capture/poison/
+espionage/trap), CAPABILITIES boolean group, the `vision` LOS resolver, properties → scoped `PROPERTY_X.{plot,city}.flat`
+deposits (`property_source_v3`). UnitCombat-specific:
+
+| old XML | new JSON path | note |
+|---|---|---|
+| `iQualityBase`/`iGroupBase`/`iSizeBase` (`-10` sentinel) + `iRBombardDamage*Base`/`iDCMBomb*Base` | `identity.base.{quality,group,size,rangedBombard*,dcm*}` | The CLASS's intrinsic **create-unit base stats** (§0.6 "create-unit-subroutine data, kept as-is") — NOT cascade modifiers, NOT the `*Change` deltas Promotion carries. ⚑ **SIZE-MATTERS clusters here** (owner 2026-06-16: "size matters seems to be mostly governed in unitcombat") → flagged for a **dedicated cross-entity Size-Matters pass** (a `sizeMatters` module §0.8 gathering the base ranks + the SM-gated `strength.sizeModifier`/`perSize`/`perVolume`/`maxHP` + the `INVISIBLE_SIZE` vision + SM cargo, across Promotion+UnitCombat+Unit); kept faithful for #428. |
+| `KillOutcomes` / `Actions` | `outcomes.{kill,actions}` | The `CvOutcomeList` mission-outcome system (subdue-animal record-tale, animal-combat reward, …), carried faithfully (`engine.generic`). **An `outcome` is a DEFERRED, MISSION-TRIGGERED, unit-ACCUMULATED grant** — distinct from `grants` (owner 2026-06-16): `grants` = **NOW** (fires on its event if the enabler/tech is held, §6.1); `outcomes` = **FUTURE** (parked on the unit, accumulated, fires only when the mission is pushed). Same one-time-yield *shape* (the commerce burst is wrapped in `AdaptUnitYield` = GameSpeed `missionYieldMultiplier`, the SAME scale a merchant trade-mission uses), different *lifecycle* → its own section, NOT folded into `grants`. ⚑ The opaque positional `Commerces` `[gold,research,culture,espionage]` (each a flat or an `AdaptUnitYield(Constant N)`) renders grant-shaped (`{gold,culture}` + the scale) at the **dedicated outcome-system pass** (#430), which also brings in the merchant `UnitInfo` trade-mission. No promotion/unitcombat grants a gold *trade*-mission; only `UNITCOMBAT_MAMMAL_RHINO`/`URSINE` carry gold via `MISSION_ANIMAL_COMBAT`. |
+| `ReligionType`/`CultureType`/`EraType` · `bForMilitary`/`bForNavalMilitary` · `GGptsforUnitTypes` · `DefaultStatusTypes` | `identity.{religion,culture,era, forMilitary,forNavalMilitary, ggPointsForUnits, defaultStatuses}` | Refs + AI tags + great-general-points-per-killed-type + auto-applied statuses — PARKED (their proper homes — enabler? grants? — settle at the unit-plane enabling / Unit pass). |
+| vs-keyed combat/work modifiers (`TerrainAttackChangeModifiers`/`FeatureAttackChangeModifiers`/`UnitCombatChangeModifiers`/`FlankingStrengthbyUnitCombatTypeChange`/`*WorkChangeModifiers`/`TrapAvoidanceUnitCombatTypes`/`DomainMods`) | `strength`/`workRate`/`trap`.unit.…  | Same homes as Promotion's `VS_KEYED`, under UnitCombat's `*ChangeModifiers` container names (`{Type, iModifier}` shape). |
+| extra capability bools (`bSpy`/`bCannotMergeSplit`/`bRBombardDirect`/`bRBombardForceAbility`/`bInvisible`/`bHealsAs`) + `iNoCaptureChange` | `capabilities.{spy,cannotMergeSplit,rBombardDirect,rBombardForceAbility,alwaysInvisible,healsAs,noCapture}` | UnitCombat-only capabilities. |
+| `VisibilityIntensitySameTileChangeTypes` | `vision.visibilityIntensitySameTile` | The extra same-tile LOS pair-list (UnitCombat-only). |
+| `Button` | `ui.art.icon` | The combat-class icon (UnitCombat extends `CvInfoBase` but carries a `Button`; all 814). |
+| `Categories` / `FeatureAttacks` / `FeatureDefenses` / `iWithdrawalProb` | — (DROPPED) | `Categories` dead; the others are WRONG-TAG entries the engine ignores (it reads `FeatureAttackChangeModifiers` / `iWithdrawalChange`) — dead in-game (the Promotion `iStealthCombatModifier`-typo pattern). |
+
+*Toolkit: `curate_unitcombat.py` (bespoke) imports the shared tables + helpers from `curate_promotion`. `UnitCombatInfo`
+registered in `store.ENTITIES`. NEXT: SpecialUnit shares this vocabulary at the Unit pass (depositing onto the loaded
+unit); the SM-module + outcome-system + the merchant trade-mission consolidations are their own later passes.*

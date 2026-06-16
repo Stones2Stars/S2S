@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_SOUTH_AFRICAN",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_SOUTH_AFRICAN",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_south_african.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_SOUTH_AFRICAN"
+ }
+}

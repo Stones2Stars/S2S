@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_COMANCHE",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_COMANCHE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_comanche.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_COMANCHE"
+ }
+}

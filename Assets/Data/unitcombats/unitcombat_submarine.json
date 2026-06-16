@@ -1,0 +1,30 @@
+{
+ "type": "UNITCOMBAT_SUBMARINE",
+ "description": "TXT_KEY_UNITCOMBAT_SUBMARINE",
+ "capabilities": {
+  "terrainDoubleMove": {
+   "TERRAIN_OCEAN_POLAR": true,
+   "TERRAIN_OCEAN": true,
+   "TERRAIN_OCEAN_TROPICAL": true,
+   "TERRAIN_TRENCH": true,
+   "TERRAIN_TRENCH_POLAR": true,
+   "TERRAIN_TRENCH_TROPICAL": true
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_SUBMARINE": 1
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_SUBMARINE": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/submarines.dds"
+  }
+ },
+ "identity": {
+  "forNavalMilitary": true
+ }
+}

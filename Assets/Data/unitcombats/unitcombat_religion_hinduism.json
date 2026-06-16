@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_RELIGION_HINDUISM",
+ "description": "TXT_KEY_UNITCOMBAT_RELIGION_HINDUISM",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/religion_hinduism.dds"
+  }
+ },
+ "identity": {
+  "religion": "RELIGION_HINDUISM"
+ }
+}

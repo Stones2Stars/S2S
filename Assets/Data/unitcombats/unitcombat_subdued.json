@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_SUBDUED",
+ "description": "TXT_KEY_UNITCOMBAT_SUBDUED",
+ "capabilities": {
+  "cannotMergeSplit": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/subdued.dds"
+  }
+ }
+}

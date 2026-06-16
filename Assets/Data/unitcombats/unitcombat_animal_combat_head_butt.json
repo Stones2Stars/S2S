@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_COMBAT_HEAD_BUTT",
+ "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_HEAD_BUTT",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_head_butt.dds"
+  }
+ }
+}

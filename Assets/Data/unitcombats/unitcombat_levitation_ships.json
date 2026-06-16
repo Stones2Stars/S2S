@@ -1,0 +1,17 @@
+{
+ "type": "UNITCOMBAT_LEVITATION_SHIPS",
+ "description": "TXT_KEY_UNITCOMBAT_LEVITATION_SHIPS",
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_NAVAL_DISGUISE": 2
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/levitation_ships.dds"
+  }
+ },
+ "identity": {
+  "forNavalMilitary": true
+ }
+}

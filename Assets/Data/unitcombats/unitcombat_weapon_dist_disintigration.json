@@ -1,0 +1,21 @@
+{
+ "type": "UNITCOMBAT_WEAPON_DIST_DISINTIGRATION",
+ "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_DISINTIGRATION",
+ "capabilities": {
+  "rBombardDirect": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/wields_distance.dds"
+  }
+ },
+ "identity": {
+  "base": {
+   "rangedBombardDamage": 150,
+   "rangedBombardLimit": 200,
+   "rangedBombardMaxUnits": 1,
+   "dcmRange": 3,
+   "dcmAccuracy": 80
+  }
+ }
+}

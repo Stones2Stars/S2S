@@ -1,0 +1,14 @@
+{
+ "type": "UNITCOMBAT_MAMMAL_ANTELOPE",
+ "description": "TXT_KEY_UNITCOMBAT_MAMMAL_ANTELOPE",
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/mammal.dds"
+  }
+ }
+}

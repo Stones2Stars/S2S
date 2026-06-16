@@ -1,0 +1,22 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+ "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+ "strength": {
+  "unit": {
+   "perVolumeMore": {
+    "percent": -15
+   },
+   "perVolumeLess": {
+    "percent": 15
+   }
+  }
+ },
+ "capabilities": {
+  "gatherHerd": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_herding.dds"
+  }
+ }
+}

@@ -1,0 +1,39 @@
+{
+ "type": "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+ "description": "TXT_KEY_UNITCOMBAT_QUALITY_EXCEPTIONAL",
+ "experience": {
+  "unit": {
+   "percent": -30
+  }
+ },
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 50
+   }
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_SIZE": 10
+  },
+  "visibilityIntensitySameTile": {
+   "INVISIBLE_SIZE": 2
+  }
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/combat_quality_exceptional.dds"
+  }
+ },
+ "identity": {
+  "base": {
+   "quality": 7
+  }
+ }
+}

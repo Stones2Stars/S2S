@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_WEAPON_H2H_FIST",
+ "description": "TXT_KEY_UNITCOMBAT_WEAPON_H2H_FIST",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/wields_h2h.dds"
+  }
+ }
+}

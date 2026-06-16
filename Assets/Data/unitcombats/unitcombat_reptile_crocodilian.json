@@ -1,0 +1,60 @@
+{
+ "type": "UNITCOMBAT_REPTILE_CROCODILIAN",
+ "description": "TXT_KEY_UNITCOMBAT_REPTILE_CROCODILIAN",
+ "strength": {
+  "unit": {
+   "stealth": {
+    "percent": 25
+   },
+   "stealthStrikes": {
+    "flat": 1
+   }
+  }
+ },
+ "vision": {
+  "invisibleTerrain": [
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "terrain": "TERRAIN_MARSH",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "terrain": "TERRAIN_MUDDY",
+    "intensity": 1
+   }
+  ],
+  "invisibleFeature": [
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_OASIS",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_FLOOD_PLAINS",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_SWAMP",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_MANGROVE",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_PEAT_BOG",
+    "intensity": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/reptile.dds"
+  }
+ }
+}

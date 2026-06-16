@@ -1,0 +1,14 @@
+{
+ "type": "UNITCOMBAT_NOMAD",
+ "description": "TXT_KEY_UNITCOMBAT_NOMAD",
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nomads.dds"
+  }
+ }
+}

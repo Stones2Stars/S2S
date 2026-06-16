@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_COMBAT_HARD_PLATED",
+ "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_HARD_PLATED",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_hard_platted.dds"
+  }
+ }
+}

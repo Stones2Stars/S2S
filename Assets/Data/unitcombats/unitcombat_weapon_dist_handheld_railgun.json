@@ -1,0 +1,21 @@
+{
+ "type": "UNITCOMBAT_WEAPON_DIST_HANDHELD_RAILGUN",
+ "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_HANDHELD_RAILGUN",
+ "capabilities": {
+  "rBombardDirect": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/wields_distance.dds"
+  }
+ },
+ "identity": {
+  "base": {
+   "rangedBombardDamage": 90,
+   "rangedBombardLimit": 70,
+   "rangedBombardMaxUnits": 2,
+   "dcmRange": 2,
+   "dcmAccuracy": 65
+  }
+ }
+}

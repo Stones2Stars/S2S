@@ -1,0 +1,55 @@
+{
+ "type": "UNITCOMBAT_TRADE",
+ "description": "TXT_KEY_UNITCOMBAT_TRADE",
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": -50
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "feature": {
+    "FEATURE_FOREST": {
+     "defense": {
+      "percent": -5
+     }
+    },
+    "FEATURE_JUNGLE": {
+     "defense": {
+      "percent": -10
+     }
+    },
+    "FEATURE_FOREST_ANCIENT": {
+     "defense": {
+      "percent": -10
+     }
+    },
+    "FEATURE_SWAMP": {
+     "defense": {
+      "percent": -10
+     }
+    },
+    "FEATURE_BAMBOO": {
+     "defense": {
+      "percent": -5
+     }
+    },
+    "FEATURE_MANGROVE": {
+     "defense": {
+      "percent": -10
+     }
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "cannotMergeSplit": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/traders.dds"
+  }
+ }
+}

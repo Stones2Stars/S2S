@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_JAPANESE",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_JAPANESE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_japan.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_JAPANESE"
+ }
+}

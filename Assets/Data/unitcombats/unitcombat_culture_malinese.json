@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_MALINESE",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_MALINESE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_mali.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_MALINESE"
+ }
+}

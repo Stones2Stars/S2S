@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_WEAPON_DIST_EMP",
+ "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_EMP",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/wields_distance.dds"
+  }
+ }
+}

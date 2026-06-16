@@ -1,0 +1,22 @@
+{
+ "type": "UNITCOMBAT_WHEELED",
+ "description": "TXT_KEY_UNITCOMBAT_WHEELED",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 20
+   },
+   "resistance": {
+    "flat": -20
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/wheeled.dds"
+  }
+ },
+ "identity": {
+  "forMilitary": true
+ }
+}

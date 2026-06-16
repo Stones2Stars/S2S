@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_PORTUGUESE",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_PORTUGUESE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_portugal.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_PORTUGUESE"
+ }
+}

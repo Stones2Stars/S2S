@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_REPTILE_DINOSAUR",
+ "description": "TXT_KEY_UNITCOMBAT_REPTILE_DINOSAUR",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/reptile.dds"
+  }
+ }
+}

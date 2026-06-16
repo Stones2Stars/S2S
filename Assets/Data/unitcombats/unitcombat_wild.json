@@ -1,0 +1,26 @@
+{
+ "type": "UNITCOMBAT_WILD",
+ "description": "TXT_KEY_UNITCOMBAT_WILD",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -1000
+   }
+  }
+ },
+ "capabilities": {
+  "noCapture": true
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_DISGUISED": 10,
+   "INVISIBLE_POLITICAL": 10,
+   "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/wild.dds"
+  }
+ }
+}

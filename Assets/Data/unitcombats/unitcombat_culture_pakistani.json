@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_PAKISTANI",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_PAKISTANI",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_pakistani.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_PAKISTANI"
+ }
+}

@@ -1,0 +1,19 @@
+{
+ "type": "UNITCOMBAT_AMPHIBIAN_FROG",
+ "description": "TXT_KEY_UNITCOMBAT_AMPHIBIAN_FROG",
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "vision": {
+  "invisibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/amphibian.dds"
+  }
+ }
+}

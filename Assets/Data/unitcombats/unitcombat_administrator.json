@@ -1,0 +1,17 @@
+{
+ "type": "UNITCOMBAT_ADMINISTRATOR",
+ "description": "TXT_KEY_UNITCOMBAT_ADMINISTRATOR",
+ "revoltProtection": {
+  "unit": {
+   "percent": 2
+  }
+ },
+ "capabilities": {
+  "cannotMergeSplit": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/administrators.dds"
+  }
+ }
+}

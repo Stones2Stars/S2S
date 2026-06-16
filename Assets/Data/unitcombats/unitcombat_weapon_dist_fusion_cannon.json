@@ -1,0 +1,21 @@
+{
+ "type": "UNITCOMBAT_WEAPON_DIST_FUSION_CANNON",
+ "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_FUSION_CANNON",
+ "capabilities": {
+  "rBombardDirect": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/wields_distance.dds"
+  }
+ },
+ "identity": {
+  "base": {
+   "rangedBombardDamage": 200,
+   "rangedBombardLimit": 150,
+   "rangedBombardMaxUnits": 3,
+   "dcmRange": 3,
+   "dcmAccuracy": 65
+  }
+ }
+}

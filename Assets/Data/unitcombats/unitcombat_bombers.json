@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_BOMBERS",
+ "description": "TXT_KEY_UNITCOMBAT_BOMBERS",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/bombers.dds"
+  }
+ },
+ "identity": {
+  "forMilitary": true
+ }
+}

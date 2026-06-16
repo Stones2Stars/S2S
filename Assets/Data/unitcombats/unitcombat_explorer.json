@@ -1,0 +1,41 @@
+{
+ "type": "UNITCOMBAT_EXPLORER",
+ "description": "TXT_KEY_UNITCOMBAT_EXPLORER",
+ "strength": {
+  "unit": {
+   "damageModifier": {
+    "percent": -15
+   },
+   "perVolumeMore": {
+    "percent": -5
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -30
+   },
+   "resistance": {
+    "flat": -20
+   }
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_SUBMARINE": 2,
+   "INVISIBLE_DISGUISED": 1,
+   "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/explorers2.dds"
+  }
+ },
+ "identity": {
+  "ggPointsForUnits": [
+   "UNIT_GREAT_HUNTER"
+  ]
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_NEPALESE",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_NEPALESE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_nepal.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_NEPALESE"
+ }
+}

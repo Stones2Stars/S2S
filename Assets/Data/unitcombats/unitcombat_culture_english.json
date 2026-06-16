@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_ENGLISH",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_ENGLISH",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_england.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_ENGLISH"
+ }
+}

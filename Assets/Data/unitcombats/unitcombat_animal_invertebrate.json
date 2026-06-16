@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_INVERTEBRATE",
+ "description": "TXT_KEY_UNITCOMBAT_ANIMAL_INVERTEBRATE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/invertebrate.dds"
+  }
+ }
+}

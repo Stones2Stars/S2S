@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_SPACE_WORKER",
+ "description": "TXT_KEY_UNITCOMBAT_SPACE_WORKER",
+ "capabilities": {
+  "cannotMergeSplit": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/workers.dds"
+  }
+ }
+}

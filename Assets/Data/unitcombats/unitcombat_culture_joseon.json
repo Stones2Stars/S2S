@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_JOSEON",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_JOSEON",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_joseon.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_JOSEON"
+ }
+}

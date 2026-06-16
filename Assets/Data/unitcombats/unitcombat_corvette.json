@@ -1,0 +1,19 @@
+{
+ "type": "UNITCOMBAT_CORVETTE",
+ "description": "TXT_KEY_UNITCOMBAT_CORVETTE",
+ "capabilities": {
+  "terrainDoubleMove": {
+   "TERRAIN_COAST_POLAR": true,
+   "TERRAIN_COAST": true,
+   "TERRAIN_COAST_TROPICAL": true
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/corvettes.dds"
+  }
+ },
+ "identity": {
+  "forNavalMilitary": true
+ }
+}

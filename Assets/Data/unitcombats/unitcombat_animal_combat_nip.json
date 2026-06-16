@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_COMBAT_NIP",
+ "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_NIP",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_nip.dds"
+  }
+ }
+}

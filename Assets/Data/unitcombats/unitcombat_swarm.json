@@ -1,0 +1,19 @@
+{
+ "type": "UNITCOMBAT_SWARM",
+ "description": "TXT_KEY_UNITCOMBAT_SWARM",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -50
+   },
+   "resistance": {
+    "flat": 50
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/swarm.dds"
+  }
+ }
+}

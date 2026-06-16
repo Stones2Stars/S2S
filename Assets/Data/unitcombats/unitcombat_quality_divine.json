@@ -1,0 +1,39 @@
+{
+ "type": "UNITCOMBAT_QUALITY_DIVINE",
+ "description": "TXT_KEY_UNITCOMBAT_QUALITY_DIVINE",
+ "experience": {
+  "unit": {
+   "percent": -75
+  }
+ },
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 200
+   }
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_SIZE": 13
+  },
+  "visibilityIntensityRange": {
+   "INVISIBLE_SIZE": 1
+  }
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/combat_quality_divine.dds"
+  }
+ },
+ "identity": {
+  "base": {
+   "quality": 10
+  }
+ }
+}

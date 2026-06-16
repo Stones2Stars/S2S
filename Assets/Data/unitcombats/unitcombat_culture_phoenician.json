@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_PHOENICIAN",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_PHOENICIAN",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_phoenicia.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_PHOENICIAN"
+ }
+}

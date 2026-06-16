@@ -1,0 +1,19 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_COMBAT_BURROWING",
+ "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_BURROWING",
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "vision": {
+  "invisibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_burrowing.dds"
+  }
+ }
+}

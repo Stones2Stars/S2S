@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_RELIGION_KEMETISM",
+ "description": "TXT_KEY_UNITCOMBAT_RELIGION_KEMETISM",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/religion_kemetism.dds"
+  }
+ },
+ "identity": {
+  "religion": "RELIGION_KEMETISM"
+ }
+}

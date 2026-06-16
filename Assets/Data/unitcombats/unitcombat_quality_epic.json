@@ -1,0 +1,39 @@
+{
+ "type": "UNITCOMBAT_QUALITY_EPIC",
+ "description": "TXT_KEY_UNITCOMBAT_QUALITY_EPIC",
+ "experience": {
+  "unit": {
+   "percent": -60
+  }
+ },
+ "upkeep": {
+  "unit": {
+   "modifier": {
+    "percent": 140
+   }
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_SIZE": 12
+  },
+  "visibilityIntensitySameTile": {
+   "INVISIBLE_SIZE": 1
+  }
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/combat_quality_epic.dds"
+  }
+ },
+ "identity": {
+  "base": {
+   "quality": 9
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_MANI",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_MANI",
+ "ui": {
+  "art": {
+   "icon": "Art/categories/culture_newcultures.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_MANI"
+ }
+}

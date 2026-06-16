@@ -1,0 +1,19 @@
+{
+ "type": "UNITCOMBAT_CARRIER",
+ "description": "TXT_KEY_UNITCOMBAT_CARRIER",
+ "capabilities": {
+  "terrainDoubleMove": {
+   "TERRAIN_OCEAN_POLAR": true,
+   "TERRAIN_OCEAN": true,
+   "TERRAIN_OCEAN_TROPICAL": true
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/carriers.dds"
+  }
+ },
+ "identity": {
+  "forNavalMilitary": true
+ }
+}

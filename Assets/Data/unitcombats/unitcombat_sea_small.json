@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_SEA_SMALL",
+ "description": "TXT_KEY_UNITCOMBAT_SEA_SMALL",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/fish.dds"
+  }
+ }
+}

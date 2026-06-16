@@ -1,0 +1,19 @@
+{
+ "type": "UNITCOMBAT_MELEE",
+ "description": "TXT_KEY_UNITCOMBAT_MELEE",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 10
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/melee.dds"
+  }
+ },
+ "identity": {
+  "forMilitary": true
+ }
+}

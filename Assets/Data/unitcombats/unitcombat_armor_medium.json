@@ -1,0 +1,14 @@
+{
+ "type": "UNITCOMBAT_ARMOR_MEDIUM",
+ "description": "TXT_KEY_UNITCOMBAT_ARMOR_MEDIUM",
+ "withdrawal": {
+  "unit": {
+   "percent": -5
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/armor_type.dds"
+  }
+ }
+}

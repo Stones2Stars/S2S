@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_SWISS",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_SWISS",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/culture_swiss.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_SWISS"
+ }
+}

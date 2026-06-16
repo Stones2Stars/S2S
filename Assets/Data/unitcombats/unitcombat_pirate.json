@@ -1,0 +1,40 @@
+{
+ "type": "UNITCOMBAT_PIRATE",
+ "description": "TXT_KEY_UNITCOMBAT_PIRATE",
+ "strength": {
+  "unit": {
+   "stealth": {
+    "percent": 10
+   },
+   "stealthStrikes": {
+    "flat": 1
+   }
+  }
+ },
+ "capabilities": {
+  "terrainDoubleMove": {
+   "TERRAIN_COAST_POLAR": true,
+   "TERRAIN_COAST": true,
+   "TERRAIN_COAST_TROPICAL": true
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_NAVAL_DISGUISE": 1
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_NAVAL_DISGUISE": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/pirate_ships.dds"
+  }
+ },
+ "identity": {
+  "forNavalMilitary": true,
+  "defaultStatuses": [
+   "PROMOTION_REMOVE_STANDOUT_STATUS"
+  ]
+ }
+}

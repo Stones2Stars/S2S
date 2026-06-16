@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_CULTURE_POVERTY_POINT",
+ "description": "TXT_KEY_UNITCOMBAT_CULTURE_POVERTY_POINT",
+ "ui": {
+  "art": {
+   "icon": "Art/categories/culture_newcultures.dds"
+  }
+ },
+ "identity": {
+  "culture": "BONUS_POVERTY_POINT"
+ }
+}

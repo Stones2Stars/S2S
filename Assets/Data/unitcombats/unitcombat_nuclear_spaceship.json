@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_NUCLEAR_SPACESHIP",
+ "description": "TXT_KEY_UNITCOMBAT_NUCLEAR_SPACESHIP",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nuclear_spaceship.dds"
+  }
+ },
+ "identity": {
+  "forMilitary": true
+ }
+}

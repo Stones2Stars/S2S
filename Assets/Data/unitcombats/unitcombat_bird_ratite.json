@@ -1,0 +1,14 @@
+{
+ "type": "UNITCOMBAT_BIRD_RATITE",
+ "description": "TXT_KEY_UNITCOMBAT_BIRD_RATITE",
+ "withdrawal": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/birds.dds"
+  }
+ }
+}

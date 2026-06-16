@@ -1,0 +1,34 @@
+{
+ "type": "UNITCOMBAT_COMBATANT",
+ "description": "TXT_KEY_UNITCOMBAT_COMBATANT",
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 10
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": 1
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/combatants.dds"
+  }
+ },
+ "identity": {
+  "forMilitary": true,
+  "defaultStatuses": [
+   "PROMOTION_STANDOUT_STATUS",
+   "PROMOTION_STANDOUT_STATUS_HS",
+   "PROMOTION_STANDOUT_STATUS_HS_SM"
+  ]
+ }
+}

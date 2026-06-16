@@ -1,0 +1,24 @@
+{
+ "type": "UNITCOMBAT_CUTTER",
+ "description": "TXT_KEY_UNITCOMBAT_CUTTER",
+ "capabilities": {
+  "terrainDoubleMove": {
+   "TERRAIN_COAST_POLAR": true,
+   "TERRAIN_COAST": true,
+   "TERRAIN_COAST_TROPICAL": true
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_DISGUISED": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/cutters.dds"
+  }
+ },
+ "identity": {
+  "forNavalMilitary": true
+ }
+}

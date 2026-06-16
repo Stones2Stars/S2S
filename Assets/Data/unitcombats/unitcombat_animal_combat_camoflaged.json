@@ -1,0 +1,29 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
+ "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
+ "strength": {
+  "unit": {
+   "stealth": {
+    "percent": 10
+   },
+   "stealthStrikes": {
+    "flat": 1
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "vision": {
+  "invisibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 2
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_camoflaged.dds"
+  }
+ }
+}

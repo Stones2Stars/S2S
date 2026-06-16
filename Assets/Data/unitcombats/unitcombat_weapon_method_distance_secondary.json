@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+ "description": "TXT_KEY_UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds"
+  }
+ }
+}

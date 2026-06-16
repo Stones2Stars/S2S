@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_ERA_CLASSICAL",
+ "description": "TXT_KEY_UNITCOMBAT_ERA_CLASSICAL",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/era_classical.dds"
+  }
+ },
+ "identity": {
+  "era": "C2C_ERA_CLASSICAL"
+ }
+}

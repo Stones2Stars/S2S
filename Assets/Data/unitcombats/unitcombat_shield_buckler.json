@@ -1,0 +1,9 @@
+{
+ "type": "UNITCOMBAT_SHIELD_BUCKLER",
+ "description": "TXT_KEY_UNITCOMBAT_SHIELD_BUCKLER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/shield_buckler.dds"
+  }
+ }
+}
