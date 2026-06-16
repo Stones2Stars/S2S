@@ -1,0 +1,256 @@
+{
+ "type": "BUILD_TERRAFORM_ROCKY",
+ "description": "TXT_KEY_BUILD_TERRAFORM_ROCKY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WEATHER_CONTROL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_TERRAFORM_ROCKY",
+  "terrainChange": "TERRAIN_ROCKY",
+  "features": [
+   {
+    "feature": "FEATURE_JUNGLE",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 400,
+    "production": 20,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_MANGROVE",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 400,
+    "production": 20,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST_YOUNG",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "production": 30,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "production": 40,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST_ANCIENT",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 500,
+    "production": 60,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_SWAMP",
+    "tech": "TECH_CANAL_SYSTEMS",
+    "time": 800,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_PEAT_BOG",
+    "tech": "TECH_CANAL_SYSTEMS",
+    "time": 800,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_VERY_TALL_GRASS",
+    "tech": "TECH_SLASH_AND_BURN",
+    "time": 300,
+    "production": 10,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_SAVANNA",
+    "tech": "TECH_SLASH_AND_BURN",
+    "time": 300,
+    "production": 10,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_BAMBOO",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "production": 20,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_CACTUS",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "production": 5,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST_BURNT",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 400,
+    "production": 5,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_POLAR_ROCK_ARCH",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_POLAR_ROCK_ARCH2",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_POLAR_ROCK_FORM1",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_POLAR_ROCK_FORM2",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_POLAR_ROCK_FORM3",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_POLAR_ROCK_FORM4",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_DARK_ROCK_ARCH",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_DARK_ROCK_ARCH2",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_DARK_ROCK_FORM1",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_DARK_ROCK_FORM2",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_DARK_ROCK_FORM3",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_DARK_ROCK_FORM4",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_ROCK_ARCH",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_ROCK_ARCH2",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_ROCK_FORM1",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_ROCK_FORM2",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_ROCK_FORM3",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_ROCK_FORM4",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_CITY_RUINS",
+    "time": 200,
+    "production": 40,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_ARCOLOGY_RUINS",
+    "time": 200,
+    "production": 40,
+    "remove": true
+   }
+  ]
+ },
+ "cost": {
+  "gold": 2800,
+  "time": 3000
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/baseterrain/tundra.dds"
+  },
+  "hotkey": "KB_T",
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

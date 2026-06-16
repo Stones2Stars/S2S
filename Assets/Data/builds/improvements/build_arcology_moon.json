@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_ARCOLOGY_MOON",
+ "description": "TXT_KEY_BUILD_ARCOLOGY_MOON",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANET_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_ARCOLOGY_MOON"
+ },
+ "cost": {
+  "gold": 800,
+  "time": 3000
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/arcology_moon.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_BRANE_FACTORY",
+ "description": "TXT_KEY_BUILD_BRANE_FACTORY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BRANE_CONSTRUCTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_BRANE_FACTORY"
+ },
+ "cost": {
+  "gold": 250,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/branespace_factory.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

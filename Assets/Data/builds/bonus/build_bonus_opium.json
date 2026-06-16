@@ -1,0 +1,24 @@
+{
+ "type": "BUILD_BONUS_OPIUM",
+ "description": "TXT_KEY_BUILD_BONUS_OPIUM",
+ "produces": {
+  "improvement": "IMPROVEMENT_BONUS_OPIUM"
+ },
+ "cost": {
+  "gold": 30,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Bonus/opium.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_IRRIGATE"
+  }
+ },
+ "identity": {
+  "consumesUnit": true
+ }
+}

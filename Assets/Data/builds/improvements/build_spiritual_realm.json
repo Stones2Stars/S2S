@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_SPIRITUAL_REALM",
+ "description": "TXT_KEY_BUILD_SPIRITUAL_REALM",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SPIRITUAL_REALMS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_SPIRITUAL_REALM"
+ },
+ "cost": {
+  "gold": 250,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/spiritual_realm.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

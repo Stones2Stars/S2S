@@ -1,0 +1,42 @@
+{
+ "type": "BUILD_BREAK_ICE_KILL",
+ "description": "TXT_KEY_BUILD_BREAK_ICE_KILL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMBUSTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "features": [
+   {
+    "feature": "FEATURE_ICE",
+    "time": 300,
+    "remove": true
+   }
+  ]
+ },
+ "cost": {
+  "gold": 80,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/TerrainFeatures/Ice.dds"
+  },
+  "hotkey": "KB_S",
+  "hotKeyPriority": 1
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "consumesUnit": true
+ }
+}

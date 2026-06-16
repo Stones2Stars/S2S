@@ -1,0 +1,35 @@
+{
+ "type": "BUILD_GRAPE_GATHERING_CAMP_KILL",
+ "description": "TXT_KEY_BUILD_GRAPE_GATHERING_CAMP_KILL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GATHERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_GRAPE_GATHERING_CAMP"
+ },
+ "cost": {
+  "gold": 4,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/gatherer_grape.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "consumesUnit": true
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_PLANT_PICKING_CAMP",
+ "description": "TXT_KEY_BUILD_PLANT_PICKING_CAMP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_PLANT_PICKING_CAMP"
+ },
+ "cost": {
+  "gold": 12,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/picker_genericplant.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

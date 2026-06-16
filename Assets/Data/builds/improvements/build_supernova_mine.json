@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_SUPERNOVA_MINE",
+ "description": "TXT_KEY_BUILD_SUPERNOVA_MINE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INDUCED_SUPERNOVA",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_SUPERNOVA_MINE"
+ },
+ "cost": {
+  "gold": 700,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/supernova_mine_improvement.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

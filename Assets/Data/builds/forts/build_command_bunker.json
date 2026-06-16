@@ -1,0 +1,33 @@
+{
+ "type": "BUILD_COMMAND_BUNKER",
+ "description": "TXT_KEY_BUILD_COMMAND_BUNKER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ELECTRICITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_COMMAND_BUNKER"
+ },
+ "cost": {
+  "gold": 1200,
+  "time": 1200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Buildings/Bunker.dds"
+  },
+  "hotkey": "KB_F",
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

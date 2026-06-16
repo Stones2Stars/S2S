@@ -1,0 +1,33 @@
+{
+ "type": "BUILD_MARINE_PRESERVE",
+ "description": "TXT_KEY_BUILD_MARINE_PRESERVE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TOURISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_MARINE_PRESERVE"
+ },
+ "cost": {
+  "gold": 200,
+  "time": 800
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/TerrainFeatures/Forest.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,4,14"
+  },
+  "hotkey": "KB_F",
+  "hotKeyPriority": 1
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

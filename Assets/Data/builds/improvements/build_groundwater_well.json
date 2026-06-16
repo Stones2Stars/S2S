@@ -1,0 +1,40 @@
+{
+ "type": "BUILD_GROUNDWATER_WELL",
+ "description": "TXT_KEY_BUILD_GROUNDWATER_WELL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MODERN_SEISMOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_GROUNDWATER_WELL",
+  "features": [
+   {
+    "feature": "FEATURE_TAR_PIT",
+    "time": 200
+   }
+  ]
+ },
+ "cost": {
+  "gold": 60,
+  "time": 1000
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/Groundwater_well.dds"
+  },
+  "hotkey": "KB_W",
+  "hotKeyPriority": 1,
+  "shiftDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

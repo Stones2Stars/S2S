@@ -1,0 +1,24 @@
+{
+ "type": "BUILD_BONUS_WALRUS",
+ "description": "TXT_KEY_BUILD_BONUS_WALRUS",
+ "produces": {
+  "improvement": "IMPROVEMENT_BONUS_WALRUS"
+ },
+ "cost": {
+  "gold": 30,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Resources/walrus.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_IRRIGATE"
+  }
+ },
+ "identity": {
+  "consumesUnit": true
+ }
+}

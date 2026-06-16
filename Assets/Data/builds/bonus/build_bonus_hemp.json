@@ -1,0 +1,24 @@
+{
+ "type": "BUILD_BONUS_HEMP",
+ "description": "TXT_KEY_BUILD_BONUS_HEMP",
+ "produces": {
+  "improvement": "IMPROVEMENT_BONUS_HEMP"
+ },
+ "cost": {
+  "gold": 30,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Bonus/hemp.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_IRRIGATE"
+  }
+ },
+ "identity": {
+  "consumesUnit": true
+ }
+}

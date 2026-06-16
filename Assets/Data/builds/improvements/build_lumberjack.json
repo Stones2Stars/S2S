@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_LUMBERJACK",
+ "description": "TXT_KEY_BUILD_LUMBERJACK",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_LUMBERJACK"
+ },
+ "cost": {
+  "gold": 8,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/Lumber_camp.dds"
+  },
+  "hotkey": "KB_U"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

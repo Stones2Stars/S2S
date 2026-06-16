@@ -1,0 +1,24 @@
+{
+ "type": "BUILD_BONUS_TEA",
+ "description": "TXT_KEY_BUILD_BONUS_TEA",
+ "produces": {
+  "improvement": "IMPROVEMENT_BONUS_TEA"
+ },
+ "cost": {
+  "gold": 30,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Bonus/Tea.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_IRRIGATE"
+  }
+ },
+ "identity": {
+  "consumesUnit": true
+ }
+}

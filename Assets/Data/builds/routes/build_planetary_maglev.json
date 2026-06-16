@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_PLANETARY_MAGLEV",
+ "description": "TXT_KEY_BUILD_PLANETARY_MAGLEV",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SUPERSONIC_RAILS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "route": "ROUTE_PLANETARY_MAGLEV"
+ },
+ "cost": {
+  "gold": 30,
+  "time": 600
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/buildplanetarymaglev.dds"
+  },
+  "hotkey": "KB_R"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_SHOVEL"
+  }
+ }
+}

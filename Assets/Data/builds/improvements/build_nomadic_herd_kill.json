@@ -1,0 +1,53 @@
+{
+ "type": "BUILD_NOMADIC_HERD_KILL",
+ "description": "TXT_KEY_BUILD_NOMADIC_HERD_KILL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CANINE_DOMESTICATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_NOMADIC_HERD",
+  "features": [
+   {
+    "feature": "FEATURE_JUNGLE",
+    "tech": "TECH_CANINE_DOMESTICATION",
+    "time": 400
+   },
+   {
+    "feature": "FEATURE_MANGROVE",
+    "tech": "TECH_CANINE_DOMESTICATION",
+    "time": 400
+   },
+   {
+    "feature": "FEATURE_FOREST",
+    "tech": "TECH_CANINE_DOMESTICATION",
+    "time": 300
+   }
+  ]
+ },
+ "cost": {
+  "gold": 4,
+  "time": 300
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/nomadic_herd.dds"
+  },
+  "hotkey": "KB_S",
+  "shiftDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "consumesUnit": true
+ }
+}

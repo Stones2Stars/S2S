@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_SUPERCLUSTER_COLONY",
+ "description": "TXT_KEY_BUILD_SUPERCLUSTER_COLONY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COSMIC_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_SUPERCLUSTER_COLONY"
+ },
+ "cost": {
+  "gold": 700,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/supercluster_colony.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

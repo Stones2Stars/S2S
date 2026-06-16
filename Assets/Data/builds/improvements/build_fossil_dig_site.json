@@ -1,0 +1,33 @@
+{
+ "type": "BUILD_FOSSIL_DIG_SITE",
+ "description": "TXT_KEY_BUILD_FOSSIL_DIG_SITE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PALEONTOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_FOSSIL_DIG_SITE"
+ },
+ "cost": {
+  "gold": 120,
+  "time": 800
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Builds/fossil_dig_site.dds"
+  },
+  "hotkey": "KB_F",
+  "hotKeyPriority": 1
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

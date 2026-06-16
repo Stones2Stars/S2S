@@ -1,0 +1,33 @@
+{
+ "type": "BUILD_WOODEN_PALISADE",
+ "description": "TXT_KEY_BUILD_WOODEN_PALISADE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_WOODEN_PALISADE"
+ },
+ "cost": {
+  "gold": 60,
+  "time": 400
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Structures/Improvements/Palisade/palisadewall.dds"
+  },
+  "hotkey": "KB_F",
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

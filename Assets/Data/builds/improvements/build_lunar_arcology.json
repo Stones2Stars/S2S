@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_LUNAR_ARCOLOGY",
+ "description": "TXT_KEY_BUILD_LUNAR_ARCOLOGY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LUNAR_MEGASTRUCTURES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_LUNAR_ARCOLOGY"
+ },
+ "cost": {
+  "gold": 1500,
+  "time": 3000
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/lunar_arcology.dds"
+  },
+  "hotkey": "KB_M"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_PLACE_GALAXY",
+ "description": "TXT_KEY_BUILD_PLACE_GALAXY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GALACTIFORMING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_PLACE_GALAXY",
+  "featureChange": "FEATURE_GALAXY"
+ },
+ "cost": {
+  "gold": 30,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/worldbuilder/galaxy.dds"
+  },
+  "hotkey": "KB_A",
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

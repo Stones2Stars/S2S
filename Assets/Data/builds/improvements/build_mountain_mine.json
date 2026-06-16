@@ -1,0 +1,33 @@
+{
+ "type": "BUILD_MOUNTAIN_MINE",
+ "description": "TXT_KEY_BUILD_MOUNTAIN_MINE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MOUNTAINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_MOUNTAIN_MINE"
+ },
+ "cost": {
+  "gold": 120,
+  "time": 1000
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Builds/BuildMountMine.dds"
+  },
+  "hotkey": "KB_M",
+  "shiftDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_MINE"
+  }
+ }
+}

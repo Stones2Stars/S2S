@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_SATELLITE_STATION",
+ "description": "TXT_KEY_BUILD_SATELLITE_STATION",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COLONY_ARCOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_SATELLITE_STATION"
+ },
+ "cost": {
+  "gold": 700,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/satellite_colony.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

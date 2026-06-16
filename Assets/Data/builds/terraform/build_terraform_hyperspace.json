@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_TERRAFORM_HYPERSPACE",
+ "description": "TXT_KEY_BUILD_TERRAFORM_HYPERSPACE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_TERRAFORM_HYPERSPACE",
+  "terrainChange": "TERRAIN_HYPERSPACE"
+ },
+ "cost": {
+  "gold": 30,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/worldbuilder/hyperspace.dds"
+  },
+  "hotkey": "KB_T",
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

@@ -1,0 +1,84 @@
+{
+ "type": "BUILD_BURN_VEGETATION",
+ "description": "TXT_KEY_BUILD_BURN_VEGETATION",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SLASH_AND_BURN",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "features": [
+   {
+    "feature": "FEATURE_FOREST",
+    "time": 300,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST_ANCIENT",
+    "time": 500,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_SAVANNA",
+    "time": 300,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST_BURNT",
+    "time": 300,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST_YOUNG",
+    "time": 300,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_CACTUS",
+    "time": 300,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_MANGROVE",
+    "time": 400,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_JUNGLE",
+    "time": 400,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_VERY_TALL_GRASS",
+    "time": 300,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_BAMBOO",
+    "time": 300,
+    "remove": true
+   }
+  ]
+ },
+ "cost": {
+  "gold": 1,
+  "time": 0
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Builds/BuildChopDown.dds,Art/Interface/Buttons/Actions_Builds_LeaderHeads_Specialists_Atlas.dds,7,8"
+  },
+  "hotkey": "KB_C",
+  "altDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_CHOP"
+  }
+ }
+}

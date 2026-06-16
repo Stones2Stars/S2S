@@ -1,0 +1,24 @@
+{
+ "type": "BUILD_BONUS_PUMPKIN",
+ "description": "TXT_KEY_BUILD_BONUS_PUMPKIN",
+ "produces": {
+  "improvement": "IMPROVEMENT_BONUS_PUMPKIN"
+ },
+ "cost": {
+  "gold": 30,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Bonus/Pumpkin.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_IRRIGATE"
+  }
+ },
+ "identity": {
+  "consumesUnit": true
+ }
+}

@@ -430,3 +430,47 @@ CHECK is the caller's job, run BEFORE it in the normal path; **direct ungated ca
 engine outcomes that must always place (`raze`→`IMPROVEMENT_CITY_RUINS`, `found`→`IMPROVEMENT_CITY`). Breaks nothing
 (setImprovementType doesn't re-validate). `IMPROVEMENT_CITY`'s `TECH_DUMMY` correctly makes it never worker-buildable;
 city-ruins has no Build (gate moot). Future merge of check+set with an explicit skip-check flag → **#437**.
+
+## Build  (`curate_build.py`)  — Tier C #23 (304 records: 151 base + 153 module-added)
+
+The worker ACTION that PLACES improvements / lays routes / adds-removes features / terraforms terrain — CLEANLY
+SEPARATED (owner 2026-06-16): it references each outcome by **FK** in a `produces` section, never embeds their data.
+A self-contained leaf action OVER the done Improvement #22 + Feature #21; **enables nothing** (`store.enabled_by(BUILD_*)`
+empty → no `enables`). **The DOUBLE-MAPPING:** plot-VALIDITY (terrain/feature/etc.) lives on the IMPROVEMENT
+(`canHaveImprovement`, #22); the build's `requires.build` is its OWN tech/bonus MEANS gate (`CvPlayer::canBuild`). Not
+redundant — two placement paths (worker build vs direct event). **EXE-link: 2 `DllExport`** — `getEntityEvent`
+(XML → `world.art.entityEvent`) + `getMissionType` (RUNTIME-assigned, not XML → dropped). Bespoke curator; no modifier
+families (Build is an action, never a cascade source/target). Mechanical de-Hungarian + the ui/world art blocks not re-logged.
+
+**FOLDERED by PRIMARY outcome (owner 2026-06-16)** into `Assets/Data/builds/<folder>/`, priority
+**bonus > forts > routes > features > terraform > improvements > clearing** (`curate_build.folder`): `bonus` (65, the
+improvement PLACES a bonus — `bPlacesBonus`/`BonusChange`), `forts` (28, improvement `bActsAsCity`/`bMilitaryStructure`),
+`routes` (21, `RouteType`), `features` (12, ADD a feature `FeatureChange`), `terraform` (18, `TerrainChange`),
+`improvements` (150, the bulk), `clearing` (10, NO improvement — REMOVE feature/terrain/pollution: drain swamp / clear
+fallout / burn vegetation / break ice / reclaim land / remove rock). A multi-outcome build (e.g. `BUILD_ROAD` clears
+features but lays a route) lands by the priority above (→ `routes`).
+
+| old XML | new JSON path | note |
+|---|---|---|
+| `PrereqTech` | `requires.build.all[].{type,scope:team}` | The build's OWN tech gate (`CvPlayer::canBuild:7540`). ALSO store-inverts to `tech.enables.builds` (generation) — this clause is the per-candidate CONFIRM, the two coexist (Improvement/Tech precedent). |
+| `PrereqBonusTypes`/`PrereqBonusType` | `requires.build.all[].{type:BONUS_X,scope:plot,connection:trade}` | ALL listed bonuses must be adjacent-plot-group-connected (`CvPlot::canBuild:3398`). ⚑ scope: the gate is plot-group-local trade reach; exact scope (plot vs city vs team) pins at #430. 3 builds (MOAI_STATUES/GEOGLYPH/MACHU_PICCHU). |
+| `ImprovementType` / `RouteType` / `TerrainChange` / `FeatureChange` | `produces.{improvement,route,terrainChange,featureChange}` | Single-FK outcomes (improvement laid / route laid / terraform-to terrain / feature planted-or-changed-to). FK only — never embeds the target's data (owner clean-separation ruling). |
+| `FeatureStructs`/`FeatureStruct` `{FeatureType,PrereqTech,iTime,iProduction,bRemove}` | `produces.features[].{feature, tech?, time?, production?, remove?}` | Per-feature add/REMOVE during the build: `remove:true` = the CHOP (clears the feature → `production` hammers + `time`); a `remove`-absent entry with only `tech` is the per-feature TECH GATE ("road on a swamp needs Canal Systems"). Per-feature PrereqTech STAYS here — it is CONDITIONAL on the plot already having that feature, NOT an unconditional `requires.build` (`CvPlayer::canBuild:7550`); it ALSO store-inverts to `tech.enables.builds`. Zero `time`/`production` + `remove:false` omitted. Edits → post-migration phase (owner). |
+| `TerrainStructs`/`TerrainStruct` `{TerrainType,PrereqTech,iTime}` | `produces.terraform[].{terrain, tech?, time?}` | Per-terrain terraform time + tech gate (`CvPlayer::canBuild:7556`). 9 builds. |
+| `iCost` | `cost.gold` | Gold spent on the build (`CvPlayer::getBuildCost:7609`, × gamespeed). Cost-vs-costs convention (a base intrinsic cost, not a multiplier family). Becomes important for BuildingInfo/UnitInfo later (owner). |
+| `iTime` | `cost.time` | Base worker-turns (`CvPlot::getBuildTime:7568`); always emitted (incl. 0). **`iTime < 0` is the build-DISABLED sentinel** (`CvPlot::canBuild:3345`) — carried faithfully. |
+| `Button` | `ui.art.icon` | The build's action button (the IMPROVEMENT it lays carries NO `<Button>` — it lives on the build). |
+| `HotKey` / `iHotKeyPriority` / `bShiftDown` / `bCtrlDown` / `bAltDown` | `ui.{hotkey,hotKeyPriority,shiftDown,ctrlDown,altDown}` | `CvHotkeyInfo` base-class key triggers (Build is the FIRST hotkey-bearing entity migrated, sets the clean shape per `ART_BLOCK`: bools only when true, priority only when non-zero, **`HotKey "0"` = no-hotkey placeholder → dropped**, 65 builds). |
+| `EntityEvent` | `world.art.entityEvent` | The on-map worker ANIMATION (`ENTITY_EVENT_SHOVEL/IRRIGATE/BUILD/…`), EXE-bound (`getEntityEvent` DllExport). Added to `curate_common.ART_BLOCK`. |
+| `bKill` | `identity.consumesUnit` | The build CONSUMES the worker on completion (`isKill`; owner: "isConsumed" — gatherers / great farmers / worker ships). 94 builds. ⚑ **FUTURE (owner 2026-06-16):** floated moving this to the worker UNIT as an `isConsumed` variable — BUT that would break correct current behaviour, since the SAME unit does both consuming and NON-consuming builds (a boat is NOT consumed when placing a seaweed gatherer, + a few others — and getting that wrong is "mightily annoying for AI"). So consume-or-not is genuinely a **per-BUILD** decision, which is exactly the build-keyed model here. Any unit-side relocation must preserve the per-build distinction — DEFERRED to the Unit pass / a separate ticket, decided then; kept build-keyed (`consumesUnit`) until then. |
+| `ObsoleteTech` | (store) `tech.obsoletes.builds` | Drop from the build (store-inverted; tech obsoletes the build). |
+| `MissionType` | — (DROP) | RUNTIME-assigned (`m_iMissionType`, `NO_MISSION` default, `setMissionType`), NOT XML-backed — never on the XML record. `getMissionType` is DllExport but reads the runtime value. |
+| `MapCategoryTypes` | — (DROP, 0/304) | A live placement gate (`CvPlot::canBuild:3406` `isMapCategory(info)`) but **SPACEMAP-related** (owner 2026-06-16) → handled via existing tooling when spacemap is fixed properly. No build data today. |
+| `PlaceBonusTypes` | — (DROP, 0/304) | A SPECIAL place-a-bonus struct, **dropped** (owner 2026-06-16). The place-a-bonus capability belongs to the BUILD as canonical tooling — concretely the `BUILD_BONUS_*` builds lay an `IMPROVEMENT_BONUS_*` whose own `bPlacesBonus`/`BonusChange` spawns the bonus (the improvement-side mechanic, parked on improvement identity, its own pass). The special struct + the **Great Farmer's unit-side `UnitInfo.PlaceBonusTypes`** hijack are the hacks to retire; the Great Farmer is to be reworked to ADHERE to the build tooling (Unit pass / post-migration). |
+| `Categories` | — (DROP, 0/304) | Dead: no `getBuildInfo(...).getCategory` consumer (same as Terrain/Improvement's dead `Categories`). |
+
+*Toolkit: `curate_build.py` (bespoke, modeled on `curate_victory.py`); added `EntityEvent → world.art.entityEvent` to
+`curate_common.ART_BLOCK`. `BuildInfo` was already registered in `store.ENTITIES` + its edges in `PREREQ_FIELDS`
+(PrereqTech, PrereqBonusTypes, per-feature/terrain PrereqTech → builds) + `OBSOLETE_FIELDS` (ObsoleteTech). The
+`produces` section is a NEW reserved section (owner-approved 2026-06-16) — the build-OUTCOME home; #430 reads it as the
+worker-action outcome system.*

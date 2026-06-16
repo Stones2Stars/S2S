@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_GROW_FOREST",
+ "description": "TXT_KEY_BUILD_GROW_FOREST",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_GROW_FOREST"
+ },
+ "cost": {
+  "gold": 80,
+  "time": 1000
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/TerrainFeatures/Forest.dds,Art/Interface/Buttons/BaseTerrain_TerrainFeatures_Atlas.dds,3,3"
+  },
+  "hotkey": "KB_S",
+  "hotKeyPriority": 1,
+  "shiftDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

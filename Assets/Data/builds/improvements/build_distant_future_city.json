@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_DISTANT_FUTURE_CITY",
+ "description": "TXT_KEY_BUILD_DISTANT_FUTURE_CITY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TIME_REVERSAL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_DISTANT_FUTURE_CITY"
+ },
+ "cost": {
+  "gold": 400,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/distant_future_city.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

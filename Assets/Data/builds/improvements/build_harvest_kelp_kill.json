@@ -1,0 +1,36 @@
+{
+ "type": "BUILD_HARVEST_KELP_KILL",
+ "description": "TXT_KEY_BUILD_HARVEST_KELP_KILL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FISHING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_HARVEST_KELP"
+ },
+ "cost": {
+  "gold": 12,
+  "time": 250
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/terrainfeatures/kelpforest.dds"
+  },
+  "hotkey": "KB_F",
+  "hotKeyPriority": 1
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "consumesUnit": true
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_NEUTRON_STAR_COLONY",
+ "description": "TXT_KEY_BUILD_NEUTRON_STAR_COLONY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NEUTRONIUM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_NEUTRON_STAR_COLONY"
+ },
+ "cost": {
+  "gold": 700,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/neutron_star_colony.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

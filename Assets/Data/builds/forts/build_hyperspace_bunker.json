@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_HYPERSPACE_BUNKER",
+ "description": "TXT_KEY_BUILD_HYPERSPACE_BUNKER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COSMIC_WARFARE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_HYPERSPACE_BUNKER"
+ },
+ "cost": {
+  "gold": 400,
+  "time": 3000
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/hyperspace_bunker.dds"
+  },
+  "hotkey": "KB_F"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

@@ -1,0 +1,46 @@
+{
+ "type": "BUILD_LIGHTHOUSE_GREAT_BARRIER_REEF",
+ "description": "TXT_KEY_BUILD_LIGHTHOUSE_GREAT_BARRIER_REEF",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_LIGHTHOUSE_GREAT_BARRIER_REEF",
+  "featureChange": "FEATURE_GREAT_BARRIER_REEF_LIGHTHOUSE",
+  "features": [
+   {
+    "feature": "FEATURE_PLATY_GREAT_BARRIER",
+    "time": 800,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_GREAT_BARRIER_REEF_BEACON",
+    "time": 400,
+    "remove": true
+   }
+  ]
+ },
+ "cost": {
+  "gold": 100,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/builds/tower.dds"
+  },
+  "hotkey": "KB_F",
+  "hotKeyPriority": 1
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

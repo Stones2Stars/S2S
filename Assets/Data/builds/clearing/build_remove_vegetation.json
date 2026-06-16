@@ -1,0 +1,102 @@
+{
+ "type": "BUILD_REMOVE_VEGETATION",
+ "description": "TXT_KEY_BUILD_REMOVE_VEGETATION",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BRONZE_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "features": [
+   {
+    "feature": "FEATURE_FOREST",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "production": 40,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST_ANCIENT",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 500,
+    "production": 60,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST_YOUNG",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "production": 30,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST_BURNT",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 400,
+    "production": 5,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_BAMBOO",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "production": 20,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_CACTUS",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "production": 5,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_MANGROVE",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 400,
+    "production": 20,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_JUNGLE",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 400,
+    "production": 20,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_SAVANNA",
+    "time": 300,
+    "production": 10,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_VERY_TALL_GRASS",
+    "time": 300,
+    "production": 10,
+    "remove": true
+   }
+  ]
+ },
+ "cost": {
+  "gold": 20,
+  "time": 0
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Builds/BuildChopDown.dds,Art/Interface/Buttons/Actions_Builds_LeaderHeads_Specialists_Atlas.dds,7,8"
+  },
+  "hotkey": "KB_C",
+  "altDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_CHOP"
+  }
+ }
+}

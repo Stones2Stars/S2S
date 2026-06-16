@@ -1,0 +1,41 @@
+{
+ "type": "BUILD_HARVEST_KELP",
+ "description": "TXT_KEY_BUILD_HARVEST_KELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SAILING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_HARVEST_KELP",
+  "features": [
+   {
+    "feature": "FEATURE_ICE",
+    "tech": "TECH_MACHINE_LEARNING",
+    "time": 300,
+    "remove": true
+   }
+  ]
+ },
+ "cost": {
+  "gold": 12,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/terrainfeatures/kelpforest.dds"
+  },
+  "hotkey": "KB_F",
+  "hotKeyPriority": 1
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

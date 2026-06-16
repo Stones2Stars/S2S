@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_SPACE_STATION_LV1",
+ "description": "TXT_KEY_BUILD_SPACE_STATION_LV1",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SPACE_STATIONS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_SPACE_STATION_LV1"
+ },
+ "cost": {
+  "gold": 250,
+  "time": 6000
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/space_station_1.dds"
+  },
+  "hotkey": "KB_M"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

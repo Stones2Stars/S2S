@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_LUNAR_HABITATION_COMPLEX",
+ "description": "TXT_KEY_BUILD_LUNAR_HABITATION_COMPLEX",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_MANUFACTURING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_LUNAR_HABITATION_COMPLEX"
+ },
+ "cost": {
+  "gold": 3000,
+  "time": 1000
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Structures/Improvements/habitats/button.dds"
+  },
+  "hotkey": "KB_L"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

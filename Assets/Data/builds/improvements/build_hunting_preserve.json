@@ -1,0 +1,33 @@
+{
+ "type": "BUILD_HUNTING_PRESERVE",
+ "description": "TXT_KEY_BUILD_HUNTING_PRESERVE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MONARCHY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_HUNTING_PRESERVE"
+ },
+ "cost": {
+  "gold": 40,
+  "time": 400
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Builds/BuildCamp.dds,Art/Interface/Buttons/Actions_Builds_LeaderHeads_Specialists_Atlas.dds,1,7"
+  },
+  "hotkey": "KB_H",
+  "hotKeyPriority": 1
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

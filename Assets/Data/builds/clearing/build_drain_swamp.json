@@ -1,0 +1,44 @@
+{
+ "type": "BUILD_DRAIN_SWAMP",
+ "description": "TXT_KEY_BUILD_DRAIN_SWAMP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CANAL_SYSTEMS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "features": [
+   {
+    "feature": "FEATURE_SWAMP",
+    "time": 800,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_PEAT_BOG",
+    "time": 800,
+    "remove": true
+   }
+  ]
+ },
+ "cost": {
+  "gold": 60,
+  "time": 0
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Builds/BuildChopDown.dds,Art/interface/buttons/mainmenu_techscreen_worldbuilder_popups_atlas.dds,4,2"
+  },
+  "hotkey": "KB_C",
+  "altDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_IRRIGATE"
+  }
+ }
+}

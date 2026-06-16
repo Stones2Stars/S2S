@@ -1,0 +1,33 @@
+{
+ "type": "BUILD_HYDRO_DAM",
+ "description": "TXT_KEY_BUILD_IMPROVEMENT_HYDRO_DAM",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HYDROELECTRICITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_HYDRO_DAM"
+ },
+ "cost": {
+  "gold": 200,
+  "time": 1200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/hydro_plant.dds"
+  },
+  "hotkey": "KB_W",
+  "shiftDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

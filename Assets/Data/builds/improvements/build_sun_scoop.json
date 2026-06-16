@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_SUN_SCOOP",
+ "description": "TXT_KEY_BUILD_SUN_SCOOP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STAR_LIFTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_SUN_SCOOP"
+ },
+ "cost": {
+  "gold": 500,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/sun_scoop.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

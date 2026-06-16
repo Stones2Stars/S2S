@@ -1,0 +1,104 @@
+{
+ "type": "BUILD_WINDMILL",
+ "description": "TXT_KEY_BUILD_WINDMILL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WINDMILLS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_WINDMILL",
+  "features": [
+   {
+    "feature": "FEATURE_JUNGLE",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 400,
+    "production": 20,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_MANGROVE",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 400,
+    "production": 20,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "production": 40,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST_ANCIENT",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 500,
+    "production": 60,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST_YOUNG",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "production": 30,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST_BURNT",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 400,
+    "production": 5,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_SWAMP",
+    "tech": "TECH_CANAL_SYSTEMS",
+    "time": 800,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_PEAT_BOG",
+    "tech": "TECH_CANAL_SYSTEMS",
+    "time": 800,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_BAMBOO",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "production": 20,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_TAR_PIT",
+    "time": 200
+   },
+   {
+    "feature": "FEATURE_CRATER",
+    "time": 200
+   }
+  ]
+ },
+ "cost": {
+  "gold": 120,
+  "time": 500
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Builds/BuildWindMill.dds,Art/Interface/Buttons/Actions_Builds_LeaderHeads_Specialists_Atlas.dds,5,8"
+  },
+  "hotkey": "KB_W",
+  "shiftDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

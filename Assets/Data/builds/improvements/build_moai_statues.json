@@ -1,0 +1,107 @@
+{
+ "type": "BUILD_MOAI_STATUES",
+ "description": "TXT_KEY_BUILD_MOAI",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEGALITH_CONSTRUCTION",
+     "scope": "team"
+    },
+    {
+     "type": "BONUS_RAPA_NUI",
+     "scope": "plot",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_MOAI",
+  "features": [
+   {
+    "feature": "FEATURE_JUNGLE",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 400,
+    "production": 20,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_MANGROVE",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 400,
+    "production": 20,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "production": 40,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST_ANCIENT",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "production": 40,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_BAMBOO",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST_YOUNG",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 200,
+    "production": 20,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST_BURNT",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 400,
+    "production": 5,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_CITY_RUINS",
+    "time": 200,
+    "production": 40,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_ARCOLOGY_RUINS",
+    "time": 200,
+    "production": 40,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_TAR_PIT",
+    "time": 200
+   },
+   {
+    "feature": "FEATURE_CRATER",
+    "time": 200
+   }
+  ]
+ },
+ "cost": {
+  "gold": 5,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/moaiimprovement.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

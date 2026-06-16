@@ -1,0 +1,56 @@
+{
+ "type": "BUILD_VACTRAIN",
+ "description": "TXT_KEY_BUILD_VACTRAIN",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SUPERSONIC_RAILS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "route": "ROUTE_VACTRAIN",
+  "features": [
+   {
+    "feature": "FEATURE_VOLCANO_DORMANT",
+    "tech": "TECH_SKYROADS"
+   },
+   {
+    "feature": "FEATURE_VOLCANO_ACTIVE",
+    "tech": "TECH_SKYROADS"
+   }
+  ],
+  "terraform": [
+   {
+    "terrain": "TERRAIN_DUNES",
+    "tech": "TECH_SKYROADS"
+   },
+   {
+    "terrain": "TERRAIN_ICE",
+    "tech": "TECH_SKYROADS"
+   },
+   {
+    "terrain": "TERRAIN_PEAK",
+    "tech": "TECH_SKYROADS"
+   }
+  ]
+ },
+ "cost": {
+  "gold": 200,
+  "time": 800
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/hyperloop.dds"
+  },
+  "hotkey": "KB_R"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_SHOVEL"
+  }
+ }
+}

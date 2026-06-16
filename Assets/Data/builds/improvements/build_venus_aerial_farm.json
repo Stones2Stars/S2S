@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_VENUS_AERIAL_FARM",
+ "description": "TXT_KEY_BUILD_VENUS_AERIAL_FARM",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BOTANICAL_ALCHEMY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_VENUS_AERIAL_FARM"
+ },
+ "cost": {
+  "gold": 250,
+  "time": 4000
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/venus_aerial_farm.dds"
+  },
+  "hotkey": "KB_F"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

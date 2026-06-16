@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_OBSERVABLE_UNIVERSE_COLONY",
+ "description": "TXT_KEY_BUILD_OBSERVABLE_UNIVERSE_COLONY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CONTROLLED_INFLATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_OBSERVABLE_UNIVERSE_COLONY"
+ },
+ "cost": {
+  "gold": 700,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/observable_universe_colony.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

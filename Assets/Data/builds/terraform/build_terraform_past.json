@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_TERRAFORM_PAST",
+ "description": "TXT_KEY_BUILD_TERRAFORM_PAST",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TIME_REVERSAL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_TERRAFORM_PAST",
+  "terrainChange": "TERRAIN_DISTANT_PAST"
+ },
+ "cost": {
+  "gold": 30,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/worldbuilder/distant_past.dds"
+  },
+  "hotkey": "KB_T",
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

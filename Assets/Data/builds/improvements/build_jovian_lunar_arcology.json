@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_JOVIAN_LUNAR_ARCOLOGY",
+ "description": "TXT_KEY_BUILD_JOVIAN_LUNAR_ARCOLOGY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LUNAR_MEGASTRUCTURES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_JOVIAN_LUNAR_ARCOLOGY"
+ },
+ "cost": {
+  "gold": 500,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/jovian_lunar_arcology.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

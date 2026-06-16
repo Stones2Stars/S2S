@@ -1,0 +1,42 @@
+{
+ "type": "BUILD_TERRAFORMED_PLANET",
+ "description": "TXT_KEY_BUILD_TERRAFORMED_PLANET",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECOSYNTHESIS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_TERRAFORMED_PLANET",
+  "features": [
+   {
+    "feature": "FEATURE_HOT_JUPITER",
+    "tech": "TECH_JOVIAN_TERRAFORMING"
+   },
+   {
+    "feature": "FEATURE_MINI_NEPTUNE",
+    "tech": "TECH_JOVIAN_TERRAFORMING"
+   }
+  ]
+ },
+ "cost": {
+  "gold": 700,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/terraformed_planet_improvement.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_TERRAFORM_FUTURE",
+ "description": "TXT_KEY_BUILD_TERRAFORM_FUTURE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TIME_REVERSAL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_TERRAFORM_FUTURE",
+  "terrainChange": "TERRAIN_DISTANT_FUTURE"
+ },
+ "cost": {
+  "gold": 30,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/worldbuilder/distant_future.dds"
+  },
+  "hotkey": "KB_T",
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

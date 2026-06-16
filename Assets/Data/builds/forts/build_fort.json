@@ -1,0 +1,33 @@
+{
+ "type": "BUILD_FORT",
+ "description": "TXT_KEY_BUILD_FORT",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MATHEMATICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_FORT"
+ },
+ "cost": {
+  "gold": 200,
+  "time": 1000
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Builds/BuildFort.dds,Art/Interface/Buttons/Actions_Builds_LeaderHeads_Specialists_Atlas.dds,7,9"
+  },
+  "hotkey": "KB_F",
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

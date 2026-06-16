@@ -1,0 +1,31 @@
+{
+ "type": "BUILD_DESERT_CAMP",
+ "description": "TXT_KEY_BUILD_DESERT_CAMP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_DESERT_CAMP"
+ },
+ "cost": {
+  "gold": 20,
+  "time": 400
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/desert_camp.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

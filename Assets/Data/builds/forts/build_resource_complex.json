@@ -1,0 +1,33 @@
+{
+ "type": "BUILD_RESOURCE_COMPLEX",
+ "description": "TXT_KEY_BUILD_WOODEN_PALISADE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_METAMATERIALS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_RESOURCE_COMPLEX"
+ },
+ "cost": {
+  "gold": 1400,
+  "time": 2000
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Builds/BuildTown.dds,Art/Interface/Buttons/Actions_Builds_LeaderHeads_Specialists_Atlas.dds,3,10"
+  },
+  "hotkey": "KB_F",
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

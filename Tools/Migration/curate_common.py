@@ -53,6 +53,7 @@ ART_BLOCK = {
     "EffectType": "world.art.effect.type", "iEffectProbability": "world.art.effect.probability",  # cosmetic bird-scatter (async RNG, active-player-only) + its trigger chance — grouped (verified CvUnit.cpp:4996)
     "ArtStyleType": "world.art.style", "UnitArtStyleType": "world.art.unitStyle",
     "DefaultPlayerColor": "world.art.playerColor",  # civ render colour (EXE-bound int FK), beside the civ's world art
+    "EntityEvent": "world.art.entityEvent",  # Build: the on-map worker animation (ENTITY_EVENT_SHOVEL/IRRIGATE/…), EXE-bound (getEntityEvent DllExport)
     # --- sound (flat: audio is itself the asset) ---
     "FootstepSounds": "sound.footsteps", "WorldSoundscapeAudioScript": "sound.soundscape",
     "GrowthSound": "sound.growth", "ConstructSound": "sound.construct",

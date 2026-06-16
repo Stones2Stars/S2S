@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_CISLUNAR_EXPANSION_MODULE",
+ "description": "TXT_KEY_BUILD_CISLUNAR_EXPANSION_MODULE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORBITAL_MEGASTRUCTURES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_CISLUNAR_EXPANSION_MODULE"
+ },
+ "cost": {
+  "gold": 700,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/expanded_habitat.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

@@ -1,0 +1,37 @@
+{
+ "type": "BUILD_WOODEN_WATCHTOWER_KILL",
+ "description": "TXT_KEY_BUILD_WOODEN_WATCHTOWER_KILL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CARPENTRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_WOODEN_WATCHTOWER"
+ },
+ "cost": {
+  "gold": 20,
+  "time": 205
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/tower/art/wooden_tower.dds"
+  },
+  "hotkey": "KB_F",
+  "shiftDown": true,
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "consumesUnit": true
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_CISLUNAR_BASE",
+ "description": "TXT_KEY_BUILD_CISLUNAR_BASE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ION_BEAMS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_CISLUNAR_BASE"
+ },
+ "cost": {
+  "gold": 150,
+  "time": 2000
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/cislunar_military_base.dds"
+  },
+  "hotkey": "KB_F"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

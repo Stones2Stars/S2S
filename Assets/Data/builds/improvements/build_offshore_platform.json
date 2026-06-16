@@ -1,0 +1,43 @@
+{
+ "type": "BUILD_OFFSHORE_PLATFORM",
+ "description": "TXT_KEY_BUILD_OFFSHORE_PLATFORM",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLASTICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_OFFSHORE_PLATFORM",
+  "features": [
+   {
+    "feature": "FEATURE_ICE",
+    "tech": "TECH_COMBUSTION",
+    "time": 300,
+    "remove": true
+   }
+  ]
+ },
+ "cost": {
+  "gold": 60,
+  "time": 300
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Builds/BuildOffshorePlatform.dds,Art/Interface/Buttons/Actions_Builds_LeaderHeads_Specialists_Atlas.dds,4,9"
+  },
+  "hotkey": "KB_O"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "consumesUnit": true
+ }
+}

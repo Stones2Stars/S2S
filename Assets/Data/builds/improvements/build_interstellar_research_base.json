@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_INTERSTELLAR_RESEARCH_BASE",
+ "description": "TXT_KEY_BUILD_INTERSTELLAR_RESEARCH_BASE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANET_SCOUTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_INTERSTELLAR_RESEARCH_BASE"
+ },
+ "cost": {
+  "gold": 700,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/interstellar_research_base.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

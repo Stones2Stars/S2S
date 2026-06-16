@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_SOLAR_SYSTEM_BASE",
+ "description": "TXT_KEY_BUILD_SOLAR_SYSTEM_BASE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SOLAR_ORDNANCE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_SOLAR_SYSTEM_BASE"
+ },
+ "cost": {
+  "gold": 250,
+  "time": 4000
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/deep_space_military_base.dds"
+  },
+  "hotkey": "KB_F"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

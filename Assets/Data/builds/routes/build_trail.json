@@ -1,0 +1,31 @@
+{
+ "type": "BUILD_TRAIL",
+ "description": "TXT_KEY_BUILD_TRAIL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRAILS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "route": "ROUTE_TRAIL"
+ },
+ "cost": {
+  "time": 150
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/BuildPath.dds"
+  },
+  "hotkey": "KB_R"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_SHOVEL"
+  }
+ }
+}

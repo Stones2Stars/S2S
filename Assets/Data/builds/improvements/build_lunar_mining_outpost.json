@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_LUNAR_MINING_OUTPOST",
+ "description": "TXT_KEY_BUILD_LUNAR_MINING_OUTPOST",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LUNAR_COLONIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_LUNAR_MINING_OUTPOST"
+ },
+ "cost": {
+  "gold": 700,
+  "time": 2000
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Structures/Improvements/habitats/button.dds"
+  },
+  "hotkey": "KB_L"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

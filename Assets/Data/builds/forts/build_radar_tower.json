@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_RADAR_TOWER",
+ "description": "TXT_KEY_BUILD_RADAR_TOWER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RADAR",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_RADAR_TOWER"
+ },
+ "cost": {
+  "gold": 200,
+  "time": 800
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Structures/Improvements/radar/radar_button.dds"
+  },
+  "hotkey": "KB_F",
+  "shiftDown": true,
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

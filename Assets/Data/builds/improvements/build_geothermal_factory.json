@@ -1,0 +1,33 @@
+{
+ "type": "BUILD_GEOTHERMAL_FACTORY",
+ "description": "TXT_KEY_BUILD_GEOTHERMAL_FACTORY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_VOLCANOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_GEOTHERMAL_FACTORY"
+ },
+ "cost": {
+  "gold": 600,
+  "time": 2000
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/electricity/art/geothermalplant.dds"
+  },
+  "hotkey": "KB_M",
+  "hotKeyPriority": 1
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_MINE"
+  }
+ }
+}

@@ -1,0 +1,44 @@
+{
+ "type": "BUILD_SANITIZE",
+ "description": "TXT_KEY_BUILD_SANITIZE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GENE_MANIPULATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "features": [
+   {
+    "feature": "FEATURE_INFECTIOUS_SMOG",
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_PLAGUED_SMOG",
+    "tech": "TECH_ARTIFICIAL_LIFE",
+    "time": 400,
+    "remove": true
+   }
+  ]
+ },
+ "cost": {
+  "gold": 600,
+  "time": 600
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Actions/Sanitize.dds"
+  },
+  "hotkey": "KB_S",
+  "hotKeyPriority": 1
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_IRRIGATE"
+  }
+ }
+}

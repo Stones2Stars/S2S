@@ -1,0 +1,64 @@
+{
+ "type": "BUILD_COTTAGE",
+ "description": "TXT_KEY_BUILD_COTTAGE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_COTTAGE",
+  "features": [
+   {
+    "feature": "FEATURE_SWAMP",
+    "tech": "TECH_CANAL_SYSTEMS",
+    "time": 800,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_PEAT_BOG",
+    "tech": "TECH_CANAL_SYSTEMS",
+    "time": 800,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_BAMBOO",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "production": 20,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_CACTUS",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "production": 5,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_TAR_PIT",
+    "time": 200
+   }
+  ]
+ },
+ "cost": {
+  "gold": 60,
+  "time": 400
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Builds/BuildCottage.dds,Art/Interface/Buttons/Actions_Builds_LeaderHeads_Specialists_Atlas.dds,2,7"
+  },
+  "hotkey": "KB_T"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

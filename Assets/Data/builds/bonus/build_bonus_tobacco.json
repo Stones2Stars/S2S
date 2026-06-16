@@ -1,0 +1,24 @@
+{
+ "type": "BUILD_BONUS_TOBACCO",
+ "description": "TXT_KEY_BUILD_BONUS_TOBACCO",
+ "produces": {
+  "improvement": "IMPROVEMENT_BONUS_TOBACCO"
+ },
+ "cost": {
+  "gold": 30,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Bonus/Tobacco.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_IRRIGATE"
+  }
+ },
+ "identity": {
+  "consumesUnit": true
+ }
+}

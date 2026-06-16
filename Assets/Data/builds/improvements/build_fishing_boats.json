@@ -1,0 +1,44 @@
+{
+ "type": "BUILD_FISHING_BOATS",
+ "description": "TXT_KEY_BUILD_FISHING_BOATS",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FISHING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_FISHING_BOATS",
+  "features": [
+   {
+    "feature": "FEATURE_ICE",
+    "tech": "TECH_MACHINE_LEARNING",
+    "time": 300,
+    "remove": true
+   }
+  ]
+ },
+ "cost": {
+  "gold": 20,
+  "time": 100
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Builds/BuildFishingBoats.dds,Art/Interface/Buttons/Actions_Builds_LeaderHeads_Specialists_Atlas.dds,7,7"
+  },
+  "hotkey": "KB_F",
+  "hotKeyPriority": 1
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "consumesUnit": true
+ }
+}

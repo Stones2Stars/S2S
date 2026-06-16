@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_COLONY_HABITAT_MEDIUM",
+ "description": "TXT_KEY_BUILD_COLONY_HABITAT_MEDIUM",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LUNAR_MANUFACTURING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_COLONY_HABITAT_MEDIUM"
+ },
+ "cost": {
+  "gold": 700,
+  "time": 1500
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Structures/Improvements/habitats/button.dds"
+  },
+  "hotkey": "KB_T"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

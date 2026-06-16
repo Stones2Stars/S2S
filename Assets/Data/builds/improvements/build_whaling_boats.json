@@ -1,0 +1,37 @@
+{
+ "type": "BUILD_WHALING_BOATS",
+ "description": "TXT_KEY_BUILD_WHALING_BOATS",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HARPOON_MAKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_WHALING_BOATS"
+ },
+ "cost": {
+  "gold": 40,
+  "time": 100
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Builds/BuildWhalingBoats.dds,Art/Interface/Buttons/Actions_Builds_LeaderHeads_Specialists_Atlas.dds,6,9"
+  },
+  "hotkey": "KB_W",
+  "hotKeyPriority": 1,
+  "shiftDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "consumesUnit": true
+ }
+}

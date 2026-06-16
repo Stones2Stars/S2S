@@ -1,0 +1,36 @@
+{
+ "type": "BUILD_GATHERING_CAMP_KILL",
+ "description": "TXT_KEY_BUILD_GATHERING_CAMP_KILL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SHELTER_BUILDING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_GATHERING_CAMP"
+ },
+ "cost": {
+  "gold": 10,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/Button_GrainGather.dds"
+  },
+  "hotkey": "KB_F",
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "consumesUnit": true
+ }
+}

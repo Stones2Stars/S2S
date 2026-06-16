@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_STEEL_WATCHTOWER",
+ "description": "TXT_KEY_BUILD_STEEL_WATCHTOWER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STEEL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_STEEL_WATCHTOWER"
+ },
+ "cost": {
+  "gold": 120,
+  "time": 600
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/tower/art/steel_tower.dds"
+  },
+  "hotkey": "KB_F",
+  "shiftDown": true,
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

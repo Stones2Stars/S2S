@@ -1,0 +1,96 @@
+{
+ "type": "BUILD_PAVED_ROAD",
+ "description": "TXT_KEY_BUILD_PAVED_ROAD",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PAVED_ROADS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "route": "ROUTE_PAVED_ROAD",
+  "features": [
+   {
+    "feature": "FEATURE_CRATER",
+    "tech": "TECH_EXPLOSIVES"
+   },
+   {
+    "feature": "FEATURE_TAR_PIT",
+    "tech": "TECH_GEOLOGY"
+   },
+   {
+    "feature": "FEATURE_VOLCANO_DORMANT",
+    "tech": "TECH_MOUNTAINEERING"
+   },
+   {
+    "feature": "FEATURE_VOLCANO_ACTIVE",
+    "tech": "TECH_DUMMY"
+   }
+  ],
+  "terraform": [
+   {
+    "terrain": "TERRAIN_BADLAND",
+    "tech": "TECH_EXPLOSIVES"
+   },
+   {
+    "terrain": "TERRAIN_DESERT",
+    "tech": "TECH_WEATHER_FORECASTING"
+   },
+   {
+    "terrain": "TERRAIN_SALT_FLATS",
+    "tech": "TECH_RAILROAD"
+   },
+   {
+    "terrain": "TERRAIN_TUNDRA",
+    "tech": "TECH_RAILROAD"
+   },
+   {
+    "terrain": "TERRAIN_MARSH",
+    "tech": "TECH_RAILROAD"
+   },
+   {
+    "terrain": "TERRAIN_HILL",
+    "tech": "TECH_SURVEYING"
+   },
+   {
+    "terrain": "TERRAIN_JAGGED",
+    "tech": "TECH_EXPLOSIVES"
+   },
+   {
+    "terrain": "TERRAIN_DUNES",
+    "tech": "TECH_DUMMY"
+   },
+   {
+    "terrain": "TERRAIN_PERMAFROST",
+    "tech": "TECH_RAILROAD"
+   },
+   {
+    "terrain": "TERRAIN_ICE",
+    "tech": "TECH_DUMMY"
+   },
+   {
+    "terrain": "TERRAIN_PEAK",
+    "tech": "TECH_MOUNTAINEERING"
+   }
+  ]
+ },
+ "cost": {
+  "gold": 8,
+  "time": 250
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/BuildPavedRoad.dds"
+  },
+  "hotkey": "KB_R"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_SHOVEL"
+  }
+ }
+}

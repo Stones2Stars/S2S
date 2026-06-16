@@ -1,0 +1,36 @@
+{
+ "type": "BUILD_FORTIFIED_CAVE_KILL",
+ "description": "TXT_KEY_BUILD_FORTIFIED_CAVE_KILL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SHELTER_BUILDING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_FORTIFIED_CAVE"
+ },
+ "cost": {
+  "gold": 20,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/interface/buttons/builds/fortified_cave.dds"
+  },
+  "hotkey": "KB_F",
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "consumesUnit": true
+ }
+}

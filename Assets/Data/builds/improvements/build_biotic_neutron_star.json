@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_BIOTIC_NEUTRON_STAR",
+ "description": "TXT_KEY_BUILD_BIOTIC_NEUTRON_STAR",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GRAND_UNIFICATION_BIOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_BIOTIC_NEUTRON_STAR"
+ },
+ "cost": {
+  "gold": 700,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/biotic_neutron_star.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

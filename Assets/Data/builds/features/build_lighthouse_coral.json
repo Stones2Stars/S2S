@@ -1,0 +1,52 @@
+{
+ "type": "BUILD_LIGHTHOUSE_CORAL",
+ "description": "TXT_KEY_BUILD_LIGHTHOUSE_CORAL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_LIGHTHOUSE_CORAL",
+  "featureChange": "FEATURE_CORAL_REEF_LIGHTHOUSE",
+  "features": [
+   {
+    "feature": "FEATURE_CORAL_REEF",
+    "time": 800,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_CORAL_REEF_BEACON",
+    "time": 400,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_ICE",
+    "tech": "TECH_MACHINE_LEARNING",
+    "time": 300,
+    "remove": true
+   }
+  ]
+ },
+ "cost": {
+  "gold": 80,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/builds/tower.dds"
+  },
+  "hotkey": "KB_F",
+  "hotKeyPriority": 1
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

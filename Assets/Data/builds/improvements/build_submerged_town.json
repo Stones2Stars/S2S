@@ -1,0 +1,127 @@
+{
+ "type": "BUILD_SUBMERGED_TOWN",
+ "description": "TXT_KEY_BUILD_SUBMERGED_TOWN",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MARINE_ARCHITECTURE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_SUBMERGED_TOWN",
+  "terraform": [
+   {
+    "terrain": "TERRAIN_COAST",
+    "tech": "TECH_MARINE_ARCHITECTURE"
+   },
+   {
+    "terrain": "TERRAIN_COAST_POLAR",
+    "tech": "TECH_MARINE_ARCHITECTURE"
+   },
+   {
+    "terrain": "TERRAIN_COAST_TROPICAL",
+    "tech": "TECH_MARINE_ARCHITECTURE"
+   },
+   {
+    "terrain": "TERRAIN_SEA",
+    "tech": "TECH_MARINE_ARCHITECTURE"
+   },
+   {
+    "terrain": "TERRAIN_SEA_POLAR",
+    "tech": "TECH_MARINE_ARCHITECTURE"
+   },
+   {
+    "terrain": "TERRAIN_SEA_TROPICAL",
+    "tech": "TECH_MARINE_ARCHITECTURE"
+   },
+   {
+    "terrain": "TERRAIN_LAKE_SHORE",
+    "tech": "TECH_MARINE_ARCHITECTURE"
+   },
+   {
+    "terrain": "TERRAIN_LAKE",
+    "tech": "TECH_MARINE_ARCHITECTURE"
+   },
+   {
+    "terrain": "TERRAIN_COAST_DEEP",
+    "tech": "TECH_SUPERSTRONG_ALLOYS"
+   },
+   {
+    "terrain": "TERRAIN_COAST_DEEP_POLAR",
+    "tech": "TECH_SUPERSTRONG_ALLOYS"
+   },
+   {
+    "terrain": "TERRAIN_COAST_DEEP_TROPICAL",
+    "tech": "TECH_SUPERSTRONG_ALLOYS"
+   },
+   {
+    "terrain": "TERRAIN_SEA_DEEP",
+    "tech": "TECH_SUPERSTRONG_ALLOYS",
+    "time": 300
+   },
+   {
+    "terrain": "TERRAIN_SEA_DEEP_POLAR",
+    "tech": "TECH_SUPERSTRONG_ALLOYS",
+    "time": 300
+   },
+   {
+    "terrain": "TERRAIN_SEA_DEEP_TROPICAL",
+    "tech": "TECH_SUPERSTRONG_ALLOYS",
+    "time": 300
+   },
+   {
+    "terrain": "TERRAIN_OCEAN",
+    "tech": "TECH_SUPERSTRONG_ALLOYS",
+    "time": 300
+   },
+   {
+    "terrain": "TERRAIN_OCEAN_POLAR",
+    "tech": "TECH_SUPERSTRONG_ALLOYS",
+    "time": 300
+   },
+   {
+    "terrain": "TERRAIN_OCEAN_TROPICAL",
+    "tech": "TECH_SUPERSTRONG_ALLOYS",
+    "time": 300
+   },
+   {
+    "terrain": "TERRAIN_TRENCH",
+    "tech": "TECH_ABYSS_COLONIZATION",
+    "time": 900
+   },
+   {
+    "terrain": "TERRAIN_TRENCH_POLAR",
+    "tech": "TECH_ABYSS_COLONIZATION",
+    "time": 900
+   },
+   {
+    "terrain": "TERRAIN_TRENCH_TROPICAL",
+    "tech": "TECH_ABYSS_COLONIZATION",
+    "time": 900
+   }
+  ]
+ },
+ "cost": {
+  "gold": 200,
+  "time": 300
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Units/Transport.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,5,5"
+  },
+  "hotkey": "KB_T",
+  "hotKeyPriority": 1
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "consumesUnit": true
+ }
+}

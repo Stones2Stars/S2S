@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_MARTIAN_MINE",
+ "description": "TXT_KEY_BUILD_MARTIAN_MINE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_EXTRACTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_MARTIAN_MINE"
+ },
+ "cost": {
+  "gold": 250,
+  "time": 4000
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/mars_mine.dds"
+  },
+  "hotkey": "KB_M"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

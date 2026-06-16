@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_MUSHROOM_GATHERER",
+ "description": "TXT_KEY_BUILD_MUSHROOM_GATHERER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_MUSHROOM_GATHERER"
+ },
+ "cost": {
+  "gold": 12,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/gatherer_mushroom.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

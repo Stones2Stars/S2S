@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_ARCHEOLOGICAL_SITE",
+ "description": "TXT_KEY_BUILD_ARCHEOLOGICAL_SITE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SCIENTIFIC_METHOD",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_ARCHEOLOGICAL_SITE"
+ },
+ "cost": {
+  "gold": 120,
+  "time": 500
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/Build_acheological_site.dds"
+  },
+  "hotkey": "KB_S",
+  "hotKeyPriority": 1,
+  "shiftDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_SHOVEL"
+  }
+ }
+}

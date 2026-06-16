@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_JOVIAN_LUNAR_BASE",
+ "description": "TXT_KEY_BUILD_JOVIAN_LUNAR_BASE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_KUIPER_BELT_EXPLORATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_JOVIAN_LUNAR_BASE"
+ },
+ "cost": {
+  "gold": 500,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/jovian_lunar_base.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

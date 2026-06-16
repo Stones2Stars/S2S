@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_COSMIC_EXPANSION_NODE",
+ "description": "TXT_KEY_BUILD_COSMIC_EXPANSION_NODE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DARK_ENERGY_HARVESTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_COSMIC_EXPANSION_NODE"
+ },
+ "cost": {
+  "gold": 1500,
+  "time": 3000
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/cosmic_expansion_node.dds"
+  },
+  "hotkey": "KB_M"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

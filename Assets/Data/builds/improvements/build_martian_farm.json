@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_MARTIAN_FARM",
+ "description": "TXT_KEY_BUILD_MARTIAN_FARM",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EXTRATERRESTRIAL_AGRICULTURE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_MARTIAN_FARM"
+ },
+ "cost": {
+  "gold": 250,
+  "time": 4000
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/martian_farm.dds"
+  },
+  "hotkey": "KB_F"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

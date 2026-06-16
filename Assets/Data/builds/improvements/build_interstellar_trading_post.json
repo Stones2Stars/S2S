@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_INTERSTELLAR_TRADING_POST",
+ "description": "TXT_KEY_BUILD_INTERSTELLAR_TRADING_POST",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INTERSTELLAR_TRADE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_INTERSTELLAR_TRADING_POST"
+ },
+ "cost": {
+  "gold": 500,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/interstellar_trading_post.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

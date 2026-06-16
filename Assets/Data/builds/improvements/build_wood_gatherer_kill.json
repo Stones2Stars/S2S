@@ -1,0 +1,35 @@
+{
+ "type": "BUILD_WOOD_GATHERER_KILL",
+ "description": "TXT_KEY_BUILD_WOOD_GATHERER_KILL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SIMPLE_WOOD_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_WOOD_GATHERER"
+ },
+ "cost": {
+  "gold": 4,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/Button_WoodGather.dds"
+  },
+  "hotkey": "KB_U"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "consumesUnit": true
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "type": "BUILD_BONUS_RABBIT",
+ "description": "TXT_KEY_BUILD_BONUS_RABBIT",
+ "produces": {
+  "improvement": "IMPROVEMENT_BONUS_RABBIT"
+ },
+ "cost": {
+  "gold": 30,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Bonus/Rabbits.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_IRRIGATE"
+  }
+ },
+ "identity": {
+  "consumesUnit": true
+ }
+}

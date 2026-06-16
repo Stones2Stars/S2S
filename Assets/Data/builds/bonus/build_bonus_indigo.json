@@ -1,0 +1,24 @@
+{
+ "type": "BUILD_BONUS_INDIGO",
+ "description": "TXT_KEY_BUILD_BONUS_INDIGO",
+ "produces": {
+  "improvement": "IMPROVEMENT_BONUS_INDIGO"
+ },
+ "cost": {
+  "gold": 30,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Bonus/Indigo.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_IRRIGATE"
+  }
+ },
+ "identity": {
+  "consumesUnit": true
+ }
+}

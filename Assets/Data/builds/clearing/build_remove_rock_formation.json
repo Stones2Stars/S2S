@@ -1,0 +1,155 @@
+{
+ "type": "BUILD_REMOVE_ROCK_FORMATION",
+ "description": "TXT_KEY_BUILD_REMOVE_ROCK_FORMATION",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EXPLOSIVES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "features": [
+   {
+    "feature": "FEATURE_POLAR_ROCK_ARCH",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_POLAR_ROCK_ARCH2",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_POLAR_ROCK_FORM1",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_POLAR_ROCK_FORM2",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_POLAR_ROCK_FORM3",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_POLAR_ROCK_FORM4",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_DARK_ROCK_ARCH",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_DARK_ROCK_ARCH2",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_DARK_ROCK_FORM1",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_DARK_ROCK_FORM2",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_DARK_ROCK_FORM3",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_DARK_ROCK_FORM4",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_ROCK_ARCH",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_ROCK_ARCH2",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_ROCK_FORM1",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_ROCK_FORM2",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_ROCK_FORM3",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_ROCK_FORM4",
+    "tech": "TECH_EXPLOSIVES",
+    "time": 800,
+    "production": 50,
+    "remove": true
+   }
+  ]
+ },
+ "cost": {
+  "gold": 120,
+  "time": 100
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/TechTree/Explosives.dds"
+  },
+  "hotkey": "KB_C",
+  "altDown": true
+ }
+}

@@ -1,0 +1,33 @@
+{
+ "type": "BUILD_EARLY_MOUNTAIN_MINE",
+ "description": "TXT_KEY_BUILD_EARLY_MOUNTAIN_MINE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MINING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_EARLY_MOUNTAIN_MINE"
+ },
+ "cost": {
+  "gold": 60,
+  "time": 300
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/Button_StoneToolsWorkshop.dds"
+  },
+  "hotkey": "KB_M",
+  "shiftDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_MINE"
+  }
+ }
+}

@@ -1,0 +1,45 @@
+{
+ "type": "BUILD_WHALING_SHIPS",
+ "description": "TXT_KEY_BUILD_WHALING_SHIPS",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMMERCIAL_WHALING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_WHALING_SHIPS",
+  "features": [
+   {
+    "feature": "FEATURE_ICE",
+    "tech": "TECH_MACHINE_LEARNING",
+    "time": 300,
+    "remove": true
+   }
+  ]
+ },
+ "cost": {
+  "gold": 80,
+  "time": 100
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Builds/BuildWhalingBoats.dds,Art/Interface/Buttons/Actions_Builds_LeaderHeads_Specialists_Atlas.dds,6,9"
+  },
+  "hotkey": "KB_W",
+  "hotKeyPriority": 1,
+  "shiftDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "consumesUnit": true
+ }
+}

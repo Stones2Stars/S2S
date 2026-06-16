@@ -1,0 +1,32 @@
+{
+ "type": "BUILD_RADIO_TOWER",
+ "description": "TXT_KEY_BUILD_RADIO_TOWER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RADIO",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_RADIO_TOWER"
+ },
+ "cost": {
+  "gold": 200,
+  "time": 600
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/BuildRadioTower.dds"
+  },
+  "hotkey": "KB_T"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ }
+}

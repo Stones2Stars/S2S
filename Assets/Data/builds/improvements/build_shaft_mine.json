@@ -1,0 +1,47 @@
+{
+ "type": "BUILD_SHAFT_MINE",
+ "description": "TXT_KEY_BUILD_SHAFT_MINE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EXPLOSIVES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_SHAFT_MINE",
+  "features": [
+   {
+    "feature": "FEATURE_SWAMP",
+    "tech": "TECH_CANAL_SYSTEMS",
+    "time": 800,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_PEAT_BOG",
+    "tech": "TECH_CANAL_SYSTEMS",
+    "time": 800,
+    "remove": true
+   }
+  ]
+ },
+ "cost": {
+  "gold": 80,
+  "time": 800
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/Explosives.dds"
+  },
+  "hotkey": "KB_M",
+  "shiftDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_MINE"
+  }
+ }
+}
