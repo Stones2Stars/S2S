@@ -1,0 +1,5 @@
+# build artifacts of the isolated readjson harness (rebuild via build.ps1)
+readjson.exe
+readjson.obj
+msvcr71.dll
+msvcp71.dll
