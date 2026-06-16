@@ -39,8 +39,9 @@ Extend `readJson` to implement **all** the new JSON-based logic — parse the fu
 `replaces`/`requires` trees, the modifier families `<family>.<scope>[.<member>].<unit>`, `grants`/`grants.repeatable`, the
 predicate tokens, count atoms, scopes) into the runtime structures the three machines consume. It is the **data-feed
 prerequisite**: the machines operate on the NEW vocabulary, not the old XML fields, so nothing computes until `readJson`
-populates them. Co-designed with the machines' input model (what `readJson` produces == what tally/modifier/enabler read).
-Plugs into the load seam at the single choke point (§3); during shadow it runs IN ADDITION to the XML load (§2).
+populates them. `readJson` is a pure CONSUMER — it loads the modder-authored JSON *shape* (defined by `data-model-spec.md`,
+NOT by `readJson`) into in-memory structures of that same shape; the machines read those. One shape, consumed here, read by
+the three. Runs as its own load path IN ADDITION to the XML load during shadow (§2/§3).
 
 **Build order: readJson + substrate → tally → modifier → enabler.** `readJson` and the substrate come first (no machine
 computes without parsed data on a scope spine); then the three machines, each interface-bounded, each deleting its slice of
