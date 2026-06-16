@@ -68,18 +68,38 @@ SHADOW** alongside the existing XML-driven machinery, behind **gated logging** (
 
 ---
 
-## 3. LOAD SEAM + EXE BOUNDARY — the fixed constraint (verified 2026-06-16)
+## 2b. BUILD PRINCIPLES — from scratch, avoid existing code (owner 2026-06-16)
 
-- **Single choke point:** `CvXMLLoadUtilitySet::SetGlobalClassInfo` → `pClassInfo->read(this)` (CvXMLLoadUtilitySet.cpp:1588).
-  `readJson` plugs in HERE — a `CvJsonLoadUtility` parallel to `CvXMLLoadUtility`, or a `readJson` path populating the **same
-  `CvInfoUtil` field wrappers** (the wrappers are format-agnostic; only the reader changes).
-- **Type resolution (reused as-is):** `GC.getInfoTypeForString` / `setInfoTypeFromString` (`m_infosMap`), then the post-parse
-  `GC.linkAllInfos()` (CvInfoUtil deferred-FK) + `GC.resolveDelayedResolution()` (legacy `SetOptionalVectorWithDelayedResolution`)
-  passes (CvXMLLoadUtilitySet.cpp:879/882). `readJson` resolves `enables`/`requires` FK refs through the same mechanism.
-- **EXE-bound surface (MUST preserve — the only hard data constraint):** `CvInfoBase` DllExport getters
-  (`getType`/`getTextKeyWide`/`getDescription`/`getText`/`getHelp`), the ~89 `getNum*Infos()`/`get*Info()` accessor pairs +
-  `getInfoTypeForString`, and a few art getters (`getArtInfo`, …). `read()` is NOT DllExport. Everything else is internal →
-  freely re-architected.
+- **★ THE MOD FITS THE NEW STRUCTURE — NOT THE REVERSE (owner 2026-06-16).** The cascade data model + engine are
+  authoritative; the mod's data/content is RESHAPED to fit them. We never constrain the new structure to match how the
+  current mod happens to work. **Two guardrails keep this honest:** (a) **PRESERVE SAVES** where possible (the name-tagged
+  soft save-format; `@SAVEBREAK` only when genuinely unavoidable); (b) **PRESERVE HOW THE GAME WORKS** — the *intended*
+  gameplay / player experience stays recognizable. (a)+(b) bound the rewrite: structure & internals are free, the played
+  game is not. *(This sharpens §2's "parity isn't the goal": we don't preserve the old IMPLEMENTATION's buggy numeric
+  outputs — the cascade corrects those — but we DO preserve the intended design the game is supposed to express.)*
+- **Build the 4 components FROM SCRATCH.** `readJson` + tally + modifier + enabler are written fresh, interface-bounded.
+- **External libraries OK where they make sense** — use **`picojson`** (header-only) for JSON parsing, rather than bending
+  the existing `CvXMLLoadUtility` XML machinery to JSON. **Already vendored and proven** under the VC7.1/C++03 toolchain — it
+  backs the existing `CvHttpServer` — so it's a known-good dependency, not a risk. Reuse that.
+- **ACTIVELY AVOID reusing existing engine code.** Do NOT thread the new path through `CvInfoUtil` / the old `read()` /
+  `SetGlobalClassInfo`. The old machinery is demolition fodder (§4), not a foundation. The new path is its OWN, parallel and
+  independent of the old during shadow (§2).
+- **The ONLY things kept/shared are the hard EXE boundary (§3)** — the type registry + the accessor surface the closed
+  `.exe` binds. Everything else is fresh.
+- **Sequence (owner): finish the specs, THEN prototype the 4 components.** The 3 machine specs are done (enabler/modifier/
+  tally); the `readJson` runtime-data-model is the remaining design (§1.4) before prototyping.
+
+## 3. EXE BOUNDARY — the only fixed constraint (verified 2026-06-16)
+
+- **`readJson` is a FRESH reader** (picojson → fresh runtime structures), NOT a reuse of `CvInfoUtil`/`CvXMLLoadUtility`/the
+  old `read()` path. It is its own load path, run IN ADDITION to the XML load during shadow (§2); at cutover the XML path
+  (`SetGlobalClassInfo` → `read()`, CvXMLLoadUtilitySet.cpp:1588) is deleted.
+- **The shared/kept pieces (EXE-bound, NOT "existing code to avoid"):** the **type registry** `GC.getInfoTypeForString` /
+  `setInfoTypeFromString` (`m_infosMap`, name↔index) — `readJson` uses it for FK resolution because the EXE binds the same
+  indices; and the **EXE-bound accessor surface**: `CvInfoBase` DllExport getters (`getType`/`getTextKeyWide`/`getDescription`/
+  `getText`/`getHelp`), the ~89 `getNum*Infos()`/`get*Info()` pairs, a few art getters (`getArtInfo`, …). `read()` is NOT
+  DllExport. During shadow the OLD objects still serve the EXE; at cutover the fresh structures must serve that surface (or it
+  is reworked) — a cutover detail, not a shadow one. Everything outside this boundary is freely built fresh.
 
 ---
 
