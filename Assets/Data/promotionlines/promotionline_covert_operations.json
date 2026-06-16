@@ -1,9 +1,32 @@
 {
  "type": "PROMOTIONLINE_COVERT_OPERATIONS",
  "description": "TXT_KEY_PROMOTIONLINE_COVERT_OPERATIONS",
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_HIDE_SEEK"
+  ]
+ },
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/CovertOperations1Promotion.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_SPY",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE",
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_MOUNTED"
+  ]
  }
 }

@@ -5,5 +5,17 @@
   "art": {
    "icon": "art/Buttons/Promotions/TransportFighters.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_PROMOTED_TRANSPORT_FIGHTERS"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_CRUISER",
+   "UNITCOMBAT_SUBMARINE",
+   "UNITCOMBAT_DESTROYER",
+   "UNITCOMBAT_BATTLESHIP",
+   "UNITCOMBAT_TRANSPORT"
+  ]
  }
 }

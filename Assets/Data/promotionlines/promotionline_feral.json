@@ -5,5 +5,15 @@
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/Feral1.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_WILD"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_BIRD_PENGUIN",
+   "UNITCOMBAT_REPTILE_TURTLE",
+   "UNITCOMBAT_SPECIES_NEANDERTHAL"
+  ]
  }
 }

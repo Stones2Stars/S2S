@@ -5,5 +5,11 @@
   "art": {
    "icon": "art/Buttons/Promotions/ScorchedEarth1Promotion.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_WEAPON_DIST_MEDIUM_RANGE_MISSILE",
+   "UNITCOMBAT_WEAPON_DIST_LONG_RANGE_MISSILE"
+  ]
  }
 }

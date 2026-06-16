@@ -5,5 +5,14 @@
   "art": {
    "icon": "art/Buttons/Promotions/PromotionNegligent.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_MISSIONARY",
+   "UNITCOMBAT_EXECUTIVE"
+  ]
  }
 }

@@ -5,5 +5,10 @@
   "art": {
    "icon": "art/Buttons/Promotions/PromotionLawful.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_LAW_ENFORCEMENT"
+  ]
  }
 }

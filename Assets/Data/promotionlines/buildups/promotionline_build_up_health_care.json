@@ -2,12 +2,27 @@
  "type": "PROMOTIONLINE_BUILD_UP_HEALTH_CARE",
  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_HEALTH_CARE",
  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_HEALTH_CARE_HELP",
+ "buildUp": {
+  "active": true
+ },
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/HealthCare1BuildUp.dds"
   }
  },
  "identity": {
-  "buildUp": true
+  "unitCombats": [
+   "UNITCOMBAT_HEALS_ALL"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_SPY",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE"
+  ]
  }
 }

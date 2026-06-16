@@ -5,5 +5,12 @@
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/shadowstalker1.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_STRIKE_TEAM",
+   "UNITCOMBAT_FELINE"
+  ]
  }
 }

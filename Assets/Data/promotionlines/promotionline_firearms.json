@@ -5,5 +5,14 @@
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/firearms1.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_WOODEN_SHIPS"
+  ],
+  "notOnDomains": [
+   "DOMAIN_LAND",
+   "DOMAIN_AIR"
+  ]
  }
 }

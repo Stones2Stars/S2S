@@ -5,5 +5,14 @@
   "art": {
    "icon": "art/Buttons/Promotions/Sophistication1Promotion.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_SPECIES_HUMAN"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_ANIMAL",
+   "UNITCOMBAT_PACIFIST"
+  ]
  }
 }

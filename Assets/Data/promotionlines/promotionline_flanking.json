@@ -5,5 +5,24 @@
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/Flanking1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,6,3"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_HELICOPTER",
+   "UNITCOMBAT_DESTROYER",
+   "UNITCOMBAT_TRANSPORT",
+   "UNITCOMBAT_SUBMARINE",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_ASSAULT_MECH",
+   "UNITCOMBAT_RECON"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ]
  }
 }

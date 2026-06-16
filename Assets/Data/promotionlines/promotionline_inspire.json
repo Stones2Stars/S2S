@@ -5,5 +5,13 @@
   "art": {
    "icon": "Art/Buttons/Promotions/Inspire1Promotion.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_ENTERTAINER"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ]
  }
 }

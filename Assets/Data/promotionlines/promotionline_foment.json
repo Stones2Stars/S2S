@@ -5,5 +5,13 @@
   "art": {
    "icon": "Art/Buttons/Promotions/Foment1Promotion.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_CRIMINAL"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ]
  }
 }

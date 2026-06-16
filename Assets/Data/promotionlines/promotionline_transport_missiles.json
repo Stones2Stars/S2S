@@ -5,5 +5,13 @@
   "art": {
    "icon": "art/Buttons/Promotions/TransportMissiles.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_PROMOTED_TRANSPORT_MISSILES"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_TRANSPORT"
+  ]
  }
 }

@@ -5,5 +5,10 @@
   "art": {
    "icon": "Art/Interface/buttons/Promotions/StatusTrespass.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_EXILE"
+  ]
  }
 }

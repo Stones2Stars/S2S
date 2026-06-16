@@ -1,9 +1,30 @@
 {
  "type": "PROMOTIONLINE_WARRIORS_INTUITION",
  "description": "TXT_KEY_PROMOTIONLINE_WARRIORS_INTUITION",
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_HIDE_SEEK"
+  ]
+ },
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/WarriorIntuition1Promotion.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_SPY",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE",
+   "UNITCOMBAT_CRIMINAL"
+  ]
  }
 }

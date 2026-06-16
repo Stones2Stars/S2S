@@ -5,5 +5,18 @@
   "art": {
    "icon": "art/Buttons/Promotions/PromotionNomadic.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_ANIMAL",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_TRADE",
+   "UNITCOMBAT_NOMAD",
+   "UNITCOMBAT_WHEELED"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ]
  }
 }

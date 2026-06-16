@@ -5,5 +5,10 @@
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/antitank1.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,5,3"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_ROBOT"
+  ]
  }
 }

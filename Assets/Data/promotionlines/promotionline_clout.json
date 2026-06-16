@@ -1,9 +1,27 @@
 {
  "type": "PROMOTIONLINE_CLOUT",
  "description": "TXT_KEY_PROMOTIONLINE_CLOUT",
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_HIDE_SEEK"
+  ]
+ },
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/Clout1Promotion.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_LAW_ENFORCEMENT",
+   "UNITCOMBAT_SPY",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_ADMINISTRATOR"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE"
+  ]
  }
 }

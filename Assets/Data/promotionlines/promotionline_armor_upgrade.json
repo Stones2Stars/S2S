@@ -5,5 +5,11 @@
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/CityGarrison1.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,5,1"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_ROBOT",
+   "UNITCOMBAT_ASSAULT_MECH"
+  ]
  }
 }

@@ -5,5 +5,11 @@
   "art": {
    "icon": "art/Buttons/Promotions/PromotionHumanitarian.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_HEALTH_CARE",
+   "UNITCOMBAT_RECON"
+  ]
  }
 }

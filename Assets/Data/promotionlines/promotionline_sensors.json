@@ -5,5 +5,18 @@
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/Sentry.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,4,10"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_HELICOPTER",
+   "UNITCOMBAT_NUCLEAR_SHIPS",
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_ROBOT",
+   "UNITCOMBAT_DREADNOUGHT",
+   "UNITCOMBAT_ASSAULT_MECH"
+  ]
  }
 }

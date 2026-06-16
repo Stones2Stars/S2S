@@ -5,5 +5,15 @@
   "art": {
    "icon": "art/Buttons/Promotions/PromotionCruel.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_STRIKE_TEAM",
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_GUN"
+  ]
  }
 }

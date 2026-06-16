@@ -5,5 +5,11 @@
   "art": {
    "icon": "art/Buttons/Promotions/PromotionDevotion.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_NAVAL_COMBATANT"
+  ]
  }
 }

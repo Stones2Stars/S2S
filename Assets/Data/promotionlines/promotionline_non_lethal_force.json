@@ -5,5 +5,11 @@
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/flaming1.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_LAW_ENFORCEMENT"
+  ]
  }
 }

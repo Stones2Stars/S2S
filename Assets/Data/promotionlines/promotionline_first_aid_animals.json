@@ -5,5 +5,13 @@
   "art": {
    "icon": "Art/Buttons/Promotions/HealAnimalsPromotion.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_HEALS_ANIMALS"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ]
  }
 }

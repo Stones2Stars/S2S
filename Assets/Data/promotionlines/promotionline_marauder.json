@@ -5,5 +5,10 @@
   "art": {
    "icon": "Art/Interface/Buttons/Retinue/merchant.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_HERO"
+  ]
  }
 }

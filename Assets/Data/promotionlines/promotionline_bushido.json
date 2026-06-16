@@ -5,5 +5,13 @@
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/Bushido1.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_MOUNTED"
+  ]
  }
 }

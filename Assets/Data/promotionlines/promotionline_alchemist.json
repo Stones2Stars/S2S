@@ -5,5 +5,10 @@
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/Alchemist1.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_SPY"
+  ]
  }
 }

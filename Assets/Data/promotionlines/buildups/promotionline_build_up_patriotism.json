@@ -2,12 +2,20 @@
  "type": "PROMOTIONLINE_BUILD_UP_PATRIOTISM",
  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_PATRIOTISM",
  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_PATRIOTISM_HELP",
+ "buildUp": {
+  "active": true
+ },
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/Patriotism1Buildup.dds"
   }
  },
  "identity": {
-  "buildUp": true
+  "unitCombats": [
+   "UNITCOMBAT_ENTERTAINER"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ]
  }
 }

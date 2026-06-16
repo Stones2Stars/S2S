@@ -5,5 +5,10 @@
   "art": {
    "icon": "art/Buttons/Promotions/Pyrotechnics1Promotion.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_WEAPON_DIST_FIREWORKS"
+  ]
  }
 }

@@ -5,5 +5,18 @@
   "art": {
    "icon": "Art/Buttons/Promotions/StandOutStatus.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_SPECIES_NEANDERTHAL",
+   "UNITCOMBAT_SPECIES_ALIEN",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_ANIMAL",
+   "UNITCOMBAT_SEA_ANIMAL"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_SPY"
+  ]
  }
 }

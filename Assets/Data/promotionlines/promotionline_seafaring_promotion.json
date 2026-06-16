@@ -5,5 +5,23 @@
   "art": {
    "icon": "art/Buttons/Promotions/PromotionSeafaring.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_WOODEN_SHIPS",
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS",
+   "UNITCOMBAT_JET_SHIPS",
+   "UNITCOMBAT_SHOCKWAVE_SHIPS",
+   "UNITCOMBAT_DROID_SHIPS",
+   "UNITCOMBAT_LEVITATION_SHIPS",
+   "UNITCOMBAT_TROID_SHIPS",
+   "UNITCOMBAT_GRAVITY_DRIVE_SHIPS"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_MISSIONARY",
+   "UNITCOMBAT_EXECUTIVE"
+  ]
  }
 }

@@ -5,5 +5,11 @@
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/patriotic1.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_MOUNTED"
+  ]
  }
 }

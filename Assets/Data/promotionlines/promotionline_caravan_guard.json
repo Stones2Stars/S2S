@@ -5,5 +5,14 @@
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/CaravanGuard_PromotionLine.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_TRADE"
+  ],
+  "notOnDomains": [
+   "DOMAIN_SEA",
+   "DOMAIN_AIR"
+  ]
  }
 }

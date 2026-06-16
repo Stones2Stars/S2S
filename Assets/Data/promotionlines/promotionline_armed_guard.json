@@ -5,5 +5,20 @@
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/ArmedGuard1Promotion.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_LAW_ENFORCEMENT"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_RUFFIAN",
+   "UNITCOMBAT_STRIKE_TEAM",
+   "UNITCOMBAT_EXPLORER"
+  ]
  }
 }

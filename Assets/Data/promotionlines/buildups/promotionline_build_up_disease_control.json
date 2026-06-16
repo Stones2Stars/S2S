@@ -2,12 +2,27 @@
  "type": "PROMOTIONLINE_BUILD_UP_DISEASE_CONTROL",
  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_DISEASE_CONTROL",
  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_DISEASE_CONTROL_HELP",
+ "buildUp": {
+  "active": true
+ },
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/DiseaseControl1BuildUp.dds"
   }
  },
  "identity": {
-  "buildUp": true
+  "unitCombats": [
+   "UNITCOMBAT_HEALTH_CARE"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_SPY",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE"
+  ]
  }
 }

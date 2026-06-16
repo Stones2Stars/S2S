@@ -5,5 +5,17 @@
   "art": {
    "icon": "art/Buttons/Promotions/BackDown1Promotion.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_BALLOON",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_TRACKED",
+   "UNITCOMBAT_WOODEN_SHIPS",
+   "UNITCOMBAT_CRUISER",
+   "UNITCOMBAT_DREADNOUGHT"
+  ]
  }
 }

@@ -5,5 +5,14 @@
   "art": {
    "icon": "art/Buttons/Promotions/PromotionPacifist.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_NAVAL_COMBATANT"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_MISSIONARY"
+  ]
  }
 }

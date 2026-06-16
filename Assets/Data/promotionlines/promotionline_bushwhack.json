@@ -5,5 +5,14 @@
   "art": {
    "icon": "Art/Buttons/Promotions/Bushwhack1Buildup.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_STRIKE_TEAM"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ]
  }
 }

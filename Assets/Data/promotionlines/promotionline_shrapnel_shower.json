@@ -5,5 +5,11 @@
   "art": {
    "icon": "art/Buttons/Promotions/ShrapnelShower1Promotion.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+   "UNITCOMBAT_WEAPON_DIST_RAPID_RAILGUN"
+  ]
  }
 }

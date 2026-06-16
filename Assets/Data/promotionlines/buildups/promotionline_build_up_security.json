@@ -2,12 +2,20 @@
  "type": "PROMOTIONLINE_BUILD_UP_SECURITY",
  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_SECURITY",
  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_SECURITY_HELP",
+ "buildUp": {
+  "active": true
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/Security_BuildUp.dds"
   }
  },
  "identity": {
-  "buildUp": true
+  "unitCombats": [
+   "UNITCOMBAT_SPY"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ]
  }
 }

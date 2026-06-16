@@ -5,5 +5,13 @@
   "art": {
    "icon": "art/Buttons/Promotions/TransportSeaplanes.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_PROMOTED_TRANSPORT_SEAPLANES"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_SUBMARINE"
+  ]
  }
 }

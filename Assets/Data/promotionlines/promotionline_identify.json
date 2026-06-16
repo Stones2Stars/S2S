@@ -1,9 +1,30 @@
 {
  "type": "PROMOTIONLINE_IDENTIFY",
  "description": "TXT_KEY_PROMOTIONLINE_IDENTIFY",
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_HIDE_SEEK"
+  ]
+ },
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/Identify1Promotion.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_LAW_ENFORCEMENT",
+   "UNITCOMBAT_SPY"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE"
+  ]
  }
 }

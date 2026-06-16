@@ -5,5 +5,11 @@
   "art": {
    "icon": "art/Buttons/Promotions/PromotionNaturalist.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_SPECIES_NEANDERTHAL"
+  ]
  }
 }

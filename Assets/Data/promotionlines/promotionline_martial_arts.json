@@ -5,5 +5,11 @@
   "art": {
    "icon": "art/Sports/Buttons/Martial_Arts1.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_MELEE"
+  ]
  }
 }

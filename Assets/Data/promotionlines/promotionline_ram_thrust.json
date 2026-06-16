@@ -5,5 +5,13 @@
   "art": {
    "icon": "art/Buttons/Promotions/RamThrust1.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_SIEGE_GATECRASHER"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ]
  }
 }

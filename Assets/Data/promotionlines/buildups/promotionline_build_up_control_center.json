@@ -2,12 +2,27 @@
  "type": "PROMOTIONLINE_BUILD_UP_CONTROL_CENTER",
  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_CONTROL_CENTER",
  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_CONTROL_CENTER_HELP",
+ "buildUp": {
+  "active": true
+ },
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/ControlCenter1BuildUp.dds"
   }
  },
  "identity": {
-  "buildUp": true
+  "unitCombats": [
+   "UNITCOMBAT_HEALS_TECH"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_SPY",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE"
+  ]
  }
 }

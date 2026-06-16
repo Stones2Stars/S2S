@@ -5,5 +5,17 @@
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/Shock.dds,Art/Interface/Buttons/Promotions_Atlas.dds,4,5"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_GUN"
+  ],
+  "notOnDomains": [
+   "DOMAIN_SEA"
+  ]
  }
 }

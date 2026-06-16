@@ -5,5 +5,10 @@
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/Projection1.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_NUCLEAR_SHIPS"
+  ]
  }
 }

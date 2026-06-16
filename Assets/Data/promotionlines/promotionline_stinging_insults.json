@@ -5,5 +5,17 @@
   "art": {
    "icon": "art/Buttons/Promotions/Insult1Promotion.fw.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_RECON"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_COMBATANT"
+  ]
  }
 }

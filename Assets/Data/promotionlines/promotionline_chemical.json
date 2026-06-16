@@ -5,5 +5,17 @@
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/chemical1.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_ROBOT",
+   "UNITCOMBAT_BIOLOGICAL"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_ANIMAL",
+   "UNITCOMBAT_PACIFIST"
+  ]
  }
 }

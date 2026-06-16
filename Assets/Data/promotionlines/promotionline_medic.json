@@ -5,5 +5,10 @@
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/Medic1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,3,4"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_HEALTH_CARE"
+  ]
  }
 }

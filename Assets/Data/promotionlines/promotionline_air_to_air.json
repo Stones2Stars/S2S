@@ -5,5 +5,12 @@
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/jetplane.dds,Art/RoM_Promotions_atlas.dds,1,2"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_JET_FIGHTERS",
+   "UNITCOMBAT_SUPERSONIC_PLANES",
+   "UNITCOMBAT_STEALTH"
+  ]
  }
 }

@@ -5,5 +5,11 @@
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/workerforest1.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_WORKER",
+   "UNITCOMBAT_COMBAT_WORKER"
+  ]
  }
 }

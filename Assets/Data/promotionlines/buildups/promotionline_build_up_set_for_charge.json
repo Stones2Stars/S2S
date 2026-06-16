@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTIONLINE_BUILD_UP_SET_FOR_CHARGE",
+ "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_SET_FOR_CHARGE",
+ "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_SET_FOR_CHARGE_HELP",
+ "buildUp": {
+  "active": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/SetForCharge1BuildUp.dds"
+  }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_WEAPON_H2H_SHORT_POLEARM",
+   "UNITCOMBAT_WEAPON_H2H_LONG_POLEARM"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE"
+  ]
+ }
+}

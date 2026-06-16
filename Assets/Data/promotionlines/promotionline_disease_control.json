@@ -5,5 +5,10 @@
   "art": {
    "icon": "art/Buttons/Promotions/DiseaseControlPromotion1.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_HEALTH_CARE"
+  ]
  }
 }

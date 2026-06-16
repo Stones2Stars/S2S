@@ -474,3 +474,44 @@ features but lays a route) lands by the priority above (→ `routes`).
 (PrereqTech, PrereqBonusTypes, per-feature/terrain PrereqTech → builds) + `OBSOLETE_FIELDS` (ObsoleteTech). The
 `produces` section is a NEW reserved section (owner-approved 2026-06-16) — the build-OUTCOME home; #430 reads it as the
 worker-action outcome system.*
+
+## PromotionLine  (`curate_promotionline.py`)  — Tier D #27 (333 records: 262 base + 72 module − 1 dropped)
+
+A GROUPING/HIERARCHY axis for promotions (the "promotion line" chains), **units-only**. NOT a modifier source (the
+individual PROMOTION owns yield/commerce/property modifiers — audit 2026-06-14) and **enables nothing**
+(`store.enabled_by(PROMOTIONLINE_*)` empty → no `enables`). It "rides Promotion" (#28): its applicability gates are
+unit-plane vocabulary the Promotion pass defines, so they are PARKED in `identity` here and re-homed there (owner
+2026-06-16: "we need a broader picture on the enabling"). **EXE-link 0 `DllExport`** (unconstrained). Bespoke curator,
+no cascade families. Consumers: the line's gates are read by `CvPromotionInfo` (cpp:2080) + `CvUnit` (17664/25585) to
+decide which units may take the line's promotions.
+
+| old XML | new JSON path | note |
+|---|---|---|
+| `OnGameOptions` | `loadPrune.onGameOptions` | Load-stable game-option availability gate (enabler-spec §6/§10; CultureLevel/Trait precedent). Owner 2026-06-16: WorldBuilder toggling game options is the enable/disable mechanism (engine removes disabled promotions; WB "supported but use at own risk"). `NotOnGameOptions` → `loadPrune.notOnGameOptions` (0 populated). |
+| `bBuildUp` | `buildUp.active: true` | **Dedicated OBJECT MODULE** (owner 2026-06-16: "treat buildup as a module, create a home for it" — disliked but kept, so isolated + purgeable; modifier-spec §0.8). The 28 build-up lines. Object-module activation convention: the block's presence is the signal; `active:true` is the INTERIM marker because the line record holds no other build-up data — WHAT a line builds up (defense/chasedown/…) lives on its **promotions**, enriched at the Promotion pass, at which point `active` becomes redundant and drops. Buildups have NO property (owner). |
+| `UnitCombatPrereqTypes` / `NotOnDomainTypes` / `NotOnUnitCombatTypes` | `identity.{unitCombats, notOnDomains, notOnUnitCombats}` | Unit-plane applicability/exclusion gates (which units may take the line's promotions). PARKED in identity, deferred to the Promotion pass (the unit-plane enabling vocabulary isn't defined yet); not store-inverted, so kept here faithfully (provisional names). |
+| `Button` | `ui.art.icon` | The promotion-line button. |
+| `PrereqTech` | (store) `tech.enables.promotionLines` | DROP (1 line, TECH_PIERCING). Single tech → **no `requires`** (owner #4: a lone tech needs no requires; only a multi-tech AND would be "murky", which doesn't arise — PromotionLine has one `PrereqTech`). |
+| `PropertyType` / `bPoison` | — (DROP, gone with the affliction line) | The SOLE `PropertyType` carrier was the dropped affliction line; `bPoison` 0. Removed from the model entirely → `buildUp` is only ever `{active:true}`. |
+| `ObsoleteTech` / `Categories` / `UnitCombat`+`Tech ContractChanceChanges` | — (DROP) | 0-populated. ObsoleteTech (not store-registered, moot); Categories (checksum-excluded, dead); `*ContractChanceChanges` (dead unimplemented system — ranking #27). |
+| `Promotions` / `Buildings` (post-load) | — (not XML) | Derived reverse indexes (`doPostLoadCaching` from `CvPromotionInfo.getPromotionLine` / `CvBuildingInfo.getPromotionLineType`) — emit nothing. |
+
+**DROPPED ENTITY (owner 2026-06-16):** `PROMOTIONLINE_AFFLICTION_DISEASE_COMMON_COLD` — a stone-dead vestige of the
+purged **Outbreaks-and-Afflictions** mod (a TRUE orphan: 0 promotions/buildings/traits reference it, GameText keys
+only). Dropped during migration as a targeted owner-directed exception to the §0 "purge entities in a separate pass"
+rule, because it was the **sole `PropertyType` carrier** — dropping it kills the PropertyType/bPoison special case
+(`buildUp` collapses to one shape). The small-pass also found 4 other true orphans (BARBARIAN/MARAUDER/MEDIC/SNEAK)
+that carry NO special fields → left for the post-migration content-purge pass (not dropped here).
+
+*Object-module convention (top-level keys = category objects; presence-and-non-empty = active; empty/absent = false)
+recorded in modifier-spec §0.8. `PromotionLineInfo` already registered in `store.ENTITIES` + `PREREQ_FIELDS`
+(PrereqTech → promotionLines).*
+
+⚑ **Promotion-pass baseline (owner 2026-06-16):** WHAT each build-up line builds up is its baseline identifier, to be
+derived at the Promotion pass from the line's promotions — surveyed: only 4 of 28 build-ups target a PROPERTY
+(CRIME_FIGHTING/SCHEMES→`PROPERTY_CRIME`, DISEASE_CONTROL→`PROPERTY_DISEASE`, TEACH→`PROPERTY_EDUCATION`, via their
+`PropertyManipulators`/`PropertySource`); the other 24 build up combat/unit STATS (defense/range/concealment/…). So
+`buildUp.property` (the 4) + a stat identifier (the 24) get filled there, and `buildUp.active` (the interim marker)
+drops. ⚑ **WATCH (owner, unverified):** the C++ that matches the correct promotion line to a unit MAY be complex —
+not confirmed, just anticipated at this stage; approach the unit-plane enabling carefully (safe rather than sorry) and
+verify it at the Promotion pass rather than assuming either way.

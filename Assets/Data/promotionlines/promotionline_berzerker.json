@@ -5,5 +5,14 @@
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/Berzerker1.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,6,2"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_WOODEN_SHIPS"
+  ]
  }
 }

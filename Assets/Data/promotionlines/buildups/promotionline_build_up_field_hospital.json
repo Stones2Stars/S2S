@@ -2,12 +2,27 @@
  "type": "PROMOTIONLINE_BUILD_UP_FIELD_HOSPITAL",
  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_FIELD_HOSPITAL",
  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_FIELD_HOSPITAL_HELP",
+ "buildUp": {
+  "active": true
+ },
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/FieldHospital1BuildUp.dds"
   }
  },
  "identity": {
-  "buildUp": true
+  "unitCombats": [
+   "UNITCOMBAT_HEALS_PEOPLE"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_SPY",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE"
+  ]
  }
 }

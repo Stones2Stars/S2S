@@ -5,5 +5,20 @@
   "art": {
    "icon": "Art/Buttons/Promotions/StayTheHandStatus.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_STRIKE_TEAM",
+   "UNITCOMBAT_FELINE",
+   "UNITCOMBAT_RUFFIAN",
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_NAVAL_COMBATANT",
+   "UNITCOMBAT_PIRATE"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ]
  }
 }

@@ -1,9 +1,24 @@
 {
  "type": "PROMOTIONLINE_LOW_PROFILE",
  "description": "TXT_KEY_PROMOTIONLINE_LOW_PROFILE",
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_HIDE_SEEK",
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/LowProfile1Promotion.dds"
   }
+ },
+ "identity": {
+  "notOnUnitCombats": [
+   "UNITCOMBAT_SPY",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE"
+  ]
  }
 }

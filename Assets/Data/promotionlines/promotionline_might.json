@@ -1,9 +1,24 @@
 {
  "type": "PROMOTIONLINE_MIGHT",
  "description": "TXT_KEY_PROMOTIONLINE_MIGHT",
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/Might1Promotion.dds"
   }
+ },
+ "identity": {
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE"
+  ]
  }
 }

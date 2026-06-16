@@ -69,6 +69,17 @@
      (`commerce.plot.flat`), tagged `enabled: HAS_RIVER` (the river system's surface), NOT relocated to a "river
      block". So the split is: **pure system data → its own block** (`WarmingDefense`, `vision`); **produced data →
      stays put, gated by the system's predicate** (enabler-spec §3).
+   - **TOP-LEVEL KEYS ARE CATEGORY OBJECTS; an object-module's PRESENCE is its on/off signal (owner, 2026-06-16).**
+     Two coupled rules for the dedicated blocks: **(a)** a top-level key should *almost always* be a **category-like
+     object**, not a bare scalar — rare exceptions aside (the universal reserved text fields `type`/`description`/
+     `help`), keeping the top level to categories is what keeps the structure coherent and a system queryable/purgeable
+     as a unit. **(b) OBJECT-MODULE ACTIVATION:** a module's block **IS** its boolean — the module is **active iff its
+     object EXISTS and is NON-EMPTY**; **absent or empty ⇒ false**. So a module needs **no separate `active`/`enabled`
+     flag** — presence carries it. *Worked example (PromotionLine #27): `buildUp` is a dedicated object module; a
+     build-up line is marked by the `buildUp` object's presence. (It currently carries an interim `buildUp.active:true`
+     only because the line record holds no other build-up data — WHAT it builds up lives on its promotions, added at
+     the Promotion pass; once present, `active` is redundant under this rule and drops.)* The corollary: don't emit an
+     empty module object as a marker (it reads as false) — give it content, or it shouldn't be there.
 
 ---
 

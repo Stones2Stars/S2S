@@ -5,5 +5,23 @@
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/patrol1.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,6,14"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_LAW_ENFORCEMENT",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_ROBOT",
+   "UNITCOMBAT_CLONES",
+   "UNITCOMBAT_ASSAULT_MECH"
+  ],
+  "notOnDomains": [
+   "DOMAIN_SEA",
+   "DOMAIN_AIR"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ]
  }
 }

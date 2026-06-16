@@ -5,5 +5,10 @@
   "art": {
    "icon": "art/Buttons/Promotions/CommodoreAdmiralStaff1.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_COMMODORE"
+  ]
  }
 }

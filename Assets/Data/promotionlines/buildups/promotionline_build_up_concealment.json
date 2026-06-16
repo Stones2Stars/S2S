@@ -1,0 +1,39 @@
+{
+ "type": "PROMOTIONLINE_BUILD_UP_CONCEALMENT",
+ "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_CONCEALMENT",
+ "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_CONCEALMENT_HELP",
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_COMBAT_HIDE_SEEK"
+  ]
+ },
+ "buildUp": {
+  "active": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Concealment1BuildUp.dds"
+  }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_ANIMAL_COMBAT_HIDING",
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_RUFFIAN",
+   "UNITCOMBAT_STRIKE_TEAM",
+   "UNITCOMBAT_FELINE",
+   "UNITCOMBAT_HUNTER"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_SPY",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE"
+  ]
+ }
+}

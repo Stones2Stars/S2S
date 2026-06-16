@@ -5,5 +5,10 @@
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/patrol1.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,1,4"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_ROBOT"
+  ]
  }
 }

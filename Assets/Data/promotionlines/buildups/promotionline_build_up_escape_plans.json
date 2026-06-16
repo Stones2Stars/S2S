@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTIONLINE_BUILD_UP_ESCAPE_PLANS",
+ "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_ESCAPE_PLANS",
+ "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_ESCAPE_PLANS_HELP",
+ "buildUp": {
+  "active": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/EscapePlans1BuildUp.dds"
+  }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_SPEED_FAST"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE"
+  ]
+ }
+}

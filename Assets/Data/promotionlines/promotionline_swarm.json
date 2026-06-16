@@ -5,5 +5,22 @@
   "art": {
    "icon": "art/Buttons/Promotions/Swarm1Promotion.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_GROUP_BATTALION",
+   "UNITCOMBAT_GROUP_FORCES",
+   "UNITCOMBAT_GROUP_CLAN",
+   "UNITCOMBAT_GROUP_HORDE",
+   "UNITCOMBAT_GROUP_MULTITUDES",
+   "UNITCOMBAT_GROUP_MILLIONS",
+   "UNITCOMBAT_GROUP_BILLIONS",
+   "UNITCOMBAT_GROUP_TRILLIONS",
+   "UNITCOMBAT_GROUP_COUNTLESS"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_CAPTAIN",
+   "UNITCOMBAT_CIVILIAN"
+  ]
  }
 }

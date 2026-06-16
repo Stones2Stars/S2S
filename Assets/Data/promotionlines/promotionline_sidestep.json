@@ -5,5 +5,19 @@
   "art": {
    "icon": "art/Buttons/Promotions/SidestepPromotion1.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_STRIKE_TEAM"
+  ],
+  "notOnDomains": [
+   "DOMAIN_SEA",
+   "DOMAIN_AIR"
+  ]
  }
 }

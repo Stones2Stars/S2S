@@ -5,5 +5,20 @@
   "art": {
    "icon": "art/Buttons/Promotions/Sting1Promotion.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_SIZE_SMALL",
+   "UNITCOMBAT_SIZE_TINY",
+   "UNITCOMBAT_SIZE_DIMINUTIVE",
+   "UNITCOMBAT_SIZE_FINE",
+   "UNITCOMBAT_SIZE_MICROSCOPIC"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_CAPTAIN",
+   "UNITCOMBAT_CIVILIAN"
+  ]
  }
 }

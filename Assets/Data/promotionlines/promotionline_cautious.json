@@ -5,5 +5,24 @@
   "art": {
    "icon": "art/Buttons/Promotions/Cautious1Promotion.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_FELINE",
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_HUNTER",
+   "UNITCOMBAT_SUBMARINE",
+   "UNITCOMBAT_STRIKE_TEAM",
+   "UNITCOMBAT_ROCKET_LAUNCHER",
+   "UNITCOMBAT_RUFFIAN",
+   "UNITCOMBAT_HELICOPTER",
+   "UNITCOMBAT_BALLOON"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PROMOTED_STALL"
+  ]
  }
 }

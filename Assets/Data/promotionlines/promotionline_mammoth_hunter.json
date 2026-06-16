@@ -5,5 +5,10 @@
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/MammothHunterLine.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_HUNTER"
+  ]
  }
 }

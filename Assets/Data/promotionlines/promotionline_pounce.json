@@ -5,5 +5,14 @@
   "art": {
    "icon": "Art/Buttons/Promotions/Pounce1Buildup.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_ANIMAL_COMBAT_POUNCE"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ]
  }
 }

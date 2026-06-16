@@ -5,5 +5,14 @@
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/Decoys1Promotion.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_EXPLORER"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ]
  }
 }

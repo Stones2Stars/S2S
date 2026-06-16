@@ -5,5 +5,16 @@
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/defence1.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,3,4"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS",
+   "UNITCOMBAT_GUN"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ]
  }
 }

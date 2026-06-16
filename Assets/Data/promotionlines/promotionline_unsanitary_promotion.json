@@ -5,5 +5,12 @@
   "art": {
    "icon": "art/Buttons/Promotions/PromotionUnsanitary.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_RUFFIAN",
+   "UNITCOMBAT_ANIMAL"
+  ]
  }
 }

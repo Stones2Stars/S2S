@@ -5,5 +5,10 @@
   "art": {
    "icon": "Art/Interface/Buttons/promotions/tactics1.dds"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_COMMANDER"
+  ]
  }
 }

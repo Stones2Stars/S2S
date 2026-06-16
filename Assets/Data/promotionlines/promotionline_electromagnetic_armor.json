@@ -5,5 +5,22 @@
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/stalwart1.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,4,9"
   }
+ },
+ "identity": {
+  "unitCombats": [
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_TRACKED",
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_ROBOT",
+   "UNITCOMBAT_ASSAULT_MECH",
+   "UNITCOMBAT_DREADNOUGHT"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ]
  }
 }
