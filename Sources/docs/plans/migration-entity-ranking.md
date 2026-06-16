@@ -186,8 +186,10 @@ and is settled when its turn comes:
     (the modifier capability is kept in general; not sourced from improvements — §8-iv). `DiscoverRand`/
     per-bonus `DepletionRand` = RNG odds, out of cascade but the per-bonus depletion-rand is KEPT (live gated
     mechanic, `MODDERGAMEOPTION_RESOURCE_DEPLETION`); root `m_iDepletionRand` is dead → drop.
-23. **Build** ✅ — `PrereqTech`, `PrereqBonusTypes`, `FeatureStructs`/`TerrainStructs` PrereqTech; `ObsoleteTech`.
-    The action laying improvements.
+23. **Build** ✅ **(curated 2026-06-16 #4, `curate_build.py`)** — the worker ACTION. New `produces` FK section
+    (improvement/route/terrain/feature + per-outcome tech/time/production) cleanly separated from those entities;
+    own `requires.build` (tech + connected-bonus). Foldered by outcome (bonus/forts/routes/features/terraform/
+    improvements/clearing). `PrereqTech`/`PrereqBonusTypes`/per-struct PrereqTech → store; `ObsoleteTech` → store.
 
 ## Tier D — City/unit producers & unit-plane sources
 
@@ -199,10 +201,11 @@ and is settled when its turn comes:
 26. **Project** ✅ — `TechPrereq` + `PrereqProjects/iNeeded` (N-of count → tally). `victory` (non-cascade).
     `YieldModifiers` → **DROP (nuked — a +10-commerce-per-plot wonder buff is rejected as nutty);** empire
     yield buffs, if ever wanted, are cheap in the locked structure later. `iTechShare` → enables/requires.
-27. **PromotionLine** ☐ (rides Promotion, dead-last-ish) — `PrereqTech`. A grouping/hierarchy of promotions;
-    accreted tech/prune gates, `buildUp`. `*ContractChanceChanges` → drop (dead, tooltip-only, system
-    unimplemented). The line NEVER enables a building / adds no yield-commerce-property modifier (the
-    individual PROMOTION owns property modifiers).
+27. **PromotionLine** ✅ **(curated 2026-06-16 #4, `curate_promotionline.py`)** — grouping/hierarchy axis for
+    promotions. `loadPrune.onGameOptions`; `buildUp` = dedicated OBJECT MODULE (`{active:true}` interim marker);
+    applicability gates parked in identity (→ Promotion pass). Dropped the dead OA-mod affliction line.
+    `*ContractChanceChanges`/Categories/etc. dropped. The line NEVER enables a building / adds no modifier (the
+    individual PROMOTION owns property modifiers). ⚑ `buildUp` baselines + applicability re-homing land at #28.
 28. **Promotion** ☐ heavy — `TechPrereq`, `PrereqBonusTypes`, `PrereqPlotBonusTypes`. Combat bonuses buried in
     identity; the promotion owns city/plot property modifiers. **Unit-plane self-accumulator (§5).**
     `iDamageperTurn`/`iWeakenperTurn` → drop (dead BATTLEWORN). Invisibility/visibility LOS tables (the 2D
@@ -214,7 +217,11 @@ and is settled when its turn comes:
     (`getQualityBase`/`GroupBase`/`SizeBase`, `-10` sentinel) — **create-unit-subroutine data (§0.6), kept
     as-is** pending a Size-Matters pass; no `override` unit. **DEFINE the unit modifier vocabulary here**
     (combat/withdrawal/bombard/air-defense/movement/first-strike/… — the §5 gap).
-30. **LeaderHead** ☐ — 90+ AI personality/diplo params → `ai` group. ~zero per-turn-effect cascade fields.
+30. **LeaderHead** ✅ **(curated 2026-06-16 #4, `curate_leaderhead.py`)** — ~90 AI personality/diplo params → the
+    granular `ai` group (npc/flavours/personality/war/victory/trade/attitude/refuse/memory/contact/noWarProb/
+    unitWeights/improvementWeights/favorites). ~zero cascade fields. Traits → `grants.{traits,developingTraits,
+    complexTraits}` (faithful; simple→complex mirror deferred to #430). `LeaderHeadInfo` registered in store.
+    The `ai` subgroup vocab is PROVISIONAL (reworked at the load-writing phase) — not locked in spec.
 
 ## Tier E — The monsters (most-targeted; depend on everything above)
 
