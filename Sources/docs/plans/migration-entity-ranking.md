@@ -311,9 +311,7 @@ gameplay entities below + a little config. **Owner rulings folded in: the EVENT 
 (#425); `CvSpawnInfo` is the barb/animal/wildlife spawn system.** Each still triaged per-info before any drop (§0 "no
 true POCO"; entity purges are a SEPARATE deliberate pass, not done mid-migration).
 
-**GAMEPLAY — to migrate (the small/medium tail; CvOutcome is the clean FIRST):**
-- **`CvOutcomeInfo`** (134 = 105 + 29 P2K) — 15 fields; the kill/action OUTCOME defs Unit/UnitCombat/Unit `outcomes`
-  already reference (carried faithfully at #28/#29/#34). #430-adjacent. **Tier-G FIRST.**
+**GAMEPLAY — to migrate (the small/medium tail).** *(`CvOutcomeInfo` was attempted but DEFERRED to #430 — see "Deferred" below.)*
 - **`CvSpawnInfo`** (327) — **the BARBARIAN / ANIMAL / WILDLIFE map-spawn system** (owner 2026-06-16); 28 fields,
   tech/date/terrain/density-gated, `TreatAsBarbarian`/neutral-only + a BoolExpr spawn condition. Large, dense.
 - **`CvGoodyInfo`** (106) — the DEFINITIONS of the possible goody-hut grants (gold/xp/heal/unit/research, era/tech-gated) —
@@ -327,11 +325,13 @@ true POCO"; entity purges are a SEPARATE deliberate pass, not done mid-migration
 - **`CvVoteSourceInfo`** (3) — UN / Apostolic Palace / Congress; free specialist + per-religion yields/commerce (Vote #6 deferred it here).
 - **`CvCommerceInfo`** (4) — the 4 commerces' config (initialPercent, initialHappiness, AI weight, flexible). Sibling to `YieldInfo`.
 - **`CvUpkeepInfo`** (4) — civic-upkeep tiers (populationPercent / cityPercent), read every turn for civic gold cost.
-- **`CvWorldInfo`** (8) — **MIXED**: map-gen grid/grain + 8 LIVE gameplay modifiers (distance/colony/corp/numCities maintenance%,
-  conscript%, trade profit%, anarchy%, building-prereq%, city-limits scale%). **SPLIT** the map-gen half from the gameplay half.
-  *(Was not flagged at all.)*
-- **`CvMapCategoryInfo`** (17) — pure enum (Type/Description) BUT a live gameplay GATE (building/unit/bonus `m_aeMapCategoryTypes`
-  key on it) → migrate as a slim enum registry; the membership lives on the gated entity. *(Was in the OUT list.)*
+- **`CvWorldInfo`** (8) — **PREGAME config (owner 2026-06-16): map SIZE is chosen at setup then FIXED** — limited *ongoing*
+  gameplay impact; its 8 "modifiers" (distance/colony/corp/numCities maintenance%, conscript%, trade%, anarchy%,
+  building-prereq%, city-limits scale%) are map-size-DERIVED CONSTANTS, not dynamic cascade deposits. **SPLIT** the map-gen
+  grid/grain half from the gameplay-constant half; migrate as a pregame-config section, NOT cascade. *(Was not flagged at all.)*
+- **`CvMapCategoryInfo`** (17) — **PREGAME config (owner 2026-06-16):** a pure enum (Type/Description) that gates which
+  buildings/units/bonuses exist on which map kind (`m_aeMapCategoryTypes`) — set by the map at setup, fixed; "pregame, kinda"
+  not ongoing gameplay. Migrate as a slim enum registry; the membership lives on the gated entity. *(Was in the OUT list.)*
 - **`CvInvisibleInfo`** (14) — thin registry; the LOS resolver keys on the `INVISIBLE_*` ENUM, only the `intrinsic` flag is
   gameplay → slim registry, LOW priority. *(Not the meaty gameplay entity earlier assumed.)*
 - **finish `CvYieldInfo`** — the min-city/golden-age/trade/colour/symbols remainder (hills/peak/river already on the terrains).
@@ -339,8 +339,19 @@ true POCO"; entity purges are a SEPARATE deliberate pass, not done mid-migration
 **CONFIG / map-gen (migrate as config sections, NOT cascade):** `CvClimateInfo` (5), `CvSeaLevelInfo` (4) — pure map-gen
 latitude/sea params; `CvTurnTimerInfo` (6) — UI turn-pacing; the `CvWorldInfo` grid half.
 
-**DEFERRED to the EVENT-SYSTEM REWORK (#425), NOT migrated faithfully in #428 (owner ruling 2026-06-16):**
-- **`CvEventInfo`** (873) + **`CvEventTriggerInfo`** (509) — the random-event monster: ~half of all remaining records,
+**DEFERRED to their OWN system reworks, NOT migrated faithfully in #428 (owner rulings 2026-06-16):**
+- **`CvOutcomeInfo`** (134) → the **#430 outcome-system pass.** A standalone migration was AUTHORED then BACKED OUT. The
+  entity is **misnamed and is only the GATING HALF of a two-part system.** "Outcome" implies a RESULT, but `CvOutcomeInfo`
+  holds **no result** — it is the *eligibility/definition* side: WHEN may a result-type fire and at what odds (tech/civic/
+  building prereqs + ObsoleteTech, allowed territory, on/off-city, capture flag, per-promotion chance deltas, supersession)
+  + a display message. The **actual CONSEQUENCE** (subdue → `UNIT_SUBDUED_X`; hunting-kill → yields; …) lives **per-unit on
+  the `CvOutcome` INSTANCE** in each unit's `KillOutcomes`/actions — already carried into the unit JSON, but in RAW faithful
+  form (`iChance` / positional `Yields` / `Constant`/`Random` expr trees), NOT cleaned. Cleaning the gating half alone, under
+  a misleading name, while the result half sits raw, is half a job — **#430 reworks BOTH halves (and the name) together.**
+  Owner 2026-06-16: *"Outcome is the worst naming possible — it's the mission IN, not the result of a mission."* (The backed-out
+  gating shape, if useful later: requires.build + dedicated `territory`/`location` + `extraChance` + `replaces.outcomes` +
+  `identity.{capture,toCoastalCity}`.)
+- **`CvEventInfo`** (873) + **`CvEventTriggerInfo`** (509) → the **EVENT-SYSTEM REWORK (#425).** The random-event monster: ~half of all remaining records,
   48/65+ fields, sparse building-yield vectors + property prereqs, and **766 Python callbacks** (433 + 333). The system is
   "OOS-prone and catastrophically coded" (#425), so it gets a REWORK, not a port — its data migration rides that pass.
 
