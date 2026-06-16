@@ -1,0 +1,156 @@
+{
+ "type": "BUILDING_PICOTECH_COMPLEX",
+ "description": "TXT_KEY_BUILDING_PICOTECH_COMPLEX",
+ "civilopedia": "TXT_KEY_BUILDING_PICOTECH_COMPLEX_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_NANOACTUATORS",
+   "BUILDING_NANITE_LAB",
+   "BUILDING_NANOBOTIC_PRINTING_MILL",
+   "BUILDING_PLYMOUTH_ARCOLOGY"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_AEROGEL_FACTORY",
+   "BUILDING_ANIMAMATERIAL_FACTORY",
+   "BUILDING_ATOMICALLY_PRECISE_ALLOY_FOUNDRY",
+   "BUILDING_BULK_DIAMOND_PLANT",
+   "BUILDING_CARBYNE_FOUNDRY",
+   "BUILDING_DIAMOND_NANOTHREAD_FOUNDRY",
+   "BUILDING_FACTORY_CYBERNETIC_CHLOROPLASTS",
+   "BUILDING_FACTORY_GRAPHENE",
+   "BUILDING_FULLERENE_PLANT",
+   "BUILDING_LIQUID_METALS_FOUNDRY",
+   "BUILDING_METALLIC_HYDROGEN_PLANT",
+   "BUILDING_METAL_FOAM_FOUNDRY",
+   "BUILDING_METAMATERIAL_FOUNDRY",
+   "BUILDING_NANOFACTORY",
+   "BUILDING_NANOTRUSS_FOUNDRY",
+   "BUILDING_NANO_RESEARCH_DEPARTMENT",
+   "BUILDING_NOVUS_REFINERY",
+   "BUILDING_QUANTUM_DOT_FACTORY",
+   "BUILDING_SUPERSOLID_HELIUM_PLANT",
+   "BUILDING_SUPERSTRONG_ALLOY_FOUNDRY",
+   "BUILDING_TRANSPARENT_ALUMINUM_FOUNDRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_MANUFACTURING_DISTRICT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 175
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200,
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_BIOPOLYMERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_CHEMICALS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_FIBERGLASS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_GRAPHENE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_NANOTUBES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STEEL_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_TITANIUM_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 12155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PICOTECH_COMPLEX"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ENGINEER": 2
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

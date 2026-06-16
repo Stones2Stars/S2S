@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_BLACK_HAT_HIDEOUT_UNSANCTIONED",
+ "description": "TXT_KEY_BUILDING_BLACK_HAT_HIDEOUT_UNSANCTIONED",
+ "civilopedia": "TXT_KEY_BUILDING_BLACK_HAT_HIDEOUT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_WIRELESS_NETWORKS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 30
+   },
+   "flat": -10
+  }
+ },
+ "happiness": {
+  "city": {
+   "perPopulation": {
+    "percent": -30
+   }
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unit": "UNIT_HACKER",
+    "interval": "perTurn",
+    "chance": {
+     "per": {
+      "type": "PROPERTY_CRIME",
+      "scope": "city"
+     }
+    }
+   },
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_TECH",
+    "interval": "perTurn",
+    "heal": -6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BLACK_HAT_HIDEOUT"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

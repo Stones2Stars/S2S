@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_AERIAL_HOTEL",
+ "description": "TXT_KEY_BUILDING_AERIAL_HOTEL",
+ "civilopedia": "TXT_KEY_BUILDING_AERIAL_HOTEL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MEGATOWER_HOTEL_LEVEL",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10,
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_HUMAN_MOD_WINGS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 5455,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_AERIAL_HOTEL"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

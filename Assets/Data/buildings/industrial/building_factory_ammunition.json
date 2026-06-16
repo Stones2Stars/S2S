@@ -1,0 +1,106 @@
+{
+ "type": "BUILDING_FACTORY_AMMUNITION",
+ "description": "TXT_KEY_BUILDING_FACTORY_AMMUNITION",
+ "civilopedia": "TXT_KEY_BUILDING_FACTORY_AMMUNITION_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SHOOTING_CLUB"
+  ],
+  "units": [
+   "UNIT_ACVSAM",
+   "UNIT_ARTILLERY",
+   "UNIT_HALFTRACK",
+   "UNIT_LIGHT_AA",
+   "UNIT_LIGHT_ARTILLERY",
+   "UNIT_MOBILE_ARTILLERY",
+   "UNIT_MUJAHIDEEN",
+   "UNIT_NLOS_CANNON",
+   "UNIT_ROCKET_ARTILLERY",
+   "UNIT_SAM_INFANTRY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_AMMUNITIONS_WORKSHOP",
+   "BUILDING_GUNSMITH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_FACTORY",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_SULPHUR",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_CHEMICALS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 830,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FACTORY_AMMUNITION"
+  }
+ },
+ "identity": {
+  "worth": 10,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

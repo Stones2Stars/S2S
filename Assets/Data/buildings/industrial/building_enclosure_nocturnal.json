@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_ENCLOSURE_NOCTURNAL",
+ "description": "TXT_KEY_BUILDING_ENCLOSURE_NOCTURNAL",
+ "civilopedia": "TXT_KEY_BUILDING_WILD_ANIMAL_CAGE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_ZOO",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "HERITAGE_FOLKLORE_BADGER",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_KOALA",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_OWL_BARN",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_OWL_BARRED",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_OWL_GREAT_HORNED",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_RACCOON",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_RATEL",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_RED_PANDA",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_SKUNK",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_TASMANIAN_DEVIL",
+      "scope": "empire"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 1600,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ENCLOSURE_NOCTURNAL"
+  }
+ },
+ "identity": {
+  "worth": 2,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_10000_YEAR_CLOCK",
+ "description": "TXT_KEY_BUILDING_10000_YEAR_CLOCK",
+ "civilopedia": "TXT_KEY_BUILDING_10000_YEAR_CLOCK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_PEAK",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_PRIEST": 3
+  }
+ },
+ "cost": {
+  "production": 58830,
+  "sizeModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_10000_YEAR_CLOCK"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_10000_YEAR_CLOCK"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

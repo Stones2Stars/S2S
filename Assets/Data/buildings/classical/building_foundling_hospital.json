@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_FOUNDLING_HOSPITAL",
+ "description": "TXT_KEY_BUILDING_FOUNDLING_HOSPITAL",
+ "civilopedia": "TXT_KEY_BUILDING_FOUNDLING_HOSPITAL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_CHURCH",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "perPopulation": -50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 486,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_FOUNDLING_HOSPITAL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FOUNDLING_HOSPITAL"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "worth": 8,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

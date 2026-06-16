@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_BEE_BOMBS",
+ "description": "TXT_KEY_BUILDING_BEE_BOMBS",
+ "civilopedia": "TXT_KEY_BUILDING_BEE_BOMBS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_POTTERY",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_APIARY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "adjacentDamage": {
+    "percent": 10
+   },
+   "repel": {
+    "flat": 20
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 132,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BEE_BOMBS"
+  }
+ },
+ "identity": {
+  "centerInCity": true,
+  "worth": 1,
+  "militaryWorth": 2,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

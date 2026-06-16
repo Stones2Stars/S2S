@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_EDUCATION_FOOLISH",
+ "description": "TXT_KEY_BUILDING_EDUCATION_FOOLISH",
+ "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_EDUCATION_UNAWARE"
+  ]
+ },
+ "production": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": -2,
+   "percent": -10
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "percent": -4
+  }
+ },
+ "greatGeneralRate": {
+  "city": {
+   "percent": -1
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": -3
+   }
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": -20
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYEDUCATION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,133 @@
+{
+ "type": "BUILDING_SCULPTORS_WORKSHOP",
+ "description": "TXT_KEY_BUILDING_SCULPTORS_WORKSHOP",
+ "civilopedia": "TXT_KEY_BUILDING_SCULPTORS_WORKSHOP_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_PHIDIAS_STATUE_WORKSHOP"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FACTORY_SCULPTURES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_JADE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_FINE_CLAY",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_TRADING_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHOPPING_DISTRICT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1,
+   "percent": [
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_ORNAMENTATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "TECH_AESTHETICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_FREE_ARTISTRY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 160,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   },
+   {
+    "FLAVOR_GOLD": 4
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SCULPTORS_WORKSHOP"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_FORGE"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ARTIST": 1
+  },
+  "nukeImmune": true,
+  "conquestProbability": 80,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

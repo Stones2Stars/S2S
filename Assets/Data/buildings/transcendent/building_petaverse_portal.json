@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_PETAVERSE_PORTAL",
+ "description": "TXT_KEY_BUILDING_PETAVERSE_PORTAL",
+ "civilopedia": "TXT_KEY_BUILDING_PETAVERSE_PORTAL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_DEEP_SPACE_COLD_FUSION",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MEGAVERSE_PORTAL",
+     "scope": "empire",
+     "min": 1
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 12
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 28114
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PETAVERSE_PORTAL"
+  }
+ },
+ "identity": {
+  "forceNoPrereqScaling": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

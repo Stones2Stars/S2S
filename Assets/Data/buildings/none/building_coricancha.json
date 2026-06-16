@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_CORICANCHA",
+ "description": "TXT_KEY_BUILDING_CORICANCHA",
+ "civilopedia": "TXT_KEY_BUILDING_CORICANCHA_PEDIA",
+ "gold": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_ANDEANISM": {
+    "flat": 1
+   }
+  }
+ },
+ "grants": {
+  "holyCity": "RELIGION_ANDEANISM"
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ANDEAN_SHRINE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CORICANCHA"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_ANDEAN"
+ },
+ "identity": {
+  "shrine": "RELIGION_ANDEANISM",
+  "nukeImmune": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_ANDEANISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

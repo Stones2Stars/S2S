@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_CRIME_POACHING",
+ "description": "TXT_KEY_BUILDING_CRIME_POACHING",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_POACHING_PEDIA",
+ "gold": {
+  "city": {
+   "percent": -3
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 8
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 2
+    },
+    "UNITCOMBAT_HUNTER": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

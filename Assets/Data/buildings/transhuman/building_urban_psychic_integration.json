@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_URBAN_PSYCHIC_INTEGRATION",
+ "description": "TXT_KEY_BUILDING_URBAN_PSYCHIC_INTEGRATION",
+ "civilopedia": "TXT_KEY_BUILDING_URBAN_PSYCHIC_INTEGRATION_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ALPHA_ASSEMBLER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_EMP_GRID",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SUPERCONDUCTING_GRID",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_NANOMORPHICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 5905,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_URBAN_PSYCHIC_INTEGRATION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

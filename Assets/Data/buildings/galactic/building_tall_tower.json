@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_TALL_TOWER",
+ "description": "TXT_KEY_BUILDING_TALL_TOWER",
+ "civilopedia": "TXT_KEY_BUILDING_TALL_TOWER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_LAUNCH_ARCOLOGY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 6
+  },
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_STRATOSPHERIC_TOWER",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 50430,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TALL_TOWER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TALL_TOWER"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

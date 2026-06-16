@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_SPECIES_RECOVERY_CENTER",
+ "description": "TXT_KEY_BUILDING_SPECIES_RECOVERY_CENTER",
+ "civilopedia": "TXT_KEY_BUILDING_SPECIES_RECOVERY_CENTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
+    },
+    {
+     "type": "BUILDING_BIOINFORMATICS_LAB",
+     "scope": "empire",
+     "min": 10
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_COMPUTERS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 17910,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SRC"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SPECIES_RECOVERY_CENTER"
+  }
+ },
+ "identity": {
+  "centerInCity": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

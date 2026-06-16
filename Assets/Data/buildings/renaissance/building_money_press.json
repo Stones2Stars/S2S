@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_MONEY_PRESS",
+ "description": "TXT_KEY_BUILDING_MONEY_PRESS",
+ "civilopedia": "TXT_KEY_BUILDING_MONEY_PRESS_PEDIA",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_PAPER_MONEY",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 410,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 4
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MONEY_PRESS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MUSEUM"
+ },
+ "identity": {
+  "worth": 4,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

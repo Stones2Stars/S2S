@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_VOLCANOLOGY_LAB",
+ "description": "TXT_KEY_BUILDING_VOLCANOLOGY_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_VOLCANOLOGY_LAB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SUBTERRANEAN_LAB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_GEOLOGY_LAB",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_VOLCANO_ACTIVE",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_VOLCANO_DORMANT",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_FUJI",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_SOPKA",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_KRAKATOA",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_KILIMANJARO",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 1475,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_VOLCANOLOGY_LAB"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

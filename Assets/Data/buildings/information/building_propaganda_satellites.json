@@ -1,0 +1,115 @@
+{
+ "type": "BUILDING_PROPAGANDA_SATELLITES",
+ "description": "TXT_KEY_BUILDING_PROPAGANDA_SATELLITES",
+ "civilopedia": "TXT_KEY_BUILDING_PROPAGANDA_SATELLITES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_MICROSATELLITE_CONSTELLATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_NANOTUBES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_EFFECT_LAUNCH_SITE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_COMMERCIAL_SPACEPORT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MILITARY_SPACEPORT",
+      "scope": "city"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      [
+       {
+        "type": "CIVIC_STATE_CHURCH",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_TOTALITARIANISM",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_TECHNOCRACY",
+        "scope": "empire"
+       }
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 2005,
+  "sizeModifier": 3,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPAGANDA_SATELLITES"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SPACEWAY"
+ },
+ "identity": {
+  "orbital": true,
+  "worth": 6,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

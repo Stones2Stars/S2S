@@ -1,0 +1,152 @@
+{
+ "type": "BUILDING_TEMPLE_OF_SETH",
+ "description": "TXT_KEY_BUILDING_TEMPLE_OF_SETH",
+ "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_SETH_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_SCULPTURES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ],
+   "noneOf": [
+    {
+     "type": "BUILDING_TEMPLE_OF_OSIRIS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_TEMPLE_OF_ISIS",
+     "scope": "city"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "RELIGION_KEMETISM",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  },
+  "empire": {
+   "percent": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": "HAS_STATE_RELIGION"
+    }
+   ]
+  }
+ },
+ "greatGeneralRate": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_KEMETISM": {
+    "flat": 3
+   }
+  }
+ },
+ "cost": {
+  "production": 432,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_EGYPTIAN_MYTH_SET"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EGYPTIAN_MYTH_SET"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_UNIT_BUILD_RA_MISSIONARY"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 2
+  },
+  "neverCapture": true,
+  "worth": 6,
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

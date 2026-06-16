@@ -1,0 +1,139 @@
+{
+ "type": "BUILDING_CENTRAL_BANK",
+ "description": "TXT_KEY_BUILDING_CENTRAL_BANK",
+ "civilopedia": "TXT_KEY_BUILDING_CENTRAL_BANK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BUILDING_BANK",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_BANK",
+     "scope": "empire",
+     "min": 4
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      [
+       {
+        "type": "CIVIC_CORPORATISM",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_GREEN",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_GUILDS",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_MERCANTILISM",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_PLANNED",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_REGULATED",
+        "scope": "empire"
+       }
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2,
+   "percent": 15
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "existedFor": {
+       "min": 200
+      }
+     }
+    }
+   ],
+   "percent": 10
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 910,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CENTRAL_BANK"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CENTRAL_BANK"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "neverCapture": true,
+  "worth": 5,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

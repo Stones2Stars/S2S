@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_CULTURE_HOPEWELL",
+ "description": "TXT_KEY_BUILDING_CULTURE_HOPEWELL",
+ "civilopedia": "TXT_KEY_BUILDING_CULTURE_HOPEWELL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_POULTRY",
+     "scope": "city",
+     "connection": "vicinity"
+    },
+    "IS_WATER",
+    {
+     "type": "BUILDING_C_AC_NORTH_AMERICAN",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_C_L_NORTH_AMERICAN",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 200
+  }
+ },
+ "cost": {
+  "production": 918
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CULTURE_HOPEWELL"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

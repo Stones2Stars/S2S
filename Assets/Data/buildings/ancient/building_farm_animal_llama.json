@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_FARM_ANIMAL_LLAMA",
+ "description": "TXT_KEY_BUILDING_FARM_ANIMAL_LLAMA",
+ "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_LLAMA_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_LLAMA",
+   "BUILDING_FARM_ANIMAL_ALPACA",
+   "BUILDING_HERDING_DOG_TRAINER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_LLAMA",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": [
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_TOURISM",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 160,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 7
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FARM_ANIMAL_LLAMA"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "type": "BUILDING_EFFECT_SOLAR_DYSON_SPHERE",
+ "description": "TXT_KEY_BUILDING_EFFECT_SOLAR_DYSON_SPHERE",
+ "civilopedia": "TXT_KEY_BUILDING_EFFECT_SOLAR_DYSON_SPHERE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_EFFECT_SOLAR_ECONOMY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 11755
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EFFECT_SOLAR_DYSON_SPHERE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

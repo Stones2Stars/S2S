@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_CRIME_ASIMOV_TAMPERING",
+ "description": "TXT_KEY_BUILDING_CRIME_ASIMOV_TAMPERING",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_ASIMOV_TAMPERING_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 10
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unit": "UNIT_TECHNARCHIST",
+    "interval": "perTurn",
+    "chance": {
+     "per": {
+      "type": "PROPERTY_CRIME",
+      "scope": "city"
+     }
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_ADVENTURE_TOURS_FRANCHISE",
+ "description": "TXT_KEY_BUILDING_ADVENTURE_TOURS_FRANCHISE",
+ "civilopedia": "TXT_KEY_BUILDING_ADVENTURE_TOURS_FRANCHISE_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_MODERN_OFFICES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_OFFICIUM",
+      "scope": "city"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "CORPORATION_ADVENTURE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ANCIENT_RELICS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ELEPHANTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_PEARLS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_HORSE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_WHALE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 1280,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 8
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ADVENTURE_TOURS_FRANCHISE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_CORPORATION",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

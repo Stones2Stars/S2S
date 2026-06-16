@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_LUNA_RING",
+ "description": "TXT_KEY_BUILDING_LUNA_RING",
+ "civilopedia": "TXT_KEY_BUILDING_LUNA_RING_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_LUNAR_ARCOLOGY",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 9912
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_LUNA_RING"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LUNA_RING"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

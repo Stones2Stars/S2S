@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_GUARD_DOG_TRAINER",
+ "description": "TXT_KEY_BUILDING_GUARD_DOG_TRAINER",
+ "civilopedia": "TXT_KEY_BUILDING_GUARD_DOG_TRAINER_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_GUARDDOG"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_DOG",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_GARRISON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MILITARY_BASE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 425,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GUARD_DOG_TRAINER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 10000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

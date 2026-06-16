@@ -2,7 +2,6 @@
  "type": "SPECIALBUILDING_GROUP_LEGENDARY_LANDSCAPES",
  "description": "TXT_KEY_SPECIALBUILDING_GROUP_LEGENDARY_LANDSCAPES",
  "identity": {
-  "maxPlayerInstances": 1,
-  "valid": true
+  "maxPlayerInstances": 1
  }
 }

@@ -1,0 +1,188 @@
+{
+ "type": "BUILDING_FARMSCRAPER_I",
+ "description": "TXT_KEY_BUILDING_FARMSCRAPER_I",
+ "civilopedia": "TXT_KEY_BUILDING_FARMSCRAPER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CIGAR_ROLLERS_SHOP",
+   "BUILDING_DYE_MAKER",
+   "BUILDING_FACTORY_DYE",
+   "BUILDING_FARMSCRAPER_II"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_AGRICULTURAL_EXTENSION",
+   "BUILDING_BLACK_TRUFFLE_GATHERER",
+   "BUILDING_BOLETE_GATHERER",
+   "BUILDING_CANNABIS_GROW_OPERATION",
+   "BUILDING_CHANTERELLE_GATHERER",
+   "BUILDING_CHINAMPA",
+   "BUILDING_CORAL_TOOTH_MUSHROOM_GATHERER",
+   "BUILDING_FARM_CROP_ALGAE",
+   "BUILDING_FARM_CROP_ARTICHOKE",
+   "BUILDING_FARM_CROP_BEAN",
+   "BUILDING_FARM_CROP_BELL_PEPPER",
+   "BUILDING_FARM_CROP_BROCCOLI",
+   "BUILDING_FARM_CROP_CABBAGE",
+   "BUILDING_FARM_CROP_CALABASH",
+   "BUILDING_FARM_CROP_CARROT",
+   "BUILDING_FARM_CROP_CASSAVA",
+   "BUILDING_FARM_CROP_CAULIFLOWER",
+   "BUILDING_FARM_CROP_CAULIFLOWER_MUSHROOM",
+   "BUILDING_FARM_CROP_CELERY",
+   "BUILDING_FARM_CROP_COCHINEAL",
+   "BUILDING_FARM_CROP_CORN_SMUT",
+   "BUILDING_FARM_CROP_CUCUMBER",
+   "BUILDING_FARM_CROP_EGGPLANT",
+   "BUILDING_FARM_CROP_ENOKITAKE_MUSHROOM",
+   "BUILDING_FARM_CROP_GARLIC",
+   "BUILDING_FARM_CROP_KALE",
+   "BUILDING_FARM_CROP_LEEK",
+   "BUILDING_FARM_CROP_LETTUCE",
+   "BUILDING_FARM_CROP_ONION",
+   "BUILDING_FARM_CROP_OYSTER_MUSHROOM",
+   "BUILDING_FARM_CROP_PORTOBELLO_MUSHROOM",
+   "BUILDING_FARM_CROP_POTATO",
+   "BUILDING_FARM_CROP_PUMPKIN",
+   "BUILDING_FARM_CROP_RADISH",
+   "BUILDING_FARM_CROP_SHIITAKE_MUSHROOM",
+   "BUILDING_FARM_CROP_SHIMEJI_MUSHROOM",
+   "BUILDING_FARM_CROP_SNOW_FUNGUS",
+   "BUILDING_FARM_CROP_SOYBEAN",
+   "BUILDING_FARM_CROP_SPINACH",
+   "BUILDING_FARM_CROP_SQUASH",
+   "BUILDING_FARM_CROP_STRAW_MUSHROOM",
+   "BUILDING_FARM_CROP_SWEET_POTATO",
+   "BUILDING_FARM_CROP_TURNIP",
+   "BUILDING_FARM_CROP_WHITE_MUSHROOM",
+   "BUILDING_FARM_CROP_ZUCCHINI",
+   "BUILDING_FARM_SUPPLY",
+   "BUILDING_FLY_AGARIC_GATHERER",
+   "BUILDING_GREAT_CHINAMPA",
+   "BUILDING_GROVE_COLA",
+   "BUILDING_GROVE_FUSTIC",
+   "BUILDING_GROVE_GINKGO",
+   "BUILDING_HEDGEHOG_MUSHROOM_GATHERER",
+   "BUILDING_HYDROPONIC_VEGETABLE_GARDEN",
+   "BUILDING_MOREL_MUSHROOM_GATHERER",
+   "BUILDING_ORGANIC_FARM",
+   "BUILDING_PESTICIDE_MANUFACTURER",
+   "BUILDING_PESTS_CROWS",
+   "BUILDING_PINE_MUSHROOM_GATHERER",
+   "BUILDING_PLANTATION_CANNABIS",
+   "BUILDING_PLANTATION_COCA",
+   "BUILDING_PLANTATION_KAVA",
+   "BUILDING_PLANTATION_MARSH_MALLOW",
+   "BUILDING_PLANTATION_MYRRH",
+   "BUILDING_PLANTATION_PEYOTE",
+   "BUILDING_PLANTATION_POPPY",
+   "BUILDING_PLANTATION_TARO",
+   "BUILDING_PLANTATION_TOBACCO",
+   "BUILDING_PRECISION_FARM",
+   "BUILDING_RESOURCES_DRUGS",
+   "BUILDING_RESOURCES_VEGETABLES",
+   "BUILDING_SCARECROWS",
+   "BUILDING_SHAGGY_PARASOL_MUSHROOM_GATHERER",
+   "BUILDING_TERRACE",
+   "BUILDING_WHITE_TRUFFLE_GATHERER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_CEMENT",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 120
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 125
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -35
+  }
+ },
+ "cost": {
+  "production": 3975,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FARMSCRAPER_I"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_VERTICAL_FARM"
+ },
+ "identity": {
+  "worth": 6,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

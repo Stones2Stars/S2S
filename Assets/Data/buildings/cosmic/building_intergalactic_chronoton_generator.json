@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_INTERGALACTIC_CHRONOTON_GENERATOR",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_CHRONOTON_GENERATOR",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_CHRONOTON_GENERATOR_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_CHRONOFORM_SHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4492
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_CHRONOTON_GENERATOR"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

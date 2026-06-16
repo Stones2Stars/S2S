@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_SEDNA_PROBE",
+ "description": "TXT_KEY_BUILDING_SEDNA_PROBE",
+ "civilopedia": "TXT_KEY_BUILDING_SEDNA_PROBE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_JET_PROPULSION_LABORATORY",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_COMMERCIAL_SPACEPORT",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_STARPORT",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 22830
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SEDNA_PROBE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SEDNA_PROBE"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

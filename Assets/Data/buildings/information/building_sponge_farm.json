@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_SPONGE_FARM",
+ "description": "TXT_KEY_BUILDING_SPONGE_FARM",
+ "civilopedia": "TXT_KEY_BUILDING_SPONGE_FARM_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_SPONGE_GATHERER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER"
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_CORAL_REEF",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_CORAL_REEF_BEACON",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_CORAL_REEF_LIGHTHOUSE",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_GREAT_BARRIER",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_GREAT_BARRIER_REEF_BEACON",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_GREAT_BARRIER_REEF_LIGHTHOUSE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 1845,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SPONGE_FARM"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_JAMES_WEBB_SPACE_TELESCOPE",
+ "description": "TXT_KEY_BUILDING_JAMES_WEBB_SPACE_TELESCOPE",
+ "civilopedia": "TXT_KEY_BUILDING_JAMES_WEBB_SPACE_TELESCOPE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_OBSERVATORY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_JET_PROPULSION_LABORATORY",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 11550
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_JAMESWEBB_TELESCOPE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_JAMES_WEBB_SPACE_TELESCOPE"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

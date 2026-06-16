@@ -1,0 +1,137 @@
+{
+ "type": "BUILDING_SHIPWRIGHT",
+ "description": "TXT_KEY_BUILDING_SHIPWRIGHT",
+ "civilopedia": "TXT_KEY_BUILDING_SHIPWRIGHT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BOATYARD",
+   "BUILDING_SHIPYARD"
+  ],
+  "units": [
+   "UNIT_BANYAN_XEBEC",
+   "UNIT_BILOG",
+   "UNIT_BRIGANTINE",
+   "UNIT_CARAVEL",
+   "UNIT_CARRACK_MERCHANT",
+   "UNIT_CHILEAN_CORVETTE",
+   "UNIT_CLIPPER_MERCHANT",
+   "UNIT_COG",
+   "UNIT_DECAREME",
+   "UNIT_DOUJIAN",
+   "UNIT_DROMON_FIRE_SHIP",
+   "UNIT_FLUYT",
+   "UNIT_FRIGATE",
+   "UNIT_GALLEASS",
+   "UNIT_GALLEON",
+   "UNIT_GALLEY",
+   "UNIT_GONE_DAU",
+   "UNIT_KNARR",
+   "UNIT_KON_TIKI",
+   "UNIT_MANOWAR",
+   "UNIT_PATAMAR",
+   "UNIT_PHOENICAN_BIREME",
+   "UNIT_PRIVATEER",
+   "UNIT_QUINQUEREME",
+   "UNIT_QUINQUEREME2",
+   "UNIT_RAZZIA_PIRATES",
+   "UNIT_SHIP_OF_THE_LINE",
+   "UNIT_SLOOP",
+   "UNIT_SLOOP_OF_WAR",
+   "UNIT_SUGAR_CLIPPER",
+   "UNIT_TRADE_JUNK",
+   "UNIT_TREASURE_SHIP",
+   "UNIT_TRIREME",
+   "UNIT_TURTLE_SHIP",
+   "UNIT_WARGALLEY",
+   "UNIT_WORKBOAT_CLASSIC",
+   "UNIT_WORKBOAT_MIDDLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ROPE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "IS_WATER",
+    {
+     "type": "BUILDING_CARPENTER",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_SAILS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1,
+   "improvements": {
+    "IMPROVEMENT_LUMBERMILL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_RESIN",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TAR",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 132,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SHIPWRIGHT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_GRAND_AERODROME",
+ "description": "TXT_KEY_BUILDING_GRAND_AERODROME",
+ "civilopedia": "TXT_KEY_BUILDING_GRAND_AERODROME_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_AERODROME"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_DIESELPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_AIRPORT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_COMMERCIAL_AIRPORT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_AIRCRAFT",
+    "interval": "perTurn",
+    "heal": 15
+   }
+  ]
+ },
+ "cost": {
+  "production": 1230
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GRAND_AERODROME"
+  }
+ },
+ "identity": {
+  "airlift": 4,
+  "airUnitCapacity": 9,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_DIESEL",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

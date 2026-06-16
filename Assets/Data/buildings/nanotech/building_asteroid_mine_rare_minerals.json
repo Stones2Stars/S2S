@@ -1,0 +1,41 @@
+{
+ "type": "BUILDING_ASTEROID_MINE_RARE_MINERALS",
+ "description": "TXT_KEY_BUILDING_ASTEROID_MINE_RARE_MINERALS",
+ "civilopedia": "TXT_KEY_BUILDING_ASTEROID_MINE_RARE_MINERALS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_ASTEROID_MINE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 3665
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ASTEROID_MINE_RARE_MINERALS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

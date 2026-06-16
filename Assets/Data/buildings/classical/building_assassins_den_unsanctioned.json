@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_ASSASSINS_DEN_UNSANCTIONED",
+ "description": "TXT_KEY_BUILDING_ASSASSINS_DEN_UNSANCTIONED",
+ "civilopedia": "TXT_KEY_BUILDING_ASSASSINS_DEN_PEDIA",
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 15
+   },
+   "flat": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unit": "UNIT_ASSASSIN",
+    "interval": "perTurn",
+    "chance": {
+     "per": {
+      "type": "PROPERTY_CRIME",
+      "scope": "city"
+     }
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ASSASSINS_DEN"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "militaryWorth": 1,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

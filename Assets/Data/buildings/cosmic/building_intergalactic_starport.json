@@ -1,0 +1,104 @@
+{
+ "type": "BUILDING_INTERGALACTIC_STARPORT",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_STARPORT",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_STARPORT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_DARK_MATTER_HIGHWAY",
+   "BUILDING_INTERGALACTIC_ELECTROWEAK_STAR_BASE",
+   "BUILDING_INTERGALACTIC_QUARK_STAR_BASE",
+   "BUILDING_INTERGALACTIC_TOURIST_AGENCY"
+  ],
+  "units": [
+   "UNIT_COSMIC_WORKER",
+   "UNIT_QUANTUM_PROBE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_CITY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERGALACTIC_TRADING_POST",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": [
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_MULTIVERSE_TRAVERSAL",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_INTERGROUP_TRAVEL",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_INTERCLUSTER_TRAVEL",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_QUANTUM_RAMJET",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_HORIZON_BREAKING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_REACTIONLESS_DRIVE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2853
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_STARPORT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_PROJECT_MERCURY",
+ "description": "TXT_KEY_BUILDING_PROJECT_MERCURY",
+ "civilopedia": "TXT_KEY_BUILDING_PROJECT_MERCURY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_EFFECT_LAUNCH_SITE",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_ROCKET_FUEL_REFINERY": {
+     "flat": 10
+    },
+    "BUILDING_CHEMICALS_DISTRICT": {
+     "flat": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 8460
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PROJECT_MERCURY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROJECT_MERCURY"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

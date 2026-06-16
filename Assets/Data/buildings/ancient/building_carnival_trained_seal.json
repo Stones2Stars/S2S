@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_CARNIVAL_TRAINED_SEAL",
+ "description": "TXT_KEY_BUILDING_CARNIVAL_TRAINED_SEAL",
+ "civilopedia": "TXT_KEY_BUILDING_CARNIVAL_TRAINED_SEAL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CARNIVAL",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_FOLKLORE_SEA_LION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_WALRUS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 306,
+  "sizeModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CARNIVAL_TRAINED_SEAL"
+  }
+ },
+ "identity": {
+  "worth": 2,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

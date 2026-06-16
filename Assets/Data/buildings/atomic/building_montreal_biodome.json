@@ -1,0 +1,137 @@
+{
+ "type": "BUILDING_MONTREAL_BIODOME",
+ "description": "TXT_KEY_BUILDING_MONTREAL_BIODOME",
+ "civilopedia": "TXT_KEY_BUILDING_MONTREAL_BIODOME_PEDIA",
+ "help": "TXT_KEY_BUILDING_MONTREAL_BIODOME_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER",
+    {
+     "type": "AREA_SIZE",
+     "scope": "world",
+     "min": 10
+    },
+    {
+     "type": "BUILDING_ZOO",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ZOO",
+     "scope": "empire",
+     "min": 4
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ELEPHANTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BEAVERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DEER",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "improvements": {
+    "IMPROVEMENT_HUNTING_CAMP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HUNTING_PRESERVE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WILDLIFE_SANCTUARY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "cost": {
+  "production": 2690,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_BIODOME"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MONTREAL_BIODOME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "worth": 8,
+  "militaryWorth": 4,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

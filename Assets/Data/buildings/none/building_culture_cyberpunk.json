@@ -1,0 +1,44 @@
+{
+ "type": "BUILDING_CULTURE_CYBERPUNK",
+ "description": "TXT_KEY_BUILDING_CULTURE_CYBERPUNK",
+ "civilopedia": "TXT_KEY_BUILDING_CULTURE_CYBERPUNK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 32730
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CULTURE_CYBERPUNK"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_CYBER",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

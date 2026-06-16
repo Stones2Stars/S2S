@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_PRESENCE_OF_CORAL",
+ "description": "TXT_KEY_BUILDING_PRESENCE_OF_CORAL",
+ "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_PRESENCE_OF_ORIGIN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_FOLKLORE_REQUIREMENT",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_CORAL_REEF",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_CORAL_REEF_BEACON",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_CORAL_REEF_LIGHTHOUSE",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_GREAT_BARRIER",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_GREAT_BARRIER_REEF_BEACON",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_GREAT_BARRIER_REEF_LIGHTHOUSE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CREATION_MYTH"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

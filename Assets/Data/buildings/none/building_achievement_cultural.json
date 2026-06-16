@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_ACHIEVEMENT_CULTURAL",
+ "description": "TXT_KEY_BUILDING_ACHIEVEMENT_CULTURAL",
+ "civilopedia": "TXT_KEY_BUILDING_ACHIEVEMENT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  },
+  "empire": {
+   "percent": 8
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CULTURAL_ACHIEVEMENT"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ACHIEVEMENT_CULTURAL"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "specialBuildingType": "SPECIALBUILDING_ACHIEVEMENT",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

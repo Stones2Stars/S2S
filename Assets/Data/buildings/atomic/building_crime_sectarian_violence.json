@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_CRIME_SECTARIAN_VIOLENCE",
+ "description": "TXT_KEY_BUILDING_CRIME_SECTARIAN_VIOLENCE",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_SECTARIAN_VIOLENCE_PEDIA",
+ "gold": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "research": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 4
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -10
+  },
+  "empire": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 250
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

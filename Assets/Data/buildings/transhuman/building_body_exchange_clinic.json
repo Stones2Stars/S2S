@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_BODY_EXCHANGE_CLINIC",
+ "description": "TXT_KEY_BUILDING_BODY_EXCHANGE_CLINIC",
+ "civilopedia": "TXT_KEY_BUILDING_BODY_EXCHANGE_CLINIC_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESURRECTION_HUB",
+   "BUILDING_SUPERHERO_GUILD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_CLONING_FACTORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "perPopulation": {
+    "percent": 25
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 5905,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BODY_EXCHANGE_CLINIC"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_HOSPITAL"
+ },
+ "identity": {
+  "worth": 8,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_SANITATION_CHAMBER",
+ "description": "TXT_KEY_BUILDING_SANITATION_CHAMBER",
+ "civilopedia": "TXT_KEY_BUILDING_SANITATION_CHAMBER_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_EXCREMENT_HOLES",
+   "BUILDING_GARDEROBE",
+   "BUILDING_OUTHOUSE",
+   "BUILDING_PUBLIC_RESTROOMS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "IS_FRESHWATER",
+    "HAS_POWER",
+    {
+     "type": "BUILDING_SEWER_SYSTEM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_WATER_PIPES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_COMPUTER_NETWORK",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SOAP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SERVICE_BOTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -32
+  }
+ },
+ "cost": {
+  "production": 2405,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SANITATION_CHAMBER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,104 @@
+{
+ "type": "BUILDING_NATIONAL_WEATHER_SERVICE",
+ "description": "TXT_KEY_BUILDING_NATIONAL_WEATHER_SERVICE",
+ "civilopedia": "TXT_KEY_BUILDING_NATIONAL_WEATHER_SERVICE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BUILDING_MODERN_OFFICES",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_BROADCAST_TOWER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_COMMUNICATION_TOWER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NETWORK_NODE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 7
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_SCIENTIST": 2
+  }
+ },
+ "cost": {
+  "production": 1740,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NATIONAL_WEATHER_SERVICE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NATIONAL_WEATHER_SERVICE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_INTELLIGENCE_AGENCY"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 4
+  },
+  "neverCapture": true,
+  "worth": 8,
+  "militaryWorth": 10,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 5,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

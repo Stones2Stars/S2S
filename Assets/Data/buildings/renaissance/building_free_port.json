@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_FREE_PORT",
+ "description": "TXT_KEY_BUILDING_FREE_PORT",
+ "civilopedia": "TXT_KEY_BUILDING_FREE_PORT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_PORT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_COMMERCIAL_PORT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_INTERNATIONAL_PORT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_OCEAN_ADMINISTRATION",
+      "scope": "city"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_FREE_MARKET",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 5
+   },
+   "foreignModifier": {
+    "percent": 10
+   }
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
+ "cost": {
+  "production": 535,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FREE_PORT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_INTERNATIONAL_PORT"
+ },
+ "identity": {
+  "worth": 3,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

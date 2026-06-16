@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_EUROPA_CITY",
+ "description": "TXT_KEY_BUILDING_EUROPA_CITY",
+ "civilopedia": "TXT_KEY_BUILDING_EUROPA_CITY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_EUROPA_COLONY",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_EUROPA",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4123
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EUROPA_CITY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

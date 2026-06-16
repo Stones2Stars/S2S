@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER",
+ "description": "TXT_KEY_BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER",
+ "civilopedia": "TXT_KEY_BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_QUANTUM_SUPERCOMPUTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_QUANTUM_LAB",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 20,
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_QUANTUM_DOTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 2305,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

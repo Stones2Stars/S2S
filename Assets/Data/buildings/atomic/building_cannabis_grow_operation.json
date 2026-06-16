@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_CANNABIS_GROW_OPERATION",
+ "description": "TXT_KEY_BUILDING_CANNABIS_GROW_OPERATION",
+ "civilopedia": "TXT_KEY_BUILDING_CANNABIS_GROW_OPERATION_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_DRUGS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_I"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_FRESHWATER",
+    "HAS_POWER",
+    {
+     "type": "BUILDING_HYDROPONICS_LAB",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1410,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CANNABIS_GROW_OPERATION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

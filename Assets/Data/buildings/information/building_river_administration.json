@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_RIVER_ADMINISTRATION",
+ "description": "TXT_KEY_BUILDING_RIVER_ADMINISTRATION",
+ "civilopedia": "TXT_KEY_BUILDING_RIVER_ADMINISTRATION_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_FERRY_TERMINAL",
+   "BUILDING_IRRIGATION_CANALS",
+   "BUILDING_LEVEE",
+   "BUILDING_NORIA",
+   "BUILDING_RIVER_AUTHORITY",
+   "BUILDING_RIVER_PORT",
+   "BUILDING_STEAMBOAT_PORT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 5
+   }
+  }
+ },
+ "cost": {
+  "production": 2625,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_RIVER_ADMINISTRATION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

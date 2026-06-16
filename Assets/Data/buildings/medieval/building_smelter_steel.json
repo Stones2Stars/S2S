@@ -1,0 +1,98 @@
+{
+ "type": "BUILDING_SMELTER_STEEL",
+ "description": "TXT_KEY_BUILDING_SMELTER_STEEL",
+ "civilopedia": "TXT_KEY_BUILDING_SMELTER_STEEL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_EIFFEL_TOWER",
+   "BUILDING_RESOURCES_STEEL_INGOTS",
+   "BUILDING_STATUE_OF_LIBERTY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ADVANCED_IRONWORKS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_IRON_INGOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_CHARCOAL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_COAL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 356,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SMELTER_STEEL"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_IRONWORKS"
+ },
+ "identity": {
+  "worth": 8,
+  "militaryWorth": 15,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 3,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

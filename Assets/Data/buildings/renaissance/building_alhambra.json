@@ -1,0 +1,138 @@
+{
+ "type": "BUILDING_ALHAMBRA",
+ "description": "TXT_KEY_BUILDING_ALHAMBRA",
+ "civilopedia": "TXT_KEY_BUILDING_ALHAMBRA_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_RELIC_ALHAMBRA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "STATE_RELIGION_IN_CITY",
+    {
+     "type": "RELIGION_ISLAM",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 300
+      }
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": 30
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "occupationTime": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_ISLAM": {
+    "flat": 1
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 2640,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GOLD": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ALHAMBRA"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ALHAMBRA"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_ISLAMIC"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 2
+  },
+  "nukeImmune": true,
+  "teamShare": true,
+  "governmentCenter": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_ISLAM",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

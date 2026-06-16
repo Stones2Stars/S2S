@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_DATTOO_PARLOR",
+ "description": "TXT_KEY_BUILDING_DATTOO_PARLOR",
+ "civilopedia": "TXT_KEY_BUILDING_DATTOO_PARLOR_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NANOGENERATORS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_TATTOO_PARLOR",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PIERCING_SHOP",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 3385,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DATTOO_PARLOR"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_DISEASE_LEPROSY",
+ "description": "TXT_KEY_BUILDING_DISEASE_LEPROSY",
+ "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+ "food": {
+  "city": {
+   "percent": -9
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -9
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -9,
+   "perPopulation": {
+    "percent": -25
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -4
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYDISEASE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

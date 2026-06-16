@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_ASCENDED_CITY",
+ "description": "TXT_KEY_BUILDING_ASCENDED_CITY",
+ "civilopedia": "TXT_KEY_BUILDING_ASCENDED_CITY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_CLAYTRONIC_CITY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "cost": {
+  "production": 29655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ASCENDED_CITY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

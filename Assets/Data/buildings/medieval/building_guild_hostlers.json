@@ -1,0 +1,97 @@
+{
+ "type": "BUILDING_GUILD_HOSTLERS",
+ "description": "TXT_KEY_BUILDING_GUILD_HOSTLERS",
+ "civilopedia": "TXT_KEY_BUILDING_GUILDS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_KNIGHTS_STABLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MODERN_STABLE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_KNIGHTS_STABLE": {
+     "flat": 5
+    },
+    "BUILDING_MODERN_STABLE": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 712,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GUILD_EQUESTRIAN"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GUILD_HOSTLERS"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "greatPeopleUnitType": "UNIT_GREAT_GENERAL",
+  "specialBuildingType": "SPECIALBUILDING_GUILD",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

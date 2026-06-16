@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_CULTURE_AKA",
+ "description": "TXT_KEY_BUILDING_CULTURE_AKA",
+ "civilopedia": "TXT_KEY_BUILDING_CULTURE_AKA_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_C_AC_AFRICAN",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_C_L_AFRICAN",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_JUNGLE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 200
+  }
+ },
+ "cost": {
+  "production": 270
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CULTURE_AKA"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

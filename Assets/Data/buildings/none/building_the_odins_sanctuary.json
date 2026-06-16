@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_THE_ODINS_SANCTUARY",
+ "description": "TXT_KEY_BUILDING_THE_ODINS_SANCTUARY",
+ "civilopedia": "TXT_KEY_BUILDING_THE_ODINS_SANCTUARY_PEDIA",
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MELEE": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_ASATRU": {
+    "flat": 1
+   }
+  }
+ },
+ "grants": {
+  "holyCity": "RELIGION_ASATRU"
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SHRINE_ASATRU"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_THE_ODINS_SANCTUARY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_NORDIC"
+ },
+ "identity": {
+  "shrine": "RELIGION_ASATRU",
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 3
+  },
+  "nukeImmune": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_ASATRU",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

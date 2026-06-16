@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_NET_SALMON",
+ "description": "TXT_KEY_BUILDING_NET_SALMON",
+ "civilopedia": "TXT_KEY_BUILDING_NET_SALMON_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_FISH"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AQUAFARM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FISH",
+     "scope": "city",
+     "connection": "vicinity"
+    },
+    "IS_WATER",
+    "HAS_RIVER",
+    {
+     "type": "BUILDING_FISH_TRAPS",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_FOREST_YOUNG",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_FOREST",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_FOREST_ANCIENT",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_FOREST_BURNT",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 50,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NET_SALMON"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

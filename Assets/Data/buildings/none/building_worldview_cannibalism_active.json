@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE",
+ "description": "TXT_KEY_BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE",
+ "civilopedia": "TXT_KEY_BUILDING_WORLDVIEW_CANNIBALISM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_WORLDVIEW_CANNIBALISM",
+     "scope": "empire",
+     "min": 1
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    -1,
+    {
+     "value": -3,
+     "enabled": {
+      "type": "TECH_PHILOSOPHY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -4,
+     "enabled": {
+      "type": "TECH_CODE_OF_LAWS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -3,
+     "enabled": {
+      "type": "TECH_HUMANISM",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "forceNoPrereqScaling": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

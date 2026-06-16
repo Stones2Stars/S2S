@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_INTERROGATION_CHAIR",
+ "description": "TXT_KEY_BUILDING_INTERROGATION_CHAIR",
+ "civilopedia": "TXT_KEY_BUILDING_INTERROGATION_CHAIR_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_JAIL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_TORTURE_CHAMBER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -6
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 356,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERROGATION_CHAIR"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_JAIL"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_INVESTIGATOR": 1
+  },
+  "worth": 4,
+  "militaryWorth": 4,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

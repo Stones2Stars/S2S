@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_VENUS_DEATH_RAY",
+ "description": "TXT_KEY_BUILDING_VENUS_DEATH_RAY",
+ "civilopedia": "TXT_KEY_BUILDING_VENUS_DEATH_RAY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_VENUS_FUSION_PLANT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 50
+   },
+   "bombardDefense": {
+    "percent": 20
+   },
+   "dynamicDefense": {
+    "flat": 20
+   },
+   "adjacentDamage": {
+    "percent": 20
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 10158
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_VENUS_DEATH_RAY"
+  }
+ },
+ "identity": {
+  "sightRange": 1,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

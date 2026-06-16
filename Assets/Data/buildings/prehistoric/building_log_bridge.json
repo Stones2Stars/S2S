@@ -1,0 +1,110 @@
+{
+ "type": "BUILDING_LOG_BRIDGE",
+ "description": "TXT_KEY_BUILDING_LOG_BRIDGE",
+ "civilopedia": "TXT_KEY_BUILDING_LOG_BRIDGE_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BAMBOO_BRIDGE"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_ROPE_BRIDGE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_TRAILS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ROADS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PAVED_ROADS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ASPHALT_ROADS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SKYROAD_CONTROL_TOWER",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2,
+   "percent": 2
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": -1
+   },
+   "riverDefensePenalty": {
+    "flat": 6
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1,
+   "modifier": {
+    "percent": 4
+   }
+  }
+ },
+ "cost": {
+  "production": 62,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LOG_BRIDGE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

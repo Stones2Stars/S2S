@@ -1,0 +1,34 @@
+{
+ "type": "BUILDING_POWER_NUCLEAR",
+ "description": "TXT_KEY_BUILDING_POWER_NUCLEAR",
+ "civilopedia": "TXT_KEY_BUILDING_POWER_NUCLEAR_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ATOMPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_POWER_NUCLEAR"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_WASTE_EXPORTATION_OFFICE",
+ "description": "TXT_KEY_BUILDING_WASTE_EXPORTATION_OFFICE",
+ "civilopedia": "TXT_KEY_BUILDING_WASTE_EXPORTATION_OFFICE_PEDIA",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "any": [
+      [
+       {
+        "type": "CIVIC_WASTE_EXPORTATION",
+        "scope": "empire"
+       }
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": [
+    {
+     "value": -500,
+     "enabled": {
+      "type": "TECH_RECYCLING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 535,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WASTE_EXPORTATION_OFFICE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GARBAGE_DUMP"
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 2,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

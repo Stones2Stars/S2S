@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_KUIPER_BELT_FUSION_PLANT",
+ "description": "TXT_KEY_BUILDING_KUIPER_BELT_FUSION_PLANT",
+ "civilopedia": "TXT_KEY_BUILDING_KUIPER_BELT_FUSION_PLANT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_KUIPER_BELT_ENZMANN_STARSHIP",
+   "BUILDING_KUIPER_BELT_INTERSTELLAR_SUPPLY_BASE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_KUIPER_BELT_OUTPOST",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_KUIPER_BELT_OBJECT",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3308
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_KUIPER_BELT_FUSION_PLANT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

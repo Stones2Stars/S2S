@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_TERRAFORMED_MARS",
+ "description": "TXT_KEY_BUILDING_TERRAFORMED_MARS",
+ "civilopedia": "TXT_KEY_BUILDING_TERRAFORMED_MARS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MARTIAN_ARCOLOGY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MARTIAN_CO2_SUBLIMATION",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "BUILDING_MARTIAN_BIOTIC_SEA",
+     "scope": "empire",
+     "min": 2
+    },
+    {
+     "type": "BUILDING_MARTIAN_AMMONIA_BOMBARDMENT",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "BUILDING_MARTIAN_CFC_GENERATOR",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "BUILDING_MARTIAN_ECOPOIESIS_REACTOR",
+     "scope": "empire",
+     "min": 3
+    },
+    {
+     "type": "BUILDING_MARTIAN_MAGNETIC_FIELD_GENERATOR",
+     "scope": "empire",
+     "min": 2
+    },
+    {
+     "type": "BUILDING_MARTIAN_FARM",
+     "scope": "empire",
+     "min": 2
+    },
+    {
+     "type": "BUILDING_MARTIAN_ORBITAL_MIRROR_ARRAY",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 27966
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MARS_TERRA"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TERRAFORMED_MARS"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

@@ -1,0 +1,135 @@
+{
+ "type": "BUILDING_FOLKLORE_E_LANDFORM",
+ "description": "TXT_KEY_BUILDING_FOLKLORE_E_LANDFORM",
+ "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_E_LANDFORM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_FOLKLORE_REQUIREMENT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FOLKLORE_E_EARTH",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FOLKLORE_E_SKY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_PRESENCE_OF_LANDFORM",
+     "scope": "empire",
+     "min": 1
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1,
+   "percent": [
+    {
+     "value": -60,
+     "enabled": {
+      "type": "TECH_LANGUAGE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_SEDENTARY_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_CLASSICAL_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_MEDIEVAL_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_RENAISSANCE_LIFESTYLE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_LANGUAGE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_SEDENTARY_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_CLASSICAL_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_MEDIEVAL_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_RENAISSANCE_LIFESTYLE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 20,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FOLKLORE_E_LANDFORM"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "forceNoPrereqScaling": true,
+  "specialBuildingType": "SPECIALBUILDING_FOLKLORE_EXPLORATION",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

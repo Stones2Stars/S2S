@@ -1,0 +1,239 @@
+{
+ "type": "BUILDING_FARMSCRAPER_II",
+ "description": "TXT_KEY_BUILDING_FARMSCRAPER_II",
+ "civilopedia": "TXT_KEY_BUILDING_FARMSCRAPER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_III",
+   "BUILDING_PUSHBUTTON_AUTOMAT"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_CANNERY",
+   "BUILDING_FARM_CROP_BEARBERRY",
+   "BUILDING_FARM_CROP_BLACKBERRY",
+   "BUILDING_FARM_CROP_BLUEBERRY",
+   "BUILDING_FARM_CROP_CRANBERRY",
+   "BUILDING_FARM_CROP_ELDERBERRY",
+   "BUILDING_FARM_CROP_GOOSEBERRY",
+   "BUILDING_FARM_CROP_RASPBERRY",
+   "BUILDING_FARM_CROP_STRAWBERRY",
+   "BUILDING_GROVE_ALMOND",
+   "BUILDING_GROVE_BRAZIL_NUT",
+   "BUILDING_GROVE_CASHEW",
+   "BUILDING_GROVE_CHESTNUT",
+   "BUILDING_GROVE_GEVUINA",
+   "BUILDING_GROVE_HAZELNUT",
+   "BUILDING_GROVE_MACADAMIA",
+   "BUILDING_GROVE_MONGONGO",
+   "BUILDING_GROVE_OAK",
+   "BUILDING_GROVE_PECAN",
+   "BUILDING_GROVE_PINE_NUT",
+   "BUILDING_GROVE_PISTACHIO",
+   "BUILDING_GROVE_WALNUT",
+   "BUILDING_PLANTATION_COCONUT",
+   "BUILDING_PLANTATION_PEANUT",
+   "BUILDING_RESOURCES_BERRIES",
+   "BUILDING_RESOURCES_NUTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_FARMSCRAPER_I",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    120,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_APPLE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CORN",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COW",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CRAB",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DEER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_FISH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LEMONS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OLIVES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PIG",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHEEP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHRIMP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WHALE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25,
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_GRAPES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "cost": {
+  "production": 3975,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FARMSCRAPER_II"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_VERTICAL_FARM"
+ },
+ "identity": {
+  "worth": 6,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

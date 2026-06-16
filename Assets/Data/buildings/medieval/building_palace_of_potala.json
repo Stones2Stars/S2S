@@ -1,0 +1,142 @@
+{
+ "type": "BUILDING_PALACE_OF_POTALA",
+ "description": "TXT_KEY_BUILDING_PALACE_OF_POTALA",
+ "civilopedia": "TXT_KEY_BUILDING_PALACE_OF_POTALA_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "STATE_RELIGION_IN_CITY",
+    {
+     "type": "RELIGION_BUDDHISM",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ],
+   "percent": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "HAS_STATE_RELIGION"
+    }
+   ]
+  }
+ },
+ "foodKept": {
+  "city": {
+   "percent": 20
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "warWeariness": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_BUDDHISM": {
+    "flat": 1
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "cost": {
+  "production": 2208,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_POTALA"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_POTALA"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BUDDHIST"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 2
+  },
+  "nukeImmune": true,
+  "teamShare": true,
+  "worth": 4,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_BUDDHISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

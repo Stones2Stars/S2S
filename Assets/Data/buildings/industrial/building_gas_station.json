@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_GAS_STATION",
+ "description": "TXT_KEY_BUILDING_GAS_STATION",
+ "civilopedia": "TXT_KEY_BUILDING_GAS_STATION_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AON_CENTER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TELEPORT_BOOTH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_AUTOMOBILES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_SHOPPING_DISTRICT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TRADING_POST",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 830,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GAS_STATION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "type": "BUILDING_ZOROASTRIAN_SHRINE",
+ "description": "TXT_KEY_BUILDING_ZOROASTRIAN_SHRINE",
+ "civilopedia": "TXT_KEY_BUILDING_ZOROASTRIAN_SHRINE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ZOROASTRIAN_MISSIONARY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "RELIGION_ZOROASTRIANISM",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_ZOROASTRIANISM": {
+    "flat": 1
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE",
+    "interval": "perTurn",
+    "heal": 2
+   }
+  ]
+ },
+ "cost": {
+  "production": 216,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ZOROASTRIAN_SHRINE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BUDDHIST"
+ },
+ "identity": {
+  "neverCapture": true,
+  "worth": 3,
+  "specialBuildingType": "SPECIALBUILDING_MONASTERY",
+  "religion": "RELIGION_ZOROASTRIANISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

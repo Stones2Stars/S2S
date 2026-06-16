@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_WASTE_INCINERATOR_POWER_PLANT",
+ "description": "TXT_KEY_BUILDING_WASTE_INCINERATOR_POWER_PLANT",
+ "civilopedia": "TXT_KEY_BUILDING_WASTE_INCINERATOR_POWER_PLANT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_POWER_LINES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LANDFILL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_RECYCLING_CENTER",
+     "scope": "city"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      [
+       {
+        "type": "CIVIC_WASTE_TO_ENERGY",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_WASTE_IMPORTATION",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_LANDFILLS",
+        "scope": "empire"
+       }
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 1475,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WASTE_INCINERATOR_POWER_PLANT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_HOUSING_SHACKS",
+ "description": "TXT_KEY_BUILDING_HOUSING_SHACKS",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_SHACKS_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_HOUSING_ANIMAL_BURROW",
+   "BUILDING_HOUSING_BARK_HUTS",
+   "BUILDING_HOUSING_CAVE_DWELLING",
+   "BUILDING_HOUSING_HOMELESS",
+   "BUILDING_HOUSING_HOVELS",
+   "BUILDING_HOUSING_LEAN_TOS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "IS_FRESHWATER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_SHACKS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

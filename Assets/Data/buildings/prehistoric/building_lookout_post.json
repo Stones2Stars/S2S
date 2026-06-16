@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_LOOKOUT_POST",
+ "description": "TXT_KEY_BUILDING_LOOKOUT_POST",
+ "civilopedia": "TXT_KEY_BUILDING_LOOKOUT_POST_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_NEANDERTHAL_WATCHER",
+   "UNIT_WATCHER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_SENTRY_POST"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "espionage": {
+  "city": {
+   "investigation": {
+    "flat": 5
+   },
+   "flat": 1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 5
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 15,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LOOKOUT_POST"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

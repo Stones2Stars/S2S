@@ -1,0 +1,117 @@
+{
+ "type": "BUILDING_BUDDHIST_MONASTERY",
+ "description": "TXT_KEY_BUILDING_BUDDHIST_MONASTERY",
+ "civilopedia": "TXT_KEY_BUILDING_BUDDHIST_MONASTERY_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_BUDDHIST_MISSIONARY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BRICKS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "RELIGION_BUDDHISM",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_BUDDHISM": {
+    "flat": 1
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE",
+    "interval": "perTurn",
+    "heal": 2
+   }
+  ]
+ },
+ "cost": {
+  "production": 225,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BUDDHIST_MONASTERY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BUDDHIST"
+ },
+ "identity": {
+  "neverCapture": true,
+  "worth": 3,
+  "specialBuildingType": "SPECIALBUILDING_MONASTERY",
+  "religion": "RELIGION_BUDDHISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

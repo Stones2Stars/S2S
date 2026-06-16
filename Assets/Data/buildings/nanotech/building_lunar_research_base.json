@@ -1,0 +1,156 @@
+{
+ "type": "BUILDING_LUNAR_RESEARCH_BASE",
+ "description": "TXT_KEY_BUILDING_LUNAR_RESEARCH_BASE",
+ "civilopedia": "TXT_KEY_BUILDING_LUNAR_RESEARCH_BASE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_CEMENT",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_LUNAR_ALGAE_LAB",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_LUNAR_OBSERVATORY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -500
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 200,
+   "percent": [
+    {
+     "value": 500,
+     "enabled": {
+      "type": "BONUS_STEEL_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "BONUS_ALGAE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "BONUS_TITANIUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "BONUS_MANGANESE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "BONUS_MAGNESIUM_ORE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "BONUS_PLASTIC",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "BONUS_SYNTHETIC_RUBBER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "BONUS_ROCKET_FUEL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2000
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LUNAR_RESEARCH_BASE"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 3
+  },
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

@@ -1,0 +1,131 @@
+{
+ "type": "BUILDING_STABLE",
+ "description": "TXT_KEY_BUILDING_STABLE",
+ "civilopedia": "TXT_KEY_BUILDING_STABLE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_RACE_TRACK",
+   "BUILDING_GER",
+   "BUILDING_RIDING_SCHOOL"
+  ],
+  "units": [
+   "UNIT_TAMED_BISON",
+   "UNIT_TAMED_BUFFALO",
+   "UNIT_TAMED_CAMEL",
+   "UNIT_TAMED_DONKEY",
+   "UNIT_TAMED_ELEPHANT",
+   "UNIT_TAMED_HORSE",
+   "UNIT_TAMED_LLAMA",
+   "UNIT_TAMED_MAMMOTH"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_KNIGHTS_STABLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SADDLES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_CAMEL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_DONKEY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_HORSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_ELEPHANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_LLAMA",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_LEISURE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MOUNTED": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 146,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_STABLE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_STABLE"
+ },
+ "identity": {
+  "newCityFree": [
+   {
+    "GOM_TECH": "TECH_STEAM_POWER"
+   }
+  ],
+  "worth": 2,
+  "militaryWorth": 2,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

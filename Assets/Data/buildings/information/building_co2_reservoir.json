@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_CO2_RESERVOIR",
+ "description": "TXT_KEY_BUILDING_CO2_RESERVOIR",
+ "civilopedia": "TXT_KEY_BUILDING_CO2_RESERVOIR_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INDUSTRIAL_PARK",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -200
+  }
+ },
+ "cost": {
+  "production": 2505,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CO2_RESERVOIR"
+  }
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 2,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

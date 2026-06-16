@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_DISTANT_LAYERED_REALITY",
+ "description": "TXT_KEY_BUILDING_DISTANT_LAYERED_REALITY",
+ "civilopedia": "TXT_KEY_BUILDING_DISTANT_LAYERED_REALITY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_DARK_WORLD",
+   "BUILDING_DISTANT_DREAM_WORLD",
+   "BUILDING_DISTANT_PARANORMAL_BRANESPACE_TOPOLOGY",
+   "BUILDING_DISTANT_RECURSIVE_WORLD",
+   "BUILDING_DISTANT_SPIRIT_WORLD",
+   "BUILDING_LIBRARY_OF_BABEL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DISTANT_HORIZON_PORT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2914
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DISTANT_LAYERED_REALITY"
+  }
+ },
+ "identity": {
+  "workableRadius": 3,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

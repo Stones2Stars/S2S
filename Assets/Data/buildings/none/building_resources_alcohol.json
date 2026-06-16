@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_RESOURCES_ALCOHOL",
+ "description": "TXT_KEY_BUILDING_RESOURCES_ALCOHOL",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_BREWERY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CIDER_HOUSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DISTILLERY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_WINERY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_ALCOHOL"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

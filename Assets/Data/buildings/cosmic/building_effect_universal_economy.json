@@ -1,0 +1,25 @@
+{
+ "type": "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
+ "description": "TXT_KEY_BUILDING_EFFECT_UNIVERSAL_ECONOMY",
+ "civilopedia": "TXT_KEY_BUILDING_UNIVERSAL_ECONOMY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_EFFECT_COSMIC_EXPANSION_POWER_PLANT",
+   "BUILDING_HYPERSPACE_OPEN_FRW_UNIVERSE",
+   "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
+   "BUILDING_MULTIVERSAL_ECONOMY"
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EFFECT_UNIVERSAL_ECONOMY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

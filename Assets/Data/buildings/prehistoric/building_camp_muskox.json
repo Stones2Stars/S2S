@@ -1,0 +1,107 @@
+{
+ "type": "BUILDING_CAMP_MUSKOX",
+ "description": "TXT_KEY_BUILDING_CAMP_MUSKOX",
+ "civilopedia": "TXT_KEY_BUILDING_CAMP_MUSKOX_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_BISON",
+   "BUILDING_RESOURCES_CARCASS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BREEDING_PROGRAM_MUSKOX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BISON",
+     "scope": "city",
+     "connection": "vicinity"
+    },
+    {
+     "latitude": {
+      "min": 40
+     }
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_SHEEP",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_HUNTERS_CAMP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANCIENT_CUSTOMS",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "TERRAIN_TAIGA",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_ICE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TECH_ECOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 45,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CAMP_MUSKOX"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

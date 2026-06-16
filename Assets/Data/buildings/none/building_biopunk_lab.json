@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_BIOPUNK_LAB",
+ "description": "TXT_KEY_BUILDING_BIOPUNK_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_BIOPUNK_LAB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHIMERA_SURGERY_CLINIC",
+   "BUILDING_PHEROMONE_LAB",
+   "BUILDING_SPECIES_REVIVAL_LAB",
+   "BUILDING_WEAPONIZED_FLORA"
+  ],
+  "units": [
+   "UNIT_ORGANIC_INFANTRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BIOPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "BUILDING_CLONING_LABORATORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 3665
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BIOPUNK_LAB"
+  }
+ },
+ "identity": {
+  "specialBuildingType": "SPECIALBUILDING_PUNK_BIO",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

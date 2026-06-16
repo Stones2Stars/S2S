@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_CRIME_ILLEGAL_IMMIGRATION",
+ "description": "TXT_KEY_BUILDING_CRIME_ILLEGAL_IMMIGRATION",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_ILLEGAL_IMMIGRATION_PEDIA",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "any": [
+      [
+       {
+        "type": "CIVIC_CLOSED_BORDERS",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_SKILLED_WORKERS",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_SECURED_BORDERS",
+        "scope": "empire"
+       }
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 20
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -4,
+   "perPopulation": {
+    "percent": -35
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

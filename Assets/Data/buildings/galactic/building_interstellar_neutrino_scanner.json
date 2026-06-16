@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_INTERSTELLAR_NEUTRINO_SCANNER",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_NEUTRINO_SCANNER",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_NEUTRINO_SCANNER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_DARK_LIGHT_BEACON"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_PLANETARY_AWARENESS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4789
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_NEUTRINO_SCANNER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

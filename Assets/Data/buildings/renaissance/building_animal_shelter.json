@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_ANIMAL_SHELTER",
+ "description": "TXT_KEY_BUILDING_ANIMAL_SHELTER",
+ "civilopedia": "TXT_KEY_BUILDING_ANIMAL_SHELTER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_DOG",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_CAT",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_RABBIT",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 535,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ANIMAL_SHELTER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

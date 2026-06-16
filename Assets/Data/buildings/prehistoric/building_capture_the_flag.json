@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_CAPTURE_THE_FLAG",
+ "description": "TXT_KEY_BUILDING_CAPTURE_THE_FLAG",
+ "civilopedia": "TXT_KEY_BUILDING_CAPTURE_THE_FLAG_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_CLOTH",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_LEATHER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_PLAYING_FIELDS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ATHLETIC_FIELDS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 2
+    },
+    "UNITCOMBAT_HUNTER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 90,
+  "sizeModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CAPTURE_THE_FLAG"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

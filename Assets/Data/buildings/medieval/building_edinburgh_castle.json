@@ -1,0 +1,138 @@
+{
+ "type": "BUILDING_EDINBURGH_CASTLE",
+ "description": "TXT_KEY_BUILDING_EDINBURGH_CASTLE",
+ "civilopedia": "TXT_KEY_BUILDING_EDINBURGH_CASTLE_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_RELIC_EDINBURGH_CASTLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_CASTLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_STAR_FORT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_IMPERIAL_FORTRESS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 100
+      }
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 100
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "occupationTime": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 1800,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_MILITARY": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_EDINBURGH"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EDINBURGH_CASTLE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CASTLE"
+ },
+ "identity": {
+  "nukeImmune": true,
+  "teamShare": true,
+  "governmentCenter": true,
+  "worth": 12,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

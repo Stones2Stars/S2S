@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_TEST_PILOT_INSTITUTE",
+ "description": "TXT_KEY_BUILDING_TEST_PILOT_INSTITUTE",
+ "civilopedia": "TXT_KEY_BUILDING_TEST_PILOT_INSTITUTE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PETROLEUM_PRODUCTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BIOFUEL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_MILITARY_AIRBASE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_AEROSPACE_COMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_B1_LANCER": {
+     "percent": 10
+    },
+    "UNIT_MODERN_FIGHTER": {
+     "percent": 10
+    },
+    "UNIT_SCRAMJET": {
+     "percent": 10
+    },
+    "UNIT_SR71": {
+     "percent": 10
+    },
+    "UNIT_ORBITAL_BOMBER": {
+     "percent": 10
+    },
+    "UNIT_ORBITAL_FIGHTER": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_SUPERSONIC_PLANES": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 1685,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TEST_PILOT_INSTITUTE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

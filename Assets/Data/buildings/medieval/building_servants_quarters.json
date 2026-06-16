@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_SERVANTS_QUARTERS",
+ "description": "TXT_KEY_BUILDING_SERVANTS_QUARTERS",
+ "civilopedia": "TXT_KEY_BUILDING_SERVANTS_QUARTERS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_GUILD_SERVANTS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_IMPERIAL_FORTRESS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_PALACE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FORBIDDEN_PALACE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CASTLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_STAR_FORT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 3
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 300,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SERVANTS_QUARTERS"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_NOBLE": 1
+  },
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

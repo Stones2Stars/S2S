@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_LUNAR_ECUMENOPOLIS",
+ "description": "TXT_KEY_BUILDING_LUNAR_ECUMENOPOLIS",
+ "civilopedia": "TXT_KEY_BUILDING_LUNAR_ECUMENOPOLIS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_LUNAR_ARCOLOGY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LUNAR_ARCOLOGY",
+     "scope": "empire",
+     "min": 2
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 9912
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_URBAN_MOON"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LUNAR_ECUMENOPOLIS"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "type": "BUILDING_EMANCIPATION_PROCLAMATION",
+ "description": "TXT_KEY_BUILDING_EMANCIPATION_PROCLAMATION",
+ "civilopedia": "TXT_KEY_BUILDING_EMANCIPATION_PROCLAMATION_PEDIA",
+ "help": "TXT_KEY_BUILDING_EMANCIPATION_PROCLAMATION_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 1310,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_EMANCIPATION_PROCLAMATION"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EMANCIPATION_PROCLAMATION"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

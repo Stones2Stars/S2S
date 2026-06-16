@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_MORTUARY",
+ "description": "TXT_KEY_BUILDING_MORTUARY",
+ "civilopedia": "TXT_KEY_BUILDING_MORTUARY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MODERN_EMBALMER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_BURIAL_TRADITION_CAVE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BURIAL_TRADITION_EARTH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BURIAL_TRADITION_FIRE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BURIAL_TRADITION_SKY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BURIAL_TRADITION_SEA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FUNERARY_SERVICES",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 380,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MORTUARY"
+  }
+ },
+ "identity": {
+  "conquestProbability": 95,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

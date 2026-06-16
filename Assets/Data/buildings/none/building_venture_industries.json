@@ -1,0 +1,143 @@
+{
+ "type": "BUILDING_VENTURE_INDUSTRIES",
+ "description": "TXT_KEY_BUILDING_VENTURE_INDUSTRIES",
+ "civilopedia": "TXT_KEY_BUILDING_VENTURE_INDUSTRIES_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ATOMPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BUILDING_LABORATORY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INDUSTRIAL_PARK",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_CLONING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_LUNAR_EXPLORATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_SPACE_STATIONS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_ROBOTICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5,
+   "percent": [
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_LUNAR_EXPLORATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_SPACE_STATIONS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_ROBOTICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_CLONING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 2690
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_VENTURE_INDUSTRIES"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_VENTURE_INDUSTRIES"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

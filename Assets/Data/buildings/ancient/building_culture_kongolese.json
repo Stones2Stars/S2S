@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_CULTURE_KONGOLESE",
+ "description": "TXT_KEY_BUILDING_CULTURE_KONGOLESE",
+ "civilopedia": "TXT_KEY_BUILDING_CULTURE_KONGOLESE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PRIME_TIMBER",
+     "scope": "city",
+     "connection": "vicinity"
+    },
+    {
+     "type": "BUILDING_C_AC_AFRICAN",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_C_L_AFRICAN",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 200
+  }
+ },
+ "cost": {
+  "production": 876
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CULTURE_KONGOLESE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

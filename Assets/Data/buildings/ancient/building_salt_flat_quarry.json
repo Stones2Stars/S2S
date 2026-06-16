@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_SALT_FLAT_QUARRY",
+ "description": "TXT_KEY_BUILDING_SALT_FLAT_QUARRY",
+ "civilopedia": "TXT_KEY_BUILDING_SALT_FLAT_QUARRY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_SALT"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MATERIALS_CONGLOMERATE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_MINING_CAMP",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_SALT_FLATS",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "terrains": {
+    "TERRAIN_SALT_FLATS": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 168,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SALT_FLAT_QUARRY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

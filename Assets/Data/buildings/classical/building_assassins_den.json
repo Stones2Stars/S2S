@@ -1,0 +1,117 @@
+{
+ "type": "BUILDING_ASSASSINS_DEN",
+ "description": "TXT_KEY_BUILDING_ASSASSINS_DEN",
+ "civilopedia": "TXT_KEY_BUILDING_ASSASSINS_DEN_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ASSASSIN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_BARTER_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TRADING_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHOPPING_DISTRICT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 15
+   },
+   "flat": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_STRIKE_TEAM": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unit": "UNIT_ASSASSIN",
+    "interval": "perTurn",
+    "chance": {
+     "per": {
+      "type": "PROPERTY_CRIME",
+      "scope": "city"
+     }
+    }
+   }
+  ]
+ },
+ "cost": {
+  "production": 225,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ASSASSINS_DEN"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "militaryWorth": 1,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

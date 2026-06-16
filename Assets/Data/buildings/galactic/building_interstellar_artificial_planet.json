@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_COMPUTRONIUM_PLANET",
+   "BUILDING_INTERSTELLAR_DEGENERATE_ERA_SURVIVAL_PLAN",
+   "BUILDING_INTERSTELLAR_PLANETARY_SHELLWORLD",
+   "BUILDING_INTERSTELLAR_WHITE_DWARF_COLONY",
+   "BUILDING_ONYX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_ARTIFICIAL_MOON",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_INTERSTELLAR_COMET_DUST_COLLECTION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SPACE_COLONY_MILKY_WAY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3611
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

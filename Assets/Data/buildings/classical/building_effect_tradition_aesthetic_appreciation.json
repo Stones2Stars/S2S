@@ -1,0 +1,28 @@
+{
+ "type": "BUILDING_EFFECT_TRADITION_AESTHETIC_APPRECIATION",
+ "description": "TXT_KEY_BUILDING_EFFECT_TRADITION_AESTHETIC_APPRECIATION",
+ "civilopedia": "TXT_KEY_BUILDING_TRADITION_AESTHETIC_APPRECIATION_PEDIA",
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRADITION_AESTHETIC_APPRECIATION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "applyFreePromotionOnMove": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

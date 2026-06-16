@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_REED_GATHERER",
+ "description": "TXT_KEY_BUILDING_REED_GATHERER",
+ "civilopedia": "TXT_KEY_BUILDING_REED_GATHERER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AGROFOREST"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "FEATURE_SWAMP",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_REED_GATHERER"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

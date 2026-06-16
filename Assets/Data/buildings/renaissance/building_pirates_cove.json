@@ -1,0 +1,162 @@
+{
+ "type": "BUILDING_PIRATES_COVE",
+ "description": "TXT_KEY_BUILDING_PIRATES_COVE",
+ "civilopedia": "TXT_KEY_BUILDING_PIRATES_COVE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER"
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      [
+       {
+        "type": "CIVIC_DESPOTISM",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_MONARCHY",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_FEUDAL",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_NATIONALIST",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_MERCANTILISM",
+        "scope": "empire"
+       }
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    -1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GOLD_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SILVER_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -1,
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_NAVAL",
+    "interval": "perTurn",
+    "heal": 3
+   }
+  ]
+ },
+ "cost": {
+  "production": 440,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PIRATES_COVE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "militaryWorth": 1,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

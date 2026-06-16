@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_INTERGALACTIC_PARTICLE_TRANSMUTATION",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_PARTICLE_TRANSMUTATION",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_PARTICLE_TRANSMUTATION_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_MATTER_PRESERVER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 5255
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_PARTICLE_TRANSMUTATION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

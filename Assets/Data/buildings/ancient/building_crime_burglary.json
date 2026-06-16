@@ -1,0 +1,186 @@
+{
+ "type": "BUILDING_CRIME_BURGLARY",
+ "description": "TXT_KEY_BUILDING_CRIME_BURGLARY",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_BURGLARY_PEDIA",
+ "gold": {
+  "city": {
+   "flat": -5,
+   "percent": [
+    {
+     "value": -100,
+     "enabled": {
+      "type": "BONUS_JEWELRY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "BONUS_SCULPTURES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "BONUS_POTTERY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "BONUS_GLASSWARE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "BONUS_CLOTHING",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "BONUS_HATS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "BONUS_SHOES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "BONUS_PERCUSSION_INSTRUMENTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "BONUS_WOODWIND_INSTRUMENTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "BONUS_BRASS_INSTRUMENTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "BONUS_STRING_INSTRUMENTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "BONUS_BOOKS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "BONUS_BICYCLES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "BONUS_TOYS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "BONUS_SKIS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "BONUS_COMPUTERS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 14
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2,
+   "perPopulation": {
+    "percent": -20
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

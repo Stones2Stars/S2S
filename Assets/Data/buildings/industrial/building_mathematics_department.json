@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_MATHEMATICS_DEPARTMENT",
+ "description": "TXT_KEY_BUILDING_MATHEMATICS_DEPARTMENT",
+ "civilopedia": "TXT_KEY_BUILDING_MATHEMATICS_DEPARTMENT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARXIV",
+   "BUILDING_CHURCH_TURING_THESIS",
+   "BUILDING_COMPUTER_SCIENCE_DEPARTMENT",
+   "BUILDING_FERMATS_LAST_THEOREM",
+   "BUILDING_FOUR_COLOR_THEOREM",
+   "BUILDING_GAME_THEORY_RESEARCH_CENTER",
+   "BUILDING_GODELS_INCOMPLETENESS_THEOREMS",
+   "BUILDING_HILBERTS_PROBLEMS"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_MATHEMATICS_ACADEMY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_UNIVERSITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 21,
+   "percent": [
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_ABSTRACT_MATHEMATICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_CHAOS_THEORY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 630,
+  "sizeModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MATHEMATICS_DEPARTMENT"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,40 @@
+{
+ "type": "BUILDING_CISLUNAR_TELESCOPE",
+ "description": "TXT_KEY_BUILDING_CISLUNAR_TELESCOPE",
+ "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_TELESCOPE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_BIG_BANG_OBSERVATORY"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 600
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 528
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CISLUNAR_TELESCOPE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_ENERGY_ISLAND",
+ "description": "TXT_KEY_BUILDING_ENERGY_ISLAND",
+ "civilopedia": "TXT_KEY_BUILDING_ENERGY_ISLAND_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER",
+    {
+     "type": "BUILDING_OCEAN_CITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 2865,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ENERGY_ISLAND"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,106 @@
+{
+ "type": "BUILDING_MILITARY_SURPLUS_STORE",
+ "description": "TXT_KEY_BUILDING_MILITARY_SURPLUS_STORE",
+ "civilopedia": "TXT_KEY_BUILDING_MILITARY_SURPLUS_STORE_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HYPERMARKET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SHOPPING_DISTRICT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HATS",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHOES",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CLOTHING",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FIREARMS",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PARTS",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ROPE",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 1475,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MILITARY_SURPLUS_STORE"
+  }
+ },
+ "identity": {
+  "worth": 5,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

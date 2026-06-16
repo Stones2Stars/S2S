@@ -1,0 +1,138 @@
+{
+ "type": "BUILDING_SKYSCRAPER",
+ "description": "TXT_KEY_BUILDING_SKYSCRAPER",
+ "civilopedia": "TXT_KEY_BUILDING_SKYSCRAPER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AON_CENTER",
+   "BUILDING_BANK_OF_CHINA_TOWER",
+   "BUILDING_BURJ_AL_ARAB",
+   "BUILDING_BURJ_KHALIFA",
+   "BUILDING_DIRIGIBLE_TERMINAL",
+   "BUILDING_ECOSCRAPER",
+   "BUILDING_EMPIRE_STATE_BUILDING",
+   "BUILDING_HOUSING_HABITATION_PODS",
+   "BUILDING_HOUSING_HIGHRISES",
+   "BUILDING_HOUSING_HIGH_TECH_HIGHRISES",
+   "BUILDING_HOUSING_HOLO_SUITES",
+   "BUILDING_HOUSING_PENTHOUSE_SUITES",
+   "BUILDING_HOUSING_PROJECTS",
+   "BUILDING_HQ_ADVENTURE_TOURS",
+   "BUILDING_HQ_ALUMINUM_CO",
+   "BUILDING_HQ_BIG_MCDOWELLS",
+   "BUILDING_HQ_BULLSEYE",
+   "BUILDING_HQ_BURGERWORLD",
+   "BUILDING_HQ_CEREAL_MILLS",
+   "BUILDING_HQ_CIVILIZED_JEWELERS_INC",
+   "BUILDING_HQ_CREATIVE_CONSTRUCTIONS",
+   "BUILDING_HQ_EAST_WEST_TRADERS",
+   "BUILDING_HQ_EMPERORS_CLOTHING",
+   "BUILDING_HQ_FASHION_HOUSE",
+   "BUILDING_HQ_MALLWART",
+   "BUILDING_HQ_MAPSTER",
+   "BUILDING_HQ_MILEHIGH_TRAVELS_INTERNATIONAL",
+   "BUILDING_HQ_MINING_INC",
+   "BUILDING_HQ_MOBBY_MEATS_INTERNATIONAL",
+   "BUILDING_HQ_MOONBEAN_COFFEE",
+   "BUILDING_HQ_RED_CURTAINS",
+   "BUILDING_HQ_SAFARI_HUNTERS",
+   "BUILDING_HQ_SIDS_SUSHI_CO",
+   "BUILDING_HQ_STANDARD_ETHANOL",
+   "BUILDING_HQ_ULTIMATE_SOLDIERS",
+   "BUILDING_HQ_WONKA_CONFECTIONERIES",
+   "BUILDING_JEDDAH_TOWER",
+   "BUILDING_KINGDOM_CENTRE",
+   "BUILDING_MADISON_AVENUE",
+   "BUILDING_MARKET_RESEARCH",
+   "BUILDING_MEGATOWER",
+   "BUILDING_PRIDE_PARADE",
+   "BUILDING_TAIPEI_101",
+   "BUILDING_TOKYO_SKY_TREE",
+   "BUILDING_TOKYO_TOWER",
+   "BUILDING_TRANSAMERICA_TOWER",
+   "BUILDING_ULTIMATE_SOLDIERS_TRAINER",
+   "BUILDING_UNITED_NATIONS",
+   "BUILDING_UN_MISSION",
+   "BUILDING_WILLIS_TOWER",
+   "BUILDING_WORLD_TOWER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_STEEL_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 800,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SKYSCRAPER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SKYSCRAPER"
+ },
+ "identity": {
+  "teamShare": true,
+  "worth": 10,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "type": "BUILDING_EFFECT_ACHIEVEMENT_SAFETY",
+ "description": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_SAFETY",
+ "civilopedia": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_SAFETY_PEDIA",
+ "revolution": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EFFECT_ACHIEVEMENT_SAFETY"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

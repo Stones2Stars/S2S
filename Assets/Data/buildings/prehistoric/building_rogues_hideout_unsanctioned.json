@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_ROGUES_HIDEOUT_UNSANCTIONED",
+ "description": "TXT_KEY_BUILDING_ROGUES_HIDEOUT_UNSANCTIONED",
+ "civilopedia": "TXT_KEY_BUILDING_THIEVES_HIDEOUT_PEDIA",
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 7
+   },
+   "flat": -2
+  }
+ },
+ "happiness": {
+  "city": {
+   "perPopulation": {
+    "percent": -20
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unit": "UNIT_ROGUE",
+    "interval": "perTurn",
+    "chance": {
+     "per": {
+      "type": "PROPERTY_CRIME",
+      "scope": "city"
+     }
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_THIEVES_HIDEOUT"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

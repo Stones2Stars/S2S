@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_WIRELESS_ELECTRIC_FENCE",
+ "description": "TXT_KEY_BUILDING_WIRELESS_ELECTRIC_FENCE",
+ "civilopedia": "TXT_KEY_BUILDING_WIRELESS_ELECTRIC_FENCE_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ARCOLOGY_SHIELDING"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_ABATIS",
+   "BUILDING_BARBWIRE_FENCE",
+   "BUILDING_ELECTRIC_FENCE",
+   "BUILDING_FIRE_ABATIS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 160
+   },
+   "min": {
+    "flat": 5
+   },
+   "noEntryLevel": {
+    "flat": 10
+   },
+   "adjacentDamage": {
+    "percent": 30
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -8
+  }
+ },
+ "cost": {
+  "production": 3975,
+  "sizeModifier": 3,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WIRELESS_ELECTRIC_FENCE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "centerInCity": true,
+  "worth": 1,
+  "militaryWorth": 4,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

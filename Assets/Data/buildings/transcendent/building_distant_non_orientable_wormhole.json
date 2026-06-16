@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_DISTANT_NON_ORIENTABLE_WORMHOLE",
+ "description": "TXT_KEY_BUILDING_DISTANT_NON_ORIENTABLE_WORMHOLE",
+ "civilopedia": "TXT_KEY_BUILDING_DISTANT_NON_ORIENTABLE_WORMHOLE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_KLEIN_BOTTLE_UNIVERSE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DISTANT_BRANE_COLLISION",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2914
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DISTANT_NON_ORIENTABLE_WORMHOLE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

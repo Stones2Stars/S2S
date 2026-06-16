@@ -1,0 +1,105 @@
+{
+ "type": "BUILDING_METH_LAB",
+ "description": "TXT_KEY_BUILDING_METH_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_METH_LAB_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_HEZBOLLAH",
+   "UNIT_STREET_GANG"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MATERIALS_CONGLOMERATE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_LABORATORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 50
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unit": "UNIT_STREET_GANG",
+    "interval": "perTurn",
+    "chance": {
+     "per": {
+      "type": "PROPERTY_CRIME",
+      "scope": "city"
+     }
+    }
+   }
+  ]
+ },
+ "cost": {
+  "production": 1685,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_METH_LAB"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

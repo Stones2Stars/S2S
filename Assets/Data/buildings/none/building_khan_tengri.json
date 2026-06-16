@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_KHAN_TENGRI",
+ "description": "TXT_KEY_BUILDING_KHAN_TENGRI",
+ "civilopedia": "TXT_KEY_BUILDING_KHAN_TENGRI_PEDIA",
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "grants": {
+  "holyCity": "RELIGION_TENGRIISM"
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TENGRI_SHRINE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_KHAN_TENGRI"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SIBERIAN"
+ },
+ "identity": {
+  "shrine": "RELIGION_TENGRIISM",
+  "nukeImmune": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_TENGRIISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

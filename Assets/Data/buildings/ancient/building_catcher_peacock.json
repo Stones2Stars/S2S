@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_CATCHER_PEACOCK",
+ "description": "TXT_KEY_BUILDING_CATCHER_PEACOCK",
+ "civilopedia": "TXT_KEY_BUILDING_CATCHER_PEACOCK_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_FEATHERS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PARROTS",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_SPICES",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TECH_ECOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 125,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 7
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CATCHER_PEACOCK"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

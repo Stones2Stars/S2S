@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_GUINEA_PIG_BREEDER",
+ "description": "TXT_KEY_BUILDING_GUINEA_PIG_BREEDER",
+ "civilopedia": "TXT_KEY_BUILDING_GUINEA_PIG_BREEDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_GUINEA_PIGS",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1,
+   "percent": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GRASS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_STRAW",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GRAINS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 98,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GUINEA_PIG_BREEDER"
+  }
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

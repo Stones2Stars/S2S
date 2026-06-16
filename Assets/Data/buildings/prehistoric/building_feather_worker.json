@@ -1,0 +1,42 @@
+{
+ "type": "BUILDING_FEATHER_WORKER",
+ "description": "TXT_KEY_BUILDING_FEATHER_WORKER",
+ "civilopedia": "TXT_KEY_BUILDING_FEATHER_WORKER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_FEATHERS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FEATHER_WORKER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "worth": 1,
+  "conquestProbability": 20,
+  "advisor": "ADVISOR_ECONOMY",
+  "freeStartEra": "C2C_ERA_CLASSICAL",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

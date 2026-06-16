@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_VALLEY_OF_THE_KINGS",
+ "description": "TXT_KEY_BUILDING_VALLEY_OF_THE_KINGS",
+ "civilopedia": "TXT_KEY_BUILDING_VALLEY_OF_THE_KINGS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "BUILDING_PALACE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_THE_GREAT_PYRAMID",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "BUILDING_THE_GREAT_SPHINX",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "grants": {
+  "freeTechs": 1,
+  "goldenAge": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_VALLEY_KINGS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_VALLEY_OF_THE_KINGS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "noInstanceLimit": true,
+  "greatPeopleUnitType": "UNIT_DOCTOR",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

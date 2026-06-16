@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_TERRAFORMED_URANUS",
+ "description": "TXT_KEY_BUILDING_TERRAFORMED_URANUS",
+ "civilopedia": "TXT_KEY_BUILDING_TERRAFORMED_URANUS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_URANUS_FLOATING_CITY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_URANUS",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 42829
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TERRAFORMED_URANUS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TERRAFORMED_URANUS"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

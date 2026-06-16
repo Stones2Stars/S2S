@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_SIGNALS_INTELLIGENCE_RECEIVERS",
+ "description": "TXT_KEY_BUILDING_SIGNALS_INTELLIGENCE_RECEIVERS",
+ "civilopedia": "TXT_KEY_BUILDING_SIGNALS_INTELLIGENCE_RECEIVERS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_INTELLIGENCE_AGENCY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SECURITY_CENTER",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_COMMUNICATION_TOWER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NETWORK_NODE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_SPY": {
+     "flat": 1
+    },
+    "UNITCOMBAT_LAW_ENFORCEMENT": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 2105,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SIGNALS_INTELLIGENCE_RECEIVERS"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SPY": 1
+  },
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

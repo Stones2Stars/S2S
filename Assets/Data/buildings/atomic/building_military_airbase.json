@@ -1,0 +1,133 @@
+{
+ "type": "BUILDING_MILITARY_AIRBASE",
+ "description": "TXT_KEY_BUILDING_MILITARY_AIRBASE",
+ "civilopedia": "TXT_KEY_BUILDING_MILITARY_AIRBASE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FLIGHT_SCHOOL",
+   "BUILDING_FLIGHT_SIMULATOR",
+   "BUILDING_HOLOGRAPHIC_FLIGHT_SIMULATOR",
+   "BUILDING_MANHATTAN_PROJECT",
+   "BUILDING_MILITARY_SPACEPORT",
+   "BUILDING_NATIONAL_AEROSPACE_AGENCY",
+   "BUILDING_TEST_PILOT_INSTITUTE"
+  ],
+  "units": [
+   "UNIT_B1_LANCER",
+   "UNIT_B52_BOMBER",
+   "UNIT_F104_STARFIGHTER",
+   "UNIT_F111_AARDVARK",
+   "UNIT_F14_TOMCAT",
+   "UNIT_F18_HORNET",
+   "UNIT_F22_RAPTOR",
+   "UNIT_F4_PHANTOM",
+   "UNIT_FIGHTER",
+   "UNIT_JET_FIGHTER",
+   "UNIT_MIG_29",
+   "UNIT_P51_MUSTANG"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AEROSPACE_COMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AIRCRAFT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "domains": {
+    "DOMAIN_AIR": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "defense": {
+  "city": {
+   "airDefense": {
+    "percent": -10
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_HELICOPTER": {
+     "flat": 3
+    }
+   },
+   "domains": {
+    "DOMAIN_AIR": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_AIRCRAFT",
+    "interval": "perTurn",
+    "heal": 6
+   }
+  ]
+ },
+ "cost": {
+  "production": 1030,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_AIRBASE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MILITARY_AIRBASE"
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 4,
+  "airlift": 1,
+  "airUnitCapacity": 5,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

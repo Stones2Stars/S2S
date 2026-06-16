@@ -1,0 +1,47 @@
+{
+ "type": "BUILDING_HYPERSPACE_TIME_TRAP",
+ "description": "TXT_KEY_BUILDING_HYPERSPACE_TIME_TRAP",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_TIME_TRAP_PEDIA",
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 30
+   },
+   "damageAttackerChance": {
+    "flat": 30
+   },
+   "damageToAttacker": {
+    "flat": 30
+   },
+   "repel": {
+    "flat": 30
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "cost": {
+  "production": 2422
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERSPACE_TIME_TRAP"
+  }
+ },
+ "identity": {
+  "damageAllAttackers": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_INTESTINAL_RATS",
+ "description": "TXT_KEY_BUILDING_INTESTINAL_RATS",
+ "civilopedia": "TXT_KEY_BUILDING_INTESTINAL_RATS_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_JAIL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_TORTURE_CHAMBER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 356
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTESTINAL_RATS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_JAIL"
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 4,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

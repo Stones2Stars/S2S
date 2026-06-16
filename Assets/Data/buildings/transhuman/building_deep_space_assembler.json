@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_DEEP_SPACE_ASSEMBLER",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_ASSEMBLER",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_ASSEMBLER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_FACTORY",
+   "BUILDING_DEEP_SPACE_INDUSTRIALIZED_ASTEROID",
+   "BUILDING_DEEP_SPACE_PLASTEEL_FACTORY",
+   "BUILDING_DEEP_SPACE_TELESCOPE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_DEEP_SPACE_SOLAR_ARRAY_INNER_SOLAR_SYSTEM",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DEEP_SPACE_SOLAR_ARRAY_OUTER_SOLAR_SYSTEM",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DEEP_SPACE_SOLAR_ARRAY_TRANSNEPTUNIAN",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 823
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_ASSEMBLER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

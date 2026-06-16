@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_JADE_GATHERER",
+ "description": "TXT_KEY_BUILDING_JADE_GATHERER",
+ "civilopedia": "TXT_KEY_BUILDING_JADE_GATHERER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_GEMSTONE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MINE_JADE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_JADE",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 60,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_JADE_GATHERER"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

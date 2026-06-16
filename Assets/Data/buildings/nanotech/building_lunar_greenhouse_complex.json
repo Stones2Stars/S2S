@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_LUNAR_GREENHOUSE_COMPLEX",
+ "description": "TXT_KEY_BUILDING_LUNAR_GREENHOUSE_COMPLEX",
+ "civilopedia": "TXT_KEY_BUILDING_LUNAR_GREENHOUSE_COMPLEX_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_GLASSWARE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_LUNAR_HYDROPONICS_FARM",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_STEEL_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_TITANIUM_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_ALUMINUM_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 36
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1950
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LUNAR_GREENHOUSE_COMPLEX"
+  }
+ },
+ "identity": {
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

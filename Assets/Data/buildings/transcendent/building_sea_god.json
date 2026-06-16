@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_SEA_GOD",
+ "description": "TXT_KEY_BUILDING_SEA_GOD",
+ "civilopedia": "TXT_KEY_BUILDING_SEA_GOD_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_REALM_OF_TRANQUILITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER",
+    {
+     "type": "BUILDING_OCEAN_ARCOLOGY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 26055,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SEA_GOD"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

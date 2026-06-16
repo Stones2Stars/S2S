@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_HOUSING_HABITATION_PODS",
+ "description": "TXT_KEY_BUILDING_HOUSING_HABITATION_PODS",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_HABITATION_PODS_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HOUSING_COLONY_ARCOLOGY"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_HOUSING_PROJECTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_FRESHWATER",
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BUILDING_WATER_PIPES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SEWER_SYSTEM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_TELEPHONE_NETWORK",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SKYSCRAPER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 12
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_HABITATION_PODS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_CARNIVAL_BOXING_KANGAROO",
+ "description": "TXT_KEY_BUILDING_CARNIVAL_BOXING_KANGAROO",
+ "civilopedia": "TXT_KEY_BUILDING_CARNIVAL_BOXING_KANGAROO_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CARNIVAL",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "HERITAGE_TAXON_MARSUPIALIA",
+      "scope": "empire"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 306,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CARNIVAL_BOXING_KANGAROO"
+  }
+ },
+ "identity": {
+  "worth": 1,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

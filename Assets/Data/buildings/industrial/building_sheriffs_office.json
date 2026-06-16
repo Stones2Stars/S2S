@@ -1,0 +1,147 @@
+{
+ "type": "BUILDING_SHERIFFS_OFFICE",
+ "description": "TXT_KEY_BUILDING_SHERIFFS_OFFICE",
+ "civilopedia": "TXT_KEY_BUILDING_SHERIFFS_OFFICE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+  ],
+  "units": [
+   "UNIT_CITY_GUARD",
+   "UNIT_ENFORCERS",
+   "UNIT_GUARD",
+   "UNIT_HARAPPA_WATCHER",
+   "UNIT_HOPLOMACHUS",
+   "UNIT_HUACA_GUARDIANS",
+   "UNIT_NEANDERTHAL_ENFORCER",
+   "UNIT_NEANDERTHAL_WATCHER",
+   "UNIT_ORONAO_WATCHER",
+   "UNIT_PATROLS",
+   "UNIT_PETRA_GUARD",
+   "UNIT_SHERIFF",
+   "UNIT_TEXAS_RANGER",
+   "UNIT_TOWN_WATCHMEN",
+   "UNIT_TREASURE_GUARD",
+   "UNIT_WATCHER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_POLICE_STATION"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_BAILIWICK",
+   "BUILDING_GUARDHOUSE",
+   "BUILDING_GUARD_STATION",
+   "BUILDING_LOOKOUT_POST",
+   "BUILDING_SENTRY_POST",
+   "BUILDING_TOWN_PATROL",
+   "BUILDING_TOWN_WATCH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_TRADING_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHOPPING_DISTRICT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MODERN_OFFICES",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "espionage": {
+  "city": {
+   "investigation": {
+    "flat": 35
+   },
+   "flat": 15,
+   "percent": 1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 20
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -15
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -35
+  }
+ },
+ "cost": {
+  "production": 630,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   },
+   {
+    "FLAVOR_MILITARY": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SHERIFFS_OFFICE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_POLICE_STATION"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_INVESTIGATOR": 4
+  },
+  "worth": 1,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

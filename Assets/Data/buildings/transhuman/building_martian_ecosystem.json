@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_MARTIAN_ECOSYSTEM",
+ "description": "TXT_KEY_BUILDING_MARTIAN_ECOSYSTEM",
+ "civilopedia": "TXT_KEY_BUILDING_MARTIAN_ECOSYSTEM_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MARTIAN_BIOTIC_SEA",
+   "BUILDING_MARTIAN_FARM",
+   "BUILDING_MARTIAN_ZOO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MARTIAN_METROPOLIS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "cost": {
+  "production": 2110
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MARTIAN_ECOSYSTEM"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

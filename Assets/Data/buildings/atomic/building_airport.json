@@ -1,0 +1,96 @@
+{
+ "type": "BUILDING_AIRPORT",
+ "description": "TXT_KEY_BUILDING_AIRPORT",
+ "civilopedia": "TXT_KEY_BUILDING_AIRPORT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AERODROME",
+   "BUILDING_AIR_SHIPPING_WAREHOUSE",
+   "BUILDING_FIRE_HANGAR",
+   "BUILDING_FLIGHT_SCHOOL",
+   "BUILDING_GRAND_AERODROME"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_COMMERCIAL_AIRPORT"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_ORNITHOPTER_AERIE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AIRCRAFT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_AIRCRAFT",
+    "interval": "perTurn",
+    "heal": 8
+   }
+  ]
+ },
+ "cost": {
+  "production": 950,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_AIRSTRIP"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_EARLY_AIRPORT"
+ },
+ "identity": {
+  "worth": 5,
+  "airlift": 1,
+  "airUnitCapacity": 4,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,40 @@
+{
+ "type": "BUILDING_HYPERSPACE_WAREHOUSE",
+ "description": "TXT_KEY_BUILDING_HYPERSPACE_WAREHOUSE",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_WAREHOUSE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_HYPERSPACE_COMMERCIAL_CENTER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1945
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERSPACE_WAREHOUSE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

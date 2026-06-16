@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_PIT_TRAPS",
+ "description": "TXT_KEY_BUILDING_PIT_TRAPS",
+ "civilopedia": "TXT_KEY_BUILDING_PIT_TRAPS_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_SPIKED_PIT_TRAPS"
+  ]
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 5
+   },
+   "damageAttackerChance": {
+    "flat": 20
+   },
+   "damageToAttacker": {
+    "flat": 5
+   },
+   "repel": {
+    "flat": 10
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 40,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PIT_TRAPS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_FORGE"
+ },
+ "identity": {
+  "damageAttackingUnitCombats": [
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_WHEELED"
+  ],
+  "militaryWorth": 1,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,126 @@
+{
+ "type": "BUILDING_RESOURCES_SEASONING",
+ "description": "TXT_KEY_BUILDING_RESOURCES_SEASONING",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_GROVE_ACACIA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_ALLSPICES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_CHILI",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_CHIVES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GROVE_CINNAMOMUM",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_CLOVES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_COFFEE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_GINGER_ROOT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_FRANKINCENSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_LICORICE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GROVE_MAPLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_PEPPERMINT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_NUTMEG",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_BLACK_PEPPER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_RHUBARB",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_SAFFRON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GROVE_SASSAFRAS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_SESAME",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_CINNAMON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SPICE_VOYAGE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_SUGARCANE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_TEA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_VANILLA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_WASABI",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_SEASONING"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

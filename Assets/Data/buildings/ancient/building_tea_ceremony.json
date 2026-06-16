@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_TEA_CEREMONY",
+ "description": "TXT_KEY_BUILDING_TEA_CEREMONY",
+ "civilopedia": "TXT_KEY_BUILDING_TEA_CEREMONY_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_TEA",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 153,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TEA_CEREMONY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

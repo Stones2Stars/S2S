@@ -1,0 +1,124 @@
+{
+ "type": "BUILDING_FACTORY_SCULPTURES",
+ "description": "TXT_KEY_BUILDING_FACTORY_SCULPTURES",
+ "civilopedia": "TXT_KEY_BUILDING_FACTORY_SCULPTURES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_PHIDIAS_STATUE_WORKSHOP"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MANUFACTURING_DISTRICT"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_SCULPTORS_WORKSHOP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_FACTORY",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_JADE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_FINE_CLAY",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PLASTIC",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_3D_PRINTING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_RAPID_PROTOTYPING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 710,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FACTORY_SCULPTURES"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ARTIST": 1
+  },
+  "nukeImmune": true,
+  "conquestProbability": 80,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

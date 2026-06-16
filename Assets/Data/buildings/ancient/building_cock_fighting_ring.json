@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_COCK_FIGHTING_RING",
+ "description": "TXT_KEY_BUILDING_COCK_FIGHTING_RING",
+ "civilopedia": "TXT_KEY_BUILDING_COCK_FIGHTING_RING_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_POULTRY",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_INDUSTRIAL_FARMS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CHICKEN_COOP",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_LEGALIZED_GAMBLING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 125,
+  "countModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_COCK_FIGHTING_RING"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

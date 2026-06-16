@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_INTERGALACTIC_SUPERMASSIVE_BLACK_HOLE_PLANT",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_SUPERMASSIVE_BLACK_HOLE_PLANT",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_SUPERMASSIVE_BLACK_HOLE_PLANT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_CORE_DYSON_SPHERE",
+   "BUILDING_INTERGALACTIC_DARK_MATTER_FUEL_SUPPLY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3075
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_SUPERMASSIVE_BLACK_HOLE_PLANT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

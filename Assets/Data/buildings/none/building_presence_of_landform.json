@@ -1,0 +1,107 @@
+{
+ "type": "BUILDING_PRESENCE_OF_LANDFORM",
+ "description": "TXT_KEY_BUILDING_PRESENCE_OF_LANDFORM",
+ "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_PRESENCE_OF_ORIGIN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_FOLKLORE_REQUIREMENT",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_POLAR_ROCK_ARCH",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_POLAR_ROCK_ARCH2",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_POLAR_ROCK_FORM1",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_POLAR_ROCK_FORM2",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_POLAR_ROCK_FORM3",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_POLAR_ROCK_FORM4",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_DARK_ROCK_ARCH",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_DARK_ROCK_ARCH2",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_DARK_ROCK_FORM1",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_DARK_ROCK_FORM2",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_DARK_ROCK_FORM3",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_DARK_ROCK_FORM4",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_ROCK_ARCH",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_ROCK_ARCH2",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_ROCK_FORM1",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_ROCK_FORM2",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_ROCK_FORM3",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_ROCK_FORM4",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_DEVILS_TABLE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CREATION_MYTH"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

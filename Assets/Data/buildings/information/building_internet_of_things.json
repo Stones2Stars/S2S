@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_INTERNET_OF_THINGS",
+ "description": "TXT_KEY_BUILDING_INTERNET_OF_THINGS",
+ "civilopedia": "TXT_KEY_BUILDING_INTERNET_OF_THINGS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_CLOUD_SERVER",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_DIGITAL_OFFICES": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MECHATRONICS_LAB": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 4810,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_INTERNET_OF_THINGS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERNET_OF_THINGS"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

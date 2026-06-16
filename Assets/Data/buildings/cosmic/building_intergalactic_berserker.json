@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_INTERGALACTIC_BERSERKER",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_BERSERKER",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_BERSERKER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_COMMAND_CENTER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": 20
+  }
+ },
+ "cost": {
+  "production": 3075
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_BERSERKER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

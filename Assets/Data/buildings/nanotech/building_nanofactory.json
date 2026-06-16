@@ -1,0 +1,97 @@
+{
+ "type": "BUILDING_NANOFACTORY",
+ "description": "TXT_KEY_BUILDING_NANOFACTORY",
+ "civilopedia": "TXT_KEY_BUILDING_NANOFACTORY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_NANOACTUATORS",
+   "BUILDING_NANOBOTIC_PRINTING_MILL"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_PICOTECH_COMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NANOGENERATORS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_NANITE_LAB",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_DELTA_ASSEMBLER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 3805,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NANOFACTORY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_NANOFACTORY"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ENGINEER": 2
+  },
+  "worth": 20,
+  "militaryWorth": 25,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 3,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

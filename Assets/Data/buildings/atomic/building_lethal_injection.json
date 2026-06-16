@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_LETHAL_INJECTION",
+ "description": "TXT_KEY_BUILDING_LETHAL_INJECTION",
+ "civilopedia": "TXT_KEY_BUILDING_LETHAL_INJECTION_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEBTORS_PRISON"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_CRUCIFIXION_CROSSES",
+   "BUILDING_ELECTRIC_CHAIR",
+   "BUILDING_GALLOWS",
+   "BUILDING_GUILLOTINE",
+   "BUILDING_PUBLIC_STONING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_COURTHOUSE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_JAIL",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "cost": {
+  "production": 1280,
+  "sizeModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LETHAL_INJECTION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

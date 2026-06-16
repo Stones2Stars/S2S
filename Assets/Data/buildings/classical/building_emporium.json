@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_EMPORIUM",
+ "description": "TXT_KEY_BUILDING_EMPORIUM",
+ "civilopedia": "TXT_KEY_BUILDING_EMPORIUM_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HYPERMARKET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_BRICKS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_CEMENT",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": 4
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1,
+   "modifier": {
+    "percent": 5
+   }
+  }
+ },
+ "cost": {
+  "production": 234,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EMPORIUM"
+  }
+ },
+ "identity": {
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

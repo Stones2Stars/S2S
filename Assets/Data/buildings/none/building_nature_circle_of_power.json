@@ -1,0 +1,127 @@
+{
+ "type": "BUILDING_NATURE_CIRCLE_OF_POWER",
+ "description": "TXT_KEY_BUILDING_NATURE_CIRCLE_OF_POWER",
+ "civilopedia": "TXT_KEY_BUILDING_NATURE_CIRCLE_OF_POWER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_NATURE_ALLIANCE",
+   "BUILDING_NATURE_CIRCLE_ALMOND",
+   "BUILDING_NATURE_CIRCLE_APPLE",
+   "BUILDING_NATURE_CIRCLE_BANANA",
+   "BUILDING_NATURE_CIRCLE_BARLEY_GOD",
+   "BUILDING_NATURE_CIRCLE_COCONUT",
+   "BUILDING_NATURE_CIRCLE_DATES",
+   "BUILDING_NATURE_CIRCLE_FIGS",
+   "BUILDING_NATURE_CIRCLE_GRAPES",
+   "BUILDING_NATURE_CIRCLE_GUAVAS",
+   "BUILDING_NATURE_CIRCLE_KAVA",
+   "BUILDING_NATURE_CIRCLE_LEMON",
+   "BUILDING_NATURE_CIRCLE_MAIZE_GOD",
+   "BUILDING_NATURE_CIRCLE_MANGO",
+   "BUILDING_NATURE_CIRCLE_MELONS",
+   "BUILDING_NATURE_CIRCLE_MUSHROOMS",
+   "BUILDING_NATURE_CIRCLE_OLIVES",
+   "BUILDING_NATURE_CIRCLE_PAPAYAS",
+   "BUILDING_NATURE_CIRCLE_PISTACHIO",
+   "BUILDING_NATURE_CIRCLE_POMEGRANATE",
+   "BUILDING_NATURE_CIRCLE_POTATOES_GOD",
+   "BUILDING_NATURE_CIRCLE_PRICKLY_PEAR",
+   "BUILDING_NATURE_CIRCLE_PUMPKIN",
+   "BUILDING_NATURE_CIRCLE_RICE_GOD",
+   "BUILDING_NATURE_CIRCLE_SQUASH",
+   "BUILDING_NATURE_CIRCLE_WHEAT_GOD"
+  ],
+  "units": [
+   "UNIT_DRUID_MISSIONARY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_NATURE_ALTAR",
+     "scope": "city"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "RELIGION_DRUIDIC_TRADITIONS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "HAS_STATE_RELIGION"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_ANIMALS",
+    "interval": "perTurn",
+    "heal": 2
+   }
+  ]
+ },
+ "cost": {
+  "production": 80,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NATURE_CIRCLE_OF_POWER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_DRUID"
+ },
+ "identity": {
+  "neverCapture": true,
+  "worth": 3,
+  "specialBuildingType": "SPECIALBUILDING_MONASTERY_II",
+  "religion": "RELIGION_DRUIDIC_TRADITIONS",
+  "advisor": "ADVISOR_RELIGION",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,140 @@
+{
+ "type": "BUILDING_ORNITHOLOGY_LAB",
+ "description": "TXT_KEY_BUILDING_ORNITHOLOGY_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_ORNITHOLOGY_LAB_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_BIOLOGY_LAB",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ZOO",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_POULTRY",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PARROTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -20,
+   "percent": [
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_BIOMATERIALS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5,
+   "percent": [
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_PALEONTOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 600,
+     "enabled": {
+      "type": "TECH_WILDLIFE_CONSERVATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 600,
+     "enabled": {
+      "type": "TECH_MARINE_BIOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_ECOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_GENETICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_GENESIS_BIOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_ECOLOGICAL_ENGINEERING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_GENOMIC_ENCYCLOPEDIA",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 535,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ORNITHOLOGY_LAB"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

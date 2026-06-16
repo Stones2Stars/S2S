@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_NATURE_DANCE",
+ "description": "TXT_KEY_BUILDING_NATURE_DANCE",
+ "civilopedia": "TXT_KEY_BUILDING_NATURE_DANCE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_GRAND_EARTH_FESTIVAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_DANCE_HUT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DANCE_HALL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NIGHT_CLUB",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NATURE_DANCE"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_CELEBRITY": 1
+  },
+  "nukeImmune": true,
+  "worth": 1,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

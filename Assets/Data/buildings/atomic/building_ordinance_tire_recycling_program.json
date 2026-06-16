@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_ORDINANCE_TIRE_RECYCLING_PROGRAM",
+ "description": "TXT_KEY_BUILDING_ORDINANCE_TIRE_RECYCLING_PROGRAM",
+ "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_TIRE_RECYCLING_PROGRAM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_TIRES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BUILDING_GARBAGE_COLLECTION_AGENCY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_COURTHOUSE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 1475,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ORDINANCE_TIRE_RECYCLING_PROGRAM"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

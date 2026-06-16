@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_DESERT_SAND_GATHERER",
+ "description": "TXT_KEY_BUILDING_DESERT_SAND_GATHERER",
+ "civilopedia": "TXT_KEY_BUILDING_DESERT_SAND_GATHERER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_SAND"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MODERN_EARTHWORKS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "TERRAIN_DESERT",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_DUNES",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 70,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DESERT_SAND_GATHERER"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

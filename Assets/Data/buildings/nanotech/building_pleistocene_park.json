@@ -1,0 +1,116 @@
+{
+ "type": "BUILDING_PLEISTOCENE_PARK",
+ "description": "TXT_KEY_BUILDING_PLEISTOCENE_PARK",
+ "civilopedia": "TXT_KEY_BUILDING_PLEISTOCENE_PARK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "latitude": {
+      "min": 45
+     }
+    },
+    {
+     "type": "BUILDING_CLONING_FACTORY",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_TAIGA",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  },
+  "area": {
+   "flat": 2
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 21150,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PLEISTO_PARK"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PLEISTOCENE_PARK"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

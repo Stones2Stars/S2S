@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_INTERGALACTIC_ZERO_POINT_PLANT",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_ZERO_POINT_PLANT",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_ZERO_POINT_PLANT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_ULTRA_HIGH_PRESSURE_FORGE",
+   "BUILDING_INTERGALACTIC_ZERO_POINT_FACTORIES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3765
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_ZERO_POINT_PLANT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

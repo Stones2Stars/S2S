@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_CRIME_ILLEGAL_BRAINWASHING",
+ "description": "TXT_KEY_BUILDING_CRIME_ILLEGAL_BRAINWASHING",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_ILLEGAL_BRAINWASHING_PEDIA",
+ "research": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 10
+   },
+   "percent": -200
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -4
+  },
+  "empire": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": -200
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

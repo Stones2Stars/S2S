@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_STARDATE_CALENDAR",
+ "description": "TXT_KEY_BUILDING_STARDATE_CALENDAR",
+ "civilopedia": "TXT_KEY_BUILDING_STARDATE_CALENDAR_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_DATA_COLLECTION",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_TRANSTELLAR_BUSSARD_RAMJET_PORT": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 7963
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_STARDATE_CALENDAR"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_STARDATE_CALENDAR"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

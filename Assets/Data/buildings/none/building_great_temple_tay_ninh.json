@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_GREAT_TEMPLE_TAY_NINH",
+ "description": "TXT_KEY_BUILDING_GREAT_TEMPLE_TAY_NINH",
+ "civilopedia": "TXT_KEY_BUILDING_GREAT_TEMPLE_TAY_NINH_PEDIA",
+ "health": {
+  "area": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_CAO_DAI": {
+    "flat": 4
+   }
+  }
+ },
+ "grants": {
+  "holyCity": "RELIGION_CAO_DAI"
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CAODAI_SHRINE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GREAT_TEMPLE_TAY_NINH"
+  }
+ },
+ "identity": {
+  "shrine": "RELIGION_CAO_DAI",
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 3
+  },
+  "nukeImmune": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_CAO_DAI",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

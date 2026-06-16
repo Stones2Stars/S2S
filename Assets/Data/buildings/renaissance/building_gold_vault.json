@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_GOLD_VAULT",
+ "description": "TXT_KEY_BUILDING_GOLD_VAULT",
+ "civilopedia": "TXT_KEY_BUILDING_GOLD_VAULT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_PALACE",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_GOLD_ORE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_GOLD_STANDARD",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 7
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 999,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GOLD_VAULT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MUSEUM"
+ },
+ "identity": {
+  "worth": 4,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

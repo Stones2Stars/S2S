@@ -1,0 +1,112 @@
+{
+ "type": "BUILDING_BLOGS",
+ "description": "TXT_KEY_BUILDING_BLOGS",
+ "civilopedia": "TXT_KEY_BUILDING_BLOGS_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_SOCIAL_NETWORKS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HOLOGRAPHIC_NETWORKS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_EXOCORTEX_NETWORKS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_DIRECT_MERCHANDISING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_EXOCORTEX_NETWORKS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_HOLOGRAPHICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "cost": {
+  "production": 2205,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BLOGS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

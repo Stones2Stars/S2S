@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_FARM_CROP_SEAWEED",
+ "description": "TXT_KEY_BUILDING_FARM_CROP_SEAWEED",
+ "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_SEAWEED_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AQUAFARM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "FEATURE_KELP",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 92,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FARM_CROP_SEAWEED"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

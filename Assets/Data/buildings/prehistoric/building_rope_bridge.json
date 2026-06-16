@@ -1,0 +1,98 @@
+{
+ "type": "BUILDING_ROPE_BRIDGE",
+ "description": "TXT_KEY_BUILDING_ROPE_BRIDGE",
+ "civilopedia": "TXT_KEY_BUILDING_ROPE_BRIDGE_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_LOG_BRIDGE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ROPE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_RIVER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_TRAILS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ROADS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PAVED_ROADS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ASPHALT_ROADS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SKYROAD_CONTROL_TOWER",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1,
+   "percent": 1
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": -1
+   },
+   "riverDefensePenalty": {
+    "flat": 3
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1,
+   "modifier": {
+    "percent": 2
+   }
+  }
+ },
+ "cost": {
+  "production": 30,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ROPE_BRIDGE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

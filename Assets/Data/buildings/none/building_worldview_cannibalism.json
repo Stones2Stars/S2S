@@ -1,0 +1,33 @@
+{
+ "type": "BUILDING_WORLDVIEW_CANNIBALISM",
+ "description": "TXT_KEY_BUILDING_WORLDVIEW_CANNIBALISM",
+ "civilopedia": "TXT_KEY_BUILDING_WORLDVIEW_CANNIBALISM_PEDIA",
+ "help": "TXT_KEY_BUILDING_WORLDVIEW_CANNIBALISM_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_PALACE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WORLDVIEW_CANNIBALISM"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SLAVE_MARKET"
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "worth": 3,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

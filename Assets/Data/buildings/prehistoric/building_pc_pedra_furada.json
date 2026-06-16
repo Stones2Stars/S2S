@@ -1,0 +1,101 @@
+{
+ "type": "BUILDING_PC_PEDRA_FURADA",
+ "description": "TXT_KEY_BUILDING_PC_PEDRA_FURADA",
+ "civilopedia": "TXT_KEY_BUILDING_PC_PEDRA_FURADA_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_CAVE_SHELTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_ROCKY",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_BADLAND",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_JAGGED",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_BARREN",
+      "scope": "plot"
+     }
+    ],
+    [
+     {
+      "type": "FEATURE_CAVES",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 40,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PEDRA_FURADA"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PC_PEDRA_FURADA"
+  }
+ },
+ "identity": {
+  "centerInCity": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_GROUP_PREHISTORIC_CAVES",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,93 @@
+{
+ "type": "BUILDING_ELECTRIC_LAMPS",
+ "description": "TXT_KEY_BUILDING_ELECTRIC_LAMPS",
+ "civilopedia": "TXT_KEY_BUILDING_ELECTRIC_LAMPS_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_OLED_LAMPS"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_GAS_LAMPS",
+   "BUILDING_OIL_LAMPS",
+   "BUILDING_TORCHES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_GLASSWARE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_FIBERGLASS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 800,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ELECTRIC_LAMPS"
+  }
+ },
+ "identity": {
+  "worth": 4,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

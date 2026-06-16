@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_MINE_LEAD",
+ "description": "TXT_KEY_BUILDING_MINE_LEAD",
+ "civilopedia": "TXT_KEY_BUILDING_MINE_LEAD_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SMELTER_LEAD"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CORE_MINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_LEAD_ORE",
+     "scope": "city",
+     "connection": "vicinity"
+    },
+    {
+     "type": "BUILDING_MINING_CAMP",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2,
+   "perPopulation": {
+    "percent": -30
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 146,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MINE_LEAD"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

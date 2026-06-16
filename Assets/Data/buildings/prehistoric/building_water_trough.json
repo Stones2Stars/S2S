@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_WATER_TROUGH",
+ "description": "TXT_KEY_BUILDING_WATER_TROUGH",
+ "civilopedia": "TXT_KEY_BUILDING_WATER_TROUGH_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ARTESIAN_WELL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_FRESHWATER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 45,
+  "countModifier": 2,
+  "materialsModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WATER_TROUGH"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_RIVER_PORT"
+ },
+ "identity": {
+  "worth": 4,
+  "conquestProbability": 50,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

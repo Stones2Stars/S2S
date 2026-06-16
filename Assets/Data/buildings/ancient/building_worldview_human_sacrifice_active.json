@@ -1,0 +1,22 @@
+{
+ "type": "BUILDING_WORLDVIEW_HUMAN_SACRIFICE_ACTIVE",
+ "description": "TXT_KEY_BUILDING_WORLDVIEW_HUMAN_SACRIFICE_ACTIVE",
+ "civilopedia": "TXT_KEY_BUILDING_WORLDVIEW_HUMAN_SACRIFICE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ALTAR_FOR_HUMAN_SACRIFICE"
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WORLDVIEW_HUMAN_SACRIFICE_ACTIVE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

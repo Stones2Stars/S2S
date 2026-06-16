@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_NATIONAL_BELIEF_RESURRECTION",
+ "description": "TXT_KEY_BUILDING_NATIONAL_BELIEF_RESURRECTION",
+ "civilopedia": "TXT_KEY_BUILDING_NATIONAL_BELIEF_RESURRECTION_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_LOA_HWE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BUDDHIST_TEMPLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HINDU_TEMPLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CHRISTIAN_TEMPLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ISLAMIC_TEMPLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_JEWISH_TEMPLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HELLENIC_TEMPLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TEMPLE_OF_RA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NATURE_ALTAR",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CANAANITE_TEMPLE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NATIONAL_BELIEF_RESURRECTION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "worth": 10,
+  "advisor": "ADVISOR_RELIGION",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_AUCTION_HOUSE",
+ "description": "TXT_KEY_BUILDING_AUCTION_HOUSE",
+ "civilopedia": "TXT_KEY_BUILDING_AUCTION_HOUSE_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_TRADING_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHOPPING_DISTRICT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 225,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_AUCTION_HOUSE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

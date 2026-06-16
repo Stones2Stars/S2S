@@ -1,0 +1,127 @@
+{
+ "type": "BUILDING_BARDIC_CIRCLE",
+ "description": "TXT_KEY_BUILDING_BARDIC_CIRCLE",
+ "civilopedia": "TXT_KEY_BUILDING_BARDIC_CIRCLE_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_THEATRE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 400,
+     "enabled": {
+      "type": "TECH_HERALDRY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 400,
+     "enabled": {
+      "type": "TECH_GUILDS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 400,
+     "enabled": {
+      "type": "TECH_ACOUSTICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 600,
+     "enabled": {
+      "type": "TECH_ROMANTICISM",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1,
+   "percent": [
+    {
+     "value": 400,
+     "enabled": {
+      "type": "TECH_HERALDRY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 400,
+     "enabled": {
+      "type": "TECH_GUILDS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 400,
+     "enabled": {
+      "type": "TECH_ACOUSTICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 600,
+     "enabled": {
+      "type": "TECH_ROMANTICISM",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 280,
+  "sizeModifier": 2,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BARDIC_CIRCLE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_THEATRE"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ARTIST": 1
+  },
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

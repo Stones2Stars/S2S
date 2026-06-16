@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_RESOURCES_GRAINS",
+ "description": "TXT_KEY_BUILDING_RESOURCES_GRAINS",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_III"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_FARM_CROP_BARLEY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_CORN",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BARLEY_GATHERER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CORN_GATHERER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_RICE_GATHERER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_WHEAT_GATHERER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_MILLET",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_OAT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_QUINOA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_RICE_PADDY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_RICE_TERRACE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_RYE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_SORGHUM",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_WHEAT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_GRAINS"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

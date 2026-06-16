@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_REMAINS_DIRE_WOLF",
+ "description": "TXT_KEY_BUILDING_REMAINS_DIRE_WOLF",
+ "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_FOLKLORE_REQUIREMENT",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_FOREST_ANCIENT",
+      "scope": "plot"
+     }
+    ],
+    [
+     {
+      "type": "HERITAGE_FOLKLORE_WOLF_DIRE",
+      "scope": "empire"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_PALEONTOLOGY_LAB",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": [
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_BIOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_REMAINS_DIRE_WOLF"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 1,
+  "conquestProbability": 90,
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

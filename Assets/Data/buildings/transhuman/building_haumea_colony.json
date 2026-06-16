@@ -1,0 +1,93 @@
+{
+ "type": "BUILDING_HAUMEA_COLONY",
+ "description": "TXT_KEY_BUILDING_HAUMEA_COLONY",
+ "civilopedia": "TXT_KEY_BUILDING_HAUMEA_COLONY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DEEP_SPACE_ECOSYSTEM",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_KUIPER_BELT_OBJECT",
+      "scope": "plot"
+     }
+    ]
+   ],
+   "noneOf": [
+    {
+     "type": "BUILDING_MAKEMAKE_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_PLUTO_RESEARCH_BASE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ERIS_COLONY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_DEEP_SPACE_FARM",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 11837
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_HAUMEA_COLONY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HAUMEA_COLONY"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

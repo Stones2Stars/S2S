@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_INTERGALACTIC_INSTANT_TELEPORTATION_PORTAL",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_INSTANT_TELEPORTATION_PORTAL",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_INSTANT_TELEPORTATION_PORTAL_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DISTANT_PORTAL_TO_DIMENSION_X",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 30
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 11110
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_INSTANT_TELEPORTATION_PORTAL"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL",
+   "MAPCATEGORY_DISTANT",
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

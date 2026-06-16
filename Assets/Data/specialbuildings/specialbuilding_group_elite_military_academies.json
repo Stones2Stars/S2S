@@ -2,7 +2,6 @@
  "type": "SPECIALBUILDING_GROUP_ELITE_MILITARY_ACADEMIES",
  "description": "TXT_KEY_SPECIALBUILDING_GROUP_ELITE_MILITARY_ACADEMIES",
  "identity": {
-  "maxPlayerInstances": 1,
-  "valid": true
+  "maxPlayerInstances": 1
  }
 }

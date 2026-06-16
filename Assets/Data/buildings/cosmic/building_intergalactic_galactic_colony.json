@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_GALACTIC_COLONY",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_GALACTIC_COLONY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANDROMEDA_COLONY",
+   "BUILDING_INTERGALACTIC_ADMINISTRATION",
+   "BUILDING_INTERGALACTIC_ANCIENT_CIVILIZATION",
+   "BUILDING_INTERGALACTIC_CULTURE",
+   "BUILDING_INTERGALACTIC_DYSON_SPHERES",
+   "BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY",
+   "BUILDING_INTERGALACTIC_GOVERNMENT",
+   "BUILDING_INTERGALACTIC_ROMAN_RING",
+   "BUILDING_INTERGALACTIC_YOTTAFACTORY",
+   "BUILDING_LARGE_MAGELLANIC_CLOUD_COLONY",
+   "BUILDING_SAGITTARIUS_DWARF_ELLIPTICAL_GALAXY_COLONY",
+   "BUILDING_SMALL_MAGELLANIC_CLOUD_COLONY",
+   "BUILDING_TRIANGULUM_COLONY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_EFFECT_GALACTIC_ECONOMY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SPACE_COLONY_EXTRAGALACTIC",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2853
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_GALACTIC_COLONY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

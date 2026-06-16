@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_NEWS_STAND",
+ "description": "TXT_KEY_BUILDING_NEWS_STAND",
+ "civilopedia": "TXT_KEY_BUILDING_NEWS_STAND_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HYPERMARKET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NEWSPAPERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_PRESS_AGENCY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 710,
+  "sizeModifier": 1,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NEWS_STAND"
+  }
+ },
+ "identity": {
+  "worth": 5,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

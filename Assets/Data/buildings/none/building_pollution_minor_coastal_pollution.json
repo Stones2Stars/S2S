@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_POLLUTION_MINOR_COASTAL_POLLUTION",
+ "description": "TXT_KEY_BUILDING_POLLUTION_MINOR_COASTAL_POLLUTION",
+ "civilopedia": "TXT_KEY_BUILDING_WATER_POLLUTION_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER"
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "plotTypes": {
+    "PLOT_OCEAN": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "plot": {
+   "plotTypes": {
+    "PLOT_OCEAN": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYWATERPOLLUTION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

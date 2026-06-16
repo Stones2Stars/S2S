@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_HUMAN_MOD_ALIEN_HYBRID",
+ "description": "TXT_KEY_BUILDING_HUMAN_MOD_ALIEN_HYBRID",
+ "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_ALIEN_HYBRID_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_GALACTIC_CANTINA",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_HUMAN_MOD_ZERO_G_ADAPTATION",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_HUMAN_MOD_LUNARIS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_HUMAN_MOD_MARTIAN",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_GALACTIC_PORT": {
+     "flat": 5
+    },
+    "BUILDING_INTERSTELLAR_ECUMENOPOLIS": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 26310
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HUMAN_MOD_ALIEN_HYBRID"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

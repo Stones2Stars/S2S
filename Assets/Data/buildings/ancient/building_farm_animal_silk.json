@@ -1,0 +1,48 @@
+{
+ "type": "BUILDING_FARM_ANIMAL_SILK",
+ "description": "TXT_KEY_BUILDING_FARM_ANIMAL_SILK",
+ "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_SILK_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_SILK",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 160,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FARM_ANIMAL_SILK"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_EDUCATION_RIDICULOUS",
+ "description": "TXT_KEY_BUILDING_EDUCATION_RIDICULOUS",
+ "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_EDUCATION_ABSURD",
+   "BUILDING_EDUCATION_DIMWITTED",
+   "BUILDING_EDUCATION_FARCICAL",
+   "BUILDING_EDUCATION_FOOLISH",
+   "BUILDING_EDUCATION_MORONIC",
+   "BUILDING_EDUCATION_SENSELESS",
+   "BUILDING_EDUCATION_UNAWARE"
+  ]
+ },
+ "production": {
+  "city": {
+   "percent": -40
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -40
+  }
+ },
+ "research": {
+  "city": {
+   "flat": -20,
+   "percent": -40
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "flat": -4
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "percent": -64
+  }
+ },
+ "greatGeneralRate": {
+  "city": {
+   "percent": -4
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -31
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": -36
+   }
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": -80
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 36
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 36
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYEDUCATION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

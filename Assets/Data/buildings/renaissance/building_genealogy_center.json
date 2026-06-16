@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_GENEALOGY_CENTER",
+ "description": "TXT_KEY_BUILDING_GENEALOGY_CENTER",
+ "civilopedia": "TXT_KEY_BUILDING_GENEALOGY_CENTER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ONLINE_GENEALOGY_CENTER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_UNIVERSITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5,
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_TABLETS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_SCROLLS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_BOOKS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 535,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GENEALOGY_CENTER"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

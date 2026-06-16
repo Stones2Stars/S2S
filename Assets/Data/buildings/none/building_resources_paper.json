@@ -1,0 +1,42 @@
+{
+ "type": "BUILDING_RESOURCES_PAPER",
+ "description": "TXT_KEY_BUILDING_RESOURCES_PAPER",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ELECTRONIC_PAPER_MAKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_FACTORY_PAPER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PAPER_MAKER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PAPER_RECLAMATION_PLANT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_PAPER"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

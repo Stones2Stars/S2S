@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_INTERSTELLAR_IMMIGRATION_OFFICE",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_IMMIGRATION_OFFICE",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_IMMIGRATION_OFFICE_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_PLANETARY_IMMIGRATION_OFFICE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_STARPORT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "foodKept": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 11355,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_IMMIGRATION_OFFICE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

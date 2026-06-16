@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_VENUS_ORBITAL_SOLAR_ARRAY",
+ "description": "TXT_KEY_BUILDING_VENUS_ORBITAL_SOLAR_ARRAY",
+ "civilopedia": "TXT_KEY_BUILDING_VENUS_ORBITAL_SOLAR_ARRAY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARTIFICIAL_VENUS_ROTATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_VENUS_CITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2544
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_VENUS_ORBITAL_SOLAR_ARRAY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

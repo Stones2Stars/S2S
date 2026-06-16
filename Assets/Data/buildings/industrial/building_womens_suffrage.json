@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_WOMENS_SUFFRAGE",
+ "description": "TXT_KEY_BUILDING_WOMENS_SUFFRAGE",
+ "civilopedia": "TXT_KEY_BUILDING_WOMENS_SUFFRAGE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      [
+       {
+        "type": "CIVIC_DEMOCRACY",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_REPUBLIC",
+        "scope": "empire"
+       }
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "warWeariness": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 200
+  }
+ },
+ "cost": {
+  "production": 4800,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_WOMAN"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WOMENS_SUFFRAGE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "teamShare": true,
+  "worth": 15,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

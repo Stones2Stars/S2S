@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_DIGITAL_EMBASSY",
+ "description": "TXT_KEY_BUILDING_DIGITAL_EMBASSY",
+ "civilopedia": "TXT_KEY_BUILDING_DIGITAL_EMBASSY_PEDIA",
+ "help": "TXT_KEY_BUILDING_DIGITAL_EMBASSY_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTELLIGENCE_AGENCY",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "cost": {
+  "production": 3690,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_DIGITAL_EMBASSY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DIGITAL_EMBASSY"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

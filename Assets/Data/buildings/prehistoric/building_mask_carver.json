@@ -1,0 +1,109 @@
+{
+ "type": "BUILDING_MASK_CARVER",
+ "description": "TXT_KEY_BUILDING_MASK_CARVER",
+ "civilopedia": "TXT_KEY_BUILDING_MASK_CARVER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_JADE_DEATH_MASK_CARVER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MANUFACTURING_DISTRICT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_STORAGE_PIT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GRANARY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MODERN_GRANARY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BARTER_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TRADING_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHOPPING_DISTRICT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FEATHERS",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 50,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MASK_CARVER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

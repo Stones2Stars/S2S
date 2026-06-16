@@ -1,0 +1,123 @@
+{
+ "type": "BUILDING_SPEEDWAY",
+ "description": "TXT_KEY_BUILDING_SPEEDWAY",
+ "civilopedia": "TXT_KEY_BUILDING_SPEEDWAY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CIRCUS_MAXIMUS"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_HIPPODROME",
+   "BUILDING_ROYAL_TOURNAMENT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_CEMENT",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_KNIGHTS_STABLE",
+      "scope": "city"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_MODERN_STABLE",
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MOUNTED": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 870,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 7
+   },
+   {
+    "FLAVOR_GOLD": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SPEEDWAY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SPEEDWAY"
+ },
+ "identity": {
+  "worth": 8,
+  "militaryWorth": 4,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

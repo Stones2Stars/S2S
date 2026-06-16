@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_DISTANT_RECURSIVE_WORLD",
+ "description": "TXT_KEY_BUILDING_DISTANT_RECURSIVE_WORLD",
+ "civilopedia": "TXT_KEY_BUILDING_DISTANT_RECURSIVE_WORLD_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DISTANT_LAYERED_REALITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3423
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DISTANT_RECURSIVE_WORLD"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

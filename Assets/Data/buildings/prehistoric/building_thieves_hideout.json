@@ -1,0 +1,106 @@
+{
+ "type": "BUILDING_THIEVES_HIDEOUT",
+ "description": "TXT_KEY_BUILDING_THIEVES_HIDEOUT",
+ "civilopedia": "TXT_KEY_BUILDING_THIEVES_HIDEOUT_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_BEGGAR",
+   "UNIT_BURGLAR",
+   "UNIT_CUTTHROAT",
+   "UNIT_KARAI_PYHARE",
+   "UNIT_ROGUE",
+   "UNIT_THIEF"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": 3,
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_BARTER",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_TRADE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "TECH_CURRENCY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 5
+   },
+   "flat": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1,
+   "perPopulation": {
+    "percent": -25
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unit": "UNIT_THIEF",
+    "interval": "perTurn",
+    "chance": {
+     "per": {
+      "type": "PROPERTY_CRIME",
+      "scope": "city"
+     }
+    }
+   }
+  ]
+ },
+ "cost": {
+  "production": 56,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_THIEVES_HIDEOUT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

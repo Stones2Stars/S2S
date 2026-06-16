@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_LIFE_CHIRAL_FLEXIBLE",
+ "description": "TXT_KEY_BUILDING_LIFE_CHIRAL_FLEXIBLE",
+ "civilopedia": "TXT_KEY_BUILDING_LIFE_CHIRAL_FLEXIBLE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_LIFE_SWARM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_INTERGALACTIC_RINGED_GALAXY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_INTERGALACTIC_ARTIFICIAL_SPIRAL_GALAXY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 300
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 12738
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LIFE_CHIRAL_FLEXIBLE"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

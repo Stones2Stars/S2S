@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_HUMAN_MOD_METAPHYSICAL",
+ "description": "TXT_KEY_BUILDING_HUMAN_MOD_METAPHYSICAL",
+ "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_METAPHYSICAL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_HYPERSPACE_QUATERNIONIC_PROJECTIVE_SPACE_COLONY": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "buildings": {
+    "BUILDING_HYPERSPACE_TRANSFINITE_SUPERCOMPUTER": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 57510
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HUMAN_MOD_METAPHYSICAL"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

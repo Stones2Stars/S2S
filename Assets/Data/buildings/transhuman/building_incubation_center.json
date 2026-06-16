@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_INCUBATION_CENTER",
+ "description": "TXT_KEY_BUILDING_INCUBATION_CENTER",
+ "civilopedia": "TXT_KEY_BUILDING_INCUBATION_CENTER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HEALTHCARE_MEGACOMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_HOSPITAL",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 5455,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INCUBATION_CENTER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_INCUBATION_CENTER"
+ },
+ "identity": {
+  "worth": 10,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 2,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

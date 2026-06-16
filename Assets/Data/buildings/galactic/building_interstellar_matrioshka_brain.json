@@ -1,0 +1,145 @@
+{
+ "type": "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_EARTH_2_0",
+   "BUILDING_INTERSTELLAR_CONSCIOUS_STAR",
+   "BUILDING_INTERSTELLAR_SPATIAL_EMULATION_STUDIO",
+   "BUILDING_INTERSTELLAR_STAR_COLONY",
+   "BUILDING_INTERSTELLAR_SUPERCOMPUTER",
+   "BUILDING_MILKY_WAY_CLUSTER_BRAIN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERSTELLAR_STAR_SCOOP",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25,
+   "percent": [
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_SPACETIME_ECONOMICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_COMPUTRONIUM_UNIVERSE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 25,
+   "percent": [
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_ULTRACOMPUTING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_UNIFICATION_MATHEMATICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5,
+   "percent": [
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_CULTURAL_LONGEVITY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 5,
+   "percent": [
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_IMMORTALITY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4056
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

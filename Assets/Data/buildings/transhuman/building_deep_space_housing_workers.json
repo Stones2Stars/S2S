@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_DEEP_SPACE_HOUSING_WORKERS",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_HOUSING_WORKERS",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_HOUSING_WORKERS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_ADVANCED_RECYCLING",
+   "BUILDING_DEEP_SPACE_PLASTEEL_FACTORY"
+  ],
+  "units": [
+   "UNIT_SOLAR_WORKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SPACE_COLONY_DEEP_SPACE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 823
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_HOUSING_WORKERS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

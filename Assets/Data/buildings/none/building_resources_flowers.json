@@ -1,0 +1,110 @@
+{
+ "type": "BUILDING_RESOURCES_FLOWERS",
+ "description": "TXT_KEY_BUILDING_RESOURCES_FLOWERS",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_GREENHOUSE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_FARM_FLOWER_BEGONIA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_FLOWER_BLUEBELL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_FLOWER_CARNATION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_FLOWER_DAISY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_FLOWER_FLAX",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_FLOWER_FOXGLOVE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_HENNA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_FLOWER_HIBISCUS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_FLOWER_INDIGO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_FLOWER_IRIS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_FLOWER_LILY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_MADDER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_FLOWER_ORCHID",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_FLOWER_PANSY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_FLOWER_ROSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_FLOWER_SNAPDRAGON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_FLOWER_SUNFLOWER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_FLOWER_TULIP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_FLOWER_VIOLET",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_FLOWERS"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

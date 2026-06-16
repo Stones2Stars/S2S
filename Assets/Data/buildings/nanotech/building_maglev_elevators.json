@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_MAGLEV_ELEVATORS",
+ "description": "TXT_KEY_BUILDING_MAGLEV_ELEVATORS",
+ "civilopedia": "TXT_KEY_BUILDING_MAGLEV_ELEVATORS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ROOFTOP_FLYING_CAR_PORT",
+   "BUILDING_STRATOSPHERIC_TOWER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MEGATOWER_SKYBRIDGE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_UBIQUITOUS_SENSORS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 3
+   }
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 3245,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MAGLEV_ELEVATORS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

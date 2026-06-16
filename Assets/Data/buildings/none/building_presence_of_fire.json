@@ -1,0 +1,27 @@
+{
+ "type": "BUILDING_PRESENCE_OF_FIRE",
+ "description": "TXT_KEY_BUILDING_PRESENCE_OF_FIRE",
+ "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_PRESENCE_OF_ORIGIN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_FOLKLORE_REQUIREMENT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CREATION_MYTH"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

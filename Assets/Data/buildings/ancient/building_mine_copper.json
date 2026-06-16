@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_MINE_COPPER",
+ "description": "TXT_KEY_BUILDING_MINE_COPPER",
+ "civilopedia": "TXT_KEY_BUILDING_MINE_COPPER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SMELTER_COPPER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_METALS_MEGACOMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COPPER_ORE",
+     "scope": "city",
+     "connection": "vicinity"
+    },
+    {
+     "type": "BUILDING_MINING_CAMP",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1,
+   "perPopulation": {
+    "percent": -20
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 146,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MINE_COPPER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

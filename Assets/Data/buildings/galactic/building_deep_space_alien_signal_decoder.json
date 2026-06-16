@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_DEEP_SPACE_ALIEN_SIGNAL_DECODER",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_ALIEN_SIGNAL_DECODER",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_ALIEN_SIGNAL_DECODER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 200,
+   "percent": [
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_NEUTRINO_COMMUNICATIONS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10,
+   "percent": [
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_NEUTRINO_COMMUNICATIONS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 6326
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_ALIEN_SIGNAL_DECODER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_INTERSTELLAR_BLACK_HOLE_COLONY",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_BLACK_HOLE_COLONY",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BLACK_HOLE_COLONY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CYGNUS_X_1_COLONY",
+   "BUILDING_INTERSTELLAR_BLACK_HOLE_COMPUTER",
+   "BUILDING_INTERSTELLAR_BLACK_HOLE_EMS",
+   "BUILDING_INTERSTELLAR_EVENT_HORIZON_CITY",
+   "BUILDING_INTERSTELLAR_EVENT_HORIZON_PROBE",
+   "BUILDING_INTERSTELLAR_WHITE_HOLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_BLACK_HOLE",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_SUPERMASSIVE_BLACK_HOLE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 12
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 60
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 8450
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_BLACK_HOLE_COLONY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

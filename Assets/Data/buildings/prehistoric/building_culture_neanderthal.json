@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_CULTURE_NEANDERTHAL",
+ "description": "TXT_KEY_BUILDING_CULTURE_NEANDERTHAL",
+ "civilopedia": "TXT_KEY_BUILDING_CULTURE_NEANDERTHAL_PEDIA",
+ "help": "TXT_KEY_BUILDING_CULTURE_NEANDERTHAL_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "noneOf": [
+    {
+     "type": "BUILDING_C_AC_NEANDERTHAL",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": -5
+  },
+  "empire": {
+   "percent": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 200
+  }
+ },
+ "cost": {
+  "production": 60
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NEANDERTHAL_EMBASSY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CULTURE_NEANDERTHAL"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

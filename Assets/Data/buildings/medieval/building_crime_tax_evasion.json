@@ -1,0 +1,35 @@
+{
+ "type": "BUILDING_CRIME_TAX_EVASION",
+ "description": "TXT_KEY_BUILDING_CRIME_TAX_EVASION",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_TAX_EVASION_PEDIA",
+ "gold": {
+  "city": {
+   "flat": -10,
+   "percent": -10
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 2
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

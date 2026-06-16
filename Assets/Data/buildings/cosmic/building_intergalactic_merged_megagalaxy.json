@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_INTERGALACTIC_MERGED_MEGAGALAXY",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_MERGED_MEGAGALAXY",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_MERGED_MEGAGALAXY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_MEGAGALAXY_CAPITOL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_GOVERNMENT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERGALACTIC_BIRCH_PLANET",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERGALACTIC_SHKADOV_THRUSTER",
+     "scope": "empire",
+     "min": 2
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4742
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_MERGED_MEGAGALAXY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

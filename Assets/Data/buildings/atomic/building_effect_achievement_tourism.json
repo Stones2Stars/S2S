@@ -1,0 +1,22 @@
+{
+ "type": "BUILDING_EFFECT_ACHIEVEMENT_TOURISM",
+ "description": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_TOURISM",
+ "civilopedia": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_TOURISM_PEDIA",
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ACHIEVEMENT_TOURISM_EFFECT"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

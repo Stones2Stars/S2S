@@ -1,0 +1,230 @@
+{
+ "type": "BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
+ "description": "TXT_KEY_BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
+ "civilopedia": "TXT_KEY_BUILDING_MILITARY_INDUSTRIAL_COMPLEX_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SHOOTING_CLUB",
+   "BUILDING_SPACE_NEEDLE"
+  ],
+  "units": [
+   "UNIT_ACVSAM",
+   "UNIT_ARTILLERY",
+   "UNIT_ASTRONAUTIC_TECHNICIAN",
+   "UNIT_AVIATION_TECHNICIAN",
+   "UNIT_FLIGHT_TECHNICIAN",
+   "UNIT_HALFTRACK",
+   "UNIT_JET_TECHNICIAN",
+   "UNIT_LIGHT_AA",
+   "UNIT_LIGHT_ARTILLERY",
+   "UNIT_MOBILE_ARTILLERY",
+   "UNIT_MUJAHIDEEN",
+   "UNIT_NLOS_CANNON",
+   "UNIT_ROCKET_ARTILLERY",
+   "UNIT_SAM_INFANTRY"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_AMMUNITIONS_WORKSHOP",
+   "BUILDING_FACTORY_AIRCRAFT",
+   "BUILDING_FACTORY_AMMUNITION",
+   "BUILDING_FACTORY_HELICOPTERS",
+   "BUILDING_FACTORY_HOVERCRAFTS",
+   "BUILDING_FACTORY_JET_ENGINES",
+   "BUILDING_FACTORY_TANKS",
+   "BUILDING_FACTORY_UNMANNED_AIRCRAFTS",
+   "BUILDING_GUNSMITH",
+   "BUILDING_MISSILE_LAB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_MANUFACTURING_DISTRICT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CARBON_FIBER",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_METAL_FOAM",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 400,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "BONUS_COMPUTERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_FIBERGLASS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 600,
+     "enabled": {
+      "type": "BONUS_NANOTUBES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "BONUS_STEEL_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 400,
+     "enabled": {
+      "type": "BONUS_TITANIUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_ICBM": {
+     "percent": 20
+    },
+    "UNIT_TACTICAL_NUKE": {
+     "percent": 20
+    },
+    "UNIT_GUIDED_MISSILE": {
+     "percent": 20
+    },
+    "UNIT_PRECISION_ATTACK_MISSILE": {
+     "percent": 20
+    },
+    "UNIT_BIOLOGICAL_WARFARE_MISSILE": {
+     "percent": 20
+    },
+    "UNIT_POISON_NOVA": {
+     "percent": 10
+    },
+    "UNIT_MRBM": {
+     "percent": 10
+    },
+    "UNIT_IRBM": {
+     "percent": 10
+    },
+    "UNIT_HYDROGEN": {
+     "percent": 10
+    },
+    "UNIT_EXPERIMENTAL": {
+     "percent": 10
+    },
+    "UNIT_FUSION_NUKE": {
+     "percent": 10
+    },
+    "UNIT_FUSION_NOVA": {
+     "percent": 10
+    },
+    "UNIT_TURN": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_AIRCRAFT",
+    "interval": "perTurn",
+    "heal": 5
+   }
+  ]
+ },
+ "cost": {
+  "production": 2865,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

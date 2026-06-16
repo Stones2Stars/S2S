@@ -1,0 +1,44 @@
+{
+ "type": "BUILDING_CRIME_INSURANCE_FRAUD",
+ "description": "TXT_KEY_BUILDING_CRIME_INSURANCE_FRAUD",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_INSURANCE_FRAUD_PEDIA",
+ "gold": {
+  "city": {
+   "flat": -10,
+   "percent": -5
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 10
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

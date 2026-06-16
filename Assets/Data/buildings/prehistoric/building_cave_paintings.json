@@ -1,0 +1,126 @@
+{
+ "type": "BUILDING_CAVE_PAINTINGS",
+ "description": "TXT_KEY_BUILDING_CAVE_PAINTINGS",
+ "civilopedia": "TXT_KEY_BUILDING_CAVE_PAINTINGS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_LASCAUX_PAINTS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FRESCO_MURAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_CLAY_PIT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CHALK_GATHERER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HEMATITE_GATHERER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MODERN_EARTHWORKS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FIRE_PIT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BONFIRE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_IMU",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CHARCOAL_BURNER",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "FEATURE_CAVES",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_HAEMATITE_ORE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_CHALK",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 50,
+  "sizeModifier": 3,
+  "materialsModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CAVE_PAINTINGS"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "centerInCity": true,
+  "worth": 2,
+  "conquestProbability": 66,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

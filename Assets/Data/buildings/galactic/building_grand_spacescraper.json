@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_GRAND_SPACESCRAPER",
+ "description": "TXT_KEY_BUILDING_GRAND_SPACESCRAPER",
+ "civilopedia": "TXT_KEY_BUILDING_GRAND_SPACESCRAPER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_SPACESCRAPER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ECUMENOPOLIS_EARTH",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 65730
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SPACESCRAPER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GRAND_SPACESCRAPER"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

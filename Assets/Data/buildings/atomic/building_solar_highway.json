@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_SOLAR_HIGHWAY",
+ "description": "TXT_KEY_BUILDING_SOLAR_HIGHWAY",
+ "civilopedia": "TXT_KEY_BUILDING_SOLAR_HIGHWAY_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_RENEWABLE_MEGACOMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_POWER_LINES",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_GLASSWARE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_HIGHWAY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SKYROAD_CONTROL_TOWER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TELEPORT_BOOTH",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 1345,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SOLAR_HIGHWAY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

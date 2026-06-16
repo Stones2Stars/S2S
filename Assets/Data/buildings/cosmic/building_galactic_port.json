@@ -1,0 +1,118 @@
+{
+ "type": "BUILDING_GALACTIC_PORT",
+ "description": "TXT_KEY_BUILDING_GALACTIC_PORT",
+ "civilopedia": "TXT_KEY_BUILDING_GALACTIC_PORT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_CAPITOL",
+   "BUILDING_STARGATE"
+  ],
+  "units": [
+   "UNIT_COSMIC_WORK_CREW",
+   "UNIT_SHAPESHIFTING_WORK_CREW"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_STARPORT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10,
+   "percent": [
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_INTERGALACTIC_COLONIZATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_INTERGROUP_TRAVEL",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_INTERCLUSTER_TRAVEL",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_QUANTUM_RAMJET",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_HORIZON_BREAKING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_REACTIONLESS_DRIVE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_PERSONAL_STARCRAFT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 14155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GALACTIC_PORT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

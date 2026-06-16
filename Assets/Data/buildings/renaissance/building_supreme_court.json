@@ -1,0 +1,112 @@
+{
+ "type": "BUILDING_SUPREME_COURT",
+ "description": "TXT_KEY_BUILDING_SUPREME_COURT",
+ "civilopedia": "TXT_KEY_BUILDING_SUPREME_COURT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_NATIONAL_ALCOHOL_PROHIBITION",
+   "BUILDING_NATIONAL_DRUG_PROHIBITION",
+   "BUILDING_NATIONAL_GAMBLING_BAN",
+   "BUILDING_NATIONAL_PROSTITUTION_BAN",
+   "BUILDING_ORDINANCE_NATIONAL_SMOKING_PROHIBITION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BUILDING_DISTRICT_COURTHOUSE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_COURTHOUSE",
+     "scope": "empire",
+     "min": 5
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "anarchy": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 880,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_ESPIONAGE": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SUPREME_COURT"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SUPREME_COURT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COURTHOUSE"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SPY": 1
+  },
+  "neverCapture": true,
+  "worth": 4,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

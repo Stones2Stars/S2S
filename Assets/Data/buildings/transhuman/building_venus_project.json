@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_VENUS_PROJECT",
+ "description": "TXT_KEY_BUILDING_VENUS_PROJECT",
+ "civilopedia": "TXT_KEY_BUILDING_VENUS_PROJECT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_RATIONAL_CITY",
+     "scope": "empire",
+     "min": 3
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": -50
+  }
+ },
+ "cost": {
+  "production": 31530,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_VENUS_PROJECT"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_VENUS_PROJECT"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

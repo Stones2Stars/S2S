@@ -1,0 +1,32 @@
+{
+ "type": "BUILDING_ORDINANCE_EFFECT_CLEAN_AIR_ACT",
+ "description": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_CLEAN_AIR_ACT",
+ "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_CLEAN_AIR_ACT_PEDIA",
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -100
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ORDINANCE_CLEAN_AIR_ACT"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

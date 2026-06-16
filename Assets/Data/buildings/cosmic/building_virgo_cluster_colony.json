@@ -1,0 +1,107 @@
+{
+ "type": "BUILDING_VIRGO_CLUSTER_COLONY",
+ "description": "TXT_KEY_BUILDING_VIRGO_CLUSTER_COLONY",
+ "civilopedia": "TXT_KEY_BUILDING_VIRGO_CLUSTER_COLONY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_VIRGO_SUPERCLUSTER",
+      "scope": "plot"
+     }
+    ]
+   ],
+   "noneOf": [
+    {
+     "type": "BUILDING_SCULPTOR_GROUP_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MAFFEI_GROUP_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FORNAX_CLUSTER_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ERIDANUS_CLUSTER_COLONY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 13205
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_VIRGO_CLUSTER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_VIRGO_CLUSTER_COLONY"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

@@ -1,0 +1,38 @@
+{
+ "type": "BUILDING_RESOURCES_SYNTHETIC_RUBBER",
+ "description": "TXT_KEY_BUILDING_RESOURCES_SYNTHETIC_RUBBER",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MATERIALS_CONGLOMERATE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_RUBBER_PLANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_RUBBER_RECLAMATION_PLANT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_SYNTHETIC_RUBBER"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

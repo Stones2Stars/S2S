@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_BONEWORKER",
+ "description": "TXT_KEY_BUILDING_BONEWORKER",
+ "civilopedia": "TXT_KEY_BUILDING_BONEWORKER_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_BONE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_IVORY",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_STORAGE_PIT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GRANARY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MODERN_GRANARY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BARTER_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TRADING_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHOPPING_DISTRICT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_BEAD_MAKING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_IVORY",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 45,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BONEWORKER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

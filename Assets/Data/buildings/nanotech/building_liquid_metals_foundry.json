@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_LIQUID_METALS_FOUNDRY",
+ "description": "TXT_KEY_BUILDING_LIQUID_METALS_FOUNDRY",
+ "civilopedia": "TXT_KEY_BUILDING_LIQUID_METALS_FOUNDRY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_PLYMOUTH_ARCOLOGY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_PICOTECH_COMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_GRAPHENE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_BIOINFORMATICS_LAB",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_FOUNDRY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_METALS_MEGACOMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 3,
+   "percent": [
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_INTERNAL_SHOCKWAVE_ENGINE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_PLASTIC_ELECTRONICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_NOVUS_CHEMISTRY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_SUPERSTRONG_ALLOYS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 3245,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LIQUID_METALS_FOUNDRY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

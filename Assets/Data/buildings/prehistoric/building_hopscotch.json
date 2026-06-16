@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_HOPSCOTCH",
+ "description": "TXT_KEY_BUILDING_HOPSCOTCH",
+ "civilopedia": "TXT_KEY_BUILDING_HOPSCOTCH_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ]
+ },
+ "production": {
+  "city": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_CHALK",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 90,
+  "sizeModifier": 1,
+  "countModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOPSCOTCH"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

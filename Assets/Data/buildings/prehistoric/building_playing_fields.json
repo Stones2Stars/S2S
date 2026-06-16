@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_PLAYING_FIELDS",
+ "description": "TXT_KEY_BUILDING_PLAYING_FIELDS",
+ "civilopedia": "TXT_KEY_BUILDING_PLAYING_FIELDS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAPTURE_THE_FLAG"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ATHLETIC_FIELDS"
+  ]
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 45,
+  "sizeModifier": 3,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PLAYING_FIELDS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 1,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

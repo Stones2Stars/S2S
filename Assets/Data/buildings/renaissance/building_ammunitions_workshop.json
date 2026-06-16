@@ -1,0 +1,132 @@
+{
+ "type": "BUILDING_AMMUNITIONS_WORKSHOP",
+ "description": "TXT_KEY_BUILDING_AMMUNITIONS_WORKSHOP",
+ "civilopedia": "TXT_KEY_BUILDING_AMMUNITIONS_WORKSHOP_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ACVSAM",
+   "UNIT_ARTILLERY",
+   "UNIT_HALFTRACK",
+   "UNIT_LIGHT_AA",
+   "UNIT_LIGHT_ARTILLERY",
+   "UNIT_MOBILE_ARTILLERY",
+   "UNIT_NLOS_CANNON",
+   "UNIT_ROCKET_ARTILLERY",
+   "UNIT_SAM_INFANTRY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FACTORY_AMMUNITION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_STEEL_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BRONZE_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_COPPER_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_TRADING_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHOPPING_DISTRICT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FACTORY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 495,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_AMMUNITIONS_WORKSHOP"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_IRONWORKS"
+ },
+ "identity": {
+  "worth": 6,
+  "militaryWorth": 30,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 3,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_RESOURCES_COPPER_INGOTS",
+ "description": "TXT_KEY_BUILDING_RESOURCES_COPPER_INGOTS",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_METALS_MEGACOMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_ADVANCED_COPPERWORKS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_COPPER_RECLAMATION_PLANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NATIONAL_SMELTER_COPPER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SMELTER_COPPER",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_COPPER_INGOTS"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

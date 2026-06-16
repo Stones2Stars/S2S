@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_INTERGALACTIC_CAPITOL",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_CAPITOL",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_CAPITOL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_GALACTIC_PORT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_PALACE",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -100
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "cost": {
+  "production": 32910
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_INTERGALACTIC_CAPITOL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_CAPITOL"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

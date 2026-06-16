@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_FACTORY_SAILS",
+ "description": "TXT_KEY_BUILDING_FACTORY_SAILS",
+ "civilopedia": "TXT_KEY_BUILDING_FACTORY_SAILS_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MANUFACTURING_DISTRICT"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_SAIL_WEAVER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER",
+    "HAS_POWER",
+    {
+     "type": "BUILDING_FACTORY",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_LEATHER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_CLOTH",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 710,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FACTORY_SAILS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

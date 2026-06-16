@@ -1,0 +1,42 @@
+{
+ "type": "BUILDING_TECHNOLOGICAL_AWAKENING",
+ "description": "TXT_KEY_BUILDING_TECHNOLOGICAL_AWAKENING",
+ "civilopedia": "TXT_KEY_BUILDING_TECHNOLOGICAL_AWAKENING_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NANOPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "cost": {
+  "production": 3525
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TECHNOLOGICAL_AWAKENING"
+  }
+ },
+ "identity": {
+  "specialBuildingType": "SPECIALBUILDING_PUNK_NANO",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

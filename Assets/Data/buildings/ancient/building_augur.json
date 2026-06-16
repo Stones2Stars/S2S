@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_AUGUR",
+ "description": "TXT_KEY_BUILDING_AUGUR",
+ "civilopedia": "TXT_KEY_BUILDING_AUGUR_PEDIA",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "any": [
+      [
+       {
+        "type": "CIVIC_PROPHETS",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_STATE_CHURCH",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_FREE_CHURCH",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_RELIGIOUS",
+        "scope": "empire"
+       }
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "hurryAnger": {
+  "city": {
+   "percent": -20
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 168,
+  "countModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_AUGUR"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 1
+  },
+  "worth": 10,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_CISLUNAR_DILATON_GENERATOR",
+ "description": "TXT_KEY_BUILDING_CISLUNAR_DILATON_GENERATOR",
+ "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_DILATON_GENERATOR_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_BLACK_HOLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CISLUNAR_ION_CANNON",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 14852
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CISLUNAR_DILATON_GENERATOR"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

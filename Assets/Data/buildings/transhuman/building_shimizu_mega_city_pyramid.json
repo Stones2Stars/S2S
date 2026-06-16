@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_SHIMIZU_MEGA_CITY_PYRAMID",
+ "description": "TXT_KEY_BUILDING_SHIMIZU_MEGA_CITY_PYRAMID",
+ "civilopedia": "TXT_KEY_BUILDING_SHIMIZU_MEGA_CITY_PYRAMID_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_ARCOLOGY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_LAUNCH_ARCOLOGY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  },
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_CLIMATE_CONTROLLED_ARCOLOGY",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 32730,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SHIMIZU_MEGACITY_PYRAMID"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SHIMIZU_MEGA_CITY_PYRAMID"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

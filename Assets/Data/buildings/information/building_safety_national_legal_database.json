@@ -1,0 +1,27 @@
+{
+ "type": "BUILDING_SAFETY_NATIONAL_LEGAL_DATABASE",
+ "description": "TXT_KEY_BUILDING_SAFETY_NATIONAL_LEGAL_DATABASE",
+ "civilopedia": "TXT_KEY_BUILDING_SAFETY_NATIONAL_LEGAL_DATABASE_PEDIA",
+ "espionage": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SAFETY_NATIONAL_LEGAL_DATABASE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

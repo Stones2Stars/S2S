@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_ONEILL_CYLINDER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_BIOFORMING_STUDIO",
+   "BUILDING_DEEP_SPACE_BISHOP_RING",
+   "BUILDING_DEEP_SPACE_CLOAKING",
+   "BUILDING_DEEP_SPACE_ECOSYSTEM",
+   "BUILDING_DEEP_SPACE_FACTORY",
+   "BUILDING_DEEP_SPACE_INDUSTRIALIZED_ASTEROID",
+   "BUILDING_DEEP_SPACE_MAGLEV",
+   "BUILDING_DEEP_SPACE_ORGANIC_VOLATILE_EXTRACTION",
+   "BUILDING_DEEP_SPACE_PRISON",
+   "BUILDING_DEEP_SPACE_SECURITY_SYSTEM",
+   "BUILDING_DEEP_SPACE_SHIELDING",
+   "BUILDING_LASER_STARWAY",
+   "BUILDING_SATURN_CLOUD_CITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_EFFECT_CISLUNAR_ECONOMY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SPACE_COLONY_DEEP_SPACE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1452
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_ONEILL_CYLINDER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

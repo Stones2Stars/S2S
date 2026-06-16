@@ -1,0 +1,134 @@
+{
+ "type": "BUILDING_RESOURCES_VEGETABLES",
+ "description": "TXT_KEY_BUILDING_RESOURCES_VEGETABLES",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_I"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_FARM_CROP_ARTICHOKE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_BELL_PEPPER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_BROCCOLI",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_CABBAGE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_CARROT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_CASSAVA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_CAULIFLOWER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_CELERY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_CUCUMBER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_EGGPLANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_GARLIC",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_CALABASH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HYDROPONIC_VEGETABLE_GARDEN",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_KALE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_LEEK",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_LETTUCE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_ONION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_POTATO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_PUMPKIN",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_RADISH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_TURNIP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_SPINACH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_SQUASH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_SWEET_POTATO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_TARO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_ZUCCHINI",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_VEGETABLES"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

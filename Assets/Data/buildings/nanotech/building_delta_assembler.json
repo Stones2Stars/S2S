@@ -1,0 +1,104 @@
+{
+ "type": "BUILDING_DELTA_ASSEMBLER",
+ "description": "TXT_KEY_BUILDING_DELTA_ASSEMBLER",
+ "civilopedia": "TXT_KEY_BUILDING_DELTA_ASSEMBLER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CARBYNE_FOUNDRY",
+   "BUILDING_CHEMICALS_DISTRICT",
+   "BUILDING_CRYSTAL_JEWELLER",
+   "BUILDING_DIAMOND_NANOTHREAD_FOUNDRY",
+   "BUILDING_GAMMA_ASSEMBLER",
+   "BUILDING_NANOFACTORY",
+   "BUILDING_SELF_ASSEMBLY_FACTORY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_EPSILON_ASSEMBLER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_FACTORY_EXOSKELETONS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NANOTECH_COMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 35,
+   "percent": 35
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_MECHANICAL",
+    "interval": "perTurn",
+    "heal": 2
+   },
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_TECH",
+    "interval": "perTurn",
+    "heal": 2
+   }
+  ]
+ },
+ "cost": {
+  "production": 3385,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DELTA_ASSEMBLER"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ENGINEER": 2
+  },
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "type": "BUILDING_HUMAN_MOD_NANOMORPHISM",
+ "description": "TXT_KEY_BUILDING_HUMAN_MOD_NANOMORPHISM",
+ "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_NANOMORPHISM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 19610
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HUMAN_MOD_NANOMORPHISM"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

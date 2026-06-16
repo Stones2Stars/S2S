@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_TRANSTELLAR_HIVEMIND",
+ "description": "TXT_KEY_BUILDING_TRANSTELLAR_HIVEMIND",
+ "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_HIVEMIND_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_TRANSTELLAR_SCOUTING_FLEET",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "cost": {
+  "production": 4789
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRANSTELLAR_HIVEMIND"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

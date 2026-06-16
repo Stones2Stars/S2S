@@ -1,0 +1,40 @@
+{
+ "type": "BUILDING_INTERSTELLAR_DESIGNER_CASTE_MAINTENANCE",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_DESIGNER_CASTE_MAINTENANCE",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DESIGNER_CASTE_MAINTENANCE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_CONTROLLED_BREEDING",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1757
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_DESIGNER_CASTE_MAINTENANCE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC"
+  ]
+ }
+}

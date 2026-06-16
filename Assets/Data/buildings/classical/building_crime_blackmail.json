@@ -1,0 +1,48 @@
+{
+ "type": "BUILDING_CRIME_BLACKMAIL",
+ "description": "TXT_KEY_BUILDING_CRIME_BLACKMAIL",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_BLACKMAIL_PEDIA",
+ "gold": {
+  "city": {
+   "percent": -3
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 35
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

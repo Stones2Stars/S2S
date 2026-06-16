@@ -1,0 +1,99 @@
+{
+ "type": "BUILDING_RECHARGING_NODE",
+ "description": "TXT_KEY_BUILDING_RECHARGING_NODE",
+ "civilopedia": "TXT_KEY_BUILDING_RECHARGING_NODE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_COMPUTER_NETWORK",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_WIRELESS_ELECTRICITY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_MICROGENERATORS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_NANOGENERATORS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_BIONICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_CYBERNETICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_TECH",
+    "interval": "perTurn",
+    "heal": 2
+   }
+  ]
+ },
+ "cost": {
+  "production": 2505,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RECHARGING_NODE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_ASTEROID_INTERIOR_CITY",
+ "description": "TXT_KEY_BUILDING_ASTEROID_INTERIOR_CITY",
+ "civilopedia": "TXT_KEY_BUILDING_ASTEROID_INTERIOR_CITY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTEROID_CLUSTER_CITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_ASTEROID_WATER_SHIELD",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_ASTEROID_SURFACE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_PARATERRAFORMING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2363
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ASTEROID_INTERIOR_CITY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

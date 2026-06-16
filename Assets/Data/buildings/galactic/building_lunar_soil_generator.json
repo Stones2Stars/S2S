@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_LUNAR_SOIL_GENERATOR",
+ "description": "TXT_KEY_BUILDING_LUNAR_SOIL_GENERATOR",
+ "civilopedia": "TXT_KEY_BUILDING_LUNAR_SOIL_GENERATOR_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUNAR_SEA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_LUNAR_ALGAE_FARM",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2982
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LUNAR_SOIL_GENERATOR"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

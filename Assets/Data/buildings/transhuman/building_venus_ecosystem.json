@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_VENUS_ECOSYSTEM",
+ "description": "TXT_KEY_BUILDING_VENUS_ECOSYSTEM",
+ "civilopedia": "TXT_KEY_BUILDING_VENUS_ECOSYSTEM_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_VENUS_BIOTIC_ATMOSPHERE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SPACE_COLONY_VENUS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2110
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_VENUS_ECOSYSTEM"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_DARK_MATTER_REACTOR",
+   "BUILDING_INTERSTELLAR_DYSON_SPHERE_HEAT_RECOVERY",
+   "BUILDING_INTERSTELLAR_PERSONAL_STARCRAFT_FACTORY",
+   "BUILDING_INTERSTELLAR_ZERO_POINT_POWER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    50,
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_FEMTOTECHNOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_ZEPTOTECHNOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_GRAVITRONICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_APPLIED_RELATIVITY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3611
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

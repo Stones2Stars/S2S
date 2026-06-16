@@ -1,0 +1,92 @@
+{
+ "type": "BUILDING_SMITH_GOLD",
+ "description": "TXT_KEY_BUILDING_SMITH_GOLD",
+ "civilopedia": "TXT_KEY_BUILDING_SMITH_GOLD_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_METALS_MEGACOMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_GOLD_INGOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_FORGE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOUNDRY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_ORNAMENTATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "TECH_AESTHETICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 153,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SMITH_GOLD"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

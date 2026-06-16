@@ -1,0 +1,38 @@
+{
+ "type": "BUILDING_MASTER_SEA_HUNTER",
+ "description": "TXT_KEY_BUILDING_MASTER_SEA_HUNTER",
+ "civilopedia": "TXT_KEY_BUILDING_MASTER_SEA_HUNTER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_TRADITION_SEA_HUNTING"
+  ]
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "flat": 2
+    },
+    "UNITCOMBAT_STEAM_SHIPS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MASTER_SEA_HUNTER"
+  }
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 4,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 10,
+  "freeStartEra": "C2C_ERA_CLASSICAL",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

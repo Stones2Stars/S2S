@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_FERTILITY_FESTIVAL",
+ "description": "TXT_KEY_BUILDING_FERTILITY_FESTIVAL",
+ "civilopedia": "TXT_KEY_BUILDING_FERTILITY_FESTIVAL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_FUR",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BASKETS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_FERTILITY_DANCE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_EFFECT_FERTILITY_FESTIVAL",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  },
+  "area": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 184,
+  "sizeModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_FERTILITYFESTIVAL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FERTILITY_FESTIVAL"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,346 @@
+{
+ "type": "BUILDING_GRAND_EARTH_FESTIVAL",
+ "description": "TXT_KEY_BUILDING_GRAND_EARTH_FESTIVAL",
+ "civilopedia": "TXT_KEY_BUILDING_GRAND_EARTH_FESTIVAL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "BUILDING_FOLKLORE_E_EARTH",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_JADE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_AMBER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_RUBIES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_SAPPHIRES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_TURQUOISE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_NATURE_DANCE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_STONE_QUARRY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MINE_IRON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_METALS_MEGACOMPLEX",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MODERN_EARTHWORKS",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "FEATURE_CRATER",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_CAVES",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_BARRINGER_CRATER",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_BASALT_ORGAN",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_DEVILS_TABLE",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_NGORONGORO_CRATER",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_NUKUORO",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_PRAVCICKA_BRANA",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_ULURU",
+      "scope": "plot"
+     }
+    ]
+   ],
+   "noneOf": [
+    {
+     "type": "BUILDING_GRAND_SKY_FESTIVAL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GRAND_FIRE_FESTIVAL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GRAND_MARINE_FESTIVAL",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_AMBER",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_RUBIES",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SAPPHIRES",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TURQUOISE",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_JADE",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4,
+   "percent": [
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_MINING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "TECH_CONSTRUCTION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_FOLK_DANCE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_FOLK_MUSIC",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "TECH_MUSICAL_NOTATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_METALLURGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GEOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  },
+  "area": {
+   "flat": 1
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 30
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": 30
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "cost": {
+  "production": 570,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_GOLD": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_EARTH_FESTIVAL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GRAND_EARTH_FESTIVAL"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

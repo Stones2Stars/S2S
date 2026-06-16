@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_CIRCADIAN_CHAMBER",
+ "description": "TXT_KEY_BUILDING_CIRCADIAN_CHAMBER",
+ "civilopedia": "TXT_KEY_BUILDING_CIRCADIAN_CHAMBER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MORPHOGEN_NANOBOTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NEUROIMPLANTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_NEURON_REGENERATOR_LAB",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_EXOCORTEX_NETWORKS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_REJUVENATION_TANK",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BIONIC_SUITS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 4315,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CIRCADIAN_CHAMBER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

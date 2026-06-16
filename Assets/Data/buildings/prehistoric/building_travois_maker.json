@@ -1,0 +1,113 @@
+{
+ "type": "BUILDING_TRAVOIS_MAKER",
+ "description": "TXT_KEY_BUILDING_TRAVOIS_MAKER",
+ "civilopedia": "TXT_KEY_BUILDING_TRAVOIS_MAKER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AERIAL_BASKET_ROPEWAYS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_WHEELWRIGHT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BAMBOO",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_STORAGE_PIT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GRANARY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MODERN_GRANARY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BARTER_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TRADING_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHOPPING_DISTRICT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 56,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRAVOIS_MAKER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SIEGE_WORKSHOP"
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 33,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

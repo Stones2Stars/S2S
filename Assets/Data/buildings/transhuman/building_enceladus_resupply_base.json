@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_ENCELADUS_RESUPPLY_BASE",
+ "description": "TXT_KEY_BUILDING_ENCELADUS_RESUPPLY_BASE",
+ "civilopedia": "TXT_KEY_BUILDING_ENCELADUS_RESUPPLY_BASE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DEEP_SPACE_ORBITAL_BASE",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_ENCELADUS",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 959
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ENCELADUS_RESUPPLY_BASE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

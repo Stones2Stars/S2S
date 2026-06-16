@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_DIGITAL_VOTING",
+ "description": "TXT_KEY_BUILDING_DIGITAL_VOTING",
+ "civilopedia": "TXT_KEY_BUILDING_DIGITAL_VOTING_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_BLOCKCHAIN_AUTHENTICATION",
+     "scope": "city"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      [
+       {
+        "type": "CIVIC_DEMOCRACY",
+        "scope": "empire"
+       }
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "cost": {
+  "production": 2405,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DIGITAL_VOTING"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

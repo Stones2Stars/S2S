@@ -1,0 +1,166 @@
+{
+ "type": "BUILDING_MOVIE_THEATRE",
+ "description": "TXT_KEY_BUILDING_MOVIE_THEATRE",
+ "civilopedia": "TXT_KEY_BUILDING_MOVIE_THEATRE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMATION_STUDIO",
+   "BUILDING_GRAUMANS_CHINESE_THEATRE",
+   "BUILDING_RED_CURTAINS_THEATRE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_TRADING_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHOPPING_DISTRICT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 600,
+     "enabled": {
+      "type": "TECH_ANIMATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_MASS_MEDIA",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_3D_MODELLING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OSTRICH_FEATHERS",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3,
+   "percent": [
+    {
+     "value": 600,
+     "enabled": {
+      "type": "TECH_ANIMATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_MASS_MEDIA",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_3D_MODELLING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_OSTRICH_FEATHERS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HIT_MOVIES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_CELEBRITY": 1
+  }
+ },
+ "cost": {
+  "production": 830,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MOVIE_THEATRE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MOVIE_THEATER"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ARTIST": 1
+  },
+  "worth": 8,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

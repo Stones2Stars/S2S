@@ -1,0 +1,36 @@
+{
+ "type": "BUILDING_EDUCATION_KNOWLEDGE_BASE_MEDIEVAL",
+ "description": "TXT_KEY_BUILDING_EDUCATION_KNOWLEDGE_BASE_MEDIEVAL",
+ "civilopedia": "TXT_KEY_BUILDING_EDUCATION_KNOWLEDGE_BASE_MEDIEVAL_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_EDUCATION_KNOWLEDGE_BASE_ANCIENT",
+   "BUILDING_EDUCATION_KNOWLEDGE_BASE_CLASSICAL"
+  ]
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": -3,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYEDUCATION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

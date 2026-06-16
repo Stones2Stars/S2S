@@ -1,0 +1,43 @@
+{
+ "type": "BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX",
+ "description": "TXT_KEY_BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX",
+ "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_TRANSTELLAR_ARTIFICIAL_ROCKY_PLANET",
+   "BUILDING_TRANS_STELLAR_QUARK_FUSION_POWER_PLANT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2856
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

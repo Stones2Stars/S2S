@@ -1,0 +1,47 @@
+{
+ "type": "BUILDING_HERD_MAMMOTH",
+ "description": "TXT_KEY_BUILDING_HERD_MAMMOTH",
+ "civilopedia": "TXT_KEY_BUILDING_HERD_MAMMOTH_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_MAMMOTH"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HERD_MAMMOTH"
+  }
+ },
+ "sound": {
+  "construct": "SND_AMB_HORSE_COBBLESTONES"
+ },
+ "identity": {
+  "worth": 3,
+  "conquestProbability": 75,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

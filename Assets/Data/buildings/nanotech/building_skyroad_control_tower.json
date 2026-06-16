@@ -1,0 +1,115 @@
+{
+ "type": "BUILDING_SKYROAD_CONTROL_TOWER",
+ "description": "TXT_KEY_BUILDING_SKYROAD_CONTROL_TOWER",
+ "civilopedia": "TXT_KEY_BUILDING_SKYROAD_CONTROL_TOWER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUTOMATED_HIGHWAY",
+   "BUILDING_BAMBOO_BRIDGE",
+   "BUILDING_BRICK_BRIDGE",
+   "BUILDING_CAUSEWAY",
+   "BUILDING_CHAIN_BRIDGE",
+   "BUILDING_COVERED_BRIDGE",
+   "BUILDING_EL_CAMINO_DE_SANTIAGO",
+   "BUILDING_INTELLIGENT_PAVEMENT",
+   "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+   "BUILDING_LARGE_SUSPENSION_BRIDGE",
+   "BUILDING_LOG_BRIDGE",
+   "BUILDING_ROAD_SIGNS",
+   "BUILDING_ROPE_BRIDGE",
+   "BUILDING_SMALL_STEEL_ARCH_BRIDGE",
+   "BUILDING_SMALL_SUSPENSION_BRIDGE",
+   "BUILDING_SOLAR_HIGHWAY",
+   "BUILDING_STONE_BRIDGE",
+   "BUILDING_TOURIST_TRAP",
+   "BUILDING_TRAFFIC_ENGINEERING_AGENCY",
+   "BUILDING_TRAFFIC_SIGNALS",
+   "BUILDING_TRUSS_BRIDGE",
+   "BUILDING_VIADUCT",
+   "BUILDING_VIA_APPIA",
+   "BUILDING_WIND_TURBINE_HIGHWAY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TELEPORT_BOOTH"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_ASPHALT_ROADS",
+   "BUILDING_EXPRESSWAY",
+   "BUILDING_HIGHWAY",
+   "BUILDING_PAVED_ROADS",
+   "BUILDING_ROADS",
+   "BUILDING_TRAILS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5,
+   "percent": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 4,
+   "modifier": {
+    "percent": 30
+   }
+  }
+ },
+ "cost": {
+  "production": 4315,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SKYROAD_CONTROL_TOWER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "worth": 4,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_CULTURE_ASSYRIAN",
+ "description": "TXT_KEY_BUILDING_CULTURE_ASSYRIAN",
+ "civilopedia": "TXT_KEY_BUILDING_CULTURE_ASSYRIAN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HORSE",
+     "scope": "city",
+     "connection": "vicinity"
+    },
+    {
+     "type": "BUILDING_C_AC_MIDDLE_EASTERN",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_C_L_MIDDLE_EASTERN",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_NIMRUD_PALACE",
+      "scope": "city"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_LIBRARY_OF_NINEVEH",
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 200
+  }
+ },
+ "cost": {
+  "production": 876
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CULTURE_ASSYRIAN"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

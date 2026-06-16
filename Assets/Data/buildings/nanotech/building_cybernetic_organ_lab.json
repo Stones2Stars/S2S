@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_CYBERNETIC_ORGAN_LAB",
+ "description": "TXT_KEY_BUILDING_CYBERNETIC_ORGAN_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_CYBERNETIC_ORGAN_LAB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMA_CHAMBER",
+   "BUILDING_DARCO",
+   "BUILDING_SINGULARITY_BRAIN_LAB",
+   "BUILDING_UTERINE_REPLICATOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_AUGMENTED_ORGAN_LAB",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SOMATOSENSORY_MANIPULATOR_LAB",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 4655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CYBERNETIC_ORGAN_LAB"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_DOCTOR": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

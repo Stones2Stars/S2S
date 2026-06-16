@@ -1,0 +1,27 @@
+{
+ "type": "BUILDING_RELIC_OLD_CITY_WALLS",
+ "description": "TXT_KEY_BUILDING_RELIC_OLD_CITY_WALLS",
+ "civilopedia": "TXT_KEY_BUILDING_WALLS_PEDIA",
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RELIC_OLD_CITY_WALLS"
+  }
+ },
+ "identity": {
+  "worth": 1,
+  "conquestProbability": 80,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,138 @@
+{
+ "type": "BUILDING_SIKH_CATHEDRAL",
+ "description": "TXT_KEY_BUILDING_SIKH_CATHEDRAL",
+ "civilopedia": "TXT_KEY_BUILDING_SIKH_CATHEDRAL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SIKH_GURDWARA",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_CITY_COUNCIL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
+      "scope": "city"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "RELIGION_SIKHISM",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": "HAS_STATE_RELIGION"
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_ARCHER": {
+     "flat": 1
+    },
+    "UNITCOMBAT_MELEE": {
+     "flat": 1
+    },
+    "UNITCOMBAT_GUN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_SIKHISM": {
+    "flat": 2
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "cost": {
+  "production": 425,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SIKH_CATHEDRAL"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 2
+  },
+  "neverCapture": true,
+  "worth": 6,
+  "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",
+  "religion": "RELIGION_SIKHISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

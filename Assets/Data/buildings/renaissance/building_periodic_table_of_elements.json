@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_PERIODIC_TABLE_OF_ELEMENTS",
+ "description": "TXT_KEY_BUILDING_PERIODIC_TABLE_OF_ELEMENTS",
+ "civilopedia": "TXT_KEY_BUILDING_PERIODIC_TABLE_OF_ELEMENTS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_CHEMISTRY_LAB",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CHEMICALS_DISTRICT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_CHEMISTRY_LAB",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_CHEMICALS_DISTRICT",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 2970,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PERIODIC_TABLE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PERIODIC_TABLE_OF_ELEMENTS"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

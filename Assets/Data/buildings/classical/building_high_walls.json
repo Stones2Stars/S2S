@@ -1,0 +1,133 @@
+{
+ "type": "BUILDING_HIGH_WALLS",
+ "description": "TXT_KEY_BUILDING_HIGH_WALLS",
+ "civilopedia": "TXT_KEY_BUILDING_HIGH_WALLS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLARNEY_CASTLE",
+   "BUILDING_CASTLE",
+   "BUILDING_CITY_GATEHOUSE",
+   "BUILDING_GROVE",
+   "BUILDING_KRAK_DES_CHEVALIERS",
+   "BUILDING_THE_ISHTAR_GATE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_RELIC_OLD_CITY_WALLS"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_EARTH_WALL",
+   "BUILDING_PALISADE",
+   "BUILDING_WALLS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BRICKS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -12
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 80
+   },
+   "bombardDefense": {
+    "percent": 40
+   },
+   "min": {
+    "flat": 25
+   },
+   "noEntryLevel": {
+    "flat": 50
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 504,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HIGH_WALLS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "centerInCity": true,
+  "worth": 1,
+  "militaryWorth": 5,
+  "conquestProbability": 25,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ATTACKSHIP",
+   "UNIT_WORLDSHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_DEEP_SPACE_DOCKING_BAY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_DEEP_SPACE_FACTORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    50,
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_ULTRAFUEL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3308
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

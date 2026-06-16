@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_DISEASE_TYPHOID_FEVER",
+ "description": "TXT_KEY_BUILDING_DISEASE_TYPHOID_FEVER",
+ "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+ "food": {
+  "city": {
+   "percent": -6
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -7
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -6
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -6
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -6,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SANITATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_MODERN_SANITATION",
+      "scope": "team"
+     }
+    }
+   ],
+   "perPopulation": {
+    "percent": -50
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYDISEASE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

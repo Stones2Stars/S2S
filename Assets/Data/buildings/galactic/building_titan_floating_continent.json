@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_TITAN_FLOATING_CONTINENT",
+ "description": "TXT_KEY_BUILDING_TITAN_FLOATING_CONTINENT",
+ "civilopedia": "TXT_KEY_BUILDING_TITAN_FLOATING_CONTINENT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_TITAN_SF6_GENERATOR",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4123
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TITAN_FLOATING_CONTINENT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_TITANIC"
+  ]
+ }
+}

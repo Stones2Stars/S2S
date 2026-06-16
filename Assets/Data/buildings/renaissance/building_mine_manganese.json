@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_MINE_MANGANESE",
+ "description": "TXT_KEY_BUILDING_MINE_MANGANESE",
+ "civilopedia": "TXT_KEY_BUILDING_MINE_MANGANESE_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CORE_MINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_LEAD_ORE",
+     "scope": "city",
+     "connection": "vicinity"
+    },
+    {
+     "type": "BUILDING_MINING_CAMP",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_IRON_ORE",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1,
+   "perPopulation": {
+    "percent": -25
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 515,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MINE_MANGANESE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

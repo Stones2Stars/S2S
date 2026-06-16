@@ -1,0 +1,125 @@
+{
+ "type": "BUILDING_NETWORK_NODE",
+ "description": "TXT_KEY_BUILDING_NETWORK_NODE",
+ "civilopedia": "TXT_KEY_BUILDING_NETWORK_NODE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS",
+   "BUILDING_INTERSTELLAR_BROADCAST_NODE",
+   "BUILDING_LOCAL_RADIO_STATION",
+   "BUILDING_NATIONAL_TV_STATION",
+   "BUILDING_NATIONAL_WEATHER_SERVICE",
+   "BUILDING_RECORDING_STUDIO",
+   "BUILDING_SIGNALS_INTELLIGENCE_RECEIVERS",
+   "BUILDING_SINGULARITY_BRAIN_LAB",
+   "BUILDING_SOUL_REPLICATOR",
+   "BUILDING_TV_STUDIO",
+   "BUILDING_WEATHER_STATION",
+   "BUILDING_WIRELESS_NETWORKS"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_BROADCAST_TOWER",
+   "BUILDING_COMMUNICATION_TOWER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_COMPUTER_NETWORK",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10,
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_HIT_MUSICALS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_HIT_SINGLES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_HIT_MOVIES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 6405,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NETWORK_NODE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BROADCASTTOWER"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ARTIST": 5
+  },
+  "worth": 15,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

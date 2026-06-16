@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_BUNKER",
+ "description": "TXT_KEY_BUILDING_BUNKER",
+ "civilopedia": "TXT_KEY_BUILDING_BUNKER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BOMB_SHELTERS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_STEEL_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_TITANIUM_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "airDefense": {
+    "percent": -20
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 770,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BUNKER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COMMAND_BUNKER"
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 1,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

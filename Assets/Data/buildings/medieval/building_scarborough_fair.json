@@ -1,0 +1,135 @@
+{
+ "type": "BUILDING_SCARBOROUGH_FAIR",
+ "description": "TXT_KEY_BUILDING_SCARBOROUGH_FAIR",
+ "civilopedia": "TXT_KEY_BUILDING_SCARBOROUGH_FAIR_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_MARKET",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SUPERMARKET",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HYPERMARKET",
+      "scope": "city"
+     }
+    ]
+   ],
+   "noneOf": [
+    {
+     "type": "BUILDING_TROYES_TRADE_FAIR",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    8,
+    {
+     "value": 8,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_BAZAAR": {
+     "flat": 2
+    },
+    "BUILDING_MALL": {
+     "flat": 2
+    },
+    "BUILDING_GROCER": {
+     "flat": 2
+    },
+    "BUILDING_MARKET": {
+     "flat": 2
+    },
+    "BUILDING_SUPERMARKET": {
+     "flat": 2
+    },
+    "BUILDING_HYPERMARKET": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "cost": {
+  "production": 2136,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SCARBOROUGH_FAIR"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SCARBOROUGH_FAIR"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_MERCHANT": 2
+  },
+  "nukeImmune": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

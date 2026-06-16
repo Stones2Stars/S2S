@@ -1,0 +1,32 @@
+{
+ "type": "BUILDING_EFFECT_PRIME_DIRECTIVE",
+ "description": "TXT_KEY_BUILDING_EFFECT_PRIME_DIRECTIVE",
+ "civilopedia": "TXT_KEY_BUILDING_EFFECT_PRIME_DIRECTIVE_PEDIA",
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": -20
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EFFECT_PRIME_DIRECTIVE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

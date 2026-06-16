@@ -1,0 +1,108 @@
+{
+ "type": "BUILDING_MARTIAN_MATERIAL_SUPPLY",
+ "description": "TXT_KEY_BUILDING_MARTIAN_MATERIAL_SUPPLY",
+ "civilopedia": "TXT_KEY_BUILDING_MARTIAN_MATERIAL_SUPPLY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DEEP_SPACE_ORBITAL_BASE",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_ASTEROID_SURFACE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_MARTIAN_MEGACITY",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_MARTIAN_AMMONIA_BOMBARDMENT",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_MARTIAN_ORBITAL_MIRROR_ARRAY",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_MARTIAN_ARCOLOGY",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MARTIAN_SKYHOOK": {
+     "flat": 5
+    },
+    "BUILDING_MARTIAN_MASS_DRIVER": {
+     "flat": 5
+    },
+    "BUILDING_MARTIAN_HOTEL": {
+     "flat": 5
+    },
+    "BUILDING_MARTIAN_SPACEPORT": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 9454
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MARTIAN_SUPPLY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MARTIAN_MATERIAL_SUPPLY"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

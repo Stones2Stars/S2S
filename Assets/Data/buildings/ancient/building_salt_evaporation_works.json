@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_SALT_EVAPORATION_WORKS",
+ "description": "TXT_KEY_BUILDING_SALT_EVAPORATION_WORKS",
+ "civilopedia": "TXT_KEY_BUILDING_SALT_EVAPORATION_WORKS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_SALT"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MATERIALS_CONGLOMERATE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER",
+    {
+     "latitude": {
+      "min": 35
+     }
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_COPPER_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_LEAD_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 168,
+  "sizeModifier": 3,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SALT_EVAPORATION_POND"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

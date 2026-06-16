@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_SEMANTIC_WEB",
+ "description": "TXT_KEY_BUILDING_SEMANTIC_WEB",
+ "civilopedia": "TXT_KEY_BUILDING_SEMANTIC_WEB_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_NATURAL_LANGUAGE_ALGORITHMS",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_E_STOCK_MARKET": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "buildings": {
+    "BUILDING_NATURAL_LANGUAGE_ALGORITHMS": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 7330,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SEMANTIC_WEB"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SEMANTIC_WEB"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

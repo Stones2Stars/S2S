@@ -1,0 +1,32 @@
+{
+ "type": "BUILDING_HYPERSPACE_S_E_P_FIELD",
+ "description": "TXT_KEY_BUILDING_HYPERSPACE_S_E_P_FIELD",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_S_E_P_FIELD_PEDIA",
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 100
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3423
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERSPACE_S_E_P_FIELD"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

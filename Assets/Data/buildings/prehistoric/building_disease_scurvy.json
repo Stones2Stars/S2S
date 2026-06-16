@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_DISEASE_SCURVY",
+ "description": "TXT_KEY_BUILDING_DISEASE_SCURVY",
+ "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+ "food": {
+  "city": {
+   "percent": -1
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LEMONS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ],
+   "perPopulation": {
+    "percent": -15
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYDISEASE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

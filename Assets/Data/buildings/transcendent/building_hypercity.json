@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_HYPERCITY",
+ "description": "TXT_KEY_BUILDING_HYPERCITY",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERCITY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HYPERSPACE_PAN_DIMENSIONAL_CITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_SPACE_COLONY_HYPERSPACE_PORTAL",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 120
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1485
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERCITY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

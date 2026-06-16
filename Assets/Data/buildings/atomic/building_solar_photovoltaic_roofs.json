@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_SOLAR_PHOTOVOLTAIC_ROOFS",
+ "description": "TXT_KEY_BUILDING_SOLAR_PHOTOVOLTAIC_ROOFS",
+ "civilopedia": "TXT_KEY_BUILDING_SOLAR_PHOTOVOLTAIC_ROOFS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MEGATOWER_SOLAR_POWER_CROWN_SECTION"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_RENEWABLE_MEGACOMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_FACTORY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_POWER_LINES",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_GLASSWARE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1,
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_QUANTUM_DOTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 1345,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SOLAR_PHOTOVOLTAIC_ROOFS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

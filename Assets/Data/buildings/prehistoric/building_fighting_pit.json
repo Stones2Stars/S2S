@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_FIGHTING_PIT",
+ "description": "TXT_KEY_BUILDING_FIGHTING_PIT",
+ "civilopedia": "TXT_KEY_BUILDING_FIGHTING_PIT_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ARENA"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MELEE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 92,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FIGHTING_PIT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_FIGHTING_PIT"
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 6,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

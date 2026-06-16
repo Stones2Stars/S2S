@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_DANCE_BIRD",
+ "description": "TXT_KEY_BUILDING_DANCE_BIRD",
+ "civilopedia": "TXT_KEY_BUILDING_DANCE_BIRD_PEDIA",
+ "production": {
+  "city": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_DANCE_HALL",
+      "scope": "city"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_NIGHT_CLUB",
+      "scope": "city"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_BALLROOM",
+      "scope": "city"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_IMPERIAL_FORTRESS",
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 60,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DANCE_BIRD"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 1,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

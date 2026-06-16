@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_CISLUNAR_OMNISURVEILLANCE",
+ "description": "TXT_KEY_BUILDING_CISLUNAR_OMNISURVEILLANCE",
+ "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_OMNISURVEILLANCE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CISLUNAR_CONTROL_SYSTEM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "cost": {
+  "production": 4408
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CISLUNAR_OMNISURVEILLANCE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

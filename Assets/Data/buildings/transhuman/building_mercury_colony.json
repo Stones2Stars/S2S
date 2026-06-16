@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_MERCURY_COLONY",
+ "description": "TXT_KEY_BUILDING_MERCURY_COLONY",
+ "civilopedia": "TXT_KEY_BUILDING_MERCURY_COLONY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MERCURY_ANTIMATTER_FACTORY",
+   "BUILDING_MERCURY_CITY",
+   "BUILDING_MERCURY_COMETARY_BOMBARDMENT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DEEP_SPACE_ORBITAL_BASE",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_MERCURY",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2104
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MERCURY_COLONY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

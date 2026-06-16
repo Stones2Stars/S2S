@@ -1,0 +1,167 @@
+{
+ "type": "BUILDING_WONDER_OF_NATURE_DEAD_SEA",
+ "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_DEAD_SEA",
+ "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_DEAD_SEA_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_SALT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "FEATURE_PLATY_DEAD_SEA",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_TOURISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "TECH_TRADE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1,
+   "percent": [
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_EDUCATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_CHEMISTRY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3,
+   "percent": [
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_MONOTHEISM",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ANIMISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ANCIENT_MEDICINE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MEDICINE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MOLECULAR_MEDICINE",
+      "scope": "team"
+     }
+    }
+   ]
+  },
+  "empire": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 10,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WONDER_OF_NATURE_DEAD_SEA"
+  }
+ },
+ "identity": {
+  "worth": 4,
+  "conquestProbability": 70,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

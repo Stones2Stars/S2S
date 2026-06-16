@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_INTERSTELLAR_BLACK_HOLE_COMPUTER",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_BLACK_HOLE_COMPUTER",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BLACK_HOLE_COMPUTER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_ETERNAL_INTELLIGENCE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_BLACK_HOLE_COLONY",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_BLACK_HOLE",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_SUPERMASSIVE_BLACK_HOLE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 180
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 9510
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_BLACK_HOLE_COMPUTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

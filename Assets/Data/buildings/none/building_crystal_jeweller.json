@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_CRYSTAL_JEWELLER",
+ "description": "TXT_KEY_BUILDING_CRYSTAL_JEWELLER",
+ "civilopedia": "TXT_KEY_BUILDING_CRYSTAL_JEWELLER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ENERGIZED_CRYSTALS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CRYSTALPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_DELTA_ASSEMBLER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 5455,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CRYSTAL_JEWELLER"
+  }
+ },
+ "identity": {
+  "specialBuildingType": "SPECIALBUILDING_PUNK_CRYSTAL",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

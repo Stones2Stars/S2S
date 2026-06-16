@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_SMOKE_SIGNALS",
+ "description": "TXT_KEY_BUILDING_SMOKE_SIGNALS",
+ "civilopedia": "TXT_KEY_BUILDING_SMOKE_SIGNALS_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_SEAL_MAKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_IMU",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FIRE_PIT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BONFIRE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CHARCOAL_BURNER",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 62,
+  "countModifier": 2,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SMOKE_SIGNALS"
+  }
+ },
+ "identity": {
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

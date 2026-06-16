@@ -1,0 +1,33 @@
+{
+ "type": "BUILDING_NATIONAL_PROSTITUTION_BAN",
+ "description": "TXT_KEY_BUILDING_NATIONAL_PROSTITUTION_BAN",
+ "civilopedia": "TXT_KEY_BUILDING_NATIONAL_PROSTITUTION_BAN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BUILDING_SUPREME_COURT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NATIONAL_PROSTITUTION_BAN"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

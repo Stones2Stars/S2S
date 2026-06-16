@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_CISLUNAR_GARBAGE_ATOMIZER",
+ "description": "TXT_KEY_BUILDING_CISLUNAR_GARBAGE_ATOMIZER",
+ "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_GARBAGE_ATOMIZER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 9246
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CISLUNAR_GARBAGE_ATOMIZER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_HYDROCARBON_REFINERY",
+ "description": "TXT_KEY_BUILDING_HYDROCARBON_REFINERY",
+ "civilopedia": "TXT_KEY_BUILDING_HYDROCARBON_REFINERY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_PETROLEUM_PRODUCTS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ULTRAFUEL_REFINERY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_INDUSTRIAL_PARK",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_BACTERIUM_BIOFORGE",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_GRASS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_REEDS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_STRAW",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 2865,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYDROCARBON_REFINERY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

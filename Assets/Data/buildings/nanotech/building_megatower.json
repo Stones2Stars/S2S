@@ -1,0 +1,108 @@
+{
+ "type": "BUILDING_MEGATOWER",
+ "description": "TXT_KEY_BUILDING_MEGATOWER",
+ "civilopedia": "TXT_KEY_BUILDING_MEGATOWER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AEROPOLIS_2001",
+   "BUILDING_ATHLETIC_MEGACOMPLEX",
+   "BUILDING_BIONIC_TOWER",
+   "BUILDING_BUILDING_MEMBRANES",
+   "BUILDING_CRYSTAL_ISLAND",
+   "BUILDING_DUBAI_CITY_TOWER",
+   "BUILDING_ECOMEGATOWER",
+   "BUILDING_GEODESIC_DOME",
+   "BUILDING_LIVING_BUILDINGS",
+   "BUILDING_MEGATOWER_AIR_SCRUBBER_CROWN_SECTION",
+   "BUILDING_MEGATOWER_BIODOME_PARK_CROWN_SECTION",
+   "BUILDING_MEGATOWER_EDUCATION_LEVEL",
+   "BUILDING_MEGATOWER_FIRE_STATION_LEVEL",
+   "BUILDING_MEGATOWER_HOLOGRAM_ADVERTISING_CROWN_SECTION",
+   "BUILDING_MEGATOWER_HOTEL_LEVEL",
+   "BUILDING_MEGATOWER_MALL_LEVEL",
+   "BUILDING_MEGATOWER_MEDICAL_LEVEL",
+   "BUILDING_MEGATOWER_OFFICE_LEVEL",
+   "BUILDING_MEGATOWER_PARK_LEVEL",
+   "BUILDING_MEGATOWER_POLICE_STATION_LEVEL",
+   "BUILDING_MEGATOWER_RESEARCH_LEVEL",
+   "BUILDING_MEGATOWER_SKYBRIDGE",
+   "BUILDING_MEGATOWER_SOLAR_POWER_CROWN_SECTION",
+   "BUILDING_MEGATOWER_THEME_PARK_CROWN_SECTION",
+   "BUILDING_MEGATOWER_WIND_POWER_CROWN_SECTION",
+   "BUILDING_VACTRAIN_TERMINAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_METAMATERIALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_SKYSCRAPER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SHOPPING_DISTRICT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10,
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_NANOTRUSSES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 3245,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MEGATOWER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

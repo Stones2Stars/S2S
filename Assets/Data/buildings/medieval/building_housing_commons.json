@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_HOUSING_COMMONS",
+ "description": "TXT_KEY_BUILDING_HOUSING_COMMONS",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_COMMONS_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_HOUSING_HOGANS",
+   "BUILDING_HOUSING_HOMELESS",
+   "BUILDING_HOUSING_INSULAE",
+   "BUILDING_HOUSING_STILT_HUTS",
+   "BUILDING_HOUSING_TREEHOUSES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "IS_FRESHWATER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BRICKS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_COMMONS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

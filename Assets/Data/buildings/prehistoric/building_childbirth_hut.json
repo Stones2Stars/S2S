@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_CHILDBIRTH_HUT",
+ "description": "TXT_KEY_BUILDING_CHILDBIRTH_HUT",
+ "civilopedia": "TXT_KEY_BUILDING_CHILDBIRTH_HUT_PEDIA",
+ "help": "TXT_KEY_BUILDING_CHILDBIRTH_HUT_HELP",
+ "enables": {
+  "buildings": [
+   "BUILDING_WET_NURSE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ANCIENT_CUSTOMS"
+  ]
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 20,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CHILDBIRTH_HUT"
+  }
+ },
+ "identity": {
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

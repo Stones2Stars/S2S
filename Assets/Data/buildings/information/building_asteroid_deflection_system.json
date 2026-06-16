@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_ASTEROID_DEFLECTION_SYSTEM",
+ "description": "TXT_KEY_BUILDING_ASTEROID_DEFLECTION_SYSTEM",
+ "civilopedia": "TXT_KEY_BUILDING_ASTEROID_DEFLECTION_SYSTEM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SENTINEL",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_MILITARY_SPACEPORT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_COMMERCIAL_SPACEPORT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_CAPTURED_ASTEROID": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "empire": {
+   "flat": -20
+  }
+ },
+ "cost": {
+  "production": 5250
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ASTEROID_DEFLECTION_SYSTEM"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ASTEROID_DEFLECTION_SYSTEM"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

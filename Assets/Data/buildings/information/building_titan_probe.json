@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_TITAN_PROBE",
+ "description": "TXT_KEY_BUILDING_TITAN_PROBE",
+ "civilopedia": "TXT_KEY_BUILDING_TITAN_PROBE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_JET_PROPULSION_LABORATORY",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 15
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_SPACE_COLONY_TITAN_BASE": {
+     "flat": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 17910
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TITAN_PROBE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TITAN_PROBE"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

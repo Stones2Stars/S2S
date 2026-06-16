@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_FAIRYLAND",
+ "description": "TXT_KEY_BUILDING_FAIRYLAND",
+ "civilopedia": "TXT_KEY_BUILDING_FAIRYLAND_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_HYPERSPACE_INFLATON_FIELD",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 1000
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_DISTANT_PAST_CITY": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 11658
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_FAIRYLAND"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FAIRYLAND"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

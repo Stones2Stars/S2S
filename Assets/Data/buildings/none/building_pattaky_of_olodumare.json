@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_PATTAKY_OF_OLODUMARE",
+ "description": "TXT_KEY_BUILDING_PATTAKY_OF_OLODUMARE",
+ "civilopedia": "TXT_KEY_BUILDING_PATTAKY_OF_OLODUMARE_PEDIA",
+ "gold": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_YORUBA": {
+    "flat": 2
+   }
+  }
+ },
+ "grants": {
+  "holyCity": "RELIGION_YORUBA"
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_OLODUMARE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_OLODUMARE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CHRISTIAN"
+ },
+ "identity": {
+  "shrine": "RELIGION_YORUBA",
+  "nukeImmune": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_YORUBA",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

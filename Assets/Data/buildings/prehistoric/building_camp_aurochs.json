@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_CAMP_AUROCHS",
+ "description": "TXT_KEY_BUILDING_CAMP_AUROCHS",
+ "civilopedia": "TXT_KEY_BUILDING_CAMP_AUROCHS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BULL_LEAPING",
+   "BUILDING_LABYRINTH_OF_KNOSSOS",
+   "BUILDING_RESOURCES_CARCASS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COW",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_HUNTERS_CAMP",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 45,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CAMP_AUROCHS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

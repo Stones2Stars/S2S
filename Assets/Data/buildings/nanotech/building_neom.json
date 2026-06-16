@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_NEOM",
+ "description": "TXT_KEY_BUILDING_NEOM",
+ "civilopedia": "TXT_KEY_BUILDING_NEOM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 20
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_SELF_CONSTRUCTION_FIRM",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_MEGATOWER_HOLOGRAM_ADVERTISING_CROWN_SECTION": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_ENGINEER": 2
+  }
+ },
+ "cost": {
+  "production": 22830,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NEOM"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NEOM"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

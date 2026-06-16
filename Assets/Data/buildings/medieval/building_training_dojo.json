@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_TRAINING_DOJO",
+ "description": "TXT_KEY_BUILDING_TRAINING_DOJO",
+ "civilopedia": "TXT_KEY_BUILDING_TRAINING_DOJO_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MASTERS_DOJO"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ATHLETIC_MEGACOMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BAMBOO",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 344,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRAINING_DOJO"
+  }
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 6,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

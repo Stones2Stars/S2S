@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_WOOLLY_PIG_BREEDER",
+ "description": "TXT_KEY_BUILDING_WOOLLY_PIG_BREEDER",
+ "civilopedia": "TXT_KEY_BUILDING_WOOLLY_PIG_BREEDER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SHEARING_BARN"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_PIG",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_FARM_ANIMAL_PIG",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_PIG",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 261,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WOOLLY_PIG_BREEDER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

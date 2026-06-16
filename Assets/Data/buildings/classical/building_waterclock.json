@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_WATERCLOCK",
+ "description": "TXT_KEY_BUILDING_WATERCLOCK",
+ "civilopedia": "TXT_KEY_BUILDING_WATERCLOCK_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SU_SONGS_WORKSHOP"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TOWNCLOCK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_AQUEDUCT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MODERN_WATERWORKS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 280,
+  "countModifier": 2,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WATERCLOCK"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

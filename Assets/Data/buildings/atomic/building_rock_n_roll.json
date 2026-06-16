@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_ROCK_N_ROLL",
+ "description": "TXT_KEY_BUILDING_ROCK_N_ROLL",
+ "civilopedia": "TXT_KEY_BUILDING_ROCK_N_ROLL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_WALK_OF_FAME"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "specialist": {
+   "specialists": {
+    "SPECIALIST_CELEBRITY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 200
+  }
+ },
+ "cost": {
+  "production": 6480,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ROCK_AND_ROLL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ROCK_N_ROLL"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "teamShare": true,
+  "worth": 18,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

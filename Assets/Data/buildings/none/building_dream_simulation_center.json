@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_DREAM_SIMULATION_CENTER",
+ "description": "TXT_KEY_BUILDING_DREAM_SIMULATION_CENTER",
+ "civilopedia": "TXT_KEY_BUILDING_DREAM_SIMULATION_CENTER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DREAM_ARTIST",
+   "BUILDING_DREAM_PROPAGANDA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CYBERPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 13
+  }
+ },
+ "cost": {
+  "production": 5455
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DREAM_SIMULATION_CENTER"
+  }
+ },
+ "identity": {
+  "specialBuildingType": "SPECIALBUILDING_PUNK_CYBER",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

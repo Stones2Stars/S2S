@@ -1,0 +1,177 @@
+{
+ "type": "BUILDING_ROBOTICS_LAB",
+ "description": "TXT_KEY_BUILDING_ROBOTICS_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_ROBOTICS_LAB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MAKERSPACE",
+   "BUILDING_MECHATRONICS_LAB"
+  ],
+  "units": [
+   "UNIT_ANDROID_INFANTRY",
+   "UNIT_ANTHROID_INFANTRY",
+   "UNIT_AUTOM_INFANTRY",
+   "UNIT_DROID_INFANTRY",
+   "UNIT_SENTROID_INFANTRY",
+   "UNIT_WALKER",
+   "UNIT_WARBOT_INFANTRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_LABORATORY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_UNIVERSITY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5,
+   "percent": [
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_MACHINE_LEARNING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_ANDROIDS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_CYBERNETICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_BIONICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_POWERED_EXOSKELETON",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_PERSONAL_ROBOTS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_NANOROBOTICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_DROIDS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_MILITARY_ROBOTICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_BIOMETRIC_WARFARE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_UNMANNED_NAVAL_VEHICLES",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_UNMANNED_AIR_VEHICLES",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_DISASTER_ROBOTS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 1685,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ROBOTICS_LAB"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

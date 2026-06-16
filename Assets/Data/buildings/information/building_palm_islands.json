@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_PALM_ISLANDS",
+ "description": "TXT_KEY_BUILDING_PALM_ISLANDS",
+ "civilopedia": "TXT_KEY_BUILDING_PALM_ISLANDS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER",
+    {
+     "type": "AREA_SIZE",
+     "scope": "world",
+     "min": 10
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "research": {
+  "empire": {
+   "buildings": {
+    "BUILDING_ENERGY_ISLAND": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
+ "cost": {
+  "production": 12030,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PALM_ISLANDS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PALM_ISLANDS"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

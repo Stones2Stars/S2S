@@ -1,0 +1,44 @@
+{
+ "type": "BUILDING_HERD_RATITE",
+ "description": "TXT_KEY_BUILDING_HERD_RATITE",
+ "civilopedia": "TXT_KEY_BUILDING_HERD_RATITE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_CARCASS",
+   "BUILDING_RESOURCES_EGGS",
+   "BUILDING_RESOURCES_FEATHERS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HERD_RATITE"
+  }
+ },
+ "sound": {
+  "construct": "SND_AMB_HORSE_COBBLESTONES"
+ },
+ "identity": {
+  "worth": 3,
+  "conquestProbability": 75,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

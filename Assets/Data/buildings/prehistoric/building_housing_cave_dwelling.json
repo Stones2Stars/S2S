@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_HOUSING_CAVE_DWELLING",
+ "description": "TXT_KEY_BUILDING_HOUSING_CAVE_DWELLING",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_CAVE_DWELLING_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "FEATURE_CAVES",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CAVE_DWELLING"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_CAVE_DWELLING"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "worth": 1,
+  "militaryWorth": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

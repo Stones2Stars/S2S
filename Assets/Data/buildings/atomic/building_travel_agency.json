@@ -1,0 +1,251 @@
+{
+ "type": "BUILDING_TRAVEL_AGENCY",
+ "description": "TXT_KEY_BUILDING_TRAVEL_AGENCY",
+ "civilopedia": "TXT_KEY_BUILDING_TRAVEL_AGENCY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BUILDING_MODERN_OFFICES",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_COMMERCIAL_AIRPORT",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_VACATION_RESORT",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_STATE_PARK",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_CRUISE_SHIP_PORT",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_UNESCO_HERITAGE_SITE",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_AMUSEMENT_PARK",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_WATER_PARK",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_NATIONAL_SPORTS_LEAGUE",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_HOTEL",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_MOTEL",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_TOURIST_TRAP",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_PUBLIC_BEACH",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_CAMP_GROUNDS",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_POLAR_HOTEL",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_OUTBACK_HOTEL",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_SAFARI_HOTEL",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_JUNGLE_TREEHOUSE_HOTEL",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_WILD_WEST_HOTEL",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_RIVER_RAFTING_DOCK",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_TELEPORT_BOOTH",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_TOURISM_MEGACOMPLEX",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 2560,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TRAVEL_AGENCY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRAVEL_AGENCY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_EARLY_AIRPORT"
+ },
+ "identity": {
+  "neverCapture": true,
+  "worth": 2,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

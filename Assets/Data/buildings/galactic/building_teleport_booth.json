@@ -1,0 +1,219 @@
+{
+ "type": "BUILDING_TELEPORT_BOOTH",
+ "description": "TXT_KEY_BUILDING_TELEPORT_BOOTH",
+ "civilopedia": "TXT_KEY_BUILDING_TELEPORT_BOOTH_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP",
+   "BUILDING_AON_CENTER",
+   "BUILDING_BUNGEE_JUMPING_SITE",
+   "BUILDING_EL_CAMINO_DE_SANTIAGO",
+   "BUILDING_GOLDEN_GATE_BRIDGE",
+   "BUILDING_MICRO_WORMHOLE",
+   "BUILDING_NOMAD_SKYSCRAPER",
+   "BUILDING_ORIENT_EXPRESS",
+   "BUILDING_RAIL_SHIPPING_WAREHOUSE",
+   "BUILDING_SOLAR_HIGHWAY",
+   "BUILDING_SOLAR_PARKING_LOT",
+   "BUILDING_TELEPORT_SHIPPING_WAREHOUSE",
+   "BUILDING_TOURIST_TRAP",
+   "BUILDING_VIA_APPIA",
+   "BUILDING_WIND_TURBINE_HIGHWAY"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_ASPHALT_ROADS",
+   "BUILDING_AUTOMATED_HIGHWAY",
+   "BUILDING_AUTOMATED_PARKING_GARAGE",
+   "BUILDING_AUTOMATED_TAXI_SERVICE",
+   "BUILDING_BAMBOO_BRIDGE",
+   "BUILDING_BIOLOGICAL_VEHICLES",
+   "BUILDING_BRICK_BRIDGE",
+   "BUILDING_BUS_STATION",
+   "BUILDING_CABLE_CARS",
+   "BUILDING_CAUSEWAY",
+   "BUILDING_CHAIN_BRIDGE",
+   "BUILDING_COVERED_BRIDGE",
+   "BUILDING_CRUISE_SHIP_PORT",
+   "BUILDING_DELIVERY_DRONE_CONTROL_CENTER",
+   "BUILDING_DIGITAL_LOGISTICS_CENTER",
+   "BUILDING_ELECTRIC_VEHICLE_RECHARGING_STATION",
+   "BUILDING_ETHANOL_STATION",
+   "BUILDING_EXPRESSWAY",
+   "BUILDING_GAS_STATION",
+   "BUILDING_HIGHWAY",
+   "BUILDING_HYPERSONIC_TERMINAL",
+   "BUILDING_INTELLIGENT_PAVEMENT",
+   "BUILDING_INTERLACED_INTERSECTION",
+   "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+   "BUILDING_LARGE_SUSPENSION_BRIDGE",
+   "BUILDING_LOG_BRIDGE",
+   "BUILDING_MAGLEV_STATION",
+   "BUILDING_MOBILE_BODEGA",
+   "BUILDING_ORDINANCE_AUTOMOBILE_EMISSION_REDUCTION_ACT",
+   "BUILDING_ORDINANCE_CARPOOL",
+   "BUILDING_ORDINANCE_COMMUTER_SHUTTLE_SERVICE",
+   "BUILDING_ORDINANCE_EFFECT_AUTOMOBILE_EMISSION_REDUCTION_ACT",
+   "BUILDING_ORDINANCE_EFFECT_CARPOOL",
+   "BUILDING_ORDINANCE_EFFECT_COMMUTER_SHUTTLE_SERVICE",
+   "BUILDING_PARKING_GARAGE",
+   "BUILDING_PARKING_LOT",
+   "BUILDING_PARKING_METERS",
+   "BUILDING_PAVED_ROADS",
+   "BUILDING_PERSONAL_RAPID_TRAIN",
+   "BUILDING_PUBLIC_TRANSPORTATION",
+   "BUILDING_RAILROAD_STATION",
+   "BUILDING_ROADS",
+   "BUILDING_ROAD_SIGNS",
+   "BUILDING_ROPE_BRIDGE",
+   "BUILDING_SHOPPING_DRONE_CONTROL_CENTER",
+   "BUILDING_SKYROAD_CONTROL_TOWER",
+   "BUILDING_SMALL_STEEL_ARCH_BRIDGE",
+   "BUILDING_SMALL_SUSPENSION_BRIDGE",
+   "BUILDING_STONE_BRIDGE",
+   "BUILDING_STREET_CARS",
+   "BUILDING_SUBTERRANEAN_TUNNEL_NETWORK",
+   "BUILDING_SUBWAY_STATION",
+   "BUILDING_TRAFFIC_CAMERAS",
+   "BUILDING_TRAFFIC_ENGINEERING_AGENCY",
+   "BUILDING_TRAFFIC_SIGNALS",
+   "BUILDING_TRAILS",
+   "BUILDING_TRUSS_BRIDGE",
+   "BUILDING_VIADUCT",
+   "BUILDING_WIRELESS_EV_CHARGING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 70
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 70,
+   "percent": 30
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 120,
+   "percent": 1
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10,
+   "percent": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "investigation": {
+    "flat": 10
+   },
+   "flat": 10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_OIL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ],
+   "perPopulation": {
+    "percent": 10
+   }
+  }
+ },
+ "defense": {
+  "city": {
+   "riverDefensePenalty": {
+    "flat": 50
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 5,
+   "modifier": {
+    "percent": 60
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -135
+  }
+ },
+ "cost": {
+  "production": 10155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TELEPORT_BOOTH"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "worth": 4,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

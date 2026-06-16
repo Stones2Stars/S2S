@@ -1,0 +1,98 @@
+{
+ "type": "BUILDING_MOB_STOREFRONT_UNSANCTIONED",
+ "description": "TXT_KEY_BUILDING_MOB_STOREFRONT_UNSANCTIONED",
+ "civilopedia": "TXT_KEY_BUILDING_MOB_STOREFRONT_PEDIA",
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 35
+   },
+   "flat": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    -1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TOBACCO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ],
+   "perPopulation": {
+    "percent": -20
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -1,
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_TOBACCO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unit": "UNIT_MOBSTER_CAR",
+    "interval": "perTurn",
+    "chance": {
+     "per": {
+      "type": "PROPERTY_CRIME",
+      "scope": "city"
+     }
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MOB_STOREFRONT"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

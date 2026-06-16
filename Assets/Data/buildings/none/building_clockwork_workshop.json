@@ -1,0 +1,115 @@
+{
+ "type": "BUILDING_CLOCKWORK_WORKSHOP",
+ "description": "TXT_KEY_BUILDING_CLOCKWORK_WORKSHOP",
+ "civilopedia": "TXT_KEY_BUILDING_CLOCKWORK_WORKSHOP_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ORNITHOPTER_AERIE"
+  ],
+  "units": [
+   "UNIT_CLOCKWORK_GOLEM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CLOCKPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BUILDING_ENGINEERING_SCHOOL",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_COPPER_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_TIN_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BRONZE_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BRASS_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_STEEL_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_MECHANICAL",
+    "interval": "perTurn",
+    "heal": 5
+   }
+  ]
+ },
+ "cost": {
+  "production": 380
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CLOCKWORK_WORKSHOP"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ENGINEER": 1
+  },
+  "worth": 2,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_CLOCK",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_LIFE_FLUORESCENT_BACTERIA",
+ "description": "TXT_KEY_BUILDING_LIFE_FLUORESCENT_BACTERIA",
+ "civilopedia": "TXT_KEY_BUILDING_LIFE_FLUORESCENT_BACTERIA_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_LIFE_CRISPR_CAS9_BACTERIA",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_BACTERIUM_BIOFORGE": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 5730,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LIFE_FLUORESCENT_BACTERIA"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

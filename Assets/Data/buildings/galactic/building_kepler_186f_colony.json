@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_KEPLER_186F_COLONY",
+ "description": "TXT_KEY_BUILDING_KEPLER_186F_COLONY",
+ "civilopedia": "TXT_KEY_BUILDING_KEPLER_186F_COLONY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_ORION_ARM",
+      "scope": "plot"
+     }
+    ]
+   ],
+   "noneOf": [
+    {
+     "type": "BUILDING_KEPLER_22B_COLONY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_BANKS_ORBITAL_CITY": {
+     "flat": 15
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 175
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_ARTIFICIAL_MOON": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 29200
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_KEPLER_186F"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_KEPLER_186F_COLONY"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

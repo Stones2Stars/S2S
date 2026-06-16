@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_INTERSTELLAR_WORLDHOUSE",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_WORLDHOUSE",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_WORLDHOUSE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_BACTERIA_SWARM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_AEROPONICS_ARCOLOGY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3212
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_WORLDHOUSE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

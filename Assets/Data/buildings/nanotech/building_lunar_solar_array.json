@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_LUNAR_SOLAR_ARRAY",
+ "description": "TXT_KEY_BUILDING_LUNAR_SOLAR_ARRAY",
+ "civilopedia": "TXT_KEY_BUILDING_LUNAR_SOLAR_ARRAY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PLASTIC",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_LUNAR_ASSEMBLY_PLANT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LUNAR_SILICON_PROCESSING_FACILITY",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_MICROCHIPS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 1000000
+  }
+ },
+ "cost": {
+  "production": 7800
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_LUNAR_SOLAR_ARRAY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LUNAR_SOLAR_ARRAY"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

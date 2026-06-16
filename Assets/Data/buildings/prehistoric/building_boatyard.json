@@ -1,0 +1,92 @@
+{
+ "type": "BUILDING_BOATYARD",
+ "description": "TXT_KEY_BUILDING_BOATYARD",
+ "civilopedia": "TXT_KEY_BUILDING_BOATYARD_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MARINA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_CANOE_BUILDER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHIPWRIGHT",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "IMPROVEMENT_FISHING_BOATS",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "improvements": {
+    "IMPROVEMENT_FISHING_BOATS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_NAVAL",
+    "interval": "perTurn",
+    "heal": 2
+   }
+  ]
+ },
+ "cost": {
+  "production": 92,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BOATYARD"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_PORT"
+ },
+ "identity": {
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_PLANTATION_HENNA",
+ "description": "TXT_KEY_BUILDING_PLANTATION_HENNA",
+ "civilopedia": "TXT_KEY_BUILDING_PLANTATION_HENNA_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DYE_MAKER",
+   "BUILDING_FACTORY_DYE",
+   "BUILDING_RESOURCES_FLOWERS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_GREENHOUSE"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_HENNA_GATHERER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HENNA",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 270,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PLANTATION_HENNA"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

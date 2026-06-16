@@ -1,0 +1,35 @@
+{
+ "type": "BUILDING_EFFECT_LUNA_RING",
+ "description": "TXT_KEY_BUILDING_EFFECT_LUNA_RING",
+ "civilopedia": "TXT_KEY_BUILDING_EFFECT_LUNA_RING_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_EFFECT_CISLUNAR_ECONOMY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 7505
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EFFECT_LUNA_RING"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

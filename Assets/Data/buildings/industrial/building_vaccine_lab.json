@@ -1,0 +1,142 @@
+{
+ "type": "BUILDING_VACCINE_LAB",
+ "description": "TXT_KEY_BUILDING_VACCINE_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_VACCINE_LAB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BACTERIOPHAGE_THERAPY_CLINIC",
+   "BUILDING_GENE_FARMING_LAB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_UNIVERSITY",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_HOSPITAL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5,
+   "percent": [
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_BIOLOGICAL_WARFARE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_GENETICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_SMART_DRUGS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_ANTI_AGING_MEDICINE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_GENE_ENHANCEMENT",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_BIOINFORMATICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_PERSONALIZED_HEALTH",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_EGGS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 800,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_VACCINE_LAB"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,108 @@
+{
+ "type": "BUILDING_ORBITAL_TARGETS",
+ "description": "TXT_KEY_BUILDING_ORBITAL_TARGETS",
+ "civilopedia": "TXT_KEY_BUILDING_ORBITAL_TARGETS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIVOUAC_GROUNDS"
+  ],
+  "units": [
+   "UNIT_HTSNIPER",
+   "UNIT_MOCOVI_TRACKER",
+   "UNIT_MOHAWK_TRACKER",
+   "UNIT_MSNIPER",
+   "UNIT_NIAM_NIAM",
+   "UNIT_PUEBLO_REBEL",
+   "UNIT_SHARPSHOOTER",
+   "UNIT_SNIPER",
+   "UNIT_TARKKA_AMPUJA"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_ARCHERY_RANGE",
+   "BUILDING_AUTOMATED_FIRING_RANGE",
+   "BUILDING_FIRING_RANGE",
+   "BUILDING_SHOOTING_CLUB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_FIREARMS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_AMMUNITION",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_ARCHER": {
+     "flat": 3
+    },
+    "UNITCOMBAT_SIEGE": {
+     "flat": 2
+    },
+    "UNITCOMBAT_THROWING": {
+     "flat": 4
+    },
+    "UNITCOMBAT_ROCKET_LAUNCHER": {
+     "flat": 6
+    },
+    "UNITCOMBAT_GUN": {
+     "flat": 6
+    },
+    "UNITCOMBAT_HITECH": {
+     "flat": 8
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 2865,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ORBITAL_TARGETS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 15,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

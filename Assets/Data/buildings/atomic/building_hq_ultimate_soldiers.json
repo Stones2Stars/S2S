@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_HQ_ULTIMATE_SOLDIERS",
+ "description": "TXT_KEY_BUILDING_HQ_ULTIMATE_SOLDIERS",
+ "civilopedia": "TXT_KEY_BUILDING_CORPORATION_ULTSOLDIER_PEDIA",
+ "enables": {
+  "corporations": [
+   "CORPORATION_ULTSOLDIER"
+  ],
+  "units": [
+   "UNIT_EXECUTIVE_ULTSOLDIER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_MODERN_OFFICES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_OFFICIUM",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SKYSCRAPER",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HQ_ULTIMATE_SOLDIERS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "corporationHQ": "CORPORATION_ULTSOLDIER",
+  "nukeImmune": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_GENERAL",
+  "specialBuildingType": "SPECIALBUILDING_CORPORATION_HQ",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

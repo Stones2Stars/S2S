@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_RESOURCES_FEATHERS",
+ "description": "TXT_KEY_BUILDING_RESOURCES_FEATHERS",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_CATCHER_BIRDS_OF_PARADISE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CATCHER_CANARY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CHICKEN_COOP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CATCHER_COCKATOO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CORMORANT_TRAINER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_ANIMAL_DUCK",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FALCONER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FALCONRY_SCHOOL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FEATHER_WORKER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CATCHER_HUMMINGBIRD",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CATCHER_JUNGLEFOWL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CATCHER_LYREBIRD",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CATCHER_MACAW",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CATCHER_PARAKEET",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PARROT_AVIARY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CATCHER_PARROT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CATCHER_PEACOCK",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HOMING_PIGEON_COOP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CATCHER_QUETZAL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_RATITE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CATCHER_TOUCAN",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_ANIMAL_TURKEY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_FEATHERS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

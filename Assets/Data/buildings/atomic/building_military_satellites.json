@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_MILITARY_SATELLITES",
+ "description": "TXT_KEY_BUILDING_MILITARY_SATELLITES",
+ "civilopedia": "TXT_KEY_BUILDING_MILITARY_SATELLITES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_GLOBAL_POSITIONING_SYSTEM",
+   "BUILDING_SENTINEL",
+   "BUILDING_SOLAR_WEATHER_MONITOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_EFFECT_LAUNCH_SITE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MILITARY_SPACEPORT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 1410,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_ESPIONAGE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MILITARY_SATELLITES"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SPACEWAY"
+ },
+ "identity": {
+  "orbital": true,
+  "worth": 6,
+  "militaryWorth": 1,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

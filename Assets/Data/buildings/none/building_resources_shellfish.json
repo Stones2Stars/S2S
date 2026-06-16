@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_RESOURCES_SHELLFISH",
+ "description": "TXT_KEY_BUILDING_RESOURCES_SHELLFISH",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AQUAFARM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_ABALONE_DIGGERS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CLAM_DIGGERS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CONCH_DIVER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NET_CRAB",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GIANT_CLAM_DIVERS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NET_LOBSTER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MUREX_DIVER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PEARL_DIVER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NET_PRAWN",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NET_SHRIMP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NET_SQUID",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_SHELLFISH"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

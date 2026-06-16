@@ -1,0 +1,108 @@
+{
+ "type": "BUILDING_MECHANICAL_TRAPS",
+ "description": "TXT_KEY_BUILDING_MECHANICAL_TRAPS",
+ "civilopedia": "TXT_KEY_BUILDING_MECHANICAL_TRAPS_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_LANDMINES"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_PIT_TRAPS",
+   "BUILDING_SPIKED_PIT_TRAPS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_BRONZE_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_STEEL_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 15
+   },
+   "damageAttackerChance": {
+    "flat": 25
+   },
+   "damageToAttacker": {
+    "flat": 15
+   },
+   "repel": {
+    "flat": 20
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 270,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MECHANICAL_TRAPS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_FORGE"
+ },
+ "identity": {
+  "damageAttackingUnitCombats": [
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_WHEELED"
+  ],
+  "militaryWorth": 3,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,133 @@
+{
+ "type": "BUILDING_BACTERIOPHAGE_THERAPY_CLINIC",
+ "description": "TXT_KEY_BUILDING_BACTERIOPHAGE_THERAPY_CLINIC",
+ "civilopedia": "TXT_KEY_BUILDING_BACTERIOPHAGE_THERAPY_CLINIC_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_VIROTHERAPY_CLINIC"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_VACCINE_LAB",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_NUCLEIC_ACID_LAB",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_PROTEIN_LAB",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 6,
+   "percent": [
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_GENETICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_GENE_MANIPULATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_GENETIC_BIOCHEMISTRY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_MOLECULAR_MEDICINE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_GENESIS_BIOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_GENE_ENHANCEMENT",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_CYBERIMMUNOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_EGGS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "cost": {
+  "production": 1410,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BACTERIOPHAGE_THERAPY_CLINIC"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

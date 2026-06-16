@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_PRESIDENTIAL_MONUMENT",
+ "description": "TXT_KEY_BUILDING_PRESIDENTIAL_MONUMENT",
+ "civilopedia": "TXT_KEY_BUILDING_PRESIDENTIAL_MONUMENT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_DEMOCRACY",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 580,
+  "sizeModifier": 1,
+  "materialsModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PRESIDENTIAL_MONUMENT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_OBELISK"
+ },
+ "identity": {
+  "worth": 3,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

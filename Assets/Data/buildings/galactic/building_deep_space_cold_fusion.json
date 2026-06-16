@@ -1,0 +1,47 @@
+{
+ "type": "BUILDING_DEEP_SPACE_COLD_FUSION",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_COLD_FUSION",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_COLD_FUSION_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_COMPUTRONIUM_ASTEROID",
+   "BUILDING_DEEP_SPACE_MICROVAC",
+   "BUILDING_PETAVERSE_PORTAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 11897
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_COLD_FUSION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

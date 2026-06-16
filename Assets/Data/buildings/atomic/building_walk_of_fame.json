@@ -1,0 +1,117 @@
+{
+ "type": "BUILDING_WALK_OF_FAME",
+ "description": "TXT_KEY_BUILDING_WALK_OF_FAME",
+ "civilopedia": "TXT_KEY_BUILDING_WALK_OF_FAME_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_BROADWAY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HOLLYWOOD",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ROCK_N_ROLL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_WORLD_NEWS_NETWORK",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NATIONAL_TV_STATION",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "specialist": {
+   "specialists": {
+    "SPECIALIST_ARTIST": {
+     "flat": 2
+    },
+    "SPECIALIST_GREAT_ARTIST": {
+     "flat": 5
+    },
+    "SPECIALIST_CELEBRITY": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    12,
+    {
+     "value": 12,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 12
+  }
+ },
+ "cost": {
+  "production": 7680,
+  "sizeModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_WALK_OF_FAME"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WALK_OF_FAME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

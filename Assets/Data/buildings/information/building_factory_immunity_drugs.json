@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_FACTORY_IMMUNITY_DRUGS",
+ "description": "TXT_KEY_BUILDING_FACTORY_IMMUNITY_DRUGS",
+ "civilopedia": "TXT_KEY_BUILDING_FACTORY_IMMUNITY_DRUGS_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MEDICAL_MEGACOMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_FACTORY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GENE_FARMING_LAB",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2205,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FACTORY_IMMUNITY_DRUGS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

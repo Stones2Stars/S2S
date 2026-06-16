@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_HYPERLOOP",
+ "description": "TXT_KEY_BUILDING_HYPERLOOP",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERLOOP_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MEGATOWER_OFFICE_LEVEL",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_VACTRAIN_TERMINAL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GRAVITY_TRAIN",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "cost": {
+  "production": 24870,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_HYPERLOOP"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERLOOP"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

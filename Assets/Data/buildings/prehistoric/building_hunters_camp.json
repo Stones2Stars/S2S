@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_HUNTERS_CAMP",
+ "description": "TXT_KEY_BUILDING_HUNTERS_CAMP",
+ "civilopedia": "TXT_KEY_BUILDING_HUNTERS_CAMP_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIRD_CALLER",
+   "BUILDING_CAMP_ANTELOPE",
+   "BUILDING_CAMP_AUROCHS",
+   "BUILDING_CAMP_BELUGA",
+   "BUILDING_CAMP_BISON",
+   "BUILDING_CAMP_BOAR",
+   "BUILDING_CAMP_CARIBOU",
+   "BUILDING_CAMP_DEER",
+   "BUILDING_CAMP_DIPROTODON",
+   "BUILDING_CAMP_ELEPHANT",
+   "BUILDING_CAMP_ELEPHANT_SEAL",
+   "BUILDING_CAMP_EMU",
+   "BUILDING_CAMP_GIANT_BISON",
+   "BUILDING_CAMP_GIRAFFE",
+   "BUILDING_CAMP_HIPPO",
+   "BUILDING_CAMP_KANGAROO",
+   "BUILDING_CAMP_MAMMOTH",
+   "BUILDING_CAMP_MEGALOCEROS",
+   "BUILDING_CAMP_MEGATHERIUM",
+   "BUILDING_CAMP_MOOSE",
+   "BUILDING_CAMP_MOUFLON",
+   "BUILDING_CAMP_MUSKOX",
+   "BUILDING_CAMP_NARWHAL",
+   "BUILDING_CAMP_OSTRICH",
+   "BUILDING_CAMP_RHEA",
+   "BUILDING_CAMP_RHINO",
+   "BUILDING_CAMP_SEAL",
+   "BUILDING_CAMP_WALRUS",
+   "BUILDING_CAMP_WOOLLY_RHINO",
+   "BUILDING_CAMP_ZEBRA",
+   "BUILDING_HUNTING_DOG_TRAINER",
+   "BUILDING_LIZARD_HUNTERS_CAMP",
+   "BUILDING_SKINNER",
+   "BUILDING_STICK_COMBAT"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ANCIENT_CUSTOMS"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_LEISURE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 45,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HUNTERS_CAMP"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

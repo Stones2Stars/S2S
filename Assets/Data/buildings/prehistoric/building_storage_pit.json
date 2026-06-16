@@ -1,0 +1,97 @@
+{
+ "type": "BUILDING_STORAGE_PIT",
+ "description": "TXT_KEY_BUILDING_STORAGE_PIT",
+ "civilopedia": "TXT_KEY_BUILDING_STORAGE_PIT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_APOTHECARY_SHOP",
+   "BUILDING_BASKETMAKER",
+   "BUILDING_BEADWORKER",
+   "BUILDING_BONEWORKER",
+   "BUILDING_BRASS_INSTRUMENT_MAKER",
+   "BUILDING_CANDY_SHOP",
+   "BUILDING_CANOE_BUILDER",
+   "BUILDING_COBBLER",
+   "BUILDING_CRAFTS_HUT",
+   "BUILDING_DANCE_HUT",
+   "BUILDING_DINING_HALL",
+   "BUILDING_FISHERMANS_HUT",
+   "BUILDING_FISHMONGER",
+   "BUILDING_FLETCHERS_HUT",
+   "BUILDING_FURNITURE_MAKER",
+   "BUILDING_HATTER",
+   "BUILDING_HEALERS_HUT",
+   "BUILDING_IKHANDA",
+   "BUILDING_LACQUERWARE_MAKER",
+   "BUILDING_MASK_CARVER",
+   "BUILDING_MICROLITH_WORKSHOP",
+   "BUILDING_MUSIC_HUT",
+   "BUILDING_MYSTICS_HUT",
+   "BUILDING_PERCUSSION_INSTRUMENT_MAKER",
+   "BUILDING_PIERCER",
+   "BUILDING_POISON_CRAFTER",
+   "BUILDING_POTTERS_HUT",
+   "BUILDING_ROPER",
+   "BUILDING_SADDLER",
+   "BUILDING_SAGE",
+   "BUILDING_SAIL_WEAVER",
+   "BUILDING_SEAMSTRESS",
+   "BUILDING_SLAUGHTERHOUSE",
+   "BUILDING_SMOKEHOUSE",
+   "BUILDING_SPEARFISHER",
+   "BUILDING_STARGAZERS_HUT",
+   "BUILDING_STONEWORKER",
+   "BUILDING_STORYTELLER",
+   "BUILDING_STRING_INSTRUMENT_MAKER",
+   "BUILDING_TABLET_MAKER",
+   "BUILDING_TATTOOER",
+   "BUILDING_TRAVOIS_MAKER",
+   "BUILDING_WOODCARVER",
+   "BUILDING_WOODWIND_INSTRUMENT_MAKER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_GRANARY"
+  ]
+ },
+ "foodKept": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 15,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_STORAGE_PIT"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 80,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

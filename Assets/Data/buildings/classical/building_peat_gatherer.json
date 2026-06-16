@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_PEAT_GATHERER",
+ "description": "TXT_KEY_BUILDING_PEAT_GATHERER",
+ "civilopedia": "TXT_KEY_BUILDING_PEAT_GATHERER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MODERN_EARTHWORKS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "FEATURE_PEAT_BOG",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 216,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PEAT_GATHERER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

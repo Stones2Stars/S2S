@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_FLINT_GATHERER",
+ "description": "TXT_KEY_BUILDING_FLINT_GATHERER",
+ "civilopedia": "TXT_KEY_BUILDING_FLINT_GATHERER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_FLINT"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MODERN_EARTHWORKS"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FLINT_GATHERER"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

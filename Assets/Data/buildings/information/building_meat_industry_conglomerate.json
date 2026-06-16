@@ -1,0 +1,381 @@
+{
+ "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+ "description": "TXT_KEY_BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+ "civilopedia": "TXT_KEY_BUILDING_MEAT_INDUSTRY_CONGLOMERATE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_BISON",
+   "BUILDING_ANIMAL_TRAINER_BUFFALO",
+   "BUILDING_ANIMAL_TRAINER_CAMEL",
+   "BUILDING_ANIMAL_TRAINER_DEER",
+   "BUILDING_ANIMAL_TRAINER_DONKEY",
+   "BUILDING_ANIMAL_TRAINER_ELEPHANT",
+   "BUILDING_ANIMAL_TRAINER_HORSE",
+   "BUILDING_ANIMAL_TRAINER_LLAMA",
+   "BUILDING_ANIMAL_TRAINER_MAMMOTH",
+   "BUILDING_ANIMAL_TRAINER_ZEBRA",
+   "BUILDING_BAMBOO_ARMOURER",
+   "BUILDING_BUFFALO_JUMP",
+   "BUILDING_BULL_LEAPING",
+   "BUILDING_CARAVAN_POST",
+   "BUILDING_COCK_FIGHTING_RING",
+   "BUILDING_DONKEY_BREEDER",
+   "BUILDING_DONKEY_MILL",
+   "BUILDING_FLOCKS_OF_DUCK",
+   "BUILDING_FLOCKS_OF_PEACOCK",
+   "BUILDING_FLOCKS_OF_TURKEY",
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+   "BUILDING_GUILD_BUTCHERS",
+   "BUILDING_HERDING_DOG_TRAINER",
+   "BUILDING_HUNTING_DOG_TRAINER",
+   "BUILDING_LABYRINTH_OF_KNOSSOS",
+   "BUILDING_OXEN_MILL"
+  ],
+  "units": [
+   "UNIT_TAMED_BOAR",
+   "UNIT_TAMED_CATTLE",
+   "UNIT_TAMED_MUSKOX"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_ANGORA_GOAT_BREEDER",
+   "BUILDING_ANGORA_RABBIT_BREEDER",
+   "BUILDING_BUTCHERY",
+   "BUILDING_CARRION_GATHERER",
+   "BUILDING_CATCHER_BIRDS_OF_PARADISE",
+   "BUILDING_CATCHER_CANARY",
+   "BUILDING_CATCHER_COCKATOO",
+   "BUILDING_CATCHER_HUMMINGBIRD",
+   "BUILDING_CATCHER_JUNGLEFOWL",
+   "BUILDING_CATCHER_LYREBIRD",
+   "BUILDING_CATCHER_MACAW",
+   "BUILDING_CATCHER_PARAKEET",
+   "BUILDING_CATCHER_PARROT",
+   "BUILDING_CATCHER_PEACOCK",
+   "BUILDING_CATCHER_QUETZAL",
+   "BUILDING_CATCHER_TOUCAN",
+   "BUILDING_CHICKEN_COOP",
+   "BUILDING_CORMORANT_TRAINER",
+   "BUILDING_DAIRY_BARN",
+   "BUILDING_FACTORY_GHEE_OIL",
+   "BUILDING_FACTORY_LEATHER",
+   "BUILDING_FARM_ANIMAL_ALPACA",
+   "BUILDING_FARM_ANIMAL_CAMEL",
+   "BUILDING_FARM_ANIMAL_COW",
+   "BUILDING_FARM_ANIMAL_DONKEY",
+   "BUILDING_FARM_ANIMAL_DUCK",
+   "BUILDING_FARM_ANIMAL_ELEPHANT",
+   "BUILDING_FARM_ANIMAL_GOAT",
+   "BUILDING_FARM_ANIMAL_GOOSE",
+   "BUILDING_FARM_ANIMAL_HORSE",
+   "BUILDING_FARM_ANIMAL_LLAMA",
+   "BUILDING_FARM_ANIMAL_OSTRICH",
+   "BUILDING_FARM_ANIMAL_OXEN",
+   "BUILDING_FARM_ANIMAL_PIG",
+   "BUILDING_FARM_ANIMAL_REINDEER",
+   "BUILDING_FARM_ANIMAL_SHEEP",
+   "BUILDING_FARM_ANIMAL_TURKEY",
+   "BUILDING_FARM_ANIMAL_YAK",
+   "BUILDING_FEATHER_WORKER",
+   "BUILDING_FISH_OIL_MAKER",
+   "BUILDING_FURRIER",
+   "BUILDING_GERBIL_BREEDER",
+   "BUILDING_GHEE_MAKER",
+   "BUILDING_GUINEA_PIG_BREEDER",
+   "BUILDING_HAMSTER_BREEDER",
+   "BUILDING_HERD_BISON",
+   "BUILDING_HERD_BUFFALO",
+   "BUILDING_HERD_CAMEL",
+   "BUILDING_HERD_COW",
+   "BUILDING_HERD_DEER",
+   "BUILDING_HERD_DONKEY",
+   "BUILDING_HERD_ELEPHANT",
+   "BUILDING_HERD_GOAT",
+   "BUILDING_HERD_HORSE",
+   "BUILDING_HERD_KANGAROO",
+   "BUILDING_HERD_LLAMA",
+   "BUILDING_HERD_MAMMOTH",
+   "BUILDING_HERD_MUSKOX",
+   "BUILDING_HERD_PIG",
+   "BUILDING_HERD_POULTRY",
+   "BUILDING_HERD_RATITE",
+   "BUILDING_HERD_SHEEP",
+   "BUILDING_HERD_ZEBRA",
+   "BUILDING_INDUSTRIAL_FARMS",
+   "BUILDING_MEAT_PACKING_PLANT",
+   "BUILDING_MOUSE_BREEDER",
+   "BUILDING_NEST_THIEF",
+   "BUILDING_PARROT_AVIARY",
+   "BUILDING_RABBIT_BREEDER",
+   "BUILDING_RAT_BREEDER",
+   "BUILDING_RENDERING_PLANT",
+   "BUILDING_RESOURCES_BONE",
+   "BUILDING_RESOURCES_CARCASS",
+   "BUILDING_RESOURCES_EGGS",
+   "BUILDING_RESOURCES_FEATHERS",
+   "BUILDING_RESOURCES_HIDE",
+   "BUILDING_RESOURCES_IVORY",
+   "BUILDING_RESOURCES_LARD",
+   "BUILDING_RESOURCES_PELTS",
+   "BUILDING_SEA_TURTLE_EGG_GATHERER",
+   "BUILDING_SHEARING_BARN",
+   "BUILDING_SKINNER",
+   "BUILDING_SLAUGHTERHOUSE",
+   "BUILDING_TANNERY",
+   "BUILDING_WHALERS_DOCK",
+   "BUILDING_WHALE_OIL_MAKER",
+   "BUILDING_WOOLLY_PIG_BREEDER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CLONING_LABORATORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    90,
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_COW",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_DEER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_PIG",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_POULTRY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_SHEEP",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ],
+   "percent": [
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_FISH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 20,
+     "enabled": {
+      "type": "BONUS_GRAINS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_GRASS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_STRAW",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 60,
+   "percent": [
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_SALT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_WAX",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 160,
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_COW",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_HORSE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_PIG",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_SHEEP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_WHALE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "domains": {
+    "DOMAIN_LAND": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    15,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": "HAS_STATE_RELIGION"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    11,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GLASSWARE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SALT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 2865,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

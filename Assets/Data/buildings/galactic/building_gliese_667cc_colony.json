@@ -1,0 +1,96 @@
+{
+ "type": "BUILDING_GLIESE_667CC_COLONY",
+ "description": "TXT_KEY_BUILDING_GLIESE_667CC_COLONY",
+ "civilopedia": "TXT_KEY_BUILDING_GLIESE_667CC_COLONY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_RED_DWARF",
+      "scope": "plot"
+     }
+    ]
+   ],
+   "noneOf": [
+    {
+     "type": "BUILDING_GLIESE_581D_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_PROXIMA_CENTAURI_B_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_WOLF_1061C_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GLIESE_163C_COLONY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  },
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_INTERSTELLAR_BASE_TIDALLY_LOCKED_PLANET",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 8998
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GLIESE_667CC"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GLIESE_667CC_COLONY"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

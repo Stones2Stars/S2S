@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_INTERSTELLAR_DESIGNER_CASTE_LAW_ENFORCEMENT",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_DESIGNER_CASTE_LAW_ENFORCEMENT",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DESIGNER_CASTE_LAW_ENFORCEMENT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_PRISON_PLANET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_CONTROLLED_BREEDING",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 1757
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_DESIGNER_CASTE_LAW_ENFORCEMENT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC"
+  ]
+ }
+}

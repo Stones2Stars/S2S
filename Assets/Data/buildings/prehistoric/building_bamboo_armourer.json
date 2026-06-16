@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_BAMBOO_ARMOURER",
+ "description": "TXT_KEY_BUILDING_BAMBOO_ARMOURER",
+ "civilopedia": "TXT_KEY_BUILDING_BAMBOO_ARMOURER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ARMOURER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BAMBOO",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_TANNERY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FACTORY_LEATHER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "FEATURE_BAMBOO",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 68,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BAMBOO_ARMOURER"
+  }
+ },
+ "identity": {
+  "applyFreePromotionOnMove": true,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

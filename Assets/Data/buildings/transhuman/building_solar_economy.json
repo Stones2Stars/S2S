@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_SOLAR_ECONOMY",
+ "description": "TXT_KEY_BUILDING_SOLAR_ECONOMY",
+ "civilopedia": "TXT_KEY_BUILDING_SOLAR_ECONOMY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_EFFECT_CISLUNAR_ECONOMY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_STARPORT",
+     "scope": "empire",
+     "min": 5
+    },
+    {
+     "type": "BUILDING_STRATOSPHERIC_TOWER",
+     "scope": "empire",
+     "min": 2
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 15610
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SOLAR_ECONOMY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SOLAR_ECONOMY"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

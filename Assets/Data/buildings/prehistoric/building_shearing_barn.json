@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_SHEARING_BARN",
+ "description": "TXT_KEY_BUILDING_SHEARING_BARN",
+ "civilopedia": "TXT_KEY_BUILDING_SHEARING_BARN_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_FARM_ANIMAL_SHEEP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_ANIMAL_ALPACA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_ANIMAL_YAK",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANGORA_GOAT_BREEDER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANGORA_RABBIT_BREEDER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_MUSKOX",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_WOOLLY_PIG_BREEDER",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 98,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SHEARING_BARN"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

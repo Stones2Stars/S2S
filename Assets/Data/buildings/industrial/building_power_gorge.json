@@ -1,0 +1,39 @@
+{
+ "type": "BUILDING_POWER_GORGE",
+ "description": "TXT_KEY_BUILDING_POWER_GORGE",
+ "civilopedia": "TXT_KEY_BUILDING_POWER_GORGE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_POWER_GORGE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

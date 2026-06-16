@@ -1,0 +1,92 @@
+{
+ "type": "BUILDING_CULTURE_AZTEC",
+ "description": "TXT_KEY_BUILDING_CULTURE_AZTEC",
+ "civilopedia": "TXT_KEY_BUILDING_CULTURE_AZTEC_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_OBSIDIAN",
+     "scope": "city",
+     "connection": "vicinity"
+    },
+    {
+     "type": "BUILDING_C_AC_NORTH_AMERICAN",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_C_L_NORTH_AMERICAN",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_JUNGLE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_PYRAMID_OF_THE_MOON",
+      "scope": "city"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_PYRAMID_OF_THE_SUN",
+      "scope": "city"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_TLALOCS_ALTAR",
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 200
+  }
+ },
+ "cost": {
+  "production": 480
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CULTURE_AZTEC"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

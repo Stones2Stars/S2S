@@ -1,0 +1,119 @@
+{
+ "type": "BUILDING_CONSPIRATORS_HIDEOUT",
+ "description": "TXT_KEY_BUILDING_CONSPIRATORS_HIDEOUT",
+ "civilopedia": "TXT_KEY_BUILDING_CONSPIRATORS_HIDEOUT_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_HAJDUK",
+   "UNIT_SCOUNDREL"
+  ]
+ },
+ "research": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 20
+   },
+   "flat": -2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 2
+    },
+    "UNITCOMBAT_RUFFIAN": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "anarchy": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unit": "UNIT_SCOUNDREL",
+    "interval": "perTurn",
+    "chance": {
+     "per": {
+      "type": "PROPERTY_CRIME",
+      "scope": "city"
+     }
+    }
+   }
+  ]
+ },
+ "cost": {
+  "production": 425,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CONSPIRATORS_HIDEOUT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COMMAND_BUNKER"
+ },
+ "identity": {
+  "worth": 2,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

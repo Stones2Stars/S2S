@@ -1,0 +1,101 @@
+{
+ "type": "BUILDING_NANITE_DEFUSER",
+ "description": "TXT_KEY_BUILDING_NANITE_DEFUSER",
+ "civilopedia": "TXT_KEY_BUILDING_NANITE_DEFUSER_PEDIA",
+ "help": "TXT_KEY_BUILDING_NANITE_DEFUSER_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "enemy": {
+    "percent": 25
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_NANOMORPH",
+    "interval": "perTurn",
+    "heal": 10
+   }
+  ]
+ },
+ "cost": {
+  "production": 32730,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NANITE_DEFUSER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NANITE_DEFUSER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_ACCELERATOR"
+ },
+ "identity": {
+  "nukeImmune": true,
+  "centerInCity": true,
+  "worth": 100,
+  "militaryWorth": 100,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 10000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

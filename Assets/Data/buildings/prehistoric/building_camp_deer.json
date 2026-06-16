@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_CAMP_DEER",
+ "description": "TXT_KEY_BUILDING_CAMP_DEER",
+ "civilopedia": "TXT_KEY_BUILDING_CAMP_DEER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_DEER",
+   "BUILDING_RESOURCES_CARCASS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BREEDING_PROGRAM_DEER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_DEER",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_HUNTERS_CAMP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANCIENT_CUSTOMS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TECH_ECOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 45,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CAMP_DEER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

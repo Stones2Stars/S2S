@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_EUROPEAN_EXTREMELY_LARGE_TELESCOPE",
+ "description": "TXT_KEY_BUILDING_EUROPEAN_EXTREMELY_LARGE_TELESCOPE",
+ "civilopedia": "TXT_KEY_BUILDING_EUROPEAN_EXTREMELY_LARGE_TELESCOPE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_OBSERVATORY",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 35
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_OBSERVATORY": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 11550,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_EURO_ELT"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EUROPEAN_EXTREMELY_LARGE_TELESCOPE"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

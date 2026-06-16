@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_CRIME_UNLICENSED_CLONING",
+ "description": "TXT_KEY_BUILDING_CRIME_UNLICENSED_CLONING",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_UNLICENSED_CLONING_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CLONING_FACTORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 50
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -4
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

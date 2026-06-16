@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_URANUS_ATMOSPHERIC_PROBE",
+ "description": "TXT_KEY_BUILDING_URANUS_ATMOSPHERIC_PROBE",
+ "civilopedia": "TXT_KEY_BUILDING_URANUS_ATMOSPHERIC_PROBE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_UMBRIEL_COLONY": {
+     "flat": 20
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 60
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_SCIENTIST": 2
+  }
+ },
+ "cost": {
+  "production": 17910
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_URANUS_ATMOSPHERE_PROBE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_URANUS_ATMOSPHERIC_PROBE"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

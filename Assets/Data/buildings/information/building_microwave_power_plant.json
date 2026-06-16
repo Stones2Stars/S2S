@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_MICROWAVE_POWER_PLANT",
+ "description": "TXT_KEY_BUILDING_MICROWAVE_POWER_PLANT",
+ "civilopedia": "TXT_KEY_BUILDING_MICROWAVE_POWER_PLANT_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_RENEWABLE_MEGACOMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_FACTORY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_POWER_LINES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SOLAR_POWER_SATELLITE",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_NANOTUBES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 16
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 2405,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MICROWAVE_POWER_PLANT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

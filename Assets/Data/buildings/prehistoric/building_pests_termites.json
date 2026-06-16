@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_PESTS_TERMITES",
+ "description": "TXT_KEY_BUILDING_PESTS_TERMITES",
+ "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "connection": "vicinity"
+     },
+     {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PESTS_TERMITES"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "autoBuild": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "type": "BUILDING_ORDINANCE_DRUG_PROHIBITION",
+ "description": "TXT_KEY_BUILDING_ORDINANCE_DRUG_PROHIBITION",
+ "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_DRUG_PROHIBITION_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_ECSTASY_LAB",
+   "BUILDING_LSD_LAB",
+   "BUILDING_METH_LAB"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ORDINANCE_DRUG_PROHIBITION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

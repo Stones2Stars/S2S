@@ -1,0 +1,38 @@
+{
+ "type": "BUILDING_EDUCATION_KNOWLEDGE_BASE_INDUSTRIAL",
+ "description": "TXT_KEY_BUILDING_EDUCATION_KNOWLEDGE_BASE_INDUSTRIAL",
+ "civilopedia": "TXT_KEY_BUILDING_EDUCATION_KNOWLEDGE_BASE_INDUSTRIAL_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_EDUCATION_KNOWLEDGE_BASE_ANCIENT",
+   "BUILDING_EDUCATION_KNOWLEDGE_BASE_CLASSICAL",
+   "BUILDING_EDUCATION_KNOWLEDGE_BASE_MEDIEVAL",
+   "BUILDING_EDUCATION_KNOWLEDGE_BASE_RENAISSANCE"
+  ]
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": -5,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYEDUCATION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

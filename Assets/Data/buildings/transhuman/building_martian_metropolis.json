@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_MARTIAN_METROPOLIS",
+ "description": "TXT_KEY_BUILDING_MARTIAN_METROPOLIS",
+ "civilopedia": "TXT_KEY_BUILDING_MARTIAN_METROPOLIS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MARTIAN_ECOSYSTEM",
+   "BUILDING_MARTIAN_FROST_CANNON",
+   "BUILDING_MARTIAN_GARDEN",
+   "BUILDING_MARTIAN_HOTEL",
+   "BUILDING_MARTIAN_MEGACITY",
+   "BUILDING_MARTIAN_SKYHOOK",
+   "BUILDING_MARTIAN_SPACEPORT",
+   "BUILDING_MARTIAN_VERTICAL_FARM",
+   "BUILDING_MARTIAN_ZOO",
+   "BUILDING_PHOBOS_INDUSTRIAL_COMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NOVUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MARTIAN_CITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "cost": {
+  "production": 2110
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MARTIAN_METROPOLIS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

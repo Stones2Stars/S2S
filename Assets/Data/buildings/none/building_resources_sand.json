@@ -1,0 +1,42 @@
+{
+ "type": "BUILDING_RESOURCES_SAND",
+ "description": "TXT_KEY_BUILDING_RESOURCES_SAND",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MODERN_EARTHWORKS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_BEACH_SAND_GATHERER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DESERT_SAND_GATHERER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ROCKDUST_GATHERER",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_SAND"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

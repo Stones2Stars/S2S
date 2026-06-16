@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_VENUS_HYDROGEN_GENERATOR",
+ "description": "TXT_KEY_BUILDING_VENUS_HYDROGEN_GENERATOR",
+ "civilopedia": "TXT_KEY_BUILDING_VENUS_HYDROGEN_GENERATOR_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_VENUS_DEUTERIUM_EXPORTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_SPACE_COLONY_VENUS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 905
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_VENUS_HYDROGEN_GENERATOR"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

@@ -1,0 +1,38 @@
+{
+ "type": "BUILDING_RESOURCES_FLINT",
+ "description": "TXT_KEY_BUILDING_RESOURCES_FLINT",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MODERN_EARTHWORKS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_FLINT_GATHERER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_WONDER_OF_NATURE_PAMUKKALE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_FLINT"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

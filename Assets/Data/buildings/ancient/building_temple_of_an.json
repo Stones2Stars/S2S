@@ -1,0 +1,129 @@
+{
+ "type": "BUILDING_TEMPLE_OF_AN",
+ "description": "TXT_KEY_BUILDING_TEMPLE_OF_AN",
+ "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_AN_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_TEMPLE_OF_ENKI",
+   "BUILDING_TEMPLE_OF_ENLIL",
+   "BUILDING_TEMPLE_OF_INANNA",
+   "BUILDING_TEMPLE_OF_KI"
+  ],
+  "units": [
+   "UNIT_MESO_MISSIONARY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_BRICKS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "RELIGION_MESOPOTAMISM",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1,
+   "percent": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "HAS_STATE_RELIGION"
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 15
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_MESOPOTAMISM": {
+    "flat": 1
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 139,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TEMPLE_OF_AN"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MESOPOTAMIAN"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 1
+  },
+  "neverCapture": true,
+  "worth": 4,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "specialBuildingType": "SPECIALBUILDING_MONASTERY_II",
+  "religion": "RELIGION_MESOPOTAMISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

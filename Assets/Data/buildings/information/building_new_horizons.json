@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_NEW_HORIZONS",
+ "description": "TXT_KEY_BUILDING_NEW_HORIZONS",
+ "civilopedia": "TXT_KEY_BUILDING_NEW_HORIZONS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_JET_PROPULSION_LABORATORY",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 18
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_PLANETARIUM": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 11550
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NEW_HORIZONS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NEW_HORIZONS"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

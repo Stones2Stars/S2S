@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_COAST_GUARD_STATION",
+ "description": "TXT_KEY_BUILDING_COAST_GUARD_STATION",
+ "civilopedia": "TXT_KEY_BUILDING_COAST_GUARD_STATION_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AI_POLICE_FORCE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER",
+    {
+     "type": "BUILDING_HARBORMASTERS_OFFICE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_NAVAL_ACADEMY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "cost": {
+  "production": 1030,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_COAST_GUARD_STATION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

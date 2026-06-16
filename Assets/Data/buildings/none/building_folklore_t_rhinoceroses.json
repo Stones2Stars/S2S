@@ -1,0 +1,150 @@
+{
+ "type": "BUILDING_FOLKLORE_T_RHINOCEROSES",
+ "description": "TXT_KEY_BUILDING_FOLKLORE_T_RHINOCEROSES",
+ "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_RHINOCEROS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_FOLKLORE_REQUIREMENT",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_FOLKLORE_GIANT_RHINOCEROS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_BLACK_RHINOCEROS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_INDIAN_RHINOCEROS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_JAVA_RHINOCEROS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_WHITE_RHINOCEROS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1,
+   "percent": [
+    {
+     "value": -60,
+     "enabled": {
+      "type": "TECH_LANGUAGE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_CLASSICAL_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_MEDIEVAL_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_RENAISSANCE_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_INDUSTRIAL_LIFESTYLE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_LANGUAGE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_CLASSICAL_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_MEDIEVAL_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_RENAISSANCE_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_INDUSTRIAL_LIFESTYLE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 250,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FOLKLORE_T_RHINOCEROSES"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "specialBuildingType": "SPECIALBUILDING_FOLKLORE_TAXONOMY",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

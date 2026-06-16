@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_FARM_ANIMAL_OSTRICH",
+ "description": "TXT_KEY_BUILDING_FARM_ANIMAL_OSTRICH",
+ "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_OSTRICH_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_CAMP_OSTRICH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_PRESERVE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_OSTRICH",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 125,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FARM_ANIMAL_OSTRICH"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

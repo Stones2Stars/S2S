@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_SOCIAL_NETWORKS",
+ "description": "TXT_KEY_BUILDING_SOCIAL_NETWORKS",
+ "civilopedia": "TXT_KEY_BUILDING_SOCIAL_NETWORKS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLOGS",
+   "BUILDING_DISTRIBUTED_SOCIAL_NETWORK",
+   "BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE",
+   "BUILDING_MEME_GENERATOR",
+   "BUILDING_SOCIAL_MEDIA_SURVEILLANCE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HOLOGRAPHIC_NETWORKS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_ENCRYPTED_FIREWALL",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_CELEBRITY": 1
+  }
+ },
+ "cost": {
+  "production": 2105,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SOCIAL_NETWORKS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

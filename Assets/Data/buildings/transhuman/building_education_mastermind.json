@@ -1,0 +1,93 @@
+{
+ "type": "BUILDING_EDUCATION_MASTERMIND",
+ "description": "TXT_KEY_BUILDING_EDUCATION_MASTERMIND",
+ "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_EDUCATION_ACUMEN",
+   "BUILDING_EDUCATION_BRILLIANT",
+   "BUILDING_EDUCATION_COSMOPOLITAN",
+   "BUILDING_EDUCATION_CULTIVATED",
+   "BUILDING_EDUCATION_ENLIGHTENED",
+   "BUILDING_EDUCATION_INTUITIVE",
+   "BUILDING_EDUCATION_KNOWLEDGEABLE",
+   "BUILDING_EDUCATION_SCHOLARLY",
+   "BUILDING_EDUCATION_WUNDERKIND"
+  ]
+ },
+ "production": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 30,
+   "percent": 50
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "greatGeneralRate": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 55
+   }
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -55
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -55
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYEDUCATION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_NANITE_LAB",
+ "description": "TXT_KEY_BUILDING_NANITE_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_NANITE_LAB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_NANOFACTORY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_LABORATORY",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_NANO_RESEARCH_DEPARTMENT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PICOTECH_COMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 3805,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NANITE_LAB"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_NANOFACTORY"
+ },
+ "identity": {
+  "worth": 20,
+  "militaryWorth": 25,
+  "dcmAirbombMission": 3,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

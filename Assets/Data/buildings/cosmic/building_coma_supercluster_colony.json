@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_COMA_SUPERCLUSTER_COLONY",
+ "description": "TXT_KEY_BUILDING_COMA_SUPERCLUSTER_COLONY",
+ "civilopedia": "TXT_KEY_BUILDING_COMA_SUPERCLUSTER_COLONY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_SUPERCLUSTER_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_OBSERVABLE_UNIVERSE",
+      "scope": "plot"
+     }
+    ]
+   ],
+   "noneOf": [
+    {
+     "type": "BUILDING_HYDRA_SUPERCLUSTER_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CENTAURUS_SUPERCLUSTER_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_PERSEUS_PISCES_SUPERCLUSTER_COLONY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_INTERGALACTIC_SUPERCLUSTER_COLONY",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 16984
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_COMA_SUPERCLUSTER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_COMA_SUPERCLUSTER_COLONY"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

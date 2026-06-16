@@ -1,0 +1,42 @@
+{
+ "type": "BUILDING_RESOURCES_PETROLEUM_PRODUCTS",
+ "description": "TXT_KEY_BUILDING_RESOURCES_PETROLEUM_PRODUCTS",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ULTRAFUEL_REFINERY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_HYDROCARBON_REFINERY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHALE_PLANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_OIL_REFINERY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_PETROLEUM_PRODUCTS"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,43 @@
+{
+ "type": "BUILDING_ECOLOGICAL_AWAKENING",
+ "description": "TXT_KEY_BUILDING_ECOLOGICAL_AWAKENING",
+ "civilopedia": "TXT_KEY_BUILDING_ECOLOGICAL_AWAKENING_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NANOPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "perPopulation": {
+    "percent": 10
+   }
+  }
+ },
+ "foodKept": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "cost": {
+  "production": 3525
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_ECOLOGICAL_AWAKENING"
+  }
+ },
+ "identity": {
+  "specialBuildingType": "SPECIALBUILDING_PUNK_NANO",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

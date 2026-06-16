@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_SENTRY_POST",
+ "description": "TXT_KEY_BUILDING_SENTRY_POST",
+ "civilopedia": "TXT_KEY_BUILDING_SENTRY_POST_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+  ],
+  "units": [
+   "UNIT_ENFORCERS",
+   "UNIT_NEANDERTHAL_ENFORCER",
+   "UNIT_NEANDERTHAL_WATCHER",
+   "UNIT_WATCHER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TOWN_WATCH"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_LOOKOUT_POST"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "espionage": {
+  "city": {
+   "investigation": {
+    "flat": 10
+   },
+   "flat": 2
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 5
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 62,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SENTRY_POST"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

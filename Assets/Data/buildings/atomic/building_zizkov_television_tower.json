@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_ZIZKOV_TELEVISION_TOWER",
+ "description": "TXT_KEY_BUILDING_ZIZKOV_TELEVISION_TOWER",
+ "civilopedia": "TXT_KEY_BUILDING_ZIZKOV_TELEVISION_TOWER_PEDIA",
+ "help": "TXT_KEY_BUILDING_ZIZKOV_TELEVISION_TOWER_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 7080,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ZIZKOV"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ZIZKOV_TELEVISION_TOWER"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 12,
+  "militaryWorth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_SPY",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": "10.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_SPACESCRAPER",
+ "description": "TXT_KEY_BUILDING_SPACESCRAPER",
+ "civilopedia": "TXT_KEY_BUILDING_SPACESCRAPER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_COMPUTRONIUM_TOWER",
+   "BUILDING_GRAND_SPACESCRAPER",
+   "BUILDING_OMEGA_ASSEMBLER",
+   "BUILDING_ORBITAL_RING",
+   "BUILDING_SHAPESHIFTING_ARCHITECTURE",
+   "BUILDING_SPACESCRAPER_COMMERCIAL_DISTRICT",
+   "BUILDING_SPACESCRAPER_FARM",
+   "BUILDING_SPACESCRAPER_INDUSTRIAL_DISTRICT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ATOMICALLY_PRECISE_ALLOYS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_STRATOSPHERIC_TOWER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_ADAPTIVE_ARCHITECTURE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 9105,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SPACESCRAPER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

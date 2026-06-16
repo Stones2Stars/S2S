@@ -1,0 +1,47 @@
+{
+ "type": "BUILDING_EFFECT_TERRAFORMED_LUNA",
+ "description": "TXT_KEY_BUILDING_EFFECT_TERRAFORMED_LUNA",
+ "civilopedia": "TXT_KEY_BUILDING_EFFECT_TERRAFORMED_LUNA_PEDIA",
+ "food": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EFFECT_TERRAFORMED_LUNA"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

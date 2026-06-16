@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_CIVIC_FREE_MARKET",
+ "description": "TXT_KEY_BUILDING_CIVIC_FREE_MARKET",
+ "civilopedia": "TXT_KEY_BUILDING_CIVIC_FREE_MARKET_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_PALACE",
+     "scope": "city"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_FREE_MARKET",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "specialist": {
+   "specialists": {
+    "SPECIALIST_SLAVES": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CIVIC_FREE_MARKET"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

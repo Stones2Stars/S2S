@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_MOVIE_STUDIO",
+ "description": "TXT_KEY_BUILDING_MOVIE_STUDIO",
+ "civilopedia": "TXT_KEY_BUILDING_MOVIE_STUDIO_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_ACTOR_STUDIO",
+   "BUILDING_HOLLYWOOD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 6
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_CELEBRITY": 1
+  }
+ },
+ "cost": {
+  "production": 1660,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MOVIE_STUDIO"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MOVIE_STUDIO"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ARTIST": 1
+  },
+  "neverCapture": true,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

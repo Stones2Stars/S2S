@@ -1,0 +1,35 @@
+{
+ "type": "BUILDING_HYPERSPACE_RESEARCH_PROBE",
+ "description": "TXT_KEY_BUILDING_HYPERSPACE_RESEARCH_PROBE",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_RESEARCH_PROBE_PEDIA",
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1261
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERSPACE_RESEARCH_PROBE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

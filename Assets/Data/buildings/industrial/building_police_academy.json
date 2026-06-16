@@ -1,0 +1,130 @@
+{
+ "type": "BUILDING_POLICE_ACADEMY",
+ "description": "TXT_KEY_BUILDING_POLICE_ACADEMY",
+ "civilopedia": "TXT_KEY_BUILDING_POLICE_ACADEMY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ORDINANCE_NEIGHBORHOOD_WATCH",
+   "BUILDING_ORDINANCE_YOUTH_CURFEW"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "BUILDING_UNIVERSITY",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_POLICE_STATION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_POLICE_PRECINCT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 5,
+   "percent": 50
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_RIOTPOLICE": {
+     "percent": 10
+    },
+    "UNIT_POLICE_DOG": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -24
+  }
+ },
+ "cost": {
+  "production": 1600,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   },
+   {
+    "FLAVOR_MILITARY": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_POLICE_ACADEMY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_POLICE_ACADEMY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_POLICE_STATION"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_INVESTIGATOR": 2
+  },
+  "neverCapture": true,
+  "worth": 1,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

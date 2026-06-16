@@ -1,0 +1,127 @@
+{
+ "type": "BUILDING_LUNAR_MANUFACTURING_PLANT",
+ "description": "TXT_KEY_BUILDING_LUNAR_MANUFACTURING_PLANT",
+ "civilopedia": "TXT_KEY_BUILDING_LUNAR_MANUFACTURING_PLANT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUNAR_ARCOLOGY",
+   "BUILDING_LUNAR_CENTRIFUGAL_HABITAT",
+   "BUILDING_LUNAR_HE3_EXTRACTION_FACILITY",
+   "BUILDING_LUNAR_KREEP_MINE"
+  ],
+  "units": [
+   "UNIT_LUNAR_INFANTRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SYNTHETIC_RUBBER",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_LUNAR_ROCK_QUARRY",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_STEEL_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_TITANIUM_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_ALUMINUM_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 20,
+   "flat": [
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_TITANIUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_STEEL_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -200,
+   "percent": [
+    {
+     "value": 20000,
+     "enabled": {
+      "type": "TECH_LUNAR_TRADE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 800
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LUNAR_MANUFACTURING_PLANT"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ENGINEER": 3
+  },
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

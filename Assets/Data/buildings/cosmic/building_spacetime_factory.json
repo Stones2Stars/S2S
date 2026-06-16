@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_SPACETIME_FACTORY",
+ "description": "TXT_KEY_BUILDING_SPACETIME_FACTORY",
+ "civilopedia": "TXT_KEY_BUILDING_SPACETIME_FACTORY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_EXTREME_FORCE_CONCENTRATOR",
+   "BUILDING_STRINGWORKS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_ALEPH_ASSEMBLER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 19055,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SPACETIME_FACTORY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

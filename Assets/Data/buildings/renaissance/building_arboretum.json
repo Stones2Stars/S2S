@@ -1,0 +1,136 @@
+{
+ "type": "BUILDING_ARBORETUM",
+ "description": "TXT_KEY_BUILDING_ARBORETUM",
+ "civilopedia": "TXT_KEY_BUILDING_ARBORETUM_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BOTANICAL_GARDENS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AGROFOREST"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_ASSASSIN_BUG_GATHERER",
+   "BUILDING_ASSASSIN_BUG_SANCTUARY",
+   "BUILDING_BAMBOO_WORM_GATHERER",
+   "BUILDING_BOGONG_MOTH_GATHERER",
+   "BUILDING_BUTTERFLY_GATHERER",
+   "BUILDING_BUTTERFLY_SANCTUARY",
+   "BUILDING_CENTIPEDE_GATHERER",
+   "BUILDING_CICADA_GATHERER",
+   "BUILDING_CICADA_SANCTUARY",
+   "BUILDING_CRICKET_GATHERER",
+   "BUILDING_CRICKET_SANCTUARY",
+   "BUILDING_DRAGONFLY_GATHERER",
+   "BUILDING_DRAGONFLY_SANCTUARY",
+   "BUILDING_DUNG_BEETLE_GATHERER",
+   "BUILDING_FIREFLY_GATHERER",
+   "BUILDING_FIREFLY_SANCTUARY",
+   "BUILDING_GIANT_COCKROACH_GATHERER",
+   "BUILDING_GOLIATH_BEETLE_GATHERER",
+   "BUILDING_GOLIATH_BEETLE_SANCTUARY",
+   "BUILDING_GRASSHOPPER_GATHERER",
+   "BUILDING_HERCULES_BEETLE_GATHERER",
+   "BUILDING_HERCULES_BEETLE_SANCTUARY",
+   "BUILDING_JUMILES_GATHERER",
+   "BUILDING_JUNEBUG_GATHERER",
+   "BUILDING_JUNEBUG_SANCTUARY",
+   "BUILDING_LADYBUG_GATHERER",
+   "BUILDING_LADYBUG_SANCTUARY",
+   "BUILDING_MEALWORM_GATHERER",
+   "BUILDING_MEZCAL_WORM_GATHERER",
+   "BUILDING_MOPANE_MOTH_GATHERER",
+   "BUILDING_PALM_WEEVIL_GATHERER",
+   "BUILDING_PESTS_APHIDS",
+   "BUILDING_PILLBUG_GATHERER",
+   "BUILDING_PRAYING_MANTIS_GATHERER",
+   "BUILDING_PRAYING_MANTIS_SANCTUARY",
+   "BUILDING_RESOURCES_BUGS",
+   "BUILDING_RICE_BEETLE_GATHERER",
+   "BUILDING_SCARAB_BEETLE_GATHERER",
+   "BUILDING_SCARAB_BEETLE_SANCTUARY",
+   "BUILDING_SCORPION_GATHERER",
+   "BUILDING_SCORPION_SANCTUARY",
+   "BUILDING_TARANTULA_GATHERER",
+   "BUILDING_WEAVING_SPIDER_GATHERER",
+   "BUILDING_WEAVING_SPIDER_SANCTUARY"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 160
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 115
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 14
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 535,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 7
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ARBORETUM"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_ARBORETUM"
+ },
+ "identity": {
+  "worth": 6,
+  "militaryWorth": 3,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

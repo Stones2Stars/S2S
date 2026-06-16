@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_LIFE_SULFURIC_ACID",
+ "description": "TXT_KEY_BUILDING_LIFE_SULFURIC_ACID",
+ "civilopedia": "TXT_KEY_BUILDING_LIFE_SULFURIC_ACID_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_VENUS_BIOTIC_ATMOSPHERE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_TERRAFORMED_VENUS",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 300
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 600
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4733
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LIFE_SULFURIC_ACID"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

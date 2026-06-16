@@ -1,0 +1,162 @@
+{
+ "type": "BUILDING_POLICE_PRECINCT",
+ "description": "TXT_KEY_BUILDING_POLICE_PRECINCT",
+ "civilopedia": "TXT_KEY_BUILDING_POLICE_PRECINCT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_221B_BAKER_STREET",
+   "BUILDING_ACTIVE_DENIAL_SYSTEM",
+   "BUILDING_AI_SURVEILLANCE",
+   "BUILDING_ALCATRAZ",
+   "BUILDING_CITY_MORGUE",
+   "BUILDING_DETECTIVE_AGENCY",
+   "BUILDING_ELECTRONIC_SECURITY_SYSTEM",
+   "BUILDING_FORENSICS_LAB",
+   "BUILDING_MEGATOWER_POLICE_STATION_LEVEL",
+   "BUILDING_NATIONAL_LEGAL_DATABASE",
+   "BUILDING_POLICE_ACADEMY",
+   "BUILDING_POLICE_CAT_TRAINER",
+   "BUILDING_POLICE_DOG_TRAINER",
+   "BUILDING_POLICE_DRONE_CONTROL_CENTER",
+   "BUILDING_RACIAL_PROFILING",
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+  ],
+  "units": [
+   "UNIT_CITY_GUARD",
+   "UNIT_ENFORCERS",
+   "UNIT_GUARD",
+   "UNIT_HARAPPA_WATCHER",
+   "UNIT_HOPLOMACHUS",
+   "UNIT_HUACA_GUARDIANS",
+   "UNIT_NEANDERTHAL_ENFORCER",
+   "UNIT_NEANDERTHAL_WATCHER",
+   "UNIT_ORONAO_WATCHER",
+   "UNIT_PATROLS",
+   "UNIT_PETRA_GUARD",
+   "UNIT_POLICE_APC",
+   "UNIT_POLICE_CAR",
+   "UNIT_POLICE_HELICOPTER",
+   "UNIT_POLICE_MECH",
+   "UNIT_PUBLIC_FORCES",
+   "UNIT_RIOTPOLICE",
+   "UNIT_SEARCH_BLOC",
+   "UNIT_SENTINEL",
+   "UNIT_SHERIFF",
+   "UNIT_SWAT_TEAM",
+   "UNIT_TEXAS_RANGER",
+   "UNIT_TOWN_WATCHMEN",
+   "UNIT_TREASURE_GUARD",
+   "UNIT_WATCHER"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_BAILIWICK",
+   "BUILDING_GUARDHOUSE",
+   "BUILDING_GUARD_STATION",
+   "BUILDING_LOOKOUT_POST",
+   "BUILDING_POLICE_BOX",
+   "BUILDING_POLICE_STATION",
+   "BUILDING_SENTRY_POST",
+   "BUILDING_SHERIFFS_OFFICE",
+   "BUILDING_TOWN_PATROL",
+   "BUILDING_TOWN_WATCH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_AMMUNITION",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "espionage": {
+  "city": {
+   "investigation": {
+    "flat": 50
+   },
+   "flat": 20,
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 20
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 9
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "cost": {
+  "production": 1845,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_POLICE_PRECINCT"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SPY": 1,
+   "SPECIALIST_INVESTIGATOR": 4
+  },
+  "militaryWorth": 2,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

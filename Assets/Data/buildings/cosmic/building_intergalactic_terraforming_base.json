@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_INTERGALACTIC_TERRAFORMING_BASE",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_TERRAFORMING_BASE",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_TERRAFORMING_BASE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_GUIDED_PLANETARY_EVOLUTION",
+   "BUILDING_INTERGALACTIC_QUASAR_ECOSYSTEM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_COMMAND_CENTER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2634
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_TERRAFORMING_BASE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

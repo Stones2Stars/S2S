@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_RESOURCES_POISON",
+ "description": "TXT_KEY_BUILDING_RESOURCES_POISON",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CHEMISTRY_LAB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_ENCLOSURE_AMPHIBIAN_POND",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BELLADONNA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CURARE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DEATH_CAP_MUSHROOM",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ALCHEMISTS_LAB",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SNAKE_PIT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_POISON"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

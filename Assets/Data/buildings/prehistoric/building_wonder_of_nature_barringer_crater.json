@@ -1,0 +1,107 @@
+{
+ "type": "BUILDING_WONDER_OF_NATURE_BARRINGER_CRATER",
+ "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_BARRINGER_CRATER",
+ "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_BARRINGER_CRATER_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "FEATURE_PLATY_BARRINGER_CRATER",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_TOURISM",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 2,
+   "percent": [
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_SPACE_STATIONS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_ASTRONOMY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 10,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WONDER_OF_NATURE_BARRINGER_CRATER"
+  }
+ },
+ "identity": {
+  "worth": 4,
+  "conquestProbability": 70,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

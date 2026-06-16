@@ -1,0 +1,18 @@
+{
+ "type": "BUILDING_EFFECT_TRADITION_WORK_ETHIC",
+ "description": "TXT_KEY_BUILDING_EFFECT_TRADITION_WORK_ETHIC",
+ "civilopedia": "TXT_KEY_BUILDING_TRADITION_WORK_ETHIC_PEDIA",
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRADITION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "applyFreePromotionOnMove": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

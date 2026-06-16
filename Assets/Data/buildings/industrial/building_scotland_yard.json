@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_SCOTLAND_YARD",
+ "description": "TXT_KEY_BUILDING_SCOTLAND_YARD",
+ "civilopedia": "TXT_KEY_BUILDING_SCOTLAND_YARD_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_221B_BAKER_STREET"
+  ],
+  "units": [
+   "UNIT_007"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_SPY": {
+     "flat": 3
+    },
+    "UNITCOMBAT_LAW_ENFORCEMENT": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -33
+  }
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SCOTLAND_YARD"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SCOTLAND_YARD"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "worth": 10,
+  "militaryWorth": 5,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

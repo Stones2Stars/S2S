@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_CHURCH_TURING_THESIS",
+ "description": "TXT_KEY_BUILDING_CHURCH_TURING_THESIS",
+ "civilopedia": "TXT_KEY_BUILDING_CHURCH_TURING_THESIS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_MATHEMATICS_DEPARTMENT",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "cost": {
+  "production": 6180,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CHURCH_TURING_THESIS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CHURCH_TURING_THESIS"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

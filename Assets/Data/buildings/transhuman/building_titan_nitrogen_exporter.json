@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_TITAN_NITROGEN_EXPORTER",
+ "description": "TXT_KEY_BUILDING_TITAN_NITROGEN_EXPORTER",
+ "civilopedia": "TXT_KEY_BUILDING_TITAN_NITROGEN_EXPORTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_TITAN_HYDROCARBON_REFINERY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 300
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2959
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TITAN_NITROGEN_EXPORTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_TITANIC"
+  ]
+ }
+}

@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_HEDGEHOG_MUSHROOM_GATHERER",
+ "description": "TXT_KEY_BUILDING_HEDGEHOG_MUSHROOM_GATHERER",
+ "civilopedia": "TXT_KEY_BUILDING_HEDGEHOG_MUSHROOM_GATHERER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_I"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MUSHROOMS",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BISON",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 132,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HEDGEHOG_MUSHROOM_GATHERER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

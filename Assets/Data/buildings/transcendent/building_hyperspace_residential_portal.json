@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_HYPERSPACE_RESIDENTIAL_PORTAL",
+ "description": "TXT_KEY_BUILDING_HYPERSPACE_RESIDENTIAL_PORTAL",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_RESIDENTIAL_PORTAL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HYPERSPACE_TESSERACT_HOMES"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1261
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERSPACE_RESIDENTIAL_PORTAL"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

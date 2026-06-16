@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_HUNTING_DOG_TRAINER",
+ "description": "TXT_KEY_BUILDING_HUNTING_DOG_TRAINER",
+ "civilopedia": "TXT_KEY_BUILDING_HUNTING_DOG_TRAINER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_DOG",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_HUNTERS_CAMP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FURRIER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANCIENT_CUSTOMS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_INDUSTRIAL_FARMS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 92,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HUNTING_DOG_TRAINER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,251 @@
+{
+ "type": "BUILDING_FOLKLORE_T_BIRDS",
+ "description": "TXT_KEY_BUILDING_FOLKLORE_T_BIRDS",
+ "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_FOLKLORE_REQUIREMENT",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_FOLKLORE_BLUE_FOOTED_BOOBY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_CROW",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_DUCK",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_EAGLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_BALD_EAGLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_FLAMINGO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_SEAGULL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_HAASTS_EAGLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_PALEOLITHIC_BIRDS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_HARPY_EAGLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_HAWK",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_KOOKABURRA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_LOON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_OXPECKER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_PARROT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_PEACOCK",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_PHEASANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_PIGEON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_RAVEN",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_RAZORBILL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_STELLERS_SEA_EAGLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_SECRETARY_BIRD",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_ARCTIC_TERN",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_TOUCAN",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_WILD_TURKEY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_VULTURE",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "HERITAGE_FOLKLORE_MACAW",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_OWL_BARN",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_OWL_BARRED",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_OWL_GREAT_HORNED",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_PARROT_AFRICAN_GREY",
+      "scope": "empire"
+     }
+    ]
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1,
+   "percent": [
+    {
+     "value": -60,
+     "enabled": {
+      "type": "TECH_LANGUAGE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_CLASSICAL_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_MEDIEVAL_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_RENAISSANCE_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_INDUSTRIAL_LIFESTYLE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_LANGUAGE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_CLASSICAL_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_MEDIEVAL_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_RENAISSANCE_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_INDUSTRIAL_LIFESTYLE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 250,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FOLKLORE_T_BIRDS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "specialBuildingType": "SPECIALBUILDING_FOLKLORE_TAXONOMY",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_ALMSHOUSE",
+ "description": "TXT_KEY_BUILDING_ALMSHOUSE",
+ "civilopedia": "TXT_KEY_BUILDING_ALMSHOUSE_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_RETIREMENT_HOME"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 300,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ALMSHOUSE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

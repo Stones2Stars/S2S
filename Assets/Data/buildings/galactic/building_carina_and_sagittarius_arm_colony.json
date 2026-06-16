@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_CARINA_AND_SAGITTARIUS_ARM_COLONY",
+ "description": "TXT_KEY_BUILDING_CARINA_AND_SAGITTARIUS_ARM_COLONY",
+ "civilopedia": "TXT_KEY_BUILDING_CARINA_AND_SAGITTARIUS_ARM_COLONY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_MILKY_WAY",
+      "scope": "plot"
+     }
+    ]
+   ],
+   "noneOf": [
+    {
+     "type": "BUILDING_PERSEUS_ARM_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_NORMA_AND_OUTER_ARM_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SCUTUM_CRUX_ARM_COLONY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN": {
+     "flat": 20
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 33800
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CARINA_SAGITTARIUS_ARM"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CARINA_AND_SAGITTARIUS_ARM_COLONY"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_BUSINESS_SCHOOL",
+ "description": "TXT_KEY_BUILDING_BUSINESS_SCHOOL",
+ "civilopedia": "TXT_KEY_BUILDING_BUSINESS_SCHOOL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_UNIVERSITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    11,
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_GLOBALIZATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_INDUSTRIALISM",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 830,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BUSINESS_SCHOOL"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

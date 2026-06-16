@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_EKAL_MASHARTI",
+ "description": "TXT_KEY_BUILDING_EKAL_MASHARTI",
+ "civilopedia": "TXT_KEY_BUILDING_EKAL_MASHARTI_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_FURNITURE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "domains": {
+    "DOMAIN_LAND": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": 15
+  }
+ },
+ "cost": {
+  "production": 1296,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ASSYRIA_EKAL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EKAL_MASHARTI"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 3,
+  "conquestProbability": 100,
+  "dcmAirbombMission": 2,
+  "greatPeopleUnitType": "UNIT_GREAT_GENERAL",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

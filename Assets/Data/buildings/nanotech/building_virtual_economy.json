@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_VIRTUAL_ECONOMY",
+ "description": "TXT_KEY_BUILDING_VIRTUAL_ECONOMY",
+ "civilopedia": "TXT_KEY_BUILDING_VIRTUAL_ECONOMY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_VIRTUAL_GOVERNANCE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_DIGITAL_IDENTITY",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_VIRTUAL_WORLD_GUILD",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 4655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_VIRTUAL_ECONOMY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

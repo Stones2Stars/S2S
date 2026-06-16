@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_CRIME_MUGGING",
+ "description": "TXT_KEY_BUILDING_CRIME_MUGGING",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_MUGGING_PEDIA",
+ "gold": {
+  "city": {
+   "flat": -5,
+   "percent": -5
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 20
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2,
+   "perPopulation": {
+    "percent": -15
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -4
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

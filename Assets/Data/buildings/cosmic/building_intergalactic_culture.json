@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_INTERGALACTIC_CULTURE",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_CULTURE",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_CULTURE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_AESTIVATION_CENTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2853
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_CULTURE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

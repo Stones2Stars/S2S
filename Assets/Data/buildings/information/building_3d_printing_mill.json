@@ -1,0 +1,117 @@
+{
+ "type": "BUILDING_3D_PRINTING_MILL",
+ "description": "TXT_KEY_BUILDING_3D_PRINTING_MILL",
+ "civilopedia": "TXT_KEY_BUILDING_3D_PRINTING_MILL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_4D_PRINTING_STUDIO"
+  ],
+  "units": [
+   "UNIT_MACHINIST",
+   "UNIT_REPLICATION_MECHANIC"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_NANOBOTIC_PRINTING_MILL"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_PARTS_MAKER",
+   "BUILDING_PARTS_PLANT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_FACTORY",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_ALUMINUM_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_TITANIUM_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_STEEL_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 30
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_MECHANICAL",
+    "interval": "perTurn",
+    "heal": 8
+   }
+  ]
+ },
+ "cost": {
+  "production": 2205,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_3D_PRINTING_MILL"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_FACTORY"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ENGINEER": 3
+  },
+  "worth": 6,
+  "militaryWorth": 2,
+  "conquestProbability": 66,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

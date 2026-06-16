@@ -1,0 +1,142 @@
+{
+ "type": "BUILDING_CITY_COUNCIL",
+ "description": "TXT_KEY_BUILDING_CITY_COUNCIL",
+ "civilopedia": "TXT_KEY_BUILDING_CITY_COUNCIL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANDEAN_CATHEDRAL",
+   "BUILDING_ASATRU_CATHEDRAL",
+   "BUILDING_BAHAI_DAR_BE_MEHR",
+   "BUILDING_BUDDHIST_STUPA",
+   "BUILDING_CANAANITE_CATHEDRAL",
+   "BUILDING_CHRAM",
+   "BUILDING_CHRISTIAN_CATHEDRAL",
+   "BUILDING_CONFUCIAN_ACADEMY",
+   "BUILDING_CRAB_NETS",
+   "BUILDING_HELLENIC_PANTHEON",
+   "BUILDING_HINDU_MANDIR",
+   "BUILDING_ISLAMIC_MOSQUE",
+   "BUILDING_JAIN_CATHEDRAL",
+   "BUILDING_JEWISH_SYNAGOGUE",
+   "BUILDING_POLIS_COUNCIL",
+   "BUILDING_SCIENTOLOGY_CATHEDRAL",
+   "BUILDING_SHINTO_JINGU",
+   "BUILDING_SIKH_CATHEDRAL",
+   "BUILDING_TAOIST_PAGODA",
+   "BUILDING_TEMPLE_OF_MUT",
+   "BUILDING_TEMPLE_OF_TLALOC",
+   "BUILDING_VOODOO_MARKET",
+   "BUILDING_ZOROASTRIAN_PANTHEON"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_METROPOLITAN_ADMINISTRATION"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_TOWN_HALL",
+   "BUILDING_VILLAGE_HALL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 20
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BRICKS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_CEMENT",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "CULTURELEVEL_REFINED",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 15
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 243,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CITY_COUNCIL"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COURTHOUSE"
+ },
+ "identity": {
+  "centerInCity": true,
+  "worth": 4,
+  "militaryWorth": 5,
+  "conquestProbability": 85,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

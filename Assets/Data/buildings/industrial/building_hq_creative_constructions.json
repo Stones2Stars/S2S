@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_HQ_CREATIVE_CONSTRUCTIONS",
+ "description": "TXT_KEY_BUILDING_HQ_CREATIVE_CONSTRUCTIONS",
+ "civilopedia": "TXT_KEY_BUILDING_CORPORATION_4_PEDIA",
+ "enables": {
+  "corporations": [
+   "CORPORATION_4"
+  ],
+  "units": [
+   "UNIT_EXECUTIVE_4"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_MODERN_OFFICES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_OFFICIUM",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SKYSCRAPER",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CORPORATION_4"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "corporationHQ": "CORPORATION_4",
+  "nukeImmune": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "specialBuildingType": "SPECIALBUILDING_CORPORATION_HQ",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

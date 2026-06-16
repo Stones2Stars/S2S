@@ -1,0 +1,107 @@
+{
+ "type": "BUILDING_HINDU_TEMPLE",
+ "description": "TXT_KEY_BUILDING_HINDU_TEMPLE",
+ "civilopedia": "TXT_KEY_BUILDING_HINDU_TEMPLE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HINDU_MANDIR",
+   "BUILDING_LAXMINARAYAN_TEMPLE",
+   "BUILDING_NATIONAL_BELIEF_KARMA",
+   "BUILDING_NATIONAL_BELIEF_REINCARNATION",
+   "BUILDING_NATIONAL_BELIEF_RESURRECTION",
+   "BUILDING_YOGA_SCHOOL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "RELIGION_HINDUISM",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": "HAS_STATE_RELIGION"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_HINDUISM": {
+    "flat": 1
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 200,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HINDU_TEMPLE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_HINDU"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 1
+  },
+  "neverCapture": true,
+  "worth": 4,
+  "specialBuildingType": "SPECIALBUILDING_TEMPLE",
+  "religion": "RELIGION_HINDUISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_RESOURCES_IVORY",
+ "description": "TXT_KEY_BUILDING_RESOURCES_IVORY",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_ANIMAL_PRESERVE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_ELEPHANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_MAMMOTH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_NARWHAL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_RHINO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_WALRUS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_ELEPHANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_ANIMAL_ELEPHANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_ELEPHANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_MAMMOTH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_NARWHAL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_RHINO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_WALRUS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_WOOLLY_RHINO",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_IVORY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_LOAN_SHARK_UNSANCTIONED",
+ "description": "TXT_KEY_BUILDING_LOAN_SHARK_UNSANCTIONED",
+ "civilopedia": "TXT_KEY_BUILDING_LOAN_SHARK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 2
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "perPopulation": {
+    "percent": -20
+   }
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unit": "UNIT_CUTTHROAT",
+    "interval": "perTurn",
+    "chance": {
+     "per": {
+      "type": "PROPERTY_CRIME",
+      "scope": "city"
+     }
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LOAN_SHARK"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 1,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

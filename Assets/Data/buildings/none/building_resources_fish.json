@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_RESOURCES_FISH",
+ "description": "TXT_KEY_BUILDING_RESOURCES_FISH",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AQUAFARM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_NET_ANCHOVY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NETS_COD",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NET_EEL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NET_FLOUNDER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MACKEREL_NETS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MARLIN_NETS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PARROTFISH_NETS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NET_SALMON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NET_SARDINE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NET_SEA_BASS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NET_SHARK",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NET_SNAPPER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SWORDFISH_NETS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NET_TUNA",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_FISH"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

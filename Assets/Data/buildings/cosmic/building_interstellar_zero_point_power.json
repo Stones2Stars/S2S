@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_INTERSTELLAR_ZERO_POINT_POWER",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_ZERO_POINT_POWER",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_ZERO_POINT_POWER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": [
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_MATERIALIZATION",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 6540
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_ZERO_POINT_POWER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

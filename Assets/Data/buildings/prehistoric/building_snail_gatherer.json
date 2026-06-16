@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_SNAIL_GATHERER",
+ "description": "TXT_KEY_BUILDING_SNAIL_GATHERER",
+ "civilopedia": "TXT_KEY_BUILDING_SNAIL_GATHERER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_BUGS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "TERRAIN_GRASSLAND",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_LUSH",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_MUDDY",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_MARSH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_GARDENING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_COOKING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SNAIL_GATHERER"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

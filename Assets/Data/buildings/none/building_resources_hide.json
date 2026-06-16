@@ -1,0 +1,42 @@
+{
+ "type": "BUILDING_RESOURCES_HIDE",
+ "description": "TXT_KEY_BUILDING_RESOURCES_HIDE",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_LL_KILGII_GWAAY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_LL_MCCALLUM",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SKINNER",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_HIDE"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

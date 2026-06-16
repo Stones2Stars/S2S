@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_QUILT_MAKER",
+ "description": "TXT_KEY_BUILDING_QUILT_MAKER",
+ "civilopedia": "TXT_KEY_BUILDING_QUILT_MAKER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HYPERMARKET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_CLOTH",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_SEAMSTRESS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TEXTILE_MILL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FACTORY_CLOTHING",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 40,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_QUILT_MAKER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

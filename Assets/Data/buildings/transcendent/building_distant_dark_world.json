@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_DISTANT_DARK_WORLD",
+ "description": "TXT_KEY_BUILDING_DISTANT_DARK_WORLD",
+ "civilopedia": "TXT_KEY_BUILDING_DISTANT_DARK_WORLD_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DISTANT_LAYERED_REALITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "cost": {
+  "production": 3166
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DISTANT_DARK_WORLD"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

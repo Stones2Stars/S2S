@@ -1,0 +1,92 @@
+{
+ "type": "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
+ "description": "TXT_KEY_BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
+ "civilopedia": "TXT_KEY_BUILDING_EFFECT_EMANCIPATION_PROCLAMATION_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND",
+   "BUILDING_SLAVE_COMPOUND_COMMERCE",
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION",
+   "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT",
+   "BUILDING_SLAVE_COMPOUND_FOOD",
+   "BUILDING_SLAVE_COMPOUND_INDUSTRY",
+   "BUILDING_SLAVE_COMPOUND_MILITARY_SUPPORT",
+   "BUILDING_SLAVE_COMPOUND_SANITATION",
+   "BUILDING_SLAVE_MARKET",
+   "BUILDING_WORLDVIEW_CANNIBALISM",
+   "BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE",
+   "BUILDING_WORLDVIEW_HUMAN_SACRIFICE",
+   "BUILDING_WORLDVIEW_HUMAN_SACRIFICE_ACTIVE",
+   "BUILDING_WORLDVIEW_SLAVERY",
+   "BUILDING_WORLDVIEW_SLAVERY_ACTIVE",
+   "BUILDING_WORLDVIEW_SLAVERY_ZOROASTRIANISM_I",
+   "BUILDING_WORLDVIEW_SLAVERY_ZOROASTRIANISM_II"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3,
+   "percent": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1,
+   "perPopulation": {
+    "percent": 5
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

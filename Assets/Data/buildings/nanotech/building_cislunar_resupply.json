@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_CISLUNAR_RESUPPLY",
+ "description": "TXT_KEY_BUILDING_CISLUNAR_RESUPPLY",
+ "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_RESUPPLY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_AEROGEL_SHIELDING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_SPACE_COLONY_CISLUNAR",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MAGLEV_LAUNCHER",
+     "scope": "empire",
+     "min": 1
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_PHOTON_THERMODYNAMICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "cost": {
+  "production": 612
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CISLUNAR_RESUPPLY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

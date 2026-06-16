@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_DW_VINTAGE_WHITE",
+ "description": "TXT_KEY_BUILDING_DW_VINTAGE_WHITE",
+ "civilopedia": "TXT_KEY_BUILDING_VINTAGE_WINERY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_WINERY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 250
+  }
+ },
+ "cost": {
+  "production": 1280,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_VINTAGE_WHITE_WINE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_VINTAGE_WHITE_WINE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_GROUP_DELUXE_WINERIES",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 10,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

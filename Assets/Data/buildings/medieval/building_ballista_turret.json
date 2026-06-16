@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_BALLISTA_TURRET",
+ "description": "TXT_KEY_BUILDING_BALLISTA_TURRET",
+ "civilopedia": "TXT_KEY_BUILDING_BALLISTA_TURRET_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CANNON_TURRET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SIEGE_WEAPONS_WORKSHOP",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_CASTLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_STAR_FORT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "adjacentDamage": {
+    "percent": 20
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "cost": {
+  "production": 300,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BALLISTA_TURRET"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CASTLE"
+ },
+ "identity": {
+  "worth": 6,
+  "militaryWorth": 12,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

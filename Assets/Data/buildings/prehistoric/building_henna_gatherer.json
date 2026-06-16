@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_HENNA_GATHERER",
+ "description": "TXT_KEY_BUILDING_HENNA_GATHERER",
+ "civilopedia": "TXT_KEY_BUILDING_HENNA_GATHERER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DYE_MAKER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_PLANTATION_HENNA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HENNA",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 70,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HENNA_GATHERER"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

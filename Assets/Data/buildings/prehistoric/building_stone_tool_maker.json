@@ -1,0 +1,292 @@
+{
+ "type": "BUILDING_STONE_TOOL_MAKER",
+ "description": "TXT_KEY_BUILDING_STONE_TOOL_MAKER",
+ "civilopedia": "TXT_KEY_BUILDING_STONE_TOOL_MAKER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FLINT_KNAPPER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ANTIQUE_SHOP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_ROCK_GATHERER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANCIENT_CUSTOMS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_COMPOSITE_TOOLS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_MICROLITH",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_SHARPENING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_FLINT_KNAPPING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_CHOPPING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_PIERCING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_SCRAPING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "TECH_COPPER_WORKING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "TECH_METAL_CASTING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "TECH_BRONZE_WORKING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "TECH_LEAD_WORKING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -300,
+     "enabled": {
+      "type": "TECH_SEDENTARY_LIFESTYLE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_ATLATL_MAKING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_SPEAR_MAKING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_AXE_MAKING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_OBSIDIAN_WEAPONS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "TECH_COPPER_WORKING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "TECH_METAL_CASTING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "TECH_BRONZE_WORKING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "TECH_LEAD_WORKING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_SOFT_HAMMER_PERCUSSION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_SCRAPING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_CHOPPING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_PIERCING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_CARVING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "TECH_COPPER_WORKING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "TECH_METAL_CASTING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "TECH_BRONZE_WORKING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -100,
+     "enabled": {
+      "type": "TECH_LEAD_WORKING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": [
+    {
+     "value": 300,
+     "enabled": {
+      "type": "TECH_IRON_WORKING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 20,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_STONE_TOOL_MAKER"
+  }
+ },
+ "identity": {
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

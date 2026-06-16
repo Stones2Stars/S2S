@@ -243,7 +243,7 @@ and is settled when its turn comes:
 31. **SpecialBuilding** ✅ (re-curate WITH Building) — `TechPrereq`/`TechPrereqAnyone`. A per-player-capped
     building-GROUP (`getMaxPlayerInstances`, enforced by `isBuildingGroupMaxedOut`/`getBuildingGroupCount`) —
     NOT an inert POCO. Shares building vocab; rides the Building pass.
-32. **Building** ◐ MONSTER — target of tech/civic/religion/bonus/corp/cultureLevel; inter-building edges
+32. **Building** ✅ **(curated 2026-06-16 #6, `curate_building.py`; 5202 records + SpecialBuilding #31's 36)** — MONSTER — target of tech/civic/religion/bonus/corp/cultureLevel; inter-building edges
     (`PrereqInCity/Amount/OrBuildings`) + OR/NOT `ConstructCondition`. The deepest modifier surface (~101
     channels; the grounding mapped it in full — see `modifier-cascade-mapping.json`). `iMinDefense` clamp
     lives in the `defense` family structure (additive `amount` + `min` floor). `CommerceChangeDoubleTimes` →

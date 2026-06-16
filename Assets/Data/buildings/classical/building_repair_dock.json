@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_REPAIR_DOCK",
+ "description": "TXT_KEY_BUILDING_REPAIR_DOCK",
+ "civilopedia": "TXT_KEY_BUILDING_REPAIR_DOCK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER",
+    {
+     "type": "BUILDING_HARBORMASTERS_OFFICE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_NAVAL",
+    "interval": "perTurn",
+    "heal": 4
+   }
+  ]
+ },
+ "cost": {
+  "production": 270,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_REPAIR_DOCK"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_HARBOR"
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

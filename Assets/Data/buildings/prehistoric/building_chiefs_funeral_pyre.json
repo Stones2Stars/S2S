@@ -1,0 +1,96 @@
+{
+ "type": "BUILDING_CHIEFS_FUNERAL_PYRE",
+ "description": "TXT_KEY_BUILDING_CHIEFS_FUNERAL_PYRE",
+ "civilopedia": "TXT_KEY_BUILDING_CHIEFS_FUNERAL_PYRE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CHIEFS_HUT",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_FUNERAL_PYRE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FUNERARY_SERVICES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
+      "scope": "city"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_CHIEFDOM",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 172,
+  "sizeModifier": 1,
+  "materialsModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CHIEFS_PYRE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CHIEFS_FUNERAL_PYRE"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "centerInCity": true,
+  "worth": 10,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

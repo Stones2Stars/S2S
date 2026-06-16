@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_RESOURCES_FLOUR",
+ "description": "TXT_KEY_BUILDING_RESOURCES_FLOUR",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MODERN_MILL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_DONKEY_MILL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_OXEN_MILL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_QUERN",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_WATERMILL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_WINDMILL",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_FLOUR"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

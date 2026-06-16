@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_CRIME_INSIDER_TRADING",
+ "description": "TXT_KEY_BUILDING_CRIME_INSIDER_TRADING",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_INSIDER_TRADING_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_STOCK_MARKET",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 5
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

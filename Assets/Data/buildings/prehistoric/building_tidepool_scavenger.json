@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_TIDEPOOL_SCAVENGER",
+ "description": "TXT_KEY_BUILDING_TIDEPOOL_SCAVENGER",
+ "civilopedia": "TXT_KEY_BUILDING_TIDEPOOL_SCAVENGER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FISHERMANS_HUT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_SPEARFISHING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_COOKING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TIDEPOOL_SCAVENGER"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

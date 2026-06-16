@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_BURIAL_TRADITION_EARTH",
+ "description": "TXT_KEY_BUILDING_BURIAL_TRADITION_EARTH",
+ "civilopedia": "TXT_KEY_BUILDING_BURIAL_TRADITION_EARTH_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANCIENT_EMBALMER",
+   "BUILDING_BURIAL_GROUND",
+   "BUILDING_BURIAL_TRADITION_BONE",
+   "BUILDING_BURIAL_TRADITION_MUMMY",
+   "BUILDING_GRAVEYARD",
+   "BUILDING_MORTUARY",
+   "BUILDING_STELE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FUNERARY_SERVICES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "noneOf": [
+    {
+     "type": "BUILDING_BURIAL_TRADITION_CAVE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_BURIAL_TRADITION_FIRE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_BURIAL_TRADITION_SKY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_BURIAL_TRADITION_SEA",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "cost": {
+  "production": 86,
+  "sizeModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BURIAL_TRADITION_EARTH"
+  }
+ },
+ "identity": {
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

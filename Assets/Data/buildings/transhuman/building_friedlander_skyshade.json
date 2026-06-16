@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_FRIEDLANDER_SKYSHADE",
+ "description": "TXT_KEY_BUILDING_FRIEDLANDER_SKYSHADE",
+ "civilopedia": "TXT_KEY_BUILDING_FRIEDLANDER_SKYSHADE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_ADVANCED_SHIELDING",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "unitUpgradePrice": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -100
+  }
+ },
+ "cost": {
+  "production": 41430,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_FRIEDLANDER_SKYSHADE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FRIEDLANDER_SKYSHADE"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

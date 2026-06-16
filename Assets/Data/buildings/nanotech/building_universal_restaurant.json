@@ -1,0 +1,266 @@
+{
+ "type": "BUILDING_UNIVERSAL_RESTAURANT",
+ "description": "TXT_KEY_BUILDING_UNIVERSAL_RESTAURANT",
+ "civilopedia": "TXT_KEY_BUILDING_UNIVERSAL_RESTAURANT_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_BURGER_JOINT",
+   "BUILDING_CAFE",
+   "BUILDING_CITY_BISTRO",
+   "BUILDING_DELI",
+   "BUILDING_DINER",
+   "BUILDING_PANCAKE_HOUSE",
+   "BUILDING_PIZZA_PARLOR",
+   "BUILDING_TACO_HUT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 31
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 20,
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_APPLE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_BANANA",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_LEMONS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_MELONS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_GRAPES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "BONUS_COFFEE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_NUTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_HONEY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_CHOCOLATE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_VANILLA",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "BONUS_VEGETABLES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "BONUS_FRUIT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 600,
+     "enabled": {
+      "type": "BONUS_SAUSAGE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "BONUS_RAW_MEAT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 400,
+     "enabled": {
+      "type": "BONUS_RAW_FISH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "BONUS_SEASONING",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 400,
+     "enabled": {
+      "type": "BONUS_BREAD",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "BONUS_SHELLFISH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 600,
+     "enabled": {
+      "type": "BONUS_CHEESE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "BONUS_EGGS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_POTATOES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_SALT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "BONUS_TEA",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 3525,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_UNIVERSAL_RESTAURANT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

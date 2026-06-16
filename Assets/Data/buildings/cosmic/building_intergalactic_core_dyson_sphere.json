@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_INTERGALACTIC_CORE_DYSON_SPHERE",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_CORE_DYSON_SPHERE",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_CORE_DYSON_SPHERE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_ARTIFICIAL_ELLIPTICAL_GALAXY",
+   "BUILDING_INTERGALACTIC_ARTIFICIAL_SPIRAL_GALAXY",
+   "BUILDING_INTERGALACTIC_GALAXY_SCAN",
+   "BUILDING_INTERGALACTIC_SHKADOV_THRUSTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_SUPERMASSIVE_BLACK_HOLE_PLANT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 80
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3075
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_CORE_DYSON_SPHERE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

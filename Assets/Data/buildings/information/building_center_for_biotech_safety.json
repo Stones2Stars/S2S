@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_CENTER_FOR_BIOTECH_SAFETY",
+ "description": "TXT_KEY_BUILDING_CENTER_FOR_BIOTECH_SAFETY",
+ "civilopedia": "TXT_KEY_BUILDING_CENTER_FOR_BIOTECH_SAFETY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_APPLIED_SOCIOLOGY_LAB",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 20
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_BIOINFORMATICS_LAB": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 5010,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CENTER_FOR_BIOTECH_SAFETY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CENTER_FOR_BIOTECH_SAFETY"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

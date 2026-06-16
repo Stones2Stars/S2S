@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_CENTRAL_BREEDER_DONKEY",
+ "description": "TXT_KEY_BUILDING_CENTRAL_BREEDER_DONKEY",
+ "civilopedia": "TXT_KEY_BUILDING_CENTRAL_BREEDER_DONKEY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_DONKEY"
+  ],
+  "units": [
+   "UNIT_TAMED_DONKEY_PAIR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_DONKEY",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 244,
+  "sizeModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CENTRAL_BREEDER_DONKEY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "neverCapture": true,
+  "worth": 4,
+  "militaryWorth": 6,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

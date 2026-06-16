@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_HI_TECH_NUCLEAR_REACTOR",
+ "description": "TXT_KEY_BUILDING_HI_TECH_NUCLEAR_REACTOR",
+ "civilopedia": "TXT_KEY_BUILDING_HI_TECH_NUCLEAR_REACTOR_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HIGH_ENERGY_LAB",
+   "BUILDING_NUCLEAR_POWERCOMPLEX"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_GENERATION_IV_REACTOR"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_CLEAN_NUCLEAR_REACTOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ATOMPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BUILDING_FACTORY",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_URANIUM",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 1845
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HI_TECH_NUCLEAR_REACTOR"
+  }
+ },
+ "identity": {
+  "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,161 @@
+{
+ "type": "BUILDING_HIGHWAYMANS_HIDEOUT",
+ "description": "TXT_KEY_BUILDING_HIGHWAYMANS_HIDEOUT",
+ "civilopedia": "TXT_KEY_BUILDING_HIGHWAYMANS_HIDEOUT_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_HIGHWAYMAN",
+   "UNIT_ZBOJNIK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HORSE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_SULPHUR",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      [
+       {
+        "type": "CIVIC_DESPOTISM",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_MONARCHY",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_FEUDAL",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_NATIONALIST",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_MERCANTILISM",
+        "scope": "empire"
+       }
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 15,
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_COPPER_ORE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_SILVER_ORE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_GOLD_ORE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -4
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MOUNTED": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "cost": {
+  "production": 425,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HIGHWAYMANS_HIDEOUT"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 2,
+  "militaryWorth": 4,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,123 @@
+{
+ "type": "BUILDING_SAGE",
+ "description": "TXT_KEY_BUILDING_SAGE",
+ "civilopedia": "TXT_KEY_BUILDING_SAGE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_GOBEKLI_TEPE",
+   "BUILDING_SWEAT_LODGE",
+   "BUILDING_TRANCE_HUT"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ALTERNATIVE_MEDICINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_STORAGE_PIT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GRANARY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MODERN_GRANARY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BARTER_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TRADING_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHOPPING_DISTRICT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 80,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SAGE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_HEALERSHUT"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 1
+  },
+  "neverCapture": true,
+  "worth": 2,
+  "conquestProbability": 66,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

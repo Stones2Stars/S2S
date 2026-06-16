@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_ARTIFICIAL_VENUS_ROTATION",
+ "description": "TXT_KEY_BUILDING_ARTIFICIAL_VENUS_ROTATION",
+ "civilopedia": "TXT_KEY_BUILDING_ARTIFICIAL_VENUS_ROTATION_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_VENUS_ORBITAL_SOLAR_ARRAY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_VENUS_SKY_ARCOLOGY",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_VENUS_CALCIUM_CARBONATE_STRUCTURES": {
+     "flat": 10
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 49068
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_VENUS_ARTIFICIAL_ROTATION"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ARTIFICIAL_VENUS_ROTATION"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

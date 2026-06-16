@@ -1,0 +1,199 @@
+{
+ "type": "BUILDING_PALACE",
+ "description": "TXT_KEY_BUILDING_PALACE",
+ "civilopedia": "TXT_KEY_BUILDING_PALACE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BALLROOM",
+   "BUILDING_CAPITAL_ADMINISTRATION",
+   "BUILDING_CIVIC_CASTE",
+   "BUILDING_CIVIC_DEMOCRACY",
+   "BUILDING_CIVIC_EGALITARIAN",
+   "BUILDING_CIVIC_FEUDAL",
+   "BUILDING_CIVIC_FREE_MARKET",
+   "BUILDING_CIVIC_MARTIAL_LAW",
+   "BUILDING_CIVIC_MIND_CONTROL",
+   "BUILDING_CIVIC_POST_SCARCITY",
+   "BUILDING_CIVIC_REPUBLIC",
+   "BUILDING_C_AD_AFRICAN",
+   "BUILDING_C_AD_ASIAN",
+   "BUILDING_C_AD_EUROPEAN",
+   "BUILDING_C_AD_MIDDLE_EASTERN",
+   "BUILDING_C_AD_NEANDERTHAL",
+   "BUILDING_C_AD_NORTH_AMERICAN",
+   "BUILDING_C_AD_OCEANIAN",
+   "BUILDING_C_AD_SOUTH_AMERICAN",
+   "BUILDING_ECUMENOPOLIS_EARTH",
+   "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_1",
+   "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_10",
+   "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_11",
+   "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_12",
+   "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_13",
+   "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_2",
+   "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_3",
+   "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_4",
+   "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_5",
+   "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_6",
+   "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_7",
+   "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_8",
+   "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_9",
+   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_1",
+   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_10",
+   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_11",
+   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_12",
+   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_13",
+   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_2",
+   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_3",
+   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_4",
+   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_5",
+   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_6",
+   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_7",
+   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_8",
+   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_9",
+   "BUILDING_GOLD_VAULT",
+   "BUILDING_HOMELAND_SECURITY_AGENCY",
+   "BUILDING_INTERGALACTIC_CAPITOL",
+   "BUILDING_KINGS_COUNCIL",
+   "BUILDING_LUXURY_FURNITURE_WORKSHOP",
+   "BUILDING_LYCEUM",
+   "BUILDING_MAUSOLEUM",
+   "BUILDING_PALACE_GARDEN",
+   "BUILDING_PALACE_WALLS",
+   "BUILDING_PRIME_DIRECTIVE",
+   "BUILDING_SERVANTS_QUARTERS",
+   "BUILDING_THRONE_ROOM",
+   "BUILDING_TREASURY",
+   "BUILDING_UNITED_FEDERATION_OF_PLANETS",
+   "BUILDING_VALLEY_OF_THE_KINGS",
+   "BUILDING_WORLDVIEW_CANNIBALISM",
+   "BUILDING_WORLDVIEW_HUMAN_SACRIFICE",
+   "BUILDING_WORLDVIEW_SLAVERY"
+  ],
+  "units": [
+   "UNIT_EARLY_IMP_GUARD",
+   "UNIT_KINGS_GUARD",
+   "UNIT_MODERN_IMP_GUARD",
+   "UNIT_PALACE_GUARD",
+   "UNIT_REN_IMP_GUARD",
+   "UNIT_ROBOT_IMP_GUARD",
+   "UNIT_TRIBAL_GUARDIAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 6,
+   "percent": 5
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_TRIBE": {
+     "percent": 50
+    },
+    "UNIT_SETTLER": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "occupationTime": {
+  "city": {
+   "percent": 150
+  }
+ },
+ "cityCapture": {
+  "empire": {
+   "resistance": {
+    "percent": 30
+   }
+  }
+ },
+ "cost": {
+  "production": 200,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PALACE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PALACE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "governmentCenter": true,
+  "capital": true,
+  "noInstanceLimit": true,
+  "maxPlayerInstancesExtra": 1,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 10000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

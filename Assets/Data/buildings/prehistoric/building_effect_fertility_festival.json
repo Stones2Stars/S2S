@@ -1,0 +1,47 @@
+{
+ "type": "BUILDING_EFFECT_FERTILITY_FESTIVAL",
+ "description": "TXT_KEY_BUILDING_EFFECT_FERTILITY_FESTIVAL",
+ "civilopedia": "TXT_KEY_BUILDING_FERTILITY_FESTIVAL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FERTILITY_FESTIVAL"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_FERTILITY_DANCE"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "foodKept": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FERTILITY_FESTIVAL"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

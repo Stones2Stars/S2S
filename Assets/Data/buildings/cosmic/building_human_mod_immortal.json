@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_HUMAN_MOD_IMMORTAL",
+ "description": "TXT_KEY_BUILDING_HUMAN_MOD_IMMORTAL",
+ "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_IMMORTAL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_TRANSAPIENT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_HUMAN_MOD_INDEFINITE_LIFESPAN",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_ETERNAL_INTELLIGENCE": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 31710
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HUMAN_MOD_IMMORTAL"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

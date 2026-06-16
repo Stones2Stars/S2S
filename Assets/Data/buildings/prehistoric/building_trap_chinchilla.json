@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_TRAP_CHINCHILLA",
+ "description": "TXT_KEY_BUILDING_TRAP_CHINCHILLA",
+ "civilopedia": "TXT_KEY_BUILDING_TRAP_CHINCHILLA_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_PELTS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BREEDING_PROGRAM_CHINCHILLA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BEAVERS",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_RABBIT",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_ANIMAL_SNARE_TRAPS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANCIENT_CUSTOMS",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "TERRAIN_PEAK",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TECH_ECOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 35,
+  "countModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRAP_CHINCHILLA"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

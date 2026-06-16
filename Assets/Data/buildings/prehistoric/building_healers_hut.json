@@ -1,0 +1,129 @@
+{
+ "type": "BUILDING_HEALERS_HUT",
+ "description": "TXT_KEY_BUILDING_HEALERS_HUT",
+ "civilopedia": "TXT_KEY_BUILDING_HEALERS_HUT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HEALING_CLAY",
+   "BUILDING_HERBALIST",
+   "BUILDING_LEECH_CATCHER",
+   "BUILDING_MUD_BATH",
+   "BUILDING_SWEAT_LODGE"
+  ],
+  "units": [
+   "UNIT_HEALER",
+   "UNIT_MANIQ_SPEAKER",
+   "UNIT_MEDICINE_MAN",
+   "UNIT_NEANDERTHAL_HEALER",
+   "UNIT_TLATILCO_WAR_PRIEST"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_DOCTORS_OFFICE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_STORAGE_PIT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GRANARY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MODERN_GRANARY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BARTER_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TRADING_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHOPPING_DISTRICT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "perPopulation": {
+    "percent": 10
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE",
+    "interval": "perTurn",
+    "heal": 4
+   },
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_ANIMALS",
+    "interval": "perTurn",
+    "heal": 2
+   }
+  ]
+ },
+ "cost": {
+  "production": 50,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HEALERS_HUT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_HEALERSHUT"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_DOCTOR": 1
+  },
+  "worth": 3,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

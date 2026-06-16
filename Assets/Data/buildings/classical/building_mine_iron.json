@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_MINE_IRON",
+ "description": "TXT_KEY_BUILDING_MINE_IRON",
+ "civilopedia": "TXT_KEY_BUILDING_MINE_IRON_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_GRAND_EARTH_FESTIVAL",
+   "BUILDING_SMELTER_IRON"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_METALS_MEGACOMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_IRON_ORE",
+     "scope": "city",
+     "connection": "vicinity"
+    },
+    {
+     "type": "BUILDING_MINING_CAMP",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1,
+   "perPopulation": {
+    "percent": -20
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 216,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MINE_IRON"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

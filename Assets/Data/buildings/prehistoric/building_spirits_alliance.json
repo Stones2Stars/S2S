@@ -1,0 +1,103 @@
+{
+ "type": "BUILDING_SPIRITS_ALLIANCE",
+ "description": "TXT_KEY_BUILDING_SPIRITS_ALLIANCE",
+ "civilopedia": "TXT_KEY_BUILDING_SPIRITS_ALLIANCE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SPIRITS_LEGACY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INVOCATION_HUT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INVOCATION_HUT",
+     "scope": "empire",
+     "min": 2
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "STATE_RELIGION_IN_CITY",
+    {
+     "type": "RELIGION_SHAMANISM",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 2,
+     "enabled": "HAS_STATE_RELIGION"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2,
+   "perPopulation": {
+    "percent": 5
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "cost": {
+  "production": 104,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SPIRITS_ALLIANCE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SHAMAN"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 2
+  },
+  "neverCapture": true,
+  "worth": 6,
+  "specialBuildingType": "SPECIALBUILDING_CATHEDRAL_II",
+  "religion": "RELIGION_SHAMANISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

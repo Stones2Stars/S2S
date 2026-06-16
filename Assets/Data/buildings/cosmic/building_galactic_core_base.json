@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_GALACTIC_CORE_BASE",
+ "description": "TXT_KEY_BUILDING_GALACTIC_CORE_BASE",
+ "civilopedia": "TXT_KEY_BUILDING_GALACTIC_CORE_BASE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_GALACTIC_CORE_DYSON_SPHERE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_GALACTIC_CORE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "cost": {
+  "production": 28230
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GALACTIC_CORE_BASE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GALACTIC_CORE_BASE"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

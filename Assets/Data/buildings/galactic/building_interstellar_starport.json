@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_INTERSTELLAR_STARPORT",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_STARPORT",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_STARPORT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_GALACTIC_PORT",
+   "BUILDING_INTERSTELLAR_TRACTOR_BEAM",
+   "BUILDING_MISSION_TO_THE_GALACTIC_CORE",
+   "BUILDING_VOYAGE_TO_ANDROMEDA"
+  ],
+  "units": [
+   "UNIT_COSMIC_WORKER",
+   "UNIT_VON_NEUMANN_PROBE",
+   "UNIT_WORLDSHIP2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_INTERSTELLAR_METROPOLIS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SPACE_COLONY_MILKY_WAY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50,
+   "percent": [
+    {
+     "value": 500,
+     "enabled": {
+      "type": "BONUS_PERSONAL_STARCRAFT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3212
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_STARPORT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

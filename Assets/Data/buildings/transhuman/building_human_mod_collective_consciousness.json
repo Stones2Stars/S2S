@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS",
+ "description": "TXT_KEY_BUILDING_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS",
+ "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_ROBOTIC_BODY",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_NETWORK_NODE",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_HUMAN_MOD_ENLIGHTENED",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "cost": {
+  "production": 13810
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

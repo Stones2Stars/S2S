@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_MUREX_DIVER",
+ "description": "TXT_KEY_BUILDING_MUREX_DIVER",
+ "civilopedia": "TXT_KEY_BUILDING_MUREX_DIVER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DYE_MAKER",
+   "BUILDING_FACTORY_DYE",
+   "BUILDING_RESOURCES_SHELLFISH"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AQUAFARM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MUREX",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 50,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MUREX_DIVER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

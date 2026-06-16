@@ -1,0 +1,22 @@
+{
+ "type": "BUILDING_EFFECT_ACHIEVEMENT_MEDICAL",
+ "description": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_MEDICAL",
+ "civilopedia": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_MEDICAL_PEDIA",
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EFFECT_ACHIEVEMENT_MEDICAL"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

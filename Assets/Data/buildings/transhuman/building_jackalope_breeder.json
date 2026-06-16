@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_JACKALOPE_BREEDER",
+ "description": "TXT_KEY_BUILDING_JACKALOPE_BREEDER",
+ "civilopedia": "TXT_KEY_BUILDING_MYTHICAL_BREEDER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ORGANIC_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 12
+    },
+    {
+     "type": "BUILDING_C_L_NORTH_AMERICAN",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "noneOf": [
+    {
+     "type": "BUILDING_HIERACOSPHINX_BREEDER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_PEGASUS_BREEDER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_PHOENIX_BREEDER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_QILIN_BREEDER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_QUETZALCOATL_BREEDER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_RAINBOW_SERPENT_BREEDER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 12310,
+  "sizeModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_JACKALOPE_BREEDER"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "worth": 10,
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

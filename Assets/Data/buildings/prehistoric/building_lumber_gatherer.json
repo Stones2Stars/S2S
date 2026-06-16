@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_LUMBER_GATHERER",
+ "description": "TXT_KEY_BUILDING_LUMBER_GATHERER",
+ "civilopedia": "TXT_KEY_BUILDING_LUMBER_GATHERER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BONFIRE",
+   "BUILDING_FIRE_PIT",
+   "BUILDING_RESOURCES_WOOD"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_LUMBER_CAMP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "FEATURE_FOREST_YOUNG",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_FOREST",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_FOREST_ANCIENT",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_FOREST_BURNT",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_JUNGLE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LUMBER_GATHERER"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

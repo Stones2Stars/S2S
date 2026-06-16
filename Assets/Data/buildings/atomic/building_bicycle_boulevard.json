@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_BICYCLE_BOULEVARD",
+ "description": "TXT_KEY_BUILDING_BICYCLE_BOULEVARD",
+ "civilopedia": "TXT_KEY_BUILDING_BICYCLE_BOULEVARD_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ELEVATED_BICYCLE_TRACK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BICYCLES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_MIXED_USE_DEVELOPMENT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_AUTONOMOUS_VEHICLES",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 1540,
+  "sizeModifier": 1,
+  "countModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BICYCLE_BOULEVARD"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

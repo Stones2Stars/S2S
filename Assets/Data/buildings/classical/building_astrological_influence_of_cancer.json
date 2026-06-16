@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_ASTROLOGICAL_INFLUENCE_OF_CANCER",
+ "description": "TXT_KEY_BUILDING_ASTROLOGICAL_INFLUENCE_OF_CANCER",
+ "civilopedia": "TXT_KEY_BUILDING_ASTROLOGICAL_INFLUENCE_OF_CANCER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_ASTROLOGY_SCHOOL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_OBSERVATORY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "grants": {
+  "traits": [
+   "TRAIT_ASTROLOGICAL_INFLUENCE_OF_CANCER"
+  ]
+ },
+ "cost": {
+  "production": 864,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ASTROLOGICAL_INFLUENCE_OF_CANCER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ASTROLOGICAL_INFLUENCE_OF_CANCER"
+  }
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 5,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_GROUP_ASTROLOGICAL_INFLUENCES",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

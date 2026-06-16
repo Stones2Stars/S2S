@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_ROGUE_PLANET_REBEL_BASE",
+ "description": "TXT_KEY_BUILDING_ROGUE_PLANET_REBEL_BASE",
+ "civilopedia": "TXT_KEY_BUILDING_ROGUE_PLANET_REBEL_BASE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_ROGUE_PLANET_OUTPOST",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_ROGUE_PLANET",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_WORMHOLE_SPACESHIP": {
+     "flat": 3
+    },
+    "UNITCOMBAT_NUCLEAR_SPACESHIP": {
+     "flat": 3
+    },
+    "UNITCOMBAT_EARLY_SPACESHIP": {
+     "flat": 3
+    },
+    "UNITCOMBAT_SOLAR_SAIL_SPACESHIP": {
+     "flat": 3
+    },
+    "UNITCOMBAT_ANTIMATTER_SPACESHIP": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "cost": {
+  "production": 2536
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ROGUE_PLANET_REBEL_BASE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR",
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

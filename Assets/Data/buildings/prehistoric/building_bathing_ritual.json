@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_BATHING_RITUAL",
+ "description": "TXT_KEY_BUILDING_BATHING_RITUAL",
+ "civilopedia": "TXT_KEY_BUILDING_BATHING_RITUAL_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BATH_HOUSE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER"
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SOAP",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "cost": {
+  "production": 60
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BATHING_RITUAL"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

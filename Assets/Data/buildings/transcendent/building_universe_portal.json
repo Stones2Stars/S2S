@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_UNIVERSE_PORTAL",
+ "description": "TXT_KEY_BUILDING_UNIVERSE_PORTAL",
+ "civilopedia": "TXT_KEY_BUILDING_UNIVERSE_PORTAL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MEGAVERSE_PORTAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_STRINGWORKS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 26055,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_UNIVERSE_PORTAL"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

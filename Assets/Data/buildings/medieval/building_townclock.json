@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_TOWNCLOCK",
+ "description": "TXT_KEY_BUILDING_TOWNCLOCK",
+ "civilopedia": "TXT_KEY_BUILDING_TOWNCLOCK_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUTOMATION_CLOCK",
+   "BUILDING_BIG_BEN",
+   "BUILDING_GATE_OF_THE_SUN",
+   "BUILDING_SU_SONGS_WORKSHOP"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_SUNDIAL",
+   "BUILDING_WATERCLOCK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_FORGE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOUNDRY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_METALS_MEGACOMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2,
+   "percent": 15
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 356,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CLOCK"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_TOWNCLOCK"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ENGINEER": 1
+  },
+  "centerInCity": true,
+  "worth": 4,
+  "militaryWorth": 5,
+  "conquestProbability": 85,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

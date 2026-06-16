@@ -1,0 +1,263 @@
+{
+ "type": "BUILDING_AQUAFARM",
+ "description": "TXT_KEY_BUILDING_AQUAFARM",
+ "civilopedia": "TXT_KEY_BUILDING_AQUAFARM_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DYE_MAKER",
+   "BUILDING_FACTORY_DYE",
+   "BUILDING_GRAND_MARINE_FESTIVAL"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_ABALONE_DIGGERS",
+   "BUILDING_CLAM_DIGGERS",
+   "BUILDING_CONCH_DIVER",
+   "BUILDING_DRIED_FISH_MAKER",
+   "BUILDING_FARM_CROP_SEAWEED",
+   "BUILDING_FISHERMANS_HUT",
+   "BUILDING_FISH_TRAPS",
+   "BUILDING_GIANT_CLAM_DIVERS",
+   "BUILDING_MACKEREL_NETS",
+   "BUILDING_MARLIN_NETS",
+   "BUILDING_MUREX_DIVER",
+   "BUILDING_NETS_COD",
+   "BUILDING_NET_ANCHOVY",
+   "BUILDING_NET_CRAB",
+   "BUILDING_NET_EEL",
+   "BUILDING_NET_FLOUNDER",
+   "BUILDING_NET_LOBSTER",
+   "BUILDING_NET_PRAWN",
+   "BUILDING_NET_SALMON",
+   "BUILDING_NET_SARDINE",
+   "BUILDING_NET_SEA_BASS",
+   "BUILDING_NET_SHARK",
+   "BUILDING_NET_SHRIMP",
+   "BUILDING_NET_SNAPPER",
+   "BUILDING_NET_SQUID",
+   "BUILDING_NET_TUNA",
+   "BUILDING_PARROTFISH_NETS",
+   "BUILDING_PEARL_DIVER",
+   "BUILDING_RESOURCES_FISH",
+   "BUILDING_RESOURCES_SHELLFISH",
+   "BUILDING_SWORDFISH_NETS",
+   "BUILDING_TIDEPOOL_SCAVENGER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    35,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FISH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CRAB",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHRIMP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LOBSTER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CLAM",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PEARLS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FISH",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CRAB",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHRIMP",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LOBSTER",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    }
+   ],
+   "terrains": {
+    "TERRAIN_COAST": {
+     "flat": 2
+    },
+    "TERRAIN_COAST_POLAR": {
+     "flat": 2
+    },
+    "TERRAIN_COAST_TROPICAL": {
+     "flat": 2
+    },
+    "TERRAIN_LAKE_SHORE": {
+     "flat": 2
+    }
+   }
+  },
+  "plot": {
+   "plotTypes": {
+    "PLOT_OCEAN": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 35
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    11,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CLAM",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CRAB",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FISH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LOBSTER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SALT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHRIMP",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 1845,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_AQUAFARM"
+  }
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 1,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

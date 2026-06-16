@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_INTERSTELLAR_SELECTIVE_DECOHERENCE",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_SELECTIVE_DECOHERENCE",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_SELECTIVE_DECOHERENCE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_SPATIAL_EMULATION_STUDIO",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 7077
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_SELECTIVE_DECOHERENCE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

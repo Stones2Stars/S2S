@@ -1,0 +1,210 @@
+{
+ "type": "BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
+ "description": "TXT_KEY_BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
+ "civilopedia": "TXT_KEY_BUILDING_TEXTILE_MANUFACTURING_DISTRICT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_GUILD_DRAPERS",
+   "BUILDING_QUILT_MAKER",
+   "BUILDING_RESOURCES_FLOWERS"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_CARPET_MAKER",
+   "BUILDING_COBBLER",
+   "BUILDING_FACTORY_CARPETS",
+   "BUILDING_FACTORY_CLOTH",
+   "BUILDING_FACTORY_CLOTHING",
+   "BUILDING_FACTORY_HATS",
+   "BUILDING_FACTORY_SHOES",
+   "BUILDING_FARM_ANIMAL_SILK",
+   "BUILDING_FARM_FLOWER_FLAX",
+   "BUILDING_HATTER",
+   "BUILDING_HEMP_FARM",
+   "BUILDING_PLANTATION_COTTON",
+   "BUILDING_SEAMSTRESS",
+   "BUILDING_TAPESTRY_MAKERS_WORKSHOP",
+   "BUILDING_TEXTILE_MILL",
+   "BUILDING_WEAVER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PLASTIC",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_MANUFACTURING_DISTRICT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 57,
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_BAMBOO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_COTTON_FIBERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_FEATHERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_FLAX_FIBERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_GOLD_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_HEMP_FIBERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_SILK",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_SILK_FIBERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_SILVER_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_WOOL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "cost": {
+  "production": 2405,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

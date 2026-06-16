@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_DISTANT_EXPLORERS_BASE",
+ "description": "TXT_KEY_BUILDING_DISTANT_EXPLORERS_BASE",
+ "civilopedia": "TXT_KEY_BUILDING_DISTANT_EXPLORERS_BASE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_TIMELINE_STABILIZERS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DISTANT_HORIZON_PORT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1713
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DISTANT_EXPLORERS_BASE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

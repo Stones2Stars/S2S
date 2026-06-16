@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_UNIVERSAL_LIBRARY",
+ "description": "TXT_KEY_BUILDING_UNIVERSAL_LIBRARY",
+ "civilopedia": "TXT_KEY_BUILDING_UNIVERSAL_LIBRARY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ENCYCLOPEDIA_GALACTICA",
+   "BUILDING_SPELLCASTERS_HUT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_UNIVERSITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -20,
+   "percent": [
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_ENDLESS_EXPLORATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_HUMAN_MOD_INDEFINITE_LIFESPAN",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 20,
+   "percent": [
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_PURE_INFORMATION_SOCIETY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_DATA_ARCHIVAL",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_ALTERNATE_HISTORY_EXPLORATION",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5,
+   "percent": [
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_CULTURAL_LONGEVITY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_CULTURAL_EVOLUTION",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 6155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_UNIVERSAL_LIBRARY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

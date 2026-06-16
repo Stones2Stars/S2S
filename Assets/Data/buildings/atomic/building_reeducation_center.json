@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_REEDUCATION_CENTER",
+ "description": "TXT_KEY_BUILDING_REEDUCATION_CENTER",
+ "civilopedia": "TXT_KEY_BUILDING_REEDUCATION_CENTER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CYBERNETIC_PRISON"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_JAIL",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 990,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_MILITARY": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_REEDUCATION_CENTER"
+  }
+ },
+ "identity": {
+  "worth": 4,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

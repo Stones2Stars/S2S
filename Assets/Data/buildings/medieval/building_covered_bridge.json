@@ -1,0 +1,110 @@
+{
+ "type": "BUILDING_COVERED_BRIDGE",
+ "description": "TXT_KEY_BUILDING_COVERED_BRIDGE",
+ "civilopedia": "TXT_KEY_BUILDING_COVERED_BRIDGE_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_VIADUCT"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_BAMBOO_BRIDGE",
+   "BUILDING_BRICK_BRIDGE",
+   "BUILDING_LOG_BRIDGE",
+   "BUILDING_ROPE_BRIDGE",
+   "BUILDING_STONE_BRIDGE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_ROADS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PAVED_ROADS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ASPHALT_ROADS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SKYROAD_CONTROL_TOWER",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 6,
+   "percent": 6
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -6
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": -1
+   },
+   "riverDefensePenalty": {
+    "flat": 18
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1,
+   "modifier": {
+    "percent": 12
+   }
+  }
+ },
+ "cost": {
+  "production": 300,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_COVERED_BRIDGE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

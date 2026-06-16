@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_MORMAN_SHRINE",
+ "description": "TXT_KEY_BUILDING_MORMAN_SHRINE",
+ "civilopedia": "TXT_KEY_BUILDING_MORMAN_SHRINE_PEDIA",
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_MORMON": {
+    "flat": 4
+   }
+  }
+ },
+ "grants": {
+  "holyCity": "RELIGION_MORMON"
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SHRINE_MORMON"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MORMAN_SHRINE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MORMON"
+ },
+ "identity": {
+  "shrine": "RELIGION_MORMON",
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 3
+  },
+  "nukeImmune": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_MORMON",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

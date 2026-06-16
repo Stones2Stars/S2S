@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_GRAIN_GATHERER",
+ "description": "TXT_KEY_BUILDING_GRAIN_GATHERER",
+ "civilopedia": "TXT_KEY_BUILDING_GRAIN_GATHERER_PEDIA",
+ "food": {
+  "city": {
+   "flat": 1,
+   "improvements": {
+    "IMPROVEMENT_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GRAIN_GATHERER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COMMUNITY_GARDEN"
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 3,
+  "militaryWorth": 1,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

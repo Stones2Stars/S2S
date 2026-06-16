@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_BATTLEBOT_ARENA",
+ "description": "TXT_KEY_BUILDING_BATTLEBOT_ARENA",
+ "civilopedia": "TXT_KEY_BUILDING_BATTLEBOT_ARENA_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BATTLEMECH_ARENA"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_HITECH": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 1685,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_MILITARY": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BATTLEBOT_ARENA"
+  }
+ },
+ "identity": {
+  "worth": 8,
+  "militaryWorth": 4,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_OCEAN_ARCOLOGY",
+ "description": "TXT_KEY_BUILDING_OCEAN_ARCOLOGY",
+ "civilopedia": "TXT_KEY_BUILDING_OCEAN_ARCOLOGY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_OCEAN_ADMINISTRATION",
+   "BUILDING_SEA_GOD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER",
+    {
+     "type": "BUILDING_OCEAN_CITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 5455,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_OCEAN_ARCOLOGY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,144 @@
+{
+ "type": "BUILDING_STEM_CELL_LAB",
+ "description": "TXT_KEY_BUILDING_STEM_CELL_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_STEM_CELL_LAB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FERTILITY_CLINIC",
+   "BUILDING_HUMAN_MOD_GENE_EDITING",
+   "BUILDING_NEUROSCIENCE_CENTER",
+   "BUILDING_SYSTEMS_BIOLOGY_SIMULATOR",
+   "BUILDING_TISSUE_ENGINEERING_LAB",
+   "BUILDING_VIROTHERAPY_CLINIC"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ENZYMES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_FORENSICS_LAB",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CLONING_LABORATORY",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_COMPUTERS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5,
+   "percent": [
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_REPLACEMENT_ORGANS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_GENOMIC_ENCYCLOPEDIA",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_GENE_ENHANCEMENT",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_DNA_COMPUTING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_REPLACEMENT_ORGANS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GENOMIC_ENCYCLOPEDIA",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GENE_ENHANCEMENT",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_DNA_COMPUTING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 1925,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_STEM_CELL_LAB"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

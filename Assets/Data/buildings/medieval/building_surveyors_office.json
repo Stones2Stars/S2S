@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_SURVEYORS_OFFICE",
+ "description": "TXT_KEY_BUILDING_SURVEYORS_OFFICE",
+ "civilopedia": "TXT_KEY_BUILDING_SURVEYORS_OFFICE_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CONSTRUCTION_FIRM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_TRADING_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHOPPING_DISTRICT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MODERN_OFFICES",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 15
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": -15
+  }
+ },
+ "cost": {
+  "production": 310,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SURVEYORS_OFFICE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

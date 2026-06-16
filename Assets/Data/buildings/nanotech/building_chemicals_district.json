@@ -1,0 +1,219 @@
+{
+ "type": "BUILDING_CHEMICALS_DISTRICT",
+ "description": "TXT_KEY_BUILDING_CHEMICALS_DISTRICT",
+ "civilopedia": "TXT_KEY_BUILDING_CHEMICALS_DISTRICT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_GENETICA_APPAREL_SHOP",
+   "BUILDING_GENETICA_SALON",
+   "BUILDING_NUCLEIC_ACID_LAB",
+   "BUILDING_PERIODIC_TABLE_OF_ELEMENTS",
+   "BUILDING_PROTEIN_LAB"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_ALCHEMISTS_LAB",
+   "BUILDING_BELLADONNA",
+   "BUILDING_CHEMICAL_PLANT",
+   "BUILDING_CHEMISTRY_LAB",
+   "BUILDING_CURARE",
+   "BUILDING_DEATH_CAP_MUSHROOM",
+   "BUILDING_DYE_MAKER",
+   "BUILDING_FACTORY_BIOPOLYMERS",
+   "BUILDING_FACTORY_DYE",
+   "BUILDING_FACTORY_ELECTROACTIVE_POLYMERS",
+   "BUILDING_FACTORY_ELECTROLYTE_CELLS",
+   "BUILDING_FACTORY_LYE",
+   "BUILDING_FACTORY_OLED",
+   "BUILDING_FACTORY_OMEGA_ACIDS",
+   "BUILDING_FACTORY_PERFUME",
+   "BUILDING_FACTORY_PHARMACEUTICALS",
+   "BUILDING_FACTORY_SOAP",
+   "BUILDING_FACTORY_TANNIN",
+   "BUILDING_HYDROGEN_GENERATOR",
+   "BUILDING_KEROSENE_DISTILLERY",
+   "BUILDING_LYE_MAKER",
+   "BUILDING_MOLECULAR_BIOLOGY_LAB",
+   "BUILDING_PERFUME_MAKER",
+   "BUILDING_RESOURCES_CHEMICALS",
+   "BUILDING_RESOURCES_POISON",
+   "BUILDING_ROCKET_FUEL_REFINERY",
+   "BUILDING_SOAP_MAKER",
+   "BUILDING_TANNIN_MAKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NOVUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_DELTA_ASSEMBLER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 4,
+     "enabled": {
+      "type": "BONUS_LITHIUM",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_METALLIC_HYDROGEN",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ],
+   "percent": [
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_SALT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_WAX",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 75,
+   "percent": [
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_ORGANIC_CITIES",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_VERTICAL_FARMING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_POTASH",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 80
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PERFUME",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 3805,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CHEMICALS_DISTRICT"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 2
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

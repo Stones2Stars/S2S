@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_TITAN_SF6_GENERATOR",
+ "description": "TXT_KEY_BUILDING_TITAN_SF6_GENERATOR",
+ "civilopedia": "TXT_KEY_BUILDING_TITAN_SF6_GENERATOR_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_TERRAFORMED_TITAN",
+   "BUILDING_TITAN_FLOATING_CONTINENT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_TITAN_HYDROCARBON_REFINERY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1650
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TITAN_SF6_GENERATOR"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_TITANIC"
+  ]
+ }
+}

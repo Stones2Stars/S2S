@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_BIZARRO_WORLD",
+ "description": "TXT_KEY_BUILDING_BIZARRO_WORLD",
+ "civilopedia": "TXT_KEY_BUILDING_BIZARRO_WORLD_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MULTIVERSE_CITY",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_INVERSE_CITY",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_MERCHANT": 3
+  }
+ },
+ "cost": {
+  "production": 172530,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_BIZARRO_WORLD"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BIZARRO_WORLD"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

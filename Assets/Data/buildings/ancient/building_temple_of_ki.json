@@ -1,0 +1,110 @@
+{
+ "type": "BUILDING_TEMPLE_OF_KI",
+ "description": "TXT_KEY_BUILDING_TEMPLE_OF_KI",
+ "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_KI_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_TEMPLE_OF_KI_CORN",
+   "BUILDING_TEMPLE_OF_KI_POTATO",
+   "BUILDING_TEMPLE_OF_KI_RICE",
+   "BUILDING_TEMPLE_OF_KI_WHEAT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_TEMPLE_OF_AN",
+     "scope": "city"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "RELIGION_MESOPOTAMISM",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1,
+   "percent": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "HAS_STATE_RELIGION"
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_MESOPOTAMISM": {
+    "flat": 1
+   }
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE",
+    "interval": "perTurn",
+    "heal": 2
+   }
+  ]
+ },
+ "cost": {
+  "production": 160,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TEMPLE_OF_KI"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MESOPOTAMIAN"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 1
+  },
+  "neverCapture": true,
+  "worth": 4,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "specialBuildingType": "SPECIALBUILDING_TEMPLE",
+  "religion": "RELIGION_MESOPOTAMISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

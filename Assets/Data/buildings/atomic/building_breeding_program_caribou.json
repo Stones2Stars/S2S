@@ -1,0 +1,106 @@
+{
+ "type": "BUILDING_BREEDING_PROGRAM_CARIBOU",
+ "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_CARIBOU",
+ "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_CARIBOU_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_CARCASS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ANIMAL_PRESERVE"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_CAMP_CARIBOU"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_DEER",
+     "scope": "city",
+     "connection": "vicinity"
+    },
+    {
+     "latitude": {
+      "min": 40
+     }
+    },
+    {
+     "type": "BUILDING_ZOO",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_TAIGA",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_TUNDRA",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_ICE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 1345,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BREEDING_PROGRAM_CARIBOU"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

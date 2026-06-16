@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_CYRUS_CYLINDER",
+ "description": "TXT_KEY_BUILDING_CYRUS_CYLINDER",
+ "civilopedia": "TXT_KEY_BUILDING_CYRUS_CYLINDER_PEDIA",
+ "help": "TXT_KEY_BUILDING_CYRUS_CYLINDER_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "greatGeneralRate": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1200
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CYRUS_CYLINDER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CYRUS_CYLINDER"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 6,
+  "militaryWorth": 3,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_SPY",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

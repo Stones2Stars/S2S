@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_GESTATION_TANKS",
+ "description": "TXT_KEY_BUILDING_GESTATION_TANKS",
+ "civilopedia": "TXT_KEY_BUILDING_GESTATION_TANKS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESURRECTION_HUB"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_NANOMORPHIC_REPLICATOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_GENOTYPE_STUDIO",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CLONING_FACTORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_CLONES": {
+     "percent": 10
+    },
+    "UNIT_AUTOMATONS": {
+     "percent": 10
+    },
+    "UNIT_FERAL": {
+     "percent": 10
+    },
+    "UNIT_BLEEDER": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": -15
+  }
+ },
+ "cost": {
+  "production": 3805,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GESTATION_TANKS"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,28 @@
+{
+ "type": "BUILDING_HOUSING_HOMELESS",
+ "description": "TXT_KEY_BUILDING_HOUSING_HOMELESS",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_HOMELESS_PEDIA",
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_HOMELESS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

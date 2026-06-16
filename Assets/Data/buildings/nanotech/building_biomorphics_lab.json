@@ -1,0 +1,140 @@
+{
+ "type": "BUILDING_BIOMORPHICS_LAB",
+ "description": "TXT_KEY_BUILDING_BIOMORPHICS_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_BIOMORPHICS_LAB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_NANOACTUATORS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MECHATRONICS_LAB",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_ORGANIC_PHOTONIC_CELLS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_BIONICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_PERSONAL_ROBOTS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_ANDROIDS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_CYBERNETICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3,
+   "percent": [
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_BIONICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_CYBERNETICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_ANDROIDS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_PERSONAL_ROBOTS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 3245,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BIOMORPHICS_LAB"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_ENGINEER": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

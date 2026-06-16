@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_MULTIVAC",
+ "description": "TXT_KEY_BUILDING_MULTIVAC",
+ "civilopedia": "TXT_KEY_BUILDING_MULTIVAC_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_SELF_AWARE_CITY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SUBTERRANEAN_CITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 14655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MULTIVAC"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

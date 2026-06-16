@@ -1,0 +1,32 @@
+{
+ "type": "BUILDING_SAFETY_YOUTH_CURFEW",
+ "description": "TXT_KEY_BUILDING_SAFETY_YOUTH_CURFEW",
+ "civilopedia": "TXT_KEY_BUILDING_SAFETY_YOUTH_CURFEW_PEDIA",
+ "gold": {
+  "city": {
+   "perPopulation": -50
+  }
+ },
+ "espionage": {
+  "city": {
+   "perPopulation": 50
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SAFETY_YOUTH_CURFEW"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

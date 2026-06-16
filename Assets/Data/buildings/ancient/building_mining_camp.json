@@ -1,0 +1,308 @@
+{
+ "type": "BUILDING_MINING_CAMP",
+ "description": "TXT_KEY_BUILDING_MINING_CAMP",
+ "civilopedia": "TXT_KEY_BUILDING_MINING_CAMP_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ACOUSTIC_DRILLING",
+   "BUILDING_LASER_DRILLING",
+   "BUILDING_MARBLE_QUARRY",
+   "BUILDING_MINE_AMBER",
+   "BUILDING_MINE_AMETHYST",
+   "BUILDING_MINE_BAUXITE",
+   "BUILDING_MINE_BERLINITE",
+   "BUILDING_MINE_BORAX",
+   "BUILDING_MINE_CAESIUM",
+   "BUILDING_MINE_CHROMITE",
+   "BUILDING_MINE_CINNABAR",
+   "BUILDING_MINE_CITRINE",
+   "BUILDING_MINE_COAL",
+   "BUILDING_MINE_COBALT",
+   "BUILDING_MINE_COPPER",
+   "BUILDING_MINE_DIAMOND",
+   "BUILDING_MINE_EMERALD",
+   "BUILDING_MINE_FLUORITE",
+   "BUILDING_MINE_GARNET",
+   "BUILDING_MINE_GEODE",
+   "BUILDING_MINE_GOLD",
+   "BUILDING_MINE_GRAPHITE",
+   "BUILDING_MINE_IRON",
+   "BUILDING_MINE_JADE",
+   "BUILDING_MINE_JET",
+   "BUILDING_MINE_LAZULITE",
+   "BUILDING_MINE_LEAD",
+   "BUILDING_MINE_LITHIUM",
+   "BUILDING_MINE_MAGNESIUM",
+   "BUILDING_MINE_MAGNETITE",
+   "BUILDING_MINE_MANGANESE",
+   "BUILDING_MINE_MASCAGNITE",
+   "BUILDING_MINE_NICKEL",
+   "BUILDING_MINE_ONYX",
+   "BUILDING_MINE_PLATINUM",
+   "BUILDING_MINE_POTASH",
+   "BUILDING_MINE_PYRITE",
+   "BUILDING_MINE_QUARTZ",
+   "BUILDING_MINE_RUBY",
+   "BUILDING_MINE_SAPPHIRE",
+   "BUILDING_MINE_SILVER",
+   "BUILDING_MINE_SULPHUR",
+   "BUILDING_MINE_TIN",
+   "BUILDING_MINE_TITANIUM",
+   "BUILDING_MINE_TOPAZ",
+   "BUILDING_MINE_TUNGSTEN",
+   "BUILDING_MINE_TURQUOISE",
+   "BUILDING_MINE_URANIUM",
+   "BUILDING_MINE_ZINC",
+   "BUILDING_MODERN_EARTHWORKS",
+   "BUILDING_SALT_FLAT_QUARRY",
+   "BUILDING_SALT_QUARRY"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_HYDRAULIC_MINING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_MASONRY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_GEOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_EXPLOSIVES",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 600,
+     "enabled": {
+      "type": "TECH_NITROGLYCERIN",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_MODERN_SEISMOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_ASTROGEOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_VOLCANOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_NANOMINING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_ASTEROID_MINING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_ASTEROID_EXTRACTION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_SUBTERRANEAN_EXPLORATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_PLANETARY_EXTRACTION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_PULLEY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_GEARS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_HYDRAULIC_MINING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_MASONRY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_GEOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_EXPLOSIVES",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 600,
+     "enabled": {
+      "type": "TECH_NITROGLYCERIN",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_MODERN_SEISMOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_ASTROGEOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_VOLCANOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_NANOMINING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_ASTEROID_MINING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_ASTEROID_EXTRACTION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_SUBTERRANEAN_EXPLORATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_PLANETARY_EXTRACTION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_PULLEY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_GEARS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 132,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MINING_CAMP"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

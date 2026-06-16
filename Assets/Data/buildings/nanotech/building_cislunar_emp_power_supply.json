@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_CISLUNAR_EMP_POWER_SUPPLY",
+ "description": "TXT_KEY_BUILDING_CISLUNAR_EMP_POWER_SUPPLY",
+ "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_EMP_POWER_SUPPLY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_SPACE_COLONY_CISLUNAR",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1421
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CISLUNAR_EMP_POWER_SUPPLY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

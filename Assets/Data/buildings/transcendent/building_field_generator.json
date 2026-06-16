@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_FIELD_GENERATOR",
+ "description": "TXT_KEY_BUILDING_FIELD_GENERATOR",
+ "civilopedia": "TXT_KEY_BUILDING_FIELD_GENERATOR_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_UBIQUITOUS_SUBDIMENSIONAL_UNIVERSE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_ALEPH_ASSEMBLER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 24355,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FIELD_GENERATOR"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

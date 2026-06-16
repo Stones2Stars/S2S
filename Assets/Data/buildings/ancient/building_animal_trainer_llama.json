@@ -1,0 +1,97 @@
+{
+ "type": "BUILDING_ANIMAL_TRAINER_LLAMA",
+ "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_LLAMA",
+ "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_LLAMA_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TAMER_COMPLEX",
+   "BUILDING_CARAVAN_POST",
+   "BUILDING_KNIGHTS_STABLE",
+   "BUILDING_MODERN_STABLE",
+   "BUILDING_STABLE"
+  ],
+  "units": [
+   "UNIT_LLAMA_ARCHER",
+   "UNIT_LLAMA_RIDER",
+   "UNIT_PACK_LLAMA",
+   "UNIT_QHATUQ",
+   "UNIT_TAMED_LLAMA",
+   "UNIT_WORKLLAMA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_LLAMA",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_FARM_ANIMAL_LLAMA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_LLAMA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CENTRAL_BREEDER_LLAMA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_INDUSTRIAL_FARMS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 160,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ANIMAL_TRAINER_LLAMA"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 6,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,158 @@
+{
+ "type": "BUILDING_MECHATRONICS_LAB",
+ "description": "TXT_KEY_BUILDING_MECHATRONICS_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_MECHATRONICS_LAB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUTOMATED_VEHICLE_DEALERSHIP",
+   "BUILDING_BIOMORPHICS_LAB",
+   "BUILDING_EPSILON_ASSEMBLER",
+   "BUILDING_FACTORY_EXOSKELETONS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_ROBOTICS_LAB",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_POWERED_EXOSKELETON",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_WARMACHINES",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_ANDROIDS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_GRAPHENE_ALLOYS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_LIQUID_METALS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_INTERNAL_SHOCKWAVE_ENGINE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3,
+   "percent": [
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_POWERED_EXOSKELETON",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_WARMACHINES",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_ANDROIDS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_GRAPHENE_ALLOYS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_LIQUID_METALS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_INTERNAL_SHOCKWAVE_ENGINE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 2505,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MECHATRONICS_LAB"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_ENGINEER": 1
+  },
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

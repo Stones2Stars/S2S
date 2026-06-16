@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_ENCRYPTED_FIREWALL",
+ "description": "TXT_KEY_BUILDING_ENCRYPTED_FIREWALL",
+ "civilopedia": "TXT_KEY_BUILDING_ENCRYPTED_FIREWALL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLACKNET",
+   "BUILDING_EXOCORTEX_NETWORKS",
+   "BUILDING_HOLOGRAPHIC_NETWORKS",
+   "BUILDING_SOCIAL_NETWORKS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_COMPUTER_NETWORK",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 2005,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ENCRYPTED_FIREWALL"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

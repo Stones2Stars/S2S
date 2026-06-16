@@ -1,0 +1,104 @@
+{
+ "type": "BUILDING_D_T_FUSION_POWER_PLANT",
+ "description": "TXT_KEY_BUILDING_D_T_FUSION_POWER_PLANT",
+ "civilopedia": "TXT_KEY_BUILDING_D_T_FUSION_POWER_PLANT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HIGH_ENERGY_LAB",
+   "BUILDING_NUCLEAR_POWERCOMPLEX",
+   "BUILDING_SUPERCRITICAL_CO2_TURBINE"
+  ],
+  "units": [
+   "UNIT_FUSION_NOVA",
+   "UNIT_FUSION_NUKE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_D_HE3_FUSION_PLANT"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_CLEAN_NUCLEAR_REACTOR",
+   "BUILDING_COAL_FIRED_DYNAMO",
+   "BUILDING_COAL_PLANT",
+   "BUILDING_FAST_BREEDER_REACTOR",
+   "BUILDING_GENERATION_IV_REACTOR",
+   "BUILDING_HIGH_TECH_COAL_POWER_PLANT",
+   "BUILDING_HI_TECH_NUCLEAR_REACTOR",
+   "BUILDING_NUCLEAR_PLANT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "BUILDING_LABORATORY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_POWER_LINES",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 200,
+   "percent": 35
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 3245,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_D_T_FUSION_POWER_PLANT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_PLANTNUCLEAR"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ENGINEER": 1
+  },
+  "neverCapture": true,
+  "dcmAirbombMission": 3,
+  "specialBuildingType": "SPECIALBUILDING_D_T_FUSION_POWER_PLANT",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

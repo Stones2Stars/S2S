@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_GENERATION_IV_REACTOR",
+ "description": "TXT_KEY_BUILDING_GENERATION_IV_REACTOR",
+ "civilopedia": "TXT_KEY_BUILDING_GENERATION_IV_REACTOR_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HIGH_ENERGY_LAB",
+   "BUILDING_NUCLEAR_POWERCOMPLEX",
+   "BUILDING_SUPERCRITICAL_CO2_TURBINE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_D_T_FUSION_POWER_PLANT"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_CLEAN_NUCLEAR_REACTOR",
+   "BUILDING_FAST_BREEDER_REACTOR",
+   "BUILDING_HI_TECH_NUCLEAR_REACTOR",
+   "BUILDING_NUCLEAR_PLANT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_URANIUM",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MANUFACTURING_PLANT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_POWER_LINES",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 80,
+   "percent": 30
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 2505,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GENERATION_IV_REACTOR"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ENGINEER": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_DEEP_SPACE_TELESCOPE",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_TELESCOPE",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_TELESCOPE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTEROID_BELT_ASTRONOMICAL_TELESCOPE",
+   "BUILDING_DEEP_SPACE_DEATH_RAY",
+   "BUILDING_DEEP_SPACE_FOCUSED_SUNLIGHT_PLANT"
+  ],
+  "units": [
+   "UNIT_INTERSTELLAR_PROBE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DEEP_SPACE_ASSEMBLER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 823
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_TELESCOPE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

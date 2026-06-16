@@ -1,0 +1,40 @@
+{
+ "type": "BUILDING_INTERGALACTIC_HERO_ACADEMY",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_HERO_ACADEMY",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_HERO_ACADEMY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_COMMAND_CENTER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "greatGeneralRate": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4246
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_HERO_ACADEMY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

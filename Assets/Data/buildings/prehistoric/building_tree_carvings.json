@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_TREE_CARVINGS",
+ "description": "TXT_KEY_BUILDING_TREE_CARVINGS",
+ "civilopedia": "TXT_KEY_BUILDING_TREE_CARVINGS_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "FEATURE_FOREST_YOUNG",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_FOREST",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_FOREST_ANCIENT",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_FOREST_BURNT",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_JUNGLE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 40,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 2
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TREE_CARVINGS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

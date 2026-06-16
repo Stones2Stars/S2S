@@ -1,0 +1,120 @@
+{
+ "type": "BUILDING_BROADCAST_TOWER",
+ "description": "TXT_KEY_BUILDING_BROADCAST_TOWER",
+ "civilopedia": "TXT_KEY_BUILDING_BROADCAST_TOWER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_LOCAL_RADIO_STATION",
+   "BUILDING_NATIONAL_TV_STATION",
+   "BUILDING_NATIONAL_WEATHER_SERVICE",
+   "BUILDING_RECORDING_STUDIO",
+   "BUILDING_TV_STUDIO",
+   "BUILDING_WEATHER_STATION"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_COMMUNICATION_TOWER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_COPPER_WIRES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_FIBER_OPTIC_CABLES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HIT_MUSICALS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HIT_SINGLES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HIT_MOVIES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 870,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BROADCAST_TOWER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BROADCASTTOWER"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ARTIST": 2
+  },
+  "worth": 5,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

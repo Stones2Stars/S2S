@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_ORCHARD_LONGAN",
+ "description": "TXT_KEY_BUILDING_ORCHARD_LONGAN",
+ "civilopedia": "TXT_KEY_BUILDING_ORCHARD_LONGAN_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_FRUIT"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_III"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MANGO",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_COCONUT",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 139,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ORCHARD_LONGAN"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

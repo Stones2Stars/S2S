@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_EXECUTIONER",
+ "description": "TXT_KEY_BUILDING_EXECUTIONER",
+ "civilopedia": "TXT_KEY_BUILDING_EXECUTIONER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_JAIL"
+  ]
+ },
+ "espionage": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 62,
+  "sizeModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EXECUTIONER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

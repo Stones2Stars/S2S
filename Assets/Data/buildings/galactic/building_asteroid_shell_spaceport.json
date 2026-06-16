@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_ASTEROID_SHELL_SPACEPORT",
+ "description": "TXT_KEY_BUILDING_ASTEROID_SHELL_SPACEPORT",
+ "civilopedia": "TXT_KEY_BUILDING_ASTEROID_SHELL_SPACEPORT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_ASTEROID_SHELL_WORLD",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_ASTEROID_SURFACE",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_KUIPER_BELT_OBJECT",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4123
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ASTEROID_SHELL_SPACEPORT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

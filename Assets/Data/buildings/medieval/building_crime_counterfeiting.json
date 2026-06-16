@@ -1,0 +1,44 @@
+{
+ "type": "BUILDING_CRIME_COUNTERFEITING",
+ "description": "TXT_KEY_BUILDING_CRIME_COUNTERFEITING",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_COUNTERFEITING_PEDIA",
+ "gold": {
+  "city": {
+   "flat": -15,
+   "percent": -5
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 15
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

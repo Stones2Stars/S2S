@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_INTERSTELLAR_BIOTIC_SPHERE_WORLD",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_BIOTIC_SPHERE_WORLD",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BIOTIC_SPHERE_WORLD_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_YGGDRASIL_SEEDS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_INTERSTELLAR_SPHEREWORLD",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100,
+   "percent": [
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_GALACTIC_ECOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_DIRECTED_PANSPERMIA",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_GRAND_UNIFICATION_BIOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_PARTICLE_GENETICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4056
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_BIOTIC_SPHERE_WORLD"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

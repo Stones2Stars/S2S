@@ -1,0 +1,113 @@
+{
+ "type": "BUILDING_MARTIAN_CITY",
+ "description": "TXT_KEY_BUILDING_MARTIAN_CITY",
+ "civilopedia": "TXT_KEY_BUILDING_MARTIAN_CITY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MARTIAN_ALGAE_DESIGNER",
+   "BUILDING_MARTIAN_CYBERNETIC_CHLOROPLAST_IMPORTER",
+   "BUILDING_MARTIAN_DEUTERIUM_EXPORTER",
+   "BUILDING_MARTIAN_DEUTERIUM_MINE",
+   "BUILDING_MARTIAN_DIAMOND_NANOTHREAD_IMPORTER",
+   "BUILDING_MARTIAN_ENTERTAINMENT_COMPLEX",
+   "BUILDING_MARTIAN_GOVERNING_COUNCIL",
+   "BUILDING_MARTIAN_METROPOLIS",
+   "BUILDING_MARTIAN_MONUMENT",
+   "BUILDING_MARTIAN_NOVUS_CHEMICAL_IMPORTER",
+   "BUILDING_MARTIAN_RARE_MINERAL_EXPORTER",
+   "BUILDING_MARTIAN_SIMULATED_WORLD",
+   "BUILDING_MARTIAN_SKYSCRAPER",
+   "BUILDING_MARTIAN_TRADING_POST"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MARTIAN_ELECTRONICS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_SPACE_COLONY_MARTIAN",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_MARTIAN_ALGAE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "cost": {
+  "production": 1577
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MARTIAN_CITY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

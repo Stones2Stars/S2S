@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_BUFFALO_JUMP",
+ "description": "TXT_KEY_BUILDING_BUFFALO_JUMP",
+ "civilopedia": "TXT_KEY_BUILDING_BUFFALO_JUMP_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BISON",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_HERD_BISON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_BISON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_GIANT_BISON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_BISON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_PRESERVE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_INDUSTRIAL_FARMS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "TERRAIN_HILL",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 74
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BUFFALO_JUMP"
+  }
+ },
+ "identity": {
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

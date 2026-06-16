@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_INTERSTELLAR_CHRONOTON_CANNONS",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_CHRONOTON_CANNONS",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CHRONOTON_CANNONS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CHRONOTON",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 30
+   },
+   "bombardDefense": {
+    "percent": 10
+   },
+   "dynamicDefense": {
+    "flat": 10
+   },
+   "adjacentDamage": {
+    "percent": 10
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 7351
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_CHRONOTON_CANNONS"
+  }
+ },
+ "identity": {
+  "sightRange": 1,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

@@ -1,0 +1,112 @@
+{
+ "type": "BUILDING_EVOLUTIONARY_ALGORITHMS",
+ "description": "TXT_KEY_BUILDING_EVOLUTIONARY_ALGORITHMS",
+ "civilopedia": "TXT_KEY_BUILDING_EVOLUTIONARY_ALGORITHMS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANTHROPOMORPHICS_LAB",
+   "BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS",
+   "BUILDING_FACTORY_BIONIC_SUITS",
+   "BUILDING_MINING_MECH_CONTROL_CENTER",
+   "BUILDING_NOVUS_REFINERY",
+   "BUILDING_SUPERSTRONG_ALLOY_FOUNDRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_NATURAL_LANGUAGE_ALGORITHMS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_EVOLUTION_SIMULATOR",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5,
+   "percent": [
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_BIONICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_ANDROIDS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_DROIDS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_SPECIES_UPLIFTING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_ARTIFICIAL_EVOLUTION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_ARTIFICIAL_LIFE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 3805,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EVOLUTIONARY_ALGORITHMS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

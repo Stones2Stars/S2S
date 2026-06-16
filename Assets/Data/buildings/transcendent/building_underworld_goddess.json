@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_UNDERWORLD_GODDESS",
+ "description": "TXT_KEY_BUILDING_UNDERWORLD_GODDESS",
+ "civilopedia": "TXT_KEY_BUILDING_UNDERWORLD_GODDESS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_REALM_OF_TORMENT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_SUBTERRANEAN_CITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 26055,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_UNDERWORLD_GODDESS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

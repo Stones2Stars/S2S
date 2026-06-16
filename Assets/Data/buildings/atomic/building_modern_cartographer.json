@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_MODERN_CARTOGRAPHER",
+ "description": "TXT_KEY_BUILDING_MODERN_CARTOGRAPHER",
+ "civilopedia": "TXT_KEY_BUILDING_MODERN_CARTOGRAPHER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DIGITAL_GLOBE"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_CARTOGRAPHERS_SHOP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BOOKS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_COMPUTERS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 1410,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MODERN_CARTOGRAPHER"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

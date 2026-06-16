@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_GALACTIC_NEWS_NETWORK",
+ "description": "TXT_KEY_BUILDING_GALACTIC_NEWS_NETWORK",
+ "civilopedia": "TXT_KEY_BUILDING_GALACTIC_NEWS_NETWORK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_WORMHOLE_BEACON",
+     "scope": "empire",
+     "min": 3
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "warWeariness": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "anarchy": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_CELEBRITY": 1
+  }
+ },
+ "cost": {
+  "production": 16224
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GALACTIC_NEWS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GALACTIC_NEWS_NETWORK"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

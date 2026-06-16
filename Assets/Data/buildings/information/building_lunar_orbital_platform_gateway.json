@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_LUNAR_ORBITAL_PLATFORM_GATEWAY",
+ "description": "TXT_KEY_BUILDING_LUNAR_ORBITAL_PLATFORM_GATEWAY",
+ "civilopedia": "TXT_KEY_BUILDING_LUNAR_ORBITAL_PLATFORM_GATEWAY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -100
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 15750
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_DEEP_SPACE_GATEWAY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LUNAR_ORBITAL_PLATFORM_GATEWAY"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

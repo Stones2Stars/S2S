@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_INTERGALACTIC_GALAXY_SCAN",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_GALAXY_SCAN",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_GALAXY_SCAN_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_CONSCIOUS_GALAXY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_CORE_DYSON_SPHERE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 125
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 5783
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_GALAXY_SCAN"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

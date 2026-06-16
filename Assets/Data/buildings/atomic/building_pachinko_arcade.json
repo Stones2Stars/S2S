@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_PACHINKO_ARCADE",
+ "description": "TXT_KEY_BUILDING_PACHINKO_ARCADE",
+ "civilopedia": "TXT_KEY_BUILDING_PACHINKO_ARCADE_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_VIDEO_GAME_ARCADE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CASINO",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1345,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PACHINKO_ARCADE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

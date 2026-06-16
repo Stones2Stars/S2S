@@ -1,0 +1,32 @@
+{
+ "type": "BUILDING_BELIEF_KARMA",
+ "description": "TXT_KEY_BUILDING_BELIEF_KARMA",
+ "civilopedia": "TXT_KEY_BUILDING_BELIEF_KARMA_PEDIA",
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BELIEF_KARMA"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

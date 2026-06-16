@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_GIANT_CLAM_DIVERS",
+ "description": "TXT_KEY_BUILDING_GIANT_CLAM_DIVERS",
+ "civilopedia": "TXT_KEY_BUILDING_GIANT_CLAM_DIVERS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_SHELLFISH"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AQUAFARM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CLAM",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_WHALE",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 92,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GIANT_CLAM_DIVERS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

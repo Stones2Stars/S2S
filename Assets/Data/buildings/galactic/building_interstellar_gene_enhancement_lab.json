@@ -1,0 +1,35 @@
+{
+ "type": "BUILDING_INTERSTELLAR_GENE_ENHANCEMENT_LAB",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_GENE_ENHANCEMENT_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_GENE_ENHANCEMENT_LAB_PEDIA",
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1192
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_GENE_ENHANCEMENT_LAB"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_MILITARY_STANDARD_CANINES",
+ "description": "TXT_KEY_BUILDING_MILITARY_STANDARD_CANINES",
+ "civilopedia": "TXT_KEY_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT_PEDIA",
+ "help": "TXT_KEY_BUILDING_MILITARY_STANDARD_CANINES_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_DOG",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "HERITAGE_FOLKLORE_DINGO",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_FOX_ARCTIC",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_FOX_FENNEC",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_FOX_RED",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_USSURI_DHOLE",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_WOLF",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_WOLF_DIRE",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_WOLF_ETHIOPIAN",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_WOLF_MANED",
+      "scope": "empire"
+     }
+    ]
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_TRAINEDDOG": {
+     "percent": 10
+    },
+    "UNIT_WARDOG": {
+     "percent": 10
+    },
+    "UNIT_GUARDDOG": {
+     "percent": 10
+    },
+    "UNIT_POLICE_DOG": {
+     "percent": 10
+    },
+    "UNIT_CANIS_SUPERIOR": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 92,
+  "countModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
+  }
+ },
+ "identity": {
+  "worth": 1,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_MILITARY",
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

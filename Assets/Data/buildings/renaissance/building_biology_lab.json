@@ -1,0 +1,123 @@
+{
+ "type": "BUILDING_BIOLOGY_LAB",
+ "description": "TXT_KEY_BUILDING_BIOLOGY_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_BIOLOGY_LAB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CYBER_INSECT_LAB",
+   "BUILDING_ENTOMOLOGY_LAB",
+   "BUILDING_EVOLUTION_SIMULATOR",
+   "BUILDING_HERPETOLOGY_LAB",
+   "BUILDING_MOLECULAR_BIOLOGY_LAB",
+   "BUILDING_ORNITHOLOGY_LAB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_UNIVERSITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5,
+   "percent": [
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_ZOOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_BOTANY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_ECOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_GENETICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_MOLECULAR_BIOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_GENESIS_BIOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_GENOMIC_ENCYCLOPEDIA",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_BIOINFORMATICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 515,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BIOLOGY_LAB"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

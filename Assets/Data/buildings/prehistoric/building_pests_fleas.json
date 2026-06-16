@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_PESTS_FLEAS",
+ "description": "TXT_KEY_BUILDING_PESTS_FLEAS",
+ "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISEASE_BUBONIC_PLAGUE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 2
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_DOG",
+      "scope": "city",
+      "connection": "vicinity"
+     },
+     {
+      "type": "BONUS_CAT",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PESTS_FLEAS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "autoBuild": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

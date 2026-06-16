@@ -1,0 +1,23 @@
+{
+ "type": "BUILDING_C_N_NEANDERTHAL",
+ "description": "TXT_KEY_BUILDING_C_N_NEANDERTHAL",
+ "civilopedia": "TXT_KEY_BUILDING_C_N_PEDIA",
+ "help": "TXT_KEY_BUILDING_C_N_HELP",
+ "research": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CULTURE_NEANDERTHAL"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

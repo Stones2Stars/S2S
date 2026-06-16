@@ -1,0 +1,118 @@
+{
+ "type": "BUILDING_RESEARCH_INSTITUTE",
+ "description": "TXT_KEY_BUILDING_RESEARCH_INSTITUTE",
+ "civilopedia": "TXT_KEY_BUILDING_RESEARCH_INSTITUTE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BUILDING_LABORATORY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MODERN_OFFICES",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -40
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 20,
+   "percent": 25
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "spaceProduction": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_SCIENTIST": 2
+  }
+ },
+ "cost": {
+  "production": 3690,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_RUSSIAN_RESEARCH_INSTITUTE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESEARCH_INSTITUTE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_LABORATORY"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "neverCapture": true,
+  "worth": 8,
+  "dcmAirbombMission": 2,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,99 @@
+{
+ "type": "BUILDING_AIRFIELD",
+ "description": "TXT_KEY_BUILDING_AIRFIELD",
+ "civilopedia": "TXT_KEY_BUILDING_AIRFIELD_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BALLOON_RIDES",
+   "BUILDING_DROP_ZONE",
+   "BUILDING_FLIGHT_SCHOOL"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AEROSPACE_COMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AIRCRAFT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_HELICOPTER": {
+     "flat": 1
+    }
+   },
+   "domains": {
+    "DOMAIN_AIR": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 1030,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_GOLD": 1
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_AIRFIELD"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_AIRFIELD"
+ },
+ "identity": {
+  "worth": 8,
+  "militaryWorth": 4,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

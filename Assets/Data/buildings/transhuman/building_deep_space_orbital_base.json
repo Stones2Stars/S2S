@@ -1,0 +1,112 @@
+{
+ "type": "BUILDING_DEEP_SPACE_ORBITAL_BASE",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_ORBITAL_BASE",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_ORBITAL_BASE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTEROID_SHELL_WORLD",
+   "BUILDING_CALLISTO_RESUPPLY_BASE",
+   "BUILDING_DEEP_SPACE_BIOFORMING_STUDIO",
+   "BUILDING_ENCELADUS_RESUPPLY_BASE",
+   "BUILDING_EUROPA_COLONY",
+   "BUILDING_IO_BASE",
+   "BUILDING_LIFE_HYDROGEN_SULFIDE",
+   "BUILDING_MARTIAN_MATERIAL_SUPPLY",
+   "BUILDING_MERCURY_COLONY",
+   "BUILDING_NEPTUNE_CHANDELIER_CITY",
+   "BUILDING_NEPTUNE_WIND_TURBINE",
+   "BUILDING_PLUTO_RESEARCH_BASE",
+   "BUILDING_TERRAFORMED_GANYMEDE",
+   "BUILDING_TRITON_COLONY",
+   "BUILDING_UMBRIEL_COLONY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "TERRAIN_MERCURY",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_ASTEROID_SURFACE",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_CALLISTO",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_EUROPA",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_GANYMEDE",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_IO",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_ENCELADUS",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_UMBRIEL",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_TRITON",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_KUIPER_BELT_OBJECT",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 959
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_ORBITAL_BASE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_MATTER_DECOMPILER",
+ "description": "TXT_KEY_BUILDING_MATTER_DECOMPILER",
+ "civilopedia": "TXT_KEY_BUILDING_MATTER_DECOMPILER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_UTILITY_FOG",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "perPopulation": {
+    "percent": 25
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 9805,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MATTER_DECOMPILER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_INCUBATION_CENTER"
+ },
+ "identity": {
+  "worth": 15,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 2,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

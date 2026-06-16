@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_TITAN_ARCOLOGY",
+ "description": "TXT_KEY_BUILDING_TITAN_ARCOLOGY",
+ "civilopedia": "TXT_KEY_BUILDING_TITAN_ARCOLOGY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_COMPUTRONIUM_TITAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_TITAN_AIRPORT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_TITAN_BIOFACTORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2959
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TITAN_ARCOLOGY"
+  }
+ },
+ "identity": {
+  "workableRadius": 3,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_TITANIC"
+  ]
+ }
+}

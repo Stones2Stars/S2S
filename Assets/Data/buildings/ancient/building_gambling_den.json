@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_GAMBLING_DEN",
+ "description": "TXT_KEY_BUILDING_GAMBLING_DEN",
+ "civilopedia": "TXT_KEY_BUILDING_GAMBLING_DEN_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_GAMBLING_HALL"
+  ]
+ },
+ "gold": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 146,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GAMBLING_DEN"
+  }
+ },
+ "identity": {
+  "worth": 2,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

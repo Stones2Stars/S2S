@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_DISTANT_INFINITE_SPEED_TACHYON_GENERATOR",
+ "description": "TXT_KEY_BUILDING_DISTANT_INFINITE_SPEED_TACHYON_GENERATOR",
+ "civilopedia": "TXT_KEY_BUILDING_DISTANT_INFINITE_SPEED_TACHYON_GENERATOR_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HEAVEN",
+   "BUILDING_LIBRARY_OF_BABEL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CHRONOTON",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_DISTANT_COMPUTRONIUM_FILAMENT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2914
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DISTANT_INFINITE_SPEED_TACHYON_GENERATOR"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

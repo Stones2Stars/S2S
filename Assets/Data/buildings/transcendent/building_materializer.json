@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_MATERIALIZER",
+ "description": "TXT_KEY_BUILDING_MATERIALIZER",
+ "civilopedia": "TXT_KEY_BUILDING_MATERIALIZER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_4D_PRINTING_STUDIO",
+   "BUILDING_MATERIALIZATION_COMPLEX"
+  ],
+  "units": [
+   "UNIT_MACHINIST",
+   "UNIT_REPLICATION_MECHANIC"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_3D_PRINTING_MILL",
+   "BUILDING_ATOMIC_ASSEMBLER",
+   "BUILDING_MOLECULAR_ASSEMBLER",
+   "BUILDING_NANOBOTIC_PRINTING_MILL",
+   "BUILDING_PARTS_MAKER",
+   "BUILDING_PARTS_PLANT",
+   "BUILDING_QUANTUM_ASSEMBLER",
+   "BUILDING_REPLICATOR_PLANT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_ALEPH_ASSEMBLER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    45,
+    {
+     "value": 1500,
+     "enabled": {
+      "type": "TECH_ENTROPY_REVERSAL",
+      "scope": "team"
+     }
+    }
+   ],
+   "percent": 100
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_MECHANICAL",
+    "interval": "perTurn",
+    "heal": 10
+   }
+  ]
+ },
+ "cost": {
+  "production": 22755,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MATERIALIZER"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ENGINEER": 4
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

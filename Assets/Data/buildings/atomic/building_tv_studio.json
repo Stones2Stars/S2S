@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_TV_STUDIO",
+ "description": "TXT_KEY_BUILDING_TV_STUDIO",
+ "civilopedia": "TXT_KEY_BUILDING_TV_STUDIO_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERNET_TELEVISION_STATION",
+   "BUILDING_NATIONAL_TV_STATION",
+   "BUILDING_TELECOURSE_STUDIO",
+   "BUILDING_TELEVANGELIST_STUDIO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_TELEVISIONS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MODERN_OFFICES",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_BROADCAST_TOWER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_COMMUNICATION_TOWER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NETWORK_NODE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 1130,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TV_STUDIO"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BROADCASTTOWER"
+ },
+ "identity": {
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

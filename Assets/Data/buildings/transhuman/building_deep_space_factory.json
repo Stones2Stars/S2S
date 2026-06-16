@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_DEEP_SPACE_FACTORY",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_FACTORY",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_FACTORY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTEROID_BELT_ASTRONOMICAL_TELESCOPE",
+   "BUILDING_DEEP_SPACE_DEATH_RAY",
+   "BUILDING_DEEP_SPACE_FOCUSED_SUNLIGHT_PLANT",
+   "BUILDING_DEEP_SPACE_FUSION_CORE",
+   "BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY",
+   "BUILDING_JOVIAN_ANTIMATTER_HARVESTER",
+   "BUILDING_JOVIAN_CORE_PROBE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_DEEP_SPACE_ASSEMBLER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1650
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_FACTORY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

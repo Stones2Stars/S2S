@@ -1,0 +1,22 @@
+{
+ "type": "BUILDING_SAFETY_ALCATRAZ",
+ "description": "TXT_KEY_BUILDING_SAFETY_ALCATRAZ",
+ "civilopedia": "TXT_KEY_BUILDING_SAFETY_ALCATRAZ_PEDIA",
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SAFETY_ALCATRAZ"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

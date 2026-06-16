@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_INTERSTELLAR_EVENT_HORIZON_PROBE",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_EVENT_HORIZON_PROBE",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_EVENT_HORIZON_PROBE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_BLACK_HOLE_INTERIOR_PLANET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_BLACK_HOLE_COLONY",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_BLACK_HOLE",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_SUPERMASSIVE_BLACK_HOLE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 10510
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_EVENT_HORIZON_PROBE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

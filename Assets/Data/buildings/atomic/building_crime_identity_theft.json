@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_CRIME_IDENTITY_THEFT",
+ "description": "TXT_KEY_BUILDING_CRIME_IDENTITY_THEFT",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_IDENTITY_THEFT_PEDIA",
+ "gold": {
+  "city": {
+   "flat": -15,
+   "percent": -5
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 40
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

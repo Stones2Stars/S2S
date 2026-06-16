@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_NAVAL_SHIPPING_WAREHOUSE",
+ "description": "TXT_KEY_BUILDING_NAVAL_SHIPPING_WAREHOUSE",
+ "civilopedia": "TXT_KEY_BUILDING_NAVAL_SHIPPING_WAREHOUSE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ONLINE_SHIPPING_WAREHOUSE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER",
+    {
+     "type": "BUILDING_HARBORMASTERS_OFFICE",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_WAREHOUSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MODERN_WAREHOUSE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 5
+   },
+   "foreignModifier": {
+    "percent": 5
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 243,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NAVAL_SHIPPING_WAREHOUSE"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

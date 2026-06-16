@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_HOUSING_BARK_HUTS",
+ "description": "TXT_KEY_BUILDING_HOUSING_BARK_HUTS",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_BARK_HUTS_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_HOUSING_ANIMAL_BURROW",
+   "BUILDING_HOUSING_CAVE_DWELLING",
+   "BUILDING_HOUSING_HOMELESS",
+   "BUILDING_HOUSING_LEAN_TOS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BARK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_FOREST_YOUNG",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_FOREST",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_FOREST_ANCIENT",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_FOREST_BURNT",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_BARK_HUTS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

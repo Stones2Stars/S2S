@@ -1,0 +1,102 @@
+{
+ "type": "BUILDING_RESURRECTION_HUB",
+ "description": "TXT_KEY_BUILDING_RESURRECTION_HUB",
+ "civilopedia": "TXT_KEY_BUILDING_RESURRECTION_HUB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEATH_COMBAT_ARENA",
+   "BUILDING_HUMAN_MOD_INDEFINITE_LIFESPAN",
+   "BUILDING_ULTIMATE_COMBAT_ARENA"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_NANOMORPHIC_REPLICATOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_GESTATION_TANKS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_UTERINE_REPLICATOR",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ANIMA_STUDIO",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_BODY_EXCHANGE_CLINIC",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_WORKER_ANDROID": {
+     "percent": 10
+    },
+    "UNIT_FERAL": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE",
+    "interval": "perTurn",
+    "heal": 5
+   },
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_ANIMALS",
+    "interval": "perTurn",
+    "heal": 5
+   }
+  ]
+ },
+ "cost": {
+  "production": 5905,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESURRECTION_HUB"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 2
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

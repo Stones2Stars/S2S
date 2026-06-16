@@ -1,0 +1,48 @@
+{
+ "type": "BUILDING_HUNTING_INSTRUCTIONS",
+ "description": "TXT_KEY_BUILDING_HUNTING_INSTRUCTIONS",
+ "civilopedia": "TXT_KEY_BUILDING_HUNTING_INSTRUCTIONS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_GREAT_HOLMEGAARD_HUNT"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 20,
+  "countModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HUNTING_INSTRUCTIONS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "applyFreePromotionOnMove": true,
+  "worth": 1,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

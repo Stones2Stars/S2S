@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_AI_POLICE_FORCE",
+ "description": "TXT_KEY_BUILDING_AI_POLICE_FORCE",
+ "civilopedia": "TXT_KEY_BUILDING_AI_POLICE_FORCE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DE_MAT_POLICE_FORCE",
+   "BUILDING_GRAVITY_CROWD_CONTROL"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_COAST_GUARD_STATION",
+   "BUILDING_POLICE_DRONE_CONTROL_CENTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MEGATOWER_POLICE_STATION_LEVEL",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -75
+  }
+ },
+ "cost": {
+  "production": 5255,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_AI_POLICE_FORCE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_ASTROLOGICAL_INFLUENCE_OF_SAGITTARIUS",
+ "description": "TXT_KEY_BUILDING_ASTROLOGICAL_INFLUENCE_OF_SAGITTARIUS",
+ "civilopedia": "TXT_KEY_BUILDING_ASTROLOGICAL_INFLUENCE_OF_SAGITTARIUS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_ASTROLOGY_SCHOOL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_OBSERVATORY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "grants": {
+  "traits": [
+   "TRAIT_ASTROLOGICAL_INFLUENCE_OF_SAGITTARIUS"
+  ]
+ },
+ "cost": {
+  "production": 900,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ASTROLOGICAL_INFLUENCE_OF_SAGITTARIUS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ASTROLOGICAL_INFLUENCE_OF_SAGITTARIUS"
+  }
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 5,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_GROUP_ASTROLOGICAL_INFLUENCES",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

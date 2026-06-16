@@ -1,0 +1,47 @@
+{
+ "type": "BUILDING_ENCLOSURE_PRIMATE",
+ "description": "TXT_KEY_BUILDING_ENCLOSURE_PRIMATE",
+ "civilopedia": "TXT_KEY_BUILDING_ENCLOSURE_EXOTIC_HERBIVORE_PEDIA",
+ "research": {
+  "city": {
+   "percent": [
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_SCIENTIFIC_METHOD",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 306,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ENCLOSURE_PRIMATE"
+  }
+ },
+ "identity": {
+  "worth": 2,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_AQUEDUCT",
+ "description": "TXT_KEY_BUILDING_AQUEDUCT",
+ "civilopedia": "TXT_KEY_BUILDING_AQUEDUCT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BARAY",
+   "BUILDING_BATH_HOUSE",
+   "BUILDING_GONDOLA_CANALS",
+   "BUILDING_HAMMAM",
+   "BUILDING_NORIA",
+   "BUILDING_PUBLIC_POOL",
+   "BUILDING_WATERCLOCK"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MODERN_WATERWORKS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BRICKS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_CEMENT",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_WATERPROOF_CEMENT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 252,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_AQUEDUCT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_AQUEDUCT"
+ },
+ "identity": {
+  "centerInCity": true,
+  "providesFreshWater": true,
+  "worth": 4,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 10240000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

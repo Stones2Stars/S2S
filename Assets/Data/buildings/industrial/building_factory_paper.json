@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_FACTORY_PAPER",
+ "description": "TXT_KEY_BUILDING_FACTORY_PAPER",
+ "civilopedia": "TXT_KEY_BUILDING_FACTORY_PAPER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_GUILD_PRINTERS",
+   "BUILDING_RESOURCES_PAPER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ELECTRONIC_PAPER_MAKER"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_PAPER_MAKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_FACTORY",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_CHEMICALS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 710,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FACTORY_PAPER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

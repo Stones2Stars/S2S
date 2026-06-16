@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_METAL_FOAM_FOUNDRY",
+ "description": "TXT_KEY_BUILDING_METAL_FOAM_FOUNDRY",
+ "civilopedia": "TXT_KEY_BUILDING_METAL_FOAM_FOUNDRY_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_PICOTECH_COMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_EPSILON_ASSEMBLER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 3245,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_METAL_FOAM_FOUNDRY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

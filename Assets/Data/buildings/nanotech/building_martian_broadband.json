@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_MARTIAN_BROADBAND",
+ "description": "TXT_KEY_BUILDING_MARTIAN_BROADBAND",
+ "civilopedia": "TXT_KEY_BUILDING_MARTIAN_BROADBAND_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SPACE_COLONY_MARTIAN",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200,
+   "percent": [
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_OPTRONICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1144
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MARTIAN_BROADBAND"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

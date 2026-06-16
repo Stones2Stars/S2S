@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE",
+ "description": "TXT_KEY_BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE",
+ "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CELLPHONES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_DIGITAL_OFFICES",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_SOCIAL_NETWORKS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HOLOGRAPHIC_NETWORKS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_EXOCORTEX_NETWORKS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "cost": {
+  "production": 4210
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

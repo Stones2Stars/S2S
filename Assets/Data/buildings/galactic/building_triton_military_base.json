@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_TRITON_MILITARY_BASE",
+ "description": "TXT_KEY_BUILDING_TRITON_MILITARY_BASE",
+ "civilopedia": "TXT_KEY_BUILDING_TRITON_MILITARY_BASE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_TRITON_HEAT_RING",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_TRITON",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_DEEP_SPACE_DEATH_RAY",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_DEEP_SPACE_CLOAKING",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_DEEP_SPACE_DOCKING_BAY",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 18377
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TRITON_MILITARY_BASE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRITON_MILITARY_BASE"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

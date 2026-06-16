@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_FERTILITY_DANCE",
+ "description": "TXT_KEY_BUILDING_FERTILITY_DANCE",
+ "civilopedia": "TXT_KEY_BUILDING_FERTILITY_DANCE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FERTILITY_FESTIVAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_DANCE_HUT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DANCE_HALL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NIGHT_CLUB",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FERTILITY_DANCE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 1,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

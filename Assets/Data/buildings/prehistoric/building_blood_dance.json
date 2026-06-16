@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_BLOOD_DANCE",
+ "description": "TXT_KEY_BUILDING_BLOOD_DANCE",
+ "civilopedia": "TXT_KEY_BUILDING_BLOOD_DANCE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLOODHUNTRESSS_HUT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_DANCE_HUT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DANCE_HALL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NIGHT_CLUB",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FIRE_PIT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BONFIRE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_IMU",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CHARCOAL_BURNER",
+      "scope": "city"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      [
+       {
+        "type": "CIVIC_ANARCHISM",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_CHIEFDOM",
+        "scope": "empire"
+       }
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SACRIFICE_CULT",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -15
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BLOOD_DANCE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 1,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

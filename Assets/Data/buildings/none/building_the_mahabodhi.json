@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_THE_MAHABODHI",
+ "description": "TXT_KEY_BUILDING_THE_MAHABODHI",
+ "civilopedia": "TXT_KEY_BUILDING_THE_MAHABODHI_PEDIA",
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_BUDDHISM": {
+    "flat": 4
+   }
+  }
+ },
+ "grants": {
+  "holyCity": "RELIGION_BUDDHISM"
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SHRINE_BUDDHIST"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_THE_MAHABODHI"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BUDDHIST"
+ },
+ "identity": {
+  "shrine": "RELIGION_BUDDHISM",
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 3
+  },
+  "nukeImmune": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_BUDDHISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_CAT_SHRINE",
+ "description": "TXT_KEY_BUILDING_CAT_SHRINE",
+ "civilopedia": "TXT_KEY_BUILDING_CAT_SHRINE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CAT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "RELIGION_KEMETISM",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 146,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CAT_SHRINE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_RELIGION",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

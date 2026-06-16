@@ -1,0 +1,104 @@
+{
+ "type": "BUILDING_SOMA_DISPENSARY",
+ "description": "TXT_KEY_BUILDING_SOMA_DISPENSARY",
+ "civilopedia": "TXT_KEY_BUILDING_SOMA_DISPENSARY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_NEUROSCIENCE_CENTER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10,
+   "percent": [
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_SIMULATED_REALITY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": -20,
+   "percent": [
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_WHOLE_BRAIN_EMULATION",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": [
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_SIMULATED_REALITY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 5055,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SOMA_DISPENSARY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

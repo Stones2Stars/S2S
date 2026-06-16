@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_HOUSING_SUBURBS",
+ "description": "TXT_KEY_BUILDING_HOUSING_SUBURBS",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_SUBURBS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BED_N_BREAKFAST"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_HOUSING_BONE_HUTS",
+   "BUILDING_HOUSING_COTTAGES",
+   "BUILDING_HOUSING_DOMUS",
+   "BUILDING_HOUSING_HOMELESS",
+   "BUILDING_HOUSING_MUD_HUTS",
+   "BUILDING_HOUSING_STONE_HUTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_FRESHWATER",
+    "HAS_POWER",
+    {
+     "type": "BUILDING_WATER_PIPES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SEWER_SYSTEM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_TELEPHONE_NETWORK",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_SUBURBS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

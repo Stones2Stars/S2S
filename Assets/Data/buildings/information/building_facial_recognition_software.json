@@ -1,0 +1,111 @@
+{
+ "type": "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
+ "description": "TXT_KEY_BUILDING_FACIAL_RECOGNITION_SOFTWARE",
+ "civilopedia": "TXT_KEY_BUILDING_FACIAL_RECOGNITION_SOFTWARE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIOMETRIC_SECURITY_SYSTEM",
+   "BUILDING_BIOMORPHICS_LAB",
+   "BUILDING_DELTA_ASSEMBLER",
+   "BUILDING_INTUITIVE_ALGORITHMS",
+   "BUILDING_PERSONALIZED_ADVERTISING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_GESTURE_RECOGNITION_SOFTWARE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SPEECH_RECOGNITION_SOFTWARE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_INTERACTIVE_GLASS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_PERSONAL_ROBOTS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_AUTOMATED_ROBOTICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_AUTOMATED_URBANIZATION",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "espionage": {
+  "city": {
+   "investigation": {
+    "flat": 50
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 2505,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FACIAL_RECOGNITION_SOFTWARE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

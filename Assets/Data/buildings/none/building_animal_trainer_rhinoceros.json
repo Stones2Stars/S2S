@@ -1,0 +1,111 @@
+{
+ "type": "BUILDING_ANIMAL_TRAINER_RHINOCEROS",
+ "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_RHINOCEROS",
+ "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_RHINOCEROS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HERITAGE_RHINOCEROS",
+   "BUILDING_MILITARY_STANDARD_RHINOCEROS"
+  ],
+  "units": [
+   "UNIT_RHINO_SWORDSMAN",
+   "UNIT_WAR_RHINO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_CAMP_RHINO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_T_RHINOCEROSES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_BLACK_RHINOCEROS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_INDIAN_RHINOCEROS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_JAVA_RHINOCEROS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_WHITE_RHINOCEROS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_GIANT_RHINOCEROS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_RHINO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_PRESERVE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 1038,
+  "sizeModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 7
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_RHINO_TRAINER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ANIMAL_TRAINER_RHINOCEROS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 2,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

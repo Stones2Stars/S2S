@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_ORDINANCE_COMMUTER_SHUTTLE_SERVICE",
+ "description": "TXT_KEY_BUILDING_ORDINANCE_COMMUTER_SHUTTLE_SERVICE",
+ "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_COMMUTER_SHUTTLE_SERVICE_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TELEPORT_BOOTH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_COURTHOUSE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 830,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ORDINANCE_COMMUTER_SHUTTLE_SERVICE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

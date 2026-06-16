@@ -1,0 +1,106 @@
+{
+ "type": "BUILDING_ASTROBIOLOGY_LAB",
+ "description": "TXT_KEY_BUILDING_ASTROBIOLOGY_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_ASTROBIOLOGY_LAB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ADVANCED_METI"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_UNIVERSITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5,
+   "percent": [
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_ASTROECOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_EXTRATERRESTRIAL_AGRICULTURE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_PLANETARY_TERRAFORMING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_ASTROANTHROPOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_SPECIES_UPLIFTING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_MARTIAN_ROCKS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 1685,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ASTROBIOLOGY_LAB"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

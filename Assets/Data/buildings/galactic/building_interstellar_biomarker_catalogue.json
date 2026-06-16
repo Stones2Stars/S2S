@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_INTERSTELLAR_BIOMARKER_CATALOGUE",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_BIOMARKER_CATALOGUE",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BIOMARKER_CATALOGUE_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_INTERSTELLAR_DATA_COLLECTION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SPACE_COLONY_MILKY_WAY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 125
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3212
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_BIOMARKER_CATALOGUE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

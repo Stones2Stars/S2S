@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_TRAILS",
+ "description": "TXT_KEY_BUILDING_TRAILS",
+ "civilopedia": "TXT_KEY_BUILDING_TRAILS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BAMBOO_BRIDGE",
+   "BUILDING_BRICK_BRIDGE",
+   "BUILDING_LOG_BRIDGE",
+   "BUILDING_ROPE_BRIDGE",
+   "BUILDING_STONE_BRIDGE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ROADS"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 1,
+   "percent": 1
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1,
+   "modifier": {
+    "percent": 2
+   }
+  }
+ },
+ "cost": {
+  "production": 15,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRAILS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "worth": 4,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

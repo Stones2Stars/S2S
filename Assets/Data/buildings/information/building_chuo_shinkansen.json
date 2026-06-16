@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_CHUO_SHINKANSEN",
+ "description": "TXT_KEY_BUILDING_CHUO_SHINKANSEN",
+ "civilopedia": "TXT_KEY_BUILDING_CHUO_SHINKANSEN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 20
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_MAGLEV_RAILS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_VACTRAIN_TERMINAL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GRAVITY_TRAIN",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 15750,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CHUO_SHINKANSEN"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CHUO_SHINKANSEN"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

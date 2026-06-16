@@ -1,0 +1,110 @@
+{
+ "type": "BUILDING_SIX_HARMONIES_PAGODA",
+ "description": "TXT_KEY_BUILDING_SIX_HARMONIES_PAGODA",
+ "civilopedia": "TXT_KEY_BUILDING_SIX_HARMONIES_PAGODA_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_CONFUCIAN_TEMPLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BUDDHIST_TEMPLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TAOIST_TEMPLE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 8
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_BUDDHIST_TEMPLE": {
+     "flat": 6
+    },
+    "BUILDING_CONFUCIAN_TEMPLE": {
+     "flat": 6
+    },
+    "BUILDING_TAOIST_TEMPLE": {
+     "flat": 6
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "cost": {
+  "production": 1800,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_FAME"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SIX_HARMONIES_PAGODA"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 1,
+   "SPECIALIST_ARTIST": 1
+  },
+  "centerInCity": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

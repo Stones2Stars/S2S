@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_TOWN_WATCH",
+ "description": "TXT_KEY_BUILDING_TOWN_WATCH",
+ "civilopedia": "TXT_KEY_BUILDING_TOWN_WATCH_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+  ],
+  "units": [
+   "UNIT_ENFORCERS",
+   "UNIT_HARAPPA_WATCHER",
+   "UNIT_NEANDERTHAL_ENFORCER",
+   "UNIT_NEANDERTHAL_WATCHER",
+   "UNIT_ORONAO_WATCHER",
+   "UNIT_TOWN_WATCHMEN",
+   "UNIT_WATCHER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TOWN_PATROL"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_LOOKOUT_POST",
+   "BUILDING_SENTRY_POST"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "espionage": {
+  "city": {
+   "investigation": {
+    "flat": 15
+   },
+   "flat": 3
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 5
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "cost": {
+  "production": 168,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TOWN_WATCH"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_INVESTIGATOR": 1
+  },
+  "nukeImmune": true,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

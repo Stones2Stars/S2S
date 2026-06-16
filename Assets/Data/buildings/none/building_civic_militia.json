@@ -1,0 +1,29 @@
+{
+ "type": "BUILDING_CIVIC_MILITIA",
+ "description": "TXT_KEY_BUILDING_CIVIC_MILITIA",
+ "civilopedia": "TXT_KEY_BUILDING_CIVIC_MILITIA_PEDIA",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_MILITIA",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CIVIC_MILITIA"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "applyFreePromotionOnMove": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

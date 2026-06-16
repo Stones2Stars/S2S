@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_MARTIAN_EXPANDED_HABITAT",
+ "description": "TXT_KEY_BUILDING_MARTIAN_EXPANDED_HABITAT",
+ "civilopedia": "TXT_KEY_BUILDING_MARTIAN_EXPANDED_HABITAT_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MARTIAN_SKYSCRAPER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SPACE_COLONY_MARTIAN",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 905
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MARTIAN_EXPANDED_HABITAT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

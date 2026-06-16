@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_CRIME_CAR_BOMBING",
+ "description": "TXT_KEY_BUILDING_CRIME_CAR_BOMBING",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_CAR_BOMBING_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5,
+   "percent": -5
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 10
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -4,
+   "perPopulation": {
+    "percent": -30
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 60
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

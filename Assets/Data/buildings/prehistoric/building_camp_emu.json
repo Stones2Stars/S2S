@@ -1,0 +1,92 @@
+{
+ "type": "BUILDING_CAMP_EMU",
+ "description": "TXT_KEY_BUILDING_CAMP_EMU",
+ "civilopedia": "TXT_KEY_BUILDING_CAMP_EMU_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_EMU_EGG_CARVER",
+   "BUILDING_RESOURCES_CARCASS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BREEDING_PROGRAM_EMU"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_POULTRY",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_KANGAROO",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_HUNTERS_CAMP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANCIENT_CUSTOMS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TECH_ECOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 45,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CAMP_EMU"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

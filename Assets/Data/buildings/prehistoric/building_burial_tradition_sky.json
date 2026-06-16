@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_BURIAL_TRADITION_SKY",
+ "description": "TXT_KEY_BUILDING_BURIAL_TRADITION_SKY",
+ "civilopedia": "TXT_KEY_BUILDING_BURIAL_TRADITION_SKY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANCIENT_EMBALMER",
+   "BUILDING_BURIAL_PLATFORMS",
+   "BUILDING_BURIAL_TRADITION_BONE",
+   "BUILDING_BURIAL_TRADITION_MUMMY",
+   "BUILDING_MORTUARY",
+   "BUILDING_STELE",
+   "BUILDING_TOWER_OF_SILENCE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FUNERARY_SERVICES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_FOLKLORE_E_SKY",
+     "scope": "city"
+    }
+   ],
+   "noneOf": [
+    {
+     "type": "BUILDING_BURIAL_TRADITION_CAVE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_BURIAL_TRADITION_EARTH",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_BURIAL_TRADITION_FIRE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_BURIAL_TRADITION_SEA",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "cost": {
+  "production": 86,
+  "sizeModifier": 1,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BURIAL_TRADITION_SKY"
+  }
+ },
+ "identity": {
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

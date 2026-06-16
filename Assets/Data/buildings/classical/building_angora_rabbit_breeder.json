@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_ANGORA_RABBIT_BREEDER",
+ "description": "TXT_KEY_BUILDING_ANGORA_RABBIT_BREEDER",
+ "civilopedia": "TXT_KEY_BUILDING_ANGORA_RABBIT_BREEDER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SHEARING_BARN"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_RABBIT_BREEDER",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_RABBIT",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 261,
+  "sizeModifier": 1,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ANGORA_RABBIT_BREEDER"
+  }
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

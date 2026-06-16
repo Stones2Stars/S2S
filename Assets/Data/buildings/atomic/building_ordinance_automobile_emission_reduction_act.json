@@ -1,0 +1,48 @@
+{
+ "type": "BUILDING_ORDINANCE_AUTOMOBILE_EMISSION_REDUCTION_ACT",
+ "description": "TXT_KEY_BUILDING_ORDINANCE_AUTOMOBILE_EMISSION_REDUCTION_ACT",
+ "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_AUTOMOBILE_EMISSION_REDUCTION_ACT_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TELEPORT_BOOTH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_COURTHOUSE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 1345,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ORDINANCE_AUTOMOBILE_EMISSION_REDUCTION_ACT"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

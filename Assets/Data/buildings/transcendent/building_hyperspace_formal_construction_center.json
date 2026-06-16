@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_HYPERSPACE_FORMAL_CONSTRUCTION_CENTER",
+ "description": "TXT_KEY_BUILDING_HYPERSPACE_FORMAL_CONSTRUCTION_CENTER",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_FORMAL_CONSTRUCTION_CENTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_HYPERSPACE_TRANSFINITE_STRUCTURES",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 70
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3423
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERSPACE_FORMAL_CONSTRUCTION_CENTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

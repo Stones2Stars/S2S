@@ -1,0 +1,33 @@
+{
+ "type": "BUILDING_EFFECT_HERITAGE_BIG_CATS",
+ "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_BIG_CATS",
+ "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_BIG_CAT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MILITARY_STANDARD_BIG_CATS",
+   "BUILDING_POLICE_CAT_TRAINER"
+  ],
+  "units": [
+   "UNIT_FELINE_SUPERIOR",
+   "UNIT_GUARDCAT",
+   "UNIT_POLICE_CAT",
+   "UNIT_TRAINEDCAT",
+   "UNIT_WARCAT"
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EFFECT_HERITAGE_BIG_CATS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

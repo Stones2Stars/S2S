@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_AEROPONICS_LAB",
+ "description": "TXT_KEY_BUILDING_AEROPONICS_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_AEROPONICS_LAB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FARM_BOT_CONTROL_CENTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "IS_FRESHWATER",
+    "HAS_POWER",
+    {
+     "type": "BUILDING_HYDROPONICS_LAB",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 2205,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_AEROPONICS_LAB"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_LASER_STARWAY",
+ "description": "TXT_KEY_BUILDING_LASER_STARWAY",
+ "civilopedia": "TXT_KEY_BUILDING_LASER_STARWAY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_EFFECT_SOLAR_ECONOMY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_BROADCAST_NODE": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 23432
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_LASER_STARWAY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LASER_STARWAY"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

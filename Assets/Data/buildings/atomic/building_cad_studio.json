@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_CAD_STUDIO",
+ "description": "TXT_KEY_BUILDING_CAD_STUDIO",
+ "civilopedia": "TXT_KEY_BUILDING_CAD_STUDIO_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MODULAR_CONSTRUCTION_FIRM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_CONSTRUCTION_FIRM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CGI_ANIMATION_STUDIO",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 20
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_RAPID_PROTOTYPING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_MEGACITIES",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": -20
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "cost": {
+  "production": 1605,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CAD_STUDIO"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

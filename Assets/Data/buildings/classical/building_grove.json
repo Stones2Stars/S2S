@@ -1,0 +1,101 @@
+{
+ "type": "BUILDING_GROVE",
+ "description": "TXT_KEY_BUILDING_GROVE",
+ "civilopedia": "TXT_KEY_BUILDING_GROVE_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CASTLE_GARDEN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_WALLS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HIGH_WALLS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BARRICADES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CEMENT_BARRIER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_METAMATERIAL_WALLS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SUPERSTRONG_ALLOY_WALLS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MEGASTRONG_ALLOY_WALLS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 216,
+  "sizeModifier": 2,
+  "countModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GROVE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_PARK"
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 2,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

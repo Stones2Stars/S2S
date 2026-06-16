@@ -1,0 +1,271 @@
+{
+ "type": "BUILDING_ZOO",
+ "description": "TXT_KEY_BUILDING_ZOO",
+ "civilopedia": "TXT_KEY_BUILDING_ZOO_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_PRESERVE",
+   "BUILDING_BREEDING_PROGRAM_ANTELOPE",
+   "BUILDING_BREEDING_PROGRAM_BEAVER",
+   "BUILDING_BREEDING_PROGRAM_BISON",
+   "BUILDING_BREEDING_PROGRAM_BOAR",
+   "BUILDING_BREEDING_PROGRAM_CARIBOU",
+   "BUILDING_BREEDING_PROGRAM_CHINCHILLA",
+   "BUILDING_BREEDING_PROGRAM_DEER",
+   "BUILDING_BREEDING_PROGRAM_ELEPHANT",
+   "BUILDING_BREEDING_PROGRAM_EMU",
+   "BUILDING_BREEDING_PROGRAM_FOX",
+   "BUILDING_BREEDING_PROGRAM_GIRAFFE",
+   "BUILDING_BREEDING_PROGRAM_HIPPO",
+   "BUILDING_BREEDING_PROGRAM_KANGAROO",
+   "BUILDING_BREEDING_PROGRAM_MAMMOTH",
+   "BUILDING_BREEDING_PROGRAM_MINK",
+   "BUILDING_BREEDING_PROGRAM_MOOSE",
+   "BUILDING_BREEDING_PROGRAM_MOUFLON",
+   "BUILDING_BREEDING_PROGRAM_MUSKOX",
+   "BUILDING_BREEDING_PROGRAM_OSTRICH",
+   "BUILDING_BREEDING_PROGRAM_RABBIT",
+   "BUILDING_BREEDING_PROGRAM_RACCOON",
+   "BUILDING_BREEDING_PROGRAM_RHEA",
+   "BUILDING_BREEDING_PROGRAM_RHINO",
+   "BUILDING_BREEDING_PROGRAM_SEA_OTTER",
+   "BUILDING_BREEDING_PROGRAM_ZEBRA",
+   "BUILDING_DESIGNED_ANIMAL_ZOO",
+   "BUILDING_ENCLOSURE_AMPHIBIAN_POND",
+   "BUILDING_ENCLOSURE_BAD_BOYS",
+   "BUILDING_ENCLOSURE_BEAR",
+   "BUILDING_ENCLOSURE_BIG_CAT",
+   "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE",
+   "BUILDING_ENCLOSURE_MARSUPIAL",
+   "BUILDING_ENCLOSURE_NOCTURNAL",
+   "BUILDING_ENCLOSURE_REPTILE",
+   "BUILDING_ENCLOSURE_RODENT",
+   "BUILDING_ENCLOSURE_SEAL",
+   "BUILDING_ENCLOSURE_WALRUS",
+   "BUILDING_ENCLOSURE_WOLF",
+   "BUILDING_ENTOMOLOGY_LAB",
+   "BUILDING_HERPETOLOGY_LAB",
+   "BUILDING_MONTREAL_BIODOME",
+   "BUILDING_ORNITHOLOGY_LAB",
+   "BUILDING_PETTING_ZOO"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_GOVERNORS_MENAGERIE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_STEEL_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_FIBERGLASS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DEER",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ELEPHANTS",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BEAVERS",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BISON",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CAMEL",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_RABBIT",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MAMMOTH",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LLAMA",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_KANGAROO",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PARROTS",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LIZARDS",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_ANIMALS",
+    "interval": "perTurn",
+    "heal": 4
+   }
+  ]
+ },
+ "cost": {
+  "production": 535,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ZOO"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_ZOO"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "centerInCity": true,
+  "worth": 8,
+  "militaryWorth": 4,
+  "conquestProbability": 35,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

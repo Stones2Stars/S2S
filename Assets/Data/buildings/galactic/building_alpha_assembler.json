@@ -1,0 +1,93 @@
+{
+ "type": "BUILDING_ALPHA_ASSEMBLER",
+ "description": "TXT_KEY_BUILDING_ALPHA_ASSEMBLER",
+ "civilopedia": "TXT_KEY_BUILDING_ALPHA_ASSEMBLER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_COMPUTRONIUM_MAKER",
+   "BUILDING_INDUSTRIAL_THINGAMAJIG",
+   "BUILDING_MEGASTRONG_ALLOY_FOUNDRY",
+   "BUILDING_MOLECULAR_ASSEMBLER",
+   "BUILDING_MOLECULAR_FEED",
+   "BUILDING_OMEGA_ASSEMBLER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SUPERSOLID_MATERIAL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_BETA_ASSEMBLER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FARMSCRAPER_III",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_URBAN_PSYCHIC_INTEGRATION",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SELF_AWARE_CITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50,
+   "percent": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 9105,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ALPHA_ASSEMBLER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_TACHYONIC_ANTITELEPHONE",
+ "description": "TXT_KEY_BUILDING_TACHYONIC_ANTITELEPHONE",
+ "civilopedia": "TXT_KEY_BUILDING_TACHYONIC_ANTITELEPHONE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 19755,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TACHYONIC_ANTITELEPHONE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

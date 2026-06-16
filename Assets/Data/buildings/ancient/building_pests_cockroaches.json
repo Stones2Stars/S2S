@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_PESTS_COCKROACHES",
+ "description": "TXT_KEY_BUILDING_PESTS_COCKROACHES",
+ "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": -1
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -1
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PESTS_COCKROACHES"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "autoBuild": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

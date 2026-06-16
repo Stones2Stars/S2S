@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_INTERTEMPORAL_STOCK_MARKET",
+ "description": "TXT_KEY_BUILDING_INTERTEMPORAL_STOCK_MARKET",
+ "civilopedia": "TXT_KEY_BUILDING_INTERTEMPORAL_STOCK_MARKET_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_HEDGE_FUND"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_E_STOCK_MARKET",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 42
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 19055,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERTEMPORAL_STOCK_MARKET"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_MERCHANT": 2
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

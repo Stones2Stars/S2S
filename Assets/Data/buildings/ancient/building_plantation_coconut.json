@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_PLANTATION_COCONUT",
+ "description": "TXT_KEY_BUILDING_PLANTATION_COCONUT",
+ "civilopedia": "TXT_KEY_BUILDING_PLANTATION_COCONUT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_NUTS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_II"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COCONUT",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 139,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PLANTATION_COCONUT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

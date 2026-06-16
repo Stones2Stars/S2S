@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_INTERSTELLAR_HYPERMAGLEV",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_HYPERMAGLEV",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_HYPERMAGLEV_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MAGNETIC_MONOPOLES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_INTERSTELLAR_STAR_ROAD",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 7077
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_HYPERMAGLEV"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

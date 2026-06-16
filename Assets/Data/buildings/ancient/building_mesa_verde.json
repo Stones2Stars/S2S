@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_MESA_VERDE",
+ "description": "TXT_KEY_BUILDING_MESA_VERDE",
+ "civilopedia": "TXT_KEY_BUILDING_MESA_VERDE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BRICKS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_HOUSING_CLIFF_DWELLING",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HOUSING_HIGHRISES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HOUSING_HIGH_TECH_HIGHRISES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_LAUNCH_ARCOLOGY",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "TERRAIN_DESERT",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_SCRUB",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 100
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 1038,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MESA_VERDE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MESA_VERDE"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ENGINEER": 1
+  },
+  "centerInCity": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

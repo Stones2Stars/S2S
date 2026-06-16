@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION",
+ "description": "TXT_KEY_BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION",
+ "civilopedia": "TXT_KEY_BUILDING_SLAVE_COMPOUND_PEDIA",
+ "help": "TXT_KEY_BUILDING_SLAVE_COMPOUND_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SLAVE_COMPOUND",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_SENTRY_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_WATCH_TOWER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BOMBARD_TOWER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GUARD_TOWER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_KEEP_TOWER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ARTILLERY_BATTERY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_AUTO_CANNON_BATTERY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MISSILE_BATTERY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_RAILGUN_BATTERY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_LASER_BATTERY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANTI_MATTER_BATTERY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TOWN_WATCH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TOWN_PATROL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GUARDHOUSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GUARD_STATION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHERIFFS_OFFICE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_POLICE_STATION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_POLICE_PRECINCT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SLAVE_MARKET"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SLAVES": 1
+  },
+  "neverCapture": true,
+  "worth": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

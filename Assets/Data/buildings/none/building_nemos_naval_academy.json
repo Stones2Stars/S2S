@@ -1,0 +1,102 @@
+{
+ "type": "BUILDING_NEMOS_NAVAL_ACADEMY",
+ "description": "TXT_KEY_BUILDING_NEMOS_NAVAL_ACADEMY",
+ "civilopedia": "TXT_KEY_BUILDING_NEMOS_NAVAL_ACADEMY_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_NAUTILUS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_STEAMPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "IS_WATER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "AREA_SIZE",
+     "scope": "world",
+     "min": 10
+    },
+    {
+     "type": "BUILDING_NAVAL_ACADEMY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_NAVAL_ACADEMY",
+     "scope": "empire",
+     "min": 3
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "experience": {
+  "city": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "cost": {
+  "production": 3930
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NEMO_ACADEMY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NEMOS_NAVAL_ACADEMY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_NAVAL_ACADEMY"
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 6,
+  "militaryWorth": 6,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_STEAM",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

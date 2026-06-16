@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_INDUSTRIAL_PARK",
+ "description": "TXT_KEY_BUILDING_INDUSTRIAL_PARK",
+ "civilopedia": "TXT_KEY_BUILDING_INDUSTRIAL_PARK_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARCOLOGY",
+   "BUILDING_CO2_RESERVOIR",
+   "BUILDING_DEACIDIFICATION_STATION",
+   "BUILDING_DELHI_MUMBAI_INDUSTRIAL_CORRIDOR",
+   "BUILDING_HYDROCARBON_REFINERY",
+   "BUILDING_MIND_CONTROL_CENTER",
+   "BUILDING_NATIONAL_SHIELD",
+   "BUILDING_NOVUS_REFINERY",
+   "BUILDING_OZONE_GENERATOR",
+   "BUILDING_POLLUTION_SCRUBBERS",
+   "BUILDING_RECYCLING_CENTER",
+   "BUILDING_ROCKET_FUEL_REFINERY",
+   "BUILDING_TECTONIC_DAMPERS",
+   "BUILDING_VENTURE_INDUSTRIES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_FACTORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -2,
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_OIL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_COAL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "cost": {
+  "production": 800,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INDUSTRIAL_PARK"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_FACTORY"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ENGINEER": 2
+  },
+  "worth": 6,
+  "militaryWorth": 35,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 3,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

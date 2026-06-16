@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_INTERSTELLAR_NEUTRINO_BEACON",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_NEUTRINO_BEACON",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_NEUTRINO_BEACON_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_WORMHOLE_BEACON",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4789
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_NEUTRINO_BEACON"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

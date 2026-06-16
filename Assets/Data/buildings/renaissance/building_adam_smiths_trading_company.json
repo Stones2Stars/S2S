@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_ADAM_SMITHS_TRADING_COMPANY",
+ "description": "TXT_KEY_BUILDING_ADAM_SMITHS_TRADING_COMPANY",
+ "civilopedia": "TXT_KEY_BUILDING_ADAM_SMITHS_TRADING_COMPANY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BUILDING_UNIVERSITY",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "specialist": {
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 25
+   }
+  }
+ },
+ "cost": {
+  "production": 3210,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ADAM_SMITH"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ADAM_SMITHS_TRADING_COMPANY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COLOSSUS"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_MERCHANT": 2
+  },
+  "nukeImmune": true,
+  "forceAllTradeRoutes": true,
+  "teamShare": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

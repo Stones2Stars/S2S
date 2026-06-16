@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_DEEP_SPACE_CLAYTRONIC_STATION",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_CLAYTRONIC_STATION",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_CLAYTRONIC_STATION_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 6326
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_CLAYTRONIC_STATION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

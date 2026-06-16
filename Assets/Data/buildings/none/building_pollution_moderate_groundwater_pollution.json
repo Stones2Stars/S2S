@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_POLLUTION_MODERATE_GROUNDWATER_POLLUTION",
+ "description": "TXT_KEY_BUILDING_POLLUTION_MODERATE_GROUNDWATER_POLLUTION",
+ "civilopedia": "TXT_KEY_BUILDING_WATER_POLLUTION_PEDIA",
+ "food": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYWATERPOLLUTION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

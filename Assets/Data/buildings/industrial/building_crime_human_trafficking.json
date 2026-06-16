@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_CRIME_HUMAN_TRAFFICKING",
+ "description": "TXT_KEY_BUILDING_CRIME_HUMAN_TRAFFICKING",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_HUMAN_TRAFFICKING_PEDIA",
+ "requires": {
+  "build": {
+   "noneOf": [
+    {
+     "type": "BUILDING_WORLDVIEW_SLAVERY_ACTIVE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 20
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -6,
+   "perPopulation": {
+    "percent": -30
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -4,
+   "perPopulation": {
+    "percent": -30
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -8
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

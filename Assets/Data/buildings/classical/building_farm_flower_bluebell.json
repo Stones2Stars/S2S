@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_FARM_FLOWER_BLUEBELL",
+ "description": "TXT_KEY_BUILDING_FARM_FLOWER_BLUEBELL",
+ "civilopedia": "TXT_KEY_BUILDING_FARM_FLOWER_BLUEBELL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_FLOWERS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_GREENHOUSE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FLAX",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_TOBACCO",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_APIARY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 270,
+  "sizeModifier": 2,
+  "countModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FARM_FLOWER_BLUEBELL"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

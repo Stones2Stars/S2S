@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_DEEP_SPACE_CONSCIOUS_STATION",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_CONSCIOUS_STATION",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_CONSCIOUS_STATION_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_EDEN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DEEP_SPACE_SOCIAL_ENGINEERING",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1000
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1452
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_CONSCIOUS_STATION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

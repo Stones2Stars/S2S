@@ -1,0 +1,93 @@
+{
+ "type": "BUILDING_BARRICADES",
+ "description": "TXT_KEY_BUILDING_BARRICADES",
+ "civilopedia": "TXT_KEY_BUILDING_BARRICADES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLARNEY_CASTLE",
+   "BUILDING_CASTLE",
+   "BUILDING_CITY_GATEHOUSE",
+   "BUILDING_GROVE",
+   "BUILDING_KRAK_DES_CHEVALIERS",
+   "BUILDING_THE_ISHTAR_GATE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CEMENT_BARRIER"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 20
+   },
+   "min": {
+    "flat": 2
+   },
+   "noEntryLevel": {
+    "flat": 100
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 455,
+  "sizeModifier": 1,
+  "countModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BARRICADES"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 2,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

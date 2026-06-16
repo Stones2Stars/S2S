@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_CRIME_ARSON",
+ "description": "TXT_KEY_BUILDING_CRIME_ARSON",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_ARSON_PEDIA",
+ "gold": {
+  "city": {
+   "percent": -3
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 8
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2,
+   "perPopulation": {
+    "percent": -15
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

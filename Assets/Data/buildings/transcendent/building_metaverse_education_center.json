@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_METAVERSE_EDUCATION_CENTER",
+ "description": "TXT_KEY_BUILDING_METAVERSE_EDUCATION_CENTER",
+ "civilopedia": "TXT_KEY_BUILDING_METAVERSE_EDUCATION_CENTER_PEDIA",
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "cost": {
+  "production": 2000
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_METAVERSE_EDUCATION_CENTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE",
+   "MAPCATEGORY_GALACTIC",
+   "MAPCATEGORY_SOLAR_SYSTEM",
+   "MAPCATEGORY_MARTIAN",
+   "MAPCATEGORY_VENUSIAN",
+   "MAPCATEGORY_JOVIAN",
+   "MAPCATEGORY_LUNAR",
+   "MAPCATEGORY_CISLUNAR",
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_TITANIC",
+   "MAPCATEGORY_UNIVERSAL",
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

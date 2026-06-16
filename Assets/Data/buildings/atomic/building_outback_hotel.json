@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_OUTBACK_HOTEL",
+ "description": "TXT_KEY_BUILDING_OUTBACK_HOTEL",
+ "civilopedia": "TXT_KEY_BUILDING_OUTBACK_HOTEL_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TOURISM_MEGACOMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_KANGAROO",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_HOTEL",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_DESERT",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_SCRUB",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 1280,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_OUTBACK_HOTEL"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

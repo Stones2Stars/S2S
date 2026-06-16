@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_LUNAR_MAGNESIUM_EXTRACTION_FACILITY",
+ "description": "TXT_KEY_BUILDING_LUNAR_MAGNESIUM_EXTRACTION_FACILITY",
+ "civilopedia": "TXT_KEY_BUILDING_LUNAR_MAGNESIUM_EXTRACTION_FACILITY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_LUNAR_ROCK_QUARRY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -20,
+   "percent": [
+    {
+     "value": 5000,
+     "enabled": {
+      "type": "TECH_LUNAR_TRADE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 225
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LUNAR_MAGNESIUM_EXTRACTION_FACILITY"
+  }
+ },
+ "identity": {
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

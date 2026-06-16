@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_FARM_CROP_GINGER_ROOT",
+ "description": "TXT_KEY_BUILDING_FARM_CROP_GINGER_ROOT",
+ "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_GINGER_ROOT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_SEASONING"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SPICES",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_RICE",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 243,
+  "sizeModifier": 3,
+  "countModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FARM_CROP_GINGER_ROOT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

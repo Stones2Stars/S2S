@@ -1,0 +1,37 @@
+{
+ "type": "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_2",
+ "description": "TXT_KEY_BUILDING_EDUCATION_BLISSFUL_IGNORANCE_2",
+ "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_1"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_PALACE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "anarchy": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYEDUCATION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

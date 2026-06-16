@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_RESOURCES_DRUGS",
+ "description": "TXT_KEY_BUILDING_RESOURCES_DRUGS",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_I"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_PLANTATION_COCA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GROVE_COLA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FLY_AGARIC_GATHERER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GROVE_GINKGO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_CANNABIS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CANNABIS_GROW_OPERATION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_KAVA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_MARSH_MALLOW",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_MYRRH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_PEYOTE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_POPPY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_TOBACCO",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_DRUGS"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

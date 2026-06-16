@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_PANOPTICON_PRISON",
+ "description": "TXT_KEY_BUILDING_PANOPTICON_PRISON",
+ "civilopedia": "TXT_KEY_BUILDING_PANOPTICON_PRISON_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_STEAMPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -4
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 4,
+   "percent": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -30
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "cost": {
+  "production": 655
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PANOPTICON_PRISON"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SPY": 1
+  },
+  "worth": 5,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_STEAM",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

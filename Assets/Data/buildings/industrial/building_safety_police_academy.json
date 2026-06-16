@@ -1,0 +1,22 @@
+{
+ "type": "BUILDING_SAFETY_POLICE_ACADEMY",
+ "description": "TXT_KEY_BUILDING_SAFETY_POLICE_ACADEMY",
+ "civilopedia": "TXT_KEY_BUILDING_SAFETY_POLICE_ACADEMY_PEDIA",
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SAFETY_POLICE_ACADEMY"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

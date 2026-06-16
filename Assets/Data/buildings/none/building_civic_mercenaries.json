@@ -1,0 +1,28 @@
+{
+ "type": "BUILDING_CIVIC_MERCENARIES",
+ "description": "TXT_KEY_BUILDING_CIVIC_MERCENARIES",
+ "civilopedia": "TXT_KEY_BUILDING_CIVIC_MERCENARIES_PEDIA",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_MERCENARIES",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CIVIC_MERCENARIES"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

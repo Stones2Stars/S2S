@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_VENUS_CALCIUM_CARBONATE_STRUCTURES",
+ "description": "TXT_KEY_BUILDING_VENUS_CALCIUM_CARBONATE_STRUCTURES",
+ "civilopedia": "TXT_KEY_BUILDING_VENUS_CALCIUM_CARBONATE_STRUCTURES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_TERRAFORMED_VENUS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_VENUS_CO2_REMOVAL",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 6372
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_VENUS_CALCIUM_CARBONATE_STRUCTURES"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

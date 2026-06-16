@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_WATER_TOWER",
+ "description": "TXT_KEY_BUILDING_WATER_TOWER",
+ "civilopedia": "TXT_KEY_BUILDING_WATER_TOWER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_WATER_PUMPING_STATION",
+   "BUILDING_WIND_WATER_PUMP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_FRESHWATER",
+    {
+     "type": "BUILDING_WATER_PIPES",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_WATERPROOF_CEMENT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 515,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WATER_TOWER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

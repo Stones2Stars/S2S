@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_CULTURE_STEAMPUNK",
+ "description": "TXT_KEY_BUILDING_CULTURE_STEAMPUNK",
+ "civilopedia": "TXT_KEY_BUILDING_CULTURE_STEAMPUNK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COAL",
+     "scope": "city",
+     "connection": "vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 3930
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CULTURE_STEAMPUNK"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "noInstanceLimit": true,
+  "worth": 5,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_STEAM",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

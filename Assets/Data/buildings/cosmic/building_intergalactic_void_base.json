@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_INTERGALACTIC_VOID_BASE",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_VOID_BASE",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_VOID_BASE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_VOID_COLONY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERGALACTIC_COMMAND_CENTER",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_INTERGALACTIC_VOID",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "cost": {
+  "production": 4004
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_VOID_BASE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

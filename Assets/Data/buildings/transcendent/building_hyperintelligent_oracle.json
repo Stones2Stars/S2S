@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_HYPERINTELLIGENT_ORACLE",
+ "description": "TXT_KEY_BUILDING_HYPERINTELLIGENT_ORACLE",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERINTELLIGENT_ORACLE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_TRANSFINITE_ORACLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 24355,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERINTELLIGENT_ORACLE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

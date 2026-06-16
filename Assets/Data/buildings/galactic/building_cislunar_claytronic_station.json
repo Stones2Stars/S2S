@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_CISLUNAR_CLAYTRONIC_STATION",
+ "description": "TXT_KEY_BUILDING_CISLUNAR_CLAYTRONIC_STATION",
+ "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_CLAYTRONIC_STATION_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_METAMORPHIC_STATION",
+   "BUILDING_CISLUNAR_WORMHOLE_TO_EARTH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CISLUNAR_NANOSATELLITE_CONSTELLATION",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 9246
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CISLUNAR_CLAYTRONIC_STATION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

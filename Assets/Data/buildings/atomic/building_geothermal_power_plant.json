@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_GEOTHERMAL_POWER_PLANT",
+ "description": "TXT_KEY_BUILDING_GEOTHERMAL_POWER_PLANT",
+ "civilopedia": "TXT_KEY_BUILDING_GEOTHERMAL_POWER_PLANT_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ENHANCED_GEOTHERMAL_SYSTEM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_FACTORY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_POWER_LINES",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_GEOTHERMAL_ENERGY",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ],
+    [
+     {
+      "type": "IMPROVEMENT_GEOTHERMAL_FACTORY",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 1475,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GEOTHERMAL_POWER_PLANT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

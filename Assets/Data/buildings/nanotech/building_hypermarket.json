@@ -1,0 +1,1074 @@
+{
+ "type": "BUILDING_HYPERMARKET",
+ "description": "TXT_KEY_BUILDING_HYPERMARKET",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERMARKET_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUGMENTED_EQUIPMENT_CENTER",
+   "BUILDING_DRIED_FISH_MAKER",
+   "BUILDING_DRIED_MEAT_MAKER",
+   "BUILDING_E_CLOTHING_OUTFITTER",
+   "BUILDING_GUILD_ARTISANS",
+   "BUILDING_GUILD_FISHMONGERS",
+   "BUILDING_GUILD_GROCERS",
+   "BUILDING_GUILD_MERCHANTS",
+   "BUILDING_GUILD_TAILORS",
+   "BUILDING_JADE_IMPORTER",
+   "BUILDING_MEGATOWER_MALL_LEVEL",
+   "BUILDING_MOTORCYCLE_CLUB",
+   "BUILDING_NATIONAL_CENSUS",
+   "BUILDING_QUANTIFIED_HEALTH_CENTER",
+   "BUILDING_SCARBOROUGH_FAIR",
+   "BUILDING_SHOPPING_DRONE_CONTROL_CENTER",
+   "BUILDING_SILK_ROAD",
+   "BUILDING_TROYES_TRADE_FAIR",
+   "BUILDING_UNMANNED_MARKET",
+   "BUILDING_WILLIS_TOWER"
+  ],
+  "units": [
+   "UNIT_AUTO_ELECTRICIAN",
+   "UNIT_GEAR_MECHANIC",
+   "UNIT_MECHANIC",
+   "UNIT_MOTORPOOL"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_APPLIANCE_STORE",
+   "BUILDING_ART_SUPPLY_STORE",
+   "BUILDING_AUTO_REPAIR_SHOP",
+   "BUILDING_BARBER_SHOP",
+   "BUILDING_BAZAAR",
+   "BUILDING_BOOK_STORE",
+   "BUILDING_BRIDAL_SHOP",
+   "BUILDING_CAR_RENTAL_STORE",
+   "BUILDING_CAR_WASH",
+   "BUILDING_CELLPHONE_STORE",
+   "BUILDING_CIGAR_ROLLERS_SHOP",
+   "BUILDING_COFFEE_SHOP",
+   "BUILDING_COMICBOOK_STORE",
+   "BUILDING_COPY_STORE",
+   "BUILDING_COSTUME_SHOP",
+   "BUILDING_CRAFTS_HUT",
+   "BUILDING_DEPARTMENT_STORE",
+   "BUILDING_DISCOUNT_STORE",
+   "BUILDING_DRY_CLEANER",
+   "BUILDING_ELECTRICIANS_WORKSHOP",
+   "BUILDING_ELECTRONICS_STORE",
+   "BUILDING_EMPORIUM",
+   "BUILDING_FISHMONGER",
+   "BUILDING_FLORIST",
+   "BUILDING_GEMCUTTER",
+   "BUILDING_GROCER",
+   "BUILDING_HEALTH_FOOD_STORE",
+   "BUILDING_LAUNDRY_HUT",
+   "BUILDING_LIQUOR_STORE",
+   "BUILDING_LUXURY_FURNITURE_WORKSHOP",
+   "BUILDING_MAIL_ORDER_CATALOGUE",
+   "BUILDING_MALL",
+   "BUILDING_MARKET",
+   "BUILDING_MATTRESS_STORE",
+   "BUILDING_MILITARY_SURPLUS_STORE",
+   "BUILDING_NEWS_STAND",
+   "BUILDING_PHOTOGRAPHY_STUDIO",
+   "BUILDING_PLUMBERS_WORKSHOP",
+   "BUILDING_PORTRAIT_PAINTER",
+   "BUILDING_POST_OFFICE",
+   "BUILDING_QUILT_MAKER",
+   "BUILDING_RECORD_STORE",
+   "BUILDING_ROBOTIC_PET_SHOP",
+   "BUILDING_SEAL_MAKER",
+   "BUILDING_SMARTPHONE_MANUFACTURER",
+   "BUILDING_SMOKEHOUSE",
+   "BUILDING_SMOKE_SIGNALS",
+   "BUILDING_SPORTS_SHOP",
+   "BUILDING_STATIONERY_STORE",
+   "BUILDING_SUPERMARKET",
+   "BUILDING_SURF_SHOP",
+   "BUILDING_TABLET_MANUFACTURER",
+   "BUILDING_TAILOR_SHOP",
+   "BUILDING_TEA_HOUSE",
+   "BUILDING_TOY_STORE",
+   "BUILDING_WATCHMAKERS_SHOP",
+   "BUILDING_WIG_SHOP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SHOPPING_DISTRICT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CLAM",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CRAB",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FISH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LOBSTER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PEARLS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHRIMP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WHALE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 150,
+   "percent": [
+    2,
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_TIRES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_BICYCLES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "BONUS_JEWELRY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_PERFUME",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "BONUS_CLOTHING",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 600,
+     "enabled": {
+      "type": "BONUS_SHOES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 600,
+     "enabled": {
+      "type": "BONUS_HATS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "BONUS_TOYS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_BOOKS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_GLASSWARE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_POTTERY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_SCULPTURES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_BASKETS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_FRUIT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_VEGETABLES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_NUTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_BERRIES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "BONUS_FLOWERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_RAW_FISH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_RAW_MEAT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_SHELLFISH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_BREAD",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_EGGS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_CHEESE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_HONEY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "BONUS_OLIVE_OIL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_LACQUERWARE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_DRIED_FRUIT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_DRIED_FISH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_DRIED_MEAT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_LARD",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_CANDY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ENERGY_DRINK",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_SODA_POP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_POTATO_CHIPS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_NUTELLA",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_SPONGES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "BONUS_REFRIGERATORS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "BONUS_MICROWAVE_OVENS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_TELEVISIONS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_CARPETS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_CANDLES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_POWER_TOOLS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_SERVICE_BOTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_SOYLENT_GREEN",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "BONUS_DISHWASHERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "BONUS_VACUUM_CLEANERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "BONUS_WASHER_DRYER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "BONUS_BLENDER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_CANNED_FOOD",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "BONUS_CALCULATORS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "BONUS_RADIOS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_PENCILS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_TYPEWRITERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "BONUS_PHONOGRAPHS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_THEREMIN",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_BEADS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_COMPUTERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_DISKETTES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_FIREARMS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_MASKS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_MILK",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_OSTRICH_FEATHERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_PARTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ROPE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_SKIS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_VIDEO_GAMES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_WAX",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_CHARCOAL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_CLAY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_DRUGS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_GRAINS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_GRAPHITE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_SEASONING",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_QUANTUM_DOTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_AMBER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_DIAMOND",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_GEODE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_GOLD_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_JADE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_RUBIES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_SAPPHIRES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_SILVER_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_TURQUOISE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_BRASS_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_BRONZE_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_COPPER_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ELECTRUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_GOLD_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_PLATINUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_SILVER_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5,
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 50,
+   "percent": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1,
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    21,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TOBACCO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HATS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHOES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SALT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1,
+   "modifier": {
+    "percent": 7
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_MECHANICAL",
+    "interval": "perTurn",
+    "heal": 8
+   }
+  ]
+ },
+ "cost": {
+  "production": 3665,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERMARKET"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_HYPERMARKET"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_MERCHANT": 5,
+   "SPECIALIST_ARTIST": 1
+  },
+  "worth": 6,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

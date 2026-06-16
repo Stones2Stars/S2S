@@ -1,0 +1,41 @@
+{
+ "type": "BUILDING_HERD_ZEBRA",
+ "description": "TXT_KEY_BUILDING_HERD_ZEBRA",
+ "civilopedia": "TXT_KEY_BUILDING_HERD_ZEBRA_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_ZEBRA"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HERD_ZEBRA"
+  }
+ },
+ "sound": {
+  "construct": "SND_AMB_HORSE_COBBLESTONES"
+ },
+ "identity": {
+  "worth": 3,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

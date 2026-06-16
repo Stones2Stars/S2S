@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_CRIME_MEDICAL_FRAUD",
+ "description": "TXT_KEY_BUILDING_CRIME_MEDICAL_FRAUD",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_MEDICAL_FRAUD_PEDIA",
+ "gold": {
+  "city": {
+   "flat": -10,
+   "percent": -5
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 8
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2,
+   "perPopulation": {
+    "percent": -20
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -4,
+   "perPopulation": {
+    "percent": -30
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

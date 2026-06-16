@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_TERRAFORMED_JUPITER",
+ "description": "TXT_KEY_BUILDING_TERRAFORMED_JUPITER",
+ "civilopedia": "TXT_KEY_BUILDING_TERRAFORMED_JUPITER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_JOVIAN_ANTIMATTER_HARVESTER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LIFE_JOVIAN_CLOUDS",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_JUPITER",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 42829
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TERRAFORMED_JUPITER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TERRAFORMED_JUPITER"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

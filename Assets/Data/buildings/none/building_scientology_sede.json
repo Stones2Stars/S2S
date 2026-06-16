@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_SCIENTOLOGY_SEDE",
+ "description": "TXT_KEY_BUILDING_SCIENTOLOGY_SEDE",
+ "civilopedia": "TXT_KEY_BUILDING_SCIENTOLOGY_SEDE_PEDIA",
+ "gold": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_SCIENTOLOGY": {
+    "flat": 1
+   }
+  }
+ },
+ "grants": {
+  "holyCity": "RELIGION_SCIENTOLOGY"
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SCIENTOLOGY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SCIENTOLOGY_SEDE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BUDDHIST"
+ },
+ "identity": {
+  "shrine": "RELIGION_SCIENTOLOGY",
+  "nukeImmune": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_SCIENTOLOGY",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,143 @@
+{
+ "type": "BUILDING_CRIME_SHOPLIFTING",
+ "description": "TXT_KEY_BUILDING_CRIME_SHOPLIFTING",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_SHOPLIFTING_PEDIA",
+ "gold": {
+  "city": {
+   "flat": -2,
+   "percent": [
+    {
+     "value": -100,
+     "enabled": {
+      "type": "TECH_CURRENCY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -200,
+     "enabled": {
+      "type": "TECH_USURY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -200,
+     "enabled": {
+      "type": "TECH_BANKING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -200,
+     "enabled": {
+      "type": "TECH_MERCANTILISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -300,
+     "enabled": {
+      "type": "TECH_ECONOMICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -300,
+     "enabled": {
+      "type": "TECH_CONSUMERISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -400,
+     "enabled": {
+      "type": "TECH_APPLIED_ECONOMICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -500,
+     "enabled": {
+      "type": "TECH_GLOBALIZATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -500,
+     "enabled": {
+      "type": "TECH_CONGLOMERATES",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -500,
+     "enabled": {
+      "type": "TECH_MEGACORPORATIONS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -300,
+     "enabled": {
+      "type": "TECH_ENVIRONMENTAL_ECONOMICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -300,
+     "enabled": {
+      "type": "TECH_PLANETARY_ECONOMICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -200,
+     "enabled": {
+      "type": "TECH_LUNAR_TRADE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -200,
+     "enabled": {
+      "type": "TECH_INTERSTELLAR_TRADE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 6
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

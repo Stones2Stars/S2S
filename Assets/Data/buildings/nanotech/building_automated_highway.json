@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_AUTOMATED_HIGHWAY",
+ "description": "TXT_KEY_BUILDING_AUTOMATED_HIGHWAY",
+ "civilopedia": "TXT_KEY_BUILDING_AUTOMATED_HIGHWAY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERLACED_INTERSECTION",
+   "BUILDING_SUBTERRANEAN_TUNNEL_NETWORK",
+   "BUILDING_WIRELESS_EV_CHARGING"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TELEPORT_BOOTH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_HIGHWAY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SKYROAD_CONTROL_TOWER",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": [
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_AUTOMATED_URBANIZATION",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 3245,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_AUTOMATED_HIGHWAY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

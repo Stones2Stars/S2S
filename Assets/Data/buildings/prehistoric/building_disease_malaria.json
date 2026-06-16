@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_DISEASE_MALARIA",
+ "description": "TXT_KEY_BUILDING_DISEASE_MALARIA",
+ "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "BUILDING_PESTS_MOSQUITOES",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": -7
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -8
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -8
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -7
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -7,
+   "perPopulation": {
+    "percent": -60
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -4
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYDISEASE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

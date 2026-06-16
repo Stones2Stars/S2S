@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_NANOTECH_CLOTHING_OUTFITTER",
+ "description": "TXT_KEY_BUILDING_NANOTECH_CLOTHING_OUTFITTER",
+ "civilopedia": "TXT_KEY_BUILDING_NANOTECH_CLOTHING_OUTFITTER_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_E_CLOTHING_OUTFITTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_UTILITY_FOG",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 5455,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NANOTECH_CLOTHING_OUTFITTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

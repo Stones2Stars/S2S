@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_DEEP_SPACE_COMPUTRONIUM_ASTEROID",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_COMPUTRONIUM_ASTEROID",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_COMPUTRONIUM_ASTEROID_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DEEP_SPACE_COLD_FUSION",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 17265
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_COMPUTRONIUM_ASTEROID"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

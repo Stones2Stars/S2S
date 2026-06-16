@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_INTERGALACTIC_COMPUTRONIUM_CONVERSION_FLEET",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_COMPUTRONIUM_CONVERSION_FLEET",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_COMPUTRONIUM_CONVERSION_FLEET_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_VON_NEUMANN_COLONIZERS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3531
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_COMPUTRONIUM_CONVERSION_FLEET"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

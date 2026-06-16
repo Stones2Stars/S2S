@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_ADVANCED_METI",
+ "description": "TXT_KEY_BUILDING_ADVANCED_METI",
+ "civilopedia": "TXT_KEY_BUILDING_ADVANCED_METI_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_ASTROBIOLOGY_LAB",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10,
+   "percent": [
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_XENODIPLOMACY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_BINARY_SEMIOTICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_INTERSTELLAR_COMMUNICATION",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 8970,
+  "sizeModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_METI"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ADVANCED_METI"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

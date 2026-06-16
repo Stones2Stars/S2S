@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_SPACE_COLONY_VENUS",
+ "description": "TXT_KEY_BUILDING_SPACE_COLONY_VENUS",
+ "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_VENUS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_VENUS_BROADBAND",
+   "BUILDING_VENUS_CARBONWORKS",
+   "BUILDING_VENUS_CITY",
+   "BUILDING_VENUS_ECOSYSTEM",
+   "BUILDING_VENUS_HYDROGEN_BOMBARDMENT",
+   "BUILDING_VENUS_HYDROGEN_GENERATOR",
+   "BUILDING_VENUS_MAGLEV_TERMINAL",
+   "BUILDING_VENUS_OXYGEN_GENERATOR",
+   "BUILDING_VENUS_SOLAR_ARRAY",
+   "BUILDING_VENUS_SURFACE_PROBE",
+   "BUILDING_VENUS_VERTICAL_WIND_FARM"
+  ],
+  "units": [
+   "UNIT_VENUS_INFANTRY"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SPACE_COLONY_VENUS"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

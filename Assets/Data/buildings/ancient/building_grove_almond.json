@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_GROVE_ALMOND",
+ "description": "TXT_KEY_BUILDING_GROVE_ALMOND",
+ "civilopedia": "TXT_KEY_BUILDING_GROVE_ALMOND_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_NUTS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_II"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ALMONDS",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 139,
+  "sizeModifier": 1,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GROVE_ALMOND"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

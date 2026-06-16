@@ -1,0 +1,93 @@
+{
+ "type": "BUILDING_LEARNING_CENTER",
+ "description": "TXT_KEY_BUILDING_LEARNING_CENTER",
+ "civilopedia": "TXT_KEY_BUILDING_LEARNING_CENTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BOOKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_HOLOGRAPHIC_SCHOOL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ELEMENTARY_SCHOOL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_UNIVERSITY",
+      "scope": "city"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_CORPORATE",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -4
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "commerceHappiness": {
+  "city": {
+   "research": {
+    "flat": 5
+   },
+   "culture": {
+    "flat": 5
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 12
+  }
+ },
+ "cost": {
+  "production": 455,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LEARNING_CENTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

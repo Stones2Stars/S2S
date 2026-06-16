@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_HOUSING_MANORS",
+ "description": "TXT_KEY_BUILDING_HOUSING_MANORS",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_MANORS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUXURY_FURNITURE_WORKSHOP",
+   "BUILDING_LYCEUM",
+   "BUILDING_MAUSOLEUM"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_HOUSING_ANIMAL_HIDE_TENTS",
+   "BUILDING_HOUSING_HOMELESS",
+   "BUILDING_HOUSING_TIPIS",
+   "BUILDING_HOUSING_VILLAS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MARBLE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "IS_FRESHWATER",
+    {
+     "type": "BUILDING_SEWER_SYSTEM",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BRICKS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_MANORS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

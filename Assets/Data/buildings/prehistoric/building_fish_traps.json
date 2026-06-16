@@ -1,0 +1,123 @@
+{
+ "type": "BUILDING_FISH_TRAPS",
+ "description": "TXT_KEY_BUILDING_FISH_TRAPS",
+ "civilopedia": "TXT_KEY_BUILDING_FISH_TRAPS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_NET_CRAB",
+   "BUILDING_NET_EEL",
+   "BUILDING_NET_LOBSTER",
+   "BUILDING_NET_PRAWN",
+   "BUILDING_NET_SALMON",
+   "BUILDING_NET_SHRIMP"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AQUAFARM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BASKETS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "IS_WATER",
+    "HAS_RIVER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FISH",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CRAB",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHRIMP",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LOBSTER",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    }
+   ],
+   "terrains": {
+    "TERRAIN_COAST": {
+     "flat": 1
+    },
+    "TERRAIN_COAST_POLAR": {
+     "flat": 1
+    },
+    "TERRAIN_COAST_TROPICAL": {
+     "flat": 1
+    },
+    "TERRAIN_LAKE_SHORE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 50,
+  "countModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FISH_TRAPS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_ARTESIAN_WELL"
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 95,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,118 @@
+{
+ "type": "BUILDING_MISSILE_BATTERY",
+ "description": "TXT_KEY_BUILDING_MISSILE_BATTERY",
+ "civilopedia": "TXT_KEY_BUILDING_MISSILE_BATTERY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_RAILGUN_BATTERY"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_ARTILLERY_BATTERY",
+   "BUILDING_AUTO_CANNON_BATTERY",
+   "BUILDING_BOMBARD_TOWER",
+   "BUILDING_FORTIFIED_OUTPOST",
+   "BUILDING_FRONTIER_OUTPOST",
+   "BUILDING_GUARD_TOWER",
+   "BUILDING_KEEP_TOWER",
+   "BUILDING_WATCH_TOWER"
+  ]
+ },
+ "production": {
+  "city": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_MICROCHIPS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 60
+   },
+   "bombardDefense": {
+    "percent": 20
+   },
+   "airDefense": {
+    "percent": -20
+   },
+   "dynamicDefense": {
+    "flat": 70
+   },
+   "adjacentDamage": {
+    "percent": 40
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -9
+  }
+ },
+ "cost": {
+  "production": 1345,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MISSILE_BATTERY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COMMAND_BUNKER"
+ },
+ "identity": {
+  "worth": 8,
+  "militaryWorth": 8,
+  "sightRange": 2,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

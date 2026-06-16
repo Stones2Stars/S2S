@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_DEEP_SPACE_SHIELDING",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_SHIELDING",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_SHIELDING_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HALO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 2363
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_SHIELDING"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

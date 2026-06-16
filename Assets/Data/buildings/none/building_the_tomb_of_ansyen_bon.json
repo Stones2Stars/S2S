@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_THE_TOMB_OF_ANSYEN_BON",
+ "description": "TXT_KEY_BUILDING_THE_TOMB_OF_ANSYEN_BON",
+ "civilopedia": "TXT_KEY_BUILDING_THE_TOMB_OF_ANSYEN_BON_PEDIA",
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "grants": {
+  "holyCity": "RELIGION_VOODOO"
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SHRINE_VOODOO"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_THE_TOMB_OF_ANSYEN_BON"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_VOODOO"
+ },
+ "identity": {
+  "shrine": "RELIGION_VOODOO",
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 3
+  },
+  "nukeImmune": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_VOODOO",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,40 @@
+{
+ "type": "BUILDING_CARBON_EXCHANGE",
+ "description": "TXT_KEY_BUILDING_CARBON_EXCHANGE",
+ "civilopedia": "TXT_KEY_BUILDING_CARBON_EXCHANGE_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ECOSYSTEM_SERVICES_MARKET"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "cost": {
+  "production": 2105,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CARBON_EXCHANGE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

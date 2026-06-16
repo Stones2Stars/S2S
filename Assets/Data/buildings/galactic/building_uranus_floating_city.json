@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_URANUS_FLOATING_CITY",
+ "description": "TXT_KEY_BUILDING_URANUS_FLOATING_CITY",
+ "civilopedia": "TXT_KEY_BUILDING_URANUS_FLOATING_CITY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_TERRAFORMED_URANUS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_EFFECT_SOLAR_ECONOMY",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_URANUS",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4123
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_URANUS_FLOATING_CITY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

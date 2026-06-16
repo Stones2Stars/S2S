@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_ORCHARD_JUJUBE",
+ "description": "TXT_KEY_BUILDING_ORCHARD_JUJUBE",
+ "civilopedia": "TXT_KEY_BUILDING_ORCHARD_JUJUBE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_FRUIT"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_III"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MANGO",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_DATES",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 139,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ORCHARD_JUJUBE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

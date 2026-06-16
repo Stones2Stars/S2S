@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_REMAINS_SABRETOOTH",
+ "description": "TXT_KEY_BUILDING_REMAINS_SABRETOOTH",
+ "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_FOLKLORE_REQUIREMENT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FOLKLORE_SABRETOOTH",
+     "scope": "empire",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_PALEONTOLOGY_LAB",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": [
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_BIOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FOLKLORE_SABRETOOTH"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 1,
+  "conquestProbability": 90,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

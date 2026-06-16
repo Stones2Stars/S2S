@@ -1,0 +1,107 @@
+{
+ "type": "BUILDING_CRYPTOLOGY_CENTER",
+ "description": "TXT_KEY_BUILDING_CRYPTOLOGY_CENTER",
+ "civilopedia": "TXT_KEY_BUILDING_CRYPTOLOGY_CENTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTELLIGENCE_AGENCY",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PARTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -16
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 8,
+   "percent": [
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_WAR_SIMULATIONS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_KNOWLEDGE_MANAGEMENT",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_CYBERWARFARE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_MASS_SURVEILLANCE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -8
+  }
+ },
+ "cost": {
+  "production": 1030,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CRYPTOLOGY_CENTER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_INTELLIGENCE_AGENCY"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SPY": 1
+  },
+  "worth": 5,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

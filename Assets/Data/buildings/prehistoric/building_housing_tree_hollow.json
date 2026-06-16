@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_HOUSING_TREE_HOLLOW",
+ "description": "TXT_KEY_BUILDING_HOUSING_TREE_HOLLOW",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_TREE_HOLLOW_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_HOUSING_HOMELESS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "FEATURE_FOREST_YOUNG",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_FOREST",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_FOREST_ANCIENT",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_FOREST_BURNT",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_JUNGLE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_TREE_HOLLOW"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

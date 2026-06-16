@@ -1,0 +1,28 @@
+{
+ "type": "BUILDING_HOUSING_ANIMAL_BURROW",
+ "description": "TXT_KEY_BUILDING_HOUSING_ANIMAL_BURROW",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_ANIMAL_BURROW_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_HOUSING_HOMELESS"
+  ]
+ },
+ "health": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_ANIMAL_BURROW"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

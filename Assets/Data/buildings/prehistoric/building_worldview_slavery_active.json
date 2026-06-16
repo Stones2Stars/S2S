@@ -1,0 +1,263 @@
+{
+ "type": "BUILDING_WORLDVIEW_SLAVERY_ACTIVE",
+ "description": "TXT_KEY_BUILDING_WORLDVIEW_SLAVERY_ACTIVE",
+ "civilopedia": "TXT_KEY_BUILDING_WORLDVIEW_SLAVERY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND",
+   "BUILDING_SLAVE_MARKET",
+   "BUILDING_WORLDVIEW_SLAVERY_ZOROASTRIANISM_I",
+   "BUILDING_WORLDVIEW_SLAVERY_ZOROASTRIANISM_II"
+  ]
+ },
+ "research": {
+  "city": {
+   "percent": [
+    {
+     "value": -5,
+     "enabled": {
+      "type": "TECH_MEDIEVAL_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -5,
+     "enabled": {
+      "type": "TECH_INVENTION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -5,
+     "enabled": {
+      "type": "TECH_RENAISSANCE_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -5,
+     "enabled": {
+      "type": "TECH_SCIENTIFIC_METHOD",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -5,
+     "enabled": {
+      "type": "TECH_ENLIGHTENMENT",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -5,
+     "enabled": {
+      "type": "TECH_LIBERALISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -5,
+     "enabled": {
+      "type": "TECH_ROMANTICISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -15,
+     "enabled": {
+      "type": "TECH_ASSEMBLY_LINE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -5,
+     "enabled": {
+      "type": "TECH_WOMENS_SUFFRAGE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_MANAGEMENT",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_ABSTRACT_MATHEMATICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -5,
+     "enabled": {
+      "type": "TECH_MASS_MEDIA",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -5,
+     "enabled": {
+      "type": "TECH_MINORITY_RIGHTS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -25,
+     "enabled": {
+      "type": "TECH_INFORMATION_LIFESTYLE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": [
+    {
+     "value": -5,
+     "enabled": {
+      "type": "TECH_MEDIEVAL_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -5,
+     "enabled": {
+      "type": "TECH_RENAISSANCE_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_HUMANISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -5,
+     "enabled": {
+      "type": "TECH_SOCIAL_CONTRACT",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -5,
+     "enabled": {
+      "type": "TECH_ECONOMICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -5,
+     "enabled": {
+      "type": "TECH_ROMANTICISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -5,
+     "enabled": {
+      "type": "TECH_ASSEMBLY_LINE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_WOMENS_SUFFRAGE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -5,
+     "enabled": {
+      "type": "TECH_CONSUMERISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_MASS_MEDIA",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -5,
+     "enabled": {
+      "type": "TECH_MINORITY_RIGHTS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": -5,
+     "enabled": {
+      "type": "TECH_HUMANISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TECH_ENLIGHTENMENT",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -2,
+     "enabled": {
+      "type": "TECH_EMANCIPATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TECH_LABOR_UNIONS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TECH_COMMUNISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -5,
+     "enabled": {
+      "type": "TECH_MINORITY_RIGHTS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WORLDVIEW_SLAVERY"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SLAVES": 3
+  },
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

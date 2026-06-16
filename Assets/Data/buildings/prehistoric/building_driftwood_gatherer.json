@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_DRIFTWOOD_GATHERER",
+ "description": "TXT_KEY_BUILDING_DRIFTWOOD_GATHERER",
+ "civilopedia": "TXT_KEY_BUILDING_DRIFTWOOD_GATHERER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BONFIRE",
+   "BUILDING_FIRE_PIT",
+   "BUILDING_RESOURCES_WOOD"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_LUMBER_CAMP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DRIFTWOOD_GATHERER"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

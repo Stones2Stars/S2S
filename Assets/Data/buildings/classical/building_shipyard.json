@@ -1,0 +1,92 @@
+{
+ "type": "BUILDING_SHIPYARD",
+ "description": "TXT_KEY_BUILDING_SHIPYARD",
+ "civilopedia": "TXT_KEY_BUILDING_SHIPYARD_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_GRAND_MARINE_FESTIVAL",
+   "BUILDING_MAGELLANS_VOYAGE",
+   "BUILDING_VENETIAN_ARSENAL"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_DRYDOCK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER",
+    {
+     "type": "BUILDING_SHIPWRIGHT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HARBORMASTERS_OFFICE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_NAVAL",
+    "interval": "perTurn",
+    "heal": 3
+   }
+  ]
+ },
+ "cost": {
+  "production": 216,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SHIPYARD"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_DRYDOCK"
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 2,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 3,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

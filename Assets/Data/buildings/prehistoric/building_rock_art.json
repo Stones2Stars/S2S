@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_ROCK_ART",
+ "description": "TXT_KEY_BUILDING_ROCK_ART",
+ "civilopedia": "TXT_KEY_BUILDING_ROCK_ART_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FRESCO_MURAL"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ANCIENT_CUSTOMS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_ROCK_GATHERER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1,
+   "percent": [
+    {
+     "value": -100,
+     "enabled": {
+      "type": "TECH_LITERATURE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1,
+   "percent": [
+    {
+     "value": -100,
+     "enabled": {
+      "type": "TECH_LITERATURE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 0
+  }
+ },
+ "cost": {
+  "production": 86,
+  "countModifier": 2,
+  "materialsModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ROCK_ART"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

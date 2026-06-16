@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_HOUSING_CLIFF_DWELLING",
+ "description": "TXT_KEY_BUILDING_HOUSING_CLIFF_DWELLING",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_CLIFF_DWELLING_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_KIVA",
+   "BUILDING_MESA_VERDE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "TERRAIN_PEAK",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_CLIFF_DWELLING"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,123 @@
+{
+ "type": "BUILDING_ANIMAL_TRAINER_BEAR",
+ "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_BEAR",
+ "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_BEAR_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HERITAGE_BEARS",
+   "BUILDING_MILITARY_STANDARD_BEARS"
+  ],
+  "units": [
+   "UNIT_BEARKNIGHT",
+   "UNIT_BEARRIDER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_CARNIVAL_DANCING_BEAR",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ENCLOSURE_BEAR",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_MOON_BEAR",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_BLACK_BEAR",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_BROWN_BEAR",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_CAVE_BEAR",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_GRIZZLY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_GIANT_PANDA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_POLAR_BEAR",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_SLOTH_BEAR",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_SPECTACLED_BEAR",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_SUN_BEAR",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 1038,
+  "sizeModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 7
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_BEAR_RIDER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ANIMAL_TRAINER_BEAR"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 2,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

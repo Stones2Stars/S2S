@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_SATURN_CLOUD_CITY",
+ "description": "TXT_KEY_BUILDING_SATURN_CLOUD_CITY",
+ "civilopedia": "TXT_KEY_BUILDING_SATURN_CLOUD_CITY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_TERRAFORMED_SATURN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_SATURN",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4123
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SATURN_CLOUD_CITY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

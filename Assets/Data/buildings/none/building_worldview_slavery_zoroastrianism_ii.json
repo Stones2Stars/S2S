@@ -1,0 +1,34 @@
+{
+ "type": "BUILDING_WORLDVIEW_SLAVERY_ZOROASTRIANISM_II",
+ "description": "TXT_KEY_BUILDING_WORLDVIEW_SLAVERY_ZOROASTRIANISM_II",
+ "civilopedia": "TXT_KEY_BUILDING_SLAVERY_ZORO_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_WORLDVIEW_SLAVERY_ACTIVE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SLAVERY_BAD_ZORO"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "religion": "RELIGION_ZOROASTRIANISM",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

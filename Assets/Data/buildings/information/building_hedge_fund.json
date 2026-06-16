@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_HEDGE_FUND",
+ "description": "TXT_KEY_BUILDING_HEDGE_FUND",
+ "civilopedia": "TXT_KEY_BUILDING_HEDGE_FUND_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INTERTEMPORAL_STOCK_MARKET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_STOCK_MARKET",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 20,
+   "flat": [
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_MEGACORPORATIONS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_MACHINE_LEARNING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": [
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_MEGACORPORATIONS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_MACHINE_LEARNING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 2105,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HEDGE_FUND"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_MERCHANT": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

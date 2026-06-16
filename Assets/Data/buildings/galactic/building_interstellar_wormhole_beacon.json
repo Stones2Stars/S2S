@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_INTERSTELLAR_WORMHOLE_BEACON",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_WORMHOLE_BEACON",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_WORMHOLE_BEACON_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_MEDIA_CENTER",
+   "BUILDING_INTERSTELLAR_NEBULA_REBEL_BASE",
+   "BUILDING_INTERSTELLAR_NEUTRINO_BEACON",
+   "BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": [
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_METAVERSE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4056
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_WORMHOLE_BEACON"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

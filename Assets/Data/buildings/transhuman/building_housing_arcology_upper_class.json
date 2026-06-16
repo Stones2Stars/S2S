@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_HOUSING_ARCOLOGY_UPPER_CLASS",
+ "description": "TXT_KEY_BUILDING_HOUSING_ARCOLOGY_UPPER_CLASS",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_ARCOLOGY_UPPER_CLASS_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HOUSING_COLONY_ARCOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MARBLE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "IS_FRESHWATER",
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
+    },
+    {
+     "type": "BUILDING_WATER_PIPES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SEWER_SYSTEM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_TELEPHONE_NETWORK",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_COMPUTER_NETWORK",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_ARCOLOGY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_ARCOLOGY_UPPER_CLASS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

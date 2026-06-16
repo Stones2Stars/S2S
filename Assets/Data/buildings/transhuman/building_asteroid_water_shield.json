@@ -1,0 +1,47 @@
+{
+ "type": "BUILDING_ASTEROID_WATER_SHIELD",
+ "description": "TXT_KEY_BUILDING_ASTEROID_WATER_SHIELD",
+ "civilopedia": "TXT_KEY_BUILDING_ASTEROID_WATER_SHIELD_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTEROID_INTERIOR_CITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "TERRAIN_ASTEROID_SURFACE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1452
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ASTEROID_WATER_SHIELD"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

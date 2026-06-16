@@ -1,0 +1,118 @@
+{
+ "type": "BUILDING_BACTERIUM_BIOFORGE",
+ "description": "TXT_KEY_BUILDING_BACTERIUM_BIOFORGE",
+ "civilopedia": "TXT_KEY_BUILDING_BACTERIUM_BIOFORGE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARTIFICIAL_REEF",
+   "BUILDING_BACILLUS_CONCRETE",
+   "BUILDING_BACTERIUM_LANDFILL",
+   "BUILDING_BIOHACKER_STUDIO",
+   "BUILDING_DESIGNER_PROBIOTICS_CLINIC",
+   "BUILDING_FACTORY_CELLULASE_CAPSULES",
+   "BUILDING_HYDROCARBON_REFINERY",
+   "BUILDING_LIFE_CRISPR_CAS9_BACTERIA",
+   "BUILDING_NATURAL_INSECTICIDE_SPRAYERS",
+   "BUILDING_URBAN_DEPOLLENIZER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ENZYMES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_VIROTHERAPY_CLINIC",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_PHENOTYPE_STUDIO",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTUITIVE_ALGORITHMS",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BIOPOLYMERS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 4,
+   "percent": [
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_PROTOTYPED_PATHOGENS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_MAINSTREAM_CLONING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_AUGMENTED_CONSUMABLES",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "cost": {
+  "production": 2865,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BACTERIUM_BIOFORGE"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

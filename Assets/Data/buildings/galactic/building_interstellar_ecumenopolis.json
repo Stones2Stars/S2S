@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_INTERSTELLAR_ECUMENOPOLIS",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_ECUMENOPOLIS",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_ECUMENOPOLIS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_BANKS_ORBITAL_CITY",
+   "BUILDING_INTERSTELLAR_INTERSPECIES_COMMUNITY",
+   "BUILDING_INTERSTELLAR_PARADISE_PLANET",
+   "BUILDING_INTERSTELLAR_PORTAL_CITY",
+   "BUILDING_INTERSTELLAR_SPHEREWORLD",
+   "BUILDING_TRANTOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_INTERSTELLAR_METROPOLIS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SPACE_COLONY_MILKY_WAY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": [
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_SPECIES_AMALGAMATION",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3611
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_ECUMENOPOLIS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

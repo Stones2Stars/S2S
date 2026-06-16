@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_ONLINE_SHIPPING_WAREHOUSE",
+ "description": "TXT_KEY_BUILDING_ONLINE_SHIPPING_WAREHOUSE",
+ "civilopedia": "TXT_KEY_BUILDING_ONLINE_SHIPPING_WAREHOUSE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DIGITAL_LOGISTICS_CENTER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_COMPUTER_NETWORK",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_MODERN_WAREHOUSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NAVAL_SHIPPING_WAREHOUSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_RAIL_SHIPPING_WAREHOUSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TRUCK_SHIPPING_WAREHOUSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_AIR_SHIPPING_WAREHOUSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SPACE_SHIPPING_WAREHOUSE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 5
+   },
+   "foreignModifier": {
+    "percent": 5
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2005,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ONLINE_SHIPPING_WAREHOUSE"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

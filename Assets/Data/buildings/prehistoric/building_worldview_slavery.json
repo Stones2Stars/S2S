@@ -1,0 +1,158 @@
+{
+ "type": "BUILDING_WORLDVIEW_SLAVERY",
+ "description": "TXT_KEY_BUILDING_WORLDVIEW_SLAVERY",
+ "civilopedia": "TXT_KEY_BUILDING_WORLDVIEW_SLAVERY_PEDIA",
+ "help": "TXT_KEY_BUILDING_WORLDVIEW_SLAVERY_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_PALACE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": -50,
+     "enabled": {
+      "type": "BUILDING_STREET_CLEANER",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": -50,
+     "enabled": {
+      "type": "BUILDING_TREADMILL_CRANE",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": -50,
+     "enabled": {
+      "type": "BUILDING_STEAM_CRANE",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": -50,
+     "enabled": {
+      "type": "BUILDING_MODERN_CRANE",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": -50,
+     "enabled": {
+      "type": "BUILDING_HIGH_TECH_CRANE",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": -50,
+     "enabled": {
+      "type": "BUILDING_WATERMILL",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": -50,
+     "enabled": {
+      "type": "BUILDING_WINDMILL",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": -50,
+     "enabled": {
+      "type": "BUILDING_DONKEY_MILL",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": -50,
+     "enabled": {
+      "type": "BUILDING_LUMBER_MILL",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": -50,
+     "enabled": {
+      "type": "BUILDING_AGROFOREST",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": -50,
+     "enabled": {
+      "type": "BUILDING_MODERN_MILL",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": -50,
+     "enabled": {
+      "type": "BUILDING_OXEN_MILL",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": -50,
+     "enabled": {
+      "type": "BUILDING_SMELTER_STEEL",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": -50,
+     "enabled": {
+      "type": "BUILDING_ADVANCED_IRONWORKS",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": -50,
+     "enabled": {
+      "type": "BUILDING_METALS_MEGACOMPLEX",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": -50,
+     "enabled": {
+      "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": -50,
+     "enabled": {
+      "type": "BUILDING_FACTORY",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WORLDVIEW_SLAVERY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SLAVE_MARKET"
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "worth": 3,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

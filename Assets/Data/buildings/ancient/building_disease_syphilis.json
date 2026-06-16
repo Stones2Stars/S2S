@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_DISEASE_SYPHILIS",
+ "description": "TXT_KEY_BUILDING_DISEASE_SYPHILIS",
+ "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+ "food": {
+  "city": {
+   "percent": -6
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -8
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -7
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -7
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -6,
+   "perPopulation": {
+    "percent": -25
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -4
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYDISEASE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_MILITARY_SCHOOL",
+ "description": "TXT_KEY_BUILDING_MILITARY_SCHOOL",
+ "civilopedia": "TXT_KEY_BUILDING_MILITARY_SCHOOL_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_BARRACKS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GARRISON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MILITARY_BASE",
+      "scope": "city"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_MARTIAL",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 12
+  }
+ },
+ "cost": {
+  "production": 216,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MILITARY_SCHOOL"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,93 @@
+{
+ "type": "BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER",
+ "description": "TXT_KEY_BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER",
+ "civilopedia": "TXT_KEY_BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CENTER_FOR_THE_STUDY_OF_CIVILIZATION",
+   "BUILDING_FORMAL_REASONING_CENTER",
+   "BUILDING_PHILOSOPHERS_CASTLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_INTUITIVE_ALGORITHMS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5,
+   "percent": [
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_NOOGENESIS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10,
+   "percent": [
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_PANPSYCHISM",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": [
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_COSMIC_PERSPECTIVE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 5455,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

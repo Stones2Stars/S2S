@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_FENCING_ACADEMY",
+ "description": "TXT_KEY_BUILDING_FENCING_ACADEMY",
+ "civilopedia": "TXT_KEY_BUILDING_FENCING_ACADEMY_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ATHLETIC_MEGACOMPLEX"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MELEE": {
+     "flat": 3
+    },
+    "UNITCOMBAT_GUN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 440,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FENCING_ACADEMY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_FENCING_SCHOOL"
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 4,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

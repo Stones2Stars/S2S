@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_POLLUTION_TOXIC_HYDROSPHERE",
+ "description": "TXT_KEY_BUILDING_POLLUTION_TOXIC_HYDROSPHERE",
+ "civilopedia": "TXT_KEY_BUILDING_WATER_POLLUTION_PEDIA",
+ "food": {
+  "city": {
+   "flat": -10
+  },
+  "plot": {
+   "plotTypes": {
+    "PLOT_OCEAN": {
+     "flat": -10
+    }
+   }
+  }
+ },
+ "production": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -10
+  },
+  "empire": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYWATERPOLLUTION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

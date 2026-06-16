@@ -1,0 +1,144 @@
+{
+ "type": "BUILDING_COIT_TOWER",
+ "description": "TXT_KEY_BUILDING_COIT_TOWER",
+ "civilopedia": "TXT_KEY_BUILDING_COIT_TOWER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_CEMENT",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    8,
+    {
+     "value": 8,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_FIRE_BRIGADE": {
+     "flat": 4
+    },
+    "BUILDING_FIRE_STATION": {
+     "flat": 4
+    },
+    "BUILDING_FIRE_DOCK": {
+     "flat": 4
+    },
+    "BUILDING_FIRE_HANGAR": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BUILDING_FIRE_BRIGADE",
+      "scope": "city"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BUILDING_FIRE_STATION",
+      "scope": "city"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BUILDING_FIRE_HANGAR",
+      "scope": "city"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BUILDING_FIRE_DOCK",
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "cost": {
+  "production": 6480,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_COIT_TOWER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_COIT_TOWER"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

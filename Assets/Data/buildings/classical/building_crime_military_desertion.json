@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_CRIME_MILITARY_DESERTION",
+ "description": "TXT_KEY_BUILDING_CRIME_MILITARY_DESERTION",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_MILITARY_DESERTION_PEDIA",
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 4
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": -30
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

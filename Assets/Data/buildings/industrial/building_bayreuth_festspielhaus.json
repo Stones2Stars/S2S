@@ -1,0 +1,115 @@
+{
+ "type": "BUILDING_BAYREUTH_FESTSPIELHAUS",
+ "description": "TXT_KEY_BUILDING_BAYREUTH_FESTSPIELHAUS",
+ "civilopedia": "TXT_KEY_BUILDING_BAYREUTH_FESTSPIELHAUS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "BUILDING_OPERA_HOUSE",
+     "scope": "empire",
+     "min": 3
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 10,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ],
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 4
+    },
+    "SPECIALIST_GREAT_ADMIRAL": {
+     "flat": 4
+    }
+   }
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_HEROIC_EPIC": {
+     "flat": 10
+    },
+    "BUILDING_NATIONAL_EPIC": {
+     "flat": 10
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BUILDING_OPERA_HOUSE",
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 4620,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_BAYREUTH"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BAYREUTH_FESTSPIELHAUS"
+  }
+ },
+ "identity": {
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

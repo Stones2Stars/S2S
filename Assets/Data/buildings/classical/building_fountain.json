@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_FOUNTAIN",
+ "description": "TXT_KEY_BUILDING_FOUNTAIN",
+ "civilopedia": "TXT_KEY_BUILDING_FOUNTAIN_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_TUMEN_AMUGULANG_PALACE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CITY_PARK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "IS_FRESHWATER",
+    {
+     "type": "BUILDING_WATER_PIPES",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 261,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FOUNTAIN"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

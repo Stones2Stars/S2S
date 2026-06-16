@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_ORNITHOPTER_AERIE",
+ "description": "TXT_KEY_BUILDING_ORNITHOPTER_AERIE",
+ "civilopedia": "TXT_KEY_BUILDING_ORNITHOPTER_AERIE_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AIRPORT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CLOCKPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BUILDING_CLOCKWORK_WORKSHOP",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_AIRCRAFT",
+    "interval": "perTurn",
+    "heal": 4
+   }
+  ]
+ },
+ "cost": {
+  "production": 380
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ORNITHOPTER_AERIE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_EARLY_AIRPORT"
+ },
+ "identity": {
+  "worth": 5,
+  "airUnitCapacity": 2,
+  "dcmAirbombMission": 2,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_CLOCK",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,146 @@
+{
+ "type": "BUILDING_LIBRARY",
+ "description": "TXT_KEY_BUILDING_LIBRARY",
+ "civilopedia": "TXT_KEY_BUILDING_LIBRARY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BRAHMIN_LIBRARY",
+   "BUILDING_CALLIGRAPHY_SCHOOL",
+   "BUILDING_COPERNICUS_OBSERVATORY",
+   "BUILDING_CREATION_MYTH",
+   "BUILDING_HOLY_SEE_LIBRARY",
+   "BUILDING_HO_TRAI_LIBRARY",
+   "BUILDING_MADRASSA",
+   "BUILDING_NATIONAL_ARCHIVES",
+   "BUILDING_NATIONAL_EPIC",
+   "BUILDING_NATIONAL_LIBRARY_SERVICE",
+   "BUILDING_PLATOS_ACADEMY",
+   "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT",
+   "BUILDING_THE_GREAT_LIBRARY",
+   "BUILDING_UNIVERSITY"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_SCHOOL_OF_SCRIBES",
+   "BUILDING_STORYTELLER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_TABLETS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_SCROLLS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BOOKS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PAPER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2,
+   "percent": [
+    {
+     "value": 300,
+     "enabled": {
+      "type": "TECH_POETRY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_DIPLOMAT": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 225,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LIBRARY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_LIBRARY"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 2
+  },
+  "newCityFree": [
+   {
+    "GOM_TECH": "TECH_STEAM_POWER"
+   }
+  ],
+  "neverCapture": true,
+  "worth": 3,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

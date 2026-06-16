@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_ARCHERY_RANGE",
+ "description": "TXT_KEY_BUILDING_ARCHERY_RANGE",
+ "civilopedia": "TXT_KEY_BUILDING_ARCHERY_RANGE_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_SHOOTING_CLUB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_FLETCHERS_HUT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_EFFECT_TRADITION_ARCHERY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_ARCHER": {
+     "flat": 3
+    },
+    "UNITCOMBAT_THROWING": {
+     "flat": 2
+    },
+    "UNITCOMBAT_SIEGE": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 320,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ARCHERY_RANGE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_ARCHERY_RANGE"
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 3,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

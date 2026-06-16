@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_CIVIC_CASTE",
+ "description": "TXT_KEY_BUILDING_CIVIC_CASTE",
+ "civilopedia": "TXT_KEY_BUILDING_CIVIC_CASTE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_PALACE",
+     "scope": "city"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_CASTE_SYSTEM",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "specialist": {
+   "specialists": {
+    "SPECIALIST_SLAVES": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CIVIC_CASTE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "type": "BUILDING_HYPERSPACE_MEDIA_CENTER",
+ "description": "TXT_KEY_BUILDING_HYPERSPACE_MEDIA_CENTER",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_MEDIA_CENTER_PEDIA",
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1261
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERSPACE_MEDIA_CENTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

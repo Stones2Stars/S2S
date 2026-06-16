@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_PIER",
+ "description": "TXT_KEY_BUILDING_PIER",
+ "civilopedia": "TXT_KEY_BUILDING_PIER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_OCEAN_ADMINISTRATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER",
+    {
+     "type": "BUILDING_HARBORMASTERS_OFFICE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "plotTypes": {
+    "PLOT_OCEAN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "plot": {
+   "plotTypes": {
+    "PLOT_OCEAN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 192,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PIER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_HARBOR"
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

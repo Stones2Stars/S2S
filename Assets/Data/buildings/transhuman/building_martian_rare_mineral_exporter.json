@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_MARTIAN_RARE_MINERAL_EXPORTER",
+ "description": "TXT_KEY_BUILDING_MARTIAN_RARE_MINERAL_EXPORTER",
+ "civilopedia": "TXT_KEY_BUILDING_MARTIAN_RARE_MINERAL_EXPORTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_EFFECT_MARS_CYCLER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MARTIAN_CITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 300
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1921
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MARTIAN_RARE_MINERAL_EXPORTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

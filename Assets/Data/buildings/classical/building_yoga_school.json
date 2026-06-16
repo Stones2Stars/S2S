@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_YOGA_SCHOOL",
+ "description": "TXT_KEY_BUILDING_YOGA_SCHOOL",
+ "civilopedia": "TXT_KEY_BUILDING_YOGA_SCHOOL_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ATHLETIC_MEGACOMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_BUDDHIST_TEMPLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HINDU_TEMPLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SIKH_GURDWARA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_JAIN_TEMPLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GYM",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 216,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_YOGA_SCHOOL"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

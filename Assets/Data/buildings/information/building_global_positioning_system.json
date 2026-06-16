@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_GLOBAL_POSITIONING_SYSTEM",
+ "description": "TXT_KEY_BUILDING_GLOBAL_POSITIONING_SYSTEM",
+ "civilopedia": "TXT_KEY_BUILDING_GLOBAL_POSITIONING_SYSTEM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_ATOMIC_CLOCK",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_MILITARY_SATELLITES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MILITARY_SPACEPORT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -40
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 3850,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GPS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GLOBAL_POSITIONING_SYSTEM"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

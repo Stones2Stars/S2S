@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_DEEP_SPACE_CLOAKING",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_CLOAKING",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_CLOAKING_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10,
+   "percent": [
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_NANOSHIELDING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_NANOMORPHIC_TROIDS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_NANO_DISASSEMBLY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_NANOTROIDS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 10
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2104
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_CLOAKING"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

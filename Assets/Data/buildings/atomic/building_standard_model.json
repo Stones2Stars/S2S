@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_STANDARD_MODEL",
+ "description": "TXT_KEY_BUILDING_STANDARD_MODEL",
+ "civilopedia": "TXT_KEY_BUILDING_STANDARD_MODEL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_PHYSICS_LAB",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 25,
+   "percent": [
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_IMAGINARY_PHYSICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_QUANTUM_TELEPORTATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_SUPERSTRING_THEORY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_UNIFICATION_PHYSICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 6780,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_STANDARD_MODEL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_STANDARD_MODEL"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

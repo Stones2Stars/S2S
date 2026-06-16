@@ -1,0 +1,125 @@
+{
+ "type": "BUILDING_STAR_FORT",
+ "description": "TXT_KEY_BUILDING_STAR_FORT",
+ "civilopedia": "TXT_KEY_BUILDING_STAR_FORT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BALISTRARIA",
+   "BUILDING_BALLISTA_TURRET",
+   "BUILDING_BALLROOM",
+   "BUILDING_CANNON_TURRET",
+   "BUILDING_CASTLE_DRAWBRIDGE",
+   "BUILDING_CASTLE_GARDEN",
+   "BUILDING_CASTLE_GATEHOUSE",
+   "BUILDING_CASTLE_KEEP",
+   "BUILDING_CATACOMBS",
+   "BUILDING_CITADEL",
+   "BUILDING_DUNGEON",
+   "BUILDING_EDINBURGH_CASTLE",
+   "BUILDING_HIMEJI_SAMURAI_CASTLE",
+   "BUILDING_MOAT",
+   "BUILDING_MUIDERSLOT_CASTLE",
+   "BUILDING_SERVANTS_QUARTERS",
+   "BUILDING_THRONE_ROOM"
+  ],
+  "units": [
+   "UNIT_FOOD_SUPPLY_TRAIN"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_IMPERIAL_FORTRESS"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_CASTLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_BRICKS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 75
+   },
+   "bombardDefense": {
+    "percent": 50
+   },
+   "min": {
+    "flat": 25
+   },
+   "noEntryLevel": {
+    "flat": 25
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 425,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_STAR_FORT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CASTLE"
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 2,
+  "militaryWorth": 4,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

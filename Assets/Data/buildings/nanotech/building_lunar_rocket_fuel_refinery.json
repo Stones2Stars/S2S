@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_LUNAR_ROCKET_FUEL_REFINERY",
+ "description": "TXT_KEY_BUILDING_LUNAR_ROCKET_FUEL_REFINERY",
+ "civilopedia": "TXT_KEY_BUILDING_LUNAR_ROCKET_FUEL_REFINERY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_LUNAR_WATER_EXTRACTION_FACILITY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LUNAR_ORGANIC_POLYMERE_FACTORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50,
+   "percent": [
+    {
+     "value": 20000,
+     "enabled": {
+      "type": "TECH_LUNAR_TRADE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 1300
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LUNAR_ROCKET_FUEL_REFINERY"
+  }
+ },
+ "identity": {
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

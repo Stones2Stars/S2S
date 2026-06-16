@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_MILITARY_STANDARD_DEER",
+ "description": "TXT_KEY_BUILDING_MILITARY_STANDARD_DEER",
+ "civilopedia": "TXT_KEY_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT_PEDIA",
+ "help": "TXT_KEY_BUILDING_MILITARY_STANDARD_DEER_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_DEER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_EFFECT_HERITAGE_DEER",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_DEERRIDER": {
+     "percent": 10
+    },
+    "UNIT_DEER_ARCHER": {
+     "percent": 10
+    },
+    "UNIT_DEER_LIGHT": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "worth": 2,
+  "conquestProbability": 25,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

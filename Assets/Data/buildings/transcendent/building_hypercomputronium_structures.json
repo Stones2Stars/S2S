@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_HYPERCOMPUTRONIUM_STRUCTURES",
+ "description": "TXT_KEY_BUILDING_HYPERCOMPUTRONIUM_STRUCTURES",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERCOMPUTRONIUM_STRUCTURES_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_HYPERPLANET",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HYPERSPACE_TRANSFINITE_STRUCTURES",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3423
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERCOMPUTRONIUM_STRUCTURES"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

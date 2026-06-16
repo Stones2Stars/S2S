@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_INTERGALACTIC_ASCENDED_GALAXY",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_ASCENDED_GALAXY",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_ASCENDED_GALAXY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_EFFECT_MULTIVERSAL_ECONOMY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -100
+  }
+ },
+ "cost": {
+  "production": 8057
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_ASCENDED_GALAXY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

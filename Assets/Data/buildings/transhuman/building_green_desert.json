@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_GREEN_DESERT",
+ "description": "TXT_KEY_BUILDING_GREEN_DESERT",
+ "civilopedia": "TXT_KEY_BUILDING_GREEN_DESERT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_ATMOSPHERIC_WATER_GENERATOR",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_STATE_PARK",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_DESERT",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_DUNES",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_ROCKY",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "cost": {
+  "production": 6155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GREEN_DESERT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

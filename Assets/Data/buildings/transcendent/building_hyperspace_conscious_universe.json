@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_HYPERSPACE_CONSCIOUS_UNIVERSE",
+ "description": "TXT_KEY_BUILDING_HYPERSPACE_CONSCIOUS_UNIVERSE",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_CONSCIOUS_UNIVERSE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2914
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERSPACE_CONSCIOUS_UNIVERSE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

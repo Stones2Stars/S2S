@@ -1,0 +1,40 @@
+{
+ "type": "BUILDING_CISLUNAR_SATELLITE_FACTORY",
+ "description": "TXT_KEY_BUILDING_CISLUNAR_SATELLITE_FACTORY",
+ "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_SATELLITE_FACTORY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_BIG_BANG_OBSERVATORY"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 612
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CISLUNAR_SATELLITE_FACTORY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_CRIME_DRUG_CARTELS",
+ "description": "TXT_KEY_BUILDING_CRIME_DRUG_CARTELS",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_DRUG_CARTELS_PEDIA",
+ "gold": {
+  "city": {
+   "percent": -15
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 15
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -6,
+   "perPopulation": {
+    "percent": -40
+   }
+  },
+  "empire": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -6
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 90
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -8
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

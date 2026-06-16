@@ -1,0 +1,43 @@
+{
+ "type": "BUILDING_CISLUNAR_SHIELDING",
+ "description": "TXT_KEY_BUILDING_CISLUNAR_SHIELDING",
+ "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_SHIELDING_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_NUCLEAR_DAMPER"
+  ]
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 50
+   },
+   "bombardDefense": {
+    "percent": 20
+   },
+   "dynamicDefense": {
+    "flat": 20
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 905
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CISLUNAR_SHIELDING"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

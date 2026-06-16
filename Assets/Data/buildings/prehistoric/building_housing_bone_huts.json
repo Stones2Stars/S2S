@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_HOUSING_BONE_HUTS",
+ "description": "TXT_KEY_BUILDING_HOUSING_BONE_HUTS",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_BONE_HUTS_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_HOUSING_HOMELESS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BONE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_BONE_HUTS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

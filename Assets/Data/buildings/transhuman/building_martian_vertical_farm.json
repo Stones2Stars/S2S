@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_MARTIAN_VERTICAL_FARM",
+ "description": "TXT_KEY_BUILDING_MARTIAN_VERTICAL_FARM",
+ "civilopedia": "TXT_KEY_BUILDING_MARTIAN_VERTICAL_FARM_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_MARTIAN_HYDROPONICS_ARRAY",
+   "BUILDING_MARTIAN_HYDROPONICS_COMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MARTIAN_RADIATION_SHIELD",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MARTIAN_METROPOLIS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 120
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 80
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 2544
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MARTIAN_VERTICAL_FARM"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

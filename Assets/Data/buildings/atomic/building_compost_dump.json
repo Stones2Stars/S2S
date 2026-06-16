@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_COMPOST_DUMP",
+ "description": "TXT_KEY_BUILDING_COMPOST_DUMP",
+ "civilopedia": "TXT_KEY_BUILDING_COMPOST_DUMP_PEDIA",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_ORGANIC_FARMING",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "cost": {
+  "production": 1345,
+  "sizeModifier": 2,
+  "countModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_COMPOST_DUMP"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COMMUNITY_GARDEN"
+ },
+ "identity": {
+  "worth": 3,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_ORCHARD_OLIVE",
+ "description": "TXT_KEY_BUILDING_ORCHARD_OLIVE",
+ "civilopedia": "TXT_KEY_BUILDING_ORCHARD_OLIVE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_OLIVE_PRESS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AGROFOREST"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_OLIVES",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 146,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ORCHARD_OLIVE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

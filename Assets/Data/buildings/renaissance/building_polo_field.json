@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_POLO_FIELD",
+ "description": "TXT_KEY_BUILDING_POLO_FIELD",
+ "civilopedia": "TXT_KEY_BUILDING_POLO_FIELD_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_COUNTRY_CLUB"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ATHLETIC_MEGACOMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_HORSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_CAMEL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_ELEPHANT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 455,
+  "sizeModifier": 2,
+  "countModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 8
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_POLO_FIELD"
+  }
+ },
+ "identity": {
+  "worth": 2,
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

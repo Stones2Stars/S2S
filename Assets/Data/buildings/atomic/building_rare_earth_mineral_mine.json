@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_RARE_EARTH_MINERAL_MINE",
+ "description": "TXT_KEY_BUILDING_RARE_EARTH_MINERAL_MINE",
+ "civilopedia": "TXT_KEY_BUILDING_RARE_EARTH_MINERAL_MINE_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CORE_MINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_MODERN_EARTHWORKS",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_ROCKY",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_BADLAND",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_JAGGED",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_SCRUB",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1410,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RARE_EARTH_MINERAL_MINE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

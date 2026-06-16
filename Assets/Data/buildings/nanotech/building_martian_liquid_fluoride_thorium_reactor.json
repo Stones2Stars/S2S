@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_MARTIAN_LIQUID_FLUORIDE_THORIUM_REACTOR",
+ "description": "TXT_KEY_BUILDING_MARTIAN_LIQUID_FLUORIDE_THORIUM_REACTOR",
+ "civilopedia": "TXT_KEY_BUILDING_MARTIAN_LIQUID_FLUORIDE_THORIUM_REACTOR_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MARTIAN_FACTORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 905
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MARTIAN_LIQUID_FLUORIDE_THORIUM_REACTOR"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

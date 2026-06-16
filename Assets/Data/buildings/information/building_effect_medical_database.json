@@ -1,0 +1,38 @@
+{
+ "type": "BUILDING_EFFECT_MEDICAL_DATABASE",
+ "description": "TXT_KEY_BUILDING_EFFECT_MEDICAL_DATABASE",
+ "civilopedia": "TXT_KEY_BUILDING_EFFECT_MEDICAL_DATABASE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_3D_BODY_ATLAS"
+  ]
+ },
+ "health": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EFFECT_MEDICAL_DATABASE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "greatPeopleUnitType": "UNIT_DOCTOR",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

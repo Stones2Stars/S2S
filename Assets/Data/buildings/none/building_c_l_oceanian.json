@@ -1,0 +1,149 @@
+{
+ "type": "BUILDING_C_L_OCEANIAN",
+ "description": "TXT_KEY_BUILDING_C_L_OCEANIAN",
+ "civilopedia": "TXT_KEY_BUILDING_C_L_PEDIA",
+ "help": "TXT_KEY_BUILDING_C_L_HELP",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_ABORIGINE",
+   "BUILDING_CULTURE_AMIS",
+   "BUILDING_CULTURE_ANDAMANESE",
+   "BUILDING_CULTURE_AUSTRALIAN",
+   "BUILDING_CULTURE_BANDANESE",
+   "BUILDING_CULTURE_BATEK",
+   "BUILDING_CULTURE_CHAMORRAN",
+   "BUILDING_CULTURE_DAYAK",
+   "BUILDING_CULTURE_FIJIAN",
+   "BUILDING_CULTURE_HAWAIIAN",
+   "BUILDING_CULTURE_ILOCANO",
+   "BUILDING_CULTURE_JAVANESE",
+   "BUILDING_CULTURE_MALAGASY",
+   "BUILDING_CULTURE_MANI",
+   "BUILDING_CULTURE_MAORI",
+   "BUILDING_CULTURE_MARIC",
+   "BUILDING_CULTURE_MELANESIAN",
+   "BUILDING_CULTURE_MICRONESIAN",
+   "BUILDING_CULTURE_NEW_ZEALANDER",
+   "BUILDING_CULTURE_NOONGAR",
+   "BUILDING_CULTURE_ORANG_ASLI",
+   "BUILDING_CULTURE_PAPUAN",
+   "BUILDING_CULTURE_POLYNESIAN",
+   "BUILDING_CULTURE_RAPA_NUI",
+   "BUILDING_CULTURE_SAMOAN",
+   "BUILDING_CULTURE_SEMANG",
+   "BUILDING_CULTURE_SUNDANESE",
+   "BUILDING_CULTURE_TAGALOG",
+   "BUILDING_CULTURE_TAHITIAN",
+   "BUILDING_CULTURE_TASMANIAN",
+   "BUILDING_CULTURE_TIWI",
+   "BUILDING_CULTURE_TONGAN",
+   "BUILDING_CULTURE_VANATUAN",
+   "BUILDING_CULTURE_WARAY",
+   "BUILDING_CULTURE_YOLNGU",
+   "BUILDING_DANCE_HAKA",
+   "BUILDING_EMU_EGG_CARVER",
+   "BUILDING_HAWAIIAN_SURFBOARD_CARVER",
+   "BUILDING_RAINBOW_SERPENT_BREEDER",
+   "BUILDING_WALKABOUT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_C_AC_OCEANIAN",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "costs": {
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_C_L_AFRICAN",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_C_L_ASIAN",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_C_L_EUROPEAN",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_C_L_MIDDLE_EASTERN",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_C_L_NEANDERTHAL",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_C_L_NORTH_AMERICAN",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": -5,
+     "enabled": {
+      "type": "BUILDING_C_L_OCEANIAN",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_C_L_SOUTH_AMERICAN",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 1
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CULTURE_OCEANIAN"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 85,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

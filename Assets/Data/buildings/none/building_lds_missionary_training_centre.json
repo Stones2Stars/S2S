@@ -1,0 +1,96 @@
+{
+ "type": "BUILDING_LDS_MISSIONARY_TRAINING_CENTRE",
+ "description": "TXT_KEY_BUILDING_LDS_MISSIONARY_TRAINING_CENTRE",
+ "civilopedia": "TXT_KEY_BUILDING_LDS_MISSIONARY_TRAINING_CENTRE_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_MORMON_MISSIONARY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_LDS_MEETINGHOUSE",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "RELIGION_MORMON",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_MORMON": {
+    "flat": 1
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 1540,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LDS_MISSIONARY_TRAINING_CENTRE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MORMON"
+ },
+ "identity": {
+  "neverCapture": true,
+  "worth": 3,
+  "religion": "RELIGION_MORMON",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

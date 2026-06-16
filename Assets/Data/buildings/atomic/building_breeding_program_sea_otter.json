@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_BREEDING_PROGRAM_SEA_OTTER",
+ "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_SEA_OTTER",
+ "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_SEA_OTTER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_PELTS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ANIMAL_PRESERVE"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_TRAP_SEA_OTTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BEAVERS",
+     "scope": "city",
+     "connection": "vicinity"
+    },
+    "IS_WATER",
+    {
+     "type": "BUILDING_ZOO",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_SEA_LION_AND_SEAL",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 1345,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BREEDING_PROGRAM_SEA_OTTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_MOTORCYCLE_CLUB_UNSANCTIONED",
+ "description": "TXT_KEY_BUILDING_MOTORCYCLE_CLUB_UNSANCTIONED",
+ "civilopedia": "TXT_KEY_BUILDING_MOTORCYCLE_CLUB_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PARTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_TIRES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PETROLEUM_PRODUCTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BIOFUEL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 25
+   },
+   "flat": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "perPopulation": {
+    "percent": -25
+   }
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unit": "UNIT_BIKER_GANG",
+    "interval": "perTurn",
+    "chance": {
+     "per": {
+      "type": "PROPERTY_CRIME",
+      "scope": "city"
+     }
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MOTORCYCLE_CLUB"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,34 @@
+{
+ "type": "BUILDING_CRIME_SOLICITING",
+ "description": "TXT_KEY_BUILDING_CRIME_SOLICITING",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_SOLICITING_PEDIA",
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 2
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

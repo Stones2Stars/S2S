@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_SNAKE_PIT",
+ "description": "TXT_KEY_BUILDING_SNAKE_PIT",
+ "civilopedia": "TXT_KEY_BUILDING_SNAKE_PIT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_POISON"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "HERITAGE_FOLKLORE_ADDER_PUFF",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_COBRA",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_VIPER_CHAIN",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_VIPER_PIT",
+      "scope": "empire"
+     }
+    ]
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 80,
+  "sizeModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SNAKE_PIT"
+  }
+ },
+ "identity": {
+  "worth": 2,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_CULTURE",
+  "freeStartEra": "C2C_ERA_CLASSICAL",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

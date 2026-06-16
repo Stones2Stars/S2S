@@ -1,0 +1,41 @@
+{
+ "type": "BUILDING_RESOURCES_PLASTIC",
+ "description": "TXT_KEY_BUILDING_RESOURCES_PLASTIC",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MATERIALS_CONGLOMERATE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_FACTORY_PLASTIC",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLASTIC_RECLAMATION_PLANT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_PLASTIC"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

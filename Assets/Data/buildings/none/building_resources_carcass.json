@@ -1,0 +1,310 @@
+{
+ "type": "BUILDING_RESOURCES_CARCASS",
+ "description": "TXT_KEY_BUILDING_RESOURCES_CARCASS",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_ANIMAL_PRESERVE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_ANTELOPE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_AUROCHS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_BISON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_BISON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_BOAR",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_ANTELOPE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_BISON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_BOAR",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_CARIBOU",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_DEER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_ELEPHANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_EMU",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_GIRAFFE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_HIPPO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_KANGAROO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_MAMMOTH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_MOOSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_MOUFLON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_MUSKOX",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_NARWHAL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_OSTRICH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_RHEA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_RHINO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_WALRUS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_ZEBRA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_BUFFALO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_CAMEL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_CARIBOU",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_ANIMAL_COW",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_COW",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_DEER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_DEER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_DIPROTODON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_DONKEY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_ELEPHANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_ELEPHANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_EMU",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CARRION_GATHERER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_GIRAFFE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_ANIMAL_GOAT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_GOAT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_HIPPO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_HORSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_GIANT_BISON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_KANGAROO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_LLAMA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_MAMMOTH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_MEGALOCEROS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_MEGATHERIUM",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_MOOSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_MOUFLON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_MUSKOX",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_MUSKOX",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_NARWHAL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_OSTRICH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_ANIMAL_OXEN",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_ANIMAL_PIG",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_PIG",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_RATITE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_ANIMAL_REINDEER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_RHEA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_RHINO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_KANGAROO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_ANIMAL_SHEEP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_SHEEP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_WALRUS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_WHALERS_DOCK",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_WOOLLY_RHINO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_ZEBRA",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_CARCASS"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_SEA_TREE",
+ "description": "TXT_KEY_BUILDING_SEA_TREE",
+ "civilopedia": "TXT_KEY_BUILDING_SEA_TREE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER",
+    "HAS_POWER",
+    {
+     "type": "BUILDING_ECOSCRAPER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_COASTAL_PRESERVE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "cost": {
+  "production": 2105,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SEA_TREE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

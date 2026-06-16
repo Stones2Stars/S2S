@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_NATURE_ALTAR_BARLEY_GOD",
+ "description": "TXT_KEY_BUILDING_NATURE_ALTAR_BARLEY_GOD",
+ "civilopedia": "TXT_KEY_BUILDING_NATURE_ALTAR_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_NATURE_ALTAR",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BARLEY",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "RELIGION_DRUIDIC_TRADITIONS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": [
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_BARLEY",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 80,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NATURE_ALTAR_BARLEY_GOD"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_DRUID"
+ },
+ "identity": {
+  "worth": 4,
+  "advisor": "ADVISOR_RELIGION",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_WILD_HERBS_GATHERER",
+ "description": "TXT_KEY_BUILDING_WILD_HERBS_GATHERER",
+ "civilopedia": "TXT_KEY_BUILDING_WILD_HERBS_GATHERER_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_NEANDERTHAL_WISE_WOMAN",
+   "UNIT_WISE_WOMAN"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_COOKING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_NATUROPATHY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE",
+    "interval": "perTurn",
+    "heal": 1
+   }
+  ]
+ },
+ "cost": {
+  "production": 40,
+  "countModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WILD_HERBS_GATHERER"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "advisor": "ADVISOR_GROWTH",
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

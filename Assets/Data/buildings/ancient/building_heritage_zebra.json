@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_HERITAGE_ZEBRA",
+ "description": "TXT_KEY_BUILDING_HERITAGE_ZEBRA",
+ "civilopedia": "TXT_KEY_BUILDING_HERITAGE_ZEBRA_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "latitude": {
+      "max": 45
+     }
+    },
+    {
+     "type": "BUILDING_ANIMAL_TRAINER_ZEBRA",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 139,
+  "sizeModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 7
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EFFECT_HERITAGE_ZEBRAS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 2,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

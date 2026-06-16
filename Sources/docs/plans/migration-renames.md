@@ -640,3 +640,45 @@ deposits (`property_source_v3`). UnitCombat-specific:
 *Toolkit: `curate_unitcombat.py` (bespoke) imports the shared tables + helpers from `curate_promotion`. `UnitCombatInfo`
 registered in `store.ENTITIES`. NEXT: SpecialUnit shares this vocabulary at the Unit pass (depositing onto the loaded
 unit); the SM-module + outcome-system + the merchant trade-mission consolidations are their own later passes.*
+
+## Building  (`curate_building.py`)  — Tier E #32, THE MONSTER (5202 records) + SpecialBuilding #31 (36 records)
+
+The deepest modifier surface (288 fields), curated from `classifications/building-classification.json` (the adversarial
+classify-building workflow) + owner rulings (handover-2026-06-16-6). **0 `DllExport` -> data UNCONSTRAINED.** A fully
+BESPOKE curator (modeled on `curate_promotion`) with a COVERAGE CHECK + era foldering (era from the PrereqTech). The
+SOURCE->building enabler edges (tech/bonus/civic/religion/corp/cultureLevel `enables`, `ReplacementBuildings`->replaces,
+`ObsoleteTech`->tech) are ALREADY store-wired -> DROP building-side. The ~70 scalar/percent families + the yield/commerce
+split are field->family.member.unit with **scopes corrected from the classification** (the mapping's were often wrong:
+`iCoastalTradeRoutes`->empire, Area*->area, Global*->empire). Mechanical de-Hungarian not re-logged. Structural / manual:
+
+| old XML | new JSON path | note |
+|---|---|---|
+| (prereqs) `PrereqTech`/`TechTypes`/`Bonus`/`PrereqBonuses`/`VicinityBonus`/`RawVicinityBonus`/civic/religion/corp/cultureLevel/`bWater`/`bRiver`/`bFreshWater`/`bPower`/counts/caps/`ConstructCondition`/… | `requires.{build,operate}` (`all`/`any`/`noneOf`) | The TARGET-side MEANS gate. **build** = greying (resources `{type,scope:city,connection:"trade|vicinity"}`, plot predicates `IS_WATER`/`HAS_RIVER`/`IS_FRESHWATER`/**`HAS_POWER`**, counts→tally `{type:POPULATION\|CITY\|TEAM\|UNIT_LEVEL\|AREA_SIZE,min}`, in-city buildings, instance caps `{type:SELF,scope,max}`, `{latitude:{min,max}}`); **operate** = dormancy (civics, religion/corp/cultureLevel, `HAS_STATE_RELIGION`/`STATE_RELIGION_IN_CITY`). **RawVicinity FOLDS into `connection:"vicinity"`** (owner: lose the adjacency strictness). ⚑ NEW tokens (owner-approved): `HAS_POWER`, `HAS_STATE_RELIGION`, `STATE_RELIGION_IN_CITY`, the count kinds, `{latitude}`. |
+| `iCoastalTradeRoutes`/Area*/Global*/National* etc. (~70 scalars) | `<family>.<scope>[.<member>].<unit>` | Corrected scopes. NEW families: **`cityCapture`** (National/Local Capture Probability/Resistance — capturing CITIES, distinct from the §5 unit `capture` gradient), `espionage`{insidiousness,investigation}, `espionageDefense`, `healing`, `foodKept`, `hurryCost`/`hurryAnger`, `cityCapture`, `pillageGold` (`iPillageGoldModifier` REVIVED, §8-ii), `populationGrowthRate`, `occupationTime`. `defense` is grouped (`amount`/`min` floor/`bombardDefense`/`nukeDefense`/`airDefense`/`noEntryLevel`/`dynamicDefense`/`riverDefensePenalty`/recovery/`damageAttackerChance`/`damageToAttacker`/`adjacentDamage`/`repel`). |
+| the 22 "inversions" (`Tech*Changes`/`Bonus*Changes`/`Improvement`/`Terrain`/`Plot`/`ReligionChanges`/Building-on-building/`Specialist*`/`UnitCombat*`/`Unit*`/`Domain*`) | KEEP-ON-BUILDING (§6.1) | The mapping's `inversionsOut` is the STALE pre-v3 rule. **CONDITION-gated** (`enabled`): Tech (`{type:TECH,scope:team}`, PROVISIONAL pending Phase-F), Bonus (`{type:BONUS,scope:city,min:1}`), Building-on-building (`{type:BUILDING}`), Power (`HAS_POWER`). **TARGET-keyed** (effect lands on the entity): Improvement/Terrain/Plot yields (`food.city.improvements.{IMP}.flat`), `ReligionChanges` (`religion.city.{RELIGION}.flat`), Specialist yields/commerce (`.specialist.specialists.{SPEC}`), UnitCombat/Domain experience+production+strength (`experience.city.unitCombats.{UC}` — the §5 building→unit crossover). |
+| `CommerceChangeDoubleTimes` | a 2nd commerce deposit `enabled:{existedFor:{min:N}}` | The age-gated doubling -> a second conditional deposit pairing the base `CommerceChanges` (banked predicate, modifier-spec §10/§4.1). |
+| `StateReligionCommerces` / `iStateReligionHappiness` | `<commerce>`/`happiness`.city.flat `enabled:{STATE_RELIGION:<bldg religion>}` / `HAS_STATE_RELIGION` | State-religion-gated. |
+| `GlobalReligionCommerce` / `GlobalCorporationCommerce` | `identity.{shrine,corporationHQ}` (the FK) | Both are single enum FKs (NOT per-commerce). The building declares it's the SHRINE/HQ for that religion/corp; the per-commerce VALUES live on the religion (#15) / corporation (#16); the modifier `value x countReligion/CorporationLevels` at world scope ASSEMBLES at #430 (owner: park the FK). |
+| `Properties` / `PropertiesAllCities` / `PropertyManipulators` | per-`PROPERTY_*` family (`.city`/`.empire`/v3) | Properties first-class: `PROPERTY_CRIME.city.flat: -10` (Courthouse) etc. `PropertyManipulators` via `engine.property_source_v3`. |
+| `PropertySpawnUnit`+`PropertySpawnProperty` / `iNumUnitFullHeal` / `HealUnitCombatTypes` | `grants.repeatable[]` | **The NEW `repeatable` grant + `interval` primitive (modifier-spec §4.1).** PropertySpawn: `{unit, interval:perTurn, chance:{per:{type:PROPERTY_X,scope:city}}}` (Pawn-Shop spawns UNIT_ROBBER, chance ∝ crime; engine owns SorenRand + barb-owner). iNumUnitFullHeal/HealUnitCombat = per-turn heal grants (count, owner-approved generalization). |
+| `FreeBuilding`/`FreeAreaBuilding`/`ExtraFreeBonuses`/`FreeTraitTypes`/`FreeSpecialTech`/`iFreeTechs`/`HolyCity`/`iPopulationChange`/`iGlobalPopulationChange`/`bGoldenAge`/`FreeSpecialistCounts`/`FreePromoTypes` | `grants.{buildings,bonuses,traits,techs,holyCity,population,goldenAge,specialists,promotions}` | One-shot provisions/pulses. (FreeBuilding/FreeAreaBuilding are store-wired.) |
+| `FoundsCorporation`/`Hurrys`/`bForceTeamVoteEligible` | `enables.{corporations,hurries,votes}` | enables-family authored on the building. `enables.votes:["FORCE_TEAM_ELIGIBLE"]` (NEW token). |
+| `ObsoletesToBuilding` | `obsoletes.buildings` | The building's OWN obsolescence edge (read in the curator; not store-wired). |
+| `NewCityFree` | `identity.newCityFree` (PARKED) | **Deferred to the UNIT pass** (the settler "carries buildings into settling" via the new grant system — owner; the settler-grants-buildings edge is authored on settler-type units). |
+| `CommerceFlexibles` | `identity.commerceFlexible: [commerce…]` | Capability: which commerce SLIDERS the building unlocks (`isCommerceFlexible`). |
+| `MayDamageAttackingUnitCombatTypes` | `identity.damageAttackingUnitCombats` | Selective counter-damage list (pairs with the `defense` family). |
+| `iCost`/`iCostSizeModifier`/…/`iCostComplexityModifier` | `cost.{production,sizeModifier,countModifier,materialsModifier,complexityModifier}` | The C2C 5-part real-building-cost mechanic (intrinsic `cost` section). `GlobalBuildingCostModifiers` -> a distinct **`costs`** family (avoids the `cost` clash). |
+| capability bools (`bNukeImmune`/`bQuarantine`/`bProtectedCulture`/`bNoUnhappiness`/`bForceAllTradeRoutes`/…) | `identity.{…}` | Whole-city capability flags (owner: identity, revisit Phase F). `iAsset`->`worth`, `iPower`->`militaryWorth`, `iConquestProb`->`conquestProbability`, `iWorkableRadius`/`iLineOfSight`/`iAirlift`/`iAirUnitCapacity`->identity (overrides/capacities, not modifiers). |
+| `AidRateChanges` / `BonusAidModifiers` | — (DROPPED) | An UNWIRED property "aid" mechanic with NO gameplay effect (city arrays allocated+saved but never written-from-building or read-for-effect; only AI building-valuation `/3` + pedia read the raw values). Owner case-by-case DROP. |
+| `iNukeExplosionRand` | — (NOT emitted) | Live meltdown CODE (`doMeltdown` every turn) but populated ONLY by the EXCLUDED `Bad_Karma/Building_Meltdown` module -> no included building sets it. (modifier-spec §8(i) corrected.) |
+| `iMaxPopulationAllowed` / `iMaxPopulationChange` / `iDCMNukesOkay`/`bDCMNukesOkay` / `bForceOverwrite` | — (DROPPED) | Dead (§8-i, zero consumers) / `bForceOverwrite` = a module-merge loader directive (not gameplay). |
+
+**SpecialBuilding #31** (`curate_special`, rides the Building pass): a per-player-capped building GROUP. `iMaxPlayerInstances`
+-> `identity.maxPlayerInstances` (the group cap, `isBuildingGroupMaxedOut`/`getBuildingGroupCount`); `bValid=0` ->
+`identity.valid:false`; `TechPrereq`/`TechPrereqAnyone` -> store (`tech.enables.specialBuildings`); `Button` -> `ui.art.icon`.
+Buildings join via their `SpecialBuildingType` FK (`identity.specialBuildingType`). Written to `Assets/Data/specialbuildings/`.
+
+*Toolkit: `curate_building.py` (bespoke, modeled on `curate_promotion`) — `SCALAR_FAMILIES`/`YIELD_FAMILIES`/`COND_KEYED`/
+`TARGET_KEYED` tables + `requires_building` + a `pass2` for the keyed/property/grant/repeatable shapes + `curate_special`
+for SpecialBuilding; COVERAGE CHECK + era foldering. ⚑ KNOWN: `loadPrune` is 0 (buildings gate at the module level, no
+`PrereqGameOption` tag). Issues expected at the #430 reading pass (owner: "a solid start").*

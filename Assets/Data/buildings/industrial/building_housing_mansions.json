@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_HOUSING_MANSIONS",
+ "description": "TXT_KEY_BUILDING_HOUSING_MANSIONS",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_MANSIONS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DRUGLORDS_MANSON",
+   "BUILDING_LUXURY_FURNITURE_WORKSHOP",
+   "BUILDING_LYCEUM",
+   "BUILDING_MAUSOLEUM"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_HOUSING_ANIMAL_HIDE_TENTS",
+   "BUILDING_HOUSING_HOMELESS",
+   "BUILDING_HOUSING_MANORS",
+   "BUILDING_HOUSING_TIPIS",
+   "BUILDING_HOUSING_VILLAS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MARBLE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "IS_FRESHWATER",
+    "HAS_POWER",
+    {
+     "type": "BUILDING_WATER_PIPES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SEWER_SYSTEM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_TELEPHONE_NETWORK",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_MANSIONS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

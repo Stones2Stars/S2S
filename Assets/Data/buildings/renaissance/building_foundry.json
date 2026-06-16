@@ -1,0 +1,133 @@
+{
+ "type": "BUILDING_FOUNDRY",
+ "description": "TXT_KEY_BUILDING_FOUNDRY",
+ "civilopedia": "TXT_KEY_BUILDING_FOUNDRY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARMOURER",
+   "BUILDING_COTTAGE_INDUSTRY",
+   "BUILDING_GRAND_FIRE_FESTIVAL",
+   "BUILDING_GRAND_MANOR",
+   "BUILDING_GUILD_BLACKSMITHS",
+   "BUILDING_GUILD_HALL",
+   "BUILDING_LIQUID_METALS_FOUNDRY",
+   "BUILDING_SMITH_ALUMINUM",
+   "BUILDING_SMITH_BRASS",
+   "BUILDING_SMITH_BRONZE",
+   "BUILDING_SMITH_COPPER",
+   "BUILDING_SMITH_ELECTRUM",
+   "BUILDING_SMITH_GOLD",
+   "BUILDING_SMITH_IRON",
+   "BUILDING_SMITH_PLATINUM",
+   "BUILDING_SMITH_SILVER",
+   "BUILDING_SMITH_STEEL",
+   "BUILDING_SMITH_TIN",
+   "BUILDING_SMITH_TITANIUM",
+   "BUILDING_SUPERSTRONG_ALLOY_FOUNDRY",
+   "BUILDING_THE_COLOSSUS",
+   "BUILDING_TOWNCLOCK"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_METALS_MEGACOMPLEX"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_FORGE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_CHARCOAL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_COAL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 25,
+   "improvements": {
+    "IMPROVEMENT_MINE": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_MECHANICAL",
+    "interval": "perTurn",
+    "heal": 5
+   }
+  ]
+ },
+ "cost": {
+  "production": 425,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FOUNDRY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_FORGE"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ENGINEER": 1
+  },
+  "worth": 4,
+  "militaryWorth": 10,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 3,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

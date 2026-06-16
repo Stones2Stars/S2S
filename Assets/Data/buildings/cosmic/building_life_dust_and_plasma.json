@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_LIFE_DUST_AND_PLASMA",
+ "description": "TXT_KEY_BUILDING_LIFE_DUST_AND_PLASMA",
+ "civilopedia": "TXT_KEY_BUILDING_LIFE_DUST_AND_PLASMA_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_TRANSTELLAR_HYDROGEN_MAP",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  },
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_SMALL_MAGELLANIC_CLOUD_COLONY",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_LARGE_MAGELLANIC_CLOUD_COLONY",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 125,
+   "percent": [
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_GRAND_UNIFICATION_BIOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 15808
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LIFE_DUST_AND_PLASMA"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

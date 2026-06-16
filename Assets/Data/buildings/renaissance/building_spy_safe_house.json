@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_SPY_SAFE_HOUSE",
+ "description": "TXT_KEY_BUILDING_SPY_SAFE_HOUSE",
+ "civilopedia": "TXT_KEY_BUILDING_SPY_SAFE_HOUSE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SPY_HIDEOUT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SPY_NETWORK",
+     "scope": "empire",
+     "min": 1
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_SPY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 425,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SAFE_HOUSE"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SPY": 1
+  },
+  "forceNoPrereqScaling": true,
+  "worth": 8,
+  "militaryWorth": 8,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

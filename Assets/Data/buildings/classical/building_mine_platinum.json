@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_MINE_PLATINUM",
+ "description": "TXT_KEY_BUILDING_MINE_PLATINUM",
+ "civilopedia": "TXT_KEY_BUILDING_MINE_PLATINUM_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SMELTER_PLATINUM"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CORE_MINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PLATINUM_ORE",
+     "scope": "city",
+     "connection": "vicinity"
+    },
+    {
+     "type": "BUILDING_MINING_CAMP",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1,
+   "perPopulation": {
+    "percent": -25
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 216,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MINE_PLATINUM"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

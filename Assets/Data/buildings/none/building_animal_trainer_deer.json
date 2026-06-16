@@ -1,0 +1,122 @@
+{
+ "type": "BUILDING_ANIMAL_TRAINER_DEER",
+ "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_DEER",
+ "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_DEER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HERITAGE_DEER",
+   "BUILDING_MILITARY_STANDARD_DEER"
+  ],
+  "units": [
+   "UNIT_DEERRIDER",
+   "UNIT_DEER_ARCHER",
+   "UNIT_DEER_LIGHT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_DEER",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "latitude": {
+      "min": 45
+     }
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_FARM_ANIMAL_REINDEER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_DEER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_DEER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_DEER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_MEGALOCEROS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_DEER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_PRESERVE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_INDUSTRIAL_FARMS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 1038,
+  "sizeModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 7
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_DEER_RIDER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ANIMAL_TRAINER_DEER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 2,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

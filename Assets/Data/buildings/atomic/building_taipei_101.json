@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_TAIPEI_101",
+ "description": "TXT_KEY_BUILDING_TAIPEI_101",
+ "civilopedia": "TXT_KEY_BUILDING_TAIPEI_101_PEDIA",
+ "help": "TXT_KEY_BUILDING_TAIPEI_101_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "TEAM",
+     "scope": "world",
+     "min": 4
+    },
+    {
+     "type": "BUILDING_SKYSCRAPER",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  },
+  "area": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "cost": {
+  "production": 7680,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TAIPEI_101"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TAIPEI_101"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_MERCHANT": 2
+  },
+  "nukeImmune": true,
+  "worth": 15,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,96 @@
+{
+ "type": "BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR",
+ "description": "TXT_KEY_BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR",
+ "civilopedia": "TXT_KEY_BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_COMBAT_SIMULATOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HOLOGRAPHIC_PROJECTORS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MILITARY_BASE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_GUN": {
+     "flat": 4
+    },
+    "UNITCOMBAT_WHEELED": {
+     "flat": 4
+    },
+    "UNITCOMBAT_TRACKED": {
+     "flat": 4
+    },
+    "UNITCOMBAT_SIEGE": {
+     "flat": 4
+    },
+    "UNITCOMBAT_RECON": {
+     "flat": 4
+    },
+    "UNITCOMBAT_HITECH": {
+     "flat": 4
+    },
+    "UNITCOMBAT_DREADNOUGHT": {
+     "flat": 4
+    },
+    "UNITCOMBAT_HEALTH_CARE": {
+     "flat": 4
+    },
+    "UNITCOMBAT_THROWING": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 3525,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 6,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

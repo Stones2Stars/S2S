@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_RESOURCES_LARD",
+ "description": "TXT_KEY_BUILDING_RESOURCES_LARD",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_BUTCHERY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MEAT_PACKING_PLANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_RENDERING_PLANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_INDUSTRIAL_FARMS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_LARD"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

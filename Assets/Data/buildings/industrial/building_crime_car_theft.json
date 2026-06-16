@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_CRIME_CAR_THEFT",
+ "description": "TXT_KEY_BUILDING_CRIME_CAR_THEFT",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_CAR_THEFT_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_AUTOMOBILES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -15,
+   "percent": -5
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 15
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2,
+   "perPopulation": {
+    "percent": -25
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

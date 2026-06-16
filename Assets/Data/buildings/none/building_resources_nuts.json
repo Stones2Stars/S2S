@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_RESOURCES_NUTS",
+ "description": "TXT_KEY_BUILDING_RESOURCES_NUTS",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_II"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_GROVE_OAK",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GROVE_ALMOND",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GROVE_BRAZIL_NUT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GROVE_CASHEW",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GROVE_CHESTNUT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_COCONUT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GROVE_GEVUINA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GROVE_HAZELNUT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GROVE_MACADAMIA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GROVE_MONGONGO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_PEANUT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GROVE_PECAN",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GROVE_PINE_NUT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GROVE_PISTACHIO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GROVE_WALNUT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_NUTS"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

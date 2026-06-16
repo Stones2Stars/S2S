@@ -1,0 +1,114 @@
+{
+ "type": "BUILDING_IKHANDA",
+ "description": "TXT_KEY_BUILDING_IKHANDA",
+ "civilopedia": "TXT_KEY_BUILDING_IKHANDA_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_STORAGE_PIT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GRANARY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MODERN_GRANARY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_WAREHOUSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MODERN_WAREHOUSE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MELEE": {
+     "flat": 3
+    },
+    "UNITCOMBAT_RECON": {
+     "flat": 3
+    },
+    "UNITCOMBAT_ANIMAL": {
+     "flat": 2
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "flat": 2
+    },
+    "UNITCOMBAT_SIEGE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 570,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_GOLD": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ZULU_IKHANDA"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_IKHANDA"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 3,
+  "conquestProbability": 100,
+  "dcmAirbombMission": 2,
+  "greatPeopleUnitType": "UNIT_GREAT_GENERAL",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

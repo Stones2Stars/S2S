@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_CLIMATE_SATELLITE",
+ "description": "TXT_KEY_BUILDING_CLIMATE_SATELLITE",
+ "civilopedia": "TXT_KEY_BUILDING_CLIMATE_SATELLITE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_CLIMATOLOGY_LAB",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5,
+   "percent": [
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_ECOLOGICAL_ENGINEERING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "cost": {
+  "production": 1540
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CLIMATE_SATELLITE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

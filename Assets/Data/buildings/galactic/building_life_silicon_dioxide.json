@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_LIFE_SILICON_DIOXIDE",
+ "description": "TXT_KEY_BUILDING_LIFE_SILICON_DIOXIDE",
+ "civilopedia": "TXT_KEY_BUILDING_LIFE_SILICON_DIOXIDE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_BASE_CHTHONIAN_PLANET",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 200
+  },
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_KEPLER_186F_COLONY",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": [
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_GALACTIC_ECOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_DIRECTED_PANSPERMIA",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 8568
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LIFE_SILICON_DIOXIDE"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

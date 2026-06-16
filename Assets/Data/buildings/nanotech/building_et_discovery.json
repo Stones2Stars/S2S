@@ -1,0 +1,98 @@
+{
+ "type": "BUILDING_ET_DISCOVERY",
+ "description": "TXT_KEY_BUILDING_ET_DISCOVERY",
+ "civilopedia": "TXT_KEY_BUILDING_ET_DISCOVERY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BUILDING_ASTRONOMICAL_DATABASE",
+     "scope": "empire",
+     "min": 3
+    },
+    {
+     "type": "BUILDING_ASTROBIOLOGY_LAB",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "BUILDING_KEPLER_SPACE_TELESCOPE",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "BUILDING_SETI_PROGRAM",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_INTERSTELLAR_BROADCAST_NODE",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 20
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_ASTROBIOLOGY_LAB": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 24870,
+  "sizeModifier": 3,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ET_DISCOVERY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ET_DISCOVERY"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

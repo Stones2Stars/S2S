@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_HYDROGEN_GENERATOR",
+ "description": "TXT_KEY_BUILDING_HYDROGEN_GENERATOR",
+ "civilopedia": "TXT_KEY_BUILDING_HYDROGEN_GENERATOR_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ROCKET_FUEL_REFINERY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CHEMICALS_DISTRICT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_FRESHWATER",
+    {
+     "type": "BUILDING_WATER_PIPES",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 655,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYDROGEN_GENERATOR"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

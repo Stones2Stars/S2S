@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_OBSIDIAN_GATHERER",
+ "description": "TXT_KEY_BUILDING_OBSIDIAN_GATHERER",
+ "civilopedia": "TXT_KEY_BUILDING_LAVA_ROCK_GATHERER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_OBSIDIAN_QUARRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_OBSIDIAN",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LAVA_ROCK_GATHERER"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

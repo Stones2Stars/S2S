@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_DISEASE_BUBONIC_PLAGUE",
+ "description": "TXT_KEY_BUILDING_DISEASE_BUBONIC_PLAGUE",
+ "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 2
+    },
+    {
+     "type": "BUILDING_PESTS_FLEAS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -12
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -12
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -10,
+   "perPopulation": {
+    "percent": -100
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYDISEASE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

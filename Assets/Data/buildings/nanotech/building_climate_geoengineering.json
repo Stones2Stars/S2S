@@ -1,0 +1,36 @@
+{
+ "type": "BUILDING_CLIMATE_GEOENGINEERING",
+ "description": "TXT_KEY_BUILDING_CLIMATE_GEOENGINEERING",
+ "civilopedia": "TXT_KEY_BUILDING_CLIMATE_GEOENGINEERING_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_POLLUTION_MAJOR_GLOBAL_WARMING",
+   "BUILDING_POLLUTION_MINOR_GLOBAL_WARMING",
+   "BUILDING_POLLUTION_MODERATE_GLOBAL_WARMING"
+  ]
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 4655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CLIMATE_GEOENGINEERING"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

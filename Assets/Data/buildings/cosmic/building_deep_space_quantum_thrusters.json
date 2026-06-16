@@ -1,0 +1,40 @@
+{
+ "type": "BUILDING_DEEP_SPACE_QUANTUM_THRUSTERS",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_QUANTUM_THRUSTERS",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_QUANTUM_THRUSTERS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 19766
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_QUANTUM_THRUSTERS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_CISLUNAR_CLOAKING",
+ "description": "TXT_KEY_BUILDING_CISLUNAR_CLOAKING",
+ "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_CLOAKING_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CISLUNAR_AEROGEL_SHIELDING",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CISLUNAR_MATERIALS_LAB",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 20,
+   "percent": [
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_PHASING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1577
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CISLUNAR_CLOAKING"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

@@ -1,0 +1,163 @@
+{
+ "type": "BUILDING_ART_GALLERY",
+ "description": "TXT_KEY_BUILDING_ART_GALLERY",
+ "civilopedia": "TXT_KEY_BUILDING_ART_GALLERY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DIGITAL_ART_MUSEUM",
+   "BUILDING_GETTY_CENTER"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 2,
+   "percent": [
+    {
+     "value": 600,
+     "enabled": {
+      "type": "TECH_ROMANTICISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 600,
+     "enabled": {
+      "type": "TECH_PHOTOGRAPHY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 600,
+     "enabled": {
+      "type": "TECH_REALISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 600,
+     "enabled": {
+      "type": "TECH_IMPRESSIONISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 600,
+     "enabled": {
+      "type": "TECH_CUBISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 600,
+     "enabled": {
+      "type": "TECH_EXPRESSIONISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_DADA",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_SURREALISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_ANIMATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_MODERN_ART",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_POP_ART",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_MASS_MEDIA",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_3D_MODELLING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 425,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ART_GALLERY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_ART_GALLERY"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ARTIST": 1
+  },
+  "worth": 5,
+  "militaryWorth": 2,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

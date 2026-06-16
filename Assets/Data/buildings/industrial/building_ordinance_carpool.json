@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_ORDINANCE_CARPOOL",
+ "description": "TXT_KEY_BUILDING_ORDINANCE_CARPOOL",
+ "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_CARPOOL_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TELEPORT_BOOTH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_COURTHOUSE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 830,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ORDINANCE_CARPOOL"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

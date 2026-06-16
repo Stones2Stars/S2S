@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_DEEP_SPACE_HOUSING_MANAGEMENT",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_HOUSING_MANAGEMENT",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_HOUSING_MANAGEMENT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_PRISON",
+   "BUILDING_DEEP_SPACE_SECURITY_SYSTEM",
+   "BUILDING_DEEP_SPACE_SOCIAL_ENGINEERING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SPACE_COLONY_DEEP_SPACE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 823
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_HOUSING_MANAGEMENT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

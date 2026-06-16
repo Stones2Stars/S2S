@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_INTERGALACTIC_ULTRA_HIGH_PRESSURE_FORGE",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_ULTRA_HIGH_PRESSURE_FORGE",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_ULTRA_HIGH_PRESSURE_FORGE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_ZERO_POINT_PLANT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4246
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_ULTRA_HIGH_PRESSURE_FORGE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

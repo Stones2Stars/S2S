@@ -1,0 +1,113 @@
+{
+ "type": "BUILDING_GERM_TRAPS",
+ "description": "TXT_KEY_BUILDING_GERM_TRAPS",
+ "civilopedia": "TXT_KEY_BUILDING_GERM_TRAPS_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ROBOTIC_TRAPS"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_BOOBY_TRAPS",
+   "BUILDING_LANDMINES",
+   "BUILDING_MECHANICAL_TRAPS",
+   "BUILDING_PIT_TRAPS",
+   "BUILDING_SPIKED_PIT_TRAPS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_BIOLOGICAL_WARFARE_LAB",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 30
+   },
+   "damageAttackerChance": {
+    "flat": 35
+   },
+   "damageToAttacker": {
+    "flat": 35
+   },
+   "repel": {
+    "flat": 50
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 1180,
+  "countModifier": 2,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GERM_TRAPS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_NANOFACTORY"
+ },
+ "identity": {
+  "damageAttackingUnitCombats": [
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_ASSAULT_MECH",
+   "UNITCOMBAT_DREADNOUGHT",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_HOVERCRAFT",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_ROBOT",
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_TRACKED",
+   "UNITCOMBAT_WHEELED"
+  ],
+  "militaryWorth": 7,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

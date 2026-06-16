@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_DIGITAL_OFFICES",
+ "description": "TXT_KEY_BUILDING_DIGITAL_OFFICES",
+ "civilopedia": "TXT_KEY_BUILDING_DIGITAL_OFFICES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DIGITAL_ADVERTISING_FIRM",
+   "BUILDING_FREELANCE_MARKETPLACE",
+   "BUILDING_HUDSON_YARDS",
+   "BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE",
+   "BUILDING_PEER_TO_PEER_RENTALS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_COMPUTER_NETWORK",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MODERN_OFFICES",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PAPER",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_TECH",
+    "interval": "perTurn",
+    "heal": 4
+   }
+  ]
+ },
+ "cost": {
+  "production": 2005,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DIGITAL_OFFICES"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,40 @@
+{
+ "type": "BUILDING_HOUSING_LEAN_TOS",
+ "description": "TXT_KEY_BUILDING_HOUSING_LEAN_TOS",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_LEAN_TOS_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_HOUSING_ANIMAL_BURROW",
+   "BUILDING_HOUSING_HOMELESS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_LEAN_TOS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

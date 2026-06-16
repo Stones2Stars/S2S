@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_FALCONRY_SCHOOL",
+ "description": "TXT_KEY_BUILDING_FALCONRY_SCHOOL",
+ "civilopedia": "TXT_KEY_BUILDING_FALCONRY_SCHOOL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_FEATHERS"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_FALCONER",
+   "BUILDING_HOMING_PIGEON_COOP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_HAWKING_HUT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_HAWK",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": -100,
+     "enabled": {
+      "type": "TECH_INDUSTRIALISM",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_TOURISM",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 310,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FALCONRY_SCHOOL"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SPY": 1
+  },
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

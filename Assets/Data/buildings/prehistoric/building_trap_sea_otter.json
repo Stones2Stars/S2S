@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_TRAP_SEA_OTTER",
+ "description": "TXT_KEY_BUILDING_TRAP_SEA_OTTER",
+ "civilopedia": "TXT_KEY_BUILDING_TRAP_SEA_OTTER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_PELTS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_BREEDING_PROGRAM_SEA_OTTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BEAVERS",
+     "scope": "city",
+     "connection": "vicinity"
+    },
+    "IS_WATER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_SEA_LION_AND_SEAL",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_ANIMAL_SNARE_TRAPS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANCIENT_CUSTOMS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TECH_ECOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 35,
+  "countModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRAP_SEA_OTTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

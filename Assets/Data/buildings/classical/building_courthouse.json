@@ -1,0 +1,154 @@
+{
+ "type": "BUILDING_COURTHOUSE",
+ "description": "TXT_KEY_BUILDING_COURTHOUSE",
+ "civilopedia": "TXT_KEY_BUILDING_COURTHOUSE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BAILIWICK",
+   "BUILDING_DISTRICT_COURTHOUSE",
+   "BUILDING_ELECTRIC_CHAIR",
+   "BUILDING_EU_HARVARD_UNIVERSITY",
+   "BUILDING_EU_UNIVERSITY_OF_BOLOGNA",
+   "BUILDING_EU_UNIVERSITY_OF_SALAMANCA",
+   "BUILDING_FERRY_TERMINAL",
+   "BUILDING_FORBIDDEN_PALACE",
+   "BUILDING_GALLOWS",
+   "BUILDING_GUILLOTINE",
+   "BUILDING_INDEPENDENCE_HALL",
+   "BUILDING_LAW_FIRM",
+   "BUILDING_LAW_SCHOOL",
+   "BUILDING_LETHAL_INJECTION",
+   "BUILDING_ORDINANCE_AUTOMOBILE_EMISSION_REDUCTION_ACT",
+   "BUILDING_ORDINANCE_CARPOOL",
+   "BUILDING_ORDINANCE_CLEAN_AIR_ACT",
+   "BUILDING_ORDINANCE_CLEAN_WATER_ACT",
+   "BUILDING_ORDINANCE_COMMUTER_SHUTTLE_SERVICE",
+   "BUILDING_ORDINANCE_FIRE_CODE",
+   "BUILDING_ORDINANCE_NEIGHBORHOOD_WATCH",
+   "BUILDING_ORDINANCE_SMOKE_DETECTOR",
+   "BUILDING_ORDINANCE_TIRE_RECYCLING_PROGRAM",
+   "BUILDING_ORDINANCE_YOUTH_CURFEW",
+   "BUILDING_PATENT_OFFICE",
+   "BUILDING_RIVER_AUTHORITY",
+   "BUILDING_STEAMBOAT_PORT",
+   "BUILDING_STOCKS"
+  ],
+  "units": [
+   "UNIT_JUDGE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BAMBOO",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BRICKS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_CEMENT",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 225,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_ESPIONAGE": 3
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_COURTHOUSE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COURTHOUSE"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SPY": 1,
+   "SPECIALIST_LAWYER": 1,
+   "SPECIALIST_INVESTIGATOR": 1
+  },
+  "newCityFree": [
+   {
+    "GOM_TECH": "TECH_STEAM_POWER"
+   }
+  ],
+  "worth": 4,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

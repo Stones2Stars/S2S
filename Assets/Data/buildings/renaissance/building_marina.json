@@ -1,0 +1,127 @@
+{
+ "type": "BUILDING_MARINA",
+ "description": "TXT_KEY_BUILDING_MARINA",
+ "civilopedia": "TXT_KEY_BUILDING_MARINA_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_YACHT_CLUB"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_BOATYARD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER",
+    {
+     "type": "BUILDING_HARBORMASTERS_OFFICE",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "IMPROVEMENT_FISHING_BOATS",
+      "scope": "plot"
+     },
+     {
+      "type": "IMPROVEMENT_WHALING_BOATS",
+      "scope": "plot"
+     },
+     {
+      "type": "IMPROVEMENT_WHALING_SHIPS",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_TOURISM",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ECOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "improvements": {
+    "IMPROVEMENT_FISHING_BOATS": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WHALING_BOATS": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WHALING_SHIPS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_NAVAL",
+    "interval": "perTurn",
+    "heal": 4
+   }
+  ]
+ },
+ "cost": {
+  "production": 410,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MARINA"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_PORT"
+ },
+ "identity": {
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

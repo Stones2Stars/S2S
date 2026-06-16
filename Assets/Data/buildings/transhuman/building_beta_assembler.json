@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_BETA_ASSEMBLER",
+ "description": "TXT_KEY_BUILDING_BETA_ASSEMBLER",
+ "civilopedia": "TXT_KEY_BUILDING_BETA_ASSEMBLER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ALPHA_ASSEMBLER",
+   "BUILDING_ATOMICALLY_PRECISE_ALLOY_FOUNDRY",
+   "BUILDING_PERSONAL_SPACECRAFT_FACTORY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_GAMMA_ASSEMBLER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ANIMA_STUDIO",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 45,
+   "percent": 45
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_MECHANICAL",
+    "interval": "perTurn",
+    "heal": 5
+   },
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_TECH",
+    "interval": "perTurn",
+    "heal": 5
+   }
+  ]
+ },
+ "cost": {
+  "production": 6405,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BETA_ASSEMBLER"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ENGINEER": 2
+  },
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

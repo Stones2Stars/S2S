@@ -1,0 +1,155 @@
+{
+ "type": "BUILDING_CHRONOPOLIS",
+ "description": "TXT_KEY_BUILDING_CHRONOPOLIS",
+ "civilopedia": "TXT_KEY_BUILDING_CHRONOPOLIS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_UTOPIA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_RATIONAL_CITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10,
+   "percent": [
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_TIMELINE_RECTIFICATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_TIME_REVERSAL",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_MULTIDIMENSIONAL_TIME",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_STABLE_TIME_LOOPS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_HUMAN_MOD_ENLIGHTENED",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10,
+   "percent": [
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_MULTIVERSE_TRAVERSAL",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_MANIFOLD_COLONIZATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_MACROVERSE_TRAVERSAL",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_HUMAN_MOD_ENLIGHTENED",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10,
+   "percent": [
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_CULTURAL_LONGEVITY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 14155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CHRONOPOLIS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

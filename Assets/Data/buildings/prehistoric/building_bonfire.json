@@ -1,0 +1,109 @@
+{
+ "type": "BUILDING_BONFIRE",
+ "description": "TXT_KEY_BUILDING_BONFIRE",
+ "civilopedia": "TXT_KEY_BUILDING_BONFIRE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLOOD_DANCE",
+   "BUILDING_BRANDING_HUT",
+   "BUILDING_CAVE_PAINTINGS",
+   "BUILDING_FIRE_DANCE",
+   "BUILDING_FUNERAL_PYRE",
+   "BUILDING_GREAT_BONFIRE",
+   "BUILDING_RESOURCES_CHARCOAL",
+   "BUILDING_SMOKE_SIGNALS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CHARCOAL_BURNER"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_FIRE_PIT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_LUMBER_CAMP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DRIFTWOOD_GATHERER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_LUMBER_GATHERER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_AGROFOREST",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 62,
+  "sizeModifier": 1,
+  "materialsModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BONFIRE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

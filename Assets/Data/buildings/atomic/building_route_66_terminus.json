@@ -1,0 +1,27 @@
+{
+ "type": "BUILDING_ROUTE_66_TERMINUS",
+ "description": "TXT_KEY_BUILDING_ROUTE_66_TERMINUS",
+ "civilopedia": "TXT_KEY_BUILDING_ROUTE_66_PEDIA",
+ "help": "TXT_KEY_BUILDING_ROUTE_66_TERMINUS_HELP",
+ "tradeRoutes": {
+  "city": {
+   "flat": 3,
+   "modifier": {
+    "percent": 50
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ROUTE_66_TERMINUS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

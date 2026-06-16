@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_CISLUNAR_MEDICAL_LAB",
+ "description": "TXT_KEY_BUILDING_CISLUNAR_MEDICAL_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_MEDICAL_LAB_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_ALUMINUM_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_EFFECT_LAUNCH_SITE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_COMMERCIAL_SPACEPORT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MILITARY_SPACEPORT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 3245
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CISLUNAR_MEDICAL_LAB"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SPACEWAY"
+ },
+ "identity": {
+  "orbital": true,
+  "worth": 6,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

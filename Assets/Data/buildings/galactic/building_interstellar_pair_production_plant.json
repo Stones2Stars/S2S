@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_INTERSTELLAR_PAIR_PRODUCTION_PLANT",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_PAIR_PRODUCTION_PLANT",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PAIR_PRODUCTION_PLANT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_PRECIOUS_METAL_GENERATOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3212
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_PAIR_PRODUCTION_PLANT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_RESOURCES_CHARCOAL",
+ "description": "TXT_KEY_BUILDING_RESOURCES_CHARCOAL",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CHARCOAL_BURNER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_BONFIRE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FIRE_PIT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_IMU",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_WONDER_OF_NATURE_KRAKATOA",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_CHARCOAL"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

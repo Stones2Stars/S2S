@@ -1,0 +1,118 @@
+{
+ "type": "BUILDING_WONDER_OF_NATURE_KILIMANJARO",
+ "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_KILIMANJARO",
+ "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_KILIMANJARO_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "FEATURE_PLATY_KILIMANJARO",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_TOURISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 400,
+     "enabled": {
+      "type": "TECH_MOUNTAINEERING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": [
+    {
+     "value": 300,
+     "enabled": {
+      "type": "TECH_ORAL_TRADITION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 400,
+     "enabled": {
+      "type": "TECH_LITERATURE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5,
+   "percent": [
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_CULTURAL_IDENTITY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 10,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WONDER_OF_NATURE_KILIMANJARO"
+  }
+ },
+ "identity": {
+  "providesFreshWater": true,
+  "worth": 4,
+  "conquestProbability": 70,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

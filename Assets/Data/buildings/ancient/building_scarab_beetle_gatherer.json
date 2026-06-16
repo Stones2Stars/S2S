@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_SCARAB_BEETLE_GATHERER",
+ "description": "TXT_KEY_BUILDING_SCARAB_BEETLE_GATHERER",
+ "civilopedia": "TXT_KEY_BUILDING_SCARAB_BEETLE_GATHERER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_BUGS",
+   "BUILDING_SCARAB_BEETLE_SANCTUARY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ARBORETUM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SILK",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_INCENSE",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 160,
+  "countModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 7
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SCARAB_BEETLE_GATHERER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

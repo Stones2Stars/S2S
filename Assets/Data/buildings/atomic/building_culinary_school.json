@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_CULINARY_SCHOOL",
+ "description": "TXT_KEY_BUILDING_CULINARY_SCHOOL",
+ "civilopedia": "TXT_KEY_BUILDING_CULINARY_SCHOOL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_GASTRONOMY_LAB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_UNIVERSITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_GENESIS_BIOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_AUGMENTED_CONSUMABLES",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 1345,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CULINARY_SCHOOL"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

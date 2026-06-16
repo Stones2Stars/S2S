@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_SYSTEMS_BIOLOGY_SIMULATOR",
+ "description": "TXT_KEY_BUILDING_SYSTEMS_BIOLOGY_SIMULATOR",
+ "civilopedia": "TXT_KEY_BUILDING_SYSTEMS_BIOLOGY_SIMULATOR_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_3D_BODY_ATLAS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_STEM_CELL_LAB",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_COMPUTER_NETWORK",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_EVOLUTION_SIMULATOR",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5,
+   "percent": [
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_GENESIS_BIOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_AFFECTIVE_ALGORITHMS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_PERSONALIZED_HEALTH",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 2305,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SYSTEMS_BIOLOGY_SIMULATOR"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

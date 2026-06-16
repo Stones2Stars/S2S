@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_BANK",
+ "description": "TXT_KEY_BUILDING_BANK",
+ "civilopedia": "TXT_KEY_BUILDING_BANK_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ACCOUNTING_FIRM",
+   "BUILDING_CENTRAL_BANK",
+   "BUILDING_CREDIT_UNION",
+   "BUILDING_CRIME_BANK_ROBBERY",
+   "BUILDING_EU_OXFORD_UNIVERSITY",
+   "BUILDING_EU_UNIVERSITY_OF_EDINBURGH",
+   "BUILDING_EU_UNIVERSITY_OF_MURCIA",
+   "BUILDING_FORT_KNOX",
+   "BUILDING_PATENT_OFFICE",
+   "BUILDING_STOCK_MARKET",
+   "BUILDING_WORLD_BANK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_MODERN_OFFICES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TRADING_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHOPPING_DISTRICT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 368,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BANK"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "worth": 5,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

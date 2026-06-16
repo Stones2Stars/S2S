@@ -1,0 +1,120 @@
+{
+ "type": "BUILDING_LASCAUX_PAINTS",
+ "description": "TXT_KEY_BUILDING_LASCAUX_PAINTS",
+ "civilopedia": "TXT_KEY_BUILDING_LASCAUX_PAINTS_PEDIA",
+ "help": "TXT_KEY_BUILDING_LASCAUX_CAVES_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_CAVE_PAINTINGS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FRESCO_MURAL",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "FEATURE_CAVES",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 8000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "cost": {
+  "production": 300,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_LASCAUX"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LASCAUX_PAINTS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_STONEHENGE"
+ },
+ "identity": {
+  "nukeImmune": true,
+  "centerInCity": true,
+  "worth": 6,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_INTERSTELLAR_CONTROLLED_BREEDING",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_CONTROLLED_BREEDING",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CONTROLLED_BREEDING_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_DESIGNER_CASTE_LAW_ENFORCEMENT",
+   "BUILDING_INTERSTELLAR_DESIGNER_CASTE_MAINTENANCE",
+   "BUILDING_INTERSTELLAR_DESIGNER_CASTE_MISSION_CONTROL"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "foodKept": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1757
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_CONTROLLED_BREEDING"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC"
+  ]
+ }
+}

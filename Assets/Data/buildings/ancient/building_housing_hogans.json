@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_HOUSING_HOGANS",
+ "description": "TXT_KEY_BUILDING_HOUSING_HOGANS",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_HOGANS_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_HOUSING_HOMELESS",
+   "BUILDING_HOUSING_STILT_HUTS",
+   "BUILDING_HOUSING_TREEHOUSES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PRIME_TIMBER",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_FINE_CLAY",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "TERRAIN_DESERT",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_SCRUB",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_HOGANS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_POTTERS_WORKSHOP",
+ "description": "TXT_KEY_BUILDING_POTTERS_WORKSHOP",
+ "civilopedia": "TXT_KEY_BUILDING_POTTERS_WORKSHOP_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_GUILD_POTTERS",
+   "BUILDING_PORCELAIN_WORKSHOP",
+   "BUILDING_RED_AND_BLACK_WARE_PAINTER",
+   "BUILDING_TERRACOTTA_WORKSHOP",
+   "BUILDING_TERRA_SIGILLATA_WORKSHOP"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FACTORY_POTTERY"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_POTTERS_HUT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_FINE_CLAY",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_CLAY",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COPPER_INGOTS",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LEAD_INGOTS",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_LEAD_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 332,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_POTTERS_WORKSHOP"
+  }
+ },
+ "identity": {
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

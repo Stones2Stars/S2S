@@ -1,0 +1,107 @@
+{
+ "type": "BUILDING_LAXMINARAYAN_TEMPLE",
+ "description": "TXT_KEY_BUILDING_LAXMINARAYAN_TEMPLE",
+ "civilopedia": "TXT_KEY_BUILDING_LAXMINARAYAN_TEMPLE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_HINDU_TEMPLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BUDDHIST_TEMPLE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_HINDU_TEMPLE": {
+     "flat": 5
+    },
+    "BUILDING_BUDDHIST_TEMPLE": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 8
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_HINDU_TEMPLE": {
+     "flat": 5
+    },
+    "BUILDING_BUDDHIST_TEMPLE": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "cost": {
+  "production": 5700,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_LAXMIN"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LAXMINARAYAN_TEMPLE"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 1
+  },
+  "centerInCity": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

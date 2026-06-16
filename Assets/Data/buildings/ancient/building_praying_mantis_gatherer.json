@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_PRAYING_MANTIS_GATHERER",
+ "description": "TXT_KEY_BUILDING_PRAYING_MANTIS_GATHERER",
+ "civilopedia": "TXT_KEY_BUILDING_PRAYING_MANTIS_GATHERER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_PRAYING_MANTIS_SANCTUARY",
+   "BUILDING_RESOURCES_BUGS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ARBORETUM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PEYOTE",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_TEA",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 160,
+  "countModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 7
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PRAYING_MANTIS_GATHERER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_INTERSTELLAR_BIOGEOCOMPUTER",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_BIOGEOCOMPUTER",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BIOGEOCOMPUTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_TERRAFORMED_PLANET",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": [
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_GALACTIC_ECOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_GRAND_UNIFICATION_BIOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_PARTICLE_GENETICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 5269
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_BIOGEOCOMPUTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

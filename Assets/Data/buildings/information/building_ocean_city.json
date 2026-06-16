@@ -1,0 +1,130 @@
+{
+ "type": "BUILDING_OCEAN_CITY",
+ "description": "TXT_KEY_BUILDING_OCEAN_CITY",
+ "civilopedia": "TXT_KEY_BUILDING_OCEAN_CITY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DOLPHIN_COMMUNICATION_CENTER",
+   "BUILDING_ENERGY_ISLAND",
+   "BUILDING_GREEN_FLOAT",
+   "BUILDING_OCEAN_ARCOLOGY",
+   "BUILDING_OCEAN_SPIRAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_WAVE_FARM",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_OCEAN_THERMAL_POWER_PLANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_RENEWABLE_MEGACOMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_NANO_ARCHITECTURE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_ABYSS_COLONIZATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_METALLIC_HYDROGEN",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    7,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HUMAN_MOD_GILLS",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": -50
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 2865,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_OCEAN_CITY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

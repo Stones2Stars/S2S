@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_QUANTUM_DOT_FACTORY",
+ "description": "TXT_KEY_BUILDING_QUANTUM_DOT_FACTORY",
+ "civilopedia": "TXT_KEY_BUILDING_QUANTUM_DOT_FACTORY_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_PICOTECH_COMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_NANO_RESEARCH_DEPARTMENT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2305,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_QUANTUM_DOT_FACTORY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_TRAFFIC_CAMERAS",
+ "description": "TXT_KEY_BUILDING_TRAFFIC_CAMERAS",
+ "civilopedia": "TXT_KEY_BUILDING_TRAFFIC_CAMERAS_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TELEPORT_BOOTH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_COMPUTER_NETWORK",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_TRAFFIC_SIGNALS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "espionage": {
+  "city": {
+   "investigation": {
+    "flat": 10
+   },
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 2005,
+  "countModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRAFFIC_CAMERAS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

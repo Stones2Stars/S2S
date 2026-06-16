@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_INTERNET_TELEVISION_STATION",
+ "description": "TXT_KEY_BUILDING_INTERNET_TELEVISION_STATION",
+ "civilopedia": "TXT_KEY_BUILDING_INTERNET_TELEVISION_STATION_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_PERSONAL_WEB_CHANNEL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_COMPUTER_NETWORK",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_TV_STUDIO",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HIT_MOVIES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2005,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERNET_TELEVISION_STATION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,31 @@
+{
+ "type": "BUILDING_EFFECT_HERITAGE_BEARS",
+ "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_BEARS",
+ "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_BEAR_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MILITARY_STANDARD_BEARS"
+  ],
+  "units": [
+   "UNIT_BEARKNIGHT",
+   "UNIT_BEARRIDER"
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EFFECT_HERITAGE_BEARS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "neverCapture": true,
+  "worth": 2,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "type": "BUILDING_MARTIAN_CO2_SUBLIMATION",
+ "description": "TXT_KEY_BUILDING_MARTIAN_CO2_SUBLIMATION",
+ "civilopedia": "TXT_KEY_BUILDING_MARTIAN_CO2_SUBLIMATION_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MARTIAN_MEGACITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 6372
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MARTIAN_CO2_SUBLIMATION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_CONVENTION_CENTRE",
+ "description": "TXT_KEY_BUILDING_CONVENTION_CENTRE",
+ "civilopedia": "TXT_KEY_BUILDING_CONVENTION_CENTRE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SCIENCE_SYMPOSIUM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_CEMENT",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 1925,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CONVENTION_CENTRE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CONVENTION_CENTER"
+ },
+ "identity": {
+  "worth": 8,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_GER",
+ "description": "TXT_KEY_BUILDING_GER",
+ "civilopedia": "TXT_KEY_BUILDING_GER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HORSE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_STABLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_KNIGHTS_STABLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MODERN_STABLE",
+      "scope": "city"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "RELIGION_TENGRIISM",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MOUNTED": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_ANIMALS",
+    "interval": "perTurn",
+    "heal": 3
+   }
+  ]
+ },
+ "cost": {
+  "production": 146,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_STABLE"
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 4,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

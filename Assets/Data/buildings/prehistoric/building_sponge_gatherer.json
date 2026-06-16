@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_SPONGE_GATHERER",
+ "description": "TXT_KEY_BUILDING_SPONGE_GATHERER",
+ "civilopedia": "TXT_KEY_BUILDING_SPONGE_GATHERER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_SPONGE_FARM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER"
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_CORAL_REEF",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_CORAL_REEF_BEACON",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_CORAL_REEF_LIGHTHOUSE",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_GREAT_BARRIER",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_GREAT_BARRIER_REEF_BEACON",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_GREAT_BARRIER_REEF_LIGHTHOUSE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TECH_ECOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 160,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SPONGE_GATHERER"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

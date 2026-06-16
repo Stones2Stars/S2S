@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_NANOBOT_WALLS",
+ "description": "TXT_KEY_BUILDING_NANOBOT_WALLS",
+ "civilopedia": "TXT_KEY_BUILDING_NANOBOT_WALLS_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_SMART_DUST_WALLS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 100
+   },
+   "bombardDefense": {
+    "percent": 25
+   },
+   "buildingDefenseRecovery": {
+    "percent": 100
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 3975,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NANOBOT_WALLS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 2,
+  "conquestProbability": 30,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

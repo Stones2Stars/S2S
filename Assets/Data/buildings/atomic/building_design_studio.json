@@ -1,0 +1,93 @@
+{
+ "type": "BUILDING_DESIGN_STUDIO",
+ "description": "TXT_KEY_BUILDING_DESIGN_STUDIO",
+ "civilopedia": "TXT_KEY_BUILDING_DESIGN_STUDIO_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CGI_ANIMATION_STUDIO",
+   "BUILDING_DIGITAL_GLOBE",
+   "BUILDING_EVOLUTION_SIMULATOR",
+   "BUILDING_GESTURE_RECOGNITION_SOFTWARE",
+   "BUILDING_SPEECH_RECOGNITION_SOFTWARE"
+  ],
+  "units": [
+   "UNIT_PROGRAMMER",
+   "UNIT_SOFTWARE_DEVELOPER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MODERN_OFFICES",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_TECH",
+    "interval": "perTurn",
+    "heal": 4
+   }
+  ]
+ },
+ "cost": {
+  "production": 1410,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DESIGN_STUDIO"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_LABORATORY"
+ },
+ "identity": {
+  "worth": 6,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

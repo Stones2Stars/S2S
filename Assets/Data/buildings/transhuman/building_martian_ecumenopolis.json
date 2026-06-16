@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_MARTIAN_ECUMENOPOLIS",
+ "description": "TXT_KEY_BUILDING_MARTIAN_ECUMENOPOLIS",
+ "civilopedia": "TXT_KEY_BUILDING_MARTIAN_ECUMENOPOLIS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MARTIAN_ARCOLOGY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MARTIAN_ARCOLOGY",
+     "scope": "empire",
+     "min": 2
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 2000
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_MARTIAN_ARCOLOGY": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MARTIAN_MEGACITY": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 21176
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_URBAN_MARS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MARTIAN_ECUMENOPOLIS"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

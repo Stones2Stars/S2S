@@ -1,0 +1,106 @@
+{
+ "type": "BUILDING_BREEDING_PROGRAM_BELUGA",
+ "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_BELUGA",
+ "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_BELUGA_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_PELTS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ANIMAL_PRESERVE"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_CAMP_BELUGA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_WHALE",
+     "scope": "city",
+     "connection": "vicinity"
+    },
+    "IS_WATER",
+    {
+     "latitude": {
+      "min": 40
+     }
+    },
+    {
+     "type": "BUILDING_AQUARIUM",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_SEA_LION_AND_SEAL",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ],
+    [
+     {
+      "type": "TERRAIN_ICE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 1345,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BREEDING_PROGRAM_BELUGA"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

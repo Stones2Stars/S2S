@@ -1,0 +1,161 @@
+{
+ "type": "BUILDING_WIRELESS_NETWORKS",
+ "description": "TXT_KEY_BUILDING_WIRELESS_NETWORKS",
+ "civilopedia": "TXT_KEY_BUILDING_WIRELESS_NETWORKS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLACK_HAT_HIDEOUT",
+   "BUILDING_BLACK_HAT_HIDEOUT_UNSANCTIONED"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CELLPHONES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_COMMUNICATIONS_SATELLITE",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_COMMUNICATION_TOWER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NETWORK_NODE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_AUTOMATED_TRAFFIC",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_CLOUD_COMPUTING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_MICROGENERATORS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_NANOGENERATORS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_WIRELESS_ELECTRICITY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_UNIVERSAL_TRANSLATOR",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5,
+   "percent": [
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_MEDIA_PSYCHOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_UNIVERSAL_TRANSLATOR",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": [
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_CYBERWARFARE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1925,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WIRELESS_NETWORKS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

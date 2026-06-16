@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_RESOURCES_FOSSILS",
+ "description": "TXT_KEY_BUILDING_RESOURCES_FOSSILS",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MODERN_EARTHWORKS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_DIG_SITE_AMMONITE_FOSSILS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DIG_SITE_ARCHAEOPTERYX_FOSSILS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DIG_SITE_DIMETRODON_FOSSILS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DIG_SITE_ICHTHYOSTEGA_FOSSILS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DIG_SITE_MAMMOTH_FOSSILS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DIG_SITE_NEANDERTHAL_FOSSILS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DIG_SITE_PETRIFIED_WOOD",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DIG_SITE_PLESIOSAUR_FOSSILS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DIG_SITE_PTERODACTYL_FOSSILS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DIG_SITE_SHARK_TEETH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DIG_SITE_SMILODON_FOSSILS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DIG_SITE_TRICERATOPS_FOSSILS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DIG_SITE_TRILOBITE_FOSSILS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DIG_SITE_VELOCIRAPTOR_FOSSILS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_FOSSILS"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

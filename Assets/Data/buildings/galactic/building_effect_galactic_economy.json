@@ -1,0 +1,25 @@
+{
+ "type": "BUILDING_EFFECT_GALACTIC_ECONOMY",
+ "description": "TXT_KEY_BUILDING_EFFECT_GALACTIC_ECONOMY",
+ "civilopedia": "TXT_KEY_BUILDING_GALACTIC_ECONOMY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_THOUGHT",
+   "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
+   "BUILDING_INTERSTELLAR_ETERNAL_INTELLIGENCE",
+   "BUILDING_UNIVERSAL_ECONOMY"
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EFFECT_GALACTIC_ECONOMY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

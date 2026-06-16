@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_DISTANT_BRANE_ASSEMBLER",
+ "description": "TXT_KEY_BUILDING_DISTANT_BRANE_ASSEMBLER",
+ "civilopedia": "TXT_KEY_BUILDING_DISTANT_BRANE_ASSEMBLER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_BRANE_COLLISION",
+   "BUILDING_DISTANT_BRANE_THRUSTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DISTANT_BLAZAR_FACTORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2422
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DISTANT_BRANE_ASSEMBLER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

@@ -1,0 +1,92 @@
+{
+ "type": "BUILDING_YACHT_CLUB",
+ "description": "TXT_KEY_BUILDING_YACHT_CLUB",
+ "civilopedia": "TXT_KEY_BUILDING_YACHT_CLUB_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER",
+    {
+     "type": "BUILDING_MARINA",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "IMPROVEMENT_FISHING_BOATS",
+      "scope": "plot"
+     },
+     {
+      "type": "IMPROVEMENT_WHALING_BOATS",
+      "scope": "plot"
+     },
+     {
+      "type": "IMPROVEMENT_WHALING_SHIPS",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 535,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_YACHT_CLUB"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_HARBOR"
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

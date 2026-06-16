@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_KUIPER_BELT_ENZMANN_STARSHIP",
+ "description": "TXT_KEY_BUILDING_KUIPER_BELT_ENZMANN_STARSHIP",
+ "civilopedia": "TXT_KEY_BUILDING_KUIPER_BELT_ENZMANN_STARSHIP_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_KUIPER_BELT_FUSION_PLANT",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_KUIPER_BELT_OBJECT",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 300
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 6326
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_KUIPER_BELT_ENZMANN_STARSHIP"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

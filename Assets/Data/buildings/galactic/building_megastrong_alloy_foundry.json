@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_MEGASTRONG_ALLOY_FOUNDRY",
+ "description": "TXT_KEY_BUILDING_MEGASTRONG_ALLOY_FOUNDRY",
+ "civilopedia": "TXT_KEY_BUILDING_MEGASTRONG_ALLOY_FOUNDRY_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MATERIALIZATION_COMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_ALPHA_ASSEMBLER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 12155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MEGASTRONG_ALLOY_FOUNDRY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_INTERSTELLAR_TIMEHOLE",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_TIMEHOLE",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_TIMEHOLE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_EXAVERSE_PORTAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": [
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_TRANSDIMENSIONAL_COMMERCE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 9410
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_TIMEHOLE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

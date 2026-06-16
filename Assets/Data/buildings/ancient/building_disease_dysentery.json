@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_DISEASE_DYSENTERY",
+ "description": "TXT_KEY_BUILDING_DISEASE_DYSENTERY",
+ "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+ "food": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -4
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -2,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SANITATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MODERN_SANITATION",
+      "scope": "team"
+     }
+    }
+   ],
+   "perPopulation": {
+    "percent": -50
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYDISEASE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,37 @@
+{
+ "type": "BUILDING_HUMAN_MOD_COGNITIVE_ENHANCEMENT",
+ "description": "TXT_KEY_BUILDING_HUMAN_MOD_COGNITIVE_ENHANCEMENT",
+ "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_COGNITIVE_ENHANCEMENT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_DESIGNER_BABIES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 10110
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HUMAN_MOD_COGNITIVE_ENHANCEMENT"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

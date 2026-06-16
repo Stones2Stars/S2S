@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_NAZCA_LINES",
+ "description": "TXT_KEY_BUILDING_NAZCA_LINES",
+ "civilopedia": "TXT_KEY_BUILDING_NAZCA_LINES_PEDIA",
+ "help": "TXT_KEY_BUILDING_NAZCA_LINES_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_FOLKLORE_E_SKY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FOLKLORE_E_EARTH",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_BARREN",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 1296,
+  "sizeModifier": 3
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NAZCA_LINES"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NAZCA_LINES"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ENGINEER": 1,
+   "SPECIALIST_PRIEST": 1,
+   "SPECIALIST_ARTIST": 1
+  },
+  "nukeImmune": true,
+  "worth": 6,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

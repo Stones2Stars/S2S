@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_EFFECT_GPS",
+ "description": "TXT_KEY_BUILDING_EFFECT_GPS",
+ "civilopedia": "TXT_KEY_BUILDING_EFFECT_GPS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUTOMATED_TAXI_SERVICE",
+   "BUILDING_PRECISION_FARM",
+   "BUILDING_SMARTPHONE_MANUFACTURER"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": [
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_ONLINE_COMMUNITY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_AUTOMATED_TRAFFIC",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_WEARABLE_COMPUTERS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": [
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_DIGITIZATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_CYBERWARFARE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_WAR_SIMULATIONS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EFFECT_GPS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

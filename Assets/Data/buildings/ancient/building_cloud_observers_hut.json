@@ -1,0 +1,48 @@
+{
+ "type": "BUILDING_CLOUD_OBSERVERS_HUT",
+ "description": "TXT_KEY_BUILDING_CLOUD_OBSERVERS_HUT",
+ "civilopedia": "TXT_KEY_BUILDING_CLOUD_OBSERVERS_HUT_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_WEATHER_VANES"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 200,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CLOUD_OBSERVERS_HUT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

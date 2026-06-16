@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_DEEP_SPACE_SUN_SCOOP",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_SUN_SCOOP",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_SUN_SCOOP_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_SUN_SCOOP_POWER_PLANT",
+   "BUILDING_SOLAR_CORE_PROBE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_DEEP_SPACE_FOCUSED_SUNLIGHT_PLANT",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_SUN",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 9636
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_SUN_SCOOP"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

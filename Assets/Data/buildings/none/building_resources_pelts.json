@@ -1,0 +1,114 @@
+{
+ "type": "BUILDING_RESOURCES_PELTS",
+ "description": "TXT_KEY_BUILDING_RESOURCES_PELTS",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_ANIMAL_PRESERVE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TRAP_BEAVER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_BELUGA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_BEAVER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_BELUGA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_CHINCHILLA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_ELEPHANT_SEAL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_FOX",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_MINK",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_RABBIT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_RACCOON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_SEAL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_SEA_OTTER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TRAP_CHINCHILLA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_ELEPHANT_SEAL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TRAP_FOX",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TRAP_MINK",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TRAP_SEA_OTTER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TRAP_RABBIT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TRAP_RACCOON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_SEAL",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_PELTS"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

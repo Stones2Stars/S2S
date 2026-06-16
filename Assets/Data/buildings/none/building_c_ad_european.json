@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_C_AD_EUROPEAN",
+ "description": "TXT_KEY_BUILDING_C_AD_EUROPEAN",
+ "civilopedia": "TXT_KEY_BUILDING_C_AD_PEDIA",
+ "help": "TXT_KEY_BUILDING_C_AD_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_PALACE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_C_L_EUROPEAN",
+     "scope": "empire",
+     "min": 3
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "noneOf": [
+    {
+     "type": "BUILDING_C_N_EUROPEAN",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CULTURE_EUROPEAN"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "noInstanceLimit": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

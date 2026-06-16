@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_INTERPLANETARY_RAIL",
+ "description": "TXT_KEY_BUILDING_INTERPLANETARY_RAIL",
+ "civilopedia": "TXT_KEY_BUILDING_INTERPLANETARY_RAIL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MARTIAN_ARCOLOGY",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MARTIAN_MAGLEV_TERMINAL": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 28310
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_INTERPLANETARY_RAIL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERPLANETARY_RAIL"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

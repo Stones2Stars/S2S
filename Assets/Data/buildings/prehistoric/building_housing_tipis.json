@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_HOUSING_TIPIS",
+ "description": "TXT_KEY_BUILDING_HOUSING_TIPIS",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_TIPIS_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_HOUSING_ANIMAL_HIDE_TENTS",
+   "BUILDING_HOUSING_HOMELESS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_BISON",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_HIDE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_LEATHER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "TERRAIN_GRASSLAND",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_PLAINS",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_TIPIS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

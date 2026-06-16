@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_TRANSTELLAR_ARTIFICIAL_ROCKY_PLANET",
+ "description": "TXT_KEY_BUILDING_TRANSTELLAR_ARTIFICIAL_ROCKY_PLANET",
+ "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_ARTIFICIAL_ROCKY_PLANET_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_TRANSTELLAR_ARTIFICIAL_GAS_GIANT",
+   "BUILDING_TRANSTELLAR_TOROIDAL_PLANET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3611
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRANSTELLAR_ARTIFICIAL_ROCKY_PLANET"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

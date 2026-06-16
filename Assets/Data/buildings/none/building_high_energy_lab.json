@@ -1,0 +1,144 @@
+{
+ "type": "BUILDING_HIGH_ENERGY_LAB",
+ "description": "TXT_KEY_BUILDING_HIGH_ENERGY_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_HIGH_ENERGY_LAB_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ATOMPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_CLEAN_NUCLEAR_REACTOR",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HI_TECH_NUCLEAR_REACTOR",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GENERATION_IV_REACTOR",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_D_T_FUSION_POWER_PLANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_D_HE3_FUSION_PLANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HE3_FUSION_POWER_PLANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -100
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 25,
+   "percent": [
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_SUPERCONDUCTORS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_WIRELESS_ELECTRICITY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_LASER",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_MAGNETIC_LEVITATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_QUANTUM_TELEPORTATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_CONTROLLED_PLASMA",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_TESLA_INFANTRY": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 1345
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HIGH_ENERGY_LAB"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

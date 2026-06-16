@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_PLUTO_RESEARCH_BASE",
+ "description": "TXT_KEY_BUILDING_PLUTO_RESEARCH_BASE",
+ "civilopedia": "TXT_KEY_BUILDING_PLUTO_RESEARCH_BASE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_TERRAFORMED_PLUTO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DEEP_SPACE_ORBITAL_BASE",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_KUIPER_BELT_OBJECT",
+      "scope": "plot"
+     }
+    ]
+   ],
+   "noneOf": [
+    {
+     "type": "BUILDING_MAKEMAKE_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HAUMEA_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ERIS_COLONY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1000
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_SCIENTIST": 3
+  }
+ },
+ "cost": {
+  "production": 2877
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PLUTO_BASE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PLUTO_RESEARCH_BASE"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

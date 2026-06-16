@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_DISTANT_HORIZON_PORT",
+ "description": "TXT_KEY_BUILDING_DISTANT_HORIZON_PORT",
+ "civilopedia": "TXT_KEY_BUILDING_DISTANT_HORIZON_PORT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_BIG_BANG_PROBE",
+   "BUILDING_DISTANT_BUBBLE_TRANSFER_STATION",
+   "BUILDING_DISTANT_EXPLORERS_BASE",
+   "BUILDING_DISTANT_LAYERED_REALITY",
+   "BUILDING_DISTANT_PIRATE_BASE",
+   "BUILDING_DISTANT_PORTAL_TO_DIMENSION_X"
+  ],
+  "units": [
+   "UNIT_COSMIC_WORKER",
+   "UNIT_INTERDIMENSIONAL_PROBE",
+   "UNIT_WORLDSHIP4"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1261
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DISTANT_HORIZON_PORT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

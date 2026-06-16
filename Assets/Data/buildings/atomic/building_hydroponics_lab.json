@@ -1,0 +1,118 @@
+{
+ "type": "BUILDING_HYDROPONICS_LAB",
+ "description": "TXT_KEY_BUILDING_HYDROPONICS_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_HYDROPONICS_LAB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AEROPONICS_LAB",
+   "BUILDING_CANNABIS_GROW_OPERATION",
+   "BUILDING_HYDROPONIC_VEGETABLE_GARDEN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_FRESHWATER",
+    "HAS_POWER",
+    {
+     "type": "BUILDING_LABORATORY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GREENHOUSE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_WATER_PIPES",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 4,
+   "percent": [
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_HEMP",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HEMP",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_HEMP",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 1410,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 7
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYDROPONICS_LAB"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_HYDROPONICS"
+ },
+ "identity": {
+  "worth": 6,
+  "militaryWorth": 3,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

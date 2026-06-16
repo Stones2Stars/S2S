@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_INTERGALACTIC_ANCIENT_CIVILIZATION",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_ANCIENT_CIVILIZATION",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_ANCIENT_CIVILIZATION_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_DARK_MATTER_CITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2853
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_ANCIENT_CIVILIZATION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

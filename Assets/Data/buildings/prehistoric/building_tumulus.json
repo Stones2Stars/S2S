@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_TUMULUS",
+ "description": "TXT_KEY_BUILDING_TUMULUS",
+ "civilopedia": "TXT_KEY_BUILDING_TUMULUS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAHOKIA_MOUNDS",
+   "BUILDING_SERPENT_MOUND"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ANCIENT_CUSTOMS"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 86,
+  "countModifier": 2,
+  "materialsModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 6
+   },
+   {
+    "FLAVOR_MILITARY": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TUMULUS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BUDDHIST"
+ },
+ "identity": {
+  "neverCapture": true,
+  "centerInCity": true,
+  "worth": 2,
+  "conquestProbability": 66,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

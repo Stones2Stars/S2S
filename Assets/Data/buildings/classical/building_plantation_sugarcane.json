@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_PLANTATION_SUGARCANE",
+ "description": "TXT_KEY_BUILDING_PLANTATION_SUGARCANE",
+ "civilopedia": "TXT_KEY_BUILDING_PLANTATION_SUGARCANE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_SEASONING"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SUGAR",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 243,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PLANTATION_SUGARCANE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_LUNAR_ALGAE_LAB",
+ "description": "TXT_KEY_BUILDING_LUNAR_ALGAE_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_LUNAR_ALGAE_LAB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUNAR_RESEARCH_BASE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_GLASSWARE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_LUNAR_HYDROPONICS_FARM",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 800
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LUNAR_ALGAE_LAB"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

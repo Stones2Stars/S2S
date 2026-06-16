@@ -1,0 +1,103 @@
+{
+ "type": "BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS",
+ "description": "TXT_KEY_BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS",
+ "civilopedia": "TXT_KEY_BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
+   "BUILDING_EM_CITIZENS",
+   "BUILDING_EM_SLAVES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_EVOLUTIONARY_ALGORITHMS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5,
+   "percent": [
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_MIND_UPLOADING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_ANDROIDS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_SPECIES_UPLIFTING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_TERRA_COMPUTER",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_ARTIFICIAL_LIFE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 4145,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

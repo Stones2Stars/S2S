@@ -1,0 +1,41 @@
+{
+ "type": "BUILDING_TRADITION_SEA_HUNTING",
+ "description": "TXT_KEY_BUILDING_TRADITION_SEA_HUNTING",
+ "civilopedia": "TXT_KEY_BUILDING_MASTER_SEA_HUNTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_MASTER_SEA_HUNTER",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TRADITION_SEA_HUNTING"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRADITION_SEA_HUNTING"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "worth": 1,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

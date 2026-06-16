@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_HYPERPLANET",
+ "description": "TXT_KEY_BUILDING_HYPERPLANET",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERPLANET_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HYPERCOMPUTRONIUM_STRUCTURES",
+   "BUILDING_HYPERSPACE_ANCESTOR_RESURRECTION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_HYPERFACTORY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HYPERSPACE_PAN_DIMENSIONAL_CITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    {
+     "value": 2000,
+     "enabled": {
+      "type": "TECH_TRANSFINITE_STRUCTURES",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 35,
+   "percent": [
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_TRANSFINITE_COMPUTATION",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1713
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERPLANET"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

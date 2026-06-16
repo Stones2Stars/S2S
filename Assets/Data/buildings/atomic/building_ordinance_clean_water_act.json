@@ -1,0 +1,42 @@
+{
+ "type": "BUILDING_ORDINANCE_CLEAN_WATER_ACT",
+ "description": "TXT_KEY_BUILDING_ORDINANCE_CLEAN_WATER_ACT",
+ "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_CLEAN_WATER_ACT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BUILDING_DEPARTMENT_OF_WATER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_COURTHOUSE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 1345,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ORDINANCE_CLEAN_WATER_ACT"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_MILLIWAYS",
+ "description": "TXT_KEY_BUILDING_MILLIWAYS",
+ "civilopedia": "TXT_KEY_BUILDING_MILLIWAYS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DISTANT_FUTURE_CITY",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_DISTANT_FUTURE_CITY": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_MERCHANT": 3
+  }
+ },
+ "cost": {
+  "production": 7783
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MILLIWAYS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MILLIWAYS"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

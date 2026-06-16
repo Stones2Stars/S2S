@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_DEEP_SPACE_ANTIMATTER_RESEARCH_CENTER",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_ANTIMATTER_RESEARCH_CENTER",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_ANTIMATTER_RESEARCH_CENTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_DEEP_SPACE_FUSION_CORE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4123
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_ANTIMATTER_RESEARCH_CENTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

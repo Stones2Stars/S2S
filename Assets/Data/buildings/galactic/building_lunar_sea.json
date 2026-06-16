@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_LUNAR_SEA",
+ "description": "TXT_KEY_BUILDING_LUNAR_SEA",
+ "civilopedia": "TXT_KEY_BUILDING_LUNAR_SEA_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_LUNAR_SOIL_GENERATOR",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_LUNAR_TERRAFORMING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2982
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LUNAR_SEA"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

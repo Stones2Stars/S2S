@@ -1,0 +1,40 @@
+{
+ "type": "BUILDING_HYPERSPACE_TOURISM_AGENCY",
+ "description": "TXT_KEY_BUILDING_HYPERSPACE_TOURISM_AGENCY",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_TOURISM_AGENCY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_HYPERSPACE_IMPORTER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1713
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERSPACE_TOURISM_AGENCY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

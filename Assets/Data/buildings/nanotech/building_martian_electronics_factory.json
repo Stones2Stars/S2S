@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_MARTIAN_ELECTRONICS_FACTORY",
+ "description": "TXT_KEY_BUILDING_MARTIAN_ELECTRONICS_FACTORY",
+ "civilopedia": "TXT_KEY_BUILDING_MARTIAN_ELECTRONICS_FACTORY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MARTIAN_MAGNETIC_FIELD_GENERATOR"
+  ],
+  "units": [
+   "UNIT_MARTIAN_INFANTRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MARTIAN_MANUFACTURED_GOODS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_MARTIAN_FACTORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1279
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MARTIAN_ELECTRONICS_FACTORY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

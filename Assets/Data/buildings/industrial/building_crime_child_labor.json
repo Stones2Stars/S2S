@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_CRIME_CHILD_LABOR",
+ "description": "TXT_KEY_BUILDING_CRIME_CHILD_LABOR",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_CHILD_LABOR_PEDIA",
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "research": {
+  "city": {
+   "percent": -15
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": -15
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 2
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -5,
+   "perPopulation": {
+    "percent": -40
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

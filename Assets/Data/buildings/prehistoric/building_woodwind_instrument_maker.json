@@ -1,0 +1,126 @@
+{
+ "type": "BUILDING_WOODWIND_INSTRUMENT_MAKER",
+ "description": "TXT_KEY_BUILDING_WOODWIND_INSTRUMENT_MAKER",
+ "civilopedia": "TXT_KEY_BUILDING_WOODWIND_INSTRUMENT_MAKER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MUSIC_FACTORY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_STORAGE_PIT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GRANARY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MODERN_GRANARY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BARTER_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TRADING_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHOPPING_DISTRICT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1,
+   "percent": [
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_FOLK_MUSIC",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "TECH_MUSICAL_NOTATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 400,
+     "enabled": {
+      "type": "TECH_ACOUSTICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_MILITARY_TRADITION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 600,
+     "enabled": {
+      "type": "TECH_RADIO",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_MASS_MEDIA",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 50,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WOODWIND_INSTRUMENT_MAKER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

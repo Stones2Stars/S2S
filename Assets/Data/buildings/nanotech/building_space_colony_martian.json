@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_SPACE_COLONY_MARTIAN",
+ "description": "TXT_KEY_BUILDING_SPACE_COLONY_MARTIAN",
+ "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_MARTIAN_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MARTIAN_BROADBAND",
+   "BUILDING_MARTIAN_CAVE_DWELLING",
+   "BUILDING_MARTIAN_CITY",
+   "BUILDING_MARTIAN_COMMUNICATION_BEACON",
+   "BUILDING_MARTIAN_EXPANDED_HABITAT",
+   "BUILDING_MARTIAN_FACTORY",
+   "BUILDING_MARTIAN_FUSION_PLANT",
+   "BUILDING_MARTIAN_HYDROPONICS_ARRAY",
+   "BUILDING_MARTIAN_HYDROPONICS_COMPLEX",
+   "BUILDING_MARTIAN_MAGLEV_TERMINAL",
+   "BUILDING_MARTIAN_MINE",
+   "BUILDING_MARTIAN_RADIATION_SHIELD",
+   "BUILDING_MARTIAN_SOLAR_ARRAY",
+   "BUILDING_MARTIAN_WATER_EXTRACTION"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 120
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SPACE_COLONY_MARTIAN"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

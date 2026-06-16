@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_PRESENCE_OF_VOLCANO",
+ "description": "TXT_KEY_BUILDING_PRESENCE_OF_VOLCANO",
+ "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_PRESENCE_OF_ORIGIN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_FOLKLORE_REQUIREMENT",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_VOLCANO_ACTIVE",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_VOLCANO_DORMANT",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_FUJI",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_SOPKA",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_KRAKATOA",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_KILIMANJARO",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CREATION_MYTH"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,102 @@
+{
+ "type": "BUILDING_SECURITY_CENTER",
+ "description": "TXT_KEY_BUILDING_SECURITY_CENTER",
+ "civilopedia": "TXT_KEY_BUILDING_SECURITY_CENTER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INFRASOUND_DEFENSES",
+   "BUILDING_LED_INCAPACITATOR",
+   "BUILDING_SIGNALS_INTELLIGENCE_RECEIVERS",
+   "BUILDING_TERAHERTZ_SCANNERS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MODERN_OFFICES",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 20
+   },
+   "bombardDefense": {
+    "percent": 20
+   },
+   "airDefense": {
+    "percent": -25
+   }
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "cost": {
+  "production": 2105,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   },
+   {
+    "FLAVOR_MILITARY": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SECURITY_CENTER"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SPY": 1
+  },
+  "worth": 10,
+  "militaryWorth": 50,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

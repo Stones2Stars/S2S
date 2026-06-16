@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_STARFLEET_ACADEMY",
+ "description": "TXT_KEY_BUILDING_STARFLEET_ACADEMY",
+ "civilopedia": "TXT_KEY_BUILDING_STARFLEET_ACADEMY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_STARPORT",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "experience": {
+  "empire": {
+   "flat": 2
+  },
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_WORMHOLE_SPACESHIP": {
+     "flat": 3
+    },
+    "UNITCOMBAT_NUCLEAR_SPACESHIP": {
+     "flat": 3
+    },
+    "UNITCOMBAT_EARLY_SPACESHIP": {
+     "flat": 3
+    },
+    "UNITCOMBAT_SOLAR_SAIL_SPACESHIP": {
+     "flat": 3
+    },
+    "UNITCOMBAT_ANTIMATTER_SPACESHIP": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "unitUpgradePrice": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "cost": {
+  "production": 60930,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_STARFLEET_ACADEMY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_STARFLEET_ACADEMY"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

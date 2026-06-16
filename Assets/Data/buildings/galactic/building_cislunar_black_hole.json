@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_CISLUNAR_BLACK_HOLE",
+ "description": "TXT_KEY_BUILDING_CISLUNAR_BLACK_HOLE",
+ "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_BLACK_HOLE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CISLUNAR_DILATON_GENERATOR",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 14852
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CISLUNAR_BLACK_HOLE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

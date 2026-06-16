@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_MILITARY_ACADEMY",
+ "description": "TXT_KEY_BUILDING_MILITARY_ACADEMY",
+ "civilopedia": "TXT_KEY_BUILDING_MILITARY_ACADEMY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MA_ACCADEMIA_AERONAUTICA",
+   "BUILDING_MA_EVELPIDON_MILITARY_ACADEMY",
+   "BUILDING_MA_IMPERIAL_NAVAL_ACADEMY",
+   "BUILDING_MA_REPUBLIC_NAVAL_ACADEMY",
+   "BUILDING_MA_ROYAL_AIR_FORCE_ACADEMY",
+   "BUILDING_MA_WEST_POINT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_UNIVERSITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MILITARY_ACADEMY"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 6,
+  "militaryWorth": 6,
+  "conquestProbability": 80,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

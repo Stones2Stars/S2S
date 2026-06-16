@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_EARTH_HISTORY_BACKUP",
+ "description": "TXT_KEY_BUILDING_EARTH_HISTORY_BACKUP",
+ "civilopedia": "TXT_KEY_BUILDING_EARTH_HISTORY_BACKUP_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_CARBON_12_13_CRYSTAL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERSTELLAR_CARBON_12_13_CRYSTAL",
+     "scope": "empire",
+     "min": 2
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 250
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_UNIVERSAL_LIBRARY": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 8998
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_EARTH_BACKUP"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EARTH_HISTORY_BACKUP"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

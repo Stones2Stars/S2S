@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_CYBER_INSECT_LAB",
+ "description": "TXT_KEY_BUILDING_CYBER_INSECT_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_CYBER_INSECT_LAB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INSECT_MANIPULATION_LAB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CYBERPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "BUILDING_BIOLOGY_LAB",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 5455
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CYBER_INSECT_LAB"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "specialBuildingType": "SPECIALBUILDING_PUNK_CYBER",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

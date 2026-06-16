@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_INTERSTELLAR_SHKADOV_THRUSTER",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_SHKADOV_THRUSTER",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_SHKADOV_THRUSTER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARTIFICIAL_CONSTELLATION",
+   "BUILDING_INTERSTELLAR_CAPTURED_NEUTRON_STARS",
+   "BUILDING_INTERSTELLAR_HYPERVELOCITY_STAR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 20
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4555
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_SHKADOV_THRUSTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

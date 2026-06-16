@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_ANCIENT_WAY_OF_THE_WOLF",
+ "description": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_WOLF",
+ "civilopedia": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_WOLF_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_DOG",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "grants": {
+  "traits": [
+   "TRAIT_ANCIENT_WAY_OF_THE_WOLF"
+  ]
+ },
+ "cost": {
+  "production": 444,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ANCIENT_WAY_OF_THE_WOLF"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ANCIENT_WAY_OF_THE_WOLF"
+  }
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 5,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_GROUP_ANCIENT_WAYS",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

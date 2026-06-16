@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_CRYSTAL_ISLAND",
+ "description": "TXT_KEY_BUILDING_CRYSTAL_ISLAND",
+ "civilopedia": "TXT_KEY_BUILDING_CRYSTAL_ISLAND_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MEGATOWER",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  },
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_MEGATOWER_MALL_LEVEL",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "cost": {
+  "production": 19470,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CRYSTAL_ISLAND"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CRYSTAL_ISLAND"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

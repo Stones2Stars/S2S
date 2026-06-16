@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_TRITON_HEAT_RING",
+ "description": "TXT_KEY_BUILDING_TRITON_HEAT_RING",
+ "civilopedia": "TXT_KEY_BUILDING_TRITON_HEAT_RING_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_TERRAFORMED_TRITON",
+   "BUILDING_TRITON_MILITARY_BASE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_TRITON_GEOTHERMAL_POWER_PLANT",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_TRITON",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1867
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRITON_HEAT_RING"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

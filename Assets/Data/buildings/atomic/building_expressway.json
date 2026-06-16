@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_EXPRESSWAY",
+ "description": "TXT_KEY_BUILDING_EXPRESSWAY",
+ "civilopedia": "TXT_KEY_BUILDING_EXPRESSWAY_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_SKYROAD_CONTROL_TOWER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_OIL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_TAR",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_HIGHWAY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1,
+   "modifier": {
+    "percent": 8
+   }
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 1130,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EXPRESSWAY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SKYSCRAPER"
+ },
+ "identity": {
+  "worth": 7,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

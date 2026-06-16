@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_HYPERSPACE_GAME_OF_LIFE",
+ "description": "TXT_KEY_BUILDING_HYPERSPACE_GAME_OF_LIFE",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_GAME_OF_LIFE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3423
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERSPACE_GAME_OF_LIFE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

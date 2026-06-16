@@ -1,0 +1,127 @@
+{
+ "type": "BUILDING_CRYOGENIC_PRISON",
+ "description": "TXT_KEY_BUILDING_CRYOGENIC_PRISON",
+ "civilopedia": "TXT_KEY_BUILDING_CRYOGENIC_PRISON_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_NANOTUBES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ],
+   "noneOf": [
+    {
+     "type": "BUILDING_STATUE_OF_LIBERTY",
+     "scope": "city"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      [
+       {
+        "type": "CIVIC_DESPOTISM",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_MONARCHY",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_TOTALITARIANISM",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_SUPERHUMAN",
+        "scope": "empire"
+       }
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1,
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -35
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -35
+  }
+ },
+ "cost": {
+  "production": 5455,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CRYOGENIC_PRISON"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CYRO_PRISON"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SPY": 2
+  },
+  "worth": 6,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

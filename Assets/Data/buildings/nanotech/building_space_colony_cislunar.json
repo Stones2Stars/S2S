@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_SPACE_COLONY_CISLUNAR",
+ "description": "TXT_KEY_BUILDING_SPACE_COLONY_CISLUNAR",
+ "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_CISLUNAR_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_CONTROL_SYSTEM",
+   "BUILDING_CISLUNAR_EMP_POWER_SUPPLY",
+   "BUILDING_CISLUNAR_RESUPPLY",
+   "BUILDING_CISLUNAR_SPACE_JUNK_REMOVAL",
+   "BUILDING_INTERPLANETARY_TRANSPORT_NETWORK"
+  ],
+  "units": [
+   "UNIT_CONSTRUCTION_SHIP"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_AUGMENTED_CONSUMABLES",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 120
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SPACE_COLONY_CISLUNAR"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

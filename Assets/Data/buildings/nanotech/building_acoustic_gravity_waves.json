@@ -1,0 +1,44 @@
+{
+ "type": "BUILDING_ACOUSTIC_GRAVITY_WAVES",
+ "description": "TXT_KEY_BUILDING_ACOUSTIC_GRAVITY_WAVES",
+ "civilopedia": "TXT_KEY_BUILDING_ACOUSTIC_GRAVITY_WAVES_PEDIA",
+ "gold": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 3665,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ACOUSTIC_GRAVITY_WAVES"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

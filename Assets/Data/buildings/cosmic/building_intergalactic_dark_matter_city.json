@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_INTERGALACTIC_DARK_MATTER_CITY",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_DARK_MATTER_CITY",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_DARK_MATTER_CITY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_ANCIENT_CIVILIZATION",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERGALACTIC_DARK_ENERGY_PLANT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4742
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_DARK_MATTER_CITY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

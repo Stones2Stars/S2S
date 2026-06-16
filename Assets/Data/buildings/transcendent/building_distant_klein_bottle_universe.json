@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_DISTANT_KLEIN_BOTTLE_UNIVERSE",
+ "description": "TXT_KEY_BUILDING_DISTANT_KLEIN_BOTTLE_UNIVERSE",
+ "civilopedia": "TXT_KEY_BUILDING_DISTANT_KLEIN_BOTTLE_UNIVERSE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DISTANT_NON_ORIENTABLE_WORMHOLE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2914
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DISTANT_KLEIN_BOTTLE_UNIVERSE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

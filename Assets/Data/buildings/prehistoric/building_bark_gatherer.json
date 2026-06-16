@@ -1,0 +1,39 @@
+{
+ "type": "BUILDING_BARK_GATHERER",
+ "description": "TXT_KEY_BUILDING_BARK_GATHERER",
+ "civilopedia": "TXT_KEY_BUILDING_BARK_GATHERER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_LUMBER_MILL"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 80,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BARK_GATHERER"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_CLOUD_SERVER",
+ "description": "TXT_KEY_BUILDING_CLOUD_SERVER",
+ "civilopedia": "TXT_KEY_BUILDING_CLOUD_SERVER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARCTIC_DATA_CENTER",
+   "BUILDING_BLOCKCHAIN_AUTHENTICATION",
+   "BUILDING_INTERNET_OF_THINGS",
+   "BUILDING_OPTRONIC_SUPERCOMPUTER",
+   "BUILDING_RIDESHARE",
+   "BUILDING_SOCIAL_CREDIT_SYSTEM",
+   "BUILDING_UBIQUITOUS_SENSORS",
+   "BUILDING_UNDERWATER_DATA_CENTER",
+   "BUILDING_VIRTUAL_WORLD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FIBER_OPTIC_CABLES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_COMPUTER_NETWORK",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 9
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 2005,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CLOUD_SERVER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

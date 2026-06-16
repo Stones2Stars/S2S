@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_ARTIFICIAL_INTELLIGENCE_LAB",
+ "description": "TXT_KEY_BUILDING_ARTIFICIAL_INTELLIGENCE_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_ARTIFICIAL_INTELLIGENCE_LAB_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_COMPUTER_NETWORK",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 2205,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ARTIFICIAL_INTELLIGENCE_LAB"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_TIME_ZONES",
+ "description": "TXT_KEY_BUILDING_TIME_ZONES",
+ "civilopedia": "TXT_KEY_BUILDING_TIME_ZONES_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_MODERN_OFFICES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_COMPUTER_NETWORK",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_PUBLIC_TRANSPORTATION": {
+     "flat": 1
+    },
+    "BUILDING_TELEPORT_BOOTH": {
+     "flat": 1
+    },
+    "BUILDING_COMMERCIAL_AIRPORT": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 1660,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TIME_ZONES"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TIME_ZONES"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

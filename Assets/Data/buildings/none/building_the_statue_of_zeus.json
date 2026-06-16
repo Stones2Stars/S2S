@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_THE_STATUE_OF_ZEUS",
+ "description": "TXT_KEY_BUILDING_THE_STATUE_OF_ZEUS",
+ "civilopedia": "TXT_KEY_BUILDING_THE_STATUE_OF_ZEUS_PEDIA",
+ "culture": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 10,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "enemy": {
+    "percent": 100
+   }
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_HELLENISM": {
+    "flat": 1
+   }
+  }
+ },
+ "grants": {
+  "holyCity": "RELIGION_HELLENISM"
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_STATUE_OF_ZEUS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_THE_STATUE_OF_ZEUS"
+  }
+ },
+ "identity": {
+  "shrine": "RELIGION_HELLENISM",
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 3
+  },
+  "nukeImmune": true,
+  "teamShare": true,
+  "worth": 8,
+  "militaryWorth": 4,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_HELLENISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

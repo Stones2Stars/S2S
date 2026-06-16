@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_RESOURCES_WOOD",
+ "description": "TXT_KEY_BUILDING_RESOURCES_WOOD",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AGROFOREST"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_GROVE_BRAZILWOOD",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DRIFTWOOD_GATHERER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_LUMBER_GATHERER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_LUMBER_CAMP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GROVE_TIMBER",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_WOOD"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

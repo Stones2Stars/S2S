@@ -1,0 +1,392 @@
+{
+ "type": "BUILDING_MANUFACTURING_DISTRICT",
+ "description": "TXT_KEY_BUILDING_MANUFACTURING_DISTRICT",
+ "civilopedia": "TXT_KEY_BUILDING_MANUFACTURING_DISTRICT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
+   "BUILDING_GUILD_GLASSBLOWERS",
+   "BUILDING_GUILD_GOLDSMITHS",
+   "BUILDING_GUILD_POTTERS",
+   "BUILDING_HARAPPAN_FAKE_GEMS",
+   "BUILDING_JADE_DEATH_MASK_CARVER",
+   "BUILDING_MATERIALS_CONGLOMERATE",
+   "BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
+   "BUILDING_MING_VASE_WORKSHOP",
+   "BUILDING_NANOTECH_COMPLEX",
+   "BUILDING_PHIDIAS_STATUE_WORKSHOP",
+   "BUILDING_PICOTECH_COMPLEX",
+   "BUILDING_RED_AND_BLACK_WARE_PAINTER",
+   "BUILDING_TERRA_SIGILLATA_WORKSHOP",
+   "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_BASKETMAKER",
+   "BUILDING_BASKET_MAKERS_WORKSHOP",
+   "BUILDING_BEADMAKERS_WORKSHOP",
+   "BUILDING_BEADWORKER",
+   "BUILDING_BICYCLE_SHOP",
+   "BUILDING_CANDLEMAKERS_SHOP",
+   "BUILDING_COOPER",
+   "BUILDING_FACTORY_BARRELS",
+   "BUILDING_FACTORY_BASKETS",
+   "BUILDING_FACTORY_BEADS",
+   "BUILDING_FACTORY_BOOKS",
+   "BUILDING_FACTORY_CANDLES",
+   "BUILDING_FACTORY_FURNITURE",
+   "BUILDING_FACTORY_GLASSWARE",
+   "BUILDING_FACTORY_LACQUERWARE",
+   "BUILDING_FACTORY_NEWSPAPERS",
+   "BUILDING_FACTORY_PENCILS",
+   "BUILDING_FACTORY_PHONOGRAPHS",
+   "BUILDING_FACTORY_PORCELAIN_WARES",
+   "BUILDING_FACTORY_POTTERY",
+   "BUILDING_FACTORY_ROPE",
+   "BUILDING_FACTORY_SAILS",
+   "BUILDING_FACTORY_SCULPTURES",
+   "BUILDING_FACTORY_SKIS",
+   "BUILDING_FACTORY_TERRACOTTA_WARES",
+   "BUILDING_FACTORY_TIRES",
+   "BUILDING_FACTORY_TOYS",
+   "BUILDING_FACTORY_TYPEWRITERS",
+   "BUILDING_FACTORY_WATER_BOTTLES",
+   "BUILDING_FIREWORKS_SHOP",
+   "BUILDING_FURNITURE_MAKER",
+   "BUILDING_GLASSBLOWERS_WORKSHOP",
+   "BUILDING_GLASS_RECLAMATION_PLANT",
+   "BUILDING_JEWELER",
+   "BUILDING_LACQUERWARE_MAKER",
+   "BUILDING_LACQUERWARE_WORKSHOP",
+   "BUILDING_MASK_CARVER",
+   "BUILDING_PORCELAIN_WORKSHOP",
+   "BUILDING_POTTERS_HUT",
+   "BUILDING_POTTERS_WORKSHOP",
+   "BUILDING_PRINTERS_WORKSHOP",
+   "BUILDING_RESOURCES_GLASSWARE",
+   "BUILDING_ROPER",
+   "BUILDING_SADDLER",
+   "BUILDING_SAIL_WEAVER",
+   "BUILDING_SCULPTORS_WORKSHOP",
+   "BUILDING_TERRACOTTA_WORKSHOP",
+   "BUILDING_TOY_CARVER",
+   "BUILDING_TOY_MAKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_MANUFACTURING_PLANT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 175,
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_BREAD",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_AMBER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_BAMBOO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_BEADS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_BRASS_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_CHEMICALS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_CLAM",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_COPPER_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_COPPER_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ELECTRUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_FEATHERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_GEMSTONE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_GOLD_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_IVORY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_JADE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_LEAD_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_PEARLS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_PLASTIC",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_PLATINUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_POTASH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_RUBBER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_SILVER_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_TIN_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_TIN_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 90,
+   "percent": [
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 2405,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MANUFACTURING_DISTRICT"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ARTIST": 1,
+   "SPECIALIST_ENGINEER": 2
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

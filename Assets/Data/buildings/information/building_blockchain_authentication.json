@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_BLOCKCHAIN_AUTHENTICATION",
+ "description": "TXT_KEY_BUILDING_BLOCKCHAIN_AUTHENTICATION",
+ "civilopedia": "TXT_KEY_BUILDING_BLOCKCHAIN_AUTHENTICATION_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES",
+   "BUILDING_DIGITAL_VOTING",
+   "BUILDING_SMART_CONTRACTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_CLOUD_SERVER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 2405,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BLOCKCHAIN_AUTHENTICATION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

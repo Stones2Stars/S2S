@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_CHEMOSYNTHESIS_PLANT_FARM",
+ "description": "TXT_KEY_BUILDING_CHEMOSYNTHESIS_PLANT_FARM",
+ "civilopedia": "TXT_KEY_BUILDING_CHEMOSYNTHESIS_PLANT_FARM_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_PROGRAMMABLE_PLANT_FARM",
+   "BUILDING_REWILDERNESS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NOVUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_WATER_TREATMENT_PLANT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FARMSCRAPER_III",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ARTIFICIAL_TREE_FARM",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "cost": {
+  "production": 4145,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CHEMOSYNTHESIS_PLANT_FARM"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

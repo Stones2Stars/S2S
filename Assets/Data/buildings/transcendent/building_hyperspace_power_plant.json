@@ -1,0 +1,42 @@
+{
+ "type": "BUILDING_HYPERSPACE_POWER_PLANT",
+ "description": "TXT_KEY_BUILDING_HYPERSPACE_POWER_PLANT",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_POWER_PLANT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 120
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1261
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERSPACE_POWER_PLANT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

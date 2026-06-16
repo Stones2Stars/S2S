@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_MARTIAN_GEOLOGY_LAB",
+ "description": "TXT_KEY_BUILDING_MARTIAN_GEOLOGY_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_MARTIAN_GEOLOGY_LAB_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MARTIAN_ROCKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 600
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 800
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MARTIAN_GEOLOGY_LAB"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_DISEASE_ANTHRAX",
+ "description": "TXT_KEY_BUILDING_DISEASE_ANTHRAX",
+ "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_SHEEP",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_COW",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -7
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -6
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -5,
+   "perPopulation": {
+    "percent": -75
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYDISEASE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

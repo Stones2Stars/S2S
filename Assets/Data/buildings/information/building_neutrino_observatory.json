@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_NEUTRINO_OBSERVATORY",
+ "description": "TXT_KEY_BUILDING_NEUTRINO_OBSERVATORY",
+ "civilopedia": "TXT_KEY_BUILDING_NEUTRINO_OBSERVATORY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_OBSERVATORY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_PHYSICS_LAB",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 8,
+   "percent": [
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_AMPLIFIED_WAVELENGTHS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_OPTRONICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 2205,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NEUTRINO_OBSERVATORY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

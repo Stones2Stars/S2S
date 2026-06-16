@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_INTERGALACTIC_ZERO_POINT_FACTORIES",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_ZERO_POINT_FACTORIES",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_ZERO_POINT_FACTORIES_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_ZERO_POINT_PLANT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 5783
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_ZERO_POINT_FACTORIES"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

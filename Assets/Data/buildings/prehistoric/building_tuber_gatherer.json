@@ -1,0 +1,32 @@
+{
+ "type": "BUILDING_TUBER_GATHERER",
+ "description": "TXT_KEY_BUILDING_TUBER_GATHERER",
+ "civilopedia": "TXT_KEY_BUILDING_TUBER_GATHERER_PEDIA",
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 30,
+  "materialsModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TUBER_GATHERER"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "advisor": "ADVISOR_GROWTH",
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_TRANSTELLAR_HYDROGEN_MAP",
+ "description": "TXT_KEY_BUILDING_TRANSTELLAR_HYDROGEN_MAP",
+ "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_HYDROGEN_MAP_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_LIFE_DUST_AND_PLASMA",
+   "BUILDING_TRANSTELLAR_BUSSARD_RAMJET_PORT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SPACE_COLONY_TRANSTELLAR",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 125
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2536
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRANSTELLAR_HYDROGEN_MAP"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

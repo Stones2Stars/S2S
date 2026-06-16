@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_WAR_DANCE",
+ "description": "TXT_KEY_BUILDING_WAR_DANCE",
+ "civilopedia": "TXT_KEY_BUILDING_WAR_DANCE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DANCE_HAKA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_DANCE_HUT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DANCE_HALL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NIGHT_CLUB",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WAR_DANCE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 1,
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

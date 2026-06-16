@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_BABEL_TOWER",
+ "description": "TXT_KEY_BUILDING_BABEL_TOWER",
+ "civilopedia": "TXT_KEY_BUILDING_TMESO_SHRINE_PEDIA",
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "grants": {
+  "holyCity": "RELIGION_MESOPOTAMISM"
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_BABEL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BABEL"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MESOPOTAMIAN"
+ },
+ "identity": {
+  "shrine": "RELIGION_MESOPOTAMISM",
+  "nukeImmune": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_MESOPOTAMISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

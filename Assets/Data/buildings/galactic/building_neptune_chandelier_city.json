@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_NEPTUNE_CHANDELIER_CITY",
+ "description": "TXT_KEY_BUILDING_NEPTUNE_CHANDELIER_CITY",
+ "civilopedia": "TXT_KEY_BUILDING_NEPTUNE_CHANDELIER_CITY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_TERRAFORMED_NEPTUNE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DEEP_SPACE_ORBITAL_BASE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_NEPTUNE_ORBITAL_RING",
+     "scope": "empire",
+     "min": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_NEPTUNE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 8676
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NEPTUNE_CHANDELIER_CITY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

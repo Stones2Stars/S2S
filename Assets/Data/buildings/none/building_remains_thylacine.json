@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_REMAINS_THYLACINE",
+ "description": "TXT_KEY_BUILDING_REMAINS_THYLACINE",
+ "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "FEATURE_CAVES",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_FOREST_ANCIENT",
+      "scope": "plot"
+     }
+    ],
+    [
+     {
+      "type": "HERITAGE_FOLKLORE_THYLACINE",
+      "scope": "empire"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_PALEONTOLOGY_LAB",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": [
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_BIOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_REMAINS_THYLACINE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 1,
+  "conquestProbability": 90,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

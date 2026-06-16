@@ -1,0 +1,47 @@
+{
+ "type": "BUILDING_INTERSTELLAR_MOLECULAR_DISRUPTION_DEVICE",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_MOLECULAR_DISRUPTION_DEVICE",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_MOLECULAR_DISRUPTION_DEVICE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_DARK_MATTER_REACTOR",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "damageAttackerChance": {
+    "flat": 50
+   },
+   "damageToAttacker": {
+    "flat": 50
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 8197
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_MOLECULAR_DISRUPTION_DEVICE"
+  }
+ },
+ "identity": {
+  "damageAllAttackers": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

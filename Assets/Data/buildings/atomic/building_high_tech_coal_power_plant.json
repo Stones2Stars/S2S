@@ -1,0 +1,97 @@
+{
+ "type": "BUILDING_HIGH_TECH_COAL_POWER_PLANT",
+ "description": "TXT_KEY_BUILDING_HIGH_TECH_COAL_POWER_PLANT",
+ "civilopedia": "TXT_KEY_BUILDING_HIGH_TECH_COAL_POWER_PLANT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SUPERCRITICAL_CO2_TURBINE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_D_T_FUSION_POWER_PLANT"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_COAL_FIRED_DYNAMO",
+   "BUILDING_COAL_PLANT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_FACTORY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_POWER_LINES",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_COAL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1280,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HIGH_TECH_COAL_POWER_PLANT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

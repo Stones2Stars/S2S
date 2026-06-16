@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_PRESENCE_OF_METAL",
+ "description": "TXT_KEY_BUILDING_PRESENCE_OF_METAL",
+ "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_PRESENCE_OF_ORIGIN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_FOLKLORE_REQUIREMENT",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_COPPER_ORE",
+      "scope": "city",
+      "connection": "vicinity"
+     },
+     {
+      "type": "BONUS_GOLD_ORE",
+      "scope": "city",
+      "connection": "vicinity"
+     },
+     {
+      "type": "BONUS_SILVER_ORE",
+      "scope": "city",
+      "connection": "vicinity"
+     },
+     {
+      "type": "BONUS_TIN_ORE",
+      "scope": "city",
+      "connection": "vicinity"
+     },
+     {
+      "type": "BONUS_IRON_ORE",
+      "scope": "city",
+      "connection": "vicinity"
+     },
+     {
+      "type": "BONUS_LEAD_ORE",
+      "scope": "city",
+      "connection": "vicinity"
+     },
+     {
+      "type": "BONUS_PLATINUM_ORE",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CREATION_MYTH"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

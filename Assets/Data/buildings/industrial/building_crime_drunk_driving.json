@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_CRIME_DRUNK_DRIVING",
+ "description": "TXT_KEY_BUILDING_CRIME_DRUNK_DRIVING",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_DRUNK_DRIVING_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ALCOHOL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_AUTOMOBILES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 6
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2,
+   "perPopulation": {
+    "percent": -10
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2,
+   "perPopulation": {
+    "percent": -10
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

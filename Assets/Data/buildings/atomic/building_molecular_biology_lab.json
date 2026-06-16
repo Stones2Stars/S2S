@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_MOLECULAR_BIOLOGY_LAB",
+ "description": "TXT_KEY_BUILDING_MOLECULAR_BIOLOGY_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_MOLECULAR_BIOLOGY_LAB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_OMEGA_ACIDS",
+   "BUILDING_GENETICA_APPAREL_SHOP",
+   "BUILDING_GENETICA_SALON",
+   "BUILDING_NUCLEIC_ACID_LAB",
+   "BUILDING_PROTEIN_LAB"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CHEMICALS_DISTRICT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_BIOLOGY_LAB",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CHEMISTRY_LAB",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -15,
+   "percent": [
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_BIOMATERIALS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5,
+   "percent": [
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_GENETIC_BIOCHEMISTRY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_GENESIS_BIOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_BIOINFORMATICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_BIOMATHEMATICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_MOLECULAR_MEDICINE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 1410,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MOLECULAR_BIOLOGY_LAB"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

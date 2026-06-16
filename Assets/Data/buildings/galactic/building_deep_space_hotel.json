@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_DEEP_SPACE_HOTEL",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_HOTEL",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_HOTEL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SATURN_RING_HOTEL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DEEP_SPACE_DOCKING_BAY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 5111
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_HOTEL"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

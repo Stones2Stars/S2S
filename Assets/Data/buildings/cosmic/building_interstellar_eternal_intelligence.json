@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_INTERSTELLAR_ETERNAL_INTELLIGENCE",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_ETERNAL_INTELLIGENCE",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_ETERNAL_INTELLIGENCE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_EFFECT_GALACTIC_ECONOMY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERSTELLAR_BLACK_HOLE_COMPUTER",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_BLACK_HOLE",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_SUPERMASSIVE_BLACK_HOLE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": [
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_EXPERIMENTAL_COSMOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 9710
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_ETERNAL_INTELLIGENCE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

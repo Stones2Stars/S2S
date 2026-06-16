@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_EXCREMENT_HOLES",
+ "description": "TXT_KEY_BUILDING_EXCREMENT_HOLES",
+ "civilopedia": "TXT_KEY_BUILDING_EXCREMENT_HOLES_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_OUTHOUSE"
+  ]
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "cost": {
+  "production": 40,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EXCREMENT_HOLES"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_METRIC_SYSTEM",
+ "description": "TXT_KEY_BUILDING_METRIC_SYSTEM",
+ "civilopedia": "TXT_KEY_BUILDING_METRIC_SYSTEM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 15,
+   "percent": [
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_MODERN_PHYSICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 600,
+     "enabled": {
+      "type": "TECH_ORGANIC_CHEMISTRY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_ENGINEER": 2
+  }
+ },
+ "cost": {
+  "production": 3780,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_METRIC_SYSTEM"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_METRIC_SYSTEM"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

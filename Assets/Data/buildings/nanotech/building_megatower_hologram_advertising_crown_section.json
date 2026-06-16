@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_MEGATOWER_HOLOGRAM_ADVERTISING_CROWN_SECTION",
+ "description": "TXT_KEY_BUILDING_MEGATOWER_HOLOGRAM_ADVERTISING_CROWN_SECTION",
+ "civilopedia": "TXT_KEY_BUILDING_MEGATOWER_HOLOGRAM_ADVERTISING_CROWN_SECTION_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_METAMATERIALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MEGATOWER",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_HOLOGRAPHIC_PROJECTORS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_HOLOGRAPHIC_NETWORKS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_EXOCORTEX_NETWORKS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10,
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_TRANSPARENT_ALUMINUM",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 3525,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MEGATOWER_HOLOGRAM_ADVERTISING_CROWN_SECTION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

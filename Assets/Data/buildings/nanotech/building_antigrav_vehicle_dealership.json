@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP",
+ "description": "TXT_KEY_BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP",
+ "civilopedia": "TXT_KEY_BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_AUTOMATED_VEHICLE_DEALERSHIP",
+   "BUILDING_AUTOMOBILE_DEALERSHIP",
+   "BUILDING_SHOCKWAVE_VEHICLE_DEALERSHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_SHOPPING_DISTRICT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_EXOCORTEX_NETWORKS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SKYROAD_STATION",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_INTELLIGENT_PAVEMENT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TELEPORT_BOOTH",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_NAVAL",
+    "interval": "perTurn",
+    "heal": 8
+   }
+  ]
+ },
+ "cost": {
+  "production": 4485,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

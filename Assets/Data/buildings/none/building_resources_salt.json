@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_RESOURCES_SALT",
+ "description": "TXT_KEY_BUILDING_RESOURCES_SALT",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MATERIALS_CONGLOMERATE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_DESALINATION_PLANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_WONDER_OF_NATURE_DEAD_SEA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SALT_EVAPORATION_POND",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SALT_EVAPORATION_WORKS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SALT_FLAT_QUARRY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_SALT"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

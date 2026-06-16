@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_INTERSTELLAR_LILLIPUTIAN_CITY",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_LILLIPUTIAN_CITY",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_LILLIPUTIAN_CITY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_SPHEREWORLD",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 5515
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_LILLIPUTIAN_CITY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

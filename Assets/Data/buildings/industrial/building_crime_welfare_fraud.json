@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_CRIME_WELFARE_FRAUD",
+ "description": "TXT_KEY_BUILDING_CRIME_WELFARE_FRAUD",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_WELFARE_FRAUD_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_WELFARE_OFFICE",
+     "scope": "city"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      [
+       {
+        "type": "CIVIC_SOCIALIZED",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_ECO_FRIENDLY",
+        "scope": "empire"
+       }
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5,
+   "percent": -5
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 1
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1,
+   "perPopulation": {
+    "percent": -30
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "perPopulation": {
+    "percent": -10
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

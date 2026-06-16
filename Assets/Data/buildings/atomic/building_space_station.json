@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_SPACE_STATION",
+ "description": "TXT_KEY_BUILDING_SPACE_STATION",
+ "civilopedia": "TXT_KEY_BUILDING_SPACE_STATION_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_CISLUNARSETTLER",
+   "UNIT_LUNARSETTLER",
+   "UNIT_PLANETARYSETTLER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_EFFECT_LAUNCH_SITE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    8,
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_SPACE_TOURISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_ASTEROID_MINING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 1685,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SPACE_STATION"
+  }
+ },
+ "identity": {
+  "orbital": true,
+  "orbitalInfrastructure": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

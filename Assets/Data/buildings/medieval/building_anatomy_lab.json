@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_ANATOMY_LAB",
+ "description": "TXT_KEY_BUILDING_ANATOMY_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_ANATOMY_LAB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_EU_MONTPELLIER_UNIVERSITY",
+   "BUILDING_EU_UNIVERSITY_OF_BARCELONA",
+   "BUILDING_EU_UNIVERSITY_OF_COIMBRA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_UNIVERSITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5,
+   "percent": [
+    {
+     "value": 600,
+     "enabled": {
+      "type": "TECH_PSYCHOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_GENETICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_HOMO_SUPERIOR",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 380,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ANATOMY_LAB"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

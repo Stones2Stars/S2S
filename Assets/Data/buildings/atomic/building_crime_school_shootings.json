@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_CRIME_SCHOOL_SHOOTINGS",
+ "description": "TXT_KEY_BUILDING_CRIME_SCHOOL_SHOOTINGS",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_SCHOOL_SHOOTINGS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 2
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -8,
+   "perPopulation": {
+    "percent": -50
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -4
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

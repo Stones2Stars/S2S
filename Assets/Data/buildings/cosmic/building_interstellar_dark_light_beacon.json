@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_INTERSTELLAR_DARK_LIGHT_BEACON",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_DARK_LIGHT_BEACON",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DARK_LIGHT_BEACON_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_NEUTRINO_SCANNER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 6806
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_DARK_LIGHT_BEACON"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_PROGRAMMED_WORK_ETHIC"
+  ]
+ },
+ "requires": {
+  "build": {
+   "noneOf": [
+    {
+     "type": "BUILDING_INTERSTELLAR_CULTURE_AGGRESSIVE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERSTELLAR_CULTURE_EXPLORATORY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERSTELLAR_CULTURE_INDUSTRIOUS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERSTELLAR_CULTURE_OBEDIENT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERSTELLAR_CULTURE_PARADISE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERSTELLAR_CULTURE_REBELLIOUS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1757
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC"
+  ]
+ }
+}

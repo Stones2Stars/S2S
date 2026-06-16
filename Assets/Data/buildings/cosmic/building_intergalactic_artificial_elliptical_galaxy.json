@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_INTERGALACTIC_ARTIFICIAL_ELLIPTICAL_GALAXY",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_ARTIFICIAL_ELLIPTICAL_GALAXY",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_ARTIFICIAL_ELLIPTICAL_GALAXY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_CORE_DYSON_SPHERE",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_OBSERVABLE_UNIVERSE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 300
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3531
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_ARTIFICIAL_ELLIPTICAL_GALAXY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

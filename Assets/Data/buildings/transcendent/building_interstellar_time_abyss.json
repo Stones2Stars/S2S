@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_INTERSTELLAR_TIME_ABYSS",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_TIME_ABYSS",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_TIME_ABYSS_PEDIA",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "any": [
+      [
+       {
+        "type": "CIVIC_GERONTOCRACY",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_UNIVERSAL_EMPIRE",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_SOCIETAL_MOLDING",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_SUPERHUMAN",
+        "scope": "empire"
+       }
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -40
+  }
+ },
+ "cost": {
+  "production": 9080
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_TIME_ABYSS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

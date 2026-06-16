@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_HOUSING_APARTMENTS",
+ "description": "TXT_KEY_BUILDING_HOUSING_APARTMENTS",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_APARTMENTS_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_HOUSING_COMMONS",
+   "BUILDING_HOUSING_HOGANS",
+   "BUILDING_HOUSING_HOMELESS",
+   "BUILDING_HOUSING_INSULAE",
+   "BUILDING_HOUSING_STILT_HUTS",
+   "BUILDING_HOUSING_TREEHOUSES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_FRESHWATER",
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "BUILDING_WATER_PIPES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SEWER_SYSTEM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_TELEPHONE_NETWORK",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_APARTMENTS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

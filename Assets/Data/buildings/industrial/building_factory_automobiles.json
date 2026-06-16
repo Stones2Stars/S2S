@@ -1,0 +1,126 @@
+{
+ "type": "BUILDING_FACTORY_AUTOMOBILES",
+ "description": "TXT_KEY_BUILDING_FACTORY_AUTOMOBILES",
+ "civilopedia": "TXT_KEY_BUILDING_FACTORY_AUTOMOBILES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AERIAL_BASKET_ROPEWAYS",
+   "BUILDING_CHARIOT_WORKSHOP"
+  ],
+  "units": [
+   "UNIT_CARTWRIGHT"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_SELF_ASSEMBLY_FACTORY"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_CARRIAGE_BUILDER",
+   "BUILDING_TRAVOIS_MAKER",
+   "BUILDING_WHEELWRIGHT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_TIRES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PARTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CARBON_FIBER",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_CHARIOT": {
+     "percent": 10
+    },
+    "UNIT_FREIGHT": {
+     "percent": 10
+    },
+    "UNIT_MOTORCYCLE": {
+     "percent": 10
+    },
+    "UNIT_JEEP": {
+     "percent": 10
+    },
+    "UNIT_HUMVEE": {
+     "percent": 10
+    },
+    "UNIT_TRADE_CARAVAN": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_MECHANICAL",
+    "interval": "perTurn",
+    "heal": 4
+   }
+  ]
+ },
+ "cost": {
+  "production": 830,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FACTORY_AUTOMOBILES"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ENGINEER": 1
+  },
+  "militaryWorth": 10,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

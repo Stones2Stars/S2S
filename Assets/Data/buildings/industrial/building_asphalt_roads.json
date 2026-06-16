@@ -1,0 +1,127 @@
+{
+ "type": "BUILDING_ASPHALT_ROADS",
+ "description": "TXT_KEY_BUILDING_ASPHALT_ROADS",
+ "civilopedia": "TXT_KEY_BUILDING_ASPHALT_ROADS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BAMBOO_BRIDGE",
+   "BUILDING_BRICK_BRIDGE",
+   "BUILDING_CAUSEWAY",
+   "BUILDING_CHAIN_BRIDGE",
+   "BUILDING_COVERED_BRIDGE",
+   "BUILDING_EL_CAMINO_DE_SANTIAGO",
+   "BUILDING_HIGHWAY",
+   "BUILDING_INTELLIGENT_PAVEMENT",
+   "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+   "BUILDING_LARGE_SUSPENSION_BRIDGE",
+   "BUILDING_LOG_BRIDGE",
+   "BUILDING_ROAD_SIGNS",
+   "BUILDING_ROPE_BRIDGE",
+   "BUILDING_SMALL_STEEL_ARCH_BRIDGE",
+   "BUILDING_SMALL_SUSPENSION_BRIDGE",
+   "BUILDING_STONE_BRIDGE",
+   "BUILDING_TOURIST_TRAP",
+   "BUILDING_TRAFFIC_SIGNALS",
+   "BUILDING_TRUSS_BRIDGE",
+   "BUILDING_VIADUCT",
+   "BUILDING_VIA_APPIA"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_SKYROAD_CONTROL_TOWER"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_PAVED_ROADS",
+   "BUILDING_ROADS",
+   "BUILDING_TRAILS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_OIL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_TAR",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 4,
+   "percent": 4
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1,
+   "modifier": {
+    "percent": 8
+   }
+  }
+ },
+ "cost": {
+  "production": 830,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ASPHALT_ROADS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "worth": 4,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

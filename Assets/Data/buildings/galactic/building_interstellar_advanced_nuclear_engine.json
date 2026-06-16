@@ -1,0 +1,36 @@
+{
+ "type": "BUILDING_INTERSTELLAR_ADVANCED_NUCLEAR_ENGINE",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_ADVANCED_NUCLEAR_ENGINE",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_ADVANCED_NUCLEAR_ENGINE_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_FUSION_ENGINE"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1192
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_ADVANCED_NUCLEAR_ENGINE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR",
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

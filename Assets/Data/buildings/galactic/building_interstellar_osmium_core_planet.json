@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_INTERSTELLAR_OSMIUM_CORE_PLANET",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_OSMIUM_CORE_PLANET",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_OSMIUM_CORE_PLANET_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_LIFE_INTERSTELLAR_PARTICLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_PRECIOUS_METAL_GENERATOR",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERSTELLAR_ARTIFICIAL_MOON",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 12
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 60
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3611
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_OSMIUM_CORE_PLANET"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

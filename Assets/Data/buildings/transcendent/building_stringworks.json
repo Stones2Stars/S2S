@@ -1,0 +1,106 @@
+{
+ "type": "BUILDING_STRINGWORKS",
+ "description": "TXT_KEY_BUILDING_STRINGWORKS",
+ "civilopedia": "TXT_KEY_BUILDING_STRINGWORKS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_POCKET_UNIVERSE_HOTEL",
+   "BUILDING_POCKET_UNIVERSE_STORAGE",
+   "BUILDING_UNIVERSE_PORTAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_SPACETIME_FACTORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    60,
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_BRANE_CONSTRUCTION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_DECOMPACTIFIED_SPACE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 15,
+   "percent": [
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_MANIFOLD_COLONIZATION",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5,
+   "percent": [
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_BRANE_CROSSOVER",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "cost": {
+  "production": 21155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_STRINGWORKS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

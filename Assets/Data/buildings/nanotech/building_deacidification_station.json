@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_DEACIDIFICATION_STATION",
+ "description": "TXT_KEY_BUILDING_DEACIDIFICATION_STATION",
+ "civilopedia": "TXT_KEY_BUILDING_DEACIDIFICATION_STATION_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_POLLUTION_ACID_RAIN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_INDUSTRIAL_PARK",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 3805,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEACIDIFICATION_STATION"
+  }
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 2,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_CLIMATE_CONTROLLED_ARCOLOGY",
+ "description": "TXT_KEY_BUILDING_CLIMATE_CONTROLLED_ARCOLOGY",
+ "civilopedia": "TXT_KEY_BUILDING_CLIMATE_CONTROLLED_ARCOLOGY_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_ARCOLOGY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_LAUNCH_ARCOLOGY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 5655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CLIMATE_CONTROLLED_ARCOLOGY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

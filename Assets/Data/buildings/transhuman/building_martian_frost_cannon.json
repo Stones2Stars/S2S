@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_MARTIAN_FROST_CANNON",
+ "description": "TXT_KEY_BUILDING_MARTIAN_FROST_CANNON",
+ "civilopedia": "TXT_KEY_BUILDING_MARTIAN_FROST_CANNON_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MARTIAN_METROPOLIS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 30
+   },
+   "bombardDefense": {
+    "percent": 10
+   },
+   "dynamicDefense": {
+    "flat": 10
+   },
+   "adjacentDamage": {
+    "percent": 10
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2110
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MARTIAN_FROST_CANNON"
+  }
+ },
+ "identity": {
+  "sightRange": 1,
+  "dcmAirbombMission": 1,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

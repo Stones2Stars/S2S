@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_BATTLEMECH_ARENA",
+ "description": "TXT_KEY_BUILDING_BATTLEMECH_ARENA",
+ "civilopedia": "TXT_KEY_BUILDING_BATTLEMECH_ARENA_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_BATTLEBOT_ARENA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_ANTHROPOMORPHICS_LAB",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5,
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_HUMAN_MOD_NOVEL_SENSES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_ASSAULT_MECH": {
+     "flat": 2
+    },
+    "UNITCOMBAT_ROBOT": {
+     "flat": 2
+    },
+    "UNITCOMBAT_HITECH": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 4485,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BATTLEMECH_ARENA"
+  }
+ },
+ "identity": {
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_VENUS_AGRODOME",
+ "description": "TXT_KEY_BUILDING_VENUS_AGRODOME",
+ "civilopedia": "TXT_KEY_BUILDING_VENUS_AGRODOME_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NOVUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_VENUS_SURFACE_CITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 125
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 5294
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_VENUS_AGRODOME"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

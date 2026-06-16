@@ -1,0 +1,109 @@
+{
+ "type": "BUILDING_SPACE_LABORATORY",
+ "description": "TXT_KEY_BUILDING_SPACE_LABORATORY",
+ "civilopedia": "TXT_KEY_BUILDING_SPACE_LABORATORY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_EFFECT_LAUNCH_SITE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_COMMERCIAL_SPACEPORT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MILITARY_SPACEPORT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -9
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "spaceProduction": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "cost": {
+  "production": 3370,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SPACE_LABORATORY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SPACE_LABORATORY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SPACEWAY"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 2
+  },
+  "neverCapture": true,
+  "worth": 6,
+  "dcmAirbombMission": 2,
+  "specialBuildingType": "SPECIALBUILDING_SPACE_LABORATORY",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

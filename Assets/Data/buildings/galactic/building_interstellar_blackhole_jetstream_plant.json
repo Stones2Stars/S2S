@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_INTERSTELLAR_BLACKHOLE_JETSTREAM_PLANT",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_BLACKHOLE_JETSTREAM_PLANT",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BLACKHOLE_JETSTREAM_PLANT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_BLACK_HOLE",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_SUPERMASSIVE_BLACK_HOLE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 250
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 7850
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_BLACKHOLE_JETSTREAM_PLANT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

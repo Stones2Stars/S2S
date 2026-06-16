@@ -1,0 +1,198 @@
+{
+ "type": "BUILDING_HOLOGRAPHIC_SCHOOL",
+ "description": "TXT_KEY_BUILDING_HOLOGRAPHIC_SCHOOL",
+ "civilopedia": "TXT_KEY_BUILDING_HOLOGRAPHIC_SCHOOL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTEGRATED_SCHOOLS",
+   "BUILDING_LEARNING_CENTER",
+   "BUILDING_TELECOURSE_STUDIO"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_CALLIGRAPHY_SCHOOL",
+   "BUILDING_CITY_COLLEGE",
+   "BUILDING_COUNTING_STICKS",
+   "BUILDING_DRIVING_SCHOOL",
+   "BUILDING_ELDER_COUNCIL",
+   "BUILDING_ELEMENTARY_SCHOOL",
+   "BUILDING_FLIGHT_SCHOOL",
+   "BUILDING_GRAMMATICUS",
+   "BUILDING_HELICOPTER_TRAINING_CENTER",
+   "BUILDING_HIGH_SCHOOL",
+   "BUILDING_KNOWLEDGE_INHERITANCE",
+   "BUILDING_LYCEUM",
+   "BUILDING_PRIVATE_SCHOOL",
+   "BUILDING_RIDING_SCHOOL",
+   "BUILDING_SAND_PAINTINGS",
+   "BUILDING_SCHOOL_BUS_STATION",
+   "BUILDING_SCHOOL_OF_RHETORIC",
+   "BUILDING_TALLY_STONE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HOLOGRAPHIC_PROJECTORS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MEGATOWER_EDUCATION_LEVEL",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100,
+   "percent": [
+    1,
+    {
+     "value": 400,
+     "enabled": {
+      "type": "BONUS_CALCULATORS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 400,
+     "enabled": {
+      "type": "BONUS_COMPUTERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 400,
+     "enabled": {
+      "type": "BONUS_PENCILS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 40,
+   "percent": 1
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_CAVALRY": {
+     "percent": 10
+    },
+    "UNIT_CHARIOT": {
+     "percent": 10
+    },
+    "UNIT_CHIVALRY": {
+     "percent": 10
+    },
+    "UNIT_CUIRASSIER": {
+     "percent": 10
+    },
+    "UNIT_HEAVY_CAVALRY": {
+     "percent": 10
+    },
+    "UNIT_HORSEMAN": {
+     "percent": 10
+    },
+    "UNIT_HORSE_ARCHER": {
+     "percent": 10
+    },
+    "UNIT_KNIGHT": {
+     "percent": 10
+    },
+    "UNIT_LIGHT_CAVALRY": {
+     "percent": 10
+    },
+    "UNIT_MOUNTED_INFANTRY": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_DIPLOMAT": {
+     "flat": 2
+    },
+    "UNITCOMBAT_HELICOPTER": {
+     "flat": 5
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "flat": 2
+    },
+    "UNITCOMBAT_SPY": {
+     "flat": 1
+    },
+    "UNITCOMBAT_WHEELED": {
+     "flat": 2
+    }
+   },
+   "domains": {
+    "DOMAIN_AIR": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "cost": {
+  "production": 3525,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOLOGRAPHIC_SCHOOL"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ARTIST": 1,
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

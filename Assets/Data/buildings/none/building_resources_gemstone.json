@@ -1,0 +1,102 @@
+{
+ "type": "BUILDING_RESOURCES_GEMSTONE",
+ "description": "TXT_KEY_BUILDING_RESOURCES_GEMSTONE",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CORE_MINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_MINE_AMETHYST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MINE_CITRINE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MINE_DIAMOND",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MINE_EMERALD",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MINE_FLUORITE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MINE_AMBER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MINE_GARNET",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_AMBER_GATHERER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_JADE_GATHERER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MINE_GEODE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MINE_JADE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MINE_JET",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MINE_ONYX",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MINE_QUARTZ",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MINE_RUBY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MINE_SAPPHIRE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MINE_TOPAZ",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MINE_TURQUOISE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_GEMSTONE"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

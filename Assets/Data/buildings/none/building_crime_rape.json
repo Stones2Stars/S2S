@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_CRIME_RAPE",
+ "description": "TXT_KEY_BUILDING_CRIME_RAPE",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_RAPE_PEDIA",
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 8
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -6,
+   "perPopulation": {
+    "percent": -25
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -4,
+   "perPopulation": {
+    "percent": -15
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

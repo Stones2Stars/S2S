@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_MARTIAN_SPACEPORT",
+ "description": "TXT_KEY_BUILDING_MARTIAN_SPACEPORT",
+ "civilopedia": "TXT_KEY_BUILDING_MARTIAN_SPACEPORT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MARTIAN_AMMONIA_BOMBARDMENT",
+   "BUILDING_MARTIAN_MASS_DRIVER",
+   "BUILDING_MARTIAN_SKYHOOK",
+   "BUILDING_MARTIAN_STARPORT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MARTIAN_METROPOLIS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2110
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MARTIAN_SPACEPORT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

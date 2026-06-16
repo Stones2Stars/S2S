@@ -1,0 +1,42 @@
+{
+ "type": "BUILDING_RESOURCES_GOLD_INGOTS",
+ "description": "TXT_KEY_BUILDING_RESOURCES_GOLD_INGOTS",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_METALS_MEGACOMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_GOLD_RECLAMATION_PLANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NATIONAL_SMELTER_GOLD",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SMELTER_GOLD",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_GOLD_INGOTS"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

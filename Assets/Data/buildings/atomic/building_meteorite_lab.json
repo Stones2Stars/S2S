@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_METEORITE_LAB",
+ "description": "TXT_KEY_BUILDING_METEORITE_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_METEORITE_LAB_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_GEOLOGY_LAB",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_CRATER",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_BARRINGER_CRATER",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_NGORONGORO_CRATER",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 1685,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_METEORITE_LAB"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

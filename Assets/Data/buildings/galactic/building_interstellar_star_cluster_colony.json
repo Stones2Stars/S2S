@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_INTERSTELLAR_STAR_CLUSTER_COLONY",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_STAR_CLUSTER_COLONY",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_STAR_CLUSTER_COLONY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_STELLAR_SAIL_NETWORK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_STAR_CLUSTER",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3611
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_STAR_CLUSTER_COLONY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

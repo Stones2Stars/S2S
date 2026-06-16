@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_HUMAN_MOD_INFORMATION_BASED",
+ "description": "TXT_KEY_BUILDING_HUMAN_MOD_INFORMATION_BASED",
+ "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_INFORMATION_BASED_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_NANOMORPHISM",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_BROADCAST_NODE": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 21910
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HUMAN_MOD_INFORMATION_BASED"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

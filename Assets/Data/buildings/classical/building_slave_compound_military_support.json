@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_SLAVE_COMPOUND_MILITARY_SUPPORT",
+ "description": "TXT_KEY_BUILDING_SLAVE_COMPOUND_MILITARY_SUPPORT",
+ "civilopedia": "TXT_KEY_BUILDING_SLAVE_COMPOUND_PEDIA",
+ "help": "TXT_KEY_BUILDING_SLAVE_COMPOUND_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SLAVE_COMPOUND",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_GARRISON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BARRACKS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MILITARY_BASE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SLAVE_COMPOUND_MILITARY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SLAVE_MARKET"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SLAVES": 1
+  },
+  "neverCapture": true,
+  "worth": 1,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

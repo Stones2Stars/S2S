@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_BARBWIRE_FENCE",
+ "description": "TXT_KEY_BUILDING_BARBWIRE_FENCE",
+ "civilopedia": "TXT_KEY_BUILDING_BARBWIRE_FENCE_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ELECTRIC_FENCE"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_ABATIS",
+   "BUILDING_FIRE_ABATIS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 120
+   },
+   "min": {
+    "flat": 5
+   },
+   "noEntryLevel": {
+    "flat": 18
+   },
+   "adjacentDamage": {
+    "percent": 20
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 770,
+  "sizeModifier": 1,
+  "countModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BARBWIRE_FENCE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "centerInCity": true,
+  "militaryWorth": 3,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

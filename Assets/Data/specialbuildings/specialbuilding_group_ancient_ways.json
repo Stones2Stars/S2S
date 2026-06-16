@@ -7,7 +7,6 @@
   }
  },
  "identity": {
-  "maxPlayerInstances": 1,
-  "valid": true
+  "maxPlayerInstances": 1
  }
 }

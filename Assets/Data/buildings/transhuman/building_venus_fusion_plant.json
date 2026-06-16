@@ -1,0 +1,48 @@
+{
+ "type": "BUILDING_VENUS_FUSION_PLANT",
+ "description": "TXT_KEY_BUILDING_VENUS_FUSION_PLANT",
+ "civilopedia": "TXT_KEY_BUILDING_VENUS_FUSION_PLANT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_VENUS_CLAYTRONIC_CITY",
+   "BUILDING_VENUS_DEATH_RAY",
+   "BUILDING_VENUS_MEGAFACTORY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_VENUS_SURFACE_CITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3065
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_VENUS_FUSION_PLANT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

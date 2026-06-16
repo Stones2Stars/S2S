@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_LUNAR_HE3_EXTRACTION_FACILITY",
+ "description": "TXT_KEY_BUILDING_LUNAR_HE3_EXTRACTION_FACILITY",
+ "civilopedia": "TXT_KEY_BUILDING_LUNAR_HE3_EXTRACTION_FACILITY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_LUNAR_MANUFACTURING_PLANT",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_TITANIUM_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_STEEL_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 2000
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2000
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LUNAR_HE3_EXTRACTION_FACILITY"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_MERCHANT": 1
+  },
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

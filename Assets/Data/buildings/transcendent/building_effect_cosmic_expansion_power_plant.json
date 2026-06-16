@@ -1,0 +1,35 @@
+{
+ "type": "BUILDING_EFFECT_COSMIC_EXPANSION_POWER_PLANT",
+ "description": "TXT_KEY_BUILDING_EFFECT_COSMIC_EXPANSION_POWER_PLANT",
+ "civilopedia": "TXT_KEY_BUILDING_EFFECT_COSMIC_EXPANSION_POWER_PLANT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "cost": {
+  "production": 22755
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EFFECT_COSMIC_EXPANSION_POWER_PLANT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

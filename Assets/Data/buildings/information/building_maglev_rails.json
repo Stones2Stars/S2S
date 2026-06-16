@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_MAGLEV_RAILS",
+ "description": "TXT_KEY_BUILDING_MAGLEV_RAILS",
+ "civilopedia": "TXT_KEY_BUILDING_MAGLEV_RAILS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHUO_SHINKANSEN",
+   "BUILDING_GLOBAL_RAIL_NETWORK",
+   "BUILDING_TRANSATLANTIC_TUNNEL"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_VACTRAIN_TERMINAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 1925,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MAGLEV_RAILS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

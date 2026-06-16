@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_TRANSTELLAR_ALDERSON_DISK_MENAGERIE",
+ "description": "TXT_KEY_BUILDING_TRANSTELLAR_ALDERSON_DISK_MENAGERIE",
+ "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_ALDERSON_DISK_MENAGERIE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_TRANSTELLAR_ALDERSON_DISK",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 175
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 5515
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRANSTELLAR_ALDERSON_DISK_MENAGERIE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

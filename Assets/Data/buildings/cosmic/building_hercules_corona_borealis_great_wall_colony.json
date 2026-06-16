@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_HERCULES_CORONA_BOREALIS_GREAT_WALL_COLONY",
+ "description": "TXT_KEY_BUILDING_HERCULES_CORONA_BOREALIS_GREAT_WALL_COLONY",
+ "civilopedia": "TXT_KEY_BUILDING_HERCULES_CORONA_BOREALIS_GREAT_WALL_COLONY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_SUPERCLUSTER_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_OBSERVABLE_UNIVERSE",
+      "scope": "plot"
+     }
+    ]
+   ],
+   "noneOf": [
+    {
+     "type": "BUILDING_SLOAN_GREAT_WALL_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CFA2_GREAT_WALL_COLONY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1000
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 18970
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_HERCULES_CORONA_BOREALIS_GREAT_WALL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HERCULES_CORONA_BOREALIS_GREAT_WALL_COLONY"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

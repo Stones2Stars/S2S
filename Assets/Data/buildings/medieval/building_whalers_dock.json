@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_WHALERS_DOCK",
+ "description": "TXT_KEY_BUILDING_WHALERS_DOCK",
+ "civilopedia": "TXT_KEY_BUILDING_WHALERS_DOCK_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_CARCASS",
+   "BUILDING_WHALE_OIL_MAKER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_WHALE",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 344,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WHALERS_DOCK"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

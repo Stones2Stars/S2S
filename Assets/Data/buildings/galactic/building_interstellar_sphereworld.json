@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_INTERSTELLAR_SPHEREWORLD",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_SPHEREWORLD",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_SPHEREWORLD_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_ASCENDED_STAR_SYSTEM",
+   "BUILDING_INTERSTELLAR_BIOTIC_SPHERE_WORLD",
+   "BUILDING_INTERSTELLAR_LILLIPUTIAN_CITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERSTELLAR_ECUMENOPOLIS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 300,
+   "percent": [
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_LUMINAL_BEINGS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3611
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_SPHEREWORLD"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_PUBLIC_TRANSPORTATION",
+ "description": "TXT_KEY_BUILDING_PUBLIC_TRANSPORTATION",
+ "civilopedia": "TXT_KEY_BUILDING_PUBLIC_TRANSPORTATION_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_PERSONAL_RAPID_TRAIN"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TELEPORT_BOOTH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_BUS_STATION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_RAILROAD_STATION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SUBWAY_STATION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_STREET_CARS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MAGLEV_STATION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SKYROAD_STATION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CABLE_CARS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "perPopulation": {
+    "percent": 10
+   },
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_NEW_URBANISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OIL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "cost": {
+  "production": 870,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PUBLIC_TRANSPORTATION"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_PUBLIC_TRANSPORTATION"
+ },
+ "identity": {
+  "worth": 5,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

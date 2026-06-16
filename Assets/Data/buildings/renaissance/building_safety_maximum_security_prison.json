@@ -1,0 +1,27 @@
+{
+ "type": "BUILDING_SAFETY_MAXIMUM_SECURITY_PRISON",
+ "description": "TXT_KEY_BUILDING_SAFETY_MAXIMUM_SECURITY_PRISON",
+ "civilopedia": "TXT_KEY_BUILDING_SAFETY_MAXIMUM_SECURITY_PRISON_PEDIA",
+ "happiness": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SAFETY_MAXIMUM_SECURITY_PRISON"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_YOTTAVERSE_PORTAL",
+ "description": "TXT_KEY_BUILDING_YOTTAVERSE_PORTAL",
+ "civilopedia": "TXT_KEY_BUILDING_YOTTAVERSE_PORTAL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_HYPERSPACE_11_DIMENSIONAL_FACTORY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_EXAVERSE_PORTAL",
+     "scope": "empire",
+     "min": 1
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 35
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 70
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 21
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3423
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_YOTTAVERSE_PORTAL"
+  }
+ },
+ "identity": {
+  "forceNoPrereqScaling": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

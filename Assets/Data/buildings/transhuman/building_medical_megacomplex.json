@@ -1,0 +1,105 @@
+{
+ "type": "BUILDING_MEDICAL_MEGACOMPLEX",
+ "description": "TXT_KEY_BUILDING_MEDICAL_MEGACOMPLEX",
+ "civilopedia": "TXT_KEY_BUILDING_MEDICAL_MEGACOMPLEX_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_NANOMORPHIC_REPLICATOR"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_FACTORY_CELLULASE_CAPSULES",
+   "BUILDING_FACTORY_HYPOSPRAYS",
+   "BUILDING_FACTORY_IMMUNITY_DRUGS",
+   "BUILDING_FACTORY_MEDICAL_TRICODERS",
+   "BUILDING_FACTORY_NEUROIMPLANTS",
+   "BUILDING_FACTORY_REPLACEMENT_ORGANS",
+   "BUILDING_FACTORY_STIM_PACKS",
+   "BUILDING_NUTRACEUTICAL_LAB",
+   "BUILDING_RESOURCES_SMART_MEDICINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GRASS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_REEDS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_STRAW",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 7205,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MEDICAL_MEGACOMPLEX"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

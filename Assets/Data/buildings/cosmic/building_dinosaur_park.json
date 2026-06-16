@@ -1,0 +1,135 @@
+{
+ "type": "BUILDING_DINOSAUR_PARK",
+ "description": "TXT_KEY_BUILDING_DINOSAUR_PARK",
+ "civilopedia": "TXT_KEY_BUILDING_DINOSAUR_PARK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
+    },
+    {
+     "latitude": {
+      "max": 30
+     }
+    },
+    {
+     "type": "BUILDING_CLONING_FACTORY",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_JUNGLE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 12
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_PALEONTOLOGY_LAB": {
+     "flat": 10
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BUILDING_PALEONTOLOGY_LAB",
+      "scope": "city"
+     }
+    }
+   ]
+  },
+  "area": {
+   "flat": 4
+  },
+  "empire": {
+   "flat": 4
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "cost": {
+  "production": 84930,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_DINO_PARK"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DINOSAUR_PARK"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 20,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

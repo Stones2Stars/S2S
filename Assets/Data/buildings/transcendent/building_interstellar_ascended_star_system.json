@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_INTERSTELLAR_ASCENDED_STAR_SYSTEM",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_ASCENDED_STAR_SYSTEM",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_ASCENDED_STAR_SYSTEM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_SPHEREWORLD",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_EFFECT_MULTIVERSAL_ECONOMY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -100
+  }
+ },
+ "cost": {
+  "production": 11510
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_ASCENDED_STAR_SYSTEM"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

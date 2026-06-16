@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_E_STOCK_MARKET",
+ "description": "TXT_KEY_BUILDING_E_STOCK_MARKET",
+ "civilopedia": "TXT_KEY_BUILDING_E_STOCK_MARKET_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AI_INVESTMENT",
+   "BUILDING_ECOSYSTEM_SERVICES_MARKET",
+   "BUILDING_FUTARCHY_MARKET",
+   "BUILDING_INTERTEMPORAL_STOCK_MARKET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_E_BANK",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_STOCK_MARKET",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 1,
+   "flat": [
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_MEGACORPORATIONS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_DIRECT_MERCHANDISING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2205,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_E_STOCK_MARKET"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_MERCHANT": 1
+  },
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

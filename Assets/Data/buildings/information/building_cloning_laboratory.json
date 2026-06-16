@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_CLONING_LABORATORY",
+ "description": "TXT_KEY_BUILDING_CLONING_LABORATORY",
+ "civilopedia": "TXT_KEY_BUILDING_CLONING_LABORATORY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_DESIGNER",
+   "BUILDING_BIOPUNK_LAB",
+   "BUILDING_CLONING_FACTORY",
+   "BUILDING_FACTORY_REPLACEMENT_ORGANS",
+   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+   "BUILDING_REPET",
+   "BUILDING_STEM_CELL_LAB"
+  ],
+  "units": [
+   "UNIT_AUTOMATONS",
+   "UNIT_CLONES",
+   "UNIT_CLONE_INFANTRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_LABORATORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 1925,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CLONING_LABORATORY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CLONING_FACTORY"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "worth": 6,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "specialBuildingType": "SPECIALBUILDING_CLONING_LABORATORY",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

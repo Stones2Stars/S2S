@@ -1,0 +1,40 @@
+{
+ "type": "BUILDING_ORDINANCE_GAMBLING_BAN",
+ "description": "TXT_KEY_BUILDING_ORDINANCE_GAMBLING_BAN",
+ "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_GAMBLING_BAN_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_CASINO",
+   "BUILDING_CIRCUS_CIRCUS_CASINO",
+   "BUILDING_COCK_FIGHTING_RING",
+   "BUILDING_COMEDY_CLUB",
+   "BUILDING_GAMBLING_DEN",
+   "BUILDING_GAMBLING_HALL",
+   "BUILDING_JAZZ_CLUB",
+   "BUILDING_KARAOKE_CLUB",
+   "BUILDING_LAS_VEGAS_STRIP",
+   "BUILDING_LUXOR_CASINO",
+   "BUILDING_MONTE_CARLO",
+   "BUILDING_PACHINKO_ARCADE",
+   "BUILDING_STRATOSPHERE_CASINO",
+   "BUILDING_VIP_CLUB"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ORDINANCE_GAMBLING_BAN"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

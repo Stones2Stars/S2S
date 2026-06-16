@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_SU_SONGS_WORKSHOP",
+ "description": "TXT_KEY_BUILDING_SU_SONGS_WORKSHOP",
+ "civilopedia": "TXT_KEY_BUILDING_SU_SONGS_WORKSHOP_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER",
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_WATERCLOCK",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TOWNCLOCK",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 12
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 1680,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SU_SONG"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SU_SONGS_WORKSHOP"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ENGINEER": 2,
+   "SPECIALIST_SCIENTIST": 2
+  },
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

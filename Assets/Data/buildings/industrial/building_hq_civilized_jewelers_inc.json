@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_HQ_CIVILIZED_JEWELERS_INC",
+ "description": "TXT_KEY_BUILDING_HQ_CIVILIZED_JEWELERS_INC",
+ "civilopedia": "TXT_KEY_BUILDING_CORPORATION_7_PEDIA",
+ "enables": {
+  "corporations": [
+   "CORPORATION_7"
+  ],
+  "units": [
+   "UNIT_EXECUTIVE_7"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_MODERN_OFFICES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_OFFICIUM",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SKYSCRAPER",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CORPORATION_7"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "corporationHQ": "CORPORATION_7",
+  "nukeImmune": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "specialBuildingType": "SPECIALBUILDING_CORPORATION_HQ",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

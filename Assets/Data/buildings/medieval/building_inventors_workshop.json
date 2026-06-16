@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_INVENTORS_WORKSHOP",
+ "description": "TXT_KEY_BUILDING_INVENTORS_WORKSHOP",
+ "civilopedia": "TXT_KEY_BUILDING_INVENTORS_WORKSHOP_PEDIA",
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_PATENT_RIGHTS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3,
+   "percent": [
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_SCIENTIFIC_METHOD",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_REPLACEABLE_PARTS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_3D_MODELLING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_RAPID_PROTOTYPING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 344,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INVENTORS_WORKSHOP"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_ENGINEER": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

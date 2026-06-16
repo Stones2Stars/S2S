@@ -1,0 +1,106 @@
+{
+ "type": "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT",
+ "description": "TXT_KEY_BUILDING_SLAVE_COMPOUND_ENTERTAINMENT",
+ "civilopedia": "TXT_KEY_BUILDING_SLAVE_COMPOUND_PEDIA",
+ "help": "TXT_KEY_BUILDING_SLAVE_COMPOUND_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SLAVE_COMPOUND",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_STORYTELLER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SCHOOL_OF_SCRIBES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_LIBRARY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DANCE_HUT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DANCE_HALL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MUSIC_HUT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MUSIC_SCHOOL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DRAMA_SCHOOL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ARENA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_COLOSSEUM",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MINOR_LEAGUE_STADIUM",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NIGHT_CLUB",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MAJOR_LEAGUE_STADIUM",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SLAVE_COMPOUND_ENTERTAINMENT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SLAVE_MARKET"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SLAVES": 1
+  },
+  "neverCapture": true,
+  "worth": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

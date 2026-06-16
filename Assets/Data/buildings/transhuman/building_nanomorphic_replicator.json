@@ -1,0 +1,116 @@
+{
+ "type": "BUILDING_NANOMORPHIC_REPLICATOR",
+ "description": "TXT_KEY_BUILDING_NANOMORPHIC_REPLICATOR",
+ "civilopedia": "TXT_KEY_BUILDING_NANOMORPHIC_REPLICATOR_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEATH_COMBAT_ARENA",
+   "BUILDING_GAMMA_ASSEMBLER",
+   "BUILDING_HUMAN_MOD_INDEFINITE_LIFESPAN",
+   "BUILDING_PHENOTYPE_STUDIO",
+   "BUILDING_ULTIMATE_COMBAT_ARENA"
+  ],
+  "units": [
+   "UNIT_CHROME_INFANTRY"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_FERTILITY_CLINIC",
+   "BUILDING_GESTATION_TANKS",
+   "BUILDING_RESURRECTION_HUB",
+   "BUILDING_UTERINE_REPLICATOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MEDICAL_MEGACOMPLEX",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_AUTOMATONS": {
+     "percent": 10
+    },
+    "UNIT_BLEEDER": {
+     "percent": 20
+    },
+    "UNIT_CYBORG": {
+     "percent": 10
+    },
+    "UNIT_FERAL": {
+     "percent": 30
+    },
+    "UNIT_CLONES": {
+     "percent": 10
+    },
+    "UNIT_WORKER_ANDROID": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": -80
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE",
+    "interval": "perTurn",
+    "heal": 6
+   },
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_ANIMALS",
+    "interval": "perTurn",
+    "heal": 6
+   }
+  ]
+ },
+ "cost": {
+  "production": 7805,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NANOMORPHIC_REPLICATOR"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 4,
+   "SPECIALIST_DOCTOR": 1
+  },
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

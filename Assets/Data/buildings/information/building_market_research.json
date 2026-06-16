@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_MARKET_RESEARCH",
+ "description": "TXT_KEY_BUILDING_MARKET_RESEARCH",
+ "civilopedia": "TXT_KEY_BUILDING_MARKET_RESEARCH_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CORPORATE_HIVE",
+   "BUILDING_EXOCORTEX_NETWORKS",
+   "BUILDING_HOLOGRAPHIC_NETWORKS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MODERN_OFFICES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_COMPUTER_NETWORK",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SKYSCRAPER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 2305,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MARKET_RESEARCH"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_UNITED_NATIONS",
+ "description": "TXT_KEY_BUILDING_UNITED_NATIONS",
+ "civilopedia": "TXT_KEY_BUILDING_UNITED_NATIONS_PEDIA",
+ "enables": {
+  "votes": [
+   "FORCE_TEAM_ELIGIBLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "TEAM",
+     "scope": "world",
+     "min": 3
+    },
+    {
+     "type": "BUILDING_SKYSCRAPER",
+     "scope": "city"
+    },
+    {
+     "type": "VICTORY_DIPLOMATIC",
+     "scope": "world"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 300
+  }
+ },
+ "cost": {
+  "production": 7080,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_UNITED_NATIONS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_UNITED_NATIONS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "teamShare": true,
+  "worth": 20,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "diploVoteType": "DIPLOVOTE_UN",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

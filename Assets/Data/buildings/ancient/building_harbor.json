@@ -1,0 +1,148 @@
+{
+ "type": "BUILDING_HARBOR",
+ "description": "TXT_KEY_BUILDING_HARBOR",
+ "civilopedia": "TXT_KEY_BUILDING_HARBOR_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_GARBAGE_DOCK",
+   "BUILDING_HARBORMASTERS_OFFICE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_PORT"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_SPEARFISHER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BAMBOO",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "terrains": {
+    "TERRAIN_COAST": {
+     "flat": 1
+    },
+    "TERRAIN_COAST_POLAR": {
+     "flat": 1
+    },
+    "TERRAIN_COAST_TROPICAL": {
+     "flat": 1
+    },
+    "TERRAIN_LAKE_SHORE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "city": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_WATERPROOF_CEMENT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "terrains": {
+    "TERRAIN_COAST": {
+     "flat": 1
+    },
+    "TERRAIN_COAST_POLAR": {
+     "flat": 1
+    },
+    "TERRAIN_COAST_TROPICAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 5
+   },
+   "foreignModifier": {
+    "percent": 5
+   }
+  }
+ },
+ "cost": {
+  "production": 192,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HARBOR"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_HARBOR"
+ },
+ "identity": {
+  "newCityFree": [
+   {
+    "Is": "TAG_COASTAL",
+    "Has": {
+     "GOM_TECH": "TECH_COLONIALISM"
+    }
+   }
+  ],
+  "worth": 4,
+  "conquestProbability": 100,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

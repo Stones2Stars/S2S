@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_GONDOLA_CANALS",
+ "description": "TXT_KEY_BUILDING_GONDOLA_CANALS",
+ "civilopedia": "TXT_KEY_BUILDING_GONDOLA_CANALS_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TOURISM_MEGACOMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_AQUEDUCT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MODERN_WATERWORKS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 252,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GONDOLA_CANALS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

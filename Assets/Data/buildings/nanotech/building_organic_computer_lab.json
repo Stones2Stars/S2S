@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_ORGANIC_COMPUTER_LAB",
+ "description": "TXT_KEY_BUILDING_ORGANIC_COMPUTER_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_ORGANIC_COMPUTER_LAB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_ORGANIC_COMPUTERS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_NANOTECH_COMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_CLONING_FACTORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 13
+  }
+ },
+ "cost": {
+  "production": 3525,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ORGANIC_COMPUTER_LAB"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

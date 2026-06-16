@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_UTERINE_REPLICATOR",
+ "description": "TXT_KEY_BUILDING_UTERINE_REPLICATOR",
+ "civilopedia": "TXT_KEY_BUILDING_UTERINE_REPLICATOR_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_GAMMA_ASSEMBLER",
+   "BUILDING_RESURRECTION_HUB"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_NANOMORPHIC_REPLICATOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_ANTHROPOMORPHICS_LAB",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CYBERNETIC_ORGAN_LAB",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_WORKER_ANDROID": {
+     "percent": 10
+    },
+    "UNIT_CYBORG": {
+     "percent": 10
+    },
+    "UNIT_FERAL": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": -15
+  }
+ },
+ "cost": {
+  "production": 4655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_UTERINE_REPLICATOR"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

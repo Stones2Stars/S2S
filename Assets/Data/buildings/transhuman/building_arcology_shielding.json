@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_ARCOLOGY_SHIELDING",
+ "description": "TXT_KEY_BUILDING_ARCOLOGY_SHIELDING",
+ "civilopedia": "TXT_KEY_BUILDING_ARCOLOGY_SHIELDING_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ADVANCED_SHIELDING"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_ABATIS",
+   "BUILDING_ANTI_MISSILE_BATTERIES",
+   "BUILDING_BARBWIRE_FENCE",
+   "BUILDING_ELECTRIC_FENCE",
+   "BUILDING_FIRE_ABATIS",
+   "BUILDING_WIRELESS_ELECTRIC_FENCE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 380
+   },
+   "bombardDefense": {
+    "percent": 40
+   },
+   "nukeDefense": {
+    "percent": -25
+   },
+   "airDefense": {
+    "percent": -25
+   },
+   "min": {
+    "flat": 5
+   },
+   "noEntryLevel": {
+    "flat": 6
+   },
+   "adjacentDamage": {
+    "percent": 35
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -9
+  }
+ },
+ "cost": {
+  "production": 5905,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ARCOLOGY_SHIELDED"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_ARCOLOGY_SHIELDING"
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 2,
+  "militaryWorth": 4,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

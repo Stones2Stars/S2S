@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_CHILDCARE_HUT",
+ "description": "TXT_KEY_BUILDING_CHILDCARE_HUT",
+ "civilopedia": "TXT_KEY_BUILDING_CHILDCARE_HUT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHILD_LABOR_CREW"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_DAY_CARE_CENTER"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 2,
+   "percent": [
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_COMMUNITY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 25,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_ESPIONAGE": 3
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CHILDCARE_HUT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

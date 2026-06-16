@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_INTERSTELLAR_CONSCIOUS_MATERIAL_FOUNDRY",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_CONSCIOUS_MATERIAL_FOUNDRY",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CONSCIOUS_MATERIAL_FOUNDRY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 7629
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_CONSCIOUS_MATERIAL_FOUNDRY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

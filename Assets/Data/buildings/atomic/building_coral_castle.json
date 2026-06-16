@@ -1,0 +1,106 @@
+{
+ "type": "BUILDING_CORAL_CASTLE",
+ "description": "TXT_KEY_BUILDING_CORAL_CASTLE",
+ "civilopedia": "TXT_KEY_BUILDING_CORAL_CASTLE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_CORAL_REEF",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_CORAL_REEF_BEACON",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_CORAL_REEF_LIGHTHOUSE",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_GREAT_BARRIER",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_GREAT_BARRIER_REEF_BEACON",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_GREAT_BARRIER_REEF_LIGHTHOUSE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 7680,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CORAL_CASTLE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CORAL_CASTLE"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_MERCHANT": 1
+  },
+  "centerInCity": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

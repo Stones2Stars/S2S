@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_STAR_CANNON"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_COMMAND_CENTER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 30
+   },
+   "bombardDefense": {
+    "percent": 10
+   },
+   "dynamicDefense": {
+    "flat": 10
+   },
+   "adjacentDamage": {
+    "percent": 10
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3075
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON"
+  }
+ },
+ "identity": {
+  "sightRange": 1,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

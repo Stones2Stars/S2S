@@ -1,0 +1,127 @@
+{
+ "type": "BUILDING_AERIAL_BASKET_ROPEWAYS",
+ "description": "TXT_KEY_BUILDING_AERIAL_BASKET_ROPEWAYS",
+ "civilopedia": "TXT_KEY_BUILDING_AERIAL_BASKET_ROPEWAYS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BASKETS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_ROPE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_VINES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_TRAVOIS_MAKER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_WHEELWRIGHT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CARRIAGE_BUILDER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FACTORY_AUTOMOBILES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SELF_ASSEMBLY_FACTORY",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "FEATURE_JUNGLE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": 15
+  }
+ },
+ "cost": {
+  "production": 160,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 3
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_BASKETROPEWAYS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_AERIAL_BASKET_ROPEWAYS"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

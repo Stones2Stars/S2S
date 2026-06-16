@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_INTERSTELLAR_PLANETARY_SHELLWORLD",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_PLANETARY_SHELLWORLD",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PLANETARY_SHELLWORLD_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3611
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_PLANETARY_SHELLWORLD"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

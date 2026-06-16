@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
+ "description": "TXT_KEY_BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
+ "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_ALCOHOL_PROHIBITION_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SPEAKEASY"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_BREWERY",
+   "BUILDING_CIDER_HOUSE",
+   "BUILDING_COMEDY_CLUB",
+   "BUILDING_DISTILLERY",
+   "BUILDING_DIVE_BAR",
+   "BUILDING_DW_CHAMPAGNE",
+   "BUILDING_DW_VINTAGE_RED",
+   "BUILDING_DW_VINTAGE_WHITE",
+   "BUILDING_GUILD_VICTUALLERS",
+   "BUILDING_JAZZ_CLUB",
+   "BUILDING_KARAOKE_CLUB",
+   "BUILDING_LIQUOR_STORE",
+   "BUILDING_PUB",
+   "BUILDING_SALOON",
+   "BUILDING_TAVERN",
+   "BUILDING_VIP_CLUB",
+   "BUILDING_WINERY"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ORDINANCE_ALCOHOL_PROHIBITION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

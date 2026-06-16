@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_INTERSTELLAR_DYSON_SWARM",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_DYSON_SWARM",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DYSON_SWARM_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_BANKS_ORBITAL"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_DYSON_SPHERE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_INTERSTELLAR_ASTEROID_MINING_SYSTEM",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SPACE_COLONY_MILKY_WAY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2536
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_DYSON_SWARM"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

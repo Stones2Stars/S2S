@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_NATURE_ANSWER",
+ "description": "TXT_KEY_BUILDING_NATURE_ANSWER",
+ "civilopedia": "TXT_KEY_BUILDING_NATURE_ANSWER_PEDIA",
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_DRUIDIC_TRADITIONS": {
+    "flat": 1
+   }
+  }
+ },
+ "grants": {
+  "holyCity": "RELIGION_DRUIDIC_TRADITIONS"
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SHRINE_DRUID"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NATURE_ANSWER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_DRUID"
+ },
+ "identity": {
+  "shrine": "RELIGION_DRUIDIC_TRADITIONS",
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 3
+  },
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_DRUIDIC_TRADITIONS",
+  "advisor": "ADVISOR_RELIGION",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

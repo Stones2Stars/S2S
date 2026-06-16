@@ -1,0 +1,47 @@
+{
+ "type": "BUILDING_SPACE_COLONY_DEEP_SPACE",
+ "description": "TXT_KEY_BUILDING_SPACE_COLONY_DEEP_SPACE",
+ "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_DEEP_SPACE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_DOCKING_BAY",
+   "BUILDING_DEEP_SPACE_HOUSING_MANAGEMENT",
+   "BUILDING_DEEP_SPACE_HOUSING_WORKERS",
+   "BUILDING_DEEP_SPACE_HYDROPONICS",
+   "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+   "BUILDING_DEEP_SPACE_SICK_BAY",
+   "BUILDING_DEEP_SPACE_SIMULATED_WORLD",
+   "BUILDING_DEEP_SPACE_SOLAR_ARRAY_INNER_SOLAR_SYSTEM",
+   "BUILDING_DEEP_SPACE_SOLAR_ARRAY_OUTER_SOLAR_SYSTEM",
+   "BUILDING_DEEP_SPACE_SOLAR_ARRAY_TRANSNEPTUNIAN"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 300
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SPACE_COLONY_DEEP_SPACE"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

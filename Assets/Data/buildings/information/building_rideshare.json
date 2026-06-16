@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_RIDESHARE",
+ "description": "TXT_KEY_BUILDING_RIDESHARE",
+ "civilopedia": "TXT_KEY_BUILDING_RIDESHARE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUTOMATED_TAXI_SERVICE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_CLOUD_SERVER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 2105,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RIDESHARE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

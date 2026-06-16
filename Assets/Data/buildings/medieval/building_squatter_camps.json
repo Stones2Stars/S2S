@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_SQUATTER_CAMPS",
+ "description": "TXT_KEY_BUILDING_SQUATTER_CAMPS",
+ "civilopedia": "TXT_KEY_BUILDING_SQUATTER_CAMPS_PEDIA",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_VASSAL_LEVIES",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": -25
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "cost": {
+  "production": 310,
+  "sizeModifier": 2,
+  "countModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SQUATTER_CAMPS"
+  }
+ },
+ "identity": {
+  "worth": 6,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,165 @@
+{
+ "type": "BUILDING_FUNERARY_SERVICES",
+ "description": "TXT_KEY_BUILDING_FUNERARY_SERVICES",
+ "civilopedia": "TXT_KEY_BUILDING_FUNERARY_SERVICES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAPUCHIN_CRYPT",
+   "BUILDING_CHIEFS_FUNERAL_PYRE",
+   "BUILDING_CITY_MORGUE",
+   "BUILDING_MORTUARY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_ANCIENT_EMBALMER",
+   "BUILDING_BURIAL_GROUND",
+   "BUILDING_BURIAL_PLATFORMS",
+   "BUILDING_BURIAL_TRADITION_BONE",
+   "BUILDING_BURIAL_TRADITION_CAVE",
+   "BUILDING_BURIAL_TRADITION_EARTH",
+   "BUILDING_BURIAL_TRADITION_FIRE",
+   "BUILDING_BURIAL_TRADITION_MUMMY",
+   "BUILDING_BURIAL_TRADITION_SEA",
+   "BUILDING_BURIAL_TRADITION_SKY",
+   "BUILDING_FUNERAL_PYRE",
+   "BUILDING_GRAVEYARD",
+   "BUILDING_MAUSOLEUM",
+   "BUILDING_MODERN_EMBALMER",
+   "BUILDING_MONUMENT",
+   "BUILDING_STELE",
+   "BUILDING_TOWER_OF_SILENCE",
+   "BUILDING_WATER_BURIALS"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_NATRON",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_NATRON",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1,
+   "percent": [
+    {
+     "value": 300,
+     "enabled": {
+      "type": "BONUS_NATRON",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 13
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -45
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 740,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FUNERARY_SERVICES"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 1
+  },
+  "conquestProbability": 70,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

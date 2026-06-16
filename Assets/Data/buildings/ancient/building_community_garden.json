@@ -1,0 +1,133 @@
+{
+ "type": "BUILDING_COMMUNITY_GARDEN",
+ "description": "TXT_KEY_BUILDING_COMMUNITY_GARDEN",
+ "civilopedia": "TXT_KEY_BUILDING_COMMUNITY_GARDEN_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASSASSIN_BUG_SANCTUARY",
+   "BUILDING_BUTTERFLY_SANCTUARY",
+   "BUILDING_CICADA_SANCTUARY",
+   "BUILDING_CRICKET_SANCTUARY",
+   "BUILDING_DRAGONFLY_SANCTUARY",
+   "BUILDING_FIREFLY_SANCTUARY",
+   "BUILDING_GOLIATH_BEETLE_SANCTUARY",
+   "BUILDING_HERCULES_BEETLE_SANCTUARY",
+   "BUILDING_JUNEBUG_SANCTUARY",
+   "BUILDING_LADYBUG_SANCTUARY",
+   "BUILDING_PRAYING_MANTIS_SANCTUARY",
+   "BUILDING_RAIN_GARDEN",
+   "BUILDING_SCARAB_BEETLE_SANCTUARY",
+   "BUILDING_SCORPION_SANCTUARY",
+   "BUILDING_WEAVING_SPIDER_SANCTUARY"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 300,
+     "enabled": {
+      "type": "TECH_WEATHER_LORE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "TECH_CALENDAR",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 600,
+     "enabled": {
+      "type": "TECH_METEOROLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 400,
+     "enabled": {
+      "type": "TECH_CROP_ROTATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_BIOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_LONG_RANGE_FORECASTING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 600,
+     "enabled": {
+      "type": "TECH_ORGANIC_CHEMISTRY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_GENETICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 168,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_COMMUNITY_GARDEN"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COMMUNITY_GARDEN"
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 1,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

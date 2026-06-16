@@ -1,0 +1,98 @@
+{
+ "type": "BUILDING_FUNERAL_PYRE",
+ "description": "TXT_KEY_BUILDING_FUNERAL_PYRE",
+ "civilopedia": "TXT_KEY_BUILDING_FUNERAL_PYRE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHIEFS_FUNERAL_PYRE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FUNERARY_SERVICES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_BURIAL_TRADITION_FIRE",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_BONFIRE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CHARCOAL_BURNER",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 86,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FUNERAL_PYRE"
+  }
+ },
+ "identity": {
+  "conquestProbability": 95,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

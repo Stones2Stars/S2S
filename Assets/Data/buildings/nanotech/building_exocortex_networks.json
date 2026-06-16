@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_EXOCORTEX_NETWORKS",
+ "description": "TXT_KEY_BUILDING_EXOCORTEX_NETWORKS",
+ "civilopedia": "TXT_KEY_BUILDING_EXOCORTEX_NETWORKS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP",
+   "BUILDING_BLOGS",
+   "BUILDING_CIRCADIAN_CHAMBER",
+   "BUILDING_DISTRIBUTED_SOCIAL_NETWORK",
+   "BUILDING_DREAM_VISUALIZER",
+   "BUILDING_HOLOGRAPHICA_APPAREL_SHOP",
+   "BUILDING_HOLOGRAPHIC_GAMING_LEAGUE",
+   "BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE",
+   "BUILDING_MEGATOWER_HOLOGRAM_ADVERTISING_CROWN_SECTION",
+   "BUILDING_MEME_GENERATOR",
+   "BUILDING_SHOCKWAVE_VEHICLE_DEALERSHIP",
+   "BUILDING_SOCIAL_MEDIA_SURVEILLANCE"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_HOLOGRAPHIC_NETWORKS",
+   "BUILDING_SOCIAL_NETWORKS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NEUROIMPLANTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_ENCRYPTED_FIREWALL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MARKET_RESEARCH",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_CELEBRITY": 1
+  }
+ },
+ "cost": {
+  "production": 4145,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EXOCORTEX_NETWORKS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

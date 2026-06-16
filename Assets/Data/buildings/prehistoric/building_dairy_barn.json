@@ -1,0 +1,116 @@
+{
+ "type": "BUILDING_DAIRY_BARN",
+ "description": "TXT_KEY_BUILDING_DAIRY_BARN",
+ "civilopedia": "TXT_KEY_BUILDING_DAIRY_BARN_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_GLASSWARE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_POTTERY",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_LEATHER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_FARM_ANIMAL_COW",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_ANIMAL_GOAT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_ANIMAL_SHEEP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_ANIMAL_YAK",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_GOAT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_COW",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_BUFFALO",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GLASSWARE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 98,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DAIRY_BARN"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,42 @@
+{
+ "type": "BUILDING_HYPERSPACE_ENERGY_CANNON",
+ "description": "TXT_KEY_BUILDING_HYPERSPACE_ENERGY_CANNON",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_ENERGY_CANNON_PEDIA",
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 30
+   },
+   "bombardDefense": {
+    "percent": 10
+   },
+   "dynamicDefense": {
+    "flat": 10
+   },
+   "adjacentDamage": {
+    "percent": 10
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2422
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERSPACE_ENERGY_CANNON"
+  }
+ },
+ "identity": {
+  "sightRange": 1,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_ASTRONOMICAL_DATABASE",
+ "description": "TXT_KEY_BUILDING_ASTRONOMICAL_DATABASE",
+ "civilopedia": "TXT_KEY_BUILDING_ASTRONOMICAL_DATABASE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ATLAST_SPACE_TELESCOPE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_UNIVERSITY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_PLANETARIUM",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1925,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ASTRONOMICAL_DATABASE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

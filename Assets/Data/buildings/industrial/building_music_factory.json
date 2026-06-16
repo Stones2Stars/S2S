@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_MUSIC_FACTORY",
+ "description": "TXT_KEY_BUILDING_MUSIC_FACTORY",
+ "civilopedia": "TXT_KEY_BUILDING_MUSIC_FACTORY_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_BRASS_INSTRUMENT_MAKER",
+   "BUILDING_PERCUSSION_INSTRUMENT_MAKER",
+   "BUILDING_STRING_INSTRUMENT_MAKER",
+   "BUILDING_WOODWIND_INSTRUMENT_MAKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_FACTORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 70,
+   "percent": [
+    {
+     "value": 2800,
+     "enabled": {
+      "type": "TECH_MASS_MEDIA",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2400,
+     "enabled": {
+      "type": "TECH_RADIO",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 710,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MUSIC_FACTORY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

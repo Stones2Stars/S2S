@@ -1,0 +1,42 @@
+{
+ "type": "BUILDING_TRADITION_AESTHETIC_APPRECIATION",
+ "description": "TXT_KEY_BUILDING_TRADITION_AESTHETIC_APPRECIATION",
+ "civilopedia": "TXT_KEY_BUILDING_TRADITION_AESTHETIC_APPRECIATION_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TRADITION_ASTHETIC_APPRECIATION"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRADITION_AESTHETIC_APPRECIATION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "worth": 6,
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

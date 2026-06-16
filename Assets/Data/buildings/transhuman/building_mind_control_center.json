@@ -1,0 +1,113 @@
+{
+ "type": "BUILDING_MIND_CONTROL_CENTER",
+ "description": "TXT_KEY_BUILDING_MIND_CONTROL_CENTER",
+ "civilopedia": "TXT_KEY_BUILDING_MIND_CONTROL_CENTER_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_TURN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_INDUSTRIAL_PARK",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MODERN_OFFICES",
+      "scope": "city"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_MIND_CONTROL",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 30
+  }
+ },
+ "research": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "happiness": {
+  "city": {
+   "perPopulation": {
+    "percent": 50
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -500
+  }
+ },
+ "cost": {
+  "production": 5255,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MIND_CONTROL_CENTER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MIND_CONTROL"
+ },
+ "identity": {
+  "neverCapture": true,
+  "worth": 3,
+  "dcmAirbombMission": 3,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

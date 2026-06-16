@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_CHAMBER_OF_COMMERCE",
+ "description": "TXT_KEY_BUILDING_CHAMBER_OF_COMMERCE",
+ "civilopedia": "TXT_KEY_BUILDING_CHAMBER_OF_COMMERCE_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_MODERN_OFFICES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_OFFICIUM",
+      "scope": "city"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_PRIVATIZED",
+     "scope": "empire"
+    },
+    {
+     "any": [
+      [
+       {
+        "type": "CIVIC_CORPORATISM",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_FREE_MARKET",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_GREEN",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_REGULATED",
+        "scope": "empire"
+       }
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
+ "cost": {
+  "production": 710,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CHAMBER_OF_COMMERCE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "worth": 3,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

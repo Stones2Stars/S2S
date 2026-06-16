@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_CISLUNAR_BIONIC_CORE",
+ "description": "TXT_KEY_BUILDING_CISLUNAR_BIONIC_CORE",
+ "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_BIONIC_CORE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CISLUNAR_ORGANIC_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CISLUNAR_BIOFACTORY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CISLUNAR_SOCIAL_ENGINEERING",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2544
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CISLUNAR_BIONIC_CORE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

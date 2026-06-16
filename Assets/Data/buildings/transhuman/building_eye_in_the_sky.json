@@ -1,0 +1,104 @@
+{
+ "type": "BUILDING_EYE_IN_THE_SKY",
+ "description": "TXT_KEY_BUILDING_EYE_IN_THE_SKY",
+ "civilopedia": "TXT_KEY_BUILDING_EYE_IN_THE_SKY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_EFFECT_CISLUNAR_ECONOMY",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      [
+       {
+        "type": "CIVIC_INQUISITORIAL",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_TOTALITARIANISM",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_MARXIST",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_PROPAGANDA",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_SINGLE_PARTY",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_GRID",
+        "scope": "empire"
+       }
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 50
+  },
+  "empire": {
+   "percent": 2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "cost": {
+  "production": 38430,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_EYE_IN_SKY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EYE_IN_THE_SKY"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

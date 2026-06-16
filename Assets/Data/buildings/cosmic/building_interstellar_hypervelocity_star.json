@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_INTERSTELLAR_HYPERVELOCITY_STAR",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_HYPERVELOCITY_STAR",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_HYPERVELOCITY_STAR_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_SHKADOV_THRUSTER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_SAGITTARIUS_DWARF_ELLIPTICAL_GALAXY_COLONY",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 5515
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_HYPERVELOCITY_STAR"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

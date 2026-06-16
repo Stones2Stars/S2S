@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_ROKOS_BASILISK",
+ "description": "TXT_KEY_BUILDING_ROKOS_BASILISK",
+ "civilopedia": "TXT_KEY_BUILDING_ROKOS_BASILISK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DISTANT_COSMOPOLIS",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1000
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -3
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 7783
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_BASILISK"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ROKOS_BASILISK"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

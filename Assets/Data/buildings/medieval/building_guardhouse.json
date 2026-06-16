@@ -1,0 +1,135 @@
+{
+ "type": "BUILDING_GUARDHOUSE",
+ "description": "TXT_KEY_BUILDING_GUARDHOUSE",
+ "civilopedia": "TXT_KEY_BUILDING_GUARDHOUSE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+  ],
+  "units": [
+   "UNIT_ENFORCERS",
+   "UNIT_GUARD",
+   "UNIT_HARAPPA_WATCHER",
+   "UNIT_HOPLOMACHUS",
+   "UNIT_HUACA_GUARDIANS",
+   "UNIT_NEANDERTHAL_ENFORCER",
+   "UNIT_NEANDERTHAL_WATCHER",
+   "UNIT_ORONAO_WATCHER",
+   "UNIT_PATROLS",
+   "UNIT_PETRA_GUARD",
+   "UNIT_TOWN_WATCHMEN",
+   "UNIT_TREASURE_GUARD",
+   "UNIT_WATCHER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_GUARD_STATION"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_LOOKOUT_POST",
+   "BUILDING_SENTRY_POST",
+   "BUILDING_TOWN_PATROL",
+   "BUILDING_TOWN_WATCH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BRICKS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "espionage": {
+  "city": {
+   "investigation": {
+    "flat": 25
+   },
+   "flat": 5,
+   "percent": [
+    1,
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_DIVINE_RIGHT",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 20
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "cost": {
+  "production": 368,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GUARDHOUSE"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_INVESTIGATOR": 2
+  },
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

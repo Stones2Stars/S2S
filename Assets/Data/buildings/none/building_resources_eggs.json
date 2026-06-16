@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_RESOURCES_EGGS",
+ "description": "TXT_KEY_BUILDING_RESOURCES_EGGS",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_CHICKEN_COOP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_ANIMAL_DUCK",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_ANIMAL_GOOSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NEST_THIEF",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_POULTRY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_RATITE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SEA_TURTLE_EGG_GATHERER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_ANIMAL_TURKEY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_EGGS"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

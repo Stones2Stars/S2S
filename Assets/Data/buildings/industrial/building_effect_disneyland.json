@@ -1,0 +1,22 @@
+{
+ "type": "BUILDING_EFFECT_DISNEYLAND",
+ "description": "TXT_KEY_BUILDING_EFFECT_DISNEYLAND",
+ "civilopedia": "TXT_KEY_BUILDING_EFFECT_DISNEYLAND_PEDIA",
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DISNEYLAND"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_BISHOP_RING",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_BISHOP_RING_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BRACEWELL_PROBES",
+   "BUILDING_DEEP_SPACE_ALIEN_SIGNAL_DECODER",
+   "BUILDING_DEEP_SPACE_CLAYTRONIC_STATION",
+   "BUILDING_DEEP_SPACE_HOTEL",
+   "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
+   "BUILDING_DEEP_SPACE_MEGAFACTORY",
+   "BUILDING_DEEP_SPACE_RECREATED_ECOSYSTEM",
+   "BUILDING_DEEP_SPACE_SOLAR_IMPORTER_EXPORTER",
+   "BUILDING_DEEP_SPACE_SUN_SCOOP",
+   "BUILDING_HALO",
+   "BUILDING_JOVIAN_MAGNETOSPHERE_POWER_PLANT",
+   "BUILDING_SOLAR_DYSON_SPHERE",
+   "BUILDING_TERRAFORMED_JUPITER",
+   "BUILDING_TERRAFORMED_NEPTUNE",
+   "BUILDING_TERRAFORMED_SATURN",
+   "BUILDING_TERRAFORMED_URANUS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 250
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4123
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_BISHOP_RING"
+  }
+ },
+ "identity": {
+  "workableRadius": 3,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

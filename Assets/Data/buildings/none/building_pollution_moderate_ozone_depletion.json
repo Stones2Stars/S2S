@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_POLLUTION_MODERATE_OZONE_DEPLETION",
+ "description": "TXT_KEY_BUILDING_POLLUTION_MODERATE_OZONE_DEPLETION",
+ "civilopedia": "TXT_KEY_BUILDING_AIR_POLLUTION_PEDIA",
+ "food": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYPOLLUTION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

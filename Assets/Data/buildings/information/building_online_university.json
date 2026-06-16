@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_ONLINE_UNIVERSITY",
+ "description": "TXT_KEY_BUILDING_ONLINE_UNIVERSITY",
+ "civilopedia": "TXT_KEY_BUILDING_ONLINE_UNIVERSITY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_UNIVERSITY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_COMPUTER_NETWORK",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_ONLINE",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 25
+  },
+  "empire": {
+   "percent": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  },
+  "empire": {
+   "percent": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 22
+  }
+ },
+ "cost": {
+  "production": 4810,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ONLINE_UNIVERSITY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ONLINE_UNIVERSITY"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

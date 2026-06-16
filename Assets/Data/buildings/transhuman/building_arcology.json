@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_ARCOLOGY",
+ "description": "TXT_KEY_BUILDING_ARCOLOGY",
+ "civilopedia": "TXT_KEY_BUILDING_ARCOLOGY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BOSTON_ARCOLOGY",
+   "BUILDING_CLIMATE_CONTROLLED_ARCOLOGY",
+   "BUILDING_HOUSING_ARCOLOGY_SLUMS",
+   "BUILDING_HOUSING_ARCOLOGY_SUBURBS",
+   "BUILDING_HOUSING_ARCOLOGY_UPPER_CLASS",
+   "BUILDING_LEAN_LINEAR_CITY",
+   "BUILDING_NUDGING_SPACE_ARCOLOGY",
+   "BUILDING_PARK_ARCOLOGY",
+   "BUILDING_SHIMIZU_MEGA_CITY_PYRAMID",
+   "BUILDING_ULTIMA_TOWER",
+   "BUILDING_X_SEED_4000"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HOUSING_COLONY_ARCOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INDUSTRIAL_PARK",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 5455,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ARCOLOGY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_ARCOLOGY"
+ },
+ "identity": {
+  "worth": 3,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

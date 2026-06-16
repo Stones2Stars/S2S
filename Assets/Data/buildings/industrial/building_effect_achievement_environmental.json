@@ -1,0 +1,27 @@
+{
+ "type": "BUILDING_EFFECT_ACHIEVEMENT_ENVIRONMENTAL",
+ "description": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_ENVIRONMENTAL",
+ "civilopedia": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_ENVIRONMENTAL_PEDIA",
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ACHIEVEMENT_ENVIRONMENTAL_EFFECT"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

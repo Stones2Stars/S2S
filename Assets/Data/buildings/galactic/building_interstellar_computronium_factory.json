@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_INTERSTELLAR_COMPUTRONIUM_FACTORY",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_COMPUTRONIUM_FACTORY",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_COMPUTRONIUM_FACTORY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4056
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_COMPUTRONIUM_FACTORY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

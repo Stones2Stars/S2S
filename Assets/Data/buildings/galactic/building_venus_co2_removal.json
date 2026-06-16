@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_VENUS_CO2_REMOVAL",
+ "description": "TXT_KEY_BUILDING_VENUS_CO2_REMOVAL",
+ "civilopedia": "TXT_KEY_BUILDING_VENUS_CO2_REMOVAL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_VENUS_CALCIUM_CARBONATE_STRUCTURES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_VENUS_MAGNESIUM_AND_CALCIUM_MINE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 6372
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_VENUS_CO2_REMOVAL"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

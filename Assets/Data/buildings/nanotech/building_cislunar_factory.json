@@ -1,0 +1,119 @@
+{
+ "type": "BUILDING_CISLUNAR_FACTORY",
+ "description": "TXT_KEY_BUILDING_CISLUNAR_FACTORY",
+ "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_FACTORY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_BIG_BANG_OBSERVATORY",
+   "BUILDING_CISLUNAR_BIOFACTORY",
+   "BUILDING_CISLUNAR_MICROSATELLITE_CONSTELLATION",
+   "BUILDING_CISLUNAR_TURBOLIFTS",
+   "BUILDING_SOLAR_SATELLITE_ARRAY"
+  ],
+  "units": [
+   "UNIT_CISLUNARSETTLER",
+   "UNIT_CISLUNAR_INFANTRY",
+   "UNIT_LUNARSETTLER",
+   "UNIT_PLANETARYSETTLER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
+    },
+    {
+     "type": "BUILDING_MODERN_GRANARY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FACTORY",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_EFFECT_LAUNCH_SITE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_COMMERCIAL_SPACEPORT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 9
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_ANIMAMATERIALS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 2,
+   "percent": [
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 3245
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CISLUNAR_FACTORY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_ORBITAL_FACTORY"
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "orbital": true,
+  "worth": 6,
+  "militaryWorth": 20,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

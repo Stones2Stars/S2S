@@ -1,0 +1,189 @@
+{
+ "type": "BUILDING_PORT",
+ "description": "TXT_KEY_BUILDING_PORT",
+ "civilopedia": "TXT_KEY_BUILDING_PORT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ELLIS_ISLAND",
+   "BUILDING_FREE_PORT",
+   "BUILDING_GARBAGE_DOCK",
+   "BUILDING_HARBORMASTERS_OFFICE",
+   "BUILDING_REMOTE_NAVAL_TRAINING_CENTER"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_COMMERCIAL_PORT"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_HARBOR",
+   "BUILDING_SPEARFISHER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_CEMENT",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "terrains": {
+    "TERRAIN_COAST": {
+     "flat": 2
+    },
+    "TERRAIN_COAST_POLAR": {
+     "flat": 2
+    },
+    "TERRAIN_COAST_TROPICAL": {
+     "flat": 2
+    },
+    "TERRAIN_LAKE_SHORE": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "production": {
+  "city": {
+   "percent": [
+    {
+     "value": 75,
+     "enabled": {
+      "type": "BONUS_WATERPROOF_CEMENT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FUR",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SILK",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    }
+   ],
+   "terrains": {
+    "TERRAIN_COAST": {
+     "flat": 2
+    },
+    "TERRAIN_COAST_POLAR": {
+     "flat": 2
+    },
+    "TERRAIN_COAST_TROPICAL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1,
+   "modifier": {
+    "percent": 10
+   },
+   "foreignModifier": {
+    "percent": 10
+   }
+  }
+ },
+ "cost": {
+  "production": 243,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PORT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_PORT"
+ },
+ "identity": {
+  "newCityFree": [
+   {
+    "Is": "TAG_COASTAL",
+    "Has": {
+     "GOM_TECH": "TECH_STEAM_POWER"
+    }
+   }
+  ],
+  "worth": 4,
+  "conquestProbability": 100,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

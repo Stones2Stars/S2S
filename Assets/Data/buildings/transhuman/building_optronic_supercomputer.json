@@ -1,0 +1,116 @@
+{
+ "type": "BUILDING_OPTRONIC_SUPERCOMPUTER",
+ "description": "TXT_KEY_BUILDING_OPTRONIC_SUPERCOMPUTER",
+ "civilopedia": "TXT_KEY_BUILDING_OPTRONIC_SUPERCOMPUTER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HUMAN_MOD_TRANSAPIENT",
+   "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_SUPERCOMPUTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_CLOUD_SERVER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_TECHNOLOGICAL_SINGULARITY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 20,
+   "percent": [
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_DATA_ARCHIVAL",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_ULTRACOMPUTING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 40,
+   "percent": [
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_DATA_ARCHIVAL",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_ULTRACOMPUTING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 5655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_OPTRONIC_SUPERCOMPUTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

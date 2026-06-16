@@ -1,0 +1,123 @@
+{
+ "type": "BUILDING_FOLKLORE_HUMPBACK_WHALE",
+ "description": "TXT_KEY_BUILDING_FOLKLORE_HUMPBACK_WHALE",
+ "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FOLKLORE_T_FISH",
+   "BUILDING_FOLKLORE_T_LEVIATHAN",
+   "BUILDING_FOLKLORE_T_TALES_OF_FISH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_FOLKLORE_REQUIREMENT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1,
+   "percent": [
+    {
+     "value": -60,
+     "enabled": {
+      "type": "TECH_LANGUAGE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_SEDENTARY_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_CLASSICAL_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_MEDIEVAL_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_RENAISSANCE_LIFESTYLE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_LANGUAGE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_SEDENTARY_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_CLASSICAL_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_MEDIEVAL_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_RENAISSANCE_LIFESTYLE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Hyena.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FOLKLORE_HUMPBACK_WHALE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

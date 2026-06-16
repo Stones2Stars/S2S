@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_DISTANT_BRANESPACE_FOOD_SOURCE",
+ "description": "TXT_KEY_BUILDING_DISTANT_BRANESPACE_FOOD_SOURCE",
+ "civilopedia": "TXT_KEY_BUILDING_DISTANT_BRANESPACE_FOOD_SOURCE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DISTANT_BLAZAR_FACTORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2422
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DISTANT_BRANESPACE_FOOD_SOURCE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

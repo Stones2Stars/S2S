@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_CRIME_ENVIRONMENTAL_DUMPING",
+ "description": "TXT_KEY_BUILDING_CRIME_ENVIRONMENTAL_DUMPING",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_ENVIRONMENTAL_DUMPING_PEDIA",
+ "food": {
+  "plot": {
+   "plotTypes": {
+    "PLOT_OCEAN": {
+     "flat": -3
+    }
+   }
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 3
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -3,
+   "perPopulation": {
+    "percent": -10
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -6,
+   "perPopulation": {
+    "percent": -35
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -4
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

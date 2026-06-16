@@ -1,0 +1,329 @@
+{
+ "type": "BUILDING_GRAND_FIRE_FESTIVAL",
+ "description": "TXT_KEY_BUILDING_GRAND_FIRE_FESTIVAL",
+ "civilopedia": "TXT_KEY_BUILDING_GRAND_FIRE_FESTIVAL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "BUILDING_FOLKLORE_E_FIRE",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PEAT",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_TAR",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_SULPHUR",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_OBSIDIAN",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_DIAMOND",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_SILVER_ORE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_GOLD_ORE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_FIRE_DANCE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FORGE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOUNDRY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_METALS_MEGACOMPLEX",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "FEATURE_VOLCANO_DORMANT",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_VOLCANO_ACTIVE",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_FUJI",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_SOPKA",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_KRAKATOA",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_PLATY_KILIMANJARO",
+      "scope": "plot"
+     }
+    ]
+   ],
+   "noneOf": [
+    {
+     "type": "BUILDING_GRAND_SKY_FESTIVAL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GRAND_EARTH_FESTIVAL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GRAND_MARINE_FESTIVAL",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PEAT",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TAR",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SULPHUR",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OBSIDIAN",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DIAMOND",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SILVER_ORE",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GOLD_ORE",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4,
+   "percent": [
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_ANCESTOR_WORSHIP",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_BRONZE_WORKING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_FOLK_DANCE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_FOLK_MUSIC",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 300,
+     "enabled": {
+      "type": "TECH_MUSICAL_NOTATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 400,
+     "enabled": {
+      "type": "TECH_SMITHING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_FLINTLOCK",
+      "scope": "team"
+     }
+    }
+   ]
+  },
+  "area": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -30
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "cost": {
+  "production": 570,
+  "sizeModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_GOLD": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_FIRE_FESTIVAL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GRAND_FIRE_FESTIVAL"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

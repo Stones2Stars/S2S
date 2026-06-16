@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_CRIME_CYBERWARFARE",
+ "description": "TXT_KEY_BUILDING_CRIME_CYBERWARFARE",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_CYBERWARFARE_PEDIA",
+ "gold": {
+  "city": {
+   "flat": -40,
+   "percent": -25
+  }
+ },
+ "research": {
+  "city": {
+   "percent": -20
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 30
+   },
+   "percent": -50
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,101 @@
+{
+ "type": "BUILDING_BIOMETRIC_SECURITY_SYSTEM",
+ "description": "TXT_KEY_BUILDING_BIOMETRIC_SECURITY_SYSTEM",
+ "civilopedia": "TXT_KEY_BUILDING_BIOMETRIC_SECURITY_SYSTEM_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_BEGGAR",
+   "UNIT_BURGLAR",
+   "UNIT_CUTTHROAT",
+   "UNIT_KARAI_PYHARE"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_ELECTRONIC_SECURITY_SYSTEM",
+   "BUILDING_LOCKSMITH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MEGATOWER_POLICE_STATION_LEVEL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 15,
+   "percent": [
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_MASS_SURVEILLANCE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_SYNTHETIC_SENTIENCE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 7
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "cost": {
+  "production": 3245,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BIOMETRIC_SECURITY_SYSTEM"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

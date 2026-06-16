@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_ALEPH_ASSEMBLER",
+ "description": "TXT_KEY_BUILDING_ALEPH_ASSEMBLER",
+ "civilopedia": "TXT_KEY_BUILDING_ALEPH_ASSEMBLER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ELECTROWEAK_FORGE",
+   "BUILDING_FIELD_GENERATOR",
+   "BUILDING_FLATLAND",
+   "BUILDING_HYPERFOG",
+   "BUILDING_MATERIALIZER",
+   "BUILDING_SPACETIME_FACTORY",
+   "BUILDING_TIME_MACHINE",
+   "BUILDING_ZERO_POINT_MAKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MEGASTRONG_ALLOYS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_OMEGA_ASSEMBLER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 60,
+   "percent": 60
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 17055,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ALEPH_ASSEMBLER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

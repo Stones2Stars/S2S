@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_SEAWALLS",
+ "description": "TXT_KEY_BUILDING_SEAWALLS",
+ "civilopedia": "TXT_KEY_BUILDING_SEAWALLS_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ADVANCED_FLOODWALL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER",
+    {
+     "type": "BUILDING_HARBORMASTERS_OFFICE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "plotTypes": {
+    "PLOT_OCEAN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 5
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 630,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SEAWALLS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_HARBOR"
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

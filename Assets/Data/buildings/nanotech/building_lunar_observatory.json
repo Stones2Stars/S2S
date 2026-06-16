@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_LUNAR_OBSERVATORY",
+ "description": "TXT_KEY_BUILDING_LUNAR_OBSERVATORY",
+ "civilopedia": "TXT_KEY_BUILDING_LUNAR_OBSERVATORY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUNAR_RESEARCH_BASE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_GLASSWARE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_SPACE_COLONY_LUNAR_BASE",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_CEMENT",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "FEATURE_CRATER_MEDIUM",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_CRATER_LARGE",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_CRATER_SMALL",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1300
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LUNAR_OBSERVATORY"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

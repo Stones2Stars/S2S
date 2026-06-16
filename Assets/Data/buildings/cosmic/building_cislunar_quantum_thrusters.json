@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_CISLUNAR_QUANTUM_THRUSTERS",
+ "description": "TXT_KEY_BUILDING_CISLUNAR_QUANTUM_THRUSTERS",
+ "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_QUANTUM_THRUSTERS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 25157
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CISLUNAR_QUANTUM_THRUSTERS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

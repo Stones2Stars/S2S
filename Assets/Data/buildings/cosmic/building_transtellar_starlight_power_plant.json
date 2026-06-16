@@ -1,0 +1,35 @@
+{
+ "type": "BUILDING_TRANSTELLAR_STARLIGHT_POWER_PLANT",
+ "description": "TXT_KEY_BUILDING_TRANSTELLAR_STARLIGHT_POWER_PLANT",
+ "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_STARLIGHT_POWER_PLANT_PEDIA",
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 5269
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRANSTELLAR_STARLIGHT_POWER_PLANT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

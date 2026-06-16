@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_WATERPROOF_CEMENT_MAKER",
+ "description": "TXT_KEY_BUILDING_WATERPROOF_CEMENT_MAKER",
+ "civilopedia": "TXT_KEY_BUILDING_WATERPROOF_CEMENT_MAKER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MODERN_EARTHWORKS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_LAVA_ROCK_GATHERER",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_CONCRETE_MASON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CEMENT_MILL",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 252,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CONCRETE_MASON"
+  }
+ },
+ "identity": {
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

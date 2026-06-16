@@ -1,0 +1,47 @@
+{
+ "type": "BUILDING_HYPERSPACE_CONSTRUCTION_FIRM",
+ "description": "TXT_KEY_BUILDING_HYPERSPACE_CONSTRUCTION_FIRM",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_CONSTRUCTION_FIRM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_HYPERSPACE_CONSTRUCTION_CENTER",
+     "scope": "empire",
+     "min": 1
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 35
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": -35
+  }
+ },
+ "cost": {
+  "production": 23555
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERSPACE_CONSTRUCTION_FIRM"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

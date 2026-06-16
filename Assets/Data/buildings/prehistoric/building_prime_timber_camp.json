@@ -1,0 +1,41 @@
+{
+ "type": "BUILDING_PRIME_TIMBER_CAMP",
+ "description": "TXT_KEY_BUILDING_PRIME_TIMBER_CAMP",
+ "civilopedia": "TXT_KEY_BUILDING_PRIME_TIMBER_CAMP_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PRIME_TIMBER",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 50,
+  "sizeModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PRIME_TIMBER_CAMP"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

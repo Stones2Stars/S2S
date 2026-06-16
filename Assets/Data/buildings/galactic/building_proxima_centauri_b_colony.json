@@ -1,0 +1,93 @@
+{
+ "type": "BUILDING_PROXIMA_CENTAURI_B_COLONY",
+ "description": "TXT_KEY_BUILDING_PROXIMA_CENTAURI_B_COLONY",
+ "civilopedia": "TXT_KEY_BUILDING_PROXIMA_CENTAURI_B_COLONY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_RED_DWARF",
+      "scope": "plot"
+     }
+    ]
+   ],
+   "noneOf": [
+    {
+     "type": "BUILDING_GLIESE_667CC_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GLIESE_581D_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_WOLF_1061C_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_GLIESE_163C_COLONY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_DEEP_SPACE_SOLAR_IMPORTER_EXPORTER",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 8998
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PROXIMA_CENTAURI"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROXIMA_CENTAURI_B_COLONY"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

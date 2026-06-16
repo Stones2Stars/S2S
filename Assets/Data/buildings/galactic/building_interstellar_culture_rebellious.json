@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_INTERSTELLAR_CULTURE_REBELLIOUS",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_REBELLIOUS",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_REBELLIOUS_PEDIA",
+ "requires": {
+  "build": {
+   "noneOf": [
+    {
+     "type": "BUILDING_INTERSTELLAR_CULTURE_AGGRESSIVE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERSTELLAR_CULTURE_EXPLORATORY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERSTELLAR_CULTURE_INDUSTRIOUS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERSTELLAR_CULTURE_OBEDIENT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERSTELLAR_CULTURE_PARADISE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": 20
+  }
+ },
+ "cost": {
+  "production": 1757
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_CULTURE_REBELLIOUS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC"
+  ]
+ }
+}

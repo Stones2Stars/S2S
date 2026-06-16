@@ -1,0 +1,104 @@
+{
+ "type": "BUILDING_EARTHWORM_GATHERER",
+ "description": "TXT_KEY_BUILDING_EARTHWORM_GATHERER",
+ "civilopedia": "TXT_KEY_BUILDING_EARTHWORM_GATHERER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_BUGS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "TERRAIN_GRASSLAND",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_LUSH",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_MUDDY",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_MARSH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 100,
+     "enabled": {
+      "type": "TECH_BOAT_BUILDING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_AGRICULTURE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_GARDENING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_COOKING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EARTHWORM_GATHERER"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_LIFE_SUPERCRITICAL_CO2",
+ "description": "TXT_KEY_BUILDING_LIFE_SUPERCRITICAL_CO2",
+ "civilopedia": "TXT_KEY_BUILDING_LIFE_SUPERCRITICAL_CO2_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_BASE_SUPER_EARTH",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_KEPLER_22B_COLONY",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": [
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_GALACTIC_ECOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_DIRECTED_PANSPERMIA",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 7608
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LIFE_SUPERCRITICAL_CO2"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

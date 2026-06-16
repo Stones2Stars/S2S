@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_URANIAN_LUNAR_HEATING",
+ "description": "TXT_KEY_BUILDING_URANIAN_LUNAR_HEATING",
+ "civilopedia": "TXT_KEY_BUILDING_URANIAN_LUNAR_HEATING_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_URANIAN_LUNAR_MAGNETIC_FIELD",
+   "BUILDING_URANIAN_SF6_GENERATOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_UMBRIEL_COLONY",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_UMBRIEL",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1452
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_URANIAN_LUNAR_HEATING"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_KUIPER_BELT_GEOTHERMAL_PLANT",
+ "description": "TXT_KEY_BUILDING_KUIPER_BELT_GEOTHERMAL_PLANT",
+ "civilopedia": "TXT_KEY_BUILDING_KUIPER_BELT_GEOTHERMAL_PLANT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_KUIPER_BELT_OUTPOST",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_KUIPER_BELT_OBJECT",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2363
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_KUIPER_BELT_GEOTHERMAL_PLANT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

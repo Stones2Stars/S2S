@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_WILKINSON_MICROWAVE_ANISOTROPY_PROBE",
+ "description": "TXT_KEY_BUILDING_WILKINSON_MICROWAVE_ANISOTROPY_PROBE",
+ "civilopedia": "TXT_KEY_BUILDING_WILKINSON_MICROWAVE_ANISOTROPY_PROBE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_JET_PROPULSION_LABORATORY",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 25
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_PHYSICS_LAB": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 12030
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_WMAP"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WILKINSON_MICROWAVE_ANISOTROPY_PROBE"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

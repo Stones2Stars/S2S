@@ -1,0 +1,174 @@
+{
+ "type": "BUILDING_CASTLE",
+ "description": "TXT_KEY_BUILDING_CASTLE",
+ "civilopedia": "TXT_KEY_BUILDING_CASTLE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BALISTRARIA",
+   "BUILDING_BALLISTA_TURRET",
+   "BUILDING_BALLROOM",
+   "BUILDING_CANNON_TURRET",
+   "BUILDING_CASTLE_DRAWBRIDGE",
+   "BUILDING_CASTLE_GARDEN",
+   "BUILDING_CASTLE_GATEHOUSE",
+   "BUILDING_CASTLE_KEEP",
+   "BUILDING_CATACOMBS",
+   "BUILDING_CITADEL",
+   "BUILDING_DUNGEON",
+   "BUILDING_EDINBURGH_CASTLE",
+   "BUILDING_HIMEJI_SAMURAI_CASTLE",
+   "BUILDING_MOAT",
+   "BUILDING_MUIDERSLOT_CASTLE",
+   "BUILDING_SERVANTS_QUARTERS",
+   "BUILDING_THRONE_ROOM"
+  ],
+  "units": [
+   "UNIT_FOOD_SUPPLY_TRAIN"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_STAR_FORT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BRICKS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_HIGH_WALLS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BARRICADES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CEMENT_BARRIER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_METAMATERIAL_WALLS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SUPERSTRONG_ALLOY_WALLS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MEGASTRONG_ALLOY_WALLS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 50
+   },
+   "bombardDefense": {
+    "percent": 20
+   },
+   "min": {
+    "flat": 25
+   },
+   "noEntryLevel": {
+    "flat": 35
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 300,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_ESPIONAGE": 4
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CASTLE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CASTLE"
+ },
+ "identity": {
+  "centerInCity": true,
+  "worth": 2,
+  "militaryWorth": 2,
+  "conquestProbability": 40,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

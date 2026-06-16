@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_INTERSTELLAR_BASE_CHTHONIAN_PLANET",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_BASE_CHTHONIAN_PLANET",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BASE_CHTHONIAN_PLANET_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_LIFE_SILICON_DIOXIDE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_CHTHONIAN_PLANET",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 250
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2856
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_BASE_CHTHONIAN_PLANET"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

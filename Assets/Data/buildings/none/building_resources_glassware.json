@@ -1,0 +1,42 @@
+{
+ "type": "BUILDING_RESOURCES_GLASSWARE",
+ "description": "TXT_KEY_BUILDING_RESOURCES_GLASSWARE",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MANUFACTURING_DISTRICT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_GLASSBLOWERS_WORKSHOP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FACTORY_GLASSWARE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GLASS_RECLAMATION_PLANT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_GLASSWARE"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

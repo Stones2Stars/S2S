@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_METEOROLOGY_LAB",
+ "description": "TXT_KEY_BUILDING_METEOROLOGY_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_METEOROLOGY_LAB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CLIMATOLOGY_LAB"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_CLOUD_OBSERVERS_HUT",
+   "BUILDING_WEATHER_VANES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_UNIVERSITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 6,
+   "percent": [
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_LONG_RANGE_FORECASTING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_RADAR",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_SATELLITES",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 740,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_METEOROLOGY_LAB"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

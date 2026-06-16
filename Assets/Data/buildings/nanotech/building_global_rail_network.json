@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_GLOBAL_RAIL_NETWORK",
+ "description": "TXT_KEY_BUILDING_GLOBAL_RAIL_NETWORK",
+ "civilopedia": "TXT_KEY_BUILDING_GLOBAL_RAIL_NETWORK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_MAGLEV_RAILS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_VACTRAIN_TERMINAL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GRAVITY_TRAIN",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MAGLEV_RAILS": {
+     "flat": 2
+    },
+    "BUILDING_GRAVITY_TRAIN": {
+     "flat": 6
+    },
+    "BUILDING_VACTRAIN_TERMINAL": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 26910,
+  "sizeModifier": 3,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_INTERCONTINENTAL_RAIL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GLOBAL_RAIL_NETWORK"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

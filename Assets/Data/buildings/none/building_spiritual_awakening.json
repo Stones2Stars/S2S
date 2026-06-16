@@ -1,0 +1,39 @@
+{
+ "type": "BUILDING_SPIRITUAL_AWAKENING",
+ "description": "TXT_KEY_BUILDING_SPIRITUAL_AWAKENING",
+ "civilopedia": "TXT_KEY_BUILDING_SPIRITUAL_AWAKENING_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NANOPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_PRIEST": 1,
+   "SPECIALIST_ARTIST": 1,
+   "SPECIALIST_CELEBRITY": 1,
+   "SPECIALIST_LAWYER": 1
+  }
+ },
+ "cost": {
+  "production": 3525
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_SPIRITUAL_AWAKENING"
+  }
+ },
+ "identity": {
+  "specialBuildingType": "SPECIALBUILDING_PUNK_NANO",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

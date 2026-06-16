@@ -1,0 +1,136 @@
+{
+ "type": "BUILDING_NIGHT_CLUB",
+ "description": "TXT_KEY_BUILDING_NIGHT_CLUB",
+ "civilopedia": "TXT_KEY_BUILDING_NIGHT_CLUB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANDROID_BROTHEL",
+   "BUILDING_BLOOD_DANCE",
+   "BUILDING_COMEDY_CLUB",
+   "BUILDING_DANCE_FOX",
+   "BUILDING_FERTILITY_DANCE",
+   "BUILDING_GENTLEMANS_CLUB",
+   "BUILDING_HAREMS",
+   "BUILDING_JAZZ_CLUB",
+   "BUILDING_KARAOKE_CLUB",
+   "BUILDING_MOON_DANCE",
+   "BUILDING_NATURE_DANCE",
+   "BUILDING_RAIN_DANCE",
+   "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT",
+   "BUILDING_VIP_CLUB",
+   "BUILDING_WAR_DANCE"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_DANCE_HALL",
+   "BUILDING_DANCE_HUT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_SHOPPING_DISTRICT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HIT_SINGLES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TOBACCO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_TOBACCO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_CELEBRITY": 1
+  }
+ },
+ "cost": {
+  "production": 1080,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NIGHT_CLUB"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ARTIST": 2
+  },
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

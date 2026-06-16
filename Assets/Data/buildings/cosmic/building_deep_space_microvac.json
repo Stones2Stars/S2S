@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_DEEP_SPACE_MICROVAC",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_MICROVAC",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_MICROVAC_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DEEP_SPACE_COLD_FUSION",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "cost": {
+  "production": 16067
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_MICROVAC"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

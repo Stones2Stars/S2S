@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_DISTANT_HYPERPORT",
+ "description": "TXT_KEY_BUILDING_DISTANT_HYPERPORT",
+ "civilopedia": "TXT_KEY_BUILDING_DISTANT_HYPERPORT_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_HYPERSHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DISTANT_COSMOPOLIS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1945
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DISTANT_HYPERPORT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

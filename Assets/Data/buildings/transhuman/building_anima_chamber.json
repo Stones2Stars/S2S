@@ -1,0 +1,102 @@
+{
+ "type": "BUILDING_ANIMA_CHAMBER",
+ "description": "TXT_KEY_BUILDING_ANIMA_CHAMBER",
+ "civilopedia": "TXT_KEY_BUILDING_ANIMA_CHAMBER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMA_STUDIO",
+   "BUILDING_CYBER_CHLOROPLASTIDA_BLOOM",
+   "BUILDING_HUMAN_MOD_ROBOTIC_BODY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MEDICAL_DIAGNOSTAT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CYBERNETIC_ORGAN_LAB",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "healing": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_MECHANICAL",
+    "interval": "perTurn",
+    "heal": 5
+   },
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_NANOMORPH",
+    "interval": "perTurn",
+    "heal": 10
+   },
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_SWARM",
+    "interval": "perTurn",
+    "heal": 10
+   }
+  ]
+ },
+ "cost": {
+  "production": 5905,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ANIMA_CHAMBER"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_DOCTOR": 1
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

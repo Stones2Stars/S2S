@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_ENHANCED_GEOTHERMAL_SYSTEM",
+ "description": "TXT_KEY_BUILDING_ENHANCED_GEOTHERMAL_SYSTEM",
+ "civilopedia": "TXT_KEY_BUILDING_ENHANCED_GEOTHERMAL_SYSTEM_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SUPERCRITICAL_CO2_TURBINE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_RENEWABLE_MEGACOMPLEX"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_GEOTHERMAL_POWER_PLANT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MODERN_EARTHWORKS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_POWER_LINES",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_GEOTHERMAL_ENERGY",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 2505,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ENHANCED_GEOTHERMAL_SYSTEM"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

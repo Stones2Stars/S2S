@@ -1,0 +1,40 @@
+{
+ "type": "BUILDING_CISLUNAR_SPACE_JUNK_REMOVAL",
+ "description": "TXT_KEY_BUILDING_CISLUNAR_SPACE_JUNK_REMOVAL",
+ "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_SPACE_JUNK_REMOVAL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SPACE_COLONY_CISLUNAR",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 800
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1279
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CISLUNAR_SPACE_JUNK_REMOVAL"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

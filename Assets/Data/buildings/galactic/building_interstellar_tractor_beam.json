@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_INTERSTELLAR_TRACTOR_BEAM",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_TRACTOR_BEAM",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_TRACTOR_BEAM_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CENTERPOINT_STATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_STARPORT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 10
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3212
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_TRACTOR_BEAM"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

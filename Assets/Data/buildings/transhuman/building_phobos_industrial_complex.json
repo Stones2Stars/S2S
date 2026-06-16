@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_PHOBOS_INDUSTRIAL_COMPLEX",
+ "description": "TXT_KEY_BUILDING_PHOBOS_INDUSTRIAL_COMPLEX",
+ "civilopedia": "TXT_KEY_BUILDING_PHOBOS_INDUSTRIAL_COMPLEX_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MARTIAN_METROPOLIS",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 120
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 11175
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PHOBOS_INDUSTRIAL_COMPLEX"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PHOBOS_INDUSTRIAL_COMPLEX"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_EDUCATION_INTUITIVE",
+ "description": "TXT_KEY_BUILDING_EDUCATION_INTUITIVE",
+ "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
+ "production": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 1
+   }
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYEDUCATION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

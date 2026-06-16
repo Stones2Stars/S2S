@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_INTERSTELLAR_BANKS_ORBITAL",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_BANKS_ORBITAL",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BANKS_ORBITAL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_BANKS_ORBITAL_CITY",
+   "BUILDING_INTERSTELLAR_TOPOPOLIS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_INTERSTELLAR_DYSON_SWARM",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4056
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_BANKS_ORBITAL"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_SPICE_VOYAGE",
+ "description": "TXT_KEY_BUILDING_SPICE_VOYAGE",
+ "civilopedia": "TXT_KEY_BUILDING_SPICE_VOYAGE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_SEASONING"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_COMMERCIAL_PORT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_INTERNATIONAL_PORT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_OCEAN_ADMINISTRATION",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 455,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SPICE_VOYAGE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

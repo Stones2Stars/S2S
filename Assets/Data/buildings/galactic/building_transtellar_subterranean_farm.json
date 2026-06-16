@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_TRANSTELLAR_SUBTERRANEAN_FARM",
+ "description": "TXT_KEY_BUILDING_TRANSTELLAR_SUBTERRANEAN_FARM",
+ "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_SUBTERRANEAN_FARM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SPACE_COLONY_TRANSTELLAR",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2249
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRANSTELLAR_SUBTERRANEAN_FARM"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

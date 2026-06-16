@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_VENUS_SURFACE_PROBE",
+ "description": "TXT_KEY_BUILDING_VENUS_SURFACE_PROBE",
+ "civilopedia": "TXT_KEY_BUILDING_VENUS_SURFACE_PROBE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SPACE_COLONY_VENUS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1000
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1144
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_VENUS_SURFACE_PROBE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

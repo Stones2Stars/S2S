@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_CRIME_LOOTING",
+ "description": "TXT_KEY_BUILDING_CRIME_LOOTING",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_LOOTING_PEDIA",
+ "food": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -20
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -15,
+   "percent": -10
+  }
+ },
+ "research": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 8
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -5,
+   "perPopulation": {
+    "percent": -40
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -5,
+   "perPopulation": {
+    "percent": -20
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -4
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

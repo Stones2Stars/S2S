@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_MARTIAN_FACTORY",
+ "description": "TXT_KEY_BUILDING_MARTIAN_FACTORY",
+ "civilopedia": "TXT_KEY_BUILDING_MARTIAN_FACTORY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MARTIAN_BIOFACTORY",
+   "BUILDING_MARTIAN_ELECTRONICS_FACTORY",
+   "BUILDING_MARTIAN_LIQUID_FLUORIDE_THORIUM_REACTOR"
+  ],
+  "units": [
+   "UNIT_MARSSETTLER",
+   "UNIT_MARTIAN_WORKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MARTIAN_ROCKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_SPACE_COLONY_MARTIAN",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 905
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MARTIAN_FACTORY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

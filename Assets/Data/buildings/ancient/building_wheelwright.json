@@ -1,0 +1,130 @@
+{
+ "type": "BUILDING_WHEELWRIGHT",
+ "description": "TXT_KEY_BUILDING_WHEELWRIGHT",
+ "civilopedia": "TXT_KEY_BUILDING_WHEELWRIGHT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AERIAL_BASKET_ROPEWAYS",
+   "BUILDING_CHARIOT_WORKSHOP"
+  ],
+  "units": [
+   "UNIT_CARTWRIGHT"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CARRIAGE_BUILDER"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_TRAVOIS_MAKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BAMBOO",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_BARTER_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TRADING_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHOPPING_DISTRICT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_CHARIOT": {
+     "percent": 10
+    },
+    "UNIT_TRADE_CARAVAN": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_MECHANICAL",
+    "interval": "perTurn",
+    "heal": 2
+   }
+  ]
+ },
+ "cost": {
+  "production": 132,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 7
+   },
+   {
+    "FLAVOR_MILITARY": 3
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WHEELWRIGHT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SIEGE_WORKSHOP"
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 33,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

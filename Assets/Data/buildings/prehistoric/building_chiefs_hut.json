@@ -1,0 +1,109 @@
+{
+ "type": "BUILDING_CHIEFS_HUT",
+ "description": "TXT_KEY_BUILDING_CHIEFS_HUT",
+ "civilopedia": "TXT_KEY_BUILDING_CHIEFS_HUT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHIEFS_FUNERAL_PYRE"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_CHIEFDOM",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 2,
+   "percent": [
+    {
+     "value": 200,
+     "enabled": {
+      "type": "TECH_NEGOTIATION",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MELEE": {
+     "flat": 1
+    },
+    "UNITCOMBAT_ARCHER": {
+     "flat": 1
+    },
+    "UNITCOMBAT_THROWING": {
+     "flat": 1
+    },
+    "UNITCOMBAT_RECON": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -4
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 86,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CHIEFS_HUT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

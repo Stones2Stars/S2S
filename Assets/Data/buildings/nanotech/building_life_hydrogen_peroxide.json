@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_LIFE_HYDROGEN_PEROXIDE",
+ "description": "TXT_KEY_BUILDING_LIFE_HYDROGEN_PEROXIDE",
+ "civilopedia": "TXT_KEY_BUILDING_LIFE_HYDROGEN_PEROXIDE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_TERRAFORMED_MARS",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4733
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LIFE_HYDROGEN_PEROXIDE"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_HOLOGRAPHIC_GAMING_LEAGUE",
+ "description": "TXT_KEY_BUILDING_HOLOGRAPHIC_GAMING_LEAGUE",
+ "civilopedia": "TXT_KEY_BUILDING_HOLOGRAPHIC_GAMING_LEAGUE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_VIDEO_GAMES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_HOLOGRAPHIC_PROJECTORS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_HOLOGRAPHIC_NETWORKS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_EXOCORTEX_NETWORKS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 7050,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_HOLOGRAPHIC_GAMING_LEAGUE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOLOGRAPHIC_GAMING_LEAGUE"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

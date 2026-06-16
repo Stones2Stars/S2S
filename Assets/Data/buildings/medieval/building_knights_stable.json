@@ -1,0 +1,126 @@
+{
+ "type": "BUILDING_KNIGHTS_STABLE",
+ "description": "TXT_KEY_BUILDING_KNIGHTS_STABLE",
+ "civilopedia": "TXT_KEY_BUILDING_KNIGHTS_STABLE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_RACE_TRACK",
+   "BUILDING_GER",
+   "BUILDING_GUILD_HOSTLERS",
+   "BUILDING_KINGS_TOURNAMENT",
+   "BUILDING_RIDING_SCHOOL"
+  ],
+  "units": [
+   "UNIT_TAMED_BISON",
+   "UNIT_TAMED_BUFFALO",
+   "UNIT_TAMED_CAMEL",
+   "UNIT_TAMED_DONKEY",
+   "UNIT_TAMED_ELEPHANT",
+   "UNIT_TAMED_HORSE",
+   "UNIT_TAMED_LLAMA",
+   "UNIT_TAMED_MAMMOTH"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MODERN_STABLE"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_STABLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SADDLES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_CAMEL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_DONKEY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_HORSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_ELEPHANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_LLAMA",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MOUNTED": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 310,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_KNIGHTS_STABLES"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_KNIGHT_STABLE"
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 3,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

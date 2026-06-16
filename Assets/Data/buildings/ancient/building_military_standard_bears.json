@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_MILITARY_STANDARD_BEARS",
+ "description": "TXT_KEY_BUILDING_MILITARY_STANDARD_BEARS",
+ "civilopedia": "TXT_KEY_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT_PEDIA",
+ "help": "TXT_KEY_BUILDING_MILITARY_STANDARD_BEAR_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_BEAR",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_EFFECT_HERITAGE_BEARS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_BEARRIDER": {
+     "percent": 10
+    },
+    "UNIT_BEARKNIGHT": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "worth": 2,
+  "conquestProbability": 25,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

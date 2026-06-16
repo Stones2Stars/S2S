@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_ANIMAL_TRAINER_DONKEY",
+ "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_DONKEY",
+ "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_DONKEY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TAMER_COMPLEX",
+   "BUILDING_CARAVAN_POST",
+   "BUILDING_KNIGHTS_STABLE",
+   "BUILDING_MODERN_STABLE",
+   "BUILDING_STABLE"
+  ],
+  "units": [
+   "UNIT_PACKMULE",
+   "UNIT_TAMED_DONKEY",
+   "UNIT_WORKMULE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_DONKEY",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_FARM_ANIMAL_DONKEY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_DONKEY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CENTRAL_BREEDER_DONKEY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_INDUSTRIAL_FARMS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 125,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ANIMAL_TRAINER_DONKEY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "worth": 2,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

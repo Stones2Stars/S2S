@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_SUPERCONDUCTING_GRID",
+ "description": "TXT_KEY_BUILDING_SUPERCONDUCTING_GRID",
+ "civilopedia": "TXT_KEY_BUILDING_SUPERCONDUCTING_GRID_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUMINESCENT_SOLAR_CONCENTRATORS",
+   "BUILDING_URBAN_PSYCHIC_INTEGRATION",
+   "BUILDING_VIBRO_WIND_GENERATORS",
+   "BUILDING_WORLD_ELECTRIC_GRID"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_EMP_GRID",
+   "BUILDING_SMART_GRID",
+   "BUILDING_WIRELESS_GRID"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SUPERSOLID_MATERIAL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_POWER_LINES",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1,
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_LIQUID_METAL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 6155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SUPERCONDUCTING_GRID"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

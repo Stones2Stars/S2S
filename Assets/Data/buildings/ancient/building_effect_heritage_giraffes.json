@@ -1,0 +1,38 @@
+{
+ "type": "BUILDING_EFFECT_HERITAGE_GIRAFFES",
+ "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_GIRAFFES",
+ "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_GIRAFFE_PEDIA",
+ "help": "TXT_KEY_BUILDING_EFFECT_HERITAGE_GIRAFFES_HELP",
+ "enables": {
+  "buildings": [
+   "BUILDING_MILITARY_STANDARD_GIRAFFE"
+  ],
+  "units": [
+   "UNIT_GIRAFFE_ARCHER",
+   "UNIT_GIRAFFE_CARABINIER",
+   "UNIT_GIRAFFE_CAVALRY",
+   "UNIT_GIRAFFE_CROSSBOW",
+   "UNIT_GIRAFFE_CUIRASSIER",
+   "UNIT_GIRAFFE_DRAGOON",
+   "UNIT_GIRAFFE_TRENCH_CAVALRY",
+   "UNIT_URBAN_GIRAFFEMAN"
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HERITAGE_GIRAFFE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "worth": 2,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

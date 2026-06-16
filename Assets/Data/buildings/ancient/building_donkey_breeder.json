@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_DONKEY_BREEDER",
+ "description": "TXT_KEY_BUILDING_DONKEY_BREEDER",
+ "civilopedia": "TXT_KEY_BUILDING_ANIMAL_BREEDER_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_TAMED_DONKEY_PAIR"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ANIMAL_TAMER_COMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_FOLKLORE_DONKEY",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_FARM_ANIMAL_DONKEY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_INDUSTRIAL_FARMS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 132,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 7
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DONKEY_BREEDER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_STABLE"
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

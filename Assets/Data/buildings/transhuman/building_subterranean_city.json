@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_SUBTERRANEAN_CITY",
+ "description": "TXT_KEY_BUILDING_SUBTERRANEAN_CITY",
+ "civilopedia": "TXT_KEY_BUILDING_SUBTERRANEAN_CITY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MULTIVAC",
+   "BUILDING_NEUTRINO_SURVEILLANCE",
+   "BUILDING_SUBTERRANEAN_CITY_EXPANSION",
+   "BUILDING_SUBTERRANEAN_FARM",
+   "BUILDING_SUBTERRANEAN_HOTEL",
+   "BUILDING_UNDERWORLD_GODDESS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_ADVANCED_SHIELDING",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 4,
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_HUMAN_MOD_HEAT_TOLERANCE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "city": {
+   "nukeDefense": {
+    "percent": -50
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 6905,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SUBTERRANEAN_CITY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

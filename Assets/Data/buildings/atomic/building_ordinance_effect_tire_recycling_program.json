@@ -1,0 +1,32 @@
+{
+ "type": "BUILDING_ORDINANCE_EFFECT_TIRE_RECYCLING_PROGRAM",
+ "description": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_TIRE_RECYCLING_PROGRAM",
+ "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_TIRE_RECYCLING_PROGRAM_PEDIA",
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ORDINANCE_TIRE_RECYCLING_PROGRAM"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_INTERSTELLAR_GAS_GIANT_SURFACE_SHELL",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_GAS_GIANT_SURFACE_SHELL",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_GAS_GIANT_SURFACE_SHELL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_TERRAFORMED_GAS_GIANT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3611
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_GAS_GIANT_SURFACE_SHELL"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

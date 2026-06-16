@@ -1,0 +1,110 @@
+{
+ "type": "BUILDING_BLACK_HAT_HIDEOUT",
+ "description": "TXT_KEY_BUILDING_BLACK_HAT_HIDEOUT",
+ "civilopedia": "TXT_KEY_BUILDING_BLACK_HAT_HIDEOUT_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_HACKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_WIRELESS_NETWORKS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 30
+   },
+   "flat": 10
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 6
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 35
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unit": "UNIT_HACKER",
+    "interval": "perTurn",
+    "chance": {
+     "per": {
+      "type": "PROPERTY_CRIME",
+      "scope": "city"
+     }
+    }
+   },
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_TECH",
+    "interval": "perTurn",
+    "heal": 6
+   }
+  ]
+ },
+ "cost": {
+  "production": 1925,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_ESPIONAGE": 4
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BLACK_HAT_HIDEOUT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_EBANK"
+ },
+ "identity": {
+  "worth": 2,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

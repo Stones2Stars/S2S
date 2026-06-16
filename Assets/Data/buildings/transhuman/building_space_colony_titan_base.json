@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_SPACE_COLONY_TITAN_BASE",
+ "description": "TXT_KEY_BUILDING_SPACE_COLONY_TITAN_BASE",
+ "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_TITAN_BASE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_TITAN_AIRPORT",
+   "BUILDING_TITAN_AMMONIA_ERUPTION",
+   "BUILDING_TITAN_BIOFACTORY",
+   "BUILDING_TITAN_FERTILIZER_PLANT",
+   "BUILDING_TITAN_HYDROCARBON_REFINERY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 250
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 120
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SPACE_COLONY_TITAN_BASE"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_TITANIC"
+  ]
+ }
+}

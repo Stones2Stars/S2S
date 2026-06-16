@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_DISTRICT_OFFICE",
+ "description": "TXT_KEY_BUILDING_DISTRICT_OFFICE",
+ "civilopedia": "TXT_KEY_BUILDING_DISTRICT_OFFICE_PEDIA",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_DEMOCRACY",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -8
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 580,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 8
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DISTRICT_OFFICE"
+  }
+ },
+ "identity": {
+  "worth": 3,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

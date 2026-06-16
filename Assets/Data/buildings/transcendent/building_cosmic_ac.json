@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_COSMIC_AC",
+ "description": "TXT_KEY_BUILDING_COSMIC_AC",
+ "civilopedia": "TXT_KEY_BUILDING_COSMIC_AC_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERSTELLAR_GALACTIC_AC",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "BUILDING_INTERGALACTIC_UNIVERSAL_AC",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 500
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_GALACTIC_AC": {
+     "flat": 5
+    },
+    "BUILDING_MULTIVAC": {
+     "flat": 5
+    },
+    "BUILDING_INTERGALACTIC_UNIVERSAL_AC": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_SCIENTIST": 3
+  }
+ },
+ "cost": {
+  "production": 11658
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_COSMIC_AC"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_COSMIC_AC"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

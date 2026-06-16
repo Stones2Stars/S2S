@@ -1,0 +1,99 @@
+{
+ "type": "BUILDING_SAGITTARIUS_DWARF_ELLIPTICAL_GALAXY_COLONY",
+ "description": "TXT_KEY_BUILDING_SAGITTARIUS_DWARF_ELLIPTICAL_GALAXY_COLONY",
+ "civilopedia": "TXT_KEY_BUILDING_SAGITTARIUS_DWARF_ELLIPTICAL_GALAXY_COLONY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_LOCAL_GROUP",
+      "scope": "plot"
+     }
+    ],
+    [
+     {
+      "type": "FEATURE_DWARF_GALAXY",
+      "scope": "plot"
+     }
+    ]
+   ],
+   "noneOf": [
+    {
+     "type": "BUILDING_SMALL_MAGELLANIC_CLOUD_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LARGE_MAGELLANIC_CLOUD_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ANDROMEDA_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_TRIANGULUM_COLONY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 250
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERGALACTIC_GALACTIC_COLONY": {
+     "flat": 20
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 50
+   }
+  }
+ },
+ "cost": {
+  "production": 11412
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SAGITTARIUS_DWARF_ELLIPTICAL_GALAXY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SAGITTARIUS_DWARF_ELLIPTICAL_GALAXY_COLONY"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

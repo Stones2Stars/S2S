@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_ENCYCLOPEDIA_GALACTICA",
+ "description": "TXT_KEY_BUILDING_ENCYCLOPEDIA_GALACTICA",
+ "civilopedia": "TXT_KEY_BUILDING_ENCYCLOPEDIA_GALACTICA_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_UNIVERSAL_LIBRARY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_UNIVERSAL_LIBRARY",
+     "scope": "empire",
+     "min": 3
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 75930,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ENCYCLOPEDIA_GALACTICA"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ENCYCLOPEDIA_GALACTICA"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

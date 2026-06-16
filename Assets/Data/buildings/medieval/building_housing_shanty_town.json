@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_HOUSING_SHANTY_TOWN",
+ "description": "TXT_KEY_BUILDING_HOUSING_SHANTY_TOWN",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_SHANTY_TOWN_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_KIVA"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_HOUSING_GRASS_HUTS",
+   "BUILDING_HOUSING_HOMELESS",
+   "BUILDING_HOUSING_LONGHOUSE",
+   "BUILDING_HOUSING_PUEBLOS",
+   "BUILDING_HOUSING_SLUMS",
+   "BUILDING_HOUSING_TREE_HOLLOW"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "IS_FRESHWATER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BRICKS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_SHANTY_TOWN"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_INTERGALACTIC_WORMHOLE_COMMUNICATION_NETWORK",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_WORMHOLE_COMMUNICATION_NETWORK",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_WORMHOLE_COMMUNICATION_NETWORK_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_CONSCIOUS_GALAXY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_ROMAN_RING",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 150,
+   "percent": [
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_METAVERSE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3301
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_WORMHOLE_COMMUNICATION_NETWORK"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

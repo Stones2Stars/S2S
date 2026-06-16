@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_AMUNDSEN_SCOTT_SOUTH_POLE_STATION",
+ "description": "TXT_KEY_BUILDING_AMUNDSEN_SCOTT_SOUTH_POLE_STATION",
+ "civilopedia": "TXT_KEY_BUILDING_AMUNDSEN_SCOTT_SOUTH_POLE_STATION_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_ICE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 20,
+   "percent": [
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_EXOPLANET_DISCOVERY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_IMAGINARY_PHYSICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 9240,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_AMUNDSEN_SCOTT_SOUTH_POLE_STATION"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_AMUNDSEN_SCOTT_SOUTH_POLE_STATION"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

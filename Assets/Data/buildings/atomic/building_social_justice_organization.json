@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_SOCIAL_JUSTICE_ORGANIZATION",
+ "description": "TXT_KEY_BUILDING_SOCIAL_JUSTICE_ORGANIZATION",
+ "civilopedia": "TXT_KEY_BUILDING_SOCIAL_JUSTICE_ORGANIZATION_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MODERN_OFFICES",
+     "scope": "city"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      [
+       {
+        "type": "CIVIC_MARXIST",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_SOCIALIZED",
+        "scope": "empire"
+       }
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 1180,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SOCIAL_JUSTICE_ORGANIZATION"
+  }
+ },
+ "identity": {
+  "worth": 3,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

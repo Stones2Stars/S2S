@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_STOCK_MARKET",
+ "description": "TXT_KEY_BUILDING_STOCK_MARKET",
+ "civilopedia": "TXT_KEY_BUILDING_STOCK_MARKET_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_INSIDER_TRADING",
+   "BUILDING_E_STOCK_MARKET",
+   "BUILDING_FINANCIAL_RISK_MONITOR",
+   "BUILDING_GLOBAL_STOCK_EXCHANGE",
+   "BUILDING_HEDGE_FUND",
+   "BUILDING_PREDICTION_MARKET",
+   "BUILDING_WALL_STREET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_BANK",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 475,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_STOCK_MARKET"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "worth": 5,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

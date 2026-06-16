@@ -1,0 +1,48 @@
+{
+ "type": "BUILDING_VOYAGE_TO_ANDROMEDA",
+ "description": "TXT_KEY_BUILDING_VOYAGE_TO_ANDROMEDA",
+ "civilopedia": "TXT_KEY_BUILDING_VOYAGE_TO_ANDROMEDA_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_STARPORT",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 375
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_ANDROMEDA_COLONY": {
+     "flat": 50
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 28734
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_VOYAGE_TO_ANDROMEDA"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

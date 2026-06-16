@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_WATER_PUMPING_STATION",
+ "description": "TXT_KEY_BUILDING_WATER_PUMPING_STATION",
+ "civilopedia": "TXT_KEY_BUILDING_WATER_PUMPING_STATION_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DOWNDRAFT_TOWER",
+   "BUILDING_FIRE_HYDRANTS"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_HAND_WATER_PUMP",
+   "BUILDING_WIND_WATER_PUMP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_FRESHWATER",
+    {
+     "type": "BUILDING_WATER_TOWER",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_COPPER_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_ALUMINUM_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_STEEL_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": -15
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "cost": {
+  "production": 655,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WATER_PUMPING_STATION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

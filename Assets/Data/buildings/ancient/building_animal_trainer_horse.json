@@ -1,0 +1,192 @@
+{
+ "type": "BUILDING_ANIMAL_TRAINER_HORSE",
+ "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_HORSE",
+ "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_HORSE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_ACTOR_STUDIO",
+   "BUILDING_ANIMAL_TAMER_COMPLEX",
+   "BUILDING_CARAVAN_POST",
+   "BUILDING_CHARIOT_WORKSHOP",
+   "BUILDING_HORSE_BREEDER",
+   "BUILDING_KENTUCKY_DERBY",
+   "BUILDING_KNIGHTS_STABLE",
+   "BUILDING_MERCENARY_STABLES",
+   "BUILDING_MODERN_STABLE",
+   "BUILDING_POLO_FIELD",
+   "BUILDING_STABLE"
+  ],
+  "units": [
+   "UNIT_ADVENTURER",
+   "UNIT_ALVARADO_CAVALRY",
+   "UNIT_AMAZON_RIDER",
+   "UNIT_APACHE_CAVALRY",
+   "UNIT_ASVARAN_SARDAR",
+   "UNIT_AUGUSTINE_I",
+   "UNIT_AZAWAD_CAVALRY",
+   "UNIT_BATYRS",
+   "UNIT_BOER_CAVALRY",
+   "UNIT_BOYARS",
+   "UNIT_BUFFALO_HUMP",
+   "UNIT_BYZANTINE_CATAPHRACT",
+   "UNIT_CANADIAN_MOUNTIE",
+   "UNIT_CARABINIER",
+   "UNIT_CARTHAGE_NUMIDIAN_CAVALRY",
+   "UNIT_CAVALRY",
+   "UNIT_CHAPUL",
+   "UNIT_CHEYENNE_RIDER",
+   "UNIT_CHIVALRY",
+   "UNIT_COMANCHE_HORSE_ARCHER",
+   "UNIT_CUIRASSIER",
+   "UNIT_DAI_CHUI",
+   "UNIT_DAREN",
+   "UNIT_DE_SUCRE_DRAGOONS",
+   "UNIT_DRAGOON",
+   "UNIT_ELMETI",
+   "UNIT_FIELD_VET",
+   "UNIT_FULANI_CAVALRY",
+   "UNIT_FUNJ_CAVALRY",
+   "UNIT_GAUCHO_CAVALRY",
+   "UNIT_GOBIR_LANCER",
+   "UNIT_GRIVPANVAR",
+   "UNIT_GUAYKURU",
+   "UNIT_HEAVY_CAVALRY",
+   "UNIT_HEAVY_TARKHAN",
+   "UNIT_HERNANDARIAS_REGIMENTO",
+   "UNIT_HORSEMAN",
+   "UNIT_HORSE_ARCHER",
+   "UNIT_HORSE_CROSSBOWMAN",
+   "UNIT_HUSSAR",
+   "UNIT_KATIPUNAN_CAVALRY",
+   "UNIT_KHAGAN_CAVALRY",
+   "UNIT_KNIGHT",
+   "UNIT_KUSHAN_RIDER",
+   "UNIT_LANCER",
+   "UNIT_LIGHT_CAVALRY",
+   "UNIT_LLANERO",
+   "UNIT_MAHSUD_ATTAN",
+   "UNIT_MAMBISE",
+   "UNIT_MANCHU_HORSEARCHER",
+   "UNIT_MANDEKALU",
+   "UNIT_MARHATHEGNOZ",
+   "UNIT_MEDICAL_VET",
+   "UNIT_MEXICO_RURALES",
+   "UNIT_MONASPA_GUARD",
+   "UNIT_MONGOL_KESHIK",
+   "UNIT_MOUNTED_GRENADIERS",
+   "UNIT_MOUNTED_INFANTRY",
+   "UNIT_NAKHARAR",
+   "UNIT_NORMAN_KNIGHT",
+   "UNIT_OILAT_KESHIK",
+   "UNIT_OMUCHTAN",
+   "UNIT_PAIUTE_CAVALRY",
+   "UNIT_PALADIN",
+   "UNIT_PERSIA_IMMORTAL",
+   "UNIT_PERUVIAN_CONQUISTADOR",
+   "UNIT_PETYHORCY",
+   "UNIT_REINDEER_RIDER",
+   "UNIT_RUSSIA_COSSACK",
+   "UNIT_SAKA_CATAPHRACT",
+   "UNIT_SAUD_CAVALRY",
+   "UNIT_SAVANNA_CAVALRY",
+   "UNIT_SAVARAN",
+   "UNIT_SCYTHIAN_HORSE_ARCHER",
+   "UNIT_SIPAHI",
+   "UNIT_SPANISH_CONQUISTADOR",
+   "UNIT_TAMED_HORSE",
+   "UNIT_TARKAN",
+   "UNIT_TRENCH_CAVALRY",
+   "UNIT_TURKOMAN",
+   "UNIT_UHLAN",
+   "UNIT_UIGHUR_KNIGHT",
+   "UNIT_URBAN_HORSEMAN",
+   "UNIT_VANDAL_PILLAGER",
+   "UNIT_WARAY_RIDERS",
+   "UNIT_WAYUU_CAVALRY",
+   "UNIT_WINGED_CAVALRY",
+   "UNIT_WORKMULE",
+   "UNIT_ZAGON",
+   "UNIT_ZAPOROZKI_KOZAK",
+   "UNIT_ZHUGE_KESHIK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HORSE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_FARM_ANIMAL_HORSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_HORSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CENTRAL_BREEDER_HORSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TENGRII_HORSE_TRAINER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_INDUSTRIAL_FARMS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 125,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ANIMAL_TRAINER_HORSE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 6,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

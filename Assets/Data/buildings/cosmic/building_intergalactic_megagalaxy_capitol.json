@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_INTERGALACTIC_MEGAGALAXY_CAPITOL",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_MEGAGALAXY_CAPITOL",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_MEGAGALAXY_CAPITOL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_MERGED_MEGAGALAXY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERGALACTIC_ASTROPOLIS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4742
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_MEGAGALAXY_CAPITOL"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_CRIME_GUN_RAMPAGE",
+ "description": "TXT_KEY_BUILDING_CRIME_GUN_RAMPAGE",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_GUN_RAMPAGE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 4
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -4,
+   "perPopulation": {
+    "percent": -15
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -3,
+   "perPopulation": {
+    "percent": -15
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 60
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -6
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unit": "UNIT_GUNFIGHTER",
+    "interval": "perTurn",
+    "chance": {
+     "per": {
+      "type": "PROPERTY_CRIME",
+      "scope": "city"
+     }
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

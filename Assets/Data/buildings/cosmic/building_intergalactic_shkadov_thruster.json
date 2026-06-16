@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_INTERGALACTIC_SHKADOV_THRUSTER",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_SHKADOV_THRUSTER",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_SHKADOV_THRUSTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_CORE_DYSON_SPHERE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERGALACTIC_DYSON_SPHERES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERGALACTIC_YOTTAFACTORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_SLOAN_GREAT_WALL_COLONY",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_CFA2_GREAT_WALL_COLONY",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_HERCULES_CORONA_BOREALIS_GREAT_WALL_COLONY",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    25,
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_HYPERSTRUCTURE_ENGINEERING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4492
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_SHKADOV_THRUSTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

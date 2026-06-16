@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_FARM_CROP_WHEAT",
+ "description": "TXT_KEY_BUILDING_FARM_CROP_WHEAT",
+ "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_WHEAT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_GRAINS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_III"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_WHEAT_GATHERER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_WHEAT",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 118,
+  "sizeModifier": 3,
+  "countModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FARM_CROP_WHEAT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

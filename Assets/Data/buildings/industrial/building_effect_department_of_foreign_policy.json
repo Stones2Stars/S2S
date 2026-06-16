@@ -1,0 +1,31 @@
+{
+ "type": "BUILDING_EFFECT_DEPARTMENT_OF_FOREIGN_POLICY",
+ "description": "TXT_KEY_BUILDING_EFFECT_DEPARTMENT_OF_FOREIGN_POLICY",
+ "civilopedia": "TXT_KEY_BUILDING_DEPARTMENT_OF_FOREIGN_POLICY_PEDIA",
+ "espionage": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_DIPLOMAT": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEPARTMENT_OF_FOREIGN_POLICY"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

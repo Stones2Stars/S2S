@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_CAPTURED_ASTEROID",
+ "description": "TXT_KEY_BUILDING_CAPTURED_ASTEROID",
+ "civilopedia": "TXT_KEY_BUILDING_CAPTURED_ASTEROID_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTEROID_MINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_COMMERCIAL_SPACEPORT",
+     "scope": "empire",
+     "min": 3
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_AEROSPACE_COMPLEX",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MILITARY_SPACEPORT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_COMMERCIAL_SPACEPORT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 2745
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CAPTURED_ASTEROID"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

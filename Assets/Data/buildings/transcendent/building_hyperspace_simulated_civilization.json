@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_HYPERSPACE_SIMULATED_CIVILIZATION",
+ "description": "TXT_KEY_BUILDING_HYPERSPACE_SIMULATED_CIVILIZATION",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_SIMULATED_CIVILIZATION_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1945
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERSPACE_SIMULATED_CIVILIZATION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

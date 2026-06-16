@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_SKYROAD_STATION",
+ "description": "TXT_KEY_BUILDING_SKYROAD_STATION",
+ "civilopedia": "TXT_KEY_BUILDING_SKYROAD_STATION_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP",
+   "BUILDING_PUBLIC_TRANSPORTATION"
+  ],
+  "units": [
+   "UNIT_MEDEVAC_DROPSHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_PETROLEUM_PRODUCTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BIOFUEL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_AIRCRAFT",
+    "interval": "perTurn",
+    "heal": 3
+   }
+  ]
+ },
+ "cost": {
+  "production": 4315,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SKYROAD_STATION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

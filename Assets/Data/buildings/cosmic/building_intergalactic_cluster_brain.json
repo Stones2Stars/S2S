@@ -1,0 +1,40 @@
+{
+ "type": "BUILDING_INTERGALACTIC_CLUSTER_BRAIN",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_CLUSTER_BRAIN",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_CLUSTER_BRAIN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_DYSON_SPHERES",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3301
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_CLUSTER_BRAIN"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

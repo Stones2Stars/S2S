@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_INTERSTELLAR_SETTLEMENT",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_SETTLEMENT",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_SETTLEMENT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2249
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_SETTLEMENT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

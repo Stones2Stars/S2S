@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_SNAKE_CHARMER",
+ "description": "TXT_KEY_BUILDING_SNAKE_CHARMER",
+ "civilopedia": "TXT_KEY_BUILDING_SNAKE_CHARMER_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_TAMED_SNAKE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "HERITAGE_FOLKLORE_ADDER_PUFF",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_COBRA",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_PYTHON_BALL",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_VIPER_CHAIN",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_VIPER_PIT",
+      "scope": "empire"
+     }
+    ]
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1,
+   "percent": [
+    {
+     "value": -100,
+     "enabled": {
+      "type": "TECH_LITERATURE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 100,
+  "sizeModifier": 1,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SNAKE_CHARMER"
+  }
+ },
+ "identity": {
+  "worth": 2,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_MILITARY",
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

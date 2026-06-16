@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_HELIUM_3_IMPORTER",
+ "description": "TXT_KEY_BUILDING_HELIUM_3_IMPORTER",
+ "civilopedia": "TXT_KEY_BUILDING_HELIUM_3_IMPORTER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HE3_FUSION_POWER_PLANT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_COMMERCIAL_SPACEPORT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LUNAR_HE3_EXTRACTION_FACILITY",
+     "scope": "empire",
+     "min": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 5905
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HELIUM_3_IMPORTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

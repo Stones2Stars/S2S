@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_SOLAR_WEATHER_MONITOR",
+ "description": "TXT_KEY_BUILDING_SOLAR_WEATHER_MONITOR",
+ "civilopedia": "TXT_KEY_BUILDING_SOLAR_WEATHER_MONITOR_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_MILITARY_SATELLITES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MILITARY_SPACEPORT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "empire": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 4010
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SOLAR_WEATHER_MONITOR"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SOLAR_WEATHER_MONITOR"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

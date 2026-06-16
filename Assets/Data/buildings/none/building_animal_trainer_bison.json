@@ -1,0 +1,123 @@
+{
+ "type": "BUILDING_ANIMAL_TRAINER_BISON",
+ "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_BISON",
+ "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_BISON_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HERITAGE_BISON",
+   "BUILDING_MILITARY_STANDARD_BISON"
+  ],
+  "units": [
+   "UNIT_BISON_RIDER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BISON",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_FOLKLORE_T_BULL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_BISON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_BISON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_MUSKOX",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_BISON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CAMP_GIANT_BISON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_MUSKOX",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_BISON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_PRESERVE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_INDUSTRIAL_FARMS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 1038,
+  "sizeModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 7
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_BISON_TRAINER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ANIMAL_TRAINER_BISON"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 2,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

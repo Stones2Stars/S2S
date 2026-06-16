@@ -1,0 +1,48 @@
+{
+ "type": "BUILDING_LICHEN_GATHERER",
+ "description": "TXT_KEY_BUILDING_LICHEN_GATHERER",
+ "civilopedia": "TXT_KEY_BUILDING_LICHEN_GATHERER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_LICHEN_BURNER"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LICHEN_GATHERER"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

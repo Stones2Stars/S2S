@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_CRIME_PRISON_BREAKOUTS",
+ "description": "TXT_KEY_BUILDING_CRIME_PRISON_BREAKOUTS",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_PRISON_BREAKOUTS_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_JAIL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SAFETY_ORBITAL_PRISON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MAXIMUM_SECURITY_PRISON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ALCATRAZ",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 15
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -3,
+   "perPopulation": {
+    "percent": -10
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "perPopulation": {
+    "percent": -10
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

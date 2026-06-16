@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_AIR_SHIPPING_WAREHOUSE",
+ "description": "TXT_KEY_BUILDING_AIR_SHIPPING_WAREHOUSE",
+ "civilopedia": "TXT_KEY_BUILDING_AIR_SHIPPING_WAREHOUSE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ONLINE_SHIPPING_WAREHOUSE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AIRCRAFT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_MODERN_WAREHOUSE",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_AIRPORT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_COMMERCIAL_AIRPORT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 5
+   },
+   "foreignModifier": {
+    "percent": 5
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 950,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_AIR_SHIPPING_WAREHOUSE"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

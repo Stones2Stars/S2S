@@ -1,0 +1,32 @@
+{
+ "type": "BUILDING_ORDINANCE_SMOKING_PROHIBITION",
+ "description": "TXT_KEY_BUILDING_ORDINANCE_SMOKING_PROHIBITION",
+ "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_SMOKING_PROHIBITION_PEDIA",
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ORDINANCE_SMOKING_PROHIBITION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

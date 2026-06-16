@@ -1,0 +1,97 @@
+{
+ "type": "BUILDING_DEEP_SPACE_RESEARCH_INSTITUTE",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_RESEARCH_INSTITUTE",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_RESEARCH_INSTITUTE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BUILDING_MODERN_OFFICES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LABORATORY",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "spaceProduction": {
+  "city": {
+   "percent": 20
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 2950,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_DEEP_SPACE_RESEARCH"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_RESEARCH_INSTITUTE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_DEEP_SPACE_RESEARCH"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "neverCapture": true,
+  "worth": 6,
+  "dcmAirbombMission": 2,
+  "specialBuildingType": "SPECIALBUILDING_DEEP_SPACE_RESEARCH_INSTITUTE",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

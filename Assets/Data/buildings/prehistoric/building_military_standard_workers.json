@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_MILITARY_STANDARD_WORKERS",
+ "description": "TXT_KEY_BUILDING_MILITARY_STANDARD_WORKERS",
+ "civilopedia": "TXT_KEY_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT_PEDIA",
+ "help": "TXT_KEY_BUILDING_MILITARY_STANDARD_WORKERS_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_FOLKLORE_NINE_BANDED_ARMADILLO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_GLYPTODON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_GROUND_SLOTH",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "HERITAGE_FOLKLORE_AARDVARK",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_ANTEATER",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_BEAVER",
+      "scope": "empire"
+     }
+    ]
+   ]
+  }
+ },
+ "cost": {
+  "production": 72,
+  "countModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
+  }
+ },
+ "identity": {
+  "worth": 1,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_GROWTH",
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

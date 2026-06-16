@@ -1,0 +1,35 @@
+{
+ "type": "BUILDING_CISLUNAR_FOOD_REPLICATOR",
+ "description": "TXT_KEY_BUILDING_CISLUNAR_FOOD_REPLICATOR",
+ "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_FOOD_REPLICATOR_PEDIA",
+ "food": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 10158
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CISLUNAR_FOOD_REPLICATOR"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

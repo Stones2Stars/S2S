@@ -1,0 +1,126 @@
+{
+ "type": "BUILDING_GOLDEN_GATE_BRIDGE",
+ "description": "TXT_KEY_BUILDING_GOLDEN_GATE_BRIDGE",
+ "civilopedia": "TXT_KEY_BUILDING_GOLDEN_GATE_BRIDGE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BUNGEE_JUMPING_SITE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_RIVER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SMALL_SUSPENSION_BRIDGE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_LARGE_SUSPENSION_BRIDGE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TELEPORT_BOOTH",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": -5
+   },
+   "riverDefensePenalty": {
+    "flat": 45
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1,
+   "modifier": {
+    "percent": 50
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 4980,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GOLDEN_GATE_BRIDGE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GOLDEN_GATE_BRIDGE"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

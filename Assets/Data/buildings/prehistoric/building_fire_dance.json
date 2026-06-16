@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_FIRE_DANCE",
+ "description": "TXT_KEY_BUILDING_FIRE_DANCE",
+ "civilopedia": "TXT_KEY_BUILDING_FIRE_DANCE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_GRAND_FIRE_FESTIVAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_IMU",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FIRE_PIT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BONFIRE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CHARCOAL_BURNER",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FIRE_DANCE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 1,
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

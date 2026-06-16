@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_INTERGALACTIC_PROTON_DECAY_GENERATOR",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_PROTON_DECAY_GENERATOR",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_PROTON_DECAY_GENERATOR_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MAGNETIC_MONOPOLES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4246
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_PROTON_DECAY_GENERATOR"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "type": "BUILDING_MARTIAN_ASTEROID_MINE",
+ "description": "TXT_KEY_BUILDING_MARTIAN_ASTEROID_MINE",
+ "civilopedia": "TXT_KEY_BUILDING_MARTIAN_ASTEROID_MINE_PEDIA",
+ "food": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "cost": {
+  "production": 800
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MARTIAN_ASTEROID_MINE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

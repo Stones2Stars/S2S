@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_BURIAL_TRADITION_MUMMY",
+ "description": "TXT_KEY_BUILDING_BURIAL_TRADITION_MUMMY",
+ "civilopedia": "TXT_KEY_BUILDING_BURIAL_TRADITION_MUMMY_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FUNERARY_SERVICES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_BURIAL_TRADITION_CAVE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BURIAL_TRADITION_EARTH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BURIAL_TRADITION_SKY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_NATRON",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_NATRON",
+      "scope": "city",
+      "connection": "vicinity",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "cost": {
+  "production": 139,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BURIAL_TRADITION_MUMMY"
+  }
+ },
+ "identity": {
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

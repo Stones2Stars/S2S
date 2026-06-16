@@ -1,0 +1,104 @@
+{
+ "type": "BUILDING_FARM_ANIMAL_DUCK",
+ "description": "TXT_KEY_BUILDING_FARM_ANIMAL_DUCK",
+ "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_DUCK_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_EGGS",
+   "BUILDING_RESOURCES_FEATHERS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_NEST_THIEF"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_POULTRY",
+     "scope": "city",
+     "connection": "vicinity"
+    },
+    "HAS_RIVER",
+    {
+     "latitude": {
+      "max": 50
+     }
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_APPLE",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1,
+   "percent": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GRAINS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 125,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FARM_ANIMAL_DUCK"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

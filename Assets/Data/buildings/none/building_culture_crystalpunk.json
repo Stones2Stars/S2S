@@ -1,0 +1,47 @@
+{
+ "type": "BUILDING_CULTURE_CRYSTALPUNK",
+ "description": "TXT_KEY_BUILDING_CULTURE_CRYSTALPUNK",
+ "civilopedia": "TXT_KEY_BUILDING_CULTURE_CRYSTALPUNK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 32730,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CRYSTALPUNK_EMBASSY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CULTURE_CRYSTALPUNK"
+  }
+ },
+ "identity": {
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_CRYSTAL",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

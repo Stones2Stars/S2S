@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_MIRANDA_BASE_JUMPING",
+ "description": "TXT_KEY_BUILDING_MIRANDA_BASE_JUMPING",
+ "civilopedia": "TXT_KEY_BUILDING_MIRANDA_BASE_JUMPING_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "TERRAIN_UMBRIEL",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 5111
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MIRANDA_BASE_JUMPING"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

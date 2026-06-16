@@ -1,0 +1,104 @@
+{
+ "type": "BUILDING_APPLIED_SOCIOLOGY_LAB",
+ "description": "TXT_KEY_BUILDING_APPLIED_SOCIOLOGY_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_APPLIED_SOCIOLOGY_LAB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CENTER_FOR_AI_SAFETY",
+   "BUILDING_CENTER_FOR_BIOTECH_SAFETY",
+   "BUILDING_CENTER_FOR_NANOTECH_SAFETY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_UNIVERSITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10,
+   "percent": [
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_SYNERGETICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_CYBERSOCIAL_INTEGRATION",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": [
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_PRECISION_SOCIAL_ENGINEERING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 2505,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_APPLIED_SOCIOLOGY_LAB"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

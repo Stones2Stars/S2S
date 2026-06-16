@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_SPACE_NEEDLE",
+ "description": "TXT_KEY_BUILDING_SPACE_NEEDLE",
+ "civilopedia": "TXT_KEY_BUILDING_SPACE_NEEDLE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_FACTORY_AIRCRAFT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_FACTORY_JET_ENGINES": {
+     "flat": 3
+    },
+    "BUILDING_FACTORY_AIRCRAFT": {
+     "flat": 3
+    },
+    "BUILDING_MILITARY_INDUSTRIAL_COMPLEX": {
+     "flat": 6
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_ENGINEER": 2
+  }
+ },
+ "cost": {
+  "production": 8070,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SPACE_NEEDLE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SPACE_NEEDLE"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

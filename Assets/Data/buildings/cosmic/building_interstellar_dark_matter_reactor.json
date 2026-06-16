@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_INTERSTELLAR_DARK_MATTER_REACTOR",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_DARK_MATTER_REACTOR",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DARK_MATTER_REACTOR_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_FALSE_VACUUM_TRAP",
+   "BUILDING_INTERSTELLAR_MATTER_GENERATOR",
+   "BUILDING_INTERSTELLAR_MOLECULAR_DISRUPTION_DEVICE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 6806
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_DARK_MATTER_REACTOR"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

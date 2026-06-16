@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_DISEASE_SMALLPOX",
+ "description": "TXT_KEY_BUILDING_DISEASE_SMALLPOX",
+ "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+ "food": {
+  "city": {
+   "percent": -8
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -9
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -9
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -8
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -8,
+   "perPopulation": {
+    "percent": -70
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYDISEASE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

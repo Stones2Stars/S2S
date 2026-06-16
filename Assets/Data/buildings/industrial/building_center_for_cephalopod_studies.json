@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_CENTER_FOR_CEPHALOPOD_STUDIES",
+ "description": "TXT_KEY_BUILDING_CENTER_FOR_CEPHALOPOD_STUDIES",
+ "civilopedia": "TXT_KEY_BUILDING_CENTER_FOR_CEPHALOPOD_STUDIES_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "latitude": {
+      "max": 70
+     }
+    },
+    {
+     "type": "BUILDING_MARINE_INSTITUTE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_WONDERS_OF_THE_DEEP",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MARINE_INSTITUTE",
+     "scope": "empire",
+     "min": 3
+    }
+   ],
+   "noneOf": [
+    {
+     "type": "BUILDING_CENTER_FOR_WHALE_STUDIES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CENTER_FOR_SHARK_STUDIES",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "cost": {
+  "production": 1260,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CENTER_FOR_CEPHALOPOD_STUDIES"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "worth": 3,
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_MERCANTILISM_BONUS_SILVER",
+ "description": "TXT_KEY_BUILDING_MERCANTILISM_BONUS_SILVER",
+ "civilopedia": "TXT_KEY_BUILDING_MERCANTILISM_BONUS_SILVER_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_SILVER_ORE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_MERCANTILISM",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MERCANTILISM_BONUS_SILVER"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "worth": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

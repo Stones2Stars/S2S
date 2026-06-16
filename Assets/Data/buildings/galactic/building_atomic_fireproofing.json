@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_ATOMIC_FIREPROOFING",
+ "description": "TXT_KEY_BUILDING_ATOMIC_FIREPROOFING",
+ "civilopedia": "TXT_KEY_BUILDING_ATOMIC_FIREPROOFING_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FEMTOBOTIC_FIREFIGHTERS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ATOMICALLY_PRECISE_ALLOYS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_CLAYTRONIC_CITY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CLAYTRONIC_FIRE_SUPPRESSION",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "cost": {
+  "production": 12155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ATOMIC_FIREPROOFING"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_NATURAL_INSECTICIDE_SPRAYERS",
+ "description": "TXT_KEY_BUILDING_NATURAL_INSECTICIDE_SPRAYERS",
+ "civilopedia": "TXT_KEY_BUILDING_NATURAL_INSECTICIDE_SPRAYERS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_BACTERIUM_BIOFORGE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 2865,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_NATURAL_INSECTICIDE_SPRAYERS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

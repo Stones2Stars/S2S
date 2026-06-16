@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_FIRE_SAFETY_DRONE_CONTROL_CENTER",
+ "description": "TXT_KEY_BUILDING_FIRE_SAFETY_DRONE_CONTROL_CENTER",
+ "civilopedia": "TXT_KEY_BUILDING_FIRE_SAFETY_DRONE_CONTROL_CENTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SERVICE_BOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_CONTROL_CENTER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FIRE_STATION",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 2985,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FIRE_SAFETY_DRONE_CONTROL_CENTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

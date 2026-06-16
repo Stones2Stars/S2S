@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_MUD_BATH",
+ "description": "TXT_KEY_BUILDING_MUD_BATH",
+ "civilopedia": "TXT_KEY_BUILDING_MUD_BATH_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HEALTH_SPA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_FINE_CLAY",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_CLAY",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_HEALERS_HUT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DOCTORS_OFFICE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SURGEONS_OFFICE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MEDICAL_CLINIC",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_APOTHECARY_SHOP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PHARMACY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 50
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MUD_BATH"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

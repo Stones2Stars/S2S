@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_TRANS_STELLAR_QUARK_FUSION_POWER_PLANT",
+ "description": "TXT_KEY_BUILDING_TRANS_STELLAR_QUARK_FUSION_POWER_PLANT",
+ "civilopedia": "TXT_KEY_BUILDING_TRANS_STELLAR_QUARK_FUSION_POWER_PLANT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 5269
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRANS_STELLAR_QUARK_FUSION_POWER_PLANT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

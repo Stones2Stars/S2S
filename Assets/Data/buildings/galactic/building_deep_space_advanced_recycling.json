@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_DEEP_SPACE_ADVANCED_RECYCLING",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_ADVANCED_RECYCLING",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_ADVANCED_RECYCLING_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_MEGAFACTORY",
+   "BUILDING_DEEP_SPACE_RECREATED_ECOSYSTEM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DEEP_SPACE_HOUSING_WORKERS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_DEEP_SPACE_ECOSYSTEM",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 5111
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_ADVANCED_RECYCLING"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

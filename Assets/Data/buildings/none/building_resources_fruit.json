@@ -1,0 +1,207 @@
+{
+ "type": "BUILDING_RESOURCES_FRUIT",
+ "description": "TXT_KEY_BUILDING_RESOURCES_FRUIT",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_III"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_ORCHARD_APPLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_APRICOT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_ATEMOYA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_AVOCADO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_BANANA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_BREADFRUIT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_CACTUS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_CANTALOUPE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_CARDON_CACTUS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_CHERIMOYA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_CHERRY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_DATE_PALM",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_DURIAN",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_FIGS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_GRAPEFRUIT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_GUAVA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_HONEYDEW",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_JUJUBE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_KIWIFRUIT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_KUMQUAT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_LEMON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_LIME",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_LONGAN",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_LOQUAT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_LYCHEE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_MANGO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_ORANGE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_PAPAYAS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_PAPAYA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_PEACH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_PEAR",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_PERSIMMON",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_PINEAPPLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_PITAYA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_PLANTAIN",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_PLUM",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_POMEGRANATE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_SAPOTE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_STARFRUIT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORCHARD_TANGERINE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PLANTATION_TOMATILLO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_TOMATO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_VINEYARD",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_WATERMELON",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_FRUIT"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

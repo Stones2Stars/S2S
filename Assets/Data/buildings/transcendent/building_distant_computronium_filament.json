@@ -1,0 +1,42 @@
+{
+ "type": "BUILDING_DISTANT_COMPUTRONIUM_FILAMENT",
+ "description": "TXT_KEY_BUILDING_DISTANT_COMPUTRONIUM_FILAMENT",
+ "civilopedia": "TXT_KEY_BUILDING_DISTANT_COMPUTRONIUM_FILAMENT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_COSMOLOGY_RESEARCH_STATION",
+   "BUILDING_DISTANT_DARK_ERA_SURVIVAL_PLAN",
+   "BUILDING_DISTANT_INFINITE_SPEED_TACHYON_GENERATOR"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1261
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DISTANT_COMPUTRONIUM_FILAMENT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

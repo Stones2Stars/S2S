@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_INTERGALACTIC_ROMAN_RING",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_ROMAN_RING",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_ROMAN_RING_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_GRAZER",
+   "BUILDING_INTERGALACTIC_KOLMOGOROV_TRANSPORTER",
+   "BUILDING_INTERGALACTIC_WORMHOLE_COMMUNICATION_NETWORK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 125
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3075
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_ROMAN_RING"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_INTERSTELLAR_DATA_COLLECTION",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_DATA_COLLECTION",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DATA_COLLECTION_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_BIOMARKER_CATALOGUE",
+   "BUILDING_STARDATE_CALENDAR",
+   "BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100,
+   "percent": [
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_PLANET_SCOUTING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10,
+   "percent": [
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_PLANET_SCANNING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1990
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_DATA_COLLECTION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

@@ -1,0 +1,125 @@
+{
+ "type": "BUILDING_CISLUNAR_GOVERNANCE",
+ "description": "TXT_KEY_BUILDING_CISLUNAR_GOVERNANCE",
+ "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_GOVERNANCE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+   "BUILDING_CISLUNAR_SIMULATED_WORLD",
+   "BUILDING_CISLUNAR_SOCIAL_ENGINEERING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CISLUNAR_CONTROL_SYSTEM",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "research": {
+  "city": {
+   "percent": [
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_SOCIAL_CALCULUS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": [
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_CULTURAL_EVOLUTION",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": [
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_GERONTOCRACY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 5000,
+     "enabled": {
+      "type": "TECH_PRECISION_SOCIAL_ENGINEERING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_COLONY_GOVERNANCE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 1921
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CISLUNAR_GOVERNANCE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

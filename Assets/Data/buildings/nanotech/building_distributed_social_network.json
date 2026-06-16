@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_DISTRIBUTED_SOCIAL_NETWORK",
+ "description": "TXT_KEY_BUILDING_DISTRIBUTED_SOCIAL_NETWORK",
+ "civilopedia": "TXT_KEY_BUILDING_DISTRIBUTED_SOCIAL_NETWORK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_SOCIAL_NETWORKS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HOLOGRAPHIC_NETWORKS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_EXOCORTEX_NETWORKS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10,
+   "percent": [
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_KNOWLEDGE_MERCANTILISM",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": -10,
+   "percent": [
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_KNOWLEDGE_MERCANTILISM",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 3385,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DISTRIBUTED_SOCIAL_NETWORK"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

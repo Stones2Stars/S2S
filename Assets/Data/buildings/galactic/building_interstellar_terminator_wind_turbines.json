@@ -1,0 +1,40 @@
+{
+ "type": "BUILDING_INTERSTELLAR_TERMINATOR_WIND_TURBINES",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_TERMINATOR_WIND_TURBINES",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_TERMINATOR_WIND_TURBINES_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_BASE_TIDALLY_LOCKED_PLANET",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2856
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_TERMINATOR_WIND_TURBINES"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

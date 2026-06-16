@@ -1,0 +1,41 @@
+{
+ "type": "BUILDING_RESOURCES_SMART_MEDICINE",
+ "description": "TXT_KEY_BUILDING_RESOURCES_SMART_MEDICINE",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MEDICAL_MEGACOMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_NUTRACEUTICAL_LAB",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_RESEARCH_HOSPITAL",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_SMART_MEDICINE"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

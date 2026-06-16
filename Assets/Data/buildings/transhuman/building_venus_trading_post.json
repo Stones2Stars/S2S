@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_VENUS_TRADING_POST",
+ "description": "TXT_KEY_BUILDING_VENUS_TRADING_POST",
+ "civilopedia": "TXT_KEY_BUILDING_VENUS_TRADING_POST_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_VENUS_DEUTERIUM_EXPORTER",
+   "BUILDING_VENUS_HOTEL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ROCKET_FUEL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_VENUS_CITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1921
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_VENUS_TRADING_POST"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

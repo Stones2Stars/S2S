@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS",
+ "description": "TXT_KEY_BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS",
+ "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_DATA_COLLECTION",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2536
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

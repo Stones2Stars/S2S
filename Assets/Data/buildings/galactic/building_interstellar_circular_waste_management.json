@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_INTERSTELLAR_CIRCULAR_WASTE_MANAGEMENT",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_CIRCULAR_WASTE_MANAGEMENT",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CIRCULAR_WASTE_MANAGEMENT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_PROJECT_PERSEPHONE"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "foodKept": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1548
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_CIRCULAR_WASTE_MANAGEMENT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR",
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

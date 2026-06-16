@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_CONSPIRATORS_HIDEOUT_UNSANCTIONED",
+ "description": "TXT_KEY_BUILDING_CONSPIRATORS_HIDEOUT_UNSANCTIONED",
+ "civilopedia": "TXT_KEY_BUILDING_CONSPIRATORS_HIDEOUT_PEDIA",
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 20
+   },
+   "flat": -5
+  }
+ },
+ "happiness": {
+  "city": {
+   "perPopulation": {
+    "percent": -35
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unit": "UNIT_SCOUNDREL",
+    "interval": "perTurn",
+    "chance": {
+     "per": {
+      "type": "PROPERTY_CRIME",
+      "scope": "city"
+     }
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CONSPIRATORS_HIDEOUT"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

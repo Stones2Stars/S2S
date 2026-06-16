@@ -1,0 +1,47 @@
+{
+ "type": "BUILDING_HYPERSPACE_POINCARE_DODECAHEDRAL_SPACE",
+ "description": "TXT_KEY_BUILDING_HYPERSPACE_POINCARE_DODECAHEDRAL_SPACE",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_POINCARE_DODECAHEDRAL_SPACE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HYPERSPACE_LANDSCAPE_MULTIVERSE",
+   "BUILDING_HYPERSPACE_TOROIDAL_COLONY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2666
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERSPACE_POINCARE_DODECAHEDRAL_SPACE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

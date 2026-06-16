@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_CRIME_RIOTING",
+ "description": "TXT_KEY_BUILDING_CRIME_RIOTING",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_RIOTING_PEDIA",
+ "food": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -20
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -30,
+   "percent": -10
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 4
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -6,
+   "perPopulation": {
+    "percent": -35
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -8,
+   "perPopulation": {
+    "percent": -25
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -8
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

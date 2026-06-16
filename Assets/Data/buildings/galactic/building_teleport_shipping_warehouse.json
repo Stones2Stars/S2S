@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_TELEPORT_SHIPPING_WAREHOUSE",
+ "description": "TXT_KEY_BUILDING_TELEPORT_SHIPPING_WAREHOUSE",
+ "civilopedia": "TXT_KEY_BUILDING_TELEPORT_SHIPPING_WAREHOUSE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DIGITAL_LOGISTICS_CENTER",
+   "BUILDING_ORICHALCUM_FORGE"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_AIR_SHIPPING_WAREHOUSE",
+   "BUILDING_NAVAL_SHIPPING_WAREHOUSE",
+   "BUILDING_ONLINE_SHIPPING_WAREHOUSE",
+   "BUILDING_RAIL_SHIPPING_WAREHOUSE",
+   "BUILDING_SPACE_SHIPPING_WAREHOUSE",
+   "BUILDING_TRUCK_SHIPPING_WAREHOUSE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MODERN_WAREHOUSE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_TELEPORT_BOOTH",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 60
+   },
+   "foreignModifier": {
+    "percent": 60
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 10155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

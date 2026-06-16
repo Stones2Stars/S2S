@@ -1,0 +1,97 @@
+{
+ "type": "BUILDING_HE3_FUSION_POWER_PLANT",
+ "description": "TXT_KEY_BUILDING_HE3_FUSION_POWER_PLANT",
+ "civilopedia": "TXT_KEY_BUILDING_HE3_FUSION_POWER_PLANT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HIGH_ENERGY_LAB",
+   "BUILDING_NUCLEAR_POWERCOMPLEX",
+   "BUILDING_SUPERCRITICAL_CO2_TURBINE",
+   "BUILDING_TIME_TOURIST_AGENCY"
+  ],
+  "units": [
+   "UNIT_FUSION_NOVA",
+   "UNIT_FUSION_NUKE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_CLEAN_NUCLEAR_REACTOR",
+   "BUILDING_COAL_FIRED_DYNAMO",
+   "BUILDING_COAL_PLANT",
+   "BUILDING_D_HE3_FUSION_PLANT",
+   "BUILDING_D_T_FUSION_POWER_PLANT",
+   "BUILDING_FAST_BREEDER_REACTOR",
+   "BUILDING_GENERATION_IV_REACTOR",
+   "BUILDING_HIGH_TECH_COAL_POWER_PLANT",
+   "BUILDING_HI_TECH_NUCLEAR_REACTOR",
+   "BUILDING_METHANE_POWER_PLANT",
+   "BUILDING_NATURAL_GAS_POWER_PLANT",
+   "BUILDING_NUCLEAR_PLANT",
+   "BUILDING_OIL_POWER_PLANT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SUPERSTRONG_ALLOYS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_POWER_LINES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HELIUM_3_IMPORTER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 300,
+   "percent": 45
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 6155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HE3_FUSION_POWER_PLANT"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ENGINEER": 2
+  },
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

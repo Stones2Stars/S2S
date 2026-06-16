@@ -1,0 +1,182 @@
+{
+ "type": "BUILDING_STARPORT",
+ "description": "TXT_KEY_BUILDING_STARPORT",
+ "civilopedia": "TXT_KEY_BUILDING_STARPORT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ADVANCED_NEUROIMPLANT_EXPORTER",
+   "BUILDING_ALIEN_EMBASSY",
+   "BUILDING_GALACTIC_PORT",
+   "BUILDING_INTERSTELLAR_IMMIGRATION_OFFICE",
+   "BUILDING_INTERSTELLAR_PROBE",
+   "BUILDING_MITHRIL_IMPORTER",
+   "BUILDING_PLANETARY_IMMIGRATION_OFFICE",
+   "BUILDING_SECTION_31",
+   "BUILDING_SOLAR_NOVA_SURVIVAL_PLAN",
+   "BUILDING_STARFLEET_ACADEMY",
+   "BUILDING_UNITED_FEDERATION_OF_PLANETS"
+  ],
+  "units": [
+   "UNIT_POSTHUMAN_WORK_CREW",
+   "UNIT_TRANSHUMAN_WORK_CREW"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_LAUNCH_ARCOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_ADVANCED_SEEDSHIPS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_INTERSTELLAR_TRADE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 6,
+   "percent": [
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_FOLDING_SPACE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_SPACE_CREASING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_ANTIMATTER_ROCKETS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_WORMHOLE_TRAVERSAL",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_NUCLEAR_PULSE_PROPULSION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_FUSION_SPACECRAFT",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_ACNP_PROPULSION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_INTERSTELLAR_TRAVEL",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_INTERSTELLAR_COLONIZATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_PERSONAL_SPACECRAFT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 3
+   }
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_SPACECRAFT",
+    "interval": "perTurn",
+    "heal": 2
+   }
+  ]
+ },
+ "cost": {
+  "production": 5655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_STARPORT"
+  }
+ },
+ "identity": {
+  "orbitalInfrastructure": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

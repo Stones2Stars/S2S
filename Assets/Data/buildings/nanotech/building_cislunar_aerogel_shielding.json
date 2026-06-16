@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_CISLUNAR_AEROGEL_SHIELDING",
+ "description": "TXT_KEY_BUILDING_CISLUNAR_AEROGEL_SHIELDING",
+ "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_AEROGEL_SHIELDING_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_CLOAKING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_CISLUNAR_DOCKING_BAY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CISLUNAR_RESUPPLY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 528
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CISLUNAR_AEROGEL_SHIELDING"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

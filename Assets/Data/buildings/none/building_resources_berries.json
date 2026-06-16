@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_RESOURCES_BERRIES",
+ "description": "TXT_KEY_BUILDING_RESOURCES_BERRIES",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_II"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_FARM_CROP_BEARBERRY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_BLACKBERRY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_BLUEBERRY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_CRANBERRY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_ELDERBERRY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_GOOSEBERRY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_RASPBERRY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_CROP_STRAWBERRY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_BERRIES"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

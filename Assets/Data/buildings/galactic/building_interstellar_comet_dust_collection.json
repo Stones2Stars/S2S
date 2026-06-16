@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_INTERSTELLAR_COMET_DUST_COLLECTION",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_COMET_DUST_COLLECTION",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_COMET_DUST_COLLECTION_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET",
+   "BUILDING_INTERSTELLAR_TERRAFORMED_PLANET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2536
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_COMET_DUST_COLLECTION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

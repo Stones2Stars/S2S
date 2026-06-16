@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_ASTEROID_BELT_ASTRONOMICAL_TELESCOPE",
+ "description": "TXT_KEY_BUILDING_ASTEROID_BELT_ASTRONOMICAL_TELESCOPE",
+ "civilopedia": "TXT_KEY_BUILDING_ASTEROID_BELT_ASTRONOMICAL_TELESCOPE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_DEEP_SPACE_FACTORY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_DEEP_SPACE_TELESCOPE",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_ASTEROIDS",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 800
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_BIOMARKER_CATALOGUE": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 7471
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ASTEROID_BELT_ASTRONOMICAL_TELESCOPE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ASTEROID_BELT_ASTRONOMICAL_TELESCOPE"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

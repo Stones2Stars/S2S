@@ -1,0 +1,261 @@
+{
+ "type": "BUILDING_IMPERIAL_FORTRESS",
+ "description": "TXT_KEY_BUILDING_IMPERIAL_FORTRESS",
+ "civilopedia": "TXT_KEY_BUILDING_IMPERIAL_FORTRESS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CASTLE_GARDEN",
+   "BUILDING_CITADEL",
+   "BUILDING_DUNGEON",
+   "BUILDING_EDINBURGH_CASTLE",
+   "BUILDING_GUILD_SERVANTS",
+   "BUILDING_HIMEJI_SAMURAI_CASTLE",
+   "BUILDING_MUIDERSLOT_CASTLE"
+  ],
+  "units": [
+   "UNIT_FOOD_SUPPLY_TRAIN"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_BALISTRARIA",
+   "BUILDING_BALLISTA_TURRET",
+   "BUILDING_BALLROOM",
+   "BUILDING_CANNON_TURRET",
+   "BUILDING_CASTLE",
+   "BUILDING_CASTLE_DRAWBRIDGE",
+   "BUILDING_CASTLE_GATEHOUSE",
+   "BUILDING_CASTLE_KEEP",
+   "BUILDING_CATACOMBS",
+   "BUILDING_CITY_GATE",
+   "BUILDING_CITY_GATEHOUSE",
+   "BUILDING_MOAT",
+   "BUILDING_PALACE_GARDEN",
+   "BUILDING_PALACE_WALLS",
+   "BUILDING_SERVANTS_QUARTERS",
+   "BUILDING_STAR_FORT",
+   "BUILDING_THRONE_ROOM"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PEARLS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SILK",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_JADE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GEMSTONE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_IVORY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ELECTRUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GOLD_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PLATINUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SILVER_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OSTRICH_FEATHERS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 175
+   },
+   "bombardDefense": {
+    "percent": 80
+   },
+   "min": {
+    "flat": 25
+   },
+   "adjacentDamage": {
+    "percent": 25
+   }
+  }
+ },
+ "healing": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 2,
+   "modifier": {
+    "percent": 3
+   }
+  }
+ },
+ "occupationTime": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "strength": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_ARCHER": {
+     "flat": 50
+    },
+    "UNITCOMBAT_GUN": {
+     "flat": 25
+    }
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -35
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 630,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_IMPERIAL_FORTRESS"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_ARTIST": 1,
+   "SPECIALIST_NOBLE": 3
+  },
+  "protectedCulture": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

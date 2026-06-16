@@ -1,0 +1,187 @@
+{
+ "type": "BUILDING_OBSERVATORY",
+ "description": "TXT_KEY_BUILDING_OBSERVATORY",
+ "civilopedia": "TXT_KEY_BUILDING_OBSERVATORY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ALMAGEST",
+   "BUILDING_ANTIKYTHERA_MECHANISM",
+   "BUILDING_ASTROLOGICAL_INFLUENCE_OF_AQUARIUS",
+   "BUILDING_ASTROLOGICAL_INFLUENCE_OF_ARIES",
+   "BUILDING_ASTROLOGICAL_INFLUENCE_OF_CANCER",
+   "BUILDING_ASTROLOGICAL_INFLUENCE_OF_CAPRICORN",
+   "BUILDING_ASTROLOGICAL_INFLUENCE_OF_GEMINI",
+   "BUILDING_ASTROLOGICAL_INFLUENCE_OF_LEO",
+   "BUILDING_ASTROLOGICAL_INFLUENCE_OF_LIBRA",
+   "BUILDING_ASTROLOGICAL_INFLUENCE_OF_PISCES",
+   "BUILDING_ASTROLOGICAL_INFLUENCE_OF_SAGITTARIUS",
+   "BUILDING_ASTROLOGICAL_INFLUENCE_OF_SCORPIO",
+   "BUILDING_ASTROLOGICAL_INFLUENCE_OF_TAURUS",
+   "BUILDING_ASTROLOGICAL_INFLUENCE_OF_VIRGO",
+   "BUILDING_DARK_MATTER_DETECTOR",
+   "BUILDING_EUROPEAN_EXTREMELY_LARGE_TELESCOPE",
+   "BUILDING_GRAND_SKY_FESTIVAL",
+   "BUILDING_JAMES_WEBB_SPACE_TELESCOPE",
+   "BUILDING_NEUTRINO_OBSERVATORY",
+   "BUILDING_PLANETARIUM",
+   "BUILDING_RUDOLPHINE",
+   "BUILDING_SLOAN_DIGITAL_SKY_SURVEY"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_ASTROLOGY_SCHOOL",
+   "BUILDING_STARGAZERS_HUT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_GLASSWARE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BRICKS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_STEEL_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "TERRAIN_HILL",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_PEAK",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10,
+   "percent": [
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_CALCULUS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_RADIO_ASTRONOMY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_THEORY_OF_RELATIVITY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_MODERN_PHYSICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_ASTRONAUTICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_JOVIAN_EXPLORATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_ASTEROID_BELT_PROBES",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 425,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_OBSERVATORY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_OBSERVATORY"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "worth": 5,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

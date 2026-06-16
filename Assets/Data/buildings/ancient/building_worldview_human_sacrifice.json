@@ -1,0 +1,32 @@
+{
+ "type": "BUILDING_WORLDVIEW_HUMAN_SACRIFICE",
+ "description": "TXT_KEY_BUILDING_WORLDVIEW_HUMAN_SACRIFICE",
+ "civilopedia": "TXT_KEY_BUILDING_WORLDVIEW_HUMAN_SACRIFICE_PEDIA",
+ "help": "TXT_KEY_BUILDING_WORLDVIEW_HUMAN_SACRIFICE_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_PALACE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WORLDVIEW_HUMAN_SACRIFICE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CEREMONIAL_ALTAR"
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_VENUS_BIOTIC_ATMOSPHERE",
+ "description": "TXT_KEY_BUILDING_VENUS_BIOTIC_ATMOSPHERE",
+ "civilopedia": "TXT_KEY_BUILDING_VENUS_BIOTIC_ATMOSPHERE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NOVUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_VENUS_ECOSYSTEM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LIFE_SULFURIC_ACID",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_VENUS_SURFACE_CITY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LIFE_SULFURIC_ACID",
+     "scope": "empire",
+     "min": 1
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 250
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3065
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_VENUS_BIOTIC_ATMOSPHERE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

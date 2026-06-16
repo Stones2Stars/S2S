@@ -1,0 +1,43 @@
+{
+ "type": "BUILDING_HERD_ELEPHANT",
+ "description": "TXT_KEY_BUILDING_HERD_ELEPHANT",
+ "civilopedia": "TXT_KEY_BUILDING_HERD_ELEPHANT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_ELEPHANT",
+   "BUILDING_RESOURCES_CARCASS",
+   "BUILDING_RESOURCES_IVORY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HERD_ELEPHANT"
+  }
+ },
+ "sound": {
+  "construct": "SND_AMB_HORSE_COBBLESTONES"
+ },
+ "identity": {
+  "worth": 3,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

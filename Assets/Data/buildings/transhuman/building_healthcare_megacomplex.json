@@ -1,0 +1,411 @@
+{
+ "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
+ "description": "TXT_KEY_BUILDING_HEALTHCARE_MEGACOMPLEX",
+ "civilopedia": "TXT_KEY_BUILDING_HEALTHCARE_MEGACOMPLEX_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUGMENTED_ORGAN_LAB",
+   "BUILDING_CENTERS_FOR_DISEASE_CONTROL",
+   "BUILDING_CITY_MORGUE",
+   "BUILDING_CURE_FOR_ALZHEIMERS",
+   "BUILDING_FERTILITY_CLINIC",
+   "BUILDING_GENE_FARMING_LAB",
+   "BUILDING_GOBEKLI_TEPE",
+   "BUILDING_GUILD_APOTHECARIES",
+   "BUILDING_MEDICAL_DIAGNOSTAT",
+   "BUILDING_NATIONAL_MEDICAL_DATABASE",
+   "BUILDING_NEURON_REGENERATOR_LAB",
+   "BUILDING_RED_CROSS",
+   "BUILDING_REJUVENATION_TANK",
+   "BUILDING_RESEARCH_HOSPITAL",
+   "BUILDING_SOMA_DISPENSARY",
+   "BUILDING_VACCINE_LAB"
+  ],
+  "units": [
+   "UNIT_AMBULANCE",
+   "UNIT_AMBULANCE_II",
+   "UNIT_APOTHECARY",
+   "UNIT_DR",
+   "UNIT_EARLY_MEDIVAC",
+   "UNIT_FADY_SHAMAN",
+   "UNIT_FIELD_VET",
+   "UNIT_HEALER",
+   "UNIT_HOSPITAL_SHIP_2",
+   "UNIT_KALLAWAYA",
+   "UNIT_MANIQ_SPEAKER",
+   "UNIT_MEDEVAC_DROPSHIP",
+   "UNIT_MEDIC",
+   "UNIT_MEDICAL_LAB_TECH",
+   "UNIT_MEDICAL_VET",
+   "UNIT_MEDICINE_MAN",
+   "UNIT_MIDEWIWIN",
+   "UNIT_MODERN_MEDIVAC",
+   "UNIT_MONK",
+   "UNIT_NEANDERTHAL_HEALER",
+   "UNIT_SURGEON",
+   "UNIT_TLATILCO_WAR_PRIEST",
+   "UNIT_VET"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_ACUPUNCTURISTS_SHOP",
+   "BUILDING_ALTERNATIVE_MEDICINE",
+   "BUILDING_AMBULANCE_DRONE_CONTROL_CENTER",
+   "BUILDING_ANCIENT_VETERINARIAN",
+   "BUILDING_APOTHECARY_SHOP",
+   "BUILDING_APPLIED_PSYCHOLOGY_LAB",
+   "BUILDING_AUTODOCTOR",
+   "BUILDING_BIONIC_EYE_IMPLANT",
+   "BUILDING_CELL_REPAIR_CENTER",
+   "BUILDING_DENTIST",
+   "BUILDING_DESIGNER_PROBIOTICS_CLINIC",
+   "BUILDING_DOCTORS_OFFICE",
+   "BUILDING_FIELD_HOSPITAL",
+   "BUILDING_HEALERS_HUT",
+   "BUILDING_HEALING_CLAY",
+   "BUILDING_HEALTH_SPA",
+   "BUILDING_HERBALIST",
+   "BUILDING_HOSPITAL",
+   "BUILDING_INCUBATION_CENTER",
+   "BUILDING_INSANE_ASYLUM",
+   "BUILDING_IQ_TESTING_CENTER",
+   "BUILDING_LASER_EYE_SURGERY_CLINIC",
+   "BUILDING_LEECH_CATCHER",
+   "BUILDING_MECHANICAL_ORGANS_LAB",
+   "BUILDING_MEDICAL_CLINIC",
+   "BUILDING_MEDICAL_PROSTHETICS_LAB",
+   "BUILDING_MEGATOWER_MEDICAL_LEVEL",
+   "BUILDING_MRI_LAB",
+   "BUILDING_MUD_BATH",
+   "BUILDING_NEUROINDUCTION_FIELD",
+   "BUILDING_NEUROSCIENCE_CENTER",
+   "BUILDING_OPTOMETRIST",
+   "BUILDING_PHARMACY",
+   "BUILDING_PSYCHOLOGY_LAB",
+   "BUILDING_QUANTIFIED_HEALTH_CENTER",
+   "BUILDING_REHABILITATION_CENTER",
+   "BUILDING_RESPIROCYTE_INJECTION",
+   "BUILDING_ROBOTIC_SURGEON",
+   "BUILDING_SAGE",
+   "BUILDING_SNAKE_OIL_SALES",
+   "BUILDING_SURGEONS_OFFICE",
+   "BUILDING_SWEAT_LODGE",
+   "BUILDING_TRANCE_HUT",
+   "BUILDING_VETERINARIAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_HOLODECK",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10,
+   "percent": [
+    1,
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_HEMP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_COCOA",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_PEYOTE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_OPIUM",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100,
+   "percent": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_MEDIC": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    73,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HEMP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OPIUM",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TOBACCO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_OBSIDIAN",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CHEMICALS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DRUGS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ECSTASY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HYPOSPRAYS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_IMMUNITY_DRUGS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LSD",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_METHAMPHETAMINE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "type": "BONUS_PHARMACEUTICALS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_REPLACEMENT_ORGANS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "type": "BONUS_SMART_MEDICINE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_LEAD_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 1
+    },
+    "UNITCOMBAT_HEALS_PEOPLE": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -350
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "heal": "full",
+    "count": 1,
+    "interval": "perTurn"
+   },
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE",
+    "interval": "perTurn",
+    "heal": 40
+   },
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_ANIMALS",
+    "interval": "perTurn",
+    "heal": 30
+   }
+  ]
+ },
+ "cost": {
+  "production": 7805,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HEALTHCARE_MEGACOMPLEX"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 1,
+   "SPECIALIST_SCIENTIST": 2,
+   "SPECIALIST_DOCTOR": 15
+  },
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

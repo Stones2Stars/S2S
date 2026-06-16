@@ -1,0 +1,34 @@
+{
+ "type": "BUILDING_CRIME_SEXUAL_HARASSMENT",
+ "description": "TXT_KEY_BUILDING_CRIME_SEXUAL_HARASSMENT",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_SEXUAL_HARASSMENT_PEDIA",
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 1
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

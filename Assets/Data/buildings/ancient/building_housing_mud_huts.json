@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_HOUSING_MUD_HUTS",
+ "description": "TXT_KEY_BUILDING_HOUSING_MUD_HUTS",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_MUD_HUTS_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_HOUSING_BONE_HUTS",
+   "BUILDING_HOUSING_HOMELESS",
+   "BUILDING_HOUSING_STONE_HUTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CLAY",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_DESERT",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_SCRUB",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_MUD_HUTS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

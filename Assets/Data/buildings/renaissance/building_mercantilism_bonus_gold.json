@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_MERCANTILISM_BONUS_GOLD",
+ "description": "TXT_KEY_BUILDING_MERCANTILISM_BONUS_GOLD",
+ "civilopedia": "TXT_KEY_BUILDING_MERCANTILISM_BONUS_GOLD_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_GOLD_ORE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_MERCANTILISM",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 6
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MERCANTILISM_BONUS_GOLD"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "worth": 3,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,113 @@
+{
+ "type": "BUILDING_ANTI_MATTER_BATTERY",
+ "description": "TXT_KEY_BUILDING_ANTI_MATTER_BATTERY",
+ "civilopedia": "TXT_KEY_BUILDING_ANTI_MATTER_BATTERY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_ARTILLERY_BATTERY",
+   "BUILDING_AUTO_CANNON_BATTERY",
+   "BUILDING_BOMBARD_TOWER",
+   "BUILDING_FORTIFIED_OUTPOST",
+   "BUILDING_FRONTIER_OUTPOST",
+   "BUILDING_GUARD_TOWER",
+   "BUILDING_KEEP_TOWER",
+   "BUILDING_LASER_BATTERY",
+   "BUILDING_MISSILE_BATTERY",
+   "BUILDING_RAILGUN_BATTERY",
+   "BUILDING_WATCH_TOWER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ANTIMATTER",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 90
+   },
+   "bombardDefense": {
+    "percent": 40
+   },
+   "airDefense": {
+    "percent": -40
+   },
+   "dynamicDefense": {
+    "flat": 95
+   },
+   "adjacentDamage": {
+    "percent": 60
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -12
+  }
+ },
+ "cost": {
+  "production": 11755,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ANTI_MATTER_BATTERY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COMMAND_BUNKER"
+ },
+ "identity": {
+  "worth": 8,
+  "militaryWorth": 8,
+  "sightRange": 3,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

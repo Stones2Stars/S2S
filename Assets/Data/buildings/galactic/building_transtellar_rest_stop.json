@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_TRANSTELLAR_REST_STOP",
+ "description": "TXT_KEY_BUILDING_TRANSTELLAR_REST_STOP",
+ "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_REST_STOP_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_TRANSTELLAR_CUSTOMS_CENTER"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3212
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRANSTELLAR_REST_STOP"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

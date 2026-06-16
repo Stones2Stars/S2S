@@ -1,0 +1,107 @@
+{
+ "type": "BUILDING_RENEWABLE_MEGACOMPLEX",
+ "description": "TXT_KEY_BUILDING_RENEWABLE_MEGACOMPLEX",
+ "civilopedia": "TXT_KEY_BUILDING_RENEWABLE_MEGACOMPLEX_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_OCEAN_CITY",
+   "BUILDING_SEASTEAD",
+   "BUILDING_SUPERCRITICAL_CO2_TURBINE"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_BIOFUEL_POWER_PLANT",
+   "BUILDING_BIOMASS_POWER_PLANT",
+   "BUILDING_DOWNDRAFT_TOWER",
+   "BUILDING_ENHANCED_GEOTHERMAL_SYSTEM",
+   "BUILDING_FLOATING_SOLAR_ARRAY",
+   "BUILDING_GEOTHERMAL_POWER_PLANT",
+   "BUILDING_HYDRO_PLANT",
+   "BUILDING_JETSTREAM_POWER_PLANT",
+   "BUILDING_MEGATOWER_SOLAR_POWER_CROWN_SECTION",
+   "BUILDING_MEGATOWER_WIND_POWER_CROWN_SECTION",
+   "BUILDING_MICROWAVE_POWER_PLANT",
+   "BUILDING_OCEAN_THERMAL_POWER_PLANT",
+   "BUILDING_OSMOTIC_POWER_PLANT",
+   "BUILDING_PEAT_FIRED_DYNAMO",
+   "BUILDING_SOLAR_HIGHWAY",
+   "BUILDING_SOLAR_MIRROR_ARRAY_POWER_PLANT",
+   "BUILDING_SOLAR_PARKING_LOT",
+   "BUILDING_SOLAR_PHOTOVOLTAIC_POWER_PLANT",
+   "BUILDING_SOLAR_PHOTOVOLTAIC_ROOFS",
+   "BUILDING_TIDAL_FARM",
+   "BUILDING_WAVE_FARM",
+   "BUILDING_WIND_FARM",
+   "BUILDING_WIND_TURBINE_HIGHWAY",
+   "BUILDING_WOOD_FIRED_DYNAMO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_FULLERENE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 200,
+     "enabled": {
+      "type": "BONUS_QUANTUM_DOTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 9105,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RENEWABLE_MEGACOMPLEX_PLANT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

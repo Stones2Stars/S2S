@@ -1,0 +1,47 @@
+{
+ "type": "BUILDING_POLLUTION_MODERATE_GLOBAL_WARMING",
+ "description": "TXT_KEY_BUILDING_POLLUTION_MODERATE_GLOBAL_WARMING",
+ "civilopedia": "TXT_KEY_BUILDING_AIR_POLLUTION_PEDIA",
+ "food": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYPOLLUTION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

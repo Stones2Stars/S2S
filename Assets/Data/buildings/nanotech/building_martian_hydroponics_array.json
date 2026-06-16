@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_MARTIAN_HYDROPONICS_ARRAY",
+ "description": "TXT_KEY_BUILDING_MARTIAN_HYDROPONICS_ARRAY",
+ "civilopedia": "TXT_KEY_BUILDING_MARTIAN_HYDROPONICS_ARRAY_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MARTIAN_HYDROPONICS_COMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SPACE_COLONY_MARTIAN",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 702
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MARTIAN_HYDROPONICS_ARRAY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

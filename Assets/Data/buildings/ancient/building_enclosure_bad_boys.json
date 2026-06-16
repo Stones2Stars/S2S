@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_ENCLOSURE_BAD_BOYS",
+ "description": "TXT_KEY_BUILDING_ENCLOSURE_BAD_BOYS",
+ "civilopedia": "TXT_KEY_BUILDING_WILD_ANIMAL_CAGE_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_CARNIVAL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ZOO",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "HERITAGE_TAXON_CROCODILIA",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_TAXON_MUSTELOIDEA",
+      "scope": "empire"
+     }
+    ]
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": [
+    {
+     "value": 500,
+     "enabled": {
+      "type": "TECH_SCIENTIFIC_METHOD",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 306,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ENCLOSURE_BAD_BOYS"
+  }
+ },
+ "identity": {
+  "worth": 1,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

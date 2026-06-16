@@ -1,0 +1,113 @@
+{
+ "type": "BUILDING_COMMERCIAL_SPACEPORT",
+ "description": "TXT_KEY_BUILDING_COMMERCIAL_SPACEPORT",
+ "civilopedia": "TXT_KEY_BUILDING_COMMERCIAL_SPACEPORT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTEROID_DEFLECTION_SYSTEM",
+   "BUILDING_CAPTURED_ASTEROID",
+   "BUILDING_CISLUNAR_FACTORY",
+   "BUILDING_CISLUNAR_LABS",
+   "BUILDING_CISLUNAR_MEDICAL_LAB",
+   "BUILDING_CISLUNAR_SPORTS_ARENA",
+   "BUILDING_COMMUNICATIONS_SATELLITE",
+   "BUILDING_FLIGHT_SCHOOL",
+   "BUILDING_HELIUM_3_IMPORTER",
+   "BUILDING_INTERSTELLAR_SPEEDWAY",
+   "BUILDING_MAGLEV_LAUNCHER",
+   "BUILDING_MARS_CYCLER",
+   "BUILDING_MISSION_TO_CALLISTO",
+   "BUILDING_MISSION_TO_MARS",
+   "BUILDING_ORBITAL_HOTEL",
+   "BUILDING_PROPAGANDA_SATELLITES",
+   "BUILDING_SKYHOOK",
+   "BUILDING_SOLAR_POWER_SATELLITE",
+   "BUILDING_SPACE_LABORATORY",
+   "BUILDING_SPACE_SHIPPING_WAREHOUSE",
+   "BUILDING_ZURICH_ORBITAL"
+  ],
+  "units": [
+   "UNIT_HEAVY_ROCKET",
+   "UNIT_SPACE_WORK_CREW"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ROCKET_FUEL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_COMMERCIAL_AIRPORT",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_NANOTUBES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 12
+   }
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_SPACECRAFT",
+    "interval": "perTurn",
+    "heal": 4
+   }
+  ]
+ },
+ "cost": {
+  "production": 2405,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_COMMERCIAL_SPACEPORT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SPACEWAY"
+ },
+ "identity": {
+  "orbitalInfrastructure": true,
+  "worth": 6,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

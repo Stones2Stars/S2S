@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_CRIME_ORGAN_TRAFFICKING",
+ "description": "TXT_KEY_BUILDING_CRIME_ORGAN_TRAFFICKING",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_ORGAN_TRAFFICKING_PEDIA",
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 8
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -3,
+   "perPopulation": {
+    "percent": -20
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -6,
+   "perPopulation": {
+    "percent": -20
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

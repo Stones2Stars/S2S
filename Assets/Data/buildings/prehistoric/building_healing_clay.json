@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_HEALING_CLAY",
+ "description": "TXT_KEY_BUILDING_HEALING_CLAY",
+ "civilopedia": "TXT_KEY_BUILDING_HEALING_CLAY_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ALTERNATIVE_MEDICINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FINE_CLAY",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_HEALERS_HUT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DOCTORS_OFFICE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SURGEONS_OFFICE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MEDICAL_CLINIC",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_APOTHECARY_SHOP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PHARMACY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 50,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HEALING_CLAY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

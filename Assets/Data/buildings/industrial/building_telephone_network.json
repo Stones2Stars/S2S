@@ -1,0 +1,140 @@
+{
+ "type": "BUILDING_TELEPHONE_NETWORK",
+ "description": "TXT_KEY_BUILDING_TELEPHONE_NETWORK",
+ "civilopedia": "TXT_KEY_BUILDING_TELEPHONE_NETWORK_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUTOMATED_SWITCHBOARD",
+   "BUILDING_BELL_LABS",
+   "BUILDING_CALL_CENTER",
+   "BUILDING_COMPUTER_NETWORK",
+   "BUILDING_HOUSING_APARTMENTS",
+   "BUILDING_HOUSING_ARCOLOGY_SLUMS",
+   "BUILDING_HOUSING_ARCOLOGY_SUBURBS",
+   "BUILDING_HOUSING_ARCOLOGY_UPPER_CLASS",
+   "BUILDING_HOUSING_CHATEAU",
+   "BUILDING_HOUSING_CONDOMINIUMS",
+   "BUILDING_HOUSING_DUGOUTS",
+   "BUILDING_HOUSING_HABITATION_PODS",
+   "BUILDING_HOUSING_HIGHRISES",
+   "BUILDING_HOUSING_HIGH_TECH_APARTMENTS",
+   "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
+   "BUILDING_HOUSING_HIGH_TECH_HIGHRISES",
+   "BUILDING_HOUSING_HOLO_SUITES",
+   "BUILDING_HOUSING_INNER_CITY",
+   "BUILDING_HOUSING_MANSIONS",
+   "BUILDING_HOUSING_PENTHOUSE_SUITES",
+   "BUILDING_HOUSING_SMART_HOMES",
+   "BUILDING_HOUSING_SUBURBS",
+   "BUILDING_MAIL_ORDER_CATALOGUE",
+   "BUILDING_MORSE_CODE",
+   "BUILDING_POLICE_BOX",
+   "BUILDING_POLLING_FIRM",
+   "BUILDING_TABULATION_FIRM",
+   "BUILDING_VIDEOPHONE_NETWORK"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_TELEGRAPH_STATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_COPPER_WIRES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_TRADING_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHOPPING_DISTRICT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MODERN_OFFICES",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 800,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TELEPHONE_NETWORK"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_TELEPHONE_NETWORK"
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 10,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_CISLUNAR_PHASED_ARRAY_OPTICS",
+ "description": "TXT_KEY_BUILDING_CISLUNAR_PHASED_ARRAY_OPTICS",
+ "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_PHASED_ARRAY_OPTICS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CISLUNAR_MATERIALS_LAB",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1144
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CISLUNAR_PHASED_ARRAY_OPTICS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

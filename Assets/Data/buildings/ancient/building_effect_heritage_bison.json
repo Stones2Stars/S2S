@@ -1,0 +1,30 @@
+{
+ "type": "BUILDING_EFFECT_HERITAGE_BISON",
+ "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_BISON",
+ "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_BISON_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MILITARY_STANDARD_BISON"
+  ],
+  "units": [
+   "UNIT_BISON_RIDER"
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EFFECT_HERITAGE_BISON"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "worth": 2,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

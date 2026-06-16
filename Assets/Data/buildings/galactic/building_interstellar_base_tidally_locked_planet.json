@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_INTERSTELLAR_BASE_TIDALLY_LOCKED_PLANET",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_BASE_TIDALLY_LOCKED_PLANET",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BASE_TIDALLY_LOCKED_PLANET_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_TERMINATOR_WIND_TURBINES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_RED_DWARF",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5,
+   "percent": [
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_GRAVITY_CONTROL",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2536
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_BASE_TIDALLY_LOCKED_PLANET"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

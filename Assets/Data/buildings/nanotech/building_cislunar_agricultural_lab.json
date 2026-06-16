@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_CISLUNAR_AGRICULTURAL_LAB",
+ "description": "TXT_KEY_BUILDING_CISLUNAR_AGRICULTURAL_LAB",
+ "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_AGRICULTURAL_LAB_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_BIOFACTORY",
+   "BUILDING_CISLUNAR_ENHANCED_ALGAE_FARM",
+   "BUILDING_CISLUNAR_HOTEL"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_VERTICAL_FARMING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_ACCELERATED_GERMINATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_BOTANICAL_ALCHEMY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 702
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CISLUNAR_AGRICULTURAL_LAB"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

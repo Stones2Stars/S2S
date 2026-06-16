@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_INTERSTELLAR_FALSE_VACUUM_TRAP",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_FALSE_VACUUM_TRAP",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_FALSE_VACUUM_TRAP_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CHRONOTON",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_INTERSTELLAR_DARK_MATTER_REACTOR",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 30
+   },
+   "damageAttackerChance": {
+    "flat": 30
+   },
+   "damageToAttacker": {
+    "flat": 30
+   },
+   "repel": {
+    "flat": 30
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "cost": {
+  "production": 8782
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_FALSE_VACUUM_TRAP"
+  }
+ },
+ "identity": {
+  "damageAllAttackers": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

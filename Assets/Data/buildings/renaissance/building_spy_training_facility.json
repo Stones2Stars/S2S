@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_SPY_TRAINING_FACILITY",
+ "description": "TXT_KEY_BUILDING_SPY_TRAINING_FACILITY",
+ "civilopedia": "TXT_KEY_BUILDING_SPY_TRAINING_FACILITY_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_SLEEPER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_SPY": {
+     "flat": 2
+    },
+    "UNITCOMBAT_DIPLOMAT": {
+     "flat": 1
+    },
+    "UNITCOMBAT_LAW_ENFORCEMENT": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 850,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SPY_TRAINING_FACILITY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SPY_TRAINING_FACILITY"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SPY": 1
+  },
+  "neverCapture": true,
+  "worth": 8,
+  "militaryWorth": 8,
+  "greatPeopleUnitType": "UNIT_GREAT_SPY",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

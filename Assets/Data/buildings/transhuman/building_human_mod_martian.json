@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_HUMAN_MOD_MARTIAN",
+ "description": "TXT_KEY_BUILDING_HUMAN_MOD_MARTIAN",
+ "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_MARTIAN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_NOVEL_SENSES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MARTIAN_CITY",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MARTIAN_ARCOLOGY": {
+     "flat": 5
+    },
+    "BUILDING_MARTIAN_MEGACITY": {
+     "flat": 5
+    },
+    "BUILDING_MARTIAN_CITY": {
+     "flat": 5
+    },
+    "BUILDING_MARTIAN_METROPOLIS": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 10910
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HUMAN_MOD_MARTIAN"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_INTERGALACTIC_DYSON_SPHERES",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_DYSON_SPHERES",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_DYSON_SPHERES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_CLUSTER_BRAIN",
+   "BUILDING_INTERGALACTIC_EXOTIC_PARTICLE_FOUNDRY",
+   "BUILDING_INTERGALACTIC_GRAVITON_COMMUNICATION_CENTER",
+   "BUILDING_INTERGALACTIC_RED_GLOBULAR_GALAXY",
+   "BUILDING_INTERGALACTIC_RINGED_GALAXY",
+   "BUILDING_INTERGALACTIC_SHKADOV_THRUSTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_INTERGALACTIC_VON_NEUMANN_COLONIZERS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3075
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_DYSON_SPHERES"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_IRRIGATION_CANALS",
+ "description": "TXT_KEY_BUILDING_IRRIGATION_CANALS",
+ "civilopedia": "TXT_KEY_BUILDING_IRRIGATION_CANALS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_NORIA"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_RIVER_ADMINISTRATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 160,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_IRRIGATION_CANALS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_AQUEDUCT"
+ },
+ "identity": {
+  "worth": 3,
+  "conquestProbability": 90,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

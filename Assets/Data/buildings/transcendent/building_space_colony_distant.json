@@ -1,0 +1,38 @@
+{
+ "type": "BUILDING_SPACE_COLONY_DISTANT",
+ "description": "TXT_KEY_BUILDING_SPACE_COLONY_DISTANT",
+ "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_DISTANT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_SPACE_WHALING_GUILD"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 12
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SPACE_COLONY_DISTANT"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

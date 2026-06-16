@@ -1,0 +1,37 @@
+{
+ "type": "BUILDING_BELIEF_REINCARNATION",
+ "description": "TXT_KEY_BUILDING_BELIEF_REINCARNATION",
+ "civilopedia": "TXT_KEY_BUILDING_BELIEF_REINCARNATION_PEDIA",
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BELIEF_REINCARNATION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

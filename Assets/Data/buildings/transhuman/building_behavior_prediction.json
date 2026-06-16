@@ -1,0 +1,34 @@
+{
+ "type": "BUILDING_BEHAVIOR_PREDICTION",
+ "description": "TXT_KEY_BUILDING_BEHAVIOR_PREDICTION",
+ "civilopedia": "TXT_KEY_BUILDING_BEHAVIOR_PREDICTION_PEDIA",
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "cost": {
+  "production": 5655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BEHAVIOR_PREDICTION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

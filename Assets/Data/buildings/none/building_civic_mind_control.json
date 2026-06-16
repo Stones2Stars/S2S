@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_CIVIC_MIND_CONTROL",
+ "description": "TXT_KEY_BUILDING_CIVIC_MIND_CONTROL",
+ "civilopedia": "TXT_KEY_BUILDING_CIVIC_MIND_CONTROL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_PALACE",
+     "scope": "city"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_MIND_CONTROL",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "production": {
+  "specialist": {
+   "specialists": {
+    "SPECIALIST_SLAVES": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CIVIC_MIND_CONTROL"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

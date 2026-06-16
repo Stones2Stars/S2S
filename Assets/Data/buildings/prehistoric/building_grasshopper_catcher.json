@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_GRASSHOPPER_CATCHER",
+ "description": "TXT_KEY_BUILDING_GRASSHOPPER_CATCHER",
+ "civilopedia": "TXT_KEY_BUILDING_GRASSHOPPER_CATCHER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_BUGS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "TERRAIN_GRASSLAND",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_LUSH",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_MUDDY",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_MARSH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GRASSHOPPER_CATCHER"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

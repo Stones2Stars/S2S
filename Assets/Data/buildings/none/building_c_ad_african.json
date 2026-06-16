@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_C_AD_AFRICAN",
+ "description": "TXT_KEY_BUILDING_C_AD_AFRICAN",
+ "civilopedia": "TXT_KEY_BUILDING_C_AD_PEDIA",
+ "help": "TXT_KEY_BUILDING_C_AD_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_PALACE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_C_L_AFRICAN",
+     "scope": "empire",
+     "min": 3
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "noneOf": [
+    {
+     "type": "BUILDING_C_N_AFRICAN",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CULTURE_AFRICAN"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "noInstanceLimit": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

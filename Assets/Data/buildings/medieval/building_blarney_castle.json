@@ -1,0 +1,138 @@
+{
+ "type": "BUILDING_BLARNEY_CASTLE",
+ "description": "TXT_KEY_BUILDING_BLARNEY_CASTLE",
+ "civilopedia": "TXT_KEY_BUILDING_BLARNEY_CASTLE_PEDIA",
+ "help": "TXT_KEY_BUILDING_BLARNEY_CASTLE_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_HIGH_WALLS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BARRICADES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CEMENT_BARRIER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_METAMATERIAL_WALLS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SUPERSTRONG_ALLOY_WALLS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MEGASTRONG_ALLOY_WALLS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 50
+   },
+   "bombardDefense": {
+    "percent": 25
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 2208,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_BLARNEY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BLARNEY_CASTLE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_SPY",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

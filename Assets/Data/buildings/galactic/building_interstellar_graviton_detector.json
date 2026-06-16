@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_INTERSTELLAR_GRAVITON_DETECTOR",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_GRAVITON_DETECTOR",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_GRAVITON_DETECTOR_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -70
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 250
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2856
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_GRAVITON_DETECTOR"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

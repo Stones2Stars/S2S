@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_DISTANT_FUTURE_CITY",
+ "description": "TXT_KEY_BUILDING_DISTANT_FUTURE_CITY",
+ "civilopedia": "TXT_KEY_BUILDING_DISTANT_FUTURE_CITY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MILLIWAYS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DISTANT_COSMOPOLIS",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_DISTANT_FUTURE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1945
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DISTANT_FUTURE_CITY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

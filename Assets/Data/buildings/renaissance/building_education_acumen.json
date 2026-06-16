@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_EDUCATION_ACUMEN",
+ "description": "TXT_KEY_BUILDING_EDUCATION_ACUMEN",
+ "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_EDUCATION_BRILLIANT",
+   "BUILDING_EDUCATION_CULTIVATED",
+   "BUILDING_EDUCATION_INTUITIVE",
+   "BUILDING_EDUCATION_KNOWLEDGEABLE"
+  ]
+ },
+ "production": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 9,
+   "percent": 25
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "greatGeneralRate": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 15
+   }
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -9
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYEDUCATION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

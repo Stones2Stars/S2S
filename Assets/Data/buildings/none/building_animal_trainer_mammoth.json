@@ -1,0 +1,112 @@
+{
+ "type": "BUILDING_ANIMAL_TRAINER_MAMMOTH",
+ "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_MAMMOTH",
+ "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_MAMMOTH_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HERITAGE_MAMMOTH"
+  ],
+  "units": [
+   "UNIT_BALLISTA_MAMMOTH",
+   "UNIT_BOMBARD_MAMMOTH",
+   "UNIT_NEANDERTHAL_MAMMOTH_RIDER",
+   "UNIT_TRAINED_MAMMOTH",
+   "UNIT_WAR_MAMMOTH",
+   "UNIT_WORKMAMMOTH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MAMMOTH",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "latitude": {
+      "min": 40
+     }
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_CAMP_MAMMOTH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HERD_MAMMOTH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BREEDING_PROGRAM_MAMMOTH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_PRESERVE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_INDUSTRIAL_FARMS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 1038,
+  "sizeModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 7
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MAMMOTH_TRAINER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ANIMAL_TRAINER_MAMMOTH"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 2,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

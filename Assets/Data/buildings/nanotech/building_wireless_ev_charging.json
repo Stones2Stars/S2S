@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_WIRELESS_EV_CHARGING",
+ "description": "TXT_KEY_BUILDING_WIRELESS_EV_CHARGING",
+ "civilopedia": "TXT_KEY_BUILDING_WIRELESS_EV_CHARGING_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_TELEPORT_BOOTH"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_ELECTRIC_VEHICLE_RECHARGING_STATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_AUTOMATED_HIGHWAY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 4485,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_WIRELESS_EV_CHARGING"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_DEEP_SPACE_PRISON",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_PRISON",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_PRISON_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DEEP_SPACE_HOUSING_MANAGEMENT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "cost": {
+  "production": 2104
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_PRISON"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

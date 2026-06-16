@@ -1,0 +1,43 @@
+{
+ "type": "BUILDING_PRIME_DIRECTIVE",
+ "description": "TXT_KEY_BUILDING_PRIME_DIRECTIVE",
+ "civilopedia": "TXT_KEY_BUILDING_PRIME_DIRECTIVE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_PALACE",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 23510
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PRIME_DIRECTIVE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PRIME_DIRECTIVE"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

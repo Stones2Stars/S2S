@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_TRANSATLANTIC_TUNNEL",
+ "description": "TXT_KEY_BUILDING_TRANSATLANTIC_TUNNEL",
+ "civilopedia": "TXT_KEY_BUILDING_TRANSATLANTIC_TUNNEL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER",
+    {
+     "type": "AREA_SIZE",
+     "scope": "world",
+     "min": 10
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_MAGLEV_RAILS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_VACTRAIN_TERMINAL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GRAVITY_TRAIN",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 24870,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TRANSATLANTIC_TUNNEL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRANSATLANTIC_TUNNEL"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

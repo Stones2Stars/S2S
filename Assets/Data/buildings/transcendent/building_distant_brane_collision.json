@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_DISTANT_BRANE_COLLISION",
+ "description": "TXT_KEY_BUILDING_DISTANT_BRANE_COLLISION",
+ "civilopedia": "TXT_KEY_BUILDING_DISTANT_BRANE_COLLISION_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_NON_ORIENTABLE_WORMHOLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DISTANT_BRANE_ASSEMBLER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_DISTANT_BRANE_THRUSTER",
+     "scope": "empire",
+     "min": 1
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 60
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2666
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DISTANT_BRANE_COLLISION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

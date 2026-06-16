@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_CRIME_ORGANIZED_CRIME",
+ "description": "TXT_KEY_BUILDING_CRIME_ORGANIZED_CRIME",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_ORGANIZED_CRIME_PEDIA",
+ "gold": {
+  "city": {
+   "flat": -10,
+   "percent": -10
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 50
+   },
+   "percent": -20
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -6,
+   "perPopulation": {
+    "percent": -25
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -6
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 6
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 140
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

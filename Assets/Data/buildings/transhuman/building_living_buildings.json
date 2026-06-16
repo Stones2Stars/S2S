@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_LIVING_BUILDINGS",
+ "description": "TXT_KEY_BUILDING_LIVING_BUILDINGS",
+ "civilopedia": "TXT_KEY_BUILDING_LIVING_BUILDINGS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_SELF_AWARE_CITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MEGATOWER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_ADAPTIVE_ARCHITECTURE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 30
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": -30
+  }
+ },
+ "cost": {
+  "production": 5655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LIVING_BUILDINGS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

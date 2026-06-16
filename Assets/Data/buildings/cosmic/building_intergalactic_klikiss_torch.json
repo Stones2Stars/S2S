@@ -1,0 +1,35 @@
+{
+ "type": "BUILDING_INTERGALACTIC_KLIKISS_TORCH",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_KLIKISS_TORCH",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_KLIKISS_TORCH_PEDIA",
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4004
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_KLIKISS_TORCH"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

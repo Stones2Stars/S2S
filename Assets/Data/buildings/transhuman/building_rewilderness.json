@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_REWILDERNESS",
+ "description": "TXT_KEY_BUILDING_REWILDERNESS",
+ "civilopedia": "TXT_KEY_BUILDING_REWILDERNESS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_SUFFERING_PREVENTION",
+   "BUILDING_NATURE_GODDESS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_CHEMOSYNTHESIS_PLANT_FARM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_STATE_PARK",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "cost": {
+  "production": 6155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_REWILDERNESS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_HOUSING_DOMUS",
+ "description": "TXT_KEY_BUILDING_HOUSING_DOMUS",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_DOMUS_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_HOUSING_BONE_HUTS",
+   "BUILDING_HOUSING_HOMELESS",
+   "BUILDING_HOUSING_MUD_HUTS",
+   "BUILDING_HOUSING_STONE_HUTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "IS_FRESHWATER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BRICKS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_DOMUS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

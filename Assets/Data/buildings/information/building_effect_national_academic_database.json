@@ -1,0 +1,43 @@
+{
+ "type": "BUILDING_EFFECT_NATIONAL_ACADEMIC_DATABASE",
+ "description": "TXT_KEY_BUILDING_EFFECT_NATIONAL_ACADEMIC_DATABASE",
+ "civilopedia": "TXT_KEY_BUILDING_EFFECT_NATIONAL_ACADEMIC_DATABASE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EFFECT_NATIONAL_ACADEMIC_DATABASE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

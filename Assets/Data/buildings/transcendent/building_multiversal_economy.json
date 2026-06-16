@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_MULTIVERSAL_ECONOMY",
+ "description": "TXT_KEY_BUILDING_MULTIVERSAL_ECONOMY",
+ "civilopedia": "TXT_KEY_BUILDING_MULTIVERSAL_ECONOMY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_DISTANT_EXPLORERS_BASE",
+     "scope": "empire",
+     "min": 2
+    },
+    {
+     "type": "BUILDING_INTERGALACTIC_TACHYON_COMMUNICATION_CENTER",
+     "scope": "empire",
+     "min": 2
+    },
+    {
+     "type": "BUILDING_HYPERSPACE_ANCESTOR_RESURRECTION",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "BUILDING_HYPERPLANET",
+     "scope": "empire",
+     "min": 2
+    },
+    {
+     "type": "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
+     "scope": "empire",
+     "min": 3
+    },
+    {
+     "type": "BUILDING_INTERSTELLAR_COSMIC_NODE",
+     "scope": "empire",
+     "min": 2
+    },
+    {
+     "type": "BUILDING_INTERGALACTIC_NEUTRONIUM_FOUNDRY",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 57510
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_COSMIC_ECONOMY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MULTIVERSAL_ECONOMY"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_ORBITAL_RING",
+ "description": "TXT_KEY_BUILDING_ORBITAL_RING",
+ "civilopedia": "TXT_KEY_BUILDING_ORBITAL_RING_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_SPACESCRAPER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_LOFSTROM_LOOP",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_LOFSTROM_LOOP": {
+     "flat": 3
+    },
+    "BUILDING_STRATOSPHERIC_SPACEPORT": {
+     "flat": 3
+    },
+    "BUILDING_STRATOSPHERIC_MAGLEV_TERMINAL": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 54630,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ORBITAL_RING"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ORBITAL_RING"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_REGIONAL_PLANNING_COMMISSION",
+ "description": "TXT_KEY_BUILDING_REGIONAL_PLANNING_COMMISSION",
+ "civilopedia": "TXT_KEY_BUILDING_REGIONAL_PLANNING_COMMISSION_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 1540,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_REGIONAL_PLANNING_COMMISSION"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

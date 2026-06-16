@@ -1,0 +1,38 @@
+{
+ "type": "BUILDING_RESOURCES_LIZARDS",
+ "description": "TXT_KEY_BUILDING_RESOURCES_LIZARDS",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_REPET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_LIZARD_HUNTERS_CAMP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ENCLOSURE_REPTILE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_LIZARDS"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

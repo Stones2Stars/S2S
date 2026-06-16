@@ -1,0 +1,37 @@
+{
+ "type": "BUILDING_HUMAN_MOD_DESIGNER_BABIES",
+ "description": "TXT_KEY_BUILDING_HUMAN_MOD_DESIGNER_BABIES",
+ "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_DESIGNER_BABIES_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_GENE_EDITING",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 7050
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HUMAN_MOD_DESIGNER_BABIES"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

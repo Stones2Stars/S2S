@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_EMP_TRAPS",
+ "description": "TXT_KEY_BUILDING_EMP_TRAPS",
+ "civilopedia": "TXT_KEY_BUILDING_EMP_TRAPS_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_NANOBOT_TRAPS"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_BOOBY_TRAPS",
+   "BUILDING_GERM_TRAPS",
+   "BUILDING_LANDMINES",
+   "BUILDING_MECHANICAL_TRAPS",
+   "BUILDING_PIT_TRAPS",
+   "BUILDING_ROBOTIC_TRAPS",
+   "BUILDING_SPIKED_PIT_TRAPS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 40
+   },
+   "damageAttackerChance": {
+    "flat": 40
+   },
+   "damageToAttacker": {
+    "flat": 40
+   },
+   "repel": {
+    "flat": 55
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 3385,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EMP_TRAPS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_NANOFACTORY"
+ },
+ "identity": {
+  "damageAllAttackers": true,
+  "militaryWorth": 7,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

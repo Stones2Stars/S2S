@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_HUMAN_MOD_HEAT_TOLERANCE",
+ "description": "TXT_KEY_BUILDING_HUMAN_MOD_HEAT_TOLERANCE",
+ "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_HEAT_TOLERANCE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_ROBOTIC_BODY",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_SPACE_COLONY_VENUS": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 13310
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HUMAN_MOD_HEAT_TOLERANCE"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

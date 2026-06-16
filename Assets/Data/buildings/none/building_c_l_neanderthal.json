@@ -1,0 +1,154 @@
+{
+ "type": "BUILDING_C_L_NEANDERTHAL",
+ "description": "TXT_KEY_BUILDING_C_L_NEANDERTHAL",
+ "civilopedia": "TXT_KEY_BUILDING_C_L_PEDIA",
+ "help": "TXT_KEY_BUILDING_C_L_HELP",
+ "enables": {
+  "buildings": [
+   "BUILDING_NEANDERTHAL_CAVES"
+  ],
+  "units": [
+   "UNIT_NEANDERTHAL",
+   "UNIT_NEANDERTHAL_BRUTE",
+   "UNIT_NEANDERTHAL_CANOE",
+   "UNIT_NEANDERTHAL_CHASER",
+   "UNIT_NEANDERTHAL_ELEPHANT_RIDER",
+   "UNIT_NEANDERTHAL_ENFORCER",
+   "UNIT_NEANDERTHAL_GATHERER",
+   "UNIT_NEANDERTHAL_HEALER",
+   "UNIT_NEANDERTHAL_HUNTER",
+   "UNIT_NEANDERTHAL_KAYAK",
+   "UNIT_NEANDERTHAL_LOG_RAM",
+   "UNIT_NEANDERTHAL_MAMMOTH_RIDER",
+   "UNIT_NEANDERTHAL_MASTER_CHASER",
+   "UNIT_NEANDERTHAL_MASTER_HUNTER",
+   "UNIT_NEANDERTHAL_MASTER_TRACKER",
+   "UNIT_NEANDERTHAL_OBSIDIAN_AXEMAN",
+   "UNIT_NEANDERTHAL_OBSIDIAN_MACEMAN",
+   "UNIT_NEANDERTHAL_OBSIDIAN_SPEARMAN",
+   "UNIT_NEANDERTHAL_OBSIDIAN_SWORDSMAN",
+   "UNIT_NEANDERTHAL_RAFT",
+   "UNIT_NEANDERTHAL_SCOUT",
+   "UNIT_NEANDERTHAL_SHEPHERD",
+   "UNIT_NEANDERTHAL_SLINGER",
+   "UNIT_NEANDERTHAL_STONE_AGE_AXEMAN",
+   "UNIT_NEANDERTHAL_STONE_AGE_SPEARMAN",
+   "UNIT_NEANDERTHAL_STONE_MACEMAN",
+   "UNIT_NEANDERTHAL_STONE_THROWER",
+   "UNIT_NEANDERTHAL_TRACKER",
+   "UNIT_NEANDERTHAL_TRAINED_DOG",
+   "UNIT_NEANDERTHAL_TRIBAL_GUARDIAN",
+   "UNIT_NEANDERTHAL_WANDERER",
+   "UNIT_NEANDERTHAL_WARRIOR",
+   "UNIT_NEANDERTHAL_WAR_CANOE",
+   "UNIT_NEANDERTHAL_WATCHER",
+   "UNIT_NEANDERTHAL_WISE_WOMAN",
+   "UNIT_NEANDERTHAL_WOODEN_SPEARMAN",
+   "UNIT_NEANDERTHAL_WORKBOAT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_C_AC_NEANDERTHAL",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "costs": {
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_C_L_AFRICAN",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_C_L_ASIAN",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_C_L_EUROPEAN",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_C_L_MIDDLE_EASTERN",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": -5,
+     "enabled": {
+      "type": "BUILDING_C_L_NEANDERTHAL",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_C_L_NORTH_AMERICAN",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_C_L_OCEANIAN",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_C_L_SOUTH_AMERICAN",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 1
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CULTURE_NEANDERTHAL"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 85,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

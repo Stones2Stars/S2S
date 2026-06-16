@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_BARRACKS",
+ "description": "TXT_KEY_BUILDING_BARRACKS",
+ "civilopedia": "TXT_KEY_BUILDING_BARRACKS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MILITARY_SCHOOL",
+   "BUILDING_PARADE_GROUNDS",
+   "BUILDING_SLAVE_COMPOUND_MILITARY_SUPPORT",
+   "BUILDING_WAR_DOG_TRAINER"
+  ],
+  "units": [
+   "UNIT_WARCAT"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_GARRISON"
+  ]
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MELEE": {
+     "flat": 3
+    },
+    "UNITCOMBAT_RECON": {
+     "flat": 3
+    },
+    "UNITCOMBAT_ANIMAL": {
+     "flat": 2
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "flat": 2
+    },
+    "UNITCOMBAT_SIEGE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 216,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BARRACKS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "newCityFree": [
+   {
+    "GOM_TECH": "TECH_COLONIALISM"
+   }
+  ],
+  "worth": 2,
+  "militaryWorth": 3,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

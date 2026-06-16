@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_MARTIAN_MAGNETIC_FIELD_GENERATOR",
+ "description": "TXT_KEY_BUILDING_MARTIAN_MAGNETIC_FIELD_GENERATOR",
+ "civilopedia": "TXT_KEY_BUILDING_MARTIAN_MAGNETIC_FIELD_GENERATOR_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MARTIAN_ELECTRONICS_FACTORY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MARTIAN_MEGACITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 4032
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MARTIAN_MAGNETIC_FIELD_GENERATOR"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

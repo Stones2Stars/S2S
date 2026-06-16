@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_METAVERSE_ENTERTAINMENT_CENTER",
+ "description": "TXT_KEY_BUILDING_METAVERSE_ENTERTAINMENT_CENTER",
+ "civilopedia": "TXT_KEY_BUILDING_METAVERSE_ENTERTAINMENT_CENTER_PEDIA",
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2000
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_METAVERSE_ENTERTAINMENT_CENTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE",
+   "MAPCATEGORY_GALACTIC",
+   "MAPCATEGORY_SOLAR_SYSTEM",
+   "MAPCATEGORY_MARTIAN",
+   "MAPCATEGORY_VENUSIAN",
+   "MAPCATEGORY_JOVIAN",
+   "MAPCATEGORY_LUNAR",
+   "MAPCATEGORY_CISLUNAR",
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_TITANIC",
+   "MAPCATEGORY_UNIVERSAL",
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

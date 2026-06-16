@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_TIME_TOURIST_AGENCY",
+ "description": "TXT_KEY_BUILDING_TIME_TOURIST_AGENCY",
+ "civilopedia": "TXT_KEY_BUILDING_TIME_TOURIST_AGENCY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_HE3_FUSION_POWER_PLANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 26955,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TIME_TOURIST_AGENCY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

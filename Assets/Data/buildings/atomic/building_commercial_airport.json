@@ -1,0 +1,115 @@
+{
+ "type": "BUILDING_COMMERCIAL_AIRPORT",
+ "description": "TXT_KEY_BUILDING_COMMERCIAL_AIRPORT",
+ "civilopedia": "TXT_KEY_BUILDING_COMMERCIAL_AIRPORT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AERODROME",
+   "BUILDING_AEROTROPOLIS",
+   "BUILDING_AIR_SHIPPING_WAREHOUSE",
+   "BUILDING_COMMERCIAL_SPACEPORT",
+   "BUILDING_FIRE_HANGAR",
+   "BUILDING_FLIGHT_SCHOOL",
+   "BUILDING_GRAND_AERODROME",
+   "BUILDING_HYBRID_AIRSHIP_PORT",
+   "BUILDING_HYPERSONIC_TERMINAL",
+   "BUILDING_VACATION_RESORT"
+  ],
+  "units": [
+   "UNIT_AIRSETTLER"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_AIRPORT",
+   "BUILDING_ORNITHOPTER_AERIE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AIRCRAFT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_CEMENT",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_AIRCRAFT",
+    "interval": "perTurn",
+    "heal": 10
+   }
+  ]
+ },
+ "cost": {
+  "production": 1230,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_AIRPORT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_AIRPORT"
+ },
+ "identity": {
+  "worth": 5,
+  "airlift": 2,
+  "airUnitCapacity": 6,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

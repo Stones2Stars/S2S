@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_INTERGALACTIC_STAR_CANNON",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_STAR_CANNON",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_STAR_CANNON_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_COMMAND_CENTER",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_OBSERVABLE_UNIVERSE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 50
+   },
+   "bombardDefense": {
+    "percent": 10
+   },
+   "dynamicDefense": {
+    "flat": 10
+   },
+   "adjacentDamage": {
+    "percent": 10
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4492
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_STAR_CANNON"
+  }
+ },
+ "identity": {
+  "sightRange": 1,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

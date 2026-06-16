@@ -1,0 +1,38 @@
+{
+ "type": "BUILDING_RESOURCES_GRASS",
+ "description": "TXT_KEY_BUILDING_RESOURCES_GRASS",
+ "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_AGROFOREST"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_GRASS_GATHERER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_WONDER_OF_NATURE_BASALT_ORGAN",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RESOURCES_GRASS"
+  }
+ },
+ "identity": {
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

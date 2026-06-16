@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_LUNAR_LAUNCH_SITE",
+ "description": "TXT_KEY_BUILDING_LUNAR_LAUNCH_SITE",
+ "civilopedia": "TXT_KEY_BUILDING_LUNAR_LAUNCH_SITE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUNAR_SPACE_PORT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_LUNAR_ROCK_QUARRY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -100,
+   "percent": [
+    {
+     "value": 10000,
+     "enabled": {
+      "type": "TECH_LUNAR_TRADE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 800
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LUNAR_LAUNCH_SITE"
+  }
+ },
+ "identity": {
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

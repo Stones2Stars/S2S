@@ -1,0 +1,184 @@
+{
+ "type": "BUILDING_REPET",
+ "description": "TXT_KEY_BUILDING_REPET",
+ "civilopedia": "TXT_KEY_BUILDING_REPET_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANCIENT_VETERINARIAN",
+   "BUILDING_ANIMAL_ACTOR_STUDIO",
+   "BUILDING_ANIMAL_TESTING_LAB",
+   "BUILDING_DOG_KENNELS",
+   "BUILDING_INTERNATIONAL_DOG_SHOW",
+   "BUILDING_SLED_DOG_TRAINER",
+   "BUILDING_VETERINARIAN"
+  ],
+  "units": [
+   "UNIT_CANIS_SUPERIOR",
+   "UNIT_DENE_SLED_DOGS",
+   "UNIT_FELINE_SUPERIOR",
+   "UNIT_JOMON_HUNTING_DOGS",
+   "UNIT_NEANDERTHAL_TRAINED_DOG",
+   "UNIT_TRAINEDDOG"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_CAT_BREEDER",
+   "BUILDING_DOG_BREEDER",
+   "BUILDING_LIZARD_HUNTERS_CAMP",
+   "BUILDING_PET_SHOP",
+   "BUILDING_RESOURCES_LIZARDS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CLONING_LABORATORY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SHOPPING_DISTRICT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10,
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_CAT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_DOG",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_FISH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_GUINEA_PIGS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_LIZARDS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_PARROTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_RABBIT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_ANIMALS",
+    "interval": "perTurn",
+    "heal": 2
+   }
+  ]
+ },
+ "cost": {
+  "production": 3525,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_REPET"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CLONING_FACTORY"
+ },
+ "identity": {
+  "centerInCity": true,
+  "worth": 6,
+  "militaryWorth": 3,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

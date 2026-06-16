@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_ACHIEVEMENT_COMMERCIAL",
+ "description": "TXT_KEY_BUILDING_ACHIEVEMENT_COMMERCIAL",
+ "civilopedia": "TXT_KEY_BUILDING_ACHIEVEMENT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 8
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_COMMERCIAL_ACHIEVEMENT"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ACHIEVEMENT_COMMERCIAL"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "worth": 10,
+  "specialBuildingType": "SPECIALBUILDING_ACHIEVEMENT",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

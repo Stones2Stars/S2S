@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_ORDINANCE_SMOKE_DETECTOR",
+ "description": "TXT_KEY_BUILDING_ORDINANCE_SMOKE_DETECTOR",
+ "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_SMOKE_DETECTOR_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "BUILDING_NATIONAL_FIRE_SERVICE",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_COURTHOUSE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "empire": {
+   "flat": -25
+  }
+ },
+ "cost": {
+  "production": 1080,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ORDINANCE_SMOKE_DETECTOR"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_FIRE_BRIGADES"
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "worth": 10,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

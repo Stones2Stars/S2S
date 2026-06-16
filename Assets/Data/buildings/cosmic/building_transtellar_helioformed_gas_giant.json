@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_TRANSTELLAR_HELIOFORMED_GAS_GIANT",
+ "description": "TXT_KEY_BUILDING_TRANSTELLAR_HELIOFORMED_GAS_GIANT",
+ "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_HELIOFORMED_GAS_GIANT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_KUGELBLITZ",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_TRANSTELLAR_ARTIFICIAL_GAS_GIANT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 6806
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_TRANSTELLAR_HELIOFORMED_GAS_GIANT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

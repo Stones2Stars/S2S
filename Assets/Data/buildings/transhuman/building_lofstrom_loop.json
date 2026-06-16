@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_LOFSTROM_LOOP",
+ "description": "TXT_KEY_BUILDING_LOFSTROM_LOOP",
+ "civilopedia": "TXT_KEY_BUILDING_LOFSTROM_LOOP_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ORBITAL_RING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MAGLEV_LAUNCHER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MAGLEV_LAUNCHER",
+     "scope": "empire",
+     "min": 2
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 5255,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LOFSTROM_LOOP"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_VOYAGER_PROGRAM",
+ "description": "TXT_KEY_BUILDING_VOYAGER_PROGRAM",
+ "civilopedia": "TXT_KEY_BUILDING_VOYAGER_PROGRAM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_JET_PROPULSION_LABORATORY",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "culture": {
+  "empire": {
+   "buildings": {
+    "BUILDING_PLANETARIUM": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 11070
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_VOYAGER_PROGRAM"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_VOYAGER_PROGRAM"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

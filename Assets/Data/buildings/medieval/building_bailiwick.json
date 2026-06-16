@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_BAILIWICK",
+ "description": "TXT_KEY_BUILDING_BAILIWICK",
+ "civilopedia": "TXT_KEY_BUILDING_BAILIWICK_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_SHERIFFS_OFFICE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_COURTHOUSE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -7
+  }
+ },
+ "cost": {
+  "production": 332,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BAILIWICK"
+  }
+ },
+ "identity": {
+  "militaryWorth": 5,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

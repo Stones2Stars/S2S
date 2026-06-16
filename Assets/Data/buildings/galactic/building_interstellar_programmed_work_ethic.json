@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_INTERSTELLAR_PROGRAMMED_WORK_ETHIC",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_PROGRAMMED_WORK_ETHIC",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PROGRAMMED_WORK_ETHIC_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_INTERSTELLAR_CULTURE_INDUSTRIOUS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1757
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_PROGRAMMED_WORK_ETHIC"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC"
+  ]
+ }
+}

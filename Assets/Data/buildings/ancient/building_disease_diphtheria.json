@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_DISEASE_DIPHTHERIA",
+ "description": "TXT_KEY_BUILDING_DISEASE_DIPHTHERIA",
+ "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+ "food": {
+  "city": {
+   "percent": -4
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -6
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -4,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SANITATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MODERN_SANITATION",
+      "scope": "team"
+     }
+    }
+   ],
+   "perPopulation": {
+    "percent": -40
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYDISEASE"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_AMNESTY_INTERNATIONAL",
+ "description": "TXT_KEY_BUILDING_AMNESTY_INTERNATIONAL",
+ "civilopedia": "TXT_KEY_BUILDING_AMNESTY_INTERNATIONAL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MODERN_OFFICES",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 8850,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_AMNESTY_INTERNATIONAL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_AMNESTY_INTERNATIONAL"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

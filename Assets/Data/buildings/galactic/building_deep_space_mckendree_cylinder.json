@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
+ "description": "TXT_KEY_BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
+ "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_COLD_FUSION",
+   "BUILDING_DEEP_SPACE_EXOTIC_ARCHITECTURE",
+   "BUILDING_DEEP_SPACE_QUANTUM_THRUSTERS",
+   "BUILDING_DEEP_SPACE_TEMPERATURE_REGULATOR",
+   "BUILDING_GRAND_UNIFIED_ACCELERATOR",
+   "BUILDING_SOLAR_CORE_PROBE",
+   "BUILDING_SOLAR_MATRIOSHKA_BRAIN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NANOMORPHIC_HABITATS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_ADVANCED_REPLICATORS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 300
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 9636
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

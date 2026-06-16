@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_HAWKING_HUT",
+ "description": "TXT_KEY_BUILDING_HAWKING_HUT",
+ "civilopedia": "TXT_KEY_BUILDING_HAWKING_HUT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FALCONRY_SCHOOL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_FOLKLORE_T_RAPTORS",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_MASTER_HUNTER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MASTER_HUNTER_TRADITION",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 320,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HAWKING_HUT_HUT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "worth": 1,
+  "advisor": "ADVISOR_GROWTH",
+  "freeStartEra": "C2C_ERA_CLASSICAL",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

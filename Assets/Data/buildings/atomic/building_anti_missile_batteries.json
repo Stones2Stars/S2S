@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_ANTI_MISSILE_BATTERIES",
+ "description": "TXT_KEY_BUILDING_ANTI_MISSILE_BATTERIES",
+ "civilopedia": "TXT_KEY_BUILDING_ANTI_MISSILE_BATTERIES_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ARCOLOGY_SHIELDING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 25
+   },
+   "bombardDefense": {
+    "percent": 25
+   },
+   "nukeDefense": {
+    "percent": -25
+   },
+   "airDefense": {
+    "percent": -25
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 1605,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ANTI_MISSILE_BATTERIES"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "worth": 1,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

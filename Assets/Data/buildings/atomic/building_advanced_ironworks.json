@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_ADVANCED_IRONWORKS",
+ "description": "TXT_KEY_BUILDING_ADVANCED_IRONWORKS",
+ "civilopedia": "TXT_KEY_BUILDING_ADVANCED_IRONWORKS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_EIFFEL_TOWER",
+   "BUILDING_RESOURCES_IRON_INGOTS",
+   "BUILDING_RESOURCES_STEEL_INGOTS",
+   "BUILDING_STATUE_OF_LIBERTY"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_METALS_MEGACOMPLEX"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_SMELTER_IRON",
+   "BUILDING_SMELTER_STEEL",
+   "BUILDING_SMITH_IRON",
+   "BUILDING_SMITH_STEEL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_IRON_ORE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_ASSEMBLY_PLANT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_ELECTRIC_ARC_WEAPONRY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 990,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ADVANCED_IRONWORKS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

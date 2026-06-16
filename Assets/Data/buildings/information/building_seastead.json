@@ -1,0 +1,115 @@
+{
+ "type": "BUILDING_SEASTEAD",
+ "description": "TXT_KEY_BUILDING_SEASTEAD",
+ "civilopedia": "TXT_KEY_BUILDING_SEASTEAD_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_WAVE_FARM",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_OCEAN_THERMAL_POWER_PLANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_RENEWABLE_MEGACOMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      [
+       {
+        "type": "CIVIC_CITY_STATES",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_OPEN_BORDERS",
+        "scope": "empire"
+       },
+       {
+        "type": "CIVIC_POLYSTATE",
+        "scope": "empire"
+       }
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": -50
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2865,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SEASTEAD"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

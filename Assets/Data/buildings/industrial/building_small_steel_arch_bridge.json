@@ -1,0 +1,109 @@
+{
+ "type": "BUILDING_SMALL_STEEL_ARCH_BRIDGE",
+ "description": "TXT_KEY_BUILDING_SMALL_STEEL_ARCH_BRIDGE",
+ "civilopedia": "TXT_KEY_BUILDING_SMALL_STEEL_ARCH_BRIDGE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BUNGEE_JUMPING_SITE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_LARGE_STEEL_ARCH_BRIDGE"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_BAMBOO_BRIDGE",
+   "BUILDING_BRICK_BRIDGE",
+   "BUILDING_CAUSEWAY",
+   "BUILDING_CHAIN_BRIDGE",
+   "BUILDING_COVERED_BRIDGE",
+   "BUILDING_LOG_BRIDGE",
+   "BUILDING_ROPE_BRIDGE",
+   "BUILDING_STONE_BRIDGE",
+   "BUILDING_TRUSS_BRIDGE",
+   "BUILDING_VIADUCT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_RIVER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_PAVED_ROADS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ASPHALT_ROADS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SKYROAD_CONTROL_TOWER",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 11,
+   "percent": 11
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -11
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": -1
+   },
+   "riverDefensePenalty": {
+    "flat": 33
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1,
+   "modifier": {
+    "percent": 22
+   }
+  }
+ },
+ "cost": {
+  "production": 740,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SMALL_STEEL_ARCH_BRIDGE"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

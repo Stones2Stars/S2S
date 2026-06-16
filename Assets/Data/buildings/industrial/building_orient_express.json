@@ -1,0 +1,126 @@
+{
+ "type": "BUILDING_ORIENT_EXPRESS",
+ "description": "TXT_KEY_BUILDING_ORIENT_EXPRESS",
+ "civilopedia": "TXT_KEY_BUILDING_ORIENT_EXPRESS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_RAILROAD_STATION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TELEPORT_BOOTH",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    8,
+    {
+     "value": 8,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "buildings": {
+    "BUILDING_RAILROAD_STATION": {
+     "flat": 2
+    },
+    "BUILDING_TELEPORT_BOOTH": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BUILDING_RAILROAD_STATION",
+      "scope": "city"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BUILDING_TELEPORT_BOOTH",
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "foreignModifier": {
+    "percent": 50
+   }
+  }
+ },
+ "cost": {
+  "production": 3930,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ORIENT_EXPRESS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ORIENT_EXPRESS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_SPY",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

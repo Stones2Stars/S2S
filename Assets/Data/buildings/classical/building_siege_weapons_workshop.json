@@ -1,0 +1,102 @@
+{
+ "type": "BUILDING_SIEGE_WEAPONS_WORKSHOP",
+ "description": "TXT_KEY_BUILDING_SIEGE_WEAPONS_WORKSHOP",
+ "civilopedia": "TXT_KEY_BUILDING_SIEGE_WEAPONS_WORKSHOP_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BALLISTA_TURRET"
+  ],
+  "units": [
+   "UNIT_ANCIENT_FLAMETHROWER",
+   "UNIT_ANCIENT_HAND_CANNON",
+   "UNIT_ANCIENT_ROCKETEER",
+   "UNIT_BALLISTA",
+   "UNIT_BALLISTA_ELEPHANT",
+   "UNIT_BARUD_WARRIOR",
+   "UNIT_CARROBALLISTA",
+   "UNIT_CATAPULT",
+   "UNIT_HEAVY_BALLISTA",
+   "UNIT_LITHOBOLOS",
+   "UNIT_MOBILE_TREBUCHET",
+   "UNIT_ORNITHOPTER",
+   "UNIT_OXYBELES",
+   "UNIT_PEN_HUO_QI",
+   "UNIT_SCORPION",
+   "UNIT_SIEGE_ENGINEER",
+   "UNIT_SIEGE_ONAGER",
+   "UNIT_SIEGE_RAM",
+   "UNIT_SIEGE_TOWER",
+   "UNIT_TREBUCHET",
+   "UNIT_WAR_WAGON",
+   "UNIT_ZEPHYR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CARPENTER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_CATAPULT": {
+     "percent": 10
+    },
+    "UNIT_TREBUCHET": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_MECHANICAL",
+    "interval": "perTurn",
+    "heal": 3
+   }
+  ]
+ },
+ "cost": {
+  "production": 225,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SIEGE_WEAPONS_WORKSHOP"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SIEGE_WORKSHOP"
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 3,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

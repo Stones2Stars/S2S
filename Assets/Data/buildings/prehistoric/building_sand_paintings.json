@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_SAND_PAINTINGS",
+ "description": "TXT_KEY_BUILDING_SAND_PAINTINGS",
+ "civilopedia": "TXT_KEY_BUILDING_SAND_PAINTINGS_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_LYCEUM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SAND",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 50,
+  "countModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SAND_PAINTINGS"
+  }
+ },
+ "identity": {
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

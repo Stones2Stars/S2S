@@ -1,0 +1,102 @@
+{
+ "type": "BUILDING_LIFE_SILICON_BASED",
+ "description": "TXT_KEY_BUILDING_LIFE_SILICON_BASED",
+ "civilopedia": "TXT_KEY_BUILDING_LIFE_SILICON_BASED_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_LUNAR_SILICON_PROCESSING_FACILITY",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_TERRAFORMED_LUNA",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_GAIA_ECOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 200,
+   "percent": [
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_NUTRACEUTICAL_ANIMALS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_ADAPTIVE_RADIATION",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": [
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_ECOSYNTHESIS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3963
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LIFE_SILICON_BASED"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

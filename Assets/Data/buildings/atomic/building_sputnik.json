@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_SPUTNIK",
+ "description": "TXT_KEY_BUILDING_SPUTNIK",
+ "civilopedia": "TXT_KEY_BUILDING_SPUTNIK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_EFFECT_LAUNCH_SITE",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -2
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_COMMUNICATIONS_SATELLITE": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_SATELLITE": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 8070
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SPUTNIK"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SPUTNIK"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

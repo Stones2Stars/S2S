@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_INTERSTELLAR_KUGELBLITZ_POWER_PLANT",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_KUGELBLITZ_POWER_PLANT",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_KUGELBLITZ_POWER_PLANT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MILKY_WAY_CORE_COLONY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_KUGELBLITZ",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 120
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3611
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_KUGELBLITZ_POWER_PLANT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

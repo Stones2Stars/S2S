@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_SLAVE_COMPOUND_COMMERCE",
+ "description": "TXT_KEY_BUILDING_SLAVE_COMPOUND_COMMERCE",
+ "civilopedia": "TXT_KEY_BUILDING_SLAVE_COMPOUND_PEDIA",
+ "help": "TXT_KEY_BUILDING_SLAVE_COMPOUND_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SLAVE_COMPOUND",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SLAVE_COMPOUND_COMMERCE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SLAVE_MARKET"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SLAVES": 1
+  },
+  "neverCapture": true,
+  "worth": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

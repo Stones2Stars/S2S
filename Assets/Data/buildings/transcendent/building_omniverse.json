@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_OMNIVERSE",
+ "description": "TXT_KEY_BUILDING_OMNIVERSE",
+ "civilopedia": "TXT_KEY_BUILDING_OMNIVERSE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_EFFECT_MULTIVERSAL_ECONOMY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HYPERSPACE_INFLATON_FIELD",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
+     "scope": "empire",
+     "min": 2
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 14732
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_UNIVERSE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_OMNIVERSE"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

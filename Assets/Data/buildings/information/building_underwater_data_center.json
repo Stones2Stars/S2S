@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_UNDERWATER_DATA_CENTER",
+ "description": "TXT_KEY_BUILDING_UNDERWATER_DATA_CENTER",
+ "civilopedia": "TXT_KEY_BUILDING_UNDERWATER_DATA_CENTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER",
+    "HAS_POWER",
+    {
+     "type": "BUILDING_CLOUD_SERVER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 2005,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_UNDERWATER_DATA_CENTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

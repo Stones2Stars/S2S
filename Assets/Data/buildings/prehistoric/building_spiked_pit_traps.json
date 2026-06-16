@@ -1,0 +1,108 @@
+{
+ "type": "BUILDING_SPIKED_PIT_TRAPS",
+ "description": "TXT_KEY_BUILDING_SPIKED_PIT_TRAPS",
+ "civilopedia": "TXT_KEY_BUILDING_SPIKED_PIT_TRAPS_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MECHANICAL_TRAPS"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_PIT_TRAPS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BAMBOO",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 10
+   },
+   "damageAttackerChance": {
+    "flat": 20
+   },
+   "damageToAttacker": {
+    "flat": 10
+   },
+   "repel": {
+    "flat": 15
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 62,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SPIKED_PIT_TRAPS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_FORGE"
+ },
+ "identity": {
+  "damageAttackingUnitCombats": [
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_WHEELED"
+  ],
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

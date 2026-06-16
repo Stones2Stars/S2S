@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_INTERSTELLAR_RESIDENTIAL_DISTRICT",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_RESIDENTIAL_DISTRICT",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_RESIDENTIAL_DISTRICT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2856
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_RESIDENTIAL_DISTRICT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

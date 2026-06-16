@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_DRYDOCK",
+ "description": "TXT_KEY_BUILDING_DRYDOCK",
+ "civilopedia": "TXT_KEY_BUILDING_DRYDOCK_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_GRAND_MARINE_FESTIVAL",
+   "BUILDING_MAGELLANS_VOYAGE",
+   "BUILDING_PEARL_HARBOR",
+   "BUILDING_SCAPA_FLOW",
+   "BUILDING_VENETIAN_ARSENAL"
+  ],
+  "units": [
+   "UNIT_HOSPITAL_SHIP"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_NAVAL_YARD"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_SHIPYARD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "IS_WATER",
+    {
+     "type": "BUILDING_HARBORMASTERS_OFFICE",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_CEMENT",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "experience": {
+  "city": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_NAVAL",
+    "interval": "perTurn",
+    "heal": 7
+   }
+  ]
+ },
+ "cost": {
+  "production": 740,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DRYDOCK"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_DRYDOCK"
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 2,
+  "conquestProbability": 75,
+  "dcmAirbombMission": 3,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

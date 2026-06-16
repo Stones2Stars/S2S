@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES",
+ "description": "TXT_KEY_BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES",
+ "civilopedia": "TXT_KEY_BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_TRANSAMERICA_TOWER"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_AUCTION_HOUSE",
+   "BUILDING_CREDIT_UNION",
+   "BUILDING_INSURANCE_OFFICE",
+   "BUILDING_LOAN_SHARK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_BLOCKCHAIN_AUTHENTICATION",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    15,
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_MESH_NETWORKS",
+      "scope": "team"
+     }
+    }
+   ],
+   "percent": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -7
+  }
+ },
+ "cost": {
+  "production": 2405,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

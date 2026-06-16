@@ -1,0 +1,125 @@
+{
+ "type": "BUILDING_FACTORY_ANTI_GRAVITY_FIELD_GENERATORS",
+ "description": "TXT_KEY_BUILDING_FACTORY_ANTI_GRAVITY_FIELD_GENERATORS",
+ "civilopedia": "TXT_KEY_BUILDING_FACTORY_ANTI_GRAVITY_FIELD_GENERATORS_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_NANOTECH_COMPLEX"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_FACTORY_LEVITATION_GENERATORS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "BUILDING_FACTORY",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_GOLD_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_SILVER_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PLATINUM_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_COPPER_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25,
+   "percent": [
+    {
+     "value": 1000,
+     "enabled": {
+      "type": "TECH_SHIELDING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_NAVAL",
+    "interval": "perTurn",
+    "heal": 5
+   },
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_SPACECRAFT",
+    "interval": "perTurn",
+    "heal": 5
+   },
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_AIRCRAFT",
+    "interval": "perTurn",
+    "heal": 5
+   }
+  ]
+ },
+ "cost": {
+  "production": 5655,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ANTIGRAV_FIELD_GENERATOR_FACTORY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,110 @@
+{
+ "type": "BUILDING_POWER_LINES",
+ "description": "TXT_KEY_BUILDING_POWER_LINES",
+ "civilopedia": "TXT_KEY_BUILDING_POWER_LINES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIOFUEL_POWER_PLANT",
+   "BUILDING_BIOMASS_POWER_PLANT",
+   "BUILDING_COAL_FIRED_DYNAMO",
+   "BUILDING_COAL_PLANT",
+   "BUILDING_DEPARTMENT_OF_ENERGY",
+   "BUILDING_DOWNDRAFT_TOWER",
+   "BUILDING_D_T_FUSION_POWER_PLANT",
+   "BUILDING_ELECTRICIANS_WORKSHOP",
+   "BUILDING_EMP_GRID",
+   "BUILDING_ENHANCED_GEOTHERMAL_SYSTEM",
+   "BUILDING_FLOATING_SOLAR_ARRAY",
+   "BUILDING_GENERATION_IV_REACTOR",
+   "BUILDING_GEOTHERMAL_POWER_PLANT",
+   "BUILDING_HE3_FUSION_POWER_PLANT",
+   "BUILDING_HIGH_TECH_COAL_POWER_PLANT",
+   "BUILDING_HYDRAULIC_FRACTURING",
+   "BUILDING_HYDRO_PLANT",
+   "BUILDING_JETSTREAM_POWER_PLANT",
+   "BUILDING_METHANE_POWER_PLANT",
+   "BUILDING_MICROWAVE_POWER_PLANT",
+   "BUILDING_NATURAL_GAS_POWER_PLANT",
+   "BUILDING_NUCLEAR_PLANT",
+   "BUILDING_OCEAN_THERMAL_POWER_PLANT",
+   "BUILDING_OIL_POWER_PLANT",
+   "BUILDING_OSMOTIC_POWER_PLANT",
+   "BUILDING_PEAT_FIRED_DYNAMO",
+   "BUILDING_SHALE_PLANT",
+   "BUILDING_SMART_GRID",
+   "BUILDING_SOLAR_HIGHWAY",
+   "BUILDING_SOLAR_MIRROR_ARRAY_POWER_PLANT",
+   "BUILDING_SOLAR_PARKING_LOT",
+   "BUILDING_SOLAR_PHOTOVOLTAIC_POWER_PLANT",
+   "BUILDING_SOLAR_PHOTOVOLTAIC_ROOFS",
+   "BUILDING_SOLAR_UPDRAFT_TOWER",
+   "BUILDING_SUPERCONDUCTING_GRID",
+   "BUILDING_THREE_GORGES_DAM",
+   "BUILDING_TIDAL_FARM",
+   "BUILDING_WASTE_INCINERATOR_POWER_PLANT",
+   "BUILDING_WAVE_FARM",
+   "BUILDING_WIND_FARM",
+   "BUILDING_WIND_TURBINE_HIGHWAY",
+   "BUILDING_WIRELESS_GRID",
+   "BUILDING_WOOD_FIRED_DYNAMO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_COPPER_WIRES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_FIBER_OPTIC_CABLES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 770,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_POWER_LINES"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_LIFE_METAL_OXIDE",
+ "description": "TXT_KEY_BUILDING_LIFE_METAL_OXIDE",
+ "civilopedia": "TXT_KEY_BUILDING_LIFE_METAL_OXIDE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_MERCURY",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 200
+  },
+  "empire": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BUILDING_TERRAFORMED_MERCURY",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 300
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1744
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LIFE_METAL_OXIDE"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

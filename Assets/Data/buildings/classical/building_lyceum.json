@@ -1,0 +1,147 @@
+{
+ "type": "BUILDING_LYCEUM",
+ "description": "TXT_KEY_BUILDING_LYCEUM",
+ "civilopedia": "TXT_KEY_BUILDING_LYCEUM_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ELEMENTARY_SCHOOL"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_COUNTING_STICKS",
+   "BUILDING_ELDER_COUNCIL",
+   "BUILDING_KNOWLEDGE_INHERITANCE",
+   "BUILDING_SAND_PAINTINGS",
+   "BUILDING_SCHOOL_OF_RHETORIC",
+   "BUILDING_TALLY_STONE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_GRAMMATICUS",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_PALACE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HOUSING_VILLAS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HOUSING_PALACES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HOUSING_MANORS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HOUSING_ESTATES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HOUSING_MANSIONS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HOUSING_CONDOMINIUMS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HOUSING_CHATEAU",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_LAUNCH_ARCOLOGY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 7,
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_DIPLOMAT": {
+     "flat": 2
+    },
+    "UNITCOMBAT_SPY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "cost": {
+  "production": 252,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LYCEUM"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SCIENTIST": 1
+  },
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

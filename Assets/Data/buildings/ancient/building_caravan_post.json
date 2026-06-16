@@ -1,0 +1,105 @@
+{
+ "type": "BUILDING_CARAVAN_POST",
+ "description": "TXT_KEY_BUILDING_CARAVAN_POST",
+ "civilopedia": "TXT_KEY_BUILDING_CARAVAN_POST_PEDIA",
+ "enables": {
+  "units": [
+   "UNIT_ARJOS",
+   "UNIT_BEAD_HUCKSTER",
+   "UNIT_COPENA_MERCHANT",
+   "UNIT_FOOD_CARAVAN",
+   "UNIT_MAIZE_CARAVAN",
+   "UNIT_MEIONE_CARAVAN",
+   "UNIT_MYRH_CARAVAN",
+   "UNIT_NOK_MERCHANTS",
+   "UNIT_RESIN_CARAVAN",
+   "UNIT_TRADE_CARAVAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_CAMEL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_LLAMA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_BUFFALO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_DONKEY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_HORSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_ELEPHANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FARM_ANIMAL_OXEN",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_INDUSTRIAL_FARMS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 12
+   }
+  }
+ },
+ "cost": {
+  "production": 153,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CARAVAN_POST"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MARKETPLACE"
+ },
+ "identity": {
+  "worth": 3,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

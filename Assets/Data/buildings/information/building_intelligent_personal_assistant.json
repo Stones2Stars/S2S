@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_INTELLIGENT_PERSONAL_ASSISTANT",
+ "description": "TXT_KEY_BUILDING_INTELLIGENT_PERSONAL_ASSISTANT",
+ "civilopedia": "TXT_KEY_BUILDING_INTELLIGENT_PERSONAL_ASSISTANT_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_KNOWLEDGE_NAVIGATOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_SPEECH_RECOGNITION_SOFTWARE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    14,
+    {
+     "value": 900,
+     "enabled": {
+      "type": "TECH_ONTOLOGICAL_ENGINEERING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 2625,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTELLIGENT_PERSONAL_ASSISTANT"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

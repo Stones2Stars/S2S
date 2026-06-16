@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_HYPERSPACE_INFLATON_FIELD",
+ "description": "TXT_KEY_BUILDING_HYPERSPACE_INFLATON_FIELD",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_INFLATON_FIELD_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_FAIRYLAND",
+   "BUILDING_HYPERSPACE_OPEN_FRW_UNIVERSE",
+   "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
+   "BUILDING_OMNIVERSE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SPACE_COLONY_HYPERSPACE_PORTAL",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -20,
+   "percent": [
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_SUBDIMENSIONAL_UNIVERSE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1485
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERSPACE_INFLATON_FIELD"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

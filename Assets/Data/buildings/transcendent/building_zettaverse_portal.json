@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_ZETTAVERSE_PORTAL",
+ "description": "TXT_KEY_BUILDING_ZETTAVERSE_PORTAL",
+ "civilopedia": "TXT_KEY_BUILDING_ZETTAVERSE_PORTAL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_INTERGALACTIC_TEMPORAL_RIFT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_EXAVERSE_PORTAL",
+     "scope": "empire",
+     "min": 1
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 60
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 18
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 11410
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ZETTAVERSE_PORTAL"
+  }
+ },
+ "identity": {
+  "forceNoPrereqScaling": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

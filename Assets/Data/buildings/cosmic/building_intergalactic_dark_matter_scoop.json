@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_INTERGALACTIC_DARK_MATTER_SCOOP",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_DARK_MATTER_SCOOP",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_DARK_MATTER_SCOOP_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_MINE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4004
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_DARK_MATTER_SCOOP"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

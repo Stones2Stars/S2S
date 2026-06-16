@@ -1,0 +1,32 @@
+{
+ "type": "BUILDING_SAFETY_NEIGHBORHOOD_WATCH",
+ "description": "TXT_KEY_BUILDING_SAFETY_NEIGHBORHOOD_WATCH",
+ "civilopedia": "TXT_KEY_BUILDING_SAFETY_NEIGHBORHOOD_WATCH_PEDIA",
+ "gold": {
+  "city": {
+   "perPopulation": -50
+  }
+ },
+ "espionage": {
+  "city": {
+   "perPopulation": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SAFETY_NEIGHBORHOOD_WATCH"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

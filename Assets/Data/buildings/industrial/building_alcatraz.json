@@ -1,0 +1,116 @@
+{
+ "type": "BUILDING_ALCATRAZ",
+ "description": "TXT_KEY_BUILDING_ALCATRAZ",
+ "civilopedia": "TXT_KEY_BUILDING_ALCATRAZ_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_PRISON_BREAKOUTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "AREA_SIZE",
+     "scope": "world",
+     "min": 10
+    },
+    {
+     "type": "BUILDING_JAIL",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_POLICE_STATION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_POLICE_PRECINCT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -4
+  },
+  "empire": {
+   "flat": 2
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -75
+  }
+ },
+ "cost": {
+  "production": 4800,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ALCATRAZ"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ALCATRAZ"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MAX_PRISON"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_SPY": 3
+  },
+  "nukeImmune": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_SPY",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

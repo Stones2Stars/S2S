@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_LEECH_CATCHER",
+ "description": "TXT_KEY_BUILDING_LEECH_CATCHER",
+ "civilopedia": "TXT_KEY_BUILDING_LEECH_CATCHER_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ALTERNATIVE_MEDICINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_HEALERS_HUT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DOCTORS_OFFICE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SURGEONS_OFFICE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MEDICAL_CLINIC",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "TERRAIN_MARSH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "cost": {
+  "production": 50,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_LEECH_CATCHER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

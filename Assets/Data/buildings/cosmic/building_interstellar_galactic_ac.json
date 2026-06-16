@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_INTERSTELLAR_GALACTIC_AC",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_GALACTIC_AC",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_GALACTIC_AC_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_INTERSTELLAR_SUPERCOMPUTER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MULTIVAC",
+     "scope": "empire",
+     "min": 1
+    },
+    {
+     "type": "BUILDING_DEEP_SPACE_MICROVAC",
+     "scope": "empire",
+     "min": 1
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 6278
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_GALACTIC_AC"
+  }
+ },
+ "identity": {
+  "forceNoPrereqScaling": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_DIG_SITE_MAMMOTH_FOSSILS",
+ "description": "TXT_KEY_BUILDING_DIG_SITE_MAMMOTH_FOSSILS",
+ "civilopedia": "TXT_KEY_BUILDING_DIG_SITE_MAMMOTH_FOSSILS_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_FOSSILS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MODERN_EARTHWORKS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MAMMOTH",
+     "scope": "city",
+     "connection": "vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_FOSSIL_BEDS",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 555,
+  "sizeModifier": 2,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DIG_SITE_MAMMOTH_FOSSILS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

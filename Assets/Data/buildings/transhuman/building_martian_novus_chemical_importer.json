@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_MARTIAN_NOVUS_CHEMICAL_IMPORTER",
+ "description": "TXT_KEY_BUILDING_MARTIAN_NOVUS_CHEMICAL_IMPORTER",
+ "civilopedia": "TXT_KEY_BUILDING_MARTIAN_NOVUS_CHEMICAL_IMPORTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_EFFECT_MARS_CYCLER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_MARTIAN_CITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 60
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1921
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MARTIAN_NOVUS_CHEMICAL_IMPORTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

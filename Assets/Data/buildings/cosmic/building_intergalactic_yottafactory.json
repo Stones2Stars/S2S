@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_INTERGALACTIC_YOTTAFACTORY",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_YOTTAFACTORY",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_YOTTAFACTORY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_BIRCH_PLANET",
+   "BUILDING_INTERGALACTIC_SHKADOV_THRUSTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 4492
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_YOTTAFACTORY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

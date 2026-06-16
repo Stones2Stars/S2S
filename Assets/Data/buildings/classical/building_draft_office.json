@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_DRAFT_OFFICE",
+ "description": "TXT_KEY_BUILDING_DRAFT_OFFICE",
+ "civilopedia": "TXT_KEY_BUILDING_DRAFT_OFFICE_PEDIA",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_CONSCRIPTION",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "cost": {
+  "production": 216,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 9
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DRAFT_OFFICE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "worth": 8,
+  "militaryWorth": 8,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

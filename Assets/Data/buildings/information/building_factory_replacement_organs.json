@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_FACTORY_REPLACEMENT_ORGANS",
+ "description": "TXT_KEY_BUILDING_FACTORY_REPLACEMENT_ORGANS",
+ "civilopedia": "TXT_KEY_BUILDING_FACTORY_REPLACEMENT_ORGANS_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_MEDICAL_MEGACOMPLEX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_FACTORY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_CLONING_LABORATORY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_TISSUE_ENGINEERING_LAB",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2865,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FACTORY_REPLACEMENT_ORGANS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,158 @@
+{
+ "type": "BUILDING_FOLKLORE_T_RAPTORS",
+ "description": "TXT_KEY_BUILDING_FOLKLORE_T_RAPTORS",
+ "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HAWKING_HUT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_FOLKLORE_REQUIREMENT",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_FOLKLORE_EAGLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_BALD_EAGLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_HAASTS_EAGLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_PALEOLITHIC_BIRDS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_HARPY_EAGLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_HAWK",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_STELLERS_SEA_EAGLE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1,
+   "percent": [
+    {
+     "value": -60,
+     "enabled": {
+      "type": "TECH_LANGUAGE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_CLASSICAL_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_MEDIEVAL_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_RENAISSANCE_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -10,
+     "enabled": {
+      "type": "TECH_INDUSTRIAL_LIFESTYLE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_LANGUAGE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_CLASSICAL_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_MEDIEVAL_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_RENAISSANCE_LIFESTYLE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "TECH_INDUSTRIAL_LIFESTYLE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 250,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_FOLKLORE_T_RAPTORS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "specialBuildingType": "SPECIALBUILDING_FOLKLORE_TAXONOMY",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

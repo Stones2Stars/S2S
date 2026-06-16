@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_RICE_PADDY",
+ "description": "TXT_KEY_BUILDING_RICE_PADDY",
+ "civilopedia": "TXT_KEY_BUILDING_RICE_PADDY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_GRAINS",
+   "BUILDING_RICE_TERRACE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_III"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_RICE_GATHERER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER"
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_RICE",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 118,
+  "sizeModifier": 3,
+  "countModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_RICE_PADDY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

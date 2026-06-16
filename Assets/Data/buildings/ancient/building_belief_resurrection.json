@@ -1,0 +1,37 @@
+{
+ "type": "BUILDING_BELIEF_RESURRECTION",
+ "description": "TXT_KEY_BUILDING_BELIEF_RESURRECTION",
+ "civilopedia": "TXT_KEY_BUILDING_BELIEF_RESURRECTION_PEDIA",
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_BELIEF_RESURRECTION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
+ "description": "TXT_KEY_BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
+ "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_CHRONOTON_GENERATOR",
+   "BUILDING_INTERGALACTIC_DARK_ENERGY_PLANT",
+   "BUILDING_INTERGALACTIC_GRAVITATIONAL_CRANE",
+   "BUILDING_INTERGALACTIC_MATTER_PRESERVER",
+   "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
+   "BUILDING_INTERGALACTIC_PROTON_DECAY_GENERATOR",
+   "BUILDING_INTERGALACTIC_SUPERMASSIVE_BLACK_HOLE_PLANT",
+   "BUILDING_INTERGALACTIC_ZERO_POINT_PLANT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERGALACTIC_FUSION_PLANTS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    100,
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_ZERO_POINT_ENERGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1200,
+     "enabled": {
+      "type": "TECH_NEUTRONIUM",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2634
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

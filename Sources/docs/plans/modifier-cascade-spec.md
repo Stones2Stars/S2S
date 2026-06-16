@@ -255,6 +255,40 @@ deposit, default ×1 — the same opt-in philosophy as `enabled`.
   `perPopulation`/`perMilitaryUnit`/`perTurn` unit** — one mechanism scales by the count of anything (a
   data Type at a scope, or a catch-all token). `SELF` = count of the owning entity's own type.
 
+### 4.1 REPEATABLE GRANTS + the `interval` temporal primitive (owner-blessed 2026-06-16, Building #32)
+The one-shot `grants` (enabler-spec §6) fires ONCE on an event. The deferred `outcomes` (UnitCombat #29) parks on a
+unit and fires when a mission is pushed. The THIRD grant-lifecycle variant — **`grants.repeatable`** — fires
+**recurringly on an INTERVAL**, optionally gated by a CHANCE the engine rolls. It introduces ONE new model
+primitive — **`interval`**, the temporal sibling of `per` (count, §4):
+- **`interval`** — when/how-often the grant fires. **`interval: { perTurn: N }` = every N turns**; the bare string
+  **`interval: perTurn` DESUGARS to `{ perTurn: 1 }`** (every turn) — the same bare-shorthand pattern as the §3
+  predicates. (Other interval kinds — e.g. `everyEra` — grow per case; `perTurn` is the only one #428 needs.)
+- **A `grants.repeatable` entry** = `{ <payload>, interval, chance?, enabled? }`:
+  - **payload** — what is granted EACH interval: a `unit` (PropertySpawn — a criminal), a `heal` count
+    (iNumUnitFullHeal — fully heal N units/turn; HealUnitCombat — +N HP/turn to a unit-combat class), etc.
+  - **`chance`** *(optional)* — the probability the engine rolls (`getSorenRandNum`) before granting; **reuses the
+    §4 `per` count-scaler** so the chance can scale with a count — e.g. `chance: { per: { type: PROPERTY_CRIME,
+    scope: city } }` (spawn odds rise with the city's crime). Absent ⇒ fires unconditionally each interval.
+  - **`enabled`** *(optional)* — the usual §3 conditional.
+- **TWO-STAGE gate (owner):** the **building's own `requires`** is the OUTER gate (is this building active at all —
+  e.g. a crime effect-building's `requires.operate` crime-band dormancy); then the repeatable entry's **`chance`/
+  `enabled`** is the INNER gate, re-checked each interval. Together = the "fully fledged system."
+- **§0.6 engine boundary:** the data carries only payload + interval + chance-driver; the engine owns the
+  `getSorenRandNum` roll, the interval ticking, and owner-selection (a NEGATIVE property like crime spawns the unit
+  **barbarian-owned**, `PropertyInfo.AIWeight < 0`). Exact chance arithmetic (crime `value/2`, criminal-count
+  damping) pins at #430.
+- **Worked example (PropertySpawn → criminal):**
+  ```jsonc
+  "grants": { "repeatable": [
+    { "unit": "UNIT_PROPERTY_CRIMINAL", "interval": "perTurn",
+      "chance": { "per": { "type": "PROPERTY_CRIME", "scope": "city" } } }
+  ] }
+  ```
+- **NOT a repeatable grant: a continuous count-scaled RATE is just a `per`-scaled MODIFIER** (owner 2026-06-16) — the
+  *shrine* (`GlobalReligionCommerce`) adds commerce every turn scaled by cities holding its religion, which is
+  exactly `commerce.city.flat: { value, per: { type: RELIGION_X, scope: world } }`. A continuous rate is a modifier;
+  `grants.repeatable` is for DISCRETE per-interval provisions (a unit, a heal) that cannot be a standing accumulator.
+
 ---
 
 ## 5. The `unit` plane — a SELF-ACCUMULATOR
@@ -368,9 +402,19 @@ is #429's — never accommodated in the #428 modifier structure.**
 
 **The dead-list re-splits FOUR ways (the grounding verified "dead" against C++ only — re-verify each against
 `Assets/Python` AND intent; ~4 of 15 were misclassified):**
-- **(i) TRULY dead → drop:** Building `iMaxPopulationAllowed`/`iMaxPopulationChange`/`iNukeExplosionRand` ·
+- **(i) TRULY dead → drop:** Building `iMaxPopulationAllowed`/`iMaxPopulationChange` ·
   Bonus `m_piImprovementChange` · Promotion `iDamageperTurn`/`iWeakenperTurn`/`iStrAdjperTurn` · UnitCombat
   `m_PropertyManipulators` · PromotionLine `*ContractChanceChanges` · root Improvement `m_iDepletionRand`.
+  - **⚠ CLARIFICATION (Building #32, 2026-06-16): Building `iNukeExplosionRand` is NOT dead-CODE, but is dead-DATA in
+    the migrated set → NOT EMITTED (effectively dropped).** The **meltdown** mechanic IS wired and runs every turn
+    (`CvCity::doMeltdown` is called from `doTurn`, CvCity.cpp:1353; it rolls `getSorenRandNum(10000) < iNukeExplosionRand`
+    per building to trigger a nuclear-plant meltdown; pedia at CvGameTextMgr.cpp:16279). BUT the field is populated by
+    **only the EXCLUDED `Bad_Karma/Building_Meltdown` module** (5 buildings, `bLoad=0`,
+    `store.EXCLUDED_MODULE_SUBPATHS`) — so **no INCLUDED building sets it**, and the curator never emits it (like any
+    all-zero field, cf. Terrain's "0/42 authored → not emitted"). The third category beyond dead-code/live-data:
+    **live-code + excluded-module-only-data**. (If Bad_Karma were ever included, its home would be `identity.meltdownChance`
+    — a per-turn RNG disaster chance, RNG out of cascade §7d. The original §8(i) "truly dead" was wrong on the *reason*,
+    right on the *outcome*.)
 - **(ii) UNWIRED MODIFIERS (legit intent, never wired — per-item):** Tech `FreeSpecialistCounts` → **revive**
   as `freeSpecialists` modifier (Python-live; "adding a specialist is a modifier"). Building
   `iPillageGoldModifier` → **revive** as `pillageGold.empire.percent` (a world wonder boosting pillage gold

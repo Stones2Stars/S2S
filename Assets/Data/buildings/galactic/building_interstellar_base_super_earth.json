@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_INTERSTELLAR_BASE_SUPER_EARTH",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_BASE_SUPER_EARTH",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BASE_SUPER_EARTH_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_LIFE_SUPERCRITICAL_CO2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_SUPER_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 250
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2536
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_BASE_SUPER_EARTH"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

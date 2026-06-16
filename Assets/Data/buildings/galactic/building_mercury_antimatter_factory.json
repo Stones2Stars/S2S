@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_MERCURY_ANTIMATTER_FACTORY",
+ "description": "TXT_KEY_BUILDING_MERCURY_ANTIMATTER_FACTORY",
+ "civilopedia": "TXT_KEY_BUILDING_MERCURY_ANTIMATTER_FACTORY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_MERCURY_COLONY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_EFFECT_SOLAR_ECONOMY",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "TERRAIN_MERCURY",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 34707
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MERCURY_ANTIMATTER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MERCURY_ANTIMATTER_FACTORY"
+  }
+ },
+ "identity": {
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

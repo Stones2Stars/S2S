@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_CONTROL_CENTER",
+ "description": "TXT_KEY_BUILDING_CONTROL_CENTER",
+ "civilopedia": "TXT_KEY_BUILDING_CONTROL_CENTER_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AMBULANCE_DRONE_CONTROL_CENTER",
+   "BUILDING_DELIVERY_DRONE_CONTROL_CENTER",
+   "BUILDING_FARM_BOT_CONTROL_CENTER",
+   "BUILDING_FIRE_SAFETY_DRONE_CONTROL_CENTER",
+   "BUILDING_MINING_BOT_CONTROL_CENTER",
+   "BUILDING_PLYMOUTH_ARCOLOGY",
+   "BUILDING_POLICE_DRONE_CONTROL_CENTER",
+   "BUILDING_SHOPPING_DRONE_CONTROL_CENTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_MILITARY_BASE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_ASSAULT_MECH": {
+     "flat": 2
+    },
+    "UNITCOMBAT_DREADNOUGHT": {
+     "flat": 2
+    }
+   },
+   "domains": {
+    "DOMAIN_AIR": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_TECH",
+    "interval": "perTurn",
+    "heal": 4
+   }
+  ]
+ },
+ "cost": {
+  "production": 2865,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CONTROL_CENTER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CONTROL_TOWER"
+ },
+ "identity": {
+  "worth": 10,
+  "militaryWorth": 10,
+  "conquestProbability": 65,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

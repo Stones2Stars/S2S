@@ -1,0 +1,193 @@
+{
+ "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
+ "description": "TXT_KEY_BUILDING_ATHLETIC_MEGACOMPLEX",
+ "civilopedia": "TXT_KEY_BUILDING_ATHLETIC_MEGACOMPLEX_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BATTLEMECH_ARENA",
+   "BUILDING_DEATH_COMBAT_ARENA",
+   "BUILDING_HIDE_AND_SEEK",
+   "BUILDING_HUNGER_GAMES",
+   "BUILDING_NATIONAL_NIGHT_OF_HOCKEY",
+   "BUILDING_REHABILITATION",
+   "BUILDING_ULTIMATE_COMBAT_ARENA"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_BASE_JUMPING_SITE",
+   "BUILDING_BASKETBALL_COURT",
+   "BUILDING_BOSSABALL_COURT",
+   "BUILDING_BOWLING_ALLEY",
+   "BUILDING_BOXING_RING",
+   "BUILDING_BUNGEE_JUMPING_SITE",
+   "BUILDING_COUNTRY_CLUB",
+   "BUILDING_CRICKET_FIELD",
+   "BUILDING_CROQUET_FIELD",
+   "BUILDING_CURLING_SHEET",
+   "BUILDING_DROP_ZONE",
+   "BUILDING_FENCING_ACADEMY",
+   "BUILDING_GOLF_COURSE",
+   "BUILDING_GYM",
+   "BUILDING_HOCKEY_RINK",
+   "BUILDING_ICE_RINK",
+   "BUILDING_JAI_ALAI_COURT",
+   "BUILDING_LACROSSE_FIELD",
+   "BUILDING_LASER_TAG_ARENA",
+   "BUILDING_MASTERS_DOJO",
+   "BUILDING_MINI_GOLF_COURSE",
+   "BUILDING_MOUNTAIN_CLIMBING_SITE",
+   "BUILDING_PAINTBALL_ARENA",
+   "BUILDING_PING_PONG_ARENA",
+   "BUILDING_POLO_FIELD",
+   "BUILDING_PUBLIC_POOL",
+   "BUILDING_RECREATION_CENTER",
+   "BUILDING_RIVER_RAFTING_DOCK",
+   "BUILDING_ROLLER_DERBY_TRACK",
+   "BUILDING_RUGBY_FIELD",
+   "BUILDING_SKATE_PARK",
+   "BUILDING_SKI_RESORT",
+   "BUILDING_SLAMBALL_COURT",
+   "BUILDING_SOCCER_FIELD",
+   "BUILDING_SOFTBALL_FIELD",
+   "BUILDING_TENNIS_COURT",
+   "BUILDING_TRAINING_DOJO",
+   "BUILDING_VELODROME",
+   "BUILDING_VOLLEYBALL_COURT",
+   "BUILDING_WATER_POLO_POOL",
+   "BUILDING_WATER_RACEWAY",
+   "BUILDING_WINTER_CHALET",
+   "BUILDING_YOGA_SCHOOL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_MEGATOWER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50,
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_HUMAN_MOD_NOVEL_SENSES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_MODERN_PARATROOPER": {
+     "percent": 10
+    },
+    "UNIT_PARATROOPER": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    46,
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_HELICOPTERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TOBACCO",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 42
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_GUN": {
+     "flat": 3
+    },
+    "UNITCOMBAT_MELEE": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_CELEBRITY": 1
+  }
+ },
+ "cost": {
+  "production": 4485,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ATHLETIC_MEGACOMPLEX"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

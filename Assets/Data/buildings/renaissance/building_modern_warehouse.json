@@ -1,0 +1,124 @@
+{
+ "type": "BUILDING_MODERN_WAREHOUSE",
+ "description": "TXT_KEY_BUILDING_MODERN_WAREHOUSE",
+ "civilopedia": "TXT_KEY_BUILDING_MODERN_WAREHOUSE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_AIR_SHIPPING_WAREHOUSE",
+   "BUILDING_DELIVERY_DRONE_CONTROL_CENTER",
+   "BUILDING_IKHANDA",
+   "BUILDING_NAVAL_SHIPPING_WAREHOUSE",
+   "BUILDING_ONLINE_SHIPPING_WAREHOUSE",
+   "BUILDING_RAIL_SHIPPING_WAREHOUSE",
+   "BUILDING_SPACE_SHIPPING_WAREHOUSE",
+   "BUILDING_TELEPORT_SHIPPING_WAREHOUSE",
+   "BUILDING_TRUCK_SHIPPING_WAREHOUSE"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_ICEHOUSE",
+   "BUILDING_WAREHOUSE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_BRICKS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_CEMENT",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 700,
+     "enabled": {
+      "type": "TECH_GLOBALIZATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 800,
+     "enabled": {
+      "type": "TECH_KNOWLEDGE_MANAGEMENT",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": [
+    {
+     "value": 600,
+     "enabled": {
+      "type": "TECH_REFRIGERATION",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "foodKept": {
+  "city": {
+   "percent": 9
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "cost": {
+  "production": 495,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_MODERN_WAREHOUSE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WAREHOUSE"
+ },
+ "identity": {
+  "worth": 8,
+  "militaryWorth": 4,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

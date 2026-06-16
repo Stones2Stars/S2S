@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_HOUSING_GRASS_HUTS",
+ "description": "TXT_KEY_BUILDING_HOUSING_GRASS_HUTS",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_GRASS_HUTS_PEDIA",
+ "replaces": {
+  "buildings": [
+   "BUILDING_HOUSING_HOMELESS",
+   "BUILDING_HOUSING_TREE_HOLLOW"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_GRASS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "FEATURE_VERY_TALL_GRASS",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_GRASS_HUTS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

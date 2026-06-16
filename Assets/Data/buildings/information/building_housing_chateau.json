@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_HOUSING_CHATEAU",
+ "description": "TXT_KEY_BUILDING_HOUSING_CHATEAU",
+ "civilopedia": "TXT_KEY_BUILDING_HOUSING_CHATEAU_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_DRUGLORDS_MANSON",
+   "BUILDING_LUXURY_FURNITURE_WORKSHOP",
+   "BUILDING_LYCEUM",
+   "BUILDING_MAUSOLEUM"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HOUSING_COLONY_ARCOLOGY"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_HOUSING_ANIMAL_HIDE_TENTS",
+   "BUILDING_HOUSING_HOMELESS",
+   "BUILDING_HOUSING_MANORS",
+   "BUILDING_HOUSING_MANSIONS",
+   "BUILDING_HOUSING_TIPIS",
+   "BUILDING_HOUSING_VILLAS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MARBLE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    "IS_FRESHWATER",
+    "HAS_POWER",
+    {
+     "type": "BUILDING_WATER_PIPES",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SEWER_SYSTEM",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_TELEPHONE_NETWORK",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_COMPUTER_NETWORK",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HOUSING_CHATEAU"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "neverCapture": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_CAMP_WOOLLY_RHINO",
+ "description": "TXT_KEY_BUILDING_CAMP_WOOLLY_RHINO",
+ "civilopedia": "TXT_KEY_BUILDING_CAMP_WOOLLY_RHINO_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_CARCASS",
+   "BUILDING_RESOURCES_IVORY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MAMMOTH",
+     "scope": "city",
+     "connection": "vicinity"
+    },
+    {
+     "latitude": {
+      "min": 40
+     }
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PIG",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_HUNTERS_CAMP",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "TERRAIN_TAIGA",
+      "scope": "plot"
+     },
+     {
+      "type": "TERRAIN_ICE",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 45,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_CAMP_WOOLLY_RHINO"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

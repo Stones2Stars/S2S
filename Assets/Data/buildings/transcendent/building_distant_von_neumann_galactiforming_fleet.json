@@ -1,0 +1,40 @@
+{
+ "type": "BUILDING_DISTANT_VON_NEUMANN_GALACTIFORMING_FLEET",
+ "description": "TXT_KEY_BUILDING_DISTANT_VON_NEUMANN_GALACTIFORMING_FLEET",
+ "civilopedia": "TXT_KEY_BUILDING_DISTANT_VON_NEUMANN_GALACTIFORMING_FLEET_PEDIA",
+ "food": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1261
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DISTANT_VON_NEUMANN_GALACTIFORMING_FLEET"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

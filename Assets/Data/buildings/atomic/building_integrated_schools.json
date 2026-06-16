@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_INTEGRATED_SCHOOLS",
+ "description": "TXT_KEY_BUILDING_INTEGRATED_SCHOOLS",
+ "civilopedia": "TXT_KEY_BUILDING_INTEGRATED_SCHOOLS_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_ELEMENTARY_SCHOOL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HOLOGRAPHIC_SCHOOL",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "cost": {
+  "production": 1475,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTEGRATED_SCHOOLS"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,37 @@
+{
+ "type": "BUILDING_HUMAN_MOD_GENE_EDITING",
+ "description": "TXT_KEY_BUILDING_HUMAN_MOD_GENE_EDITING",
+ "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_GENE_EDITING_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_STEM_CELL_LAB",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 6770
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HUMAN_MOD_GENE_EDITING"
+  }
+ },
+ "identity": {
+  "neverCapture": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

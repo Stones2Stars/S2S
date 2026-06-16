@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_INTERSTELLAR_PRECIOUS_METAL_GENERATOR",
+ "description": "TXT_KEY_BUILDING_INTERSTELLAR_PRECIOUS_METAL_GENERATOR",
+ "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PRECIOUS_METAL_GENERATOR_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_OSMIUM_CORE_PLANET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_PAIR_PRODUCTION_PLANT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 3212
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERSTELLAR_PRECIOUS_METAL_GENERATOR"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

@@ -1,0 +1,137 @@
+{
+ "type": "BUILDING_PALACE_OF_THE_SOVIETS",
+ "description": "TXT_KEY_BUILDING_PALACE_OF_THE_SOVIETS",
+ "civilopedia": "TXT_KEY_BUILDING_PALACE_OF_THE_SOVIETS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "CIVIC_MARXIST",
+     "scope": "empire"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BUILDING_SOCIAL_JUSTICE_ORGANIZATION",
+      "scope": "city"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BUILDING_WELFARE_OFFICE",
+      "scope": "city"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BUILDING_PLANNING_OFFICE",
+      "scope": "city"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BUILDING_CHURCH_OF_THE_STATE",
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "revolution": {
+  "empire": {
+   "flat": -10
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 5940,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PALACE_SOV"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PALACE_OF_THE_SOVIETS"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

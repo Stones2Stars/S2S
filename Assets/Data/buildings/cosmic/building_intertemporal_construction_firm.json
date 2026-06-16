@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM",
+ "description": "TXT_KEY_BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM",
+ "civilopedia": "TXT_KEY_BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_NEOM"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_CAD_STUDIO",
+   "BUILDING_MODULAR_CONSTRUCTION_FIRM",
+   "BUILDING_SELF_CONSTRUCTION_FIRM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 35
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 60,
+   "percent": [
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_MULTIVERSE_TRAVERSAL",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_SYNTHETIC_DIAMOND",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "militaryProduction": {
+  "city": {
+   "percent": -20
+  }
+ },
+ "grants": {
+  "specialists": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "cost": {
+  "production": 19755,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

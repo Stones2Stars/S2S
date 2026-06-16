@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_GLADIATORIAL_SCHOOL",
+ "description": "TXT_KEY_BUILDING_GLADIATORIAL_SCHOOL",
+ "civilopedia": "TXT_KEY_BUILDING_GLADIATORIAL_SCHOOL_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_ARENA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_COLOSSEUM",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MINOR_LEAGUE_STADIUM",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MAJOR_LEAGUE_STADIUM",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MELEE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "city": {
+   "domestic": {
+    "percent": 10
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 234,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_GLADIATORIAL_SCHOOL"
+  }
+ },
+ "identity": {
+  "centerInCity": true,
+  "worth": 4,
+  "militaryWorth": 4,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

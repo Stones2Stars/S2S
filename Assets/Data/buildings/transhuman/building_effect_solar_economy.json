@@ -1,0 +1,27 @@
+{
+ "type": "BUILDING_EFFECT_SOLAR_ECONOMY",
+ "description": "TXT_KEY_BUILDING_EFFECT_SOLAR_ECONOMY",
+ "civilopedia": "TXT_KEY_BUILDING_SOLAR_ECONOMY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_EFFECT_SOLAR_DYSON_SPHERE",
+   "BUILDING_GALACTIC_ECONOMY",
+   "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
+   "BUILDING_LASER_STARWAY",
+   "BUILDING_MERCURY_ANTIMATTER_FACTORY",
+   "BUILDING_URANUS_FLOATING_CITY"
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_EFFECT_SOLAR_ECONOMY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

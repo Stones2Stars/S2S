@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_CRIME_GANGS",
+ "description": "TXT_KEY_BUILDING_CRIME_GANGS",
+ "civilopedia": "TXT_KEY_BUILDING_CRIME_GANGS_PEDIA",
+ "gold": {
+  "city": {
+   "flat": -10,
+   "percent": -5
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "espionage": {
+  "city": {
+   "insidiousness": {
+    "flat": 20
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -3,
+   "perPopulation": {
+    "percent": -20
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -5,
+   "perPopulation": {
+    "percent": -20
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 6
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "unit": "UNIT_THUG",
+    "interval": "perTurn",
+    "chance": {
+     "per": {
+      "type": "PROPERTY_CRIME",
+      "scope": "city"
+     }
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

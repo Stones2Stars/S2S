@@ -1,0 +1,104 @@
+{
+ "type": "BUILDING_HERBALIST",
+ "description": "TXT_KEY_BUILDING_HERBALIST",
+ "civilopedia": "TXT_KEY_BUILDING_HERBALIST_PEDIA",
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ALTERNATIVE_MEDICINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_HEALERS_HUT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DOCTORS_OFFICE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SURGEONS_OFFICE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MEDICAL_CLINIC",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "heal": "full",
+    "count": 1,
+    "interval": "perTurn"
+   },
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE",
+    "interval": "perTurn",
+    "heal": 2
+   },
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_ANIMALS",
+    "interval": "perTurn",
+    "heal": 2
+   }
+  ]
+ },
+ "cost": {
+  "production": 320,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HERBALIST"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_HEALERSHUT"
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 3,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

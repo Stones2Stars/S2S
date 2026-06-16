@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_VENUS_ARCOLOGY",
+ "description": "TXT_KEY_BUILDING_VENUS_ARCOLOGY",
+ "civilopedia": "TXT_KEY_BUILDING_VENUS_ARCOLOGY_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAPTURED_IO",
+   "BUILDING_TERRAFORMED_VENUS",
+   "BUILDING_VENUS_SKY_ARCOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_VENUS_SURFACE_CITY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 500,
+   "percent": [
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_LAUNCH_ARCOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_COLONY_ARCOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 5294
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_VENUS_ARCOLOGY"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

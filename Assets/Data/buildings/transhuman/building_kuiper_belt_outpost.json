@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_KUIPER_BELT_OUTPOST",
+ "description": "TXT_KEY_BUILDING_KUIPER_BELT_OUTPOST",
+ "civilopedia": "TXT_KEY_BUILDING_KUIPER_BELT_OUTPOST_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_KUIPER_BELT_FUSION_PLANT",
+   "BUILDING_KUIPER_BELT_GEOTHERMAL_PLANT",
+   "BUILDING_KUIPER_BELT_TETHER",
+   "BUILDING_LIFE_LIQUID_NITROGEN"
+  ],
+  "units": [
+   "UNIT_CAPTURED_COMET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "TERRAIN_KUIPER_BELT_OBJECT",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    {
+     "value": 1100,
+     "enabled": {
+      "type": "TECH_PARATERRAFORMING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 2363
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_KUIPER_BELT_OUTPOST"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

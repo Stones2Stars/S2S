@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_POLLUTION_RED_TIDE",
+ "description": "TXT_KEY_BUILDING_POLLUTION_RED_TIDE",
+ "civilopedia": "TXT_KEY_BUILDING_WATER_POLLUTION_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER"
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "plotTypes": {
+    "PLOT_OCEAN": {
+     "flat": -5
+    }
+   }
+  }
+ },
+ "production": {
+  "plot": {
+   "plotTypes": {
+    "PLOT_OCEAN": {
+     "flat": -2
+    }
+   }
+  }
+ },
+ "commerce": {
+  "plot": {
+   "plotTypes": {
+    "PLOT_OCEAN": {
+     "flat": -5
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_PROPERTYWATERPOLLUTION"
+  }
+ },
+ "identity": {
+  "nukeImmune": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

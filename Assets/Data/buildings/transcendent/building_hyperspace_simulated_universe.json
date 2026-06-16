@@ -1,0 +1,119 @@
+{
+ "type": "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
+ "description": "TXT_KEY_BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
+ "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_SIMULATED_UNIVERSE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HYPERSPACE_ALTERNATE_HISTORY_EXPLORATION",
+   "BUILDING_HYPERSPACE_CONSCIOUS_UNIVERSE",
+   "BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE",
+   "BUILDING_HYPERSPACE_GAME_OF_LIFE",
+   "BUILDING_HYPERSPACE_PICARD_HORN",
+   "BUILDING_HYPERSPACE_POINCARE_DODECAHEDRAL_SPACE",
+   "BUILDING_HYPERSPACE_SIMULATED_CIVILIZATION",
+   "BUILDING_HYPERSPACE_TRANSFINITE_STRUCTURES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "BUILDING_HYPERSPACE_5D_ARTIFICIAL_GRAVITY",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_HYPERSPACE_INFLATON_FIELD",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 120,
+   "percent": [
+    {
+     "value": 2000,
+     "enabled": {
+      "type": "TECH_OMEGA_POINT",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_UNIVERSAL_SINGULARITY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 120,
+   "percent": [
+    {
+     "value": 2000,
+     "enabled": {
+      "type": "TECH_SIMULATION_AWARENESS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": [
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_DIRECTED_COSMIC_EVOLUTION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1300,
+     "enabled": {
+      "type": "TECH_ASCENSION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2000,
+     "enabled": {
+      "type": "TECH_ALPHA_POINT",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 10000
+  }
+ },
+ "cost": {
+  "production": 1945
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_HYPERSPACE_SIMULATED_UNIVERSE"
+  }
+ },
+ "identity": {
+  "workableRadius": 3,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

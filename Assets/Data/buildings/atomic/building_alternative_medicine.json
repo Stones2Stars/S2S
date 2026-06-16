@@ -1,0 +1,124 @@
+{
+ "type": "BUILDING_ALTERNATIVE_MEDICINE",
+ "description": "TXT_KEY_BUILDING_ALTERNATIVE_MEDICINE",
+ "civilopedia": "TXT_KEY_BUILDING_ALTERNATIVE_MEDICINE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_GOBEKLI_TEPE"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_HEALTHCARE_MEGACOMPLEX"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_ACUPUNCTURISTS_SHOP",
+   "BUILDING_HEALING_CLAY",
+   "BUILDING_HERBALIST",
+   "BUILDING_LEECH_CATCHER",
+   "BUILDING_SAGE",
+   "BUILDING_SNAKE_OIL_SALES",
+   "BUILDING_SWEAT_LODGE",
+   "BUILDING_TRANCE_HUT"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 10,
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 1
+    },
+    "UNITCOMBAT_HEALS_PEOPLE": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "grants": {
+  "repeatable": [
+   {
+    "heal": "full",
+    "count": 1,
+    "interval": "perTurn"
+   },
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE",
+    "interval": "perTurn",
+    "heal": 2
+   },
+   {
+    "unitCombat": "UNITCOMBAT_HEALS_AS_ANIMALS",
+    "interval": "perTurn",
+    "heal": 2
+   }
+  ]
+ },
+ "cost": {
+  "production": 1410,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ALTERNATIVE_MEDICINE"
+  }
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 1
+  },
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,36 @@
+{
+ "type": "BUILDING_ANTIMATTER_IMPORTER",
+ "description": "TXT_KEY_BUILDING_ANTIMATTER_IMPORTER",
+ "civilopedia": "TXT_KEY_BUILDING_ANTIMATTER_IMPORTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_MERCURY_ANTIMATTER_FACTORY",
+     "scope": "empire",
+     "min": 1
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 10955
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_ANTIMATTER_IMPORTER"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_DEATH_CAP_MUSHROOM",
+ "description": "TXT_KEY_BUILDING_DEATH_CAP_MUSHROOM",
+ "civilopedia": "TXT_KEY_BUILDING_DEATH_CAP_MUSHROOM_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_POISON"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_CHEMISTRY_LAB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_INDIGO",
+      "scope": "city",
+      "connection": "vicinity"
+     }
+    ],
+    [
+     {
+      "type": "FEATURE_FOREST_YOUNG",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_FOREST",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_FOREST_ANCIENT",
+      "scope": "plot"
+     },
+     {
+      "type": "FEATURE_FOREST_BURNT",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 132,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_DEATH_CAP_MUSHROOM"
+  }
+ },
+ "identity": {
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

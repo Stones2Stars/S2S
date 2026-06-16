@@ -1,0 +1,152 @@
+{
+ "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
+ "description": "TXT_KEY_BUILDING_METROPOLITAN_ADMINISTRATION",
+ "civilopedia": "TXT_KEY_BUILDING_METROPOLITAN_ADMINISTRATION_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANDEAN_CATHEDRAL",
+   "BUILDING_ASATRU_CATHEDRAL",
+   "BUILDING_AUTOMATED_WASTE_COLLECTION_SYSTEM",
+   "BUILDING_BAHAI_DAR_BE_MEHR",
+   "BUILDING_BUDDHIST_STUPA",
+   "BUILDING_CANAANITE_CATHEDRAL",
+   "BUILDING_CAPITAL_ADMINISTRATION",
+   "BUILDING_CHRAM",
+   "BUILDING_CHRISTIAN_CATHEDRAL",
+   "BUILDING_CONFUCIAN_ACADEMY",
+   "BUILDING_CRAB_NETS",
+   "BUILDING_HEATING_AND_COOLING_DISTRICT",
+   "BUILDING_HELLENIC_PANTHEON",
+   "BUILDING_HINDU_MANDIR",
+   "BUILDING_ISLAMIC_MOSQUE",
+   "BUILDING_JAIN_CATHEDRAL",
+   "BUILDING_JEWISH_SYNAGOGUE",
+   "BUILDING_MAGLEV_RAILS",
+   "BUILDING_MIXED_USE_DEVELOPMENT",
+   "BUILDING_POLIS_COUNCIL",
+   "BUILDING_REGIONAL_PLANNING_COMMISSION",
+   "BUILDING_RIVER_ADMINISTRATION",
+   "BUILDING_SCIENTOLOGY_CATHEDRAL",
+   "BUILDING_SHINTO_JINGU",
+   "BUILDING_SIKH_CATHEDRAL",
+   "BUILDING_TAOIST_PAGODA",
+   "BUILDING_TEMPLE_OF_MUT",
+   "BUILDING_TEMPLE_OF_TLALOC",
+   "BUILDING_VOODOO_MARKET",
+   "BUILDING_ZOROASTRIAN_PANTHEON"
+  ]
+ },
+ "replaces": {
+  "buildings": [
+   "BUILDING_CITY_COUNCIL",
+   "BUILDING_TOWN_HALL",
+   "BUILDING_VILLAGE_HALL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 30
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BRICKS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_CEMENT",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "CULTURELEVEL_INFLUENTIAL",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 20
+  }
+ },
+ "revolution": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "cost": {
+  "production": 475,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_GOLD": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_METROPOLITAN_ADMINISTRATION"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COURTHOUSE"
+ },
+ "identity": {
+  "centerInCity": true,
+  "worth": 4,
+  "militaryWorth": 5,
+  "conquestProbability": 100,
+  "workableRadius": 3,
+  "dcmAirbombMission": 2,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

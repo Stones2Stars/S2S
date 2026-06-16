@@ -1,0 +1,93 @@
+{
+ "type": "BUILDING_SHAMANISTIC_TEMPLE",
+ "description": "TXT_KEY_BUILDING_SHAMANISTIC_TEMPLE",
+ "civilopedia": "TXT_KEY_BUILDING_SHAMANISTIC_TEMPLE_PEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INVOCATION_HUT",
+   "BUILDING_SHAMANISTIC_TEMPLE_BISON",
+   "BUILDING_SHAMANISTIC_TEMPLE_COW",
+   "BUILDING_SHAMANISTIC_TEMPLE_DEER",
+   "BUILDING_SHAMANISTIC_TEMPLE_PIG",
+   "BUILDING_SHAMANISTIC_TEMPLE_RABBIT",
+   "BUILDING_SHAMANISTIC_TEMPLE_SEAL",
+   "BUILDING_SHAMANISTIC_TEMPLE_SHEEP",
+   "BUILDING_SHAMANISTIC_TEMPLE_WALRUS"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "RELIGION_SHAMANISM",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "HAS_STATE_RELIGION"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 80,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BUILDING_SHAMANISTIC_TEMPLE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SHAMAN"
+ },
+ "identity": {
+  "specialistSlots": {
+   "SPECIALIST_PRIEST": 1
+  },
+  "neverCapture": true,
+  "worth": 4,
+  "religion": "RELIGION_SHAMANISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}
