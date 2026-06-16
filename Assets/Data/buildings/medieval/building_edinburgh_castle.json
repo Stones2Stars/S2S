@@ -36,7 +36,8 @@
       "scope": "city"
      }
     ]
-   ]
+   ],
+   "disabled": "IS_CAPITAL"
   }
  },
  "culture": {

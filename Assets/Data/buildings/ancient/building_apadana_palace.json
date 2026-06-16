@@ -20,7 +20,8 @@
      "scope": "world",
      "max": 1
     }
-   ]
+   ],
+   "disabled": "IS_CAPITAL"
   },
   "operate": {
    "all": [

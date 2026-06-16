@@ -121,6 +121,8 @@ static void check_condition(const picojson::value& v, const std::string& path, R
                 else check_condition(groups[g], path + ".any", r);  // tolerate a flat any
             }
         } else r.flag(path, "'any' not array"); }
+    if (o.find("enabled") != o.end())  { comb = true; check_condition(o.find("enabled")->second, path + ".enabled", r); }
+    if (o.find("disabled") != o.end()) { comb = true; check_condition(o.find("disabled")->second, path + ".disabled", r); }
     if (comb) return;
     if (o.find("type") != o.end()) { check_atom(o, path, r); return; }
     // else: a parameterized predicate {PRED: param}
@@ -244,6 +246,8 @@ static std::string render_cond(const picojson::value& v) {
     if (mget(o, "all") && mget(o, "all")->is<picojson::array>()) { const picojson::array& a = mget(o, "all")->get<picojson::array>(); std::vector<std::string> p; for (size_t i = 0; i < a.size(); ++i) p.push_back(render_cond(a[i])); conj.push_back(p.size() <= 1 ? join(p, "") : "(" + join(p, " AND ") + ")"); }
     if (mget(o, "any") && mget(o, "any")->is<picojson::array>()) { const picojson::array& gs = mget(o, "any")->get<picojson::array>(); for (size_t g = 0; g < gs.size(); ++g) { std::vector<std::string> p; if (gs[g].is<picojson::array>()) { const picojson::array& grp = gs[g].get<picojson::array>(); for (size_t i = 0; i < grp.size(); ++i) p.push_back(render_cond(grp[i])); } else p.push_back(render_cond(gs[g])); conj.push_back("(one of: " + join(p, ", ") + ")"); } }
     if (mget(o, "noneOf") && mget(o, "noneOf")->is<picojson::array>()) { const picojson::array& a = mget(o, "noneOf")->get<picojson::array>(); std::vector<std::string> p; for (size_t i = 0; i < a.size(); ++i) p.push_back(render_cond(a[i])); conj.push_back("NONE of (" + join(p, ", ") + ")"); }
+    if (mget(o, "disabled")) conj.push_back("disabled while " + render_cond(*mget(o, "disabled")));
+    if (mget(o, "enabled")) conj.push_back("only while " + render_cond(*mget(o, "enabled")));
     if (!conj.empty()) return join(conj, " AND ");
     if (mget(o, "type")) return render_atom(o);
     if (o.size() == 1) return o.begin()->first + " " + num(o.begin()->second);   // {PRED: param}

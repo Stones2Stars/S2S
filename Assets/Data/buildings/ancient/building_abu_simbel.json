@@ -18,7 +18,8 @@
       "scope": "plot"
      }
     ]
-   ]
+   ],
+   "disabled": "IS_CAPITAL"
   }
  },
  "production": {

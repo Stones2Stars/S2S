@@ -46,7 +46,8 @@
       "connection": "trade|vicinity"
      }
     ]
-   ]
+   ],
+   "disabled": "IS_CAPITAL"
   },
   "operate": {
    "all": [

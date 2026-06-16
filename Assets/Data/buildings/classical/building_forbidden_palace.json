@@ -33,7 +33,8 @@
      "scope": "empire",
      "max": 1
     }
-   ]
+   ],
+   "disabled": "IS_CAPITAL"
   }
  },
  "culture": {

@@ -686,6 +686,13 @@ def requires_building(rec, store):
         build["any"] = build_any
     if build_none:
         build["noneOf"] = build_none
+    # PALACE-TYPE (government-center) buildings can't be player-BUILT where a government center already exists
+    # (CvCity.cpp:2654 isGovernmentCenter gate; Palace + the bGovernmentCenter pseudo-palaces). The negation twin
+    # `disabled: IS_CAPITAL` (owner 2026-06-16); IS_CAPITAL = "the city has a palace/palace-adjacent building".
+    # NB this is the PLAYER build gate only — the engine's FORCED relocation (capital falls) is an ungated actor
+    # that bypasses requires (the #437 placement-gate invariant: gate the checked path, engine outcomes bypass).
+    if _bool(rec, "bCapital") or _bool(rec, "bGovernmentCenter"):
+        build["disabled"] = "IS_CAPITAL"
     out = OrderedDict()
     if build:
         out["build"] = build

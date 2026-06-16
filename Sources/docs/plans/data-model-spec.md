@@ -74,6 +74,11 @@ none-present). Leaves are one of:
   not false** (a retired system's references go quiet, never spuriously disable — enabler-spec §3). ⚑ The `IS_COASTAL` /
   `HAS_FEATURE` / `HAS_TERRAIN` (BoolExpr converter) vs `COASTAL_LAND` / `{feature|terrain:[…]}` (Improvement placement)
   split is a Phase-F reconcile.
+- **`IS_CAPITAL` is computed from BUILDING presence (owner 2026-06-16).** The engine answers `IS_CAPITAL` as "the city has a
+  Palace or palace-adjacent (government-center) building" — i.e. from the presence of an `identity.{capital,governmentCenter}`
+  building (and it hard-moves the capital to wherever the Palace is). The palace-type buildings then gate on its negation —
+  `requires.build.disabled: "IS_CAPITAL"` (§4.2). One concept, two ends: the flag says "I make this a capital," the
+  requirement says "but not where one already exists."
 
 ### 2.6 `per` — the count-scaler (modifier-spec §4)
 `per: { type | anyOf:[TYPE…], each, scope }` — scale a deposit by `count(type) / each` at `scope`. Cross-city scopes
@@ -119,6 +124,14 @@ Authored on the source, per target-kind:
 - **`build`** = the one-time construction gate (greying); **`operate`** = the continuous gate (dormancy — lose it and the
   built thing goes inactive, not demolished). Each is an `{all/any/noneOf}` tree (§2.4). Units carry `build` only (leaf
   actions, no dormancy). ⚑ continuous resource/power gates currently sit in `build` but should be `operate` (Phase F).
+- **`disabled` / `enabled` as a requires CLAUSE — the bare-predicate negation twin (§2.5).** Besides `all`/`any`/`noneOf`,
+  a `build`/`operate` gate may carry a `disabled` (or `enabled`) clause for a single predicate — cleaner than `noneOf:[…]`
+  for one bare predicate. **Worked case: PALACE-TYPE (government-center) buildings** — `BUILDING_PALACE` + the 8
+  `bGovernmentCenter` pseudo-palaces (`FORBIDDEN_PALACE`, `EL_ESCORIAL`, `VERSAILLES`, `EDINBURGH_CASTLE`, …) — carry
+  `requires.build.disabled: "IS_CAPITAL"`: you can't player-BUILD one where a government center already exists
+  (CvCity.cpp:2654). **⚑ This is the PLAYER build gate ONLY** — the engine's FORCED palace relocation (capital falls →
+  hard-move, even into a gov-center city) is an UNGATED actor that bypasses `requires` (the #437 placement-gate invariant:
+  the gate is the caller's job; engine outcomes that must always happen bypass it).
 - **Tech** appears in `requires.build` only as a per-candidate CONFIRM (multi-parent AND/OR), never as a generation driver.
 
 ### 4.3 Modifier families — `<family>.<scope>[.<targetType>.{TARGET}][.<member>].<unit> = value`
