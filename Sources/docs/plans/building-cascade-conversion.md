@@ -208,10 +208,10 @@ curated (Unit — the art-heaviest: models+icons+sounds — Building, Improvemen
 
 **DEFERRED — ART-DATA ENTITIES (a SEPARATE pass, NOT the gameplay cascade; verified 2026-06-14):** A gameplay
 Info's on-screen ICON and its on-MAP / 3D art are DIFFERENT entities. Verified on Route: `CvRouteInfo` (the
-gameplay route, migrated) has exactly ONE art field — `Button` → `art.icon` (the UI icon) — and **no** model
+gameplay route, migrated) has exactly ONE art field — `Button` → `ui.art.icon` (the UI icon) — and **no** model
 reference at all; the on-map road models live in a SEPARATE DLL `CvInfo`, **`CvRouteModelInfo`** (`Art/
 CIV4RouteModelInfos.xml`, ~840 rows: one `.nif` per route-type × connection-orientation, `ModelFile`/
-`Connections`/`Rotations`, keyed UP to the route by `RouteType`). So `art.icon` on a curated gameplay entity is
+`Connections`/`Rotations`, keyed UP to the route by `RouteType`). So `ui.art.icon` on a curated gameplay entity is
 the UI icon ONLY — its placed/3D art is owned by a distinct art entity. This is NOT a migration drop (the model
 art was never a `CvRouteInfo` field); it is an entire **unmigrated art tier** that was never on the gameplay
 roster:
@@ -222,7 +222,7 @@ roster:
   Movie, Terrain, Unit (+ base Asset/ScalableAsset/GenericBuilding/GenericCity).
 These carry ZERO cascade data (no families/scopes/enables) — pure rendering. Guidance for the eventual art
 pass: migrate each as its OWN faithful entity keyed by its gameplay type (do NOT fold into the gameplay entity's
-`art.icon`); if the pedia/website wants the link, derive a reverse edge (route → its models via the `RouteType`
+`ui.art.icon`); if the pedia/website wants the link, derive a reverse edge (route → its models via the `RouteType`
 FK). This dovetails with the already-noted "align everything to art-defines" cleanup (§2). LOW priority,
 orthogonal to the cascade; do it after the gameplay entities, or never if the engine keeps loading the art XML.
 
@@ -738,7 +738,7 @@ Tooling under `Tools/Migration/`:
 - **Hurry (lighter cleanup, done 2026-06-14 PM):** `curate_hurry.py` (bespoke), 2 records. NOT a POCO — the
   fast-path dumped 3 gameplay fields into identity. Re-homed: the two rush RATES (`iGoldPerProduction` /
   `iProductionPerPopulation`, mutually-exclusive per hurry, the 0/not-applicable dropped) → `conversion`;
-  `bAnger` → `causesAnger`; `Button` → `art.icon`. The cascade MODIFIER on hurry cost is elsewhere
+  `bAnger` → `causesAnger`; `Button` → `ui.art.icon`. The cascade MODIFIER on hurry cost is elsewhere
   (`BuildingInfo.iHurryCostModifier`, a city-scope %); these are the intrinsic BASE rates. Dropped from
   `curate_pocos.POCOS`.
   - **Grants are source-side (done / deferred):** hurries are GRANTED by civics (`enables.hurries` — all 20
@@ -807,7 +807,7 @@ Tooling under `Tools/Migration/`:
   / `techs` (FreeTechs → team); `spawnRate.empire.{general,npcPeace}.percent` (the ONE cascade modifier; barb/NPC
   civs only, 6/54); `policies` (`playable`/`aiPlayable` + `stronglyRestricted` NPC build-lockdown); **`disables`**
   (a `{techs:[…]}` object, symmetric with `grants` so it extends to other kinds later — owner; per-civ research
-  ban, NOT a cascade enabler/modifier); `art` (playerColor/artDefine/styles/sounds); `identity` (leaders /
+  ban, NOT a cascade enabler/modifier); `world`/`sound` art (playerColor/artDefine/styles/sounds); `identity` (leaders /
   cityNames / derivativeCiv). **Owner finding:** `FreeTechs` + `disables.techs`
   are Neanderthal-ONLY — `CIVILIZATION_NPC_NEANDERTHAL` starts with primitive techs (CAVE_DWELLING/GATHERING/
   NOMADISM/SCAVENGING/LANGUAGE) and can never research `TECH_SEDENTARY_LIFESTYLE` (stays nomadic; no Palace
@@ -838,8 +838,8 @@ Tooling under `Tools/Migration/`:
   `greatPeopleRate` (GP/GG threshold), `durations.anger`, `eventChance` (FLAT, a probability). Plus
   `costs.world.researchCutBelowEra` = the summed-across-era-bands tech-cost CUT (DIFFERENT math from the
   research base — distinct member, not folded). `grants` (startingGold/units/multiplier/freePopulation — stack
-  with Handicap's). `art` = era audio (soundtracks / citySoundscapes / victory+defeat sounds, carried as name
-  strings) + icon. `identity` = pacing inputs (historicalStartYear/EndYear/normalSpeedTurns — turns/calendar
+  with Handicap's). `sound` = era audio (soundtracks / introSoundtrack / citySoundscapes / victory+defeat sounds,
+  carried as name strings) + `ui.art.icon`. `identity` = pacing inputs (historicalStartYear/EndYear/normalSpeedTurns — turns/calendar
   DERIVE downstream on GameSpeed/CvDate) + advancedStart (parked, like Handicap). 14 written, 0 module eras.
   DROP `bNoAnimals` (no C++ consumer). The barbarian world-gates + initial-city-maintenance are 0/absent in
   every era → not emitted (boolean-world-gate family placement deferred until an era actually sets one).

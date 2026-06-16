@@ -49,6 +49,16 @@ not drift):**
    `--write` → owner inspects the actual `Assets/Data/.../*.json` → explicit approval → commit. Approval of the
    MODEL/scope in discussion is NOT approval to commit the JSON. Never commit without the inspection + go-ahead.
 
+**On HANDOVER MUTABILITY (owner clarification 2026-06-16) — read this so the next agent doesn't over-apply it.**
+Each session writes a NEW handover, so prior ones *rarely need* editing — but **prior handovers are NOT immutable, and
+neither is any living plan doc.** "Rarely needed" ≠ "forbidden": edit/correct a prior handover (or any of these plan
+docs) when there's a genuine reason — a misleading or over-absolute statement, a now-stale shape, a recorded ruling
+that drifted. The cautionary incident behind the original "never edit a handover" line was *needless rewriting*, not a
+ban; that absolute itself got misread as immutability and over-applied to `building-cascade-conversion.md` (a living,
+frequently-edited doc). **"We didn't need to do X before" is not "X must never be done"** — a general guard against
+hardening observations into false rules. (Dated per-session *status* notes inside a living doc are still best treated
+as records of what that session did; correct them when they actively mislead, but don't manufacture churn.)
+
 **⛔ THREE GOVERNING RULINGS for what the JSON IS (owner, 2026-06-15) — they OVERRIDE any "make it match the
 code" instinct:**
 1. **Author the data for WHAT IT IS, not how the current C++ fetches/combines it.** Choose the unit/shape from
