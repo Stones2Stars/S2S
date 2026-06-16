@@ -7,6 +7,16 @@
    "flat": 1
   }
  },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "HAS_RIVER"
+    }
+   ]
+  }
+ },
  "cultureDistance": {
   "plot": {
    "flat": 2

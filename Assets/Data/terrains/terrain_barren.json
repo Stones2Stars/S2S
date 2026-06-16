@@ -2,6 +2,16 @@
  "type": "TERRAIN_BARREN",
  "description": "TXT_KEY_TERRAIN_BARREN",
  "civilopedia": "TXT_KEY_TERRAIN_BARREN_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "HAS_RIVER"
+    }
+   ]
+  }
+ },
  "cultureDistance": {
   "plot": {
    "flat": 2

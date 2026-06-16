@@ -4,7 +4,13 @@
  "civilopedia": "TXT_KEY_TERRAIN_SALT_FLATS_PEDIA",
  "commerce": {
   "plot": {
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": "HAS_RIVER"
+    }
+   ]
   }
  },
  "cultureDistance": {

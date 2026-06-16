@@ -7,6 +7,16 @@
    "flat": 2
   }
  },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "HAS_RIVER"
+    }
+   ]
+  }
+ },
  "movement": {
   "plot": {
    "flat": 1

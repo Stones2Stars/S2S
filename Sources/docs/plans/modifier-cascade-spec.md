@@ -181,6 +181,10 @@ what keeps the construct from becoming a nesting fiesta.
 - **`disabled`** — defaults **false**; present → the deposit is suppressed while its expression holds.
 - **Value of each = the enabler `requires` object, verbatim** (§0.2). **Absent = unconditioned** (the common
   case stays clean). Effective = `enabled holds ∧ ¬disabled holds`, re-evaluated each recompute (dormancy).
+- **BARE-STRING predicate shorthand (owner 2026-06-16; enabler-spec §3).** A parameter-free / unambiguously-scoped
+  object-predicate is a bare string — `enabled: HAS_RIVER`, `enabled: IS_CAPITAL` — not `{HAS_RIVER: true}`. A
+  parameterized predicate keeps the object form (`{HOLY_CITY: RELIGION_X}`). Its **negation is the `disabled` twin**
+  (`disabled: HAS_RIVER`), so the bare form never needs a `false` value.
 - There is **no group wrapper** — the only nesting is the enabler expression itself (bounded `all`/`any`,
   `min`/`max`). A modder cannot build condition-trees.
 - **The same `enabled`/`disabled` + list-of-entries pattern is used by `grants` too** (§ enabler-spec §6) —

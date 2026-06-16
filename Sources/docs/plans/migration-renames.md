@@ -299,10 +299,21 @@ but no terrain populates them; `Categories` is also a dead TB-combat list). Per-
 | `MapCategoryTypes` | `identity.mapCategories` | Live placement-gate classification array (`CvPlot::getMapCategories` → `isMapCategory<>` set-membership); matched by attribute, not summed → identity. Renamed for clarity. |
 | `Categories` / `PropertyManipulators` / `bImpassable` | — (not emitted) | 0/42 authored (see intro). |
 
-*Toolkit: registered `TerrainInfo` in `store.ENTITIES`; added `defense`/`cultureDistance`/`buildTime` to
-`FAMILY_ORDER` and an `art_rename` hook to `EntityConfig`/`curate_common`. RIVER is **not** a terrain field — it is a
-plot edge-attribute modelled as a conditional modifier gated by the new `HAS_RIVER` predicate, carried by its
-deliveryguy (feature/improvement/building) at those passes (enabler-spec §3, modifier-spec §6.1).*
+**SYNTHETIC plot-yield deposits (no terrain XML field; owner 2026-06-16) — injected via a `post_process` hook,
+read from `YieldInfo` (no magic numbers):**
+
+| source | new JSON path | note |
+|---|---|---|
+| `YieldInfo.YIELD_COMMERCE.iRiverChange` (=1) | `commerce.plot.flat[].{value:1, enabled:"HAS_RIVER"}` on the **19 river-capable land terrains** | The RIVER add-on. River is a plot edge-attribute "just added on" to a terrain (no terrain field); the Info data is only the **conditioner** on `CvPlot`'s live river boolean (owner: "the live data defines if there is a river, the info data is just the conditioner"). Lands on the terrain because every river plot has a terrain (the always-present plot owner); compounds with a feature's `RiverYieldChange` on top. River-capable = LAND: `MAPCATEGORY_EARTH ∧ ¬AQUATIC` (the 17 earth-land) **+** `TERRAIN_HILL`/`TERRAIN_PEAK` (owner: include them); excludes water (AQUATIC) + all space terrains (no EARTH) + `TERRAIN_NONE`. The first real `HAS_RIVER` use (enabler-spec §3). |
+| `YieldInfo.iHillsChange` / `iPeakChange` | `TERRAIN_HILL` `food −1`/`prod +1`; `TERRAIN_PEAK` `food −2`/`prod +3`/`commerce −1` (`.plot.flat`) | The HILLS/PEAK plot-yield deltas, moved off `YieldInfo`'s plot-type changes onto their own terrains (owner 2026-06-16: "hills and peaks are their own terrain, so they should handle their own yield modifiers"). `TERRAIN_HILL`/`PEAK` are dual plot-type + terrain entities; the cascade engine (#430) reads these terrain yields for hills/peak plots instead of `YieldInfo.getHillsChange/getPeakChange` (which retire). PEAK's commerce is a mixed list `[−1, {value:1, enabled:"HAS_RIVER"}]` (own peak −1 + the river add-on). |
+
+*Toolkit: registered `TerrainInfo` + `YieldInfo` in `store.ENTITIES`; added `defense`/`cultureDistance`/`buildTime`
+to `FAMILY_ORDER`, an `art_rename` hook, and a `post_process` hook to `EntityConfig`/`curate_common` (for synthetic
+deposits not sourced from the entity's own XML). **YieldInfo migration owes nothing for hills/peak/river yields —
+already on the terrains;** its remaining fields (min-city/city-change/golden-age/trade-modifier/colour/symbols) are
+a later `YieldInfo` curation. Other river-side yields (`FeatureInfo.RiverYieldChange`,
+`ImprovementInfo.RiverSideYieldChange`, `BuildingInfo.RiverPlotYieldChanges`) stay on their deliveryguy at those
+passes (enabler-spec §3, modifier-spec §6.1).*
 
 ## Route  (`curate_route.py`)  — Tier C #19 (21 records: 12 base + 9 module-added space routes)
 

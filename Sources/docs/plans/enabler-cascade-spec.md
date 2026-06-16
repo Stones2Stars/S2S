@@ -274,26 +274,54 @@ resource/bonus**. Authored on the target, scope-tagged per clause:
 - **Leaf atom** = `{<kind>: "TYPE", scope, connection?, disposition}` where `<kind>` ∈
   `civic | religion | bonus | …` (never `tech`). The `all`/`any` nodes nest to form the BoolExpr.
 - **OBJECT-EVALUATED PREDICATES (owner, 2026-06-15).** Some conditions need runtime object state the static Info
-  cannot hold (is this city the holy city? the capital? is this the player's state religion?). These are authored
-  as a single conditional **`{PREDICATE: parameter}`** (or `{PREDICATE: true}` when unparameterized); the **object
-  itself (city/player) answers it at evaluation** — "the city does not have the info in the data, it says itself
+  cannot hold (is this city the holy city? the capital? is this the player's state religion?). The **object
+  itself (city/player/plot) answers it at evaluation** — "the city does not have the info in the data, it says itself
   whether it is." The engine's predicate owns any compound logic (e.g. `STATE_RELIGION` encapsulates the C++
   relaxation "present AND (is-state-religion OR no-state-religion OR non-state-commerce)"). Same shape inside
-  `requires` and the modifier `enabled`/`disabled`. Vocabulary so far (extensible, engine-resolved like the §
-  catch-all tokens — not info special-cases):
+  `requires` and the modifier `enabled`/`disabled`.
+  - **AUTHORING SHORTHAND (owner 2026-06-16): a parameter-free / unambiguously-scoped predicate is a BARE STRING;**
+    a parameterized one stays the object `{PREDICATE: parameter}`. The discriminator is whether anything must be
+    *named* for the predicate to be unambiguous (consistent with the "atoms are explicit, never infer from context"
+    rule — bare is allowed only when there is genuinely nothing to infer).
+    - **PARSING CONTRACT (owner 2026-06-16): a bare predicate DESUGARS deterministically to `{PREDICATE: true}`** in
+      one fixed translation step (`HAS_RIVER` ≡ `{HAS_RIVER: true}`, `IS_CAPITAL` ≡ `{IS_CAPITAL: true}`) — pure
+      authoring sugar over the canonical object, **never a separate shape the engine handles specially.** So a
+      predicate is **bare-able *iff* its canonical form is `{PREDICATE: true}`** (exactly the parameter-free case);
+      `HOLY_CITY` cannot be bare because its canonical object is `{HOLY_CITY: RELIGION_X}`, not `{HOLY_CITY: true}` —
+      there is nothing to translate it to.
+    - **bare** (nothing to name): **`enabled: HAS_RIVER`** (the river is on *the plot* the terrain/feature occupies),
+      **`enabled: IS_CAPITAL`** (a city is or isn't the capital).
+    - **object** (a parameter is load-bearing): **`{HOLY_CITY: RELIGION_X}`** (holy city *of which religion?*),
+      `{HAS_RELIGION: RELIGION_X}`, `{STATE_RELIGION: RELIGION_X}`, `{HAS_CORPORATION: CORPORATION_X}`.
+    - **negation = the `disabled` twin**, not a `false` value: **`disabled: HAS_RIVER`** ("suppress where there is a
+      river") is the clean negative; `enabled: {HAS_RIVER: false}` remains a valid (verbose) equivalent.
+    - No ambiguity with data Types: a bare string in `enabled`/`disabled` is a predicate catch-all token; a resource
+      condition is ALWAYS the full tally atom `{type, scope, min}`, never a bare `BONUS_X`.
+  - Vocabulary so far (extensible, engine-resolved like the § catch-all tokens — not info special-cases):
   - **`HAS_RELIGION: RELIGION_X`** — the city has religion X present (`isHasReligion`).
   - **`STATE_RELIGION: RELIGION_X`** — X is the player's (effective) state religion. *(Religion `StateReligionCommerces`.)*
-  - **`HOLY_CITY: RELIGION_X`** — this city is X's holy city (`isHolyCity`). *(Religion `HolyCityCommerces`.)*
-  - **`IS_CAPITAL: true`** — this city is the capital. *(Many capital-specific bonuses in Trait + Civic; the
+  - **`HOLY_CITY: RELIGION_X`** — this city is X's holy city (`isHolyCity`). *(Religion `HolyCityCommerces`.)* Parameterized → object.
+  - **`IS_CAPITAL`** (bare; parameter-free) — this city is the capital. *(Many capital-specific bonuses in Trait + Civic; the
     committed civic `capital` member retrofits to this later.)*
   - **`HAS_CORPORATION: CORPORATION_X`** — this city has corporation X active (spreads like a religion,
     `isHasCorporation`). *(Corporation per-city effects — the Religion-parallel model.)*
-  - **`HAS_RIVER: true`** — this **PLOT** has a river (edge-attribute, `CvPlot::isRiver`; the PLOT self-reports,
-    extending the predicate's object set beyond city/player to the plot). River is "just added on" — NOT its own
-    feature or terrain — so a river-side yield is a **CONDITIONAL modifier gated by this predicate** rather than a
-    river entity (owner 2026-06-16). *(`FeatureInfo.RiverYieldChange`, `ImprovementInfo.RiverSideYieldChange`,
-    `BuildingInfo.RiverPlotYieldChanges` — each authored on its **deliveryguy** at that entity's pass; the
-    ownership rule is modifier-spec §6.1. There is no river field on `CvTerrainInfo`.)*
+  - **`HAS_RIVER`** (bare; parameter-free) — this **PLOT** has a river (edge-attribute, `getRiverCrossingCount() > 0` /
+    `CvPlot::isRiver`; the PLOT self-reports, extending the predicate's object set beyond city/player to the plot).
+    A river is **independent of any feature** — it exists on a plot with or without one. River is "just added on"
+    — NOT its own feature/terrain entity — so each river-driven yield is a **CONDITIONAL modifier gated by this
+    predicate**, owned by its **deliveryguy** (owner 2026-06-16, modifier-spec §6.1). The homes, from
+    `CvPlot::calculateYield` (CvPlot.cpp:8060-8092):
+    - **the river's OWN BASE yield** (the +1 commerce any river plot gets, feature or not; `YieldInfo.iRiverChange`,
+      line 8090) → **the TERRAIN, as a `HAS_RIVER`-conditional deposit** (owner 2026-06-16): every river plot has a
+      terrain (the always-present plot owner), so the base river bonus lands on each river-capable LAND terrain as
+      `commerce.plot.flat[].{value:1, enabled:"HAS_RIVER"}` — NOT kept on the abstract `YieldInfo`. Done in the
+      Terrain #20 re-curation (renames §Terrain). The **hills/peak** base yields (`getHillsChange`/`getPeakChange`)
+      likewise move onto `TERRAIN_HILL`/`TERRAIN_PEAK` (those ARE their own terrains); `YieldInfo`'s plot-type yields
+      retire, its remaining fields a later small curation.
+    - **a feature's EXTRA river-side yield** (forest-on-river) → **`FeatureInfo.RiverYieldChange`** (line 8085), applied
+      only when a feature AND a river coincide → feature-owned, gated by `HAS_RIVER` (Feature #21).
+    - **`ImprovementInfo.RiverSideYieldChange`**, **`BuildingInfo.RiverPlotYieldChanges`** → improvement-/building-owned,
+      authored at their passes. There is no river field on `CvTerrainInfo`.
 
 ---
 

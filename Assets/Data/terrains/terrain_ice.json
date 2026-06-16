@@ -2,6 +2,16 @@
  "type": "TERRAIN_ICE",
  "description": "TXT_KEY_TERRAIN_ICE",
  "civilopedia": "TXT_KEY_TERRAIN_ICE_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "HAS_RIVER"
+    }
+   ]
+  }
+ },
  "cultureDistance": {
   "plot": {
    "flat": 4

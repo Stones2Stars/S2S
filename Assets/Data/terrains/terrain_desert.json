@@ -2,6 +2,16 @@
  "type": "TERRAIN_DESERT",
  "description": "TXT_KEY_TERRAIN_DESERT",
  "civilopedia": "TXT_KEY_TERRAIN_DESERT_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "HAS_RIVER"
+    }
+   ]
+  }
+ },
  "cultureDistance": {
   "plot": {
    "flat": 2

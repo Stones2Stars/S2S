@@ -76,6 +76,7 @@ ENTITIES = {
     "VoteInfo":          "*CIV4VoteInfo.xml",            # diplo-vote resolutions (config for the voting subsystem)
     "CivilizationInfo":  "*CIV4CivilizationInfos.xml",   # game-start grants + per-civ policy/art (source entity)
     "TerrainInfo":       "*CIV4TerrainInfos.xml",        # plot-leaf TARGET (forms the plot's base yields); enables nothing
+    "YieldInfo":         "*CIV4YieldInfos.xml",          # the 3 yields' config; source of the hills/peak/river plot-yield deltas (migrated onto terrains)
 }
 
 # Enabler reverse-index config: a record of <sourceEntity> that references type X via <fieldPath> means

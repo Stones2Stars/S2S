@@ -2,6 +2,27 @@
  "type": "TERRAIN_PEAK",
  "description": "TXT_KEY_TERRAIN_PEAK",
  "civilopedia": "TXT_KEY_TERRAIN_PEAK_PEDIA",
+ "food": {
+  "plot": {
+   "flat": -2
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    -1,
+    {
+     "value": 1,
+     "enabled": "HAS_RIVER"
+    }
+   ]
+  }
+ },
  "cultureDistance": {
   "plot": {
    "flat": 3

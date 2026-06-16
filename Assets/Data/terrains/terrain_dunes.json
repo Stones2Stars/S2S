@@ -2,6 +2,16 @@
  "type": "TERRAIN_DUNES",
  "description": "TXT_KEY_TERRAIN_DUNES",
  "civilopedia": "TXT_KEY_TERRAIN_DUNES_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "HAS_RIVER"
+    }
+   ]
+  }
+ },
  "cultureDistance": {
   "plot": {
    "flat": 3

@@ -2,6 +2,16 @@
  "type": "TERRAIN_PERMAFROST",
  "description": "TXT_KEY_TERRAIN_PERMAFROST",
  "civilopedia": "TXT_KEY_TERRAIN_PERMAFROST_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "HAS_RIVER"
+    }
+   ]
+  }
+ },
  "cultureDistance": {
   "plot": {
    "flat": 3

@@ -294,21 +294,24 @@ def curate(typ, rec, cfg, store, boosts):
     return out
 
 
-def run(cfg, boosts_config, store=None):
+def run(cfg, boosts_config, store=None, post_process=None):
     store = store or Store()
     boosts = accumulate_boosts(store, boosts_config)
     result = OrderedDict()
     for typ, rec in store.table(cfg.entity).items():
-        result[typ] = (curate(typ, rec, cfg, store, boosts.get(typ, {})), cfg.era_fn(rec, store))
+        obj = curate(typ, rec, cfg, store, boosts.get(typ, {}))
+        if post_process:                  # per-entity hook to inject SYNTHETIC deposits not sourced from this
+            post_process(typ, obj, rec, store)   # entity's own XML (e.g. terrain's HAS_RIVER bonus + the
+        result[typ] = (obj, cfg.era_fn(rec, store))   # hills/peak plot-yields moved off YieldInfo). Mutates obj.
     return store, result
 
 
-def main(cfg, boosts_config, out_dir):
+def main(cfg, boosts_config, out_dir, post_process=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--sample", nargs="*", help="print these types (default: first 1)")
     ap.add_argument("--write", action="store_true")
     args = ap.parse_args()
-    _, result = run(cfg, boosts_config)
+    _, result = run(cfg, boosts_config, post_process=post_process)
     n = len(result)
     has = lambda k: sum(1 for (o, _) in result.values() if k in o)
     STRUCT = {"type", "description", "civilopedia", "help", "quote", "strategy", "enables", "obsoletes",

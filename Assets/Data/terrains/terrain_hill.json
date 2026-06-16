@@ -2,6 +2,26 @@
  "type": "TERRAIN_HILL",
  "description": "TXT_KEY_TERRAIN_HILL",
  "civilopedia": "TXT_KEY_TERRAIN_HILL_PEDIA",
+ "food": {
+  "plot": {
+   "flat": -1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "HAS_RIVER"
+    }
+   ]
+  }
+ },
  "buildTime": {
   "plot": {
    "percent": 25
