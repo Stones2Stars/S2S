@@ -56,6 +56,24 @@
       "type": "HERITAGE_TAXON_MONOTREMATA",
       "scope": "empire"
      }
+    ],
+    [
+     {
+      "type": "BUILDING_FOLKLORE_T_FLIGHTLESS_BIRDS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_T_ANTELOPE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_T_RHINOCEROSES",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_T_BULL",
+      "scope": "city"
+     }
     ]
    ]
   }

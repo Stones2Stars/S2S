@@ -72,11 +72,6 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
-  "newCityFree": [
-   {
-    "GOM_TECH": "TECH_COLONIALISM"
-   }
-  ],
   "worth": 2,
   "militaryWorth": 3,
   "dcmAirbombMission": 2,

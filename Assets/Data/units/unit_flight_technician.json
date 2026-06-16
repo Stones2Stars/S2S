@@ -9,6 +9,16 @@
      "type": "BONUS_AIRCRAFT",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_TOOLS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

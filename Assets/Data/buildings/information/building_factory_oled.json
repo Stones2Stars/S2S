@@ -23,6 +23,16 @@
     {
      "type": "BUILDING_BIOINFORMATICS_LAB",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_BIOPOLYMERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_ENZYMES",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

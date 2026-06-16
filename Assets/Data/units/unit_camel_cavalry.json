@@ -13,6 +13,11 @@
     {
      "type": "BUILDING_ANIMAL_TRAINER_CAMEL",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

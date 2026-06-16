@@ -14,6 +14,26 @@
      "type": "SELF",
      "scope": "empire",
      "max": 5
+    },
+    {
+     "type": "BONUS_AIRCRAFT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_ALUMINUM_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_JET_ENGINES",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

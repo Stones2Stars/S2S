@@ -29,6 +29,11 @@
     {
      "type": "BUILDING_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_HEAVY_WATER",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

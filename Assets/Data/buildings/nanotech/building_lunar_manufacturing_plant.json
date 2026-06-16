@@ -25,6 +25,16 @@
     {
      "type": "BUILDING_LUNAR_ROCK_QUARRY",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_PLASTIC",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

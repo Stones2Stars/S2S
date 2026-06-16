@@ -9,6 +9,11 @@
      "type": "BONUS_PARTS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_TOOLS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

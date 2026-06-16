@@ -9,6 +9,16 @@
      "type": "BONUS_PERSONAL_ELECTRONICS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

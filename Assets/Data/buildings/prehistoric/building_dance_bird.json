@@ -2,6 +2,44 @@
  "type": "BUILDING_DANCE_BIRD",
  "description": "TXT_KEY_BUILDING_DANCE_BIRD",
  "civilopedia": "TXT_KEY_BUILDING_DANCE_BIRD_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_DANCE_HUT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DANCE_HALL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NIGHT_CLUB",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_FOLKLORE_FLAMINGO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_PEACOCK",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_SECRETARY_BIRD",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_VULTURE",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
  "production": {
   "city": {
    "percent": [

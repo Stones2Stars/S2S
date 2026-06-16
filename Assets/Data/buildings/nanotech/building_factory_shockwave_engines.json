@@ -23,6 +23,16 @@
     {
      "type": "BUILDING_ADVANCED_QUALITY_CONTROL",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_METAMATERIALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_LIQUID_METAL",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

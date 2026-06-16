@@ -9,6 +9,18 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_PRIME_TIMBER",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
    "any": [
     [
      {

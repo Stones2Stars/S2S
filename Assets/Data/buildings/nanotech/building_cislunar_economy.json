@@ -30,6 +30,21 @@
      "type": "SELF",
      "scope": "empire",
      "max": 1
+    },
+    {
+     "type": "BONUS_ORGANIC_PHOTONIC_CELLS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_METAMATERIALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_EXOSKELETONS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

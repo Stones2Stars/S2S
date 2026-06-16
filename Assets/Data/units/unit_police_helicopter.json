@@ -4,6 +4,33 @@
  "civilopedia": "TXT_KEY_UNIT_POLICE_HELICOPTER_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "BONUS_HELICOPTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_RADIOS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
    "any": [
     [
      {

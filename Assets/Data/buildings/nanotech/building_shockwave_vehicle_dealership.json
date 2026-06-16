@@ -29,6 +29,21 @@
     {
      "type": "BUILDING_ADVANCED_QUALITY_CONTROL",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_GRAPHENE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_SHOCKWAVE_ENGINES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_ORGANIC_PHOTONIC_CELLS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

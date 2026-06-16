@@ -14,6 +14,21 @@
     {
      "type": "BUILDING_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_GEMSTONE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_MANGANESE",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

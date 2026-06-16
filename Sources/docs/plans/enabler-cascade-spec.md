@@ -322,6 +322,20 @@ resource/bonus**. Authored on the target, scope-tagged per clause:
       only when a feature AND a river coincide → feature-owned, gated by `HAS_RIVER` (Feature #21).
     - **`ImprovementInfo.RiverSideYieldChange`**, **`BuildingInfo.RiverPlotYieldChanges`** → improvement-/building-owned,
       authored at their passes. There is no river field on `CvTerrainInfo`.
+  - **`HAS_FEATURE: FEATURE_X` / `HAS_TERRAIN: TERRAIN_X` (parameterized) + `IS_COASTAL` (bare) — the BoolExpr-converter
+    predicates (owner 2026-06-16, the BoolExpr/settler follow-up).** The shared `BoolExpr → enabler-condition` converter
+    (`Tools/Migration/boolexpr.py`) translates the XML `BoolExpr` machinery (`And`/`Or`/`Not`/`Has[GOMType,ID]`/`Is[TAG]`
+    + integer-compare; `Sources/BoolExpr.{h,cpp}`) into this `requires` vocabulary — used to retrofit the building
+    `ConstructCondition`, the building `NewCityFree`, and the unit `TrainCondition` (all parked, now parsed). The GOM/TAG
+    map: `GOM_TECH`→`{type:TECH,scope:team}`, `GOM_BONUS`→`{type:BONUS,scope:city,connection:"trade|vicinity"}`,
+    `GOM_BUILDING`→`{type:BUILDING,scope:city}`, **`GOM_FEATURE`→`{HAS_FEATURE:FEATURE_X}`**, **`GOM_TERRAIN`→
+    `{HAS_TERRAIN:TERRAIN_X}`** (parameterized predicates, uniform with `HAS_BONUS`/`HAS_CORPORATION`), **`Is
+    TAG_COASTAL`→`IS_COASTAL`** (a bare city-is-coastal predicate, `CvCity::isCoastal`), `And`→`all`, `Or`→`any`,
+    `GreaterEqual(ATTRIBUTE_POPULATION,N)`→`{type:POPULATION,scope:city,min:N}`. The converter RAISES on any node/GOM/tag
+    outside this set (so a future module addition is caught, never silently mis-converted — owner: "if parsing is too
+    cumbersome we hand-recreate with grants by hand"). ⚑ **PHASE-F RECONCILE:** `HAS_FEATURE`/`HAS_TERRAIN`/`IS_COASTAL`
+    DIVERGE from Improvement #22's placement-gate forms (`{feature:[…]}`/`{terrain:[…]}` membership + `COASTAL_LAND`
+    plot predicate) — same underlying systems, two surfaces; unify in the Phase-F predicate-modularity pass.
 - **PREDICATES ARE ORGANIZED BY SYSTEM — each is a system's ISOLATED QUERY-SURFACE (owner, 2026-06-16).** A system
   exposes its runtime state through its own predicate(s), which any data references to gate on that system *without
   coupling to its internals*: `HAS_RIVER` (river), `HAS_RELIGION`/`STATE_RELIGION`/`HOLY_CITY` (religion),

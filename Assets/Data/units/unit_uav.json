@@ -9,6 +9,11 @@
      "type": "BONUS_UNMANNED_AIRCRAFTS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_ALUMINUM_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

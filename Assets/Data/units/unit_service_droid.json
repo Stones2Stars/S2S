@@ -13,6 +13,21 @@
     {
      "type": "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_HELICOPTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_PERSONAL_ELECTRONICS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

@@ -9,6 +9,21 @@
      "type": "SELF",
      "scope": "empire",
      "max": 1
+    },
+    {
+     "type": "BONUS_HUMAN_MOD_ARCHAILECT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_HUMAN_MOD_ATEMPORAL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_HUMAN_MOD_NON_SPATIAL",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

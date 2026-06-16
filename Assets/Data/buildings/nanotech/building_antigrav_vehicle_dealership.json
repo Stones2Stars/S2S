@@ -29,6 +29,21 @@
     {
      "type": "BUILDING_SKYROAD_STATION",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_LEVITATION_GENERATORS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_SUPERSTRONG_ALLOYS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_NOVUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

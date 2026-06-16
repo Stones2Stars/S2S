@@ -25,6 +25,11 @@
      "type": "SELF",
      "scope": "empire",
      "max": 1
+    },
+    {
+     "type": "BONUS_HEAVY_WATER",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

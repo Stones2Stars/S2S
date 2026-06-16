@@ -114,11 +114,6 @@
   "construct": "AS2D_BUILD_STABLE"
  },
  "identity": {
-  "newCityFree": [
-   {
-    "GOM_TECH": "TECH_STEAM_POWER"
-   }
-  ],
   "worth": 2,
   "militaryWorth": 2,
   "dcmAirbombMission": 2,

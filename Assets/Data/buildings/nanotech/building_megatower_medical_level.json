@@ -29,6 +29,21 @@
     {
      "type": "BUILDING_HOSPITAL",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_PHARMACEUTICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_BIOPOLYMERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_PERSONAL_ELECTRONICS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

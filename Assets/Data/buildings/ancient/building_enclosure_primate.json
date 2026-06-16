@@ -2,6 +2,36 @@
  "type": "BUILDING_ENCLOSURE_PRIMATE",
  "description": "TXT_KEY_BUILDING_ENCLOSURE_PRIMATE",
  "civilopedia": "TXT_KEY_BUILDING_ENCLOSURE_EXOTIC_HERBIVORE_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_CARNIVAL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ZOO",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_FOLKLORE_T_OLD_MAN_OF_THE_FOREST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_T_OLD_WORLD_MONKEYS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_T_NEW_WORLD_MONKEYS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
  "research": {
   "city": {
    "percent": [

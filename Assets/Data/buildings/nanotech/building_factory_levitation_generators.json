@@ -23,6 +23,16 @@
     {
      "type": "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_SUPERSTRONG_ALLOYS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_NOVUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

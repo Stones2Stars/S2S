@@ -181,11 +181,6 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
-  "newCityFree": [
-   {
-    "GOM_TECH": "TECH_COLONIALISM"
-   }
-  ],
   "worth": 3,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

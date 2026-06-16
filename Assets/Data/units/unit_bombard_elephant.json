@@ -17,6 +17,11 @@
     {
      "type": "BUILDING_CANNON_FORGE",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

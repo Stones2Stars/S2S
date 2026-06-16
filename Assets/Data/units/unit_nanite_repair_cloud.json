@@ -9,6 +9,31 @@
      "type": "BONUS_NANOBOTS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_NANOACTUATORS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_GRAPHENE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_NOVUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_CYBERNETIC_CHLOROPLASTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

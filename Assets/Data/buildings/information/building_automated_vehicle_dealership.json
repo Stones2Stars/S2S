@@ -27,6 +27,21 @@
     {
      "type": "BUILDING_MECHATRONICS_LAB",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_HYDROGEN",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_FLASH_MEMORY_DEVICES",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

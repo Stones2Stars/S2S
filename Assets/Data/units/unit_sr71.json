@@ -18,6 +18,16 @@
      "type": "SELF",
      "scope": "empire",
      "max": 3
+    },
+    {
+     "type": "BONUS_AIRCRAFT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

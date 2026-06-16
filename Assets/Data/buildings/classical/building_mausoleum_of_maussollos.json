@@ -14,6 +14,16 @@
      "type": "SELF",
      "scope": "world",
      "max": 1
+    },
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_SCULPTURES",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

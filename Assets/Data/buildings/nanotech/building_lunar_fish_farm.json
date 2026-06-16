@@ -14,6 +14,16 @@
     {
      "type": "BUILDING_LUNAR_WATER_EXTRACTION_FACILITY",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_GLASSWARE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_ALGAE",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

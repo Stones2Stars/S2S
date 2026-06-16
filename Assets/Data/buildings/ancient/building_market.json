@@ -185,11 +185,6 @@
   "specialistSlots": {
    "SPECIALIST_MERCHANT": 1
   },
-  "newCityFree": [
-   {
-    "GOM_TECH": "TECH_COLONIALISM"
-   }
-  ],
   "worth": 3,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

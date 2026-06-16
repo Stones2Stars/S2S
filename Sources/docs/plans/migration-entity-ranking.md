@@ -269,7 +269,10 @@ don't want a future agent to go 'hurr?!?' because it's different"* (owner). Know
 grows as more accumulate):
 - **Predicate modularity** (enabler-spec §3): treat Religion / Corporations / Traits (simple + complex) — and any
   concept we define as a system — as isolated systems; bare-string predicate forms; per-system self-documentation;
-  ignore-not-false degradation. (The `workedBy: SELF` predicate also lands here / at Buildings.)
+  ignore-not-false degradation. (The `workedBy: SELF` predicate also lands here / at Buildings.) **Reconcile the
+  BoolExpr-converter predicates** (`IS_COASTAL` / `HAS_FEATURE:FEATURE_X` / `HAS_TERRAIN:TERRAIN_X`, from the #428
+  BoolExpr/settler follow-up, `boolexpr.py`) with **Improvement #22's placement-gate forms** (`COASTAL_LAND` /
+  `{feature:[…]}` / `{terrain:[…]}`) — same underlying systems, two surfaces; pick one.
 - **Art blocks — DONE 2026-06-16 (for all migrated entities).** Flat `art.*` → the three **top-level** blocks
   `ui` / `world` / `sound` (`art` a sub-block within `ui`/`world`; canonical map `curate_common.ART_BLOCK`, shared
   `put_art`/`emit_art` helpers). Applied to the cc-curated set AND all 11 art-bearing bespoke curators; entities not

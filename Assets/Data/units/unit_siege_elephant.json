@@ -22,6 +22,21 @@
      "type": "SELF",
      "scope": "empire",
      "max": 5
+    },
+    {
+     "type": "BONUS_ELEPHANTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

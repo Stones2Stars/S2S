@@ -29,6 +29,16 @@
     {
      "type": "BUILDING_TELEPHONE_NETWORK",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_COPPER_WIRES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_TELEVISIONS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

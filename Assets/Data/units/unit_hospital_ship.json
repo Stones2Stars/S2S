@@ -38,6 +38,16 @@
       "type": "BUILDING_NAVAL_YARD",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "BUILDING_HOSPITAL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
+      "scope": "city"
+     }
     ]
    ]
   }

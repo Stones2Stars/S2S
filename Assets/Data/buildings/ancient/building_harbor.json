@@ -128,14 +128,6 @@
   "construct": "AS2D_BUILD_HARBOR"
  },
  "identity": {
-  "newCityFree": [
-   {
-    "Is": "TAG_COASTAL",
-    "Has": {
-     "GOM_TECH": "TECH_COLONIALISM"
-    }
-   }
-  ],
   "worth": 4,
   "conquestProbability": 100,
   "dcmAirbombMission": 2,

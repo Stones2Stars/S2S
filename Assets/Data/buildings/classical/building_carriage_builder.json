@@ -46,6 +46,23 @@
       "type": "BUILDING_SHOPPING_DISTRICT",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BAMBOO",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
     ]
    ]
   }

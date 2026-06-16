@@ -21,6 +21,16 @@
     {
      "type": "BUILDING_LUNAR_LAUNCH_SITE",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_PLASTIC",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_ROCKET_FUEL",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

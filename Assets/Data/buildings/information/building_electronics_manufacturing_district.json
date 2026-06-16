@@ -50,6 +50,26 @@
     {
      "type": "BUILDING_MANUFACTURING_DISTRICT",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_PLASTIC",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_COPPER_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_RARE_EARTH_MINERALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

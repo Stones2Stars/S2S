@@ -664,7 +664,7 @@ split are field->family.member.unit with **scopes corrected from the classificat
 | `FreeBuilding`/`FreeAreaBuilding`/`ExtraFreeBonuses`/`FreeTraitTypes`/`FreeSpecialTech`/`iFreeTechs`/`HolyCity`/`iPopulationChange`/`iGlobalPopulationChange`/`bGoldenAge`/`FreeSpecialistCounts`/`FreePromoTypes` | `grants.{buildings,bonuses,traits,techs,holyCity,population,goldenAge,specialists,promotions}` | One-shot provisions/pulses. (FreeBuilding/FreeAreaBuilding are store-wired.) |
 | `FoundsCorporation`/`Hurrys`/`bForceTeamVoteEligible` | `enables.{corporations,hurries,votes}` | enables-family authored on the building. `enables.votes:["FORCE_TEAM_ELIGIBLE"]` (NEW token). |
 | `ObsoletesToBuilding` | `obsoletes.buildings` | The building's OWN obsolescence edge (read in the curator; not store-wired). |
-| `NewCityFree` | `identity.newCityFree` (PARKED) | **Deferred to the UNIT pass** (the settler "carries buildings into settling" via the new grant system — owner; the settler-grants-buildings edge is authored on settler-type units). |
+| `NewCityFree` | **RELOCATED → founder `grants.foundBuildings`** (NOT emitted building-side) | The settler "carries buildings into settling": DONE in the BoolExpr/settler follow-up (see that section below). The 13 NewCityFree buildings + their condition move onto the `bFound` units as `grants.foundBuildings` (each `enabled` by the converted NewCityFree BoolExpr). Nothing emitted on the building. |
 | `CommerceFlexibles` | `identity.commerceFlexible: [commerce…]` | Capability: which commerce SLIDERS the building unlocks (`isCommerceFlexible`). |
 | `MayDamageAttackingUnitCombatTypes` | `identity.damageAttackingUnitCombats` | Selective counter-damage list (pairs with the `defense` family). |
 | `iCost`/`iCostSizeModifier`/…/`iCostComplexityModifier` | `cost.{production,sizeModifier,countModifier,materialsModifier,complexityModifier}` | The C2C 5-part real-building-cost mechanic (intrinsic `cost` section). `GlobalBuildingCostModifiers` -> a distinct **`costs`** family (avoids the `cost` clash). |
@@ -705,11 +705,9 @@ SOURCE->unit enabler edges (tech/building-prereq/bonus/religion/civic + Obsolete
 **SpecialUnit #33** (`curate_special_unit`, rides Unit): cargo-load config — `bValid=0`->`identity.valid:false`, `bCityLoad`/
 `bSMLoadSame` -> `identity.{cityLoad,smLoadSame}`. Newly registered in `store.ENTITIES`. Written to `Assets/Data/specialunits/`.
 
-⚑ **DEFERRED follow-up (owner 2026-06-16):** the SETTLER-grants-buildings edge (founders `bFound` carry the `NewCityFree`
-set "into settling") + the **shared BoolExpr->enabler-condition converter** it needs (`NewCityFree` is tech/plot-CONDITIONED
-— `Has GOM_TECH`/`Is TAG_COASTAL` — NOT settler-type-based; owner-verified no settler-type difference yet) + the capital
-(`bCapital`) grant gated `empire.cities.max=0` (first city only) + retrofitting the parked building `ConstructCondition` +
-unit `TrainCondition` BoolExprs to that converter. One focused pass (a GitHub issue tracks the settler-buildings feature).
+✅ **DONE — BoolExpr/settler follow-up (owner 2026-06-16; GitHub #7).** The shared BoolExpr→enabler-condition converter
+(`Tools/Migration/boolexpr.py`) + all four consumers landed — see the dedicated **"BoolExpr converter + settler-grants
+follow-up"** section at the end of this file.
 
 *Toolkit: `curate_unit.py` (bespoke; REUSES the §5 family vocab; `BASE`/`UNIT_FAMILIES`/`VS_KEYED`/`CAP_BOOL`/`VISION_STRUCTS`/
 `GP_ACTIONS` tables + `requires_unit` + `pass2` + `curate_special_unit`) with a COVERAGE CHECK. `SpecialUnitInfo` registered in
@@ -719,3 +717,48 @@ unit `TrainCondition` BoolExprs to that converter. One focused pass (a GitHub is
 `TARGET_KEYED` tables + `requires_building` + a `pass2` for the keyed/property/grant/repeatable shapes + `curate_special`
 for SpecialBuilding; COVERAGE CHECK + era foldering. ⚑ KNOWN: `loadPrune` is 0 (buildings gate at the module level, no
 `PrereqGameOption` tag). Issues expected at the #430 reading pass (owner: "a solid start").*
+
+## BoolExpr converter + settler-grants follow-up  (`boolexpr.py`)  — #428 (owner 2026-06-16; GitHub #7)
+
+A focused SHARED pass: a `BoolExpr → enabler-condition` converter (`Tools/Migration/boolexpr.py`) + the four parked
+consumers it unblocks. The XML `BoolExpr` machinery (`Sources/BoolExpr.{h,cpp}`: `And`/`Or`/`Not`/`Has[GOMType,ID]`/
+`Is[TAG]` + integer-compare) → the LOCKED `requires` vocabulary (enabler-spec §3, `all`/`any`/`noneOf` over atoms +
+predicates). **The real, module-included vocabulary is tiny** (verified, `_survey_boolexpr.py`): `NewCityFree` = `GOM_TECH`
+(±`Is TAG_COASTAL`); `ConstructCondition` = `And`/`Or` of `Has` over `{BONUS,FEATURE,BUILDING,TECH,TERRAIN}`;
+`TrainCondition` = `And`/`Or` of `Has` over `{BONUS,BUILDING}` + ONE `GreaterEqual(ATTRIBUTE_POPULATION,10)` (UNIT_IMMIGRANT).
+So a small deterministic converter covers 100% — no hand-recreation. It RAISES on anything outside the map (a future module
+addition is caught, never silently mis-converted — owner: "if parsing is too cumbersome we hand-recreate by hand").
+
+| BoolExpr | new JSON | note |
+|---|---|---|
+| `Has GOM_TECH X` | `{type:TECH_X, scope:team}` | Per-candidate confirm (Tech/Building precedent). |
+| `Has GOM_BONUS X` | `{type:BONUS_X, scope:city, connection:"trade\|vicinity"}` | City has the resource (matches `requires_building`/`requires_unit` bonus atoms). |
+| `Has GOM_BUILDING X` | `{type:BUILDING_X, scope:city}` | In-city building presence (matches existing in-city building atoms). |
+| `Has GOM_FEATURE X` | `{HAS_FEATURE: FEATURE_X}` | **NEW parameterized predicate** (uniform w/ `HAS_BONUS`/`HAS_CORPORATION`). ⚑ diverges from Improvement #22's `{feature:[…]}` membership → Phase-F reconcile. |
+| `Has GOM_TERRAIN X` | `{HAS_TERRAIN: TERRAIN_X}` | **NEW parameterized predicate.** ⚑ diverges from Improvement #22's `{terrain:[…]}` → Phase-F. |
+| `Is TAG_COASTAL` | `IS_COASTAL` | **NEW bare predicate** (`CvCity::isCoastal`). ⚑ diverges from Improvement #22's `COASTAL_LAND` plot token → Phase-F. |
+| `And` / `Or` / `Not` | `all` / `any` (one OR-group) / `noneOf` | `Not` unused today; built for completeness. |
+| `GreaterEqual(ATTRIBUTE_POPULATION, N)` | `{type:POPULATION, scope:city, min:N}` | Established count kind (Building #32); the lone UNIT_IMMIGRANT case. |
+
+**The four consumers (retrofit; Building + Unit JSON regenerated):**
+| field (entity) | old | new | note |
+|---|---|---|---|
+| `ConstructCondition` (Building) | parked/coverage-only | folded into `requires.build` (`merge_into`) | Checked ONLY at `canConstruct` (CvCity.cpp:2976-2999), never `isActiveBuilding` → **build (greying), NOT operate** (losing a ConstructCondition bonus post-build does nothing). 97 buildings. |
+| `TrainCondition` (Unit) | parked/coverage-only | folded into `requires.build` | Checked at `canTrain` (CvCity.cpp:1961-1963). 238 units. |
+| `NewCityFree` (Building) | `identity.newCityFree` (parked) | **relocated** → founder `grants.foundBuildings` | See below; removed building-side. |
+| `bCapital` (Building = Palace) | `identity.capital` (kept) | **+** founder `grants.foundBuildings` entry, `enabled:{type:CITY,scope:empire,max:0}` | The capital-defining flag STAYS on the building (`isCapital`); the first-city auto-Palace becomes a found-grant gated on "no cities yet" (owner). |
+
+**`grants.foundBuildings` (NEW found-time grant key, on the 8 `bFound` units).** Every founder
+(SETTLER/COLONIST/PIONEER/BAND/TRIBE/MARSSETTLER/VENUS_SETTLER/AIRSETTLER) seeds its new city with the **identical** list
+(no settler-type difference yet — owner-verified): the 13 NewCityFree buildings (each `{building, enabled:<converted
+NewCityFree BoolExpr>}`) + `{building:BUILDING_PALACE, enabled:{type:CITY,scope:empire,max:0}}`. Computed once from the
+merged BuildingInfo table (`curate_unit.found_buildings`). Realizes the owner invariant: **a tech-gated building not
+available at settle time is not granted → not pre-built.** Distinct from the unit's `grants.buildings` (always-grants) —
+`foundBuildings` is the found-time seed (matches GitHub #7's "FoundBuildings list on CvUnitInfo"). The space-settler
+variants that are NOT `bFound` (lunar/cislunar/oneill/planetary) correctly receive no `foundBuildings` (they found via a
+different path).
+
+*Toolkit: `boolexpr.py` (shared, imported by `curate_building` + `curate_unit`); `curate_building.requires_building`
+merges `ConstructCondition`; `curate_unit.requires_unit` merges `TrainCondition`; `curate_unit.found_buildings(store)`
+builds the list. `_survey_boolexpr.py` was a throwaway vocabulary survey (deleted). ⚑ Phase-F: reconcile
+`IS_COASTAL`/`HAS_FEATURE`/`HAS_TERRAIN` with Improvement #22's `COASTAL_LAND`/`{feature\|terrain:[…]}`.*

@@ -13,6 +13,11 @@
     {
      "type": "BUILDING_SECRET_ARMY_BASE",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_AIRCRAFT",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

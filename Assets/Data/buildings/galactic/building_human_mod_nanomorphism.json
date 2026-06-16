@@ -9,6 +9,21 @@
      "type": "SELF",
      "scope": "empire",
      "max": 1
+    },
+    {
+     "type": "BONUS_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_HUMAN_MOD_RADIATION_TOLERANCE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_HUMAN_MOD_COLD_TOLERANCE",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

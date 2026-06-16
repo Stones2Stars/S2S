@@ -9,6 +9,11 @@
      "type": "BONUS_WOOD",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_ROPE",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

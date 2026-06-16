@@ -33,6 +33,11 @@
      "type": "BUILDING_TOXIC_WASTE_DUMP",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "BONUS_HEAVY_WATER",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

@@ -1,0 +1,138 @@
+#!/usr/bin/env python3
+"""Shared BoolExpr -> enabler-condition converter (#428 BoolExpr/settler follow-up, owner 2026-06-16).
+
+Converts the XML `BoolExpr` machinery (And/Or/Not/Has[GOM]/Is[TAG]/integer-compare; Sources/BoolExpr.{h,cpp})
+into the LOCKED requires-condition vocabulary (enabler-spec §3): `all`/`any`/`noneOf` over `requires` atoms
+({type,scope,...}) + bare / parameterized predicates. Used to retrofit the parked building `ConstructCondition`
++ `NewCityFree` and unit `TrainCondition` BoolExprs into `requires` / `grants.foundBuildings`.
+
+COVERAGE — verified against the live, module-INCLUDED data (Tools/Migration/_survey_boolexpr.py): the three
+fields use ONLY And/Or of Has over GOM_{TECH,BONUS,BUILDING,FEATURE,TERRAIN}, `Is TAG_COASTAL`, and a single
+`GreaterEqual(ATTRIBUTE_POPULATION, N)` (UNIT_IMMIGRANT). Anything outside that RAISES — so a future module
+addition is caught, never silently mis-converted (owner: "if parsing is too cumbersome we hand-recreate with
+grants by hand"). Extend the maps below (consciously) when a new node/GOM/tag actually appears.
+
+OWNER RULINGS 2026-06-16 (recorded in enabler-cascade-spec §3 + migration-renames):
+  - `Has GOM_TECH X`     -> {type:TECH_X,   scope:team}                     (per-candidate confirm; Tech/Building precedent)
+  - `Has GOM_BONUS X`    -> {type:BONUS_X,  scope:city, connection:"trade|vicinity"}  (city has the resource)
+  - `Has GOM_BUILDING X` -> {type:BUILDING_X, scope:city}                   (in-city building presence; matches requires_building)
+  - `Has GOM_FEATURE X`  -> {HAS_FEATURE: FEATURE_X}                        (parameterized predicate, uniform with HAS_BONUS)
+  - `Has GOM_TERRAIN X`  -> {HAS_TERRAIN: TERRAIN_X}                        (parameterized predicate)
+  - `Is TAG_COASTAL`     -> "IS_COASTAL"                                    (bare city-is-coastal predicate)
+  - `And`->all, `Or`->any (one OR-group), `Not`->noneOf
+  - `GreaterEqual(ATTRIBUTE_POPULATION, N)` -> {type:POPULATION, scope:city, min:N}   (established count kind, Building #32)
+  ⚑ HAS_FEATURE/HAS_TERRAIN/IS_COASTAL DIVERGE from Improvement #22's {feature:[...]}/{terrain:[...]} membership +
+    COASTAL_LAND plot token — flagged for the Phase-F predicate-modularity reconciliation (enabler-spec §12 / ranking Phase F).
+"""
+from collections import OrderedDict
+import engine
+
+
+def _atom(typ, scope, **kw):
+    a = OrderedDict([("type", typ), ("scope", scope)])
+    a.update(kw)
+    return a
+
+
+def _has_leaf(gom, ident):
+    """`Has GOMType ID` -> a requires leaf (atom dict or parameterized predicate)."""
+    if not ident or ident == "NONE":
+        return None
+    if gom == "GOM_TECH":
+        return _atom(ident, "team")
+    if gom == "GOM_BONUS":
+        return _atom(ident, "city", connection="trade|vicinity")
+    if gom == "GOM_BUILDING":
+        return _atom(ident, "city")
+    if gom == "GOM_FEATURE":
+        return OrderedDict([("HAS_FEATURE", ident)])
+    if gom == "GOM_TERRAIN":
+        return OrderedDict([("HAS_TERRAIN", ident)])
+    raise ValueError("boolexpr: unhandled <Has> GOMType %s (ID %s) — extend the converter or hand-recreate" % (gom, ident))
+
+
+def _is_pred(tag):
+    """`Is TAG` -> a bare predicate."""
+    if tag == "TAG_COASTAL":
+        return "IS_COASTAL"
+    raise ValueError("boolexpr: unhandled <Is> tag %s — extend the converter or hand-recreate" % tag)
+
+
+def _int_compare(tag, elem):
+    """The integer-comparison nodes. Only ATTRIBUTE_POPULATION >= Constant appears (UNIT_IMMIGRANT)."""
+    attr = engine.text(elem.find("AttributeType"))
+    cnode = elem.find("Constant")
+    const = int(engine.text(cnode)) if cnode is not None and engine.is_int(engine.text(cnode)) else None
+    if tag == "GreaterEqual" and attr == "ATTRIBUTE_POPULATION" and const is not None:
+        return _atom("POPULATION", "city", min=const)
+    raise ValueError("boolexpr: unhandled integer comparison <%s> attr=%s const=%s "
+                     "— extend the converter or hand-recreate" % (tag, attr, const))
+
+
+def convert(node):
+    """A BoolExpr NODE -> a normalized condition: a LEAF (atom dict / predicate str / {PRED:ID})
+    | {'all':[...]} | {'any':[[...]]} | {'noneOf':[...]}. None for an empty node."""
+    if node is None:
+        return None
+    tag = node.tag
+    kids = [k for k in node]
+    if tag == "And":
+        parts = [p for p in (convert(c) for c in kids) if p is not None]
+        if not parts:
+            return None
+        return parts[0] if len(parts) == 1 else OrderedDict([("all", parts)])
+    if tag == "Or":
+        parts = [p for p in (convert(c) for c in kids) if p is not None]
+        if not parts:
+            return None
+        return parts[0] if len(parts) == 1 else OrderedDict([("any", [parts])])
+    if tag == "Not":
+        parts = [p for p in (convert(c) for c in kids) if p is not None]
+        if not parts:
+            return None
+        return OrderedDict([("noneOf", parts)])
+    if tag == "Has":
+        return _has_leaf(engine.text(node.find("GOMType")), engine.text(node.find("ID")))
+    if tag == "Is":
+        return _is_pred(engine.text(node))
+    if tag in ("Greater", "GreaterEqual", "Equal"):
+        return _int_compare(tag, node)
+    raise ValueError("boolexpr: unhandled node <%s> — extend the converter or hand-recreate" % tag)
+
+
+def convert_field(field_elem):
+    """ENTRY POINT for a field WRAPPER (<ConstructCondition>/<NewCityFree>/<TrainCondition>): the wrapper holds the
+    BoolExpr as its single child. Returns the condition node (or None if empty)."""
+    if field_elem is None:
+        return None
+    kids = [k for k in field_elem]
+    if not kids:
+        return None
+    if len(kids) == 1:
+        return convert(kids[0])
+    parts = [p for p in (convert(k) for k in kids) if p is not None]  # implicit AND of multiple children
+    if not parts:
+        return None
+    return parts[0] if len(parts) == 1 else OrderedDict([("all", parts)])
+
+
+def _is_structural(node):
+    return isinstance(node, dict) and ("all" in node or "any" in node or "noneOf" in node)
+
+
+def merge_into(node, allc, anyc, none):
+    """Fold a converted condition node into EXISTING requires.build (`all`/`any`/`noneOf`) lists, IN PLACE.
+    Flattens top-level AND into allc; an OR-group goes to anyc (AND-ed with allc, per enabler-spec §3); a NOT to
+    none. A leaf (atom/predicate) appends to allc. (An Or-group MEMBER that is itself structural is kept as-is.)"""
+    if node is None:
+        return
+    if _is_structural(node):
+        if "all" in node:
+            for m in node["all"]:
+                merge_into(m, allc, anyc, none)
+        elif "any" in node:
+            anyc.extend(node["any"])
+        else:
+            none.extend(node["noneOf"])
+    else:
+        allc.append(node)

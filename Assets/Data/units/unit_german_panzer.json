@@ -23,6 +23,18 @@
       "scope": "city",
       "connection": "trade|vicinity"
      }
+    ],
+    [
+     {
+      "type": "BONUS_PETROLEUM_PRODUCTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BIOFUEL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
     ]
    ]
   }

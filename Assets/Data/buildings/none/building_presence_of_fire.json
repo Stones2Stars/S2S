@@ -9,6 +9,43 @@
      "type": "BUILDING_FOLKLORE_REQUIREMENT",
      "scope": "city"
     }
+   ],
+   "any": [
+    [
+     {
+      "HAS_TERRAIN": "TERRAIN_DUNES"
+     },
+     {
+      "HAS_TERRAIN": "TERRAIN_DESERT"
+     },
+     {
+      "HAS_TERRAIN": "TERRAIN_PLAINS"
+     },
+     {
+      "HAS_TERRAIN": "TERRAIN_SCRUB"
+     },
+     {
+      "HAS_TERRAIN": "TERRAIN_LUSH"
+     },
+     {
+      "HAS_FEATURE": "FEATURE_JUNGLE"
+     },
+     {
+      "HAS_FEATURE": "FEATURE_SAVANNA"
+     },
+     {
+      "HAS_FEATURE": "FEATURE_FOREST"
+     },
+     {
+      "HAS_FEATURE": "FEATURE_FOREST_ANCIENT"
+     },
+     {
+      "HAS_FEATURE": "FEATURE_FOREST_YOUNG"
+     },
+     {
+      "HAS_FEATURE": "FEATURE_FOREST_BURNT"
+     }
+    ]
    ]
   }
  },

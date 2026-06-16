@@ -19,6 +19,16 @@
     {
      "type": "BUILDING_LUNAR_HYDROPONICS_FARM",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_FERTILIZERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

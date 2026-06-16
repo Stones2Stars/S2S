@@ -9,6 +9,26 @@
      "type": "BONUS_JET_ENGINES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_TOOLS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_PARTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

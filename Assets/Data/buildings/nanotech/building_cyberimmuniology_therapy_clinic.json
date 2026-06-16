@@ -22,6 +22,16 @@
     {
      "type": "BUILDING_REJUVENATION_TANK",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_METAMATERIALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

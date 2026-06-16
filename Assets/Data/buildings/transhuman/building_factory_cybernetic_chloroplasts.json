@@ -23,6 +23,21 @@
     {
      "type": "BUILDING_SOMATOSENSORY_MANIPULATOR_LAB",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_SUPERSTRONG_ALLOYS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_NOVUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_BIOPOLYMERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

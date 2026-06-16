@@ -9,6 +9,11 @@
      "type": "BONUS_TITANIUM_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_HOVERCRAFTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

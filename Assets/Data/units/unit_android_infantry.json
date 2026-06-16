@@ -13,6 +13,16 @@
     {
      "type": "BUILDING_ROBOTICS_LAB",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

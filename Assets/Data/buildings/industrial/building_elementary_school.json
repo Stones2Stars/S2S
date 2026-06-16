@@ -36,6 +36,11 @@
      "type": "BONUS_BOOKS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

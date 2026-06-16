@@ -21,6 +21,11 @@
      "type": "BONUS_COAL",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

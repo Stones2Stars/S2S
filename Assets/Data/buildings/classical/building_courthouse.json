@@ -137,11 +137,6 @@
    "SPECIALIST_LAWYER": 1,
    "SPECIALIST_INVESTIGATOR": 1
   },
-  "newCityFree": [
-   {
-    "GOM_TECH": "TECH_STEAM_POWER"
-   }
-  ],
   "worth": 4,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

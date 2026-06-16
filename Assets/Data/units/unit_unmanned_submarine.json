@@ -18,6 +18,11 @@
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 10
+    },
+    {
+     "type": "BONUS_URANIUM",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

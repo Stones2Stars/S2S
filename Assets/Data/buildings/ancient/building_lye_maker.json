@@ -14,6 +14,16 @@
      "type": "BONUS_WOOD",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_BARRELS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

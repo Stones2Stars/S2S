@@ -9,6 +9,21 @@
      "type": "SELF",
      "scope": "empire",
      "max": 1
+    },
+    {
+     "type": "BONUS_HUMAN_MOD_IMMORTAL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_HUMAN_MOD_ALIEN_HYBRID",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_HUMAN_MOD_PURE_ENERGY",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

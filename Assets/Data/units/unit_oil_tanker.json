@@ -20,6 +20,16 @@
      "type": "SELF",
      "scope": "empire",
      "max": 5
+    },
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_OIL",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

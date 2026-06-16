@@ -24,6 +24,16 @@
     {
      "type": "BUILDING_BIOINFORMATICS_LAB",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_METAMATERIALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_ORGANIC_PHOTONIC_CELLS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

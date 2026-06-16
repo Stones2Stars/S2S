@@ -10,7 +10,45 @@
      "latitude": {
       "max": 60
      }
+    },
+    {
+     "type": "BUILDING_FOLKLORE_T_FISH",
+     "scope": "city"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_FOLKLORE_COD",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_MACKEREL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_TUNA",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_MARLIN",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_TOWN_HALL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CITY_COUNCIL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
+      "scope": "city"
+     }
+    ]
    ]
   }
  },

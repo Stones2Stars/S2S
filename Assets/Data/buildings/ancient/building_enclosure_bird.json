@@ -8,6 +8,40 @@
    "UNIT_TAMED_TURKEY"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_GOVERNORS_MENAGERIE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_CARNIVAL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ZOO",
+      "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_FOLKLORE_T_BIRDS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_T_FLIGHTLESS_BIRDS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FOLKLORE_T_RAPTORS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
  "research": {
   "city": {
    "percent": [

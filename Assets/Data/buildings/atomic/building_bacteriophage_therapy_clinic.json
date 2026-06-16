@@ -22,6 +22,21 @@
     {
      "type": "BUILDING_PROTEIN_LAB",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_ENZYMES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

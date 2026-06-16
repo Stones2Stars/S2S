@@ -16,6 +16,16 @@
   "build": {
    "all": [
     "IS_FRESHWATER"
+   ],
+   "any": [
+    [
+     {
+      "HAS_TERRAIN": "TERRAIN_MUDDY"
+     },
+     {
+      "HAS_FEATURE": "FEATURE_FLOOD_PLAINS"
+     }
+    ]
    ]
   }
  },

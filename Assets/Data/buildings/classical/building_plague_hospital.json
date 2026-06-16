@@ -4,6 +4,13 @@
  "civilopedia": "TXT_KEY_BUILDING_PLAGUE_HOSPITAL_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
    "any": [
     [
      {

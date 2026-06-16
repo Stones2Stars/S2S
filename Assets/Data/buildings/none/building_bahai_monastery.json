@@ -4,6 +4,18 @@
  "civilopedia": "TXT_KEY_BUILDING_BAHAI_MONASTERY_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
    "any": [
     [
      {

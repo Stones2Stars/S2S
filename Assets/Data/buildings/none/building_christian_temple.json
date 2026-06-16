@@ -11,6 +11,23 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_GLASSWARE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
    "any": [
     [
      {

@@ -8,6 +8,129 @@
   "found": true,
   "ignoreTerrainCost": true
  },
+ "grants": {
+  "foundBuildings": [
+   {
+    "building": "BUILDING_STABLE",
+    "enabled": {
+     "type": "TECH_STEAM_POWER",
+     "scope": "team"
+    }
+   },
+   {
+    "building": "BUILDING_BARRACKS",
+    "enabled": {
+     "type": "TECH_COLONIALISM",
+     "scope": "team"
+    }
+   },
+   {
+    "building": "BUILDING_COURTHOUSE",
+    "enabled": {
+     "type": "TECH_STEAM_POWER",
+     "scope": "team"
+    }
+   },
+   {
+    "building": "BUILDING_FISHERMANS_HUT",
+    "enabled": {
+     "all": [
+      "IS_COASTAL",
+      {
+       "type": "TECH_COLONIALISM",
+       "scope": "team"
+      }
+     ]
+    }
+   },
+   {
+    "building": "BUILDING_FORGE",
+    "enabled": {
+     "type": "TECH_COLONIALISM",
+     "scope": "team"
+    }
+   },
+   {
+    "building": "BUILDING_GARRISON",
+    "enabled": {
+     "type": "TECH_STEAM_POWER",
+     "scope": "team"
+    }
+   },
+   {
+    "building": "BUILDING_GRANARY",
+    "enabled": {
+     "type": "TECH_COLONIALISM",
+     "scope": "team"
+    }
+   },
+   {
+    "building": "BUILDING_GROCER",
+    "enabled": {
+     "type": "TECH_STEAM_POWER",
+     "scope": "team"
+    }
+   },
+   {
+    "building": "BUILDING_HARBOR",
+    "enabled": {
+     "all": [
+      "IS_COASTAL",
+      {
+       "type": "TECH_COLONIALISM",
+       "scope": "team"
+      }
+     ]
+    }
+   },
+   {
+    "building": "BUILDING_LIBRARY",
+    "enabled": {
+     "type": "TECH_STEAM_POWER",
+     "scope": "team"
+    }
+   },
+   {
+    "building": "BUILDING_LIGHTHOUSE",
+    "enabled": {
+     "all": [
+      "IS_COASTAL",
+      {
+       "type": "TECH_COLONIALISM",
+       "scope": "team"
+      }
+     ]
+    }
+   },
+   {
+    "building": "BUILDING_MARKET",
+    "enabled": {
+     "type": "TECH_COLONIALISM",
+     "scope": "team"
+    }
+   },
+   {
+    "building": "BUILDING_PORT",
+    "enabled": {
+     "all": [
+      "IS_COASTAL",
+      {
+       "type": "TECH_STEAM_POWER",
+       "scope": "team"
+      }
+     ]
+    }
+   },
+   {
+    "building": "BUILDING_PALACE",
+    "enabled": {
+     "type": "CITY",
+     "scope": "empire",
+     "max": 0
+    }
+   }
+  ]
+ },
  "succession": {
   "upgradesTo": [
    "UNIT_AIRSETTLER"

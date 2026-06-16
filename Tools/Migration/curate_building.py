@@ -32,6 +32,7 @@ import os
 from collections import OrderedDict
 
 import engine
+import boolexpr
 from curate_common import put_art, emit_art, FAMILY_ORDER, de_i
 from store import Store, REPO
 
@@ -498,13 +499,10 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables, obsolete
     otb = _txt(rec, "ObsoletesToBuilding")
     if otb:
         obsoletes.setdefault("buildings", []).append(otb)
-    # --- NewCityFree: PARKED -> identity, deferred to the UNIT pass (the settler "carries buildings into settling"
-    # via the new grant system; the settler-grants-buildings edge is authored on settler-type units — owner 2026-06-16). ---
-    ncf = rec.find("NewCityFree")
-    if ncf is not None:
-        g = engine.generic(ncf)
-        if g not in (None, "", {}, []):
-            identity["newCityFree"] = g
+    # --- NewCityFree: RELOCATED off the building onto the FOUNDER units as grants.foundBuildings (owner 2026-06-16:
+    # the settler "carries buildings into settling"; gated by each building's NewCityFree BoolExpr -> a tech-gated
+    # building unavailable at settle time is not pre-built). curate_unit.found_buildings() reads NewCityFree off the
+    # store's BuildingInfo table + the boolexpr converter; nothing is emitted building-side now. (renames §Unit.) ---
     # --- CommerceFlexibles -> identity.commerceFlexible (capability: which commerce SLIDERS this building unlocks;
     # CvPlayer::changeCommerceFlexibleCount on build -> isCommerceFlexible gates slider-setting — owner 2026-06-16). ---
     cfn = rec.find("CommerceFlexibles")
@@ -675,6 +673,11 @@ def requires_building(rec, store):
         v = _txt(rec, tag)
         if v:
             op_all.append(_atom(v, scope))
+    # --- ConstructCondition BoolExpr -> build (greying). It is checked ONLY at canConstruct (CvCity.cpp:2976-2999),
+    # never isActiveBuilding, so losing a ConstructCondition bonus after build does nothing -> build (greying), NOT
+    # operate (dormancy). Folded via the shared boolexpr converter (And/Or of Has over bonus/feature/tech/terrain/
+    # building). owner 2026-06-16; renames §Building. ---
+    boolexpr.merge_into(boolexpr.convert_field(rec.find("ConstructCondition")), build_all, build_any, build_none)
 
     build = OrderedDict()
     if build_all:

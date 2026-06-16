@@ -32,6 +32,7 @@ import os
 from collections import OrderedDict
 
 import engine
+import boolexpr
 from curate_common import put_art, emit_art, FAMILY_ORDER, de_i
 from store import Store, REPO
 
@@ -170,11 +171,11 @@ def _int(rec, tag):
 def _bool(rec, tag):
     return engine.text(rec.find(tag)) in ("1", "true", "True")
 
-# ⚑ FOLLOW-UP (owner 2026-06-16): the SETTLER-grants-buildings edge (bFound units carry the NewCityFree building set
-# "into settling") is DEFERRED to a focused pass — it needs a shared BoolExpr->enabler-condition converter, since
-# NewCityFree is tech/plot-CONDITIONED (Has GOM_TECH / Is TAG_COASTAL), NOT settler-type-based (owner-verified: no
-# settler-type difference yet). That same converter serves the parked building ConstructCondition + unit TrainCondition
-# BoolExprs. The capital (bCapital -> Palace) grants only on the first city ("empire.cities.max=0") in that pass.
+# ✅ DONE (owner 2026-06-16; GitHub #7): the SETTLER-grants-buildings edge — bFound units carry the NewCityFree set
+# "into settling" as grants.foundBuildings (see found_buildings() below), each gated by its NewCityFree BoolExpr via the
+# shared converter `boolexpr.py`. That same converter retrofits the parked building ConstructCondition + unit
+# TrainCondition into requires.build. The capital (bCapital -> Palace) is a foundBuildings entry gated {type:CITY,
+# scope:empire, max:0} (first city only). Map + rationale: migration-renames "BoolExpr converter + settler-grants".
 
 
 def _typelist(rec, wrapper):
@@ -246,6 +247,9 @@ def requires_unit(rec, store):
         v = _int(rec, tag)
         if v is not None and v >= 0:
             allc.append(_atom("SELF", scope, max=v))
+    # --- TrainCondition BoolExpr -> build (checked at canTrain, CvCity.cpp:1961-1963). Folded via the shared
+    # boolexpr converter (And/Or of Has over bonus/building + the one ATTRIBUTE_POPULATION>=N case). owner 2026-06-16. ---
+    boolexpr.merge_into(boolexpr.convert_field(rec.find("TrainCondition")), allc, anyc, none)
     build = OrderedDict()
     if allc:
         build["all"] = allc
@@ -254,6 +258,35 @@ def requires_unit(rec, store):
     if none:
         build["noneOf"] = none
     return {"build": build} if build else None
+
+
+_FOUND_BUILDINGS = None
+
+
+def found_buildings(store):
+    """The settler-grants-buildings list (owner 2026-06-16): every building's NewCityFree BoolExpr becomes a
+    found-time grant {building, enabled:<condition>}, + the Palace gated on no-cities-yet ({type:CITY,scope:empire,
+    max:0}). IDENTICAL for every bFound unit (no settler-type difference yet — owner-verified). Computed ONCE from
+    the merged, module-included BuildingInfo table (file order = deterministic). Realizes the invariant: a building
+    not available at settle time (its tech gate unmet) is simply not granted -> not pre-built. (GitHub #7; renames §Unit.)"""
+    global _FOUND_BUILDINGS
+    if _FOUND_BUILDINGS is not None:
+        return _FOUND_BUILDINGS
+    out = []
+    for b, brec in store.table("BuildingInfo").items():
+        ncf = brec.find("NewCityFree")
+        if ncf is None:
+            continue
+        entry = OrderedDict([("building", b)])
+        cond = boolexpr.convert_field(ncf)
+        if cond is not None:
+            entry["enabled"] = cond
+        out.append(entry)
+    for b, brec in store.table("BuildingInfo").items():
+        if engine.text(brec.find("bCapital")) == "1":
+            out.append(OrderedDict([("building", b), ("enabled", _atom("CITY", "empire", max=0))]))
+    _FOUND_BUILDINGS = out
+    return out
 
 
 def _set_fam(fams, family, member, unit, value):
@@ -477,6 +510,10 @@ def curate(typ, rec, store):
             grants[key] = lst
     if _bool(rec, "bGoldenAge"):
         grants["goldenAge"] = True
+    # --- settler-grants-buildings: a FOUNDER (bFound) seeds its new city with the NewCityFree set (+ Palace),
+    # each gated by its condition; relocated off the buildings (owner 2026-06-16; GitHub #7). ---
+    if _bool(rec, "bFound"):
+        grants["foundBuildings"] = found_buildings(store)
     # --- succession (upgrade chain; manual, NOT replaces) ---
     ups = _typelist_struct(rec, "UnitUpgrades", "UnitType") or _typelist(rec, "UnitUpgrades")
     if ups:

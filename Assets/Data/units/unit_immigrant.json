@@ -3,6 +3,17 @@
  "description": "TXT_KEY_UNIT_IMMIGRANT",
  "civilopedia": "TXT_KEY_UNIT_IMMIGRANT_PEDIA",
  "help": "TXT_KEY_UNIT_IMMIGRANT_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 10
+    }
+   ]
+  }
+ },
  "capabilities": {
   "food": true
  },

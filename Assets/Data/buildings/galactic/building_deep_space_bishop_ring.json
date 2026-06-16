@@ -33,6 +33,21 @@
     {
      "type": "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_SUPERINTELLIGENT_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_DEEP_SPACE_NANOBOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_DEEP_SPACE_LIFEFORMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

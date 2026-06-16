@@ -9,6 +9,18 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_FIBERGLASS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
    "any": [
     [
      {

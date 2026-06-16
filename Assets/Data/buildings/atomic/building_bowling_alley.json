@@ -19,6 +19,16 @@
     {
      "type": "BUILDING_SHOPPING_DISTRICT",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_PLASTIC",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

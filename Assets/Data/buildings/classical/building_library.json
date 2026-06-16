@@ -33,6 +33,11 @@
      "type": "BONUS_BRICKS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [
@@ -129,11 +134,6 @@
   "specialistSlots": {
    "SPECIALIST_SCIENTIST": 2
   },
-  "newCityFree": [
-   {
-    "GOM_TECH": "TECH_STEAM_POWER"
-   }
-  ],
   "neverCapture": true,
   "worth": 3,
   "dcmAirbombMission": 2,

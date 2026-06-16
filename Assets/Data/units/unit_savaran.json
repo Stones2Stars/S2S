@@ -18,6 +18,16 @@
      "type": "SELF",
      "scope": "empire",
      "max": 5
+    },
+    {
+     "type": "BONUS_HORSE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_HORSE",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

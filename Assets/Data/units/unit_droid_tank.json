@@ -9,6 +9,16 @@
      "type": "BONUS_TANKS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_TANKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_SERVICE_BOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

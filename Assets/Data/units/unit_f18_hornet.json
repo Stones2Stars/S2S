@@ -10,6 +10,16 @@
      "type": "BONUS_PETROLEUM_PRODUCTS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_AIRCRAFT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

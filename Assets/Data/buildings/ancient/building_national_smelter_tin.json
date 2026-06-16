@@ -20,6 +20,18 @@
      "scope": "empire",
      "max": 1
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "TECH_ROAD_BUILDING",
+      "scope": "team"
+     },
+     {
+      "type": "TECH_SHIP_BUILDING",
+      "scope": "team"
+     }
+    ]
    ]
   }
  },

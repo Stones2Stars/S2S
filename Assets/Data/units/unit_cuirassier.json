@@ -13,6 +13,16 @@
     {
      "type": "BUILDING_ANIMAL_TRAINER_HORSE",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_HORSE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

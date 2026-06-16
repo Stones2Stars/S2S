@@ -44,6 +44,26 @@
     {
      "type": "BUILDING_MANUFACTURING_DISTRICT",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_PLASTIC",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_TITANIUM_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }

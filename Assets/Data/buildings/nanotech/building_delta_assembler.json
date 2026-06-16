@@ -24,6 +24,21 @@
     {
      "type": "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_LIQUID_METAL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_PLASMA_GENERATORS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_MICROGENERATORS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

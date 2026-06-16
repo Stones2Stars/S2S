@@ -17,6 +17,46 @@
     {
      "type": "BUILDING_SKYROAD_STATION",
      "scope": "city"
+    },
+    {
+     "type": "BONUS_BIOFUEL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_FLASH_MEMORY_DEVICES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_IMMUNITY_DRUGS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_MEDICAL_TRICORDERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_STIM_PACKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_SHOCKWAVE_ENGINES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_SMART_MEDICINE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BONUS_HYPOSPRAYS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [

@@ -18,6 +18,11 @@
      "type": "SELF",
      "scope": "empire",
      "max": 5
+    },
+    {
+     "type": "BONUS_PERSONAL_ELECTRONICS",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ],
    "any": [
