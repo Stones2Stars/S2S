@@ -296,9 +296,24 @@ grows as more accumulate):
   each belongs on the tech (downward deposit) or keep-on-source on the delivering entity. Carry the affected entities'
   inversions as-is until this pass; flag at each entity (Improvement #22 drops `TechYieldChanges`, deferring to the
   existing tech gate pending this review).
-Done BEFORE #430 so the parser implements against uniform data — no mid-parse retrofit churn. **⛔ HARD GATE (owner,
-emphatic 2026-06-16): do NOT start "whatever is next" (the #430 parser, or any new phase) until this alignment —
-INCLUDING the art-block update — is complete.** Finish migration → align everything (arts included) → only then move on.
+Done BEFORE #430 so the parser implements against uniform data — no mid-parse retrofit churn. (Earlier framed as a hard
+"finish all alignment before any #430 work" gate; the art-block update IS complete.)
+
+**↻ REFRAMED — Phase F is a LIGHT pass, NOT an exhaustive hunt (owner 2026-06-16).** A quick enabler/requires placement
+AUDIT (2026-06-16, across all 34 migrated entities) confirmed the **structure is fundamentally SOUND**: every conditioner/
+generator carries the `enables` family on the SOURCE, every buildable target carries `requires`; tech only ever appears in
+`requires.build` as a confirm (never a generator); the build/operate split is right for the fluid means (civic/religion/
+corp → operate dormancy; units → build-only as leaf actions). So Phase F doesn't need to find everything up front — **we
+will surface and fix more alignment issues as we walk through WIRING #430** (owner: don't over-invest in an exhaustive
+audit). Known items to carry into the wiring (fix when hit, not as a blocking pre-pass):
+- **build-vs-operate for CONTINUOUS building gates:** building **resource** (`bonus`, ~6.6k) and **power** (`HAS_POWER`,
+  ~1k) prereqs currently sit in `requires.build` (grey-only); per the grounding they are the continuous `CvCity::isActiveBuilding`
+  gates → they should `operate` (grey at build AND go dormant when the input is lost). Verify vs `isActiveBuilding`, then move.
+- **grey-vs-hide consistency:** buildings/units put bonus prereqs in `requires` (grey); routes invert theirs to
+  `bonus.enables.routes` (hide). Same concept, two treatments — pick one convention.
+- the previously-listed items (predicate modularity + `IS_COASTAL`/`HAS_FEATURE` reconcile, modifier-ownership/tech-gate
+  review, family names) — handle as encountered.
+- minor: the SpecialBuilding per-group instance cap is in `identity.maxPlayerInstances`, not a member-building `requires` `max`.
 
 ## Tier G — UNRANKED gameplay infos / "stragglers" (SCOPE VERIFIED 2026-06-16)
 
