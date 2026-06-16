@@ -3,3 +3,6 @@ readjson.exe
 readjson.obj
 msvcr71.dll
 msvcp71.dll
+
+# run outputs
+_*.txt

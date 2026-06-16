@@ -87,6 +87,13 @@ SHADOW** alongside the existing XML-driven machinery, behind **gated logging** (
   independent of the old during shadow (§2).
 - **The ONLY things kept/shared are the hard EXE boundary (§3)** — the type registry + the accessor surface the closed
   `.exe` binds. Everything else is fresh.
+- **DELIBERATE REUSE EXCEPTION — `BoolExpr` for the conditionals (owner 2026-06-16).** The JSON conditionals
+  (`requires`/`enabled`/`disabled`: `all`/`any`/`noneOf` over atoms + predicates) are **isomorphic to the engine's existing
+  `BoolExpr`** (`And`/`Or`/`Not` over `Has`(GOM)/`Is`(tag)) — see `Sources/BoolExpr.{h,cpp}`. So the runtime `readJson`
+  **translates a JSON conditional directly into a `BoolExpr` tree** and evaluates it against any in-game object; `BoolExpr`
+  is the one existing piece we pull out and reuse (not rebuild). The isolated harness (`Sources/ReadJson/`) can't link
+  `BoolExpr`, so it proves the same parse by rendering the conditional to **clear text** (the litmus test: "BUILDING_X
+  requires (one of: …) AND NONE of (…)"). One conditional shape, two back-ends: `BoolExpr` in-game, text offline.
 - **Sequence (owner): finish the specs, THEN prototype the 4 components.** The 3 machine specs are done (enabler/modifier/
   tally); the `readJson` runtime-data-model is the remaining design (§1.4) before prototyping.
 
