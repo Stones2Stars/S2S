@@ -1,0 +1,71 @@
+{
+ "type": "IMPROVEMENT_SUBMERGED_TOWN",
+ "description": "TXT_KEY_IMPROVEMENT_SUBMERGED_TOWN",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_SUBMERGED_TOWN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MARINE_ARCHITECTURE",
+     "scope": "team"
+    },
+    "IS_WATER"
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_COAST",
+       "TERRAIN_COAST_POLAR",
+       "TERRAIN_COAST_TROPICAL",
+       "TERRAIN_OCEAN",
+       "TERRAIN_OCEAN_POLAR",
+       "TERRAIN_OCEAN_TROPICAL",
+       "TERRAIN_SEA",
+       "TERRAIN_SEA_POLAR",
+       "TERRAIN_SEA_TROPICAL",
+       "TERRAIN_COAST_DEEP",
+       "TERRAIN_COAST_DEEP_POLAR",
+       "TERRAIN_COAST_DEEP_TROPICAL",
+       "TERRAIN_SEA_DEEP",
+       "TERRAIN_SEA_DEEP_POLAR",
+       "TERRAIN_SEA_DEEP_TROPICAL",
+       "TERRAIN_TRENCH",
+       "TERRAIN_TRENCH_POLAR",
+       "TERRAIN_TRENCH_TROPICAL",
+       "TERRAIN_LAKE_SHORE",
+       "TERRAIN_LAKE"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_SUBMERGED_TOWN"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 60
+  },
+  "airBombDefense": 5,
+  "pillageGold": 25
+ }
+}

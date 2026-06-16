@@ -1,0 +1,50 @@
+{
+ "type": "IMPROVEMENT_DYSON_SPHERE",
+ "description": "TXT_KEY_IMPROVEMENT_DYSON_SPHERE",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_DYSON_SPHERE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASTROENGINEERING",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_MILKY_WAY",
+       "TERRAIN_GALACTIC_CORE",
+       "TERRAIN_ORION_ARM",
+       "TERRAIN_STAR_CLUSTER",
+       "TERRAIN_NEBULA",
+       "TERRAIN_RED_GIANT",
+       "TERRAIN_SUN_LIKE_STAR",
+       "TERRAIN_RED_DWARF"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 10
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_DYSON_SPHERE"
+  }
+ },
+ "identity": {
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

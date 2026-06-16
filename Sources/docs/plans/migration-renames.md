@@ -386,3 +386,47 @@ compiles but no route consumer reads it via `getRouteInfo`, and no route populat
 | `TechMovementChanges` | (curate_tech) `tech` `movement.team.routes.{ROUTE}.flat` | Per-tech route-movement improvement → inverts onto the TECH (`CvTeam::processTech` accumulates it team-wide); dropped here. Live consumers reworked at the reader phase: C++ `CvTeam::processTech`, Python `Revolution.py` / `CvTechChooser.py`. Only `ROUTE_VACTRAIN` sets one (`TECH_SKYROADS`, −4). |
 | `Categories` / `PropertyManipulators` | — (DROPPED) | Dead/empty on every route (see intro). |
 | `m_zobristValue` | — (drop) | Runtime-only (seeded from `getSorenRand()` in the ctor), not XML-backed. |
+
+## Improvement  (`curate_improvement.py`)  — Tier C #22 (266 records: 122 base + 144 module-added; 101 graphical-only)
+
+A plot-leaf **TARGET** (Terrain/Feature peer): carries its OWN `plot`-scope modifiers + a placement `requires.build`;
+never a source (`store.enabled_by` empty → no `enables`). Curated from the adversarially-verified
+`classifications/improvement-classification.json` (classify-improvement workflow) + owner rulings 2026-06-16; full
+per-field rationale + the placement-gate INVARIANT live there. EXE-link: **3 DllExport** (`isGoody`,
+`isRequiresRiverSide`, `getArtInfo`) → `bGoody`+`bRequiresRiverSide` EXE-constrained. ≡ its **Build** (#23): the worker
+Build is the action that PLACES it (button/time/cost on Build); the improvement carries NO `<Button>`. Mechanical
+de-Hungarian + the ui/world/sound art blocks not re-logged. Structural / manual:
+
+| old XML | new JSON path | note |
+|---|---|---|
+| `YieldChanges` | `<yield>.plot.flat` (food/production/commerce) | The improvement's OWN tile yield. MAPPING ERROR: buried in identity + scope:city → `plot` (the Terrain/Feature trap). |
+| `RiverSideYieldChange` | `<yield>.plot.flat[].{value, enabled:"HAS_RIVER"}` | Extra river-plot yield, `HAS_RIVER`-gated (post_process). |
+| `IrrigatedYieldChange` | `<yield>.plot.flat[].{value, enabled:"HAS_IRRIGATION"}` | Extra yield when irrigated; new `HAS_IRRIGATION` plot predicate. |
+| `iDefenseModifier` | `defense.plot.amount.percent` | Fort tile-defense % (Terrain/Feature `amount` member). MAPPING ERROR scope:city → plot. |
+| `iCulture` / `iCultureRange` | `culture.plot.flat` / `identity.cultureRange` | Plot culture deposit + its radius parameter (identity, paired). |
+| `iVisibilityChange` / `iSeeFrom` | `vision.plot.visibilityRange.flat` / `vision.plot.seeFrom.flat` | Dedicated `vision` block (§0.8); the improvement's first vision members. |
+| `PrereqTech` + placement bools/lists | `requires.build` (`all`/`any`/`noneOf`) | **The placement gate** (owner double-mapping; consumed by `CvPlot::canHaveImprovement`). `all`: `{type:TECH,scope:team}` + bare `IS_WATER`/`IS_PEAK` (domain), `HAS_IRRIGATION`(`bRequiresIrrigation`), `IS_FLATLANDS`, `HAS_FEATURE`, `HAS_RIVER`(`bRequiresRiverSide`), `COASTAL_LAND`(`bCanMoveSeaUnits`), `{natureYield:{…}}`(`PrereqNatureYields`). `any` (one OR-group, the make-valid set): `{terrain:[…]}`/`{feature:[…]}`/`{bonus:[…]}` + `IS_HILLS`/`IS_FRESHWATER`/`HAS_RIVER`/`IS_PEAK`. `noneOf`: `IS_FRESHWATER`(`bNoFreshWater`). NEW vocab: bare plot predicates + `{terrain\|feature\|bonus:[…]}` membership + `HAS_BONUS:{}` + `{natureYield}`. `PrereqTech` ALSO store-inverts to `tech.enables.improvements` (coexist). |
+| `BonusTypeStructs.YieldChanges` | `<yield>.plot.flat[].{value, enabled:{HAS_BONUS:BONUS_X}}` | Per-bonus extra yield (mine-on-coal), `HAS_BONUS`-gated (post_process). |
+| `BonusTypeStructs.bBonusMakesValid` | `requires.build.any […].{bonus:[…]}` | Per-bonus placement validity (folded into the make-valid OR-set). |
+| `BonusTypeStructs.bBonusTrade` / `iDiscoverRand` / `iDepletionRand` | `identity.bonuses.{BONUS}.{trade,discoverRand,depletionRand}` | Per-bonus capability + RNG (DepletionRand = live gated `MODDERGAMEOPTION_RESOURCE_DEPLETION`). |
+| `bCarriesIrrigation` | `identity.carriesIrrigation` | **KEPT** — the improvement must retain its carry-irrigation ability (propagation is live `updateIrrigated`; team-tech-gated by `TECH_CANAL_SYSTEMS`, engine-ANDed; no tech clause here). Carriers: ORCHARD/PLANTATION/VERTICAL_FARM/FARM/GROUNDWATER_WELL. |
+| `bIsUniversalTradeBonusProvider` | `identity.universalBonusTrade` | LIVE capability ("trades ALL bonuses on its plot"), via `isImprovementBonusTrade(-1)` OR-fold — NOT unwired (the lynchpin). |
+| `bActsAsCity`/`bIsZOCSource`/`bMilitaryStructure`/`bGraphicalOnly`/`bExtraterresial`/`bOutsideBorders` | `identity.{actsAsCity,zoneOfControl,militaryStructure,graphicalOnly,extraterrestrial,outsideBorders}` | Persistent plot-capability flags (NOT `grants`). `bExtraterresial`→`extraterrestrial` (typo fix). |
+| `ImprovementUpgrade`/`iUpgradeTime`/`AlternativeImprovementUpgradeTypes`/`bUpgradeRequiresFortify`/`ImprovementPillage`/`iPillageGold`/`bBombardable` | `identity.{upgradesTo,upgradeTime,alternativeUpgrades,upgradeRequiresFortify,pillageTo,pillageGold,bombardable}` | Upgrade + pillage LIFECYCLE (deferred outcome system, not modifiers). |
+| `bPlacesBonus`/`bPlacesFeature`/`bPlacesTerrain`/`FeatureChangeTypes`/`bChangeRemove` | `identity.{placesBonus,placesFeature,placesTerrain,featureChanges,changeRemove}` | The "random spawn"/placement-transform mechanic (e.g. apple bonus under a lumberjack) — KEPT on identity; needs its OWN pass, OUT OF SCOPE #428. |
+| `iAdvancedStartCost` | `identity.advancedStart.cost` | Advanced-start placement gold (Route/Handicap/Era precedent), NOT a production cost. (⚑ `-1` sentinel = not advanced-start-placeable; carried faithfully.) |
+| `iUniqueRange` / `iGoodyRange` / `iTilesPerGoody` / `bGoody` | `mapGeneration.{uniqueRange,goodyRange,tilesPerGoody,goody}` | Map-gen spacing/goody config. `bGoody` EXE-constrained (`isGoody`). |
+| `iAirBombDefense` / `iFeatureGrowth` | `identity.{airBombDefense,featureGrowth}` | RNG / world-state odds (engine mechanic is the roll), out of cascade. |
+| `TechYieldChanges` | (curate_tech) `yield.team.improvements.{IMPROVEMENT}.flat` | Inverts ONTO the tech (downward, `curate_tech` TECH_BOOSTS). DROP here. **PROVISIONAL** pending the Phase-F modifier-ownership review (owner 2026-06-16). |
+| `RouteYieldChanges` | (curate_route) `yield.plot.improvements.{IMPROVEMENT}.flat` | Already folded onto the ROUTE (`curate_route` ROUTE_BOOSTS, owner ruling). DROP here. |
+| `iHealthPercent` | — (DROPPED, balance-cut) | BALANCE-CUT as a source from improvements (capability kept globally; §8-iv). |
+| `PropertyManipulators` | `properties[]` (PARKED raw) | Spatial leakage → #429; preserved verbatim (cutover replaces XML). |
+| `Categories` / root `iDepletionRand` / `Button` / `MapCategoryTypes` | — (DROPPED) | Dead: no consumer / no member / no improvement button / 0-of-266. |
+
+**Placement-gate INVARIANT (owner-LOCKED 2026-06-16):** `requires.build` gates the BUILD + `canHaveImprovement`-checked
+paths (worker build, map-gen, advanced-start, AI, upgrade) **and generic event placement** (events check-then-set, so
+they respect it = the "double mapping"). `setImprovementType()` stays a **separate non-checking actor** (the doer); the
+CHECK is the caller's job, run BEFORE it in the normal path; **direct ungated calls are the sanctioned exception** for
+engine outcomes that must always place (`raze`→`IMPROVEMENT_CITY_RUINS`, `found`→`IMPROVEMENT_CITY`). Breaks nothing
+(setImprovementType doesn't re-validate). `IMPROVEMENT_CITY`'s `TECH_DUMMY` correctly makes it never worker-buildable;
+city-ruins has no Build (gate moot). Future merge of check+set with an explicit skip-check flag → **#437**.

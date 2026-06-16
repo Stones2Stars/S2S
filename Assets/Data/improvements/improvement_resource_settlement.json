@@ -1,0 +1,62 @@
+{
+ "type": "IMPROVEMENT_RESOURCE_SETTLEMENT",
+ "description": "TXT_KEY_IMPROVEMENT_RESOURCE_SETTLEMENT",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_RESOURCE_OUTPOSTS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CITY_PLANNING",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_BARREN",
+       "TERRAIN_DESERT",
+       "TERRAIN_DUNES",
+       "TERRAIN_GRASSLAND",
+       "TERRAIN_ICE",
+       "TERRAIN_LUSH",
+       "TERRAIN_MARSH",
+       "TERRAIN_MUDDY",
+       "TERRAIN_PERMAFROST",
+       "TERRAIN_PLAINS",
+       "TERRAIN_ROCKY",
+       "TERRAIN_BADLAND",
+       "TERRAIN_JAGGED",
+       "TERRAIN_SALT_FLATS",
+       "TERRAIN_SCRUB",
+       "TERRAIN_TAIGA",
+       "TERRAIN_TUNDRA"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "plot": {
+   "flat": 30
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_HAMLET"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 10
+  },
+  "upgradeTime": 5,
+  "outsideBorders": true,
+  "actsAsCity": true,
+  "upgradesTo": "IMPROVEMENT_RESOURCE_TOWN",
+  "bombardable": true,
+  "upgradeRequiresFortify": true,
+  "universalBonusTrade": true
+ }
+}

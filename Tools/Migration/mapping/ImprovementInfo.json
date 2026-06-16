@@ -3,19 +3,15 @@
   "rootElement": "ImprovementInfo",
   "glob": "**/CIV4ImprovementInfos.xml",
   "channels": {
-    "iCulture": {"scope": "city", "channel": "culture", "kind": "flat"},
-    "iHealthPercent": {"scope": "city", "channel": "health", "kind": "percent"},
-    "iDefenseModifier": {"scope": "city", "channel": "defense", "kind": "percent"},
-    "iVisibilityChange": {"scope": "city", "channel": "visibility", "kind": "flat"},
-    "iSeeFrom": {"scope": "city", "channel": "visibility", "kind": "flat"},
-    "bCarriesIrrigation": {"scope": "city", "channel": "irrigation", "kind": "enabler"},
-    "bActsAsCity": {"scope": "city", "channel": "actsAsCity", "kind": "enabler"},
-    "bIsZOCSource": {"scope": "city", "channel": "zoneOfControl", "kind": "enabler"},
-    "bIsUniversalTradeBonusProvider": {"scope": "city", "channel": "universalTradeBonusProvider", "kind": "enabler"}
+    "iCulture": {"scope": "plot", "channel": "culture", "kind": "flat"},
+    "iDefenseModifier": {"scope": "plot", "channel": "defense", "kind": "percent", "member": "amount"},
+    "iVisibilityChange": {"scope": "plot", "channel": "vision", "kind": "flat", "member": "visibilityRange"},
+    "iSeeFrom": {"scope": "plot", "channel": "vision", "kind": "flat", "member": "seeFrom"},
+    "_NOTE": "curate_improvement.families overrides these (plot scope). REMOVED misclassified channels (owner+classify 2026-06-16): iHealthPercent (drop, balance-cut as source); bCarriesIrrigation/bActsAsCity/bIsZOCSource/bIsUniversalTradeBonusProvider (identity capability flags, NOT enabler channels)."
   },
   "inversionsOut": {
-    "TechYieldChanges": {"destEntity": "CvTechInfo", "shape": "improvementYieldChanges.{IMPROVEMENT}"},
-    "RouteYieldChanges": {"destEntity": "CvRouteInfo", "shape": "improvementYieldChanges.{IMPROVEMENT}"}
+    "TechYieldChanges": {"destEntity": "CvTechInfo", "shape": "yield.team.improvements.{IMPROVEMENT}.flat (curate_tech TECH_BOOSTS)"},
+    "RouteYieldChanges": {"destEntity": "CvRouteInfo", "shape": "yield.plot.improvements.{IMPROVEMENT}.flat (curate_route ROUTE_BOOSTS)"}
   },
   "enablerEdges": {},
   "prereqs": [

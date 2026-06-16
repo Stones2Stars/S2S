@@ -1,0 +1,89 @@
+{
+ "type": "IMPROVEMENT_WOOD_GATHERER",
+ "description": "TXT_KEY_IMPROVEMENT_WOOD_GATHERER",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_LUMBERYARD_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SIMPLE_WOOD_WORKING",
+     "scope": "team"
+    },
+    "HAS_FEATURE"
+   ],
+   "any": [
+    [
+     {
+      "feature": [
+       "FEATURE_FOREST",
+       "FEATURE_FOREST_ANCIENT",
+       "FEATURE_BAMBOO",
+       "FEATURE_JUNGLE",
+       "FEATURE_MANGROVE"
+      ]
+     },
+     {
+      "bonus": [
+       "BONUS_RESIN",
+       "BONUS_PRIME_TIMBER"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PRIME_TIMBER"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RESIN"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PRIME_TIMBER"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_WOOD_GATHERER"
+  }
+ },
+ "identity": {
+  "upgradeTime": 5,
+  "pillageGold": 5,
+  "upgradesTo": "IMPROVEMENT_LUMBERJACK",
+  "bonuses": {
+   "BONUS_RESIN": {
+    "trade": true,
+    "discoverRand": 10000
+   },
+   "BONUS_MUSHROOMS": {
+    "discoverRand": 10000
+   },
+   "BONUS_PRIME_TIMBER": {
+    "trade": true,
+    "discoverRand": 10000
+   }
+  }
+ }
+}

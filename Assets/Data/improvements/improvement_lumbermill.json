@@ -1,0 +1,167 @@
+{
+ "type": "IMPROVEMENT_LUMBERMILL",
+ "description": "TXT_KEY_IMPROVEMENT_LUMBERMILL",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_LUMBERMILL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MACHINERY",
+     "scope": "team"
+    },
+    "HAS_FEATURE"
+   ],
+   "any": [
+    [
+     {
+      "feature": [
+       "FEATURE_FOREST",
+       "FEATURE_FOREST_ANCIENT",
+       "FEATURE_BAMBOO",
+       "FEATURE_MANGROVE",
+       "FEATURE_JUNGLE"
+      ]
+     },
+     {
+      "bonus": [
+       "BONUS_APPLE",
+       "BONUS_HEMP",
+       "BONUS_RESIN",
+       "BONUS_PRIME_TIMBER"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_APPLE"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    6,
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_APPLE"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HEMP"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RESIN"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PRIME_TIMBER"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    4,
+    {
+     "value": 1,
+     "enabled": "HAS_RIVER"
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_APPLE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HEMP"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RESIN"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PRIME_TIMBER"
+     }
+    }
+   ]
+  }
+ },
+ "properties": [
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_AIR_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": 1
+  }
+ ],
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_LUMBERMILL"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 48
+  },
+  "upgradeTime": 15,
+  "airBombDefense": 5,
+  "pillageGold": 15,
+  "pillageTo": "IMPROVEMENT_LUMBERJACK",
+  "upgradesTo": "IMPROVEMENT_TREEFARM",
+  "bonuses": {
+   "BONUS_APPLE": {
+    "trade": true,
+    "discoverRand": 2500
+   },
+   "BONUS_HEMP": {
+    "trade": true,
+    "discoverRand": 2500
+   },
+   "BONUS_MUSHROOMS": {
+    "discoverRand": 2500
+   },
+   "BONUS_OLIVES": {
+    "discoverRand": 2500
+   },
+   "BONUS_RESIN": {
+    "trade": true,
+    "discoverRand": 2500
+   },
+   "BONUS_TEA": {
+    "discoverRand": 2500
+   },
+   "BONUS_PRIME_TIMBER": {
+    "trade": true,
+    "discoverRand": 2500
+   }
+  }
+ }
+}

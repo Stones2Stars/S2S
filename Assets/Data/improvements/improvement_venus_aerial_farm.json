@@ -1,0 +1,40 @@
+{
+ "type": "IMPROVEMENT_VENUS_AERIAL_FARM",
+ "description": "TXT_KEY_IMPROVEMENT_VENUS_AERIAL_FARM",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_VENUS_AERIAL_FARM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BOTANICAL_ALCHEMY",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_VENUS",
+       "TERRAIN_VENUS_HIGHLANDS",
+       "TERRAIN_VENUS_LOWLANDS"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 5
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_VENUS_AERIAL_FARM"
+  }
+ },
+ "identity": {
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

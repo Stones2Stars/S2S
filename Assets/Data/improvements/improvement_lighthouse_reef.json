@@ -1,0 +1,39 @@
+{
+ "type": "IMPROVEMENT_LIGHTHOUSE_REEF",
+ "description": "TXT_KEY_IMPROVEMENT_LIGHTHOUSE_REEF",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_LIGHTHOUSE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ENGINEERING",
+     "scope": "team"
+    },
+    "IS_WATER"
+   ],
+   "any": [
+    [
+     {
+      "feature": [
+       "FEATURE_REEF",
+       "FEATURE_REEF_BEACON"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_LIGHTHOUSE"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": -1
+  },
+  "outsideBorders": true,
+  "placesFeature": true,
+  "graphicalOnly": true
+ }
+}

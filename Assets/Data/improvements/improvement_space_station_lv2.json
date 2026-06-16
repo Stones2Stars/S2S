@@ -1,0 +1,55 @@
+{
+ "type": "IMPROVEMENT_SPACE_STATION_LV2",
+ "description": "TXT_KEY_IMPROVEMENT_SPACE_STATION_LV2",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_SPACE_STATION_LV2_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SPACE_TOURISM",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_ORBIT"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_SPACE_STATION_LV2"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 2
+ },
+ "identity": {
+  "extraterrestrial": true,
+  "upgradeTime": 20,
+  "pillageGold": 200,
+  "outsideBorders": true,
+  "pillageTo": "IMPROVEMENT_SPACE_STATION_LV1",
+  "upgradesTo": "IMPROVEMENT_SPACE_STATION_LV3"
+ }
+}

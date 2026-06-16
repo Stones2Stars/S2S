@@ -1,0 +1,60 @@
+{
+ "type": "IMPROVEMENT_MODERN_WINDMILL",
+ "description": "TXT_KEY_IMPROVEMENT_MODERNWINDMILL",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_WINDMILL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECOLOGY",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_BARREN",
+       "TERRAIN_DESERT",
+       "TERRAIN_DUNES",
+       "TERRAIN_GRASSLAND",
+       "TERRAIN_ICE",
+       "TERRAIN_PERMAFROST",
+       "TERRAIN_PLAINS",
+       "TERRAIN_ROCKY",
+       "TERRAIN_BADLAND",
+       "TERRAIN_JAGGED",
+       "TERRAIN_SALT_FLATS",
+       "TERRAIN_SCRUB",
+       "TERRAIN_TAIGA",
+       "TERRAIN_TUNDRA"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 7
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 7
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_MODERN_WINDMILL"
+  }
+ },
+ "identity": {
+  "pillageTo": "IMPROVEMENT_WINDMILL",
+  "advancedStart": {
+   "cost": 80
+  },
+  "airBombDefense": 5,
+  "pillageGold": 30
+ }
+}

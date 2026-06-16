@@ -1,0 +1,54 @@
+{
+ "type": "IMPROVEMENT_TIDAL_HARNESS",
+ "description": "TXT_KEY_IMPROVEMENT_TIDAL_HARNESS",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_TIDAL_HARNESS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECOLOGY",
+     "scope": "team"
+    },
+    "IS_WATER"
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_COAST",
+       "TERRAIN_COAST_POLAR",
+       "TERRAIN_COAST_TROPICAL"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": -2
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_TIDAL_HARNESS"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 30
+  },
+  "airBombDefense": 5,
+  "pillageGold": 5
+ }
+}

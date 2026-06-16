@@ -1,0 +1,62 @@
+{
+ "type": "IMPROVEMENT_FOREST_PRESERVE",
+ "description": "TXT_KEY_IMPROVEMENT_FOREST_PRESERVE",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_FOREST_PRESERVE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WILDLIFE_CONSERVATION",
+     "scope": "team"
+    },
+    "HAS_FEATURE"
+   ],
+   "any": [
+    [
+     {
+      "feature": [
+       "FEATURE_FOREST",
+       "FEATURE_FOREST_ANCIENT",
+       "FEATURE_BAMBOO",
+       "FEATURE_SAVANNA",
+       "FEATURE_JUNGLE"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": "HAS_RIVER"
+    }
+   ]
+  }
+ },
+ "properties": [
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_AIR_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": -5
+  }
+ ],
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_FOREST_PRESERVE"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 48
+  },
+  "featureGrowth": 64,
+  "airBombDefense": 20
+ }
+}

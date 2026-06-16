@@ -1,0 +1,204 @@
+{
+ "type": "IMPROVEMENT_PASTURE",
+ "description": "TXT_KEY_IMPROVEMENT_PASTURE",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_PASTURE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "bonus": [
+       "BONUS_COW",
+       "BONUS_HORSE",
+       "BONUS_PIG",
+       "BONUS_SHEEP",
+       "BONUS_CAMEL",
+       "BONUS_DONKEY",
+       "BONUS_LLAMA",
+       "BONUS_POULTRY"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COW"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HORSE"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PIG"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SHEEP"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_CAMEL"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_DONKEY"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_LLAMA"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_POULTRY"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COW"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HORSE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SHEEP"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_CAMEL"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_DONKEY"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_LLAMA"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HORSE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SHEEP"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_CAMEL"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_DONKEY"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_LLAMA"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_PASTURE"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 24
+  },
+  "upgradeTime": 10,
+  "airBombDefense": 5,
+  "pillageGold": 15,
+  "pillageTo": "IMPROVEMENT_NOMADIC_HERD",
+  "upgradesTo": "IMPROVEMENT_VERTICAL_FARM",
+  "bonuses": {
+   "BONUS_COW": {
+    "trade": true
+   },
+   "BONUS_HORSE": {
+    "trade": true
+   },
+   "BONUS_PIG": {
+    "trade": true
+   },
+   "BONUS_SHEEP": {
+    "trade": true
+   },
+   "BONUS_CAMEL": {
+    "trade": true
+   },
+   "BONUS_DONKEY": {
+    "trade": true
+   },
+   "BONUS_LLAMA": {
+    "trade": true
+   },
+   "BONUS_POULTRY": {
+    "trade": true
+   }
+  }
+ }
+}

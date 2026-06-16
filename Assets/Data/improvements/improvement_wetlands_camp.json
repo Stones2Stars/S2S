@@ -1,0 +1,73 @@
+{
+ "type": "IMPROVEMENT_WETLANDS_CAMP",
+ "description": "TXT_KEY_IMPROVEMENT_WETLANDS_CAMP",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_WETLANDS_CAMP_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NATUROPATHY",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_MARSH",
+       "TERRAIN_MUDDY"
+      ]
+     },
+     {
+      "feature": [
+       "FEATURE_SWAMP",
+       "FEATURE_FLOOD_PLAINS"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_WETLANDS_CAMP"
+  }
+ },
+ "identity": {
+  "pillageTo": "IMPROVEMENT_SEED_CAMP",
+  "advancedStart": {
+   "cost": 24
+  },
+  "airBombDefense": 5,
+  "pillageGold": 5,
+  "bonuses": {
+   "BONUS_FINE_CLAY": {
+    "discoverRand": 5000
+   },
+   "BONUS_FLAX": {
+    "discoverRand": 5000
+   },
+   "BONUS_PAPYRUS": {
+    "discoverRand": 5000
+   },
+   "BONUS_RICE": {
+    "discoverRand": 5000
+   }
+  }
+ }
+}

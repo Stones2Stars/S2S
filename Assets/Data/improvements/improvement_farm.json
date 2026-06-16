@@ -1,0 +1,210 @@
+{
+ "type": "IMPROVEMENT_FARM",
+ "description": "TXT_KEY_IMPROVEMENT_FARM",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_FARM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AGRICULTURE",
+     "scope": "team"
+    },
+    "HAS_IRRIGATION",
+    "IS_FLATLANDS",
+    {
+     "natureYield": {
+      "food": 1
+     }
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_GRASSLAND",
+       "TERRAIN_PLAINS",
+       "TERRAIN_MARSH",
+       "TERRAIN_LUSH",
+       "TERRAIN_SCRUB",
+       "TERRAIN_MUDDY"
+      ]
+     },
+     "IS_FRESHWATER",
+     {
+      "bonus": [
+       "BONUS_CORN",
+       "BONUS_RICE",
+       "BONUS_WHEAT",
+       "BONUS_POTATOES",
+       "BONUS_BARLEY",
+       "BONUS_MELONS",
+       "BONUS_PUMPKIN",
+       "BONUS_SQUASH"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": "HAS_IRRIGATION"
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_CORN"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RICE"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_WHEAT"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_POTATOES"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_BARLEY"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MELONS"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PUMPKIN"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SQUASH"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_CORN"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_BARLEY"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MELONS"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PUMPKIN"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SQUASH"
+     }
+    }
+   ]
+  }
+ },
+ "properties": [
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_WATER_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": 1
+  }
+ ],
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_FARM"
+  }
+ },
+ "identity": {
+  "carriesIrrigation": true,
+  "advancedStart": {
+   "cost": 30
+  },
+  "upgradeTime": 10,
+  "airBombDefense": 5,
+  "pillageGold": 15,
+  "pillageTo": "IMPROVEMENT_SEED_CAMP",
+  "upgradesTo": "IMPROVEMENT_VERTICAL_FARM",
+  "bonuses": {
+   "BONUS_CORN": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_RICE": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_WHEAT": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_POTATOES": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_BARLEY": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_MELONS": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_PUMPKIN": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_SQUASH": {
+    "trade": true,
+    "discoverRand": 5000
+   }
+  }
+ }
+}

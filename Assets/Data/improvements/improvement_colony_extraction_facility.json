@@ -1,0 +1,98 @@
+{
+ "type": "IMPROVEMENT_COLONY_EXTRACTION_FACILITY",
+ "description": "TXT_KEY_IMPROVEMENT_COLONY_EXTRACTION_FACILITY",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_COLONY_EXTRACTION_FACILITY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LUNAR_MANUFACTURING",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_LUNAR_DOME",
+       "TERRAIN_LUNAR_MARE",
+       "TERRAIN_LUNAR_HIGHLAND",
+       "TERRAIN_LUNAR_REGOLITH",
+       "TERRAIN_LUNAR_RILLE",
+       "TERRAIN_GREEN_MOON"
+      ]
+     },
+     "IS_HILLS",
+     {
+      "bonus": [
+       "BONUS_CARBON_DIOXIDE_ICE",
+       "BONUS_HELIUM_3"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    6,
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_CARBON_DIOXIDE_ICE"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HELIUM_3"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_CARBON_DIOXIDE_ICE"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HELIUM_3"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_GEOTHERMAL_FACTORY"
+  }
+ },
+ "identity": {
+  "extraterrestrial": true,
+  "advancedStart": {
+   "cost": -1
+  },
+  "pillageGold": 250,
+  "outsideBorders": true,
+  "bonuses": {
+   "BONUS_CARBON_DIOXIDE_ICE": {
+    "trade": true,
+    "discoverRand": 5000,
+    "depletionRand": 1000
+   },
+   "BONUS_HELIUM_3": {
+    "trade": true,
+    "discoverRand": 5000,
+    "depletionRand": 1000
+   }
+  }
+ }
+}

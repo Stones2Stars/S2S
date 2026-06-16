@@ -1,0 +1,106 @@
+{
+ "type": "IMPROVEMENT_HYDROCARBON_WELL",
+ "description": "TXT_KEY_IMPROVEMENT_HYDROCARBON_WELL",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_HYDROCARBON_WELL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_REFINING",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "feature": [
+       "FEATURE_TAR_PIT"
+      ]
+     },
+     {
+      "bonus": [
+       "BONUS_OIL",
+       "BONUS_NATURAL_GAS"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    5,
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OIL"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_NATURAL_GAS"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    2,
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OIL"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_NATURAL_GAS"
+     }
+    }
+   ]
+  }
+ },
+ "properties": [
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_WATER_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": 5
+  }
+ ],
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_HYDROCARBON_WELL"
+  }
+ },
+ "identity": {
+  "pillageTo": "IMPROVEMENT_TAR_GATHERER",
+  "advancedStart": {
+   "cost": 60
+  },
+  "airBombDefense": 10,
+  "pillageGold": 75,
+  "bonuses": {
+   "BONUS_FOSSIL_BEDS": {
+    "discoverRand": 2500
+   },
+   "BONUS_OIL": {
+    "trade": true,
+    "discoverRand": 2500,
+    "depletionRand": 1000
+   },
+   "BONUS_NATURAL_GAS": {
+    "trade": true,
+    "discoverRand": 5000,
+    "depletionRand": 1000
+   }
+  }
+ }
+}

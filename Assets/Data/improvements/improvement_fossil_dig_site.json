@@ -1,0 +1,58 @@
+{
+ "type": "IMPROVEMENT_FOSSIL_DIG_SITE",
+ "description": "TXT_KEY_IMPROVEMENT_FOSSIL_DIG_SITE",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_FOSSIL_DIG_SITE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PALEONTOLOGY",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "feature": [
+       "FEATURE_TAR_PIT"
+      ]
+     },
+     {
+      "bonus": [
+       "BONUS_FOSSIL_BEDS"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    2,
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_FOSSIL_BEDS"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_FOSSIL_DIG_SITE"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 48
+  },
+  "bonuses": {
+   "BONUS_FOSSIL_BEDS": {
+    "trade": true,
+    "discoverRand": 5000
+   }
+  }
+ }
+}

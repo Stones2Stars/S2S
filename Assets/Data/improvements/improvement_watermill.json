@@ -1,0 +1,51 @@
+{
+ "type": "IMPROVEMENT_WATERMILL",
+ "description": "TXT_KEY_IMPROVEMENT_WATERMILL",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_WATERMILL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WATERWHEELS",
+     "scope": "team"
+    },
+    "IS_FLATLANDS",
+    "HAS_RIVER"
+   ],
+   "any": [
+    [
+     "HAS_RIVER"
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_WATERMILL"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 48
+  },
+  "upgradeTime": 15,
+  "airBombDefense": 5,
+  "pillageGold": 20,
+  "upgradesTo": "IMPROVEMENT_HYDRO_DAM"
+ }
+}

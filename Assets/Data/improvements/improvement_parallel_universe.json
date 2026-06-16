@@ -1,0 +1,51 @@
+{
+ "type": "IMPROVEMENT_PARALLEL_UNIVERSE",
+ "description": "TXT_KEY_IMPROVEMENT_PARALLEL_UNIVERSE",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_PARALLEL_UNIVERSE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EXPERIMENTAL_COSMOLOGY",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_OBSERVABLE_UNIVERSE",
+       "TERRAIN_DISTANT_COSMOS",
+       "TERRAIN_INTERGALACTIC_VOID",
+       "TERRAIN_HYPERSPACE"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 35
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_PARALLEL_UNIVERSE"
+  }
+ },
+ "identity": {
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

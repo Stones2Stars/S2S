@@ -1,0 +1,42 @@
+{
+ "type": "IMPROVEMENT_PLANT_SAVANNA",
+ "description": "TXT_KEY_BUILD_PLANT_SAVANNA",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_LAND_WORKED_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECOLOGY",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_GRASSLAND",
+       "TERRAIN_PLAINS",
+       "TERRAIN_SCRUB",
+       "TERRAIN_ROCKY",
+       "TERRAIN_LUSH",
+       "TERRAIN_MUDDY",
+       "TERRAIN_MARSH"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_PLANT_SAVANNA"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": -1
+  },
+  "placesFeature": true,
+  "graphicalOnly": true
+ }
+}

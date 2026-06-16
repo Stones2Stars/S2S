@@ -1,0 +1,79 @@
+{
+ "type": "IMPROVEMENT_WOODEN_WATCHTOWER",
+ "description": "TXT_KEY_IMPROVEMENT_WOODEN_WATCHTOWER",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_OBSERVATION_POST_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CARPENTRY",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_BARREN",
+       "TERRAIN_DESERT",
+       "TERRAIN_DUNES",
+       "TERRAIN_GRASSLAND",
+       "TERRAIN_ICE",
+       "TERRAIN_LUSH",
+       "TERRAIN_MARSH",
+       "TERRAIN_MUDDY",
+       "TERRAIN_PERMAFROST",
+       "TERRAIN_PLAINS",
+       "TERRAIN_ROCKY",
+       "TERRAIN_BADLAND",
+       "TERRAIN_JAGGED",
+       "TERRAIN_SALT_FLATS",
+       "TERRAIN_SCRUB",
+       "TERRAIN_TAIGA",
+       "TERRAIN_TUNDRA"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 5
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "visibilityRange": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_WOODEN_WATCHTOWER"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 0
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 10
+  },
+  "upgradeTime": 5,
+  "airBombDefense": 2,
+  "outsideBorders": true,
+  "militaryStructure": true,
+  "upgradesTo": "IMPROVEMENT_STONE_WATCHTOWER",
+  "bombardable": true,
+  "upgradeRequiresFortify": true
+ }
+}

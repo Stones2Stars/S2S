@@ -1,0 +1,56 @@
+{
+ "type": "IMPROVEMENT_GEOGLYPH",
+ "description": "TXT_KEY_IMPROVEMENT_GEOGLYPH",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_SACRED_SITE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STARGAZING",
+     "scope": "team"
+    },
+    "IS_FLATLANDS"
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_BARREN",
+       "TERRAIN_DESERT",
+       "TERRAIN_SALT_FLATS",
+       "TERRAIN_SCRUB",
+       "TERRAIN_ROCKY",
+       "TERRAIN_BADLAND",
+       "TERRAIN_JAGGED"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": -1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_GEOGLYPH"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 2
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 30
+  },
+  "airBombDefense": 5,
+  "pillageGold": 25
+ }
+}

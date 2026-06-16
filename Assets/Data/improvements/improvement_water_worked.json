@@ -1,0 +1,17 @@
+{
+ "type": "IMPROVEMENT_WATER_WORKED",
+ "description": "TXT_KEY_IMPROVEMENT_WATER_WORKED",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_WATER_WORKED_PEDIA",
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_WATER_WORKED"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": -1
+  },
+  "airBombDefense": -1,
+  "graphicalOnly": true
+ }
+}

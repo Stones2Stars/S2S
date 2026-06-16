@@ -1,0 +1,65 @@
+{
+ "type": "IMPROVEMENT_GRAPE_PICKING_CAMP",
+ "description": "TXT_KEY_IMPROVEMENT_GRAPE_PICKING_CAMP",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_FRUIT_GATHERING_CAMP_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "bonus": [
+       "BONUS_GRAPES"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_GRAPES"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_GRAPES"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_GRAPE_PICKING_CAMP"
+  }
+ },
+ "identity": {
+  "upgradeTime": 10,
+  "pillageGold": 20,
+  "pillageTo": "IMPROVEMENT_GRAPE_GATHERING_CAMP",
+  "upgradesTo": "IMPROVEMENT_WINERY",
+  "bonuses": {
+   "BONUS_GRAPES": {
+    "trade": true
+   }
+  }
+ }
+}

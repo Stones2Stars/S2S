@@ -1,0 +1,42 @@
+{
+ "type": "IMPROVEMENT_PLANT_JUNGLE",
+ "description": "TXT_KEY_BUILD_PLANT_JUNGLE",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_LAND_WORKED_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECOLOGY",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_GRASSLAND",
+       "TERRAIN_MARSH",
+       "TERRAIN_SCRUB",
+       "TERRAIN_ROCKY",
+       "TERRAIN_LUSH",
+       "TERRAIN_MUDDY"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_PLANT_JUNGLE"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": -1
+  },
+  "airBombDefense": -1,
+  "placesFeature": true,
+  "graphicalOnly": true
+ }
+}

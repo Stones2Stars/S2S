@@ -1,0 +1,251 @@
+{
+ "type": "IMPROVEMENT_EARLY_MOUNTAIN_MINE",
+ "description": "TXT_KEY_IMPROVEMENT_EARLY_MOUNTAIN_MINE",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_EARLY_MOUNTAIN_MINE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MINING",
+     "scope": "team"
+    },
+    "IS_PEAK"
+   ],
+   "any": [
+    [
+     {
+      "bonus": [
+       "BONUS_GOLD_ORE",
+       "BONUS_SILVER_ORE",
+       "BONUS_COPPER_ORE",
+       "BONUS_TIN_ORE",
+       "BONUS_LEAD_ORE",
+       "BONUS_PLATINUM_ORE",
+       "BONUS_IRON_ORE",
+       "BONUS_SULPHUR",
+       "BONUS_STONE",
+       "BONUS_OBSIDIAN",
+       "BONUS_MARBLE",
+       "BONUS_TURQUOISE",
+       "BONUS_JADE",
+       "BONUS_DIAMOND",
+       "BONUS_RUBIES",
+       "BONUS_SAPPHIRES",
+       "BONUS_COAL"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    2,
+    {
+     "value": -1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_GOLD_ORE"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COPPER_ORE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_TIN_ORE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_LEAD_ORE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_IRON_ORE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SULPHUR"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_STONE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OBSIDIAN"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MARBLE"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_GOLD_ORE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SILVER_ORE"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COPPER_ORE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PLATINUM_ORE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_TURQUOISE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_JADE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_DIAMOND"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RUBIES"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SAPPHIRES"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COAL"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_STONE_TOOLS_WORKSHOP"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 24
+  },
+  "upgradeTime": 10,
+  "pillageGold": 20,
+  "upgradesTo": "IMPROVEMENT_MOUNTAIN_MINE",
+  "bonuses": {
+   "BONUS_GOLD_ORE": {
+    "trade": true,
+    "depletionRand": 1000
+   },
+   "BONUS_SILVER_ORE": {
+    "trade": true,
+    "depletionRand": 1000
+   },
+   "BONUS_COPPER_ORE": {
+    "trade": true,
+    "depletionRand": 1000
+   },
+   "BONUS_TIN_ORE": {
+    "trade": true,
+    "depletionRand": 1000
+   },
+   "BONUS_LEAD_ORE": {
+    "trade": true,
+    "depletionRand": 1000
+   },
+   "BONUS_PLATINUM_ORE": {
+    "trade": true,
+    "depletionRand": 1000
+   },
+   "BONUS_IRON_ORE": {
+    "trade": true,
+    "depletionRand": 1000
+   },
+   "BONUS_SULPHUR": {
+    "trade": true,
+    "depletionRand": 1000
+   },
+   "BONUS_STONE": {
+    "trade": true,
+    "depletionRand": 1000
+   },
+   "BONUS_OBSIDIAN": {
+    "trade": true,
+    "depletionRand": 1000
+   },
+   "BONUS_MARBLE": {
+    "trade": true,
+    "depletionRand": 1000
+   },
+   "BONUS_TURQUOISE": {
+    "trade": true,
+    "depletionRand": 1000
+   },
+   "BONUS_JADE": {
+    "trade": true,
+    "depletionRand": 1000
+   },
+   "BONUS_DIAMOND": {
+    "trade": true,
+    "depletionRand": 1000
+   },
+   "BONUS_RUBIES": {
+    "trade": true,
+    "depletionRand": 1000
+   },
+   "BONUS_SAPPHIRES": {
+    "trade": true,
+    "depletionRand": 1000
+   },
+   "BONUS_COAL": {
+    "trade": true,
+    "depletionRand": 1000
+   }
+  }
+ }
+}

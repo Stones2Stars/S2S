@@ -1,0 +1,49 @@
+{
+ "type": "IMPROVEMENT_WINDMILL",
+ "description": "TXT_KEY_IMPROVEMENT_WINDMILL",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_WINDMILL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WINDMILLS",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     "IS_HILLS"
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_WINDMILL"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 30
+  },
+  "upgradeTime": 15,
+  "airBombDefense": 5,
+  "pillageGold": 15,
+  "upgradesTo": "IMPROVEMENT_MODERN_WINDMILL"
+ }
+}

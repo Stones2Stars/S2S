@@ -1,0 +1,65 @@
+{
+ "type": "IMPROVEMENT_TOWN",
+ "description": "TXT_KEY_IMPROVEMENT_TOWN",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_TOWN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GUILDS",
+     "scope": "team"
+    },
+    {
+     "natureYield": {
+      "food": 1
+     }
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_GRASSLAND",
+       "TERRAIN_PLAINS",
+       "TERRAIN_LUSH",
+       "TERRAIN_SCRUB",
+       "TERRAIN_MUDDY"
+      ]
+     },
+     "IS_FRESHWATER"
+    ]
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 11
+  }
+ },
+ "culture": {
+  "plot": {
+   "flat": 20
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_TOWN"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": -1
+  },
+  "upgradeTime": 40,
+  "airBombDefense": 5,
+  "pillageGold": 100,
+  "cultureRange": 1,
+  "pillageTo": "IMPROVEMENT_VILLAGE",
+  "upgradesTo": "IMPROVEMENT_SUBURBS"
+ }
+}

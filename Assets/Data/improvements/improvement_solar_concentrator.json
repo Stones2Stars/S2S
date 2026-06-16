@@ -1,0 +1,49 @@
+{
+ "type": "IMPROVEMENT_SOLAR_CONCENTRATOR",
+ "description": "TXT_KEY_IMPROVEMENT_SOLAR_CONCENTRATOR",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_SOLAR_PANEL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SOLAR_ORDNANCE",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_INNER_SOLAR_SYSTEM",
+       "TERRAIN_OUTER_SOLAR_SYSTEM",
+       "TERRAIN_TRANSNEPTUNIAN_SPACE"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 10
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 5
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_SPACE_SOLAR_PANELS"
+  }
+ },
+ "identity": {
+  "extraterrestrial": true,
+  "advancedStart": {
+   "cost": -1
+  },
+  "pillageGold": 50,
+  "outsideBorders": true
+ }
+}

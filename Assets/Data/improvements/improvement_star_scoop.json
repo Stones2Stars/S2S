@@ -1,0 +1,43 @@
+{
+ "type": "IMPROVEMENT_STAR_SCOOP",
+ "description": "TXT_KEY_IMPROVEMENT_STAR_SCOOP",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_STAR_SCOOP_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STAR_LIFTING",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_MILKY_WAY",
+       "TERRAIN_GALACTIC_CORE",
+       "TERRAIN_ORION_ARM",
+       "TERRAIN_RED_GIANT",
+       "TERRAIN_SUN_LIKE_STAR",
+       "TERRAIN_RED_DWARF"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 25
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_STAR_SCOOP"
+  }
+ },
+ "identity": {
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

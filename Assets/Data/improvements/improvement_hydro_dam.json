@@ -1,0 +1,45 @@
+{
+ "type": "IMPROVEMENT_HYDRO_DAM",
+ "description": "TXT_KEY_IMPROVEMENT_HYDRO_DAM",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_HYDRO_DAM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HYDROELECTRICITY",
+     "scope": "team"
+    },
+    "IS_FLATLANDS",
+    "HAS_RIVER"
+   ],
+   "any": [
+    [
+     "HAS_RIVER"
+    ]
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 10
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_HYDRO_DAM"
+  }
+ },
+ "identity": {
+  "pillageTo": "IMPROVEMENT_WATERMILL",
+  "advancedStart": {
+   "cost": 64
+  },
+  "airBombDefense": 5,
+  "pillageGold": 50
+ }
+}

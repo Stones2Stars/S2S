@@ -1,0 +1,76 @@
+{
+ "type": "IMPROVEMENT_MANUFACTURING_COMPLEX",
+ "description": "TXT_KEY_IMPROVEMENT_INDUSTRIAL_COMPLEX",
+ "civilopedia": "TXT_KEY_BUILDING_FACTORY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MANUFACTURING",
+     "scope": "team"
+    },
+    "IS_FLATLANDS"
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_BARREN",
+       "TERRAIN_DESERT",
+       "TERRAIN_GRASSLAND",
+       "TERRAIN_ICE",
+       "TERRAIN_LUSH",
+       "TERRAIN_PLAINS",
+       "TERRAIN_MUDDY",
+       "TERRAIN_PERMAFROST",
+       "TERRAIN_ROCKY",
+       "TERRAIN_BADLAND",
+       "TERRAIN_JAGGED",
+       "TERRAIN_SCRUB",
+       "TERRAIN_TAIGA",
+       "TERRAIN_TUNDRA"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": -3
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 12
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "properties": [
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_AIR_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": 10
+  }
+ ],
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_MANUFACTURING_COMPLEX"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": -1
+  },
+  "airBombDefense": 5,
+  "pillageGold": 150,
+  "pillageTo": "IMPROVEMENT_FACTORY"
+ }
+}

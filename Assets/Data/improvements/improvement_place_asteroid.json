@@ -1,0 +1,46 @@
+{
+ "type": "IMPROVEMENT_PLACE_ASTEROID",
+ "description": "TXT_KEY_BUILD_PLACE_ASTEROID",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_LAND_WORKED_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASTEROID_BELT_PROBES",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_CISLUNAR_SPACE",
+       "TERRAIN_INNER_SOLAR_SYSTEM",
+       "TERRAIN_OUTER_SOLAR_SYSTEM",
+       "TERRAIN_TRANSNEPTUNIAN_SPACE"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_PLACE_ASTEROID"
+  }
+ },
+ "identity": {
+  "extraterrestrial": true,
+  "featureChanges": [
+   "FEATURE_ASTEROIDS"
+  ],
+  "placesFeature": true,
+  "changeRemove": true,
+  "advancedStart": {
+   "cost": -1
+  },
+  "airBombDefense": -1,
+  "outsideBorders": true,
+  "graphicalOnly": true
+ }
+}

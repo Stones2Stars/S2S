@@ -1,0 +1,60 @@
+{
+ "type": "IMPROVEMENT_INTERSTELLAR_TRADING_POST",
+ "description": "TXT_KEY_IMPROVEMENT_INTERSTELLAR_TRADING_POST",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_INTERSTELLAR_TRADING_POST_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INTERSTELLAR_TRADE",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_TRANSTELLAR_SPACE",
+       "TERRAIN_ORION_ARM"
+      ]
+     },
+     {
+      "bonus": [
+       "BONUS_ABANDONED_CIVILIZATION"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    10,
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_ABANDONED_CIVILIZATION"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_INTERSTELLAR_TRADING_POST"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 2
+ },
+ "identity": {
+  "extraterrestrial": true,
+  "pillageGold": 200,
+  "bonuses": {
+   "BONUS_ABANDONED_CIVILIZATION": {
+    "trade": true
+   }
+  }
+ }
+}

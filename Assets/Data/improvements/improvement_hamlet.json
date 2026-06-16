@@ -1,0 +1,64 @@
+{
+ "type": "IMPROVEMENT_HAMLET",
+ "description": "TXT_KEY_IMPROVEMENT_HAMLET",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_HAMLET_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MASONRY",
+     "scope": "team"
+    },
+    {
+     "natureYield": {
+      "food": 1
+     }
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_GRASSLAND",
+       "TERRAIN_PLAINS",
+       "TERRAIN_LUSH",
+       "TERRAIN_SCRUB",
+       "TERRAIN_MUDDY"
+      ]
+     },
+     "IS_FRESHWATER"
+    ]
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 7
+  }
+ },
+ "culture": {
+  "plot": {
+   "flat": 5
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_HAMLET"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": -1
+  },
+  "upgradeTime": 20,
+  "airBombDefense": 5,
+  "pillageGold": 60,
+  "pillageTo": "IMPROVEMENT_COTTAGE",
+  "upgradesTo": "IMPROVEMENT_VILLAGE"
+ }
+}

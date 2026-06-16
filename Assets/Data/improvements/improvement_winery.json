@@ -1,0 +1,70 @@
+{
+ "type": "IMPROVEMENT_WINERY",
+ "description": "TXT_KEY_IMPROVEMENT_WINERY",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_WINERY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FERMENTATION",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "bonus": [
+       "BONUS_GRAPES"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_GRAPES"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_GRAPES"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_WINERY"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 30
+  },
+  "upgradeTime": 15,
+  "airBombDefense": 5,
+  "pillageGold": 40,
+  "pillageTo": "IMPROVEMENT_GRAPE_PICKING_CAMP",
+  "upgradesTo": "IMPROVEMENT_VERTICAL_FARM",
+  "bonuses": {
+   "BONUS_GRAPES": {
+    "trade": true
+   }
+  }
+ }
+}

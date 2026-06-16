@@ -1,0 +1,49 @@
+{
+ "type": "IMPROVEMENT_TIME_MANIFOLD",
+ "description": "TXT_KEY_IMPROVEMENT_TIME_MANIFOLD",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_TIME_MANIFOLD_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MULTIDIMENSIONAL_TIME",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_DISTANT_PAST",
+       "TERRAIN_DISTANT_FUTURE"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 30
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_TIME_MANIFOLD"
+  }
+ },
+ "identity": {
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

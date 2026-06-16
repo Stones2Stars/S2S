@@ -1,0 +1,899 @@
+{
+ "type": "IMPROVEMENT_VERTICAL_FARM",
+ "description": "TXT_KEY_IMPROVEMENT_VERTICAL_FARM",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_FARM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_VERTICAL_FARMING",
+     "scope": "team"
+    },
+    "IS_FLATLANDS"
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_GRASSLAND",
+       "TERRAIN_PLAINS",
+       "TERRAIN_MARSH",
+       "TERRAIN_LUSH",
+       "TERRAIN_SCRUB",
+       "TERRAIN_MUDDY",
+       "TERRAIN_TAIGA"
+      ]
+     },
+     "IS_FRESHWATER",
+     {
+      "bonus": [
+       "BONUS_CORN",
+       "BONUS_RICE",
+       "BONUS_WHEAT",
+       "BONUS_POTATOES",
+       "BONUS_BARLEY",
+       "BONUS_MELONS",
+       "BONUS_PUMPKIN",
+       "BONUS_SQUASH",
+       "BONUS_MUSHROOMS",
+       "BONUS_GRAPES",
+       "BONUS_APPLE",
+       "BONUS_BANANA",
+       "BONUS_LEMONS",
+       "BONUS_SPICES",
+       "BONUS_ALMONDS",
+       "BONUS_FIG",
+       "BONUS_MANGO",
+       "BONUS_PAPAYA",
+       "BONUS_COCONUT",
+       "BONUS_DATES",
+       "BONUS_PISTACHIO",
+       "BONUS_POMEGRANATE",
+       "BONUS_PRICKLY_PEAR",
+       "BONUS_OLIVES",
+       "BONUS_GUAVAS",
+       "BONUS_PIG",
+       "BONUS_SHEEP",
+       "BONUS_COW",
+       "BONUS_POULTRY",
+       "BONUS_SUGAR",
+       "BONUS_COCOA",
+       "BONUS_COFFEE",
+       "BONUS_TEA",
+       "BONUS_FLAX",
+       "BONUS_VANILLA",
+       "BONUS_KAVA",
+       "BONUS_PAPYRUS",
+       "BONUS_COTTON",
+       "BONUS_OPIUM",
+       "BONUS_PEYOTE",
+       "BONUS_TOBACCO",
+       "BONUS_HENNA",
+       "BONUS_INDIGO",
+       "BONUS_COCA",
+       "BONUS_INCENSE",
+       "BONUS_RUBBER",
+       "BONUS_RESIN",
+       "BONUS_CAMEL",
+       "BONUS_DONKEY",
+       "BONUS_HORSE",
+       "BONUS_LLAMA",
+       "BONUS_HEMP",
+       "BONUS_SILK"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    15,
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_CORN"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RICE"
+     }
+    },
+    {
+     "value": 8,
+     "enabled": {
+      "HAS_BONUS": "BONUS_WHEAT"
+     }
+    },
+    {
+     "value": 8,
+     "enabled": {
+      "HAS_BONUS": "BONUS_POTATOES"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_BARLEY"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MELONS"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PUMPKIN"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SQUASH"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MUSHROOMS"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_GRAPES"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_APPLE"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_BANANA"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_LEMONS"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SPICES"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_ALMONDS"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_FIG"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MANGO"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PAPAYA"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COCONUT"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_DATES"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PISTACHIO"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_POMEGRANATE"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PRICKLY_PEAR"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OLIVES"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_GUAVAS"
+     }
+    },
+    {
+     "value": 8,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PIG"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SHEEP"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COW"
+     }
+    },
+    {
+     "value": 8,
+     "enabled": {
+      "HAS_BONUS": "BONUS_POULTRY"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SUGAR"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COCOA"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_TEA"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_CORN"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COCONUT"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SHEEP"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COW"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_FLAX"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PAPYRUS"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OPIUM"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RUBBER"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RESIN"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_CAMEL"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_DONKEY"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HORSE"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_LLAMA"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HEMP"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    10,
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_CORN"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RICE"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_BARLEY"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MELONS"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PUMPKIN"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SQUASH"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MUSHROOMS"
+     }
+    },
+    {
+     "value": 8,
+     "enabled": {
+      "HAS_BONUS": "BONUS_GRAPES"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_APPLE"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_BANANA"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_LEMONS"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SPICES"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_ALMONDS"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_FIG"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MANGO"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PAPAYA"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COCONUT"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_DATES"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PISTACHIO"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_POMEGRANATE"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PRICKLY_PEAR"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OLIVES"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_GUAVAS"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SHEEP"
+     }
+    },
+    {
+     "value": 11,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SUGAR"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COCOA"
+     }
+    },
+    {
+     "value": 11,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COFFEE"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_TEA"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "HAS_BONUS": "BONUS_FLAX"
+     }
+    },
+    {
+     "value": 11,
+     "enabled": {
+      "HAS_BONUS": "BONUS_VANILLA"
+     }
+    },
+    {
+     "value": 12,
+     "enabled": {
+      "HAS_BONUS": "BONUS_KAVA"
+     }
+    },
+    {
+     "value": 12,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COTTON"
+     }
+    },
+    {
+     "value": 11,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OPIUM"
+     }
+    },
+    {
+     "value": 11,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PEYOTE"
+     }
+    },
+    {
+     "value": 11,
+     "enabled": {
+      "HAS_BONUS": "BONUS_TOBACCO"
+     }
+    },
+    {
+     "value": 12,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HENNA"
+     }
+    },
+    {
+     "value": 12,
+     "enabled": {
+      "HAS_BONUS": "BONUS_INDIGO"
+     }
+    },
+    {
+     "value": 11,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COCA"
+     }
+    },
+    {
+     "value": 12,
+     "enabled": {
+      "HAS_BONUS": "BONUS_INCENSE"
+     }
+    },
+    {
+     "value": 9,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RUBBER"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RESIN"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_CAMEL"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_DONKEY"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HORSE"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_LLAMA"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HEMP"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SILK"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_VERTICAL_FARM"
+  }
+ },
+ "mapGeneration": {
+  "goodyRange": 1
+ },
+ "identity": {
+  "pillageTo": "IMPROVEMENT_FARM",
+  "carriesIrrigation": true,
+  "advancedStart": {
+   "cost": 60
+  },
+  "airBombDefense": 5,
+  "pillageGold": 50,
+  "bonuses": {
+   "BONUS_CORN": {
+    "trade": true,
+    "discoverRand": 2500
+   },
+   "BONUS_RICE": {
+    "trade": true,
+    "discoverRand": 2500
+   },
+   "BONUS_WHEAT": {
+    "trade": true,
+    "discoverRand": 2500
+   },
+   "BONUS_POTATOES": {
+    "trade": true,
+    "discoverRand": 2500
+   },
+   "BONUS_BARLEY": {
+    "trade": true,
+    "discoverRand": 2500
+   },
+   "BONUS_MELONS": {
+    "trade": true,
+    "discoverRand": 2500
+   },
+   "BONUS_PUMPKIN": {
+    "trade": true,
+    "discoverRand": 2500
+   },
+   "BONUS_SQUASH": {
+    "trade": true,
+    "discoverRand": 2500
+   },
+   "BONUS_MUSHROOMS": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_GRAPES": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_APPLE": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_BANANA": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_LEMONS": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_SPICES": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_ALMONDS": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_FIG": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_MANGO": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_PAPAYA": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_COCONUT": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_DATES": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_PISTACHIO": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_POMEGRANATE": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_PRICKLY_PEAR": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_OLIVES": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_GUAVAS": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_PIG": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_SHEEP": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_COW": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_POULTRY": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_SUGAR": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_COCOA": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_COFFEE": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_TEA": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_FLAX": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_VANILLA": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_KAVA": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_PAPYRUS": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_COTTON": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_OPIUM": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_PEYOTE": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_TOBACCO": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_HENNA": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_INDIGO": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_COCA": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_INCENSE": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_RUBBER": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_RESIN": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_CAMEL": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_DONKEY": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_HORSE": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_LLAMA": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_HEMP": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_SILK": {
+    "trade": true,
+    "discoverRand": 5000
+   }
+  }
+ }
+}

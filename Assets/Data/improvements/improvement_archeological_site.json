@@ -1,0 +1,52 @@
+{
+ "type": "IMPROVEMENT_ARCHEOLOGICAL_SITE",
+ "description": "TXT_KEY_IMPROVEMENT_ARCHEOLOGICAL_SITE",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_ARCHEOLOGICAL_SITE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SCIENTIFIC_METHOD",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "feature": [
+       "FEATURE_CITY_RUINS",
+       "FEATURE_ARCOLOGY_RUINS"
+      ]
+     },
+     {
+      "bonus": [
+       "BONUS_ANCIENT_RELICS"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_ARCHEOLOGICAL_SITE"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 30
+  },
+  "airBombDefense": -1,
+  "outsideBorders": true,
+  "bonuses": {
+   "BONUS_ANCIENT_RELICS": {
+    "trade": true
+   }
+  }
+ }
+}

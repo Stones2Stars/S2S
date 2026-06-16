@@ -1,0 +1,80 @@
+{
+ "type": "IMPROVEMENT_RADAR_TOWER",
+ "description": "TXT_KEY_IMPROVEMENT_RADAR_TOWER",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_OBSERVATION_POST_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RADAR",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_BARREN",
+       "TERRAIN_DESERT",
+       "TERRAIN_DUNES",
+       "TERRAIN_GRASSLAND",
+       "TERRAIN_ICE",
+       "TERRAIN_LUSH",
+       "TERRAIN_MARSH",
+       "TERRAIN_MUDDY",
+       "TERRAIN_PERMAFROST",
+       "TERRAIN_PLAINS",
+       "TERRAIN_ROCKY",
+       "TERRAIN_BADLAND",
+       "TERRAIN_JAGGED",
+       "TERRAIN_SALT_FLATS",
+       "TERRAIN_SCRUB",
+       "TERRAIN_TAIGA",
+       "TERRAIN_TUNDRA"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "plot": {
+   "flat": 20
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 20
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "visibilityRange": {
+    "flat": 4
+   },
+   "seeFrom": {
+    "flat": 2
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_RADAR_TOWER"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 0
+ },
+ "identity": {
+  "pillageTo": "IMPROVEMENT_STEEL_WATCHTOWER",
+  "advancedStart": {
+   "cost": 400
+  },
+  "airBombDefense": 15,
+  "outsideBorders": true,
+  "militaryStructure": true,
+  "bombardable": true
+ }
+}

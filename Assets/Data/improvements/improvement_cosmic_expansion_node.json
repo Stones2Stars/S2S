@@ -1,0 +1,43 @@
+{
+ "type": "IMPROVEMENT_COSMIC_EXPANSION_NODE",
+ "description": "TXT_KEY_IMPROVEMENT_COSMIC_EXPANSION_NODE",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_COSMIC_EXPANSION_NODE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DARK_ENERGY_HARVESTING",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_INTERGALACTIC_VOID"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 40
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_COSMIC_EXPANSION_NODE"
+  }
+ },
+ "identity": {
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

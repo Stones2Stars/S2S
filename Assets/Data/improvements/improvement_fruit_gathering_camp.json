@@ -1,0 +1,197 @@
+{
+ "type": "IMPROVEMENT_FRUIT_GATHERING_CAMP",
+ "description": "TXT_KEY_IMPROVEMENT_FRUIT_GATHERING_CAMP",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_FRUIT_GATHERING_CAMP_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GATHERING",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "bonus": [
+       "BONUS_APPLE",
+       "BONUS_BANANA",
+       "BONUS_LEMONS",
+       "BONUS_SPICES",
+       "BONUS_ALMONDS",
+       "BONUS_FIG",
+       "BONUS_MANGO",
+       "BONUS_PAPAYA",
+       "BONUS_COCONUT",
+       "BONUS_DATES",
+       "BONUS_PISTACHIO",
+       "BONUS_POMEGRANATE",
+       "BONUS_PRICKLY_PEAR",
+       "BONUS_OLIVES",
+       "BONUS_GUAVAS"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_APPLE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_BANANA"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_LEMONS"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_ALMONDS"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_FIG"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MANGO"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PAPAYA"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COCONUT"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_DATES"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PISTACHIO"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_POMEGRANATE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PRICKLY_PEAR"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OLIVES"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_GUAVAS"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SPICES"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_FRUIT_GATHERING_CAMP"
+  }
+ },
+ "identity": {
+  "upgradeTime": 5,
+  "pillageGold": 6,
+  "upgradesTo": "IMPROVEMENT_FRUIT_PICKING_CAMP",
+  "bonuses": {
+   "BONUS_APPLE": {
+    "trade": true
+   },
+   "BONUS_BANANA": {
+    "trade": true
+   },
+   "BONUS_LEMONS": {
+    "trade": true
+   },
+   "BONUS_SPICES": {
+    "trade": true
+   },
+   "BONUS_ALMONDS": {
+    "trade": true
+   },
+   "BONUS_FIG": {
+    "trade": true
+   },
+   "BONUS_MANGO": {
+    "trade": true
+   },
+   "BONUS_PAPAYA": {
+    "trade": true
+   },
+   "BONUS_COCONUT": {
+    "trade": true
+   },
+   "BONUS_DATES": {
+    "trade": true
+   },
+   "BONUS_PISTACHIO": {
+    "trade": true
+   },
+   "BONUS_POMEGRANATE": {
+    "trade": true
+   },
+   "BONUS_PRICKLY_PEAR": {
+    "trade": true
+   },
+   "BONUS_OLIVES": {
+    "trade": true
+   },
+   "BONUS_GUAVAS": {
+    "trade": true
+   }
+  }
+ }
+}

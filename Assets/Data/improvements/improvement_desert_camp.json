@@ -1,0 +1,97 @@
+{
+ "type": "IMPROVEMENT_DESERT_CAMP",
+ "description": "TXT_KEY_IMPROVEMENT_DESERT_CAMP",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_DESERT_CAMP_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NATUROPATHY",
+     "scope": "team"
+    },
+    "HAS_IRRIGATION"
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_DESERT",
+       "TERRAIN_DUNES",
+       "TERRAIN_SCRUB"
+      ]
+     },
+     {
+      "feature": [
+       "FEATURE_CACTUS",
+       "FEATURE_OASIS"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_DESERT_CAMP"
+  }
+ },
+ "identity": {
+  "pillageTo": "IMPROVEMENT_SEED_CAMP",
+  "advancedStart": {
+   "cost": 24
+  },
+  "airBombDefense": 5,
+  "pillageGold": 5,
+  "bonuses": {
+   "BONUS_ALMONDS": {
+    "discoverRand": 5000
+   },
+   "BONUS_COCONUT": {
+    "discoverRand": 5000
+   },
+   "BONUS_COFFEE": {
+    "discoverRand": 5000
+   },
+   "BONUS_COTTON": {
+    "discoverRand": 5000
+   },
+   "BONUS_DATES": {
+    "discoverRand": 5000
+   },
+   "BONUS_HENNA": {
+    "discoverRand": 5000
+   },
+   "BONUS_INCENSE": {
+    "discoverRand": 5000
+   },
+   "BONUS_OPIUM": {
+    "discoverRand": 5000
+   },
+   "BONUS_PEYOTE": {
+    "discoverRand": 5000
+   },
+   "BONUS_PISTACHIO": {
+    "discoverRand": 5000
+   },
+   "BONUS_POMEGRANATE": {
+    "discoverRand": 5000
+   },
+   "BONUS_PRICKLY_PEAR": {
+    "discoverRand": 5000
+   },
+   "BONUS_GRAPES": {
+    "discoverRand": 5000
+   }
+  }
+ }
+}

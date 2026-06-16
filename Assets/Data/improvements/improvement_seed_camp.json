@@ -1,0 +1,142 @@
+{
+ "type": "IMPROVEMENT_SEED_CAMP",
+ "description": "TXT_KEY_IMPROVEMENT_SEED_CAMP",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_SEED_CAMP_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GATHERING",
+     "scope": "team"
+    },
+    "IS_FLATLANDS"
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_GRASSLAND",
+       "TERRAIN_PLAINS",
+       "TERRAIN_LUSH",
+       "TERRAIN_SCRUB",
+       "TERRAIN_MUDDY",
+       "TERRAIN_DESERT"
+      ]
+     },
+     {
+      "bonus": [
+       "BONUS_WHEAT",
+       "BONUS_POTATOES",
+       "BONUS_RICE",
+       "BONUS_CORN",
+       "BONUS_BARLEY",
+       "BONUS_MELONS",
+       "BONUS_PUMPKIN",
+       "BONUS_SQUASH"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_WHEAT"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_POTATOES"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RICE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_CORN"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_BARLEY"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MELONS"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PUMPKIN"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SQUASH"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_SEED_CAMP"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 5
+  },
+  "upgradeTime": 5,
+  "pillageGold": 5,
+  "upgradesTo": "IMPROVEMENT_FARM",
+  "alternativeUpgrades": [
+   "IMPROVEMENT_THATCH_CUTTER",
+   "IMPROVEMENT_JUNGLE_CAMP",
+   "IMPROVEMENT_WETLANDS_CAMP",
+   "IMPROVEMENT_DESERT_CAMP"
+  ],
+  "bonuses": {
+   "BONUS_WHEAT": {
+    "trade": true
+   },
+   "BONUS_POTATOES": {
+    "trade": true
+   },
+   "BONUS_RICE": {
+    "trade": true
+   },
+   "BONUS_CORN": {
+    "trade": true
+   },
+   "BONUS_BARLEY": {
+    "trade": true
+   },
+   "BONUS_MELONS": {
+    "trade": true
+   },
+   "BONUS_PUMPKIN": {
+    "trade": true
+   },
+   "BONUS_SQUASH": {
+    "trade": true
+   }
+  }
+ }
+}

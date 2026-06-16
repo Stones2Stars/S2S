@@ -1,0 +1,168 @@
+{
+ "type": "IMPROVEMENT_HYBRID_FOREST",
+ "description": "TXT_KEY_IMPROVEMENT_HYBRID_FOREST",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_HYBRID_FOREST_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_ECONOMICS",
+     "scope": "team"
+    },
+    "HAS_FEATURE"
+   ],
+   "any": [
+    [
+     {
+      "feature": [
+       "FEATURE_FOREST",
+       "FEATURE_FOREST_ANCIENT",
+       "FEATURE_BAMBOO",
+       "FEATURE_SAVANNA",
+       "FEATURE_JUNGLE",
+       "FEATURE_MANGROVE"
+      ]
+     },
+     {
+      "bonus": [
+       "BONUS_APPLE",
+       "BONUS_HEMP",
+       "BONUS_RESIN",
+       "BONUS_PRIME_TIMBER"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_APPLE"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    12,
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_APPLE"
+     }
+    },
+    {
+     "value": 9,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HEMP"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RESIN"
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PRIME_TIMBER"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    6,
+    {
+     "value": 1,
+     "enabled": "HAS_RIVER"
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_APPLE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HEMP"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RESIN"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PRIME_TIMBER"
+     }
+    }
+   ]
+  }
+ },
+ "properties": [
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_AIR_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": -5
+  }
+ ],
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_HYBRID_FOREST"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 120
+  },
+  "featureGrowth": 64,
+  "airBombDefense": 5,
+  "pillageGold": 25,
+  "pillageTo": "IMPROVEMENT_TREEFARM",
+  "bonuses": {
+   "BONUS_APPLE": {
+    "trade": true,
+    "discoverRand": 625
+   },
+   "BONUS_HEMP": {
+    "trade": true,
+    "discoverRand": 625
+   },
+   "BONUS_RESIN": {
+    "trade": true,
+    "discoverRand": 625
+   },
+   "BONUS_PRIME_TIMBER": {
+    "trade": true,
+    "discoverRand": 625
+   },
+   "BONUS_OLIVES": {
+    "discoverRand": 625
+   },
+   "BONUS_TEA": {
+    "discoverRand": 625
+   },
+   "BONUS_MUSHROOMS": {
+    "discoverRand": 625
+   }
+  }
+ }
+}

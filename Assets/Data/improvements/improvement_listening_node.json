@@ -1,0 +1,61 @@
+{
+ "type": "IMPROVEMENT_LISTENING_NODE",
+ "description": "TXT_KEY_IMPROVEMENT_LISTENING_NODE",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_OBSERVATION_POST_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_DEFENSES",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_CISLUNAR_SPACE",
+       "TERRAIN_ORBIT"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 10
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "visibilityRange": {
+    "flat": 5
+   },
+   "seeFrom": {
+    "flat": 4
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_LISTENING_NODE"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 2
+ },
+ "identity": {
+  "extraterrestrial": true,
+  "advancedStart": {
+   "cost": 400
+  },
+  "airBombDefense": 15,
+  "outsideBorders": true,
+  "militaryStructure": true,
+  "bombardable": true,
+  "upgradeRequiresFortify": true
+ }
+}

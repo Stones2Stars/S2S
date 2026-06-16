@@ -257,6 +257,14 @@ grows as more accumulate):
 - **Any shape an entity locked AFTER an earlier entity was committed** — e.g. the family names
   defense/movement/cultureDistance/buildTime/`vision` (blessed at Terrain/Feature), the deliveryguy/semantic-sense
   ownership rule (modifier-spec §6.1), the dedicated-block rule (§0.8).
+- **MODIFIER OWNERSHIP REVIEW — up/down placement, "who BRINGS the modifier" (owner ruling 2026-06-16).** Once all
+  infos are moved, do a deliberate pass to confirm the correct OWNER (and scope direction, up vs down) of every
+  cross-entity modifier against the deliveryguy/§6.1 rule. **Specifically the TECH-MODIFIER GATES** (the `Tech*Changes`
+  inverted ONTO the tech: `curate_tech` TECH_BOOSTS — Building/Improvement/Specialist/Route `TechYieldChanges` etc.,
+  §0.4) were decided BEFORE the §6.1 "who brings the modifier" refinement, so they are PROVISIONAL — re-judge whether
+  each belongs on the tech (downward deposit) or keep-on-source on the delivering entity. Carry the affected entities'
+  inversions as-is until this pass; flag at each entity (Improvement #22 drops `TechYieldChanges`, deferring to the
+  existing tech gate pending this review).
 Done BEFORE #430 so the parser implements against uniform data — no mid-parse retrofit churn. **⛔ HARD GATE (owner,
 emphatic 2026-06-16): do NOT start "whatever is next" (the #430 parser, or any new phase) until this alignment —
 INCLUDING the art-block update — is complete.** Finish migration → align everything (arts included) → only then move on.

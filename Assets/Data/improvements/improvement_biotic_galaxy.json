@@ -1,0 +1,46 @@
+{
+ "type": "IMPROVEMENT_BIOTIC_GALAXY",
+ "description": "TXT_KEY_IMPROVEMENT_BIOTIC_GALAXY",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_BIOTIC_GALAXY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GALACTIC_ECOLOGY",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_LOCAL_GROUP",
+       "TERRAIN_VIRGO_SUPERCLUSTER",
+       "TERRAIN_OBSERVABLE_UNIVERSE",
+       "TERRAIN_DISTANT_COSMOS"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 25
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_BIOTIC_GALAXY"
+  }
+ },
+ "identity": {
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

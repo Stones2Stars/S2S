@@ -1,0 +1,60 @@
+{
+ "type": "IMPROVEMENT_PARATERRAFORMED_ASTEROID",
+ "description": "TXT_KEY_IMPROVEMENT_PARATERRAFORMED_ASTEROID",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_PARATERRAFORMED_ASTEROID_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PARATERRAFORMING",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_ASTEROID_SURFACE",
+       "TERRAIN_KUIPER_BELT_OBJECT"
+      ]
+     },
+     {
+      "feature": [
+       "FEATURE_SEDNOID",
+       "FEATURE_PLANETARY_RING",
+       "FEATURE_OORT_CLOUD",
+       "FEATURE_ASTEROIDS"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_PARATERRAFORMED_ASTEROID"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 2
+ },
+ "identity": {
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

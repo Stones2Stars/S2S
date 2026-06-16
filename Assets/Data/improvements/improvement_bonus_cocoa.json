@@ -1,0 +1,17 @@
+{
+ "type": "IMPROVEMENT_BONUS_COCOA",
+ "description": "TXT_KEY_IMPROVEMENT_BONUS_COCOA",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_LAND_WORKED_PEDIA",
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_LAND_WORKED"
+  }
+ },
+ "identity": {
+  "placesBonus": true,
+  "advancedStart": {
+   "cost": -1
+  },
+  "graphicalOnly": true
+ }
+}

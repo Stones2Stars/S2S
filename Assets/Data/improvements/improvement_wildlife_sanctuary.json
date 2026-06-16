@@ -1,0 +1,167 @@
+{
+ "type": "IMPROVEMENT_WILDLIFE_SANCTUARY",
+ "description": "TXT_KEY_IMPROVEMENT_WILDLIFE_SANCTUARY",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_WILDLIFE_SANCTUARY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TOURISM",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "bonus": [
+       "BONUS_ELEPHANTS",
+       "BONUS_BEAVERS",
+       "BONUS_PARROTS",
+       "BONUS_SEA_LION_AND_SEAL",
+       "BONUS_WALRUS",
+       "BONUS_MAMMOTH",
+       "BONUS_BISON",
+       "BONUS_DEER",
+       "BONUS_GUINEA_PIGS",
+       "BONUS_KANGAROO",
+       "BONUS_RABBIT"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RABBIT"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    3,
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_ELEPHANTS"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_BEAVERS"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PARROTS"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SEA_LION_AND_SEAL"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_WALRUS"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MAMMOTH"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_BISON"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_DEER"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_GUINEA_PIGS"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_KANGAROO"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RABBIT"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_HUNTING_CAMP"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 24
+  },
+  "airBombDefense": 5,
+  "pillageGold": 25,
+  "pillageTo": "IMPROVEMENT_HUNTING_PRESERVE",
+  "bonuses": {
+   "BONUS_ELEPHANTS": {
+    "trade": true
+   },
+   "BONUS_BEAVERS": {
+    "trade": true
+   },
+   "BONUS_PARROTS": {
+    "trade": true
+   },
+   "BONUS_SEA_LION_AND_SEAL": {
+    "trade": true
+   },
+   "BONUS_WALRUS": {
+    "trade": true
+   },
+   "BONUS_MAMMOTH": {
+    "trade": true
+   },
+   "BONUS_BISON": {
+    "trade": true
+   },
+   "BONUS_DEER": {
+    "trade": true
+   },
+   "BONUS_GUINEA_PIGS": {
+    "trade": true
+   },
+   "BONUS_KANGAROO": {
+    "trade": true
+   },
+   "BONUS_RABBIT": {
+    "trade": true
+   }
+  }
+ }
+}

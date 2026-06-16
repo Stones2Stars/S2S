@@ -1,0 +1,24 @@
+{
+ "type": "IMPROVEMENT_CITY",
+ "description": "TXT_WORD_CITY",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_CITY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DUMMY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_CITY_RUINS"
+  }
+ },
+ "identity": {
+  "actsAsCity": true,
+  "graphicalOnly": true
+ }
+}

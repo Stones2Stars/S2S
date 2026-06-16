@@ -1,0 +1,69 @@
+{
+ "type": "IMPROVEMENT_WORKSHOP",
+ "description": "TXT_KEY_IMPROVEMENT_WORKSHOP",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_WORKSHOP_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MACHINERY",
+     "scope": "team"
+    },
+    "IS_FLATLANDS"
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_GRASSLAND",
+       "TERRAIN_PLAINS",
+       "TERRAIN_LUSH",
+       "TERRAIN_SCRUB",
+       "TERRAIN_MUDDY",
+       "TERRAIN_BARREN",
+       "TERRAIN_ROCKY",
+       "TERRAIN_BADLAND",
+       "TERRAIN_JAGGED",
+       "TERRAIN_TAIGA"
+      ]
+     },
+     "IS_FRESHWATER"
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": -1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 5
+  }
+ },
+ "properties": [
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_AIR_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": 1
+  }
+ ],
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_WORKSHOP"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 36
+  },
+  "upgradeTime": 20,
+  "airBombDefense": 5,
+  "pillageGold": 30,
+  "upgradesTo": "IMPROVEMENT_FACTORY"
+ }
+}

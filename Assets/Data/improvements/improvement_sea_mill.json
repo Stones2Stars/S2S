@@ -1,0 +1,55 @@
+{
+ "type": "IMPROVEMENT_SEA_MILL",
+ "description": "TXT_KEY_IMPROVEMENT_SEA_MILL",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_WINDMILL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECOLOGY",
+     "scope": "team"
+    },
+    "IS_WATER"
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_COAST",
+       "TERRAIN_COAST_POLAR",
+       "TERRAIN_COAST_TROPICAL",
+       "TERRAIN_COAST_DEEP",
+       "TERRAIN_COAST_DEEP_POLAR",
+       "TERRAIN_COAST_DEEP_TROPICAL",
+       "TERRAIN_LAKE_SHORE",
+       "TERRAIN_SEA",
+       "TERRAIN_SEA_POLAR",
+       "TERRAIN_SEA_TROPICAL",
+       "TERRAIN_SEA_DEEP",
+       "TERRAIN_SEA_DEEP_POLAR",
+       "TERRAIN_SEA_DEEP_TROPICAL",
+       "TERRAIN_LAKE"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 5
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_SEA_MILL"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 30
+  },
+  "airBombDefense": 5,
+  "pillageGold": 5
+ }
+}

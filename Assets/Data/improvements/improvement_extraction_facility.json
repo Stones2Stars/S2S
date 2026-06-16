@@ -1,0 +1,160 @@
+{
+ "type": "IMPROVEMENT_EXTRACTION_FACILITY",
+ "description": "TXT_KEY_IMPROVEMENT_EXTRACTION_FACILITY",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_EXTRACTION_FACILITY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SUPERSTRONG_ALLOYS",
+     "scope": "team"
+    },
+    "IS_WATER"
+   ],
+   "any": [
+    [
+     {
+      "bonus": [
+       "BONUS_OIL",
+       "BONUS_NATURAL_GAS",
+       "BONUS_METHANE_ICE",
+       "BONUS_HYDROTHERMAL_VENT"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": -2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OIL"
+     }
+    },
+    {
+     "value": -2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_NATURAL_GAS"
+     }
+    },
+    {
+     "value": -2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_METHANE_ICE"
+     }
+    },
+    {
+     "value": -2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HYDROTHERMAL_VENT"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    5,
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OIL"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_NATURAL_GAS"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_METHANE_ICE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HYDROTHERMAL_VENT"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    5,
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OIL"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_NATURAL_GAS"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_METHANE_ICE"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HYDROTHERMAL_VENT"
+     }
+    }
+   ]
+  }
+ },
+ "properties": [
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_WATER_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": 1
+  }
+ ],
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_EXTRACTION_FACILITY"
+  }
+ },
+ "identity": {
+  "pillageTo": "IMPROVEMENT_OFFSHORE_PLATFORM",
+  "advancedStart": {
+   "cost": 60
+  },
+  "airBombDefense": 5,
+  "pillageGold": 100,
+  "bonuses": {
+   "BONUS_OIL": {
+    "trade": true,
+    "depletionRand": 2000
+   },
+   "BONUS_NATURAL_GAS": {
+    "trade": true,
+    "depletionRand": 2000
+   },
+   "BONUS_METHANE_ICE": {
+    "trade": true,
+    "depletionRand": 2000
+   },
+   "BONUS_HYDROTHERMAL_VENT": {
+    "trade": true
+   }
+  }
+ }
+}

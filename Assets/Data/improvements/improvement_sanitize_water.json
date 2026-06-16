@@ -1,0 +1,39 @@
+{
+ "type": "IMPROVEMENT_SANITIZE_WATER",
+ "description": "TXT_KEY_IMPROVEMENT_SANITIZE_WATER",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_SANITIZE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AQUACULTURE",
+     "scope": "team"
+    },
+    "IS_WATER"
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_INFECTED_WATER",
+       "TERRAIN_PLAGUED_WATER"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_SANITIZE_WATER"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 60
+  },
+  "outsideBorders": true,
+  "placesTerrain": true,
+  "graphicalOnly": true
+ }
+}

@@ -1,0 +1,56 @@
+{
+ "type": "IMPROVEMENT_MOAI",
+ "description": "TXT_KEY_IMPROVEMENT_MOAI",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_SACRED_SITE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEGALITH_CONSTRUCTION",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_BARREN",
+       "TERRAIN_DESERT",
+       "TERRAIN_LUSH",
+       "TERRAIN_GRASSLAND",
+       "TERRAIN_PLAINS"
+      ]
+     }
+    ]
+   ],
+   "noneOf": [
+    "IS_FRESHWATER"
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": -1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_MOAI"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 2
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 30
+  },
+  "airBombDefense": 5,
+  "pillageGold": 25
+ }
+}

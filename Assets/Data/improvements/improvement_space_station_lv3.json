@@ -1,0 +1,53 @@
+{
+ "type": "IMPROVEMENT_SPACE_STATION_LV3",
+ "description": "TXT_KEY_IMPROVEMENT_SPACE_STATION_LV3",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_SPACE_STATION_LV3_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASTEROID_MINING",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_ORBIT"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_SPACE_STATION_LV3"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 2
+ },
+ "identity": {
+  "extraterrestrial": true,
+  "pillageGold": 200,
+  "outsideBorders": true,
+  "pillageTo": "IMPROVEMENT_SPACE_STATION_LV2"
+ }
+}

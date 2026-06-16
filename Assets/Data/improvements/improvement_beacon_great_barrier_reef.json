@@ -1,0 +1,38 @@
+{
+ "type": "IMPROVEMENT_BEACON_GREAT_BARRIER_REEF",
+ "description": "TXT_KEY_IMPROVEMENT_BEACON_GREAT_BARRIER_REEF",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_LIGHTHOUSE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SAILING",
+     "scope": "team"
+    },
+    "IS_WATER"
+   ],
+   "any": [
+    [
+     {
+      "feature": [
+       "FEATURE_PLATY_GREAT_BARRIER"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_BEACON"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": -1
+  },
+  "outsideBorders": true,
+  "placesFeature": true,
+  "graphicalOnly": true
+ }
+}

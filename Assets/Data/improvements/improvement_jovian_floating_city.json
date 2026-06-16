@@ -1,0 +1,44 @@
+{
+ "type": "IMPROVEMENT_JOVIAN_FLOATING_CITY",
+ "description": "TXT_KEY_IMPROVEMENT_JOVIAN_FLOATING_CITY",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_JOVIAN_FLOATING_CITY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COLONY_ARCOLOGY",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_JUPITER",
+       "TERRAIN_SATURN",
+       "TERRAIN_URANUS",
+       "TERRAIN_NEPTUNE"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 12
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_JOVIAN_FLOATING_CITY"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 2
+ },
+ "identity": {
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

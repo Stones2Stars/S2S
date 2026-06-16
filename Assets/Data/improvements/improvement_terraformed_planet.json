@@ -1,0 +1,78 @@
+{
+ "type": "IMPROVEMENT_TERRAFORMED_PLANET",
+ "description": "TXT_KEY_IMPROVEMENT_TERRAFORMED_PLANET",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_TERRAFORMED_PLANET_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECOSYNTHESIS",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "feature": [
+       "FEATURE_CARBON_PLANET",
+       "FEATURE_CHTHONIAN_PLANET",
+       "FEATURE_DESERT_PLANET",
+       "FEATURE_ROGUE_PLANET",
+       "FEATURE_SUPER_EARTH",
+       "FEATURE_OCEAN_PLANET",
+       "FEATURE_HOT_JUPITER",
+       "FEATURE_MINI_NEPTUNE"
+      ]
+     },
+     {
+      "bonus": [
+       "BONUS_XENOFLORA",
+       "BONUS_XENOFAUNA"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    20,
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_XENOFLORA"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_XENOFAUNA"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_TERRAFORMED_PLANET"
+  }
+ },
+ "identity": {
+  "extraterrestrial": true,
+  "pillageGold": 200,
+  "bonuses": {
+   "BONUS_XENOFLORA": {
+    "trade": true
+   },
+   "BONUS_XENOFAUNA": {
+    "trade": true
+   }
+  }
+ }
+}

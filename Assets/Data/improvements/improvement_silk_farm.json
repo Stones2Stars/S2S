@@ -1,0 +1,56 @@
+{
+ "type": "IMPROVEMENT_SILK_FARM",
+ "description": "TXT_KEY_IMPROVEMENT_SILK_FARM",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_SILK_FARM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SERICULTURE",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "bonus": [
+       "BONUS_SILK"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SILK"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_PLANTATION"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 30
+  },
+  "airBombDefense": 5,
+  "pillageGold": 10,
+  "upgradeTime": 10,
+  "upgradesTo": "IMPROVEMENT_VERTICAL_FARM",
+  "bonuses": {
+   "BONUS_SILK": {
+    "trade": true
+   }
+  }
+ }
+}

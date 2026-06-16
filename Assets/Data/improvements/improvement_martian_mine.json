@@ -1,0 +1,78 @@
+{
+ "type": "IMPROVEMENT_MARTIAN_MINE",
+ "description": "TXT_KEY_IMPROVEMENT_MARTIAN_MINE",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_MARTIAN_MINE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_EXTRACTION",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_MARTIAN_DESERT",
+       "TERRAIN_MARTIAN_DUNES",
+       "TERRAIN_MARTIAN_BARREN",
+       "TERRAIN_MARTIAN_PLAINS",
+       "TERRAIN_MARTIAN_ROCKY",
+       "TERRAIN_GREEN_MARS"
+      ]
+     },
+     {
+      "bonus": [
+       "BONUS_EXTRATERRESTRIAL_MICROBES",
+       "BONUS_MARTIAN_BLUEBERRIES"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_EXTRATERRESTRIAL_MICROBES"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    4,
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MARTIAN_BLUEBERRIES"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_MARTIAN_MINE"
+  }
+ },
+ "identity": {
+  "extraterrestrial": true,
+  "pillageGold": 200,
+  "bonuses": {
+   "BONUS_EXTRATERRESTRIAL_MICROBES": {
+    "trade": true
+   },
+   "BONUS_MARTIAN_BLUEBERRIES": {
+    "trade": true
+   }
+  }
+ }
+}

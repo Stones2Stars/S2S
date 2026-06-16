@@ -1,0 +1,133 @@
+{
+ "type": "IMPROVEMENT_FISHING_BOATS",
+ "description": "TXT_KEY_IMPROVEMENT_FISHING_BOATS",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_FISHING_BOATS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FISHING",
+     "scope": "team"
+    },
+    "IS_WATER"
+   ],
+   "any": [
+    [
+     {
+      "bonus": [
+       "BONUS_CLAM",
+       "BONUS_CRAB",
+       "BONUS_FISH",
+       "BONUS_MUREX",
+       "BONUS_PEARLS",
+       "BONUS_SHRIMP",
+       "BONUS_LOBSTER"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_CLAM"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_CRAB"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_FISH"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PEARLS"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SHRIMP"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_LOBSTER"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MUREX"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PEARLS"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_LOBSTER"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_FISHING_BOATS"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 30
+  },
+  "airBombDefense": 5,
+  "pillageGold": 5,
+  "bonuses": {
+   "BONUS_CLAM": {
+    "trade": true
+   },
+   "BONUS_CRAB": {
+    "trade": true
+   },
+   "BONUS_FISH": {
+    "trade": true
+   },
+   "BONUS_MUREX": {
+    "trade": true
+   },
+   "BONUS_PEARLS": {
+    "trade": true
+   },
+   "BONUS_SHRIMP": {
+    "trade": true
+   },
+   "BONUS_LOBSTER": {
+    "trade": true
+   }
+  }
+ }
+}

@@ -1,0 +1,392 @@
+{
+ "type": "IMPROVEMENT_MOUNTAIN_MINE",
+ "description": "TXT_KEY_IMPROVEMENT_MOUNTAIN_MINE",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_MOUNTAIN_MINE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MOUNTAINEERING",
+     "scope": "team"
+    },
+    "IS_PEAK"
+   ],
+   "any": [
+    [
+     "IS_PEAK"
+    ]
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    6,
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_BAUXITE_ORE"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COAL"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COPPER_ORE"
+     }
+    },
+    {
+     "value": -2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_GOLD_ORE"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_IRON_ORE"
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SILVER_ORE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SULPHUR"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_LEAD_ORE"
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RUBIES"
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SAPPHIRES"
+     }
+    },
+    {
+     "value": -2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_DIAMOND"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PLATINUM_ORE"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_TIN_ORE"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_TITANIUM_ORE"
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_JADE"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MARBLE"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_STONE"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OBSIDIAN"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MANGANESE"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_BAUXITE_ORE"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COAL"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COPPER_ORE"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_GOLD_ORE"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SILVER_ORE"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_URANIUM"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SULPHUR"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_LEAD_ORE"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RUBIES"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SAPPHIRES"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_DIAMOND"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PLATINUM_ORE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_TIN_ORE"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_TITANIUM_ORE"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_JADE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MARBLE"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OBSIDIAN"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_TURQUOISE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MANGANESE"
+     }
+    }
+   ]
+  }
+ },
+ "properties": [
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_WATER_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": 2
+  }
+ ],
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_MOUNT_MINE"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 50
+  },
+  "airBombDefense": 25,
+  "pillageGold": 10,
+  "pillageTo": "IMPROVEMENT_EARLY_MOUNTAIN_MINE",
+  "bonuses": {
+   "BONUS_BAUXITE_ORE": {
+    "trade": true,
+    "discoverRand": 2000,
+    "depletionRand": 1000
+   },
+   "BONUS_COAL": {
+    "trade": true,
+    "discoverRand": 2000,
+    "depletionRand": 1000
+   },
+   "BONUS_COPPER_ORE": {
+    "trade": true,
+    "discoverRand": 2000,
+    "depletionRand": 1000
+   },
+   "BONUS_GOLD_ORE": {
+    "trade": true,
+    "discoverRand": 2000,
+    "depletionRand": 1000
+   },
+   "BONUS_IRON_ORE": {
+    "trade": true,
+    "discoverRand": 2000,
+    "depletionRand": 1000
+   },
+   "BONUS_SILVER_ORE": {
+    "trade": true,
+    "discoverRand": 2000,
+    "depletionRand": 1000
+   },
+   "BONUS_URANIUM": {
+    "trade": true,
+    "discoverRand": 2000,
+    "depletionRand": 1000
+   },
+   "BONUS_SULPHUR": {
+    "trade": true,
+    "discoverRand": 2000,
+    "depletionRand": 1000
+   },
+   "BONUS_LEAD_ORE": {
+    "trade": true,
+    "discoverRand": 2000,
+    "depletionRand": 1000
+   },
+   "BONUS_RUBIES": {
+    "trade": true,
+    "discoverRand": 2000,
+    "depletionRand": 1000
+   },
+   "BONUS_SAPPHIRES": {
+    "trade": true,
+    "discoverRand": 2000,
+    "depletionRand": 1000
+   },
+   "BONUS_DIAMOND": {
+    "trade": true,
+    "discoverRand": 2000,
+    "depletionRand": 1000
+   },
+   "BONUS_PLATINUM_ORE": {
+    "trade": true,
+    "discoverRand": 2000,
+    "depletionRand": 1000
+   },
+   "BONUS_TIN_ORE": {
+    "trade": true,
+    "discoverRand": 2000,
+    "depletionRand": 1000
+   },
+   "BONUS_TITANIUM_ORE": {
+    "trade": true,
+    "discoverRand": 2000,
+    "depletionRand": 1000
+   },
+   "BONUS_JADE": {
+    "trade": true,
+    "discoverRand": 2000,
+    "depletionRand": 1000
+   },
+   "BONUS_MARBLE": {
+    "trade": true,
+    "discoverRand": 2000,
+    "depletionRand": 1000
+   },
+   "BONUS_STONE": {
+    "trade": true,
+    "discoverRand": 2000,
+    "depletionRand": 1000
+   },
+   "BONUS_OBSIDIAN": {
+    "trade": true,
+    "discoverRand": 2000,
+    "depletionRand": 1000
+   },
+   "BONUS_TURQUOISE": {
+    "trade": true,
+    "discoverRand": 2000,
+    "depletionRand": 1000
+   },
+   "BONUS_MANGANESE": {
+    "trade": true,
+    "discoverRand": 2000,
+    "depletionRand": 1000
+   }
+  }
+ }
+}

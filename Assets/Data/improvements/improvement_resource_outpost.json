@@ -1,0 +1,69 @@
+{
+ "type": "IMPROVEMENT_RESOURCE_OUTPOST",
+ "description": "TXT_KEY_IMPROVEMENT_RESOURCE_OUTPOST",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_RESOURCE_OUTPOSTS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CARPENTRY",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_BARREN",
+       "TERRAIN_DESERT",
+       "TERRAIN_DUNES",
+       "TERRAIN_GRASSLAND",
+       "TERRAIN_ICE",
+       "TERRAIN_LUSH",
+       "TERRAIN_MARSH",
+       "TERRAIN_MUDDY",
+       "TERRAIN_PERMAFROST",
+       "TERRAIN_PLAINS",
+       "TERRAIN_ROCKY",
+       "TERRAIN_BADLAND",
+       "TERRAIN_JAGGED",
+       "TERRAIN_SALT_FLATS",
+       "TERRAIN_SCRUB",
+       "TERRAIN_TAIGA",
+       "TERRAIN_TUNDRA"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "plot": {
+   "flat": 20
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": -15
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_COTTAGE"
+  }
+ },
+ "identity": {
+  "advancedStart": {
+   "cost": 10
+  },
+  "upgradeTime": 5,
+  "outsideBorders": true,
+  "actsAsCity": true,
+  "upgradesTo": "IMPROVEMENT_RESOURCE_SETTLEMENT",
+  "bombardable": true,
+  "upgradeRequiresFortify": true,
+  "universalBonusTrade": true
+ }
+}

@@ -1,0 +1,44 @@
+{
+ "type": "IMPROVEMENT_TERRAFORM_NEUTRON_STAR",
+ "description": "TXT_KEY_BUILD_TERRAFORM_NEUTRON_STAR",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_LAND_WORKED_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INDUCED_SUPERNOVA",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_STAR_CLUSTER"
+      ]
+     },
+     {
+      "feature": [
+       "FEATURE_BLUE_SUPERGIANT"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_TERRAFORM_NEUTRON_STAR"
+  }
+ },
+ "identity": {
+  "extraterrestrial": true,
+  "advancedStart": {
+   "cost": -1
+  },
+  "airBombDefense": -1,
+  "outsideBorders": true,
+  "placesTerrain": true,
+  "graphicalOnly": true
+ }
+}

@@ -1,0 +1,74 @@
+{
+ "type": "IMPROVEMENT_SALT_GATHERER",
+ "description": "TXT_KEY_IMPROVEMENT_SALT_GATHERER",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_SALT_MINE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HARD_HAMMER_PERCUSSION",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_SALT_FLATS"
+      ]
+     },
+     {
+      "bonus": [
+       "BONUS_SALT",
+       "BONUS_NATRON"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SALT"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_NATRON"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_STONE_TOOLS_WORKSHOP"
+  }
+ },
+ "identity": {
+  "upgradeTime": 5,
+  "pillageGold": 5,
+  "upgradesTo": "IMPROVEMENT_QUARRY",
+  "bonuses": {
+   "BONUS_SALT": {
+    "trade": true,
+    "discoverRand": 1000
+   },
+   "BONUS_NATRON": {
+    "trade": true,
+    "discoverRand": 1000
+   }
+  }
+ }
+}

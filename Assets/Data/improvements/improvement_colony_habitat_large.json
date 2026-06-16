@@ -1,0 +1,68 @@
+{
+ "type": "IMPROVEMENT_COLONY_HABITAT_LARGE",
+ "description": "TXT_KEY_IMPROVEMENT_COLONY_HABITAT_LARGE",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_COTTAGE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_MANUFACTURING",
+     "scope": "team"
+    },
+    "IS_FLATLANDS"
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_LUNAR_DOME",
+       "TERRAIN_LUNAR_MARE",
+       "TERRAIN_LUNAR_HIGHLAND",
+       "TERRAIN_LUNAR_REGOLITH",
+       "TERRAIN_LUNAR_RILLE",
+       "TERRAIN_GREEN_MOON",
+       "TERRAIN_MARTIAN_ICE",
+       "TERRAIN_MARTIAN_PERMAFROST",
+       "TERRAIN_MARTIAN_DESERT",
+       "TERRAIN_MARTIAN_DUNES",
+       "TERRAIN_MARTIAN_BARREN",
+       "TERRAIN_MARTIAN_PLAINS",
+       "TERRAIN_GREEN_MARS"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 8
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_COLONY_HABITAT_LARGE"
+  }
+ },
+ "identity": {
+  "extraterrestrial": true,
+  "advancedStart": {
+   "cost": -1
+  },
+  "upgradeTime": 40,
+  "airBombDefense": 5,
+  "pillageGold": 20,
+  "pillageTo": "IMPROVEMENT_COLONY_HABITAT_MEDIUM",
+  "upgradesTo": "IMPROVEMENT_COLONY_HABITAT_HUGE"
+ }
+}

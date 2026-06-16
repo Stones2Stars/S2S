@@ -1,0 +1,75 @@
+{
+ "type": "IMPROVEMENT_WOODEN_PALISADE",
+ "description": "TXT_KEY_IMPROVEMENT_WOODEN_PALISADE",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_FORT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CARPENTRY",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "terrain": [
+       "TERRAIN_BARREN",
+       "TERRAIN_DESERT",
+       "TERRAIN_DUNES",
+       "TERRAIN_GRASSLAND",
+       "TERRAIN_ICE",
+       "TERRAIN_LUSH",
+       "TERRAIN_MARSH",
+       "TERRAIN_MUDDY",
+       "TERRAIN_PERMAFROST",
+       "TERRAIN_PLAINS",
+       "TERRAIN_ROCKY",
+       "TERRAIN_BADLAND",
+       "TERRAIN_JAGGED",
+       "TERRAIN_SALT_FLATS",
+       "TERRAIN_SCRUB",
+       "TERRAIN_TAIGA",
+       "TERRAIN_TUNDRA"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 15
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_WOODEN_PALISADE"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 2
+ },
+ "identity": {
+  "actsAsCity": true,
+  "advancedStart": {
+   "cost": 10
+  },
+  "upgradeTime": 10,
+  "airBombDefense": 5,
+  "outsideBorders": true,
+  "militaryStructure": true,
+  "pillageTo": "IMPROVEMENT_ABATIS_THORN_HEDGE",
+  "upgradesTo": "IMPROVEMENT_FORT",
+  "bombardable": true,
+  "upgradeRequiresFortify": true,
+  "universalBonusTrade": true
+ }
+}

@@ -1,0 +1,51 @@
+{
+ "type": "IMPROVEMENT_GRAPE_GATHERING_CAMP",
+ "description": "TXT_KEY_IMPROVEMENT_GRAPE_GATHERING_CAMP",
+ "civilopedia": "TXT_KEY_IMPROVEMENT_FRUIT_GATHERING_CAMP_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GATHERING",
+     "scope": "team"
+    }
+   ],
+   "any": [
+    [
+     {
+      "bonus": [
+       "BONUS_GRAPES"
+      ]
+     }
+    ]
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_GRAPES"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_IMPROVEMENT_GRAPE_GATHERING_CAMP"
+  }
+ },
+ "identity": {
+  "upgradeTime": 5,
+  "pillageGold": 7,
+  "upgradesTo": "IMPROVEMENT_GRAPE_PICKING_CAMP",
+  "bonuses": {
+   "BONUS_GRAPES": {
+    "trade": true
+   }
+  }
+ }
+}
