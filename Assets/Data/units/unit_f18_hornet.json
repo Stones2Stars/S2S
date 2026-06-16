@@ -1,0 +1,141 @@
+{
+ "type": "UNIT_F18_HORNET",
+ "description": "TXT_KEY_UNIT_F18_HORNET",
+ "civilopedia": "TXT_KEY_UNIT_F18_HORNET_PEDIA",
+ "help": "TXT_KEY_UNIT_CARRIER_OPS_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_ALUMINUM_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_MILITARY_AIRBASE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_AEROSPACE_COMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "airBombRate": {
+    "flat": 18
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 12
+   },
+   "intercept": {
+    "percent": 100
+   },
+   "evasion": {
+    "percent": 10
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": 80
+    },
+    "UNITCOMBAT_STEAM_SHIPS": {
+     "percent": 55
+    },
+    "UNITCOMBAT_DIESEL_SHIPS": {
+     "percent": 20
+    }
+   },
+   "domain": {
+    "DOMAIN_SEA": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "ignoreBuildingDefense": true,
+  "mechanized": true,
+  "dcmFighterEngage": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "dcmAirBomb": 2
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MODERN_FIGHTER"
+  ]
+ },
+ "cost": {
+  "production": 1700,
+  "upkeep": 4
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 28,
+  "xpValueAttack": 4,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_DEFENSE_AIR",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "special": "SPECIALUNIT_FIGHTER",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_DEFENSE_AIR",
+   "UNITAI_CARRIER_AIR"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+   "UNITCOMBAT_WEAPON_A2G_TORPEDO",
+   "UNITCOMBAT_WEAPON_A2G_GUIDED",
+   "UNITCOMBAT_ARMOR_AIRCRAFT",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_PILOTING",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_AIRCRAFT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "airCombat": 72,
+   "airCombatLimit": 60,
+   "airUnitCap": 1,
+   "combatClass": "UNITCOMBAT_JET_FIGHTERS"
+  }
+ }
+}

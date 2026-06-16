@@ -1,0 +1,73 @@
+{
+ "type": "UNIT_EXPLORER",
+ "description": "TXT_KEY_UNIT_EXPLORER",
+ "civilopedia": "TXT_KEY_UNIT_EXPLORER_PEDIA",
+ "withdrawal": {
+  "unit": {
+   "percent": 60
+  }
+ },
+ "capabilities": {
+  "ignoreTerrainCost": true,
+  "noBadGoodies": true,
+  "passage": true,
+  "upgradeAnywhere": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_GUERILLA1",
+   "PROMOTION_WOODSMAN1"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_ADVENTURER"
+  ]
+ },
+ "cost": {
+  "production": 175,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "xpValueAttack": 4,
+  "xpValueDefense": 4,
+  "animalCombat": 25,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_EXPLORE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_EXPLORE",
+   "UNITAI_HUNTER_ESCORT",
+   "UNITAI_ESCORT"
+  ],
+  "notUnitAIs": [
+   "UNITAI_HUNTER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+   "UNITCOMBAT_WEAPON_DIST_LIGHT_CROSSBOW",
+   "UNITCOMBAT_ARMOR_MEDIUM",
+   "UNITCOMBAT_SHIELD_BUCKLER",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 6,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_RECON"
+  }
+ }
+}

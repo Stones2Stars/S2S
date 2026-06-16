@@ -1,0 +1,83 @@
+{
+ "type": "UNIT_LEMUR",
+ "description": "TXT_KEY_UNIT_LEMUR",
+ "civilopedia": "TXT_KEY_UNIT_LEMUR_PEDIA",
+ "withdrawal": {
+  "unit": {
+   "percent": 35
+  }
+ },
+ "capabilities": {
+  "blendIntoCity": true,
+  "onlyDefensive": true,
+  "animalIgnoresBorders": true
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_SUBDUE",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_LEMUR",
+    "bUnitToCity": [
+     {
+      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
+     }
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 95,
+    "Yields": [
+     1,
+     0,
+     3
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 2,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_MAMMAL",
+   "UNITCOMBAT_MAMMAL_PROSIMIAN",
+   "UNITCOMBAT_ANIMAL_COMBAT_SCRATCH",
+   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+   "UNITCOMBAT_ANIMAL_COMBAT_TREECLIMBING",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_TINY",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_BARREN",
+   "TERRAIN_DUNES",
+   "TERRAIN_ICE",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_SCRUB",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA"
+  ],
+  "base": {
+   "combat": 1,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

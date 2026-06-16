@@ -1,0 +1,87 @@
+{
+ "type": "UNIT_SUBDUED_PIG_NEW",
+ "description": "TXT_KEY_UNIT_SUBDUED_PIG_NEW",
+ "civilopedia": "TXT_KEY_UNIT_PIG_PEDIA",
+ "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
+ "capabilities": {
+  "onlyDefensive": true,
+  "militaryTrade": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_SLAY_ANIMAL": [
+     {
+      "OutcomeType": "OUTCOME_SLAY_ANIMAL",
+      "iChance": 100,
+      "Yields": [
+       [
+        {
+         "Constant": 20,
+         "Random": 230
+        }
+       ],
+       [
+        {
+         "Constant": 3,
+         "Random": 12
+        }
+       ],
+       [
+        {
+         "Constant": 2,
+         "Random": 3
+        }
+       ]
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_GOVERNORS_PETS",
+   "BUILDING_GOVERNORS_MENAGERIE",
+   "BUILDING_MASTER_HUNTER",
+   "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE",
+   "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+   "BUILDING_HERD_PIG",
+   "BUILDING_CAMP_BOAR",
+   "BUILDING_ZOO",
+   "BUILDING_TAXIDERMIST"
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "captures": "UNIT_SUBDUED_PIG_NEW",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_SUBDUED_SMALL",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_ANIMALS",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "heritage": [
+   "HERITAGE_FOLKLORE_SWINE",
+   "HERITAGE_TAXON_SUIDAE"
+  ],
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_SUBDUED"
+  }
+ }
+}

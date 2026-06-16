@@ -1,0 +1,74 @@
+{
+ "type": "UNIT_SUBDUED_PUFFADDER",
+ "description": "TXT_KEY_UNIT_SUBDUED_PUFFADDER",
+ "civilopedia": "TXT_KEY_UNIT_PUFFADDER_PEDIA",
+ "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
+ "capabilities": {
+  "onlyDefensive": true,
+  "militaryTrade": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_SLAY_ANIMAL": [
+     {
+      "OutcomeType": "OUTCOME_SLAY_ANIMAL",
+      "iChance": 100,
+      "Yields": [
+       1,
+       1,
+       5
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_GOVERNORS_PETS",
+   "BUILDING_GOVERNORS_MENAGERIE",
+   "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+   "BUILDING_FOLKLORE_E_EARTH",
+   "BUILDING_ENCLOSURE_REPTILE",
+   "BUILDING_SNAKE_CHARMER",
+   "BUILDING_SNAKE_PIT",
+   "BUILDING_ZOO",
+   "BUILDING_TAXIDERMIST"
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "captures": "UNIT_SUBDUED_PUFFADDER",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_SUBDUED_TINY",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_ANIMALS",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "heritage": [
+   "HERITAGE_FOLKLORE_ADDER_PUFF",
+   "HERITAGE_TAXON_REPTILIA",
+   "HERITAGE_TAXON_SERPENTES",
+   "HERITAGE_TAXON_SQUAMATA"
+  ],
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_SUBDUED"
+  }
+ }
+}

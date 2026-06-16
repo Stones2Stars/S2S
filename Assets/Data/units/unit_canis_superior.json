@@ -1,0 +1,145 @@
+{
+ "type": "UNIT_CANIS_SUPERIOR",
+ "description": "TXT_KEY_UNIT_CANIS_SUPERIOR",
+ "civilopedia": "TXT_KEY_UNIT_CANIS_SUPERIOR_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_DOG",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_REPET",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "unit": {
+   "investigation": {
+    "flat": 50
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "lunge": {
+    "percent": 25
+   },
+   "enclose": {
+    "percent": 25
+   },
+   "unnerve": {
+    "percent": 25
+   },
+   "dynamicDefense": {
+    "percent": 25
+   },
+   "stealthStrikes": {
+    "flat": 1
+   },
+   "stealth": {
+    "percent": 50
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 30
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  },
+  "plot": {
+   "flat": -5
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "noDefensiveBonus": true,
+  "counterSpy": true,
+  "ignoreTerrainCost": true,
+  "passage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militaryTrade": true,
+  "targets": {
+   "UNITCOMBAT_CRIMINAL": true
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 6,
+   "INVISIBLE_POLITICAL": 2,
+   "INVISIBLE_INVISIBLE": 2
+  }
+ },
+ "cost": {
+  "production": 3942,
+  "upkeep": 5
+ },
+ "identity": {
+  "worth": 15,
+  "militaryWorth": 60,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "animalCombat": 50,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PILLAGE_COUNTER",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_PILLAGE_COUNTER",
+   "UNITAI_HUNTER_ESCORT",
+   "UNITAI_PROPERTY_CONTROL",
+   "UNITAI_SEE_INVISIBLE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CLONES",
+   "UNITCOMBAT_LAW_ENFORCEMENT",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_ANIMAL_MAMMAL",
+   "UNITCOMBAT_CANINE",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_DIST_HANDGUN",
+   "UNITCOMBAT_ARMOR_MODERN",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
+   "UNITCOMBAT_ANIMAL_COMBAT_WARNING",
+   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+   "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+   "UNITCOMBAT_ANIMAL_COMBAT_PACK_HUNTER",
+   "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 90,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

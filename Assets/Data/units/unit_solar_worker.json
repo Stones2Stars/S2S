@@ -1,0 +1,66 @@
+{
+ "type": "UNIT_SOLAR_WORKER",
+ "description": "TXT_KEY_UNIT_SOLAR_WORKER",
+ "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+ "help": "TXT_KEY_UNIT_SOLAR_WORKER_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DEEP_SPACE_HOUSING_WORKERS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "canMoveImpassable": true,
+  "ignoreTerrainCost": true
+ },
+ "grants": {
+  "builds": [
+   "BUILD_SOLAR_TRAJECTORY"
+  ]
+ },
+ "cost": {
+  "production": 2000,
+  "upkeep": 1,
+  "hurryCostModifier": 10000
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_SOLAR_WORKER",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_SOLAR_SAIL_SPACESHIP",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_TECH",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR",
+   "MAPCATEGORY_SOLAR_SYSTEM",
+   "MAPCATEGORY_TITANIC"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "moves": 24,
+   "workRate": 250,
+   "combatClass": "UNITCOMBAT_SPACE_WORKER"
+  }
+ }
+}

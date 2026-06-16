@@ -1,0 +1,189 @@
+{
+ "type": "UNIT_ROBBER",
+ "description": "TXT_KEY_UNIT_ROBBER",
+ "civilopedia": "TXT_KEY_UNIT_ROBBER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_PAWN_SHOP",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "culture": {
+  "unit": {
+   "garrison": {
+    "flat": -10
+   }
+  }
+ },
+ "espionage": {
+  "unit": {
+   "insidiousness": {
+    "flat": 75
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "lunge": {
+    "percent": 22
+   },
+   "unnerve": {
+    "percent": 22
+   },
+   "stealthStrikes": {
+    "flat": 3
+   },
+   "stealth": {
+    "percent": 50
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 55
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 60
+  },
+  "plot": {
+   "flat": 30
+  }
+ },
+ "capabilities": {
+  "alwaysHostile": true,
+  "assassin": true,
+  "hiddenNationality": true,
+  "noCapture": true,
+  "noDefensiveBonus": true,
+  "pillage": true,
+  "blendIntoCity": true,
+  "counterSpy": true,
+  "destroy": true,
+  "ignoreZoneOfControl": true,
+  "stealPlans": true,
+  "upgradeAnywhere": true,
+  "militaryProduction": true,
+  "targets": {
+   "UNITCOMBAT_CANINE": true,
+   "UNITCOMBAT_TRADE": true,
+   "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_DISGUISED": 5,
+   "INVISIBLE_POLITICAL": 3
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_DISGUISED": 5,
+   "INVISIBLE_POLITICAL": 3
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COMMANDO",
+   "PROMOTION_MARAUDER",
+   "PROMOTION_LOOTER",
+   "PROMOTION_INDUSTRYESPIONAGE"
+  ],
+  "greatPersonAction": {
+   "trade": {
+    "base": 150,
+    "multiplier": 2
+   }
+  }
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_TECHNARCHIST"
+  ]
+ },
+ "cost": {
+  "production": 875,
+  "upkeep": 11
+ },
+ "identity": {
+  "worth": 11,
+  "militaryWorth": 37,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_INFILTRATOR",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_TROOP",
+  "advisor": "ADVISOR_GROWTH",
+  "espionagePoints": 1000,
+  "unitAIs": [
+   "UNITAI_SPY",
+   "UNITAI_PILLAGE",
+   "UNITAI_INFILTRATOR"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_WEAPON_DIST_HANDGUN",
+   "UNITCOMBAT_ARMOR_VEHICULAR",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_DRIVING",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "cargo": {
+   "domain": "DOMAIN_LAND",
+   "special": "SPECIALUNIT_PEOPLE",
+   "smNotSpecial": "SPECIALUNIT_VTOL"
+  },
+  "base": {
+   "combat": 50,
+   "moves": 4,
+   "cargo": 2,
+   "combatClass": "UNITCOMBAT_CRIMINAL"
+  }
+ }
+}

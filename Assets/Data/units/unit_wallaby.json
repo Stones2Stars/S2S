@@ -1,0 +1,146 @@
+{
+ "type": "UNIT_WALLABY",
+ "description": "TXT_KEY_UNIT_WALLABY",
+ "civilopedia": "TXT_KEY_UNIT_WALLABY_PEDIA",
+ "withdrawal": {
+  "unit": {
+   "percent": 35
+  }
+ },
+ "capabilities": {
+  "blendIntoCity": true,
+  "onlyDefensive": true,
+  "animalIgnoresBorders": true
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_SUBDUE",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_WALLABY",
+    "bUnitToCity": [
+     {
+      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
+     }
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 95,
+    "Yields": [
+     [
+      {
+       "Constant": 1,
+       "Random": 1
+      }
+     ],
+     [
+      {
+       "Constant": 1,
+       "Random": 1
+      }
+     ],
+     [
+      {
+       "Constant": 1,
+       "Random": 2
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 3,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_MAMMAL",
+   "UNITCOMBAT_MAMMAL_MARSUPIAL",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+   "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_TINY",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "featureImpassable": [
+   "FEATURE_JUNGLE",
+   "FEATURE_MANGROVE",
+   "FEATURE_SWAMP"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES",
+   "TERRAIN_ICE",
+   "TERRAIN_MARSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_SCRUB",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA"
+  ],
+  "featurePassableTechs": [
+   {
+    "FEATURE_CAVES": "NONE"
+   },
+   {
+    "FEATURE_DARK_ROCK_ARCH": "NONE"
+   },
+   {
+    "FEATURE_DARK_ROCK_ARCH2": "NONE"
+   },
+   {
+    "FEATURE_DARK_ROCK_FORM1": "NONE"
+   },
+   {
+    "FEATURE_DARK_ROCK_FORM2": "NONE"
+   },
+   {
+    "FEATURE_DARK_ROCK_FORM3": "NONE"
+   },
+   {
+    "FEATURE_DARK_ROCK_FORM4": "NONE"
+   },
+   {
+    "FEATURE_ROCK_ARCH": "NONE"
+   },
+   {
+    "FEATURE_ROCK_ARCH2": "NONE"
+   },
+   {
+    "FEATURE_ROCK_FORM1": "NONE"
+   },
+   {
+    "FEATURE_ROCK_FORM2": "NONE"
+   },
+   {
+    "FEATURE_ROCK_FORM3": "NONE"
+   },
+   {
+    "FEATURE_ROCK_FORM4": "NONE"
+   }
+  ],
+  "base": {
+   "combat": 1,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

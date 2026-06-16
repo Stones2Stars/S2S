@@ -1,0 +1,103 @@
+{
+ "type": "UNIT_FRENCH_MUSKETEER",
+ "description": "TXT_KEY_UNIT_FRENCH_MUSKETEER",
+ "civilopedia": "TXT_KEY_UNIT_FRENCH_MUSKETEER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FRENCH",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_LEAD_WARES": {
+     "percent": 15
+    },
+    "BONUS_FLINT": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SPEED"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_RIFLEMAN"
+  ]
+ },
+ "cost": {
+  "production": 405,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 52,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "conscription": 9,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_RANGED",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE",
+   "UNITAI_RESERVE",
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+   "UNITCOMBAT_WEAPON_H2H_KNIFE",
+   "UNITCOMBAT_WEAPON_DIST_RIFLE",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 20,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_GUN"
+  }
+ }
+}

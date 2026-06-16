@@ -1,0 +1,124 @@
+{
+ "type": "UNIT_BARUD_WARRIOR",
+ "description": "TXT_KEY_UNIT_BARUD_WARRIOR",
+ "civilopedia": "TXT_KEY_UNIT_BARUD_WARRIOR_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SIEGE_WEAPONS_WORKSHOP",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_LEAD_WARES": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE_WOODEN": {
+     "percent": 50
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 50
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 25
+    },
+    "UNITCOMBAT_MELEE": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_WARMTH1",
+   "PROMOTION_WARMTH2"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_ARQUEBUSIER"
+  ]
+ },
+ "cost": {
+  "production": 300,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 17,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_ATTACK",
+   "UNITAI_RESERVE",
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PILLAGE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_DIST_CANNONBALL",
+   "UNITCOMBAT_WEAPON_H2H_CLUB",
+   "UNITCOMBAT_ARMOR_MEDIUM",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 12,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_ROCKET_LAUNCHER"
+  }
+ }
+}

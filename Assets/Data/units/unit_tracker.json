@@ -1,0 +1,96 @@
+{
+ "type": "UNIT_TRACKER",
+ "description": "TXT_KEY_UNIT_TRACKER",
+ "civilopedia": "TXT_KEY_UNIT_HUNTER_PEDIA",
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_ROPE": {
+     "percent": 10
+    },
+    "BONUS_FLINT": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": -75
+   },
+   "unitCombat": {
+    "UNITCOMBAT_ANIMAL_COMBAT_FLEEING": {
+     "percent": 20
+    },
+    "UNITCOMBAT_ANIMAL_COMBAT_HIDING": {
+     "percent": 20
+    },
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "assassin": true,
+  "militaryTrade": true,
+  "targets": {
+   "UNITCOMBAT_ANIMAL": true,
+   "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+  }
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_HUNTER",
+   "UNIT_NEANDERTHAL_TRACKER"
+  ],
+  "supersededBy": [
+   "UNIT_NEANDERTHAL_GATHERER"
+  ]
+ },
+ "cost": {
+  "production": 38,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 2,
+  "xpValueAttack": 2,
+  "xpValueDefense": 1,
+  "animalCombat": 125,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_HUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_HUNTER",
+   "UNITAI_EXPLORE",
+   "UNITAI_ATTACK"
+  ],
+  "notUnitAIs": [
+   "UNITAI_HUNTER_ESCORT"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_KNIFE",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 3,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_HUNTER"
+  }
+ }
+}

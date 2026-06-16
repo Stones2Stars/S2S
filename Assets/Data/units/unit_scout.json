@@ -1,0 +1,69 @@
+{
+ "type": "UNIT_SCOUT",
+ "description": "TXT_KEY_UNIT_SCOUT",
+ "civilopedia": "TXT_KEY_UNIT_SCOUT_PEDIA",
+ "withdrawal": {
+  "unit": {
+   "percent": 50
+  }
+ },
+ "capabilities": {
+  "noBadGoodies": true,
+  "passage": true,
+  "upgradeAnywhere": true,
+  "militaryTrade": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_GUIDE",
+   "UNIT_NEANDERTHAL_SCOUT"
+  ],
+  "supersededBy": [
+   "UNIT_NEANDERTHAL_SCOUT"
+  ]
+ },
+ "cost": {
+  "production": 11,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "xpValueAttack": 4,
+  "xpValueDefense": 4,
+  "animalCombat": 25,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_EXPLORE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_EXPLORE",
+   "UNITAI_HUNTER_ESCORT",
+   "UNITAI_ESCORT"
+  ],
+  "notUnitAIs": [
+   "UNITAI_HUNTER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_AXE",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 2,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_RECON"
+  }
+ }
+}

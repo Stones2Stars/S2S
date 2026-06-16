@@ -1,0 +1,143 @@
+{
+ "type": "UNIT_MASTER_SAILOR_CARRIER",
+ "description": "TXT_KEY_UNIT_MASTER_SAILOR_CARRIER",
+ "civilopedia": "TXT_KEY_UNIT_CARRIER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "AREA_SIZE",
+     "scope": "world",
+     "min": 10
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PETROLEUM_PRODUCTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_URANIUM",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_COAST": {
+     "attack": {
+      "percent": -50
+     },
+     "defense": {
+      "percent": -50
+     }
+    },
+    "TERRAIN_COAST_POLAR": {
+     "attack": {
+      "percent": -50
+     },
+     "defense": {
+      "percent": -50
+     }
+    },
+    "TERRAIN_COAST_TROPICAL": {
+     "attack": {
+      "percent": -50
+     },
+     "defense": {
+      "percent": -50
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": 100
+    },
+    "UNITCOMBAT_STEAM_SHIPS": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "ignoreBuildingDefense": true,
+  "ignoreTerrainCost": true,
+  "mechanized": true,
+  "noBadGoodies": true,
+  "renderBelowWater": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_NAVIGATION1",
+   "PROMOTION_LEADERSHIP"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MASTER_SAILOR_NUCLEAR_CARRIER"
+  ]
+ },
+ "cost": {
+  "upkeep": 2
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 120,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "minAreaSize": 10,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_CARRIER_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_CARRIER_SEA"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_TRANSPORT",
+   "UNITCOMBAT_NAVAL_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_ARMOR_NAVAL",
+   "UNITCOMBAT_SPEED_SLOW",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_COLOSSAL",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_NAVAL",
+   "UNITCOMBAT_HEALS_AIRCRAFT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "cargo": {
+   "domain": "DOMAIN_AIR",
+   "special": "SPECIALUNIT_FIGHTER",
+   "smNotSpecial": "SPECIALUNIT_MISSILE"
+  },
+  "base": {
+   "combat": 40,
+   "moves": 5,
+   "cargo": 5,
+   "combatClass": "UNITCOMBAT_DIESEL_SHIPS"
+  }
+ }
+}

@@ -1,0 +1,160 @@
+{
+ "type": "UNIT_PERSIA_IMMORTAL",
+ "description": "TXT_KEY_UNIT_PERIA_IMMORTAL",
+ "civilopedia": "TXT_KEY_UNIT_PERIA_IMMORTAL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PERSIAN",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_ANIMAL_TRAINER_HORSE",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_HORSE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_FLINT": {
+     "percent": 5
+    },
+    "BONUS_PRIME_TIMBER": {
+     "percent": 5
+    },
+    "BONUS_STONE": {
+     "percent": 5
+    },
+    "BONUS_OBSIDIAN": {
+     "percent": 5
+    }
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "feature": {
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": -25
+     }
+    },
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": -50
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_ARCHER": {
+     "percent": 50
+    }
+   },
+   "vsUnit": {
+    "UNIT_AXEMAN": {
+     "attack": {
+      "percent": 100
+     }
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "firstStrikeImmune": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MOUNTED_INFANTRY"
+  ]
+ },
+ "cost": {
+  "production": 98,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 7,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_COUNTER",
+   "UNITAI_PILLAGE"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_COUNTER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_SHORT_POLEARM",
+   "UNITCOMBAT_WEAPON_DIST_SHORTBOW",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+   "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_RIDING",
+   "UNITCOMBAT_MOUNT_HORSE",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 6,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_MOUNTED"
+  }
+ }
+}

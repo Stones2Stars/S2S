@@ -1,0 +1,137 @@
+{
+ "type": "UNIT_SPACE_SHUTTLE",
+ "description": "TXT_KEY_UNIT_SPACE_SHUTTLE",
+ "civilopedia": "TXT_KEY_UNIT_SPACE_SHUTTLE_PEDIA",
+ "help": "TXT_KEY_UNIT_SPACEUNIT_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ROCKET_FUEL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_EFFECT_LAUNCH_SITE",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 2
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "canMoveAllTerrain": true,
+  "canMoveImpassable": true,
+  "ignoreTerrainCost": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MissionType": "MISSION_EXPLORE_SS1",
+    "iCost": [
+     [
+      0
+     ]
+    ],
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_EXPLORE_SS1",
+      "iChance": 100,
+      "PythonName": "ExploreSS1",
+      "Python": "from CvPythonExtensions import *\n\t\t\t\t\t\t\t\timport random\n\t\t\t\t\t\t\t\tdef isPossible(unit,plot):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tvalid_terrain_strings = ['SPACE_STATION_LV1']\n\t\t\t\t\t\t\t\t\tvalid_terrains = [gc.getInfoTypeForString('IMPROVEMENT_'+t) for t in valid_terrain_strings]\n\t\t\t\t\t\t\t\t\treturn plot.getImprovementType() in valid_terrains\n\t\t\t\t\t\t\t\tdef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\t\t\t\t\t\t\t\t\tgc.getPlayer(unit.getOwner()).initUnit(gc.getInfoTypeForString('UNIT_SS1_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\n\t\t\t\t\t\t\t\tdef getDisplay(unit,plot):\n\t\t\t\t\t\t\t\t\treturn u\"Conduct Scientific Mission\"\n\t\t\t\t\t\t\t\tdef getAIValue(unit, plot):\n\t\t\t\t\t\t\t\t\treturn 1"
+     }
+    ]
+   },
+   {
+    "MissionType": "MISSION_EXPLORE_SS2",
+    "iCost": [
+     [
+      0
+     ]
+    ],
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_EXPLORE_SS2",
+      "iChance": 100,
+      "PythonName": "ExploreSS1",
+      "Python": "from CvPythonExtensions import *\n\t\t\t\t\t\t\t\timport random\n\t\t\t\t\t\t\t\tdef isPossible(unit,plot):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tvalid_terrain_strings = ['SPACE_STATION_LV2']\n\t\t\t\t\t\t\t\t\tvalid_terrains = [gc.getInfoTypeForString('IMPROVEMENT_'+t) for t in valid_terrain_strings]\n\t\t\t\t\t\t\t\t\treturn plot.getImprovementType() in valid_terrains\n\t\t\t\t\t\t\t\tdef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\t\t\t\t\t\t\t\t\tgc.getPlayer(unit.getOwner()).initUnit(gc.getInfoTypeForString('UNIT_SS2_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\n\t\t\t\t\t\t\t\tdef getDisplay(unit,plot):\n\t\t\t\t\t\t\t\t\treturn u\"Conduct Scientific Mission\"\n\t\t\t\t\t\t\t\tdef getAIValue(unit, plot):\n\t\t\t\t\t\t\t\t\treturn 1"
+     }
+    ]
+   },
+   {
+    "MissionType": "MISSION_EXPLORE_SS3",
+    "iCost": [
+     [
+      0
+     ]
+    ],
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_EXPLORE_SS3",
+      "iChance": 100,
+      "PythonName": "ExploreSS3",
+      "Python": "from CvPythonExtensions import *\n\t\t\t\t\t\t\t\timport random\n\t\t\t\t\t\t\t\tdef isPossible(unit,plot):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tvalid_terrain_strings = ['SPACE_STATION_LV3']\n\t\t\t\t\t\t\t\t\tvalid_terrains = [gc.getInfoTypeForString('IMPROVEMENT_'+t) for t in valid_terrain_strings]\n\t\t\t\t\t\t\t\t\treturn plot.getImprovementType() in valid_terrains\n\t\t\t\t\t\t\t\tdef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\t\t\t\t\t\t\t\t\tgc.getPlayer(unit.getOwner()).initUnit(gc.getInfoTypeForString('UNIT_SS3_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\n\t\t\t\t\t\t\t\tdef getDisplay(unit,plot):\n\t\t\t\t\t\t\t\t\treturn u\"Conduct Scientific Mission\"\n\t\t\t\t\t\t\t\tdef getAIValue(unit, plot):\n\t\t\t\t\t\t\t\t\treturn 1"
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "builds": [
+   "BUILD_SPACE_STATION_LV1",
+   "BUILD_SPACE_STATION_LV2",
+   "BUILD_SPACE_STATION_LV3"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_HEAVY_ROCKET"
+  ]
+ },
+ "cost": {
+  "production": 2106,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_SPACE_SHUTTLE",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_EARLY_SPACESHIP",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_TECH",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH",
+   "MAPCATEGORY_CISLUNAR"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_CISLUNAR_SPACE"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "moves": 24,
+   "workRate": 250,
+   "combatClass": "UNITCOMBAT_SPACE_WORKER"
+  }
+ }
+}

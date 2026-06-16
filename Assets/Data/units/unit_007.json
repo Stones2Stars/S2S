@@ -1,0 +1,89 @@
+{
+ "type": "UNIT_007",
+ "description": "TXT_KEY_UNIT_007",
+ "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SCOTLAND_YARD",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "dropRange": {
+    "flat": 10
+   }
+  }
+ },
+ "capabilities": {
+  "counterSpy": true,
+  "ignoreTerrainCost": true,
+  "investigate": true,
+  "alwaysInvisible": true,
+  "rivalTerritory": true,
+  "spy": true,
+  "stealPlans": true,
+  "unlimitedException": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COMMANDO",
+   "PROMOTION_IMPROVISE1",
+   "PROMOTION_SECURITY1",
+   "PROMOTION_ESCAPE1",
+   "PROMOTION_DECEPTION1",
+   "PROMOTION_IMPROVISE2",
+   "PROMOTION_SECURITY2",
+   "PROMOTION_IMPROVISE3"
+  ]
+ },
+ "cost": {
+  "production": 1350,
+  "upkeep": 1500
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SPY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_SPY"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_SPY"
+  }
+ }
+}

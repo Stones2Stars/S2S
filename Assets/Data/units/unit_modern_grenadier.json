@@ -1,0 +1,137 @@
+{
+ "type": "UNIT_MODERN_GRENADIER",
+ "description": "TXT_KEY_UNIT_MODERN_GRENADIER",
+ "civilopedia": "TXT_KEY_UNIT_GRENADIER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 30
+   },
+   "vsUnit": {
+    "UNIT_RIFLEMAN": {
+     "attack": {
+      "percent": 50
+     }
+    },
+    "UNIT_INFANTRY": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "UNIT_EARLY_TANK": {
+     "attack": {
+      "percent": 25
+     },
+     "defense": {
+      "percent": 100
+     }
+    },
+    "UNIT_TANK": {
+     "attack": {
+      "percent": 25
+     }
+    }
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 2
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 10
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 8
+   },
+   "limit": {
+    "flat": 25
+   },
+   "maxUnits": {
+    "flat": 2
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "ignoreBuildingDefense": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_BAZOOKA"
+  ]
+ },
+ "cost": {
+  "production": 790,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 98,
+  "xpValueAttack": 2,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_TROOP",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_RESERVE",
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_ESCORT"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_BAYONETTE",
+   "UNITCOMBAT_WEAPON_DIST_GRENADE",
+   "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+   "UNITCOMBAT_ARMOR_MODERN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 34,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_THROWING"
+  }
+ }
+}

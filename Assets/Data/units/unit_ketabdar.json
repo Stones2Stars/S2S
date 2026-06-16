@@ -1,0 +1,124 @@
+{
+ "type": "UNIT_KETABDAR",
+ "description": "TXT_KEY_UNIT_KETABDAR",
+ "civilopedia": "TXT_KEY_UNIT_KETABDAR_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_GHURID",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "capabilities": {
+  "rivalTerritory": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MissionType": "MISSION_ENTERTAIN_CITY",
+    "bKill": 0,
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_ENTERTAIN_CITY",
+      "iChance": 80,
+      "Commerces": [
+       0,
+       0,
+       [
+        [
+         6
+        ]
+       ]
+      ],
+      "iReduceAnarchyLength": 4,
+      "bKill": 1
+     },
+     {
+      "OutcomeType": "OUTCOME_ENTERTAIN_CITY_EXALTED",
+      "iChance": 20,
+      "Commerces": [
+       0,
+       0,
+       [
+        [
+         12
+        ]
+       ]
+      ],
+      "PromotionType": "PROMOTION_EXPERIENCED_ARTIST",
+      "iReduceAnarchyLength": 5
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "greatPersonAction": {
+   "greatWork": {
+    "base": 15
+   }
+  }
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_CELEBRITY"
+  ]
+ },
+ "cost": {
+  "production": 250,
+  "upkeep": 4
+ },
+ "identity": {
+  "worth": 5,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_CULTURE",
+  "captures": "UNIT_ENTERTAINER",
+  "unitAIs": [
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_INFERIOR",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_ENTERTAINER"
+  }
+ }
+}

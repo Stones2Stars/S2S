@@ -1,0 +1,83 @@
+{
+ "type": "UNIT_PATTON",
+ "description": "TXT_KEY_UNIT_PATTON",
+ "civilopedia": "TXT_KEY_UNIT_PATTON_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AMERICAN",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_RETINUE_LIEUTENANT"
+  ],
+  "greatPeople": [
+   "SPECIALIST_GREAT_MILITARY_INSTRUCTOR"
+  ]
+ },
+ "cost": {
+  "production": 3800,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 6,
+  "militaryWorth": 8,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "leaderPromotion": "PROMOTION_LEADER",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_COUNTER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_TRACKED",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+   "UNITCOMBAT_ARMOR_VEHICULAR",
+   "UNITCOMBAT_MOTILITY_DRIVING",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 44,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_HERO"
+  }
+ }
+}

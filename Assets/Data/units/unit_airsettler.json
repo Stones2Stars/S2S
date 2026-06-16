@@ -1,0 +1,67 @@
+{
+ "type": "UNIT_AIRSETTLER",
+ "description": "TXT_KEY_UNIT_AIRSETTLER",
+ "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",
+ "help": "TXT_KEY_UNIT_AIRSETTLER_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_JET_ENGINES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_COMMERCIAL_AIRPORT",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PETROLEUM_PRODUCTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "capabilities": {
+  "canMoveAllTerrain": true,
+  "food": true,
+  "found": true
+ },
+ "cost": {
+  "upkeep": 10
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SETTLE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "captures": "UNIT_CAPTIVE_CIVILIAN",
+  "unitAIs": [
+   "UNITAI_SETTLE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_PILOTING",
+   "UNITCOMBAT_QUALITY_POOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_AIRCRAFT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 24,
+   "combatClass": "UNITCOMBAT_SETTLER"
+  }
+ }
+}

@@ -1,0 +1,93 @@
+{
+ "type": "UNIT_CHROME_INFANTRY",
+ "description": "TXT_KEY_UNIT_CHROME_INFANTRY",
+ "civilopedia": "TXT_KEY_UNIT_CHROME_INFANTRY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_FIREARMS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_FERTILITY_CLINIC",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_NANOMORPHIC_REPLICATOR",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_CLONE_INFANTRY"
+  ]
+ },
+ "cost": {
+  "production": 2700,
+  "upkeep": 2
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 250,
+  "xpValueAttack": 1,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_CITY_DEFENSE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_TROOP",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_RESERVE",
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_ESCORT"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_BAYONETTE",
+   "UNITCOMBAT_WEAPON_DIST_COILGUN",
+   "UNITCOMBAT_ARMOR_MODERN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_MEDIOCRE",
+   "UNITCOMBAT_GROUP_FORCES",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": 80
+  },
+  "base": {
+   "combat": 100,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_CLONES"
+  }
+ }
+}

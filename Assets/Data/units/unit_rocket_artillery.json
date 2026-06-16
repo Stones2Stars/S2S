@@ -1,0 +1,127 @@
+{
+ "type": "UNIT_ROCKET_ARTILLERY",
+ "description": "TXT_KEY_UNIT_ROCKET_ARTILLERY",
+ "civilopedia": "TXT_KEY_UNIT_ROCKET_ARTILLERY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_FACTORY_AMMUNITION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_AMMUNITIONS_WORKSHOP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 20
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 100
+   },
+   "limit": {
+    "flat": 80
+   },
+   "maxUnits": {
+    "flat": 10
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE": {
+     "percent": 50
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "pillage": true,
+  "ignoreBuildingDefense": true,
+  "mechanized": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_NLOS_CANNON",
+   "UNIT_HOVER_ARTILLERY"
+  ]
+ },
+ "cost": {
+  "production": 1700,
+  "upkeep": 2
+ },
+ "identity": {
+  "worth": 6,
+  "militaryWorth": 230,
+  "xpValueAttack": 6,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_COLLATERAL",
+   "UNITAI_CITY_COUNTER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_TRACKED",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SIEGE_URBAN",
+   "UNITCOMBAT_SIEGE_FIELD",
+   "UNITCOMBAT_SIEGE_ROCKETRY",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_DIST_LONG_RANGE_MISSILE",
+   "UNITCOMBAT_WEAPON_DIST_MEDIUM_RANGE_MISSILE",
+   "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+   "UNITCOMBAT_ARMOR_VEHICULAR",
+   "UNITCOMBAT_MOTILITY_DRIVING",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 65,
+   "moves": 2,
+   "combatLimit": 90,
+   "combatClass": "UNITCOMBAT_SIEGE"
+  }
+ }
+}

@@ -1,0 +1,101 @@
+{
+ "type": "UNIT_GREAT_DETECTIVE",
+ "description": "TXT_KEY_UNIT_GREAT_DETECTIVE",
+ "civilopedia": "TXT_KEY_CONCEPT_GREAT_DETECTIVE_PEDIA",
+ "capabilities": {
+  "goldenAge": true,
+  "alwaysInvisible": true,
+  "rivalTerritory": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_REMOVE_WV_SLAVERY": [
+     {
+      "OutcomeType": "OUTCOME_REMOVE_WV_SLAVERY",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "PythonCallback": "doRemoveWVSlavery"
+     }
+    ]
+   },
+   {
+    "MISSION_REMOVE_WV_CANNIBALISM": [
+     {
+      "OutcomeType": "OUTCOME_REMOVE_WV_CANNIBALISM",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "PythonCallback": "doRemoveWVCannibalism"
+     }
+    ]
+   },
+   {
+    "MISSION_REMOVE_WV_HUMAN_SACRIFICE": [
+     {
+      "OutcomeType": "OUTCOME_REMOVE_WV_HUMAN_SACRIFICE",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "PythonCallback": "doRemoveWVHumanSacrifice"
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "greatPeople": [
+   "SPECIALIST_GREAT_SLEUTH"
+  ],
+  "buildings": [
+   "BUILDING_SCOTLAND_YARD"
+  ],
+  "goldenAge": true
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   }
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MERCHANT",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_MERCHANT"
+  ],
+  "notUnitAIs": [
+   "UNITAI_EXPLORE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_LAW_ENFORCEMENT",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_PRODIGY"
+  }
+ }
+}

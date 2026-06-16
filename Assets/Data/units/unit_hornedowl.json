@@ -1,0 +1,102 @@
+{
+ "type": "UNIT_HORNEDOWL",
+ "description": "TXT_KEY_UNIT_HORNEDOWL",
+ "civilopedia": "TXT_KEY_UNIT_HORNEDOWL_PEDIA",
+ "withdrawal": {
+  "unit": {
+   "percent": 60
+  }
+ },
+ "capabilities": {
+  "assassin": true,
+  "blendIntoCity": true,
+  "onlyDefensive": true,
+  "animalIgnoresBorders": true,
+  "targets": {
+   "UNITCOMBAT_BIRD_GAMEBIRD": true,
+   "UNITCOMBAT_BIRD_CORVID": true,
+   "UNITCOMBAT_BIRD_RAPTOR": true,
+   "UNITCOMBAT_BIRD_SEABIRD": true,
+   "UNITCOMBAT_BIRD_SONGBIRD": true,
+   "UNITCOMBAT_BIRD_WATERFOWL": true,
+   "UNITCOMBAT_MAMMAL_RODENT": true,
+   "UNITCOMBAT_REPTILE_SNAKE": true
+  },
+  "unitTargets": {
+   "UNIT_ARMADILLO": true,
+   "UNIT_CRAB": true,
+   "UNIT_OPOSSUM": true,
+   "UNIT_SKUNK": true,
+   "UNIT_JUNGLE_TARANTULA": true,
+   "UNIT_DESERT_TARANTULA": true
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_SUBDUE",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_HORNEDOWL",
+    "bUnitToCity": [
+     {
+      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
+     }
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 95,
+    "Yields": [
+     1,
+     1,
+     4
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 2,
+  "xpValueDefense": 1,
+  "aggression": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_BIRD",
+   "UNITCOMBAT_BIRD_RAPTOR",
+   "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
+   "UNITCOMBAT_ANIMAL_COMBAT_PECK",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
+   "UNITCOMBAT_MOTILITY_AERIAL",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_SMALL",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_DUNES",
+   "TERRAIN_ICE",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_LAKE_SHORE",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_DEEP_TROPICAL",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_SEA_TROPICAL",
+   "TERRAIN_PEAK"
+  ],
+  "base": {
+   "combat": 1,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

@@ -1,0 +1,114 @@
+{
+ "type": "UNIT_MAPINGUARI_PIKE",
+ "description": "TXT_KEY_UNIT_MAPINGUARI_PIKE",
+ "civilopedia": "TXT_KEY_UNIT_MAPINGUARI_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BRONZE_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_MAPINGUARI_COMPOUND",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityDefense": {
+    "percent": -80
+   },
+   "attack": {
+    "percent": -50
+   },
+   "defense": {
+    "percent": 100
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "cost": {
+  "production": 315,
+  "upkeep": 25
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 8,
+  "xpValueAttack": 2,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ESCORT",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_PILLAGE_COUNTER",
+   "UNITAI_ESCORT"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_TAMED",
+   "UNITCOMBAT_ANIMAL_MAMMAL",
+   "UNITCOMBAT_MAMMAL_ANTEATER",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
+   "UNITCOMBAT_ANIMAL_COMBAT_ROARING",
+   "UNITCOMBAT_ANIMAL_COMBAT_CONSTRICT",
+   "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+   "UNITCOMBAT_SPEED_SLOW",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 8,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

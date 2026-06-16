@@ -1,0 +1,121 @@
+{
+ "type": "UNIT_SERVICE_DROID",
+ "description": "TXT_KEY_UNIT_SERVICE_DROID",
+ "civilopedia": "TXT_KEY_UNIT_SERVICE_DROID_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SERVICE_BOTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_FLASH_MEMORY_DEVICES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_REPLICATORS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BIOFUEL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 12
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_MECHANICAL": {
+     "heal": 37,
+     "adjacentHeal": 20
+    },
+    "UNITCOMBAT_HEALS_AS_AIRCRAFT": {
+     "heal": 37
+    },
+    "UNITCOMBAT_HEALS_AS_SPACECRAFT": {
+     "heal": 27
+    },
+    "UNITCOMBAT_HEALS_AS_TECH": {
+     "heal": 20
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "mechanized": true,
+  "onlyDefensive": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_NANITE_REPAIR_CLOUD"
+  ]
+ },
+ "cost": {
+  "production": 4315,
+  "upkeep": 11,
+  "hurryCostModifier": 25
+ },
+ "identity": {
+  "worth": 15,
+  "militaryWorth": 40,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_HEALER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_VTOL",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_HEALER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_LASER",
+   "UNITCOMBAT_ARMOR_AIRCRAFT",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_PILOTING",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_SMALL",
+   "UNITCOMBAT_HEALS_AS_TECH",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL",
+   "UNITCOMBAT_HEALS_MECHANICAL",
+   "UNITCOMBAT_HEALS_AIRCRAFT",
+   "UNITCOMBAT_HEALS_SPACECRAFT",
+   "UNITCOMBAT_HEALS_TECH"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 60,
+   "moves": 6,
+   "combatClass": "UNITCOMBAT_HELICOPTER"
+  }
+ }
+}

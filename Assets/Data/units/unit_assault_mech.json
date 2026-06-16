@@ -1,0 +1,126 @@
+{
+ "type": "UNIT_ASSAULT_MECH",
+ "description": "TXT_KEY_UNIT_ASSAULT_MECH",
+ "civilopedia": "TXT_KEY_UNIT_ASSAULT_MECH_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MECHS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 10
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 15
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 20
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 2
+   },
+   "intercept": {
+    "percent": 20
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "ignoreBuildingDefense": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true,
+  "targets": {
+   "UNITCOMBAT_GUN": true,
+   "UNITCOMBAT_MOUNTED": true,
+   "UNITCOMBAT_CLONES": true,
+   "UNITCOMBAT_MELEE": true,
+   "UNITCOMBAT_RECON": true
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_BLITZ"
+  ]
+ },
+ "cost": {
+  "production": 7700,
+  "upkeep": 16
+ },
+ "identity": {
+  "worth": 7,
+  "militaryWorth": 1100,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "conscription": 17,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_RANGED",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_CITY_SPECIAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_DIST_ION",
+   "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_WEAPON_H2H_LASER",
+   "UNITCOMBAT_WEAPON_H2H_HYDRAULIC_APPENDAGE",
+   "UNITCOMBAT_ARMOR_VEHICULAR",
+   "UNITCOMBAT_SHIELD_ENERGY",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_DRIVING",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_TECH",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": 450
+  },
+  "base": {
+   "combat": 220,
+   "moves": 2,
+   "airCombat": 70,
+   "airCombatLimit": 50,
+   "combatClass": "UNITCOMBAT_ASSAULT_MECH"
+  }
+ }
+}

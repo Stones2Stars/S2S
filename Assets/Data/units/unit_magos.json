@@ -1,0 +1,133 @@
+{
+ "type": "UNIT_MAGOS",
+ "description": "TXT_KEY_UNIT_MAGOS",
+ "civilopedia": "TXT_KEY_UNIT_MAGOS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SABBATEAN",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "capabilities": {
+  "rivalTerritory": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MissionType": "MISSION_ENTERTAIN_CITY",
+    "bKill": 0,
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_ENTERTAIN_CITY",
+      "iChance": 80,
+      "Commerces": [
+       0,
+       0,
+       [
+        [
+         5
+        ]
+       ]
+      ],
+      "iReduceAnarchyLength": 3,
+      "bKill": 1
+     },
+     {
+      "OutcomeType": "OUTCOME_ENTERTAIN_CITY_EXALTED",
+      "iChance": 20,
+      "Commerces": [
+       0,
+       0,
+       [
+        [
+         10
+        ]
+       ]
+      ],
+      "PromotionType": "PROMOTION_EXPERIENCED_ARTIST",
+      "iReduceAnarchyLength": 4
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_EDUCATE1",
+   "PROMOTION_EDUCATE2",
+   "PROMOTION_EDUCATE3"
+  ],
+  "buildings": [
+   "BUILDING_RAIN_DANCE",
+   "BUILDING_WAR_DANCE",
+   "BUILDING_FIRE_DANCE",
+   "BUILDING_NATURE_DANCE",
+   "BUILDING_MOON_DANCE",
+   "BUILDING_FERTILITY_DANCE",
+   "BUILDING_BLOOD_DANCE"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_ENTERTAINER"
+  ]
+ },
+ "cost": {
+  "production": 151,
+  "upkeep": 3
+ },
+ "identity": {
+  "worth": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_CULTURE",
+  "captures": "UNIT_BARD",
+  "unitAIs": [
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_INFERIOR",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_ENTERTAINER"
+  }
+ }
+}

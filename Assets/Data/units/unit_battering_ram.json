@@ -1,0 +1,103 @@
+{
+ "type": "UNIT_BATTERING_RAM",
+ "description": "TXT_KEY_UNIT_BATTERING_RAM",
+ "civilopedia": "TXT_KEY_UNIT_BATTERING_RAM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CARPENTER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_PRIME_TIMBER": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "breakdownChance": {
+    "flat": 25
+   },
+   "breakdownDamage": {
+    "flat": 4
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "firstStrikeImmune": true,
+  "mechanized": true,
+  "attackOnlyCities": true,
+  "ignoreNoEntryLevel": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_SIEGE_RAM"
+  ]
+ },
+ "cost": {
+  "production": 125,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 2,
+  "xpValueAttack": 6,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "captures": "UNIT_BATTERING_RAM",
+  "unitAIs": [
+   "UNITAI_ATTACK_CITY"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SIEGE_DEFENSIVE",
+   "UNITCOMBAT_SIEGE_GATECRASHER",
+   "UNITCOMBAT_SIEGE_WOODEN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_WEAPON_H2H_MACE",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_SHIELD_SMALL",
+   "UNITCOMBAT_SPEED_SLOW",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 4,
+   "moves": 1,
+   "combatLimit": 75,
+   "combatClass": "UNITCOMBAT_SIEGE"
+  }
+ }
+}

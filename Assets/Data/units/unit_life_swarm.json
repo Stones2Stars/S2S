@@ -1,0 +1,93 @@
+{
+ "type": "UNIT_LIFE_SWARM",
+ "description": "TXT_KEY_UNIT_LIFE_SWARM",
+ "civilopedia": "TXT_KEY_UNIT_LIFE_SWARM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_LIFE_CHIRAL_FLEXIBLE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "canMoveAllTerrain": true,
+  "canMoveImpassable": true,
+  "ignoreTerrainCost": true
+ },
+ "grants": {
+  "greatPersonAction": {
+   "hurry": {
+    "base": 350
+   }
+  }
+ },
+ "cost": {
+  "production": 7500,
+  "upkeep": 1,
+  "hurryCostModifier": 10000
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_LIFE_SWARM",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WORMHOLE_SPACESHIP",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_TECH",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC",
+   "MAPCATEGORY_UNIVERSAL",
+   "MAPCATEGORY_DISTANT",
+   "MAPCATEGORY_HYPERSPACE"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_LOCAL_GROUP",
+   "TERRAIN_VIRGO_SUPERCLUSTER",
+   "TERRAIN_INTERGALACTIC_VOID",
+   "TERRAIN_OBSERVABLE_UNIVERSE",
+   "TERRAIN_DISTANT_COSMOS"
+  ],
+  "terrainPassableTechs": [
+   {
+    "TERRAIN_LOCAL_GROUP": "TECH_SPACE_CREASING"
+   },
+   {
+    "TERRAIN_VIRGO_SUPERCLUSTER": "TECH_INTERGROUP_TRAVEL"
+   },
+   {
+    "TERRAIN_INTERGALACTIC_VOID": "TECH_INTERCLUSTER_TRAVEL"
+   },
+   {
+    "TERRAIN_OBSERVABLE_UNIVERSE": "TECH_INTERCLUSTER_TRAVEL"
+   },
+   {
+    "TERRAIN_DISTANT_COSMOS": "TECH_HORIZON_BREAKING"
+   }
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "moves": 2,
+   "workRate": 350,
+   "combatClass": "UNITCOMBAT_SPACE_WORKER"
+  }
+ }
+}

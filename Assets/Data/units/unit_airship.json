@@ -1,0 +1,77 @@
+{
+ "type": "UNIT_AIRSHIP",
+ "description": "TXT_KEY_UNIT_AIRSHIP",
+ "civilopedia": "TXT_KEY_UNIT_AIRSHIP_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HYDROGEN",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 8
+   }
+  }
+ },
+ "capabilities": {
+  "ignoreBuildingDefense": true,
+  "mechanized": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true,
+  "dcmAirBomb": 2
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_BOMBER"
+  ]
+ },
+ "cost": {
+  "production": 950,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 20,
+  "xpValueAttack": 6,
+  "xpValueDefense": 6,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_ATTACK_AIR",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_AIR"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_A2G_BOMBS",
+   "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+   "UNITCOMBAT_SPEED_SLOW",
+   "UNITCOMBAT_MOTILITY_PILOTING",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_GARGANTUAN",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "airCombat": 10,
+   "airCombatLimit": 20,
+   "airUnitCap": 1,
+   "combatClass": "UNITCOMBAT_BALLOON"
+  }
+ }
+}

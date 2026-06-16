@@ -1,0 +1,135 @@
+{
+ "type": "UNIT_LION",
+ "description": "TXT_KEY_UNIT_LION",
+ "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
+ "withdrawal": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "capabilities": {
+  "assassin": true,
+  "blendIntoCity": true,
+  "unitTargets": {
+   "UNIT_BUFFALO_CAPE": true,
+   "UNIT_WILDEBEEST": true,
+   "UNIT_ZEBRA": true
+  }
+ },
+ "vision": {
+  "invisibleTerrain": [
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "terrain": "TERRAIN_DESERT",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "terrain": "TERRAIN_PLAINS",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "terrain": "TERRAIN_SCRUB",
+    "intensity": 1
+   }
+  ],
+  "invisibleFeature": [
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_SAVANNA",
+    "intensity": 1
+   }
+  ]
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_SUBDUE",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_LION",
+    "bUnitToCity": [
+     {
+      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
+     }
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 95,
+    "Yields": [
+     [
+      {
+       "Constant": 20,
+       "Random": 20
+      }
+     ],
+     [
+      {
+       "Constant": 5,
+       "Random": 6
+      }
+     ],
+     [
+      {
+       "Constant": 50,
+       "Random": 56
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 9,
+  "xpValueDefense": 6,
+  "aggression": 6,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_MAMMAL",
+   "UNITCOMBAT_FELINE",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
+   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+   "UNITCOMBAT_ANIMAL_COMBAT_PACK_HUNTER",
+   "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+   "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+   "UNITCOMBAT_ANIMAL_COMBAT_ROARING",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+   "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "featureImpassable": [
+   "FEATURE_JUNGLE",
+   "FEATURE_MANGROVE",
+   "FEATURE_SWAMP"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_DUNES",
+   "TERRAIN_ICE",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA"
+  ],
+  "base": {
+   "combat": 5,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

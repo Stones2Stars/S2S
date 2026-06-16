@@ -1,0 +1,156 @@
+{
+ "type": "UNIT_SWAT_TEAM",
+ "description": "TXT_KEY_UNIT_SWAT_TEAM",
+ "civilopedia": "TXT_KEY_UNIT_SWAT_TEAM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_POLICE_PRECINCT",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PETROLEUM_PRODUCTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BIOFUEL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "unit": {
+   "garrison": {
+    "flat": 15
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "enclose": {
+    "percent": 25
+   },
+   "dynamicDefense": {
+    "percent": 25
+   },
+   "stealthStrikes": {
+    "flat": 3
+   },
+   "stealth": {
+    "percent": 70
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 45
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 2
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 30
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -40
+  },
+  "plot": {
+   "flat": -24
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "counterSpy": true,
+  "mechanized": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militaryTrade": true,
+  "targets": {
+   "UNITCOMBAT_CRIMINAL": true
+  },
+  "defenders": {
+   "UNITCOMBAT_CRIMINAL": true
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_DISGUISED": 6,
+   "INVISIBLE_POLITICAL": 4,
+   "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_POLICE_MECH"
+  ]
+ },
+ "cost": {
+  "production": 1825,
+  "upkeep": 13
+ },
+ "identity": {
+  "worth": 10,
+  "militaryWorth": 30,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_RANGED",
+  "special": "SPECIALUNIT_TROOP",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_PROPERTY_CONTROL",
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_INVESTIGATOR",
+   "UNITAI_SEE_INVISIBLE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_DIST_GRENADE",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+   "UNITCOMBAT_ARMOR_VEHICULAR",
+   "UNITCOMBAT_MOTILITY_DRIVING",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "cargo": {
+   "domain": "DOMAIN_LAND",
+   "special": "SPECIALUNIT_PEOPLE",
+   "smNotSpecial": "SPECIALUNIT_VTOL"
+  },
+  "base": {
+   "combat": 100,
+   "moves": 3,
+   "cargo": 1,
+   "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT"
+  }
+ }
+}

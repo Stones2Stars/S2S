@@ -1,0 +1,80 @@
+{
+ "type": "UNIT_INT_BATTLECRUISER",
+ "description": "TXT_KEY_UNIT_INT_BATTLECRUISER",
+ "civilopedia": "TXT_KEY_UNIT_INT_BATTLECRUISER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_DEFENSIVE_PERIMETER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 10
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 2
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 3
+   },
+   "limit": {
+    "flat": 10
+   },
+   "maxUnits": {
+    "flat": 1
+   }
+  }
+ },
+ "capabilities": {
+  "canMoveAllTerrain": true,
+  "canMoveImpassable": true
+ },
+ "cost": {
+  "production": 4850,
+  "upkeep": 11,
+  "hurryCostModifier": 10000
+ },
+ "identity": {
+  "worth": 1,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_ATTACK_CITY"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "combat": 360,
+   "moves": 3,
+   "combatLimit": 100,
+   "combatClass": "UNITCOMBAT_ANTIMATTER_SPACESHIP"
+  }
+ }
+}

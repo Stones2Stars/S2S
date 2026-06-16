@@ -1,0 +1,94 @@
+{
+ "type": "UNIT_LUNARSETTLER",
+ "description": "TXT_KEY_UNIT_LUNARSETTLER",
+ "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",
+ "help": "TXT_KEY_UNIT_LUNARSETTLER_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ROCKET_FUEL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_CISLUNAR_FACTORY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SPACE_STATION",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "capabilities": {
+  "canMoveAllTerrain": true,
+  "canMoveImpassable": true,
+  "food": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MissionType": "MISSION_PLANET_LAND",
+    "iCost": [
+     [
+      0
+     ]
+    ],
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_UPGRADE_TO_PLANET_SETTLER",
+      "iChance": 100,
+      "PythonName": "BuildCityLunar",
+      "Python": "from CvPythonExtensions import CyGlobalContext\n\t\t\t\t\t\t\t\tdef isPossible(unit,plot):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\t\t\t\t\t\t\t\t\treturn False\n\t\t\t\t\t\t\t\t\tvalid_terrain_strings = ['LUNAR_DOME','LUNAR_MARE','LUNAR_HIGHLAND','LUNAR_REGOLITH','LUNAR_RILLE','GREEN_MOON']\n\t\t\t\t\t\t\t\t\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\t\t\t\t\t\t\t\t\treturn plot.getTerrainType() in valid_terrains\n\t\t\t\t\t\t\t\tdef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tgc.getPlayer(unit.getOwner()).found(plot.getX(),plot.getY())\n\t\t\t\t\t\t\t\tdef getDisplay(unit,plot):\n\t\t\t\t\t\t\t\t\treturn u\"Build a city on this plot.\"\n\t\t\t\t\t\t\t\tdef getAIValue(unit, plot):\n\t\t\t\t\t\t\t\t\treturn 1"
+     }
+    ]
+   }
+  ]
+ },
+ "cost": {
+  "production": 2540,
+  "upkeep": 11,
+  "hurryCostModifier": 10000
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SETTLE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "captures": "UNIT_CAPTIVE_CIVILIAN",
+  "unitAIs": [
+   "UNITAI_SETTLE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_EARLY_SPACESHIP",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_PILOTING",
+   "UNITCOMBAT_QUALITY_INFERIOR",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_SPACECRAFT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH",
+   "MAPCATEGORY_CISLUNAR",
+   "MAPCATEGORY_LUNAR"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "moves": 24,
+   "combatClass": "UNITCOMBAT_SETTLER"
+  }
+ }
+}

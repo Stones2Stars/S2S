@@ -1,0 +1,114 @@
+{
+ "type": "UNIT_SATELLITE",
+ "description": "TXT_KEY_UNIT_SATELLITE",
+ "civilopedia": "TXT_KEY_UNIT_SATELLITE_PEDIA",
+ "help": "TXT_KEY_UNIT_SPACEUNIT_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ROCKET_FUEL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_EFFECT_LAUNCH_SITE",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "canMoveAllTerrain": true,
+  "canMoveImpassable": true,
+  "ignoreTerrainCost": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MissionType": "MISSION_LAUNCH_SATELLITE",
+    "iCost": [
+     [
+      0
+     ]
+    ],
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_LAUNCH_SATELLITE",
+      "iChance": 100,
+      "PythonName": "LaunchSatellite",
+      "Python": "from CvPythonExtensions import CyGlobalContext\n\t\t\t\t\t\t\t\tfrom CvPythonExtensions import *\n\t\t\t\t\t\t\t\tdef isPossible(unit,plot):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tvalid_terrain_strings = ['ORBIT']\n\t\t\t\t\t\t\t\t\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\t\t\t\t\t\t\t\t\treturn plot.getTerrainType() in valid_terrains\n\t\t\t\t\t\t\t\tdef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\t\t\t\t\t\t\t\t\tgc.getPlayer(unit.getOwner()).initUnit(gc.getInfoTypeForString('UNIT_LOE_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\n\t\t\t\t\t\t\t\tdef getDisplay(unit,plot):\n\t\t\t\t\t\t\t\t\treturn u\"Place Satellite in Low-Earth Orbit.\"\n\t\t\t\t\t\t\t\tdef getAIValue(unit, plot):\n\t\t\t\t\t\t\t\t\treturn 1"
+     }
+    ]
+   },
+   {
+    "MissionType": "MISSION_LAUNCH_SATELLITE_CISLUNAR",
+    "iCost": [
+     [
+      0
+     ]
+    ],
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_LAUNCH_SATELLITE_CISLUNAR",
+      "iChance": 100,
+      "PythonName": "ExploreMoonSurface",
+      "Python": "from CvPythonExtensions import *\n\t\t\t\t\t\t\t\timport random\n\t\t\t\t\t\t\t\tdef isPossible(unit,plot):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tvalid_terrain_strings = ['CISLUNAR_SPACE']\n\t\t\t\t\t\t\t\t\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\t\t\t\t\t\t\t\t\treturn plot.getTerrainType() in valid_terrains\n\t\t\t\t\t\t\t\tdef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\t\t\t\t\t\t\t\t\tgc.getPlayer(unit.getOwner()).initUnit(gc.getInfoTypeForString('UNIT_CISLUNAR_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\n\t\t\t\t\t\t\t\tdef getDisplay(unit,plot):\n\t\t\t\t\t\t\t\t\treturn u\"Place Satellite in Geosynchronous Orbit\"\n\t\t\t\t\t\t\t\tdef getAIValue(unit, plot):\n\t\t\t\t\t\t\t\t\treturn 1"
+     }
+    ]
+   }
+  ]
+ },
+ "cost": {
+  "production": 1762,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_SATELLITE",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_EARLY_SPACESHIP",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_TECH",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH",
+   "MAPCATEGORY_CISLUNAR"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_CISLUNAR_SPACE"
+  ],
+  "terrainPassableTechs": [
+   {
+    "TERRAIN_CISLUNAR_SPACE": "TECH_ION_PROPULSION"
+   }
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "moves": 12,
+   "workRate": 250,
+   "combatClass": "UNITCOMBAT_SPACE_WORKER"
+  }
+ }
+}

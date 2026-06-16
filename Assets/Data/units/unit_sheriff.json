@@ -1,0 +1,173 @@
+{
+ "type": "UNIT_SHERIFF",
+ "description": "TXT_KEY_UNIT_SHERIFF",
+ "civilopedia": "TXT_KEY_UNIT_SHERIFF_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_AMMUNITION",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_SHERIFFS_OFFICE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_POLICE_STATION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_POLICE_PRECINCT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_IRON_WARES": {
+     "percent": 15
+    },
+    "BONUS_FLINT": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "culture": {
+  "unit": {
+   "garrison": {
+    "flat": 8
+   }
+  }
+ },
+ "espionage": {
+  "unit": {
+   "investigation": {
+    "flat": 40
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "enclose": {
+    "percent": 14
+   },
+   "dynamicDefense": {
+    "percent": 14
+   },
+   "stealthStrikes": {
+    "flat": 2
+   },
+   "stealth": {
+    "percent": 35
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 15
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -15
+  },
+  "plot": {
+   "flat": -7
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "counterSpy": true,
+  "passage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militaryTrade": true,
+  "targets": {
+   "UNITCOMBAT_CRIMINAL": true
+  },
+  "defenders": {
+   "UNITCOMBAT_CRIMINAL": true
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_DISGUISED": 7
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SENTRY"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_RIOTPOLICE"
+  ]
+ },
+ "cost": {
+  "production": 565,
+  "upkeep": 7
+ },
+ "identity": {
+  "worth": 8,
+  "militaryWorth": 20,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_TROOP",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_PROPERTY_CONTROL",
+   "UNITAI_INVESTIGATOR",
+   "UNITAI_SEE_INVISIBLE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_RIFLE_BUTT",
+   "UNITCOMBAT_WEAPON_DIST_RIFLE",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 23,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT"
+  }
+ }
+}

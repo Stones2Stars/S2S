@@ -1,0 +1,121 @@
+{
+ "type": "UNIT_OMUCHTAN",
+ "description": "TXT_KEY_UNIT_OMUCHTAN",
+ "civilopedia": "TXT_KEY_UNIT_OMUCHTAN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_TAJIK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_ANIMAL_TRAINER_HORSE",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_HORSE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 70
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "ignoreTerrainCost": true,
+  "noBadGoodies": true,
+  "onlyDefensive": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_GUERILLA1",
+   "PROMOTION_WOODSMAN1",
+   "PROMOTION_SENTRY",
+   "PROMOTION_FIELD1",
+   "PROMOTION_FIELD2"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MOTORCYCLE"
+  ]
+ },
+ "cost": {
+  "production": 325,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_EXPLORE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_EXPLORE",
+   "UNITAI_PILLAGE",
+   "UNITAI_HUNTER_ESCORT"
+  ],
+  "notUnitAIs": [
+   "UNITAI_HUNTER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+   "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_RIDING",
+   "UNITCOMBAT_MOUNT_HORSE",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 9,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_RECON"
+  }
+ }
+}

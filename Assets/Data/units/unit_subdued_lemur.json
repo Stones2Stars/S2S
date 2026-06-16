@@ -1,0 +1,67 @@
+{
+ "type": "UNIT_SUBDUED_LEMUR",
+ "description": "TXT_KEY_UNIT_SUBDUED_LEMUR",
+ "civilopedia": "TXT_KEY_UNIT_LEMUR_PEDIA",
+ "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
+ "capabilities": {
+  "onlyDefensive": true,
+  "militaryTrade": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_SLAY_ANIMAL": [
+     {
+      "OutcomeType": "OUTCOME_SLAY_ANIMAL",
+      "iChance": 100,
+      "Yields": [
+       1,
+       0,
+       3
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_GOVERNORS_PETS",
+   "BUILDING_GOVERNORS_MENAGERIE",
+   "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+   "BUILDING_ENCLOSURE_PRIMATE",
+   "BUILDING_FOLKLORE_T_OLD_MAN_OF_THE_FOREST",
+   "BUILDING_FOLKLORE_RING_TAILED_LEMUR",
+   "BUILDING_ZOO",
+   "BUILDING_TAXIDERMIST"
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "captures": "UNIT_SUBDUED_LEMUR",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_SUBDUED_TINY",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_ANIMALS",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_SUBDUED"
+  }
+ }
+}

@@ -1,0 +1,92 @@
+{
+ "type": "UNIT_CYBORG",
+ "description": "TXT_KEY_UNIT_CYBORG",
+ "civilopedia": "TXT_KEY_UNIT_CYBORG_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BIONIC_SUITS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_CLONING_FACTORY",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_NEUROIMPLANTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "food": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_BLITZ"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_ANTHROID_INFANTRY",
+   "UNIT_FERAL"
+  ]
+ },
+ "cost": {
+  "production": 4700,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 372,
+  "xpValueAttack": 2,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_TROOP",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_CITY_SPECIAL",
+   "UNITAI_ESCORT"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_BAYONETTE",
+   "UNITCOMBAT_WEAPON_DIST_LASER",
+   "UNITCOMBAT_ARMOR_MODERN",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_BATTALION",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_TECH"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 200,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_HITECH"
+  }
+ }
+}

@@ -1,0 +1,125 @@
+{
+ "type": "UNIT_ARMADILLO",
+ "description": "TXT_KEY_UNIT_ARMADILLO",
+ "civilopedia": "TXT_KEY_UNIT_ARMADILLO_PEDIA",
+ "capabilities": {
+  "blendIntoCity": true,
+  "onlyDefensive": true,
+  "animalIgnoresBorders": true
+ },
+ "vision": {
+  "invisibleTerrain": [
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "terrain": "TERRAIN_ROCKY",
+    "intensity": 1
+   }
+  ]
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_SUBDUE",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_ARMADILLO",
+    "bUnitToCity": [
+     {
+      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
+     }
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 95,
+    "Yields": [
+     [
+      {
+       "Constant": 1,
+       "Random": 14
+      }
+     ],
+     [
+      {
+       "Constant": 1,
+       "Random": 4
+      }
+     ],
+     [
+      {
+       "Constant": 2,
+       "Random": 2
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_MAMMAL",
+   "UNITCOMBAT_MAMMAL_ANTEATER",
+   "UNITCOMBAT_ANIMAL_COMBAT_BURROWING",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_ANIMAL_COMBAT_HARD_PLATED",
+   "UNITCOMBAT_ANIMAL_COMBAT_HIDING",
+   "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_POOR",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_TINY",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_ICE",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_PLAINS",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_SCRUB",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA"
+  ],
+  "featurePassableTechs": [
+   {
+    "FEATURE_FLOOD_PLAINS": "NONE"
+   },
+   {
+    "FEATURE_JUNGLE": "NONE"
+   },
+   {
+    "FEATURE_MANGROVE": "NONE"
+   },
+   {
+    "FEATURE_SAVANNA": "NONE"
+   },
+   {
+    "FEATURE_SWAMP": "NONE"
+   },
+   {
+    "FEATURE_VERY_TALL_GRASS": "NONE"
+   }
+  ],
+  "base": {
+   "combat": 1,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

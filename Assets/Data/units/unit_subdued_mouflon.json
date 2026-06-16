@@ -1,0 +1,111 @@
+{
+ "type": "UNIT_SUBDUED_MOUFLON",
+ "description": "TXT_KEY_UNIT_SUBDUED_MOUFLON",
+ "civilopedia": "TXT_KEY_UNIT_MOUFLON_PEDIA",
+ "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
+ "capabilities": {
+  "onlyDefensive": true,
+  "militaryTrade": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_SLAY_ANIMAL": [
+     {
+      "OutcomeType": "OUTCOME_SLAY_ANIMAL",
+      "iChance": 100,
+      "Yields": [
+       [
+        {
+         "Constant": 10,
+         "Random": 10
+        }
+       ],
+       [
+        {
+         "Constant": 1,
+         "Random": 2
+        }
+       ],
+       [
+        {
+         "Constant": 6,
+         "Random": 3
+        }
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "MISSION_BUILD_DOMESTICATED_HERD": [
+     {
+      "OutcomeType": "OUTCOME_BUILD_DOMESTICATED_HERD",
+      "iChance": 50,
+      "PlotCondition": [
+       {
+        "Python": "canBuildSheepBonus",
+        "Constant": 0
+       }
+      ],
+      "PythonCallback": "doBuildSheepBonus"
+     },
+     {
+      "OutcomeType": "OUTCOME_BUILD_DOMESTICATED_HERD_WITH_PASTURE",
+      "iChance": 100,
+      "PlotCondition": [
+       {
+        "Python": "canBuildSheepBonusAndPasture",
+        "Constant": 0
+       }
+      ],
+      "PythonCallback": "doBuildSheepBonusAndPasture"
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_GOVERNORS_PETS",
+   "BUILDING_GOVERNORS_MENAGERIE",
+   "BUILDING_MASTER_HUNTER",
+   "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE",
+   "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+   "BUILDING_HERD_GOAT",
+   "BUILDING_HERD_SHEEP",
+   "BUILDING_FOLKLORE_MOUFLON",
+   "BUILDING_CAMP_MOUFLON",
+   "BUILDING_ZOO",
+   "BUILDING_TAXIDERMIST"
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "captures": "UNIT_SUBDUED_MOUFLON",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_SUBDUED_MEDIUM",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_ANIMALS",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_SUBDUED"
+  }
+ }
+}

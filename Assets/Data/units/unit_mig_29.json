@@ -1,0 +1,139 @@
+{
+ "type": "UNIT_MIG_29",
+ "description": "TXT_KEY_UNIT_MIG_29",
+ "civilopedia": "TXT_KEY_UNIT_MIG_29_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SOVIET",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_AMMUNITION",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_MILITARY_AIRBASE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_AEROSPACE_COMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "bombard": {
+  "unit": {
+   "airBombRate": {
+    "flat": 10
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 14
+   },
+   "intercept": {
+    "percent": 50
+   },
+   "evasion": {
+    "percent": 20
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "ignoreBuildingDefense": true,
+  "mechanized": true,
+  "dcmFighterEngage": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true,
+  "dcmAirBomb": 2
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_AIR_TO_AIR1",
+   "PROMOTION_AIR_TO_AIR2",
+   "PROMOTION_RANGE1"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MODERN_FIGHTER"
+  ]
+ },
+ "cost": {
+  "production": 1605,
+  "upkeep": 5
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 178,
+  "xpValueAttack": 6,
+  "xpValueDefense": 6,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_DEFENSE_AIR",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "special": "SPECIALUNIT_FIGHTER",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_DEFENSE_AIR",
+   "UNITAI_CARRIER_AIR"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+   "UNITCOMBAT_WEAPON_DIST_MEDIUM_RANGE_MISSILE",
+   "UNITCOMBAT_WEAPON_A2G_GUIDED",
+   "UNITCOMBAT_WEAPON_A2G_SHORT_RANGE_MISSILE",
+   "UNITCOMBAT_WEAPON_A2G_MEDIUM_RANGE_MISSILE",
+   "UNITCOMBAT_ARMOR_AIRCRAFT",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_PILOTING",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_AIRCRAFT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "airCombat": 80,
+   "airCombatLimit": 50,
+   "airUnitCap": 1,
+   "combatClass": "UNITCOMBAT_JET_FIGHTERS"
+  }
+ }
+}

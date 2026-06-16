@@ -1,0 +1,118 @@
+{
+ "type": "UNIT_GOLIATH_AIRSHIP",
+ "description": "TXT_KEY_UNIT_GOLIATH_AIRSHIP",
+ "civilopedia": "TXT_KEY_UNIT_GOLIATH_AIRSHIP_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HYDROGEN",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_DIESELPUNK",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_GUN": {
+     "percent": 50
+    },
+    "UNITCOMBAT_TRACKED": {
+     "percent": 50
+    },
+    "UNITCOMBAT_WHEELED": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "noDefensiveBonus": true,
+  "canMoveAllTerrain": true,
+  "ignoreBuildingDefense": true,
+  "ignoreTerrainCost": true,
+  "dcmFighterEngage": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_GUNSHIP"
+  ]
+ },
+ "cost": {
+  "production": 1030,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 139,
+  "xpValueAttack": 3,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_TRANSPORT",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+   "UNITCOMBAT_WEAPON_A2G_BOMBS",
+   "UNITCOMBAT_SPEED_SLOW",
+   "UNITCOMBAT_MOTILITY_PILOTING",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_COLOSSAL",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "cargo": {
+   "domain": "DOMAIN_AIR",
+   "special": "SPECIALUNIT_FIGHTER",
+   "smNotSpecial": "SPECIALUNIT_MISSILE"
+  },
+  "base": {
+   "combat": 40,
+   "moves": 2,
+   "cargo": 2,
+   "combatClass": "UNITCOMBAT_BALLOON"
+  }
+ }
+}

@@ -1,0 +1,80 @@
+{
+ "type": "UNIT_NEANDERTHAL_WANDERER",
+ "description": "TXT_KEY_UNIT_NEANDERTHAL_WANDERER",
+ "civilopedia": "TXT_KEY_UNIT_WANDERER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_C_AC_NEANDERTHAL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_C_L_NEANDERTHAL",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "capabilities": {
+  "blendIntoCity": true,
+  "barbCoExist": true,
+  "noBadGoodies": true,
+  "rivalTerritory": true,
+  "upgradeAnywhere": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_NEANDERTHAL_SCOUT",
+   "UNIT_NEANDERTHAL_CHASER"
+  ]
+ },
+ "cost": {
+  "production": 12,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 1,
+  "xpValueAttack": 3,
+  "xpValueDefense": 3,
+  "animalCombat": 50,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_EXPLORE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_EXPLORE",
+   "UNITAI_PILLAGE",
+   "UNITAI_HUNTER",
+   "UNITAI_HUNTER_ESCORT"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_SPECIES_NEANDERTHAL",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_STAFF",
+   "UNITCOMBAT_WEAPON_DIST_ROCK",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 2,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_RECON"
+  }
+ }
+}

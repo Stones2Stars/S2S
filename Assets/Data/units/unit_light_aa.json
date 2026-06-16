@@ -1,0 +1,102 @@
+{
+ "type": "UNIT_LIGHT_AA",
+ "description": "TXT_KEY_UNIT_LIGHT_AA",
+ "civilopedia": "TXT_KEY_UNIT_LIGHT_AA_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_FACTORY_AMMUNITION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_AMMUNITIONS_WORKSHOP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 1
+   },
+   "intercept": {
+    "percent": 20
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_TRACKED": {
+     "percent": -25
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "mechanized": true,
+  "onlyDefensive": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_HALFTRACK"
+  ]
+ },
+ "cost": {
+  "production": 1030,
+  "upkeep": 2
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 80,
+  "xpValueAttack": 1,
+  "xpValueDefense": 5,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_CITY_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "captures": "UNIT_LIGHT_AA",
+  "unitAIs": [
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_CITY_SPECIAL",
+   "UNITAI_ESCORT"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_BAYONETTE",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_SPEED_SLOW",
+   "UNITCOMBAT_MOTILITY_DRIVING",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 35,
+   "moves": 1,
+   "combatLimit": 85,
+   "combatClass": "UNITCOMBAT_WHEELED"
+  }
+ }
+}

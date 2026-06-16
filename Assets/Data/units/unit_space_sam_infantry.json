@@ -1,0 +1,116 @@
+{
+ "type": "UNIT_SPACE_SAM_INFANTRY",
+ "description": "TXT_KEY_UNIT_SPACE_SAM_INFANTRY",
+ "civilopedia": "TXT_KEY_UNIT_SPACE_SAM_INFANTRY_PEDIA",
+ "strength": {
+  "unit": {
+   "hillsDefense": {
+    "percent": 25
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HELICOPTER": {
+     "percent": 75
+    },
+    "UNITCOMBAT_ROBOT": {
+     "percent": 50
+    },
+    "UNITCOMBAT_SIEGE": {
+     "percent": 50
+    },
+    "UNITCOMBAT_TRACKED": {
+     "percent": 50
+    },
+    "UNITCOMBAT_WHEELED": {
+     "percent": 50
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": -50
+    },
+    "UNITCOMBAT_HITECH": {
+     "percent": -50
+    },
+    "UNITCOMBAT_CLONES": {
+     "percent": -50
+    },
+    "UNITCOMBAT_ASSAULT_MECH": {
+     "percent": -25
+    },
+    "UNITCOMBAT_DREADNOUGHT": {
+     "percent": -25
+    }
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 50
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 3
+   },
+   "intercept": {
+    "percent": 70
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "firstStrikeImmune": true,
+  "ignoreBuildingDefense": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "vision": {
+  "invisible": "INVISIBLE_CAMOUFLAGE"
+ },
+ "cost": {
+  "production": 3500,
+  "upkeep": 1,
+  "hurryCostModifier": 50
+ },
+ "identity": {
+  "worth": 6,
+  "militaryWorth": 645,
+  "xpValueAttack": 2,
+  "xpValueDefense": 4,
+  "conscription": 15,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_CITY_SPECIAL",
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_RESERVE",
+   "UNITAI_ESCORT"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_HANDGUN",
+   "UNITCOMBAT_WEAPON_DIST_EMP",
+   "UNITCOMBAT_WEAPON_DIST_ION",
+   "UNITCOMBAT_ARMOR_MODERN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 145,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_HITECH"
+  }
+ }
+}

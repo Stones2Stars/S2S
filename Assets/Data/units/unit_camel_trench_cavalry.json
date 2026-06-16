@@ -1,0 +1,140 @@
+{
+ "type": "UNIT_CAMEL_TRENCH_CAVALRY",
+ "description": "TXT_KEY_UNIT_CAMEL_TRENCH_CAVALRY",
+ "civilopedia": "TXT_KEY_UNIT_CAMEL_TRENCH_CAVALRY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_ANIMAL_TRAINER_CAMEL",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_CAMEL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": -20
+   },
+   "feature": {
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": -50
+     }
+    },
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": -25
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE_WOODEN": {
+     "percent": 50
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 20
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_WARMTH1",
+   "PROMOTION_WARMTH2",
+   "PROMOTION_WARMTH3",
+   "PROMOTION_COMMANDO",
+   "PROMOTION_TRENCH1"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_ARMORED_CAR",
+   "UNIT_AUTOGYRO"
+  ]
+ },
+ "cost": {
+  "production": 900,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 32,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_COUNTER",
+   "UNITAI_ESCORT"
+  ],
+  "notUnitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_BAYONETTE",
+   "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+   "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+   "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+   "UNITCOMBAT_ANIMAL_COMBAT_REPELLENT",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_RIDING",
+   "UNITCOMBAT_MOUNT_CAMEL",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 32,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_MOUNTED"
+  }
+ }
+}

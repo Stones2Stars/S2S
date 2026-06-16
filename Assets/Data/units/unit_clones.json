@@ -1,0 +1,109 @@
+{
+ "type": "UNIT_CLONES",
+ "description": "TXT_KEY_UNIT_CLONES",
+ "civilopedia": "TXT_KEY_UNIT_CLONES_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CLONING_LABORATORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "food": true,
+  "workerTrade": true
+ },
+ "grants": {
+  "builds": [
+   "BUILD_MUSHROOM_GATHERER",
+   "BUILD_ORCHARD",
+   "BUILD_PASTURE",
+   "BUILD_SILK_FARM",
+   "BUILD_WINERY",
+   "BUILD_FARM",
+   "BUILD_QUARRY",
+   "BUILD_GEOGLYPH",
+   "BUILD_PLANTATION",
+   "BUILD_ROAD",
+   "BUILD_MOUNTAIN_MINE",
+   "BUILD_YOUNG_FOREST",
+   "BUILD_ARCHEOLOGICAL_SITE",
+   "BUILD_FOSSIL_DIG_SITE",
+   "BUILD_FOREST_PRESERVE",
+   "BUILD_HYDROCARBON_WELL",
+   "BUILD_HYDRO_DAM",
+   "BUILD_RADIO_TOWER",
+   "BUILD_SUBURBS",
+   "BUILD_HIGHWAY",
+   "BUILD_ELECTRIC_RAILROAD",
+   "BUILD_TREEFARM",
+   "BUILD_MODERN_MINE",
+   "BUILD_GEOTHERMAL_FACTORY",
+   "BUILD_GROUNDWATER_WELL",
+   "BUILD_GROW_FOREST",
+   "BUILD_MANUFACTURING_COMPLEX",
+   "BUILD_MODERN_WINDMILL",
+   "BUILD_NATURE_PRESERVE",
+   "BUILD_PLANT_BAMBOO",
+   "BUILD_PLANT_JUNGLE",
+   "BUILD_PLANT_SAVANNA",
+   "BUILD_RADAR_TOWER",
+   "BUILD_SOLAR_PANELS",
+   "BUILD_WILDLIFE_SANCTUARY",
+   "BUILD_MAGLEV",
+   "BUILD_CLEAR_FALLOUT_FAST",
+   "BUILD_COMMAND_CENTER",
+   "BUILD_RESOURCE_COMPLEX",
+   "BUILD_RECLAIM_LAND",
+   "BUILD_SANITIZE",
+   "BUILD_HYBRID_FOREST",
+   "BUILD_VACTRAIN",
+   "BUILD_VERTICAL_FARM"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_WORKER_ANDROID"
+  ]
+ },
+ "cost": {
+  "production": 2800,
+  "upkeep": 6
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_TROOP",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CLONES",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_POOR",
+   "UNITCOMBAT_GROUP_BATTALION",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": 80
+  },
+  "base": {
+   "moves": 3,
+   "workRate": 237,
+   "combatClass": "UNITCOMBAT_WORKER"
+  }
+ }
+}

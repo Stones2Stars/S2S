@@ -1,0 +1,77 @@
+{
+ "type": "UNIT_GATHERER",
+ "description": "TXT_KEY_UNIT_GATHERER",
+ "civilopedia": "TXT_KEY_UNIT_GATHERER_PEDIA",
+ "capabilities": {
+  "food": true,
+  "workerTrade": true
+ },
+ "grants": {
+  "builds": [
+   "BUILD_ABATIS_THORN_HEDGE_KILL",
+   "BUILD_GATHERING_CAMP_KILL",
+   "BUILD_TRAIL",
+   "BUILD_BURN_VEGETATION",
+   "BUILD_COTTAGE_KILL",
+   "BUILD_DESERT_CAMP_KILL",
+   "BUILD_FORTIFIED_CAVE_KILL",
+   "BUILD_FRUIT_GATHERING_CAMP_KILL",
+   "BUILD_GRAPE_GATHERING_CAMP_KILL",
+   "BUILD_JUNGLE_CAMP_KILL",
+   "BUILD_MUSHROOM_GATHERER_KILL",
+   "BUILD_NOMADIC_HERD_KILL",
+   "BUILD_PLANT_GATHERING_CAMP_KILL",
+   "BUILD_SALT_GATHERER_KILL",
+   "BUILD_SCAVENGING_CAMP_KILL",
+   "BUILD_SEED_CAMP_KILL",
+   "BUILD_STONE_TOOLS_WORKSHOP_KILL",
+   "BUILD_TAR_GATHERER_KILL",
+   "BUILD_WETLANDS_CAMP_KILL",
+   "BUILD_WOODEN_PALISADE_KILL",
+   "BUILD_RESOURCE_OUTPOST_KILL",
+   "BUILD_WOODEN_WATCHTOWER_KILL",
+   "BUILD_WOOD_GATHERER_KILL"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_WORKER"
+  ],
+  "supersededBy": [
+   "UNIT_NEANDERTHAL_GATHERER"
+  ]
+ },
+ "cost": {
+  "production": 12,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_GATHERER",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_POOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "workRate": 50,
+   "combatClass": "UNITCOMBAT_WORKER"
+  }
+ }
+}

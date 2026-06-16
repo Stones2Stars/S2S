@@ -1,0 +1,123 @@
+{
+ "type": "UNIT_SALTWATER_CROC_LARGE",
+ "description": "TXT_KEY_UNIT_SALTWATER_CROC_LARGE",
+ "civilopedia": "TXT_KEY_CONCEPT_SALTWATER_CROC_PEDIA",
+ "capabilities": {
+  "blendIntoCity": true
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_TALES_SEA",
+    "iChance": 5,
+    "UnitType": "UNIT_TALESOF_SALTWATER_CROCL",
+    "bUnitToCity": [
+     1
+    ],
+    "Yields": [
+     [
+      {
+       "Constant": 100,
+       "Random": 100
+      }
+     ],
+     [
+      {
+       "Constant": 40,
+       "Random": 40
+      }
+     ],
+     [
+      {
+       "Constant": 12,
+       "Random": 26
+      }
+     ]
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_SUBDUE_SEA_LARGE",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_SALTWATER_CROCL",
+    "bUnitToCity": [
+     "DONT_ESCORT_SUBDUED_SEA_ANIMAL"
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 85,
+    "Yields": [
+     [
+      {
+       "Constant": 100,
+       "Random": 100
+      }
+     ],
+     [
+      {
+       "Constant": 40,
+       "Random": 40
+      }
+     ],
+     [
+      {
+       "Constant": 12,
+       "Random": 26
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 12,
+  "xpValueDefense": 9,
+  "aggression": 4,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_REPTILE",
+   "UNITCOMBAT_REPTILE_CROCODILIAN",
+   "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+   "UNITCOMBAT_ANIMAL_COMBAT_HARD_PLATED",
+   "UNITCOMBAT_ANIMAL_COMBAT_TAIL",
+   "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+   "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_COAST",
+   "TERRAIN_COAST_DEEP",
+   "TERRAIN_COAST_DEEP_POLAR",
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_POLAR",
+   "TERRAIN_TRENCH_TROPICAL"
+  ],
+  "base": {
+   "combat": 7,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_SEA_ANIMAL"
+  }
+ }
+}

@@ -1,0 +1,117 @@
+{
+ "type": "UNIT_UNITA_FORCES",
+ "description": "TXT_KEY_UNIT_UNITA_FORCES",
+ "civilopedia": "TXT_KEY_UNIT_UNITA_FORCES_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ANGOLAN",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_FIREARMS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "vsUnit": {
+    "UNIT_MACHINE_GUN": {
+     "attack": {
+      "percent": 50
+     }
+    },
+    "UNIT_ARTILLERY": {
+     "attack": {
+      "percent": 50
+     }
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_AMPHIBIOUS",
+   "PROMOTION_DRILL1",
+   "PROMOTION_DRILL2",
+   "PROMOTION_DRILL3"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MODERN_MARINE"
+  ]
+ },
+ "cost": {
+  "production": 1080,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 117,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_TROOP",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_RESERVE",
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_RIFLE_BUTT",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 39,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_GUN"
+  }
+ }
+}

@@ -1,0 +1,167 @@
+{
+ "type": "UNIT_TRADE_CARAVAN",
+ "description": "TXT_KEY_UNIT_TRADE_CARAVAN",
+ "civilopedia": "TXT_KEY_CONCEPT_TRADE_CARAVAN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CARAVAN_POST",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_HENNA": {
+     "percent": 1
+    },
+    "BONUS_INDIGO": {
+     "percent": 1
+    },
+    "BONUS_PAPYRUS": {
+     "percent": 1
+    },
+    "BONUS_OPIUM": {
+     "percent": 1
+    },
+    "BONUS_TOBACCO": {
+     "percent": 1
+    },
+    "BONUS_PARROTS": {
+     "percent": 1
+    },
+    "BONUS_COCA": {
+     "percent": 1
+    },
+    "BONUS_PEARLS": {
+     "percent": 1
+    },
+    "BONUS_AMBER": {
+     "percent": 1
+    },
+    "BONUS_RUBIES": {
+     "percent": 1
+    },
+    "BONUS_DIAMOND": {
+     "percent": 1
+    },
+    "BONUS_SAPPHIRES": {
+     "percent": 1
+    },
+    "BONUS_JADE": {
+     "percent": 1
+    },
+    "BONUS_TURQUOISE": {
+     "percent": 1
+    },
+    "BONUS_HORSE": {
+     "percent": 2
+    },
+    "BONUS_DONKEY": {
+     "percent": 2
+    },
+    "BONUS_LLAMA": {
+     "percent": 2
+    },
+    "BONUS_CAMEL": {
+     "percent": 2
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "noNonTypeProdMods": true,
+  "onlyDefensive": true,
+  "rivalTerritory": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_HURRY_PRODUCTION_CARAVAN": [
+     {
+      "OutcomeType": "OUTCOME_HURRY_PRODUCTION_CARAVAN",
+      "iChance": 100,
+      "Yields": [
+       0,
+       [
+        [
+         72
+        ]
+       ]
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "greatPersonAction": {
+   "trade": {
+    "base": 30,
+    "multiplier": 1
+   }
+  }
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_SUPPLY_TRAIN"
+  ]
+ },
+ "cost": {
+  "production": 115,
+  "upkeep": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "animalCombat": 100,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MERCHANT",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "captures": "UNIT_TRADE_CARAVAN",
+  "unitAIs": [
+   "UNITAI_MERCHANT",
+   "UNITAI_ENGINEER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_EXPLORE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_STAFF",
+   "UNITCOMBAT_MOTILITY_ANIMAL_DRAWN",
+   "UNITCOMBAT_ASSISTED_MULE",
+   "UNITCOMBAT_QUALITY_MEDIOCRE",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 2,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_TRADE"
+  }
+ }
+}

@@ -1,0 +1,124 @@
+{
+ "type": "UNIT_NILECROC",
+ "description": "TXT_KEY_UNIT_NILECROC",
+ "civilopedia": "TXT_KEY_UNIT_NILECROC_PEDIA",
+ "capabilities": {
+  "assassin": true,
+  "blendIntoCity": true,
+  "onlyDefensive": true,
+  "targets": {
+   "UNITCOMBAT_SIZE_DIMINUTIVE": true,
+   "UNITCOMBAT_SIZE_TINY": true,
+   "UNITCOMBAT_SIZE_SMALL": true,
+   "UNITCOMBAT_SIZE_MEDIUM": true
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_SUBDUE",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_NILECROC",
+    "bUnitToCity": [
+     {
+      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
+     }
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 95,
+    "Yields": [
+     [
+      {
+       "Constant": 50,
+       "Random": 150
+      }
+     ],
+     [
+      {
+       "Constant": 17,
+       "Random": 18
+      }
+     ],
+     [
+      {
+       "Constant": 11,
+       "Random": 13
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 10,
+  "xpValueDefense": 8,
+  "aggression": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_REPTILE",
+   "UNITCOMBAT_RECKLESS_ANIMAL",
+   "UNITCOMBAT_REPTILE_CROCODILIAN",
+   "UNITCOMBAT_ANIMAL_COMBAT_HARD_PLATED",
+   "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+   "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+   "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+   "UNITCOMBAT_ANIMAL_COMBAT_TAIL",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "featureImpassable": [
+   "FEATURE_FOREST",
+   "FEATURE_FOREST_ANCIENT",
+   "FEATURE_JUNGLE"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES",
+   "TERRAIN_HILL",
+   "TERRAIN_ICE",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_SCRUB",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA"
+  ],
+  "featurePassableTechs": [
+   {
+    "FEATURE_FLOOD_PLAINS": "NONE"
+   },
+   {
+    "FEATURE_MANGROVE": "NONE"
+   },
+   {
+    "FEATURE_SWAMP": "NONE"
+   },
+   {
+    "FEATURE_VERY_TALL_GRASS": "NONE"
+   }
+  ],
+  "base": {
+   "combat": 6,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

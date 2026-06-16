@@ -1,0 +1,79 @@
+{
+ "type": "UNIT_MACKEREL",
+ "description": "TXT_KEY_UNIT_MACKEREL",
+ "civilopedia": "TXT_KEY_UNIT_MACKEREL_PEDIA",
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "blendIntoCity": true,
+  "onlyDefensive": true,
+  "animalIgnoresBorders": true
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_BONUS_SPAWNED",
+    "iChance": 2,
+    "BonusType": "BONUS_FISH",
+    "Yields": [
+     1
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_TALES_SEA",
+    "iChance": 8,
+    "UnitType": "UNIT_TALESOF_MACKEREL",
+    "bUnitToCity": [
+     1
+    ],
+    "Yields": [
+     1
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_SUBDUE_SEA_SMALL",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_MACKEREL",
+    "bUnitToCity": [
+     "DONT_ESCORT_SUBDUED_SEA_ANIMAL"
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 85,
+    "Yields": [
+     1
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 1,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_FISH",
+   "UNITCOMBAT_FISH_BONEY",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_PATHETIC",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_TINY",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 1,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_SEA_ANIMAL"
+  }
+ }
+}

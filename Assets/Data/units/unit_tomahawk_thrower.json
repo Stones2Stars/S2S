@@ -1,0 +1,149 @@
+{
+ "type": "UNIT_TOMAHAWK_THROWER",
+ "description": "TXT_KEY_UNIT_TOMAHAWK_THROWER",
+ "civilopedia": "TXT_KEY_UNIT_TOMAHAWK_THROWER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_IROQUOIS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_STONE": {
+     "percent": 15
+    },
+    "BONUS_OBSIDIAN": {
+     "percent": 15
+    },
+    "BONUS_FLINT": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 15
+   },
+   "cityDefense": {
+    "percent": 15
+   },
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 25
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 25
+    },
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 2
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 5
+   },
+   "limit": {
+    "flat": 10
+   },
+   "maxUnits": {
+    "flat": 1
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_AXEMAN",
+   "UNIT_JAVELINEER"
+  ]
+ },
+ "cost": {
+  "production": 42,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 4,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "conscription": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PILLAGE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_AXE",
+   "UNITCOMBAT_WEAPON_DIST_AXE",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 4,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_THROWING"
+  }
+ }
+}

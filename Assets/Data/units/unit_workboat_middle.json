@@ -1,0 +1,116 @@
+{
+ "type": "UNIT_WORKBOAT_MIDDLE",
+ "description": "TXT_KEY_UNIT_WORKBOAT_MIDDLE",
+ "civilopedia": "TXT_KEY_UNIT_WORKBOAT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SHIPWRIGHT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "mechanized": true,
+  "renderBelowWater": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "builds": [
+   "BUILD_WHALING_BOATS",
+   "BUILD_FISHING_BOATS",
+   "BUILD_BEACON_CORAL",
+   "BUILD_BEACON_REEF",
+   "BUILD_BEACON_GREAT_BARRIER_REEF",
+   "BUILD_HARVEST_KELP",
+   "BUILD_LIGHTHOUSE_CORAL",
+   "BUILD_LIGHTHOUSE_REEF",
+   "BUILD_LIGHTHOUSE_GREAT_BARRIER_REEF",
+   "BUILD_WHALING_SHIPS"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_WORKBOAT_MODERN"
+  ]
+ },
+ "cost": {
+  "production": 233,
+  "upkeep": 3
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_WORKER_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_WORKBOAT_MIDDLE",
+  "unitAIs": [
+   "UNITAI_WORKER_SEA"
+  ],
+  "notUnitAIs": [
+   "UNITAI_ESCORT_SEA",
+   "UNITAI_RESERVE_SEA",
+   "UNITAI_ATTACK_SEA",
+   "UNITAI_ASSAULT_SEA"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_POOR",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_NAVAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "featureImpassable": [
+   "FEATURE_ICE"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_TROPICAL",
+   "TERRAIN_TRENCH_POLAR"
+  ],
+  "featurePassableTechs": [
+   {
+    "FEATURE_ICE": "TECH_ASTRONOMY"
+   }
+  ],
+  "terrainPassableTechs": [
+   {
+    "TERRAIN_OCEAN": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_OCEAN_POLAR": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_OCEAN_TROPICAL": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_TRENCH": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_TRENCH_TROPICAL": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_TRENCH_POLAR": "TECH_ASTRONOMY"
+   }
+  ],
+  "base": {
+   "moves": 3,
+   "workRate": 100,
+   "combatClass": "UNITCOMBAT_SEA_WORKER"
+  }
+ }
+}

@@ -1,0 +1,69 @@
+{
+ "type": "UNIT_LUNAR_WORKER",
+ "description": "TXT_KEY_UNIT_LUNAR_WORKER",
+ "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_LUNAR_DROID_FACTORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "ignoreTerrainCost": true
+ },
+ "grants": {
+  "builds": [
+   "BUILD_LUNAR_PATH",
+   "BUILD_PLANETARY_MAGLEV",
+   "BUILD_LUNAR_MINE",
+   "BUILD_COLONY_HYDROPONICS",
+   "BUILD_COLONY_EXTRACTION_FACILITY",
+   "BUILD_COLONY_SOLAR_ARRAY",
+   "BUILD_COLONY_MANUFACTORY",
+   "BUILD_LUNAR_ARCOLOGY",
+   "BUILD_TERRAFORM_MOON",
+   "BUILD_COLONY_HABITAT_SMALL",
+   "BUILD_COLONY_HABITAT_MEDIUM",
+   "BUILD_COLONY_HABITAT_LARGE",
+   "BUILD_COLONY_HABITAT_HUGE"
+  ]
+ },
+ "cost": {
+  "production": 2000,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_LUNAR_WORKER",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_TECH",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ],
+  "base": {
+   "moves": 3,
+   "workRate": 250,
+   "combatClass": "UNITCOMBAT_SPACE_WORKER"
+  }
+ }
+}

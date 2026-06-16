@@ -1,0 +1,139 @@
+{
+ "type": "UNIT_INTERSTELLAR_PROBE",
+ "description": "TXT_KEY_UNIT_INTERSTELLAR_PROBE",
+ "civilopedia": "TXT_KEY_UNIT_INTERSTELLAR_PROBE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DEEP_SPACE_TELESCOPE",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 3
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "canMoveAllTerrain": true,
+  "canMoveImpassable": true,
+  "ignoreTerrainCost": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MissionType": "MISSION_EXPLORE_OORT_CLOUD",
+    "iCost": [
+     [
+      0
+     ]
+    ],
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_EXPLORE_OORT_CLOUD",
+      "iChance": 100,
+      "PythonName": "ExploreOortCloud",
+      "Python": "from CvPythonExtensions import CyGlobalContext\n\t\t\t\t\t\t\t\tfrom CvPythonExtensions import *\n\t\t\t\t\t\t\t\tdef isPossible(unit,plot):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\t\t\t\t\t\t\t\t\treturn False\n\t\t\t\t\t\t\t\t\tvalid_feature_strings = ['OORT_CLOUD']\n\t\t\t\t\t\t\t\t\tvalid_features = [gc.getInfoTypeForString('FEATURE_'+t) for t in valid_feature_strings]\n\t\t\t\t\t\t\t\t\treturn plot.getFeatureType() in valid_features\n\t\t\t\t\t\t\t\tdef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\t\t\t\t\t\t\t\t\tgc.getPlayer(unit.getOwner()).initUnit(gc.getInfoTypeForString('UNIT_OORT_CLOUD_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\n\t\t\t\t\t\t\t\tdef getDisplay(unit,plot):\n\t\t\t\t\t\t\t\t\treturn u\"Explore the Oort Cloud.\"\n\t\t\t\t\t\t\t\tdef getAIValue(unit, plot):\n\t\t\t\t\t\t\t\t\treturn 1"
+     }
+    ]
+   },
+   {
+    "MissionType": "MISSION_EXPLORE_INTERSTELLAR",
+    "iCost": [
+     [
+      0
+     ]
+    ],
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_EXPLORE_INTERSTELLAR",
+      "iChance": 100,
+      "PythonName": "ExploreInterstellar",
+      "Python": "from CvPythonExtensions import *\n\t\t\t\t\t\t\t\timport random\n\t\t\t\t\t\t\t\tdef isPossible(unit,plot):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tvalid_terrain_strings = ['RED_DWARF','RED_GIANT','SUN_LIKE_STAR']\n\t\t\t\t\t\t\t\t\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\t\t\t\t\t\t\t\t\treturn plot.getTerrainType() in valid_terrains\n\t\t\t\t\t\t\t\tdef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\t\t\t\t\t\t\t\t\tgc.getPlayer(unit.getOwner()).initUnit(gc.getInfoTypeForString('UNIT_INTERSTELLAR_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\n\t\t\t\t\t\t\t\tdef getDisplay(unit,plot):\n\t\t\t\t\t\t\t\t\treturn u\"Explore a nearby star\"\n\t\t\t\t\t\t\t\tdef getAIValue(unit, plot):\n\t\t\t\t\t\t\t\t\treturn 1"
+     }
+    ]
+   },
+   {
+    "MissionType": "MISSION_EXPLORE_EXOPLANET",
+    "iCost": [
+     [
+      0
+     ]
+    ],
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_EXPLORE_EXOPLANET",
+      "iChance": 100,
+      "PythonName": "ExploreExoplanet",
+      "Python": "from CvPythonExtensions import CyGlobalContext\n\t\t\t\t\t\t\t\tfrom CvPythonExtensions import *\n\t\t\t\t\t\t\t\tdef isPossible(unit,plot):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\t\t\t\t\t\t\t\t\treturn False\n\t\t\t\t\t\t\t\t\tvalid_feature_strings = ['CARBON_PLANET','CHTHONIAN_PLANET','DESERT_PLANET','HOT_JUPITER','MINI_NEPTUNE','ROGUE_PLANET','SUPER_EARTH','OCEAN_PLANET']\n\t\t\t\t\t\t\t\t\tvalid_features = [gc.getInfoTypeForString('FEATURE_'+t) for t in valid_feature_strings]\n\t\t\t\t\t\t\t\t\treturn plot.getFeatureType() in valid_features\n\t\t\t\t\t\t\t\tdef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\t\t\t\t\t\t\t\t\tgc.getPlayer(unit.getOwner()).initUnit(gc.getInfoTypeForString('UNIT_EXOPLANET_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\n\t\t\t\t\t\t\t\tdef getDisplay(unit,plot):\n\t\t\t\t\t\t\t\t\treturn u\"Explore this planet.\"\n\t\t\t\t\t\t\t\tdef getAIValue(unit, plot):\n\t\t\t\t\t\t\t\t\treturn 1"
+     }
+    ]
+   },
+   {
+    "MissionType": "MISSION_EXPLORE_INTERSTELLAR_LIFE",
+    "iCost": [
+     [
+      0
+     ]
+    ],
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_EXPLORE_INTERSTELLAR_LIFE",
+      "iChance": 100,
+      "PythonName": "ExploreInterstellarLife",
+      "Python": "from CvPythonExtensions import *\n\t\t\t\t\t\t\t\timport random\n\t\t\t\t\t\t\t\tdef isPossible(unit,plot):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tvalid_bonus_strings = ['XENOFLORA','XENOFAUNA']\n\t\t\t\t\t\t\t\t\tvalid_bonuses = [gc.getInfoTypeForString('BONUS_'+t) for t in valid_bonus_strings]\n\t\t\t\t\t\t\t\t\treturn plot.getBonusType(-1) in valid_bonuses\n\t\t\t\t\t\t\t\tdef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\t\t\t\t\t\t\t\t\tgc.getPlayer(unit.getOwner()).initUnit(gc.getInfoTypeForString('UNIT_INTERSTELLAR_LIFE_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\n\t\t\t\t\t\t\t\tdef getDisplay(unit,plot):\n\t\t\t\t\t\t\t\t\treturn u\"Explore a nearby star\"\n\t\t\t\t\t\t\t\tdef getAIValue(unit, plot):\n\t\t\t\t\t\t\t\t\treturn 1"
+     }
+    ]
+   }
+  ]
+ },
+ "cost": {
+  "production": 5000,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_INTERSTELLAR_PROBE",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_EARLY_SPACESHIP",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_TECH",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_JOVIAN",
+   "MAPCATEGORY_SOLAR_SYSTEM",
+   "MAPCATEGORY_GALACTIC"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_STAR_CLUSTER",
+   "TERRAIN_ORION_ARM",
+   "TERRAIN_MILKY_WAY",
+   "TERRAIN_GALACTIC_CORE"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "moves": 12,
+   "workRate": 250,
+   "combatClass": "UNITCOMBAT_SPACE_WORKER"
+  }
+ }
+}

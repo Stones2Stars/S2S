@@ -1,0 +1,101 @@
+{
+ "type": "UNIT_LIBERTY_MERCHANT",
+ "description": "TXT_KEY_UNIT_LIBERTY_MERCHANT",
+ "civilopedia": "TXT_KEY_UNIT_LIBERTY_MERCHANT_PEDIA",
+ "help": "TXT_KEY_UNIT_MERCHANT_SHIP_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "AREA_SIZE",
+     "scope": "world",
+     "min": 10
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_OIL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "mechanized": true,
+  "onlyDefensive": true,
+  "rivalTerritory": true,
+  "renderBelowWater": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "greatPersonAction": {
+   "trade": {
+    "base": 150,
+    "multiplier": 1
+   }
+  }
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_CARGO_SHIP"
+  ]
+ },
+ "cost": {
+  "production": 773,
+  "upkeep": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   }
+  ]
+ },
+ "identity": {
+  "worth": 2,
+  "minAreaSize": 10,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_EXPLORE_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_MERCHANT",
+   "UNITAI_EXPLORE_SEA"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_ARMOR_NAVAL",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_GARGANTUAN",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_NAVAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 17,
+   "moves": 5,
+   "combatClass": "UNITCOMBAT_TRADE"
+  }
+ }
+}

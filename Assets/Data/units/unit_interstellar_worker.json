@@ -1,0 +1,91 @@
+{
+ "type": "UNIT_INTERSTELLAR_WORKER",
+ "description": "TXT_KEY_UNIT_INTERSTELLAR_WORKER",
+ "civilopedia": "TXT_KEY_UNIT_INTERSTELLAR_WORKER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "ignoreTerrainCost": true
+ },
+ "grants": {
+  "builds": [
+   "BUILD_WORMHOLE",
+   "BUILD_INTERSTELLAR_TRADING_POST",
+   "BUILD_SUPERNOVA_MINE",
+   "BUILD_TERRAFORMED_PLANET",
+   "BUILD_ARTIFICIAL_PLANET",
+   "BUILD_STAR_SCOOP",
+   "BUILD_BLUE_SUPERGIANT_COLONY",
+   "BUILD_BIOTIC_NEUTRON_STAR",
+   "BUILD_NEUTRON_STAR_COLONY",
+   "BUILD_HELIOFORMED_BROWN_DWARF",
+   "BUILD_TERRAFORM_NEUTRON_STAR",
+   "BUILD_INTERSTELLAR_COLONY",
+   "BUILD_DYSON_SPHERE",
+   "BUILD_INTERSTELLAR_BASE",
+   "BUILD_INTERSTELLAR_RESEARCH_BASE"
+  ]
+ },
+ "cost": {
+  "production": 5000,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_INTERSTELLAR_WORKER",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_NUCLEAR_SPACESHIP",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_TECH",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_ORION_ARM",
+   "TERRAIN_MILKY_WAY",
+   "TERRAIN_GALACTIC_CORE"
+  ],
+  "terrainPassableTechs": [
+   {
+    "TERRAIN_ORION_ARM": "TECH_ADVANCED_SEEDSHIPS"
+   },
+   {
+    "TERRAIN_MILKY_WAY": "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS"
+   },
+   {
+    "TERRAIN_GALACTIC_CORE": "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS"
+   }
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "moves": 24,
+   "workRate": 250,
+   "combatClass": "UNITCOMBAT_SPACE_WORKER"
+  }
+ }
+}

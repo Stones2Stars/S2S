@@ -1,0 +1,110 @@
+{
+ "type": "UNIT_SIBERIANTIGER",
+ "description": "TXT_KEY_UNIT_SIBERIANTIGER",
+ "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
+ },
+ "capabilities": {
+  "assassin": true,
+  "blendIntoCity": true,
+  "targets": {
+   "UNITCOMBAT_MAMMAL_ANTELOPE": true,
+   "UNITCOMBAT_MAMMAL_CERVID": true,
+   "UNITCOMBAT_MAMMAL_SWINE": true,
+   "UNITCOMBAT_MAMMAL_URSINE": true
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_SUBDUE",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_SIBERIANTIGER",
+    "bUnitToCity": [
+     {
+      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
+     }
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 95,
+    "Yields": [
+     [
+      {
+       "Constant": 70,
+       "Random": 50
+      }
+     ],
+     [
+      {
+       "Constant": 11,
+       "Random": 12
+      }
+     ],
+     [
+      {
+       "Constant": 74,
+       "Random": 70
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 12,
+  "xpValueDefense": 9,
+  "aggression": 5,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_MAMMAL",
+   "UNITCOMBAT_FELINE",
+   "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
+   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+   "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
+   "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+   "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+   "UNITCOMBAT_ANIMAL_COMBAT_ROARING",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+   "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "featureImpassable": [
+   "FEATURE_JUNGLE"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES",
+   "TERRAIN_ICE",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS"
+  ],
+  "base": {
+   "combat": 7,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

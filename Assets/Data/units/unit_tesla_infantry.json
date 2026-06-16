@@ -1,0 +1,97 @@
+{
+ "type": "UNIT_TESLA_INFANTRY",
+ "description": "TXT_KEY_UNIT_TESLA_INFANTRY",
+ "civilopedia": "TXT_KEY_UNIT_TESLA_INFANTRY_PEDIA",
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 25
+   },
+   "cityDefense": {
+    "percent": 25
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HELICOPTER": {
+     "percent": 100
+    },
+    "UNITCOMBAT_WHEELED": {
+     "percent": 50
+    },
+    "UNITCOMBAT_TRACKED": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 110
+   },
+   "limit": {
+    "flat": 100
+   },
+   "maxUnits": {
+    "flat": 10
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "ignoreBuildingDefense": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_URBAN_TACTICS1",
+   "PROMOTION_URBAN_TACTICS2"
+  ]
+ },
+ "cost": {
+  "production": 3000,
+  "upkeep": 1,
+  "hurryCostModifier": 50
+ },
+ "identity": {
+  "worth": 6,
+  "militaryWorth": 400,
+  "xpValueAttack": 6,
+  "xpValueDefense": 6,
+  "conscription": 14,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_COLLATERAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_ENERGY_GLOVES",
+   "UNITCOMBAT_WEAPON_DIST_ELECTRICAL",
+   "UNITCOMBAT_ARMOR_MODERN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_BATTALION",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 100,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_HITECH"
+  }
+ }
+}

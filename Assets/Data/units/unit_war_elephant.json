@@ -1,0 +1,122 @@
+{
+ "type": "UNIT_WAR_ELEPHANT",
+ "description": "TXT_KEY_UNIT_WAR_ELEPHANT",
+ "civilopedia": "TXT_KEY_UNIT_WAR_ELEPHANT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ELEPHANTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_ANIMAL_TRAINER_ELEPHANT",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 25
+   },
+   "feature": {
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": 25
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE_WOODEN": {
+     "percent": 50
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COMMANDO"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_BOMBARD_ELEPHANT"
+  ]
+ },
+ "cost": {
+  "production": 340,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 15,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_COUNTER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_WEAPON_H2H_LONG_POLEARM",
+   "UNITCOMBAT_SHIELD_TOWER",
+   "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_HORNED",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+   "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+   "UNITCOMBAT_ANIMAL_COMBAT_CONSTRICT",
+   "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+   "UNITCOMBAT_MOTILITY_RIDING",
+   "UNITCOMBAT_MOUNT_ELEPHANT",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 14,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_MOUNTED"
+  }
+ }
+}

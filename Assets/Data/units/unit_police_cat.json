@@ -1,0 +1,189 @@
+{
+ "type": "UNIT_POLICE_CAT",
+ "description": "TXT_KEY_UNIT_POLICE_CAT",
+ "civilopedia": "TXT_KEY_UNIT_WARCAT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_EFFECT_HERITAGE_BIG_CATS",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_POLICE_CAT_TRAINER",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_CAT": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "espionage": {
+  "unit": {
+   "investigation": {
+    "flat": 15
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "lunge": {
+    "percent": 40
+   },
+   "unnerve": {
+    "percent": 20
+   },
+   "dynamicDefense": {
+    "percent": 20
+   },
+   "stealthStrikes": {
+    "flat": 4
+   },
+   "stealth": {
+    "percent": 40
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 45
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 100
+   },
+   "maxUnits": {
+    "flat": 2
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 10
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -3
+  },
+  "plot": {
+   "flat": -5
+  }
+ },
+ "capabilities": {
+  "alwaysHostile": true,
+  "hiddenNationality": true,
+  "noCapture": true,
+  "noDefensiveBonus": true,
+  "counterSpy": true,
+  "ignoreTerrainCost": true,
+  "ignoreZoneOfControl": true,
+  "noNonOwnedCityEntry": true,
+  "ignoreNoEntryLevel": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "targets": {
+   "UNITCOMBAT_STRIKE_TEAM": true,
+   "UNITCOMBAT_CRIMINAL": true,
+   "UNITCOMBAT_RUFFIAN": true
+  }
+ },
+ "vision": {
+  "invisible": "INVISIBLE_CAMOUFLAGE",
+  "invisibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 5
+  }
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_FELINE_SUPERIOR"
+  ]
+ },
+ "cost": {
+  "production": 800,
+  "upkeep": 6
+ },
+ "identity": {
+  "worth": 9,
+  "militaryWorth": 28,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PILLAGE_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE_COUNTER",
+   "UNITAI_CITY_SPECIAL",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_LAW_ENFORCEMENT",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_ANIMAL",
+   "UNITCOMBAT_ANIMAL_MAMMAL",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+   "UNITCOMBAT_ANIMAL_COMBAT_ROARING",
+   "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
+   "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 36,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_FELINE"
+  }
+ }
+}

@@ -1,0 +1,79 @@
+{
+ "type": "UNIT_TREESLOTH",
+ "description": "TXT_KEY_UNIT_TREESLOTH",
+ "civilopedia": "TXT_KEY_UNIT_TREESLOTH_PEDIA",
+ "capabilities": {
+  "blendIntoCity": true,
+  "onlyDefensive": true,
+  "animalIgnoresBorders": true
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_SUBDUE",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_TREESLOTH",
+    "bUnitToCity": [
+     {
+      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
+     }
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 95,
+    "Yields": [
+     4,
+     1,
+     3
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 2,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_MAMMAL",
+   "UNITCOMBAT_MAMMAL_ANTEATER",
+   "UNITCOMBAT_ANIMAL_COMBAT_HIDING",
+   "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+   "UNITCOMBAT_ANIMAL_COMBAT_TREECLIMBING",
+   "UNITCOMBAT_SPEED_SLOW",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_PATHETIC",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_SMALL",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES",
+   "TERRAIN_ICE",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_SCRUB",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA"
+  ],
+  "base": {
+   "combat": 1,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

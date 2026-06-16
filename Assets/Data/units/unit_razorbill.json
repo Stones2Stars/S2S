@@ -1,0 +1,93 @@
+{
+ "type": "UNIT_RAZORBILL",
+ "description": "TXT_KEY_UNIT_RAZORBILL",
+ "civilopedia": "TXT_KEY_UNIT_RAZORBILL_PEDIA",
+ "withdrawal": {
+  "unit": {
+   "percent": 70
+  }
+ },
+ "capabilities": {
+  "blendIntoCity": true,
+  "onlyDefensive": true,
+  "animalIgnoresBorders": true
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_SUBDUE",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_RAZORBILL",
+    "bUnitToCity": [
+     {
+      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
+     }
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 95,
+    "Yields": [
+     1,
+     1,
+     4
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 1,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_BIRD",
+   "UNITCOMBAT_BIRD_SEABIRD",
+   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+   "UNITCOMBAT_ANIMAL_COMBAT_PECK",
+   "UNITCOMBAT_MOTILITY_AERIAL",
+   "UNITCOMBAT_QUALITY_PATHETIC",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_TINY",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "featureImpassable": [
+   "FEATURE_FOREST_ANCIENT",
+   "FEATURE_JUNGLE",
+   "FEATURE_MANGROVE"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_COAST_TROPICAL",
+   "TERRAIN_COAST_DEEP_TROPICAL",
+   "TERRAIN_DESERT",
+   "TERRAIN_LAKE_SHORE",
+   "TERRAIN_DUNES",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_BADLAND",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_SEA_TROPICAL",
+   "TERRAIN_SEA_DEEP_TROPICAL",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_POLAR",
+   "TERRAIN_TRENCH_TROPICAL",
+   "TERRAIN_PEAK"
+  ],
+  "base": {
+   "combat": 1,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

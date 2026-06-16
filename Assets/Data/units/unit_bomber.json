@@ -1,0 +1,114 @@
+{
+ "type": "UNIT_BOMBER",
+ "description": "TXT_KEY_UNIT_BOMBER",
+ "civilopedia": "TXT_KEY_UNIT_BOMBER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_AIRCRAFT",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "bombard": {
+  "unit": {
+   "airBombRate": {
+    "flat": 20
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 100
+   },
+   "limit": {
+    "flat": 50
+   },
+   "maxUnits": {
+    "flat": 5
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 12
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "domain": {
+    "DOMAIN_AIR": {
+     "percent": -50
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "ignoreBuildingDefense": true,
+  "mechanized": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true,
+  "dcmAirBomb": 5
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_B52_BOMBER"
+  ]
+ },
+ "cost": {
+  "production": 1353,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 170,
+  "xpValueAttack": 6,
+  "xpValueDefense": 6,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_ATTACK_AIR",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_AIR"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_WEAPON_A2G_BOMBS",
+   "UNITCOMBAT_ARMOR_AIRCRAFT",
+   "UNITCOMBAT_MOTILITY_PILOTING",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_AIRCRAFT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "airCombat": 52,
+   "airCombatLimit": 50,
+   "airUnitCap": 1,
+   "combatClass": "UNITCOMBAT_BOMBERS"
+  }
+ }
+}

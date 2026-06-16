@@ -1,0 +1,229 @@
+{
+ "type": "UNIT_HAJDUK",
+ "description": "TXT_KEY_UNIT_HAJDUK",
+ "civilopedia": "TXT_KEY_UNIT_HAJDUK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SERBIAN",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_CONSPIRATORS_HIDEOUT",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_FIREARMS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_AMMUNITION",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_IRON_WARES": {
+     "percent": 15
+    },
+    "BONUS_FLINT": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "culture": {
+  "unit": {
+   "garrison": {
+    "flat": -10
+   }
+  }
+ },
+ "espionage": {
+  "unit": {
+   "insidiousness": {
+    "flat": 30
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "lunge": {
+    "percent": 14
+   },
+   "unnerve": {
+    "percent": 14
+   },
+   "stealthStrikes": {
+    "flat": 1
+   },
+   "stealth": {
+    "percent": 30
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 35
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 30
+  },
+  "plot": {
+   "flat": 15
+  }
+ },
+ "capabilities": {
+  "alwaysHostile": true,
+  "assassin": true,
+  "hiddenNationality": true,
+  "noCapture": true,
+  "noDefensiveBonus": true,
+  "pillage": true,
+  "blendIntoCity": true,
+  "counterSpy": true,
+  "destroy": true,
+  "ignoreTerrainCost": true,
+  "ignoreZoneOfControl": true,
+  "stealPlans": true,
+  "upgradeAnywhere": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "targets": {
+   "UNITCOMBAT_EXPLORER": true,
+   "UNITCOMBAT_CANINE": true,
+   "UNITCOMBAT_TRADE": true,
+   "UNITCOMBAT_ENTERTAINER": true,
+   "UNITCOMBAT_CRIMINAL": true,
+   "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+  }
+ },
+ "vision": {
+  "invisible": "INVISIBLE_CAMOUFLAGE",
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 2,
+   "INVISIBLE_DISGUISED": 5
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_DISGUISED": 5,
+   "INVISIBLE_CAMOUFLAGE": 4
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_INDUSTRYESPIONAGE",
+   "PROMOTION_COMMANDO",
+   "PROMOTION_MARAUDER",
+   "PROMOTION_LOOTER",
+   "PROMOTION_WOODSMAN1",
+   "PROMOTION_BACKSTAB1",
+   "PROMOTION_BACKSTAB2"
+  ],
+  "greatPersonAction": {
+   "trade": {
+    "base": 50,
+    "multiplier": 1
+   }
+  }
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_GUNFIGHTER",
+   "UNIT_OUTLAW"
+  ]
+ },
+ "cost": {
+  "production": 405,
+  "upkeep": 7
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   }
+  ]
+ },
+ "identity": {
+  "worth": 7,
+  "militaryWorth": 15,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PILLAGE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_MILITARY",
+  "espionagePoints": 500,
+  "unitAIs": [
+   "UNITAI_SPY",
+   "UNITAI_PILLAGE"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+   "UNITCOMBAT_WEAPON_H2H_KNIFE",
+   "UNITCOMBAT_WEAPON_DIST_HANDGUN",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "cargo": {
+   "special": "SPECIALUNIT_CAPTIVE"
+  },
+  "base": {
+   "combat": 17,
+   "moves": 3,
+   "cargo": 1,
+   "combatClass": "UNITCOMBAT_CRIMINAL"
+  }
+ }
+}

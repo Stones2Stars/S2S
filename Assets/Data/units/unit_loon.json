@@ -1,0 +1,88 @@
+{
+ "type": "UNIT_LOON",
+ "description": "TXT_KEY_UNIT_LOON",
+ "civilopedia": "TXT_KEY_UNIT_LOON_PEDIA",
+ "withdrawal": {
+  "unit": {
+   "percent": 70
+  }
+ },
+ "capabilities": {
+  "blendIntoCity": true,
+  "onlyDefensive": true,
+  "animalIgnoresBorders": true
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_BONUS_SPAWNED",
+    "iChance": 2,
+    "BonusType": "BONUS_POULTRY",
+    "Yields": [
+     1,
+     1,
+     4
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_SUBDUE",
+    "iChance": 3,
+    "UnitType": "UNIT_SUBDUED_LOON",
+    "bUnitToCity": [
+     {
+      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
+     }
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 95,
+    "Yields": [
+     1,
+     1,
+     4
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 1,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_BIRD",
+   "UNITCOMBAT_BIRD_WATERFOWL",
+   "UNITCOMBAT_ANIMAL_COMBAT_PECK",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_MOTILITY_AERIAL",
+   "UNITCOMBAT_QUALITY_INFERIOR",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_TINY",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_DEEP_TROPICAL",
+   "TERRAIN_LAKE_SHORE",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_SEA_TROPICAL",
+   "TERRAIN_PEAK"
+  ],
+  "base": {
+   "combat": 1,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

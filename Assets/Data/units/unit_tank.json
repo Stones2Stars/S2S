@@ -1,0 +1,122 @@
+{
+ "type": "UNIT_TANK",
+ "description": "TXT_KEY_UNIT_TANK",
+ "civilopedia": "TXT_KEY_UNIT_TANK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_TANKS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PETROLEUM_PRODUCTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BIOFUEL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 60
+   },
+   "maxUnits": {
+    "flat": 5
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_WHEELED": {
+     "percent": 25
+    }
+   },
+   "vsUnit": {
+    "UNIT_MACHINE_GUN": {
+     "attack": {
+      "percent": 50
+     }
+    },
+    "UNIT_EARLY_TANK": {
+     "attack": {
+      "percent": 40
+     }
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "pillage": true,
+  "ignoreBuildingDefense": true,
+  "mechanized": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_BLITZ"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_ARMOR_M60"
+  ]
+ },
+ "cost": {
+  "production": 1200,
+  "upkeep": 3
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 161,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_PILLAGE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_ARMOR_VEHICULAR",
+   "UNITCOMBAT_MOTILITY_DRIVING",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 50,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_TRACKED"
+  }
+ }
+}

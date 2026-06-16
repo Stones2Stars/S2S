@@ -1,0 +1,87 @@
+{
+ "type": "UNIT_TOUCAN",
+ "description": "TXT_KEY_UNIT_TOUCAN",
+ "civilopedia": "TXT_KEY_UNIT_TOUCAN_PEDIA",
+ "withdrawal": {
+  "unit": {
+   "percent": 35
+  }
+ },
+ "capabilities": {
+  "blendIntoCity": true,
+  "onlyDefensive": true,
+  "animalIgnoresBorders": true
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_SUBDUE",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_TOUCAN",
+    "bUnitToCity": [
+     {
+      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
+     }
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 95,
+    "Yields": [
+     1,
+     1,
+     4
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 1,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_BIRD",
+   "UNITCOMBAT_BIRD_PARROT",
+   "UNITCOMBAT_ANIMAL_COMBAT_PECK",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_MOTILITY_AERIAL",
+   "UNITCOMBAT_QUALITY_POOR",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_TINY",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_COAST_DEEP_POLAR",
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_DUNES",
+   "TERRAIN_ICE",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_JAGGED",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_SEA",
+   "TERRAIN_LAKE_SHORE",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_DEEP_TROPICAL",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_SEA_TROPICAL",
+   "TERRAIN_PEAK"
+  ],
+  "base": {
+   "combat": 1,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

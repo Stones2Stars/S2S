@@ -1,0 +1,204 @@
+{
+ "type": "UNIT_CAPTIVE_CIVILIAN",
+ "description": "TXT_KEY_UNIT_CAPTIVE_CIVILIAN",
+ "civilopedia": "TXT_KEY_UNIT_CAPTIVE_CIVILIAN_PEDIA",
+ "help": "TXT_KEY_UNIT_CAPTIVE_CIVILIAN_HELP",
+ "capabilities": {
+  "onlyDefensive": true,
+  "workerTrade": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_JOIN_CITY_POPULATION": [
+     {
+      "OutcomeType": "OUTCOME_JOIN_CITY_POPULATION",
+      "iChance": 100,
+      "iPopulationBoost": 1,
+      "bKill": 1,
+      "PlotCondition": [
+       {
+        "RelationType": "RELATION_ASSOCIATED",
+        "GameObjectType": "GAMEOBJECT_CITY",
+        "GreaterEqual": {
+         "ATTRIBUTE_POPULATION": 7
+        }
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "MissionType": "MISSION_CAPTIVE_UPGRADE_TO_IMMIGRANT",
+    "iCost": [
+     [
+      10
+     ]
+    ],
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_UPGRADE_TO_IMMIGRANT",
+      "iChance": 100,
+      "UnitType": "UNIT_CAPTIVE_IMMIGRANT",
+      "bUnitToCity": [
+       0
+      ],
+      "PlotCondition": [
+       [
+        "TAG_ANARCHY"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "MissionType": "MISSION_CAPTIVE_UPGRADE_TO_SETTLER",
+    "iCost": [
+     [
+      20
+     ]
+    ],
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_UPGRADE_TO_SETTLER",
+      "iChance": 100,
+      "UnitType": "UNIT_SETTLER",
+      "bUnitToCity": [
+       0
+      ],
+      "PlotCondition": [
+       [
+        "TAG_ANARCHY"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "MISSION_BUTCHER_HUMAN": [
+     {
+      "OutcomeType": "OUTCOME_HUMAN_BUTCHERED_CITY",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "Yields": [
+       [
+        [
+         40
+        ]
+       ],
+       [
+        [
+         10
+        ]
+       ]
+      ]
+     },
+     {
+      "OutcomeType": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "Yields": [
+       [
+        [
+         50
+        ]
+       ],
+       [
+        [
+         15
+        ]
+       ]
+      ]
+     },
+     {
+      "OutcomeType": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT1",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "Yields": [
+       [
+        [
+         50
+        ]
+       ],
+       [
+        [
+         15
+        ]
+       ]
+      ]
+     },
+     {
+      "OutcomeType": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT2",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "Yields": [
+       [
+        [
+         50
+        ]
+       ],
+       [
+        [
+         15
+        ]
+       ]
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_WORLDVIEW_SLAVERY",
+   "BUILDING_SLAVE_MARKET",
+   "BUILDING_WORLDVIEW_CANNIBALISM",
+   "BUILDING_WORLDVIEW_HUMAN_SACRIFICE"
+  ],
+  "greatPersonAction": {
+   "hurry": {
+    "base": 100,
+    "multiplier": 5
+   }
+  }
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_CAPTIVE",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_CAPTIVE_CIVILIAN",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_PATHETIC",
+   "UNITCOMBAT_GROUP_BATTALION",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_CAPTIVE"
+  }
+ }
+}

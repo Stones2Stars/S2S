@@ -1,0 +1,103 @@
+{
+ "type": "UNIT_PAPUAN_CANNIBAL",
+ "description": "TXT_KEY_UNIT_PAPUAN_CANNIBAL",
+ "civilopedia": "TXT_KEY_UNIT_PAPUAN_CANNIBAL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PAPUAN",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_WOODSMAN1"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_EARLY_MACEMAN"
+  ]
+ },
+ "cost": {
+  "production": 105,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 1,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+   "UNITCOMBAT_WEAPON_DIST_BOLA",
+   "UNITCOMBAT_SHIELD_SMALL",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 5,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_STRIKE_TEAM"
+  }
+ }
+}

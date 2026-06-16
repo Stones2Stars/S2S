@@ -1,0 +1,115 @@
+{
+ "type": "UNIT_LOKI",
+ "description": "TXT_KEY_UNIT_LOKI",
+ "civilopedia": "TXT_KEY_UNIT_VIKING_BESERKER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_LOKI_SANCTUARY",
+     "scope": "city"
+    },
+    {
+     "type": "RELIGION_ASATRU",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BRONZE_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 20
+   },
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 60
+    }
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_AMPHIBIOUS",
+   "PROMOTION_BERZERKER1",
+   "PROMOTION_BERZERKER2"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MUSKETMAN"
+  ]
+ },
+ "cost": {
+  "production": 300
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 7,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "conscription": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "religion": "RELIGION_ASATRU",
+  "unitAIs": [
+   "UNITAI_COUNTER",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_ATTACK"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_WEAPON_H2H_AXE",
+   "UNITCOMBAT_ARMOR_HEAVY",
+   "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 12,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_MELEE"
+  }
+ }
+}

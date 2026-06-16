@@ -1,0 +1,123 @@
+{
+ "type": "UNIT_FIGHTER",
+ "description": "TXT_KEY_UNIT_FIGHTER",
+ "civilopedia": "TXT_KEY_UNIT_FIGHTER_PEDIA",
+ "help": "TXT_KEY_UNIT_CARRIER_OPS_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_MILITARY_AIRBASE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_AEROSPACE_COMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "bombard": {
+  "unit": {
+   "airBombRate": {
+    "flat": 10
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 6
+   },
+   "intercept": {
+    "percent": 20
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_NUCLEAR_SHIPS": {
+     "percent": -40
+    },
+    "UNITCOMBAT_DIESEL_SHIPS": {
+     "percent": -20
+    },
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": 20
+    }
+   },
+   "domain": {
+    "DOMAIN_SEA": {
+     "percent": 100
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "ignoreBuildingDefense": true,
+  "mechanized": true,
+  "dcmFighterEngage": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true,
+  "dcmAirBomb": 2
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_F4_PHANTOM"
+  ]
+ },
+ "cost": {
+  "production": 1110,
+  "upkeep": 2
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 76,
+  "xpValueAttack": 6,
+  "xpValueDefense": 6,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_DEFENSE_AIR",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "special": "SPECIALUNIT_FIGHTER",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_DEFENSE_AIR",
+   "UNITAI_CARRIER_AIR"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_WEAPON_A2G_TORPEDO",
+   "UNITCOMBAT_ARMOR_AIRCRAFT",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_PILOTING",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_AIRCRAFT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "airCombat": 28,
+   "airCombatLimit": 50,
+   "airUnitCap": 1,
+   "combatClass": "UNITCOMBAT_EARLY_FIGHTERS"
+  }
+ }
+}

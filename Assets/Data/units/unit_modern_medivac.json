@@ -1,0 +1,133 @@
+{
+ "type": "UNIT_MODERN_MEDIVAC",
+ "description": "TXT_KEY_UNIT_MODERN_MEDIVAC",
+ "civilopedia": "TXT_KEY_UNIT_MEDIC_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HELICOPTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PHARMACEUTICALS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_MEDICAL_CLINIC",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "dropRange": {
+    "flat": 10
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 13
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_PEOPLE": {
+     "heal": 33,
+     "adjacentHeal": 16
+    },
+    "UNITCOMBAT_HEALS_AS_ANIMALS": {
+     "heal": 29,
+     "adjacentHeal": 12
+    }
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -37
+  },
+  "plot": {
+   "flat": -22
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "mechanized": true,
+  "onlyDefensive": true,
+  "militaryProduction": true,
+  "militaryTrade": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MEDEVAC_DROPSHIP"
+  ]
+ },
+ "cost": {
+  "production": 1330,
+  "upkeep": 12,
+  "hurryCostModifier": 25
+ },
+ "identity": {
+  "worth": 15,
+  "militaryWorth": 60,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_VTOL",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_HEALER",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_HELICOPTER",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_ARMOR_AIRCRAFT",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_PILOTING",
+   "UNITCOMBAT_QUALITY_MEDIOCRE",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL",
+   "UNITCOMBAT_HEALS_PEOPLE",
+   "UNITCOMBAT_HEALS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "cargo": {
+   "domain": "DOMAIN_LAND",
+   "smNotSpecial": "SPECIALUNIT_VTOL"
+  },
+  "base": {
+   "combat": 60,
+   "moves": 4,
+   "cargo": 2,
+   "combatClass": "UNITCOMBAT_HEALTH_CARE"
+  }
+ }
+}

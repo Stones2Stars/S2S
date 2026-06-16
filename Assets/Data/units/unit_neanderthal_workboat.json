@@ -1,0 +1,99 @@
+{
+ "type": "UNIT_NEANDERTHAL_WORKBOAT",
+ "description": "TXT_KEY_UNIT_NEANDERTHAL_WORKBOAT",
+ "civilopedia": "TXT_KEY_UNIT_WORKBOAT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_C_AC_NEANDERTHAL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_C_L_NEANDERTHAL",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "canMoveImpassable": true,
+  "mechanized": true,
+  "renderBelowWater": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "builds": [
+   "BUILD_WHALING_BOATS",
+   "BUILD_FISHING_BOATS",
+   "BUILD_HARVEST_KELP_KILL",
+   "BUILD_BEACON_CORAL",
+   "BUILD_BEACON_REEF",
+   "BUILD_BEACON_GREAT_BARRIER_REEF"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_WORKBOAT_CLASSIC"
+  ]
+ },
+ "cost": {
+  "production": 96,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_WORKER_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_NEANDERTHAL_WORKBOAT",
+  "unitAIs": [
+   "UNITAI_WORKER_SEA"
+  ],
+  "notUnitAIs": [
+   "UNITAI_ESCORT_SEA",
+   "UNITAI_RESERVE_SEA",
+   "UNITAI_ATTACK_SEA",
+   "UNITAI_ASSAULT_SEA"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_NEANDERTHAL",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_POOR",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_NAVAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "featureImpassable": [
+   "FEATURE_ICE"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_SEA_TROPICAL",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_DEEP_TROPICAL",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_POLAR",
+   "TERRAIN_TRENCH_TROPICAL"
+  ],
+  "base": {
+   "moves": 1,
+   "workRate": 200,
+   "combatClass": "UNITCOMBAT_SEA_WORKER"
+  }
+ }
+}

@@ -1,0 +1,111 @@
+{
+ "type": "UNIT_MONITOR",
+ "description": "TXT_KEY_UNIT_MONITOR",
+ "civilopedia": "TXT_KEY_UNIT_NILE_MONITOR_PEDIA",
+ "capabilities": {
+  "assassin": true,
+  "blendIntoCity": true,
+  "onlyDefensive": true,
+  "animalIgnoresBorders": true,
+  "targets": {
+   "UNITCOMBAT_SIZE_FINE": true,
+   "UNITCOMBAT_SIZE_DIMINUTIVE": true,
+   "UNITCOMBAT_SIZE_TINY": true
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_SUBDUE",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_MONITOR",
+    "bUnitToCity": [
+     {
+      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
+     }
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 95,
+    "Yields": [
+     [
+      {
+       "Constant": 1,
+       "Random": 9
+      }
+     ],
+     [
+      {
+       "Constant": 0,
+       "Random": 4
+      }
+     ],
+     [
+      {
+       "Constant": 1,
+       "Random": 2
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "aggression": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_REPTILE",
+   "UNITCOMBAT_RECKLESS_ANIMAL",
+   "UNITCOMBAT_REPTILE_LIZARD",
+   "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+   "UNITCOMBAT_ANIMAL_COMBAT_SCRATCH",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+   "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+   "UNITCOMBAT_ANIMAL_COMBAT_TREECLIMBING",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_SMALL",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES",
+   "TERRAIN_ICE",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_SCRUB",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA"
+  ],
+  "featurePassableTechs": [
+   {
+    "FEATURE_FLOOD_PLAINS": "NONE"
+   },
+   {
+    "FEATURE_SAVANNA": "NONE"
+   }
+  ],
+  "base": {
+   "combat": 2,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

@@ -1,0 +1,192 @@
+{
+ "type": "UNIT_SUBDUED_ZEBRA",
+ "description": "TXT_KEY_UNIT_SUBDUED_ZEBRA",
+ "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
+ "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
+ "strength": {
+  "unit": {
+   "cityDefense": {
+    "percent": -80
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 70
+  }
+ },
+ "capabilities": {
+  "onlyDefensive": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_SLAY_ANIMAL": [
+     {
+      "OutcomeType": "OUTCOME_SLAY_ANIMAL",
+      "iChance": 100,
+      "Yields": [
+       [
+        {
+         "Constant": 90,
+         "Random": 110
+        }
+       ],
+       [
+        {
+         "Constant": 11,
+         "Random": 14
+        }
+       ],
+       [
+        {
+         "Constant": 7,
+         "Random": 5
+        }
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "MISSION_ANIMAL_COMBAT": [
+     {
+      "OutcomeType": "OUTCOME_ANIMAL_COMBAT1",
+      "iChance": 100,
+      "Commerces": [
+       [
+        [
+         1
+        ]
+       ],
+       0,
+       [
+        [
+         5
+        ]
+       ],
+       0
+      ],
+      "iHappinessTimer": 5
+     },
+     {
+      "OutcomeType": "OUTCOME_ANIMAL_COMBAT2",
+      "iChance": 100,
+      "Commerces": [
+       [
+        [
+         2
+        ]
+       ],
+       0,
+       [
+        [
+         5
+        ]
+       ],
+       0
+      ],
+      "iHappinessTimer": 5
+     },
+     {
+      "OutcomeType": "OUTCOME_ANIMAL_COMBAT3",
+      "iChance": 100,
+      "Commerces": [
+       [
+        [
+         3
+        ]
+       ],
+       0,
+       [
+        [
+         5
+        ]
+       ],
+       0
+      ],
+      "iHappinessTimer": 5
+     },
+     {
+      "OutcomeType": "OUTCOME_ANIMAL_COMBAT4",
+      "iChance": 100,
+      "Commerces": [
+       [
+        [
+         4
+        ]
+       ],
+       0,
+       [
+        [
+         5
+        ]
+       ],
+       0
+      ],
+      "iHappinessTimer": 5
+     },
+     {
+      "OutcomeType": "OUTCOME_ANIMAL_COMBAT5",
+      "iChance": 100,
+      "Commerces": [
+       [
+        [
+         5
+        ]
+       ],
+       0,
+       [
+        [
+         5
+        ]
+       ],
+       0
+      ],
+      "iHappinessTimer": 5
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_GOVERNORS_PETS",
+   "BUILDING_GOVERNORS_MENAGERIE",
+   "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+   "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE",
+   "BUILDING_CARNIVAL",
+   "BUILDING_FOLKLORE_ZEBRA",
+   "BUILDING_CAMP_ZEBRA",
+   "BUILDING_ZOO",
+   "BUILDING_TAXIDERMIST"
+  ]
+ },
+ "identity": {
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "captures": "UNIT_SUBDUED_ZEBRA",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_SUBDUED_LARGE",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_ANIMALS",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_SUBDUED"
+  }
+ }
+}

@@ -1,0 +1,129 @@
+{
+ "type": "UNIT_MAMMOTH",
+ "description": "TXT_KEY_UNIT_MAMMOTH",
+ "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 100
+   },
+   "limit": {
+    "flat": 75
+   },
+   "maxUnits": {
+    "flat": 4
+   }
+  }
+ },
+ "capabilities": {
+  "blendIntoCity": true,
+  "onlyDefensive": true,
+  "animalIgnoresBorders": true
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_BONUS_SPAWNED",
+    "iChance": 2,
+    "BonusType": "BONUS_MAMMOTH",
+    "Yields": [
+     [
+      {
+       "Constant": 1000,
+       "Random": 1000
+      }
+     ],
+     [
+      {
+       "Constant": 500,
+       "Random": 200
+      }
+     ],
+     [
+      {
+       "Constant": 118,
+       "Random": 24
+      }
+     ]
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_SUBDUE",
+    "iChance": 3,
+    "UnitType": "UNIT_SUBDUED_MAMMOTH",
+    "bUnitToCity": [
+     {
+      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
+     }
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 95,
+    "Yields": [
+     [
+      {
+       "Constant": 1000,
+       "Random": 1000
+      }
+     ],
+     [
+      {
+       "Constant": 500,
+       "Random": 200
+      }
+     ],
+     [
+      {
+       "Constant": 118,
+       "Random": 24
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 14,
+  "xpValueDefense": 10,
+  "aggression": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_MAMMAL",
+   "UNITCOMBAT_RECKLESS_ANIMAL",
+   "UNITCOMBAT_MAMMAL_PACHYDERM",
+   "UNITCOMBAT_ANIMAL_COMBAT_CONSTRICT",
+   "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+   "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_HORNED",
+   "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+   "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_PLAINS",
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES",
+   "TERRAIN_SALT_FLATS"
+  ],
+  "base": {
+   "combat": 8,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

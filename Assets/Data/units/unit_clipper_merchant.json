@@ -1,0 +1,92 @@
+{
+ "type": "UNIT_CLIPPER_MERCHANT",
+ "description": "TXT_KEY_UNIT_CLIPPER_MERCHANT",
+ "civilopedia": "TXT_KEY_UNIT_CLIPPER_MERCHANT_PEDIA",
+ "help": "TXT_KEY_UNIT_MERCHANT_SHIP_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SHIPWRIGHT",
+     "scope": "city"
+    },
+    {
+     "type": "AREA_SIZE",
+     "scope": "world",
+     "min": 10
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "mechanized": true,
+  "onlyDefensive": true,
+  "rivalTerritory": true,
+  "renderBelowWater": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "greatPersonAction": {
+   "trade": {
+    "base": 85,
+    "multiplier": 1
+   }
+  }
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_LIBERTY_MERCHANT"
+  ]
+ },
+ "cost": {
+  "production": 372,
+  "upkeep": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   }
+  ]
+ },
+ "identity": {
+  "worth": 2,
+  "minAreaSize": 10,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_EXPLORE_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_MERCHANT",
+   "UNITAI_EXPLORE_SEA"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+   "UNITCOMBAT_WEAPON_DIST_RIFLE",
+   "UNITCOMBAT_ARMOR_NAVAL",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_MEDIOCRE",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_NAVAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 8,
+   "moves": 4,
+   "combatClass": "UNITCOMBAT_TRADE"
+  }
+ }
+}

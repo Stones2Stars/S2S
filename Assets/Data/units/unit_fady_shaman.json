@@ -1,0 +1,130 @@
+{
+ "type": "UNIT_FADY_SHAMAN",
+ "description": "TXT_KEY_UNIT_FADY_SHAMAN",
+ "civilopedia": "TXT_KEY_UNIT_FADY_SHAMAN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MALAGASY",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_APOTHECARY_SHOP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_PHARMACY",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 6
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_PEOPLE": {
+     "heal": 9
+    },
+    "UNITCOMBAT_HEALS_AS_ANIMALS": {
+     "heal": 6
+    }
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -8
+  },
+  "plot": {
+   "flat": -4
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "onlyDefensive": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_DISEASE_CONTROL1",
+   "PROMOTION_DISEASE_CONTROL2",
+   "PROMOTION_DISEASE_CONTROL3"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_DR"
+  ]
+ },
+ "cost": {
+  "production": 245,
+  "upkeep": 5,
+  "hurryCostModifier": 25
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 7,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_HEALER",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_WEAPON_H2H_STAFF",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_MEDIOCRE",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_PEOPLE",
+   "UNITCOMBAT_HEALS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 5,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_HEALTH_CARE"
+  }
+ }
+}

@@ -1,0 +1,109 @@
+{
+ "type": "UNIT_DIGGER",
+ "description": "TXT_KEY_UNIT_DIGGER",
+ "civilopedia": "TXT_KEY_UNIT_DIGGER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AUSTRALIAN",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "vsUnit": {
+    "UNIT_MACHINE_GUN": {
+     "attack": {
+      "percent": 50
+     }
+    },
+    "UNIT_ARTILLERY": {
+     "attack": {
+      "percent": 50
+     }
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "ignoreBuildingDefense": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_AMBUSH",
+   "PROMOTION_MARCH",
+   "PROMOTION_WARMTH1"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MODERN_MARINE",
+   "UNIT_SKI_PATROL"
+  ]
+ },
+ "cost": {
+  "production": 805,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 18,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "conscription": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_RESERVE",
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_RIFLE_BUTT",
+   "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 24,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_GUN"
+  }
+ }
+}

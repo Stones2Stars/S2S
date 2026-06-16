@@ -1,0 +1,90 @@
+{
+ "type": "UNIT_POISON_NOVA",
+ "description": "TXT_KEY_UNIT_POISON_NOVA",
+ "civilopedia": "TXT_KEY_UNIT_POISON_NOVA_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_BIOLOGICAL_WARFARE_LAB",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": -1
+   },
+   "evasion": {
+    "percent": 50
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "ignoreBuildingDefense": true,
+  "mechanized": true,
+  "suicide": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "cost": {
+  "production": 5000,
+  "upkeep": 21
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_ADVANCED_NUKES"
+  ]
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 50,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_ICBM",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ICBM"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_BALLISTIC",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_WEAPON_METHOD_WARHEAD",
+   "UNITCOMBAT_WEAPON_DETONATE_BIOLOGICAL",
+   "UNITCOMBAT_MOTILITY_UNMANNED",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_HUGE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": 260
+  },
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_DOOM"
+  }
+ }
+}

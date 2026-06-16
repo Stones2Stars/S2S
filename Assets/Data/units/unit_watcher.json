@@ -1,0 +1,154 @@
+{
+ "type": "UNIT_WATCHER",
+ "description": "TXT_KEY_UNIT_WATCHER",
+ "civilopedia": "TXT_KEY_UNIT_WATCHER_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_LOOKOUT_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SENTRY_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TOWN_WATCH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_TOWN_PATROL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GUARDHOUSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GUARD_STATION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHERIFFS_OFFICE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_POLICE_STATION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_POLICE_PRECINCT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "unit": {
+   "garrison": {
+    "flat": 1
+   }
+  }
+ },
+ "espionage": {
+  "unit": {
+   "investigation": {
+    "flat": 2
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "enclose": {
+    "percent": 2
+   },
+   "dynamicDefense": {
+    "percent": 2
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -2
+  },
+  "plot": {
+   "flat": -1
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "counterSpy": true,
+  "passage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militaryTrade": true,
+  "targets": {
+   "UNITCOMBAT_CRIMINAL": true
+  },
+  "defenders": {
+   "UNITCOMBAT_CRIMINAL": true
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_DISGUISED": 1
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SENTRY"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_ENFORCERS",
+   "UNIT_NEANDERTHAL_WATCHER"
+  ],
+  "supersededBy": [
+   "UNIT_NEANDERTHAL_WATCHER"
+  ]
+ },
+ "cost": {
+  "production": 14,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 2,
+  "xpValueAttack": 1,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_PROPERTY_CONTROL",
+   "UNITAI_INVESTIGATOR",
+   "UNITAI_SEE_INVISIBLE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_WEAPON_H2H_FIST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 2,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT"
+  }
+ }
+}

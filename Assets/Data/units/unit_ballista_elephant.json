@@ -1,0 +1,135 @@
+{
+ "type": "UNIT_BALLISTA_ELEPHANT",
+ "description": "TXT_KEY_UNIT_BALLISTA_ELEPHANT",
+ "civilopedia": "TXT_KEY_UNIT_BALLISTA_ELEPHANT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ELEPHANTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_ANIMAL_TRAINER_ELEPHANT",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SIEGE_WEAPONS_WORKSHOP",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 30
+   },
+   "feature": {
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": 25
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE_WOODEN": {
+     "percent": 50
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 50
+    },
+    "UNITCOMBAT_MELEE": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 5
+   }
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "targets": {
+   "UNITCOMBAT_MOUNTED": true
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COMMANDO"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_BOMBARD_ELEPHANT"
+  ]
+ },
+ "cost": {
+  "production": 300,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 17,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_COUNTER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SIEGE_URBAN",
+   "UNITCOMBAT_SIEGE_WOODEN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_LONG_POLEARM",
+   "UNITCOMBAT_WEAPON_DIST_BALLISTA",
+   "UNITCOMBAT_SHIELD_TOWER",
+   "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_HORNED",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+   "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+   "UNITCOMBAT_ANIMAL_COMBAT_CONSTRICT",
+   "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+   "UNITCOMBAT_MOTILITY_RIDING",
+   "UNITCOMBAT_MOUNT_ELEPHANT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 11,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_MOUNTED"
+  }
+ }
+}

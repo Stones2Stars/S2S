@@ -1,0 +1,150 @@
+{
+ "type": "UNIT_VERY_HEAVY_ARMOR",
+ "description": "TXT_KEY_UNIT_VERY_HEAVY_ARMOR",
+ "civilopedia": "TXT_KEY_UNIT_VERY_HEAVY_ARMOR_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_DIESELPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PETROLEUM_PRODUCTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BIOFUEL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 60
+   },
+   "maxUnits": {
+    "flat": 6
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_WHEELED": {
+     "percent": 25
+    }
+   },
+   "vsUnit": {
+    "UNIT_MACHINE_GUN": {
+     "attack": {
+      "percent": 50
+     }
+    },
+    "UNIT_EARLY_TANK": {
+     "attack": {
+      "percent": 150
+     }
+    },
+    "UNIT_LIGHT_TANK": {
+     "attack": {
+      "percent": 30
+     }
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "pillage": true,
+  "ignoreBuildingDefense": true,
+  "mechanized": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_BLITZ"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MODERN_ARMOR"
+  ]
+ },
+ "cost": {
+  "production": 1080,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 6,
+  "militaryWorth": 260,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_PILLAGE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_ARMOR_VEHICULAR",
+   "UNITCOMBAT_MOTILITY_DRIVING",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 55,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_TRACKED"
+  }
+ }
+}

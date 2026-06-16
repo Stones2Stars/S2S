@@ -1,0 +1,130 @@
+{
+ "type": "UNIT_A10_BOMBER",
+ "description": "TXT_KEY_UNIT_A10_BOMBER",
+ "civilopedia": "TXT_KEY_UNIT_A10_BOMBER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_AMMUNITION",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "bombard": {
+  "unit": {
+   "airBombRate": {
+    "flat": 15
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 100
+   },
+   "limit": {
+    "flat": 100
+   },
+   "maxUnits": {
+    "flat": 2
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 12
+   },
+   "evasion": {
+    "percent": 20
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_TRACKED": {
+     "percent": 50
+    },
+    "UNITCOMBAT_WHEELED": {
+     "percent": 50
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": 50
+    },
+    "UNITCOMBAT_SIEGE": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "ignoreBuildingDefense": true,
+  "mechanized": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true,
+  "dcmAirBomb": 5
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_UAV"
+  ]
+ },
+ "cost": {
+  "production": 1700,
+  "upkeep": 5
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 250,
+  "xpValueAttack": 6,
+  "xpValueDefense": 6,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_ATTACK_AIR",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "special": "SPECIALUNIT_FIGHTER",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_AIR"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+   "UNITCOMBAT_WEAPON_A2G_TORPEDO",
+   "UNITCOMBAT_WEAPON_A2G_BOMBS",
+   "UNITCOMBAT_WEAPON_A2G_SHORT_RANGE_MISSILE",
+   "UNITCOMBAT_ARMOR_AIRCRAFT",
+   "UNITCOMBAT_MOTILITY_PILOTING",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_AIRCRAFT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "airCombat": 60,
+   "airCombatLimit": 60,
+   "airUnitCap": 1,
+   "combatClass": "UNITCOMBAT_BOMBERS"
+  }
+ }
+}

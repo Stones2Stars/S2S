@@ -1,0 +1,164 @@
+{
+ "type": "UNIT_HITTITES_HITTITE_CHARIOT",
+ "description": "TXT_KEY_UNIT_HITTITES_HITTITE_CHARIOT",
+ "civilopedia": "TXT_KEY_UNIT_CHARIOT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HITTITE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_CHARIOT_WORKSHOP",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_HORSE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_COPPER_WARES": {
+     "percent": 5
+    },
+    "BONUS_BRONZE_WARES": {
+     "percent": 5
+    },
+    "BONUS_IRON_WARES": {
+     "percent": 5
+    },
+    "BONUS_PRIME_TIMBER": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "feature": {
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": -25
+     }
+    },
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": -50
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 100
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "pillage": true,
+  "firstStrikeImmune": true,
+  "ignoreTerrainCost": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_BLITZ"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_CARROBALLISTA"
+  ]
+ },
+ "cost": {
+  "production": 130,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 7,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_COUNTER",
+   "UNITAI_PILLAGE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_SHORT_POLEARM",
+   "UNITCOMBAT_WEAPON_DIST_JAVELIN",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+   "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_ANIMAL_DRAWN",
+   "UNITCOMBAT_MOUNT_HORSE",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "cargo": {
+   "domain": "DOMAIN_LAND",
+   "special": "SPECIALUNIT_TROOP"
+  },
+  "base": {
+   "combat": 6,
+   "moves": 2,
+   "cargo": 1,
+   "combatClass": "UNITCOMBAT_MOUNTED"
+  }
+ }
+}

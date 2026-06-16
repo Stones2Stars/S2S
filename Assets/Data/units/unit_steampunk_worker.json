@@ -1,0 +1,183 @@
+{
+ "type": "UNIT_STEAMPUNK_WORKER",
+ "description": "TXT_KEY_UNIT_STEAMPUNK_WORKER",
+ "civilopedia": "TXT_KEY_UNIT_STEAMPUNK_WORKER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_STEAMPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_COPPER_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BRONZE_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_STEEL_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_COPPER_WARES": {
+     "percent": 15
+    },
+    "BONUS_BRONZE_WARES": {
+     "percent": 15
+    },
+    "BONUS_IRON_WARES": {
+     "percent": 15
+    },
+    "BONUS_STEEL_WARES": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "workerTrade": true
+ },
+ "grants": {
+  "builds": [
+   "BUILD_BURN_VEGETATION",
+   "BUILD_MINE",
+   "BUILD_PATH",
+   "BUILD_STONE_WATCHTOWER",
+   "BUILD_TAR_GATHERER",
+   "BUILD_DESERT_CAMP",
+   "BUILD_HUNTING_PRESERVE",
+   "BUILD_JUNGLE_CAMP",
+   "BUILD_REMOVE_VEGETATION",
+   "BUILD_SALT_GATHERER",
+   "BUILD_THATCH_CUTTER",
+   "BUILD_WETLANDS_CAMP",
+   "BUILD_MUSHROOM_GATHERER",
+   "BUILD_ORCHARD",
+   "BUILD_PASTURE",
+   "BUILD_SILK_FARM",
+   "BUILD_WINERY",
+   "BUILD_FARM",
+   "BUILD_QUARRY",
+   "BUILD_GEOGLYPH",
+   "BUILD_FORT",
+   "BUILD_PAVED_ROAD",
+   "BUILD_WATERMILL",
+   "BUILD_WORKSHOP",
+   "BUILD_DRAIN_SWAMP",
+   "BUILD_LUMBERMILL",
+   "BUILD_PEAT_CUTTER",
+   "BUILD_PLANTATION",
+   "BUILD_ROAD",
+   "BUILD_VILLAGE",
+   "BUILD_WINDMILL",
+   "BUILD_MOUNTAIN_MINE",
+   "BUILD_YOUNG_FOREST",
+   "BUILD_TOWN",
+   "BUILD_REMOVE_ROCK_FORMATION",
+   "BUILD_SHAFT_MINE",
+   "BUILD_ARCHEOLOGICAL_SITE",
+   "BUILD_FOSSIL_DIG_SITE",
+   "BUILD_STEEL_WATCHTOWER",
+   "BUILD_COMMAND_BUNKER",
+   "BUILD_FACTORY",
+   "BUILD_RAILROAD",
+   "BUILD_FOREST_PRESERVE",
+   "BUILD_HYDROCARBON_WELL",
+   "BUILD_HYDRO_DAM",
+   "BUILD_RADIO_TOWER",
+   "BUILD_SUBURBS",
+   "BUILD_HIGHWAY",
+   "BUILD_ELECTRIC_RAILROAD",
+   "BUILD_TREEFARM",
+   "BUILD_MODERN_MINE",
+   "BUILD_GEOTHERMAL_FACTORY",
+   "BUILD_GROUNDWATER_WELL",
+   "BUILD_GROW_FOREST",
+   "BUILD_MANUFACTURING_COMPLEX",
+   "BUILD_MODERN_WINDMILL",
+   "BUILD_NATURE_PRESERVE",
+   "BUILD_PLANT_BAMBOO",
+   "BUILD_PLANT_JUNGLE",
+   "BUILD_PLANT_SAVANNA",
+   "BUILD_RADAR_TOWER",
+   "BUILD_SCRUB_FALLOUT",
+   "BUILD_SOLAR_PANELS",
+   "BUILD_WILDLIFE_SANCTUARY"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_WORKER_MODERN"
+  ]
+ },
+ "cost": {
+  "production": 590,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_STEAMPUNK_WORKER",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_ROBOT",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 3,
+   "workRate": 155,
+   "combatClass": "UNITCOMBAT_WORKER"
+  }
+ }
+}

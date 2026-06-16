@@ -1,0 +1,154 @@
+{
+ "type": "UNIT_CAMEL_CUIRASSIER",
+ "description": "TXT_KEY_UNIT_CAMEL_CUIRASSIER",
+ "civilopedia": "TXT_KEY_UNIT_CAMEL_CUIRASSIER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_ANIMAL_TRAINER_CAMEL",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_CAMEL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": -20
+   },
+   "terrain": {
+    "TERRAIN_DESERT": {
+     "attack": {
+      "percent": 25
+     }
+    }
+   },
+   "feature": {
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": -25
+     }
+    },
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": -50
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 50
+    },
+    "UNITCOMBAT_SIEGE_WOODEN": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 100
+   },
+   "maxUnits": {
+    "flat": 6
+   }
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "pillage": true,
+  "firstStrikeImmune": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COMMANDO",
+   "PROMOTION_WARMTH1",
+   "PROMOTION_WARMTH2",
+   "PROMOTION_WARMTH3"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_CAMEL_GUNNER"
+  ]
+ },
+ "cost": {
+  "production": 380,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 52,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+   "UNITCOMBAT_WEAPON_DIST_RIFLE",
+   "UNITCOMBAT_ARMOR_HEAVY",
+   "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+   "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+   "UNITCOMBAT_ANIMAL_COMBAT_REPELLENT",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_RIDING",
+   "UNITCOMBAT_MOUNT_CAMEL",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 14,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_MOUNTED"
+  }
+ }
+}

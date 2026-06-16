@@ -1,0 +1,156 @@
+{
+ "type": "UNIT_CLOUD_DESTROYER",
+ "description": "TXT_KEY_UNIT_CLOUD_DESTROYER",
+ "civilopedia": "TXT_KEY_UNIT_CLOUD_DESTROYER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_STEAMPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_HYDROGEN",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "bombard": {
+  "unit": {
+   "airBombRate": {
+    "flat": 12
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "vsUnit": {
+    "UNIT_BALLOON": {
+     "attack": {
+      "percent": 100
+     },
+     "defense": {
+      "percent": 100
+     }
+    },
+    "UNIT_BLIMP": {
+     "attack": {
+      "percent": 75
+     },
+     "defense": {
+      "percent": 75
+     }
+    },
+    "UNIT_BARRAGE_BALLOON": {
+     "attack": {
+      "percent": 50
+     },
+     "defense": {
+      "percent": 50
+     }
+    },
+    "UNIT_AIRSHIP": {
+     "attack": {
+      "percent": 25
+     },
+     "defense": {
+      "percent": 25
+     }
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "noDefensiveBonus": true,
+  "canMoveAllTerrain": true,
+  "ignoreBuildingDefense": true,
+  "ignoreTerrainCost": true,
+  "mechanized": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SENTRY"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_GUNSHIP"
+  ]
+ },
+ "cost": {
+  "production": 645,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 75,
+  "xpValueAttack": 6,
+  "xpValueDefense": 6,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+   "UNITCOMBAT_WEAPON_A2G_BOMBS",
+   "UNITCOMBAT_SPEED_SLOW",
+   "UNITCOMBAT_MOTILITY_PILOTING",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_GARGANTUAN",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL"
+  ],
+  "base": {
+   "combat": 35,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_BALLOON"
+  }
+ }
+}

@@ -1,0 +1,138 @@
+{
+ "type": "UNIT_BALLISTA_MAMMOTH",
+ "description": "TXT_KEY_UNIT_BALLISTA_MAMMOTH",
+ "civilopedia": "TXT_KEY_UNIT_BALLISTA_MAMMOTH_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MAMMOTH",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_EFFECT_HERITAGE_MAMMOTHS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_MAMMOTH",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 30
+   },
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE_WOODEN": {
+     "percent": 50
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 50
+    },
+    "UNITCOMBAT_MELEE": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true,
+  "unitTargets": {
+   "UNIT_MOUNTED_INFANTRY": true
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COLD1",
+   "PROMOTION_COLD2",
+   "PROMOTION_COLD3"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_BOMBARD_MAMMOTH"
+  ]
+ },
+ "cost": {
+  "production": 495
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 8,
+  "xpValueAttack": 2,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_COUNTER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SIEGE_URBAN",
+   "UNITCOMBAT_SIEGE_WOODEN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_LONG_POLEARM",
+   "UNITCOMBAT_WEAPON_DIST_BALLISTA",
+   "UNITCOMBAT_SHIELD_TOWER",
+   "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_HORNED",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+   "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+   "UNITCOMBAT_ANIMAL_COMBAT_CONSTRICT",
+   "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+   "UNITCOMBAT_MOTILITY_RIDING",
+   "UNITCOMBAT_MOUNT_MAMMOTH",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 10,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_MOUNTED"
+  }
+ }
+}

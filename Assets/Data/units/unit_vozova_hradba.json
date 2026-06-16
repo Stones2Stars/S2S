@@ -1,0 +1,131 @@
+{
+ "type": "UNIT_VOZOVA_HRADBA",
+ "description": "TXT_KEY_UNIT_VOZOVA_HRADBA",
+ "civilopedia": "TXT_KEY_UNIT_VOZOVA_HRADBA_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CZECH",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_CANNON_FORGE",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "feature": {
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": -50
+     }
+    },
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": -50
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 75
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SHOCK",
+   "PROMOTION_FORMATION",
+   "PROMOTION_FORMATION2"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_ARMORED_CAR"
+  ]
+ },
+ "cost": {
+  "production": 400,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 16,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_COUNTER",
+   "UNITAI_PILLAGE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+   "UNITCOMBAT_WEAPON_DIST_RIFLE",
+   "UNITCOMBAT_ARMOR_VEHICULAR",
+   "UNITCOMBAT_SHIELD_LARGE",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+   "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_ANIMAL_DRAWN",
+   "UNITCOMBAT_MOUNT_HORSE",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 13,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_MOUNTED"
+  }
+ }
+}

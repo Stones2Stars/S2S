@@ -1,0 +1,90 @@
+{
+ "type": "UNIT_COBRA",
+ "description": "TXT_KEY_UNIT_COBRA",
+ "civilopedia": "TXT_KEY_UNIT_COBRA_PEDIA",
+ "withdrawal": {
+  "unit": {
+   "percent": 70
+  }
+ },
+ "capabilities": {
+  "assassin": true,
+  "blendIntoCity": true,
+  "targets": {
+   "UNITCOMBAT_SIZE_DIMINUTIVE": true,
+   "UNITCOMBAT_SIZE_TINY": true
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_SUBDUE",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_COBRA",
+    "bUnitToCity": [
+     {
+      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
+     }
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 95,
+    "Yields": [
+     1,
+     1,
+     [
+      {
+       "Constant": 5,
+       "Random": 7
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 4,
+  "xpValueDefense": 3,
+  "aggression": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_REPTILE",
+   "UNITCOMBAT_REPTILE_SNAKE",
+   "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
+   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+   "UNITCOMBAT_ANIMAL_COMBAT_HIDING",
+   "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+   "UNITCOMBAT_ANIMAL_COMBAT_VENEMOUS",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EPIC",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_TINY",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_ICE",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA"
+  ],
+  "base": {
+   "combat": 2,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

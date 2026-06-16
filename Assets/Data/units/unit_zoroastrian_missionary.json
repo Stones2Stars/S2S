@@ -1,0 +1,68 @@
+{
+ "type": "UNIT_ZOROASTRIAN_MISSIONARY",
+ "description": "TXT_KEY_UNIT_ZOROASTRIAN_MISSIONARY",
+ "civilopedia": "TXT_KEY_CONCEPT_RELIGION_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_ZOROASTRIAN_SHRINE",
+     "scope": "city"
+    },
+    {
+     "type": "RELIGION_ZOROASTRIANISM",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_REMOVE_WV_SLAVERY": [
+     {
+      "OutcomeType": "OUTCOME_REMOVE_WV_SLAVERY",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "PythonCallback": "doRemoveWVSlavery"
+     }
+    ]
+   }
+  ]
+ },
+ "cost": {
+  "production": 110,
+  "upkeep": 2
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MISSIONARY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_RELIGION",
+  "captures": "UNIT_ZOROASTRIAN_MISSIONARY",
+  "unitAIs": [
+   "UNITAI_MISSIONARY"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_INFERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_MISSIONARY"
+  }
+ }
+}

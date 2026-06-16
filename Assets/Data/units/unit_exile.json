@@ -1,0 +1,157 @@
+{
+ "type": "UNIT_EXILE",
+ "description": "TXT_KEY_UNIT_EXILE",
+ "civilopedia": "TXT_KEY_UNIT_EXILE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_EXILE_PRACTICES",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "culture": {
+  "unit": {
+   "garrison": {
+    "flat": -1
+   }
+  }
+ },
+ "espionage": {
+  "unit": {
+   "insidiousness": {
+    "flat": 2
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "lunge": {
+    "percent": 2
+   },
+   "unnerve": {
+    "percent": 2
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 4
+  },
+  "plot": {
+   "flat": 2
+  }
+ },
+ "capabilities": {
+  "alwaysHostile": true,
+  "hiddenNationality": true,
+  "noCapture": true,
+  "noDefensiveBonus": true,
+  "pillage": true,
+  "blendIntoCity": true,
+  "counterSpy": true,
+  "destroy": true,
+  "ignoreTerrainCost": true,
+  "stealPlans": true,
+  "militaryProduction": true,
+  "targets": {
+   "UNITCOMBAT_TRADE": true,
+   "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+  }
+ },
+ "vision": {
+  "invisible": "INVISIBLE_CAMOUFLAGE",
+  "invisibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_INDUSTRYESPIONAGE",
+   "PROMOTION_MARAUDER"
+  ],
+  "greatPersonAction": {
+   "trade": {
+    "base": 5,
+    "multiplier": 1
+   }
+  }
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_THIEF"
+  ],
+  "supersededBy": [
+   "UNIT_NEANDERTHAL_GATHERER"
+  ]
+ },
+ "cost": {
+  "production": 13,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 2,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_INFILTRATOR",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_MILITARY",
+  "espionagePoints": 25,
+  "unitAIs": [
+   "UNITAI_SPY",
+   "UNITAI_PILLAGE",
+   "UNITAI_INFILTRATOR"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_ROCK",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_EXILE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 2,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_CRIMINAL"
+  }
+ }
+}

@@ -1,0 +1,80 @@
+{
+ "type": "UNIT_TACTICAL_NUKE",
+ "description": "TXT_KEY_UNIT_TACTICAL_NUKE",
+ "civilopedia": "TXT_KEY_UNIT_TACTICAL_NUKE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_URANIUM",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_HEAVY_WATER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 4
+   },
+   "evasion": {
+    "percent": 50
+   },
+   "nukeRange": {
+    "flat": 1
+   }
+  }
+ },
+ "capabilities": {
+  "ignoreBuildingDefense": true,
+  "mechanized": true,
+  "suicide": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "cost": {
+  "production": 1681,
+  "upkeep": 6
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 1000,
+  "xpValueDefense": 6,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_ICBM",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "special": "SPECIALUNIT_MISSILE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ICBM"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_BALLISTIC",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_WEAPON_METHOD_WARHEAD",
+   "UNITCOMBAT_WEAPON_DETONATE_RADIOACTIVE",
+   "UNITCOMBAT_MOTILITY_UNMANNED",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_HUGE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_DOOM"
+  }
+ }
+}

@@ -1,0 +1,103 @@
+{
+ "type": "UNIT_PROGRAMMER",
+ "description": "TXT_KEY_UNIT_PROGRAMMER",
+ "civilopedia": "TXT_KEY_UNIT_PROGRAMMER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_FIREARMS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_DESIGN_STUDIO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 10
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_TECH": {
+     "heal": 26,
+     "adjacentHeal": 9
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "capabilities": {
+  "onlyDefensive": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_SOFTWARE_DEVELOPER"
+  ]
+ },
+ "cost": {
+  "production": 1200,
+  "upkeep": 8,
+  "hurryCostModifier": 25
+ },
+ "identity": {
+  "worth": 10,
+  "militaryWorth": 10,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_HEALER",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_HANDGUN",
+   "UNITCOMBAT_WEAPON_DIST_HANDGUN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_TECH"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 10,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_GUN"
+  }
+ }
+}

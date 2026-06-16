@@ -1,0 +1,127 @@
+{
+ "type": "UNIT_COW",
+ "description": "TXT_KEY_UNIT_COW",
+ "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
+ "capabilities": {
+  "blendIntoCity": true,
+  "onlyDefensive": true,
+  "animalIgnoresBorders": true
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_BONUS_SPAWNED",
+    "iChance": 2,
+    "BonusType": "BONUS_COW",
+    "Yields": [
+     [
+      {
+       "Constant": 180,
+       "Random": 180
+      }
+     ],
+     [
+      {
+       "Constant": 27,
+       "Random": 27
+      }
+     ],
+     [
+      {
+       "Constant": 13,
+       "Random": 5
+      }
+     ]
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_SUBDUE",
+    "iChance": 3,
+    "UnitType": "UNIT_SUBDUED_COW",
+    "bUnitToCity": [
+     {
+      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
+     }
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 95,
+    "Yields": [
+     [
+      {
+       "Constant": 180,
+       "Random": 180
+      }
+     ],
+     [
+      {
+       "Constant": 27,
+       "Random": 27
+      }
+     ],
+     [
+      {
+       "Constant": 13,
+       "Random": 5
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 5,
+  "xpValueDefense": 3,
+  "aggression": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_MAMMAL",
+   "UNITCOMBAT_RECKLESS_ANIMAL",
+   "UNITCOMBAT_MAMMAL_BOVINE",
+   "UNITCOMBAT_ATTACK_FORM_COLLISION_PIERCING",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+   "UNITCOMBAT_ANIMAL_COMBAT_HEAD_BUTT",
+   "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+   "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+   "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_HORNED",
+   "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+   "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+   "UNITCOMBAT_ANIMAL_COMBAT_WARNING",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "featureImpassable": [
+   "FEATURE_JUNGLE",
+   "FEATURE_MANGROVE",
+   "FEATURE_SWAMP"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_DUNES",
+   "TERRAIN_ICE",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_TAIGA"
+  ],
+  "base": {
+   "combat": 3,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

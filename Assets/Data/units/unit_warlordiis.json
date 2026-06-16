@@ -1,0 +1,61 @@
+{
+ "type": "UNIT_WARLORDIIS",
+ "description": "TXT_KEY_UNIT_WARLORDIIS",
+ "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "grants": {
+  "greatPeople": [
+   "SPECIALIST_MILITARY_INSTRUCTOR"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_WARLORDIIIS"
+  ]
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "leaderExperience": 10,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_GENERAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_MILITARY",
+  "leaderPromotion": "PROMOTION_LEADER",
+  "captures": "UNIT_WARLORDIIS",
+  "unitAIs": [
+   "UNITAI_GENERAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_CAPTAIN"
+  }
+ }
+}

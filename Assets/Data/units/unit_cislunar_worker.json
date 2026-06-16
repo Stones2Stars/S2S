@@ -1,0 +1,62 @@
+{
+ "type": "UNIT_CISLUNAR_WORKER",
+ "description": "TXT_KEY_UNIT_CISLUNAR_WORKER",
+ "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CISLUNAR_DOCKING_BAY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "ignoreTerrainCost": true
+ },
+ "grants": {
+  "builds": [
+   "BUILD_ORBITAL_TRAJECTORY"
+  ]
+ },
+ "cost": {
+  "production": 1000,
+  "upkeep": 1,
+  "hurryCostModifier": 10000
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_CISLUNAR_WORKER",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_SOLAR_SAIL_SPACESHIP",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_TECH",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "moves": 24,
+   "workRate": 250,
+   "combatClass": "UNITCOMBAT_SPACE_WORKER"
+  }
+ }
+}

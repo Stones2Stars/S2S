@@ -1,0 +1,94 @@
+{
+ "type": "UNIT_VULTURE",
+ "description": "TXT_KEY_UNIT_VULTURE",
+ "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
+ "withdrawal": {
+  "unit": {
+   "percent": 40
+  }
+ },
+ "capabilities": {
+  "blendIntoCity": true,
+  "onlyDefensive": true,
+  "animalIgnoresBorders": true
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_SUBDUE",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_VULTURE",
+    "bUnitToCity": [
+     {
+      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
+     }
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 95,
+    "Yields": [
+     1,
+     1,
+     4
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 1,
+  "xpValueDefense": 1,
+  "aggression": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_BIRD",
+   "UNITCOMBAT_RECKLESS_ANIMAL",
+   "UNITCOMBAT_BIRD_RAPTOR",
+   "UNITCOMBAT_ANIMAL_COMBAT_PECK",
+   "UNITCOMBAT_ANIMAL_COMBAT_REPELLENT",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
+   "UNITCOMBAT_ANIMAL_COMBAT_WARNING",
+   "UNITCOMBAT_MOTILITY_AERIAL",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_SMALL",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "featureImpassable": [
+   "FEATURE_JUNGLE"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_COAST_DEEP_POLAR",
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_ICE",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TRENCH",
+   "TERRAIN_LAKE_SHORE",
+   "TERRAIN_TRENCH_POLAR",
+   "TERRAIN_TRENCH_TROPICAL",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PEAK"
+  ],
+  "base": {
+   "combat": 1,
+   "moves": 4,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

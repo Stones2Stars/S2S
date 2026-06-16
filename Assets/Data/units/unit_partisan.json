@@ -1,0 +1,168 @@
+{
+ "type": "UNIT_PARTISAN",
+ "description": "TXT_KEY_UNIT_PARTISAN",
+ "civilopedia": "TXT_KEY_UNIT_PARTISAN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_AMMUNITION",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_IRON_WARES": {
+     "percent": 15
+    },
+    "BONUS_FLINT": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "lunge": {
+    "percent": 14
+   },
+   "enclose": {
+    "percent": 12
+   },
+   "unnerve": {
+    "percent": 14
+   },
+   "stealthStrikes": {
+    "flat": 2
+   },
+   "stealth": {
+    "percent": 30
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 15
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 15
+  },
+  "plot": {
+   "flat": 25
+  }
+ },
+ "capabilities": {
+  "alwaysHostile": true,
+  "hiddenNationality": true,
+  "pillage": true,
+  "barbCoExist": true,
+  "ignoreTerrainCost": true,
+  "noNonOwnedCityEntry": true,
+  "stealthDefense": true,
+  "upgradeAnywhere": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "targets": {
+   "UNITCOMBAT_TRADE": true,
+   "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 2
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 2
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_FREEDOM_FIGHTER",
+   "PROMOTION_COMMANDO",
+   "PROMOTION_MARAUDER",
+   "PROMOTION_LOOTER"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_GUERRILLA"
+  ]
+ },
+ "cost": {
+  "production": 540,
+  "upkeep": 7
+ },
+ "identity": {
+  "worth": 7,
+  "militaryWorth": 20,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "conscription": 6,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_TROOP",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_RIFLE_BUTT",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_BATTALION",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "cargo": {
+   "special": "SPECIALUNIT_CAPTIVE"
+  },
+  "base": {
+   "combat": 24,
+   "moves": 2,
+   "cargo": 1,
+   "combatClass": "UNITCOMBAT_RUFFIAN"
+  }
+ }
+}

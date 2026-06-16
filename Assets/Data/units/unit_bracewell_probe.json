@@ -1,0 +1,115 @@
+{
+ "type": "UNIT_BRACEWELL_PROBE",
+ "description": "TXT_KEY_UNIT_BRACEWELL_PROBE",
+ "civilopedia": "TXT_KEY_UNIT_BRACEWELL_PROBE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 3
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "canMoveAllTerrain": true,
+  "canMoveImpassable": true,
+  "ignoreTerrainCost": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MissionType": "MISSION_EXPLORE_BRACEWELL",
+    "iCost": [
+     [
+      0
+     ]
+    ],
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_EXPLORE_BRACEWELL",
+      "iChance": 100,
+      "PythonName": "ExploreBracewell",
+      "Python": "from CvPythonExtensions import *\n\t\t\t\t\t\t\t\timport random\n\t\t\t\t\t\t\t\tdef isPossible(unit,plot):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tvalid_terrain_strings = ['STAR_CLUSTER','MILKY_WAY','ORION_ARM']\n\t\t\t\t\t\t\t\t\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\t\t\t\t\t\t\t\t\treturn plot.getTerrainType() in valid_terrains\n\t\t\t\t\t\t\t\tdef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\t\t\t\t\t\t\t\t\tgc.getPlayer(unit.getOwner()).initUnit(gc.getInfoTypeForString('UNIT_GALACTIC_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\n\t\t\t\t\t\t\t\tdef getDisplay(unit,plot):\n\t\t\t\t\t\t\t\t\treturn u\"Explore the galaxy\"\n\t\t\t\t\t\t\t\tdef getAIValue(unit, plot):\n\t\t\t\t\t\t\t\t\treturn 1"
+     }
+    ]
+   },
+   {
+    "MissionType": "MISSION_EXPLORE_ANCIENT_CIVILIZATION",
+    "iCost": [
+     [
+      0
+     ]
+    ],
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_EXPLORE_ANCIENT_CIVILIZATION",
+      "iChance": 100,
+      "PythonName": "ExploreAncientCivilization",
+      "Python": "from CvPythonExtensions import *\n\t\t\t\t\t\t\t\timport random\n\t\t\t\t\t\t\t\tdef isPossible(unit,plot):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tvalid_bonus_strings = ['ABANDONED_CIVILIZATION']\n\t\t\t\t\t\t\t\t\tvalid_bonuses = [gc.getInfoTypeForString('BONUS_'+t) for t in valid_bonus_strings]\n\t\t\t\t\t\t\t\t\treturn plot.getBonusType(-1) in valid_bonuses\n\t\t\t\t\t\t\t\tdef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\t\t\t\t\t\t\t\t\tgc.getPlayer(unit.getOwner()).initUnit(gc.getInfoTypeForString('UNIT_ANCIENT_CIVILIZATION_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\n\t\t\t\t\t\t\t\tdef getDisplay(unit,plot):\n\t\t\t\t\t\t\t\t\treturn u\"Excavate an ancient civilization\"\n\t\t\t\t\t\t\t\tdef getAIValue(unit, plot):\n\t\t\t\t\t\t\t\t\treturn 1"
+     }
+    ]
+   },
+   {
+    "MissionType": "MISSION_EXPLORE_GALACTIC_CORE",
+    "iCost": [
+     [
+      0
+     ]
+    ],
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_EXPLORE_GALACTIC_CORE",
+      "iChance": 100,
+      "PythonName": "ExploreGalacticCore",
+      "Python": "from CvPythonExtensions import *\n\t\t\t\t\t\t\t\timport random\n\t\t\t\t\t\t\t\tdef isPossible(unit,plot):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tvalid_terrain_strings = ['GALACTIC_CORE']\n\t\t\t\t\t\t\t\t\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\t\t\t\t\t\t\t\t\treturn plot.getTerrainType() in valid_terrains\n\t\t\t\t\t\t\t\tdef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\t\t\t\t\t\t\t\t\tgc.getPlayer(unit.getOwner()).initUnit(gc.getInfoTypeForString('UNIT_GALACTIC_CORE_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\n\t\t\t\t\t\t\t\tdef getDisplay(unit,plot):\n\t\t\t\t\t\t\t\t\treturn u\"Explore the galactic core.\"\n\t\t\t\t\t\t\t\tdef getAIValue(unit, plot):\n\t\t\t\t\t\t\t\t\treturn 1"
+     }
+    ]
+   }
+  ]
+ },
+ "cost": {
+  "production": 5000,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_BRACEWELL_PROBE",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_EARLY_SPACESHIP",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_TECH",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "moves": 12,
+   "workRate": 250,
+   "combatClass": "UNITCOMBAT_SPACE_WORKER"
+  }
+ }
+}

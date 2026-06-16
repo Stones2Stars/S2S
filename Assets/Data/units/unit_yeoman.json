@@ -1,0 +1,122 @@
+{
+ "type": "UNIT_YEOMAN",
+ "description": "TXT_KEY_UNIT_YEOMAN",
+ "civilopedia": "TXT_KEY_UNIT_YEOMAN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_WELSH",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityDefense": {
+    "percent": 25
+   },
+   "hillsDefense": {
+    "percent": 25
+   },
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 50
+    }
+   },
+   "vsUnit": {
+    "UNIT_JAVELINEER": {
+     "attack": {
+      "percent": 25
+     },
+     "defense": {
+      "percent": 25
+     }
+    },
+    "UNIT_SKIRMISHER": {
+     "attack": {
+      "percent": 25
+     },
+     "defense": {
+      "percent": 25
+     }
+    }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_ARQUEBUSIER"
+  ]
+ },
+ "cost": {
+  "production": 290,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 15,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_CITY_DEFENSE",
+  "formationType": "FORMATION_TYPE_RANGED",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_SHORT_POLEARM",
+   "UNITCOMBAT_WEAPON_DIST_LONGBOW",
+   "UNITCOMBAT_SHIELD_TOWER",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 9,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_ARCHER"
+  }
+ }
+}

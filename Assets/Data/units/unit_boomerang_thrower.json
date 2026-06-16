@@ -1,0 +1,151 @@
+{
+ "type": "UNIT_BOOMERANG_THROWER",
+ "description": "TXT_KEY_UNIT_BOOMERANG_THROWER",
+ "civilopedia": "TXT_KEY_UNIT_BOOMERANG_THROWER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ABORIGINE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_PRIME_TIMBER": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityDefense": {
+    "percent": 20
+   },
+   "hillsDefense": {
+    "percent": 20
+   },
+   "unitCombat": {
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 100
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 20
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   },
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 2
+   },
+   "limit": {
+    "flat": 5
+   },
+   "maxUnits": {
+    "flat": 2
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_WARMTH1"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_ARCHER",
+   "UNIT_ATLATL"
+  ]
+ },
+ "cost": {
+  "production": 43,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 3,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "conscription": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_CITY_DEFENSE",
+  "formationType": "FORMATION_TYPE_RANGED",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_HUNTER",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_SHORT_POLEARM",
+   "UNITCOMBAT_WEAPON_DIST_BOOMERANG",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 3,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_THROWING"
+  }
+ }
+}

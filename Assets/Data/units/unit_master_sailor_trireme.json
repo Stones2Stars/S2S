@@ -1,0 +1,90 @@
+{
+ "type": "UNIT_MASTER_SAILOR_TRIREME",
+ "description": "TXT_KEY_UNIT_MASTER_SAILOR_TRIREME",
+ "civilopedia": "TXT_KEY_UNIT_TRIREME_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "AREA_SIZE",
+     "scope": "world",
+     "min": 10
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "mechanized": true,
+  "noBadGoodies": true,
+  "renderBelowWater": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_NAVIGATION1",
+   "PROMOTION_SEA_HUNTER2"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MASTER_SAILOR_QUINQUEREME"
+  ]
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 12,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "minAreaSize": 10,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ATTACK_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_SEA",
+   "UNITAI_RESERVE_SEA",
+   "UNITAI_ESCORT_SEA",
+   "UNITAI_EXPLORE_SEA",
+   "UNITAI_ASSAULT_SEA"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_NAVAL_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_OAR",
+   "UNITCOMBAT_WEAPON_DIST_SHORTBOW",
+   "UNITCOMBAT_ARMOR_NAVAL",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_NAVAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_TROPICAL",
+   "TERRAIN_TRENCH_POLAR"
+  ],
+  "cargo": {
+   "domain": "DOMAIN_LAND"
+  },
+  "base": {
+   "combat": 7,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_WOODEN_SHIPS"
+  }
+ }
+}

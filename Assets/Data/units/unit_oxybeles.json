@@ -1,0 +1,120 @@
+{
+ "type": "UNIT_OXYBELES",
+ "description": "TXT_KEY_UNIT_OXYBELES",
+ "civilopedia": "TXT_KEY_UNIT_BALLISTA_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SIEGE_WEAPONS_WORKSHOP",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_PRIME_TIMBER": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 5
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 100
+   },
+   "limit": {
+    "flat": 50
+   },
+   "maxUnits": {
+    "flat": 2
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE_WOODEN": {
+     "percent": 50
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 50
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 25
+    },
+    "UNITCOMBAT_MELEE": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "pillage": true,
+  "mechanized": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_SCORPION"
+  ]
+ },
+ "cost": {
+  "production": 225,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 17,
+  "xpValueAttack": 6,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "captures": "UNIT_OXYBELES",
+  "unitAIs": [
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_COLLATERAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SIEGE_FIELD",
+   "UNITCOMBAT_SIEGE_WOODEN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+   "UNITCOMBAT_WEAPON_DIST_BALLISTA",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_SPEED_SLOW",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 6,
+   "moves": 1,
+   "combatLimit": 70,
+   "combatClass": "UNITCOMBAT_SIEGE"
+  }
+ }
+}

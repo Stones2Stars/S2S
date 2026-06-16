@@ -1,0 +1,104 @@
+{
+ "type": "UNIT_SOLARSAIL_WORKER",
+ "description": "TXT_KEY_UNIT_SOLARSAIL_WORKER",
+ "civilopedia": "TXT_KEY_UNIT_SOLARSAIL_WORKER_PEDIA",
+ "help": "TXT_KEY_UNIT_SPACEUNIT_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ROCKET_FUEL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_EFFECT_LAUNCH_SITE",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "canMoveAllTerrain": true,
+  "canMoveImpassable": true,
+  "ignoreTerrainCost": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MissionType": "MISSION_CAPTURE_ASTEROID",
+    "iCost": [
+     [
+      0
+     ]
+    ],
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_CAPTURE_ASTEROID",
+      "iChance": 100,
+      "PythonName": "BuildCapturedAsteroidSolarSail",
+      "Python": "from CvPythonExtensions import CyGlobalContext\n\t\t\t\t\t\t\t\tfrom CvPythonExtensions import *\n\t\t\t\t\t\t\t\tdef isPossible(unit,plot):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\t\t\t\t\t\t\t\t\treturn False\n\t\t\t\t\t\t\t\t\tvalid_terrain_strings = ['ASTEROID_SURFACE']\n\t\t\t\t\t\t\t\t\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\t\t\t\t\t\t\t\t\treturn plot.getTerrainType() in valid_terrains\n\t\t\t\t\t\t\t\tdef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tgc.getPlayer(unit.getOwner()).initUnit(gc.getInfoTypeForString('UNIT_CAPTURED_ASTEROID'),plot.getX(),plot.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\n\t\t\t\t\t\t\t\tdef getDisplay(unit,plot):\n\t\t\t\t\t\t\t\t\treturn u\"Capture an asteroid.\"\n\t\t\t\t\t\t\t\tdef getAIValue(unit, plot):\n\t\t\t\t\t\t\t\t\treturn 1"
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "builds": [
+   "BUILD_SPACE_SOLAR_ARRAY",
+   "BUILD_ASTEROID_MINE",
+   "BUILD_SOLAR_CONCENTRATOR",
+   "BUILD_CISLUNAR_BASE",
+   "BUILD_SOLAR_SYSTEM_BASE"
+  ]
+ },
+ "cost": {
+  "production": 2506,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_SOLARSAIL_WORKER",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_SOLAR_SAIL_SPACESHIP",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_TECH",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH",
+   "MAPCATEGORY_CISLUNAR",
+   "MAPCATEGORY_LUNAR",
+   "MAPCATEGORY_MARTIAN",
+   "MAPCATEGORY_VENUSIAN",
+   "MAPCATEGORY_JOVIAN",
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "moves": 24,
+   "workRate": 250,
+   "combatClass": "UNITCOMBAT_SPACE_WORKER"
+  }
+ }
+}

@@ -1,0 +1,126 @@
+{
+ "type": "UNIT_CREE_TRACKER",
+ "description": "TXT_KEY_UNIT_CREE_TRACKER",
+ "civilopedia": "TXT_KEY_UNIT_CREE_TRACKER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CREE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_STONE": {
+     "percent": 10
+    },
+    "BONUS_FLINT": {
+     "percent": 10
+    },
+    "BONUS_PRIME_TIMBER": {
+     "percent": 10
+    },
+    "BONUS_ROPE": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": -75
+   },
+   "unitCombat": {
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryTrade": true,
+  "targets": {
+   "UNITCOMBAT_ANIMAL": true,
+   "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_HUNTING_SIGHT1"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_RANGER"
+  ]
+ },
+ "cost": {
+  "production": 38,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 4,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "animalCombat": 125,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_HUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_HUNTER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_WEAPON_H2H_CLUB",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_SHIELD_SMALL",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 4,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_HUNTER"
+  }
+ }
+}

@@ -1,0 +1,121 @@
+{
+ "type": "UNIT_STILETTO_BOAT",
+ "description": "TXT_KEY_UNIT_STILETTO_BOAT",
+ "civilopedia": "TXT_KEY_UNIT_STILETTO_BOAT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ALUMINUM_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "AREA_SIZE",
+     "scope": "world",
+     "min": 10
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PETROLEUM_PRODUCTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 75
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 5
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": 100
+    },
+    "UNITCOMBAT_STEAM_SHIPS": {
+     "percent": 40
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "ignoreBuildingDefense": true,
+  "ignoreTerrainCost": true,
+  "mechanized": true,
+  "renderBelowWater": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "vision": {
+  "invisible": "INVISIBLE_STEALTH"
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_FUSION_TRANSPORT"
+  ]
+ },
+ "cost": {
+  "production": 1660,
+  "upkeep": 2
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 183,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "minAreaSize": 10,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ASSAULT_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ASSAULT_SEA",
+   "UNITAI_SETTLER_SEA"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_TRANSPORT",
+   "UNITCOMBAT_NAVAL_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+   "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+   "UNITCOMBAT_ARMOR_NAVAL",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_NAVAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "cargo": {
+   "domain": "DOMAIN_LAND",
+   "special": "SPECIALUNIT_TROOP"
+  },
+  "base": {
+   "combat": 55,
+   "moves": 10,
+   "cargo": 3,
+   "combatClass": "UNITCOMBAT_DIESEL_SHIPS"
+  }
+ }
+}

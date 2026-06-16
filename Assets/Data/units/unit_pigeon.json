@@ -1,0 +1,92 @@
+{
+ "type": "UNIT_PIGEON",
+ "description": "TXT_KEY_UNIT_PIGEON",
+ "civilopedia": "TXT_KEY_UNIT_PIGEON_PEDIA",
+ "withdrawal": {
+  "unit": {
+   "percent": 60
+  }
+ },
+ "capabilities": {
+  "blendIntoCity": true,
+  "onlyDefensive": true,
+  "animalIgnoresBorders": true
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_BONUS_SPAWNED",
+    "iChance": 2,
+    "BonusType": "BONUS_POULTRY",
+    "Yields": [
+     1,
+     0,
+     4
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_SUBDUE",
+    "iChance": 3,
+    "UnitType": "UNIT_SUBDUED_PIGEON",
+    "bUnitToCity": [
+     {
+      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
+     }
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 95,
+    "Yields": [
+     1,
+     0,
+     4
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 1,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_BIRD",
+   "UNITCOMBAT_BIRD_PIGEON",
+   "UNITCOMBAT_ANIMAL_COMBAT_PECK",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+   "UNITCOMBAT_MOTILITY_AERIAL",
+   "UNITCOMBAT_QUALITY_PATHETIC",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_TINY",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_COAST",
+   "TERRAIN_COAST_DEEP",
+   "TERRAIN_COAST_DEEP_POLAR",
+   "TERRAIN_COAST_DEEP_TROPICAL",
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_COAST_TROPICAL",
+   "TERRAIN_DUNES",
+   "TERRAIN_LAKE_SHORE",
+   "TERRAIN_ICE",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_PEAK"
+  ],
+  "base": {
+   "combat": 1,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

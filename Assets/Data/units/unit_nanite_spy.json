@@ -1,0 +1,89 @@
+{
+ "type": "UNIT_NANITE_SPY",
+ "description": "TXT_KEY_UNIT_NANITE_SPY",
+ "civilopedia": "TXT_KEY_UNIT_NANITE_CLOUD_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_NANOBOTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "dropRange": {
+    "flat": 20
+   }
+  }
+ },
+ "capabilities": {
+  "counterSpy": true,
+  "destroy": true,
+  "flatMovementCost": true,
+  "ignoreTerrainCost": true,
+  "investigate": true,
+  "alwaysInvisible": true,
+  "rivalTerritory": true,
+  "sabotage": true,
+  "spy": true,
+  "stealPlans": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COMMANDO",
+   "PROMOTION_IMPROVISE1",
+   "PROMOTION_SECURITY1",
+   "PROMOTION_SECURITY2",
+   "PROMOTION_ESCAPE1",
+   "PROMOTION_ALCHEMIST1"
+  ]
+ },
+ "cost": {
+  "production": 4092,
+  "upkeep": 10000
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SPY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "espionagePoints": 500,
+  "unitAIs": [
+   "UNITAI_SPY"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_NANITE",
+   "UNITCOMBAT_SWARM",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_MOTILITY_AERIAL",
+   "UNITCOMBAT_QUALITY_MEDIOCRE",
+   "UNITCOMBAT_GROUP_MILLIONS",
+   "UNITCOMBAT_SIZE_MICROSCOPIC",
+   "UNITCOMBAT_HEALS_AS_NANOMORPH"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 4,
+   "combatClass": "UNITCOMBAT_SPY"
+  }
+ }
+}

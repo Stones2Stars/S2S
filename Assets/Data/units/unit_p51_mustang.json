@@ -1,0 +1,106 @@
+{
+ "type": "UNIT_P51_MUSTANG",
+ "description": "TXT_KEY_UNIT_P51_MUSTANG",
+ "civilopedia": "TXT_KEY_UNIT_P51_MUSTANG_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AIRCRAFT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PETROLEUM_PRODUCTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_MILITARY_AIRBASE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_AEROSPACE_COMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "bombard": {
+  "unit": {
+   "airBombRate": {
+    "flat": 5
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 6
+   },
+   "intercept": {
+    "percent": 40
+   }
+  }
+ },
+ "capabilities": {
+  "ignoreBuildingDefense": true,
+  "mechanized": true,
+  "dcmFighterEngage": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true,
+  "dcmAirBomb": 2
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_EARLYJET"
+  ]
+ },
+ "cost": {
+  "production": 930,
+  "upkeep": 2
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 12,
+  "xpValueAttack": 4,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_ATTACK_AIR",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_AIR"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_ARMOR_AIRCRAFT",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_PILOTING",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_AIRCRAFT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "airCombat": 26,
+   "airCombatLimit": 40,
+   "airUnitCap": 1,
+   "combatClass": "UNITCOMBAT_EARLY_FIGHTERS"
+  }
+ }
+}

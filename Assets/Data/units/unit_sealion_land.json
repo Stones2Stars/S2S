@@ -1,0 +1,128 @@
+{
+ "type": "UNIT_SEALION_LAND",
+ "description": "TXT_KEY_UNIT_SEALION",
+ "civilopedia": "TXT_KEY_UNIT_SEALION_PEDIA",
+ "capabilities": {
+  "blendIntoCity": true,
+  "onlyDefensive": true,
+  "animalIgnoresBorders": true
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_BONUS_SPAWNED",
+    "iChance": 2,
+    "BonusType": "BONUS_SEA_LION_AND_SEAL",
+    "Yields": [
+     [
+      {
+       "Constant": 20,
+       "Random": 80
+      }
+     ],
+     [
+      {
+       "Constant": 5,
+       "Random": 20
+      }
+     ],
+     [
+      {
+       "Constant": 8,
+       "Random": 10
+      }
+     ]
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_SUBDUE",
+    "iChance": 3,
+    "UnitType": "UNIT_SUBDUED_SEALION_LAND",
+    "bUnitToCity": [
+     {
+      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
+     }
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 95,
+    "Yields": [
+     [
+      {
+       "Constant": 20,
+       "Random": 80
+      }
+     ],
+     [
+      {
+       "Constant": 5,
+       "Random": 20
+      }
+     ],
+     [
+      {
+       "Constant": 3,
+       "Random": 2
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 5,
+  "xpValueDefense": 3,
+  "aggression": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_MAMMAL",
+   "UNITCOMBAT_RECKLESS_ANIMAL",
+   "UNITCOMBAT_MAMMAL_PINNIPED",
+   "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+   "UNITCOMBAT_ANIMAL_COMBAT_ROARING",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+   "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+   "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
+   "UNITCOMBAT_SPEED_SLOW",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "featureImpassable": [
+   "FEATURE_JUNGLE",
+   "FEATURE_BAMBOO",
+   "FEATURE_FOREST",
+   "FEATURE_FOREST_ANCIENT"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_PLAINS",
+   "TERRAIN_BADLAND",
+   "TERRAIN_SALT_FLATS"
+  ],
+  "featurePassableTechs": [
+   {
+    "FEATURE_ICE": "NONE"
+   }
+  ],
+  "base": {
+   "combat": 3,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

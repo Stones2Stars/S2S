@@ -1,0 +1,89 @@
+{
+ "type": "UNIT_FOOD_CARAVAN",
+ "description": "TXT_KEY_UNIT_FOOD_CARAVAN",
+ "civilopedia": "TXT_KEY_CONCEPT_FOOD_CARAVAN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CARAVAN_POST",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "noNonTypeProdMods": true,
+  "onlyDefensive": true,
+  "rivalTerritory": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "greatPersonAction": {
+   "food": {
+    "base": 82
+   }
+  }
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_FOOD_SUPPLY_TRAIN"
+  ]
+ },
+ "cost": {
+  "production": 115,
+  "upkeep": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ],
+  "behaviour": {
+   "weight": 10
+  }
+ },
+ "identity": {
+  "worth": 1,
+  "animalCombat": 100,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MERCHANT",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "captures": "UNIT_FOOD_CARAVAN",
+  "unitAIs": [
+   "UNITAI_MERCHANT",
+   "UNITAI_ENGINEER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_EXPLORE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_STAFF",
+   "UNITCOMBAT_MOTILITY_ANIMAL_DRAWN",
+   "UNITCOMBAT_ASSISTED_MULE",
+   "UNITCOMBAT_QUALITY_MEDIOCRE",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 2,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_TRADE"
+  }
+ }
+}

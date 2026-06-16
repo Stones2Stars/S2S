@@ -1,0 +1,88 @@
+{
+ "type": "UNIT_BALLOON",
+ "description": "TXT_KEY_UNIT_BALLOON",
+ "civilopedia": "TXT_KEY_UNIT_BALLOON_PEDIA",
+ "withdrawal": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_GUN": {
+     "percent": -50
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "noDefensiveBonus": true,
+  "canMoveAllTerrain": true,
+  "ignoreBuildingDefense": true,
+  "ignoreTerrainCost": true,
+  "onlyDefensive": true,
+  "dcmFighterEngage": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SENTRY"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_BLIMP"
+  ]
+ },
+ "cost": {
+  "production": 530,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 79,
+  "xpValueAttack": 3,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_RIFLE",
+   "UNITCOMBAT_WEAPON_A2G_BOMBS",
+   "UNITCOMBAT_SPEED_SLOW",
+   "UNITCOMBAT_MOTILITY_PILOTING",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_TROPICAL",
+   "TERRAIN_TRENCH_POLAR"
+  ],
+  "base": {
+   "combat": 20,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_BALLOON"
+  }
+ }
+}

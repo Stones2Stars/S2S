@@ -1,0 +1,61 @@
+{
+ "type": "UNIT_LOCUST",
+ "description": "TXT_KEY_UNIT_LOCUST",
+ "civilopedia": "TXT_KEY_UNIT_LOCUST_PEDIA",
+ "capabilities": {
+  "pillage": true,
+  "onlyDefensive": true
+ },
+ "identity": {
+  "xpValueAttack": 3,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PILLAGE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "unitAIs": [
+   "UNITAI_PILLAGE"
+  ],
+  "notUnitAIs": [
+   "UNITAI_ATTACK_CITY"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_SWARM",
+   "UNITCOMBAT_ANIMAL_INVERTEBRATE",
+   "UNITCOMBAT_ANIMAL_INSECT",
+   "UNITCOMBAT_ANIMAL_COMBAT_DEVOUR",
+   "UNITCOMBAT_ANIMAL_COMBAT_REPELLENT",
+   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+   "UNITCOMBAT_MOTILITY_AERIAL",
+   "UNITCOMBAT_QUALITY_INCAPABLE",
+   "UNITCOMBAT_GROUP_BILLIONS",
+   "UNITCOMBAT_SIZE_FINE",
+   "UNITCOMBAT_HEALS_AS_SWARM"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_COAST",
+   "TERRAIN_COAST_DEEP",
+   "TERRAIN_COAST_DEEP_POLAR",
+   "TERRAIN_COAST_DEEP_TROPICAL",
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_COAST_TROPICAL",
+   "TERRAIN_DUNES",
+   "TERRAIN_ICE",
+   "TERRAIN_LAKE_SHORE",
+   "TERRAIN_PEAK",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA"
+  ],
+  "base": {
+   "combat": 4,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

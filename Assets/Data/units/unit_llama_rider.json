@@ -1,0 +1,175 @@
+{
+ "type": "UNIT_LLAMA_RIDER",
+ "description": "TXT_KEY_UNIT_LLAMA_RIDER",
+ "civilopedia": "TXT_KEY_UNIT_LLAMA_RIDER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_LLAMA",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_ANIMAL_TRAINER_LLAMA",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 15
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 100
+   },
+   "maxUnits": {
+    "flat": 4
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_SCRUB": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "TERRAIN_ROCKY": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "TERRAIN_BADLAND": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "TERRAIN_JAGGED": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "TERRAIN_PEAK": {
+     "attack": {
+      "percent": 25
+     }
+    }
+   },
+   "feature": {
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": -25
+     }
+    },
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": -25
+     }
+    },
+    "FEATURE_SWAMP": {
+     "attack": {
+      "percent": -25
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE_WOODEN": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COMMANDO",
+   "PROMOTION_MOUNTAINEER"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_AUTOGYRO",
+   "UNIT_ARMORED_CAR"
+  ]
+ },
+ "cost": {
+  "production": 125
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 8,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_WEAPON_H2H_SHORT_POLEARM",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+   "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+   "UNITCOMBAT_ANIMAL_COMBAT_REPELLENT",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_RIDING",
+   "UNITCOMBAT_MOUNT_LLAMA",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 5,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_MOUNTED"
+  }
+ }
+}

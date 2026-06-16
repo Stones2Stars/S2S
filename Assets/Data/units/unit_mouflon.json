@@ -1,0 +1,122 @@
+{
+ "type": "UNIT_MOUFLON",
+ "description": "TXT_KEY_UNIT_MOUFLON",
+ "civilopedia": "TXT_KEY_UNIT_MOUFLON_PEDIA",
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
+ },
+ "capabilities": {
+  "blendIntoCity": true,
+  "onlyDefensive": true,
+  "animalIgnoresBorders": true
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_BONUS_SPAWNED",
+    "iChance": 2,
+    "BonusType": "BONUS_SHEEP",
+    "Yields": [
+     [
+      {
+       "Constant": 10,
+       "Random": 10
+      }
+     ],
+     [
+      {
+       "Constant": 1,
+       "Random": 2
+      }
+     ],
+     [
+      {
+       "Constant": 6,
+       "Random": 3
+      }
+     ]
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_SUBDUE",
+    "iChance": 3,
+    "UnitType": "UNIT_SUBDUED_MOUFLON",
+    "bUnitToCity": [
+     {
+      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
+     }
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 95,
+    "Yields": [
+     [
+      {
+       "Constant": 10,
+       "Random": 10
+      }
+     ],
+     [
+      {
+       "Constant": 1,
+       "Random": 2
+      }
+     ],
+     [
+      {
+       "Constant": 6,
+       "Random": 3
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "aggression": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_MAMMAL",
+   "UNITCOMBAT_RECKLESS_ANIMAL",
+   "UNITCOMBAT_MAMMAL_GOAT",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_ANIMAL_COMBAT_HEAD_BUTT",
+   "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+   "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_DUNES",
+   "TERRAIN_ICE",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_TUNDRA"
+  ],
+  "base": {
+   "combat": 2,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

@@ -1,0 +1,159 @@
+{
+ "type": "UNIT_AZTEC_JAGUAR",
+ "description": "TXT_KEY_UNIT_AZTEC_JAGUAR",
+ "civilopedia": "TXT_KEY_UNIT_AZTEC_JAGUAR_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AZTEC",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_OBSIDIAN",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_STONE": {
+     "percent": 15
+    },
+    "BONUS_FLINT": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 20
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "vision": {
+  "invisibleFeature": [
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_JUNGLE",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_FOREST",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_FOREST_YOUNG",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_FOREST_BURNT",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_FOREST_ANCIENT",
+    "intensity": 2
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_BAMBOO",
+    "intensity": 1
+   },
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_MANGROVE",
+    "intensity": 1
+   }
+  ]
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_WOODSMAN1",
+   "PROMOTION_WOODSMAN2",
+   "PROMOTION_FORESTRY"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_SWORDSMAN"
+  ]
+ },
+ "cost": {
+  "production": 67,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 12,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_RESERVE",
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_SHIELD_SMALL",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 7,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_MELEE"
+  }
+ }
+}

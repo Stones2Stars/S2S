@@ -251,9 +251,8 @@ and is settled when its turn comes:
     `pillageGold.empire.percent` (world-wonder, all units). One-shot pulses (population/goldenAge/founding)
     → `grants` (engine event-hooks, not info). `BUILDING_EFFECT_*` threshold pseudobuildings KEPT as-is
     (→ `PropertyEffect` later).
-33. **SpecialUnit** ☐ (rides Unit) — combat%/withdrawal deposits onto the LOADED unit (unit-self scope);
-    shares Promotion/UnitCombat combat/withdrawal vocab.
-34. **Unit** ☐ MONSTER, **LAST** — target of everything (tech, building-prereq, bonus, religion, civic,
+33. **SpecialUnit** ✅ **(curated 2026-06-16 #6, `curate_unit.py` `curate_special_unit`)** — cargo-load config (bValid/cityLoad/smLoadSame); registered in store.
+34. **Unit** ✅ **(curated 2026-06-16 #6, `curate_unit.py`; 2073 records)** MONSTER, **LAST** — target of everything (tech, building-prereq, bonus, religion, civic,
     promotion/unitcombat). `upgradesTo` = `succession` (manual, NOT `replaces`). GP action magnitudes
     (discover/hurry/trade/greatWork) + spawn pulses → `grants` (one-shot, not per-turn). `CorporationSpreads`.
     `iInstanceCostModifier` → `costs.empire.perInstance` `per:{type:SELF}` (the priority count-scaled case).
@@ -290,6 +289,28 @@ grows as more accumulate):
 Done BEFORE #430 so the parser implements against uniform data — no mid-parse retrofit churn. **⛔ HARD GATE (owner,
 emphatic 2026-06-16): do NOT start "whatever is next" (the #430 parser, or any new phase) until this alignment —
 INCLUDING the art-block update — is complete.** Finish migration → align everything (arts included) → only then move on.
+
+## Tier G — UNRANKED gameplay infos / "stragglers" (owner-flagged 2026-06-16; a SEPARATE pass after Unit #34)
+
+The #1–34 ranking is NOT the full info universe — there are unranked gameplay infos still to migrate (owner: "a couple
+of more straggling infos around, CvOutcome being one… none of it truly scares me, the core structure is in place, it's
+about fitting data to structure now"). A SEPARATE Tier-G pass after Unit #34 (some may fold into Phase F). Triage each as
+gameplay vs UI/graphics/config/dead first. Known gameplay candidates (from the `class Cv*Info` enumeration):
+- **`CvOutcomeInfo`** — the kill/action OUTCOME definitions that Unit/UnitCombat's `KillOutcomes`/`Actions` → `outcomes`
+  reference (carried faithfully + deferred at #28/#29/#34; the definitions themselves migrate here). #430-adjacent (the
+  outcome system) — likely FIRST of Tier G.
+- **`CvVoteSourceInfo`** — UN / Apostolic Palace / Congress (Vote #6 deferred VoteSource → here); hosts the diplo-vote resolution.
+- **`CvInvisibleInfo`** — the `INVISIBLE_*` types the vision/LOS resolver (Promotion/UnitCombat/Unit `vision` blocks) key on.
+- **`CvGoodyInfo`** (goody-hut rewards), **`CvSpawnInfo`** (spawn rules), **`CvEventInfo`/`CvEventTriggerInfo`** (random
+  events — large), **`CvEspionageMissionInfo`**, **`CvIdeaInfo`/`CvIdeaClassInfo`**, **`CvAttachableInfo`** (equipment?),
+  **`CvCommerceInfo`/`CvUpkeepInfo`** (mostly config), **finish `CvYieldInfo`** (min-city/golden-age/trade/colour/symbols
+  — the non-hills/peak/river remainder).
+- **OUT of cascade (config/UI/graphics/audio/engine):** GameOption/MPOption/PlayerOption/GraphicOption, World/SeaLevel/
+  Climate/Map/MapCategory/ModLoadControl, Action/Advisor/Animation*/Camera*/Color/Command/Control/Cursor/EntityEvent/
+  HallOfFame/InterfaceMode/Landscape/MainMenu/Mission/PlayerColor/Popup/Replay/*Model/SlideShow*/SpaceShip/ThroneRoom*/
+  TurnTimer/UnitArtStyle/UnitFormation/WaterPlane/WorldPicker/PathGeneratorPlot/NodeCost/TerrainPlane/Attachable(art tier)/
+  Diplomacy/Emphasize/Automate/ForceControl/Category(dead). + the deferred ART-DEFINE tier (building-cascade-conversion).
+  (Triage confirms per-info before dropping — the "no true POCO" rule; some "config" may hide gameplay.)
 
 ---
 

@@ -1,0 +1,115 @@
+{
+ "type": "UNIT_RA_KNIGHT",
+ "description": "TXT_KEY_UNIT_RA_KNIGHT",
+ "civilopedia": "TXT_KEY_UNIT_RA_FIST_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HORSE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_TEMPLE_OF_CHONS",
+     "scope": "city"
+    },
+    {
+     "type": "RELIGION_KEMETISM",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 100
+   },
+   "maxUnits": {
+    "flat": 6
+   }
+  }
+ },
+ "capabilities": {
+  "alwaysHostile": true,
+  "noDefensiveBonus": true,
+  "pillage": true,
+  "firstStrikeImmune": true,
+  "unlimitedException": true,
+  "militaryHappiness": true,
+  "militaryProduction": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_WARMTH1",
+   "PROMOTION_MARCH",
+   "PROMOTION_BLITZ",
+   "PROMOTION_COMBAT1"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_CUIRASSIER"
+  ]
+ },
+ "cost": {
+  "production": 370
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 11,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "religion": "RELIGION_KEMETISM",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_WEAPON_H2H_SHORT_POLEARM",
+   "UNITCOMBAT_ARMOR_MEDIUM",
+   "UNITCOMBAT_SHIELD_LARGE",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+   "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+   "UNITCOMBAT_MOTILITY_RIDING",
+   "UNITCOMBAT_MOUNT_HORSE",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 17,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_MOUNTED"
+  }
+ }
+}

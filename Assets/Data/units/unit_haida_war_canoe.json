@@ -1,0 +1,127 @@
+{
+ "type": "UNIT_HAIDA_WAR_CANOE",
+ "description": "TXT_KEY_UNIT_HAIDA_WAR_CANOE",
+ "civilopedia": "TXT_KEY_UNIT_HAIDA_WAR_CANOE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HAIDA",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_CANOE_BUILDER",
+     "scope": "city"
+    },
+    {
+     "type": "AREA_SIZE",
+     "scope": "world",
+     "min": 5
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_PRIME_TIMBER": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "mechanized": true,
+  "renderBelowWater": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COASTAL_ASSAULT1"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_WARGALLEY"
+  ]
+ },
+ "cost": {
+  "production": 105,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 3,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "animalCombat": 50,
+  "minAreaSize": 5,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ATTACK_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_SEA",
+   "UNITAI_ASSAULT_SEA",
+   "UNITAI_SETTLER_SEA",
+   "UNITAI_MISSIONARY_SEA",
+   "UNITAI_SPY_SEA"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_NAVAL_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_OAR",
+   "UNITCOMBAT_WEAPON_DIST_SHORTBOW",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_NAVAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_SEA_TROPICAL",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_DEEP_TROPICAL",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_POLAR",
+   "TERRAIN_TRENCH_TROPICAL"
+  ],
+  "base": {
+   "combat": 3,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_WOODEN_SHIPS"
+  }
+ }
+}

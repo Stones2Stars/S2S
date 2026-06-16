@@ -1,0 +1,148 @@
+{
+ "type": "UNIT_NAUTILUS",
+ "description": "TXT_KEY_UNIT_NAUTILUS",
+ "civilopedia": "TXT_KEY_UNIT_NAUTILUS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_COAL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_NEMOS_NAVAL_ACADEMY",
+     "scope": "city"
+    },
+    {
+     "type": "AREA_SIZE",
+     "scope": "world",
+     "min": 10
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_STEEL_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 50
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": 100
+    },
+    "UNITCOMBAT_STEAM_SHIPS": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "canMoveImpassable": true,
+  "ignoreBuildingDefense": true,
+  "ignoreTerrainCost": true,
+  "mechanized": true,
+  "rivalTerritory": true,
+  "renderBelowWater": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true,
+  "unitTargets": {
+   "UNIT_FLUYT": true,
+   "UNIT_GALLEON": true,
+   "UNIT_TRANSPORT": true,
+   "UNIT_LANDING_SHIP": true
+  }
+ },
+ "vision": {
+  "invisible": "INVISIBLE_SUBMARINE"
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_ATTACK_SUBMARINE"
+  ]
+ },
+ "cost": {
+  "production": 818,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 102,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "minAreaSize": 10,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_RESERVE_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_RESERVE_SEA",
+   "UNITAI_EXPLORE_SEA",
+   "UNITAI_MISSIONARY_SEA",
+   "UNITAI_SPY_SEA",
+   "UNITAI_SEE_INVISIBLE_SEA"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_NAVAL_COMBATANT",
+   "UNITCOMBAT_TRANSPORT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_TORPEDO",
+   "UNITCOMBAT_ARMOR_NAVAL",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_NAVAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "cargo": {
+   "domain": "DOMAIN_LAND",
+   "special": "SPECIALUNIT_PEOPLE"
+  },
+  "base": {
+   "combat": 34,
+   "moves": 5,
+   "cargo": 1,
+   "combatClass": "UNITCOMBAT_SUBMARINE"
+  }
+ }
+}

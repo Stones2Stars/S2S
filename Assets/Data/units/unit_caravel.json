@@ -1,0 +1,94 @@
+{
+ "type": "UNIT_CARAVEL",
+ "description": "TXT_KEY_UNIT_CARAVEL",
+ "civilopedia": "TXT_KEY_UNIT_CARAVEL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SHIPWRIGHT",
+     "scope": "city"
+    },
+    {
+     "type": "AREA_SIZE",
+     "scope": "world",
+     "min": 10
+    }
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_PRIME_TIMBER": {
+     "percent": 20
+    },
+    "BONUS_HEMP": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "mechanized": true,
+  "rivalTerritory": true,
+  "renderBelowWater": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_SLOOP"
+  ]
+ },
+ "cost": {
+  "production": 300,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 17,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "minAreaSize": 10,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_EXPLORE_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_SEA",
+   "UNITAI_ESCORT_SEA",
+   "UNITAI_EXPLORE_SEA",
+   "UNITAI_MISSIONARY_SEA",
+   "UNITAI_SPY_SEA"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+   "UNITCOMBAT_WEAPON_DIST_LONGBOW",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_NAVAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "cargo": {
+   "domain": "DOMAIN_LAND",
+   "special": "SPECIALUNIT_PEOPLE"
+  },
+  "base": {
+   "combat": 9,
+   "moves": 3,
+   "cargo": 1,
+   "combatClass": "UNITCOMBAT_WOODEN_SHIPS"
+  }
+ }
+}

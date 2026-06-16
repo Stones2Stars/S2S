@@ -1,0 +1,125 @@
+{
+ "type": "UNIT_JOMON_HUNTING_DOGS",
+ "description": "TXT_KEY_UNIT_JOMON_HUNTING_DOGS",
+ "civilopedia": "TXT_KEY_UNIT_JOMON_HUNTING_DOGS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_JOMON",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_DOG_BREEDER",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_REPET",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "lunge": {
+    "percent": 5
+   },
+   "enclose": {
+    "percent": 5
+   },
+   "unnerve": {
+    "percent": 5
+   },
+   "dynamicDefense": {
+    "percent": 5
+   },
+   "stealth": {
+    "percent": 10
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "noDefensiveBonus": true,
+  "ignoreTerrainCost": true,
+  "passage": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_WARDOG"
+  ]
+ },
+ "cost": {
+  "production": 70,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 3,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "animalCombat": 50,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PILLAGE_COUNTER",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_PILLAGE_COUNTER",
+   "UNITAI_HUNTER_ESCORT"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_ANIMAL_MAMMAL",
+   "UNITCOMBAT_CANINE",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_ANIMAL_COMBAT_SCRATCH",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+   "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
+   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+   "UNITCOMBAT_ANIMAL_COMBAT_WARNING",
+   "UNITCOMBAT_ANIMAL_COMBAT_PACK_HUNTER",
+   "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_SMALL",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 4,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

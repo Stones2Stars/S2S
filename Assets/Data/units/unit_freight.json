@@ -1,0 +1,92 @@
+{
+ "type": "UNIT_FREIGHT",
+ "description": "TXT_KEY_UNIT_FREIGHT",
+ "civilopedia": "TXT_KEY_CONCEPT_FREIGHT_PEDIA",
+ "capabilities": {
+  "noCapture": true,
+  "noNonTypeProdMods": true,
+  "onlyDefensive": true,
+  "rivalTerritory": true,
+  "militarySupport": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_HURRY_PRODUCTION_CARAVAN": [
+     {
+      "OutcomeType": "OUTCOME_HURRY_PRODUCTION_CARAVAN",
+      "iChance": 100,
+      "Yields": [
+       0,
+       [
+        [
+         594
+        ]
+       ]
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "greatPersonAction": {
+   "trade": {
+    "base": 120,
+    "multiplier": 1
+   }
+  }
+ },
+ "cost": {
+  "production": 660,
+  "upkeep": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "animalCombat": 100,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MERCHANT",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "captures": "UNIT_FREIGHT",
+  "unitAIs": [
+   "UNITAI_MERCHANT",
+   "UNITAI_ENGINEER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_EXPLORE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_HANDGUN",
+   "UNITCOMBAT_ARMOR_VEHICULAR",
+   "UNITCOMBAT_MOTILITY_DRIVING",
+   "UNITCOMBAT_QUALITY_MEDIOCRE",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 5,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_TRADE"
+  }
+ }
+}

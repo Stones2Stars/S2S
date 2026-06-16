@@ -1,0 +1,137 @@
+{
+ "type": "UNIT_POLICE_DOG",
+ "description": "TXT_KEY_UNIT_POLICE_DOG",
+ "civilopedia": "TXT_KEY_UNIT_POLICE_DOG_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_DOG",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_POLICE_DOG_TRAINER",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "unit": {
+   "investigation": {
+    "flat": 25
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "lunge": {
+    "percent": 20
+   },
+   "enclose": {
+    "percent": 20
+   },
+   "unnerve": {
+    "percent": 20
+   },
+   "dynamicDefense": {
+    "percent": 20
+   },
+   "stealth": {
+    "percent": 40
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 15
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  },
+  "plot": {
+   "flat": -3
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "noDefensiveBonus": true,
+  "counterSpy": true,
+  "ignoreTerrainCost": true,
+  "passage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militaryTrade": true,
+  "targets": {
+   "UNITCOMBAT_CRIMINAL": true
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 4,
+   "INVISIBLE_POLITICAL": 1
+  }
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_CANIS_SUPERIOR"
+  ]
+ },
+ "cost": {
+  "production": 601,
+  "upkeep": 3
+ },
+ "identity": {
+  "worth": 8,
+  "militaryWorth": 20,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "animalCombat": 25,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PILLAGE_COUNTER",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_PILLAGE_COUNTER",
+   "UNITAI_HUNTER_ESCORT",
+   "UNITAI_PROPERTY_CONTROL",
+   "UNITAI_SEE_INVISIBLE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_LAW_ENFORCEMENT",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_ANIMAL_MAMMAL",
+   "UNITCOMBAT_CANINE",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_ANIMAL_COMBAT_SCRATCH",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+   "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
+   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+   "UNITCOMBAT_ANIMAL_COMBAT_WARNING",
+   "UNITCOMBAT_ANIMAL_COMBAT_PACK_HUNTER",
+   "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_SMALL",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 27,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

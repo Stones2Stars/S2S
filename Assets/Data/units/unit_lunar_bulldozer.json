@@ -1,0 +1,58 @@
+{
+ "type": "UNIT_LUNAR_BULLDOZER",
+ "description": "TXT_KEY_UNIT_LUNAR_BULLDOZER",
+ "civilopedia": "TXT_KEY_UNIT_LUNAR_BULLDOZER_PEDIA",
+ "capabilities": {
+  "onlyDefensive": true
+ },
+ "grants": {
+  "builds": [
+   "BUILD_LUNAR_PATH",
+   "BUILD_PLANETARY_MAGLEV",
+   "BUILD_LUNAR_MINING_OUTPOST",
+   "BUILD_COLONY_EXTRACTION_FACILITY",
+   "BUILD_LUNAR_MINE"
+  ]
+ },
+ "cost": {
+  "production": 1700,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_LUNAR_BULLDOZER",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_TRACKED",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+   "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+   "UNITCOMBAT_WEAPON_H2H_HYDRAULIC_APPENDAGE",
+   "UNITCOMBAT_ARMOR_VEHICULAR",
+   "UNITCOMBAT_MOTILITY_DRIVING",
+   "UNITCOMBAT_QUALITY_MEDIOCRE",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ],
+  "base": {
+   "combat": 20,
+   "moves": 1,
+   "workRate": 200,
+   "combatClass": "UNITCOMBAT_SPACE_WORKER"
+  }
+ }
+}

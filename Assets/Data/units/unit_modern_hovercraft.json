@@ -1,0 +1,125 @@
+{
+ "type": "UNIT_MODERN_HOVERCRAFT",
+ "description": "TXT_KEY_UNIT_MODERN_HOVERCRAFT",
+ "civilopedia": "TXT_KEY_UNIT_MODERN_HOVERCRAFT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ALUMINUM_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BIOFUEL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PETROLEUM_PRODUCTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_MARSH": {
+     "attack": {
+      "percent": 50
+     }
+    }
+   },
+   "feature": {
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": -25
+     }
+    },
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": -25
+     }
+    },
+    "FEATURE_SWAMP": {
+     "attack": {
+      "percent": 50
+     }
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "pillage": true,
+  "canMoveAllTerrain": true,
+  "ignoreTerrainCost": true,
+  "mechanized": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_AMPHIBIOUS"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_HITECH_HOVERCRAFT"
+  ]
+ },
+ "cost": {
+  "production": 1475,
+  "upkeep": 5
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 161,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_PILLAGE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_TRANSPORT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_ARMOR_VEHICULAR",
+   "UNITCOMBAT_MOTILITY_HOVERING",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "cargo": {
+   "domain": "DOMAIN_LAND",
+   "special": "SPECIALUNIT_TROOP"
+  },
+  "base": {
+   "combat": 75,
+   "moves": 4,
+   "cargo": 3,
+   "combatClass": "UNITCOMBAT_HOVERCRAFT"
+  }
+ }
+}

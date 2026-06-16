@@ -1,0 +1,54 @@
+{
+ "type": "UNIT_SHINTO_MISSIONARY",
+ "description": "TXT_KEY_UNIT_SHINTO_MISSIONARY",
+ "civilopedia": "TXT_KEY_UNIT_SHINTO_MISSIONARY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SHINTO_MONASTERY",
+     "scope": "city"
+    },
+    {
+     "type": "RELIGION_SHINTO",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 110
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MISSIONARY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_RELIGION",
+  "captures": "UNIT_SHINTO_MISSIONARY",
+  "unitAIs": [
+   "UNITAI_MISSIONARY"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": -1
+  },
+  "base": {
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_MISSIONARY"
+  }
+ }
+}

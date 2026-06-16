@@ -1,0 +1,132 @@
+{
+ "type": "UNIT_ARTILLERY",
+ "description": "TXT_KEY_UNIT_ARTILLERY",
+ "civilopedia": "TXT_KEY_UNIT_ARTILLERY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_FACTORY_AMMUNITION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_AMMUNITIONS_WORKSHOP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 50
+   },
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE": {
+     "percent": 50
+    },
+    "UNITCOMBAT_MELEE": {
+     "percent": 100
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 100
+    }
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 16
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 100
+   },
+   "limit": {
+    "flat": 70
+   },
+   "maxUnits": {
+    "flat": 8
+   }
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "pillage": true,
+  "ignoreBuildingDefense": true,
+  "mechanized": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MOBILE_ARTILLERY"
+  ]
+ },
+ "cost": {
+  "production": 1030,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 62,
+  "xpValueAttack": 6,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "captures": "UNIT_ARTILLERY",
+  "unitAIs": [
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_COLLATERAL",
+   "UNITAI_CITY_COUNTER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SIEGE_URBAN",
+   "UNITCOMBAT_SIEGE_FIELD",
+   "UNITCOMBAT_SIEGE_GUNPOWDER",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+   "UNITCOMBAT_WEAPON_H2H_RIFLE_BUTT",
+   "UNITCOMBAT_WEAPON_H2H_KNIFE",
+   "UNITCOMBAT_SPEED_SLOW",
+   "UNITCOMBAT_MOTILITY_DRIVING",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 40,
+   "moves": 1,
+   "combatLimit": 85,
+   "combatClass": "UNITCOMBAT_SIEGE"
+  }
+ }
+}

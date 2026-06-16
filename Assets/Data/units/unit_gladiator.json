@@ -1,0 +1,94 @@
+{
+ "type": "UNIT_GLADIATOR",
+ "description": "TXT_KEY_UNIT_GLADIATOR",
+ "civilopedia": "TXT_KEY_UNIT_GLADIATOR_PEDIA",
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_DRILL1"
+  ],
+  "greatPeople": [
+   "SPECIALIST_SETTLED_GLADIATOR"
+  ],
+  "buildings": [
+   "BUILDING_GLADIATORIAL_SCHOOL"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MACEMAN"
+  ]
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "loadPrune": {
+  "notOnGameOptions": [
+   "GAMEOPTION_NO_EVENTS"
+  ]
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 5,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+   "UNITCOMBAT_WEAPON_DIST_BOLA",
+   "UNITCOMBAT_SHIELD_LARGE",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EPIC",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 9,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_MELEE"
+  }
+ }
+}

@@ -1,0 +1,131 @@
+{
+ "type": "UNIT_HAMMERHEAD",
+ "description": "TXT_KEY_UNIT_HAMMERHEAD",
+ "civilopedia": "TXT_KEY_UNIT_HAMMERHEAD_SHARK_PEDIA",
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
+ },
+ "capabilities": {
+  "assassin": true,
+  "noDefensiveBonus": true,
+  "blendIntoCity": true,
+  "onlyDefensive": true,
+  "animalIgnoresBorders": true,
+  "targets": {
+   "UNITCOMBAT_ANIMAL_INVERTEBRATE": true,
+   "UNITCOMBAT_FISH_BONEY": true,
+   "UNITCOMBAT_FISH_RAY": true
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_TALES_SEA",
+    "iChance": 5,
+    "UnitType": "UNIT_TALESOF_HAMMERHEAD",
+    "bUnitToCity": [
+     1
+    ],
+    "Yields": [
+     [
+      {
+       "Constant": 80,
+       "Random": 70
+      }
+     ],
+     [
+      {
+       "Constant": 15,
+       "Random": 15
+      }
+     ],
+     [
+      {
+       "Constant": 4,
+       "Random": 12
+      }
+     ]
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_SUBDUE_SEA_LARGE",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_HAMMERHEAD",
+    "bUnitToCity": [
+     "DONT_ESCORT_SUBDUED_SEA_ANIMAL"
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 90,
+    "Yields": [
+     [
+      {
+       "Constant": 80,
+       "Random": 70
+      }
+     ],
+     [
+      {
+       "Constant": 15,
+       "Random": 15
+      }
+     ],
+     [
+      {
+       "Constant": 4,
+       "Random": 12
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 5,
+  "xpValueDefense": 3,
+  "aggression": 2,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_FISH",
+   "UNITCOMBAT_RECKLESS_ANIMAL",
+   "UNITCOMBAT_FISH_SHARK",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+   "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+   "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_POLAR"
+  ],
+  "base": {
+   "combat": 2,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_SEA_ANIMAL"
+  }
+ }
+}

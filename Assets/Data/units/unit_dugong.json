@@ -1,0 +1,119 @@
+{
+ "type": "UNIT_DUGONG",
+ "description": "TXT_KEY_UNIT_DUGONG",
+ "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
+ "capabilities": {
+  "blendIntoCity": true,
+  "onlyDefensive": true,
+  "animalIgnoresBorders": true
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_TALES_SEA",
+    "iChance": 5,
+    "UnitType": "UNIT_TALESOF_DUGONG",
+    "bUnitToCity": [
+     1
+    ],
+    "Yields": [
+     [
+      {
+       "Constant": 50,
+       "Random": 50
+      }
+     ],
+     [
+      {
+       "Constant": 15,
+       "Random": 15
+      }
+     ],
+     [
+      {
+       "Constant": 4,
+       "Random": 4
+      }
+     ]
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_SUBDUE_SEA_LARGE",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_DUGONG",
+    "bUnitToCity": [
+     "DONT_ESCORT_SUBDUED_SEA_ANIMAL"
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 90,
+    "Yields": [
+     [
+      {
+       "Constant": 50,
+       "Random": 50
+      }
+     ],
+     [
+      {
+       "Constant": 15,
+       "Random": 15
+      }
+     ],
+     [
+      {
+       "Constant": 4,
+       "Random": 4
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_MAMMAL",
+   "UNITCOMBAT_MAMMAL_SIRENIA",
+   "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_ANIMAL_COMBAT_TAIL",
+   "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+   "UNITCOMBAT_SPEED_SLOW",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_INFERIOR",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_COAST_DEEP_POLAR",
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_POLAR",
+   "TERRAIN_TRENCH_TROPICAL"
+  ],
+  "base": {
+   "combat": 3,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_SEA_ANIMAL"
+  }
+ }
+}

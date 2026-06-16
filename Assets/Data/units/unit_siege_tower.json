@@ -1,0 +1,119 @@
+{
+ "type": "UNIT_SIEGE_TOWER",
+ "description": "TXT_KEY_UNIT_SIEGE_TOWER",
+ "civilopedia": "TXT_KEY_UNIT_SIEGE_TOWER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PRIME_TIMBER",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_SIEGE_WEAPONS_WORKSHOP",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 13
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_ARCHER": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "noDefensiveBonus": true,
+  "mechanized": true,
+  "onlyDefensive": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SENTRY"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_BOMBARD"
+  ]
+ },
+ "cost": {
+  "production": 250,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 15,
+  "xpValueAttack": 6,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "captures": "UNIT_SIEGE_TOWER",
+  "unitAIs": [
+   "UNITAI_ATTACK_CITY"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SIEGE_DEFENSIVE",
+   "UNITCOMBAT_SIEGE_URBAN",
+   "UNITCOMBAT_SIEGE_WOODEN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+   "UNITCOMBAT_WEAPON_DIST_BALLISTA",
+   "UNITCOMBAT_ARMOR_MEDIUM",
+   "UNITCOMBAT_SHIELD_TOWER",
+   "UNITCOMBAT_SPEED_SLOW",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 8,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_SIEGE"
+  }
+ }
+}

@@ -1,0 +1,206 @@
+{
+ "type": "UNIT_OUTLAW",
+ "description": "TXT_KEY_UNIT_OUTLAW",
+ "civilopedia": "TXT_KEY_UNIT_OUTLAW_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HORSE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_SALOON",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_AMMUNITION",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_IRON_WARES": {
+     "percent": 15
+    },
+    "BONUS_FLINT": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "espionage": {
+  "unit": {
+   "insidiousness": {
+    "flat": 30
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "lunge": {
+    "percent": 20
+   },
+   "enclose": {
+    "percent": 15
+   },
+   "unnerve": {
+    "percent": 15
+   },
+   "stealthStrikes": {
+    "flat": 1
+   },
+   "stealth": {
+    "percent": 30
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 50
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 100
+   },
+   "maxUnits": {
+    "flat": 2
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 15
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 17
+  },
+  "plot": {
+   "flat": 35
+  }
+ },
+ "capabilities": {
+  "alwaysHostile": true,
+  "hiddenNationality": true,
+  "noCapture": true,
+  "noDefensiveBonus": true,
+  "pillage": true,
+  "barbCoExist": true,
+  "counterSpy": true,
+  "ignoreTerrainCost": true,
+  "ignoreZoneOfControl": true,
+  "upgradeAnywhere": true,
+  "militaryProduction": true,
+  "targets": {
+   "UNITCOMBAT_TRADE": true,
+   "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 2
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COMMANDO",
+   "PROMOTION_MARAUDER",
+   "PROMOTION_LOOTER",
+   "PROMOTION_INDUSTRYESPIONAGE"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MOBSTER_CAR"
+  ]
+ },
+ "cost": {
+  "production": 700,
+  "upkeep": 8
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   }
+  ]
+ },
+ "identity": {
+  "worth": 8,
+  "militaryWorth": 22,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PILLAGE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_TROOP",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE",
+   "UNITAI_SPY"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_RIFLE_BUTT",
+   "UNITCOMBAT_WEAPON_DIST_RIFLE",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+   "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_RIDING",
+   "UNITCOMBAT_MOUNT_HORSE",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "cargo": {
+   "special": "SPECIALUNIT_CAPTIVE"
+  },
+  "base": {
+   "combat": 28,
+   "moves": 3,
+   "cargo": 2,
+   "combatClass": "UNITCOMBAT_RUFFIAN"
+  }
+ }
+}

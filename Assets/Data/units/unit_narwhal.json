@@ -1,0 +1,124 @@
+{
+ "type": "UNIT_NARWHAL",
+ "description": "TXT_KEY_UNIT_NARWHAL",
+ "civilopedia": "TXT_KEY_UNIT_NARWHAL_PEDIA",
+ "withdrawal": {
+  "unit": {
+   "percent": 60
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "blendIntoCity": true,
+  "canMoveImpassable": true,
+  "onlyDefensive": true,
+  "animalIgnoresBorders": true
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_TALES_SEA",
+    "iChance": 5,
+    "UnitType": "UNIT_TALESOF_NARWHAL",
+    "bUnitToCity": [
+     1
+    ],
+    "Yields": [
+     [
+      {
+       "Constant": 400,
+       "Random": 400
+      }
+     ],
+     [
+      {
+       "Constant": 40,
+       "Random": 40
+      }
+     ],
+     [
+      {
+       "Constant": 25,
+       "Random": 25
+      }
+     ]
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_SUBDUE_SEA_LARGE",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_NARWHAL",
+    "bUnitToCity": [
+     "DONT_ESCORT_SUBDUED_SEA_ANIMAL"
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 90,
+    "Yields": [
+     [
+      {
+       "Constant": 400,
+       "Random": 400
+      }
+     ],
+     [
+      {
+       "Constant": 40,
+       "Random": 40
+      }
+     ],
+     [
+      {
+       "Constant": 25,
+       "Random": 25
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 7,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_MAMMAL",
+   "UNITCOMBAT_RECKLESS_ANIMAL",
+   "UNITCOMBAT_MAMMAL_WHALE",
+   "UNITCOMBAT_ATTACK_FORM_COLLISION_PIERCING",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+   "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+   "UNITCOMBAT_ANIMAL_COMBAT_HIDING",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_HORNED",
+   "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_COAST",
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_OCEAN",
+   "TERRAIN_TRENCH"
+  ],
+  "base": {
+   "combat": 5,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_SEA_ANIMAL"
+  }
+ }
+}

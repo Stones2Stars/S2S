@@ -1,0 +1,139 @@
+{
+ "type": "UNIT_GREATWHITE",
+ "description": "TXT_KEY_UNIT_GREATWHITE",
+ "civilopedia": "TXT_KEY_UNIT_GREATWHITE_SHARK_PEDIA",
+ "withdrawal": {
+  "unit": {
+   "percent": 40
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "blendIntoCity": true
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_TALES_SEA",
+    "iChance": 5,
+    "UnitType": "UNIT_TALESOF_GREATWHITE",
+    "bUnitToCity": [
+     1
+    ],
+    "Yields": [
+     [
+      {
+       "Constant": 80,
+       "Random": 20
+      }
+     ],
+     [
+      {
+       "Constant": 58,
+       "Random": 42
+      }
+     ],
+     [
+      {
+       "Constant": 20,
+       "Random": 20
+      }
+     ]
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_SUBDUE_SEA_LARGE",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_GREATWHITE",
+    "bUnitToCity": [
+     "DONT_ESCORT_SUBDUED_SEA_ANIMAL"
+    ],
+    "Yields": [
+     [
+      {
+       "Constant": 80,
+       "Random": 20
+      }
+     ],
+     [
+      {
+       "Constant": 58,
+       "Random": 42
+      }
+     ],
+     [
+      {
+       "Constant": 20,
+       "Random": 20
+      }
+     ]
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 90,
+    "Yields": [
+     [
+      {
+       "Constant": 80,
+       "Random": 20
+      }
+     ],
+     [
+      {
+       "Constant": 58,
+       "Random": 42
+      }
+     ],
+     [
+      {
+       "Constant": 20,
+       "Random": 20
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 12,
+  "xpValueDefense": 7,
+  "aggression": 2,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_FISH",
+   "UNITCOMBAT_FISH_SHARK",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+   "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+   "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_EPIC",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_TRENCH_POLAR"
+  ],
+  "base": {
+   "combat": 4,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_SEA_ANIMAL"
+  }
+ }
+}

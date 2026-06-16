@@ -1,0 +1,85 @@
+{
+ "type": "UNIT_SUBDUED_LIZARD",
+ "description": "TXT_KEY_UNIT_SUBDUED_LIZARD",
+ "civilopedia": "TXT_KEY_UNIT_LIZARD_PEDIA",
+ "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
+ "capabilities": {
+  "onlyDefensive": true,
+  "militaryTrade": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_SLAY_ANIMAL": [
+     {
+      "OutcomeType": "OUTCOME_SLAY_ANIMAL",
+      "iChance": 100,
+      "Yields": [
+       [
+        {
+         "Constant": 20,
+         "Random": 20
+        }
+       ],
+       [
+        {
+         "Constant": 5,
+         "Random": 6
+        }
+       ],
+       [
+        {
+         "Constant": 0,
+         "Random": 2
+        }
+       ]
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+   "BUILDING_FOLKLORE_E_EARTH",
+   "BUILDING_GOVERNORS_MENAGERIE",
+   "BUILDING_GOVERNORS_PETS",
+   "BUILDING_ENCLOSURE_REPTILE",
+   "BUILDING_TAXIDERMIST",
+   "BUILDING_ZOO"
+  ]
+ },
+ "identity": {
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "captures": "UNIT_SUBDUED_LIZARD",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_SUBDUED_DIMINUTIVE",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_ANIMALS",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "heritage": [
+   "HERITAGE_FOLKLORE_LIZARD",
+   "HERITAGE_TAXON_REPTILIA",
+   "HERITAGE_TAXON_SQUAMATA"
+  ],
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_SUBDUED"
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "type": "UNIT_EGYPT_MYTH_MISSIONARY",
+ "description": "TXT_KEY_UNIT_EGYPT_MYTH_MISSIONARY",
+ "civilopedia": "TXT_KEY_CONCEPT_RELIGION_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_TEMPLE_OF_CHONS",
+     "scope": "city"
+    },
+    {
+     "type": "RELIGION_KEMETISM",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 110,
+  "upkeep": 2
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MISSIONARY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_RELIGION",
+  "captures": "UNIT_EGYPT_MYTH_MISSIONARY",
+  "unitAIs": [
+   "UNITAI_MISSIONARY"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_POOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_MISSIONARY"
+  }
+ }
+}

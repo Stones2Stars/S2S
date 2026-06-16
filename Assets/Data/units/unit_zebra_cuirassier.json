@@ -1,0 +1,207 @@
+{
+ "type": "UNIT_ZEBRA_CUIRASSIER",
+ "description": "TXT_KEY_UNIT_ZEBRA_CUIRASSIER",
+ "civilopedia": "TXT_KEY_UNIT_CUIRASSIER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_SULPHUR",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_EFFECT_HERITAGE_ZEBRAS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_ZEBRA",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 50
+  }
+ },
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 100
+   },
+   "maxUnits": {
+    "flat": 6
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_GRASSLAND": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "TERRAIN_PLAINS": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "TERRAIN_DESERT": {
+     "attack": {
+      "percent": 25
+     }
+    }
+   },
+   "feature": {
+    "FEATURE_SAVANNA": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": -25
+     }
+    },
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": -25
+     }
+    },
+    "FEATURE_SWAMP": {
+     "attack": {
+      "percent": -25
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 50
+    }
+   },
+   "vsUnit": {
+    "UNIT_SPEARMAN": {
+     "attack": {
+      "percent": 50
+     },
+     "defense": {
+      "percent": 50
+     }
+    },
+    "UNIT_PIKEMAN": {
+     "attack": {
+      "percent": 50
+     },
+     "defense": {
+      "percent": 50
+     }
+    },
+    "UNIT_HEAVY_PIKEMAN": {
+     "attack": {
+      "percent": 50
+     },
+     "defense": {
+      "percent": 50
+     }
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "pillage": true,
+  "firstStrikeImmune": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COMMANDO"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_ZEBRA_CAVALRY"
+  ]
+ },
+ "cost": {
+  "production": 475
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 21,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_RIFLE_BUTT",
+   "UNITCOMBAT_WEAPON_DIST_RIFLE",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+   "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
+   "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_RIDING",
+   "UNITCOMBAT_MOUNT_ZEBRA",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 21,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_MOUNTED"
+  }
+ }
+}

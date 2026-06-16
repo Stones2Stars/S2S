@@ -1,0 +1,175 @@
+{
+ "type": "UNIT_KHMER_PHAKAK",
+ "description": "TXT_KEY_UNIT_KHMER_PHAKAK",
+ "civilopedia": "TXT_KEY_UNIT_KHMER_PHAKAK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_KHMER",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_COPPER_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_COPPER_WARES": {
+     "percent": 15
+    },
+    "BONUS_BRONZE_WARES": {
+     "percent": 15
+    },
+    "BONUS_IRON_WARES": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "feature": {
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": 25
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 50
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 50
+    }
+   },
+   "vsUnit": {
+    "UNIT_ELEPHANT_RIDER": {
+     "attack": {
+      "percent": 100
+     }
+    },
+    "UNIT_WAR_ELEPHANT": {
+     "attack": {
+      "percent": 90
+     }
+    },
+    "UNIT_SIAM_ELEPHANT": {
+     "attack": {
+      "percent": 80
+     }
+    },
+    "UNIT_BALLISTA_ELEPHANT": {
+     "attack": {
+      "percent": 70
+     }
+    },
+    "UNIT_BOMBARD_ELEPHANT": {
+     "attack": {
+      "percent": 60
+     }
+    },
+    "UNIT_HOWDAH": {
+     "attack": {
+      "percent": 80
+     }
+    },
+    "UNIT_FLAIL_ELEPHANT": {
+     "attack": {
+      "percent": 80
+     }
+    },
+    "UNIT_MAHOUT_LANCER": {
+     "attack": {
+      "percent": 80
+     }
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_HEAVY_PIKEMAN"
+  ]
+ },
+ "cost": {
+  "production": 200,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 6,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "conscription": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_ATTACK_CITY"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_WEAPON_H2H_SHORT_POLEARM",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_SHIELD_LARGE",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 7,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_MELEE"
+  }
+ }
+}

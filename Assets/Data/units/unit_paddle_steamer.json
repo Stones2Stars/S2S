@@ -1,0 +1,87 @@
+{
+ "type": "UNIT_PADDLE_STEAMER",
+ "description": "TXT_KEY_UNIT_PADDLE_STEAMER",
+ "civilopedia": "TXT_KEY_UNIT_PADDLE_STEAMER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "AREA_SIZE",
+     "scope": "world",
+     "min": 10
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_COAL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "ignoreBuildingDefense": true,
+  "ignoreTerrainCost": true,
+  "mechanized": true,
+  "renderBelowWater": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_TRANSPORT"
+  ]
+ },
+ "cost": {
+  "production": 570,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 4,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "minAreaSize": 10,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ASSAULT_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ESCORT_SEA",
+   "UNITAI_ASSAULT_SEA",
+   "UNITAI_SETTLER_SEA"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_TRANSPORT",
+   "UNITCOMBAT_NAVAL_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_RIFLE",
+   "UNITCOMBAT_WEAPON_DIST_CANNONBALL",
+   "UNITCOMBAT_ARMOR_NAVAL",
+   "UNITCOMBAT_SPEED_SLOW",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_NAVAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "cargo": {
+   "domain": "DOMAIN_LAND"
+  },
+  "base": {
+   "combat": 22,
+   "moves": 5,
+   "cargo": 7,
+   "combatClass": "UNITCOMBAT_STEAM_SHIPS"
+  }
+ }
+}

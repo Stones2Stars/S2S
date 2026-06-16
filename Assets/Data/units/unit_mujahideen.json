@@ -1,0 +1,138 @@
+{
+ "type": "UNIT_MUJAHIDEEN",
+ "description": "TXT_KEY_UNIT_MUJAHIDEEN",
+ "civilopedia": "TXT_KEY_UNIT_MUJAHIDEEN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AFGHAN",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_FIREARMS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_FACTORY_AMMUNITION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 35
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 1
+   },
+   "intercept": {
+    "percent": 40
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_HELICOPTER": {
+     "percent": 75
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "ignoreBuildingDefense": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "targets": {
+   "UNITCOMBAT_HELICOPTER": true
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_GUERILLA1",
+   "PROMOTION_GUERILLA2",
+   "PROMOTION_GUERILLA3"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MOBILE_SAM"
+  ]
+ },
+ "cost": {
+  "production": 1345,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 178,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_TROOP",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_CITY_SPECIAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_HANDGUN",
+   "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+   "UNITCOMBAT_ARMOR_MODERN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 54,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_ROCKET_LAUNCHER"
+  }
+ }
+}

@@ -1,0 +1,137 @@
+{
+ "type": "UNIT_SUBDUED_SEATURTLE",
+ "description": "TXT_KEY_UNIT_SUBDUED_SEATURTLE",
+ "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_SEA_ANIMALS_PEDIA",
+ "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
+ "capabilities": {
+  "onlyDefensive": true,
+  "militaryTrade": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_SLAY_ANIMAL": [
+     {
+      "OutcomeType": "OUTCOME_SLAY_ANIMAL",
+      "iChance": 100,
+      "Yields": [
+       [
+        {
+         "Constant": 15,
+         "Random": 185
+        }
+       ],
+       [
+        {
+         "Constant": 2,
+         "Random": 70
+        }
+       ],
+       [
+        {
+         "Constant": 5,
+         "Random": 18
+        }
+       ]
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT",
+   "BUILDING_FOLKLORE_E_SEA",
+   "BUILDING_SHELL_WORKERS_HUT",
+   "BUILDING_SEA_TURTLE_EGG_GATHERER",
+   "BUILDING_AQUARIUM",
+   "BUILDING_MARINE_INSTITUTE",
+   "BUILDING_TAXIDERMIST"
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "captures": "UNIT_SUBDUED_SEATURTLE",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_SUBDUED_SMALL",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_ANIMALS",
+   "UNITCOMBAT_HEALS_AS_NAVAL",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_SEA_TROPICAL",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_DEEP_TROPICAL",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_TROPICAL",
+   "TERRAIN_TRENCH_POLAR"
+  ],
+  "terrainPassableTechs": [
+   {
+    "TERRAIN_SEA_TROPICAL": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA_POLAR": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA_DEEP": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA_DEEP_POLAR": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA_DEEP_TROPICAL": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_OCEAN": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_OCEAN_POLAR": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_OCEAN_TROPICAL": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_TRENCH": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_TRENCH_TROPICAL": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_TRENCH_POLAR": "TECH_ASTRONOMY"
+   }
+  ],
+  "heritage": [
+   "HERITAGE_FOLKLORE_TURTLE_SEA",
+   "HERITAGE_TAXON_TESTUDINES"
+  ],
+  "base": {
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_SUBDUED"
+  }
+ }
+}

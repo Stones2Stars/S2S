@@ -1,0 +1,125 @@
+{
+ "type": "UNIT_STEALTH_FIGHTER",
+ "description": "TXT_KEY_UNIT_EARLYSTEALTH",
+ "civilopedia": "TXT_KEY_UNIT_STEALTH_FIGHTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_AMMUNITION",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "bombard": {
+  "unit": {
+   "airBombRate": {
+    "flat": 20
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 100
+   },
+   "limit": {
+    "flat": 50
+   },
+   "maxUnits": {
+    "flat": 4
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 18
+   },
+   "intercept": {
+    "percent": 55
+   },
+   "evasion": {
+    "percent": 40
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "domain": {
+    "DOMAIN_AIR": {
+     "percent": -50
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "ignoreBuildingDefense": true,
+  "mechanized": true,
+  "dcmFighterEngage": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true,
+  "dcmAirBomb": 2
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_STEALTH_BOMBER"
+  ]
+ },
+ "cost": {
+  "production": 2120,
+  "upkeep": 9
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 347,
+  "xpValueAttack": 6,
+  "xpValueDefense": 6,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_DEFENSE_AIR",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "special": "SPECIALUNIT_FIGHTER",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_DEFENSE_AIR",
+   "UNITAI_CARRIER_AIR"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+   "UNITCOMBAT_WEAPON_A2G_SHORT_RANGE_MISSILE",
+   "UNITCOMBAT_WEAPON_A2G_BOMBS",
+   "UNITCOMBAT_ARMOR_AIRCRAFT",
+   "UNITCOMBAT_MOTILITY_PILOTING",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_AIRCRAFT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "airCombat": 60,
+   "airCombatLimit": 70,
+   "airUnitCap": 1,
+   "combatClass": "UNITCOMBAT_STEALTH"
+  }
+ }
+}

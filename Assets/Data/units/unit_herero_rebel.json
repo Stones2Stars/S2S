@@ -1,0 +1,185 @@
+{
+ "type": "UNIT_HERERO_REBEL",
+ "description": "TXT_KEY_UNIT_HERERO_REBEL",
+ "civilopedia": "TXT_KEY_UNIT_HERERO_REBEL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HERERO",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_IRON_WARES": {
+     "percent": 15
+    },
+    "BONUS_FLINT": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "perVolumeMore": {
+    "percent": 10
+   },
+   "perVolumeLess": {
+    "percent": 10
+   },
+   "lunge": {
+    "percent": 15
+   },
+   "enclose": {
+    "percent": 15
+   },
+   "unnerve": {
+    "percent": 15
+   },
+   "stealthStrikes": {
+    "flat": 2
+   },
+   "stealth": {
+    "percent": 40
+   },
+   "feature": {
+    "FEATURE_SAVANNA": {
+     "attack": {
+      "percent": 50
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_GUN": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 2
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -5
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 20
+  },
+  "plot": {
+   "flat": 40
+  }
+ },
+ "capabilities": {
+  "alwaysHostile": true,
+  "hiddenNationality": true,
+  "pillage": true,
+  "barbCoExist": true,
+  "ignoreTerrainCost": true,
+  "noNonOwnedCityEntry": true,
+  "stealthDefense": true,
+  "upgradeAnywhere": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "targets": {
+   "UNITCOMBAT_GUN": true
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 3
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 3
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COMMANDO",
+   "PROMOTION_MARAUDER",
+   "PROMOTION_LOOTER"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_GUERRILLA"
+  ]
+ },
+ "cost": {
+  "production": 590,
+  "upkeep": 6
+ },
+ "identity": {
+  "worth": 8,
+  "militaryWorth": 26,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+   "UNITCOMBAT_WEAPON_DIST_RIFLE",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_BATTALION",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 26,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_RUFFIAN"
+  }
+ }
+}

@@ -1,0 +1,185 @@
+{
+ "type": "UNIT_SUBDUED_MUSKOX",
+ "description": "TXT_KEY_UNIT_SUBDUED_MUSKOX",
+ "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
+ "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
+ "capabilities": {
+  "onlyDefensive": true,
+  "militaryTrade": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_SLAY_ANIMAL": [
+     {
+      "OutcomeType": "OUTCOME_SLAY_ANIMAL",
+      "iChance": 100,
+      "Yields": [
+       [
+        {
+         "Constant": 90,
+         "Random": 110
+        }
+       ],
+       [
+        {
+         "Constant": 9,
+         "Random": 11
+        }
+       ],
+       [
+        {
+         "Constant": 9,
+         "Random": 10
+        }
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "MISSION_ANIMAL_COMBAT": [
+     {
+      "OutcomeType": "OUTCOME_ANIMAL_COMBAT1",
+      "iChance": 100,
+      "Commerces": [
+       [
+        [
+         1
+        ]
+       ],
+       0,
+       [
+        [
+         5
+        ]
+       ],
+       0
+      ],
+      "iHappinessTimer": 5
+     },
+     {
+      "OutcomeType": "OUTCOME_ANIMAL_COMBAT2",
+      "iChance": 100,
+      "Commerces": [
+       [
+        [
+         2
+        ]
+       ],
+       0,
+       [
+        [
+         5
+        ]
+       ],
+       0
+      ],
+      "iHappinessTimer": 5
+     },
+     {
+      "OutcomeType": "OUTCOME_ANIMAL_COMBAT3",
+      "iChance": 100,
+      "Commerces": [
+       [
+        [
+         3
+        ]
+       ],
+       0,
+       [
+        [
+         5
+        ]
+       ],
+       0
+      ],
+      "iHappinessTimer": 5
+     },
+     {
+      "OutcomeType": "OUTCOME_ANIMAL_COMBAT4",
+      "iChance": 100,
+      "Commerces": [
+       [
+        [
+         4
+        ]
+       ],
+       0,
+       [
+        [
+         5
+        ]
+       ],
+       0
+      ],
+      "iHappinessTimer": 5
+     },
+     {
+      "OutcomeType": "OUTCOME_ANIMAL_COMBAT5",
+      "iChance": 100,
+      "Commerces": [
+       [
+        [
+         5
+        ]
+       ],
+       0,
+       [
+        [
+         5
+        ]
+       ],
+       0
+      ],
+      "iHappinessTimer": 5
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+   "BUILDING_CARNIVAL",
+   "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE",
+   "BUILDING_FOLKLORE_T_BULL",
+   "BUILDING_FOLKLORE_MUSKOX",
+   "BUILDING_GOVERNORS_MENAGERIE",
+   "BUILDING_GOVERNORS_PETS",
+   "BUILDING_MASTER_HUNTER",
+   "BUILDING_CAMP_MUSKOX",
+   "BUILDING_HERD_MUSKOX",
+   "BUILDING_TAXIDERMIST",
+   "BUILDING_ZOO"
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "captures": "UNIT_SUBDUED_MUSKOX",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_SUBDUED_LARGE",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_ANIMALS",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_SUBDUED"
+  }
+ }
+}

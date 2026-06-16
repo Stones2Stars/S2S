@@ -1,0 +1,234 @@
+{
+ "type": "UNIT_PUEBLO_REBEL",
+ "description": "TXT_KEY_UNIT_PUEBLO_REBEL",
+ "civilopedia": "TXT_KEY_UNIT_PUEBLO_REBEL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HOPI",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_FIREARMS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_AMMUNITION",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_SHOOTING_CLUB",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_FIRING_RANGE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_AUTOMATED_FIRING_RANGE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORBITAL_TARGETS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_IRON_WARES": {
+     "percent": 15
+    },
+    "BONUS_FLINT": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 15
+   },
+   "perSizeMore": {
+    "percent": 5
+   },
+   "perVolumeMore": {
+    "percent": -5
+   },
+   "perVolumeLess": {
+    "percent": 5
+   },
+   "lunge": {
+    "percent": 12
+   },
+   "unnerve": {
+    "percent": 12
+   },
+   "stealthStrikes": {
+    "flat": 1
+   },
+   "stealth": {
+    "percent": 30
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rangedDamage": {
+    "flat": 10
+   },
+   "rangedDamageLimit": {
+    "flat": 10
+   },
+   "dcmAccuracy": {
+    "flat": 15
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 5
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -20
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "assassin": true,
+  "counterSpy": true,
+  "destroy": true,
+  "ignoreTerrainCost": true,
+  "ignoreZoneOfControl": true,
+  "rivalTerritory": true,
+  "sabotage": true,
+  "stealPlans": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "targets": {
+   "UNITCOMBAT_EXPLORER": true,
+   "UNITCOMBAT_CIVILIAN": true,
+   "UNITCOMBAT_CANINE": true
+  }
+ },
+ "vision": {
+  "invisible": "INVISIBLE_CAMOUFLAGE",
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 3
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 4
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COMMANDO",
+   "PROMOTION_SENTRY",
+   "PROMOTION_TAKE_PRISONERS1",
+   "PROMOTION_TAKE_PRISONERS2",
+   "PROMOTION_TAKE_PRISONERS3"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_SNIPER"
+  ]
+ },
+ "cost": {
+  "production": 530,
+  "upkeep": 6
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   }
+  ]
+ },
+ "identity": {
+  "worth": 7,
+  "militaryWorth": 15,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_TROOP",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE_COUNTER",
+   "UNITAI_SPY"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_RIFLE_BUTT",
+   "UNITCOMBAT_WEAPON_DIST_RIFLE",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 17,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_STRIKE_TEAM"
+  }
+ }
+}

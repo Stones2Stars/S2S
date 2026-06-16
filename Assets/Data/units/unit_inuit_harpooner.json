@@ -1,0 +1,132 @@
+{
+ "type": "UNIT_INUIT_HARPOONER",
+ "description": "TXT_KEY_UNIT_INUIT_HARPOONER",
+ "civilopedia": "TXT_KEY_UNIT_INUIT_HARPOONER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_INUIT",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_BONE": {
+     "percent": 15
+    },
+    "BONUS_IVORY": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 100
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 50
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 25
+    },
+    "UNITCOMBAT_THROWING": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COLD1",
+   "PROMOTION_COLD2",
+   "PROMOTION_COLD3"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_SKIRMISHER"
+  ]
+ },
+ "cost": {
+  "production": 75,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 5,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "conscription": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_ATTACK_CITY"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_HUNTER",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_SHORT_POLEARM",
+   "UNITCOMBAT_WEAPON_DIST_JAVELIN",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_SHIELD_SMALL",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 6,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_THROWING"
+  }
+ }
+}

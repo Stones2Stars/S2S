@@ -1,0 +1,176 @@
+{
+ "type": "UNIT_ARSONIST",
+ "description": "TXT_KEY_UNIT_ARSONIST",
+ "civilopedia": "TXT_KEY_UNIT_ARSONIST_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_TAR",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_OLIVE_OIL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_FISH_OIL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_GHEE_OIL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_WHALE_OIL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_KEROSENE",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_ALCOHOL": {
+     "percent": 5
+    },
+    "BONUS_FISH_OIL": {
+     "percent": 5
+    },
+    "BONUS_GHEE_OIL": {
+     "percent": 5
+    },
+    "BONUS_KEROSENE": {
+     "percent": 5
+    },
+    "BONUS_OLIVE_OIL": {
+     "percent": 5
+    },
+    "BONUS_TAR": {
+     "percent": 5
+    },
+    "BONUS_WHALE_OIL": {
+     "percent": 5
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 50
+   },
+   "cityDefense": {
+    "percent": -50
+   },
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 15
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 2
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 3
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 6
+   },
+   "limit": {
+    "flat": 17
+   },
+   "maxUnits": {
+    "flat": 2
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "ignoreBuildingDefense": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_GRENADIER",
+   "UNIT_ANCIENT_FLAMETHROWER"
+  ]
+ },
+ "cost": {
+  "production": 130,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 20,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_RESERVE",
+   "UNITAI_CITY_COUNTER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_DIST_EXPLOSIVE_FLASK",
+   "UNITCOMBAT_WEAPON_H2H_CLUB",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 5,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_THROWING"
+  }
+ }
+}

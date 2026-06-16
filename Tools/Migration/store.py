@@ -58,6 +58,7 @@ ENTITIES = {
     "PromotionInfo":     "*CIV4PromotionInfos.xml",
     "PromotionLineInfo": "*CIV4PromotionLineInfos.xml",
     "UnitCombatInfo":    "*CIV4UnitCombatInfos.xml",
+    "SpecialUnitInfo":   "*CIV4SpecialUnitInfos.xml",   # #33, rides the Unit pass (cargo-load rules + combat deposits)
     "HeritageInfo":      "*HeritageInfos.xml",
     "SpecialBuildingInfo": "*CIV4SpecialBuildingInfos.xml",
     # config/global entities — participate in NO enabler edges (enable nothing); registered for

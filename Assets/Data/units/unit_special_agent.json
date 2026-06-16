@@ -1,0 +1,88 @@
+{
+ "type": "UNIT_SPECIAL_AGENT",
+ "description": "TXT_KEY_UNIT_SPECIAL_AGENT",
+ "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_INTELLIGENCE_AGENCY",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "counterSpy": true,
+  "ignoreTerrainCost": true,
+  "investigate": true,
+  "alwaysInvisible": true,
+  "rivalTerritory": true,
+  "spy": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COMMANDO",
+   "PROMOTION_IMPROVISE1",
+   "PROMOTION_SECURITY1",
+   "PROMOTION_ESCAPE1"
+  ]
+ },
+ "cost": {
+  "production": 811,
+  "upkeep": 1000
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SPY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_MILITARY",
+  "espionagePoints": 500,
+  "unitAIs": [
+   "UNITAI_SPY"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_SPY"
+  }
+ }
+}

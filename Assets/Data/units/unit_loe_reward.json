@@ -1,0 +1,73 @@
+{
+ "type": "UNIT_LOE_REWARD",
+ "description": "TXT_KEY_UNIT_LOE_REWARD",
+ "civilopedia": "TXT_KEY_UNIT_LOE_REWARD_PEDIA",
+ "capabilities": {
+  "canMoveAllTerrain": true,
+  "canMoveImpassable": true,
+  "ignoreTerrainCost": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_SAMPLE_STUDY": [
+     {
+      "OutcomeType": "OUTCOME_SAMPLE_STUDY",
+      "iChance": 100,
+      "Yields": [
+       0,
+       0,
+       5000
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_SPUTNIK",
+   "BUILDING_PROJECT_GEMINI",
+   "BUILDING_PROJECT_MERCURY",
+   "BUILDING_WILKINSON_MICROWAVE_ANISOTROPY_PROBE",
+   "BUILDING_CLIMATE_SATELLITE"
+  ]
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_LOE_REWARD",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_EARLY_SPACESHIP",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_TECH",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "moves": 24,
+   "workRate": 250,
+   "combatClass": "UNITCOMBAT_SPACE_WORKER"
+  }
+ }
+}

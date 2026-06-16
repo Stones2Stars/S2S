@@ -1,0 +1,73 @@
+{
+ "type": "UNIT_FOOD_FREIGHT",
+ "description": "TXT_KEY_UNIT_FOOD_FREIGHT",
+ "civilopedia": "TXT_KEY_CONCEPT_FREIGHT_PEDIA",
+ "capabilities": {
+  "noCapture": true,
+  "noNonTypeProdMods": true,
+  "onlyDefensive": true,
+  "rivalTerritory": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "greatPersonAction": {
+   "food": {
+    "base": 594
+   }
+  }
+ },
+ "cost": {
+  "production": 660,
+  "upkeep": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ],
+  "behaviour": {
+   "weight": 10
+  }
+ },
+ "identity": {
+  "worth": 1,
+  "animalCombat": 100,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MERCHANT",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "captures": "UNIT_FOOD_FREIGHT",
+  "unitAIs": [
+   "UNITAI_MERCHANT",
+   "UNITAI_ENGINEER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_EXPLORE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_HANDGUN",
+   "UNITCOMBAT_ARMOR_VEHICULAR",
+   "UNITCOMBAT_MOTILITY_DRIVING",
+   "UNITCOMBAT_QUALITY_MEDIOCRE",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 5,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_TRADE"
+  }
+ }
+}

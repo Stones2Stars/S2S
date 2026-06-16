@@ -1,0 +1,94 @@
+{
+ "type": "UNIT_SYSTEMS_ANALYST",
+ "description": "TXT_KEY_UNIT_SYSTEMS_ANALYST",
+ "civilopedia": "TXT_KEY_UNIT_SYSTEMS_ANALYST_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NEUROIMPLANTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_FLASH_MEMORY_DEVICES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 12
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_TECH": {
+     "heal": 38,
+     "adjacentHeal": 21
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "capabilities": {
+  "mechanized": true,
+  "onlyDefensive": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "cost": {
+  "production": 3700,
+  "upkeep": 11,
+  "hurryCostModifier": 25
+ },
+ "identity": {
+  "worth": 19,
+  "militaryWorth": 50,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_HEALER",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_SPRAY",
+   "UNITCOMBAT_WEAPON_DIST_LASER",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_TECH",
+   "UNITCOMBAT_HEALS_TECH"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 20,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_HITECH"
+  }
+ }
+}

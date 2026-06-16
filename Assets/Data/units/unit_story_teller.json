@@ -1,0 +1,103 @@
+{
+ "type": "UNIT_STORY_TELLER",
+ "description": "TXT_KEY_UNIT_STORY_TELLER",
+ "civilopedia": "TXT_KEY_UNIT_STORY_TELLER_PEDIA",
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "capabilities": {
+  "rivalTerritory": true,
+  "militaryTrade": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MissionType": "MISSION_ENTERTAIN_CITY",
+    "bKill": 0,
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_ENTERTAIN_CITY",
+      "iChance": 70,
+      "Commerces": [
+       0,
+       0,
+       [
+        [
+         4
+        ]
+       ]
+      ],
+      "iReduceAnarchyLength": 2,
+      "bKill": 1
+     },
+     {
+      "OutcomeType": "OUTCOME_ENTERTAIN_CITY_EXALTED",
+      "iChance": 30,
+      "Commerces": [
+       0,
+       0,
+       [
+        [
+         6
+        ]
+       ]
+      ],
+      "PromotionType": "PROMOTION_EXPERIENCED_ARTIST",
+      "iReduceAnarchyLength": 3
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_RAIN_DANCE",
+   "BUILDING_WAR_DANCE",
+   "BUILDING_FIRE_DANCE",
+   "BUILDING_NATURE_DANCE",
+   "BUILDING_MOON_DANCE",
+   "BUILDING_FERTILITY_DANCE",
+   "BUILDING_BLOOD_DANCE"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_BARD"
+  ]
+ },
+ "cost": {
+  "production": 16,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_CULTURE",
+  "captures": "UNIT_STORY_TELLER",
+  "unitAIs": [
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_INFERIOR",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_ENTERTAINER"
+  }
+ }
+}

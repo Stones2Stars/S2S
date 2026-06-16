@@ -1,0 +1,192 @@
+{
+ "type": "UNIT_SUBDUED_WOLF",
+ "description": "TXT_KEY_UNIT_SUBDUED_WOLF",
+ "civilopedia": "TXT_KEY_UNIT_WOLF_PEDIA",
+ "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
+ "capabilities": {
+  "onlyDefensive": true,
+  "militaryTrade": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_SLAY_ANIMAL": [
+     {
+      "OutcomeType": "OUTCOME_SLAY_ANIMAL",
+      "iChance": 100,
+      "Yields": [
+       [
+        {
+         "Constant": 12,
+         "Random": 28
+        }
+       ],
+       [
+        {
+         "Constant": 1,
+         "Random": 6
+        }
+       ],
+       [
+        {
+         "Constant": 8,
+         "Random": 5
+        }
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "MISSION_ANIMAL_COMBAT": [
+     {
+      "OutcomeType": "OUTCOME_ANIMAL_COMBAT1",
+      "iChance": 100,
+      "Commerces": [
+       [
+        [
+         1
+        ]
+       ],
+       0,
+       [
+        [
+         5
+        ]
+       ],
+       0
+      ],
+      "iHappinessTimer": 5
+     },
+     {
+      "OutcomeType": "OUTCOME_ANIMAL_COMBAT2",
+      "iChance": 100,
+      "Commerces": [
+       [
+        [
+         2
+        ]
+       ],
+       0,
+       [
+        [
+         5
+        ]
+       ],
+       0
+      ],
+      "iHappinessTimer": 5
+     },
+     {
+      "OutcomeType": "OUTCOME_ANIMAL_COMBAT3",
+      "iChance": 100,
+      "Commerces": [
+       [
+        [
+         3
+        ]
+       ],
+       0,
+       [
+        [
+         5
+        ]
+       ],
+       0
+      ],
+      "iHappinessTimer": 5
+     },
+     {
+      "OutcomeType": "OUTCOME_ANIMAL_COMBAT4",
+      "iChance": 100,
+      "Commerces": [
+       [
+        [
+         4
+        ]
+       ],
+       0,
+       [
+        [
+         5
+        ]
+       ],
+       0
+      ],
+      "iHappinessTimer": 5
+     },
+     {
+      "OutcomeType": "OUTCOME_ANIMAL_COMBAT5",
+      "iChance": 100,
+      "Commerces": [
+       [
+        [
+         5
+        ]
+       ],
+       0,
+       [
+        [
+         5
+        ]
+       ],
+       0
+      ],
+      "iHappinessTimer": 5
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+   "BUILDING_MILITARY_STANDARD_CANINES",
+   "BUILDING_DOG_BREEDER",
+   "BUILDING_DOG_KENNELS",
+   "BUILDING_GOVERNORS_MENAGERIE",
+   "BUILDING_GOVERNORS_PETS",
+   "BUILDING_GUARD_DOG_TRAINER",
+   "BUILDING_HERDING_DOG_TRAINER",
+   "BUILDING_HUNTING_DOG_TRAINER",
+   "BUILDING_POLICE_DOG_TRAINER",
+   "BUILDING_SLED_DOG_TRAINER",
+   "BUILDING_TAXIDERMIST",
+   "BUILDING_WAR_DOG_TRAINER",
+   "BUILDING_ENCLOSURE_WOLF",
+   "BUILDING_ZOO"
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "captures": "UNIT_SUBDUED_WOLF",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_SUBDUED_SMALL",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_ANIMALS",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "heritage": [
+   "HERITAGE_FOLKLORE_WOLF",
+   "HERITAGE_TAXON_CANIDAE"
+  ],
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_SUBDUED"
+  }
+ }
+}

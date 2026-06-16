@@ -1,0 +1,78 @@
+{
+ "type": "UNIT_INQUISITOR",
+ "description": "TXT_KEY_UNIT_INQUISITOR",
+ "civilopedia": "TXT_KEY_UNIT_INQUISITOR_PEDIA",
+ "help": "TXT_KEY_UNIT_INQUISITOR_HELP",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "CIVIC_INQUISITORIAL",
+      "scope": "empire"
+     }
+    ]
+   ]
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "inquisitor": true,
+  "stateReligion": true
+ },
+ "cost": {
+  "production": 233,
+  "upkeep": 1
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_RELIGION_INQUISITIONS"
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MERCHANT",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_RELIGION",
+  "unitAIs": [
+   "UNITAI_MERCHANT",
+   "UNITAI_MISSIONARY"
+  ],
+  "notUnitAIs": [
+   "UNITAI_EXPLORE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_LAW_ENFORCEMENT",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": 80
+  },
+  "base": {
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_MISSIONARY"
+  }
+ }
+}

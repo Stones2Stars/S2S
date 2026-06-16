@@ -1,0 +1,144 @@
+{
+ "type": "UNIT_ARABIAN_GALLIOT",
+ "description": "TXT_KEY_UNIT_ARABIAN_GALLIOT",
+ "civilopedia": "TXT_KEY_UNIT_ARABIAN_GALLIOT_PEDIA",
+ "help": "TXT_KEY_UNIT_MERCHANT_SHIP_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_OMANI",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "AREA_SIZE",
+     "scope": "world",
+     "min": 10
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "mechanized": true,
+  "onlyDefensive": true,
+  "rivalTerritory": true,
+  "renderBelowWater": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "greatPersonAction": {
+   "trade": {
+    "base": 50,
+    "multiplier": 2
+   }
+  }
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_CARRACK_MERCHANT"
+  ]
+ },
+ "cost": {
+  "production": 133,
+  "upkeep": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   }
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "minAreaSize": 10,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ATTACK_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_SEA",
+   "UNITAI_MERCHANT",
+   "UNITAI_EXPLORE_SEA"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WOODEN_SHIPS",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+   "UNITCOMBAT_WEAPON_DIST_SHORTBOW",
+   "UNITCOMBAT_ARMOR_NAVAL",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_NAVAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_SEA_TROPICAL",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_DEEP_TROPICAL",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_POLAR",
+   "TERRAIN_TRENCH_TROPICAL"
+  ],
+  "terrainPassableTechs": [
+   {
+    "TERRAIN_SEA_TROPICAL": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA_POLAR": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA_DEEP": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA_DEEP_POLAR": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA_DEEP_TROPICAL": "TECH_SEAFARING"
+   }
+  ],
+  "base": {
+   "combat": 3,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_TRADE"
+  }
+ }
+}

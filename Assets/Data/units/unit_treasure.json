@@ -1,0 +1,73 @@
+{
+ "type": "UNIT_TREASURE",
+ "description": "TXT_KEY_UNIT_TREASURE",
+ "civilopedia": "TXT_KEY_UNIT_TREASURE_PEDIA",
+ "capabilities": {
+  "rivalTerritory": true
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_TREASURY",
+   "BUILDING_MUSEUM"
+  ],
+  "greatPersonAction": {
+   "hurry": {
+    "base": 100,
+    "multiplier": 10
+   },
+   "greatWork": {
+    "base": 200
+   }
+  }
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   }
+  ]
+ },
+ "loadPrune": {
+  "notOnGameOptions": [
+   "GAMEOPTION_NO_EVENTS"
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ENGINEER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "captures": "UNIT_TREASURE",
+  "unitAIs": [
+   "UNITAI_ARTIST",
+   "UNITAI_ENGINEER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_SPEED_SLOW",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_MEDIOCRE",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_TRADE"
+  }
+ }
+}

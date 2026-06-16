@@ -1,0 +1,64 @@
+{
+ "type": "UNIT_VENUS_WORKER",
+ "description": "TXT_KEY_UNIT_VENUS_WORKER",
+ "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_VENUS_CARBONWORKS",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "ignoreTerrainCost": true
+ },
+ "grants": {
+  "builds": [
+   "BUILD_PLANETARY_MAGLEV",
+   "BUILD_VENUS_SURFACE_MINE",
+   "BUILD_COLONY_SOLAR_ARRAY",
+   "BUILD_VENUS_AERIAL_FARM"
+  ]
+ },
+ "cost": {
+  "production": 1500,
+  "upkeep": 1,
+  "hurryCostModifier": 10000
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_VENUS_WORKER",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_TECH",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "moves": 3,
+   "workRate": 250,
+   "combatClass": "UNITCOMBAT_SPACE_WORKER"
+  }
+ }
+}

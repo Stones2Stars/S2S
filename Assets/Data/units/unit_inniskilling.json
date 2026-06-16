@@ -1,0 +1,206 @@
+{
+ "type": "UNIT_INNISKILLING",
+ "description": "TXT_KEY_UNIT_INNISKILLING",
+ "civilopedia": "TXT_KEY_UNIT_INNISKILLING_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_IRISH",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_IRON_WARES": {
+     "percent": 15
+    },
+    "BONUS_FLINT": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "perSizeMore": {
+    "percent": 10
+   },
+   "perVolumeMore": {
+    "percent": -10
+   },
+   "perVolumeLess": {
+    "percent": 10
+   },
+   "lunge": {
+    "percent": 15
+   },
+   "unnerve": {
+    "percent": 15
+   },
+   "stealthStrikes": {
+    "flat": 2
+   },
+   "stealth": {
+    "percent": 40
+   },
+   "unitCombat": {
+    "UNITCOMBAT_GUN": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 2
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rangedDamage": {
+    "flat": 30
+   },
+   "rangedDamageLimit": {
+    "flat": 30
+   },
+   "dcmRange": {
+    "flat": 1
+   },
+   "dcmAccuracy": {
+    "flat": 10
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 75
+   },
+   "maxUnits": {
+    "flat": 2
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 5
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -10
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "assassin": true,
+  "counterSpy": true,
+  "destroy": true,
+  "ignoreTerrainCost": true,
+  "ignoreZoneOfControl": true,
+  "rivalTerritory": true,
+  "sabotage": true,
+  "stealPlans": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "targets": {
+   "UNITCOMBAT_GUN": true,
+   "UNITCOMBAT_CANINE": true
+  }
+ },
+ "vision": {
+  "invisible": "INVISIBLE_CAMOUFLAGE",
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 4
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 5
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SNIPER",
+   "PROMOTION_SENTRY"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MSNIPER"
+  ]
+ },
+ "cost": {
+  "production": 668,
+  "upkeep": 6
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   }
+  ]
+ },
+ "identity": {
+  "worth": 9,
+  "militaryWorth": 25,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE_COUNTER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_BAYONETTE",
+   "UNITCOMBAT_WEAPON_DIST_RIFLE",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 26,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_STRIKE_TEAM"
+  }
+ }
+}

@@ -1,0 +1,108 @@
+{
+ "type": "UNIT_WALLABY_HUNTERS",
+ "description": "TXT_KEY_UNIT_WALLABY_HUNTERS",
+ "civilopedia": "TXT_KEY_UNIT_WALLABY_HUNTERS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_TIWI",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": -75
+   },
+   "unitCombat": {
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "assassin": true,
+  "targets": {
+   "UNITCOMBAT_ANIMAL": true,
+   "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_HUNTING_SIGHT1",
+   "PROMOTION_HUNTING_SIGHT2",
+   "PROMOTION_WARMTH1",
+   "PROMOTION_WOODSMAN1",
+   "PROMOTION_DRILL1"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_WARDEN"
+  ]
+ },
+ "cost": {
+  "production": 175,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 2,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "animalCombat": 150,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_HUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_HUNTER",
+   "UNITAI_EXPLORE",
+   "UNITAI_ATTACK"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_AXE",
+   "UNITCOMBAT_WEAPON_H2H_KNIFE",
+   "UNITCOMBAT_WEAPON_DIST_SHORTBOW",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 5,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_HUNTER"
+  }
+ }
+}

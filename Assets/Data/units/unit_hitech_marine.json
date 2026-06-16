@@ -1,0 +1,100 @@
+{
+ "type": "UNIT_HITECH_MARINE",
+ "description": "TXT_KEY_UNIT_HITECH_MARINE",
+ "civilopedia": "TXT_KEY_UNIT_HITECH_MARINE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   },
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE": {
+     "percent": 80
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_AMPHIBIOUS",
+   "PROMOTION_WARMTH1",
+   "PROMOTION_WARMTH2",
+   "PROMOTION_WARMTH3",
+   "PROMOTION_COLD1",
+   "PROMOTION_COLD2",
+   "PROMOTION_COLD3"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_POWER_ARMORED_INFANTRY"
+  ]
+ },
+ "cost": {
+  "production": 2745,
+  "upkeep": 4
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 117,
+  "xpValueAttack": 3,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_TROOP",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_RESERVE",
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_BAYONETTE",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_ARMOR_MODERN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 90,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_HITECH"
+  }
+ }
+}

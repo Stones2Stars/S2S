@@ -1,0 +1,91 @@
+{
+ "type": "UNIT_MASTER_GAME_HUNTER",
+ "description": "TXT_KEY_UNIT_MASTER_GAME_HUNTER",
+ "civilopedia": "TXT_KEY_UNIT_MASTER_HUNTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": -75
+   },
+   "unitCombat": {
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "assassin": true,
+  "noBadGoodies": true,
+  "targets": {
+   "UNITCOMBAT_ANIMAL": true,
+   "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_MASTER_HUNTER1",
+   "PROMOTION_MASTER_HUNTER2",
+   "PROMOTION_HUNTING_SIGHT1",
+   "PROMOTION_HUNTING_SIGHT2"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MASTER_BIG_GAME_HUNTER"
+  ]
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 8,
+  "militaryWorth": 16,
+  "xpValueAttack": 1,
+  "xpValueDefense": 2,
+  "animalCombat": 125,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_HUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_HUNTER",
+   "UNITAI_EXPLORE",
+   "UNITAI_ATTACK"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_RIFLE_BUTT",
+   "UNITCOMBAT_WEAPON_DIST_RIFLE",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 12,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_HUNTER"
+  }
+ }
+}

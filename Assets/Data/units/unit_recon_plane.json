@@ -1,0 +1,98 @@
+{
+ "type": "UNIT_RECON_PLANE",
+ "description": "TXT_KEY_UNIT_RECON_PLANE",
+ "civilopedia": "TXT_KEY_UNIT_RECON_PLANE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_SECRET_ARMY_BASE",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_ALUMINUM_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 12
+   },
+   "evasion": {
+    "percent": 40
+   }
+  }
+ },
+ "capabilities": {
+  "hiddenNationality": true,
+  "firstStrikeImmune": true,
+  "mechanized": true,
+  "onlyDefensive": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SENTRY"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_SR71"
+  ]
+ },
+ "cost": {
+  "production": 1150,
+  "upkeep": 3
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 10,
+  "xpValueAttack": 6,
+  "xpValueDefense": 6,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_DEFENSE_AIR",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_DEFENSE_AIR"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+   "UNITCOMBAT_ARMOR_AIRCRAFT",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_PILOTING",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_AIRCRAFT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "airCombat": 1,
+   "airCombatLimit": 1,
+   "airUnitCap": 1,
+   "combatClass": "UNITCOMBAT_AIR_RECON"
+  }
+ }
+}

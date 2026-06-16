@@ -1,0 +1,169 @@
+{
+ "type": "UNIT_GUERRILLA",
+ "description": "TXT_KEY_UNIT_GUERRILLA",
+ "civilopedia": "TXT_KEY_UNIT_GUERRILLA_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_REBEL_CAMP",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_AMMUNITION",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "lunge": {
+    "percent": 16
+   },
+   "enclose": {
+    "percent": 16
+   },
+   "unnerve": {
+    "percent": 16
+   },
+   "stealthStrikes": {
+    "flat": 2
+   },
+   "stealth": {
+    "percent": 50
+   },
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE_DEFENSIVE": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 40
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 2
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 30
+  },
+  "plot": {
+   "flat": 60
+  }
+ },
+ "capabilities": {
+  "alwaysHostile": true,
+  "assassin": true,
+  "hiddenNationality": true,
+  "pillage": true,
+  "counterSpy": true,
+  "destroy": true,
+  "ignoreTerrainCost": true,
+  "ignoreZoneOfControl": true,
+  "noNonOwnedCityEntry": true,
+  "sabotage": true,
+  "stealPlans": true,
+  "upgradeAnywhere": true,
+  "ignoreNoEntryLevel": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "targets": {
+   "UNITCOMBAT_EXPLORER": true,
+   "UNITCOMBAT_CIVILIAN": true,
+   "UNITCOMBAT_CANINE": true,
+   "UNITCOMBAT_SIEGE_DEFENSIVE": true,
+   "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 4
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 5
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_LOOTER",
+   "PROMOTION_COMMANDO",
+   "PROMOTION_MARAUDER",
+   "PROMOTION_SENTRY",
+   "PROMOTION_AMBUSH"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MSNIPER"
+  ]
+ },
+ "cost": {
+  "production": 1250,
+  "upkeep": 9
+ },
+ "identity": {
+  "worth": 10,
+  "militaryWorth": 40,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PILLAGE",
+  "formationType": "FORMATION_TYPE_RANGED",
+  "special": "SPECIALUNIT_TROOP",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE",
+   "UNITAI_PILLAGE_COUNTER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_RUFFIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_BAYONETTE",
+   "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "cargo": {
+   "special": "SPECIALUNIT_CAPTIVE"
+  },
+  "base": {
+   "combat": 60,
+   "moves": 2,
+   "cargo": 1,
+   "combatClass": "UNITCOMBAT_STRIKE_TEAM"
+  }
+ }
+}

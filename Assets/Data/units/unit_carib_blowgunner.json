@@ -1,0 +1,135 @@
+{
+ "type": "UNIT_CARIB_BLOWGUNNER",
+ "description": "TXT_KEY_UNIT_CARIB_BLOWGUNNER",
+ "civilopedia": "TXT_KEY_UNIT_CARIB_BLOWGUNNER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CARIB",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_FLINT": {
+     "percent": 5
+    },
+    "BONUS_PRIME_TIMBER": {
+     "percent": 5
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityDefense": {
+    "percent": 50
+   },
+   "hillsDefense": {
+    "percent": 25
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_POISON_TIPS"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_ARCHER"
+  ]
+ },
+ "cost": {
+  "production": 46,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 8,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "conscription": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PILLAGE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_CLUB",
+   "UNITCOMBAT_WEAPON_DIST_BLOWGUN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 3,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_STRIKE_TEAM"
+  }
+ }
+}

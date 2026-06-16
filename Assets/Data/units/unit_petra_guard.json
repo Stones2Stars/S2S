@@ -1,0 +1,193 @@
+{
+ "type": "UNIT_PETRA_GUARD",
+ "description": "TXT_KEY_UNIT_PETRA_GUARD",
+ "civilopedia": "TXT_KEY_UNIT_PETRA_GUARD_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NABATEANS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_TOWN_PATROL",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GUARDHOUSE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_GUARD_STATION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHERIFFS_OFFICE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_POLICE_STATION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_POLICE_PRECINCT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_COPPER_WARES": {
+     "percent": 15
+    },
+    "BONUS_BRONZE_WARES": {
+     "percent": 15
+    },
+    "BONUS_IRON_WARES": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "culture": {
+  "unit": {
+   "garrison": {
+    "flat": 5
+   }
+  }
+ },
+ "espionage": {
+  "unit": {
+   "investigation": {
+    "flat": 25
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "enclose": {
+    "percent": 10
+   },
+   "dynamicDefense": {
+    "percent": 10
+   },
+   "stealthStrikes": {
+    "flat": 1
+   },
+   "stealth": {
+    "percent": 25
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 9
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  },
+  "plot": {
+   "flat": -5
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "counterSpy": true,
+  "passage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true,
+  "targets": {
+   "UNITCOMBAT_CRIMINAL": true
+  },
+  "defenders": {
+   "UNITCOMBAT_CRIMINAL": true
+  }
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_DISGUISED": 4
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SENTRY",
+   "PROMOTION_CITY_GARRISON1",
+   "PROMOTION_COMBAT1",
+   "PROMOTION_WARMTH1"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_CITY_GUARD"
+  ]
+ },
+ "cost": {
+  "production": 370,
+  "upkeep": 6
+ },
+ "identity": {
+  "worth": 6,
+  "militaryWorth": 11,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_TROOP",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+   "UNITCOMBAT_ARMOR_MEDIUM",
+   "UNITCOMBAT_SHIELD_LARGE",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 12,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT"
+  }
+ }
+}

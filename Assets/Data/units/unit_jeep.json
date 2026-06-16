@@ -1,0 +1,130 @@
+{
+ "type": "UNIT_JEEP",
+ "description": "TXT_KEY_UNIT_JEEP",
+ "civilopedia": "TXT_KEY_UNIT_JEEP_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PETROLEUM_PRODUCTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BIOFUEL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
+ },
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 100
+   },
+   "maxUnits": {
+    "flat": 6
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "feature": {
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": -50
+     }
+    },
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": -75
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 25
+    },
+    "UNITCOMBAT_TRACKED": {
+     "percent": -25
+    }
+   },
+   "vsUnit": {
+    "UNIT_MACHINE_GUN": {
+     "attack": {
+      "percent": 25
+     }
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_HUMVEE"
+  ]
+ },
+ "cost": {
+  "production": 1100,
+  "upkeep": 2
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 113,
+  "xpValueAttack": 2,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_EXPLORE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_EXPLORE",
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_PILLAGE",
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_ESCORT"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_ARMOR_VEHICULAR",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_DRIVING",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 38,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_WHEELED"
+  }
+ }
+}

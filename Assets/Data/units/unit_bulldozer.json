@@ -1,0 +1,94 @@
+{
+ "type": "UNIT_BULLDOZER",
+ "description": "TXT_KEY_UNIT_BULLDOZER",
+ "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BIOFUEL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_PETROLEUM_PRODUCTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "capabilities": {
+  "food": true,
+  "onlyDefensive": true,
+  "workerTrade": true
+ },
+ "grants": {
+  "builds": [
+   "BUILD_BURN_VEGETATION",
+   "BUILD_PATH",
+   "BUILD_REMOVE_VEGETATION",
+   "BUILD_DRAIN_SWAMP",
+   "BUILD_ROAD",
+   "BUILD_REMOVE_ROCK_FORMATION",
+   "BUILD_SCRUB_FALLOUT",
+   "BUILD_CLEAR_FALLOUT_FAST",
+   "BUILD_RECLAIM_LAND",
+   "BUILD_SANITIZE"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_CLONES"
+  ]
+ },
+ "cost": {
+  "production": 800,
+  "upkeep": 5
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_BULLDOZER",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_TRACKED",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+   "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+   "UNITCOMBAT_WEAPON_H2H_HYDRAULIC_APPENDAGE",
+   "UNITCOMBAT_ARMOR_VEHICULAR",
+   "UNITCOMBAT_MOTILITY_DRIVING",
+   "UNITCOMBAT_QUALITY_MEDIOCRE",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 20,
+   "moves": 2,
+   "workRate": 200,
+   "combatClass": "UNITCOMBAT_WORKER"
+  }
+ }
+}

@@ -1,0 +1,75 @@
+{
+ "type": "UNIT_POSTHUMAN_WORK_CREW",
+ "description": "TXT_KEY_UNIT_POSTHUMAN_WORK_CREW",
+ "civilopedia": "TXT_KEY_UNIT_POSTHUMAN_WORK_CREW_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_STARPORT",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "canMoveAllTerrain": true,
+  "canMoveImpassable": true,
+  "ignoreTerrainCost": true
+ },
+ "grants": {
+  "greatPersonAction": {
+   "hurry": {
+    "base": 250
+   }
+  }
+ },
+ "cost": {
+  "production": 8817,
+  "upkeep": 1,
+  "hurryCostModifier": 10000
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_POSTHUMAN_WORK_CREW",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_NUCLEAR_SPACESHIP",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_TECH",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH",
+   "MAPCATEGORY_CISLUNAR",
+   "MAPCATEGORY_LUNAR",
+   "MAPCATEGORY_MARTIAN",
+   "MAPCATEGORY_VENUSIAN",
+   "MAPCATEGORY_SOLAR_SYSTEM",
+   "MAPCATEGORY_JOVIAN",
+   "MAPCATEGORY_TITANIC",
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_GALACTIC"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "moves": 24,
+   "workRate": 350,
+   "combatClass": "UNITCOMBAT_SPACE_WORKER"
+  }
+ }
+}

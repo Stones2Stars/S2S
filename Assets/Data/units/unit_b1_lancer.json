@@ -1,0 +1,129 @@
+{
+ "type": "UNIT_B1_LANCER",
+ "description": "TXT_KEY_UNIT_B1_LANCER",
+ "civilopedia": "TXT_KEY_UNIT_B1_LANCER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_ALUMINUM_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_MILITARY_AIRBASE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_AEROSPACE_COMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "bombard": {
+  "unit": {
+   "airBombRate": {
+    "flat": 30
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 100
+   },
+   "limit": {
+    "flat": 50
+   },
+   "maxUnits": {
+    "flat": 8
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 26
+   },
+   "evasion": {
+    "percent": 50
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "domain": {
+    "DOMAIN_AIR": {
+     "percent": -50
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "ignoreBuildingDefense": true,
+  "mechanized": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true,
+  "dcmAirBomb": 5
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_STEALTH_BOMBER"
+  ]
+ },
+ "cost": {
+  "production": 1850,
+  "upkeep": 7
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 10,
+  "xpValueAttack": 6,
+  "xpValueDefense": 6,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_ATTACK_AIR",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_AIR"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_WEAPON_A2G_GUIDED",
+   "UNITCOMBAT_WEAPON_A2G_SHORT_RANGE_MISSILE",
+   "UNITCOMBAT_WEAPON_A2G_TORPEDO",
+   "UNITCOMBAT_ARMOR_AIRCRAFT",
+   "UNITCOMBAT_MOTILITY_PILOTING",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_AIRCRAFT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "airCombat": 75,
+   "airCombatLimit": 50,
+   "airUnitCap": 1,
+   "combatClass": "UNITCOMBAT_SUPERSONIC_PLANES"
+  }
+ }
+}

@@ -1,0 +1,85 @@
+{
+ "type": "UNIT_V1",
+ "description": "TXT_KEY_UNIT_V1",
+ "civilopedia": "TXT_KEY_UNIT_V1_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ROCKET_FUEL",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "bombard": {
+  "unit": {
+   "airBombRate": {
+    "flat": 10
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 3
+   },
+   "evasion": {
+    "percent": 100
+   }
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "ignoreBuildingDefense": true,
+  "mechanized": true,
+  "suicide": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true,
+  "dcmAirBomb": 3
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_GUIDED_MISSILE"
+  ]
+ },
+ "cost": {
+  "production": 811,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 49,
+  "xpValueDefense": 6,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_MISSILE_AIR",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "special": "SPECIALUNIT_MISSILE",
+  "advisor": "ADVISOR_MILITARY",
+  "captures": "UNIT_V1",
+  "unitAIs": [
+   "UNITAI_MISSILE_AIR"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_BALLISTIC",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_WEAPON_METHOD_WARHEAD",
+   "UNITCOMBAT_WEAPON_DETONATE_GUIDED",
+   "UNITCOMBAT_MOTILITY_UNMANNED",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_LARGE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "airCombat": 20,
+   "airCombatLimit": 100,
+   "combatClass": "UNITCOMBAT_MISSILE"
+  }
+ }
+}

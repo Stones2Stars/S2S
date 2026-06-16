@@ -1,0 +1,87 @@
+{
+ "type": "UNIT_FOOD_SUPPLY_TRAIN",
+ "description": "TXT_KEY_UNIT_FOOD_SUPPLY_TRAIN",
+ "civilopedia": "TXT_KEY_CONCEPT_FOOD_CARAVAN_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_CASTLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_STAR_FORT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_IMPERIAL_FORTRESS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "noNonTypeProdMods": true,
+  "onlyDefensive": true,
+  "rivalTerritory": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "greatPersonAction": {
+   "food": {
+    "base": 204
+   }
+  }
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_FOOD_FREIGHT"
+  ]
+ },
+ "cost": {
+  "production": 240,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "animalCombat": 100,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MERCHANT",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_FOOD_SUPPLY_TRAIN",
+  "unitAIs": [
+   "UNITAI_MERCHANT",
+   "UNITAI_ENGINEER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_EXPLORE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_STAFF",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_MOTILITY_ANIMAL_DRAWN",
+   "UNITCOMBAT_ASSISTED_MULE",
+   "UNITCOMBAT_QUALITY_MEDIOCRE",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 3,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_TRADE"
+  }
+ }
+}

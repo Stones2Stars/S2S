@@ -1,0 +1,148 @@
+{
+ "type": "UNIT_ACVSAM",
+ "description": "TXT_KEY_UNIT_ACVSAM",
+ "civilopedia": "TXT_KEY_UNIT_ACVSAM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PETROLEUM_PRODUCTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BIOFUEL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_FACTORY_AMMUNITION",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_AMMUNITIONS_WORKSHOP",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 45
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 2
+   },
+   "intercept": {
+    "percent": 70
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_GUN": {
+     "percent": -25
+    },
+    "UNITCOMBAT_HITECH": {
+     "percent": -25
+    },
+    "UNITCOMBAT_CLONES": {
+     "percent": -25
+    },
+    "UNITCOMBAT_ASSAULT_MECH": {
+     "percent": -25
+    },
+    "UNITCOMBAT_DREADNOUGHT": {
+     "percent": -25
+    },
+    "UNITCOMBAT_HELICOPTER": {
+     "percent": 75
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "ignoreBuildingDefense": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true,
+  "targets": {
+   "UNITCOMBAT_HELICOPTER": true
+  }
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_SPACE_SAM_INFANTRY"
+  ]
+ },
+ "cost": {
+  "production": 2580,
+  "upkeep": 4
+ },
+ "identity": {
+  "worth": 6,
+  "militaryWorth": 400,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_CITY_SPECIAL",
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_RESERVE",
+   "UNITAI_ESCORT"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_ROCKET_LAUNCHER",
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_MEDIUM_RANGE_MISSILE",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+   "UNITCOMBAT_ARMOR_VEHICULAR",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_DRIVING",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_TECH",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 100,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_HITECH"
+  }
+ }
+}

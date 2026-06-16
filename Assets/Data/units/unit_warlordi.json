@@ -1,0 +1,138 @@
+{
+ "type": "UNIT_WARLORDI",
+ "description": "TXT_KEY_UNIT_WARLORDI",
+ "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_COPPER_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_GOLD_WARES": {
+     "percent": 10
+    },
+    "BONUS_SILVER_WARES": {
+     "percent": 10
+    },
+    "BONUS_GEMSTONE": {
+     "percent": 10
+    },
+    "BONUS_PEARLS": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 10
+   },
+   "limit": {
+    "flat": 10
+   },
+   "maxUnits": {
+    "flat": 1
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 25
+    },
+    "UNITCOMBAT_MELEE": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "alwaysHostile": true,
+  "hiddenNationality": true,
+  "noCapture": true,
+  "pillage": true,
+  "unlimitedException": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_LEADER"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_WARLORDII"
+  ]
+ },
+ "cost": {
+  "production": 215,
+  "upkeep": 2
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 10,
+  "xpValueAttack": 1,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_GENERAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "captures": "UNIT_WARLORDIS",
+  "unitAIs": [
+   "UNITAI_GENERAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+   "UNITCOMBAT_ARMOR_MEDIUM",
+   "UNITCOMBAT_SHIELD_LARGE",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 10,
+   "moves": 1,
+   "workRate": 50,
+   "combatClass": "UNITCOMBAT_MELEE"
+  }
+ }
+}

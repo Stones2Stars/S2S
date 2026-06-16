@@ -1,0 +1,90 @@
+{
+ "type": "UNIT_SUBDUED_PENGUIN",
+ "description": "TXT_KEY_UNIT_SUBDUED_PENGUIN",
+ "civilopedia": "TXT_KEY_UNIT_EMPEROR_PENGUIN_PEDIA",
+ "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
+ "capabilities": {
+  "onlyDefensive": true,
+  "militaryTrade": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_SLAY_ANIMAL": [
+     {
+      "OutcomeType": "OUTCOME_SLAY_ANIMAL",
+      "iChance": 100,
+      "Yields": [
+       [
+        {
+         "Constant": 1,
+         "Random": 9
+        }
+       ],
+       [
+        {
+         "Constant": 0,
+         "Random": 3
+        }
+       ],
+       [
+        {
+         "Constant": 3,
+         "Random": 1
+        }
+       ]
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_GOVERNORS_PETS",
+   "BUILDING_GOVERNORS_MENAGERIE",
+   "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+   "BUILDING_FOLKLORE_T_FISH",
+   "BUILDING_FOLKLORE_E_SEA",
+   "BUILDING_ENCLOSURE_BIRD",
+   "BUILDING_FOLKLORE_T_BIRDS",
+   "BUILDING_FOLKLORE_T_FLIGHTLESS_BIRDS",
+   "BUILDING_ZOO",
+   "BUILDING_AQUARIUM",
+   "BUILDING_MARINE_INSTITUTE",
+   "BUILDING_TAXIDERMIST"
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "captures": "UNIT_SUBDUED_PENGUIN",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_SUBDUED_SMALL",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_ANIMALS",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "heritage": [
+   "HERITAGE_FOLKLORE_PENGUIN_EMPEROR",
+   "HERITAGE_TAXON_SPHENISCIDAE"
+  ],
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_SUBDUED"
+  }
+ }
+}

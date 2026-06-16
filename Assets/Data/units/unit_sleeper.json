@@ -1,0 +1,70 @@
+{
+ "type": "UNIT_SLEEPER",
+ "description": "TXT_KEY_UNIT_SLEEPER",
+ "civilopedia": "TXT_KEY_UNIT_SLEEPER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SPY_TRAINING_FACILITY",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "counterSpy": true,
+  "destroy": true,
+  "food": true,
+  "investigate": true,
+  "alwaysInvisible": true,
+  "rivalTerritory": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SENTRY"
+  ]
+ },
+ "cost": {
+  "production": 531,
+  "upkeep": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/sleeper.dds"
+  }
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SPY",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_SPY"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 2
+  }
+ }
+}

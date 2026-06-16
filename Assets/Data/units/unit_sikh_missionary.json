@@ -1,0 +1,55 @@
+{
+ "type": "UNIT_SIKH_MISSIONARY",
+ "description": "TXT_KEY_UNIT_SIKH_MISSIONARY",
+ "civilopedia": "TXT_KEY_UNIT_SIKH_MISSIONARY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_SIKH_GURDWARA",
+     "scope": "city"
+    },
+    {
+     "type": "RELIGION_SIKHISM",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 110
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/sikh_miss.dds"
+  }
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MISSIONARY",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_RELIGION",
+  "captures": "UNIT_SIKH_MISSIONARY",
+  "unitAIs": [
+   "UNITAI_MISSIONARY"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_PATHETIC",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_MISSIONARY"
+  }
+ }
+}

@@ -1,0 +1,7 @@
+{
+ "type": "SPECIALUNIT_PEOPLE",
+ "description": "TXT_KEY_SPECIALUNIT_PEOPLE",
+ "identity": {
+  "smLoadSame": true
+ }
+}

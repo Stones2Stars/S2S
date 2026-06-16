@@ -1,0 +1,130 @@
+{
+ "type": "UNIT_MOBILE_SAM",
+ "description": "TXT_KEY_UNIT_MOBILE_SAM",
+ "civilopedia": "TXT_KEY_UNIT_MOBILE_SAM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PETROLEUM_PRODUCTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BIOFUEL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 40
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 1
+   },
+   "intercept": {
+    "percent": 50
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "feature": {
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": -50
+     }
+    },
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": -75
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HELICOPTER": {
+     "percent": 200
+    },
+    "UNITCOMBAT_TRACKED": {
+     "percent": -25
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "pillage": true,
+  "ignoreBuildingDefense": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true,
+  "targets": {
+   "UNITCOMBAT_HELICOPTER": true
+  }
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_ACVSAM"
+  ]
+ },
+ "cost": {
+  "production": 1365,
+  "upkeep": 2
+ },
+ "identity": {
+  "worth": 6,
+  "militaryWorth": 250,
+  "xpValueAttack": 2,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_CITY_SPECIAL",
+   "UNITAI_ESCORT"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+   "UNITCOMBAT_WEAPON_DIST_MEDIUM_RANGE_MISSILE",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_ARMOR_VEHICULAR",
+   "UNITCOMBAT_MOTILITY_DRIVING",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 70,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_ROCKET_LAUNCHER"
+  }
+ }
+}

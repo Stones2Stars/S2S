@@ -1,0 +1,118 @@
+{
+ "type": "UNIT_HARPYEAGLE",
+ "description": "TXT_KEY_UNIT_HARPYEAGLE",
+ "civilopedia": "TXT_KEY_UNIT_HARPYEAGLE_PEDIA",
+ "withdrawal": {
+  "unit": {
+   "percent": 50
+  }
+ },
+ "capabilities": {
+  "assassin": true,
+  "blendIntoCity": true,
+  "onlyDefensive": true,
+  "animalIgnoresBorders": true,
+  "targets": {
+   "UNITCOMBAT_BIRD_PARROT": true,
+   "UNITCOMBAT_MAMMAL_MONKEY": true,
+   "UNITCOMBAT_MAMMAL_PROSIMIAN": true,
+   "UNITCOMBAT_REPTILE_SNAKE": true
+  },
+  "unitTargets": {
+   "UNIT_AARDVARK": true,
+   "UNIT_ANTEATER": true,
+   "UNIT_ARMADILLO": true,
+   "UNIT_IGUANA": true,
+   "UNIT_TREESLOTH": true
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_SUBDUE",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_HARPYEAGLE",
+    "bUnitToCity": [
+     {
+      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
+     }
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 95,
+    "Yields": [
+     [
+      {
+       "Constant": 2,
+       "Random": 2
+      }
+     ],
+     1,
+     [
+      {
+       "Constant": 4,
+       "Random": 4
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 1,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_BIRD",
+   "UNITCOMBAT_BIRD_RAPTOR",
+   "UNITCOMBAT_ANIMAL_COMBAT_PECK",
+   "UNITCOMBAT_ANIMAL_COMBAT_SCRATCH",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
+   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+   "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_AERIAL",
+   "UNITCOMBAT_QUALITY_DIVINE",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_TINY",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES",
+   "TERRAIN_ICE",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_LAKE_SHORE",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_POLAR",
+   "TERRAIN_TRENCH_TROPICAL",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PEAK"
+  ],
+  "base": {
+   "combat": 1,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

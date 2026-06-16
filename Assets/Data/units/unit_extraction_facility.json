@@ -1,0 +1,71 @@
+{
+ "type": "UNIT_EXTRACTION_FACILITY",
+ "description": "TXT_KEY_UNIT_EXTRACTION_FACILITY",
+ "civilopedia": "TXT_KEY_UNIT_EXTRACTION_FACILITY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_WATERPROOF_CEMENT": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "ignoreTerrainCost": true,
+  "mechanized": true,
+  "renderBelowWater": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "builds": [
+   "BUILD_EXTRACTION_FACILITY"
+  ]
+ },
+ "cost": {
+  "production": 4000,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_WORKER_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER_SEA"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_SPEED_SLOW",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_POOR",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_GARGANTUAN",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_NAVAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "workRate": 50,
+   "combatClass": "UNITCOMBAT_SEA_WORKER"
+  }
+ }
+}

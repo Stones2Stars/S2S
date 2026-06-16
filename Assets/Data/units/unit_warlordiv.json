@@ -1,0 +1,164 @@
+{
+ "type": "UNIT_WARLORDIV",
+ "description": "TXT_KEY_UNIT_WARLORDIV",
+ "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 4
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_SULPHUR",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_GOLD_WARES": {
+     "percent": 10
+    },
+    "BONUS_SILVER_WARES": {
+     "percent": 10
+    },
+    "BONUS_GEMSTONE": {
+     "percent": 10
+    },
+    "BONUS_PEARLS": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 25
+   },
+   "unitCombat": {
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 100
+    },
+    "UNITCOMBAT_MELEE": {
+     "percent": 100
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 50
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 20
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 16
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 40
+   },
+   "limit": {
+    "flat": 40
+   },
+   "maxUnits": {
+    "flat": 4
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "alwaysHostile": true,
+  "hiddenNationality": true,
+  "noCapture": true,
+  "pillage": true,
+  "unlimitedException": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_LEADER"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_WARLORDV"
+  ]
+ },
+ "cost": {
+  "production": 630,
+  "upkeep": 11
+ },
+ "identity": {
+  "worth": 10,
+  "militaryWorth": 40,
+  "xpValueAttack": 1,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_GENERAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "captures": "UNIT_WARLORDIVS",
+  "unitAIs": [
+   "UNITAI_GENERAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+   "UNITCOMBAT_WEAPON_DIST_HANDGUN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 40,
+   "moves": 1,
+   "workRate": 85,
+   "combatClass": "UNITCOMBAT_GUN"
+  }
+ }
+}

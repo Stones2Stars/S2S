@@ -1,0 +1,148 @@
+{
+ "type": "UNIT_DOLPHIN_MECH",
+ "description": "TXT_KEY_UNIT_DOLPHIN_MECH",
+ "civilopedia": "TXT_KEY_UNIT_DOLPHIN_MECH_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CETACEA_SAPIENS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_MECHS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 10
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HELICOPTER": {
+     "percent": 25
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": 100
+    },
+    "UNITCOMBAT_TRACKED": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 10
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 20
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "canMoveAllTerrain": true,
+  "ignoreBuildingDefense": true,
+  "mechanized": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_BLITZ",
+   "PROMOTION_AMPHIBIOUS"
+  ]
+ },
+ "cost": {
+  "production": 6000,
+  "upkeep": 6,
+  "hurryCostModifier": 50
+ },
+ "identity": {
+  "worth": 6,
+  "militaryWorth": 400,
+  "xpValueAttack": 6,
+  "xpValueDefense": 6,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_COLLATERAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_ANIMAL",
+   "UNITCOMBAT_ANIMAL_MAMMAL",
+   "UNITCOMBAT_MAMMAL_WHALE",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_DIST_ION",
+   "UNITCOMBAT_WEAPON_DIST_LASER",
+   "UNITCOMBAT_WEAPON_H2H_HYDRAULIC_APPENDAGE",
+   "UNITCOMBAT_ARMOR_VEHICULAR",
+   "UNITCOMBAT_SHIELD_ENERGY",
+   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+   "UNITCOMBAT_MOTILITY_DRIVING",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL",
+   "UNITCOMBAT_HEALS_AS_TECH"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 120,
+   "moves": 1,
+   "airCombat": 35,
+   "airCombatLimit": 50,
+   "combatClass": "UNITCOMBAT_ASSAULT_MECH"
+  }
+ }
+}

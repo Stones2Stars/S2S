@@ -1,0 +1,137 @@
+{
+ "type": "UNIT_WORKMAMMOTH",
+ "description": "TXT_KEY_UNIT_WORKMAMMOTH",
+ "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_EFFECT_HERITAGE_MAMMOTHS",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANIMAL_TRAINER_MAMMOTH",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "capabilities": {
+  "food": true,
+  "workerTrade": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_POLAR_WORKER1",
+   "PROMOTION_POLAR_WORKER2"
+  ],
+  "builds": [
+   "BUILD_FORTIFIED_CAVE",
+   "BUILD_WOODEN_WATCHTOWER",
+   "BUILD_TRAIL",
+   "BUILD_WOODEN_PALISADE",
+   "BUILD_BURN_VEGETATION",
+   "BUILD_EARLY_QUARRY",
+   "BUILD_FRUIT_PICKING_CAMP",
+   "BUILD_GRAPE_PICKING_CAMP",
+   "BUILD_FORTIFIED_CAVE_WITH_CACHE",
+   "BUILD_HUNTING_CAMP",
+   "BUILD_PLANT_PICKING_CAMP",
+   "BUILD_SEED_CAMP",
+   "BUILD_STONE_TOOLS_WORKSHOP",
+   "BUILD_COTTAGE",
+   "BUILD_EARLY_MOUNTAIN_MINE",
+   "BUILD_LUMBERJACK",
+   "BUILD_MINE",
+   "BUILD_PATH",
+   "BUILD_STONE_WATCHTOWER",
+   "BUILD_TAR_GATHERER",
+   "BUILD_DESERT_CAMP",
+   "BUILD_HUNTING_PRESERVE",
+   "BUILD_JUNGLE_CAMP",
+   "BUILD_REMOVE_VEGETATION",
+   "BUILD_SALT_GATHERER",
+   "BUILD_THATCH_CUTTER",
+   "BUILD_WETLANDS_CAMP",
+   "BUILD_MUSHROOM_GATHERER",
+   "BUILD_ORCHARD",
+   "BUILD_PASTURE",
+   "BUILD_SILK_FARM",
+   "BUILD_WINERY",
+   "BUILD_FARM",
+   "BUILD_QUARRY",
+   "BUILD_GEOGLYPH",
+   "BUILD_MACHU_PICCHU",
+   "BUILD_HAMLET",
+   "BUILD_FORT",
+   "BUILD_PAVED_ROAD",
+   "BUILD_WATERMILL",
+   "BUILD_WORKSHOP",
+   "BUILD_DRAIN_SWAMP",
+   "BUILD_LUMBERMILL",
+   "BUILD_PEAT_CUTTER",
+   "BUILD_PLANTATION",
+   "BUILD_ROAD",
+   "BUILD_VILLAGE",
+   "BUILD_WINDMILL",
+   "BUILD_MOUNTAIN_MINE",
+   "BUILD_YOUNG_FOREST",
+   "BUILD_TOWN",
+   "BUILD_REMOVE_ROCK_FORMATION",
+   "BUILD_SHAFT_MINE",
+   "BUILD_ARCHEOLOGICAL_SITE",
+   "BUILD_FOSSIL_DIG_SITE",
+   "BUILD_STEEL_WATCHTOWER",
+   "BUILD_COMMAND_BUNKER",
+   "BUILD_FACTORY",
+   "BUILD_RAILROAD",
+   "BUILD_FOREST_PRESERVE",
+   "BUILD_HYDROCARBON_WELL",
+   "BUILD_HYDRO_DAM",
+   "BUILD_RADIO_TOWER",
+   "BUILD_SUBURBS"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_WORKER_INDUSTRIAL"
+  ]
+ },
+ "cost": {
+  "production": 170,
+  "upkeep": 3
+ },
+ "identity": {
+  "worth": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_WORKMAMMOTH",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_ANIMAL_DRAWN",
+   "UNITCOMBAT_ASSISTED_MAMMOTH",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 2,
+   "workRate": 135,
+   "combatClass": "UNITCOMBAT_WORKER"
+  }
+ }
+}

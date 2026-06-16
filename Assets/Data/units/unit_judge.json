@@ -1,0 +1,145 @@
+{
+ "type": "UNIT_JUDGE",
+ "description": "TXT_KEY_UNIT_JUDGE",
+ "civilopedia": "TXT_KEY_UNIT_JUDGE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_COURTHOUSE",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "militaryHappiness": true,
+  "militaryProduction": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_REMOVE_WV_SLAVERY": [
+     {
+      "OutcomeType": "OUTCOME_REMOVE_WV_SLAVERY",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "PythonCallback": "doRemoveWVSlavery"
+     }
+    ]
+   },
+   {
+    "MISSION_REMOVE_WV_CANNIBALISM": [
+     {
+      "OutcomeType": "OUTCOME_REMOVE_WV_CANNIBALISM",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "PythonCallback": "doRemoveWVCannibalism"
+     }
+    ]
+   },
+   {
+    "MISSION_REMOVE_WV_HUMAN_SACRIFICE": [
+     {
+      "OutcomeType": "OUTCOME_REMOVE_WV_HUMAN_SACRIFICE",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "PythonCallback": "doRemoveWVHumanSacrifice"
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_ORDINANCE_CARPOOL",
+   "BUILDING_ORDINANCE_SMOKE_DETECTOR",
+   "BUILDING_ORDINANCE_FIRE_CODE",
+   "BUILDING_ORDINANCE_NEIGHBORHOOD_WATCH",
+   "BUILDING_ORDINANCE_YOUTH_CURFEW",
+   "BUILDING_ORDINANCE_AUTOMOBILE_EMISSION_REDUCTION_ACT",
+   "BUILDING_ORDINANCE_CLEAN_AIR_ACT",
+   "BUILDING_ORDINANCE_CLEAN_WATER_ACT",
+   "BUILDING_ORDINANCE_TIRE_RECYCLING_PROGRAM",
+   "BUILDING_ORDINANCE_COMMUTER_SHUTTLE_SERVICE",
+   "BUILDING_ORDINANCE_PROSTITUTION_BAN",
+   "BUILDING_ORDINANCE_GAMBLING_BAN",
+   "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
+   "BUILDING_ORDINANCE_DRUG_PROHIBITION",
+   "BUILDING_ORDINANCE_SMOKING_PROHIBITION",
+   "BUILDING_NATIONAL_ALCOHOL_PROHIBITION",
+   "BUILDING_NATIONAL_DRUG_PROHIBITION",
+   "BUILDING_ORDINANCE_NATIONAL_SMOKING_PROHIBITION",
+   "BUILDING_NATIONAL_PROSTITUTION_BAN",
+   "BUILDING_NATIONAL_GAMBLING_BAN"
+  ]
+ },
+ "cost": {
+  "production": 225,
+  "upkeep": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   }
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MERCHANT",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_MERCHANT",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "notUnitAIs": [
+   "UNITAI_EXPLORE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_PATHETIC",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": 1
+  },
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_ADMINISTRATOR"
+  }
+ }
+}

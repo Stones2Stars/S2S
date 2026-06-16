@@ -1,0 +1,105 @@
+{
+ "type": "UNIT_WAPITI",
+ "description": "TXT_KEY_UNIT_WAPITI",
+ "civilopedia": "TXT_KEY_UNIT_WAPITI_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PILAGA",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 60
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "barbCoExist": true,
+  "ignoreTerrainCost": true,
+  "noBadGoodies": true,
+  "passage": true,
+  "upgradeAnywhere": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_GUERILLA1",
+   "PROMOTION_GUERILLA2",
+   "PROMOTION_GUERILLA3",
+   "PROMOTION_WOODSMAN1"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_ADVENTURER"
+  ]
+ },
+ "cost": {
+  "production": 235,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_EXPLORE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_EXPLORE",
+   "UNITAI_PILLAGE",
+   "UNITAI_HUNTER_ESCORT"
+  ],
+  "notUnitAIs": [
+   "UNITAI_HUNTER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+   "UNITCOMBAT_WEAPON_DIST_LIGHT_CROSSBOW",
+   "UNITCOMBAT_ARMOR_MEDIUM",
+   "UNITCOMBAT_SHIELD_BUCKLER",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 6,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_RECON"
+  }
+ }
+}

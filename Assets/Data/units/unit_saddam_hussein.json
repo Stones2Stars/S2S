@@ -1,0 +1,92 @@
+{
+ "type": "UNIT_SADDAM_HUSSEIN",
+ "description": "TXT_KEY_UNIT_SADDAM_HUSSEIN",
+ "civilopedia": "TXT_KEY_UNIT_SADDAM_HUSSEIN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_IRAQI",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_RETINUE_SPOUSE"
+  ],
+  "greatPeople": [
+   "SPECIALIST_GREAT_PROPHET",
+   "SPECIALIST_GREAT_MILITARY_INSTRUCTOR",
+   "SPECIALIST_CELEBRITY"
+  ],
+  "buildings": [
+   "BUILDING_ACHIEVEMENT_AGRICULTURAL",
+   "BUILDING_ACHIEVEMENT_COMMERCIAL",
+   "BUILDING_ACHIEVEMENT_CULTURAL",
+   "BUILDING_ACHIEVEMENT_ENVIRONMENTAL",
+   "BUILDING_ACHIEVEMENT_INDUSTRIAL",
+   "BUILDING_ACHIEVEMENT_MEDICAL",
+   "BUILDING_ACHIEVEMENT_MILITARY",
+   "BUILDING_ACHIEVEMENT_POLITICAL",
+   "BUILDING_ACHIEVEMENT_SAFETY",
+   "BUILDING_ACHIEVEMENT_SCIENTIFIC",
+   "BUILDING_ACHIEVEMENT_SEAFARING",
+   "BUILDING_ACHIEVEMENT_TOURISTIC"
+  ]
+ },
+ "cost": {
+  "production": 3960,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 3,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "conscription": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "leaderPromotion": "PROMOTION_LEADER",
+  "unitAIs": [
+   "UNITAI_ATTACK"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_TRACKED",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_ARMOR_VEHICULAR",
+   "UNITCOMBAT_MOTILITY_DRIVING",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 44,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_HERO"
+  }
+ }
+}

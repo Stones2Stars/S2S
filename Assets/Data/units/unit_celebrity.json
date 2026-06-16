@@ -1,0 +1,97 @@
+{
+ "type": "UNIT_CELEBRITY",
+ "description": "TXT_KEY_UNIT_CELEBRITY",
+ "civilopedia": "TXT_KEY_UNIT_CELEBRITY_PEDIA",
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "capabilities": {
+  "rivalTerritory": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MissionType": "MISSION_ENTERTAIN_CITY",
+    "bKill": 0,
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_ENTERTAIN_CITY",
+      "iChance": 70,
+      "Commerces": [
+       0,
+       0,
+       [
+        [
+         8
+        ]
+       ]
+      ],
+      "iReduceAnarchyLength": 6,
+      "bKill": 1
+     },
+     {
+      "OutcomeType": "OUTCOME_ENTERTAIN_CITY_EXALTED",
+      "iChance": 30,
+      "Commerces": [
+       0,
+       0,
+       [
+        [
+         16
+        ]
+       ]
+      ],
+      "PromotionType": "PROMOTION_EXPERIENCED_ARTIST",
+      "iReduceAnarchyLength": 7
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_RAIN_DANCE",
+   "BUILDING_WAR_DANCE",
+   "BUILDING_FIRE_DANCE",
+   "BUILDING_NATURE_DANCE",
+   "BUILDING_MOON_DANCE",
+   "BUILDING_FERTILITY_DANCE",
+   "BUILDING_BLOOD_DANCE"
+  ]
+ },
+ "cost": {
+  "production": 886,
+  "upkeep": 6
+ },
+ "identity": {
+  "worth": 8,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_CULTURE",
+  "captures": "UNIT_CELEBRITY",
+  "unitAIs": [
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_INFERIOR",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_ENTERTAINER"
+  }
+ }
+}

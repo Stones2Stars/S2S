@@ -1,0 +1,108 @@
+{
+ "type": "UNIT_SOFTWARE_DEVELOPER",
+ "description": "TXT_KEY_UNIT_SOFTWARE_DEVELOPER",
+ "civilopedia": "TXT_KEY_UNIT_SOFTWARE_DEVELOPER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PERSONAL_ELECTRONICS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_DISKETTES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_FLASH_MEMORY_DEVICES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_DESIGN_STUDIO",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 11
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_TECH": {
+     "heal": 32,
+     "adjacentHeal": 15
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "capabilities": {
+  "onlyDefensive": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_HACKER"
+  ]
+ },
+ "cost": {
+  "production": 1540,
+  "upkeep": 9,
+  "hurryCostModifier": 25
+ },
+ "identity": {
+  "worth": 14,
+  "militaryWorth": 15,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_HEALER",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_HANDGUN",
+   "UNITCOMBAT_WEAPON_DIST_HANDGUN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_TECH"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 15,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_GUN"
+  }
+ }
+}

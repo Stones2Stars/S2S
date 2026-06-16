@@ -1,0 +1,47 @@
+{
+ "type": "UNIT_PIONEER",
+ "description": "TXT_KEY_UNIT_PIONEER",
+ "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",
+ "help": "TXT_KEY_UNIT_PIONEER_HELP",
+ "capabilities": {
+  "food": true,
+  "found": true,
+  "ignoreTerrainCost": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_AIRSETTLER"
+  ]
+ },
+ "cost": {
+  "upkeep": 8
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SETTLE",
+  "formationType": "FORMATION_TYPE_SETTLER",
+  "advisor": "ADVISOR_GROWTH",
+  "captures": "UNIT_CAPTIVE_CIVILIAN",
+  "unitAIs": [
+   "UNITAI_SETTLE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_POOR",
+   "UNITCOMBAT_GROUP_BATTALION",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_SETTLER"
+  }
+ }
+}

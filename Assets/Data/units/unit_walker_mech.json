@@ -1,0 +1,111 @@
+{
+ "type": "UNIT_WALKER_MECH",
+ "description": "TXT_KEY_UNIT_WALKER_MECH",
+ "civilopedia": "TXT_KEY_UNIT_WALKER_MECH_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MECHS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityDefense": {
+    "percent": 40
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HELICOPTER": {
+     "percent": 25
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": 100
+    },
+    "UNITCOMBAT_TRACKED": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 50
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "ignoreBuildingDefense": true,
+  "mechanized": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_URBAN_TACTICS1",
+   "PROMOTION_URBAN_TACTICS2",
+   "PROMOTION_MARCH"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_HITECH_ROBOT",
+   "UNIT_SENTINEL"
+  ]
+ },
+ "cost": {
+  "production": 5200,
+  "upkeep": 16,
+  "hurryCostModifier": 50
+ },
+ "identity": {
+  "worth": 6,
+  "militaryWorth": 400,
+  "xpValueAttack": 6,
+  "xpValueDefense": 6,
+  "conscription": 14,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_COLLATERAL",
+   "UNITAI_ESCORT"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_DIST_ION",
+   "UNITCOMBAT_WEAPON_DIST_LASER",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_ARMOR_VEHICULAR",
+   "UNITCOMBAT_SHIELD_ENERGY",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_DRIVING",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_TECH",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 190,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_ASSAULT_MECH"
+  }
+ }
+}

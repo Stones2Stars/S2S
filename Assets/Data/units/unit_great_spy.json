@@ -1,0 +1,134 @@
+{
+ "type": "UNIT_GREAT_SPY",
+ "description": "TXT_KEY_UNIT_GREAT_SPY",
+ "civilopedia": "TXT_KEY_CONCEPT_GREAT_SPY_PEDIA",
+ "capabilities": {
+  "goldenAge": true,
+  "alwaysInvisible": true,
+  "rivalTerritory": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_REMOVE_WV_SLAVERY": [
+     {
+      "OutcomeType": "OUTCOME_REMOVE_WV_SLAVERY",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "PythonCallback": "doRemoveWVSlavery"
+     }
+    ]
+   },
+   {
+    "MISSION_REMOVE_WV_CANNIBALISM": [
+     {
+      "OutcomeType": "OUTCOME_REMOVE_WV_CANNIBALISM",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "PythonCallback": "doRemoveWVCannibalism"
+     }
+    ]
+   },
+   {
+    "MISSION_REMOVE_WV_HUMAN_SACRIFICE": [
+     {
+      "OutcomeType": "OUTCOME_REMOVE_WV_HUMAN_SACRIFICE",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "PythonCallback": "doRemoveWVHumanSacrifice"
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "greatPeople": [
+   "SPECIALIST_GREAT_SPY"
+  ],
+  "buildings": [
+   "BUILDING_SPY_NETWORK",
+   "BUILDING_SPY_TRAINING_FACILITY",
+   "BUILDING_SCOTLAND_YARD"
+  ],
+  "goldenAge": true
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   }
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MERCHANT",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_MILITARY",
+  "espionagePoints": 3000,
+  "unitAIs": [
+   "UNITAI_MERCHANT"
+  ],
+  "notUnitAIs": [
+   "UNITAI_EXPLORE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "uniqueNames": [
+   "TXT_KEY_GREAT_PERSON_ALLAN_PINKERTON",
+   "TXT_KEY_GREAT_PERSON_AN_JUNG_GEUN",
+   "TXT_KEY_GREAT_PERSON_ANTHONY_BABINGTON",
+   "TXT_KEY_GREAT_PERSON_AUSTIN_POWERS",
+   "TXT_KEY_GREAT_PERSON_BELLE_BOYD",
+   "TXT_KEY_GREAT_PERSON_JAMES_BOND",
+   "TXT_KEY_GREAT_PERSON_CHARLOTTE_CORDAY",
+   "TXT_KEY_GREAT_PERSON_CLAUDE_DANSEY",
+   "TXT_KEY_GREAT_PERSON_CLAUS_VON_STAUFFENBERG",
+   "TXT_KEY_GREAT_PERSON_EPHIALTES_OF_TRACHIS",
+   "TXT_KEY_GREAT_PERSON_FRANCIS_WALSINGHAM",
+   "TXT_KEY_GREAT_PERSON_GASPAR_GRAZIANI",
+   "TXT_KEY_GREAT_PERSON_GIACOMO_CASANOVA",
+   "TXT_KEY_GREAT_PERSON_GREAT_SPY",
+   "TXT_KEY_GREAT_PERSON_GUY_FAWKES",
+   "TXT_KEY_GREAT_PERSON_HATTORI_HANZO",
+   "TXT_KEY_GREAT_PERSON_ISHIKAWA_GOEMON",
+   "TXT_KEY_GREAT_PERSON_J_EDGAR_HOOVER",
+   "TXT_KEY_GREAT_PERSON_JASON_BOURNE",
+   "TXT_KEY_GREAT_PERSON_JING_KE",
+   "TXT_KEY_GREAT_PERSON_JOHN_HONEYMAN",
+   "TXT_KEY_GREAT_PERSON_JULIUS_ROSENBERG",
+   "TXT_KEY_GREAT_PERSON_MATA_HARI",
+   "TXT_KEY_GREAT_PERSON_MAXWELL_SMART",
+   "TXT_KEY_GREAT_PERSON_MOE_BERG",
+   "TXT_KEY_GREAT_PERSON_NATHAN_HALE",
+   "TXT_KEY_GREAT_PERSON_PEBEKKAMEN",
+   "TXT_KEY_GREAT_PERSON_QIN_WUYANG",
+   "TXT_KEY_GREAT_PERSON_SIDNEY_REILLY",
+   "TXT_KEY_GREAT_PERSON_SPY_VS_SPY",
+   "TXT_KEY_GREAT_PERSON_WILLIAM_DONOVAN",
+   "TXT_KEY_GREAT_PERSON_WILLIAM_MELVILLE"
+  ],
+  "base": {
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_PRODIGY"
+  }
+ }
+}

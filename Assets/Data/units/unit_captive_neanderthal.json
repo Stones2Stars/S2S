@@ -1,0 +1,325 @@
+{
+ "type": "UNIT_CAPTIVE_NEANDERTHAL",
+ "description": "TXT_KEY_UNIT_CAPTIVE_NEANDERTHAL",
+ "civilopedia": "TXT_KEY_UNIT_CAPTIVE_MILITARY_PEDIA",
+ "help": "TXT_KEY_UNIT_CAPTIVE_MILITARY_HELP",
+ "capabilities": {
+  "onlyDefensive": true,
+  "militaryTrade": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MissionType": "MISSION_CAPTIVE_UPGRADE_TO_WORKER",
+    "iCost": [
+     [
+      30
+     ]
+    ],
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_UPGRADE_TO_WORKER",
+      "iChance": 100,
+      "UnitType": "UNIT_WORKER",
+      "bUnitToCity": [
+       0
+      ],
+      "PlotCondition": [
+       [
+        "TAG_ANARCHY"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "MissionType": "MISSION_CAPTIVE_UPGRADE_TO_NEANDERTHAL_GATHERER",
+    "iCost": [
+     [
+      15
+     ]
+    ],
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_UPGRADE_TO_NEANDERTHAL_GATHERER",
+      "iChance": 100,
+      "UnitType": "UNIT_NEANDERTHAL_GATHERER",
+      "bUnitToCity": [
+       0
+      ],
+      "PlotCondition": [
+       [
+        "TAG_ANARCHY"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "MISSION_JOIN_CITY_AS_SLAVE_FOOD": [
+     {
+      "OutcomeType": "OUTCOME_JOIN_AS_SLAVE_FOOD",
+      "iChance": 100,
+      "PlotCondition": [
+       {
+        "Greater": {
+         "Python": "getNumNonSpecialistSlavesFood",
+         "Constant": 0
+        },
+        "Is": "TAG_OWNED"
+       }
+      ],
+      "PythonCallback": "doAddSettledSlaveFood"
+     }
+    ]
+   },
+   {
+    "MISSION_JOIN_CITY_AS_SLAVE_PRODUCTION": [
+     {
+      "OutcomeType": "OUTCOME_JOIN_AS_SLAVE_PRODUCTION",
+      "iChance": 100,
+      "PlotCondition": [
+       {
+        "Greater": {
+         "Python": "getNumNonSpecialistSlavesProduction",
+         "Constant": 0
+        },
+        "Is": "TAG_OWNED"
+       }
+      ],
+      "PythonCallback": "doAddSettledSlaveProduction"
+     }
+    ]
+   },
+   {
+    "MISSION_JOIN_CITY_AS_SLAVE_ENTERTAINMENT": [
+     {
+      "OutcomeType": "OUTCOME_JOIN_AS_SLAVE_ENTERTAINMENT",
+      "iChance": 100,
+      "PlotCondition": [
+       {
+        "Greater": {
+         "Python": "getNumNonSpecialistSlavesEntertainment",
+         "Constant": 0
+        },
+        "Is": "TAG_OWNED"
+       }
+      ],
+      "PythonCallback": "doAddSettledSlaveEntertainment"
+     }
+    ]
+   },
+   {
+    "MISSION_JOIN_CITY_AS_SLAVE_MILITARY": [
+     {
+      "OutcomeType": "OUTCOME_JOIN_AS_SLAVE_MILITARY",
+      "iChance": 100,
+      "PlotCondition": [
+       {
+        "Greater": {
+         "Python": "getNumNonSpecialistSlavesMilitary",
+         "Constant": 0
+        },
+        "Is": "TAG_OWNED"
+       }
+      ],
+      "PythonCallback": "doAddSettledSlaveMilitary"
+     }
+    ]
+   },
+   {
+    "MissionType": "MISSION_CAPTIVE_UPGRADE_TO_NEANDERTHAL_WARRIOR",
+    "iCost": [
+     [
+      15
+     ]
+    ],
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_UPGRADE_TO_NEANDERTHAL_WARRIOR",
+      "iChance": 100,
+      "UnitType": "UNIT_NEANDERTHAL",
+      "bUnitToCity": [
+       0
+      ],
+      "PlotCondition": [
+       [
+        "TAG_ANARCHY"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "MissionType": "MISSION_CAPTIVE_UPGRADE_TO_NEANDERTHAL_TRACKER",
+    "iCost": [
+     [
+      15
+     ]
+    ],
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_UPGRADE_TO_NEANDERTHAL_TRACKER",
+      "iChance": 100,
+      "UnitType": "UNIT_NEANDERTHAL_CHASER",
+      "bUnitToCity": [
+       0
+      ],
+      "PlotCondition": [
+       [
+        "TAG_ANARCHY"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "MISSION_SELL_CAPTIVE": [
+     {
+      "OutcomeType": "OUTCOME_SLAVE_SALE_NOT_SLAVERY",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "Yields": [
+       0,
+       0,
+       [
+        [
+         2
+        ]
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "MISSION_BUTCHER_HUMAN": [
+     {
+      "OutcomeType": "OUTCOME_HUMAN_BUTCHERED_CITY",
+      "iChance": 100,
+      "Yields": [
+       [
+        [
+         8
+        ]
+       ],
+       [
+        [
+         2
+        ]
+       ]
+      ]
+     },
+     {
+      "OutcomeType": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST",
+      "iChance": 100,
+      "Yields": [
+       [
+        [
+         10
+        ]
+       ],
+       [
+        [
+         4
+        ]
+       ]
+      ]
+     },
+     {
+      "OutcomeType": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT1",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "Yields": [
+       [
+        [
+         10
+        ]
+       ],
+       [
+        [
+         4
+        ]
+       ]
+      ]
+     },
+     {
+      "OutcomeType": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT2",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "Yields": [
+       [
+        [
+         10
+        ]
+       ],
+       [
+        [
+         4
+        ]
+       ]
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_WORLDVIEW_SLAVERY",
+   "BUILDING_SLAVE_MARKET",
+   "BUILDING_SLAVE_COMPOUND",
+   "BUILDING_SLAVE_COMPOUND_MILITARY_SUPPORT",
+   "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT",
+   "BUILDING_SLAVE_COMPOUND_FOOD",
+   "BUILDING_SLAVE_COMPOUND_INDUSTRY",
+   "BUILDING_SLAVE_COMPOUND_COMMERCE",
+   "BUILDING_SLAVE_COMPOUND_SANITATION",
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION",
+   "BUILDING_WORLDVIEW_CANNIBALISM",
+   "BUILDING_WORLDVIEW_HUMAN_SACRIFICE"
+  ],
+  "greatPersonAction": {
+   "hurry": {
+    "base": 20,
+    "multiplier": 2
+   }
+  }
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_CAPTIVE",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_CAPTIVE_NEANDERTHAL",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_NEANDERTHAL",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_CAPTIVE"
+  }
+ }
+}

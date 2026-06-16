@@ -1,0 +1,112 @@
+{
+ "type": "UNIT_NEANDERTHAL_CHASER",
+ "description": "TXT_KEY_UNIT_NEANDERTHAL_CHASER",
+ "civilopedia": "TXT_KEY_UNIT_CHASER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_C_AC_NEANDERTHAL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_C_L_NEANDERTHAL",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": -75
+   },
+   "unitCombat": {
+    "UNITCOMBAT_ANIMAL_COMBAT_FLEEING": {
+     "percent": 50
+    },
+    "UNITCOMBAT_ANIMAL_COMBAT_RAGING": {
+     "percent": -50
+    },
+    "UNITCOMBAT_ANIMAL_COMBAT_HERDING": {
+     "percent": -25
+    },
+    "UNITCOMBAT_ANIMAL_COMBAT_HIDING": {
+     "percent": -25
+    },
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "assassin": true,
+  "targets": {
+   "UNITCOMBAT_ANIMAL": true,
+   "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_BY_THE_HORNS"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_NEANDERTHAL_TRACKER"
+  ]
+ },
+ "cost": {
+  "production": 27,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 1,
+  "xpValueAttack": 2,
+  "xpValueDefense": 1,
+  "animalCombat": 125,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_HUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_HUNTER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_HUNTER_ESCORT"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_SPECIES_NEANDERTHAL",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_WEAPON_H2H_FIST",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 2,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_HUNTER"
+  }
+ }
+}

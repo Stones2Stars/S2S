@@ -1,0 +1,67 @@
+{
+ "type": "UNIT_IMMIGRANT",
+ "description": "TXT_KEY_UNIT_IMMIGRANT",
+ "civilopedia": "TXT_KEY_UNIT_IMMIGRANT_PEDIA",
+ "help": "TXT_KEY_UNIT_IMMIGRANT_HELP",
+ "capabilities": {
+  "food": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_JOIN_CITY_POPULATION": [
+     {
+      "OutcomeType": "OUTCOME_JOIN_CITY_POPULATION",
+      "iChance": 100,
+      "iPopulationBoost": 1,
+      "bKill": 1,
+      "PlotCondition": [
+       {
+        "RelationType": "RELATION_ASSOCIATED",
+        "GameObjectType": "GAMEOBJECT_CITY",
+        "GreaterEqual": {
+         "ATTRIBUTE_POPULATION": 7
+        }
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "cost": {
+  "production": 235,
+  "upkeep": 3
+ },
+ "identity": {
+  "worth": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_CITY_SPECIAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "captures": "UNIT_WORKER",
+  "unitAIs": [
+   "UNITAI_CITY_SPECIAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_POOR",
+   "UNITCOMBAT_GROUP_BATTALION",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": 25
+  },
+  "base": {
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_SETTLER"
+  }
+ }
+}

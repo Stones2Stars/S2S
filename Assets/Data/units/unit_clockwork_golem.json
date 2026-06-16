@@ -1,0 +1,145 @@
+{
+ "type": "UNIT_CLOCKWORK_GOLEM",
+ "description": "TXT_KEY_UNIT_CLOCKWORK_GOLEM",
+ "civilopedia": "TXT_KEY_UNIT_CLOCKWORK_GOLEM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CLOCKPUNK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_CLOCKWORK_WORKSHOP",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BRONZE_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 50
+   },
+   "cityDefense": {
+    "percent": -25
+   },
+   "terrain": {
+    "TERRAIN_DUNES": {
+     "attack": {
+      "percent": -90
+     }
+    },
+    "TERRAIN_DESERT": {
+     "attack": {
+      "percent": -80
+     }
+    }
+   },
+   "feature": {
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": -50
+     }
+    },
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": -75
+     }
+    }
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 20
+   },
+   "limit": {
+    "flat": 20
+   },
+   "maxUnits": {
+    "flat": 6
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "renderBelowWater": true
+ },
+ "cost": {
+  "production": 350
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 1,
+  "xpValueAttack": 9,
+  "xpValueDefense": 5,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_RESERVE",
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_ESCORT"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+   "UNITCOMBAT_WEAPON_H2H_AXE",
+   "UNITCOMBAT_WEAPON_H2H_HAMMER",
+   "UNITCOMBAT_WEAPON_DIST_REPEATING_CROSSBOW",
+   "UNITCOMBAT_ARMOR_HEAVY",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": -1
+  },
+  "base": {
+   "combat": 14,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_MELEE"
+  }
+ }
+}

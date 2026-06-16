@@ -1,0 +1,88 @@
+{
+ "type": "UNIT_TALESOF_COD",
+ "description": "TXT_KEY_UNIT_TALESOF_COD",
+ "civilopedia": "TXT_KEY_UNIT_COD_PEDIA",
+ "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
+ "capabilities": {
+  "militaryTrade": true
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_FOLKLORE_T_TALES_OF_FISH",
+   "BUILDING_FOLKLORE_E_SEA",
+   "BUILDING_FOLKLORE_COD"
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "captures": "UNIT_TALESOF_COD",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_IDEA"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_SEA_TROPICAL",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_DEEP_TROPICAL",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_TROPICAL",
+   "TERRAIN_TRENCH_POLAR"
+  ],
+  "terrainPassableTechs": [
+   {
+    "TERRAIN_SEA_TROPICAL": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA_POLAR": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA_DEEP": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA_DEEP_POLAR": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA_DEEP_TROPICAL": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_OCEAN": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_OCEAN_POLAR": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_OCEAN_TROPICAL": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_TRENCH": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_TRENCH_TROPICAL": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_TRENCH_POLAR": "TECH_ASTRONOMY"
+   }
+  ],
+  "base": {
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_SEA_ANIMAL_TALE"
+  }
+ }
+}

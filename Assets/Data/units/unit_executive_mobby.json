@@ -1,0 +1,62 @@
+{
+ "type": "UNIT_EXECUTIVE_MOBBY",
+ "description": "TXT_KEY_UNIT_EXECUTIVE_MOBBY",
+ "civilopedia": "TXT_KEY_CONCEPT_CORPORATIONS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_HQ_MOBBY_MEATS_INTERNATIONAL",
+     "scope": "city"
+    },
+    {
+     "type": "CORPORATION_MOBBY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 275,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MISSIONARY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_MISSIONARY"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_PATHETIC",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_EXECUTIVE"
+  }
+ }
+}

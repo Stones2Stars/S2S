@@ -1,0 +1,93 @@
+{
+ "type": "UNIT_WORLDSHIP4",
+ "description": "TXT_KEY_UNIT_WORLDSHIP4",
+ "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",
+ "help": "TXT_KEY_UNIT_WORLDSHIP4_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ALICE_MATTER",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DISTANT_HORIZON_PORT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "capabilities": {
+  "canMoveAllTerrain": true,
+  "canMoveImpassable": true,
+  "food": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MissionType": "MISSION_PLANET_LAND",
+    "iCost": [
+     [
+      0
+     ]
+    ],
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_UPGRADE_TO_PLANET_SETTLER",
+      "iChance": 100,
+      "PythonName": "BuildCityInterstellar4",
+      "Python": "from CvPythonExtensions import CyGlobalContext\n\t\t\t\t\t\t\t\tdef isPossible(unit,plot):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\t\t\t\t\t\t\t\t\treturn False\n\t\t\t\t\t\t\t\t\tvalid_terrain_strings = ['LOCAL_GROUP','VIRGO_SUPERCLUSTER','INTERGALACTIC_VOID','OBSERVABLE_UNIVERSE','DISTANT_COSMOS']\n\t\t\t\t\t\t\t\t\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\t\t\t\t\t\t\t\t\treturn plot.getTerrainType() in valid_terrains\n\t\t\t\t\t\t\t\tdef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tgc.getPlayer(unit.getOwner()).found(plot.getX(),plot.getY())\n\t\t\t\t\t\t\t\tdef getDisplay(unit,plot):\n\t\t\t\t\t\t\t\t\treturn u\"Build a city on this plot.\"\n\t\t\t\t\t\t\t\tdef getAIValue(unit, plot):\n\t\t\t\t\t\t\t\t\treturn 1"
+     }
+    ]
+   }
+  ]
+ },
+ "cost": {
+  "production": 4850,
+  "upkeep": 11,
+  "hurryCostModifier": 10000
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SETTLE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "captures": "UNIT_CAPTIVE_CIVILIAN",
+  "unitAIs": [
+   "UNITAI_SETTLE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WORMHOLE_SPACESHIP",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_PILOTING",
+   "UNITCOMBAT_QUALITY_INFERIOR",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_SPACECRAFT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL",
+   "MAPCATEGORY_DISTANT"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "moves": 24,
+   "combatClass": "UNITCOMBAT_SETTLER"
+  }
+ }
+}

@@ -1,0 +1,110 @@
+{
+ "type": "UNIT_FUSION_NOVA",
+ "description": "TXT_KEY_UNIT_FUSION_NOVA",
+ "civilopedia": "TXT_KEY_UNIT_FUSION_NOVA_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_D_T_FUSION_POWER_PLANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_D_HE3_FUSION_PLANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HE3_FUSION_POWER_PLANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "air": {
+  "unit": {
+   "evasion": {
+    "percent": 75
+   },
+   "nukeRange": {
+    "flat": 1
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "ignoreBuildingDefense": true,
+  "mechanized": true,
+  "nukeImmune": true,
+  "suicide": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "cost": {
+  "production": 7381,
+  "upkeep": 33
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_ADVANCED_NUKES"
+  ]
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 60,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_ICBM",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ICBM"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_BALLISTIC",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_WEAPON_METHOD_WARHEAD",
+   "UNITCOMBAT_WEAPON_DETONATE_RADIOACTIVE",
+   "UNITCOMBAT_MOTILITY_UNMANNED",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_HUGE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": 500
+  },
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_DOOM"
+  }
+ }
+}

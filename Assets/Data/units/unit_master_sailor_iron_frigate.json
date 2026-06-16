@@ -1,0 +1,119 @@
+{
+ "type": "UNIT_MASTER_SAILOR_IRON_FRIGATE",
+ "description": "TXT_KEY_UNIT_IRON_MASTER_SAILOR_FRIGATE",
+ "civilopedia": "TXT_KEY_UNIT_IRON_FRIGATE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "AREA_SIZE",
+     "scope": "world",
+     "min": 10
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 20
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 10
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "ignoreBuildingDefense": true,
+  "ignoreTerrainCost": true,
+  "mechanized": true,
+  "noBadGoodies": true,
+  "renderBelowWater": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_NAVIGATION1",
+   "PROMOTION_LEADERSHIP"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MASTER_SAILOR_STEAM_DESTROYER"
+  ]
+ },
+ "cost": {
+  "upkeep": 2
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 83,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "minAreaSize": 10,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ATTACK_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_SEA",
+   "UNITAI_RESERVE_SEA",
+   "UNITAI_ESCORT_SEA",
+   "UNITAI_MISSIONARY_SEA",
+   "UNITAI_SPY_SEA",
+   "UNITAI_ASSAULT_SEA",
+   "UNITAI_SETTLER_SEA"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_NAVAL_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_RIFLE",
+   "UNITCOMBAT_WEAPON_DIST_CANNONBALL",
+   "UNITCOMBAT_ARMOR_NAVAL",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_NAVAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 31,
+   "moves": 5,
+   "combatClass": "UNITCOMBAT_STEAM_SHIPS"
+  }
+ }
+}

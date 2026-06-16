@@ -1,0 +1,98 @@
+{
+ "type": "UNIT_LARA_CROFT",
+ "description": "TXT_KEY_UNIT_LARA_CROFT",
+ "civilopedia": "TXT_KEY_UNIT_LARA_CROFT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HIT_MOVIES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_MUSEUM",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_GUN": {
+     "percent": 50
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "ignoreBuildingDefense": true,
+  "ignoreTerrainCost": true,
+  "noBadGoodies": true,
+  "rivalTerritory": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_BLITZ",
+   "PROMOTION_MARCH"
+  ]
+ },
+ "cost": {
+  "production": 4720
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 32,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_PILLAGE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_HANDGUN",
+   "UNITCOMBAT_WEAPON_DIST_HANDGUN",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EPIC",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 51,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_HERO"
+  }
+ }
+}

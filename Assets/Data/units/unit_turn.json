@@ -1,0 +1,78 @@
+{
+ "type": "UNIT_TURN",
+ "description": "TXT_KEY_UNIT_TURN",
+ "civilopedia": "TXT_KEY_UNIT_TURN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_MIND_CONTROL_CENTER",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "ignoreBuildingDefense": true,
+  "alwaysInvisible": true,
+  "mechanized": true,
+  "nukeImmune": true,
+  "suicide": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "cost": {
+  "production": 6200,
+  "upkeep": 6
+ },
+ "loadPrune": {
+  "onGameOptions": [
+   "GAMEOPTION_ADVANCED_NUKES"
+  ]
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 60,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_ICBM",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ICBM"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_BALLISTIC",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_WEAPON_METHOD_WARHEAD",
+   "UNITCOMBAT_WEAPON_DETONATE_PSYCH",
+   "UNITCOMBAT_MOTILITY_UNMANNED",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_HUGE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_DOOM"
+  }
+ }
+}

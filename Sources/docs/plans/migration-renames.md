@@ -678,6 +678,43 @@ split are field->family.member.unit with **scopes corrected from the classificat
 `identity.valid:false`; `TechPrereq`/`TechPrereqAnyone` -> store (`tech.enables.specialBuildings`); `Button` -> `ui.art.icon`.
 Buildings join via their `SpecialBuildingType` FK (`identity.specialBuildingType`). Written to `Assets/Data/specialbuildings/`.
 
+## Unit  (`curate_unit.py`)  — Tier E #34, THE LAST MONSTER (2073 records) + SpecialUnit #33 (7 records)
+
+The TARGET of everything, but §5-DOMINATED: the combat/capability/vision/heal surface is the locked shared vocabulary
+(Promotion #28 / UnitCombat #29), so the curator REUSES the family NAMES/members (the unit deposits at `unit` scope, the
+§5 self-accumulator). CvUnitInfo has NO getDataMembers (legacy read()) -> the inventory is the live XML (219 tags). The
+SOURCE->unit enabler edges (tech/building-prereq/bonus/religion/civic + ObsoleteTech) are store-wired -> dropped unit-side.
+
+| old XML | new JSON path | note |
+|---|---|---|
+| `iCombat`/`iMoves`/`iWorkRate`/`iAirCombat`/`iCargo`/`iCombatLimit`/`iAirUnitCap` + `Combat` | `identity.base.{combat,moves,workRate,airCombat,cargo,combatLimit,airUnitCap,combatClass}` | The create-unit FOUNDATION (§0.6) the subroutine sets. ⚑ The base/deposit boundary is the one genuine judgement (flagged for inspection). |
+| the combat TRAITS (`iCityAttack`/`iCityDefense`/`iHillsAttack`/`iWithdrawalProb`/`iFirstStrikes`/`iCollateralDamage*`/`iBombardRate`/`iAirRange`/`iCapture*`/`iInsidiousness`/`iVSBarbs`/`iLunge`/`iEnclose`/…) | `strength`/`withdrawal`/`firstStrike`/`bombard`/`collateral`/`air`/`capture`/`espionage`/`heal`.`unit`.… | §5 unit-scope self-accumulator deposits (summed with promotions). SAME vocab as Promotion (the `*Change` suffix dropped on the unit). |
+| vs-keyed (`TerrainAttacks`/`FeatureAttacks`/`UnitCombatMods`/`DomainMods`/`FlankingStrikesbyUnitCombat`/`UnitAttackMods`/`UnitDefenseMods`) | `strength.unit.{terrain\|feature\|unitCombat\|domain\|flanking\|vsUnit}.{TYPE}[.attack\|defense].percent` | The unit's keyed combat mods. `UnitCombatTargets`/`Defenders`/`CollateralImmunes` -> `capabilities.{targets,…}`. |
+| `Invisible`/`SeeInvisible`/`VisibilityIntensityTypes`/`InvisibilityIntensityTypes`/`Invisible{Terrain,Feature}Changes` | `vision.{invisible,seeInvisible,visibilityIntensity,…}` | The hide-&-seek LOS resolver (non-cascade, §7). |
+| (prereqs) `PrereqTech`/`BonusType`/`PrereqBonuses`/`VicinityBonusType`/`PrereqAnd\|OrBuildings`/`PrereqReligion`/`PrereqCorporation`/`PrereqOrCivics`/`Prereq*Heritage`/`StateReligion`/`iMinAreaSize`/caps | `requires.build` (`all`/`any`/`noneOf`) | Unit `requires.build` ONLY (units are leaf actions — no operate/dormancy yet; future fuel-disable = operate). Instance caps -> `{SELF, max}`. |
+| `UnitUpgrades`/`SupersedingUnits` | `succession.{upgradesTo,supersededBy}` | MANUAL upgrade chain (NOT `replaces`). |
+| `FreePromotions`/`GreatPeoples`/`Builds`/`GroupSpawnUnitCombatTypes`/`ReligionSpreads`/`CorporationSpreads`/`Buildings` | `grants.{promotions,greatPeople,builds,groupSpawn,religionSpreads,corporationSpreads,buildings}` | One-shot provisions. `bGoldenAge` -> `grants.goldenAge`. |
+| GP-action magnitudes (`iBaseDiscover`/`iDiscoverMultiplier`/`iBaseHurry`/…/`iGreatWorkCulture`/`iBaseFoodChange`) | `grants.greatPersonAction.{discover,hurry,trade,greatWork,food}.{base,multiplier}` | One-time great-person action magnitudes. |
+| `KillOutcomes` / `Actions` | `outcomes.{kill,actions}` | The CvOutcome mission system, carried FAITHFULLY (`engine.generic`) — DEFS = the `CvOutcome` Tier-G straggler; the outcome-system pass (#430) refines (same as UnitCombat #29). |
+| `iInstanceCostModifier` | `costs.empire.perInstance` `{percent, per:{type:SELF}}` | Cost rises per existing instance (the priority count-scaled cost case). `iCost`->`cost.production`, `iBaseUpkeep`->`cost.upkeep`. |
+| `BonusProductionModifiers` | `production.unit.bonuses.{BONUS}.percent` | Build-faster-with-bonus, keep-on-unit (§6). |
+| `PropertyManipulators` | per-`PROPERTY_*` family (v3) | Crime/disease/etc. unit->city emission. |
+| `Capture` | `identity.captures` | The subdue/capture-into unit FK (subdued animals). |
+| `Domain`/`DefaultUnitAI`/`UnitAIs`/`NotUnitAIs`/`SubCombatTypes`/`FormationType`/`bMilitary*`/`iXPValue*`/`iAsset`->worth/`iPower`->militaryWorth/… | `identity.{…}` / `capabilities.{…}` | Domain, AI roles, combat classes, military flags, XP/score. ~50 capability bools -> `capabilities`. `DCMAirBomb1-5` -> `capabilities.dcmAirBomb` (tier = count set). Tech-passability/heritage/cargo-kinds/advancedStart -> identity (parked). |
+
+**SpecialUnit #33** (`curate_special_unit`, rides Unit): cargo-load config — `bValid=0`->`identity.valid:false`, `bCityLoad`/
+`bSMLoadSame` -> `identity.{cityLoad,smLoadSame}`. Newly registered in `store.ENTITIES`. Written to `Assets/Data/specialunits/`.
+
+⚑ **DEFERRED follow-up (owner 2026-06-16):** the SETTLER-grants-buildings edge (founders `bFound` carry the `NewCityFree`
+set "into settling") + the **shared BoolExpr->enabler-condition converter** it needs (`NewCityFree` is tech/plot-CONDITIONED
+— `Has GOM_TECH`/`Is TAG_COASTAL` — NOT settler-type-based; owner-verified no settler-type difference yet) + the capital
+(`bCapital`) grant gated `empire.cities.max=0` (first city only) + retrofitting the parked building `ConstructCondition` +
+unit `TrainCondition` BoolExprs to that converter. One focused pass (a GitHub issue tracks the settler-buildings feature).
+
+*Toolkit: `curate_unit.py` (bespoke; REUSES the §5 family vocab; `BASE`/`UNIT_FAMILIES`/`VS_KEYED`/`CAP_BOOL`/`VISION_STRUCTS`/
+`GP_ACTIONS` tables + `requires_unit` + `pass2` + `curate_special_unit`) with a COVERAGE CHECK. `SpecialUnitInfo` registered in
+`store.ENTITIES`. ⚑ PARKED to pass-2/identity: tech-passability, heritage, cargo-kinds, advanced-start, the BoolExprs above.*
+
 *Toolkit: `curate_building.py` (bespoke, modeled on `curate_promotion`) — `SCALAR_FAMILIES`/`YIELD_FAMILIES`/`COND_KEYED`/
 `TARGET_KEYED` tables + `requires_building` + a `pass2` for the keyed/property/grant/repeatable shapes + `curate_special`
 for SpecialBuilding; COVERAGE CHECK + era foldering. ⚑ KNOWN: `loadPrune` is 0 (buildings gate at the module level, no

@@ -1,0 +1,100 @@
+{
+ "type": "UNIT_CRAB",
+ "description": "TXT_KEY_UNIT_CRAB",
+ "civilopedia": "TXT_KEY_UNIT_CRAB_PEDIA",
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "blendIntoCity": true,
+  "onlyDefensive": true,
+  "animalIgnoresBorders": true
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_BONUS_SPAWNED",
+    "iChance": 2,
+    "BonusType": "BONUS_CRAB",
+    "Yields": [
+     2,
+     0,
+     1
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_TALES_SEA",
+    "iChance": 8,
+    "UnitType": "UNIT_TALESOF_CRAB",
+    "bUnitToCity": [
+     1
+    ],
+    "Yields": [
+     2,
+     0,
+     1
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_SUBDUE_SEA_SMALL",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_CRAB",
+    "bUnitToCity": [
+     "DONT_ESCORT_SUBDUED_SEA_ANIMAL"
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 85,
+    "Yields": [
+     2,
+     0,
+     1
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 2,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_INVERTEBRATE",
+   "UNITCOMBAT_INVERTEBRATE_CRUSTACEAN",
+   "UNITCOMBAT_ANIMAL_COMBAT_BURROWING",
+   "UNITCOMBAT_ANIMAL_COMBAT_HIDING",
+   "UNITCOMBAT_ANIMAL_COMBAT_NIP",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHELLED",
+   "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+   "UNITCOMBAT_SPEED_SLOW",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_INCAPABLE",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_DIMINUTIVE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_POLAR",
+   "TERRAIN_TRENCH_TROPICAL",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_DEEP_TROPICAL"
+  ],
+  "base": {
+   "combat": 1,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_SEA_ANIMAL"
+  }
+ }
+}

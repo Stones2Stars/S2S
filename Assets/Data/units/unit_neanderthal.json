@@ -1,0 +1,74 @@
+{
+ "type": "UNIT_NEANDERTHAL",
+ "description": "TXT_KEY_UNIT_NEANDERTHAL",
+ "civilopedia": "TXT_KEY_UNIT_NEANDERTHAL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_C_AC_NEANDERTHAL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_C_L_NEANDERTHAL",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": -75
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_NEANDERTHAL_WARRIOR",
+   "UNIT_NEANDERTHAL_WOODEN_SPEARMAN"
+  ]
+ },
+ "cost": {
+  "production": 19,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 3,
+  "xpValueAttack": 5,
+  "xpValueDefense": 5,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_NEANDERTHAL",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_WEAPON_H2H_SHORT_POLEARM",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 3,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_MELEE"
+  }
+ }
+}

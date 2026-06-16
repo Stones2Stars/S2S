@@ -1,0 +1,147 @@
+{
+ "type": "UNIT_VIETCONG",
+ "description": "TXT_KEY_UNIT_VIETCONG",
+ "civilopedia": "TXT_KEY_UNIT_VIETCONG_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_VIETNAMESE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_AMMUNITION",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 15
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_GUN": {
+     "percent": 50
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 50
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 75
+    },
+    "UNITCOMBAT_MELEE": {
+     "percent": 100
+    },
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 100
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "onlyDefensive": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "vision": {
+  "invisibleFeature": [
+   {
+    "invisible": "INVISIBLE_CAMOUFLAGE",
+    "feature": "FEATURE_JUNGLE",
+    "intensity": 1
+   }
+  ]
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_WOODSMAN1",
+   "PROMOTION_GUERILLA1",
+   "PROMOTION_GUERILLA2",
+   "PROMOTION_FORESTRY"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_UNMANNED_MACHINE_GUN"
+  ]
+ },
+ "cost": {
+  "production": 1030,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 83,
+  "xpValueAttack": 6,
+  "xpValueDefense": 6,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_CITY_SPECIAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_CITY_SPECIAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SIEGE_DEFENSIVE",
+   "UNITCOMBAT_SIEGE_GUNPOWDER",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_BAYONETTE",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 55,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_SIEGE"
+  }
+ }
+}

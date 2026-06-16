@@ -1,0 +1,112 @@
+{
+ "type": "UNIT_LEONIDAS",
+ "description": "TXT_KEY_UNIT_LEONIDAS",
+ "civilopedia": "TXT_KEY_UNIT_LEONIDAS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SPARTAN",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_BRONZE_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "hillsDefense": {
+    "percent": 50
+   },
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 100
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 100
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "firstStrikeImmune": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_HEROIC"
+  ],
+  "greatPeople": [
+   "SPECIALIST_GREAT_MILITARY_INSTRUCTOR"
+  ]
+ },
+ "cost": {
+  "production": 736,
+  "upkeep": 1,
+  "hurryCostModifier": 200
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 8,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "conscription": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "leaderPromotion": "PROMOTION_LEADER",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_SHORT_POLEARM",
+   "UNITCOMBAT_WEAPON_DIST_JAVELIN",
+   "UNITCOMBAT_ARMOR_HEAVY",
+   "UNITCOMBAT_SHIELD_LARGE",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EPIC",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 9,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_HERO"
+  }
+ }
+}

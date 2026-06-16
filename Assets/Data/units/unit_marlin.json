@@ -1,0 +1,154 @@
+{
+ "type": "UNIT_MARLIN",
+ "description": "TXT_KEY_UNIT_MARLIN",
+ "civilopedia": "TXT_KEY_UNIT_MARLIN_PEDIA",
+ "capabilities": {
+  "assassin": true,
+  "noDefensiveBonus": true,
+  "blendIntoCity": true,
+  "onlyDefensive": true,
+  "animalIgnoresBorders": true,
+  "targets": {
+   "UNITCOMBAT_FISH_BONEY": true
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_BONUS_SPAWNED",
+    "iChance": 2,
+    "BonusType": "BONUS_FISH",
+    "Yields": [
+     [
+      {
+       "Constant": 45,
+       "Random": 180
+      }
+     ],
+     [
+      {
+       "Constant": 1,
+       "Random": 1
+      }
+     ],
+     [
+      {
+       "Constant": 1,
+       "Random": 1
+      }
+     ]
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_TALES_SEA",
+    "iChance": 8,
+    "UnitType": "UNIT_TALESOF_MARLIN",
+    "bUnitToCity": [
+     1
+    ],
+    "Yields": [
+     [
+      {
+       "Constant": 45,
+       "Random": 180
+      }
+     ],
+     [
+      {
+       "Constant": 1,
+       "Random": 1
+      }
+     ],
+     [
+      {
+       "Constant": 1,
+       "Random": 1
+      }
+     ]
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_SUBDUE_SEA_LARGE",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_MARLIN",
+    "bUnitToCity": [
+     "DONT_ESCORT_SUBDUED_SEA_ANIMAL"
+    ],
+    "Yields": [
+     [
+      {
+       "Constant": 45,
+       "Random": 180
+      }
+     ],
+     [
+      {
+       "Constant": 1,
+       "Random": 1
+      }
+     ],
+     [
+      {
+       "Constant": 1,
+       "Random": 1
+      }
+     ]
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 85,
+    "Yields": [
+     [
+      {
+       "Constant": 45,
+       "Random": 180
+      }
+     ],
+     [
+      {
+       "Constant": 1,
+       "Random": 1
+      }
+     ],
+     [
+      {
+       "Constant": 1,
+       "Random": 1
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 4,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_FISH",
+   "UNITCOMBAT_FISH_BONEY",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 3,
+   "moves": 4,
+   "combatClass": "UNITCOMBAT_SEA_ANIMAL"
+  }
+ }
+}

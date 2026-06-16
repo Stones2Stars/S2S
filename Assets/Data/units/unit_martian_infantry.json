@@ -1,0 +1,88 @@
+{
+ "type": "UNIT_MARTIAN_INFANTRY",
+ "description": "TXT_KEY_UNIT_MARTIAN_INFANTRY",
+ "civilopedia": "TXT_KEY_UNIT_MARTIAN_INFANTRY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_MARTIAN_ELECTRONICS_FACTORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityDefense": {
+    "percent": 25
+   },
+   "unitCombat": {
+    "UNITCOMBAT_GUN": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "ignoreBuildingDefense": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_BLITZ"
+  ]
+ },
+ "cost": {
+  "production": 4850,
+  "upkeep": 11,
+  "hurryCostModifier": 10000
+ },
+ "identity": {
+  "worth": 5,
+  "militaryWorth": 500,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_CITY_DEFENSE",
+  "formationType": "FORMATION_TYPE_RANGED",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_HYDRAULIC_APPENDAGE",
+   "UNITCOMBAT_WEAPON_H2H_FLAMETHROWER",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_WEAPON_DIST_HEAT",
+   "UNITCOMBAT_ARMOR_MODERN",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_TECH",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ],
+  "advancedStart": {
+   "cost": 550
+  },
+  "base": {
+   "combat": 110,
+   "moves": 1,
+   "combatLimit": 100,
+   "combatClass": "UNITCOMBAT_ROBOT"
+  }
+ }
+}

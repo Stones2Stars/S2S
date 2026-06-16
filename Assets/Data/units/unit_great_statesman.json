@@ -1,0 +1,152 @@
+{
+ "type": "UNIT_GREAT_STATESMAN",
+ "description": "TXT_KEY_UNIT_GREAT_STATESMAN",
+ "civilopedia": "TXT_KEY_CONCEPT_GREAT_STATESMAN_PEDIA",
+ "capabilities": {
+  "goldenAge": true,
+  "ignoreBuildingDefense": true,
+  "rivalTerritory": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_REMOVE_WV_SLAVERY": [
+     {
+      "OutcomeType": "OUTCOME_REMOVE_WV_SLAVERY",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "PythonCallback": "doRemoveWVSlavery"
+     }
+    ]
+   },
+   {
+    "MISSION_REMOVE_WV_CANNIBALISM": [
+     {
+      "OutcomeType": "OUTCOME_REMOVE_WV_CANNIBALISM",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "PythonCallback": "doRemoveWVCannibalism"
+     }
+    ]
+   },
+   {
+    "MISSION_REMOVE_WV_HUMAN_SACRIFICE": [
+     {
+      "OutcomeType": "OUTCOME_REMOVE_WV_HUMAN_SACRIFICE",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "PythonCallback": "doRemoveWVHumanSacrifice"
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "greatPeople": [
+   "SPECIALIST_GREAT_STATESMAN"
+  ],
+  "goldenAge": true,
+  "greatPersonAction": {
+   "discover": {
+    "base": 10000,
+    "multiplier": 2
+   }
+  }
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   }
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SPY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_SPY",
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_MERCHANT",
+   "UNITAI_PROPHET"
+  ],
+  "notUnitAIs": [
+   "UNITAI_EXPLORE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_ADMINISTRATOR",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_INFERIOR",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "uniqueNames": [
+   "TXT_KEY_GREAT_PERSON_NIKITA_KHRUSHCHEV",
+   "TXT_KEY_GREAT_PERSON_JAMES_MADISON",
+   "TXT_KEY_GREAT_PERSON_JOSEPH_STALIN",
+   "TXT_KEY_GREAT_PERSON_EMPEROR_AKIHITO",
+   "TXT_KEY_GREAT_PERSON_VLADIMIR_LENIN",
+   "TXT_KEY_GREAT_PERSON_AARON_BURR",
+   "TXT_KEY_GREAT_PERSON_THOMAS_JEFFERSON",
+   "TXT_KEY_GREAT_PERSON_ALEXANDER_HAMILTON",
+   "TXT_KEY_GREAT_PERSON_NELSON_MANDELA",
+   "TXT_KEY_GREAT_PERSON_MARTIN_VAN_BUREN",
+   "TXT_KEY_GREAT_PERSON_ROBERT_LIVINGSTON",
+   "TXT_KEY_GREAT_PERSON_DR._HENRY_KISSINGER",
+   "TXT_KEY_GREAT_PERSON_JOHN_QUINCY_ADAMS",
+   "TXT_KEY_GREAT_PERSON_HAROLD_MACMILLAN",
+   "TXT_KEY_GREAT_PERSON_JOHN_F._KENNEDY",
+   "TXT_KEY_GREAT_PERSON_MIKHAIL_GORBACHEV",
+   "TXT_KEY_GREAT_PERSON_MARGARET_THATCHER",
+   "TXT_KEY_GREAT_PERSON_LEON_TROTSKY",
+   "TXT_KEY_GREAT_PERSON_EMILIANO_ZAPATA",
+   "TXT_KEY_GREAT_PERSON_RONALD_REAGAN",
+   "TXT_KEY_GREAT_PERSON_QIN_SHI_HUANG",
+   "TXT_KEY_GREAT_PERSON_MAO_ZEDONG",
+   "TXT_KEY_GREAT_PERSON_PANCHO_VILLA",
+   "TXT_KEY_GREAT_PERSON_PASCUAL_OROZCO",
+   "TXT_KEY_GREAT_PERSON_LORD_CHESTERFIELD",
+   "TXT_KEY_GREAT_PERSON_LORD_MELBOURNE",
+   "TXT_KEY_GREAT_PERSON_ALCIBIADES",
+   "TXT_KEY_GREAT_PERSON_YASSER_ARAFAT",
+   "TXT_KEY_GREAT_PERSON_SIR_FRANCIS_BACON",
+   "TXT_KEY_GREAT_PERSON_DAVID_GEN_GURION",
+   "TXT_KEY_GREAT_PERSON_MENACHEM_BEGIN",
+   "TXT_KEY_GREAT_PERSON_SIMON_BOLIVAR",
+   "TXT_KEY_GREAT_PERSON_WILLY_BRANDT",
+   "TXT_KEY_GREAT_PERSON_MARCUS_JUNIUS_BRUTUS",
+   "TXT_KEY_GREAT_PERSON_EDMUND_BURKE",
+   "TXT_KEY_GREAT_PERSON_KEMAL_ATATURK",
+   "TXT_KEY_GREAT_PERSON_MUSTAFA_KEMAL",
+   "TXT_KEY_GREAT_PERSON_BIRGER_JARL",
+   "TXT_KEY_GREAT_PERSON_ZHUGE_LIANG",
+   "TXT_KEY_GREAT_PERSON_YITZHAK_RABIN",
+   "TXT_KEY_GREAT_PERSON_PERICLES",
+   "TXT_KEY_GREAT_PERSON_KIMON",
+   "TXT_KEY_GREAT_PERSON_ARISTIDES",
+   "TXT_KEY_GREAT_PERSON_MARK_ANTONY"
+  ],
+  "base": {
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_PRODIGY"
+  }
+ }
+}

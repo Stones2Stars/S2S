@@ -1,0 +1,117 @@
+{
+ "type": "UNIT_NEANDERTHAL_HEALER",
+ "description": "TXT_KEY_UNIT_NEANDERTHAL_HEALER",
+ "civilopedia": "TXT_KEY_UNIT_HEALER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_C_AC_NEANDERTHAL",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_C_L_NEANDERTHAL",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_HEALERS_HUT",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_DOCTORS_OFFICE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SURGEONS_OFFICE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_MEDICAL_CLINIC",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 4
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_PEOPLE": {
+     "heal": 5
+    },
+    "UNITCOMBAT_HEALS_AS_ANIMALS": {
+     "heal": 3
+    }
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -4
+  },
+  "plot": {
+   "flat": -2
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "onlyDefensive": true,
+  "militaryProduction": true,
+  "militaryTrade": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MEDICINE_MAN"
+  ]
+ },
+ "cost": {
+  "production": 62,
+  "upkeep": 3,
+  "hurryCostModifier": 25
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 3,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_HEALER",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_NEANDERTHAL",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_WEAPON_H2H_STAFF",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_MEDIOCRE",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_PEOPLE",
+   "UNITCOMBAT_HEALS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 3,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_HEALTH_CARE"
+  }
+ }
+}

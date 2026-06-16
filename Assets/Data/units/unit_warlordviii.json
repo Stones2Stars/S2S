@@ -1,0 +1,134 @@
+{
+ "type": "UNIT_WARLORDVIII",
+ "description": "TXT_KEY_UNIT_WARLORDVIII",
+ "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 8
+    }
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_GOLD_WARES": {
+     "percent": 10
+    },
+    "BONUS_SILVER_WARES": {
+     "percent": 10
+    },
+    "BONUS_GEMSTONE": {
+     "percent": 10
+    },
+    "BONUS_PEARLS": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 25
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 20
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 50
+   },
+   "limit": {
+    "flat": 50
+   },
+   "maxUnits": {
+    "flat": 5
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "alwaysHostile": true,
+  "hiddenNationality": true,
+  "noCapture": true,
+  "pillage": true,
+  "unlimitedException": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_LEADER"
+  ]
+ },
+ "cost": {
+  "production": 10617,
+  "upkeep": 16
+ },
+ "identity": {
+  "worth": 15,
+  "militaryWorth": 60,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_GENERAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "captures": "UNIT_WARLORDVIIIS",
+  "unitAIs": [
+   "UNITAI_GENERAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_HANDGUN",
+   "UNITCOMBAT_WEAPON_DIST_HANDGUN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "combat": 160,
+   "moves": 4,
+   "combatLimit": 100,
+   "combatClass": "UNITCOMBAT_GUN"
+  }
+ }
+}

@@ -1,0 +1,62 @@
+{
+ "type": "UNIT_AGENT",
+ "description": "TXT_KEY_UNIT_AGENT",
+ "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
+ "capabilities": {
+  "counterSpy": true,
+  "investigate": true,
+  "alwaysInvisible": true,
+  "rivalTerritory": true,
+  "spy": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COMMANDO",
+   "PROMOTION_SECURITY1"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_SPECIAL_AGENT"
+  ]
+ },
+ "cost": {
+  "production": 473,
+  "upkeep": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SPY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_SPY"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_SPY"
+  }
+ }
+}

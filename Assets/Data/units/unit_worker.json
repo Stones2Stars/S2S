@@ -1,0 +1,112 @@
+{
+ "type": "UNIT_WORKER",
+ "description": "TXT_KEY_UNIT_WORKER",
+ "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_DONKEY": {
+     "percent": 5
+    },
+    "BONUS_CAMEL": {
+     "percent": 5
+    },
+    "BONUS_COW": {
+     "percent": 5
+    },
+    "BONUS_HORSE": {
+     "percent": 5
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "food": true,
+  "workerTrade": true
+ },
+ "grants": {
+  "builds": [
+   "BUILD_FORTIFIED_CAVE",
+   "BUILD_WOODEN_WATCHTOWER",
+   "BUILD_TRAIL",
+   "BUILD_WOODEN_PALISADE",
+   "BUILD_RESOURCE_OUTPOST",
+   "BUILD_BURN_VEGETATION",
+   "BUILD_EARLY_QUARRY",
+   "BUILD_FRUIT_PICKING_CAMP",
+   "BUILD_GRAPE_PICKING_CAMP",
+   "BUILD_FORTIFIED_CAVE_WITH_CACHE",
+   "BUILD_HUNTING_CAMP",
+   "BUILD_PLANT_PICKING_CAMP",
+   "BUILD_SEED_CAMP",
+   "BUILD_STONE_TOOLS_WORKSHOP",
+   "BUILD_COTTAGE",
+   "BUILD_EARLY_MOUNTAIN_MINE",
+   "BUILD_LUMBERJACK",
+   "BUILD_HAMLET",
+   "BUILD_MINE",
+   "BUILD_PATH",
+   "BUILD_STONE_WATCHTOWER",
+   "BUILD_TAR_GATHERER",
+   "BUILD_DESERT_CAMP",
+   "BUILD_HUNTING_PRESERVE",
+   "BUILD_JUNGLE_CAMP",
+   "BUILD_REMOVE_VEGETATION",
+   "BUILD_SALT_GATHERER",
+   "BUILD_THATCH_CUTTER",
+   "BUILD_WETLANDS_CAMP",
+   "BUILD_MUSHROOM_GATHERER",
+   "BUILD_ORCHARD",
+   "BUILD_PASTURE",
+   "BUILD_SILK_FARM",
+   "BUILD_WINERY",
+   "BUILD_FARM",
+   "BUILD_QUARRY",
+   "BUILD_GEOGLYPH",
+   "BUILD_MACHU_PICCHU"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_WORKANIMAL",
+   "UNIT_WORKBUFFALO",
+   "UNIT_WORKELEPHANT",
+   "UNIT_WORKMULE",
+   "UNIT_WORKLLAMA",
+   "UNIT_WORKCAMEL"
+  ]
+ },
+ "cost": {
+  "production": 90,
+  "upkeep": 2
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_WORKER",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_POOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 2,
+   "workRate": 75,
+   "combatClass": "UNITCOMBAT_WORKER"
+  }
+ }
+}

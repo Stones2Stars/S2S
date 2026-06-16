@@ -1,0 +1,109 @@
+{
+ "type": "UNIT_HIDEYOSHI",
+ "description": "TXT_KEY_UNIT_HIDEYOSHI",
+ "civilopedia": "TXT_KEY_UNIT_HIDEYOSHI_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_JAPANESE",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_RETINUE_MESSENGER",
+   "PROMOTION_LEADER"
+  ],
+  "greatPeople": [
+   "SPECIALIST_CITIZEN",
+   "SPECIALIST_GREAT_PROPHET",
+   "SPECIALIST_GREAT_ARTIST",
+   "SPECIALIST_GREAT_SCIENTIST",
+   "SPECIALIST_GREAT_MERCHANT",
+   "SPECIALIST_GREAT_ENGINEER",
+   "SPECIALIST_NOBLE",
+   "SPECIALIST_GREAT_MILITARY_INSTRUCTOR"
+  ],
+  "buildings": [
+   "BUILDING_ACHIEVEMENT_AGRICULTURAL",
+   "BUILDING_ACHIEVEMENT_COMMERCIAL",
+   "BUILDING_ACHIEVEMENT_CULTURAL",
+   "BUILDING_ACHIEVEMENT_ENVIRONMENTAL",
+   "BUILDING_ACHIEVEMENT_INDUSTRIAL",
+   "BUILDING_ACHIEVEMENT_MEDICAL",
+   "BUILDING_ACHIEVEMENT_MILITARY",
+   "BUILDING_ACHIEVEMENT_POLITICAL",
+   "BUILDING_ACHIEVEMENT_SAFETY",
+   "BUILDING_ACHIEVEMENT_SCIENTIFIC",
+   "BUILDING_ACHIEVEMENT_SEAFARING",
+   "BUILDING_ACHIEVEMENT_TOURISTIC"
+  ]
+ },
+ "cost": {
+  "production": 1472,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 6,
+  "militaryWorth": 8,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_COUNTER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+   "UNITCOMBAT_ARMOR_HEAVY",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+   "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+   "UNITCOMBAT_MOTILITY_RIDING",
+   "UNITCOMBAT_MOUNT_HORSE",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 19,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_HERO"
+  }
+ }
+}

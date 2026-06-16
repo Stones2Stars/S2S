@@ -1,0 +1,165 @@
+{
+ "type": "UNIT_TORPEDO_BOAT",
+ "description": "TXT_KEY_UNIT_TORPEDO_BOAT",
+ "civilopedia": "TXT_KEY_UNIT_TORPEDO_BOAT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "AREA_SIZE",
+     "scope": "world",
+     "min": 10
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PETROLEUM_PRODUCTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "CIVIC_MERCANTILISM",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_NATIONALIST",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_FEUDAL",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_MONARCHY",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_DESPOTISM",
+      "scope": "empire"
+     }
+    ]
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_COAST": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "TERRAIN_COAST_POLAR": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "TERRAIN_COAST_TROPICAL": {
+     "attack": {
+      "percent": 25
+     }
+    }
+   },
+   "vsUnit": {
+    "UNIT_DESTROYER": {
+     "attack": {
+      "percent": 50
+     }
+    },
+    "UNIT_CRUISER": {
+     "attack": {
+      "percent": 50
+     }
+    },
+    "UNIT_PRE_DREADNOUGHT": {
+     "attack": {
+      "percent": 50
+     }
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "canMoveImpassable": true,
+  "mechanized": true,
+  "renderBelowWater": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_STEALTH_DESTROYER"
+  ]
+ },
+ "cost": {
+  "production": 710,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 28,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "minAreaSize": 10,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_RESERVE_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_RESERVE_SEA",
+   "UNITAI_PIRATE_SEA",
+   "UNITAI_SPY_SEA",
+   "UNITAI_ASSAULT_SEA",
+   "UNITAI_EXPLORE_SEA"
+  ],
+  "notUnitAIs": [
+   "UNITAI_ESCORT_SEA",
+   "UNITAI_RESERVE_SEA",
+   "UNITAI_ATTACK_SEA"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_DESTROYER",
+   "UNITCOMBAT_NAVAL_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_TORPEDO",
+   "UNITCOMBAT_ARMOR_NAVAL",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_NAVAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 40,
+   "moves": 5,
+   "combatClass": "UNITCOMBAT_STEAM_SHIPS"
+  }
+ }
+}

@@ -1,0 +1,94 @@
+{
+ "type": "UNIT_COMPOSITE_BOWMAN",
+ "description": "TXT_KEY_UNIT_COMPOSITE_BOWMAN",
+ "civilopedia": "TXT_KEY_UNIT_ARCHER_PEDIA",
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_COPPER_WARES": {
+     "percent": 5
+    },
+    "BONUS_BRONZE_WARES": {
+     "percent": 5
+    },
+    "BONUS_IRON_WARES": {
+     "percent": 5
+    },
+    "BONUS_PRIME_TIMBER": {
+     "percent": 5
+    },
+    "BONUS_FEATHERS": {
+     "percent": 5
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityDefense": {
+    "percent": 50
+   },
+   "hillsDefense": {
+    "percent": 25
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_LONGBOWMAN"
+  ]
+ },
+ "cost": {
+  "production": 145,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 5,
+  "xpValueAttack": 1,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_CITY_DEFENSE",
+  "formationType": "FORMATION_TYPE_RANGED",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_ESCORT"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_DIST_SHORTBOW",
+   "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_BATTALION",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 5,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_ARCHER"
+  }
+ }
+}

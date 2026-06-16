@@ -1,0 +1,57 @@
+{
+ "type": "UNIT_LORD",
+ "description": "TXT_KEY_UNIT_LORD",
+ "civilopedia": "TXT_KEY_UNIT_LORD_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "unlimitedException": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_VICEROY"
+  ]
+ },
+ "cost": {
+  "production": 350,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "leaderExperience": 15,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_GENERAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_MILITARY",
+  "leaderPromotion": "PROMOTION_LORDSHIP",
+  "unitAIs": [
+   "UNITAI_GENERAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_CAPTAIN"
+  }
+ }
+}

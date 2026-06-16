@@ -1,0 +1,130 @@
+{
+ "type": "UNIT_TAMED_WOLF_PAIR",
+ "description": "TXT_KEY_UNIT_TAMED_WOLF_PAIR",
+ "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",
+ "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_DOG_KENNELS",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "HERITAGE_FOLKLORE_WOLF",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_WOLF_DIRE",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_FOLKLORE_WOLF_ETHIOPIAN",
+      "scope": "empire"
+     },
+     {
+      "type": "HERITAGE_TAXON_CANIDAE",
+      "scope": "empire"
+     }
+    ]
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "onlyDefensive": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+   "BUILDING_MILITARY_STANDARD_CANINES",
+   "BUILDING_DOG_BREEDER",
+   "BUILDING_DOG_KENNELS",
+   "BUILDING_GOVERNORS_MENAGERIE",
+   "BUILDING_GOVERNORS_PETS",
+   "BUILDING_GUARD_DOG_TRAINER",
+   "BUILDING_HERDING_DOG_TRAINER",
+   "BUILDING_HUNTING_DOG_TRAINER",
+   "BUILDING_POLICE_DOG_TRAINER",
+   "BUILDING_SLED_DOG_TRAINER",
+   "BUILDING_TAXIDERMIST",
+   "BUILDING_WAR_DOG_TRAINER",
+   "BUILDING_ENCLOSURE_WOLF",
+   "BUILDING_ZOO"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_TAMED_WOLF"
+  ]
+ },
+ "cost": {
+  "production": 100
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 1,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "notUnitAIs": [
+   "UNITAI_WORKER",
+   "UNITAI_EXPLORE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_TAMED",
+   "UNITCOMBAT_ANIMAL_MAMMAL",
+   "UNITCOMBAT_CANINE",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+   "UNITCOMBAT_ANIMAL_COMBAT_SCRATCH",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+   "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+   "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
+   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+   "UNITCOMBAT_ANIMAL_COMBAT_WARNING",
+   "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+   "UNITCOMBAT_ANIMAL_COMBAT_PACK_HUNTER",
+   "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_SMALL",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 7,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

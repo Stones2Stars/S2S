@@ -1,0 +1,221 @@
+{
+ "type": "UNIT_CUTTHROAT",
+ "description": "TXT_KEY_UNIT_CUTTHROAT",
+ "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_THIEVES_HIDEOUT",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BUILDING_LOCKSMITH",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ELECTRONIC_SECURITY_SYSTEM",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_BIOMETRIC_SECURITY_SYSTEM",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "culture": {
+  "unit": {
+   "garrison": {
+    "flat": -6
+   }
+  }
+ },
+ "espionage": {
+  "unit": {
+   "insidiousness": {
+    "flat": 25
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "lunge": {
+    "percent": 12
+   },
+   "enclose": {
+    "percent": 8
+   },
+   "unnerve": {
+    "percent": 12
+   },
+   "stealthStrikes": {
+    "flat": 1
+   },
+   "stealth": {
+    "percent": 20
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 10
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 25
+  },
+  "plot": {
+   "flat": 12
+  }
+ },
+ "capabilities": {
+  "alwaysHostile": true,
+  "assassin": true,
+  "hiddenNationality": true,
+  "pillage": true,
+  "blendIntoCity": true,
+  "barbCoExist": true,
+  "counterSpy": true,
+  "destroy": true,
+  "ignoreTerrainCost": true,
+  "ignoreZoneOfControl": true,
+  "stealPlans": true,
+  "upgradeAnywhere": true,
+  "militaryProduction": true,
+  "targets": {
+   "UNITCOMBAT_EXPLORER": true,
+   "UNITCOMBAT_HEALTH_CARE": true,
+   "UNITCOMBAT_CANINE": true,
+   "UNITCOMBAT_TRADE": true,
+   "UNITCOMBAT_ENTERTAINER": true,
+   "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+  }
+ },
+ "vision": {
+  "invisible": "INVISIBLE_CAMOUFLAGE",
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 3,
+   "INVISIBLE_DISGUISED": 4
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_DISGUISED": 4,
+   "INVISIBLE_CAMOUFLAGE": 4
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_INDUSTRYESPIONAGE",
+   "PROMOTION_COMMANDO",
+   "PROMOTION_MARAUDER",
+   "PROMOTION_LOOTER"
+  ],
+  "greatPersonAction": {
+   "trade": {
+    "base": 50,
+    "multiplier": 1
+   }
+  }
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_SCOUNDREL",
+   "UNIT_PARTISAN"
+  ]
+ },
+ "cost": {
+  "production": 330,
+  "upkeep": 6
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   }
+  ]
+ },
+ "identity": {
+  "worth": 6,
+  "militaryWorth": 11,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PILLAGE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_TROOP",
+  "advisor": "ADVISOR_MILITARY",
+  "espionagePoints": 100,
+  "unitAIs": [
+   "UNITAI_SPY",
+   "UNITAI_PILLAGE",
+   "UNITAI_ATTACK",
+   "UNITAI_INFILTRATOR"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_RUFFIAN",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+   "UNITCOMBAT_WEAPON_DIST_KNIFE",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "cargo": {
+   "special": "SPECIALUNIT_CAPTIVE"
+  },
+  "base": {
+   "combat": 12,
+   "moves": 2,
+   "cargo": 1,
+   "combatClass": "UNITCOMBAT_CRIMINAL"
+  }
+ }
+}

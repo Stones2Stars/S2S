@@ -1,0 +1,104 @@
+{
+ "type": "UNIT_TAMED_TURKEY",
+ "description": "TXT_KEY_UNIT_TAMED_TURKEY",
+ "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",
+ "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_ANIMAL_TAMER_COMPLEX",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ENCLOSURE_BIRD",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_FOLKLORE_WILD_TURKEY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityDefense": {
+    "percent": -80
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_GOVERNORS_PETS",
+   "BUILDING_GOVERNORS_MENAGERIE",
+   "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+   "BUILDING_ENCLOSURE_BIRD",
+   "BUILDING_FEATHER_WORKER",
+   "BUILDING_HERD_POULTRY",
+   "BUILDING_FARM_ANIMAL_TURKEY",
+   "BUILDING_FLOCKS_OF_TURKEY",
+   "BUILDING_ZOO",
+   "BUILDING_TAXIDERMIST"
+  ]
+ },
+ "cost": {
+  "production": 133
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 1,
+  "xpValueAttack": 2,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "notUnitAIs": [
+   "UNITAI_WORKER",
+   "UNITAI_EXPLORE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_TAMED",
+   "UNITCOMBAT_ANIMAL_BIRD",
+   "UNITCOMBAT_BIRD_GAMEBIRD",
+   "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
+   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+   "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+   "UNITCOMBAT_ANIMAL_COMBAT_PECK",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_POOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_SMALL",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": -1
+  },
+  "base": {
+   "combat": 1,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

@@ -1,0 +1,106 @@
+{
+ "type": "UNIT_MECHANIZED_INFANTRY",
+ "description": "TXT_KEY_UNIT_MECHANIZED_INFANTRY",
+ "civilopedia": "TXT_KEY_UNIT_MECHANIZED_INFANTRY_PEDIA",
+ "strength": {
+  "unit": {
+   "cityDefense": {
+    "percent": 25
+   },
+   "feature": {
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": -25
+     }
+    },
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": -50
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_WHEELED": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 20
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_MARCH",
+   "PROMOTION_AMPHIBIOUS"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_FUTURE_APC"
+  ]
+ },
+ "cost": {
+  "production": 1605,
+  "upkeep": 3
+ },
+ "identity": {
+  "worth": 6,
+  "militaryWorth": 250,
+  "xpValueAttack": 1,
+  "xpValueDefense": 3,
+  "conscription": 13,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_CITY_DEFENSE",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_CITY_SPECIAL",
+   "UNITAI_ESCORT"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_TRANSPORT",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+   "UNITCOMBAT_ARMOR_VEHICULAR",
+   "UNITCOMBAT_MOTILITY_DRIVING",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "cargo": {
+   "domain": "DOMAIN_LAND",
+   "special": "SPECIALUNIT_TROOP"
+  },
+  "base": {
+   "combat": 70,
+   "moves": 2,
+   "cargo": 3,
+   "combatClass": "UNITCOMBAT_TRACKED"
+  }
+ }
+}

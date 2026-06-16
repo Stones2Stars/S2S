@@ -1,0 +1,122 @@
+{
+ "type": "UNIT_STONE_THROWER",
+ "description": "TXT_KEY_UNIT_STONE_THROWER",
+ "civilopedia": "TXT_KEY_UNIT_STONE_THROWER_PEDIA",
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_STONE": {
+     "percent": 15
+    },
+    "BONUS_FLINT": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityDefense": {
+    "percent": 25
+   },
+   "hillsDefense": {
+    "percent": 25
+   },
+   "unitCombat": {
+    "UNITCOMBAT_ARCHER": {
+     "percent": 25
+    },
+    "UNITCOMBAT_MELEE": {
+     "percent": 25
+    },
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 2
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 1
+   },
+   "limit": {
+    "flat": 5
+   },
+   "maxUnits": {
+    "flat": 1
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_SLINGER",
+   "UNIT_NEANDERTHAL_STONE_THROWER"
+  ],
+  "supersededBy": [
+   "UNIT_NEANDERTHAL_STONE_THROWER"
+  ]
+ },
+ "cost": {
+  "production": 4,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 1,
+  "xpValueAttack": 2,
+  "xpValueDefense": 2,
+  "conscription": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_CITY_DEFENSE",
+  "formationType": "FORMATION_TYPE_NO_SIEGE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PILLAGE",
+   "UNITAI_ESCORT"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_ROCK",
+   "UNITCOMBAT_WEAPON_DIST_ROCK",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 1,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_THROWING"
+  }
+ }
+}

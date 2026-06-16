@@ -1,0 +1,160 @@
+{
+ "type": "UNIT_YOLNGU_MESSENGER",
+ "description": "TXT_KEY_UNIT_YOLNGU_MESSENGER",
+ "civilopedia": "TXT_KEY_UNIT_YOLNGU_MESSENGER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_YOLNGU",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_HENNA": {
+     "percent": 1
+    },
+    "BONUS_INDIGO": {
+     "percent": 1
+    },
+    "BONUS_PAPYRUS": {
+     "percent": 1
+    },
+    "BONUS_OPIUM": {
+     "percent": 1
+    },
+    "BONUS_TOBACCO": {
+     "percent": 1
+    },
+    "BONUS_PARROTS": {
+     "percent": 1
+    },
+    "BONUS_COCA": {
+     "percent": 1
+    },
+    "BONUS_PEARLS": {
+     "percent": 1
+    },
+    "BONUS_AMBER": {
+     "percent": 1
+    },
+    "BONUS_RUBIES": {
+     "percent": 1
+    },
+    "BONUS_DIAMOND": {
+     "percent": 1
+    },
+    "BONUS_SAPPHIRES": {
+     "percent": 1
+    },
+    "BONUS_JADE": {
+     "percent": 1
+    },
+    "BONUS_TURQUOISE": {
+     "percent": 1
+    },
+    "BONUS_HORSE": {
+     "percent": 2
+    },
+    "BONUS_DONKEY": {
+     "percent": 2
+    },
+    "BONUS_LLAMA": {
+     "percent": 2
+    },
+    "BONUS_CAMEL": {
+     "percent": 2
+    }
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "onlyDefensive": true,
+  "rivalTerritory": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "greatPersonAction": {
+   "trade": {
+    "base": 20,
+    "multiplier": 3
+   }
+  }
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_TRADE_CARAVAN"
+  ]
+ },
+ "cost": {
+  "production": 59,
+  "upkeep": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MERCHANT",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "captures": "UNIT_EARLY_MERCHANT_C2C",
+  "unitAIs": [
+   "UNITAI_MERCHANT",
+   "UNITAI_ENGINEER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_EXPLORE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_MEDIOCRE",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 2,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_TRADE"
+  }
+ }
+}

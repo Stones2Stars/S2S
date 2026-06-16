@@ -1,0 +1,57 @@
+{
+ "type": "UNIT_TRIBE",
+ "description": "TXT_KEY_UNIT_TRIBE",
+ "civilopedia": "TXT_KEY_UNIT_TRIBE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "food": true,
+  "found": true,
+  "unlimitedException": true
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_SETTLER"
+  ]
+ },
+ "cost": {
+  "upkeep": 2
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SETTLE",
+  "formationType": "FORMATION_TYPE_SETTLER",
+  "advisor": "ADVISOR_GROWTH",
+  "captures": "UNIT_CAPTIVE_CIVILIAN",
+  "unitAIs": [
+   "UNITAI_SETTLE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_MEDIOCRE",
+   "UNITCOMBAT_GROUP_BATTALION",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_SETTLER"
+  }
+ }
+}

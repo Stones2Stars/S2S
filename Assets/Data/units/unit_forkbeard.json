@@ -1,0 +1,93 @@
+{
+ "type": "UNIT_FORKBEARD",
+ "description": "TXT_KEY_UNIT_FORKBEARD",
+ "civilopedia": "TXT_KEY_UNIT_FORKBEARD_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_DANISH",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "world",
+     "max": 1
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "militaryHappiness": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_RETINUE_WAR_VETERAN"
+  ],
+  "greatPeople": [
+   "SPECIALIST_GREAT_PROPHET",
+   "SPECIALIST_GREAT_MILITARY_INSTRUCTOR",
+   "SPECIALIST_GREAT_ADMIRAL",
+   "SPECIALIST_CELEBRITY"
+  ],
+  "buildings": [
+   "BUILDING_ACHIEVEMENT_AGRICULTURAL",
+   "BUILDING_ACHIEVEMENT_COMMERCIAL",
+   "BUILDING_ACHIEVEMENT_CULTURAL",
+   "BUILDING_ACHIEVEMENT_ENVIRONMENTAL",
+   "BUILDING_ACHIEVEMENT_INDUSTRIAL",
+   "BUILDING_ACHIEVEMENT_MEDICAL",
+   "BUILDING_ACHIEVEMENT_MILITARY",
+   "BUILDING_ACHIEVEMENT_POLITICAL",
+   "BUILDING_ACHIEVEMENT_SAFETY",
+   "BUILDING_ACHIEVEMENT_SCIENTIFIC",
+   "BUILDING_ACHIEVEMENT_SEAFARING",
+   "BUILDING_ACHIEVEMENT_TOURISTIC"
+  ]
+ },
+ "cost": {
+  "production": 1376,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 2,
+  "militaryWorth": 3,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "conscription": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "leaderPromotion": "PROMOTION_LEADER",
+  "unitAIs": [
+   "UNITAI_ATTACK"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+   "UNITCOMBAT_ARMOR_MEDIUM",
+   "UNITCOMBAT_SHIELD_LARGE",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_EPIC",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 16,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_HERO"
+  }
+ }
+}

@@ -1,0 +1,105 @@
+{
+ "type": "UNIT_SUPPLY_TRAIN",
+ "description": "TXT_KEY_UNIT_SUPPLY_TRAIN",
+ "civilopedia": "TXT_KEY_CONCEPT_TRADE_CARAVAN_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "BUILDING_TRADING_POST",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_SHOPPING_DISTRICT",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "noNonTypeProdMods": true,
+  "onlyDefensive": true,
+  "rivalTerritory": true,
+  "militarySupport": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_HURRY_PRODUCTION_CARAVAN": [
+     {
+      "OutcomeType": "OUTCOME_HURRY_PRODUCTION_CARAVAN",
+      "iChance": 100,
+      "Yields": [
+       0,
+       [
+        [
+         204
+        ]
+       ]
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "greatPersonAction": {
+   "trade": {
+    "base": 60,
+    "multiplier": 1
+   }
+  }
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_FREIGHT"
+  ]
+ },
+ "cost": {
+  "production": 240,
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "animalCombat": 100,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MERCHANT",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_SUPPLY_TRAIN",
+  "unitAIs": [
+   "UNITAI_MERCHANT",
+   "UNITAI_ENGINEER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_EXPLORE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_STAFF",
+   "UNITCOMBAT_ARMOR_LIGHT",
+   "UNITCOMBAT_MOTILITY_ANIMAL_DRAWN",
+   "UNITCOMBAT_ASSISTED_MULE",
+   "UNITCOMBAT_QUALITY_MEDIOCRE",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 3,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_TRADE"
+  }
+ }
+}

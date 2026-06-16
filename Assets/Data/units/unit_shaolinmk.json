@@ -1,0 +1,154 @@
+{
+ "type": "UNIT_SHAOLINMK",
+ "description": "TXT_KEY_UNIT_SHAOLINMK",
+ "civilopedia": "TXT_KEY_UNIT_SHAOLINMK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SOAP",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_SHAOLIN_TEMPLE",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_SCROLLS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "dynamicDefense": {
+    "percent": 50
+   },
+   "stealthStrikes": {
+    "flat": 1
+   },
+   "stealth": {
+    "percent": 50
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 25
+   }
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 4
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_PEOPLE": {
+     "heal": 10
+    }
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  },
+  "plot": {
+   "flat": -3
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  },
+  "plot": {
+   "flat": -3
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "pillage": true,
+  "onlyDefensive": true,
+  "ignoreNoEntryLevel": true,
+  "militaryHappiness": true,
+  "militaryProduction": true
+ },
+ "vision": {
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 3
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 4
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_MARTIAL_ARTS",
+   "PROMOTION_MARTIAL_ARTS2",
+   "PROMOTION_MARTIAL_ARTS3"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_CITY_GUARD",
+   "UNIT_AMBULANCE"
+  ]
+ },
+ "cost": {
+  "production": 345,
+  "upkeep": 4,
+  "hurryCostModifier": 25
+ },
+ "identity": {
+  "worth": 6,
+  "militaryWorth": 15,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_RESERVE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_RESERVE",
+   "UNITAI_ATTACK",
+   "UNITAI_HEALER",
+   "UNITAI_PROPERTY_CONTROL",
+   "UNITAI_ESCORT"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_HEALTH_CARE",
+   "UNITCOMBAT_LAW_ENFORCEMENT",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_MARTIAL_ART",
+   "UNITCOMBAT_WEAPON_DIST_MARTIAL_ART",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 12,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_MELEE"
+  }
+ }
+}

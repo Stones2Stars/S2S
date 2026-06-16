@@ -1,0 +1,144 @@
+{
+ "type": "UNIT_MASTER_SAILOR_ATTACK_SUBMARINE",
+ "description": "TXT_KEY_UNIT_MASTER_SAILOR_ATTACK_SUBMARINE",
+ "civilopedia": "TXT_KEY_UNIT_ATTACK_SUBMARINE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "AREA_SIZE",
+     "scope": "world",
+     "min": 10
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PETROLEUM_PRODUCTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_URANIUM",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 70
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": 100
+    },
+    "UNITCOMBAT_STEAM_SHIPS": {
+     "percent": 50
+    }
+   },
+   "vsUnit": {
+    "UNIT_SUBMARINE": {
+     "attack": {
+      "percent": 50
+     },
+     "defense": {
+      "percent": 50
+     }
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "canMoveImpassable": true,
+  "ignoreBuildingDefense": true,
+  "ignoreTerrainCost": true,
+  "mechanized": true,
+  "noBadGoodies": true,
+  "rivalTerritory": true,
+  "renderBelowWater": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true,
+  "unitTargets": {
+   "UNIT_FLUYT": true,
+   "UNIT_GALLEON": true,
+   "UNIT_TRANSPORT": true,
+   "UNIT_LANDING_SHIP": true
+  }
+ },
+ "vision": {
+  "invisible": "INVISIBLE_SUBMARINE"
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_NAVIGATION1",
+   "PROMOTION_LEADERSHIP"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MASTER_SAILOR_NUCLEAR_SUBMARINE"
+  ]
+ },
+ "cost": {
+  "upkeep": 2
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 177,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "minAreaSize": 10,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_RESERVE_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_RESERVE_SEA",
+   "UNITAI_EXPLORE_SEA",
+   "UNITAI_MISSIONARY_SEA",
+   "UNITAI_SPY_SEA"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_NAVAL_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_TORPEDO",
+   "UNITCOMBAT_WEAPON_DIST_LONG_RANGE_MISSILE",
+   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+   "UNITCOMBAT_ARMOR_NAVAL",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_GARGANTUAN",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_NAVAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "cargo": {
+   "domain": "DOMAIN_LAND",
+   "special": "SPECIALUNIT_PEOPLE"
+  },
+  "base": {
+   "combat": 54,
+   "moves": 7,
+   "cargo": 1,
+   "combatClass": "UNITCOMBAT_SUBMARINE"
+  }
+ }
+}

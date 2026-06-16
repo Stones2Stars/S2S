@@ -1,0 +1,55 @@
+{
+ "type": "UNIT_MARSSETTLER",
+ "description": "TXT_KEY_UNIT_MARSSETTLER",
+ "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_MARTIAN_FACTORY",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "food": true,
+  "found": true
+ },
+ "cost": {
+  "production": 4850,
+  "upkeep": 11,
+  "hurryCostModifier": 10000
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SETTLE",
+  "advisor": "ADVISOR_GROWTH",
+  "captures": "UNIT_CAPTIVE_CIVILIAN",
+  "unitAIs": [
+   "UNITAI_SETTLE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_PILOTING",
+   "UNITCOMBAT_QUALITY_INFERIOR",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_SPACECRAFT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_SETTLER"
+  }
+ }
+}

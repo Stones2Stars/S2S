@@ -1,0 +1,117 @@
+{
+ "type": "UNIT_MASTER_SAILOR_KAYAK",
+ "description": "TXT_KEY_UNIT_MASTER_SAILOR_KAYAK",
+ "civilopedia": "TXT_KEY_UNIT_KAYAK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "AREA_SIZE",
+     "scope": "world",
+     "min": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BAMBOO",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "mechanized": true,
+  "noBadGoodies": true,
+  "rivalTerritory": true,
+  "renderBelowWater": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_NAVIGATION1",
+   "PROMOTION_SEA_HUNTER2"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MASTER_SAILOR_OUTRIGGER"
+  ]
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 3,
+  "militaryWorth": 1,
+  "xpValueAttack": 2,
+  "xpValueDefense": 1,
+  "animalCombat": 200,
+  "minAreaSize": 5,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_EXPLORE_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_SEA",
+   "UNITAI_ESCORT_SEA",
+   "UNITAI_EXPLORE_SEA"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_WEAPON_H2H_OAR",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_NAVAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_SEA_TROPICAL",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_DEEP_TROPICAL",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_TROPICAL",
+   "TERRAIN_TRENCH_POLAR"
+  ],
+  "base": {
+   "combat": 2,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_WOODEN_SHIPS"
+  }
+ }
+}

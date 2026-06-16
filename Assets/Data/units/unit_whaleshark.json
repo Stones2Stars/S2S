@@ -1,0 +1,113 @@
+{
+ "type": "UNIT_WHALESHARK",
+ "description": "TXT_KEY_UNIT_WHALESHARK",
+ "civilopedia": "TXT_KEY_UNIT_WHALESHARK_PEDIA",
+ "capabilities": {
+  "blendIntoCity": true
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "OutcomeType": "OUTCOME_TALES_SEA",
+    "iChance": 5,
+    "UnitType": "UNIT_TALESOF_WHALESHARK",
+    "bUnitToCity": [
+     1
+    ],
+    "Yields": [
+     [
+      {
+       "Constant": 10000,
+       "Random": 7000
+      }
+     ],
+     [
+      {
+       "Constant": 1000,
+       "Random": 700
+      }
+     ],
+     [
+      {
+       "Constant": 30,
+       "Random": 10
+      }
+     ]
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_SUBDUE_SEA_LARGE",
+    "iChance": 5,
+    "UnitType": "UNIT_SUBDUED_WHALESHARK",
+    "bUnitToCity": [
+     "DONT_ESCORT_SUBDUED_SEA_ANIMAL"
+    ]
+   },
+   {
+    "OutcomeType": "OUTCOME_HUNTING_KILL",
+    "iChance": 80,
+    "Yields": [
+     [
+      {
+       "Constant": 10000,
+       "Random": 7000
+      }
+     ],
+     [
+      {
+       "Constant": 100,
+       "Random": 70
+      }
+     ],
+     [
+      {
+       "Constant": 30,
+       "Random": 10
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "identity": {
+  "xpValueAttack": 10,
+  "xpValueDefense": 8,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_WILD",
+   "UNITCOMBAT_ANIMAL_FISH",
+   "UNITCOMBAT_FISH_SHARK",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+   "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+   "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
+   "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+   "UNITCOMBAT_SPEED_SLOW",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_COAST_DEEP_POLAR",
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_TRENCH_POLAR"
+  ],
+  "base": {
+   "combat": 5,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_SEA_ANIMAL"
+  }
+ }
+}

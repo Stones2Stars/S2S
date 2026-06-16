@@ -1,0 +1,140 @@
+{
+ "type": "UNIT_MASTER_SAILOR_GALLEASS",
+ "description": "TXT_KEY_UNIT_MASTER_SAILOR_GALLEASS",
+ "civilopedia": "TXT_KEY_UNIT_GALLEASS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "AREA_SIZE",
+     "scope": "world",
+     "min": 10
+    }
+   ]
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 4
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": 50
+    }
+   },
+   "vsUnit": {
+    "UNIT_FRIGATE": {
+     "attack": {
+      "percent": 50
+     },
+     "defense": {
+      "percent": 50
+     }
+    },
+    "UNIT_GALLEON": {
+     "attack": {
+      "percent": 50
+     },
+     "defense": {
+      "percent": 50
+     }
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "pillage": true,
+  "mechanized": true,
+  "noBadGoodies": true,
+  "renderBelowWater": true,
+  "militaryProduction": true,
+  "militarySupport": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_NAVIGATION1",
+   "PROMOTION_SEA_HUNTER2"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MASTER_SAILOR_SLOOP_OF_WAR"
+  ]
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "militaryWorth": 10,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "minAreaSize": 10,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ATTACK_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_SEA",
+   "UNITAI_RESERVE_SEA",
+   "UNITAI_ESCORT_SEA",
+   "UNITAI_EXPLORE_SEA",
+   "UNITAI_ASSAULT_SEA"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_NAVAL_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+   "UNITCOMBAT_WEAPON_DIST_CANNONBALL",
+   "UNITCOMBAT_ARMOR_NAVAL",
+   "UNITCOMBAT_MOTILITY_NAVAL",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_NAVAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_TROPICAL",
+   "TERRAIN_TRENCH_POLAR"
+  ],
+  "terrainPassableTechs": [
+   {
+    "TERRAIN_OCEAN": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_OCEAN_POLAR": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_OCEAN_TROPICAL": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_TRENCH": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_TRENCH_TROPICAL": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_TRENCH_POLAR": "TECH_ASTRONOMY"
+   }
+  ],
+  "base": {
+   "combat": 10,
+   "moves": 3,
+   "combatClass": "UNITCOMBAT_WOODEN_SHIPS"
+  }
+ }
+}

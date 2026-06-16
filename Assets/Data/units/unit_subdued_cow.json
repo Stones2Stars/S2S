@@ -1,0 +1,211 @@
+{
+ "type": "UNIT_SUBDUED_COW",
+ "description": "TXT_KEY_UNIT_SUBDUED_COW",
+ "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
+ "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
+ "capabilities": {
+  "onlyDefensive": true,
+  "militaryTrade": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_SLAY_ANIMAL": [
+     {
+      "OutcomeType": "OUTCOME_SLAY_ANIMAL",
+      "iChance": 100,
+      "Yields": [
+       [
+        {
+         "Constant": 180,
+         "Random": 180
+        }
+       ],
+       [
+        {
+         "Constant": 27,
+         "Random": 27
+        }
+       ],
+       [
+        {
+         "Constant": 13,
+         "Random": 5
+        }
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "MISSION_ANIMAL_COMBAT": [
+     {
+      "OutcomeType": "OUTCOME_ANIMAL_COMBAT1",
+      "iChance": 100,
+      "Commerces": [
+       [
+        [
+         1
+        ]
+       ],
+       0,
+       [
+        [
+         5
+        ]
+       ],
+       0
+      ],
+      "iHappinessTimer": 5
+     },
+     {
+      "OutcomeType": "OUTCOME_ANIMAL_COMBAT2",
+      "iChance": 100,
+      "Commerces": [
+       [
+        [
+         2
+        ]
+       ],
+       0,
+       [
+        [
+         5
+        ]
+       ],
+       0
+      ],
+      "iHappinessTimer": 5
+     },
+     {
+      "OutcomeType": "OUTCOME_ANIMAL_COMBAT3",
+      "iChance": 100,
+      "Commerces": [
+       [
+        [
+         3
+        ]
+       ],
+       0,
+       [
+        [
+         5
+        ]
+       ],
+       0
+      ],
+      "iHappinessTimer": 5
+     },
+     {
+      "OutcomeType": "OUTCOME_ANIMAL_COMBAT4",
+      "iChance": 100,
+      "Commerces": [
+       [
+        [
+         4
+        ]
+       ],
+       0,
+       [
+        [
+         5
+        ]
+       ],
+       0
+      ],
+      "iHappinessTimer": 5
+     },
+     {
+      "OutcomeType": "OUTCOME_ANIMAL_COMBAT5",
+      "iChance": 100,
+      "Commerces": [
+       [
+        [
+         5
+        ]
+       ],
+       0,
+       [
+        [
+         5
+        ]
+       ],
+       0
+      ],
+      "iHappinessTimer": 5
+     }
+    ]
+   },
+   {
+    "MISSION_BUILD_DOMESTICATED_HERD": [
+     {
+      "OutcomeType": "OUTCOME_BUILD_DOMESTICATED_HERD",
+      "iChance": 50,
+      "PlotCondition": [
+       {
+        "Python": "canBuildCowBonus",
+        "Constant": 0
+       }
+      ],
+      "PythonCallback": "doBuildCowBonus"
+     },
+     {
+      "OutcomeType": "OUTCOME_BUILD_DOMESTICATED_HERD_WITH_PASTURE",
+      "iChance": 100,
+      "PlotCondition": [
+       {
+        "Python": "canBuildCowBonusAndPasture",
+        "Constant": 0
+       }
+      ],
+      "PythonCallback": "doBuildCowBonusAndPasture"
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+   "BUILDING_CAMP_AUROCHS",
+   "BUILDING_CARNIVAL",
+   "BUILDING_HERD_COW",
+   "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE",
+   "BUILDING_FOLKLORE_AUROCHS",
+   "BUILDING_FOLKLORE_T_BULL",
+   "BUILDING_GOVERNORS_MENAGERIE",
+   "BUILDING_GOVERNORS_PETS",
+   "BUILDING_MASTER_HUNTER",
+   "BUILDING_TAXIDERMIST",
+   "BUILDING_ZOO"
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "captures": "UNIT_SUBDUED_COW",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_SUBDUED_LARGE",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_ANIMALS",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_SUBDUED"
+  }
+ }
+}

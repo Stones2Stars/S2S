@@ -1,0 +1,61 @@
+{
+ "type": "UNIT_FREED_SLAVE",
+ "description": "TXT_KEY_UNIT_FREED_SLAVE",
+ "civilopedia": "TXT_KEY_UNIT_FREED_SLAVE_PEDIA",
+ "help": "TXT_KEY_UNIT_FREED_SLAVE_HELP",
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_JOIN_CITY_FREED_SLAVE": [
+     {
+      "OutcomeType": "OUTCOME_JOIN_CITY_FREED_SLAVE",
+      "iChance": 100,
+      "Yields": [
+       [
+        [
+         100
+        ]
+       ]
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_GATHERER"
+  ]
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "captures": "UNIT_FREED_SLAVE",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_MEDIOCRE",
+   "UNITCOMBAT_GROUP_BATTALION",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "workRate": 45,
+   "combatClass": "UNITCOMBAT_WORKER"
+  }
+ }
+}

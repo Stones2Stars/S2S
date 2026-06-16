@@ -1,0 +1,113 @@
+{
+ "type": "UNIT_TAMED_SNAKE",
+ "description": "TXT_KEY_UNIT_TAMED_SNAKE",
+ "civilopedia": "TXT_KEY_UNIT_TAMED_SNAKE_PEDIA",
+ "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_ANIMAL_TAMER_COMPLEX",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_SNAKE_CHARMER",
+     "scope": "city"
+    },
+    {
+     "type": "BUILDING_ENCLOSURE_REPTILE",
+     "scope": "city"
+    }
+   ]
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityDefense": {
+    "percent": -80
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 35
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noDefensiveBonus": true,
+  "onlyDefensive": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+   "BUILDING_GOVERNORS_MENAGERIE",
+   "BUILDING_GOVERNORS_PETS",
+   "BUILDING_ENCLOSURE_REPTILE",
+   "BUILDING_SNAKE_CHARMER",
+   "BUILDING_SNAKE_PIT",
+   "BUILDING_TAXIDERMIST",
+   "BUILDING_ZOO"
+  ]
+ },
+ "cost": {
+  "production": 133
+ },
+ "identity": {
+  "xpValueAttack": 2,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "notUnitAIs": [
+   "UNITAI_WORKER",
+   "UNITAI_EXPLORE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_TAMED",
+   "UNITCOMBAT_ANIMAL_REPTILE",
+   "UNITCOMBAT_REPTILE_SNAKE",
+   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+   "UNITCOMBAT_ANIMAL_COMBAT_VENEMOUS",
+   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+   "UNITCOMBAT_ANIMAL_COMBAT_HIDING",
+   "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
+   "UNITCOMBAT_ANIMAL_COMBAT_WARNING",
+   "UNITCOMBAT_ANIMAL_COMBAT_TREECLIMBING",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_TINY",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "heritage": [
+   "HERITAGE_TAXON_REPTILIA",
+   "HERITAGE_TAXON_SERPENTES",
+   "HERITAGE_TAXON_SQUAMATA"
+  ],
+  "base": {
+   "combat": 2,
+   "moves": 1,
+   "combatClass": "UNITCOMBAT_ANIMAL"
+  }
+ }
+}

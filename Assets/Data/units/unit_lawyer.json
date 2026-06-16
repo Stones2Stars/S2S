@@ -1,0 +1,128 @@
+{
+ "type": "UNIT_LAWYER",
+ "description": "TXT_KEY_UNIT_LAWYER",
+ "civilopedia": "TXT_KEY_CONCEPT_CORPORATIONS_PEDIA",
+ "help": "TXT_KEY_UNIT_LAWYER_REMOVE_CORPORATIONS_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  },
+  "plot": {
+   "flat": -10
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_LAWYER_REMOVE_CORPORATIONS": [
+     {
+      "OutcomeType": "OUTCOME_LAWYER_LITIGATION",
+      "iChance": 100,
+      "EventTrigger": "EVENTTRIGGER_LAWYER_LITIGATION"
+     }
+    ]
+   },
+   {
+    "MISSION_REMOVE_WV_SLAVERY": [
+     {
+      "OutcomeType": "OUTCOME_REMOVE_WV_SLAVERY",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "PythonCallback": "doRemoveWVSlavery"
+     }
+    ]
+   },
+   {
+    "MISSION_REMOVE_WV_CANNIBALISM": [
+     {
+      "OutcomeType": "OUTCOME_REMOVE_WV_CANNIBALISM",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "PythonCallback": "doRemoveWVCannibalism"
+     }
+    ]
+   },
+   {
+    "MISSION_REMOVE_WV_HUMAN_SACRIFICE": [
+     {
+      "OutcomeType": "OUTCOME_REMOVE_WV_HUMAN_SACRIFICE",
+      "iChance": 100,
+      "PlotCondition": [
+       "TAG_OWNED"
+      ],
+      "PythonCallback": "doRemoveWVHumanSacrifice"
+     }
+    ]
+   }
+  ]
+ },
+ "cost": {
+  "production": 450,
+  "upkeep": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 1
+   }
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MERCHANT",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_PEOPLE",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_MERCHANT",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "notUnitAIs": [
+   "UNITAI_EXPLORE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_PATHETIC",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_ADMINISTRATOR"
+  }
+ }
+}

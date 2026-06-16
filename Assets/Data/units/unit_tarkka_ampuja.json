@@ -1,0 +1,228 @@
+{
+ "type": "UNIT_TARKKA_AMPUJA",
+ "description": "TXT_KEY_UNIT_TARKKA_AMPUJA",
+ "civilopedia": "TXT_KEY_UNIT_TARKKA_AMPUJA_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FINNISH",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_FIREARMS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "BUILDING_FIRING_RANGE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_AUTOMATED_FIRING_RANGE",
+      "scope": "city"
+     },
+     {
+      "type": "BUILDING_ORBITAL_TARGETS",
+      "scope": "city"
+     }
+    ]
+   ]
+  }
+ },
+ "production": {
+  "unit": {
+   "bonuses": {
+    "BONUS_IRON_WARES": {
+     "percent": 15
+    },
+    "BONUS_FLINT": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "cityAttack": {
+    "percent": 15
+   },
+   "perSizeMore": {
+    "percent": 10
+   },
+   "perVolumeMore": {
+    "percent": -10
+   },
+   "perVolumeLess": {
+    "percent": 10
+   },
+   "lunge": {
+    "percent": 14
+   },
+   "unnerve": {
+    "percent": 14
+   },
+   "stealthStrikes": {
+    "flat": 2
+   },
+   "stealth": {
+    "percent": 35
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 35
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 2
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rangedDamage": {
+    "flat": 15
+   },
+   "rangedDamageLimit": {
+    "flat": 15
+   },
+   "dcmRange": {
+    "flat": 1
+   },
+   "dcmAccuracy": {
+    "flat": 20
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 10
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -25
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "assassin": true,
+  "counterSpy": true,
+  "destroy": true,
+  "ignoreTerrainCost": true,
+  "ignoreZoneOfControl": true,
+  "rivalTerritory": true,
+  "sabotage": true,
+  "stealPlans": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "targets": {
+   "UNITCOMBAT_EXPLORER": true,
+   "UNITCOMBAT_CIVILIAN": true,
+   "UNITCOMBAT_CANINE": true,
+   "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+  }
+ },
+ "vision": {
+  "invisible": "INVISIBLE_CAMOUFLAGE",
+  "visibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 4
+  },
+  "invisibilityIntensity": {
+   "INVISIBLE_CAMOUFLAGE": 5
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COMMANDO",
+   "PROMOTION_SENTRY",
+   "PROMOTION_WOODSMAN1",
+   "PROMOTION_COLD1",
+   "PROMOTION_COLD2"
+  ]
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_MSNIPER"
+  ]
+ },
+ "cost": {
+  "production": 787,
+  "upkeep": 7
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   }
+  ]
+ },
+ "identity": {
+  "worth": 8,
+  "militaryWorth": 20,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "special": "SPECIALUNIT_TROOP",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE_COUNTER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+   "UNITCOMBAT_WEAPON_H2H_BAYONETTE",
+   "UNITCOMBAT_WEAPON_DIST_RIFLE",
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_HEALS_AS_PEOPLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 23,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_STRIKE_TEAM"
+  }
+ }
+}

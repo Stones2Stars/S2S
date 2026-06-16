@@ -1,0 +1,100 @@
+{
+ "type": "UNIT_DRONE",
+ "description": "TXT_KEY_UNIT_DRONE",
+ "civilopedia": "TXT_KEY_UNIT_DRONE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_UNMANNED_AIRCRAFTS",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_SECRET_ARMY_BASE",
+     "scope": "city"
+    }
+   ],
+   "any": [
+    [
+     {
+      "type": "BONUS_PETROLEUM_PRODUCTS",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     },
+     {
+      "type": "BONUS_BIOFUEL",
+      "scope": "city",
+      "connection": "trade|vicinity"
+     }
+    ]
+   ]
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 50
+   },
+   "evasion": {
+    "percent": 60
+   }
+  }
+ },
+ "capabilities": {
+  "hiddenNationality": true,
+  "firstStrikeImmune": true,
+  "mechanized": true,
+  "onlyDefensive": true,
+  "militaryProduction": true,
+  "militarySupport": true,
+  "militaryTrade": true
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SENTRY",
+   "PROMOTION_SENTRY2",
+   "PROMOTION_SENTRY3"
+  ]
+ },
+ "cost": {
+  "production": 1635,
+  "upkeep": 11
+ },
+ "identity": {
+  "worth": 4,
+  "militaryWorth": 10,
+  "xpValueAttack": 6,
+  "xpValueDefense": 6,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_DEFENSE_AIR",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_DEFENSE_AIR"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+   "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+   "UNITCOMBAT_SPEED_FAST",
+   "UNITCOMBAT_MOTILITY_UNMANNED",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_GROUP_SOLO",
+   "UNITCOMBAT_SIZE_SMALL",
+   "UNITCOMBAT_HEALS_AS_AIRCRAFT",
+   "UNITCOMBAT_HEALS_AS_TECH"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "moves": 1,
+   "airCombat": 1,
+   "airCombatLimit": 1,
+   "airUnitCap": 1,
+   "combatClass": "UNITCOMBAT_AIR_RECON"
+  }
+ }
+}

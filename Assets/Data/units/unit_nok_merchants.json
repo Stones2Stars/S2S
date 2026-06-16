@@ -1,0 +1,164 @@
+{
+ "type": "UNIT_NOK_MERCHANTS",
+ "description": "TXT_KEY_UNIT_NOK_MERCHANTS",
+ "civilopedia": "TXT_KEY_UNIT_NOK_MERCHANTS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NOK",
+     "scope": "city",
+     "connection": "trade|vicinity"
+    },
+    {
+     "type": "BUILDING_CARAVAN_POST",
+     "scope": "city"
+    },
+    {
+     "type": "SELF",
+     "scope": "empire",
+     "max": 5
+    }
+   ]
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "capabilities": {
+  "noCapture": true,
+  "noNonTypeProdMods": true,
+  "onlyDefensive": true,
+  "rivalTerritory": true,
+  "militarySupport": true
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "MISSION_HURRY_PRODUCTION_CARAVAN": [
+     {
+      "OutcomeType": "OUTCOME_HURRY_PRODUCTION_CARAVAN",
+      "iChance": 100,
+      "Yields": [
+       0,
+       [
+        [
+         104
+        ]
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "MissionType": "MISSION_ENTERTAIN_CITY",
+    "bKill": 0,
+    "ActionOutcomes": [
+     {
+      "OutcomeType": "OUTCOME_ENTERTAIN_CITY",
+      "iChance": 80,
+      "Commerces": [
+       0,
+       0,
+       [
+        [
+         5
+        ]
+       ]
+      ],
+      "iReduceAnarchyLength": 2,
+      "bKill": 1
+     },
+     {
+      "OutcomeType": "OUTCOME_ENTERTAIN_CITY_EXALTED",
+      "iChance": 20,
+      "Commerces": [
+       0,
+       0,
+       [
+        [
+         10
+        ]
+       ]
+      ],
+      "PromotionType": "PROMOTION_EXPERIENCED_ARTIST",
+      "iReduceAnarchyLength": 3
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "greatPersonAction": {
+   "trade": {
+    "base": 30,
+    "multiplier": 1
+   }
+  }
+ },
+ "succession": {
+  "upgradesTo": [
+   "UNIT_SUPPLY_TRAIN"
+  ]
+ },
+ "cost": {
+  "production": 130,
+  "upkeep": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "identity": {
+  "worth": 1,
+  "animalCombat": 100,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MERCHANT",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "captures": "UNIT_TRADE_CARAVAN",
+  "unitAIs": [
+   "UNITAI_MERCHANT",
+   "UNITAI_ENGINEER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_EXPLORE"
+  ],
+  "combatClasses": [
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+   "UNITCOMBAT_WEAPON_H2H_STAFF",
+   "UNITCOMBAT_WEAPON_DIST_SLING",
+   "UNITCOMBAT_MOTILITY_ANIMAL_DRAWN",
+   "UNITCOMBAT_ASSISTED_MULE",
+   "UNITCOMBAT_QUALITY_MEDIOCRE",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combat": 2,
+   "moves": 2,
+   "combatClass": "UNITCOMBAT_TRADE"
+  }
+ }
+}
