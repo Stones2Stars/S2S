@@ -300,27 +300,61 @@ Done BEFORE #430 so the parser implements against uniform data — no mid-parse 
 emphatic 2026-06-16): do NOT start "whatever is next" (the #430 parser, or any new phase) until this alignment —
 INCLUDING the art-block update — is complete.** Finish migration → align everything (arts included) → only then move on.
 
-## Tier G — UNRANKED gameplay infos / "stragglers" (owner-flagged 2026-06-16; a SEPARATE pass after Unit #34)
+## Tier G — UNRANKED gameplay infos / "stragglers" (SCOPE VERIFIED 2026-06-16)
 
-The #1–34 ranking is NOT the full info universe — there are unranked gameplay infos still to migrate (owner: "a couple
-of more straggling infos around, CvOutcome being one… none of it truly scares me, the core structure is in place, it's
-about fitting data to structure now"). A SEPARATE Tier-G pass after Unit #34 (some may fold into Phase F). Triage each as
-gameplay vs UI/graphics/config/dead first. Known gameplay candidates (from the `class Cv*Info` enumeration):
-- **`CvOutcomeInfo`** — the kill/action OUTCOME definitions that Unit/UnitCombat's `KillOutcomes`/`Actions` → `outcomes`
-  reference (carried faithfully + deferred at #28/#29/#34; the definitions themselves migrate here). #430-adjacent (the
-  outcome system) — likely FIRST of Tier G.
-- **`CvVoteSourceInfo`** — UN / Apostolic Palace / Congress (Vote #6 deferred VoteSource → here); hosts the diplo-vote resolution.
-- **`CvInvisibleInfo`** — the `INVISIBLE_*` types the vision/LOS resolver (Promotion/UnitCombat/Unit `vision` blocks) key on.
-- **`CvGoodyInfo`** (goody-hut rewards), **`CvSpawnInfo`** (spawn rules), **`CvEventInfo`/`CvEventTriggerInfo`** (random
-  events — large), **`CvEspionageMissionInfo`**, **`CvIdeaInfo`/`CvIdeaClassInfo`**, **`CvAttachableInfo`** (equipment?),
-  **`CvCommerceInfo`/`CvUpkeepInfo`** (mostly config), **finish `CvYieldInfo`** (min-city/golden-age/trade/colour/symbols
-  — the non-hills/peak/river remainder).
-- **OUT of cascade (config/UI/graphics/audio/engine):** GameOption/MPOption/PlayerOption/GraphicOption, World/SeaLevel/
-  Climate/Map/MapCategory/ModLoadControl, Action/Advisor/Animation*/Camera*/Color/Command/Control/Cursor/EntityEvent/
-  HallOfFame/InterfaceMode/Landscape/MainMenu/Mission/PlayerColor/Popup/Replay/*Model/SlideShow*/SpaceShip/ThroneRoom*/
-  TurnTimer/UnitArtStyle/UnitFormation/WaterPlane/WorldPicker/PathGeneratorPlot/NodeCost/TerrainPlane/Attachable(art tier)/
-  Diplomacy/Emphasize/Automate/ForceControl/Category(dead). + the deferred ART-DEFINE tier (building-cascade-conversion).
-  (Triage confirms per-info before dropping — the "no true POCO" rule; some "config" may hide gameplay.)
+**The actual remaining scope, established by a verification pass (2026-06-16):** cross-referenced the FULL info universe
+(`CvGlobals.h` vector registry — ~91 `Cv*Info` classes) against the 35 migrated entities (#1–34 + partial `YieldInfo`),
+then adversarially triaged every non-art remainder against the real source (record counts incl. modules, data members,
+live consumers, dead-or-not). **"Nothing is easy" held — several earlier Tier-G guesses were WRONG** (corrections below).
+Of ~56 unmigrated classes, ~38 are the art/UI/engine tier (out); the real remaining work is the ~13 small/medium
+gameplay entities below + a little config. **Owner rulings folded in: the EVENT SYSTEM is deferred to its own rework
+(#425); `CvSpawnInfo` is the barb/animal/wildlife spawn system.** Each still triaged per-info before any drop (§0 "no
+true POCO"; entity purges are a SEPARATE deliberate pass, not done mid-migration).
+
+**GAMEPLAY — to migrate (the small/medium tail; CvOutcome is the clean FIRST):**
+- **`CvOutcomeInfo`** (134 = 105 + 29 P2K) — 15 fields; the kill/action OUTCOME defs Unit/UnitCombat/Unit `outcomes`
+  already reference (carried faithfully at #28/#29/#34). #430-adjacent. **Tier-G FIRST.**
+- **`CvSpawnInfo`** (327) — **the BARBARIAN / ANIMAL / WILDLIFE map-spawn system** (owner 2026-06-16); 28 fields,
+  tech/date/terrain/density-gated, `TreatAsBarbarian`/neutral-only + a BoolExpr spawn condition. Large, dense.
+- **`CvGoodyInfo`** (106) — the DEFINITIONS of the possible goody-hut grants (gold/xp/heal/unit/research, era/tech-gated) —
+  a `grants`-shaped entity. **WHICH goodies appear + their weighting lives on the Handicap, NOT here** (owner 2026-06-16:
+  "possible grants based on naming of goodyhut, referenced in handicap") — VERIFIED: `CvHandicapInfo` has `<Goodies>` and
+  the migrated Handicap #2 already carries it as `identity.goodies` (per-difficulty `GOODY_*` ref lists). So GoodyInfo
+  migrates only the grant DEFINITIONS those refs point at. Medium.
+- **`CvEspionageMissionInfo`** (29) — espionage missions; PROCEDURAL one-shot effects (not modifiers) + tech/option gate. Small.
+- **`CvEmphasizeInfo`** (8) — city production-emphasis (yield/commerce modifiers + avoid-growth/angry/unhealthy flags);
+  **LIVE AI + UI** (#367–370). *(Was wrongly in the OUT list.)*
+- **`CvVoteSourceInfo`** (3) — UN / Apostolic Palace / Congress; free specialist + per-religion yields/commerce (Vote #6 deferred it here).
+- **`CvCommerceInfo`** (4) — the 4 commerces' config (initialPercent, initialHappiness, AI weight, flexible). Sibling to `YieldInfo`.
+- **`CvUpkeepInfo`** (4) — civic-upkeep tiers (populationPercent / cityPercent), read every turn for civic gold cost.
+- **`CvWorldInfo`** (8) — **MIXED**: map-gen grid/grain + 8 LIVE gameplay modifiers (distance/colony/corp/numCities maintenance%,
+  conscript%, trade profit%, anarchy%, building-prereq%, city-limits scale%). **SPLIT** the map-gen half from the gameplay half.
+  *(Was not flagged at all.)*
+- **`CvMapCategoryInfo`** (17) — pure enum (Type/Description) BUT a live gameplay GATE (building/unit/bonus `m_aeMapCategoryTypes`
+  key on it) → migrate as a slim enum registry; the membership lives on the gated entity. *(Was in the OUT list.)*
+- **`CvInvisibleInfo`** (14) — thin registry; the LOS resolver keys on the `INVISIBLE_*` ENUM, only the `intrinsic` flag is
+  gameplay → slim registry, LOW priority. *(Not the meaty gameplay entity earlier assumed.)*
+- **finish `CvYieldInfo`** — the min-city/golden-age/trade/colour/symbols remainder (hills/peak/river already on the terrains).
+
+**CONFIG / map-gen (migrate as config sections, NOT cascade):** `CvClimateInfo` (5), `CvSeaLevelInfo` (4) — pure map-gen
+latitude/sea params; `CvTurnTimerInfo` (6) — UI turn-pacing; the `CvWorldInfo` grid half.
+
+**DEFERRED to the EVENT-SYSTEM REWORK (#425), NOT migrated faithfully in #428 (owner ruling 2026-06-16):**
+- **`CvEventInfo`** (873) + **`CvEventTriggerInfo`** (509) — the random-event monster: ~half of all remaining records,
+  48/65+ fields, sparse building-yield vectors + property prereqs, and **766 Python callbacks** (433 + 333). The system is
+  "OOS-prone and catastrophically coded" (#425), so it gets a REWORK, not a port — its data migration rides that pass.
+
+**DEAD — flagged for the separate purge pass (verified zero runtime consumers; NOT auto-dropped, §0):**
+`CvIdeaInfo` (2) + `CvIdeaClassInfo` (2) — save/load enumeration only; `CvCategoryInfo` (56) — no `getCategory` consumer
+(the `Categories` lists on entities are never queried — confirms the long-suspected dead-Categories). *(Idea/IdeaClass were
+mis-listed as gameplay candidates.)*
+
+**OUT of cascade (art/UI/graphics/audio/engine — no migration):** GameOption/MPOption/PlayerOption/GraphicOption/ForceControl,
+World(grid half)/Map(→ multimap rework)/ModLoadControl, Action/Advisor/Animation*/Camera*/Color/Command/Control/Cursor/
+EntityEvent/HallOfFame/InterfaceMode/Landscape/MainMenu/Mission/PlayerColor/Popup/Replay/*Model/SlideShow*/SpaceShip/
+ThroneRoom*/UnitArtStyle/UnitFormation/WaterPlane/WorldPicker/TerrainPlane/Automate; **`CvAttachableInfo`** (72, art/FX
+particle paths, `DllExport getPath` — NOT equipment, corrected); **`CvDiplomacyInfo`** (110, live UI diplomacy TEXT only —
+note #359's "dead class" is the sibling `CvDiplomacyTextInfo`, not this). + the deferred ART-DEFINE tier (building-cascade-conversion).
 
 ---
 
