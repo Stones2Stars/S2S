@@ -7,8 +7,10 @@
    "UNIT_ADZE_WARRIOR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_LUBA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_LUBA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

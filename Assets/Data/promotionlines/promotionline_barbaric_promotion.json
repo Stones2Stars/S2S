@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_BARBARIC_PROMOTION",
+ "description": "TXT_KEY_PROMOTIONLINE_BARBARIC_PROMOTION",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/PromotionBarbaric.dds"
+  }
+ }
+}

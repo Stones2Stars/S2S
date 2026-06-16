@@ -9,8 +9,10 @@
    "UNIT_STEPPE_RIDER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MASSAGETAE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MASSAGETAE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

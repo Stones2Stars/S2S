@@ -8,8 +8,10 @@
    "UNIT_LAPU_LAPU"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FILIPINO"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FILIPINO"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

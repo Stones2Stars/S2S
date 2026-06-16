@@ -65,11 +65,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/UrbanTransportation.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,3,3"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_MASS_TRANSIT",
-  "soundMP": "AS2D_TECH_MASS_TRANSIT",
-  "icon": ",Art/Interface/Buttons/TechTree/UrbanTransportation.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,3,3"
+  "soundMP": "AS2D_TECH_MASS_TRANSIT"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

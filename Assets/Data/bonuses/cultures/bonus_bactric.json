@@ -8,8 +8,10 @@
    "UNIT_DEMETRIUS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BACTRIC"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BACTRIC"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

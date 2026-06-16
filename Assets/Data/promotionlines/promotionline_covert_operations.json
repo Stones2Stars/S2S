@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_COVERT_OPERATIONS",
+ "description": "TXT_KEY_PROMOTIONLINE_COVERT_OPERATIONS",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/CovertOperations1Promotion.dds"
+  }
+ }
+}

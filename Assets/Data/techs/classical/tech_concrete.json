@@ -54,11 +54,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Concrete.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_CONCRETE",
-  "soundMP": "AS2D_TECH_CONCRETE",
-  "icon": "Art/Interface/Buttons/TechTree/Concrete.dds"
+  "soundMP": "AS2D_TECH_CONCRETE"
  },
  "identity": {
   "era": "C2C_ERA_CLASSICAL",

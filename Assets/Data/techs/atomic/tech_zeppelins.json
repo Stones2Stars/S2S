@@ -61,11 +61,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/zeppelins.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ZEPPELINS",
-  "soundMP": "AS2D_TECH_ZEPPELINS",
-  "icon": "Art/Interface/Buttons/TechTree/zeppelins.dds"
+  "soundMP": "AS2D_TECH_ZEPPELINS"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

@@ -13,8 +13,10 @@
    "BUILDING_PESTS_SEAGULLS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_RAW_FISH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_RAW_FISH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

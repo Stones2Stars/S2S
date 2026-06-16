@@ -8,8 +8,10 @@
    "UNIT_JULES_WIJDENBOSCH"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SURINAMESE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SURINAMESE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

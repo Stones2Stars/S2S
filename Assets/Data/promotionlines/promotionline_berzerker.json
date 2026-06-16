@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_BERZERKER",
+ "description": "TXT_KEY_PROMOTIONLINE_BERZERKER",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Berzerker1.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,6,2"
+  }
+ }
+}

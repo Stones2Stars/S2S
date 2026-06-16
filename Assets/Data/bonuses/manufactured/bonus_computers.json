@@ -106,8 +106,10 @@
    "UNIT_UNMANNED_MACHINE_GUN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_COMPUTERS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_COMPUTERS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -8,8 +8,10 @@
    "BUILDING_VIRTUAL_WORLD"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HUMAN_MOD_DIGITAL_LIFESTYLE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HUMAN_MOD_DIGITAL_LIFESTYLE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

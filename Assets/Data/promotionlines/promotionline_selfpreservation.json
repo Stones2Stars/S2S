@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_SELFPRESERVATION",
+ "description": "TXT_KEY_PROMOTIONLINE_SELFPRESERVATION",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/SelfPreservation1.dds"
+  }
+ }
+}

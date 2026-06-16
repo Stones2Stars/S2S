@@ -8,8 +8,10 @@
    "UNIT_ASHINA_JIESHESHUAI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_GOKTURK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_GOKTURK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

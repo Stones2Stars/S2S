@@ -67,8 +67,10 @@
    "tradeModifier": 4
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ELEPHANTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ELEPHANTS"
+  }
  },
  "mapGeneration": {
   "placementOrder": 3,

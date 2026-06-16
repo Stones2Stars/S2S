@@ -7,8 +7,10 @@
    "UNIT_SAVARAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SASSANIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SASSANIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -9,8 +9,10 @@
    "BUILDING_FACTORY_MARZIPAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HONEY"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HONEY"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

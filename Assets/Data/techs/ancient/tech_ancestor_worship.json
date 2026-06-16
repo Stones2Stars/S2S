@@ -67,11 +67,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/ancestorworship.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ANCESTOR_WORSHIP",
-  "soundMP": "AS2D_TECH_ANCESTOR_WORSHIP",
-  "icon": "Art/Interface/Buttons/TechTree/ancestorworship.dds"
+  "soundMP": "AS2D_TECH_ANCESTOR_WORSHIP"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

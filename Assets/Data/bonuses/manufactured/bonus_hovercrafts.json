@@ -2,8 +2,10 @@
  "type": "BONUS_HOVERCRAFTS",
  "description": "TXT_KEY_BONUS_HOVERCRAFTS",
  "civilopedia": "TXT_KEY_BONUS_HOVERCRAFTS_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_HOVERCRAFTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HOVERCRAFTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

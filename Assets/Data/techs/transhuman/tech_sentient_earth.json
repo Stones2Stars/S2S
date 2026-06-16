@@ -158,11 +158,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/sentient_earth.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,1,16"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SENTIENT_EARTH",
-  "soundMP": "AS2D_TECH_SENTIENT_EARTH",
-  "icon": ",Art/Interface/Buttons/TechTree/sentient_earth.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,1,16"
+  "soundMP": "AS2D_TECH_SENTIENT_EARTH"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

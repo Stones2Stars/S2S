@@ -8,8 +8,10 @@
    "UNIT_DOUJIAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_THREE_KINGDOMS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_THREE_KINGDOMS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

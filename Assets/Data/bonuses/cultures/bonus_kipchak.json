@@ -8,8 +8,10 @@
    "UNIT_CHAPUL"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_KIPCHAK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_KIPCHAK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

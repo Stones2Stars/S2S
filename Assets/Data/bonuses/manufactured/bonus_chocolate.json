@@ -7,8 +7,10 @@
    "BUILDING_FACTORY_NUTELLA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CHOCOLATE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CHOCOLATE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

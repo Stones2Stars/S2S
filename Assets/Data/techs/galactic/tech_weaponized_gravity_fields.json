@@ -46,11 +46,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Buttons/Techs/TechWeaponizedGravityFields.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_WEAPONIZED_GRAVITY_FIELDS",
-  "soundMP": "AS2D_TECH_WEAPONIZED_GRAVITY_FIELDS",
-  "icon": "Art/Buttons/Techs/TechWeaponizedGravityFields.dds"
+  "soundMP": "AS2D_TECH_WEAPONIZED_GRAVITY_FIELDS"
  },
  "identity": {
   "era": "C2C_ERA_GALACTIC",

@@ -17,9 +17,15 @@
    "flat": 1
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_TITAN",
-  "icon": "Art/Interface/Buttons/WorldBuilder/titan.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/titan.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_TITAN"
+  }
  },
  "identity": {
   "found": true,

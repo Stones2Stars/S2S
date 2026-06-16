@@ -1,0 +1,12 @@
+{
+ "type": "SPECIALBUILDING_FOLKLORE_TAXONOMY",
+ "description": "TXT_KEY_SPECIALBUILDING_FOLKLORE_TAXONOMY",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/DartFrog.dds"
+  }
+ },
+ "identity": {
+  "valid": true
+ }
+}

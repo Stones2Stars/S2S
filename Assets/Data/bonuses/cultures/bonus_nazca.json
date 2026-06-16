@@ -8,8 +8,10 @@
    "UNIT_PACADEO"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NAZCA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NAZCA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -1,0 +1,7 @@
+{
+ "type": "SPECIALBUILDING_CATHEDRAL_II",
+ "description": "TXT_KEY_SPECIALBUILDING_CATHEDRAL",
+ "identity": {
+  "valid": true
+ }
+}

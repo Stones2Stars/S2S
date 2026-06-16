@@ -7,8 +7,10 @@
    "BUILDING_DIAMOND_NANOTHREAD_FOUNDRY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SYNTHETIC_DIAMOND"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SYNTHETIC_DIAMOND"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

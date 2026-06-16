@@ -8,8 +8,10 @@
    "UNIT_BANYAN_XEBEC"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BAHRAINI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BAHRAINI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

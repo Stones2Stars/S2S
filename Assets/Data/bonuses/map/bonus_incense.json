@@ -33,8 +33,10 @@
    "tradeModifier": 3
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_INCENSE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_INCENSE"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

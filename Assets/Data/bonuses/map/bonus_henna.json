@@ -26,8 +26,10 @@
    "tradeModifier": 3
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HENNA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HENNA"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

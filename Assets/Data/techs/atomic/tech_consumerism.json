@@ -97,11 +97,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/consumerism.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_CONSUMERISM",
-  "soundMP": "AS2D_TECH_CONSUMERISM",
-  "icon": "Art/Interface/Buttons/TechTree/consumerism.dds"
+  "soundMP": "AS2D_TECH_CONSUMERISM"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

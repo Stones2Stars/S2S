@@ -47,11 +47,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_RELIGION",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/Confucianism.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_CONFUCIANISM",
-  "soundMP": "AS2D_TECH_CONFUCIANISM",
-  "icon": "Art/Interface/Buttons/TechTree/Confucianism.dds"
+  "soundMP": "AS2D_TECH_CONFUCIANISM"
  },
  "identity": {
   "era": "C2C_ERA_CLASSICAL",

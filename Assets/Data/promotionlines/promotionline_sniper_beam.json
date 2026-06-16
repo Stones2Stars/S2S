@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_SNIPER_BEAM",
+ "description": "TXT_KEY_PROMOTIONLINE_SNIPER_BEAM",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/SniperBeam1Promotion.dds"
+  }
+ }
+}

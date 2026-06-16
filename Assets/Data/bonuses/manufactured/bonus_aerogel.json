@@ -2,8 +2,10 @@
  "type": "BONUS_AEROGEL",
  "description": "TXT_KEY_BONUS_AEROGEL",
  "civilopedia": "TXT_KEY_BONUS_AEROGEL_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_AEROGEL"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_AEROGEL"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

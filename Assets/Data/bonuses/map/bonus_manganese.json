@@ -12,8 +12,10 @@
    "flat": 2
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MANGANESE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MANGANESE"
+  }
  },
  "mapGeneration": {
   "placementOrder": 6,

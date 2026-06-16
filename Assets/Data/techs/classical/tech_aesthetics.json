@@ -176,11 +176,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": ",Art/Interface/Buttons/TechTree/StoneCarving.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,6,1"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_AESTHETICS",
-  "soundMP": "AS2D_TECH_AESTHETICS",
-  "icon": ",Art/Interface/Buttons/TechTree/StoneCarving.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,6,1"
+  "soundMP": "AS2D_TECH_AESTHETICS"
  },
  "identity": {
   "era": "C2C_ERA_CLASSICAL",

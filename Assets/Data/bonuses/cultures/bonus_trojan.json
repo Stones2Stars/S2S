@@ -7,8 +7,10 @@
    "UNIT_APOLLONIAN_GUARD"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TROJAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TROJAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

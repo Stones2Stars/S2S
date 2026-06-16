@@ -9,8 +9,10 @@
    "UNIT_MERLIN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CELTIC"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CELTIC"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

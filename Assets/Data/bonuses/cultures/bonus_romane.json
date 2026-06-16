@@ -8,8 +8,10 @@
    "UNIT_STEFAN_RAZVAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ROMANE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ROMANE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

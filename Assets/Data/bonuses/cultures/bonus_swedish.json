@@ -8,8 +8,10 @@
    "UNIT_KAROLINER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SWEDISH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SWEDISH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

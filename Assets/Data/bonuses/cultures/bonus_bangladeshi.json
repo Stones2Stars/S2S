@@ -8,8 +8,10 @@
    "UNIT_RAM_MOHAN_ROY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BANGLADESHI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BANGLADESHI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

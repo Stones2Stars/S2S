@@ -1,0 +1,39 @@
+{
+ "type": "FEATURE_QUASAR",
+ "description": "TXT_KEY_FEATURE_QUASAR",
+ "civilopedia": "TXT_KEY_FEATURE_QUASAR_PEDIA",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_QUASAR"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_ASTEROIDS_SELECT_AMB"
+ },
+ "identity": {
+  "popDestroys": -1,
+  "noCity": true,
+  "validTerrains": [
+   "TERRAIN_OBSERVABLE_UNIVERSE"
+  ]
+ }
+}

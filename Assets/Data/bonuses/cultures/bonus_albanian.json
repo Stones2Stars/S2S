@@ -8,8 +8,10 @@
    "UNIT_SKANDERBEG"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ALBANIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ALBANIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -7,8 +7,10 @@
    "flat": 3
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ABANDONED_MEGASTRUCTURE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ABANDONED_MEGASTRUCTURE"
+  }
  },
  "mapGeneration": {
   "constAppearance": 35,

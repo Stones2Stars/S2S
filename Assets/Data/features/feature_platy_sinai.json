@@ -1,0 +1,33 @@
+{
+ "type": "FEATURE_PLATY_SINAI",
+ "description": "TXT_KEY_FEATURE_SINAI",
+ "civilopedia": "TXT_KEY_FEATURE_SINAI_PEDIA",
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_SINAI"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "requiresFlatlands": true,
+  "noCity": true,
+  "noImprovement": true,
+  "noBonus": true,
+  "nukeImmune": true,
+  "countsAsPeak": true,
+  "ignoreTerrainCulture": true,
+  "validTerrains": [
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES"
+  ]
+ }
+}

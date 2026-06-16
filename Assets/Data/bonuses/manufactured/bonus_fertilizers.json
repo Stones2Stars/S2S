@@ -19,8 +19,10 @@
    "objective": 10
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FERTILIZERS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FERTILIZERS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -63,11 +63,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/simplewoodworking.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SIMPLE_WOOD_WORKING",
-  "soundMP": "AS2D_TECH_SIMPLE_WOOD_WORKING",
-  "icon": "Art/Interface/Buttons/TechTree/simplewoodworking.dds"
+  "soundMP": "AS2D_TECH_SIMPLE_WOOD_WORKING"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

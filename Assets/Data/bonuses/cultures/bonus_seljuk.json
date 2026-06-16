@@ -8,8 +8,10 @@
    "UNIT_SIPAHI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SELJUK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SELJUK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

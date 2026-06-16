@@ -10,8 +10,10 @@
    "BUILDING_VIDEO_GAME_ARCADE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_VIDEO_GAMES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_VIDEO_GAMES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

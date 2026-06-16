@@ -9,8 +9,10 @@
    "UNIT_JOHN_MONASH"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_AUSTRALIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_AUSTRALIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

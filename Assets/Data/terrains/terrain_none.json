@@ -12,9 +12,15 @@
    "flat": 1
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_NONE",
-  "icon": "Art/Interface/Buttons/WorldBuilder/Space.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/Space.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_NONE"
+  }
  },
  "identity": {
   "found": true

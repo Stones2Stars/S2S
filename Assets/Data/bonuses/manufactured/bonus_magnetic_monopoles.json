@@ -8,8 +8,10 @@
    "BUILDING_INTERSTELLAR_HYPERMAGLEV"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MAGNETIC_MONOPOLES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MAGNETIC_MONOPOLES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

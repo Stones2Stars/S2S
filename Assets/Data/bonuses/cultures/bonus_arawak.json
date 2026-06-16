@@ -9,8 +9,10 @@
    "UNIT_YURUPARI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ARAWAK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ARAWAK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

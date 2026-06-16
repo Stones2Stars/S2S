@@ -16,8 +16,10 @@
    "UNIT_RAFT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_REEDS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_REEDS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

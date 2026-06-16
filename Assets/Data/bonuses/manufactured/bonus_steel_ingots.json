@@ -15,8 +15,10 @@
    "tradeModifier": 10
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_STEEL_INGOTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_STEEL_INGOTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

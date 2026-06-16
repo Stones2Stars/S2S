@@ -18,8 +18,10 @@
    "BUILDING_WEAPONIZED_FLORA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BIOPUNK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BIOPUNK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

@@ -65,11 +65,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Fire_Suppression.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_FIRE_SUPPRESSION",
-  "soundMP": "AS2D_TECH_FIRE_SUPPRESSION",
-  "icon": "Art/Interface/Buttons/TechTree/Fire_Suppression.dds"
+  "soundMP": "AS2D_TECH_FIRE_SUPPRESSION"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

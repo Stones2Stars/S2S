@@ -7,8 +7,10 @@
    "flat": 3
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_EXOTIC_LIFEFORMS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_EXOTIC_LIFEFORMS"
+  }
  },
  "mapGeneration": {
   "constAppearance": 35,

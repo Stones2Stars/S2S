@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_INNOVATIVE",
+ "description": "TXT_KEY_PROMOTIONLINE_INNOVATIVE",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitInnovative.dds"
+  }
+ }
+}

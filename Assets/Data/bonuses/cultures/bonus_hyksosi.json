@@ -8,8 +8,10 @@
    "UNIT_KHYAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HYKSOSI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HYKSOSI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -38,8 +38,10 @@
    "tradeModifier": 3
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HEMP"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HEMP"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

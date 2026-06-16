@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_DECOYS",
+ "description": "TXT_KEY_PROMOTIONLINE_DECOYS",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Decoys1Promotion.dds"
+  }
+ }
+}

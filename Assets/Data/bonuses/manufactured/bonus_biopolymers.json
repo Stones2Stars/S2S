@@ -11,8 +11,10 @@
    "BUILDING_FACTORY_SERVICE_BOTS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BIOPOLYMERS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BIOPOLYMERS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

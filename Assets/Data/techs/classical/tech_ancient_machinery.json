@@ -64,11 +64,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/amachinery.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ANCIENT_MACHINERY",
-  "soundMP": "AS2D_TECH_ANCIENT_MACHINERY",
-  "icon": "Art/Interface/Buttons/TechTree/amachinery.dds"
+  "soundMP": "AS2D_TECH_ANCIENT_MACHINERY"
  },
  "identity": {
   "era": "C2C_ERA_CLASSICAL",

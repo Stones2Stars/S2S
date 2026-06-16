@@ -68,11 +68,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/astroanthropology.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ASTROANTHROPOLOGY",
-  "soundMP": "AS2D_TECH_ASTROANTHROPOLOGY",
-  "icon": "Art/Interface/Buttons/TechTree/astroanthropology.dds"
+  "soundMP": "AS2D_TECH_ASTROANTHROPOLOGY"
  },
  "identity": {
   "era": "C2C_ERA_GALACTIC",

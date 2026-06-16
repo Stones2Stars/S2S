@@ -43,11 +43,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/hotairballoon.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_HOT_AIR_BALLOON",
-  "soundMP": "AS2D_TECH_HOT_AIR_BALLOON",
-  "icon": "Art/Interface/Buttons/TechTree/hotairballoon.dds"
+  "soundMP": "AS2D_TECH_HOT_AIR_BALLOON"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

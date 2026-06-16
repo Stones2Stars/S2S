@@ -78,11 +78,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/gaslighting.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_GAS_LIGHTING",
-  "soundMP": "AS2D_TECH_GAS_LIGHTING",
-  "icon": "Art/Interface/Buttons/TechTree/gaslighting.dds"
+  "soundMP": "AS2D_TECH_GAS_LIGHTING"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

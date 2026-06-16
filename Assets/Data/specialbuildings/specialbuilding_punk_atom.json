@@ -1,0 +1,12 @@
+{
+ "type": "SPECIALBUILDING_PUNK_ATOM",
+ "description": "TXT_KEY_SPECIALBUILDING_PUNK_ATOM",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/TechTree/retrospace.dds"
+  }
+ },
+ "identity": {
+  "valid": true
+ }
+}

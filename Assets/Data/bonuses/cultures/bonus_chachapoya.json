@@ -8,8 +8,10 @@
    "UNIT_WARRIORS_OF_THE_CLOUDS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CHACHAPOYA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CHACHAPOYA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

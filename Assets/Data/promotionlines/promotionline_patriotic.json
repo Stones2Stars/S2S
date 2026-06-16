@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_PATRIOTIC",
+ "description": "TXT_KEY_PROMOTIONLINE_PATRIOTIC",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/patriotic1.dds"
+  }
+ }
+}

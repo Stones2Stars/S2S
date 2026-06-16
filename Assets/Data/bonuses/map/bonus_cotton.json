@@ -32,8 +32,10 @@
    "tradeModifier": 4
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_COTTON"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_COTTON"
+  }
  },
  "mapGeneration": {
   "placementOrder": 6,

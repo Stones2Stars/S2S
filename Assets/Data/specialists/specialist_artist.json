@@ -1,0 +1,206 @@
+{
+ "type": "SPECIALIST_ARTIST",
+ "description": "TXT_KEY_SPECIALIST_ARTIST",
+ "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_BAUHAUS_SCHOOL": {
+     "flat": 2
+    }
+   }
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_CREATIVE": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_CREATIVE1": {
+     "flat": 1
+    },
+    "TRAIT_UNREFINED": {
+     "flat": -1
+    },
+    "TRAIT_UNREFINED1": {
+     "flat": -1
+    },
+    "TRAIT_NATURALIST": {
+     "flat": 1
+    },
+    "TRAIT_NATURALIST1": {
+     "flat": 1
+    },
+    "TRAIT_SLOB": {
+     "flat": -1
+    },
+    "TRAIT_SLOB1": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_MADISON_AVENUE": {
+     "flat": 1
+    },
+    "BUILDING_WALK_OF_FAME": {
+     "flat": 2
+    }
+   }
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_CREATIVE": {
+     "flat": 1
+    },
+    "TRAIT_CREATIVE2": {
+     "flat": 1
+    },
+    "TRAIT_UNREFINED": {
+     "flat": -1
+    },
+    "TRAIT_UNREFINED2": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "traits": {
+    "TRAIT_PHILOSOPHICAL": {
+     "flat": 1
+    },
+    "TRAIT_PHILOSOPHICAL1": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1,
+   "civics": {
+    "CIVIC_GUILDS": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4,
+   "buildings": {
+    "BUILDING_WARHOLS_FACTORY": {
+     "flat": 4
+    }
+   },
+   "civics": {
+    "CIVIC_CAPITALIST": {
+     "percent": 50
+    }
+   }
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_CREATIVE": {
+     "flat": 2
+    },
+    "TRAIT_CREATIVE2": {
+     "flat": 2
+    },
+    "TRAIT_UNREFINED": {
+     "flat": -2
+    },
+    "TRAIT_UNREFINED2": {
+     "flat": -2
+    },
+    "TRAIT_COMPLEX_PHILOSOPHICAL": {
+     "flat": 1
+    },
+    "TRAIT_PHILOSOPHICAL3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_POPULIST": {
+     "flat": -1
+    },
+    "TRAIT_POPULIST3": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_ORGANIZED1": {
+     "flat": -1
+    },
+    "TRAIT_IMPULSIVE1": {
+     "flat": 1
+    },
+    "TRAIT_NATURALIST": {
+     "flat": 1
+    },
+    "TRAIT_NATURALIST1": {
+     "flat": 1
+    },
+    "TRAIT_SLOB": {
+     "flat": -1
+    },
+    "TRAIT_SLOB1": {
+     "flat": -1
+    },
+    "TRAIT_PHILOSOPHICAL": {
+     "flat": 1
+    },
+    "TRAIT_ORGANIZED": {
+     "flat": -1
+    },
+    "TRAIT_CREATIVE": {
+     "flat": 2
+    },
+    "TRAIT_PHILOSOPHICAL1": {
+     "flat": 1
+    },
+    "TRAIT_ORGANIZED1": {
+     "flat": -1
+    },
+    "TRAIT_CREATIVE1": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_CHARISMATIC1": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_ENTERTAINER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/MainScreen/CityScreen/Artist.dds",
+  "button": "Art/Interface/MainScreen/CityScreen/Artist.dds"
+ },
+ "identity": {
+  "visible": true,
+  "categories": [
+   "CATEGORY_ASSIGNABLE_SPECIALISTS",
+   "CATEGORY_SPECIALIST_GROUP_CULTURAL"
+  ],
+  "greatPeopleUnit": "UNIT_ARTIST"
+ }
+}

@@ -9,8 +9,10 @@
    "UNIT_SATURDAY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ABORIGINE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ABORIGINE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

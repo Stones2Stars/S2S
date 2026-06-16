@@ -16,8 +16,10 @@
    "flat": 2
   }
  },
- "art": {
-  "icon": "art/interface/buttons/improvements/aspatial_route.dds"
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/aspatial_route.dds"
+  }
  },
  "identity": {
   "value": 6,

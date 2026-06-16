@@ -1,0 +1,124 @@
+{
+ "type": "FEATURE_JUNGLE",
+ "description": "TXT_KEY_FEATURE_JUNGLE",
+ "civilopedia": "TXT_KEY_FEATURE_JUNGLE_PEDIA",
+ "food": {
+  "plot": {
+   "flat": -1
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "plot": {
+   "percent": -20
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 20
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "properties": [
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_AIR_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": -5
+  },
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_WATER_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": -4
+  }
+ ],
+ "cost": {
+  "advancedStartRemoveCost": 40
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_JUNGLE",
+   "effect": {
+    "type": "EFFECT_BIRDSCATTER",
+    "probability": 15
+   }
+  }
+ },
+ "sound": {
+  "footsteps": [
+   {
+    "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT_FOREST"
+   },
+   {
+    "FOOTSTEP_AUDIO_HUMAN_LOW": "AS3D_UN_FOOT_UNIT_LOW_FOREST"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL": "AS3D_UN_ANIMAL_FOOT_LARGE_FOREST"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL_LOW": "AS3D_UN_ANIMAL_FOOT_LARGE_LOW_FOREST"
+   },
+   {
+    "FOOTSTEP_AUDIO_HORSE": "AS3D_UN_HORSE_RUN_FOREST"
+   },
+   {
+    "LOOPSTEP_TANK": "AS3D_UN_TANK_LOOP_FOREST"
+   },
+   {
+    "ENDSTEP_TANK": "AS3D_UN_TANK_END_FOREST"
+   },
+   {
+    "LOOPSTEP_MOD_ARMOUR": "AS3D_UN_MOD_ARMOUR_LOOP_FOREST"
+   },
+   {
+    "ENDSTEP_MOD_ARMOUR": "AS3D_UN_MOD_ARMOUR_END_FOREST"
+   },
+   {
+    "LOOPSTEP_ARTILLERY": "AS3D_UN_ARTILL_RUN_LOOP_FOREST"
+   },
+   {
+    "ENDSTEP_ARTILLERY": "AS3D_UN_ARTILL_RUN_END_FOREST"
+   },
+   {
+    "LOOPSTEP_WHEELS_3": "AS3D_UN_TREBUCHET_RUN_LEAVES"
+   },
+   {
+    "ENDSTEP_WHEELS_3": "AS3D_UN_TREBUCHET_STOP_LEAVES"
+   }
+  ],
+  "soundscape": "ASSS_JUNGLE_SELECT_AMB",
+  "growth": "AS2D_FEATUREGROWTH"
+ },
+ "identity": {
+  "growth": 10,
+  "popDestroys": 3,
+  "validTerrains": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_MUDDY",
+   "TERRAIN_LUSH",
+   "TERRAIN_MARSH"
+  ]
+ }
+}

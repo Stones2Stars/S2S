@@ -119,11 +119,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Modern_seismology.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_MODERN_SEISMOLOGY",
-  "soundMP": "AS2D_TECH_MODERN_SEISMOLOGY",
-  "icon": "Art/Interface/Buttons/TechTree/Modern_seismology.dds"
+  "soundMP": "AS2D_TECH_MODERN_SEISMOLOGY"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

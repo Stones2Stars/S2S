@@ -100,11 +100,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/agriculture2.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_AGRICULTURE",
-  "soundMP": "AS2D_TECH_MP_AGRICULTURE",
-  "icon": "Art/Interface/Buttons/TechTree/agriculture2.dds"
+  "soundMP": "AS2D_TECH_MP_AGRICULTURE"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

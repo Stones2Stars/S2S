@@ -8,8 +8,10 @@
    "UNIT_TRUGANINI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TASMANIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TASMANIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

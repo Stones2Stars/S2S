@@ -58,11 +58,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/sundialtech.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SUNDIAL",
-  "soundMP": "AS2D_TECH_SUNDIAL",
-  "icon": "Art/Interface/Buttons/TechTree/sundialtech.dds"
+  "soundMP": "AS2D_TECH_SUNDIAL"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

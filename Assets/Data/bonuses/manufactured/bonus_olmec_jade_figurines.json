@@ -7,8 +7,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_OLMEC_JADE_FIGURINES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_OLMEC_JADE_FIGURINES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_WONDER"

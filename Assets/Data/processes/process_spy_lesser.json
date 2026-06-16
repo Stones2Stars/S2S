@@ -6,7 +6,9 @@
    "percent": 40
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Process/spyprocesslesser.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Process/spyprocesslesser.dds"
+  }
  }
 }

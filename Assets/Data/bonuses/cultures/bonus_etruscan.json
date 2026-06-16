@@ -8,8 +8,10 @@
    "UNIT_LARS_PORSENA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ETRUSCAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ETRUSCAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

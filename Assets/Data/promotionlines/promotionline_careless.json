@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_CARELESS",
+ "description": "TXT_KEY_PROMOTIONLINE_CARELESS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCareless.dds"
+  }
+ }
+}

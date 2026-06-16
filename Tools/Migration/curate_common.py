@@ -27,6 +27,37 @@ B_FLAG_NAMES = {"bTrade": "tradeable", "bGoodyTech": "goodyTech"}
 # Unify the display-art reference to `icon` across entities: tech's direct Button path AND bonus/building's
 # ArtDefineTag both -> icon. Other art fields (sound/movie/...) just de-Hungarianize.
 ART_RENAME = {"Button": "icon", "ArtDefineTag": "icon"}
+# ART SUB-BLOCKS (owner 2026-06-16): the SUBSYSTEM is the TOP-LEVEL block (`ui`/`world`/`sound`), with `art` a
+# sub-block WITHIN ui/world (so non-art members like key-triggers sit BESIDE art, not under it) — dedicated-block
+# rule, modifier-spec §0.8. Solves the icon headache: UI icon (`Button`) -> ui.art.icon, on-map graphic
+# (`ArtDefineTag`) -> world.art.icon. SOUND is flat (`sound.footsteps`). Movie video+sound go TOGETHER under
+# ui.art.movie.{file,sound}. tag -> full dotted path. Unknown art tag -> ui.art.<de_i> (visible; categorize at its pass).
+ART_BLOCK = {
+    # --- ui.art (on-screen icons / buttons / movies / glyphs) ---
+    "Button": "ui.art.icon", "Texture": "ui.art.icon",
+    "TechButton": "ui.art.techButton", "GenericTechButton": "ui.art.genericTechButton",
+    "Advisor": "ui.art.advisor",
+    "MovieFile": "ui.art.movie.file", "MovieSound": "ui.art.movie.sound",
+    "VictoryMovie": "ui.art.movie.file", "MovieDefineTag": "ui.art.movie.defineTag",
+    "FontButtonIndex": "ui.art.fontButton", "iTGAIndex": "ui.art.tgaIndex",
+    # --- ui (non-art: key triggers) ---
+    "HotKey": "ui.hotkey", "bAltDown": "ui.altDown", "bCtrlDown": "ui.ctrlDown",
+    "bShiftDown": "ui.shiftDown", "iHotKeyPriority": "ui.hotKeyPriority",
+    # --- world.art (on-map / 3D graphics, styles) ---
+    "ArtDefineTag": "world.art.icon",
+    "EffectType": "world.art.effect.type", "iEffectProbability": "world.art.effect.probability",  # cosmetic bird-scatter (async RNG, active-player-only) + its trigger chance — grouped (verified CvUnit.cpp:4996)
+    "ArtStyleType": "world.art.style", "UnitArtStyleType": "world.art.unitStyle",
+    # --- sound (flat: audio is itself the asset) ---
+    "FootstepSounds": "sound.footsteps", "WorldSoundscapeAudioScript": "sound.soundscape",
+    "GrowthSound": "sound.growth", "ConstructSound": "sound.construct",
+    "Sound": "sound.sound", "SoundMP": "sound.soundMP",
+    "CivilizationActionSound": "sound.action", "CivilizationSelectionSound": "sound.selection",
+    "AudioUnitVictoryScript": "sound.unitVictory", "AudioUnitDefeatScript": "sound.unitDefeat",
+    "EraInfoSoundtracks": "sound.soundtracks", "CitySoundscapes": "sound.citySoundscapes",
+    "iSoundtrackSpace": "sound.soundtrackSpace",
+    "DiplomacyIntroMusicPeace": "sound.diploIntroMusicPeace", "DiplomacyIntroMusicWar": "sound.diploIntroMusicWar",
+    "DiplomacyMusicPeace": "sound.diploMusicPeace", "DiplomacyMusicWar": "sound.diploMusicWar",
+}
 # All AI-targeting metadata -> one `ai` group, subgroups flavours + behaviour (extensible: attitude/strategy).
 AI_BEHAVIOUR = {"iAITradeModifier": "tradeModifier", "iAIWeight": "weight", "iAIObjective": "objective"}
 # Base yield/commerce SPLIT into per-identifier families (food/gold/…) — no `yield`/`commerce` wrapper, which
@@ -45,6 +76,22 @@ def de_i(tag):
     if tag[:1] == "i" and len(tag) > 1 and tag[1:2].isupper():
         return tag[1].lower() + tag[2:]
     return tag[:1].lower() + tag[1:]
+
+
+def drop_empty_audio(v):
+    """Drop empty / 'NONE' audio entries (owner 2026-06-16): an empty footstep script maps to the C++ array's
+    DEFAULT (-1 / no sound) — identical to an absent entry — so authoring it carries no information (verified:
+    SetVariableListTagPairForAudioScripts InitLists to the default, CvXMLLoadUtilitySet.cpp:2434). Filters empty
+    footstep-script entries + empty/'NONE' sound strings; leaves real art untouched. None if it collapses to empty."""
+    if isinstance(v, str):
+        return None if v in ("", "NONE") else v
+    if isinstance(v, dict):
+        out = {k: x for k, x in ((k, drop_empty_audio(x)) for k, x in v.items()) if x is not None}
+        return out or None
+    if isinstance(v, list):
+        out = [x for x in (drop_empty_audio(x) for x in v) if x is not None]
+        return out or None
+    return v
 
 
 def _set_path(d, dotted, val):
@@ -202,7 +249,7 @@ class EntityConfig:
 
 
 def curate(typ, rec, cfg, store, boosts):
-    text_fields, families, cost, art, identity, grants, map_gen = {}, {}, {}, {}, {}, {}, {}
+    text_fields, families, cost, art_blocks, identity, grants, map_gen = {}, {}, {}, {}, {}, {}, {}
     ai_behaviour, ai_flavours = {}, None
     for c in rec:
         tag, t = c.tag, engine.text(c)
@@ -230,7 +277,9 @@ def curate(typ, rec, cfg, store, boosts):
             if engine.is_int(t) and int(t) != 0:
                 cost[cfg.cost_rename.get(tag, de_i(tag))] = int(t)
         elif tag in cfg.art_fields:
-            art[cfg.art_rename.get(tag) or ART_RENAME.get(tag, de_i(tag))] = engine.generic(c)
+            av = drop_empty_audio(engine.generic(c))   # only emit real sounds; empties default in the EXE (owner)
+            if av is not None:
+                _set_path(art_blocks, ART_BLOCK.get(tag, "ui.art." + de_i(tag)), av)   # ui/world/sound dotted path
         elif tag[:1] == "b" and len(tag) > 2 and tag[1:2].isupper():
             if t in ("1", "true", "True"):                 # boolean flag -> clean name + true (false omitted)
                 name = cfg.id_rename.get(tag) or B_FLAG_NAMES.get(tag, tag[1].lower() + tag[2:])
@@ -285,8 +334,9 @@ def curate(typ, rec, cfg, store, boosts):
         ai["flavours"] = ai_flavours
     if ai:
         out["ai"] = ai
-    if art:
-        out["art"] = art
+    for _blk in ("ui", "world", "sound"):      # art now lives in the ui/world/sound top-level subsystem blocks
+        if art_blocks.get(_blk):
+            out[_blk] = art_blocks[_blk]
     if map_gen:
         out["mapGeneration"] = map_gen
     if identity:
@@ -315,7 +365,7 @@ def main(cfg, boosts_config, out_dir, post_process=None):
     n = len(result)
     has = lambda k: sum(1 for (o, _) in result.values() if k in o)
     STRUCT = {"type", "description", "civilopedia", "help", "quote", "strategy", "enables", "obsoletes",
-              "replaces", "disables", "requires", "grants", "cost", "ai", "art", "mapGeneration", "identity"}
+              "replaces", "disables", "requires", "grants", "cost", "ai", "ui", "world", "sound", "mapGeneration", "identity"}
     fams = lambda o: [k for k in o if k not in STRUCT]
     print("%s curated: %d" % (cfg.entity, n))
     for k in ("enables", "obsoletes", "replaces", "disables", "requires", "grants", "ai"):

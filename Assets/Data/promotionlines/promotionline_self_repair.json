@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_SELF_REPAIR",
+ "description": "TXT_KEY_PROMOTIONLINE_SELF_HEAL",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/SelfRepair1Promotion.dds"
+  }
+ }
+}

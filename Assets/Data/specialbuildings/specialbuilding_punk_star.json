@@ -1,0 +1,12 @@
+{
+ "type": "SPECIALBUILDING_PUNK_STAR",
+ "description": "TXT_KEY_SPECIALBUILDING_PUNK_STAR",
+ "ui": {
+  "art": {
+   "icon": "Art/interface/buttons/TechTree/starpunk.dds"
+  }
+ },
+ "identity": {
+  "valid": true
+ }
+}

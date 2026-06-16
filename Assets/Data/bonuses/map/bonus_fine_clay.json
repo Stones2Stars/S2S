@@ -43,8 +43,10 @@
    "flat": 4
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FINE_CLAY"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FINE_CLAY"
+  }
  },
  "mapGeneration": {
   "placementOrder": 5,

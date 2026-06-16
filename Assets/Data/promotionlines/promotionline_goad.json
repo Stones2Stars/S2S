@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_GOAD",
+ "description": "TXT_KEY_PROMOTIONLINE_GOAD",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Goad1Promotion.fw.dds"
+  }
+ }
+}

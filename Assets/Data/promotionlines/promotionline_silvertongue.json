@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_SILVERTONGUE",
+ "description": "TXT_KEY_PROMOTIONLINE_SILVERTONGUE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/silvertongue1.dds"
+  }
+ }
+}

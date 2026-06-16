@@ -58,11 +58,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/propaganda.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_PROPAGANDA",
-  "soundMP": "AS2D_TECH_PROPAGANDA",
-  "icon": "Art/Interface/Buttons/TechTree/propaganda.dds"
+  "soundMP": "AS2D_TECH_PROPAGANDA"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

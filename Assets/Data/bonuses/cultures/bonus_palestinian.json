@@ -8,8 +8,10 @@
    "UNIT_PLO_FIGHTER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PALESTINIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PALESTINIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

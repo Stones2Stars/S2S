@@ -83,11 +83,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/modernlifestyle.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ATOMIC_LIFESTYLE",
-  "soundMP": "AS2D_TECH_ATOMIC_LIFESTYLE",
-  "icon": "Art/Interface/Buttons/TechTree/modernlifestyle.dds"
+  "soundMP": "AS2D_TECH_ATOMIC_LIFESTYLE"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

@@ -17,9 +17,15 @@
    "flat": 1
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_ORION_ARM",
-  "icon": "Art/Interface/Buttons/WorldBuilder/orion_arm.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/orion_arm.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_ORION_ARM"
+  }
  },
  "identity": {
   "found": true,

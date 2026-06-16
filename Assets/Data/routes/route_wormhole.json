@@ -16,8 +16,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "art/interface/buttons/improvements/wormhole.dds"
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/wormhole.dds"
+  }
  },
  "identity": {
   "value": 3,

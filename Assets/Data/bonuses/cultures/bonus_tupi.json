@@ -8,8 +8,10 @@
    "UNIT_TUPI_CUNHAMBEBE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TUPI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TUPI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

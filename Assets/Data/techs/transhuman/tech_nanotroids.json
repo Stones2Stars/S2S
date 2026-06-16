@@ -84,11 +84,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Buttons/Techs/TechNanotroids.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_NANOTROIDS",
-  "soundMP": "AS2D_TECH_NANOTROIDS",
-  "icon": "Art/Buttons/Techs/TechNanotroids.dds"
+  "soundMP": "AS2D_TECH_NANOTROIDS"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

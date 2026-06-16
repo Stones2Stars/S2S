@@ -8,8 +8,10 @@
    "UNIT_JOMON_HUNTING_DOGS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_JOMON"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_JOMON"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

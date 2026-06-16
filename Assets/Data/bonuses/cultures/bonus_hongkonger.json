@@ -8,8 +8,10 @@
    "UNIT_TRADE_JUNK"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HONGKONGER"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HONGKONGER"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

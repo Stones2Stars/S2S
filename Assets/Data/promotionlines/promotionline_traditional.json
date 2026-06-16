@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_TRADITIONAL",
+ "description": "TXT_KEY_PROMOTIONLINE_TRADITIONAL",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitTraditional.dds"
+  }
+ }
+}

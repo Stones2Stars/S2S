@@ -8,8 +8,10 @@
    "UNIT_RIVER_WORKER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MISSISSIPPIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MISSISSIPPIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -11,8 +11,10 @@
    "BUILDING_PESTS_SLUGS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FLOWERS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FLOWERS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

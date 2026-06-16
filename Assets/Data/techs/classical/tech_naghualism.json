@@ -43,11 +43,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_RELIGION",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/naghualism.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_NAGHUALISM",
-  "soundMP": "AS2D_TECH_NAGHUALISM",
-  "icon": "Art/Interface/Buttons/TechTree/naghualism.dds"
+  "soundMP": "AS2D_TECH_NAGHUALISM"
  },
  "identity": {
   "era": "C2C_ERA_CLASSICAL",

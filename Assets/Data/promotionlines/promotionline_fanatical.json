@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_FANATICAL",
+ "description": "TXT_KEY_PROMOTIONLINE_FANATICAL",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPolitician.dds"
+  }
+ }
+}

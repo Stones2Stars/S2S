@@ -10,8 +10,10 @@
    "UNIT_WORLDSHIP3"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_WARP_DRIVES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_WARP_DRIVES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

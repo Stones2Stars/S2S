@@ -16,8 +16,10 @@
    "UNIT_UNMANNED_HELICOPTER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HELICOPTERS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HELICOPTERS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

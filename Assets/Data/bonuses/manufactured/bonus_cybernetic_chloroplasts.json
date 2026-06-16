@@ -10,8 +10,10 @@
    "BUILDING_PROGRAMMABLE_PLANT_FARM"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CYBERNETIC_CHLOROPLASTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CYBERNETIC_CHLOROPLASTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

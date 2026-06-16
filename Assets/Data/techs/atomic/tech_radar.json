@@ -74,11 +74,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": ",Art/Interface/Buttons/TechTree/Radar.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,1,15"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_RADAR",
-  "soundMP": "AS2D_TECH_RADAR",
-  "icon": ",Art/Interface/Buttons/TechTree/Radar.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,1,15"
+  "soundMP": "AS2D_TECH_RADAR"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

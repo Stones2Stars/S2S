@@ -7,8 +7,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NOK_SCULPTURES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NOK_SCULPTURES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_WONDER"

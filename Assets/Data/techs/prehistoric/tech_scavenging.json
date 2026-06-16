@@ -86,11 +86,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/scavenging.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SCAVENGING",
-  "soundMP": "AS2D_TECH_SCAVENGING",
-  "icon": "Art/Interface/Buttons/TechTree/scavenging.dds"
+  "soundMP": "AS2D_TECH_SCAVENGING"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

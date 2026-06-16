@@ -8,8 +8,10 @@
    "BUILDING_LIQUID_METALS_FOUNDRY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_GRAPHENE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_GRAPHENE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

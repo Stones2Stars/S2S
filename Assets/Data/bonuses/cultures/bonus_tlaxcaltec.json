@@ -9,8 +9,10 @@
    "UNIT_YAOTLALLI_WARRIOR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TLAXCALTEC"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TLAXCALTEC"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

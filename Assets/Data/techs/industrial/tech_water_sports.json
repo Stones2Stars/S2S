@@ -44,11 +44,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Water_Sports.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_WATER_SPORTS",
-  "soundMP": "AS2D_TECH_WATER_SPORTS",
-  "icon": "Art/Interface/Buttons/TechTree/Water_Sports.dds"
+  "soundMP": "AS2D_TECH_WATER_SPORTS"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

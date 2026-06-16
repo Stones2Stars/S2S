@@ -78,11 +78,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/humanoids.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SAPIENTROIDS",
-  "soundMP": "AS2D_TECH_SAPIENTROIDS",
-  "icon": "Art/Interface/Buttons/TechTree/humanoids.dds"
+  "soundMP": "AS2D_TECH_SAPIENTROIDS"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

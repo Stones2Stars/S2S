@@ -165,8 +165,10 @@
    "BUILDING_ZOROASTRIAN_SHRINE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BRICKS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BRICKS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

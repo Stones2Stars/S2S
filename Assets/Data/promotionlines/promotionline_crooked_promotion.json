@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_CROOKED_PROMOTION",
+ "description": "TXT_KEY_PROMOTIONLINE_CROOKED_PROMOTION",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/PromotionCrooked.dds"
+  }
+ }
+}

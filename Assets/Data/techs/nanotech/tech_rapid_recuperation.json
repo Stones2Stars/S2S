@@ -70,11 +70,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Rapidrecuperation.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_RAPID_RECUPERATION",
-  "soundMP": "AS2D_TECH_RAPID_RECUPERATION",
-  "icon": "Art/Interface/Buttons/TechTree/Rapidrecuperation.dds"
+  "soundMP": "AS2D_TECH_RAPID_RECUPERATION"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

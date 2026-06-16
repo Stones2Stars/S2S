@@ -8,8 +8,10 @@
    "UNIT_WAPITI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PILAGA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PILAGA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

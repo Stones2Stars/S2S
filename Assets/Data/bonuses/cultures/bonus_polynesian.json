@@ -9,8 +9,10 @@
    "UNIT_TUITATUI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_POLYNESIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_POLYNESIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

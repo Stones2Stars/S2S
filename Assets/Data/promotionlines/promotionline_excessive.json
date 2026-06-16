@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_EXCESSIVE",
+ "description": "TXT_KEY_PROMOTIONLINE_EXCESSIVE",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPolitician.dds"
+  }
+ }
+}

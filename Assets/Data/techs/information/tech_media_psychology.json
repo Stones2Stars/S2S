@@ -71,11 +71,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/MediaPsychology.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_MEDIA_PSYCHOLOGY",
-  "soundMP": "AS2D_TECH_MEDIA_PSYCHOLOGY",
-  "icon": "Art/Interface/Buttons/TechTree/MediaPsychology.dds"
+  "soundMP": "AS2D_TECH_MEDIA_PSYCHOLOGY"
  },
  "identity": {
   "era": "C2C_ERA_INFORMATION",

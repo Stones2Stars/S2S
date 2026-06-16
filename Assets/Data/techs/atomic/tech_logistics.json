@@ -87,11 +87,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/Logistic.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,10"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_LOGISTICS",
-  "soundMP": "AS2D_TECH_LOGISTICS",
-  "icon": ",Art/Interface/Buttons/TechTree/Logistic.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,10"
+  "soundMP": "AS2D_TECH_LOGISTICS"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

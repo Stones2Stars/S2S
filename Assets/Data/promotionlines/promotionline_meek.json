@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_MEEK",
+ "description": "TXT_KEY_PROMOTIONLINE_MEEK",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitMeek.dds"
+  }
+ }
+}

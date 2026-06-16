@@ -21,8 +21,10 @@
    "BUILDING_WINDMILL"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_GRAINS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_GRAINS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

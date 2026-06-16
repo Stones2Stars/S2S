@@ -1,0 +1,194 @@
+{
+ "type": "SPECIALIST_GREAT_DOCTOR",
+ "description": "TXT_KEY_SPECIALIST_GREAT_DOCTOR",
+ "civilopedia": "TXT_KEY_CONCEPT_GREAT_DOCTOR_PEDIA",
+ "food": {
+  "empire": {
+   "traits": {
+    "TRAIT_MEDICAL": {
+     "flat": 1
+    },
+    "TRAIT_MEDICAL1": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "traits": {
+    "TRAIT_MEDICAL": {
+     "flat": 1
+    },
+    "TRAIT_MEDICAL2": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_SCIENTIFIC": {
+     "flat": 1
+    },
+    "TRAIT_SCIENTIFIC2": {
+     "flat": 1
+    },
+    "TRAIT_TRADITIONAL": {
+     "flat": -1
+    },
+    "TRAIT_TRADITIONAL2": {
+     "flat": -1
+    },
+    "TRAIT_MEDICAL": {
+     "flat": 1
+    },
+    "TRAIT_MEDICAL3": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "traits": {
+    "TRAIT_MEDICAL2": {
+     "flat": 1
+    },
+    "TRAIT_UNSANITARY2": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_SCIENTIFIC": {
+     "flat": 2
+    },
+    "TRAIT_SCIENTIFIC3": {
+     "flat": 2
+    },
+    "TRAIT_TRADITIONAL": {
+     "flat": -2
+    },
+    "TRAIT_TRADITIONAL3": {
+     "flat": -2
+    },
+    "TRAIT_COMPLEX_PHILOSOPHICAL": {
+     "flat": 1
+    },
+    "TRAIT_PHILOSOPHICAL3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_POPULIST": {
+     "flat": -1
+    },
+    "TRAIT_POPULIST3": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_EXPANSIVE1": {
+     "flat": -1
+    },
+    "TRAIT_MINIMALIST1": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_HUMANITARIAN": {
+     "flat": 1
+    },
+    "TRAIT_HUMANITARIAN2": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_CRUEL": {
+     "flat": 1
+    },
+    "TRAIT_CRUEL2": {
+     "flat": 1
+    },
+    "TRAIT_MEDICAL": {
+     "flat": 1
+    },
+    "TRAIT_MEDICAL1": {
+     "flat": 1
+    },
+    "TRAIT_UNSANITARY": {
+     "flat": -1
+    },
+    "TRAIT_UNSANITARY1": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "traits": {
+    "TRAIT_MEDICAL3": {
+     "flat": 1
+    },
+    "TRAIT_UNSANITARY3": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_HUMANITARIAN": {
+     "flat": 1
+    },
+    "TRAIT_HUMANITARIAN3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_CRUEL": {
+     "flat": 1
+    },
+    "TRAIT_CRUEL3": {
+     "flat": 1
+    },
+    "TRAIT_MEDICAL2": {
+     "flat": 1
+    },
+    "TRAIT_UNSANITARY2": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 300
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_HEALTH_CARE": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": [
+   {
+    "perTurn": -5
+   }
+  ]
+ },
+ "art": {
+  "icon": "Art/Interface/buttons/specialists/great_doctor.dds",
+  "button": "Art/Interface/buttons/specialists/great_doctor.dds"
+ },
+ "identity": {
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_MEDICAL"
+  ]
+ }
+}

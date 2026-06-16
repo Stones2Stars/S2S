@@ -44,8 +44,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BISON"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BISON"
+  }
  },
  "mapGeneration": {
   "placementOrder": 6,

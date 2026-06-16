@@ -11,8 +11,10 @@
    "BUILDING_VIROTHERAPY_CLINIC"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ENZYMES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ENZYMES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

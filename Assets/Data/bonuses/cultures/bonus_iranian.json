@@ -8,8 +8,10 @@
    "UNIT_PASDARAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_IRANIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_IRANIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

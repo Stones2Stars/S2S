@@ -10,8 +10,10 @@
    "BUILDING_STABLE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SADDLES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SADDLES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

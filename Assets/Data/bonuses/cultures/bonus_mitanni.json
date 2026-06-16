@@ -8,8 +8,10 @@
    "UNIT_SHUTTARNA_II"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MITANNI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MITANNI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

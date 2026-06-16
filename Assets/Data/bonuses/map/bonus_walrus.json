@@ -33,8 +33,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_WALRUS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_WALRUS"
+  }
  },
  "mapGeneration": {
   "placementOrder": 5,

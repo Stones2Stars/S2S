@@ -1,0 +1,40 @@
+{
+ "type": "FEATURE_ASTEROIDS",
+ "description": "TXT_KEY_FEATURE_ASTEROIDS",
+ "civilopedia": "TXT_KEY_FEATURE_ASTEROIDS_PEDIA",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_ASTEROIDS"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_ASTEROIDS_SELECT_AMB"
+ },
+ "identity": {
+  "popDestroys": -1,
+  "validTerrains": [
+   "TERRAIN_INNER_SOLAR_SYSTEM",
+   "TERRAIN_OUTER_SOLAR_SYSTEM",
+   "TERRAIN_TRANSNEPTUNIAN_SPACE"
+  ]
+ }
+}

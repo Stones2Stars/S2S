@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_FIRST_AID_ANIMALS",
+ "description": "TXT_KEY_PROMOTIONLINE_FIRST_AID_ANIMALS",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/HealAnimalsPromotion.dds"
+  }
+ }
+}

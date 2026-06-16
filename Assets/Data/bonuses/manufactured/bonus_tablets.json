@@ -34,8 +34,10 @@
    "BUILDING_TAOIST_MONASTERY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TABLETS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TABLETS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

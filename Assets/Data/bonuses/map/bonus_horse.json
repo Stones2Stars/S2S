@@ -90,8 +90,10 @@
    "flat": 4
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HORSE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HORSE"
+  }
  },
  "mapGeneration": {
   "placementOrder": 1,

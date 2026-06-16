@@ -8,8 +8,10 @@
    "UNIT_MOBILE_TREBUCHET"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_KHAZAR"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_KHAZAR"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

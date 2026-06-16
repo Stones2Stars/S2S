@@ -32,10 +32,18 @@
    "flat": 2
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_TAIGA",
-  "icon": "Art/Interface\\Buttons\\WorldBuilder\\TERRAIN_TAIGA.dds",
-  "footstepSounds": [
+ "ui": {
+  "art": {
+   "icon": "Art/Interface\\Buttons\\WorldBuilder\\TERRAIN_TAIGA.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_TAIGA"
+  }
+ },
+ "sound": {
+  "footsteps": [
    {
     "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT_TUNDRA"
    },
@@ -130,7 +138,7 @@
     "ENDSTEP_WHEELS_3": "AS3D_UN_TREBUCHET_STOP"
    }
   ],
-  "worldSoundscapeAudioScript": "ASSS_TUNDRA_SELECT_AMB"
+  "soundscape": "ASSS_TUNDRA_SELECT_AMB"
  },
  "identity": {
   "found": true,

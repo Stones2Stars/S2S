@@ -12,8 +12,10 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CARCASS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CARCASS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

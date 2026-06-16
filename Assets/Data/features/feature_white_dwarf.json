@@ -1,0 +1,40 @@
+{
+ "type": "FEATURE_WHITE_DWARF",
+ "description": "TXT_KEY_FEATURE_WHITE_DWARF",
+ "civilopedia": "TXT_KEY_FEATURE_WHITE_DWARF_PEDIA",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_WHITE_DWARF"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_ASTEROIDS_SELECT_AMB"
+ },
+ "identity": {
+  "popDestroys": -1,
+  "validTerrains": [
+   "TERRAIN_TRANSTELLAR_SPACE",
+   "TERRAIN_ORION_ARM",
+   "TERRAIN_MILKY_WAY"
+  ]
+ }
+}

@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_CHARISMATIC",
+ "description": "TXT_KEY_PROMOTIONLINE_CHARISMATIC",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCharismatic.dds"
+  }
+ }
+}

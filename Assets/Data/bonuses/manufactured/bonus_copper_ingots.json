@@ -9,8 +9,10 @@
    "BUILDING_SMITH_COPPER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_COPPER_INGOTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_COPPER_INGOTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

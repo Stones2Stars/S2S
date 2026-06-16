@@ -1,0 +1,45 @@
+{
+ "type": "FEATURE_PLATY_BASALT_ORGAN",
+ "description": "TXT_KEY_FEATURE_BASALT_ORGAN",
+ "civilopedia": "TXT_KEY_FEATURE_BASALT_ORGAN_PEDIA",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 5
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_BASALT_ORGAN"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "requiresFlatlands": true,
+  "noCity": true,
+  "noImprovement": true,
+  "noBonus": true,
+  "nukeImmune": true,
+  "ignoreTerrainCulture": true,
+  "validTerrains": [
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_BARREN",
+   "TERRAIN_ROCKY"
+  ]
+ }
+}

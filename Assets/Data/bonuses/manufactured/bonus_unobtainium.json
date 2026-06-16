@@ -2,8 +2,10 @@
  "type": "BONUS_UNOBTAINIUM",
  "description": "TXT_KEY_BONUS_UNOBTAINIUM",
  "civilopedia": "TXT_KEY_BONUS_UNOBTAINIUM_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_UNOBTAINIUM"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_UNOBTAINIUM"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

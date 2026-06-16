@@ -7,8 +7,10 @@
    "UNIT_FULANI_CAVALRY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FULANI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FULANI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

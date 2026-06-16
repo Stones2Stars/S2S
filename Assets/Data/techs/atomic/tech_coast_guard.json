@@ -57,11 +57,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/coastguard.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_COAST_GUARD",
-  "soundMP": "AS2D_TECH_COAST_GUARD",
-  "icon": "Art/Interface/Buttons/TechTree/coastguard.dds"
+  "soundMP": "AS2D_TECH_COAST_GUARD"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

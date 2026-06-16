@@ -78,11 +78,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Cyberimmunology.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_CYBERIMMUNOLOGY",
-  "soundMP": "AS2D_TECH_CYBERIMMUNOLOGY",
-  "icon": "Art/Interface/Buttons/TechTree/Cyberimmunology.dds"
+  "soundMP": "AS2D_TECH_CYBERIMMUNOLOGY"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

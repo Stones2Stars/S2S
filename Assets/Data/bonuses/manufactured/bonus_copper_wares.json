@@ -115,8 +115,10 @@
    "UNIT_ZULU_IMPI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_COPPER_WARES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_COPPER_WARES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

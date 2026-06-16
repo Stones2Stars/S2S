@@ -44,8 +44,10 @@
    "UNIT_WAR_CANOE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BAMBOO"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BAMBOO"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

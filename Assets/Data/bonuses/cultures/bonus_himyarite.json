@@ -8,8 +8,10 @@
    "UNIT_MYRH_CARAVAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HIMYARITE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HIMYARITE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

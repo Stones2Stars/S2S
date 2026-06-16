@@ -43,11 +43,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/celebration.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_CELEBRATION",
-  "soundMP": "AS2D_TECH_CELEBRATION",
-  "icon": "Art/Interface/Buttons/TechTree/celebration.dds"
+  "soundMP": "AS2D_TECH_CELEBRATION"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

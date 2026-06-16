@@ -52,11 +52,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/heattreatment.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_HEAT_TREATMENT",
-  "soundMP": "AS2D_TECH_HEAT_TREATMENT",
-  "icon": "Art/Interface/Buttons/TechTree/heattreatment.dds"
+  "soundMP": "AS2D_TECH_HEAT_TREATMENT"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

@@ -2,8 +2,10 @@
  "type": "BONUS_TUNGSTEN",
  "description": "TXT_KEY_BONUS_TUNGSTEN",
  "civilopedia": "TXT_KEY_BONUS_TUNGSTEN_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_TUNGSTEN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TUNGSTEN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

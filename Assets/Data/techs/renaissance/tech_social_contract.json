@@ -80,11 +80,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Human_rights.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,1,9"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SOCIAL_CONTRACT",
-  "soundMP": "AS2D_TECH_SOCIAL_CONTRACT",
-  "icon": ",Art/Interface/Buttons/TechTree/Human_rights.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,1,9"
+  "soundMP": "AS2D_TECH_SOCIAL_CONTRACT"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

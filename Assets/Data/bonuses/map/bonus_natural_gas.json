@@ -21,8 +21,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NATURAL_GAS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NATURAL_GAS"
+  }
  },
  "mapGeneration": {
   "placementOrder": 8,

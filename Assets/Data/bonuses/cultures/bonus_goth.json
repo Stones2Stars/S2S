@@ -8,8 +8,10 @@
    "UNIT_HUSKARL"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_GOTH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_GOTH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

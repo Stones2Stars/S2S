@@ -9,8 +9,10 @@
    "UNIT_KHMER_PHAKAK"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_KHMER"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_KHMER"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

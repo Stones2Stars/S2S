@@ -9,8 +9,10 @@
    "UNIT_CONSTANTINE_XI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BYZANTINE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BYZANTINE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -7,8 +7,10 @@
    "UNIT_CHEYENNE_RIDER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CHEYENNE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CHEYENNE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -7,8 +7,10 @@
    "BUILDING_CENTER_FOR_THE_STUDY_OF_CIVILIZATION"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SPACEPUNK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SPACEPUNK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

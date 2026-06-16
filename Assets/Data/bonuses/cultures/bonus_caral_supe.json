@@ -8,8 +8,10 @@
    "UNIT_KON_TIKI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CARAL_SUPE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CARAL_SUPE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

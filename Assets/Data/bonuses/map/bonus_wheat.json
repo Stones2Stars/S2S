@@ -42,8 +42,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_WHEAT"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_WHEAT"
+  }
  },
  "mapGeneration": {
   "placementOrder": 6,

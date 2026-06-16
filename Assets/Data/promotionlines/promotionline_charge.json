@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_CHARGE",
+ "description": "TXT_KEY_PROMOTIONLINE_CHARGE",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Charge.dds,Art/Interface/Buttons/Promotions_Atlas.dds,1,5"
+  }
+ }
+}

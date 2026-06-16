@@ -8,8 +8,10 @@
    "UNIT_THAYENDANEGEA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MOHAWK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MOHAWK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

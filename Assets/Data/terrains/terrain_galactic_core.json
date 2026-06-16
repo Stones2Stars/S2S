@@ -17,9 +17,15 @@
    "flat": 1
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_GALACTIC_CORE",
-  "icon": "Art/Interface/Buttons/WorldBuilder/galactic_core.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/galactic_core.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_GALACTIC_CORE"
+  }
  },
  "identity": {
   "found": true,

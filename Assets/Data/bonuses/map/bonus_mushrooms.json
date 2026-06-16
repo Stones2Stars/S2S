@@ -52,8 +52,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MUSHROOMS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MUSHROOMS"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

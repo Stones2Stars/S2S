@@ -7,8 +7,10 @@
    "UNIT_SWAZI_TRACKER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SWAZI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SWAZI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

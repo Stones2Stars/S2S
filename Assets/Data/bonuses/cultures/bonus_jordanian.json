@@ -8,8 +8,10 @@
    "UNIT_ROYAL_SPECIAL_FORCES"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_JORDANIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_JORDANIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

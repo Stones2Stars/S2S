@@ -21,8 +21,10 @@
    "tradeModifier": 10
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PLATINUM_ORE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PLATINUM_ORE"
+  }
  },
  "mapGeneration": {
   "placementOrder": 5,

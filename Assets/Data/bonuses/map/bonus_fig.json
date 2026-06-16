@@ -38,8 +38,10 @@
    "tradeModifier": 20
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FIG"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FIG"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

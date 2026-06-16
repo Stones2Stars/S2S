@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_LOW_PROFILE",
+ "description": "TXT_KEY_PROMOTIONLINE_LOW_PROFILE",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/LowProfile1Promotion.dds"
+  }
+ }
+}

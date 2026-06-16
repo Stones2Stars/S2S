@@ -8,8 +8,10 @@
    "UNIT_LLANERO"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_VENEZUELAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_VENEZUELAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

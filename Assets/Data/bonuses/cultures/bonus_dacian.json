@@ -8,8 +8,10 @@
    "UNIT_FALXMEN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_DACIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_DACIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

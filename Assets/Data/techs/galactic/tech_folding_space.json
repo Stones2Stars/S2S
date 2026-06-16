@@ -67,11 +67,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/foldingspace.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_FOLDING_SPACE",
-  "soundMP": "AS2D_TECH_FOLDING_SPACE",
-  "icon": "Art/Interface/Buttons/TechTree/foldingspace.dds"
+  "soundMP": "AS2D_TECH_FOLDING_SPACE"
  },
  "identity": {
   "era": "C2C_ERA_GALACTIC",

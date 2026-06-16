@@ -1,0 +1,131 @@
+{
+ "type": "SPECIALIST_GREAT_ENGINEER",
+ "description": "TXT_KEY_SPECIALIST_GREAT_ENGINEER",
+ "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
+ "production": {
+  "city": {
+   "flat": 3
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_INDUSTRIOUS": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_INDUSTRIOUS1": {
+     "flat": 1
+    },
+    "TRAIT_INDUSTRIOUS2": {
+     "flat": 1
+    },
+    "TRAIT_INDUSTRIOUS3": {
+     "flat": 1
+    },
+    "TRAIT_LAZY": {
+     "flat": -1
+    },
+    "TRAIT_LAZY1": {
+     "flat": -1
+    },
+    "TRAIT_LAZY2": {
+     "flat": -1
+    },
+    "TRAIT_LAZY3": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_PHILOSOPHICAL": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_PHILOSOPHICAL1": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_POPULIST": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_POPULIST1": {
+     "flat": -1
+    },
+    "TRAIT_UNSANITARY": {
+     "flat": -1
+    },
+    "TRAIT_UNSANITARY3": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_INDUSTRIOUS": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_INDUSTRIOUS1": {
+     "flat": -1
+    },
+    "TRAIT_INDUSTRIOUS2": {
+     "flat": -1
+    },
+    "TRAIT_INDUSTRIOUS3": {
+     "flat": -1
+    },
+    "TRAIT_GRIM": {
+     "flat": 1
+    },
+    "TRAIT_GRIM2": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_BAUHAUS_SCHOOL": {
+     "flat": 2
+    }
+   }
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_LAZY": {
+     "flat": 1
+    },
+    "TRAIT_LAZY1": {
+     "flat": 1
+    },
+    "TRAIT_LAZY2": {
+     "flat": 1
+    },
+    "TRAIT_LAZY3": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_WORKER": {
+     "flat": 2
+    },
+    "UNITCOMBAT_SEA_WORKER": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/MainScreen/CityScreen/Great_Engineer.dds",
+  "button": "Art/Interface/MainScreen/CityScreen/Great_Engineer.dds"
+ },
+ "identity": {
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_ARCHITECTURAL"
+  ]
+ }
+}

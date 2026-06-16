@@ -8,8 +8,10 @@
    "BUILDING_STRATOSPHERIC_TOWER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_DIAMOND_NANOTHREADS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_DIAMOND_NANOTHREADS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

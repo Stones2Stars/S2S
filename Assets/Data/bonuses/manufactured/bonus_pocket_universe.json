@@ -8,8 +8,10 @@
    "BUILDING_POCKET_UNIVERSE_STORAGE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_POCKET_UNIVERSE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_POCKET_UNIVERSE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

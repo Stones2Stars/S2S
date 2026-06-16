@@ -2,8 +2,10 @@
  "type": "BONUS_MARZIPAN",
  "description": "TXT_KEY_BONUS_MARZIPAN",
  "civilopedia": "TXT_KEY_BONUS_MARZIPAN_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_MARZIPAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MARZIPAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

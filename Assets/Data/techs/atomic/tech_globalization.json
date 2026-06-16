@@ -143,11 +143,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/Globalization.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,7"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_GLOBALIZATION",
-  "soundMP": "AS2D_TECH_GLOBALIZATION",
-  "icon": ",Art/Interface/Buttons/TechTree/Globalization.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,7"
+  "soundMP": "AS2D_TECH_GLOBALIZATION"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

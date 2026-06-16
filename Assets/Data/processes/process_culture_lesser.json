@@ -6,7 +6,9 @@
    "percent": 40
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Process/processculturelesser.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Process/processculturelesser.dds"
+  }
  }
 }

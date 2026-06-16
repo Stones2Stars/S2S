@@ -9,8 +9,10 @@
    "BUILDING_SLAUGHTERHOUSE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PELTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PELTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

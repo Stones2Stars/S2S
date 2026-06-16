@@ -315,6 +315,35 @@ a later `YieldInfo` curation. Other river-side yields (`FeatureInfo.RiverYieldCh
 `ImprovementInfo.RiverSideYieldChange`, `BuildingInfo.RiverPlotYieldChanges`) stay on their deliveryguy at those
 passes (enabler-spec §3, modifier-spec §6.1).*
 
+## Feature  (`curate_feature.py`)  — Tier C #21 (101 records: 76 base + 25 module)
+
+A plot-leaf **TARGET / deliveryguy** that MODIFIES the plot it sits on. Unlike Terrain (which SEEDS the plot base), a
+feature **ADDS** its values onto the terrain-seeded accumulator (`CvPlot.cpp` movement 4559 / defense 4404 / yield
+8081, all `+=`) — a genuine per-plot DELTA, so its own effects are feature-owned `plot`-scope modifier families.
+Enables nothing; **all inbound feature-keyed modifiers stay keep-on-source** (the civic/unit/promotion/unit-combat
+that delivers them owns them, conditioned on the feature — Feature carries no inbound boost). EXE-link: **1
+`DllExport` (`getArtInfo`, an art FK) — unconstrained.** Classification: `classifications/feature-classification.json`
+(adversarially verified). Mechanical de-Hungarian not re-logged.
+
+| old XML | new JSON path | note |
+|---|---|---|
+| `YieldChanges` | `<yield>.plot.flat` (food/production/commerce) | The feature's own per-plot yield DELTA (forest −food/+hammers, jungle −food, oasis +food/+commerce). Mapping said `city` scope — WRONG → `plot`. |
+| `RiverYieldChange` | `<yield>.plot.flat[].{value, enabled:"HAS_RIVER"}` | The feature's EXTRA river-side yield (forest-on-river), `HAS_RIVER`-gated (bare predicate), compounding with the terrain's river bonus. First real `HAS_RIVER` use alongside the terrain (enabler-spec §3). Injected via `post_process` (apply_channel can't express the conditional). |
+| `iHealthPercent` | `health.plot.percent` | Feature OWNS health (Terrain dropped it precisely because it lives here). |
+| `iDefense` | `defense.plot.amount.percent` | Feature defense %, additive onto the plot (same `amount` member as Terrain/CultureLevel). |
+| `iMovement` | `movement.plot.flat` | Extra move cost, additive onto the terrain-seeded cost. |
+| `iCultureDistance` | `cultureDistance.plot.flat` | Summed into the city culture-distance total. |
+| `iSeeThrough` | `vision.plot.seeThrough.flat` | Line-of-sight see-through → a **`vision` block** (owner 2026-06-16: dedicated-block rule, modifier-spec §0.8), grouped so the coming vision-behaviour rework lands beside it. |
+| `iWarmingDefense` | — (DROPPED, cat i dead) | `GLOBAL_WARMING` is `// #define`d out → the mechanic is compiled out. A future global-warming system gets its OWN base object, not a feature field (owner). Issue **#436** + `global-warming-mod.md`. |
+| `PropertyManipulators` | `properties[]` (PARKED raw) | `RELATION_NEAR` pollution = **spatial leakage → #429**; the atomic cutover replaces the XML, so the sources are preserved verbatim (via `clean_property_source`), not dropped, pending the #429 redesign. ⚑ FLAG. |
+| `OnUnitChangeTo` | `grants.onUnitChangeTo` | A feature that transforms a unit on entry (module-only, 0 in base XML). ⚑ FLAG: `grants` vs a dedicated transform edge — owner pass if it ever carries data. |
+| `iAdvancedStartRemoveCost` | `cost.advancedStartRemoveCost` | Gold cost to remove the feature in advanced start. |
+| `ArtDefineTag` (on-map art) / `EffectType` / `iEffectProbability` / `GrowthSound` / `FootstepSounds` / `WorldSoundscapeAudioScript` | `art.*` | Art + audio (`ArtDefineTag` → `icon`; feature carries no separate UI Button). Audio reorganization deferred to the art pass. |
+| `iAppearance` / `iDisappearance` / `iGrowth` / `iSpread` / `iPopDestroys` / `bCanGrowAnywhere` / `bRequires*` / `bNo*` / placement flags / `bGraphicalOnly` / `TerrainBooleans` | `identity.*` | World-gen RNG / lifecycle / placement config (read directly). `bGraphicalOnly` is a base-class flag (moved out of the mapping's `art` → identity). |
+
+*Toolkit: registered `FeatureInfo` in `store.ENTITIES`; `curate_feature.py` (bespoke) reuses the `post_process` hook
+for the `HAS_RIVER` river yield + the `properties` parking; fixed `mapping/FeatureInfo.json` (`bGraphicalOnly` art→flag).*
+
 ## Route  (`curate_route.py`)  — Tier C #19 (21 records: 12 base + 9 module-added space routes)
 
 A small plot-leaf entity: a route lays movement cost + (optionally) its own tile yields onto the plot it

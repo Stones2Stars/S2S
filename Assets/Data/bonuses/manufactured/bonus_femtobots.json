@@ -8,8 +8,10 @@
    "BUILDING_FEMTOBOTIC_FIREFIGHTERS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FEMTOBOTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FEMTOBOTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

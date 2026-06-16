@@ -8,8 +8,10 @@
    "UNIT_VANAU_WARRIOR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_VANUATUAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_VANUATUAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

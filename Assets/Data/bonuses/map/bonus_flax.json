@@ -45,8 +45,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FLAX"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FLAX"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

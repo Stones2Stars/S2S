@@ -8,8 +8,10 @@
    "UNIT_SPARTAN_WARRIOR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SPARTAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SPARTAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

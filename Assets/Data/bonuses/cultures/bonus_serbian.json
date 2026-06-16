@@ -8,8 +8,10 @@
    "UNIT_STEPHEN_UROS_IV_DUSAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SERBIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SERBIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

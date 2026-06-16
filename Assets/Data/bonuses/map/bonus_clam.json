@@ -36,8 +36,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CLAM"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CLAM"
+  }
  },
  "mapGeneration": {
   "placementOrder": 8,

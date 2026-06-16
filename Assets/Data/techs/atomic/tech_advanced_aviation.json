@@ -78,11 +78,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,3,16"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ADVANCED_AVIATION",
-  "soundMP": "AS2D_TECH_ADVANCED_AVIATION",
-  "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,3,16"
+  "soundMP": "AS2D_TECH_ADVANCED_AVIATION"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

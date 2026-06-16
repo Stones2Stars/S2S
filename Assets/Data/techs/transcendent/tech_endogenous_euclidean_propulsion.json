@@ -64,11 +64,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/endogenous_euclidean_propulsion.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION",
-  "soundMP": "AS2D_TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION",
-  "icon": "Art/interface/buttons/TechTree/endogenous_euclidean_propulsion.dds"
+  "soundMP": "AS2D_TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION"
  },
  "identity": {
   "era": "C2C_ERA_TRANSCENDENT",

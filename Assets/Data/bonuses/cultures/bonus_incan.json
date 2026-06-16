@@ -9,8 +9,10 @@
    "UNIT_TUPAC_YUPANQUI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_INCAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_INCAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

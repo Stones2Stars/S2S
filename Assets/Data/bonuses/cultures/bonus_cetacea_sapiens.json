@@ -10,8 +10,10 @@
    "UNIT_DOLPHIN_MECH"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CETACEA_SAPIENS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CETACEA_SAPIENS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

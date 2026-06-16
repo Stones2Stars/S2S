@@ -123,11 +123,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Hunting.dds,Art/Interface/Buttons/TechTree_Atlas.dds,7,4"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_TRACKING",
-  "soundMP": "AS2D_TECH_MP_HUNTING",
-  "icon": ",Art/Interface/Buttons/TechTree/Hunting.dds,Art/Interface/Buttons/TechTree_Atlas.dds,7,4"
+  "soundMP": "AS2D_TECH_MP_HUNTING"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

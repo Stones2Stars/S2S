@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_DEFENSIVE_PROTOCOLS",
+ "description": "TXT_KEY_PROMOTIONLINE_DEFENSIVE_PROTOCOLS",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Flanking1.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,1,3"
+  }
+ }
+}

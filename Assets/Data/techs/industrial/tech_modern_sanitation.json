@@ -84,11 +84,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Modern_Sanitation.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,11"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_MODERN_SANITATION",
-  "soundMP": "AS2D_TECH_MODERN_SANITATION",
-  "icon": ",Art/Interface/Buttons/TechTree/Modern_Sanitation.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,11"
+  "soundMP": "AS2D_TECH_MODERN_SANITATION"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

@@ -27,8 +27,10 @@
    "UNIT_P51_MUSTANG"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_AIRCRAFT"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_AIRCRAFT"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

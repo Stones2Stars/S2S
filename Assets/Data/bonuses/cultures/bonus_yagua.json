@@ -8,8 +8,10 @@
    "UNIT_YAWAR_RUNA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_YAGUA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_YAGUA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

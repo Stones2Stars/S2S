@@ -50,8 +50,10 @@
    "tradeModifier": 10
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_POULTRY"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_POULTRY"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

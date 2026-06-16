@@ -8,8 +8,10 @@
    "BUILDING_TOY_STORE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TOYS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TOYS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

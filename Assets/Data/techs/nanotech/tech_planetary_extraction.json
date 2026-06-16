@@ -80,11 +80,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/planetarymining.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_PLANETARY_EXTRACTION",
-  "soundMP": "AS2D_TECH_PLANETARY_EXTRACTION",
-  "icon": "Art/Interface/Buttons/TechTree/planetarymining.dds"
+  "soundMP": "AS2D_TECH_PLANETARY_EXTRACTION"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

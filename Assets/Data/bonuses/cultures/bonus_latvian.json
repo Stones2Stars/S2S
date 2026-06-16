@@ -8,8 +8,10 @@
    "UNIT_JACOB_KETTLER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_LATVIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_LATVIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

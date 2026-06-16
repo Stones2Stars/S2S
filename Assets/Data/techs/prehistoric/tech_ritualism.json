@@ -61,11 +61,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": ",Art/Interface/Buttons/TechTree/ritualism.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,15"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_RITUALISM",
-  "soundMP": "AS2D_TECH_RITUALISM",
-  "icon": ",Art/Interface/Buttons/TechTree/ritualism.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,15"
+  "soundMP": "AS2D_TECH_RITUALISM"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

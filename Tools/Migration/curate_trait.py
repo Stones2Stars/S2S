@@ -507,7 +507,7 @@ def main():
     nc = sum(1 for f in folders.values() if f == "complex")
     print("TraitInfo curated: %d  (simple=%d, complex=%d)" % (len(results), len(results) - nc, nc))
     STRUCT = {"type", "description", "civilopedia", "help", "strategy", "enables", "replacedBy", "excludes",
-              "policies", "grants", "succession", "loadPrune", "ai", "art", "identity"}
+              "policies", "grants", "succession", "loadPrune", "ai", "ui", "world", "sound", "identity"}
     fams = sorted({k for o in results.values() for k in o if k not in STRUCT and not k.startswith("PROPERTY_")})
     has = lambda k: sum(1 for o in results.values() if k in o)
     print("  families seen: %s" % ", ".join(fams))

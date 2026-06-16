@@ -53,11 +53,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/prehistoricdance.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_PREHISTORIC_DANCE",
-  "soundMP": "AS2D_TECH_PREHISTORIC_DANCE",
-  "icon": "Art/Interface/Buttons/TechTree/prehistoricdance.dds"
+  "soundMP": "AS2D_TECH_PREHISTORIC_DANCE"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

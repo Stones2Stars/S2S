@@ -2,8 +2,10 @@
  "type": "BONUS_POTASH",
  "description": "TXT_KEY_BONUS_POTASH",
  "civilopedia": "TXT_KEY_BONUS_POTASH_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_POTASH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_POTASH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

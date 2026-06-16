@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_HUMBLE",
+ "description": "TXT_KEY_PROMOTIONLINE_HUMBLE",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitHumble.dds"
+  }
+ }
+}

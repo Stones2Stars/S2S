@@ -7,8 +7,10 @@
    "BUILDING_PALEONTOLOGY_LAB"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FOSSILS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FOSSILS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

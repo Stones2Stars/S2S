@@ -8,8 +8,10 @@
    "UNIT_LUTAKAWI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ZUNI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ZUNI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

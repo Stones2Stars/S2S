@@ -8,8 +8,10 @@
    "UNIT_VIKING_BESERKER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_VIKING"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_VIKING"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

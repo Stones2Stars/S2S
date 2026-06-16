@@ -37,11 +37,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/controlledfire.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_CONTROLLED_FIRE",
-  "soundMP": "AS2D_TECH_CONTROLLED_FIRE",
-  "icon": "Art/Interface/Buttons/TechTree/controlledfire.dds"
+  "soundMP": "AS2D_TECH_CONTROLLED_FIRE"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

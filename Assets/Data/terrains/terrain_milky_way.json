@@ -17,9 +17,15 @@
    "flat": 1
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_MILKY_WAY",
-  "icon": "Art/Interface/Buttons/WorldBuilder/milky_way.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/milky_way.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_MILKY_WAY"
+  }
  },
  "identity": {
   "found": true,

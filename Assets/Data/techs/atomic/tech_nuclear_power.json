@@ -49,11 +49,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/NuclearPower.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,13"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_NUCLEAR_POWER",
-  "soundMP": "AS2D_TECH_NUCLEAR_POWER",
-  "icon": ",Art/Interface/Buttons/TechTree/NuclearPower.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,13"
+  "soundMP": "AS2D_TECH_NUCLEAR_POWER"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

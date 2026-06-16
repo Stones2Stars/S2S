@@ -7,8 +7,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HAWAIIAN_SURFBOARDS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HAWAIIAN_SURFBOARDS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_WONDER"

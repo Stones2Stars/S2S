@@ -38,8 +38,10 @@
    "ROUTE_PLANETARY_MAGLEV"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PLASTIC"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PLASTIC"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

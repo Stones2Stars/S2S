@@ -84,11 +84,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/planet_engineering.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_PLANET_ENGINEERING",
-  "soundMP": "AS2D_TECH_PLANET_ENGINEERING",
-  "icon": "Art/interface/buttons/TechTree/planet_engineering.dds"
+  "soundMP": "AS2D_TECH_PLANET_ENGINEERING"
  },
  "identity": {
   "era": "C2C_ERA_GALACTIC",

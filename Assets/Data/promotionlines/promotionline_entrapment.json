@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_ENTRAPMENT",
+ "description": "TXT_KEY_PROMOTIONLINE_ENTRAPMENT",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/flaming1.dds"
+  }
+ }
+}

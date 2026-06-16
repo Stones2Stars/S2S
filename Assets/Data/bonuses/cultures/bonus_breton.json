@@ -8,8 +8,10 @@
    "UNIT_PALADIN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BRETON"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BRETON"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

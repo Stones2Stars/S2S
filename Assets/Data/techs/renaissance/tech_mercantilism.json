@@ -89,11 +89,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Mercantilism.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,2,11"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_MERCANTILISM",
-  "soundMP": "AS2D_TECH_MERCANTILISM",
-  "icon": ",Art/Interface/Buttons/TechTree/Mercantilism.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,2,11"
+  "soundMP": "AS2D_TECH_MERCANTILISM"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

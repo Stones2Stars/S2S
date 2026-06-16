@@ -2,8 +2,10 @@
  "type": "BONUS_VIBRANIUM",
  "description": "TXT_KEY_BONUS_VIBRANIUM",
  "civilopedia": "TXT_KEY_BONUS_VIBRANIUM_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_VIBRANIUM"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_VIBRANIUM"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

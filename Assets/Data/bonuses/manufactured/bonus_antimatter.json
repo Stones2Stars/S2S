@@ -8,8 +8,10 @@
    "BUILDING_ANTI_MATTER_BATTERY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ANTIMATTER"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ANTIMATTER"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

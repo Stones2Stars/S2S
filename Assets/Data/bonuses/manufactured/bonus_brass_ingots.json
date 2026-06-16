@@ -7,8 +7,10 @@
    "BUILDING_SMITH_BRASS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BRASS_INGOTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BRASS_INGOTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

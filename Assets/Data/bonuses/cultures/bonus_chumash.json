@@ -9,8 +9,10 @@
    "UNIT_TOMOL"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CHUMASH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CHUMASH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

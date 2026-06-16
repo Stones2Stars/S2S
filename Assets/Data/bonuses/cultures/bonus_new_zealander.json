@@ -7,8 +7,10 @@
    "UNIT_NEW_ZEALAND_INFANTRY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NEW_ZEALANDER"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NEW_ZEALANDER"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_SCIENTIFIC",
+ "description": "TXT_KEY_PROMOTIONLINE_SCIENTIFIC",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitScientific.dds"
+  }
+ }
+}

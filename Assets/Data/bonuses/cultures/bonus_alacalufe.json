@@ -8,8 +8,10 @@
    "UNIT_PATAGONIAN_ARCHER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ALACALUFE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ALACALUFE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

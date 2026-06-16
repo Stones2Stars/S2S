@@ -174,11 +174,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/attometerengineering.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ATOMIC_SCALE_ENGINEERING",
-  "soundMP": "AS2D_TECH_ATOMIC_SCALE_ENGINEERING",
-  "icon": "Art/Interface/Buttons/TechTree/attometerengineering.dds"
+  "soundMP": "AS2D_TECH_ATOMIC_SCALE_ENGINEERING"
  },
  "identity": {
   "era": "C2C_ERA_GALACTIC",

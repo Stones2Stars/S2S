@@ -75,11 +75,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Button_OralTradition.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ORAL_TRADITION",
-  "soundMP": "AS2D_TECH_ORAL_TRADITION",
-  "icon": "Art/Interface/Buttons/TechTree/Button_OralTradition.dds"
+  "soundMP": "AS2D_TECH_ORAL_TRADITION"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

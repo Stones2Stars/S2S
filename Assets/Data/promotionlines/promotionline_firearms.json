@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_FIREARMS",
+ "description": "TXT_KEY_PROMOTIONLINE_FIREARMS",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/firearms1.dds"
+  }
+ }
+}

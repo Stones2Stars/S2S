@@ -70,8 +70,10 @@
    "tradeModifier": 10
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BIOFUEL"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BIOFUEL"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

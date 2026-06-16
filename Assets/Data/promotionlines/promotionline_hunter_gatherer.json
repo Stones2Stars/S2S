@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_HUNTER_GATHERER",
+ "description": "TXT_KEY_PROMOTIONLINE_HUNTER_GATHERER",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitHunterGatherer.dds"
+  }
+ }
+}

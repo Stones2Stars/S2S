@@ -40,8 +40,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Builds/BuildRoad.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/BuildRoad.dds"
+  }
  },
  "identity": {
   "value": 3,

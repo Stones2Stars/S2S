@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_SLOB",
+ "description": "TXT_KEY_PROMOTIONLINE_SLOB",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitSlob.dds"
+  }
+ }
+}

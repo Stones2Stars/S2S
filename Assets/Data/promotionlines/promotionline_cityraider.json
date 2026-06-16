@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_CITYRAIDER",
+ "description": "TXT_KEY_PROMOTIONLINE_CITYRAIDER",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CityRaider1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,5,2"
+  }
+ }
+}

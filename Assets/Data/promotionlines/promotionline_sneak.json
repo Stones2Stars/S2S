@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_SNEAK",
+ "description": "TXT_KEY_PROMOTIONLINE_SNEAK",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Retinue/apprentice.dds"
+  }
+ }
+}

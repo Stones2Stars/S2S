@@ -17,10 +17,18 @@
    "flat": 3
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_URANUS",
-  "icon": "Art/Interface/Buttons/baseterrain/uranus.dds",
-  "worldSoundscapeAudioScript": "ASSS_TUNDRA_SELECT_AMB"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/baseterrain/uranus.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_URANUS"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_TUNDRA_SELECT_AMB"
  },
  "identity": {
   "found": true,

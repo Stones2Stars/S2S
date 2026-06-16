@@ -1,0 +1,49 @@
+{
+ "type": "FEATURE_PLATY_KRAKATOA",
+ "description": "TXT_KEY_FEATURE_KRAKATOA",
+ "civilopedia": "TXT_KEY_FEATURE_KRAKATOA_PEDIA",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "properties": [
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_AIR_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": 10
+  }
+ ],
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_KRAKATOA"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "noCity": true,
+  "noImprovement": true,
+  "noBonus": true,
+  "nukeImmune": true,
+  "countsAsPeak": true,
+  "ignoreTerrainCulture": true,
+  "validTerrains": [
+   "TERRAIN_COAST",
+   "TERRAIN_COAST_TROPICAL",
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_TROPICAL"
+  ]
+ }
+}

@@ -63,11 +63,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/SingularityStanilization.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SINGULARITY_STABILIZATION",
-  "soundMP": "AS2D_TECH_SINGULARITY_STABILIZATION",
-  "icon": "Art/Interface/Buttons/TechTree/SingularityStanilization.dds"
+  "soundMP": "AS2D_TECH_SINGULARITY_STABILIZATION"
  },
  "identity": {
   "era": "C2C_ERA_GALACTIC",

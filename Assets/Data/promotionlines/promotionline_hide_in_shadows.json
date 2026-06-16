@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_HIDE_IN_SHADOWS",
+ "description": "TXT_KEY_PROMOTIONLINE_HIDE_IN_SHADOWS",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/HideInShadows1Promotion.dds"
+  }
+ }
+}

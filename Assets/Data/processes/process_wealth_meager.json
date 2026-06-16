@@ -6,7 +6,9 @@
    "percent": 30
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Process/processwealthmeagre.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Process/processwealthmeagre.dds"
+  }
  }
 }

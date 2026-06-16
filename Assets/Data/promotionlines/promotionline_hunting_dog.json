@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_HUNTING_DOG",
+ "description": "TXT_KEY_PROMOTIONLINE_HUNTING_DOG",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/huntingdog1.dds"
+  }
+ }
+}

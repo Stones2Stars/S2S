@@ -75,11 +75,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/artificialplanets.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ARTIFICIAL_PLANETS",
-  "soundMP": "AS2D_TECH_ARTIFICIAL_PLANETS",
-  "icon": "Art/Interface/Buttons/TechTree/artificialplanets.dds"
+  "soundMP": "AS2D_TECH_ARTIFICIAL_PLANETS"
  },
  "identity": {
   "era": "C2C_ERA_GALACTIC",

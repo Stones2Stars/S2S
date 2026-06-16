@@ -128,8 +128,10 @@
    "UNIT_WAR_CANOE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_WOOD"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_WOOD"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

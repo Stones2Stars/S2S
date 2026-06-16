@@ -8,8 +8,10 @@
    "UNIT_VLAD_III_DRACULA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_WALLACHIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_WALLACHIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

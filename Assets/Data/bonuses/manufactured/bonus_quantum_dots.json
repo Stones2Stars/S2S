@@ -10,8 +10,10 @@
    "BUILDING_QUANTUM_SUPERCOMPUTER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_QUANTUM_DOTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_QUANTUM_DOTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

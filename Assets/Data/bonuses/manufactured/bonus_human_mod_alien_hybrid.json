@@ -2,8 +2,10 @@
  "type": "BONUS_HUMAN_MOD_ALIEN_HYBRID",
  "description": "TXT_KEY_BONUS_HUMAN_MOD_ALIEN_HYBRID",
  "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_HUMAN_MOD_ALIEN_HYBRID"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HUMAN_MOD_ALIEN_HYBRID"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

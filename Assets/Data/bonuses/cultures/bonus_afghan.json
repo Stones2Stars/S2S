@@ -8,8 +8,10 @@
    "UNIT_MUJAHIDEEN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_AFGHAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_AFGHAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

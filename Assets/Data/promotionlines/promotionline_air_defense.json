@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_AIR_DEFENSE",
+ "description": "TXT_KEY_PROMOTIONLINE_AIR_DEFENSE",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/defence1.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,3,4"
+  }
+ }
+}

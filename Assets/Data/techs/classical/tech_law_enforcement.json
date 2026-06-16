@@ -63,11 +63,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "art/buttons/techs/LawEnforcementTech.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_LAW_ENFORCEMENT",
-  "soundMP": "AS2D_TECH_LAW_ENFORCEMENT",
-  "icon": "art/buttons/techs/LawEnforcementTech.dds"
+  "soundMP": "AS2D_TECH_LAW_ENFORCEMENT"
  },
  "identity": {
   "era": "C2C_ERA_CLASSICAL",

@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_WARMTH",
+ "description": "TXT_KEY_PROMOTIONLINE_WARMTH",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Warmth1.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,7,12"
+  }
+ }
+}

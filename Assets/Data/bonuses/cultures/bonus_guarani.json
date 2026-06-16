@@ -8,8 +8,10 @@
    "UNIT_KARAI_PYHARE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_GUARANI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_GUARANI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -84,11 +84,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Space_stations.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,16"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SPACE_STATIONS",
-  "soundMP": "AS2D_TECH_SPACE_STATIONS",
-  "icon": ",Art/Interface/Buttons/TechTree/Space_stations.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,16"
+  "soundMP": "AS2D_TECH_SPACE_STATIONS"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

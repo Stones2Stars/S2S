@@ -106,11 +106,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Sentient_robots.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_MACHINE_LEARNING",
-  "soundMP": "AS2D_TECH_MACHINE_LEARNING",
-  "icon": "Art/Interface/Buttons/TechTree/Sentient_robots.dds"
+  "soundMP": "AS2D_TECH_MACHINE_LEARNING"
  },
  "identity": {
   "era": "C2C_ERA_INFORMATION",

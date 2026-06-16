@@ -117,8 +117,10 @@
    "UNIT_ZEBRA_CUIRASSIER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FIREARMS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FIREARMS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

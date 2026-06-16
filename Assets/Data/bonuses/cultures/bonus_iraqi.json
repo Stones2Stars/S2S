@@ -8,8 +8,10 @@
    "UNIT_SADDAM_HUSSEIN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_IRAQI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_IRAQI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

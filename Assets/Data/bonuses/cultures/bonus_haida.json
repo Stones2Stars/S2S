@@ -7,8 +7,10 @@
    "UNIT_HAIDA_WAR_CANOE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HAIDA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HAIDA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

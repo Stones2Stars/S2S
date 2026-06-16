@@ -58,11 +58,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/coalmining.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_COAL_MINING",
-  "soundMP": "AS2D_TECH_COAL_MINING",
-  "icon": "Art/Interface/Buttons/TechTree/coalmining.dds"
+  "soundMP": "AS2D_TECH_COAL_MINING"
  },
  "identity": {
   "era": "C2C_ERA_MEDIEVAL",

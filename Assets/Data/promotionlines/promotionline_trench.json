@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_TRENCH",
+ "description": "TXT_KEY_PROMOTIONLINE_TRENCH",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/trench1.dds"
+  }
+ }
+}

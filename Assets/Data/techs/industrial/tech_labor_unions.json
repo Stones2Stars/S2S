@@ -82,11 +82,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/LaborUnion.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,9"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_LABOR_UNIONS",
-  "soundMP": "AS2D_TECH_LABOR_UNIONS",
-  "icon": ",Art/Interface/Buttons/TechTree/LaborUnion.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,9"
+  "soundMP": "AS2D_TECH_LABOR_UNIONS"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

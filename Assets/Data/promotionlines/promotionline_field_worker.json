@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_FIELD_WORKER",
+ "description": "TXT_KEY_PROMOTIONLINE_FIELD_WORKER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/workerfield1.dds"
+  }
+ }
+}

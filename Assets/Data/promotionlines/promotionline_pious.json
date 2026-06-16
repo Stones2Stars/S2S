@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_PIOUS",
+ "description": "TXT_KEY_PROMOTIONLINE_PIOUS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPious.dds"
+  }
+ }
+}

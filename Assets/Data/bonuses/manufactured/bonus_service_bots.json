@@ -27,8 +27,10 @@
    "UNIT_WARBOT_INFANTRY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SERVICE_BOTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SERVICE_BOTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

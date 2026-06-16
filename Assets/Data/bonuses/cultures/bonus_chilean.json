@@ -8,8 +8,10 @@
    "UNIT_OHIGGINS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CHILEAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CHILEAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

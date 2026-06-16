@@ -71,11 +71,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/Diplomacy.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,5"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_POLITICAL_PHILOSOPHY",
-  "soundMP": "AS2D_TECH_POLITICAL_PHILOSOPHY",
-  "icon": ",Art/Interface/Buttons/TechTree/Diplomacy.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,5"
+  "soundMP": "AS2D_TECH_POLITICAL_PHILOSOPHY"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

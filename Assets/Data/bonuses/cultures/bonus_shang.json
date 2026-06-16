@@ -10,8 +10,10 @@
    "UNIT_SHANG_CHARIOT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SHANG"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SHANG"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

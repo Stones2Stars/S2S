@@ -8,8 +8,10 @@
    "UNIT_QABOOS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_OMANI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_OMANI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

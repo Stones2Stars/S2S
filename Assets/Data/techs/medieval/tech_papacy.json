@@ -45,11 +45,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_RELIGION",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/Papacy.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_PAPACY",
-  "soundMP": "AS2D_TECH_PAPACY",
-  "icon": "Art/Interface/Buttons/TechTree/Papacy.dds"
+  "soundMP": "AS2D_TECH_PAPACY"
  },
  "identity": {
   "era": "C2C_ERA_MEDIEVAL",

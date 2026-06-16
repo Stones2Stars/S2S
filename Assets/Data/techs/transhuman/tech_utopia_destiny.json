@@ -71,11 +71,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/utopiadestiny.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_UTOPIA_DESTINY",
-  "soundMP": "AS2D_TECH_UTOPIA_DESTINY",
-  "icon": "Art/Interface/Buttons/TechTree/utopiadestiny.dds"
+  "soundMP": "AS2D_TECH_UTOPIA_DESTINY"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

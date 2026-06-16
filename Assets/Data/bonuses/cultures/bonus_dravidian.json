@@ -8,8 +8,10 @@
    "UNIT_KHARAVELA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_DRAVIDIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_DRAVIDIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

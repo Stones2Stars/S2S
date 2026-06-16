@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_PACIFIST",
+ "description": "TXT_KEY_PROMOTIONLINE_PACIFIST",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPacifist.dds"
+  }
+ }
+}

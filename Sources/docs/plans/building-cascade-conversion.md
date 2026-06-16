@@ -182,6 +182,22 @@ Property (diffusion/`ChangePropagators` — #429-adjacent) · LeaderHead (90+ AI
 MONSTERS **Building** (101ch + 22 inversions + 47 prereqs; inter-building A→B + OR/NOT `ConstructCondition`) +
 **Unit** LAST.
 
+**DEFERRED — ART SUB-BLOCKS `art.ui` / `art.world` / `art.sound` (a SEPARATE later pass; owner 2026-06-16).** The
+flat `art` section will regroup into three dedicated sub-blocks — **`art.ui`** (on-screen icons/buttons),
+**`art.world`** (on-map / 3D graphics, the `ArtDefineTag` model ref), **`art.sound`** (audio, NESTED by kind:
+**`art.sound.footsteps`**, `art.sound.soundscape`, effect/growth sounds — owner 2026-06-16). This is an instance of
+the dedicated-block rule (modifier-spec §0.8) applied to art, and it
+**dissolves the "icon headache"**: both are named `icon`, disambiguated by the block — **`art.ui.icon`** (the UI icon,
+from `Button`) and **`art.world.icon`** (the actual on-map icon, from `ArtDefineTag`) — owner 2026-06-16. No more
+ambiguity about which `icon` is which (the reason Terrain needed the bespoke `ArtDefineTag→artDefineTag` vs
+`Button→icon` split, and Feature collapsed both to `icon`; both retrofit to `art.world.icon`/`art.ui.icon` in that
+pass). **CROSS-CUTTING — this retrofit touches EVERY already-migrated and upcoming art-bearing entity (owner
+2026-06-16):** Bonus #18 is already migrated (its `ArtDefineTag → art.icon` becomes `art.world.icon`), and the
+art-heaviest of all is the **Unit** pass (models + icons + sounds); Buildings, Improvements, etc. all regroup in the
+one art pass. Until then, #428
+leaves `art` flat (`art.icon`/`art.artDefineTag`/`art.footstepSounds`/…); empty/`NONE` audio is already filtered out
+(only real sounds emitted — `curate_common.drop_empty_audio`). Related to the art-DATA-entities deferral below.
+
 **DEFERRED — ART-DATA ENTITIES (a SEPARATE pass, NOT the gameplay cascade; verified 2026-06-14):** A gameplay
 Info's on-screen ICON and its on-MAP / 3D art are DIFFERENT entities. Verified on Route: `CvRouteInfo` (the
 gameplay route, migrated) has exactly ONE art field — `Button` → `art.icon` (the UI icon) — and **no** model

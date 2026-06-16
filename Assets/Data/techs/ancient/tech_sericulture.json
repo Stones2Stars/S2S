@@ -84,11 +84,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/sericulture.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SERICULTURE",
-  "soundMP": "AS2D_TECH_SERICULTURE",
-  "icon": "Art/Interface/Buttons/TechTree/sericulture.dds"
+  "soundMP": "AS2D_TECH_SERICULTURE"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

@@ -9,8 +9,10 @@
    "UNIT_THOMAS_JEFFERSON"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_AMERICAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_AMERICAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

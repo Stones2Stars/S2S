@@ -1,0 +1,83 @@
+{
+ "type": "FEATURE_TAR_PIT",
+ "description": "TXT_KEY_FEATURE_TAR_PIT",
+ "civilopedia": "TXT_KEY_FEATURE_TAR_PIT_PEDIA",
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": -50
+   }
+  }
+ },
+ "properties": [
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_WATER_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": 5
+  }
+ ],
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_TAR_PIT"
+  }
+ },
+ "sound": {
+  "footsteps": [
+   {
+    "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT_SNOW"
+   },
+   {
+    "FOOTSTEP_AUDIO_HUMAN_LOW": "AS3D_UN_FOOT_UNIT_LOW_SNOW"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL": "AS3D_UN_ANIMAL_FOOT_LARGE_SNOW"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL_LOW": "AS3D_UN_ANIMAL_FOOT_LARGE_LOW_SNOW"
+   }
+  ]
+ },
+ "identity": {
+  "appearance": 50,
+  "requiresFlatlands": true,
+  "popDestroys": -1,
+  "validTerrains": [
+   "TERRAIN_MARSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_LUSH",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_PLAINS",
+   "TERRAIN_BARREN",
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DESERT",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA"
+  ]
+ }
+}

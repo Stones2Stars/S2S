@@ -49,11 +49,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/weaponizeddisintegration.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_WEAPONIZED_DISINTEGRATION",
-  "soundMP": "AS2D_TECH_WEAPONIZED_DISINTEGRATION",
-  "icon": "Art/Interface/Buttons/TechTree/weaponizeddisintegration.dds"
+  "soundMP": "AS2D_TECH_WEAPONIZED_DISINTEGRATION"
  },
  "identity": {
   "era": "C2C_ERA_GALACTIC",

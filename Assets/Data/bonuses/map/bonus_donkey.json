@@ -33,8 +33,10 @@
    "flat": 3
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_DONKEY"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_DONKEY"
+  }
  },
  "mapGeneration": {
   "placementOrder": 3,

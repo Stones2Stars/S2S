@@ -68,11 +68,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/Animism.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ANIMISM",
-  "soundMP": "AS2D_TECH_ANIMISM",
-  "icon": "Art/Interface/Buttons/TechTree/Animism.dds"
+  "soundMP": "AS2D_TECH_ANIMISM"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

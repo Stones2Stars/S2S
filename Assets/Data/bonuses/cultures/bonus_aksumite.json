@@ -8,8 +8,10 @@
    "UNIT_ENDUBIS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_AKSUMITE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_AKSUMITE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

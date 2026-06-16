@@ -9,8 +9,10 @@
    "BUILDING_PLASTIC_RECLAMATION_PLANT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BLENDER"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BLENDER"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -2,8 +2,10 @@
  "type": "BONUS_CARBON_FIBER",
  "description": "TXT_KEY_BONUS_CARBON_FIBER",
  "civilopedia": "TXT_KEY_BONUS_CARBON_FIBER_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_CARBON_FIBER"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CARBON_FIBER"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

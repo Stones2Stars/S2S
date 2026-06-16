@@ -1,0 +1,39 @@
+{
+ "type": "FEATURE_PLATY_EVEREST",
+ "description": "TXT_KEY_FEATURE_EVEREST",
+ "civilopedia": "TXT_KEY_FEATURE_EVEREST_PEDIA",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_EVEREST"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "noCity": true,
+  "noImprovement": true,
+  "noBonus": true,
+  "nukeImmune": true,
+  "countsAsPeak": true,
+  "ignoreTerrainCulture": true,
+  "validTerrains": [
+   "TERRAIN_ICE",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_JAGGED",
+   "TERRAIN_TUNDRA"
+  ]
+ }
+}

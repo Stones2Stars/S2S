@@ -8,8 +8,10 @@
    "UNIT_RAZZIA_PIRATES"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ALGERIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ALGERIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_ARROW_BARRAGE",
+ "description": "TXT_KEY_PROMOTIONLINE_ARROW_BARRAGE",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/ArrowBarrage1Promotion.dds"
+  }
+ }
+}

@@ -7,8 +7,10 @@
    "UNIT_MAMBISE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CUBAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CUBAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

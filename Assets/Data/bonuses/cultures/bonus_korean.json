@@ -9,8 +9,10 @@
    "UNIT_YI_SUN_SIN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_KOREAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_KOREAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

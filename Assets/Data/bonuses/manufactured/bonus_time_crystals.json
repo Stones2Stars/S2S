@@ -8,8 +8,10 @@
    "BUILDING_INTERSTELLAR_DEGENERATE_ERA_SURVIVAL_PLAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TIME_CRYSTALS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TIME_CRYSTALS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

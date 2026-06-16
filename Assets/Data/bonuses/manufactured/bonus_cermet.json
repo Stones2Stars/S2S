@@ -2,8 +2,10 @@
  "type": "BONUS_CERMET",
  "description": "TXT_KEY_BONUS_CERMET",
  "civilopedia": "TXT_KEY_BONUS_CERMET_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_CERMET"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CERMET"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -7,8 +7,10 @@
    "UNIT_SWISS_PIKEMAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SWISS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SWISS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

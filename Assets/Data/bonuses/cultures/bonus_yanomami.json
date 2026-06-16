@@ -8,8 +8,10 @@
    "UNIT_TUXAWA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_YANOMAMI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_YANOMAMI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

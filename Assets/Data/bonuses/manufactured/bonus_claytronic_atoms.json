@@ -7,8 +7,10 @@
    "BUILDING_CLAYTRONIC_FIRE_SUPPRESSION"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CLAYTRONIC_ATOMS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CLAYTRONIC_ATOMS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

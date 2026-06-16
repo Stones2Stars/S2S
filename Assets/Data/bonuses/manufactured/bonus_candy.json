@@ -2,8 +2,10 @@
  "type": "BONUS_CANDY",
  "description": "TXT_KEY_BONUS_CANDY",
  "civilopedia": "TXT_KEY_BONUS_CANDY_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_CANDY"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CANDY"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

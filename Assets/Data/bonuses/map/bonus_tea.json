@@ -47,8 +47,10 @@
    "tradeModifier": 2
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TEA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TEA"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

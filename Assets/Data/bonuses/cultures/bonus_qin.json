@@ -8,8 +8,10 @@
    "UNIT_ZHUGE_NO"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_QIN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_QIN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -95,11 +95,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/artificial_life.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ARTIFICIAL_LIFE",
-  "soundMP": "AS2D_TECH_ARTIFICIAL_LIFE",
-  "icon": "Art/Interface/Buttons/TechTree/artificial_life.dds"
+  "soundMP": "AS2D_TECH_ARTIFICIAL_LIFE"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

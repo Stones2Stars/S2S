@@ -8,8 +8,10 @@
    "UNIT_PAAKA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_WARI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_WARI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

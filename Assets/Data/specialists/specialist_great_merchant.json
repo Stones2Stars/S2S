@@ -1,0 +1,149 @@
+{
+ "type": "SPECIALIST_GREAT_MERCHANT",
+ "description": "TXT_KEY_SPECIALIST_GREAT_MERCHANT",
+ "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
+ "food": {
+  "city": {
+   "flat": 1
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_NEGOTIATOR": {
+     "flat": 1
+    },
+    "TRAIT_NEGOTIATOR2": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_ISOLATIONIST": {
+     "flat": -1
+    },
+    "TRAIT_ISOLATIONIST2": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "traits": {
+    "TRAIT_NEGOTIATOR": {
+     "flat": 1
+    },
+    "TRAIT_NEGOTIATOR3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_ISOLATIONIST": {
+     "flat": -1
+    },
+    "TRAIT_ISOLATIONIST3": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 6
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_FINANCIAL": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_FINANCIAL1": {
+     "flat": 1
+    },
+    "TRAIT_FINANCIAL3": {
+     "flat": 1
+    },
+    "TRAIT_GREEDY": {
+     "flat": -1
+    },
+    "TRAIT_GREEDY1": {
+     "flat": -1
+    },
+    "TRAIT_GREEDY3": {
+     "flat": -1
+    },
+    "TRAIT_NEGOTIATOR": {
+     "flat": 1
+    },
+    "TRAIT_NEGOTIATOR1": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_ISOLATIONIST": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_ISOLATIONIST1": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_FINANCIAL": {
+     "flat": 2
+    },
+    "TRAIT_FINANCIAL2": {
+     "flat": 2
+    },
+    "TRAIT_GREEDY": {
+     "flat": -2
+    },
+    "TRAIT_GREEDY2": {
+     "flat": -2
+    },
+    "TRAIT_COMPLEX_PHILOSOPHICAL": {
+     "flat": 1
+    },
+    "TRAIT_PHILOSOPHICAL3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_POPULIST": {
+     "flat": -1
+    },
+    "TRAIT_POPULIST3": {
+     "flat": -1
+    },
+    "TRAIT_PROLIFIC1": {
+     "flat": -1
+    },
+    "TRAIT_GRIM2": {
+     "flat": 1
+    },
+    "TRAIT_LAWFUL": {
+     "flat": 1
+    },
+    "TRAIT_LAWFUL1": {
+     "flat": 1
+    },
+    "TRAIT_CROOKED": {
+     "flat": -1
+    },
+    "TRAIT_CROOKED1": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_TRADE": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/MainScreen/CityScreen/Great_Merchant.dds",
+  "button": "Art/Interface/MainScreen/CityScreen/Great_Merchant.dds"
+ },
+ "identity": {
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_ECONOMIC"
+  ]
+ }
+}

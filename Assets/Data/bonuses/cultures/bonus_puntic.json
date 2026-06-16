@@ -8,8 +8,10 @@
    "UNIT_RESIN_CARAVAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PUNTIC"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PUNTIC"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

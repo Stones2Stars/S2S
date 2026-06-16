@@ -8,8 +8,10 @@
    "UNIT_WINNEMUCCA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PAIUTE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PAIUTE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

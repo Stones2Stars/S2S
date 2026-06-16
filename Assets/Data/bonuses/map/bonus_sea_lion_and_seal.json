@@ -44,8 +44,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SEA_LION_AND_SEAL"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SEA_LION_AND_SEAL"
+  }
  },
  "mapGeneration": {
   "placementOrder": 5,

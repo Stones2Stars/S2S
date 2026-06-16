@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_COMBAT",
+ "description": "TXT_KEY_PROMOTIONLINE_COMBAT",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,8,2"
+  }
+ }
+}

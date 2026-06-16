@@ -17,9 +17,15 @@
    "flat": 1
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_ENCELADUS",
-  "icon": "Art/Interface/Buttons/WorldBuilder/enceladus.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/enceladus.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_ENCELADUS"
+  }
  },
  "identity": {
   "found": true,

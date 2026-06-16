@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_TRANSPORT_SEAPLANES",
+ "description": "TXT_KEY_PROMOTIONLINE_TRANSPORT_SEAPLANES",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/TransportSeaplanes.dds"
+  }
+ }
+}

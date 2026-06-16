@@ -49,8 +49,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_DEER"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_DEER"
+  }
  },
  "mapGeneration": {
   "placementOrder": 6,

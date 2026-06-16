@@ -46,11 +46,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/windmills.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_WINDMILLS",
-  "soundMP": "AS2D_TECH_WINDMILLS",
-  "icon": "Art/Interface/Buttons/TechTree/windmills.dds"
+  "soundMP": "AS2D_TECH_WINDMILLS"
  },
  "identity": {
   "era": "C2C_ERA_MEDIEVAL",

@@ -8,8 +8,10 @@
    "UNIT_TOMISLAV"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CROATIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CROATIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

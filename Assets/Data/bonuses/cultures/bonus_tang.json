@@ -8,8 +8,10 @@
    "UNIT_PEN_HUO_QI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TANG"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TANG"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

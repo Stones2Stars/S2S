@@ -1,8 +1,10 @@
 {
  "type": "ROUTE_TRAIL",
  "description": "TXT_KEY_ROUTE_TRAIL",
- "art": {
-  "icon": "Art/Interface/Buttons/Builds/path.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/path.dds"
+  }
  },
  "identity": {
   "value": 1,

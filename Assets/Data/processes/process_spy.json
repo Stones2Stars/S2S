@@ -6,7 +6,9 @@
    "percent": 50
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Process/SpyProcess.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Process/SpyProcess.dds"
+  }
  }
 }

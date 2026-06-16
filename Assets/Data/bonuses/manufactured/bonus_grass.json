@@ -15,8 +15,10 @@
    "BUILDING_ULTRAFUEL_REFINERY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_GRASS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_GRASS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

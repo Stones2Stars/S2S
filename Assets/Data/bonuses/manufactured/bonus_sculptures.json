@@ -21,8 +21,10 @@
    "BUILDING_TUMEN_AMUGULANG_PALACE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SCULPTURES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SCULPTURES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

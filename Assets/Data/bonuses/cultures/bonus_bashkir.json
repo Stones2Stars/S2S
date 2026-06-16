@@ -8,8 +8,10 @@
    "UNIT_SALAWAT_YULAYEV"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BASHKIR"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BASHKIR"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

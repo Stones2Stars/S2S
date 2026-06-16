@@ -8,8 +8,10 @@
    "UNIT_SHEBA_ELITES"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ZIMBABWEAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ZIMBABWEAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_PROLIFIC",
+ "description": "TXT_KEY_PROMOTIONLINE_PROLIFIC",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitProlific.dds"
+  }
+ }
+}

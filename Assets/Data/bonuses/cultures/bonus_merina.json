@@ -7,8 +7,10 @@
    "UNIT_MENALAMBA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MERINA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MERINA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

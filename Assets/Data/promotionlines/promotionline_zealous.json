@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_ZEALOUS",
+ "description": "TXT_KEY_PROMOTIONLINE_ZEALOUS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitZealous.dds"
+  }
+ }
+}

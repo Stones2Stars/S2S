@@ -17,8 +17,10 @@
    "UNIT_WARLORDVIIS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SUPERSTRONG_ALLOYS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SUPERSTRONG_ALLOYS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

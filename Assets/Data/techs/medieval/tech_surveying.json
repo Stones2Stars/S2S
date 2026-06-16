@@ -80,11 +80,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/surveying.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SURVEYING",
-  "soundMP": "AS2D_TECH_SURVEYING",
-  "icon": "Art/Interface/Buttons/TechTree/surveying.dds"
+  "soundMP": "AS2D_TECH_SURVEYING"
  },
  "identity": {
   "era": "C2C_ERA_MEDIEVAL",

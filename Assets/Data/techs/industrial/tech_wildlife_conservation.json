@@ -96,11 +96,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Wildernessc.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_WILDLIFE_CONSERVATION",
-  "soundMP": "AS2D_TECH_WILDLIFE_CONSERVATION",
-  "icon": "Art/Interface/Buttons/TechTree/Wildernessc.dds"
+  "soundMP": "AS2D_TECH_WILDLIFE_CONSERVATION"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

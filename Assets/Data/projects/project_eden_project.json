@@ -1,0 +1,18 @@
+{
+ "type": "PROJECT_EDEN_PROJECT",
+ "description": "TXT_KEY_PROJECT_EDEN_PROJECT",
+ "civilopedia": "TXT_KEY_PROJECT_EDEN_PROJECT_PEDIA",
+ "cost": {
+  "create": 55240
+ },
+ "art": {
+  "movie": "ART_DEF_MOVIE_EDEN",
+  "icon": "Art/Interface/Buttons/Buildings/Eden.dds"
+ },
+ "identity": {
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "maxGlobalInstances": 1
+ }
+}

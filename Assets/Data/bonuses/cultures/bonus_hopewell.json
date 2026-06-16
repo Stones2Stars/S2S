@@ -8,8 +8,10 @@
    "UNIT_COPENA_MERCHANT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HOPEWELL"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HOPEWELL"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -30,8 +30,10 @@
    "tradeModifier": 10
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BAUXITE_ORE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BAUXITE_ORE"
+  }
  },
  "mapGeneration": {
   "placementOrder": 3,

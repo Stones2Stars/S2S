@@ -45,8 +45,10 @@
    "flat": 3
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CAMEL"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CAMEL"
+  }
  },
  "mapGeneration": {
   "placementOrder": 0,

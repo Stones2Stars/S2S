@@ -2,8 +2,10 @@
  "type": "BONUS_ECSTASY",
  "description": "TXT_KEY_BONUS_ECSTASY",
  "civilopedia": "TXT_KEY_BONUS_ECSTASY_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_ECSTASY"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ECSTASY"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

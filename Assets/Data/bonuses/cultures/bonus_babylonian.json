@@ -9,8 +9,10 @@
    "UNIT_NEDBUCHADNEZZAR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BABYLONIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BABYLONIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

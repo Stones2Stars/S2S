@@ -50,11 +50,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/interstellartravel.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ION_PROPULSION",
-  "soundMP": "AS2D_TECH_ION_PROPULSION",
-  "icon": "Art/Interface/Buttons/TechTree/interstellartravel.dds"
+  "soundMP": "AS2D_TECH_ION_PROPULSION"
  },
  "identity": {
   "era": "C2C_ERA_INFORMATION",

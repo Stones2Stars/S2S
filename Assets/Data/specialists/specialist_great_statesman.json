@@ -1,0 +1,200 @@
+{
+ "type": "SPECIALIST_GREAT_STATESMAN",
+ "description": "TXT_KEY_UNIT_GREAT_STATESMAN",
+ "civilopedia": "TXT_KEY_CONCEPT_GREAT_STATESMAN_PEDIA",
+ "food": {
+  "city": {
+   "flat": 1
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_POLITICIAN": {
+     "flat": 1
+    },
+    "TRAIT_POLITICIAN2": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_FOREIGN": {
+     "flat": -1
+    },
+    "TRAIT_FOREIGN2": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_POLITICIAN": {
+     "flat": 1
+    },
+    "TRAIT_POLITICIAN2": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_FOREIGN": {
+     "flat": -1
+    },
+    "TRAIT_FOREIGN2": {
+     "flat": -1
+    },
+    "TRAIT_CROOKED3": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_EFFICIENT": {
+     "flat": 1
+    },
+    "TRAIT_EFFICIENT1": {
+     "flat": 1
+    },
+    "TRAIT_EFFICIENT2": {
+     "flat": 1
+    },
+    "TRAIT_EFFICIENT3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_EXCESSIVE": {
+     "flat": -1
+    },
+    "TRAIT_EXCESSIVE2": {
+     "flat": -1
+    },
+    "TRAIT_EXCESSIVE3": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_PHILOSOPHICAL": {
+     "flat": 1
+    },
+    "TRAIT_PHILOSOPHICAL2": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_POPULIST": {
+     "flat": -1
+    },
+    "TRAIT_POPULIST2": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_POLITICIAN": {
+     "flat": 1
+    },
+    "TRAIT_POLITICIAN2": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_FOREIGN": {
+     "flat": -1
+    },
+    "TRAIT_FOREIGN2": {
+     "flat": -1
+    },
+    "TRAIT_LAWFUL": {
+     "flat": 1
+    },
+    "TRAIT_LAWFUL3": {
+     "flat": 1
+    },
+    "TRAIT_CROOKED": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 1
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_PROLIFIC3": {
+     "flat": -1
+    },
+    "TRAIT_GRIM3": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_EXPANSIVE3": {
+     "flat": -1
+    },
+    "TRAIT_MINIMALIST3": {
+     "flat": 1
+    },
+    "TRAIT_LAWFUL": {
+     "flat": 1
+    },
+    "TRAIT_LAWFUL3": {
+     "flat": 1
+    },
+    "TRAIT_CROOKED": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_ORGANIZED3": {
+     "flat": -1
+    },
+    "TRAIT_IMPULSIVE3": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_CHARISMATIC2": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_SPY": {
+     "flat": 1
+    },
+    "UNITCOMBAT_DIPLOMAT": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/mainscreen/cityscreen/great_statesman.dds",
+  "button": "Art/Interface/mainscreen/cityscreen/great_statesman.dds"
+ },
+ "identity": {
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_POLITICAL"
+  ]
+ }
+}

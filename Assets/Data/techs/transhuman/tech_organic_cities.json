@@ -108,11 +108,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/organic_city.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ORGANIC_CITIES",
-  "soundMP": "AS2D_TECH_ORGANIC_CITIES",
-  "icon": "Art/Interface/Buttons/TechTree/organic_city.dds"
+  "soundMP": "AS2D_TECH_ORGANIC_CITIES"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

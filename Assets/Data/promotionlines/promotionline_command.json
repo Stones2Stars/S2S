@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_COMMAND",
+ "description": "TXT_KEY_PROMOTIONLINE_COMMAND",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/CommanderCommand1.dds"
+  }
+ }
+}

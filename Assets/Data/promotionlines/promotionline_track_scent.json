@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_TRACK_SCENT",
+ "description": "TXT_KEY_PROMOTIONLINE_TRACK_SCENT",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/trackscent1.dds"
+  }
+ }
+}

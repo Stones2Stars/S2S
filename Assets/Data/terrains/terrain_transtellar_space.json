@@ -17,9 +17,15 @@
    "flat": 1
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_TRANSTELLAR_SPACE",
-  "icon": "Art/Interface/Buttons/WorldBuilder/transtellar.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/transtellar.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_TRANSTELLAR_SPACE"
+  }
  },
  "identity": {
   "found": true,

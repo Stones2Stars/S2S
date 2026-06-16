@@ -8,8 +8,10 @@
    "UNIT_KHANUNGESE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SEMANG"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SEMANG"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

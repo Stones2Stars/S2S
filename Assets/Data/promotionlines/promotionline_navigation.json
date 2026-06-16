@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_NAVIGATION",
+ "description": "TXT_KEY_PROMOTIONLINE_NAVIGATION",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Navigation1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,7,4"
+  }
+ }
+}

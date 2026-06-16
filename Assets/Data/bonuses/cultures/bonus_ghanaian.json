@@ -8,8 +8,10 @@
    "UNIT_SONINKE_SWORDSMAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_GHANAIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_GHANAIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

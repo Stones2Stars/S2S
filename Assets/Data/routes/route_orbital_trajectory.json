@@ -16,8 +16,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "art/interface/buttons/improvements/cislunar_trajectory.dds"
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/cislunar_trajectory.dds"
+  }
  },
  "identity": {
   "value": 1,

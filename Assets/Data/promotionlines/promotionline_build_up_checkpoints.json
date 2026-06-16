@@ -1,0 +1,13 @@
+{
+ "type": "PROMOTIONLINE_BUILD_UP_CHECKPOINTS",
+ "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_CHECKPOINTS",
+ "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_CHECKPOINTS_HELP",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Checkpoints1BuildUp.dds"
+  }
+ },
+ "identity": {
+  "buildUp": true
+ }
+}

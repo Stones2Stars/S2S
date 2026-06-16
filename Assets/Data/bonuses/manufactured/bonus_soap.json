@@ -12,8 +12,10 @@
    "UNIT_VET"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SOAP"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SOAP"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -1,0 +1,77 @@
+{
+ "type": "FEATURE_BAMBOO",
+ "description": "TXT_KEY_FEATURE_BAMBOO",
+ "civilopedia": "TXT_KEY_FEATURE_BAMBOO_PEDIA",
+ "production": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 10
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "properties": [
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_AIR_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": -3
+  }
+ ],
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_BAMBOO"
+  }
+ },
+ "sound": {
+  "footsteps": [
+   {
+    "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_HUMAN_LOW": "AS3D_UN_FOOT_UNIT_LOW_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL": "AS3D_UN_ANIMAL_FOOT_LARGE_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL_LOW": "AS3D_UN_ANIMAL_FOOT_LARGE_LOW_MUD"
+   }
+  ],
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "appearance": 500,
+  "growth": 20,
+  "popDestroys": 5,
+  "validTerrains": [
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_ROCKY",
+   "TERRAIN_MARSH"
+  ]
+ }
+}

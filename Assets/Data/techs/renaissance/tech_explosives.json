@@ -129,11 +129,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/Explosives.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_EXPLOSIVES",
-  "soundMP": "AS2D_TECH_EXPLOSIVES",
-  "icon": "Art/Interface/Buttons/TechTree/Explosives.dds"
+  "soundMP": "AS2D_TECH_EXPLOSIVES"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

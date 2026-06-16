@@ -9,8 +9,10 @@
    "UNIT_SEMIRAMIS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ASSYRIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ASSYRIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

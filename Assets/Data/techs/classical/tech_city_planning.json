@@ -119,11 +119,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/CityPlanning.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,4"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_CITY_PLANNING",
-  "soundMP": "AS2D_TECH_CITY_PLANNING",
-  "icon": ",Art/Interface/Buttons/TechTree/CityPlanning.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,4"
+  "soundMP": "AS2D_TECH_CITY_PLANNING"
  },
  "identity": {
   "era": "C2C_ERA_CLASSICAL",

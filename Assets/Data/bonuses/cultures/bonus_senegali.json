@@ -8,8 +8,10 @@
    "UNIT_SABAR_DRUMMER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SENEGALI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SENEGALI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

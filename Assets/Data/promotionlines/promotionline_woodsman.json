@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_WOODSMAN",
+ "description": "TXT_KEY_PROMOTIONLINE_WOODSMAN",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Woodsman1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,6,6"
+  }
+ }
+}

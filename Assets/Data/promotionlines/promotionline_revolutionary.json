@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_REVOLUTIONARY",
+ "description": "TXT_KEY_PROMOTIONLINE_REVOLUTIONARY",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPolitician.dds"
+  }
+ }
+}

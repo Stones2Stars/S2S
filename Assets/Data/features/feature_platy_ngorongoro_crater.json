@@ -1,0 +1,32 @@
+{
+ "type": "FEATURE_PLATY_NGORONGORO_CRATER",
+ "description": "TXT_KEY_FEATURE_NGORONGORO_CRATER",
+ "civilopedia": "TXT_KEY_FEATURE_NGORONGORO_CRATER_PEDIA",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_NGORONGORO_CRATER"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "addsFreshWater": true,
+  "requiresFlatlands": true,
+  "noCity": true,
+  "noImprovement": true,
+  "noBonus": true,
+  "nukeImmune": true,
+  "ignoreTerrainCulture": true,
+  "validTerrains": [
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_SCRUB"
+  ]
+ }
+}

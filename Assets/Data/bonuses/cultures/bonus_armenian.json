@@ -9,8 +9,10 @@
    "UNIT_NAKHARAR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ARMENIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ARMENIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

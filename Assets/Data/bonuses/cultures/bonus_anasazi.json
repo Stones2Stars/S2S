@@ -9,8 +9,10 @@
    "UNIT_SPIRIT_WALKER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ANASAZI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ANASAZI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

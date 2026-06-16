@@ -127,11 +127,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/techtree/Mountianeering.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_MOUNTAINEERING",
-  "soundMP": "AS2D_TECH_MOUNTAINEERING",
-  "icon": "Art/Interface/Buttons/techtree/Mountianeering.dds"
+  "soundMP": "AS2D_TECH_MOUNTAINEERING"
  },
  "identity": {
   "era": "C2C_ERA_MEDIEVAL",

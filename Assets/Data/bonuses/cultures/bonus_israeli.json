@@ -9,8 +9,10 @@
    "UNIT_SOLOMON"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ISRAELI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ISRAELI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

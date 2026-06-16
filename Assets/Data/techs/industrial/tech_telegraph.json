@@ -48,11 +48,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/telegraph.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_TELEGRAPH",
-  "soundMP": "AS2D_TECH_TELEGRAPH",
-  "icon": "Art/Interface/Buttons/TechTree/telegraph.dds"
+  "soundMP": "AS2D_TECH_TELEGRAPH"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

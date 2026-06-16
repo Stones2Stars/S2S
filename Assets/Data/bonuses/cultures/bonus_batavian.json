@@ -8,8 +8,10 @@
    "UNIT_JULIUS_CIVILIS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BATAVIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BATAVIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

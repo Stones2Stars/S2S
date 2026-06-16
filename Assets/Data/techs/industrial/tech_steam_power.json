@@ -122,11 +122,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/Steam_Power.dds,Art/Interface/Buttons/TechTree_Atlas.dds,1,12"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_STEAMPOWER",
-  "soundMP": "AS2D_TECH_MP_STEAMPOWER",
-  "icon": ",Art/Interface/Buttons/TechTree/Steam_Power.dds,Art/Interface/Buttons/TechTree_Atlas.dds,1,12"
+  "soundMP": "AS2D_TECH_MP_STEAMPOWER"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

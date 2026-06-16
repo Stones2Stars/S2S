@@ -22,10 +22,18 @@
    "flat": 3
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_ASTEROID_SURFACE",
-  "icon": "Art/Interface/Buttons/baseterrain/asteroid_surface.dds",
-  "worldSoundscapeAudioScript": "ASSS_TUNDRA_SELECT_AMB"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/baseterrain/asteroid_surface.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_ASTEROID_SURFACE"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_TUNDRA_SELECT_AMB"
  },
  "identity": {
   "found": true,

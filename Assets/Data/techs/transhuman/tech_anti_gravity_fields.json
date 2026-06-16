@@ -56,11 +56,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Buttons/Techs/TechAntiGravityFields.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ANTI_GRAVITY_FIELDS",
-  "soundMP": "AS2D_TECH_ANTI_GRAVITY_FIELDS",
-  "icon": "Art/Buttons/Techs/TechAntiGravityFields.dds"
+  "soundMP": "AS2D_TECH_ANTI_GRAVITY_FIELDS"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

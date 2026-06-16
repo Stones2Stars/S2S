@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_NOMADIC_PROMOTION",
+ "description": "TXT_KEY_PROMOTIONLINE_NOMADIC_PROMOTION",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/PromotionNomadic.dds"
+  }
+ }
+}

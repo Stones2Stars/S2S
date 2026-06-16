@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_LAWFUL_PROMOTION",
+ "description": "TXT_KEY_PROMOTIONLINE_LAWFUL_PROMOTION",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/PromotionLawful.dds"
+  }
+ }
+}

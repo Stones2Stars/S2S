@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_PROGRESSIST",
+ "description": "TXT_KEY_PROMOTIONLINE_PROGRESSIST",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitProgressist.dds"
+  }
+ }
+}

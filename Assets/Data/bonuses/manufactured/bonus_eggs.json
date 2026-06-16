@@ -9,8 +9,10 @@
    "BUILDING_PANCAKE_HOUSE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_EGGS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_EGGS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

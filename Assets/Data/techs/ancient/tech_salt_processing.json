@@ -55,11 +55,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/saltprocessing.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SALT_PROCESSING",
-  "soundMP": "AS2D_TECH_SALT_PROCESSING",
-  "icon": "Art/Interface/Buttons/TechTree/saltprocessing.dds"
+  "soundMP": "AS2D_TECH_SALT_PROCESSING"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

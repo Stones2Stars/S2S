@@ -9,8 +9,10 @@
    "UNIT_VIETCONG"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_VIETNAMESE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_VIETNAMESE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

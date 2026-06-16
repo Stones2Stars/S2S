@@ -7,8 +7,10 @@
    "UNIT_TARKAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HUN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HUN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

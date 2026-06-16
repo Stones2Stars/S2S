@@ -7,8 +7,10 @@
    "flat": 3
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MARTIAN_BLUEBERRIES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MARTIAN_BLUEBERRIES"
+  }
  },
  "mapGeneration": {
   "constAppearance": 35,

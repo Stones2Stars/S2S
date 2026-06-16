@@ -9,8 +9,10 @@
    "UNIT_OTTOMAN_JANISSARY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_OTTOMAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_OTTOMAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

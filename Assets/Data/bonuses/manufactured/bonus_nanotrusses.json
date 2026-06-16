@@ -7,8 +7,10 @@
    "BUILDING_PLYMOUTH_ARCOLOGY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NANOTRUSSES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NANOTRUSSES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

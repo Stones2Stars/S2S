@@ -68,11 +68,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/binarysemiotics.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_BINARY_SEMIOTICS",
-  "soundMP": "AS2D_TECH_BINARY_SEMIOTICS",
-  "icon": "Art/Interface/Buttons/TechTree/binarysemiotics.dds"
+  "soundMP": "AS2D_TECH_BINARY_SEMIOTICS"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

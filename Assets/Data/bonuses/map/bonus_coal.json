@@ -50,8 +50,10 @@
    "flat": 4
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_COAL"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_COAL"
+  }
  },
  "mapGeneration": {
   "placementOrder": 2,

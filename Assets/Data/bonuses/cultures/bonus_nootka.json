@@ -7,8 +7,10 @@
    "UNIT_NOOTKA_CLUBMAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NOOTKA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NOOTKA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

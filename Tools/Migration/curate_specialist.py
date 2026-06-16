@@ -201,7 +201,7 @@ def main():
         all_leftover.update(leftover)
     print("SpecialistInfo curated: %d" % len(results))
     seen = sorted({k for o in results.values() for k in o
-                   if k not in ("type", "description", "civilopedia", "help", "ai", "art", "identity")})
+                   if k not in ("type", "description", "civilopedia", "help", "ai", "ui", "world", "sound", "identity")})
     print("  families/props seen: %s" % ", ".join(seen))
     if all_leftover:
         print("  leftover-to-identity (review): %s" % ", ".join(sorted(all_leftover)))

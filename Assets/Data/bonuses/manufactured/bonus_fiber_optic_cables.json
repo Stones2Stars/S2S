@@ -14,8 +14,10 @@
    "BUILDING_RADIO_TELESCOPE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FIBER_OPTIC_CABLES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FIBER_OPTIC_CABLES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -44,11 +44,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_RELIGION",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/reincarnation.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_REINCARNATION2",
-  "soundMP": "AS2D_TECH_REINCARNATION2",
-  "icon": "Art/Interface/Buttons/TechTree/reincarnation.dds"
+  "soundMP": "AS2D_TECH_REINCARNATION2"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

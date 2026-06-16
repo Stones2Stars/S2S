@@ -85,11 +85,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/Computers.dds,Art/Interface/Buttons/TechTree_Atlas.dds,7,2"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_PERSONAL_COMPUTERS",
-  "soundMP": "AS2D_TECH_PERSONAL_COMPUTERS",
-  "icon": ",Art/Interface/Buttons/TechTree/Computers.dds,Art/Interface/Buttons/TechTree_Atlas.dds,7,2"
+  "soundMP": "AS2D_TECH_PERSONAL_COMPUTERS"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

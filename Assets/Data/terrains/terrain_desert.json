@@ -27,10 +27,18 @@
    "flat": 2
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_DESERT",
-  "icon": "Art/Interface/Buttons/baseterrain/DuneGraben.dds",
-  "footstepSounds": [
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/baseterrain/DuneGraben.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_DESERT"
+  }
+ },
+ "sound": {
+  "footsteps": [
    {
     "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT_SAND"
    },
@@ -125,7 +133,7 @@
     "ENDSTEP_WHEELS_3": "AS3D_UN_TREBUCHET_STOP"
    }
   ],
-  "worldSoundscapeAudioScript": "ASSS_DESERT_SELECT_AMB"
+  "soundscape": "ASSS_DESERT_SELECT_AMB"
  },
  "identity": {
   "foundCoast": true,

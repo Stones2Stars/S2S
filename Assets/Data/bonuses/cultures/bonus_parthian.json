@@ -7,8 +7,10 @@
    "UNIT_GRIVPANVAR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PARTHIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PARTHIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

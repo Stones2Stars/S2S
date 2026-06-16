@@ -32,8 +32,10 @@
    "UNIT_WORKANIMAL"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_DOG"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_DOG"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

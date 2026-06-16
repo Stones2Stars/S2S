@@ -48,11 +48,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Fire_Brigades.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_FIRE_BRIGADES",
-  "soundMP": "AS2D_TECH_FIRE_BRIGADES",
-  "icon": "Art/Interface/Buttons/TechTree/Fire_Brigades.dds"
+  "soundMP": "AS2D_TECH_FIRE_BRIGADES"
  },
  "identity": {
   "era": "C2C_ERA_MEDIEVAL",

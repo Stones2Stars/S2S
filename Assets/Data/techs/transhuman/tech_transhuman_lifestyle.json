@@ -99,11 +99,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Buttons/Techs/TranshumanLifestyleTech.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_TRANSHUMAN_LIFESTYLE",
-  "soundMP": "AS2D_TECH_TRANSHUMAN_LIFESTYLE",
-  "icon": "Art/Buttons/Techs/TranshumanLifestyleTech.dds"
+  "soundMP": "AS2D_TECH_TRANSHUMAN_LIFESTYLE"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

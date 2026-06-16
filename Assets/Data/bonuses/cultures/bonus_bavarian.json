@@ -8,8 +8,10 @@
    "UNIT_MARHATHEGNOZ"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BAVARIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BAVARIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

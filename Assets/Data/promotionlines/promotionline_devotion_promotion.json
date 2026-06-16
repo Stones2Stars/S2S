@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_DEVOTION_PROMOTION",
+ "description": "TXT_KEY_PROMOTIONLINE_DEVOTION_PROMOTION",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/PromotionDevotion.dds"
+  }
+ }
+}

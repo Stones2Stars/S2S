@@ -7,8 +7,10 @@
    "UNIT_COYOTE_RUNNER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TOLTEC"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TOLTEC"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

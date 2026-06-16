@@ -8,8 +8,10 @@
    "BUILDING_HUMAN_MOD_INDEFINITE_LIFESPAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HUMAN_MOD_ENLIGHTENED"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HUMAN_MOD_ENLIGHTENED"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

@@ -7,8 +7,10 @@
    "UNIT_HERERO_REBEL"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HERERO"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HERERO"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

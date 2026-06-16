@@ -58,11 +58,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Buttons/Techs/TechAttometerNanomophism.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_NANOMORPHIC_TROIDS",
-  "soundMP": "AS2D_TECH_NANOMORPHIC_TROIDS",
-  "icon": "Art/Buttons/Techs/TechAttometerNanomophism.dds"
+  "soundMP": "AS2D_TECH_NANOMORPHIC_TROIDS"
  },
  "identity": {
   "era": "C2C_ERA_GALACTIC",

@@ -8,8 +8,10 @@
    "UNIT_OMUCHTAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TAJIK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TAJIK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

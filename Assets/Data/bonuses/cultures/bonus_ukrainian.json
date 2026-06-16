@@ -8,8 +8,10 @@
    "UNIT_ZAPOROZKI_KOZAK"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_UKRAINIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_UKRAINIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

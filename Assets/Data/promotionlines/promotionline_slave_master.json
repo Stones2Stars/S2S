@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_SLAVE_MASTER",
+ "description": "TXT_KEY_PROMOTIONLINE_SLAVE_MASTER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/flaming1.dds"
+  }
+ }
+}

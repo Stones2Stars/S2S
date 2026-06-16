@@ -12,8 +12,10 @@
    "UNIT_SHOCKWAVE_APC"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SHOCKWAVE_ENGINES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SHOCKWAVE_ENGINES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

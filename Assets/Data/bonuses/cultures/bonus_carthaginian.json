@@ -9,8 +9,10 @@
    "UNIT_SACRED_BAND"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CARTHAGINIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CARTHAGINIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

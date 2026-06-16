@@ -8,8 +8,10 @@
    "UNIT_SUGAR_CLIPPER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_GUYANESE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_GUYANESE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

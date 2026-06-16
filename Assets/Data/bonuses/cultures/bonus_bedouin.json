@@ -8,8 +8,10 @@
    "UNIT_MEHARISTS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BEDOUIN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BEDOUIN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -48,11 +48,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/Falconry.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_FALCONRY",
-  "soundMP": "AS2D_TECH_FALCONRY",
-  "icon": "Art/Interface/Buttons/TechTree/Falconry.dds"
+  "soundMP": "AS2D_TECH_FALCONRY"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

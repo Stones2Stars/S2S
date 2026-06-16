@@ -95,11 +95,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/archeology.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ARCHEOLOGY",
-  "soundMP": "AS2D_TECH_ARCHEOLOGY",
-  "icon": "Art/Interface/Buttons/TechTree/archeology.dds"
+  "soundMP": "AS2D_TECH_ARCHEOLOGY"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

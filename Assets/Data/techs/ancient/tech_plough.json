@@ -86,11 +86,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/plough2.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_PLOUGH",
-  "soundMP": "AS2D_TECH_PLOUGH",
-  "icon": "Art/Interface/Buttons/TechTree/plough2.dds"
+  "soundMP": "AS2D_TECH_PLOUGH"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

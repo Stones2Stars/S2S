@@ -8,8 +8,10 @@
    "UNIT_ZHUGE_KESHIK"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_XIONGNU"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_XIONGNU"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

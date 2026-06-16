@@ -8,8 +8,10 @@
    "UNIT_SAXON_RAIDER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SAXON"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SAXON"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

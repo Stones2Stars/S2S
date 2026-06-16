@@ -1,0 +1,95 @@
+{
+ "type": "FEATURE_MANGROVE",
+ "description": "TXT_KEY_FEATURE_MANGROVE",
+ "civilopedia": "TXT_KEY_FEATURE_MANGROVE_PEDIA",
+ "cultureDistance": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 10
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "properties": [
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_AIR_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": -4
+  },
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_WATER_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": -5
+  }
+ ],
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_MANGROVE"
+  }
+ },
+ "sound": {
+  "footsteps": [
+   {
+    "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_HUMAN_LOW": "AS3D_UN_FOOT_UNIT_LOW_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL": "AS3D_UN_ANIMAL_FOOT_LARGE_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL_LOW": "AS3D_UN_ANIMAL_FOOT_LARGE_LOW_MUD"
+   },
+   {
+    "LOOPSTEP_OCEAN1": "AS3D_UN_OCEAN_LOOP1"
+   },
+   {
+    "ENDSTEP_OCEAN1": "AS3D_UN_OCEAN_END1"
+   },
+   {
+    "LOOPSTEP_OCEAN2": "AS3D_UN_OCEAN_LOOP1"
+   },
+   {
+    "ENDSTEP_OCEAN2": "AS3D_UN_OCEAN_END2"
+   }
+  ],
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "popDestroys": -1,
+  "noCity": true,
+  "coastalOnly": true,
+  "requiresFlatlands": true,
+  "appearance": 200,
+  "growth": 10,
+  "validTerrains": [
+   "TERRAIN_MARSH",
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_COAST_TROPICAL"
+  ]
+ }
+}

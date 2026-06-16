@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_BOMBARDING",
+ "description": "TXT_KEY_PROMOTIONLINE_BOMBARDING",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/bombarding1.dds"
+  }
+ }
+}

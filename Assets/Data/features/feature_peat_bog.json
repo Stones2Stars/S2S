@@ -1,0 +1,85 @@
+{
+ "type": "FEATURE_PEAT_BOG",
+ "description": "TXT_KEY_FEATURE_PEAT_BOG",
+ "civilopedia": "TXT_KEY_FEATURE_PEAT_BOG_PEDIA",
+ "food": {
+  "plot": {
+   "flat": -1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "HAS_RIVER"
+    }
+   ]
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "plot": {
+   "percent": -50
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 10
+   }
+  }
+ },
+ "properties": [
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_WATER_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": -5
+  }
+ ],
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_PEAT_BOG"
+  }
+ },
+ "sound": {
+  "footsteps": [
+   {
+    "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_HUMAN_LOW": "AS3D_UN_FOOT_UNIT_LOW_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL": "AS3D_UN_ANIMAL_FOOT_LARGE_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL_LOW": "AS3D_UN_ANIMAL_FOOT_LARGE_LOW_MUD"
+   }
+  ]
+ },
+ "identity": {
+  "appearance": 80,
+  "popDestroys": -1,
+  "requiresFlatlands": true,
+  "addsFreshWater": true,
+  "noCity": true,
+  "validTerrains": [
+   "TERRAIN_TAIGA",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND"
+  ]
+ }
+}

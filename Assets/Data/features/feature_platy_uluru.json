@@ -1,0 +1,44 @@
+{
+ "type": "FEATURE_PLATY_ULURU",
+ "description": "TXT_KEY_FEATURE_ULURU",
+ "civilopedia": "TXT_KEY_FEATURE_ULURU_PEDIA",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 5
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_ULURU"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "requiresFlatlands": true,
+  "noCity": true,
+  "noImprovement": true,
+  "noBonus": true,
+  "nukeImmune": true,
+  "ignoreTerrainCulture": true,
+  "validTerrains": [
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB"
+  ]
+ }
+}

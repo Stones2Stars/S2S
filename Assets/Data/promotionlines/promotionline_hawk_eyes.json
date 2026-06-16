@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_HAWK_EYES",
+ "description": "TXT_KEY_PROMOTIONLINE_HAWK_EYES",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/HawkEyes1Promotion.dds"
+  }
+ }
+}

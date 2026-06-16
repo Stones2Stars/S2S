@@ -96,11 +96,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/Robotics.dds,Art/Interface/Buttons/NextWar_Atlas.dds,4,3"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_BIONICS",
-  "soundMP": "AS2D_TECH_BIONICS",
-  "icon": ",Art/Interface/Buttons/TechTree/Robotics.dds,Art/Interface/Buttons/NextWar_Atlas.dds,4,3"
+  "soundMP": "AS2D_TECH_BIONICS"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

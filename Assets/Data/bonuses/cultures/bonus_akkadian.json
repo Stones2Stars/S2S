@@ -9,8 +9,10 @@
    "UNIT_SARGON"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_AKKADIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_AKKADIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

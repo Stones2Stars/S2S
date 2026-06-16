@@ -8,8 +8,10 @@
    "UNIT_ROLLO"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NORMAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NORMAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

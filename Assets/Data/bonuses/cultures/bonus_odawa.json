@@ -8,8 +8,10 @@
    "UNIT_ODAWA_TRADERS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ODAWA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ODAWA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

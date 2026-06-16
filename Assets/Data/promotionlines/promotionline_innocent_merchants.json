@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_INNOCENT_MERCHANTS",
+ "description": "TXT_KEY_PROMOTIONLINE_INNOCENT_MERCHANTS",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/InnocentMerchants1Promotion.dds"
+  }
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "type": "PROJECT_ENCYCLOPEDIA",
+ "description": "TXT_KEY_PROJECT_ENCYCLOPEDIA",
+ "civilopedia": "TXT_KEY_PROJECT_ENCYCLOPEDIA_PEDIA",
+ "diplomacy": {
+  "team": {
+   "techShare": {
+    "flat": 2
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 15
+  }
+ },
+ "cost": {
+  "create": 4120
+ },
+ "art": {
+  "movie": "ART_DEF_MOVIE_ENCYCLOPEDIA",
+  "icon": "Art/Interface/Buttons/Buildings/CodeCivil.dds"
+ },
+ "identity": {
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "maxGlobalInstances": 1
+ }
+}

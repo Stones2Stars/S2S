@@ -9,8 +9,10 @@
    "BUILDING_SUPERCONDUCTING_GRID"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SUPERSOLID_MATERIAL"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SUPERSOLID_MATERIAL"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

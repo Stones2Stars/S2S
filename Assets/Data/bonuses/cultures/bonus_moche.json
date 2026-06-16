@@ -9,8 +9,10 @@
    "UNIT_SI_WARRIOR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MOCHE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MOCHE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

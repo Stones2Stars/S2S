@@ -8,8 +8,10 @@
    "UNIT_REINDEER_RIDER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SAMI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SAMI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

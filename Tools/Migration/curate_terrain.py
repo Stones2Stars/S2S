@@ -103,7 +103,7 @@ def _inject(obj, family, scope, unit, value, enabled=None):
 
 _PREFIX = ["type", "description", "civilopedia", "help", "quote", "strategy",
            "enables", "obsoletes", "replaces", "disables", "requires"]
-_SUFFIX = ["grants", "cost", "ai", "art", "mapGeneration", "identity"]
+_SUFFIX = ["grants", "cost", "ai", "ui", "world", "sound", "mapGeneration", "identity"]
 
 
 def _reorder(obj):
@@ -151,16 +151,14 @@ TERRAIN_FAMILIES = {
     "iBuildModifier":   {"channel": "buildTime",       "scope": "plot", "kind": "percent"},
 }
 
-# Keep ArtDefineTag (the ON-MAP terrain graphics FK) DISTINCT from the UI icon (Button): terrain carries BOTH,
-# and the global ArtDefineTag->icon collapse would otherwise overwrite Button->icon (silent data loss).
-TERRAIN_ART_RENAME = {"ArtDefineTag": "artDefineTag"}
+# ArtDefineTag (on-map terrain graphics) -> world.art.icon and Button -> ui.art.icon are now handled by the shared
+# ART_BLOCK (curate_common) — no per-entity art_rename needed.
 
 # Clearer identity key for the placement-category vector (MAPCATEGORY_* membership).
 TERRAIN_ID_RENAME = {"MapCategoryTypes": "mapCategories"}
 
 CFG = cc.EntityConfig("TerrainInfo", extra_drop=["iHealthPercent"],
-                      families=TERRAIN_FAMILIES, id_rename=TERRAIN_ID_RENAME,
-                      art_rename=TERRAIN_ART_RENAME)
+                      families=TERRAIN_FAMILIES, id_rename=TERRAIN_ID_RENAME)
 
 # NO inbound boosts: a terrain is never the deliveryguy for another entity's modifier (owner 2026-06-16).
 TERRAIN_BOOSTS = []

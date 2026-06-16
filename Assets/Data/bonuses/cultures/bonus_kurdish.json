@@ -8,8 +8,10 @@
    "UNIT_PESHMERGA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_KURDISH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_KURDISH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

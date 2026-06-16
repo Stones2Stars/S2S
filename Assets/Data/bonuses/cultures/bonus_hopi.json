@@ -8,8 +8,10 @@
    "UNIT_SEKAQUAPTEWA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HOPI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HOPI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

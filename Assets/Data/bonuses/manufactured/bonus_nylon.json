@@ -7,8 +7,10 @@
    "BUILDING_FACTORY_ROPE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NYLON"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NYLON"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -51,11 +51,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/techtree/Negotiation.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_NEGOTIATION",
-  "soundMP": "AS2D_TECH_NEGOTIATION",
-  "icon": "Art/Interface/Buttons/techtree/Negotiation.dds"
+  "soundMP": "AS2D_TECH_NEGOTIATION"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

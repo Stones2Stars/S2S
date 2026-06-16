@@ -8,8 +8,10 @@
    "UNIT_VOZOVA_HRADBA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CZECH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CZECH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

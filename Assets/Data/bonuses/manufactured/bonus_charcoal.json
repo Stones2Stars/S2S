@@ -11,8 +11,10 @@
    "BUILDING_SMELTER_STEEL"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CHARCOAL"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CHARCOAL"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

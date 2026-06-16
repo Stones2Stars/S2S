@@ -17,9 +17,15 @@
    "flat": 1
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_METHANE_OCEAN",
-  "icon": "Art/Interface/Buttons/WorldBuilder/methane_ocean.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/methane_ocean.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_METHANE_OCEAN"
+  }
  },
  "identity": {
   "distanceToLand": 1,

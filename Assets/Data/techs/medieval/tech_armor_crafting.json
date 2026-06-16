@@ -82,11 +82,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/Armorcrafting.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ARMORCRAFTING",
-  "soundMP": "AS2D_TECH_ARMORCRAFTING",
-  "icon": "Art/Interface/Buttons/TechTree/Armorcrafting.dds"
+  "soundMP": "AS2D_TECH_ARMORCRAFTING"
  },
  "identity": {
   "era": "C2C_ERA_MEDIEVAL",

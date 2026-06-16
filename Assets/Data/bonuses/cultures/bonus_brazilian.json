@@ -9,8 +9,10 @@
    "UNIT_TIRADENTES"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BRAZILIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BRAZILIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

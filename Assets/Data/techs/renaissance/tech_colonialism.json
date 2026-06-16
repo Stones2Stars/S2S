@@ -52,11 +52,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/colonialism.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_COLONIALISM",
-  "soundMP": "AS2D_TECH_COLONIALISM",
-  "icon": "Art/Interface/Buttons/TechTree/colonialism.dds"
+  "soundMP": "AS2D_TECH_COLONIALISM"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

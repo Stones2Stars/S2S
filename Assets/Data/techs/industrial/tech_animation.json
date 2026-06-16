@@ -65,11 +65,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/animation.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ANIMATION",
-  "soundMP": "AS2D_TECH_ANIMATION",
-  "icon": "Art/Interface/Buttons/TechTree/animation.dds"
+  "soundMP": "AS2D_TECH_ANIMATION"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

@@ -52,11 +52,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/ideograms.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_IDEOGRAMS",
-  "soundMP": "AS2D_TECH_IDEOGRAMS",
-  "icon": "Art/Interface/Buttons/TechTree/ideograms.dds"
+  "soundMP": "AS2D_TECH_IDEOGRAMS"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

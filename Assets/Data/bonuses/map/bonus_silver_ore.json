@@ -35,8 +35,10 @@
    "tradeModifier": 2
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SILVER_ORE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SILVER_ORE"
+  }
  },
  "mapGeneration": {
   "placementOrder": 5,

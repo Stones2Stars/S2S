@@ -2,8 +2,10 @@
  "type": "BONUS_SOYLENT_GREEN",
  "description": "TXT_KEY_BONUS_SOYLENT_GREEN",
  "civilopedia": "TXT_KEY_BONUS_SOYLENT_GREEN_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_SOYLENT_GREEN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SOYLENT_GREEN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

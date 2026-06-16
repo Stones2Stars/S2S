@@ -9,8 +9,10 @@
    "UNIT_SAN_MARTIN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ARGENTINIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ARGENTINIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -44,8 +44,10 @@
    "tradeModifier": 3
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_OLIVES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_OLIVES"
+  }
  },
  "mapGeneration": {
   "placementOrder": 5,

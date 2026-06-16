@@ -8,8 +8,10 @@
    "UNIT_INDONESIAN_SILAT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_INDONESIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_INDONESIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

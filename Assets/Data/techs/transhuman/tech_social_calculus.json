@@ -69,11 +69,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/socialcalculus.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SOCIAL_CALCULUS",
-  "soundMP": "AS2D_TECH_SOCIAL_CALCULUS",
-  "icon": "Art/Interface/Buttons/TechTree/socialcalculus.dds"
+  "soundMP": "AS2D_TECH_SOCIAL_CALCULUS"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

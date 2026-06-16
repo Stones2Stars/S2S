@@ -58,11 +58,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/compositetools.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_COMPOSITE_TOOLS",
-  "soundMP": "AS2D_TECH_COMPOSITE_TOOLS",
-  "icon": "Art/Interface/Buttons/TechTree/compositetools.dds"
+  "soundMP": "AS2D_TECH_COMPOSITE_TOOLS"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

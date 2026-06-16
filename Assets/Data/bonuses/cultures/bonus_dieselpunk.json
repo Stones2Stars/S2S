@@ -23,8 +23,10 @@
    "UNIT_VERY_HEAVY_ARMOR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_DIESELPUNK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_DIESELPUNK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

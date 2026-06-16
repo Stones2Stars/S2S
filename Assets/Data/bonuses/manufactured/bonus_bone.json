@@ -20,8 +20,10 @@
    "BUILDING_TATTOO_PARLOR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BONE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BONE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

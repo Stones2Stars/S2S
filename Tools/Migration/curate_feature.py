@@ -1,0 +1,116 @@
+#!/usr/bin/env python3
+"""Curate Feature (#428, Tier C #21) — a plot-leaf TARGET / DELIVERYGUY that MODIFIES the plot it sits on.
+
+Unlike Terrain (which SEEDS the plot's base), a feature ADDS its values onto the terrain-seeded accumulator
+(CvPlot.cpp movementCost 4559 +=, defenseModifier 4404 +=, recalculateBaseYield 8081 += ) — a genuine per-plot
+DELTA, so its own effects are feature-owned PLOT-scope modifier families. Enables nothing
+(store.enabled_by(FEATURE_*) empty). All inbound feature-keyed modifiers stay KEEP-ON-SOURCE (the civic/unit/
+promotion that delivers them owns them, conditioned on the feature) — Feature carries no inbound boost.
+Per-field dispositions: classifications/feature-classification.json (adversarially verified, wf waugnsq1x).
+
+Modeling calls (verified vs CvFeatureInfo + CvPlot::calculateYield/movementCost/getDefenseModifier + CvCity):
+- YieldChanges      -> SPLIT food/production/commerce .plot.flat (forest -food/+hammers, jungle -food, oasis +).
+- RiverYieldChange  -> SPLIT yield .plot.flat, each entry HAS_RIVER-gated (forest-on-river); the feature's EXTRA
+                       river yield, compounding with the terrain's river bonus (enabler-spec §3; first HAS_RIVER use).
+- iHealthPercent    -> health.plot.percent (Feature OWNS health; Terrain dropped it precisely because it lives here).
+- iDefense          -> defense.plot.amount.percent (feature defense %, additive onto the plot).
+- iMovement         -> movement.plot.flat (extra move cost; additive onto the terrain-seeded cost).
+- iCultureDistance  -> cultureDistance.plot.flat (summed into the city culture-distance total).
+- iSeeThrough       -> `vision` block: vision.plot.seeThrough.flat (line-of-sight; grouped for the coming vision
+                       rework — owner 2026-06-16; modifier-spec §0.8 dedicated-block rule).
+- iWarmingDefense   -> DROP. Dead: GLOBAL_WARMING is `// #define`d out (compiled out); a future global-warming
+                       system gets its OWN base object, not a feature field (owner; issue #436, global-warming-mod.md).
+- PropertyManipulators -> PARKED raw in `properties` (RELATION_NEAR pollution = spatial leakage -> #429; the cutover
+                       replaces the XML, so preserve-don't-drop until #429 redesigns it).
+- iAppearance/iDisappearance/iGrowth/iSpread/iPopDestroys + bCanGrow.../bRequires.../bNo.../placement flags
+                    -> identity (world-gen RNG / lifecycle / placement config). bGraphicalOnly -> identity flag.
+- ArtDefineTag (on-map art) / EffectType / iEffectProbability / GrowthSound / FootstepSounds / WorldSoundscape -> art.
+- OnUnitChangeTo    -> grants (a feature that transforms a unit on entry; module-only, 0 in base XML). FLAG: grants
+                       vs a dedicated transform edge (owner pass if it ever carries data).
+
+EXE-link: 1 DllExport on CvFeatureInfo (getArtInfo, an art FK) — unconstrained for data.
+
+  python3 curate_feature.py --sample FEATURE_FOREST
+  python3 curate_feature.py --write
+"""
+import os
+from collections import OrderedDict
+
+import engine
+import curate_common as cc
+from store import REPO
+
+# Feature's OWN per-plot modifier families (override the mapping's wrong city scope -> plot).
+FEATURE_FAMILIES = {
+    "YieldChanges":     {"channel": "yield",          "scope": "plot", "kind": "flat", "valueKeys": engine.YIELDS},
+    "iHealthPercent":   {"channel": "health",         "scope": "plot", "kind": "percent"},
+    "iDefense":         {"channel": "defense",        "scope": "plot", "kind": "percent", "member": "amount"},
+    "iMovement":        {"channel": "movement",       "scope": "plot", "kind": "flat"},
+    "iCultureDistance": {"channel": "cultureDistance","scope": "plot", "kind": "flat"},
+    "iSeeThrough":      {"channel": "vision",         "scope": "plot", "kind": "flat", "member": "seeThrough"},
+}
+
+# RiverYieldChange + PropertyManipulators are dropped from the DEFAULT path and rebuilt in post_process (the first
+# is HAS_RIVER-conditional, which apply_channel can't express; the second is parked raw for #429). iWarmingDefense
+# is dead. Prereqs (none) come from the mapping.
+FEATURE_DROP = ["iWarmingDefense", "RiverYieldChange", "PropertyManipulators"]
+
+CFG = cc.EntityConfig("FeatureInfo", extra_drop=FEATURE_DROP, families=FEATURE_FAMILIES,
+                      grants={"OnUnitChangeTo": "onUnitChangeTo"})
+
+# No inbound boosts: a feature is never the deliveryguy for another entity's modifier (modifier-spec §6.1).
+FEATURE_BOOSTS = []
+
+HAS_RIVER = "HAS_RIVER"   # bare-string predicate shorthand (enabler-spec §3)
+_PREFIX = ["type", "description", "civilopedia", "help", "quote", "strategy",
+           "enables", "obsoletes", "replaces", "disables", "requires"]
+_SUFFIX = ["grants", "properties", "cost", "ai", "ui", "world", "sound", "mapGeneration", "identity"]
+
+
+def _inject(obj, family, scope, unit, value, enabled=None):
+    leaf = obj.setdefault(family, OrderedDict()).setdefault(scope, OrderedDict())
+    entry = value if enabled is None else OrderedDict([("value", value), ("enabled", enabled)])
+    cur = leaf.get(unit)
+    if cur is None:
+        leaf[unit] = entry if enabled is None else [entry]
+    elif isinstance(cur, list):
+        cur.append(entry)
+    elif enabled is None:
+        leaf[unit] = cur + value
+    else:
+        leaf[unit] = [cur, entry]
+
+
+def _reorder(obj):
+    fams = [k for k in obj if k not in _PREFIX and k not in _SUFFIX]
+    ordered = [f for f in cc.FAMILY_ORDER if f in fams] + [f for f in fams if f not in cc.FAMILY_ORDER]
+    new = OrderedDict()
+    for k in _PREFIX:
+        if k in obj:
+            new[k] = obj[k]
+    for f in ordered:
+        new[f] = obj[f]
+    for k in _SUFFIX:
+        if k in obj:
+            new[k] = obj[k]
+    obj.clear()
+    obj.update(new)
+
+
+def post_process(typ, obj, rec, store):
+    # RiverYieldChange -> HAS_RIVER-conditional SPLIT yield deposit (the feature's extra river-side yield).
+    node = rec.find("RiverYieldChange")
+    if node is not None:
+        for y, v in engine.named_array(node, engine.YIELDS).items():
+            _inject(obj, y, "plot", "flat", v, HAS_RIVER)
+    # PropertyManipulators -> PARK raw (RELATION_NEAR pollution = #429 spatial leakage; preserve, don't drop).
+    pm = rec.find("PropertyManipulators")
+    if pm is not None:
+        sources = [engine.clean_property_source(s) for s in pm if s.tag == "PropertySource"]
+        if sources:
+            obj["properties"] = sources   # FLAG #429: spatial-leakage sources parked verbatim, not yet modelled
+    _reorder(obj)
+
+
+if __name__ == "__main__":
+    cc.main(CFG, FEATURE_BOOSTS, os.path.join(REPO, "Assets", "Data", "features"), post_process=post_process)

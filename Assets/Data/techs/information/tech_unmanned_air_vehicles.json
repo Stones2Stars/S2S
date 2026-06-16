@@ -63,11 +63,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/uav.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,2,3"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_UNMANNED_AIR_VEHICLES",
-  "soundMP": "AS2D_TECH_UNMANNED_AIR_VEHICLES",
-  "icon": ",Art/Interface/Buttons/TechTree/uav.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,2,3"
+  "soundMP": "AS2D_TECH_UNMANNED_AIR_VEHICLES"
  },
  "identity": {
   "era": "C2C_ERA_INFORMATION",

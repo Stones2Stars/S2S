@@ -42,11 +42,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/Button_PrehistoricMusic.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_PREHISTORIC_MUSIC",
-  "soundMP": "AS2D_TECH_PREHISTORIC_MUSIC",
-  "icon": "Art/Interface/Buttons/TechTree/Button_PrehistoricMusic.dds"
+  "soundMP": "AS2D_TECH_PREHISTORIC_MUSIC"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

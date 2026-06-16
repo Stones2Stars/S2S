@@ -12,8 +12,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HYDROTHERMAL_VENT"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HYDROTHERMAL_VENT"
+  }
  },
  "mapGeneration": {
   "placementOrder": 8,

@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_COWARDLY",
+ "description": "TXT_KEY_PROMOTIONLINE_COWARDLY",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCowardly.dds"
+  }
+ }
+}

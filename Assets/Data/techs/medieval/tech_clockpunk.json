@@ -58,11 +58,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/clockpunk.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_CLOCKPUNK",
-  "soundMP": "AS2D_TECH_GENERIC",
-  "icon": "Art/Interface/Buttons/TechTree/clockpunk.dds"
+  "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
   "era": "C2C_ERA_MEDIEVAL",

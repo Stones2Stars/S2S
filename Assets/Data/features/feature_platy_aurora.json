@@ -1,0 +1,25 @@
+{
+ "type": "FEATURE_PLATY_AURORA",
+ "description": "TXT_KEY_FEATURE_AURORA",
+ "civilopedia": "TXT_KEY_FEATURE_AURORA_PEDIA",
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_AURORA"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "noCity": true,
+  "noImprovement": true,
+  "noBonus": true,
+  "nukeImmune": true,
+  "ignoreTerrainCulture": true,
+  "validTerrains": [
+   "TERRAIN_ICE",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_TAIGA"
+  ]
+ }
+}

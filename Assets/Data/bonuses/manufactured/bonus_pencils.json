@@ -2,8 +2,10 @@
  "type": "BONUS_PENCILS",
  "description": "TXT_KEY_BONUS_PENCILS",
  "civilopedia": "TXT_KEY_BONUS_PENCILS_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_PENCILS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PENCILS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

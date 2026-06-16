@@ -8,8 +8,10 @@
    "UNIT_ZENU_GOLDSMITHS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ZENU"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ZENU"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

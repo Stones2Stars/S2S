@@ -1,0 +1,12 @@
+{
+ "type": "SPECIALBUILDING_GUILD",
+ "description": "TXT_KEY_SPECIALBUILDING_GUILD",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/National_Wonders/apothecary_guild.dds"
+  }
+ },
+ "identity": {
+  "valid": true
+ }
+}

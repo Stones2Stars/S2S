@@ -8,8 +8,10 @@
    "UNIT_TURTLE_SHIP"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_JOSEON"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_JOSEON"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

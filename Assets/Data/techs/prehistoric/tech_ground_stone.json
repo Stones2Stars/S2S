@@ -46,11 +46,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/groundstones.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_GROUND_STONE",
-  "soundMP": "AS2D_TECH_GROUND_STONE",
-  "icon": "Art/Interface/Buttons/TechTree/groundstones.dds"
+  "soundMP": "AS2D_TECH_GROUND_STONE"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

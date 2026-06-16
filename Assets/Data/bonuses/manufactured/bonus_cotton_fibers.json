@@ -9,8 +9,10 @@
    "BUILDING_WEAVER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_COTTON_FIBERS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_COTTON_FIBERS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

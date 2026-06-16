@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_CROWS_NEST",
+ "description": "TXT_KEY_PROMOTIONLINE_CROWS_NEST",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/CrowsNest1Promotion.dds"
+  }
+ }
+}

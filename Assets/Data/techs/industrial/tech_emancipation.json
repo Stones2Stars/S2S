@@ -62,11 +62,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/emancipation.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_EMANCIPATION",
-  "soundMP": "AS2D_TECH_EMANCIPATION",
-  "icon": "Art/Interface/Buttons/TechTree/emancipation.dds"
+  "soundMP": "AS2D_TECH_EMANCIPATION"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

@@ -7,8 +7,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SHANG_JADE_RITUAL_ITEMS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SHANG_JADE_RITUAL_ITEMS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_WONDER"

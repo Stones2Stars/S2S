@@ -22,10 +22,18 @@
    "flat": 1
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_LUSH",
-  "icon": "Art/Interface/Buttons/baseterrain/DuneGrassland.dds",
-  "footstepSounds": [
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/baseterrain/DuneGrassland.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_LUSH"
+  }
+ },
+ "sound": {
+  "footsteps": [
    {
     "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT"
    },
@@ -120,7 +128,7 @@
     "ENDSTEP_WHEELS_3": "AS3D_UN_TREBUCHET_STOP"
    }
   ],
-  "worldSoundscapeAudioScript": "ASSS_GRASSLAND_SELECT_AMB"
+  "soundscape": "ASSS_GRASSLAND_SELECT_AMB"
  },
  "identity": {
   "found": true,

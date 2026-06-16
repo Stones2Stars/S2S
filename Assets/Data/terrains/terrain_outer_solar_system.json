@@ -17,9 +17,15 @@
    "flat": 1
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_OUTER_SOLAR_SYSTEM",
-  "icon": "Art/Interface/Buttons/WorldBuilder/outer_solar_system.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/outer_solar_system.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_OUTER_SOLAR_SYSTEM"
+  }
  },
  "identity": {
   "found": true,

@@ -8,8 +8,10 @@
    "UNIT_STAMAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BATEK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BATEK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

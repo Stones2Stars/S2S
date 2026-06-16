@@ -8,8 +8,10 @@
    "UNIT_PETRA_GUARD"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NABATEANS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NABATEANS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

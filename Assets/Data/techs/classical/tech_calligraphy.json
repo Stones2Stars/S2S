@@ -52,11 +52,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/calligraphy.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_CALLIGRAPHY",
-  "soundMP": "AS2D_TECH_CALLIGRAPHY",
-  "icon": "Art/Interface/Buttons/TechTree/calligraphy.dds"
+  "soundMP": "AS2D_TECH_CALLIGRAPHY"
  },
  "identity": {
   "era": "C2C_ERA_CLASSICAL",

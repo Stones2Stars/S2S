@@ -78,11 +78,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/liquidmaterials.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_LIQUID_METALS",
-  "soundMP": "AS2D_TECH_LIQUID_METALS",
-  "icon": "Art/Interface/Buttons/TechTree/liquidmaterials.dds"
+  "soundMP": "AS2D_TECH_LIQUID_METALS"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

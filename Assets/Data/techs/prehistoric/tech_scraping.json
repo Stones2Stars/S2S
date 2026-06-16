@@ -53,11 +53,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/scraping.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SCRAPING",
-  "soundMP": "AS2D_TECH_SCRAPING",
-  "icon": "Art/Interface/Buttons/TechTree/scraping.dds"
+  "soundMP": "AS2D_TECH_SCRAPING"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

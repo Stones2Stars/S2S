@@ -1,0 +1,20 @@
+{
+ "type": "PROJECT_INTERNATIONAL_MONETARY_FUND",
+ "description": "TXT_KEY_PROJECT_INTERNATIONAL_MONETARY_FUND",
+ "civilopedia": "TXT_KEY_PROJECT_INTERNATIONAL_MONETARY_FUND_PEDIA",
+ "grants": {
+  "grantsSpecialBuilding": "SPECIALBUILDING_WORLD_BANK"
+ },
+ "cost": {
+  "create": 9440
+ },
+ "art": {
+  "icon": "Art/Interface/Buttons/buildings/IMF.dds"
+ },
+ "identity": {
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "maxGlobalInstances": 1
+ }
+}

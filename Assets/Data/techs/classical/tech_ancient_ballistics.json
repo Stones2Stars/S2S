@@ -64,11 +64,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/ancientballistics.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ANCIENT_BALLISTICS",
-  "soundMP": "AS2D_TECH_ANCIENT_BALLISTICS",
-  "icon": "Art/Interface/Buttons/TechTree/ancientballistics.dds"
+  "soundMP": "AS2D_TECH_ANCIENT_BALLISTICS"
  },
  "identity": {
   "era": "C2C_ERA_CLASSICAL",

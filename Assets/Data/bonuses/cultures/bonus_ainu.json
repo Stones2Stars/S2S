@@ -9,8 +9,10 @@
    "UNIT_SURKU"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_AINU"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_AINU"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

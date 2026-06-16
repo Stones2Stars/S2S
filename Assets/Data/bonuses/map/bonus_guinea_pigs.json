@@ -32,8 +32,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_GUINEA_PIGS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_GUINEA_PIGS"
+  }
  },
  "mapGeneration": {
   "placementOrder": 6,

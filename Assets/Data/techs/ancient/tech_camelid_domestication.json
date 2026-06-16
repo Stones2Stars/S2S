@@ -69,11 +69,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/Camel_Riding.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_CAMELID_DOMESTICATION",
-  "soundMP": "AS2D_TECH_CAMELID_DOMESTICATION",
-  "icon": "Art/Interface/Buttons/TechTree/Camel_Riding.dds"
+  "soundMP": "AS2D_TECH_CAMELID_DOMESTICATION"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

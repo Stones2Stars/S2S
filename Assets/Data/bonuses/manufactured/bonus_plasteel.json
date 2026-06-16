@@ -12,8 +12,10 @@
    "objective": 10
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PLASTEEL"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PLASTEEL"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

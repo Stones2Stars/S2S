@@ -8,8 +8,10 @@
    "UNIT_TIMUR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TIMURID"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TIMURID"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

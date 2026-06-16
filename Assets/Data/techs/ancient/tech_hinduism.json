@@ -47,11 +47,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_RELIGION",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/Hinduism.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_REINCARNATION",
-  "soundMP": "AS2D_TECH_REINCARNATION",
-  "icon": "Art/Interface/Buttons/TechTree/Hinduism.dds"
+  "soundMP": "AS2D_TECH_REINCARNATION"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

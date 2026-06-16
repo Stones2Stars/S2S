@@ -2,8 +2,10 @@
  "type": "BONUS_MOON_ROCKS",
  "description": "TXT_KEY_BONUS_MOON_ROCKS",
  "civilopedia": "TXT_KEY_BONUS_MOON_ROCKS_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_MOON_ROCKS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MOON_ROCKS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

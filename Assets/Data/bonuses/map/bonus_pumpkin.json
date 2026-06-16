@@ -33,8 +33,10 @@
    "tradeModifier": 10
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PUMPKIN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PUMPKIN"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_CIVILIZED_PROMOTION",
+ "description": "TXT_KEY_PROMOTIONLINE_CIVILIZED_PROMOTION",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/PromotionCivilized.dds"
+  }
+ }
+}

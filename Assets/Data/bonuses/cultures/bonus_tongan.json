@@ -8,8 +8,10 @@
    "UNIT_WILLIAM_MARINER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TONGAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TONGAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -54,8 +54,10 @@
    "tradeModifier": 2
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SPICES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SPICES"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

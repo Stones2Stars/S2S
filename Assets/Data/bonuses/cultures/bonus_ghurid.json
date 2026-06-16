@@ -8,8 +8,10 @@
    "UNIT_KETABDAR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_GHURID"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_GHURID"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -9,8 +9,10 @@
    "UNIT_LEOPOLD_II"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BELGIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BELGIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

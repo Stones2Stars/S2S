@@ -48,11 +48,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/Button_HutBuilding.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_STONE_BUILDING",
-  "soundMP": "AS2D_TECH_STONE_BUILDING",
-  "icon": "Art/Interface/Buttons/TechTree/Button_HutBuilding.dds"
+  "soundMP": "AS2D_TECH_STONE_BUILDING"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

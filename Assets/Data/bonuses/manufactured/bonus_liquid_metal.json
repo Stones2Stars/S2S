@@ -7,8 +7,10 @@
    "ROUTE_GRAVITY_TRAIN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_LIQUID_METAL"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_LIQUID_METAL"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -75,11 +75,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Button_CookedFood.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_COOKING",
-  "soundMP": "AS2D_TECH_COOKING",
-  "icon": "Art/Interface/Buttons/TechTree/Button_CookedFood.dds"
+  "soundMP": "AS2D_TECH_COOKING"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

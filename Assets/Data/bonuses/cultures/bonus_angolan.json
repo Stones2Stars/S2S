@@ -8,8 +8,10 @@
    "UNIT_UNITA_FORCES"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ANGOLAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ANGOLAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -57,11 +57,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/transverseduclideangeometry.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_TRANVERSE_EUCLIDEAN_GEOMETRY",
-  "soundMP": "AS2D_TECH_TRANVERSE_EUCLIDEAN_GEOMETRY",
-  "icon": "Art/Interface/Buttons/TechTree/transverseduclideangeometry.dds"
+  "soundMP": "AS2D_TECH_TRANVERSE_EUCLIDEAN_GEOMETRY"
  },
  "identity": {
   "era": "C2C_ERA_TRANSCENDENT",

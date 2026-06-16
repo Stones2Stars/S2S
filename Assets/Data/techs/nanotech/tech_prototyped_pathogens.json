@@ -64,11 +64,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/prototypedpathogens.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_PROTOTYPED_PATHOGENS",
-  "soundMP": "AS2D_TECH_PROTOTYPED_PATHOGENS",
-  "icon": "Art/Interface/Buttons/TechTree/prototypedpathogens.dds"
+  "soundMP": "AS2D_TECH_PROTOTYPED_PATHOGENS"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

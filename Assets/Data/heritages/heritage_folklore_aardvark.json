@@ -1,0 +1,53 @@
+{
+ "type": "HERITAGE_FOLKLORE_AARDVARK",
+ "description": "TXT_KEY_HERITAGE_FOLKLORE_AARDVARK",
+ "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
+ "research": {
+  "empire": {
+   "byEra": {
+    "C2C_ERA_PREHISTORIC": {
+     "flat": 40
+    },
+    "C2C_ERA_ANCIENT": {
+     "flat": -10
+    },
+    "C2C_ERA_CLASSICAL": {
+     "flat": -10
+    },
+    "C2C_ERA_MEDIEVAL": {
+     "flat": -10
+    },
+    "C2C_ERA_RENAISSANCE": {
+     "flat": -10
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "byEra": {
+    "C2C_ERA_PREHISTORIC": {
+     "flat": 10
+    },
+    "C2C_ERA_ANCIENT": {
+     "flat": 10
+    },
+    "C2C_ERA_CLASSICAL": {
+     "flat": 10
+    },
+    "C2C_ERA_MEDIEVAL": {
+     "flat": 10
+    },
+    "C2C_ERA_RENAISSANCE": {
+     "flat": 10
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/Buttons/Units/Aardvark.dds"
+ },
+ "identity": {
+  "needsLanguage": true
+ }
+}

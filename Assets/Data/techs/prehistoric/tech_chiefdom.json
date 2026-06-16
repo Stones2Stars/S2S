@@ -47,11 +47,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Button_Chiefdom.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_CHIEFDOM",
-  "soundMP": "AS2D_TECH_CHIEFDOM",
-  "icon": "Art/Interface/Buttons/TechTree/Button_Chiefdom.dds"
+  "soundMP": "AS2D_TECH_CHIEFDOM"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

@@ -8,8 +8,10 @@
    "BUILDING_MEGASTRONG_ALLOY_WALLS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MEGASTRONG_ALLOYS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MEGASTRONG_ALLOYS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

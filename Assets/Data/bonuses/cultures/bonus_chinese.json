@@ -10,8 +10,10 @@
    "UNIT_ZHENG_HE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CHINESE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CHINESE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

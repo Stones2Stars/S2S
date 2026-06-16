@@ -1,0 +1,139 @@
+{
+ "type": "FEATURE_REEF_LIGHTHOUSE",
+ "description": "TXT_KEY_FEATURE_REEF_LIGHTHOUSE",
+ "civilopedia": "TXT_KEY_FEATURE_REEF_PEDIA",
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_REEF_LIGHTHOUSE"
+  }
+ },
+ "sound": {
+  "footsteps": [
+   {
+    "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT_SAND"
+   },
+   {
+    "FOOTSTEP_AUDIO_HUMAN_LOW": "AS3D_UN_FOOT_UNIT_LOW_SAND"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL": "AS3D_UN_ANIMAL_FOOT_LARGE_SAND"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL_LOW": "AS3D_UN_ANIMAL_FOOT_LARGE_LOW_SAND"
+   },
+   {
+    "FOOTSTEP_AUDIO_HORSE": "AS3D_UN_HORSE_RUN"
+   },
+   {
+    "LOOPSTEP_WHEELS": "AS3D_UN_CHARIOT_LOOP"
+   },
+   {
+    "ENDSTEP_WHEELS": "AS3D_UN_CHARIOT_END"
+   },
+   {
+    "LOOPSTEP_WHEELS_2": "AS3D_UN_WAR_CHARIOT_LOOP"
+   },
+   {
+    "ENDSTEP_WHEELS_2": "AS3D_UN_WAR_CHARIOT_END"
+   },
+   {
+    "LOOPSTEP_TANK": "AS3D_UN_TANK_LOOP"
+   },
+   {
+    "ENDSTEP_TANK": "AS3D_UN_TANK_END"
+   },
+   {
+    "LOOPSTEP_MOD_ARMOUR": "AS3D_UN_MOD_ARMOUR_LOOP"
+   },
+   {
+    "ENDSTEP_MOD_ARMOUR": "AS3D_UN_MOD_ARMOUR_END"
+   },
+   {
+    "LOOPSTEP_OCEAN1": "AS3D_UN_OCEAN_LOOP1"
+   },
+   {
+    "ENDSTEP_OCEAN1": "AS3D_UN_OCEAN_END1"
+   },
+   {
+    "LOOPSTEP_OCEAN2": "AS3D_UN_OCEAN_LOOP1"
+   },
+   {
+    "ENDSTEP_OCEAN2": "AS3D_UN_OCEAN_END2"
+   },
+   {
+    "LOOPSTEP_DESTOYER": "AS3D_UN_DESTROYER_RUN_LOOP"
+   },
+   {
+    "ENDSTEP_DESTROYER": "AS3D_UN_DESTROYER_RUN_END"
+   },
+   {
+    "LOOPSTEP_IRONCLAD": "AS3D_UN_IRONCLAD_RUN_LOOP"
+   },
+   {
+    "ENDSTEP_IRONCLAD": "AS3D_UN_IRONCLAD_RUN_END"
+   },
+   {
+    "LOOPSTEP_TRANSPORT": "AS3D_UN_TRANSPORT_RUN_LOOP"
+   },
+   {
+    "ENDSTEP_TRANSPORT": "AS3D_UN_TRANSPORT_RUN_END"
+   },
+   {
+    "LOOPSTEP_SUBMARINE": "AS3D_UN_SUBMARINE_RUN_LOOP"
+   },
+   {
+    "ENDSTEP_SUBMARINE": "AS3D_UN_SUBMARINE_RUN_END"
+   },
+   {
+    "LOOPSTEP_GUNSHIP": "AS3D_UN_GUNSHIP_RUN_LOOP"
+   },
+   {
+    "ENDSTEP_GUNSHIP": "AS3D_UN_GUNSHIP_RUN_END"
+   },
+   {
+    "LOOPSTEP_ARTILLERY": "AS3D_UN_ARTILLERY_RUN_LOOP"
+   },
+   {
+    "ENDSTEP_ARTILLERY": "AS3D_UN_ARTILLERY_RUN_END"
+   },
+   {
+    "LOOPSTEP_WHEELS_3": "AS3D_UN_TREBUCHET_RUN"
+   },
+   {
+    "ENDSTEP_WHEELS_3": "AS3D_UN_TREBUCHET_STOP"
+   }
+  ]
+ },
+ "identity": {
+  "appearance": -1,
+  "validTerrains": [
+   "TERRAIN_COAST",
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_COAST_TROPICAL",
+   "TERRAIN_LAKE",
+   "TERRAIN_LAKE_SHORE"
+  ]
+ }
+}

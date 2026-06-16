@@ -20,8 +20,10 @@
    "UNIT_THERMOBARIC_TANK"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TANKS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TANKS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

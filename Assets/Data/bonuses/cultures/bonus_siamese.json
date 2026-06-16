@@ -12,8 +12,10 @@
    "UNIT_SURIYOTHAI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SIAMESE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SIAMESE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

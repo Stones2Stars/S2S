@@ -49,11 +49,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Buttons/Techs/TechWeaponizedLasers.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_WEAPONIZED_LASERS",
-  "soundMP": "AS2D_TECH_WEAPONIZED_LASERS",
-  "icon": "Art/Buttons/Techs/TechWeaponizedLasers.dds"
+  "soundMP": "AS2D_TECH_WEAPONIZED_LASERS"
  },
  "identity": {
   "era": "C2C_ERA_INFORMATION",

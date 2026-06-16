@@ -39,8 +39,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_RICE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_RICE"
+  }
  },
  "mapGeneration": {
   "placementOrder": 6,

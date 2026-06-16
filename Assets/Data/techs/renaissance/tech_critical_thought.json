@@ -49,11 +49,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_RELIGION",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/criticalthought.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_CRITICALTHOUGHT",
-  "soundMP": "AS2D_TECH_CRITICALTHOUGHT",
-  "icon": "Art/Interface/Buttons/TechTree/criticalthought.dds"
+  "soundMP": "AS2D_TECH_CRITICALTHOUGHT"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

@@ -7,8 +7,10 @@
    "BUILDING_HUMAN_MOD_DESIGNER_BABIES"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HUMAN_MOD_GENE_EDITING"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HUMAN_MOD_GENE_EDITING"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

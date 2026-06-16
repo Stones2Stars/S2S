@@ -56,11 +56,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Foodp.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_FOOD_PRESERVATION",
-  "soundMP": "AS2D_TECH_FOOD_PRESERVATION",
-  "icon": "Art/Interface/Buttons/TechTree/Foodp.dds"
+  "soundMP": "AS2D_TECH_FOOD_PRESERVATION"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

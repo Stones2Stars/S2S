@@ -8,8 +8,10 @@
    "UNIT_ANTONIO"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PIMA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PIMA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

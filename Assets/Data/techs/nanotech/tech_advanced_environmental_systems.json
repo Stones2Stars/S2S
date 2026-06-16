@@ -86,11 +86,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/advancedenvironmentalsystems.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS2",
-  "soundMP": "AS2D_TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS2",
-  "icon": "Art/Interface/Buttons/TechTree/advancedenvironmentalsystems.dds"
+  "soundMP": "AS2D_TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS2"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

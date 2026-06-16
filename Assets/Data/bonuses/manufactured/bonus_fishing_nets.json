@@ -19,8 +19,10 @@
    "BUILDING_SWORDFISH_NETS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FISHING_NETS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FISHING_NETS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

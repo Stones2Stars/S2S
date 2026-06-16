@@ -7,8 +7,10 @@
    "UNIT_TIGERCLAW"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TAMIL"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TAMIL"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

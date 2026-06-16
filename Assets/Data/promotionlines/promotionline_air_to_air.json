@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_AIR_TO_AIR",
+ "description": "TXT_KEY_PROMOTIONLINE_AIR_TO_AIR",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/jetplane.dds,Art/RoM_Promotions_atlas.dds,1,2"
+  }
+ }
+}

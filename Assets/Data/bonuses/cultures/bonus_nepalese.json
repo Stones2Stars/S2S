@@ -7,8 +7,10 @@
    "UNIT_GURKHA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NEPALESE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NEPALESE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

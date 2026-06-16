@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_TAKE_PRISONERS",
+ "description": "TXT_KEY_PROMOTIONLINE_TAKE_PRISONERS",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/flaming1.dds"
+  }
+ }
+}

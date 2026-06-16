@@ -18,8 +18,10 @@
    "UNIT_SENTROID_INFANTRY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ANDROIDS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ANDROIDS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

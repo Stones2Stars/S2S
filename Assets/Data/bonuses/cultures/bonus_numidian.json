@@ -7,8 +7,10 @@
    "UNIT_MASINISSA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NUMIDIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NUMIDIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -7,8 +7,10 @@
    "UNIT_DENE_SLED_DOGS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_DENE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_DENE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

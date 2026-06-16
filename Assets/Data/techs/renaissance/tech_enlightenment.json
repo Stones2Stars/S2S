@@ -63,11 +63,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/enlightenment.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ENLIGHTENMENT",
-  "soundMP": "AS2D_TECH_ENLIGHTENMENT",
-  "icon": "Art/Interface/Buttons/TechTree/enlightenment.dds"
+  "soundMP": "AS2D_TECH_ENLIGHTENMENT"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

@@ -9,8 +9,10 @@
    "UNIT_YUSUF"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BERBER"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BERBER"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

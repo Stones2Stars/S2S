@@ -8,8 +8,10 @@
    "UNIT_GUAYKURU"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TOBA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TOBA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

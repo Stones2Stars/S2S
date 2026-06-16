@@ -7,8 +7,10 @@
    "UNIT_KHITAN_INFANTRY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_KHITAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_KHITAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

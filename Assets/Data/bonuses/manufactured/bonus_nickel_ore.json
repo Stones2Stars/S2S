@@ -2,8 +2,10 @@
  "type": "BONUS_NICKEL_ORE",
  "description": "TXT_KEY_BONUS_NICKEL_ORE",
  "civilopedia": "TXT_KEY_BONUS_NICKEL_ORE_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_NICKEL_ORE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NICKEL_ORE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -12,8 +12,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HYPOSPRAYS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HYPOSPRAYS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

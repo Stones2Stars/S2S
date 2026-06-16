@@ -9,8 +9,10 @@
    "UNIT_PLUMED_ARCHER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HUASTEC"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HUASTEC"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -8,8 +8,10 @@
    "BUILDING_HUMAN_MOD_ENLIGHTENED"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HUMAN_MOD_DESIGNER_BABIES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HUMAN_MOD_DESIGNER_BABIES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

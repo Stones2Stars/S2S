@@ -67,8 +67,10 @@
    "UNIT_WALKER_ARTILLERY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ALUMINUM_WARES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ALUMINUM_WARES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_COVER",
+ "description": "TXT_KEY_PROMOTIONLINE_COVER",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Cover.dds,Art/Interface/Buttons/Promotions_Atlas.dds,2,5"
+  }
+ }
+}

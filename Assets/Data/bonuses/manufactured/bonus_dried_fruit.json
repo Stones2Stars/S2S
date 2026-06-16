@@ -2,8 +2,10 @@
  "type": "BONUS_DRIED_FRUIT",
  "description": "TXT_KEY_BONUS_DRIED_FRUIT",
  "civilopedia": "TXT_KEY_BONUS_DRIED_FRUIT_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_DRIED_FRUIT"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_DRIED_FRUIT"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

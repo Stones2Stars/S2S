@@ -9,8 +9,10 @@
    "UNIT_ISAAC_BROCK"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CANADIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CANADIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

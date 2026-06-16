@@ -7,8 +7,10 @@
    "UNIT_HYPASPISTAI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MACEDONIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MACEDONIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

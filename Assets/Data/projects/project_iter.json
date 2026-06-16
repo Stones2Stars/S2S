@@ -1,0 +1,21 @@
+{
+ "type": "PROJECT_ITER",
+ "description": "TXT_KEY_PROJECT_ITER",
+ "civilopedia": "TXT_KEY_PROJECT_ITER_PEDIA",
+ "grants": {
+  "grantsSpecialBuilding": "SPECIALBUILDING_D_T_FUSION_POWER_PLANT"
+ },
+ "cost": {
+  "create": 18440
+ },
+ "art": {
+  "movie": "ART_DEF_MOVIE_FUSION_PLANT",
+  "icon": "Art/Interface/Buttons/buildings/ITER.dds"
+ },
+ "identity": {
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "maxTeamInstances": 1
+ }
+}

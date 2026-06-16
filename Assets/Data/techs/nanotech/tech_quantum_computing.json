@@ -55,11 +55,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/quantum_computing.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_QUANTUM_COMPUTING",
-  "soundMP": "AS2D_TECH_QUANTUM_COMPUTING",
-  "icon": "Art/Interface/Buttons/TechTree/quantum_computing.dds"
+  "soundMP": "AS2D_TECH_QUANTUM_COMPUTING"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

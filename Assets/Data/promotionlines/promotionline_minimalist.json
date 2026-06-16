@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_MINIMALIST",
+ "description": "TXT_KEY_PROMOTIONLINE_MINIMALIST",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitMinimalist.dds"
+  }
+ }
+}

@@ -39,8 +39,10 @@
    "BUILDING_WORKHOUSE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FURNITURE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FURNITURE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

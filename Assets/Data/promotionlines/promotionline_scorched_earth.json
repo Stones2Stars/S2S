@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_SCORCHED_EARTH",
+ "description": "TXT_KEY_PROMOTIONLINE_SCORCHED_EARTH",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/ScorchedEarth1Promotion.dds"
+  }
+ }
+}

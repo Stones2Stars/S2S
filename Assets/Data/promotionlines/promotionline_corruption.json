@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_CORRUPTION",
+ "description": "TXT_KEY_PROMOTIONLINE_CORRUPTION",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Corruption1Promotion.dds"
+  }
+ }
+}

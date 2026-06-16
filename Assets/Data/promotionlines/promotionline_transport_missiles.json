@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_TRANSPORT_MISSILES",
+ "description": "TXT_KEY_PROMOTIONLINE_TRANSPORT_MISSILES",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/TransportMissiles.dds"
+  }
+ }
+}

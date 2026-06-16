@@ -10,8 +10,10 @@
    "BUILDING_TACO_HUT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CHEESE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CHEESE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

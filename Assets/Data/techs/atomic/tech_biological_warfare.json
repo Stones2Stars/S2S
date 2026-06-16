@@ -71,11 +71,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/BioTech.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,3"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_BIOLOGICAL_WARFARE",
-  "soundMP": "AS2D_TECH_BIOLOGICAL_WARFARE",
-  "icon": ",Art/Interface/Buttons/TechTree/BioTech.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,3"
+  "soundMP": "AS2D_TECH_BIOLOGICAL_WARFARE"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

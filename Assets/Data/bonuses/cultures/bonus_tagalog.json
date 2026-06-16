@@ -8,8 +8,10 @@
    "UNIT_KATIPUNAN_CAVALRY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TAGALOG"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TAGALOG"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

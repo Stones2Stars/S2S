@@ -7,8 +7,10 @@
    "BUILDING_HUMAN_MOD_INFORMATION_BASED"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HUMAN_MOD_NANOMORPHISM"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HUMAN_MOD_NANOMORPHISM"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

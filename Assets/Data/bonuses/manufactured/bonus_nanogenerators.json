@@ -12,8 +12,10 @@
    "UNIT_NANITE_REPAIR_CLOUD"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NANOGENERATORS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NANOGENERATORS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

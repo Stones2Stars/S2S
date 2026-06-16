@@ -53,11 +53,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "art/buttons/techs/TheftTech.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_THEFT",
-  "soundMP": "AS2D_TECH_THEFT",
-  "icon": "art/buttons/techs/TheftTech.dds"
+  "soundMP": "AS2D_TECH_THEFT"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

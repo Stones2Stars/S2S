@@ -1,0 +1,177 @@
+{
+ "type": "SPECIALIST_SCIENTIST",
+ "description": "TXT_KEY_SPECIALIST_SCIENTIST",
+ "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
+ "food": {
+  "city": {
+   "buildings": {
+    "BUILDING_SVALBARD_GLOBAL_SEED_VAULT": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_EINSTEINS_LABORATORY": {
+     "flat": 1
+    },
+    "BUILDING_HIPPOCRATIC_OATH": {
+     "flat": 1
+    },
+    "BUILDING_ISAAC_NEWTONS_COLLEGE": {
+     "flat": 1
+    },
+    "BUILDING_ATOMIUM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_SCIENTIFIC": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_SCIENTIFIC1": {
+     "flat": 1
+    },
+    "TRAIT_SCIENTIFIC3": {
+     "flat": 1
+    },
+    "TRAIT_TRADITIONAL": {
+     "flat": -1
+    },
+    "TRAIT_TRADITIONAL1": {
+     "flat": -1
+    },
+    "TRAIT_TRADITIONAL3": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3,
+   "civics": {
+    "CIVIC_TECHNOCRACY": {
+     "percent": 150
+    },
+    "CIVIC_ANTIRELIGION": {
+     "percent": 50
+    },
+    "CIVIC_GUILDS": {
+     "percent": 100
+    },
+    "CIVIC_CAPITALIST": {
+     "percent": 50
+    }
+   }
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_SCIENTIFIC": {
+     "flat": 2
+    },
+    "TRAIT_SCIENTIFIC2": {
+     "flat": 2
+    },
+    "TRAIT_TRADITIONAL": {
+     "flat": -2
+    },
+    "TRAIT_TRADITIONAL2": {
+     "flat": -2
+    },
+    "TRAIT_COMPLEX_PHILOSOPHICAL": {
+     "flat": 1
+    },
+    "TRAIT_PHILOSOPHICAL3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_POPULIST": {
+     "flat": -1
+    },
+    "TRAIT_POPULIST3": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_EXPANSIVE1": {
+     "flat": -1
+    },
+    "TRAIT_MINIMALIST1": {
+     "flat": 1
+    },
+    "TRAIT_MEDICAL": {
+     "flat": 1
+    },
+    "TRAIT_UNSANITARY": {
+     "flat": -1
+    },
+    "TRAIT_UNSANITARY3": {
+     "flat": -1
+    },
+    "TRAIT_SPIRITUAL": {
+     "flat": -1
+    },
+    "TRAIT_SCIENTIFIC": {
+     "flat": 1
+    },
+    "TRAIT_FANATICAL": {
+     "flat": -1
+    },
+    "TRAIT_SPIRITUAL1": {
+     "flat": -1
+    },
+    "TRAIT_SCIENTIFIC1": {
+     "flat": 1
+    },
+    "TRAIT_FANATICAL1": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "traits": {
+    "TRAIT_MEDICAL3": {
+     "flat": 1
+    },
+    "TRAIT_PHILOSOPHICAL": {
+     "flat": 1
+    },
+    "TRAIT_PHILOSOPHICAL1": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "traits": {
+    "TRAIT_CHARISMATIC3": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/MainScreen/CityScreen/scientist.dds",
+  "button": "Art/Interface/MainScreen/CityScreen/scientist.dds"
+ },
+ "identity": {
+  "visible": true,
+  "categories": [
+   "CATEGORY_ASSIGNABLE_SPECIALISTS",
+   "CATEGORY_SPECIALIST_GROUP_RESEARCH"
+  ],
+  "greatPeopleUnit": "UNIT_SCIENTIST"
+ }
+}

@@ -8,8 +8,10 @@
    "UNIT_MBARZ_BALSYF"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_YEMENI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_YEMENI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

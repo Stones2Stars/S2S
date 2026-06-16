@@ -12,8 +12,10 @@
    "tradeModifier": 7
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_GEMSTONE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_GEMSTONE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -1,0 +1,24 @@
+{
+ "type": "PROJECT_SS_LIFE_SUPPORT",
+ "description": "TXT_KEY_PROJECT_SS_LIFE_SUPPORT",
+ "civilopedia": "TXT_KEY_PROJECT_SS_LIFE_SUPPORT_PEDIA",
+ "victory": {
+  "thresholds": {
+   "VICTORY_SPACE_RACE": 1
+  }
+ },
+ "cost": {
+  "create": 62440
+ },
+ "art": {
+  "icon": ",Art/Interface/Buttons/Buildings/SS_LifeSupport.dds,Art/Interface/Buttons/Buildings_Atlas.dds,5,10"
+ },
+ "identity": {
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "launchesVictory": "VICTORY_SPACE_RACE",
+  "maxTeamInstances": 1,
+  "spaceship": true
+ }
+}

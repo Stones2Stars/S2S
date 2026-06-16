@@ -7,8 +7,10 @@
    "UNIT_UHLAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PRUSSIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PRUSSIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

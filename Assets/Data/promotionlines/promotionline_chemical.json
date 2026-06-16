@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_CHEMICAL",
+ "description": "TXT_KEY_PROMOTIONLINE_CHEMICAL",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/chemical1.dds"
+  }
+ }
+}

@@ -68,11 +68,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Buttons/Techs/TechNanomorphics.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_GENERIC",
-  "soundMP": "AS2D_TECH_GENERIC",
-  "icon": "Art/Buttons/Techs/TechNanomorphics.dds"
+  "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

@@ -9,8 +9,10 @@
    "UNIT_VIRACOCHA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_AYMARA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_AYMARA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

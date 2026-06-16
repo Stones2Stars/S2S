@@ -1,0 +1,13 @@
+{
+ "type": "PROMOTIONLINE_BUILD_UP_ESCAPE_PLANS",
+ "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_ESCAPE_PLANS",
+ "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_ESCAPE_PLANS_HELP",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/EscapePlans1BuildUp.dds"
+  }
+ },
+ "identity": {
+  "buildUp": true
+ }
+}

@@ -8,8 +8,10 @@
    "UNIT_JURI_ULUOTS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ESTONIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ESTONIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

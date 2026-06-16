@@ -7,8 +7,10 @@
    "flat": 3
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ORGANIC_VOLATILES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ORGANIC_VOLATILES"
+  }
  },
  "mapGeneration": {
   "constAppearance": 35,

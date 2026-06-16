@@ -8,8 +8,10 @@
    "UNIT_SABAH_AL_AHMAD"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_KUWAITI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_KUWAITI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

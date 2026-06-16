@@ -22,8 +22,10 @@
    "UNIT_POST_APOCALYPTIC_GRENADIER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TAR"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TAR"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

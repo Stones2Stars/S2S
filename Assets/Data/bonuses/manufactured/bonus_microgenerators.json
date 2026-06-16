@@ -9,8 +9,10 @@
    "BUILDING_UBIQUITOUS_SENSORS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MICROGENERATORS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MICROGENERATORS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

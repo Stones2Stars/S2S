@@ -7,8 +7,10 @@
    "UNIT_MANCHU_HORSEARCHER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MANCHURIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MANCHURIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

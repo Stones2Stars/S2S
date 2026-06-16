@@ -7,8 +7,10 @@
    "UNIT_SOFTWARE_DEVELOPER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PERSONAL_ELECTRONICS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PERSONAL_ELECTRONICS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -8,8 +8,10 @@
    "UNIT_RHODESIA_NATIVE_REGIMENT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_RHODESIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_RHODESIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

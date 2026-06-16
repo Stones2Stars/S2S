@@ -8,8 +8,10 @@
    "UNIT_NANDUAPAQUE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_QUERANDI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_QUERANDI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

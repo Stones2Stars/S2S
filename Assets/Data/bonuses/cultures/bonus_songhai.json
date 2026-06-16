@@ -8,8 +8,10 @@
    "UNIT_AZAWAD_CAVALRY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SONGHAI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SONGHAI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

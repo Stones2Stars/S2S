@@ -8,8 +8,10 @@
    "UNIT_QUADO"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MOCOVI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MOCOVI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

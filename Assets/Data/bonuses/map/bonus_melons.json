@@ -36,8 +36,10 @@
    "tradeModifier": 20
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MELONS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MELONS"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

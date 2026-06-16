@@ -8,8 +8,10 @@
    "UNIT_ATATURK"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TURKISH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TURKISH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

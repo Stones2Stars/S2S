@@ -55,11 +55,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/genetic_engineering.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,5,7"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_CRYONICS",
-  "soundMP": "AS2D_TECH_CRYONICS",
-  "icon": ",Art/Interface/Buttons/TechTree/genetic_engineering.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,5,7"
+  "soundMP": "AS2D_TECH_CRYONICS"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

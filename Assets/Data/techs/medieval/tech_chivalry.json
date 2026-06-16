@@ -80,11 +80,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/chivalry.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,4"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_CHIVALRY",
-  "soundMP": "AS2D_TECH_CHIVALRY",
-  "icon": ",Art/Interface/Buttons/TechTree/chivalry.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,4"
+  "soundMP": "AS2D_TECH_CHIVALRY"
  },
  "identity": {
   "era": "C2C_ERA_MEDIEVAL",

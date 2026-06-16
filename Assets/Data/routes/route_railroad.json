@@ -79,8 +79,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Builds/BuildRailroad.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/BuildRailroad.dds"
+  }
  },
  "identity": {
   "value": 5,

@@ -38,8 +38,10 @@
    "tradeModifier": 20
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_OIL"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_OIL"
+  }
  },
  "mapGeneration": {
   "placementOrder": 2,

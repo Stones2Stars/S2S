@@ -8,8 +8,10 @@
    "UNIT_RWENZURURU_SOLDIER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_KONJAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_KONJAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

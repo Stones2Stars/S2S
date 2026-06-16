@@ -62,8 +62,10 @@
    "tradeModifier": 3
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_GLASSWARE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_GLASSWARE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

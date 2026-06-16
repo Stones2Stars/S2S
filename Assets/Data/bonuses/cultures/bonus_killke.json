@@ -8,8 +8,10 @@
    "UNIT_WIRUTI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_KILLKE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_KILLKE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

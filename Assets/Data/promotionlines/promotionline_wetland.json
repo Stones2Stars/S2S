@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_WETLAND",
+ "description": "TXT_KEY_PROMOTIONLINE_WETLAND",
+ "ui": {
+  "art": {
+   "icon": "art/Tweaks/art/wetlandcombat1.dds"
+  }
+ }
+}

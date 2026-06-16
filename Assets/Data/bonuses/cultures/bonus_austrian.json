@@ -9,8 +9,10 @@
    "UNIT_JAEGER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_AUSTRIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_AUSTRIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

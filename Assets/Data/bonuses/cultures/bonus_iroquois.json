@@ -9,8 +9,10 @@
    "UNIT_TOMAHAWK_THROWER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_IROQUOIS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_IROQUOIS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

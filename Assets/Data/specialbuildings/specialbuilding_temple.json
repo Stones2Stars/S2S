@@ -1,0 +1,12 @@
+{
+ "type": "SPECIALBUILDING_TEMPLE",
+ "description": "TXT_KEY_SPECIALBUILDING_TEMPLE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Buildings/Temple.dds"
+  }
+ },
+ "identity": {
+  "valid": true
+ }
+}

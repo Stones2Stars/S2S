@@ -7,8 +7,10 @@
    "BUILD_MACHU_PICCHU"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MACHU_PICCHU_PLANS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MACHU_PICCHU_PLANS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_WONDER"

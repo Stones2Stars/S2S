@@ -7,8 +7,10 @@
    "BUILDING_INTERSTELLAR_TOURIST_AGENCY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PERSONAL_STARCRAFT"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PERSONAL_STARCRAFT"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

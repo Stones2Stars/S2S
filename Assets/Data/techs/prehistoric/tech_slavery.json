@@ -52,11 +52,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/slave.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,16"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SLAVERY",
-  "soundMP": "AS2D_TECH_SLAVERY",
-  "icon": ",Art/Interface/Buttons/TechTree/slave.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,16"
+  "soundMP": "AS2D_TECH_SLAVERY"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

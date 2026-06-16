@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_NEGLIGENT",
+ "description": "TXT_KEY_PROMOTIONLINE_NEGLIGENT",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitNegligent.dds"
+  }
+ }
+}

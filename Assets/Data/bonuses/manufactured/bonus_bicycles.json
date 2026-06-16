@@ -13,8 +13,10 @@
    "BUILDING_VELODROME"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BICYCLES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BICYCLES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

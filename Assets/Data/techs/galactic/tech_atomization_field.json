@@ -65,11 +65,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/atomization_field.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ATOMIZATION_FIELD",
-  "soundMP": "AS2D_TECH_ATOMIZATION_FIELD",
-  "icon": "Art/interface/buttons/TechTree/atomization_field.dds"
+  "soundMP": "AS2D_TECH_ATOMIZATION_FIELD"
  },
  "identity": {
   "era": "C2C_ERA_GALACTIC",

@@ -83,11 +83,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/brain_scan.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_THOUGHT_SCANNING",
-  "soundMP": "AS2D_TECH_THOUGHT_SCANNING",
-  "icon": "Art/Interface/Buttons/TechTree/brain_scan.dds"
+  "soundMP": "AS2D_TECH_THOUGHT_SCANNING"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

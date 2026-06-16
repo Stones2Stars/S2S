@@ -7,8 +7,10 @@
    "BUILDING_BELL_LABS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PUNCH_CARDS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PUNCH_CARDS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

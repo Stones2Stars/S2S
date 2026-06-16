@@ -62,11 +62,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Buttons/Techs/TechNanoshielding.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_NANOSHIELDING",
-  "soundMP": "AS2D_TECH_NANOSHIELDING",
-  "icon": "Art/Buttons/Techs/TechNanoshielding.dds"
+  "soundMP": "AS2D_TECH_NANOSHIELDING"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

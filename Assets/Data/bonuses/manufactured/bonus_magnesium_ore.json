@@ -2,8 +2,10 @@
  "type": "BONUS_MAGNESIUM_ORE",
  "description": "TXT_KEY_BONUS_MAGNESIUM_ORE",
  "civilopedia": "TXT_KEY_BONUS_MAGNESIUM_ORE_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_MAGNESIUM_ORE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MAGNESIUM_ORE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

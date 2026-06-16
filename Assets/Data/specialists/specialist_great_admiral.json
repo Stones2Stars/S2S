@@ -1,0 +1,168 @@
+{
+ "type": "SPECIALIST_GREAT_ADMIRAL",
+ "description": "TXT_KEY_SPECIALIST_GREAT_ADMIRAL",
+ "civilopedia": "TXT_KEY_CONCEPT_GREAT_ADMIRALS_PEDIA",
+ "food": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_SEAFARING": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_SEAFARING1": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_AGGRESSIVE": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_AGGRESSIVE1": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_PROTECTIVE": {
+     "flat": 1
+    },
+    "TRAIT_PROTECTIVE2": {
+     "flat": 1
+    },
+    "TRAIT_SEAFARING2": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_DEFENSIVE": {
+     "flat": 1
+    },
+    "TRAIT_DEFENSIVE1": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_IMPERIALIST": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_IMPERIALIST1": {
+     "flat": 1
+    },
+    "TRAIT_SEAFARING3": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 1
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_AGGRESSIVE": {
+     "flat": 2
+    },
+    "TRAIT_AGGRESSIVE2": {
+     "flat": 2
+    },
+    "TRAIT_TIMID": {
+     "flat": -2
+    },
+    "TRAIT_SEAFARING3": {
+     "flat": 2
+    },
+    "TRAIT_COMPLEX_HUMANITARIAN": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_HUMANITARIAN1": {
+     "flat": -1
+    },
+    "TRAIT_HUMANITARIAN3": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "traits": {
+    "TRAIT_DEFENSIVE": {
+     "flat": 2
+    },
+    "TRAIT_DEFENSIVE2": {
+     "flat": 2
+    },
+    "TRAIT_COMPLEX_SEAFARING1": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_BAYREUTH_FESTSPIELHAUS": {
+     "flat": 4
+    }
+   }
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_PROTECTIVE": {
+     "flat": 2
+    },
+    "TRAIT_COMPLEX_PROTECTIVE1": {
+     "flat": 2
+    },
+    "TRAIT_COMPLEX_SEAFARING": {
+     "flat": 2
+    },
+    "TRAIT_COMPLEX_HUMANITARIAN": {
+     "flat": -1
+    },
+    "TRAIT_HUMANITARIAN2": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_IMPERIALIST": {
+     "flat": 2
+    },
+    "TRAIT_IMPERIALIST2": {
+     "flat": 2
+    },
+    "TRAIT_SEAFARING2": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_NAVAL_COMBATANT": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/MainScreen/CityScreen/specialist_great_admiral.dds",
+  "button": "Art/Interface/MainScreen/CityScreen/specialist_great_admiral.dds"
+ },
+ "identity": {
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_MILITARY"
+  ]
+ }
+}

@@ -7,8 +7,10 @@
    "BUILDING_FACTORY_PENCILS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_GRAPHITE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_GRAPHITE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

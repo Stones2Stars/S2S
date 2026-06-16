@@ -63,8 +63,10 @@
    "UNIT_STREET_GANG"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_AUTOMOBILES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_AUTOMOBILES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

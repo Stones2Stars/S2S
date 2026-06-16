@@ -9,8 +9,10 @@
    "BUILDING_STEEL_RECLAMATION_PLANT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ENERGY_DRINK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ENERGY_DRINK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

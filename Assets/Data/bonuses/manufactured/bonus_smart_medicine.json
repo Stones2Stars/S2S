@@ -21,8 +21,10 @@
    "flat": 2
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SMART_MEDICINE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SMART_MEDICINE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

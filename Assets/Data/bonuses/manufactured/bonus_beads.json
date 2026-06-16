@@ -7,8 +7,10 @@
    "BUILDING_JEWELER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BEADS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BEADS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

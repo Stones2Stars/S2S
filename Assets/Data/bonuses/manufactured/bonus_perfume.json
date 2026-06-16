@@ -7,8 +7,10 @@
    "BUILDING_ANCIENT_EMBALMER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PERFUME"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PERFUME"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

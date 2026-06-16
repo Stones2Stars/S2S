@@ -8,8 +8,10 @@
    "UNIT_TSAVO_HUNTERS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_KENYAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_KENYAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

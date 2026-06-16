@@ -8,8 +8,10 @@
    "UNIT_MINGBURNU"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_KHWARAZMIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_KHWARAZMIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

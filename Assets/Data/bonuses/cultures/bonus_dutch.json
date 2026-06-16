@@ -12,8 +12,10 @@
    "UNIT_PIER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_DUTCH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_DUTCH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

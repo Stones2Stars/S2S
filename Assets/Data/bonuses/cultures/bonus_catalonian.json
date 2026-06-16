@@ -8,8 +8,10 @@
    "UNIT_JAMES_I"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CATALONIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CATALONIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -8,8 +8,10 @@
    "UNIT_SERENGETI_RANGER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TANZANIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TANZANIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

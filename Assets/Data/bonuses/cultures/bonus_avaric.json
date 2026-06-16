@@ -8,8 +8,10 @@
    "UNIT_KUBRAT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_AVARIC"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_AVARIC"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

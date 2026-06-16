@@ -8,8 +8,10 @@
    "UNIT_TREASURE_GUARD"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_OPHIR"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_OPHIR"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

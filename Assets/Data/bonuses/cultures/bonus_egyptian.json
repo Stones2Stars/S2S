@@ -9,8 +9,10 @@
    "UNIT_THUTMOSE_III"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_EGYPTIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_EGYPTIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

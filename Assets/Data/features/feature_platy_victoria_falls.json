@@ -1,0 +1,40 @@
+{
+ "type": "FEATURE_PLATY_VICTORIA_FALLS",
+ "description": "TXT_KEY_FEATURE_VICTORIA_FALLS",
+ "civilopedia": "TXT_KEY_FEATURE_VICTORIA_FALLS_PEDIA",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_VICTORIA_FALLS"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "noRiver": true,
+  "requiresFlatlands": true,
+  "addsFreshWater": true,
+  "noCity": true,
+  "noImprovement": true,
+  "noBonus": true,
+  "nukeImmune": true,
+  "ignoreTerrainCulture": true,
+  "validTerrains": [
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_MARSH"
+  ]
+ }
+}

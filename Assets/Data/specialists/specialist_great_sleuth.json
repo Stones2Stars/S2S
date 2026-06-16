@@ -1,0 +1,128 @@
+{
+ "type": "SPECIALIST_GREAT_SLEUTH",
+ "description": "TXT_KEY_SPECIALIST_GREAT_SLEUTH",
+ "civilopedia": "TXT_KEY_CONCEPT_GREAT_DETECTIVE_PEDIA",
+ "commerce": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_DECEIVER": {
+     "flat": 1
+    },
+    "TRAIT_DECEIVER2": {
+     "flat": 1
+    },
+    "TRAIT_NAIVE": {
+     "flat": -1
+    },
+    "TRAIT_NAIVE2": {
+     "flat": -1
+    },
+    "TRAIT_LAWFUL": {
+     "flat": 1
+    },
+    "TRAIT_LAWFUL2": {
+     "flat": 1
+    },
+    "TRAIT_CROOKED": {
+     "flat": -1
+    },
+    "TRAIT_CROOKED2": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "traits": {
+    "TRAIT_ORGANIZED3": {
+     "flat": -1
+    },
+    "TRAIT_IMPULSIVE3": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_DECEIVER": {
+     "flat": 2
+    },
+    "TRAIT_DECEIVER3": {
+     "flat": 2
+    },
+    "TRAIT_NAIVE": {
+     "flat": -2
+    },
+    "TRAIT_NAIVE3": {
+     "flat": -2
+    },
+    "TRAIT_COMPLEX_CHARISMATIC1": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_PHILOSOPHICAL": {
+     "flat": 1
+    },
+    "TRAIT_PHILOSOPHICAL3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_POPULIST": {
+     "flat": -1
+    },
+    "TRAIT_POPULIST3": {
+     "flat": -1
+    },
+    "TRAIT_LAWFUL": {
+     "flat": 1
+    },
+    "TRAIT_LAWFUL2": {
+     "flat": 1
+    },
+    "TRAIT_CROOKED": {
+     "flat": -1
+    },
+    "TRAIT_CROOKED2": {
+     "flat": -1
+    },
+    "TRAIT_CROOKED3": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_LAW_ENFORCEMENT": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "investigation": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": [
+   {
+    "perTurn": -4
+   }
+  ]
+ },
+ "art": {
+  "icon": "Art/Interface/MainScreen/CityScreen/Detective.dds",
+  "button": "Art/Interface/MainScreen/CityScreen/Detective.dds"
+ },
+ "identity": {
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_LEGAL"
+  ]
+ }
+}

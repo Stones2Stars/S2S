@@ -17,9 +17,15 @@
    "flat": 1
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_DISTANT_PAST",
-  "icon": "Art/Interface/Buttons/WorldBuilder/distant_past.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/distant_past.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_DISTANT_PAST"
+  }
  },
  "identity": {
   "found": true,

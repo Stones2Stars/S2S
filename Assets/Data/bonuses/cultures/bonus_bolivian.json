@@ -8,8 +8,10 @@
    "UNIT_EVO_MORALES"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BOLIVIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BOLIVIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

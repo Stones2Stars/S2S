@@ -63,11 +63,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Affectivealgorithms.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_AFFECTIVE_ALGORITHMS",
-  "soundMP": "AS2D_TECH_AFFECTIVE_ALGORITHMS",
-  "icon": "Art/Interface/Buttons/TechTree/Affectivealgorithms.dds"
+  "soundMP": "AS2D_TECH_AFFECTIVE_ALGORITHMS"
  },
  "identity": {
   "era": "C2C_ERA_INFORMATION",

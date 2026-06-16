@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_DESERT_WORKER",
+ "description": "TXT_KEY_PROMOTIONLINE_DESERT_WORKER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/workerdesert1.dds"
+  }
+ }
+}

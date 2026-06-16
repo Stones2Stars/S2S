@@ -9,8 +9,10 @@
    "UNIT_MEIONE_CARAVAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_LYDIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_LYDIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -18,8 +18,10 @@
    "UNIT_STEAMPUNK_WORKER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_STEAMPUNK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_STEAMPUNK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

@@ -9,8 +9,10 @@
    "UNIT_MURSILI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HITTITE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HITTITE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

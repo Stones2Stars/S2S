@@ -178,11 +178,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/Biology.dds,Art/Interface/Buttons/TechTree_Atlas.dds,1,9"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_BIOLOGY",
-  "soundMP": "AS2D_TECH_MP_BIOLOGY",
-  "icon": ",Art/Interface/Buttons/TechTree/Biology.dds,Art/Interface/Buttons/TechTree_Atlas.dds,1,9"
+  "soundMP": "AS2D_TECH_MP_BIOLOGY"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

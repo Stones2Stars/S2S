@@ -8,8 +8,10 @@
    "UNIT_MALACCAN_PIRATE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MALAYSIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MALAYSIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

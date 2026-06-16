@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_CREATIVE",
+ "description": "TXT_KEY_PROMOTIONLINE_CREATIVE",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCreative.dds"
+  }
+ }
+}

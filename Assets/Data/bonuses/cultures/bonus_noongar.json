@@ -8,8 +8,10 @@
    "UNIT_PIBELMAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NOONGAR"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NOONGAR"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

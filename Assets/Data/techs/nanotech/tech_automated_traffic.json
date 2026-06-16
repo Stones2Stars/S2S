@@ -75,11 +75,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/AutomatedTraffic.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,6,2"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_AUTOMATED_TRAFFIC",
-  "soundMP": "AS2D_TECH_AUTOMATED_TRAFFIC",
-  "icon": ",Art/Interface/Buttons/TechTree/AutomatedTraffic.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,6,2"
+  "soundMP": "AS2D_TECH_AUTOMATED_TRAFFIC"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

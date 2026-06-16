@@ -67,11 +67,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Microprocessor.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_MICROPROCESSOR",
-  "soundMP": "AS2D_TECH_MICROPROCESSOR",
-  "icon": "Art/Interface/Buttons/TechTree/Microprocessor.dds"
+  "soundMP": "AS2D_TECH_MICROPROCESSOR"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

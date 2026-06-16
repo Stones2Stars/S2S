@@ -29,8 +29,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_LOBSTER"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_LOBSTER"
+  }
  },
  "mapGeneration": {
   "placementOrder": 9,

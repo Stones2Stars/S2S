@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_WARRIORS_INTUITION",
+ "description": "TXT_KEY_PROMOTIONLINE_WARRIORS_INTUITION",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/WarriorIntuition1Promotion.dds"
+  }
+ }
+}

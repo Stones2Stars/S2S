@@ -48,8 +48,10 @@
    "tradeModifier": 2
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_POTATOES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_POTATOES"
+  }
  },
  "mapGeneration": {
   "placementOrder": 6,

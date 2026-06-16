@@ -8,8 +8,10 @@
    "UNIT_LA_PLATA_MOSQUETERO"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_LA_PLATAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_LA_PLATAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

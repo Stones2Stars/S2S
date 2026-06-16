@@ -185,11 +185,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/enviromentaleconomics2.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ENVIRONMENTALISM",
-  "soundMP": "AS2D_TECH_ENVIRONMENTALISM",
-  "icon": "Art/Interface/Buttons/TechTree/enviromentaleconomics2.dds"
+  "soundMP": "AS2D_TECH_ENVIRONMENTALISM"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

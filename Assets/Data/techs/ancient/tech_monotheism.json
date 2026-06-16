@@ -61,11 +61,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_RELIGION",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": ",Art/Interface/Buttons/TechTree/Monotheism.dds,Art/Interface/Buttons/TechTree_Atlas.dds,2,11"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_MONOTHEISM",
-  "soundMP": "AS2D_TECH_MP_MONOTHEISM",
-  "icon": ",Art/Interface/Buttons/TechTree/Monotheism.dds,Art/Interface/Buttons/TechTree_Atlas.dds,2,11"
+  "soundMP": "AS2D_TECH_MP_MONOTHEISM"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

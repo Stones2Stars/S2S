@@ -8,8 +8,10 @@
    "UNIT_MOHAMMED_II_TAIRAB"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FURAWI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FURAWI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

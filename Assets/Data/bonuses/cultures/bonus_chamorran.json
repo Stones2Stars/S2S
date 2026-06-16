@@ -8,8 +8,10 @@
    "UNIT_MATAPANG"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CHAMORRAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CHAMORRAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

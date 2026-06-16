@@ -76,11 +76,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/huntingtactics.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_HUNTING",
-  "soundMP": "AS2D_TECH_HUNTING",
-  "icon": "Art/Interface/Buttons/TechTree/huntingtactics.dds"
+  "soundMP": "AS2D_TECH_HUNTING"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

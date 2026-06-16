@@ -8,8 +8,10 @@
    "UNIT_KNARR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_JUTE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_JUTE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

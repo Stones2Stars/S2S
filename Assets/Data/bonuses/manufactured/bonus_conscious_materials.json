@@ -7,8 +7,10 @@
    "BUILDING_INTERSTELLAR_ANIMATED_PREON_STAR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CONSCIOUS_MATERIALS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CONSCIOUS_MATERIALS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

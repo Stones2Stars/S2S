@@ -20,8 +20,10 @@
    "objective": 8
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HEAVY_WATER"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HEAVY_WATER"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_WONDER"

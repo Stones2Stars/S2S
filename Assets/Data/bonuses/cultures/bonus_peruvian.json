@@ -8,8 +8,10 @@
    "UNIT_PERUVIAN_CONQUISTADOR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PERUVIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PERUVIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

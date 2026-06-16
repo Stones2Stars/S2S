@@ -8,8 +8,10 @@
    "UNIT_WANQARA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PUELCHE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PUELCHE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

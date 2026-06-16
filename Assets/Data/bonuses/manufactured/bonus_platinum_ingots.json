@@ -7,8 +7,10 @@
    "BUILDING_SMITH_PLATINUM"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PLATINUM_INGOTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PLATINUM_INGOTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

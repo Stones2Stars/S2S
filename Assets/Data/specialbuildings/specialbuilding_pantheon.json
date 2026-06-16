@@ -1,0 +1,12 @@
+{
+ "type": "SPECIALBUILDING_PANTHEON",
+ "description": "TXT_KEY_SPECIALBUILDING_PANTHEON",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Buildings/parthenon.dds"
+  }
+ },
+ "identity": {
+  "valid": true
+ }
+}

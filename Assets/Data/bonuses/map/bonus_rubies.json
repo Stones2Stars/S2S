@@ -21,8 +21,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_RUBIES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_RUBIES"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

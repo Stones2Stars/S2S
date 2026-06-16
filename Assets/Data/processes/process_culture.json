@@ -6,7 +6,9 @@
    "percent": 50
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Process/ProcessCulture.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Process/ProcessCulture.dds"
+  }
  }
 }

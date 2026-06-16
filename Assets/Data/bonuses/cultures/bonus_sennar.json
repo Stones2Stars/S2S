@@ -8,8 +8,10 @@
    "UNIT_FUNJ_CAVALRY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SENNAR"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SENNAR"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

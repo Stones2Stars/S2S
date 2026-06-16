@@ -29,10 +29,18 @@
    }
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_DESERT",
-  "icon": "Art/Interface/Buttons/baseterrain/DuneGraben.dds",
-  "worldSoundscapeAudioScript": "ASSS_DESERT_SELECT_AMB"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/baseterrain/DuneGraben.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_DESERT"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_DESERT_SELECT_AMB"
  },
  "identity": {
   "foundCoast": true,

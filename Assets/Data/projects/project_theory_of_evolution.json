@@ -1,0 +1,37 @@
+{
+ "type": "PROJECT_THEORY_OF_EVOLUTION",
+ "description": "TXT_KEY_BUILDING_THEORY_OF_EVOLUTION",
+ "civilopedia": "TXT_KEY_BUILDING_THEORY_OF_EVOLUTION_PEDIA",
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "cost": {
+  "create": 4440
+ },
+ "art": {
+  "icon": ",Art/Interface/Buttons/Buildings/Evolution.dds,Art/Interface/Buttons/RoM_Building_Atlas.dds,8,3"
+ },
+ "identity": {
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "maxGlobalInstances": 1
+ }
+}

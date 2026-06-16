@@ -7,8 +7,10 @@
    "BUILDING_HUMAN_MOD_RADIATION_TOLERANCE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HUMAN_MOD_HEAT_TOLERANCE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HUMAN_MOD_HEAT_TOLERANCE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

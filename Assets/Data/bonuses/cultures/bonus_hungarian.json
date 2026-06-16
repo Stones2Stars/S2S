@@ -9,8 +9,10 @@
    "UNIT_STEPHEN_I"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HUNGARIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HUNGARIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

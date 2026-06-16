@@ -9,8 +9,10 @@
    "UNIT_SANCHO"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BASQUE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BASQUE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -69,11 +69,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/Economics2.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_MERCHANTADVENTURES",
-  "soundMP": "AS2D_TECH_MERCHANTADVENTURES",
-  "icon": "Art/Interface/Buttons/TechTree/Economics2.dds"
+  "soundMP": "AS2D_TECH_MERCHANTADVENTURES"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

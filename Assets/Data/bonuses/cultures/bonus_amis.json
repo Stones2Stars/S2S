@@ -8,8 +8,10 @@
    "UNIT_TERUO_NAKAMURA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_AMIS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_AMIS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

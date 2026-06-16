@@ -65,11 +65,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/artificialstars.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ARTIFICIAL_STARS",
-  "soundMP": "AS2D_TECH_ARTIFICIAL_STARS",
-  "icon": "Art/Interface/Buttons/TechTree/artificialstars.dds"
+  "soundMP": "AS2D_TECH_ARTIFICIAL_STARS"
  },
  "identity": {
   "era": "C2C_ERA_GALACTIC",

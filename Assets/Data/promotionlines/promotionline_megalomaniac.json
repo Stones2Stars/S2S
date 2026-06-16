@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_MEGALOMANIAC",
+ "description": "TXT_KEY_PROMOTIONLINE_MEGALOMANIAC",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPolitician.dds"
+  }
+ }
+}

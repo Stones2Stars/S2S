@@ -229,6 +229,26 @@ and is settled when its turn comes:
     rands, `nukeExplosionRand`) → out of cascade. Unit `requires.build` only (no `operate`/dormancy yet;
     future fuel-disable would be `requires.operate`).
 
+## Phase F — FINAL ALIGNMENT PASS (after all infos migrated, BEFORE #430 parsing; owner 2026-06-16)
+
+**Finish the info migration FIRST, then sweep back over every already-migrated info to bring them ALL into line with
+the latest conventions.** The model evolves *during* migration — each entity sharpens a rule — so earlier-migrated
+entities lag the conventions later ones established. One consistency sweep at the end is the countermeasure: *"I
+don't want a future agent to go 'hurr?!?' because it's different"* (owner). Known divergences to reconcile (the list
+grows as more accumulate):
+- **Predicate modularity** (enabler-spec §3): treat Religion / Corporations / Traits (simple + complex) — and any
+  concept we define as a system — as isolated systems; bare-string predicate forms; per-system self-documentation;
+  ignore-not-false degradation. (The `workedBy: SELF` predicate also lands here / at Buildings.)
+- **Art sub-blocks** (building-cascade-conversion, "DEFERRED — ART SUB-BLOCKS"): flat `art.*` →
+  `art.ui.icon` / `art.world.icon` / `art.sound.{footsteps,soundscape,…}` across EVERY art-bearing entity (Bonus
+  already migrated; Units the heaviest).
+- **Any shape an entity locked AFTER an earlier entity was committed** — e.g. the family names
+  defense/movement/cultureDistance/buildTime/`vision` (blessed at Terrain/Feature), the deliveryguy/semantic-sense
+  ownership rule (modifier-spec §6.1), the dedicated-block rule (§0.8).
+Done BEFORE #430 so the parser implements against uniform data — no mid-parse retrofit churn. **⛔ HARD GATE (owner,
+emphatic 2026-06-16): do NOT start "whatever is next" (the #430 parser, or any new phase) until this alignment —
+INCLUDING the art-block update — is complete.** Finish migration → align everything (arts included) → only then move on.
+
 ---
 
 *Method per entity: curation, not transcription — ask "what do the two cascades need from this entity?",

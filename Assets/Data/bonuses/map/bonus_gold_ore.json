@@ -37,8 +37,10 @@
    "tradeModifier": 6
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_GOLD_ORE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_GOLD_ORE"
+  }
  },
  "mapGeneration": {
   "placementOrder": 5,

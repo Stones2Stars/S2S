@@ -1,0 +1,124 @@
+{
+ "type": "SPECIALIST_GREAT_SCIENTIST",
+ "description": "TXT_KEY_SPECIALIST_GREAT_SCIENTIST",
+ "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_SCIENTIFIC": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_SCIENTIFIC1": {
+     "flat": 1
+    },
+    "TRAIT_SCIENTIFIC3": {
+     "flat": 1
+    },
+    "TRAIT_TRADITIONAL": {
+     "flat": -1
+    },
+    "TRAIT_TRADITIONAL1": {
+     "flat": -1
+    },
+    "TRAIT_TRADITIONAL3": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 6
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_SCIENTIFIC": {
+     "flat": 2
+    },
+    "TRAIT_SCIENTIFIC2": {
+     "flat": 2
+    },
+    "TRAIT_TRADITIONAL": {
+     "flat": -2
+    },
+    "TRAIT_TRADITIONAL2": {
+     "flat": -2
+    },
+    "TRAIT_COMPLEX_PHILOSOPHICAL": {
+     "flat": 1
+    },
+    "TRAIT_PHILOSOPHICAL3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_POPULIST": {
+     "flat": -1
+    },
+    "TRAIT_POPULIST3": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_EXPANSIVE1": {
+     "flat": -1
+    },
+    "TRAIT_MINIMALIST1": {
+     "flat": 1
+    },
+    "TRAIT_MEDICAL": {
+     "flat": 1
+    },
+    "TRAIT_UNSANITARY": {
+     "flat": -1
+    },
+    "TRAIT_UNSANITARY3": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "traits": {
+    "TRAIT_MEDICAL3": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "traits": {
+    "TRAIT_CHARISMATIC3": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_WORKER": {
+     "flat": 1
+    },
+    "UNITCOMBAT_SEA_WORKER": {
+     "flat": 1
+    },
+    "UNITCOMBAT_ENTERTAINER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/MainScreen/CityScreen/Great_Scientist.dds",
+  "button": "Art/Interface/MainScreen/CityScreen/Great_Scientist.dds"
+ },
+ "identity": {
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_RESEARCH"
+  ]
+ }
+}

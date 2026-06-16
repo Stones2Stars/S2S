@@ -23,8 +23,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_DIAMOND"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_DIAMOND"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

@@ -12,8 +12,10 @@
    "BUILDING_SHWEDAGON_PAYA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_GOLD_WARES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_GOLD_WARES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -24,10 +24,18 @@
    }
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_ROCKY",
-  "icon": "Art/Interface/Buttons/baseterrain/DuneRugged.dds",
-  "worldSoundscapeAudioScript": "ASSS_PLAINS_SELECT_AMB"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/baseterrain/DuneRugged.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_ROCKY"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_PLAINS_SELECT_AMB"
  },
  "identity": {
   "found": true,

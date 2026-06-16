@@ -7,8 +7,10 @@
    "UNIT_KUOMINTANG"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TAIWANESE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TAIWANESE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

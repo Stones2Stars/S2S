@@ -89,11 +89,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/nitroglycerin.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_NITROGLYCERIN",
-  "soundMP": "AS2D_TECH_NITROGLYCERIN",
-  "icon": "Art/Interface/Buttons/TechTree/nitroglycerin.dds"
+  "soundMP": "AS2D_TECH_NITROGLYCERIN"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

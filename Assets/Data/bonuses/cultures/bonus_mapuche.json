@@ -7,8 +7,10 @@
    "UNIT_IRONWOOD_SPEARMAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MAPUCHE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MAPUCHE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

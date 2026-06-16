@@ -66,11 +66,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/wormholetraversal.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_WORMHOLE_TRAVERSAL",
-  "soundMP": "AS2D_TECH_WORMHOLE_TRAVERSAL",
-  "icon": "Art/Interface/Buttons/TechTree/wormholetraversal.dds"
+  "soundMP": "AS2D_TECH_WORMHOLE_TRAVERSAL"
  },
  "identity": {
   "era": "C2C_ERA_GALACTIC",

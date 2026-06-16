@@ -8,8 +8,10 @@
    "BUILDING_SMITH_LEAD"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_LEAD_INGOTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_LEAD_INGOTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

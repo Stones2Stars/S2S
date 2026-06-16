@@ -1,0 +1,49 @@
+{
+ "type": "FEATURE_PLATY_FUJI",
+ "description": "TXT_KEY_FEATURE_FUJI",
+ "civilopedia": "TXT_KEY_FEATURE_FUJI_PEDIA",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "properties": [
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_AIR_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": 5
+  }
+ ],
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_FUJI"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "noCity": true,
+  "noImprovement": true,
+  "noBonus": true,
+  "nukeImmune": true,
+  "countsAsPeak": true,
+  "ignoreTerrainCulture": true,
+  "validTerrains": [
+   "TERRAIN_ICE",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_JAGGED",
+   "TERRAIN_TUNDRA"
+  ]
+ }
+}

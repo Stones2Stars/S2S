@@ -8,8 +8,10 @@
    "UNIT_WANANO"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TUCANO"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TUCANO"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

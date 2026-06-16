@@ -73,11 +73,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/unificationphysics.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_UNIFICATION_PHYSICS",
-  "soundMP": "AS2D_TECH_UNIFICATION_PHYSICS",
-  "icon": "Art/Interface/Buttons/TechTree/unificationphysics.dds"
+  "soundMP": "AS2D_TECH_UNIFICATION_PHYSICS"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

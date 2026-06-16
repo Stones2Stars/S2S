@@ -24,8 +24,10 @@
    "flat": 2
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TIN_ORE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TIN_ORE"
+  }
  },
  "mapGeneration": {
   "placementOrder": 5,

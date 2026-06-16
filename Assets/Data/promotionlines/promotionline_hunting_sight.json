@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_HUNTING_SIGHT",
+ "description": "TXT_KEY_PROMOTIONLINE_HUNTING_SIGHT",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Sentry.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,4,10"
+  }
+ }
+}

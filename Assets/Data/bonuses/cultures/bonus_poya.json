@@ -8,8 +8,10 @@
    "UNIT_POYA_LONGSPEARS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_POYA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_POYA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

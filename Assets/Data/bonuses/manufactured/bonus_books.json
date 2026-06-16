@@ -42,8 +42,10 @@
    "BUILDING_TAOIST_MONASTERY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BOOKS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BOOKS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

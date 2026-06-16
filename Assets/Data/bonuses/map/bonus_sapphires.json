@@ -23,8 +23,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SAPPHIRES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SAPPHIRES"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

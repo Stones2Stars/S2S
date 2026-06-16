@@ -8,8 +8,10 @@
    "UNIT_RUSSIA_COSSACK"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_RUSSIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_RUSSIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

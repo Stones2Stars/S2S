@@ -14,8 +14,10 @@
    "UNIT_UAV"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_UNMANNED_AIRCRAFTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_UNMANNED_AIRCRAFTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

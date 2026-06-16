@@ -1,0 +1,29 @@
+{
+ "type": "PROJECT_APOLLO_PROGRAM",
+ "description": "TXT_KEY_PROJECT_APOLLO_PROGRAM",
+ "civilopedia": "TXT_KEY_PROJECT_APOLLO_PROGRAM_PEDIA",
+ "enables": {
+  "projects": [
+   "PROJECT_SS_CASING",
+   "PROJECT_SS_COCKPIT",
+   "PROJECT_SS_DOCKING_BAY",
+   "PROJECT_SS_ENGINE",
+   "PROJECT_SS_LIFE_SUPPORT",
+   "PROJECT_SS_STASIS_CHAMBER",
+   "PROJECT_SS_THRUSTERS"
+  ]
+ },
+ "cost": {
+  "create": 12320
+ },
+ "art": {
+  "icon": ",Art/Interface/Buttons/Buildings/ApolloProgram.dds,Art/Interface/Buttons/Buildings_Atlas.dds,3,1"
+ },
+ "identity": {
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "launchesVictory": "VICTORY_SPACE_RACE",
+  "maxTeamInstances": 1
+ }
+}

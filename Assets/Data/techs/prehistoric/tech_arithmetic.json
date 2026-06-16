@@ -39,11 +39,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/arithmetic.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ARITHMETIC",
-  "soundMP": "AS2D_TECH_ARITHMETIC",
-  "icon": "Art/Interface/Buttons/TechTree/arithmetic.dds"
+  "soundMP": "AS2D_TECH_ARITHMETIC"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

@@ -1,0 +1,58 @@
+{
+ "type": "HERITAGE_FOLKLORE_MAMMOTH",
+ "description": "TXT_KEY_HERITAGE_FOLKLORE_MAMMOTH",
+ "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
+ "enables": {
+  "heritages": [
+   "HERITAGE_TAXON_ELEPHANTIDAE"
+  ]
+ },
+ "research": {
+  "empire": {
+   "byEra": {
+    "C2C_ERA_PREHISTORIC": {
+     "flat": 40
+    },
+    "C2C_ERA_ANCIENT": {
+     "flat": -10
+    },
+    "C2C_ERA_CLASSICAL": {
+     "flat": -10
+    },
+    "C2C_ERA_MEDIEVAL": {
+     "flat": -10
+    },
+    "C2C_ERA_RENAISSANCE": {
+     "flat": -10
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "byEra": {
+    "C2C_ERA_PREHISTORIC": {
+     "flat": 10
+    },
+    "C2C_ERA_ANCIENT": {
+     "flat": 10
+    },
+    "C2C_ERA_CLASSICAL": {
+     "flat": 10
+    },
+    "C2C_ERA_MEDIEVAL": {
+     "flat": 10
+    },
+    "C2C_ERA_RENAISSANCE": {
+     "flat": 10
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/Buttons/Buildings/PaleolithicMammothMyth.dds"
+ },
+ "identity": {
+  "needsLanguage": true
+ }
+}

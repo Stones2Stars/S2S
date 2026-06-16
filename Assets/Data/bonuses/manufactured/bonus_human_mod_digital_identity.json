@@ -11,8 +11,10 @@
    "BUILDING_VIRTUAL_WORLD_DATA_ANALYSIS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HUMAN_MOD_DIGITAL_IDENTITY"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HUMAN_MOD_DIGITAL_IDENTITY"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

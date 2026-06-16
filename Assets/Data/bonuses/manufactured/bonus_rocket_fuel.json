@@ -26,8 +26,10 @@
    "UNIT_V1"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ROCKET_FUEL"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ROCKET_FUEL"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

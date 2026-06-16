@@ -7,8 +7,10 @@
    "UNIT_CARIB_BLOWGUNNER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CARIB"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CARIB"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

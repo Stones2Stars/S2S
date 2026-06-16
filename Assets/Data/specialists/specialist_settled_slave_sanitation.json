@@ -1,0 +1,59 @@
+{
+ "type": "SPECIALIST_SETTLED_SLAVE_SANITATION",
+ "description": "TXT_KEY_SPECIALIST_SETTLED_SLAVE_SANITATION",
+ "civilopedia": "TXT_KEY_SPECIALIST_SETTLED_SLAVE_PEDIA",
+ "food": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -40
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": [
+   {
+    "perTurn": -1
+   }
+  ]
+ },
+ "PROPERTY_CRIME": {
+  "city": [
+   {
+    "perTurn": 1
+   }
+  ]
+ },
+ "PROPERTY_DISEASE": {
+  "city": [
+   {
+    "perTurn": -1
+   }
+  ]
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": [
+   {
+    "perTurn": -1
+   }
+  ]
+ },
+ "art": {
+  "icon": "Art/Interface/MainScreen/CityScreen/slave_sanitation.dds",
+  "button": "Art/Interface/MainScreen/CityScreen/slave_commerce.dds"
+ },
+ "identity": {
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_CAPTIVE",
+   "CATEGORY_SPECIALIST_GROUP_MEDICAL"
+  ],
+  "slave": true
+ }
+}

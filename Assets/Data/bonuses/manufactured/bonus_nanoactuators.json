@@ -7,8 +7,10 @@
    "BUILDING_ANTHROPOMORPHICS_LAB"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NANOACTUATORS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NANOACTUATORS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

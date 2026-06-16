@@ -1,0 +1,390 @@
+{
+ "type": "SPECIALIST_PRIEST",
+ "description": "TXT_KEY_SPECIALIST_PRIEST",
+ "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
+ "food": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_SPIRITUAL1": {
+     "flat": 1
+    },
+    "TRAIT_SPIRITUAL3": {
+     "flat": 1
+    },
+    "TRAIT_ANTI_CLERICAL3": {
+     "flat": -1
+    },
+    "TRAIT_PIOUS3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_ZEALOUS": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_ZEALOUS1": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_HUMANITARIAN": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_HUMANITARIAN1": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_CRUEL": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_CRUEL1": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1,
+   "buildings": {
+    "BUILDING_ANGKOR_WAT": {
+     "flat": 1
+    },
+    "BUILDING_ARK_OF_THE_COVENANT": {
+     "flat": 1
+    },
+    "BUILDING_MASADA": {
+     "flat": 1
+    },
+    "BUILDING_THE_NECROMANTEION": {
+     "flat": 1
+    }
+   }
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_ANTI_CLERICAL": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_ANTI_CLERICAL1": {
+     "flat": -1
+    },
+    "TRAIT_PIOUS": {
+     "flat": 1
+    },
+    "TRAIT_PIOUS1": {
+     "flat": 1
+    },
+    "TRAIT_ZEALOUS3": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_HUMANITARIAN": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_HUMANITARIAN1": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_CRUEL": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_CRUEL1": {
+     "flat": 1
+    },
+    "TRAIT_SPIRITUAL": {
+     "flat": 1
+    },
+    "TRAIT_ANTI_CLERICAL": {
+     "flat": -1
+    },
+    "TRAIT_SPIRITUAL1": {
+     "flat": 1
+    },
+    "TRAIT_ANTI_CLERICAL1": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_THE_NECROMANTEION": {
+     "flat": 1
+    }
+   }
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_SPIRITUAL": {
+     "flat": 1
+    },
+    "TRAIT_SPIRITUAL2": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_ANTI_CLERICAL": {
+     "flat": -1
+    },
+    "TRAIT_ANTI_CLERICAL2": {
+     "flat": -1
+    },
+    "TRAIT_PIOUS2": {
+     "flat": 1
+    },
+    "TRAIT_ZEALOUS2": {
+     "flat": -1
+    },
+    "TRAIT_SPIRITUAL": {
+     "flat": 1
+    },
+    "TRAIT_SPIRITUAL1": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 1,
+   "buildings": {
+    "BUILDING_HOUSE_OF_WISDOM": {
+     "flat": -1
+    }
+   },
+   "civics": {
+    "CIVIC_THEOCRACY": {
+     "percent": 50
+    },
+    "CIVIC_STATE_CHURCH": {
+     "percent": 50
+    },
+    "CIVIC_INQUISITORIAL": {
+     "percent": 100
+    },
+    "CIVIC_APOTHEOSIS": {
+     "percent": 100
+    }
+   }
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_SPIRITUAL": {
+     "flat": 1
+    },
+    "TRAIT_SPIRITUAL2": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_ANTI_CLERICAL": {
+     "flat": -1
+    },
+    "TRAIT_ANTI_CLERICAL3": {
+     "flat": -1
+    },
+    "TRAIT_PIOUS": {
+     "flat": 1
+    },
+    "TRAIT_PIOUS1": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_ZEALOUS": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_ZEALOUS1": {
+     "flat": -1
+    },
+    "TRAIT_ZEALOUS2": {
+     "flat": -1
+    },
+    "TRAIT_ZEALOUS3": {
+     "flat": -1
+    },
+    "TRAIT_PROLIFIC3": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_HOUSE_OF_WISDOM": {
+     "flat": 1
+    }
+   },
+   "civics": {
+    "CIVIC_THEOCRACY": {
+     "percent": 25
+    },
+    "CIVIC_APOTHEOSIS": {
+     "percent": 25
+    }
+   }
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_SPIRITUAL": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_SPIRITUAL1": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_ANTI_CLERICAL": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_ANTI_CLERICAL1": {
+     "flat": -1
+    },
+    "TRAIT_ANTI_CLERICAL2": {
+     "flat": -1
+    },
+    "TRAIT_ANTI_CLERICAL3": {
+     "flat": -1
+    },
+    "TRAIT_PIOUS": {
+     "flat": 1
+    },
+    "TRAIT_PIOUS3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_ZEALOUS": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_ZEALOUS1": {
+     "flat": -1
+    },
+    "TRAIT_EXPANSIVE2": {
+     "flat": -1
+    },
+    "TRAIT_MINIMALIST2": {
+     "flat": 1
+    },
+    "TRAIT_MEDICAL1": {
+     "flat": 1
+    },
+    "TRAIT_UNSANITARY1": {
+     "flat": -1
+    },
+    "TRAIT_NATURALIST": {
+     "flat": 1
+    },
+    "TRAIT_NATURALIST1": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "civics": {
+    "CIVIC_THEOCRACY": {
+     "percent": 25
+    },
+    "CIVIC_FREE_CHURCH": {
+     "percent": 100
+    }
+   }
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_SPIRITUAL": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_SPIRITUAL1": {
+     "flat": 1
+    },
+    "TRAIT_SPIRITUAL3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_ANTI_CLERICAL": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_ANTI_CLERICAL1": {
+     "flat": -1
+    },
+    "TRAIT_PIOUS": {
+     "flat": 1
+    },
+    "TRAIT_PIOUS2": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_ZEALOUS": {
+     "flat": -1
+    },
+    "TRAIT_ZEALOUS2": {
+     "flat": -1
+    },
+    "TRAIT_CREATIVE1": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_SPIRITUAL": {
+     "flat": 1
+    },
+    "TRAIT_SPIRITUAL2": {
+     "flat": 1
+    },
+    "TRAIT_SPIRITUAL3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_ANTI_CLERICAL": {
+     "flat": -1
+    },
+    "TRAIT_ANTI_CLERICAL2": {
+     "flat": -1
+    },
+    "TRAIT_PIOUS": {
+     "flat": 1
+    },
+    "TRAIT_PIOUS1": {
+     "flat": 1
+    },
+    "TRAIT_PIOUS2": {
+     "flat": 1
+    },
+    "TRAIT_PIOUS3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_ZEALOUS": {
+     "flat": -1
+    },
+    "TRAIT_ZEALOUS3": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_CRUEL1": {
+     "flat": 1
+    },
+    "TRAIT_ANTI_CLERICAL": {
+     "flat": 1
+    },
+    "TRAIT_ANTI_CLERICAL1": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MISSIONARY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/MainScreen/CityScreen/Priest.dds",
+  "button": "Art/Interface/MainScreen/CityScreen/Priest.dds"
+ },
+ "identity": {
+  "visible": true,
+  "categories": [
+   "CATEGORY_ASSIGNABLE_SPECIALISTS",
+   "CATEGORY_SPECIALIST_GROUP_RELIGIOUS"
+  ],
+  "greatPeopleUnit": "UNIT_PROPHET"
+ }
+}

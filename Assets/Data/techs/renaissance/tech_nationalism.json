@@ -96,11 +96,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Nationalism.dds,Art/Interface/Buttons/TechTree_Atlas.dds,1,6"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_NATIONALISM",
-  "soundMP": "AS2D_TECH_MP_NATIONALISM",
-  "icon": ",Art/Interface/Buttons/TechTree/Nationalism.dds,Art/Interface/Buttons/TechTree_Atlas.dds,1,6"
+  "soundMP": "AS2D_TECH_MP_NATIONALISM"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

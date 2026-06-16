@@ -7,8 +7,10 @@
    "UNIT_PAPUAN_CANNIBAL"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PAPUAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PAPUAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -65,11 +65,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/astrolabe.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ASTROLABE",
-  "soundMP": "AS2D_TECH_ASTROLABE",
-  "icon": "Art/Interface/Buttons/TechTree/astrolabe.dds"
+  "soundMP": "AS2D_TECH_ASTROLABE"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

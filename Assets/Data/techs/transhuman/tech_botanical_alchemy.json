@@ -91,11 +91,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/botanicalalchemy.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_BOTANICAL_ALCHEMY",
-  "soundMP": "AS2D_TECH_BOTANICAL_ALCHEMY",
-  "icon": "Art/Interface/Buttons/TechTree/botanicalalchemy.dds"
+  "soundMP": "AS2D_TECH_BOTANICAL_ALCHEMY"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

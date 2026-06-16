@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_CARAVAN_MOVEMENT",
+ "description": "TXT_KEY_PROMOTIONLINE_CARAVAN_MOVEMENT",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/CaravanMovement_PromotionLine.dds"
+  }
+ }
+}

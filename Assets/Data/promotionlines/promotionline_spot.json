@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_SPOT",
+ "description": "TXT_KEY_PROMOTIONLINE_SPOT",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Spot1Promotion.dds"
+  }
+ }
+}

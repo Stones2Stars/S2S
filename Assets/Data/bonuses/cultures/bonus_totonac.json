@@ -8,8 +8,10 @@
    "UNIT_MAIZE_CARAVAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TOTONAC"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TOTONAC"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

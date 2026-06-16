@@ -7,8 +7,10 @@
    "UNIT_FORKBEARD"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_DANISH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_DANISH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

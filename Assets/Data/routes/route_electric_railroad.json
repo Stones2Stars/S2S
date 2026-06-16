@@ -79,8 +79,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Builds/BuildElectricRailroad.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/BuildElectricRailroad.dds"
+  }
  },
  "identity": {
   "value": 7,

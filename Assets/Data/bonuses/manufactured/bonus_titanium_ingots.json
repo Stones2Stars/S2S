@@ -8,8 +8,10 @@
    "BUILDING_SMITH_TITANIUM"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TITANIUM_INGOTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TITANIUM_INGOTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

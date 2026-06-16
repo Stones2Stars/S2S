@@ -74,11 +74,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/fermentation.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_FERMENTATION",
-  "soundMP": "AS2D_TECH_FERMENTATION",
-  "icon": "Art/Interface/Buttons/TechTree/fermentation.dds"
+  "soundMP": "AS2D_TECH_FERMENTATION"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

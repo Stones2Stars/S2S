@@ -11,8 +11,10 @@
    "BUILDING_ICE_CREAM_PARLOR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MILK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MILK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

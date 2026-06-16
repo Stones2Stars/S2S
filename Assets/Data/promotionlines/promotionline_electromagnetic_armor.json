@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_ELECTROMAGNETIC_ARMOR",
+ "description": "TXT_KEY_PROMOTIONLINE_ELECTROMAGNETIC_ARMOR",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/stalwart1.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,4,9"
+  }
+ }
+}

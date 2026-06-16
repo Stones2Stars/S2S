@@ -77,11 +77,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/Spearfishing.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SPEARFISHING",
-  "soundMP": "AS2D_TECH_SPEARFISHING",
-  "icon": "Art/Interface/Buttons/TechTree/Spearfishing.dds"
+  "soundMP": "AS2D_TECH_SPEARFISHING"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

@@ -68,11 +68,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/AdvancedCalculus.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,1"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_MODERN_PHYSICS",
-  "soundMP": "AS2D_TECH_MODERN_PHYSICS",
-  "icon": ",Art/Interface/Buttons/TechTree/AdvancedCalculus.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,1"
+  "soundMP": "AS2D_TECH_MODERN_PHYSICS"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

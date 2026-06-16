@@ -9,8 +9,10 @@
    "UNIT_TORE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_AKA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_AKA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

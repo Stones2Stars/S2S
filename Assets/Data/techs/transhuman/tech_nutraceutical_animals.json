@@ -59,11 +59,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/nutraceuticals.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_NUTRACEUTICAL_ANIMALS",
-  "soundMP": "AS2D_TECH_NUTRACEUTICAL_ANIMALS",
-  "icon": "Art/Interface/Buttons/TechTree/nutraceuticals.dds"
+  "soundMP": "AS2D_TECH_NUTRACEUTICAL_ANIMALS"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

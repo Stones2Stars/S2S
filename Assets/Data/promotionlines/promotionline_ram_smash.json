@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_RAM_SMASH",
+ "description": "TXT_KEY_PROMOTIONLINE_RAM_SMASH",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/RamSmash1.dds"
+  }
+ }
+}

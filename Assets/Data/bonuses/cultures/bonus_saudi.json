@@ -8,8 +8,10 @@
    "UNIT_SAUD_CAVALRY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SAUDI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SAUDI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

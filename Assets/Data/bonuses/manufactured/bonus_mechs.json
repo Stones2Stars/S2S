@@ -16,8 +16,10 @@
    "UNIT_WALKER_MECH"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MECHS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MECHS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

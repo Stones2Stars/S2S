@@ -8,8 +8,10 @@
    "UNIT_JOZE_PUCNIK"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SLOVENIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SLOVENIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

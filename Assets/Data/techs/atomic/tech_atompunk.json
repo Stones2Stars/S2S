@@ -48,11 +48,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/retrospace.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ATOMPUNK",
-  "soundMP": "AS2D_TECH_GENERIC",
-  "icon": "Art/Interface/Buttons/TechTree/retrospace.dds"
+  "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

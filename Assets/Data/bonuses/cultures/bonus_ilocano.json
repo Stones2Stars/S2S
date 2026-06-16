@@ -8,8 +8,10 @@
    "UNIT_ELPIDIO_QUIRINO"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ILOCANO"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ILOCANO"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

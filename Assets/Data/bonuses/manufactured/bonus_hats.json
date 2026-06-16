@@ -7,8 +7,10 @@
    "BUILDING_TAILOR_SHOP"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HATS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HATS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

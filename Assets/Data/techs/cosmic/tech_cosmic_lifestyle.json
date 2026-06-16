@@ -71,11 +71,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Buttons/Techs/CosmicLifestyleTech.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_COSMIC_LIFESTYLE",
-  "soundMP": "AS2D_TECH_COSMIC_LIFESTYLE",
-  "icon": "Art/Buttons/Techs/CosmicLifestyleTech.dds"
+  "soundMP": "AS2D_TECH_COSMIC_LIFESTYLE"
  },
  "identity": {
   "era": "C2C_ERA_COSMIC",

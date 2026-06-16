@@ -9,8 +9,10 @@
    "UNIT_SUMERIAN_VULTURE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SUMERIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SUMERIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

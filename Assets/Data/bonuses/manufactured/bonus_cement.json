@@ -118,8 +118,10 @@
    "BUILDING_ZOO"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CEMENT"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CEMENT"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

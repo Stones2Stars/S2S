@@ -34,8 +34,10 @@
    "tradeModifier": 10
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SQUASH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SQUASH"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

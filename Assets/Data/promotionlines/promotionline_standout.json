@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_STANDOUT",
+ "description": "TXT_KEY_PROMOTIONLINE_STANDOUT",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/StandOutStatus.dds"
+  }
+ }
+}

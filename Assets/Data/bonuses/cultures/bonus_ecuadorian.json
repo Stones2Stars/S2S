@@ -8,8 +8,10 @@
    "UNIT_JUAN_JOSE_FLORES"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ECUADORIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ECUADORIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -74,11 +74,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/transistors.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,1,3"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_TRANSISTORS",
-  "soundMP": "AS2D_TECH_TRANSISTORS",
-  "icon": ",Art/Interface/Buttons/TechTree/transistors.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,1,3"
+  "soundMP": "AS2D_TECH_TRANSISTORS"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

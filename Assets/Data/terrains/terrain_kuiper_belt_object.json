@@ -22,10 +22,18 @@
    "flat": 3
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_KUIPER_BELT_OBJECT",
-  "icon": "Art/Interface/Buttons/baseterrain/kuiper_belt_object.dds",
-  "worldSoundscapeAudioScript": "ASSS_TUNDRA_SELECT_AMB"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/baseterrain/kuiper_belt_object.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_KUIPER_BELT_OBJECT"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_TUNDRA_SELECT_AMB"
  },
  "identity": {
   "found": true,

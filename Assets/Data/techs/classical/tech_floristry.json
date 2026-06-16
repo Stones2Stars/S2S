@@ -61,11 +61,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/floristry.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_FLORISTRY",
-  "soundMP": "AS2D_TECH_FLORISTRY",
-  "icon": "Art/Interface/Buttons/TechTree/floristry.dds"
+  "soundMP": "AS2D_TECH_FLORISTRY"
  },
  "identity": {
   "era": "C2C_ERA_CLASSICAL",

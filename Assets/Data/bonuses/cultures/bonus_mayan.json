@@ -12,8 +12,10 @@
    "UNIT_TECUN_UMAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MAYAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MAYAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

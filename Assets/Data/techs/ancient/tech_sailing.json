@@ -98,11 +98,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Sailing.dds,Art/Interface/Buttons/TechTree_Atlas.dds,6,7"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SAILING",
-  "soundMP": "AS2D_TECH_MP_SAILING",
-  "icon": ",Art/Interface/Buttons/TechTree/Sailing.dds,Art/Interface/Buttons/TechTree_Atlas.dds,6,7"
+  "soundMP": "AS2D_TECH_MP_SAILING"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

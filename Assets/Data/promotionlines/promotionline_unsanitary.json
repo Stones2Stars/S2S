@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_UNSANITARY",
+ "description": "TXT_KEY_PROMOTIONLINE_UNSANITARY",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitUnsanitary.dds"
+  }
+ }
+}

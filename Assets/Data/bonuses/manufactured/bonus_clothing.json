@@ -17,8 +17,10 @@
    "BUILDING_TAILOR_SHOP"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CLOTHING"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CLOTHING"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -1,0 +1,39 @@
+{
+ "type": "FEATURE_DWARF_GALAXY",
+ "description": "TXT_KEY_FEATURE_DWARF_GALAXY",
+ "civilopedia": "TXT_KEY_FEATURE_DWARF_GALAXY_PEDIA",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_DWARF_GALAXY"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_ASTEROIDS_SELECT_AMB"
+ },
+ "identity": {
+  "popDestroys": -1,
+  "validTerrains": [
+   "TERRAIN_LOCAL_GROUP",
+   "TERRAIN_VIRGO_SUPERCLUSTER"
+  ]
+ }
+}

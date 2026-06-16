@@ -61,11 +61,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/gear.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_GEARS",
-  "soundMP": "AS2D_TECH_GEARS",
-  "icon": "Art/Interface/Buttons/TechTree/gear.dds"
+  "soundMP": "AS2D_TECH_GEARS"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

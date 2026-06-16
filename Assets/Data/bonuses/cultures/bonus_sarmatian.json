@@ -8,8 +8,10 @@
    "UNIT_BATRADZ"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SARMATIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SARMATIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

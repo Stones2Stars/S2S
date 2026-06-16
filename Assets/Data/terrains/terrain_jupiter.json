@@ -22,10 +22,18 @@
    "flat": 3
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_JUPITER",
-  "icon": "Art/Interface/Buttons/baseterrain/jupiter.dds",
-  "worldSoundscapeAudioScript": "ASSS_TUNDRA_SELECT_AMB"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/baseterrain/jupiter.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_JUPITER"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_TUNDRA_SELECT_AMB"
  },
  "identity": {
   "found": true,

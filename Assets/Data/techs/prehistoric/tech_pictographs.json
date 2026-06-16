@@ -53,11 +53,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/pictographs.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_PICTOGRAPHS",
-  "soundMP": "AS2D_TECH_PICTOGRAPHS",
-  "icon": "Art/Interface/Buttons/TechTree/pictographs.dds"
+  "soundMP": "AS2D_TECH_PICTOGRAPHS"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

@@ -74,11 +74,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/Usury.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,4,3"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_USURY",
-  "soundMP": "AS2D_TECH_USURY",
-  "icon": ",Art/Interface/Buttons/TechTree/Usury.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,4,3"
+  "soundMP": "AS2D_TECH_USURY"
  },
  "identity": {
   "era": "C2C_ERA_MEDIEVAL",

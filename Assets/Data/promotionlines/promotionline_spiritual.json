@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_SPIRITUAL",
+ "description": "TXT_KEY_PROMOTIONLINE_SPIRITUAL",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitSpiritual.dds"
+  }
+ }
+}

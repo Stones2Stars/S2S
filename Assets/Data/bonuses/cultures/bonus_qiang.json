@@ -9,8 +9,10 @@
    "UNIT_YAO_CHANG"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_QIANG"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_QIANG"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

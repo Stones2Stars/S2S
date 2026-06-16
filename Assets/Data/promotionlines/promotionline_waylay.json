@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_WAYLAY",
+ "description": "TXT_KEY_PROMOTIONLINE_WAYLAY",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Waylay1Buildup.dds"
+  }
+ }
+}

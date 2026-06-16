@@ -48,11 +48,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_RELIGION",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/resurrection.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_RESURRECTION",
-  "soundMP": "AS2D_TECH_RESURRECTION",
-  "icon": "Art/Interface/Buttons/TechTree/resurrection.dds"
+  "soundMP": "AS2D_TECH_RESURRECTION"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

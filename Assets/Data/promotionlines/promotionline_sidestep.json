@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_SIDESTEP",
+ "description": "TXT_KEY_PROMOTIONLINE_SIDESTEP",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/SidestepPromotion1.dds"
+  }
+ }
+}

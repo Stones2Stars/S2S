@@ -8,8 +8,10 @@
    "BUILDING_TANNIN_MAKER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BERRIES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BERRIES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

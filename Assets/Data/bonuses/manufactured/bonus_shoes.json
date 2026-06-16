@@ -9,8 +9,10 @@
    "BUILDING_TAILOR_SHOP"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SHOES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SHOES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

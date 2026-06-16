@@ -8,8 +8,10 @@
    "UNIT_OILAT_KESHIK"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_DZUNGAR"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_DZUNGAR"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

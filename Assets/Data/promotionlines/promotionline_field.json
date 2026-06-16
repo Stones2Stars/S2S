@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_FIELD",
+ "description": "TXT_KEY_PROMOTIONLINE_FIELD",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Field1.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,2,5"
+  }
+ }
+}

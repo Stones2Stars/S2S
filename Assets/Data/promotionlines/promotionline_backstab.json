@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_BACKSTAB",
+ "description": "TXT_KEY_PROMOTIONLINE_BACKSTAB",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Backstab1Buildup.dds"
+  }
+ }
+}

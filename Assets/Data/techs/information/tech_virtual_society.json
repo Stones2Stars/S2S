@@ -108,11 +108,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Virtualsociety.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_VIRTUAL_SOCIETY",
-  "soundMP": "AS2D_TECH_VIRTUAL_SOCIETY",
-  "icon": "Art/Interface/Buttons/TechTree/Virtualsociety.dds"
+  "soundMP": "AS2D_TECH_VIRTUAL_SOCIETY"
  },
  "identity": {
   "era": "C2C_ERA_INFORMATION",

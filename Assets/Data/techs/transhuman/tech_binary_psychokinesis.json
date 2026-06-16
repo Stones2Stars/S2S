@@ -68,11 +68,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/binarypsychokinesis.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_BINARY_PSYCHOKINESIS",
-  "soundMP": "AS2D_TECH_BINARY_PSYCHOKINESIS",
-  "icon": "Art/Interface/Buttons/TechTree/binarypsychokinesis.dds"
+  "soundMP": "AS2D_TECH_BINARY_PSYCHOKINESIS"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

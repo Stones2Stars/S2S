@@ -9,8 +9,10 @@
    "UNIT_ODYSSEUS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_GREEK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_GREEK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

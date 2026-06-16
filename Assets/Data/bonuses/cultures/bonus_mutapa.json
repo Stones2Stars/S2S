@@ -7,8 +7,10 @@
    "UNIT_ROZVI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MUTAPA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MUTAPA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

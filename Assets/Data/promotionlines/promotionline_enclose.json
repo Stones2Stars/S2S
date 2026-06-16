@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_ENCLOSE",
+ "description": "TXT_KEY_PROMOTIONLINE_ENCLOSE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Enclose1Promotion.dds"
+  }
+ }
+}

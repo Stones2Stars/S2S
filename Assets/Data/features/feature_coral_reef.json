@@ -1,0 +1,46 @@
+{
+ "type": "FEATURE_CORAL_REEF",
+ "description": "TXT_KEY_FEATURE_CORAL_REEF",
+ "civilopedia": "TXT_KEY_FEATURE_CORAL_REEF_PEDIA",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "properties": [
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_WATER_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": -5
+  }
+ ],
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_CORAL_REEF"
+  }
+ },
+ "identity": {
+  "appearance": 500,
+  "growth": 5,
+  "validTerrains": [
+   "TERRAIN_COAST",
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_COAST_TROPICAL",
+   "TERRAIN_LAKE",
+   "TERRAIN_LAKE_SHORE"
+  ]
+ }
+}

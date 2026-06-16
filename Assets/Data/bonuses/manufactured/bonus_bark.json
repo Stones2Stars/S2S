@@ -12,8 +12,10 @@
    "BUILDING_TANNIN_MAKER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BARK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BARK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

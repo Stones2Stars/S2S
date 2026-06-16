@@ -8,8 +8,10 @@
    "UNIT_NUSTA_HUILLAC"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_QULLA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_QULLA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

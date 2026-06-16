@@ -60,11 +60,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/Button_CavePainting.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_PETROGLYPHS",
-  "soundMP": "AS2D_TECH_PETROGLYPHS",
-  "icon": "Art/Interface/Buttons/TechTree/Button_CavePainting.dds"
+  "soundMP": "AS2D_TECH_PETROGLYPHS"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

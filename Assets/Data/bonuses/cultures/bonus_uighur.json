@@ -9,8 +9,10 @@
    "UNIT_UIGHUR_KNIGHT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_UIGHUR"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_UIGHUR"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

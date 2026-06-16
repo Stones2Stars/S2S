@@ -76,11 +76,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/Physics.dds,Art/Interface/Buttons/TechTree_Atlas.dds,5,6"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_PHYSICS",
-  "soundMP": "AS2D_TECH_MP_PHYSICS",
-  "icon": ",Art/Interface/Buttons/TechTree/Physics.dds,Art/Interface/Buttons/TechTree_Atlas.dds,5,6"
+  "soundMP": "AS2D_TECH_MP_PHYSICS"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

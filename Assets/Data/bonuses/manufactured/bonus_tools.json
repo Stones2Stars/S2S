@@ -11,8 +11,10 @@
    "UNIT_SIEGE_ENGINEER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TOOLS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TOOLS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

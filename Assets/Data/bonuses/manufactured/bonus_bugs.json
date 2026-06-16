@@ -7,8 +7,10 @@
    "BUILDING_ENTOMOLOGY_LAB"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BUGS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BUGS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

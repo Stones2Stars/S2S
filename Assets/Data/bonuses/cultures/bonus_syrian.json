@@ -7,8 +7,10 @@
    "UNIT_SIAM_ELEPHANT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SYRIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SYRIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

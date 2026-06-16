@@ -7,8 +7,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HELIUM_3"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HELIUM_3"
+  }
  },
  "mapGeneration": {
   "constAppearance": 100,

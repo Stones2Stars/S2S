@@ -131,11 +131,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": ",Art/Interface/Buttons/TechTree/electronics.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,6"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ELECTRONICS",
-  "soundMP": "AS2D_TECH_ELECTRONICS",
-  "icon": ",Art/Interface/Buttons/TechTree/electronics.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,6"
+  "soundMP": "AS2D_TECH_ELECTRONICS"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

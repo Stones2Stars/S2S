@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_TRESPASS",
+ "description": "TXT_KEY_STATUS_TRESPASS",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/buttons/Promotions/StatusTrespass.dds"
+  }
+ }
+}

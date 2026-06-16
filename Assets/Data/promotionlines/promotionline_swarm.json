@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_SWARM",
+ "description": "TXT_KEY_PROMOTIONLINE_SWARM",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Swarm1Promotion.dds"
+  }
+ }
+}

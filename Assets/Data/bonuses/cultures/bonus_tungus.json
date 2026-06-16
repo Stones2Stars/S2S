@@ -8,8 +8,10 @@
    "UNIT_SABLE_TRAPPER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TUNGUS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TUNGUS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -8,8 +8,10 @@
    "UNIT_KALYAGA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MOLLO"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MOLLO"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

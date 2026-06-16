@@ -7,8 +7,10 @@
    "BUILDING_HUMAN_MOD_NOVEL_SENSES"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HUMAN_MOD_COGNITIVE_ENHANCEMENT"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HUMAN_MOD_COGNITIVE_ENHANCEMENT"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_DEFENSIVE",
+ "description": "TXT_KEY_PROMOTIONLINE_DEFENSIVE",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitDefensive.dds"
+  }
+ }
+}

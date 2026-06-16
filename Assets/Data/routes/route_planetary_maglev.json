@@ -16,8 +16,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Builds/buildplanetarymaglev.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/buildplanetarymaglev.dds"
+  }
  },
  "identity": {
   "value": 2,

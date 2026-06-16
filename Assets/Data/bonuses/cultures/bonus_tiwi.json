@@ -8,8 +8,10 @@
    "UNIT_WALLABY_HUNTERS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TIWI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TIWI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -29,8 +29,10 @@
    "BUILDING_TITANIUM_RECLAMATION_PLANT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_METAMATERIALS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_METAMATERIALS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

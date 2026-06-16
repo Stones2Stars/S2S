@@ -8,8 +8,10 @@
    "UNIT_TAIYIN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FUEGIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FUEGIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

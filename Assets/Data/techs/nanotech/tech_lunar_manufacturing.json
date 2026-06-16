@@ -90,11 +90,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/lunarmanufacturing.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_LUNAR_MANUFACTURING",
-  "soundMP": "AS2D_TECH_LUNAR_MANUFACTURING",
-  "icon": "Art/Interface/Buttons/TechTree/lunarmanufacturing.dds"
+  "soundMP": "AS2D_TECH_LUNAR_MANUFACTURING"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

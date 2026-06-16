@@ -47,11 +47,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/bicycles.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_BICYCLES",
-  "soundMP": "AS2D_TECH_BICYCLES",
-  "icon": "Art/Interface/Buttons/TechTree/bicycles.dds"
+  "soundMP": "AS2D_TECH_BICYCLES"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

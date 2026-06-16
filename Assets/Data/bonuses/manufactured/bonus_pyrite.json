@@ -2,8 +2,10 @@
  "type": "BONUS_PYRITE",
  "description": "TXT_KEY_BONUS_PYRITE",
  "civilopedia": "TXT_KEY_BONUS_PYRITE_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_PYRITE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PYRITE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

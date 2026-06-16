@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_NEGOTIATOR",
+ "description": "TXT_KEY_PROMOTIONLINE_NEGOTIATOR",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitNegotiator.dds"
+  }
+ }
+}

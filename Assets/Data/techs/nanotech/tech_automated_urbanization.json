@@ -134,11 +134,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Aicity.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_AUTOMATED_URBANIZATION",
-  "soundMP": "AS2D_TECH_AUTOMATED_URBANIZATION",
-  "icon": "Art/Interface/Buttons/TechTree/Aicity.dds"
+  "soundMP": "AS2D_TECH_AUTOMATED_URBANIZATION"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

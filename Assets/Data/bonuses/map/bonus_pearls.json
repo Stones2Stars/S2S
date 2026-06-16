@@ -37,8 +37,10 @@
    "tradeModifier": 5
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PEARLS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PEARLS"
+  }
  },
  "mapGeneration": {
   "placementOrder": 8,

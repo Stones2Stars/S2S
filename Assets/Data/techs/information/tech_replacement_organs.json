@@ -152,11 +152,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Replacement_Organs.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_REPLACEMENT_ORGANS",
-  "soundMP": "AS2D_TECH_REPLACEMENT_ORGANS",
-  "icon": "Art/Interface/Buttons/TechTree/Replacement_Organs.dds"
+  "soundMP": "AS2D_TECH_REPLACEMENT_ORGANS"
  },
  "identity": {
   "era": "C2C_ERA_INFORMATION",

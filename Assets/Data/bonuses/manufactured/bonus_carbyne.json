@@ -2,8 +2,10 @@
  "type": "BONUS_CARBYNE",
  "description": "TXT_KEY_BONUS_CARBYNE",
  "civilopedia": "TXT_KEY_BONUS_CARBYNE_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_CARBYNE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CARBYNE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

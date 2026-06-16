@@ -15,8 +15,10 @@
    "UNIT_UNMANNED_TRIKE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TIRES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TIRES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

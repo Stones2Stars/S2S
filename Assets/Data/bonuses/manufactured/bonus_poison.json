@@ -7,8 +7,10 @@
    "BUILDING_POISON_CRAFTER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_POISON"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_POISON"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

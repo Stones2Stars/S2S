@@ -7,8 +7,10 @@
    "UNIT_HURON_MANLET"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HURON"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HURON"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

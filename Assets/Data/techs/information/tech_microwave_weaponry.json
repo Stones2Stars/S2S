@@ -38,11 +38,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Buttons/Techs/TechMicrowaveWeaponry.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_MICROWAVE_WEAPONRY",
-  "soundMP": "AS2D_TECH_MICROWAVE_WEAPONRY",
-  "icon": "Art/Buttons/Techs/TechMicrowaveWeaponry.dds"
+  "soundMP": "AS2D_TECH_MICROWAVE_WEAPONRY"
  },
  "identity": {
   "era": "C2C_ERA_INFORMATION",

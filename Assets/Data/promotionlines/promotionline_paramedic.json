@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_PARAMEDIC",
+ "description": "TXT_KEY_PROMOTIONLINE_PARAMEDIC",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/paramedic1.dds"
+  }
+ }
+}

@@ -89,11 +89,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/aviation.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,1,3"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_AVIATION",
-  "soundMP": "AS2D_TECH_AVIATION",
-  "icon": ",Art/Interface/Buttons/TechTree/aviation.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,1,3"
+  "soundMP": "AS2D_TECH_AVIATION"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

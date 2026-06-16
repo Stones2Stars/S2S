@@ -12,8 +12,10 @@
    "BUILDING_SOAP_MAKER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_LARD"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_LARD"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

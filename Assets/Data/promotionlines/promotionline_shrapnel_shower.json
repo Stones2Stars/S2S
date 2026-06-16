@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_SHRAPNEL_SHOWER",
+ "description": "TXT_KEY_PROMOTIONLINE_SHRAPNEL_SHOWER",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/ShrapnelShower1Promotion.dds"
+  }
+ }
+}

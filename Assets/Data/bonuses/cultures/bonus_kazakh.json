@@ -8,8 +8,10 @@
    "UNIT_BATYRS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_KAZAKH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_KAZAKH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

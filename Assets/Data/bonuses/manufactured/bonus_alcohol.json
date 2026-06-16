@@ -31,8 +31,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ALCOHOL"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ALCOHOL"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

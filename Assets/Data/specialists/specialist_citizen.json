@@ -1,0 +1,373 @@
+{
+ "type": "SPECIALIST_CITIZEN",
+ "description": "TXT_KEY_SPECIALIST_CITIZEN",
+ "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
+ "food": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_AGRICULTURAL": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_AGRICULTURAL1": {
+     "flat": 1
+    },
+    "TRAIT_AGRICULTURAL2": {
+     "flat": 1
+    },
+    "TRAIT_AGRICULTURAL3": {
+     "flat": 1
+    },
+    "TRAIT_GLUTTONOUS": {
+     "flat": -1
+    },
+    "TRAIT_GLUTTONOUS1": {
+     "flat": -1
+    },
+    "TRAIT_GLUTTONOUS2": {
+     "flat": -1
+    },
+    "TRAIT_GLUTTONOUS3": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_REVOLUTIONARY": {
+     "flat": 1
+    },
+    "TRAIT_REVOLUTIONARY2": {
+     "flat": 1
+    },
+    "TRAIT_USURPER": {
+     "flat": -1
+    },
+    "TRAIT_USURPER2": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_HUMANITARIAN": {
+     "flat": 1
+    },
+    "TRAIT_HUMANITARIAN3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_CRUEL": {
+     "flat": -1
+    },
+    "TRAIT_CRUEL3": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_INDUSTRIOUS": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_INDUSTRIOUS1": {
+     "flat": 1
+    },
+    "TRAIT_INDUSTRIOUS2": {
+     "flat": 1
+    },
+    "TRAIT_INDUSTRIOUS3": {
+     "flat": 1
+    },
+    "TRAIT_LAZY": {
+     "flat": -1
+    },
+    "TRAIT_LAZY1": {
+     "flat": -1
+    },
+    "TRAIT_LAZY2": {
+     "flat": -1
+    },
+    "TRAIT_LAZY3": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_REVOLUTIONARY": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_REVOLUTIONARY1": {
+     "flat": 1
+    },
+    "TRAIT_USURPER": {
+     "flat": -1
+    },
+    "TRAIT_USURPER1": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_HUMANITARIAN": {
+     "flat": -1
+    },
+    "TRAIT_HUMANITARIAN3": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_CRUEL": {
+     "flat": 1
+    },
+    "TRAIT_CRUEL3": {
+     "flat": 1
+    },
+    "TRAIT_UNSANITARY": {
+     "flat": -1
+    },
+    "TRAIT_UNSANITARY1": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "traits": {
+    "TRAIT_EFFICIENT": {
+     "flat": 1
+    },
+    "TRAIT_EFFICIENT1": {
+     "flat": 1
+    },
+    "TRAIT_EFFICIENT2": {
+     "flat": 1
+    },
+    "TRAIT_EFFICIENT3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_EXCESSIVE": {
+     "flat": -1
+    },
+    "TRAIT_EXCESSIVE2": {
+     "flat": -1
+    },
+    "TRAIT_EXCESSIVE3": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_PHILOSOPHICAL": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_PHILOSOPHICAL1": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_POPULIST": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_POPULIST1": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_REVOLUTIONARY": {
+     "flat": 1
+    },
+    "TRAIT_REVOLUTIONARY3": {
+     "flat": 1
+    },
+    "TRAIT_USURPER": {
+     "flat": -1
+    },
+    "TRAIT_USURPER3": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_INDUSTRIOUS": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_INDUSTRIOUS1": {
+     "flat": -1
+    },
+    "TRAIT_INDUSTRIOUS2": {
+     "flat": -1
+    },
+    "TRAIT_INDUSTRIOUS3": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_FINANCIAL": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_FINANCIAL1": {
+     "flat": 1
+    },
+    "TRAIT_GREEDY": {
+     "flat": -1
+    },
+    "TRAIT_GREEDY1": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_REVOLUTIONARY": {
+     "flat": 1
+    },
+    "TRAIT_REVOLUTIONARY2": {
+     "flat": 1
+    },
+    "TRAIT_USURPER": {
+     "flat": -1
+    },
+    "TRAIT_USURPER2": {
+     "flat": -1
+    },
+    "TRAIT_PROLIFIC2": {
+     "flat": -1
+    },
+    "TRAIT_GRIM1": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_HUMANITARIAN": {
+     "flat": 1
+    },
+    "TRAIT_HUMANITARIAN2": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_CRUEL": {
+     "flat": -1
+    },
+    "TRAIT_CRUEL2": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_SCIENTIFIC": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_SCIENTIFIC1": {
+     "flat": 1
+    },
+    "TRAIT_TRADITIONAL": {
+     "flat": -1
+    },
+    "TRAIT_TRADITIONAL1": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_REVOLUTIONARY": {
+     "flat": 1
+    },
+    "TRAIT_REVOLUTIONARY3": {
+     "flat": 1
+    },
+    "TRAIT_USURPER": {
+     "flat": -1
+    },
+    "TRAIT_USURPER3": {
+     "flat": -1
+    },
+    "TRAIT_HUMANITARIAN3": {
+     "flat": 1
+    },
+    "TRAIT_CRUEL3": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "traits": {
+    "TRAIT_LAZY": {
+     "flat": 1
+    },
+    "TRAIT_LAZY1": {
+     "flat": 1
+    },
+    "TRAIT_LAZY2": {
+     "flat": 1
+    },
+    "TRAIT_LAZY3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_CREATIVE": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_CREATIVE1": {
+     "flat": 1
+    },
+    "TRAIT_UNREFINED": {
+     "flat": -1
+    },
+    "TRAIT_UNREFINED1": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_REVOLUTIONARY": {
+     "flat": 1
+    },
+    "TRAIT_REVOLUTIONARY2": {
+     "flat": 1
+    },
+    "TRAIT_USURPER": {
+     "flat": -1
+    },
+    "TRAIT_USURPER2": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_HUMANITARIAN": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_HUMANITARIAN1": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_CRUEL": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_CRUEL1": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_DECEIVER": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_DECEIVER1": {
+     "flat": 1
+    },
+    "TRAIT_NAIVE": {
+     "flat": -1
+    },
+    "TRAIT_NAIVE1": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_REVOLUTIONARY": {
+     "flat": 1
+    },
+    "TRAIT_REVOLUTIONARY3": {
+     "flat": 1
+    },
+    "TRAIT_USURPER": {
+     "flat": -1
+    },
+    "TRAIT_USURPER3": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CIVILIAN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/MainScreen/CityScreen/Citizen.dds",
+  "button": "Art/Interface/MainScreen/CityScreen/Citizen.dds"
+ },
+ "identity": {
+  "visible": true,
+  "categories": [
+   "CATEGORY_ASSIGNABLE_SPECIALISTS",
+   "CATEGORY_SPECIALIST_GROUP_CIVILIAN"
+  ]
+ }
+}

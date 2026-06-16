@@ -12,8 +12,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_REPLACEMENT_ORGANS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_REPLACEMENT_ORGANS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

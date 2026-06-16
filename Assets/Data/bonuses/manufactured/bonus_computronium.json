@@ -9,8 +9,10 @@
    "BUILDING_MATHEMATICAL_ORACLE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_COMPUTRONIUM"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_COMPUTRONIUM"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

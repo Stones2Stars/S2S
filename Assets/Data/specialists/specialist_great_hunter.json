@@ -1,0 +1,89 @@
+{
+ "type": "SPECIALIST_GREAT_HUNTER",
+ "description": "TXT_KEY_SPECIALIST_GREAT_HUNTER",
+ "civilopedia": "TXT_KEY_SPECIALIST_GREAT_HUNTER_PEDIA",
+ "food": {
+  "city": {
+   "flat": 4
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_NOMADIC1": {
+     "flat": 1
+    },
+    "TRAIT_NOMADIC2": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_NOMADIC": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_NOMADIC3": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "traits": {
+    "TRAIT_NOMADIC3": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_NOMADIC1": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_NOMADIC": {
+     "flat": 2
+    },
+    "TRAIT_NOMADIC2": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_EXPLORER": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/MainScreen/CityScreen/great_hunter.dds",
+  "button": "Art/Interface/MainScreen/CityScreen/great_hunter.dds"
+ },
+ "identity": {
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_MILITARY"
+  ]
+ }
+}

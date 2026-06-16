@@ -8,8 +8,10 @@
    "UNIT_YU_THE_GREAT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_XIA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_XIA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

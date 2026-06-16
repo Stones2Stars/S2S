@@ -1,0 +1,23 @@
+{
+ "type": "FEATURE_RADIATION_CLOUD",
+ "description": "TXT_KEY_FEATURE_RADIATION_CLOUD",
+ "civilopedia": "TXT_KEY_FEATURE_RADIATION_CLOUD_PEDIA",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_RADIATION_CLOUD"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_SPACE_RADIATION_SELECT_AMB"
+ },
+ "identity": {
+  "popDestroys": -1,
+  "noImprovement": true,
+  "nukeImmune": true
+ }
+}

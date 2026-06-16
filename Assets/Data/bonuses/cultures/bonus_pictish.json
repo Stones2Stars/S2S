@@ -7,8 +7,10 @@
    "UNIT_PICTISH_WARRIOR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PICTISH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PICTISH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_EDUCATE",
+ "description": "TXT_KEY_PROMOTIONLINE_EDUCATE",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Educate1Promotion.dds"
+  }
+ }
+}

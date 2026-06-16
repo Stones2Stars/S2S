@@ -9,8 +9,10 @@
    "UNIT_SEPOY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BENGALI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BENGALI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

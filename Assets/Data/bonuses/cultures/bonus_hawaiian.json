@@ -7,8 +7,10 @@
    "UNIT_POLYNESIAN_KOA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HAWAIIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HAWAIIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

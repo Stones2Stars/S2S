@@ -8,8 +8,10 @@
    "UNIT_TEUTA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ILLYRIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ILLYRIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

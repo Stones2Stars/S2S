@@ -63,11 +63,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Buttons/Techs/TechThermalNegation.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_THERMAL_NEGATION",
-  "soundMP": "AS2D_TECH_THERMAL_NEGATION",
-  "icon": "Art/Buttons/Techs/TechThermalNegation.dds"
+  "soundMP": "AS2D_TECH_THERMAL_NEGATION"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

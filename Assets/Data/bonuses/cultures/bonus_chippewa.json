@@ -8,8 +8,10 @@
    "UNIT_SHA_CO_PAY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CHIPPEWA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CHIPPEWA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

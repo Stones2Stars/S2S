@@ -17,9 +17,15 @@
    "flat": 1
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_NEBULA",
-  "icon": "Art/Interface/Buttons/WorldBuilder/nebula.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/nebula.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_NEBULA"
+  }
  },
  "identity": {
   "found": true,

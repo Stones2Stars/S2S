@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_INITIATIVE",
+ "description": "TXT_KEY_PROMOTIONLINE_INITIATIVE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/initiative1.dds"
+  }
+ }
+}

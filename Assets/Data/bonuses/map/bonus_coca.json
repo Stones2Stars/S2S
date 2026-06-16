@@ -31,8 +31,10 @@
    "tradeModifier": 3
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_COCA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_COCA"
+  }
  },
  "mapGeneration": {
   "placementOrder": 6,

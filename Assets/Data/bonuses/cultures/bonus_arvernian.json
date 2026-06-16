@@ -8,8 +8,10 @@
    "UNIT_VERCINGETORIX"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ARVERNIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ARVERNIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

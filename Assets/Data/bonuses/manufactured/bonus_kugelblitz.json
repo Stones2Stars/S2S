@@ -8,8 +8,10 @@
    "BUILDING_TRANSTELLAR_HELIOFORMED_GAS_GIANT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_KUGELBLITZ"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_KUGELBLITZ"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

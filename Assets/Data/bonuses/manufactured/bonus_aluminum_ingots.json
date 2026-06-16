@@ -13,8 +13,10 @@
    "tradeModifier": 10
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ALUMINUM_INGOTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ALUMINUM_INGOTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

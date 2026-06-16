@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_BULLY",
+ "description": "TXT_KEY_PROMOTIONLINE_BULLY",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Bully1Promotion.dds"
+  }
+ }
+}

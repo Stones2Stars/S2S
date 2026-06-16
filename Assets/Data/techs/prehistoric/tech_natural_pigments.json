@@ -55,11 +55,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/Button_NaturalPigments.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_NATURAL_PIGMENTS",
-  "soundMP": "AS2D_TECH_NATURAL_PIGMENTS",
-  "icon": "Art/Interface/Buttons/TechTree/Button_NaturalPigments.dds"
+  "soundMP": "AS2D_TECH_NATURAL_PIGMENTS"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

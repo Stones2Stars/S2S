@@ -2,8 +2,10 @@
  "type": "BONUS_FIRECRACKERS",
  "description": "TXT_KEY_BONUS_FIRECRACKERS",
  "civilopedia": "TXT_KEY_BONUS_FIRECRACKERS_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_FIRECRACKERS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FIRECRACKERS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

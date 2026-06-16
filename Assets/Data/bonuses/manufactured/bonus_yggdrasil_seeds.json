@@ -8,8 +8,10 @@
    "BUILDING_TRANSTELLAR_ALDERSON_DISK_FANTASY_ZONE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_YGGDRASIL_SEEDS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_YGGDRASIL_SEEDS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

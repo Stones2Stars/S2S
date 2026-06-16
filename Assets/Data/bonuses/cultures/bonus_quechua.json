@@ -7,8 +7,10 @@
    "UNIT_INCAN_QUECHUA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_QUECHUA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_QUECHUA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

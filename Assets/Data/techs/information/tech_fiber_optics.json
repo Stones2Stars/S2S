@@ -66,11 +66,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/FiberOptics.dds,Art/Interface/Buttons/TechTree_Atlas.dds,8,8"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_FIBER_OPTICS",
-  "soundMP": "AS2D_TECH_MP_FIBER_OPTICS",
-  "icon": ",Art/Interface/Buttons/TechTree/FiberOptics.dds,Art/Interface/Buttons/TechTree_Atlas.dds,8,8"
+  "soundMP": "AS2D_TECH_MP_FIBER_OPTICS"
  },
  "identity": {
   "era": "C2C_ERA_INFORMATION",

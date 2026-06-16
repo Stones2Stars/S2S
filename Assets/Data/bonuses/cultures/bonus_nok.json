@@ -8,8 +8,10 @@
    "UNIT_NOK_MERCHANTS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NOK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NOK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

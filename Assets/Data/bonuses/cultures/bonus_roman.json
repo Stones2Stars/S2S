@@ -9,8 +9,10 @@
    "UNIT_SCIPIO_AFRICANUS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ROMAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ROMAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

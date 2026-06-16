@@ -68,11 +68,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/antimatterrocket.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ANTIMATTER_ROCKETS",
-  "soundMP": "AS2D_TECH_ANTIMATTER_ROCKETS",
-  "icon": "Art/Interface/Buttons/TechTree/antimatterrocket.dds"
+  "soundMP": "AS2D_TECH_ANTIMATTER_ROCKETS"
  },
  "identity": {
   "era": "C2C_ERA_GALACTIC",

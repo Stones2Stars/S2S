@@ -7,8 +7,10 @@
    "UNIT_YEOMAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_WELSH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_WELSH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

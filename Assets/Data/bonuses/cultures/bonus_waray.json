@@ -8,8 +8,10 @@
    "UNIT_WARAY_RIDERS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_WARAY"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_WARAY"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

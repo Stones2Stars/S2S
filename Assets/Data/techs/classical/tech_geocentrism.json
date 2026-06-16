@@ -59,11 +59,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/techtree/Geocentrism.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_GEOCENTRISM",
-  "soundMP": "AS2D_TECH_GEOCENTRISM",
-  "icon": "Art/Interface/Buttons/techtree/Geocentrism.dds"
+  "soundMP": "AS2D_TECH_GEOCENTRISM"
  },
  "identity": {
   "era": "C2C_ERA_CLASSICAL",

@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_BARD",
+ "description": "TXT_KEY_PROMOTIONLINE_BARD",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Bard1.dds"
+  }
+ }
+}

@@ -7,8 +7,10 @@
    "UNIT_INUIT_HARPOONER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_INUIT"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_INUIT"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

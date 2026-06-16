@@ -1,0 +1,40 @@
+{
+ "type": "FEATURE_BLUE_SUPERGIANT",
+ "description": "TXT_KEY_FEATURE_BLUE_SUPERGIANT",
+ "civilopedia": "TXT_KEY_FEATURE_BLUE_SUPERGIANT_PEDIA",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_BLUE_SUPERGIANT"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_ASTEROIDS_SELECT_AMB"
+ },
+ "identity": {
+  "popDestroys": -1,
+  "noCity": true,
+  "validTerrains": [
+   "TERRAIN_ORION_ARM",
+   "TERRAIN_MILKY_WAY"
+  ]
+ }
+}

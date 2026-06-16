@@ -8,8 +8,10 @@
    "UNIT_VIRIATHUS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CELTIBERIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CELTIBERIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

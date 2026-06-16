@@ -91,11 +91,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Siege_Warfare.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,2,4"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SIEGE_WARFARE",
-  "soundMP": "AS2D_TECH_SIEGE_WARFARE",
-  "icon": ",Art/Interface/Buttons/TechTree/Siege_Warfare.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,2,4"
+  "soundMP": "AS2D_TECH_SIEGE_WARFARE"
  },
  "identity": {
   "era": "C2C_ERA_CLASSICAL",

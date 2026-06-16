@@ -7,8 +7,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_RED_AND_BLACK_CERAMICS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_RED_AND_BLACK_CERAMICS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_WONDER"

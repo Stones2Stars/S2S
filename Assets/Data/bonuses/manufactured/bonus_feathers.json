@@ -7,8 +7,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FEATHERS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FEATHERS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

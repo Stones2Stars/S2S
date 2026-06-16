@@ -49,11 +49,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/Dueling.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_DUELING",
-  "soundMP": "AS2D_TECH_DUELING",
-  "icon": "Art/Interface/Buttons/TechTree/Dueling.dds"
+  "soundMP": "AS2D_TECH_DUELING"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_PINCH",
+ "description": "TXT_KEY_PROMOTIONLINE_PINCH",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Pinch.dds,Art/Interface/Buttons/Promotions_Atlas.dds,3,5"
+  }
+ }
+}

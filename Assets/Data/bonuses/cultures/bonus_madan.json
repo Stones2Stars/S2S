@@ -8,8 +8,10 @@
    "UNIT_MATO_TOPE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MADAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MADAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

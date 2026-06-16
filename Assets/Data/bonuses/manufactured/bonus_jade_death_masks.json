@@ -7,8 +7,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_JADE_DEATH_MASKS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_JADE_DEATH_MASKS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_WONDER"

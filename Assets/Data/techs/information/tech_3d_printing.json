@@ -85,11 +85,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/3dprinting.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_3D_PRINTING",
-  "soundMP": "AS2D_TECH_3D_PRINTING",
-  "icon": "Art/Interface/Buttons/TechTree/3dprinting.dds"
+  "soundMP": "AS2D_TECH_3D_PRINTING"
  },
  "identity": {
   "era": "C2C_ERA_INFORMATION",

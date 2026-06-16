@@ -22,10 +22,18 @@
    "flat": 2
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_LUNAR_HIGHLAND",
-  "icon": "Art/Interface\\Buttons\\WorldBuilder\\lunarHighlands.dds",
-  "worldSoundscapeAudioScript": "ASSS_DESERT_SELECT_AMB"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface\\Buttons\\WorldBuilder\\lunarHighlands.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_LUNAR_HIGHLAND"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_DESERT_SELECT_AMB"
  },
  "identity": {
   "found": true,

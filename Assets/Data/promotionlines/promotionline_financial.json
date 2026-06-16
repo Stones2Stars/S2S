@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_FINANCIAL",
+ "description": "TXT_KEY_PROMOTIONLINE_FINANCIAL",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitFinancial.dds"
+  }
+ }
+}

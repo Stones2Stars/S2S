@@ -1,0 +1,39 @@
+{
+ "type": "FEATURE_CRATER_SMALL",
+ "description": "TXT_KEY_FEATURE_CRATER_SMALL",
+ "civilopedia": "TXT_KEY_FEATURE_CRATER_PEDIA",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_CRATER_SMALL"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "appearance": 250,
+  "popDestroys": 20,
+  "noAdjacent": true,
+  "requiresFlatlands": true,
+  "noImprovement": true,
+  "validTerrains": [
+   "TERRAIN_LUNAR_REGOLITH",
+   "TERRAIN_LUNAR_MARE",
+   "TERRAIN_LUNAR_HIGHLAND",
+   "TERRAIN_LUNAR_DOME",
+   "TERRAIN_LUNAR_RILLE"
+  ]
+ }
+}

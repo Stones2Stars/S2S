@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_BUSHWHACK",
+ "description": "TXT_KEY_PROMOTIONLINE_BUSHWHACK",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Bushwhack1Buildup.dds"
+  }
+ }
+}

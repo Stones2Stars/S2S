@@ -76,11 +76,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_RELIGION",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/folkmusic.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_FOLK_MUSIC",
-  "soundMP": "AS2D_TECH_FOLK_MUSIC",
-  "icon": "Art/Interface/Buttons/TechTree/folkmusic.dds"
+  "soundMP": "AS2D_TECH_FOLK_MUSIC"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

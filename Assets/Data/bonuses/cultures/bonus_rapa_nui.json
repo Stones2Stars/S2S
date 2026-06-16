@@ -10,8 +10,10 @@
    "UNIT_RAPANUIWORKER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_RAPA_NUI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_RAPA_NUI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -9,8 +9,10 @@
    "BUILDING_SMITH_SILVER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SILVER_INGOTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SILVER_INGOTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

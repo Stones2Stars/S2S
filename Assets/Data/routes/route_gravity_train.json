@@ -102,8 +102,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/interface/buttons/improvements/gravity_train.dds"
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/gravity_train.dds"
+  }
  },
  "identity": {
   "value": 10,

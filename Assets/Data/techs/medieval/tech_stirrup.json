@@ -55,11 +55,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Stirrup.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,3,1"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_STIRRUP",
-  "soundMP": "AS2D_TECH_STIRRUP",
-  "icon": ",Art/Interface/Buttons/TechTree/Stirrup.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,3,1"
+  "soundMP": "AS2D_TECH_STIRRUP"
  },
  "identity": {
   "era": "C2C_ERA_MEDIEVAL",

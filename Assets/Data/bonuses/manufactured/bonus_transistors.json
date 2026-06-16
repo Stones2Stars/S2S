@@ -9,8 +9,10 @@
    "BUILDING_FACTORY_RADIOS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TRANSISTORS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TRANSISTORS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

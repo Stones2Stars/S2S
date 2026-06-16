@@ -48,11 +48,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Buttons/Techs/computer_science.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_GENERIC",
-  "soundMP": "AS2D_TECH_GENERIC",
-  "icon": "Art/Buttons/Techs/computer_science.dds"
+  "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

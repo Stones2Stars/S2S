@@ -43,8 +43,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MAMMOTH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MAMMOTH"
+  }
  },
  "mapGeneration": {
   "placementOrder": 3,

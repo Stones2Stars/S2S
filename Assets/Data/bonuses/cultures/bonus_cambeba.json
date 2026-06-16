@@ -8,8 +8,10 @@
    "UNIT_EDUARDO_ANGELIM"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CAMBEBA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CAMBEBA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

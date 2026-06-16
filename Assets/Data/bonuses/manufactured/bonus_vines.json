@@ -10,8 +10,10 @@
    "BUILDING_FACTORY_BASKETS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_VINES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_VINES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

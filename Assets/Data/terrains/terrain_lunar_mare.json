@@ -24,10 +24,18 @@
    }
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_LUNAR_MARE",
-  "icon": "Art/Interface\\Buttons\\WorldBuilder\\lunarMaria.dds",
-  "worldSoundscapeAudioScript": "ASSS_PLAINS_SELECT_AMB"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface\\Buttons\\WorldBuilder\\lunarMaria.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_LUNAR_MARE"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_PLAINS_SELECT_AMB"
  },
  "identity": {
   "found": true,

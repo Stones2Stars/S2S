@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_WIDE_BEAM",
+ "description": "TXT_KEY_PROMOTIONLINE_WIDE_BEAM",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/WideBeam1Promotion.dds"
+  }
+ }
+}

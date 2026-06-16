@@ -2,8 +2,10 @@
  "type": "BONUS_TAPESTRIES",
  "description": "TXT_KEY_BONUS_TAPESTRIES",
  "civilopedia": "TXT_KEY_BONUS_TAPESTRIES_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_TAPESTRIES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TAPESTRIES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -8,8 +8,10 @@
    "UNIT_QUAHE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MELANESIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MELANESIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

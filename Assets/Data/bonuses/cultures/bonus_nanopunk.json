@@ -12,8 +12,10 @@
    "BUILDING_TECHNOLOGICAL_AWAKENING"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NANOPUNK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NANOPUNK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

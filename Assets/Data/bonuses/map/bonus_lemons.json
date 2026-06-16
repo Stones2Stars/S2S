@@ -40,8 +40,10 @@
    "tradeModifier": 4
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_LEMONS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_LEMONS"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

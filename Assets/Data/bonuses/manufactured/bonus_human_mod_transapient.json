@@ -7,8 +7,10 @@
    "BUILDING_HUMAN_MOD_IMMORTAL"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HUMAN_MOD_TRANSAPIENT"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HUMAN_MOD_TRANSAPIENT"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

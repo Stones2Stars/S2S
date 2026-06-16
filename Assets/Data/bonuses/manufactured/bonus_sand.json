@@ -14,8 +14,10 @@
    "BUILDING_SAND_PAINTINGS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SAND"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SAND"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

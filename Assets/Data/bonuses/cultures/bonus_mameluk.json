@@ -8,8 +8,10 @@
    "UNIT_MAMELUK"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MAMELUK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MAMELUK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

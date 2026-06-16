@@ -20,8 +20,10 @@
    "flat": 3
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PAPYRUS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PAPYRUS"
+  }
  },
  "mapGeneration": {
   "placementOrder": 5,

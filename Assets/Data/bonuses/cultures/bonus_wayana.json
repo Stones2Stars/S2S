@@ -8,8 +8,10 @@
    "UNIT_OJANA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_WAYANA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_WAYANA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

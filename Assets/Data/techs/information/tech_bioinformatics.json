@@ -79,11 +79,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Bioinformatics.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_BIOINFORMATICS",
-  "soundMP": "AS2D_TECH_BIOINFORMATICS",
-  "icon": "Art/Interface/Buttons/TechTree/Bioinformatics.dds"
+  "soundMP": "AS2D_TECH_BIOINFORMATICS"
  },
  "identity": {
   "era": "C2C_ERA_INFORMATION",

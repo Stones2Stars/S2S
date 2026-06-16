@@ -72,11 +72,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/lunarexploration.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_LUNAR_EXPLORATION",
-  "soundMP": "AS2D_TECH_LUNAR_EXPLORATION",
-  "icon": "Art/Interface/Buttons/TechTree/lunarexploration.dds"
+  "soundMP": "AS2D_TECH_LUNAR_EXPLORATION"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

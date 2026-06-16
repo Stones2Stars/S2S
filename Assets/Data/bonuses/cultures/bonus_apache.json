@@ -9,8 +9,10 @@
    "UNIT_GERONIMO"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_APACHE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_APACHE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

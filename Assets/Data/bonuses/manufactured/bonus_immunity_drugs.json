@@ -12,8 +12,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_IMMUNITY_DRUGS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_IMMUNITY_DRUGS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

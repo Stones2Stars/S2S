@@ -8,8 +8,10 @@
    "UNIT_OBAFEMI_AWOLOWO"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NIGERIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NIGERIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

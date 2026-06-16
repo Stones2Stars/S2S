@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_SHADOWSTALKER",
+ "description": "TXT_KEY_PROMOTIONLINE_SHADOWSTALKER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/shadowstalker1.dds"
+  }
+ }
+}

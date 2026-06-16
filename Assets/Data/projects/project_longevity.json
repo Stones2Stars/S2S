@@ -1,0 +1,48 @@
+{
+ "type": "PROJECT_LONGEVITY",
+ "description": "TXT_KEY_BUILDING_LONGEVITY",
+ "civilopedia": "TXT_KEY_BUILDING_LONGEVITY_PEDIA",
+ "happiness": {
+  "empire": {
+   "flat": 1
+  },
+  "world": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  },
+  "world": {
+   "flat": 1
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "cost": {
+  "create": 31800
+ },
+ "art": {
+  "icon": ",Art/Interface/Buttons/Buildings/Longevity.dds,Art/Interface/Buttons/RoM_Building_Atlas.dds,1,5"
+ },
+ "identity": {
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "maxGlobalInstances": 1
+ }
+}

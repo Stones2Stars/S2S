@@ -8,8 +8,10 @@
    "UNIT_PEDRO_DE_ALVARADO"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_GUATEMALAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_GUATEMALAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -2,8 +2,10 @@
  "type": "BONUS_PHOENIX",
  "description": "TXT_KEY_BONUS_PHOENIX",
  "civilopedia": "TXT_KEY_BONUS_PHOENIX_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_PHOENIX"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PHOENIX"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_WONDER"

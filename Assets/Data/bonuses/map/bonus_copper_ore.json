@@ -37,8 +37,10 @@
    "tradeModifier": 10
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_COPPER_ORE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_COPPER_ORE"
+  }
  },
  "mapGeneration": {
   "placementOrder": 1,

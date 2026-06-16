@@ -37,8 +37,10 @@
    "flat": 3
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_JADE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_JADE"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

@@ -1,0 +1,38 @@
+{
+ "type": "FEATURE_PLANETARY_RING",
+ "description": "TXT_KEY_FEATURE_PLANETARY_RING",
+ "civilopedia": "TXT_KEY_FEATURE_PLANETARY_RING_PEDIA",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_PLANETARY_RING"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_ASTEROIDS_SELECT_AMB"
+ },
+ "identity": {
+  "popDestroys": -1,
+  "validTerrains": [
+   "TERRAIN_OUTER_SOLAR_SYSTEM"
+  ]
+ }
+}

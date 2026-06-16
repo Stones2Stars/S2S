@@ -1,0 +1,28 @@
+{
+ "type": "PROJECT_SS_THRUSTERS",
+ "description": "TXT_KEY_PROJECT_SS_THRUSTERS",
+ "civilopedia": "TXT_KEY_PROJECT_SS_THRUSTERS_PEDIA",
+ "victory": {
+  "thresholds": {
+   "VICTORY_SPACE_RACE": 5
+  },
+  "minThresholds": {
+   "VICTORY_SPACE_RACE": 1
+  },
+  "delayPercent": 100
+ },
+ "cost": {
+  "create": 60040
+ },
+ "art": {
+  "icon": ",Art/Interface/Buttons/Buildings/SS_Thrusters.dds,Art/Interface/Buttons/Buildings_Atlas.dds,7,10"
+ },
+ "identity": {
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "launchesVictory": "VICTORY_SPACE_RACE",
+  "maxTeamInstances": 5,
+  "spaceship": true
+ }
+}

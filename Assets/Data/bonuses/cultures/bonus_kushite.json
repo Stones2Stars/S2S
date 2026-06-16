@@ -8,8 +8,10 @@
    "UNIT_PIYE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_KUSHITE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_KUSHITE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

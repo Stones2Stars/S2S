@@ -9,8 +9,10 @@
    "BUILDING_FISH_TRAPS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BASKETS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BASKETS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -55,11 +55,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/llinguistics.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_LINGUISTICS",
-  "soundMP": "AS2D_TECH_LINGUISTICS",
-  "icon": "Art/Interface/Buttons/TechTree/llinguistics.dds"
+  "soundMP": "AS2D_TECH_LINGUISTICS"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

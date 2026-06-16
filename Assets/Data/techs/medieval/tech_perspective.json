@@ -51,11 +51,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Perspective.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,14"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_PERSPECTIVE",
-  "soundMP": "AS2D_TECH_PERSPECTIVE",
-  "icon": ",Art/Interface/Buttons/TechTree/Perspective.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,14"
+  "soundMP": "AS2D_TECH_PERSPECTIVE"
  },
  "identity": {
   "era": "C2C_ERA_MEDIEVAL",

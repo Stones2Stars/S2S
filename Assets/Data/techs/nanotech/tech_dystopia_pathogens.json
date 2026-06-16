@@ -71,11 +71,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/dystopianpathogens.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_DYSTOPIA_PATHOGENS",
-  "soundMP": "AS2D_TECH_DYSTOPIA_PATHOGENS",
-  "icon": "Art/Interface/Buttons/TechTree/dystopianpathogens.dds"
+  "soundMP": "AS2D_TECH_DYSTOPIA_PATHOGENS"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

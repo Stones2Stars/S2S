@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_SHIP_STRIKEFORCE",
+ "description": "TXT_KEY_PROMOTIONLINE_STRIKEFORCE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/shipStrikeForce1.dds"
+  }
+ }
+}

@@ -8,8 +8,10 @@
    "UNIT_YAGHAN_HUNTERS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_YAGHAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_YAGHAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

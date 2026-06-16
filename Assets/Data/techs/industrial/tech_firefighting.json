@@ -51,11 +51,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Firefighting.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_FIREFIGHTING",
-  "soundMP": "AS2D_TECH_FIREFIGHTING",
-  "icon": "Art/Interface/Buttons/TechTree/Firefighting.dds"
+  "soundMP": "AS2D_TECH_FIREFIGHTING"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

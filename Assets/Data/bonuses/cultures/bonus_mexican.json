@@ -10,8 +10,10 @@
    "UNIT_PANCHO_VILLA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MEXICAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MEXICAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

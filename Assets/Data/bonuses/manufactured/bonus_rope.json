@@ -16,8 +16,10 @@
    "BUILDING_TREE_PLATFORMS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ROPE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ROPE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

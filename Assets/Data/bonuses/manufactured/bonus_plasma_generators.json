@@ -10,8 +10,10 @@
    "UNIT_PLASMA_THROWER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PLASMA_GENERATORS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PLASMA_GENERATORS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

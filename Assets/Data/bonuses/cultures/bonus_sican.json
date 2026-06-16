@@ -8,8 +8,10 @@
    "UNIT_TUCUME"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SICAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SICAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

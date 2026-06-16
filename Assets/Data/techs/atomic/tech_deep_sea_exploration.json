@@ -76,11 +76,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/deepseaexploration.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_DEEP_SEA_EXPLORATION",
-  "soundMP": "AS2D_TECH_DEEP_SEA_EXPLORATION",
-  "icon": "Art/Interface/Buttons/TechTree/deepseaexploration.dds"
+  "soundMP": "AS2D_TECH_DEEP_SEA_EXPLORATION"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

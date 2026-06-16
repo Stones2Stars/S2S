@@ -41,8 +41,10 @@
    "tradeModifier": 4
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TOBACCO"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TOBACCO"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

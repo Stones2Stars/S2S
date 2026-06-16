@@ -8,8 +8,10 @@
    "UNIT_WAYUU_CAVALRY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_WAYUU"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_WAYUU"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

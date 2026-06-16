@@ -15,8 +15,10 @@
    "BUILDING_TOY_MAKER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CLAY"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CLAY"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

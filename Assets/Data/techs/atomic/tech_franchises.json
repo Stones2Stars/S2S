@@ -50,11 +50,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/franchises.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_FRANCHISES",
-  "soundMP": "AS2D_TECH_FRANCHISES",
-  "icon": "Art/Interface/Buttons/TechTree/franchises.dds"
+  "soundMP": "AS2D_TECH_FRANCHISES"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

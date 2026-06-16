@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_MASTER_HUNTER",
+ "description": "TXT_KEY_PROMOTIONLINE_MASTER_HUNTER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Master_hunter1.dds"
+  }
+ }
+}

@@ -68,11 +68,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Buttons/Techs/TechUrbanCulture.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_URBAN_CULTURE",
-  "soundMP": "AS2D_TECH_URBAN_CULTURE",
-  "icon": "Art/Buttons/Techs/TechUrbanCulture.dds"
+  "soundMP": "AS2D_TECH_URBAN_CULTURE"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

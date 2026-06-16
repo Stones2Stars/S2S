@@ -1,0 +1,24 @@
+{
+ "type": "PROJECT_SS_COCKPIT",
+ "description": "TXT_KEY_PROJECT_SS_COCKPIT",
+ "civilopedia": "TXT_KEY_PROJECT_SS_COCKPIT_PEDIA",
+ "victory": {
+  "thresholds": {
+   "VICTORY_SPACE_RACE": 1
+  }
+ },
+ "cost": {
+  "create": 57640
+ },
+ "art": {
+  "icon": ",Art/Interface/Buttons/Buildings/SS_Cockpit.dds,Art/Interface/Buttons/Buildings_Atlas.dds,5,6"
+ },
+ "identity": {
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "launchesVictory": "VICTORY_SPACE_RACE",
+  "maxTeamInstances": 1,
+  "spaceship": true
+ }
+}

@@ -11,8 +11,10 @@
    "BUILDING_INTERSTELLAR_FALSE_VACUUM_TRAP"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CHRONOTON"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CHRONOTON"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -21,8 +21,10 @@
    "UNIT_SURGEON"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_DRUGS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_DRUGS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

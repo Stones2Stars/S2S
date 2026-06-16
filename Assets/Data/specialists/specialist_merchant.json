@@ -1,0 +1,199 @@
+{
+ "type": "SPECIALIST_MERCHANT",
+ "description": "TXT_KEY_SPECIALIST_MERCHANT",
+ "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
+ "food": {
+  "empire": {
+   "traits": {
+    "TRAIT_NEGOTIATOR": {
+     "flat": 1
+    },
+    "TRAIT_NEGOTIATOR2": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_ISOLATIONIST": {
+     "flat": -1
+    },
+    "TRAIT_ISOLATIONIST2": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "traits": {
+    "TRAIT_NEGOTIATOR": {
+     "flat": 1
+    },
+    "TRAIT_NEGOTIATOR3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_ISOLATIONIST": {
+     "flat": -1
+    },
+    "TRAIT_ISOLATIONIST3": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3,
+   "buildings": {
+    "BUILDING_ADAM_SMITHS_TRADING_COMPANY": {
+     "flat": 1
+    },
+    "BUILDING_MARCO_POLOS_EMBASSY": {
+     "flat": 1
+    },
+    "BUILDING_SILK_ROAD": {
+     "flat": 1
+    }
+   }
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_FINANCIAL": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_FINANCIAL1": {
+     "flat": 1
+    },
+    "TRAIT_FINANCIAL3": {
+     "flat": 1
+    },
+    "TRAIT_GREEDY": {
+     "flat": -1
+    },
+    "TRAIT_GREEDY1": {
+     "flat": -1
+    },
+    "TRAIT_GREEDY3": {
+     "flat": -1
+    },
+    "TRAIT_NEGOTIATOR": {
+     "flat": 1
+    },
+    "TRAIT_NEGOTIATOR1": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_ISOLATIONIST": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_ISOLATIONIST1": {
+     "flat": -1
+    },
+    "TRAIT_FINANCIAL": {
+     "flat": 1
+    },
+    "TRAIT_FINANCIAL1": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "civics": {
+    "CIVIC_CONFEDERACY": {
+     "percent": 50
+    },
+    "CIVIC_CAPITALIST": {
+     "percent": 50
+    }
+   }
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_FINANCIAL": {
+     "flat": 2
+    },
+    "TRAIT_FINANCIAL2": {
+     "flat": 2
+    },
+    "TRAIT_GREEDY": {
+     "flat": -2
+    },
+    "TRAIT_GREEDY2": {
+     "flat": -2
+    },
+    "TRAIT_COMPLEX_PHILOSOPHICAL": {
+     "flat": 1
+    },
+    "TRAIT_PHILOSOPHICAL3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_POPULIST": {
+     "flat": -1
+    },
+    "TRAIT_POPULIST3": {
+     "flat": -1
+    },
+    "TRAIT_PROLIFIC1": {
+     "flat": -1
+    },
+    "TRAIT_GRIM2": {
+     "flat": 1
+    },
+    "TRAIT_LAWFUL": {
+     "flat": 1
+    },
+    "TRAIT_LAWFUL1": {
+     "flat": 1
+    },
+    "TRAIT_CROOKED": {
+     "flat": -1
+    },
+    "TRAIT_CROOKED1": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "civics": {
+    "CIVIC_GUILDS": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "traits": {
+    "TRAIT_CREATIVE1": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_TRADE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/MainScreen/CityScreen/merchant.dds",
+  "button": "Art/Interface/MainScreen/CityScreen/merchant.dds"
+ },
+ "identity": {
+  "visible": true,
+  "categories": [
+   "CATEGORY_ASSIGNABLE_SPECIALISTS",
+   "CATEGORY_SPECIALIST_GROUP_ECONOMIC"
+  ],
+  "greatPeopleUnit": "UNIT_MERCHANT"
+ }
+}

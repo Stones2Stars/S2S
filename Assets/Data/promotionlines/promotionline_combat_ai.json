@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_COMBAT_AI",
+ "description": "TXT_KEY_PROMOTIONLINE_COMBAT_AI",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat1.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,8,4"
+  }
+ }
+}

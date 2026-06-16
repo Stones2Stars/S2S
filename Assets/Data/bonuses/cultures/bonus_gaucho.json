@@ -8,8 +8,10 @@
    "UNIT_JUAN_MANUEL_DE_ROSAS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_GAUCHO"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_GAUCHO"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

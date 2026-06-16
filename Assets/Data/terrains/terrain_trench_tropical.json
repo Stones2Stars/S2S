@@ -22,10 +22,18 @@
    "flat": 2
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_TRENCH",
-  "icon": "Art/Interface\\Buttons\\WorldBuilder\\Terrain_Ocean.dds",
-  "footstepSounds": [
+ "ui": {
+  "art": {
+   "icon": "Art/Interface\\Buttons\\WorldBuilder\\Terrain_Ocean.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_TRENCH"
+  }
+ },
+ "sound": {
+  "footsteps": [
    {
     "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT_MUD"
    },
@@ -120,7 +128,7 @@
     "ENDSTEP_WHEELS_3": "AS3D_UN_TREBUCHET_STOP"
    }
   ],
-  "worldSoundscapeAudioScript": "ASSS_OCEAN_SELECT_AMB"
+  "soundscape": "ASSS_OCEAN_SELECT_AMB"
  },
  "identity": {
   "distanceToLand": 3,

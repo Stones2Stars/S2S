@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_RAIN_OF_BOLTS",
+ "description": "TXT_KEY_PROMOTIONLINE_RAIN_OF_BOLTS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/RainOfBolts1Promotion.dds"
+  }
+ }
+}

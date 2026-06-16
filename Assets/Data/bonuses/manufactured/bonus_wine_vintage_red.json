@@ -12,8 +12,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_WINE_VINTAGE_RED"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_WINE_VINTAGE_RED"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_WONDER"

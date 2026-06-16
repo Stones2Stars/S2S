@@ -10,8 +10,10 @@
    "BUILDING_TALLY_STONE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FLINT"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FLINT"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

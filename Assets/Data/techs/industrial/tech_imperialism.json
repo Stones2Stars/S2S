@@ -57,11 +57,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/imperialism.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_IMPERIALISM",
-  "soundMP": "AS2D_TECH_IMPERIALISM",
-  "icon": "Art/Interface/Buttons/TechTree/imperialism.dds"
+  "soundMP": "AS2D_TECH_IMPERIALISM"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

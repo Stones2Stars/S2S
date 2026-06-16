@@ -8,8 +8,10 @@
    "UNIT_SANDEH"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_AZANDE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_AZANDE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

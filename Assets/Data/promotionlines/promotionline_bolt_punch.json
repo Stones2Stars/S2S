@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_BOLT_PUNCH",
+ "description": "TXT_KEY_PROMOTIONLINE_BOLT_PUNCH",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/BoltPunch1Promotion.dds"
+  }
+ }
+}

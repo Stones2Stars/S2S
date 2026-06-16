@@ -2,8 +2,10 @@
  "type": "BONUS_ICE_CREAM",
  "description": "TXT_KEY_BONUS_ICE_CREAM",
  "civilopedia": "TXT_KEY_BONUS_ICE_CREAM_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_ICE_CREAM"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ICE_CREAM"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

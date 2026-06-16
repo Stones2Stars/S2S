@@ -232,11 +232,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/gaiaecology.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_GAIA_ECOLOGY",
-  "soundMP": "AS2D_TECH_GAIA_ECOLOGY",
-  "icon": "Art/Interface/Buttons/TechTree/gaiaecology.dds"
+  "soundMP": "AS2D_TECH_GAIA_ECOLOGY"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

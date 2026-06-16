@@ -10,8 +10,10 @@
    "UNIT_SENTINEL"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_LEVITATION_GENERATORS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_LEVITATION_GENERATORS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

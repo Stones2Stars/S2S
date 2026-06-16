@@ -8,8 +8,10 @@
    "BUILDING_NEUROTRANSMITTER_MANIPULATOR_LAB"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_STIM_PACKS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_STIM_PACKS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -85,11 +85,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_RELIGION",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": ",Art/Interface/Buttons/TechTree/Theology.dds,Art/Interface/Buttons/TechTree_Atlas.dds,5,12"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_THEOLOGY",
-  "soundMP": "AS2D_TECH_MP_THEOLOGY",
-  "icon": ",Art/Interface/Buttons/TechTree/Theology.dds,Art/Interface/Buttons/TechTree_Atlas.dds,5,12"
+  "soundMP": "AS2D_TECH_MP_THEOLOGY"
  },
  "identity": {
   "era": "C2C_ERA_MEDIEVAL",

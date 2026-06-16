@@ -7,8 +7,10 @@
    "BUILDING_NONSUCH_PALACE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TERRACOTTA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TERRACOTTA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

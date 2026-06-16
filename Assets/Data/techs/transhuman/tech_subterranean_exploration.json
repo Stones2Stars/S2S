@@ -64,11 +64,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/subterraineanexploration.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SUBTERRANEAN_EXPLORATION",
-  "soundMP": "AS2D_TECH_SUBTERRANEAN_EXPLORATION",
-  "icon": "Art/Interface/Buttons/TechTree/subterraineanexploration.dds"
+  "soundMP": "AS2D_TECH_SUBTERRANEAN_EXPLORATION"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

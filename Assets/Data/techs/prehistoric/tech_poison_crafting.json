@@ -54,11 +54,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/poisoncrafting.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_POISON_CRAFTING",
-  "soundMP": "AS2D_TECH_POISON_CRAFTING",
-  "icon": "Art/Interface/Buttons/TechTree/poisoncrafting.dds"
+  "soundMP": "AS2D_TECH_POISON_CRAFTING"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

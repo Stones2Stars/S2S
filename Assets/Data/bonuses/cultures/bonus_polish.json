@@ -9,8 +9,10 @@
    "UNIT_WINGED_CAVALRY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_POLISH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_POLISH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

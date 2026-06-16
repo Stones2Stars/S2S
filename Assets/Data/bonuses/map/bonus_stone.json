@@ -112,8 +112,10 @@
    "flat": 4
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_STONE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_STONE"
+  }
  },
  "mapGeneration": {
   "placementOrder": 1,

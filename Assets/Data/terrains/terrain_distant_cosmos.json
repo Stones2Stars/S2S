@@ -17,9 +17,15 @@
    "flat": 1
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_DISTANT_COSMOS",
-  "icon": "Art/Interface/Buttons/WorldBuilder/distant_cosmos.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/distant_cosmos.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_DISTANT_COSMOS"
+  }
  },
  "identity": {
   "found": true,

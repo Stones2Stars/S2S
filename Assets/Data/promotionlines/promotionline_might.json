@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_MIGHT",
+ "description": "TXT_KEY_PROMOTIONLINE_MIGHT",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Might1Promotion.dds"
+  }
+ }
+}

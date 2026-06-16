@@ -9,8 +9,10 @@
    "UNIT_MAHKAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BLACKFOOT"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BLACKFOOT"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -46,11 +46,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/journalism.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_JOURNALISM",
-  "soundMP": "AS2D_TECH_JOURNALISM",
-  "icon": "Art/Interface/Buttons/TechTree/journalism.dds"
+  "soundMP": "AS2D_TECH_JOURNALISM"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

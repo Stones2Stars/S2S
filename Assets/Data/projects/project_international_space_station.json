@@ -1,0 +1,21 @@
+{
+ "type": "PROJECT_INTERNATIONAL_SPACE_STATION",
+ "description": "TXT_KEY_PROJECT_INTERNATIONAL_SPACE_STATION",
+ "civilopedia": "TXT_KEY_PROJECT_INTERNATIONAL_SPACE_STATION_PEDIA",
+ "grants": {
+  "grantsSpecialBuilding": "SPECIALBUILDING_SPACE_LABORATORY"
+ },
+ "cost": {
+  "create": 13480
+ },
+ "art": {
+  "movie": "ART_DEF_MOVIE_ISS",
+  "icon": "art/Interface/Buttons/Projects/iss.dds"
+ },
+ "identity": {
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "maxTeamInstances": 1
+ }
+}

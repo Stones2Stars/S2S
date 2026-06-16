@@ -66,11 +66,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/human_machine.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,8"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_BRAIN_MACHINE_INTERFACE",
-  "soundMP": "AS2D_TECH_BRAIN_MACHINE_INTERFACE",
-  "icon": ",Art/Interface/Buttons/TechTree/human_machine.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,8"
+  "soundMP": "AS2D_TECH_BRAIN_MACHINE_INTERFACE"
  },
  "identity": {
   "era": "C2C_ERA_INFORMATION",

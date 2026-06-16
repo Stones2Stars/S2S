@@ -8,8 +8,10 @@
    "UNIT_RUHANGA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_KITARAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_KITARAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

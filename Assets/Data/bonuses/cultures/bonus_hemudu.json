@@ -8,8 +8,10 @@
    "UNIT_SHENGJUN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HEMUDU"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HEMUDU"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

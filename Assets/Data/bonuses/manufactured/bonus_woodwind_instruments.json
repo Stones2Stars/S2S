@@ -7,8 +7,10 @@
    "BUILDING_BIRD_CALLER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_WOODWIND_INSTRUMENTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_WOODWIND_INSTRUMENTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

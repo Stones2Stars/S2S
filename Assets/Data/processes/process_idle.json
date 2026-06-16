@@ -1,7 +1,9 @@
 {
  "type": "PROCESS_IDLE",
  "description": "TXT_KEY_PROCESS_IDLE",
- "art": {
-  "icon": "Art/Interface/Buttons/Process/ProcessIdle.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Process/ProcessIdle.dds"
+  }
  }
 }

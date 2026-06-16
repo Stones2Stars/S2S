@@ -55,11 +55,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Button_WoodWorking.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_WOODWORKING",
-  "soundMP": "AS2D_TECH_WOODWORKING",
-  "icon": "Art/Interface/Buttons/TechTree/Button_WoodWorking.dds"
+  "soundMP": "AS2D_TECH_WOODWORKING"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

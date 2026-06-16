@@ -72,11 +72,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/raftbuilding.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_RAFT_BUILDING",
-  "soundMP": "AS2D_TECH_RAFT_BUILDING",
-  "icon": "Art/Interface/Buttons/TechTree/raftbuilding.dds"
+  "soundMP": "AS2D_TECH_RAFT_BUILDING"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

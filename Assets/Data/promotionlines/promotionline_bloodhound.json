@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_BLOODHOUND",
+ "description": "TXT_KEY_PROMOTIONLINE_BLOODHOUND",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/bloodhound1.dds"
+  }
+ }
+}

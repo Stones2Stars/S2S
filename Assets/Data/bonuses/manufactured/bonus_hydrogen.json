@@ -17,8 +17,10 @@
    "UNIT_GOLIATH_AIRSHIP"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HYDROGEN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HYDROGEN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -7,8 +7,10 @@
    "UNIT_CUACHIC"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MIXTEC"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MIXTEC"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

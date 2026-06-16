@@ -9,8 +9,10 @@
    "UNIT_SUBOTEI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MONGOLIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MONGOLIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

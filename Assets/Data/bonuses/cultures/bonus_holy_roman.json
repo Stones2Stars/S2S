@@ -9,8 +9,10 @@
    "UNIT_LORENZO_DE_MEDICI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HOLY_ROMAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HOLY_ROMAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

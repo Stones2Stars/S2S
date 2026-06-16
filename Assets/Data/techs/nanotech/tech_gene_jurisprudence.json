@@ -58,11 +58,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Genejurisprudence.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_GENE_JURISPRUDENCE",
-  "soundMP": "AS2D_TECH_GENE_JURISPRUDENCE",
-  "icon": "Art/Interface/Buttons/TechTree/Genejurisprudence.dds"
+  "soundMP": "AS2D_TECH_GENE_JURISPRUDENCE"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

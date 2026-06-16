@@ -222,11 +222,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Bronze_Working.dds,Art/Interface/Buttons/TechTree_Atlas.dds,2,9"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_BRONZEWORK",
-  "soundMP": "AS2D_TECH_MP_BRONZEWORK",
-  "icon": ",Art/Interface/Buttons/TechTree/Bronze_Working.dds,Art/Interface/Buttons/TechTree_Atlas.dds,2,9"
+  "soundMP": "AS2D_TECH_MP_BRONZEWORK"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

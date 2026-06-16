@@ -138,11 +138,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/forestry.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,6"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ECOLOGICAL_ENGINEERING",
-  "soundMP": "AS2D_TECH_ECOLOGICAL_ENGINEERING",
-  "icon": ",Art/Interface/Buttons/TechTree/forestry.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,6"
+  "soundMP": "AS2D_TECH_ECOLOGICAL_ENGINEERING"
  },
  "identity": {
   "era": "C2C_ERA_INFORMATION",

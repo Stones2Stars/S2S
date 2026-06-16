@@ -2,8 +2,10 @@
  "type": "BONUS_PASTA",
  "description": "TXT_KEY_BONUS_PASTA",
  "civilopedia": "TXT_KEY_BONUS_PASTA_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_PASTA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PASTA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

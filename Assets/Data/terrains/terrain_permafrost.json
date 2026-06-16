@@ -27,8 +27,18 @@
    "flat": 3
   }
  },
- "art": {
-  "footstepSounds": [
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/baseterrain/DuneIce.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_PERMAFROST"
+  }
+ },
+ "sound": {
+  "footsteps": [
    {
     "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT_TUNDRA"
    },
@@ -123,9 +133,7 @@
     "ENDSTEP_WHEELS_3": "AS3D_UN_TREBUCHET_STOP"
    }
   ],
-  "worldSoundscapeAudioScript": "ASSS_TUNDRA_SELECT_AMB",
-  "artDefineTag": "ART_DEF_TERRAIN_PERMAFROST",
-  "icon": "Art/Interface/Buttons/baseterrain/DuneIce.dds"
+  "soundscape": "ASSS_TUNDRA_SELECT_AMB"
  },
  "identity": {
   "mapCategories": [

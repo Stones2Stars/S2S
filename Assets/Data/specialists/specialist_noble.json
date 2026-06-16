@@ -1,0 +1,244 @@
+{
+ "type": "SPECIALIST_NOBLE",
+ "description": "TXT_KEY_SPECIALIST_NOBLE",
+ "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
+ "food": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_AGRICULTURAL": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_AGRICULTURAL1": {
+     "flat": 1
+    },
+    "TRAIT_AGRICULTURAL2": {
+     "flat": 1
+    },
+    "TRAIT_AGRICULTURAL3": {
+     "flat": 1
+    },
+    "TRAIT_GLUTTONOUS": {
+     "flat": -1
+    },
+    "TRAIT_GLUTTONOUS1": {
+     "flat": -1
+    },
+    "TRAIT_GLUTTONOUS2": {
+     "flat": -1
+    },
+    "TRAIT_GLUTTONOUS3": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_POLITICIAN": {
+     "flat": 1
+    },
+    "TRAIT_POLITICIAN2": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_FOREIGN": {
+     "flat": -1
+    },
+    "TRAIT_FOREIGN2": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "production": {
+  "city": {
+   "buildings": {
+    "BUILDING_NEUSCHWANSTEIN": {
+     "flat": 1
+    },
+    "BUILDING_VERSAILLES": {
+     "flat": 1
+    }
+   }
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_FINANCIAL2": {
+     "flat": 1
+    },
+    "TRAIT_GREEDY2": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_POLITICIAN": {
+     "flat": 1
+    },
+    "TRAIT_POLITICIAN2": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_FOREIGN": {
+     "flat": -1
+    },
+    "TRAIT_FOREIGN2": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_FINANCIAL": {
+     "flat": 1
+    },
+    "TRAIT_FINANCIAL2": {
+     "flat": 1
+    },
+    "TRAIT_GREEDY": {
+     "flat": -1
+    },
+    "TRAIT_GREEDY2": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_POLITICIAN": {
+     "flat": 1
+    },
+    "TRAIT_POLITICIAN2": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_FOREIGN": {
+     "flat": -1
+    },
+    "TRAIT_FOREIGN2": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 2
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_FINANCIAL": {
+     "flat": 2
+    },
+    "TRAIT_FINANCIAL3": {
+     "flat": 2
+    },
+    "TRAIT_GREEDY": {
+     "flat": -2
+    },
+    "TRAIT_GREEDY3": {
+     "flat": -2
+    },
+    "TRAIT_COMPLEX_PHILOSOPHICAL": {
+     "flat": 1
+    },
+    "TRAIT_PHILOSOPHICAL3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_POPULIST": {
+     "flat": -1
+    },
+    "TRAIT_POPULIST3": {
+     "flat": -1
+    },
+    "TRAIT_PROLIFIC": {
+     "flat": -1
+    },
+    "TRAIT_PROLIFIC1": {
+     "flat": -1
+    },
+    "TRAIT_GRIM": {
+     "flat": 1
+    },
+    "TRAIT_GRIM3": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_EXPANSIVE": {
+     "flat": -1
+    },
+    "TRAIT_EXPANSIVE2": {
+     "flat": -1
+    },
+    "TRAIT_MINIMALIST": {
+     "flat": 1
+    },
+    "TRAIT_MINIMALIST2": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_ORGANIZED": {
+     "flat": -1
+    },
+    "TRAIT_ORGANIZED2": {
+     "flat": -1
+    },
+    "TRAIT_IMPULSIVE": {
+     "flat": 1
+    },
+    "TRAIT_IMPULSIVE2": {
+     "flat": 1
+    },
+    "TRAIT_ORGANIZED": {
+     "flat": -1
+    },
+    "TRAIT_CREATIVE": {
+     "flat": 2
+    },
+    "TRAIT_ORGANIZED1": {
+     "flat": -1
+    },
+    "TRAIT_CREATIVE1": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_CHARISMATIC": {
+     "flat": -1
+    },
+    "TRAIT_CHARISMATIC2": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CAPTAIN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/MainScreen/CityScreen/noble.dds",
+  "button": "Art/Interface/MainScreen/CityScreen/noble.dds"
+ },
+ "identity": {
+  "visible": true,
+  "categories": [
+   "CATEGORY_ASSIGNABLE_SPECIALISTS",
+   "CATEGORY_SPECIALIST_GROUP_POLITICAL"
+  ]
+ }
+}

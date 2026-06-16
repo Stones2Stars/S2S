@@ -74,11 +74,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/alchemy.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ALCHEMYASTROLOGY",
-  "soundMP": "AS2D_TECH_ALCHEMYASTROLOGY",
-  "icon": "Art/Interface/Buttons/TechTree/alchemy.dds"
+  "soundMP": "AS2D_TECH_ALCHEMYASTROLOGY"
  },
  "identity": {
   "era": "C2C_ERA_MEDIEVAL",

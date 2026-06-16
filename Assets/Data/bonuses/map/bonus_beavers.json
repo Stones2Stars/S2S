@@ -47,8 +47,10 @@
    "tradeModifier": 7
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BEAVERS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BEAVERS"
+  }
  },
  "mapGeneration": {
   "placementOrder": 5,

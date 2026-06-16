@@ -62,11 +62,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/personaladornment.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_PERSONAL_ADORNMENT",
-  "soundMP": "AS2D_TECH_PERSONAL_ADORNMENT",
-  "icon": "Art/Interface/Buttons/TechTree/personaladornment.dds"
+  "soundMP": "AS2D_TECH_PERSONAL_ADORNMENT"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

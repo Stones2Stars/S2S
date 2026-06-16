@@ -1,0 +1,34 @@
+{
+ "type": "PROJECT_AA_MISSILE_DEFENSES",
+ "description": "TXT_KEY_PROJECT_AA_MISSILE_DEFENSES",
+ "civilopedia": "TXT_KEY_PROJECT_MISSILE_DEFENCE_PEDIA",
+ "combat": {
+  "team": {
+   "nukeInterception": {
+    "percent": 10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "all": {
+    "percent": 5
+   },
+   "numCities": {
+    "percent": 5
+   }
+  }
+ },
+ "cost": {
+  "create": 12840
+ },
+ "art": {
+  "icon": "art/Interface/Buttons/Projects/MissileAAGun.dds"
+ },
+ "identity": {
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "maxTeamInstances": 1
+ }
+}

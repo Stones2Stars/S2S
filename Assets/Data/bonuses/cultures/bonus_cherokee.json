@@ -7,8 +7,10 @@
    "UNIT_CHEROKEE_RIFLEMAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CHEROKEE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CHEROKEE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

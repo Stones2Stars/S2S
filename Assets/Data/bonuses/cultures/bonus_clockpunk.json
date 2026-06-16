@@ -18,8 +18,10 @@
    "UNIT_ZEPHYR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CLOCKPUNK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CLOCKPUNK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

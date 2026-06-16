@@ -115,11 +115,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/matchlock.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,10"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_MATCHLOCK",
-  "soundMP": "AS2D_TECH_MATCHLOCK",
-  "icon": ",Art/Interface/Buttons/TechTree/matchlock.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,10"
+  "soundMP": "AS2D_TECH_MATCHLOCK"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

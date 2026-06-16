@@ -45,11 +45,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/minewarfare.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_MINE_WARFARE",
-  "soundMP": "AS2D_TECH_MINE_WARFARE",
-  "icon": "Art/Interface/Buttons/TechTree/minewarfare.dds"
+  "soundMP": "AS2D_TECH_MINE_WARFARE"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

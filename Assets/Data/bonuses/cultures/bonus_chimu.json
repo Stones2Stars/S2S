@@ -8,8 +8,10 @@
    "UNIT_YUPANQUI_BOWMAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CHIMU"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CHIMU"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -8,8 +8,10 @@
    "UNIT_GALLIOT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_VENETIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_VENETIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

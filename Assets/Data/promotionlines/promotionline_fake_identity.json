@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_FAKE_IDENTITY",
+ "description": "TXT_KEY_PROMOTIONLINE_FAKE_IDENTITY",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/FakeIdentity1Promotion.dds"
+  }
+ }
+}

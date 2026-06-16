@@ -10,8 +10,10 @@
    "BUILDING_PHILOSOPHERS_CASTLE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CRYSTALPUNK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CRYSTALPUNK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

@@ -2,8 +2,10 @@
  "type": "BONUS_FULLERENE",
  "description": "TXT_KEY_BONUS_FULLERENE",
  "civilopedia": "TXT_KEY_BONUS_FULLERENE_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_FULLERENE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FULLERENE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

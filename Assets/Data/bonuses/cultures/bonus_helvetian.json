@@ -8,8 +8,10 @@
    "UNIT_TIGURINI_SCOUTS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HELVETIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HELVETIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

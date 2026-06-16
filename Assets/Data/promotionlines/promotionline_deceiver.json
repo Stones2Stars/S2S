@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_DECEIVER",
+ "description": "TXT_KEY_PROMOTIONLINE_DECEIVER",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitDeceptive.dds"
+  }
+ }
+}

@@ -7,8 +7,10 @@
    "UNIT_MAROON"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_JAMAICAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_JAMAICAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

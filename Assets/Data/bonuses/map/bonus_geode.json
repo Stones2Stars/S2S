@@ -17,8 +17,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_GEODE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_GEODE"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

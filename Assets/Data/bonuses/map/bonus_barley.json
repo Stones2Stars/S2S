@@ -35,8 +35,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BARLEY"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BARLEY"
+  }
  },
  "mapGeneration": {
   "placementOrder": 6,

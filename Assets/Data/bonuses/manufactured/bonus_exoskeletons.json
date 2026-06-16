@@ -13,8 +13,10 @@
    "UNIT_EXOARMORED_INFANTRY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_EXOSKELETONS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_EXOSKELETONS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

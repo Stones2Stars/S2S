@@ -12,8 +12,10 @@
    "tradeModifier": 10
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_VULCANIZED_RUBBER"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_VULCANIZED_RUBBER"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

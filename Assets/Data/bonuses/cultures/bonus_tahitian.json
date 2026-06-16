@@ -9,8 +9,10 @@
    "UNIT_TAHITIAN_RIDERS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TAHITIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TAHITIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

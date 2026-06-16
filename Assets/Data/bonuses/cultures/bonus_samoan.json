@@ -8,8 +8,10 @@
    "UNIT_MATAAFA_IOSEFO"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SAMOAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SAMOAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

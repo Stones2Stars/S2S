@@ -35,8 +35,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_KANGAROO"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_KANGAROO"
+  }
  },
  "mapGeneration": {
   "placementOrder": 5,

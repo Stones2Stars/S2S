@@ -52,11 +52,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/astroenvironmentalsystems.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ASTRO_ENVIRONMENTAL_SYSTEMS",
-  "soundMP": "AS2D_TECH_ASTRO_ENVIRONMENTAL_SYSTEMS",
-  "icon": "Art/Interface/Buttons/TechTree/astroenvironmentalsystems.dds"
+  "soundMP": "AS2D_TECH_ASTRO_ENVIRONMENTAL_SYSTEMS"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

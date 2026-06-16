@@ -71,11 +71,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/cybersociology.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_CYBERSOCIAL_INTEGRATION",
-  "soundMP": "AS2D_TECH_CYBERSOCIAL_INTEGRATION",
-  "icon": "Art/Interface/Buttons/TechTree/cybersociology.dds"
+  "soundMP": "AS2D_TECH_CYBERSOCIAL_INTEGRATION"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

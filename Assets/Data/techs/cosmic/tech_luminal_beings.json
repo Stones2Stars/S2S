@@ -42,11 +42,15 @@
  "cost": {
   "research": 366008
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/luminal_beings.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_GENERIC",
-  "soundMP": "AS2D_TECH_GENERIC",
-  "icon": "Art/interface/buttons/TechTree/luminal_beings.dds"
+  "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
   "era": "C2C_ERA_COSMIC",

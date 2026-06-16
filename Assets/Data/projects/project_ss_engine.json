@@ -1,0 +1,28 @@
+{
+ "type": "PROJECT_SS_ENGINE",
+ "description": "TXT_KEY_PROJECT_SS_ENGINE",
+ "civilopedia": "TXT_KEY_PROJECT_SS_ENGINE_PEDIA",
+ "victory": {
+  "thresholds": {
+   "VICTORY_SPACE_RACE": 2
+  },
+  "minThresholds": {
+   "VICTORY_SPACE_RACE": 1
+  },
+  "delayPercent": 50
+ },
+ "cost": {
+  "create": 62440
+ },
+ "art": {
+  "icon": ",Art/Interface/Buttons/Buildings/SS_Engine.dds,Art/Interface/Buttons/Buildings_Atlas.dds,7,6"
+ },
+ "identity": {
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "launchesVictory": "VICTORY_SPACE_RACE",
+  "maxTeamInstances": 2,
+  "spaceship": true
+ }
+}

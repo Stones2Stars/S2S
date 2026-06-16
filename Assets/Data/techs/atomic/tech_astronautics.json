@@ -81,11 +81,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Space_Flight.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,16"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SPACEFLIGHT",
-  "soundMP": "AS2D_TECH_SPACEFLIGHT",
-  "icon": ",Art/Interface/Buttons/TechTree/Space_Flight.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,16"
+  "soundMP": "AS2D_TECH_SPACEFLIGHT"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

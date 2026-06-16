@@ -8,8 +8,10 @@
    "BUILDING_PLASTIC_RECLAMATION_PLANT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_WASHER_DRYER"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_WASHER_DRYER"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

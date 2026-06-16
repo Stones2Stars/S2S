@@ -1,0 +1,43 @@
+{
+ "type": "FEATURE_PLATY_SHARK_BAY",
+ "description": "TXT_KEY_FEATURE_SHARK_BAY",
+ "civilopedia": "TXT_KEY_FEATURE_SHARK_BAY_PEDIA",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 5
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_SHARK_BAY"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "noCity": true,
+  "noImprovement": true,
+  "noBonus": true,
+  "nukeImmune": true,
+  "ignoreTerrainCulture": true,
+  "validTerrains": [
+   "TERRAIN_COAST",
+   "TERRAIN_COAST_TROPICAL"
+  ]
+ }
+}

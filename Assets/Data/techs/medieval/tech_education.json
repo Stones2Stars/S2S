@@ -98,11 +98,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/Education.dds,Art/Interface/Buttons/TechTree_Atlas.dds,5,3"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_EDUCATION",
-  "soundMP": "AS2D_TECH_MP_EDUCATION",
-  "icon": ",Art/Interface/Buttons/TechTree/Education.dds,Art/Interface/Buttons/TechTree_Atlas.dds,5,3"
+  "soundMP": "AS2D_TECH_MP_EDUCATION"
  },
  "identity": {
   "era": "C2C_ERA_MEDIEVAL",

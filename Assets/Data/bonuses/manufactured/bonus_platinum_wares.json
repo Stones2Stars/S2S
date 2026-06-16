@@ -9,8 +9,10 @@
    "BUILDING_JEWELER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PLATINUM_WARES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PLATINUM_WARES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

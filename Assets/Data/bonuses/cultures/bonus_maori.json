@@ -7,8 +7,10 @@
    "UNIT_TEWHATEWHA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MAORI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MAORI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

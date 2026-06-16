@@ -8,8 +8,10 @@
    "BUILDING_MILKY_WAY_CORE_TERAEARTH"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_AB_MATTER"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_AB_MATTER"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

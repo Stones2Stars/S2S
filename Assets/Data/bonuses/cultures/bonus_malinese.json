@@ -9,8 +9,10 @@
    "UNIT_SUNDIATA_KEITA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MALINESE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MALINESE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -1,0 +1,33 @@
+{
+ "type": "FEATURE_BLACK_HOLE",
+ "description": "TXT_KEY_FEATURE_BLACK_HOLE",
+ "civilopedia": "TXT_KEY_FEATURE_BLACK_HOLE_PEDIA",
+ "movement": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_BLACK_HOLE"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_BLACK_HOLE_SELECT_AMB"
+ },
+ "identity": {
+  "appearance": 500,
+  "noCoast": true,
+  "noRiver": true,
+  "noAdjacent": true,
+  "requiresFlatlands": true,
+  "noCity": true,
+  "noImprovement": true,
+  "visibleAlways": true,
+  "nukeImmune": true,
+  "validTerrains": [
+   "TERRAIN_ORION_ARM",
+   "TERRAIN_MILKY_WAY"
+  ]
+ }
+}

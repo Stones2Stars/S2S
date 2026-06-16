@@ -7,8 +7,10 @@
    "UNIT_FLAIL_ELEPHANT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BURMESE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BURMESE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -60,11 +60,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Team_Sports.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_TEAM_SPORTS",
-  "soundMP": "AS2D_TECH_TEAM_SPORTS",
-  "icon": "Art/Interface/Buttons/TechTree/Team_Sports.dds"
+  "soundMP": "AS2D_TECH_TEAM_SPORTS"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

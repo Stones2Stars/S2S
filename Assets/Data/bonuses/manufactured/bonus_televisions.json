@@ -15,8 +15,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TELEVISIONS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TELEVISIONS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

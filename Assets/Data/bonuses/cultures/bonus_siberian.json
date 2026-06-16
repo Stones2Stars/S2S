@@ -7,8 +7,10 @@
    "UNIT_SIBERIAN_TRACKER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SIBERIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SIBERIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

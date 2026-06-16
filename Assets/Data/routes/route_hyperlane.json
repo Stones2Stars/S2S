@@ -16,8 +16,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "art/interface/buttons/improvements/hyperlane.dds"
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/hyperlane.dds"
+  }
  },
  "identity": {
   "value": 5,

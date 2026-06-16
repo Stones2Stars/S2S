@@ -8,8 +8,10 @@
    "UNIT_MWAANTA_GAAND"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_LUNDA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_LUNDA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

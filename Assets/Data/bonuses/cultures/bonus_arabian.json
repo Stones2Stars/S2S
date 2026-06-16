@@ -9,8 +9,10 @@
    "UNIT_KHALID"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ARABIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ARABIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

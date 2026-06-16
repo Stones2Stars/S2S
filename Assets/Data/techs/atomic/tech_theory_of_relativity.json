@@ -47,11 +47,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/TheoryofRelativity.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,6,2"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_THEORY_OF_RELATIVITY",
-  "soundMP": "AS2D_TECH_THEORY_OF_RELATIVITY",
-  "icon": ",Art/Interface/Buttons/TechTree/TheoryofRelativity.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,6,2"
+  "soundMP": "AS2D_TECH_THEORY_OF_RELATIVITY"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

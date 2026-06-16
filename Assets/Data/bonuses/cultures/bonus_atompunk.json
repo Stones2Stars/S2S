@@ -16,8 +16,10 @@
    "BUILDING_VIDEOPHONE_NETWORK"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ATOMPUNK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ATOMPUNK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

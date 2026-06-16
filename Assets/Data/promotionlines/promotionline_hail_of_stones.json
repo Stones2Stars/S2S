@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_HAIL_OF_STONES",
+ "description": "TXT_KEY_PROMOTIONLINE_HAIL_OF_STONES",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/HailOfStones1Promotion.dds"
+  }
+ }
+}

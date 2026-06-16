@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_SHIP_INITIATIVE",
+ "description": "TXT_KEY_PROMOTIONLINE_SHIP_INITIATIVE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/shipInitiative1.dds"
+  }
+ }
+}

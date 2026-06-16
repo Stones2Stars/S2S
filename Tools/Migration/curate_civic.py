@@ -371,7 +371,7 @@ def main():
     print("CivicInfo curated: %d" % len(results))
     fams = sorted({k for o in results.values() for k in o
                    if k not in ("type", "description", "civilopedia", "help", "strategy", "enables",
-                                "policies", "grants", "ai", "art", "identity")})
+                                "policies", "grants", "ai", "ui", "world", "sound", "identity")})
     print("  families/props seen: %s" % ", ".join(fams))
     if all_leftover:
         print("  !! leftover-to-identity (review): %s" % ", ".join(sorted(all_leftover)))

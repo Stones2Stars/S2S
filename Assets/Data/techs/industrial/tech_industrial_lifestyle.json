@@ -182,11 +182,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/industriallifestyle.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_INDUSTRIAL_LIFESTYLE",
-  "soundMP": "AS2D_TECH_INDUSTRIAL_LIFESTYLE",
-  "icon": "Art/Interface/Buttons/TechTree/industriallifestyle.dds"
+  "soundMP": "AS2D_TECH_INDUSTRIAL_LIFESTYLE"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

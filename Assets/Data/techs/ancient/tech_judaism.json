@@ -47,11 +47,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_RELIGION",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/judaism.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_JUDAISM",
-  "soundMP": "AS2D_TECH_JUDAISM",
-  "icon": "Art/Interface/Buttons/TechTree/judaism.dds"
+  "soundMP": "AS2D_TECH_JUDAISM"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_PACK_HUNTER",
+ "description": "TXT_KEY_PROMOTIONLINE_PACK_HUNTER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/packhunting1.dds"
+  }
+ }
+}

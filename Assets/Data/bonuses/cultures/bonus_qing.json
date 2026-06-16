@@ -8,8 +8,10 @@
    "UNIT_UJEN_CHOOHA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_QING"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_QING"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

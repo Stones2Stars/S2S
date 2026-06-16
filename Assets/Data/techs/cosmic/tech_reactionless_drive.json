@@ -59,11 +59,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/reactionless_drive.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_GENERIC",
-  "soundMP": "AS2D_TECH_GENERIC",
-  "icon": "Art/interface/buttons/TechTree/reactionless_drive.dds"
+  "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
   "era": "C2C_ERA_COSMIC",

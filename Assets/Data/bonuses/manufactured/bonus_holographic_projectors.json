@@ -16,8 +16,10 @@
    "BUILDING_MEGATOWER_HOLOGRAM_ADVERTISING_CROWN_SECTION"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HOLOGRAPHIC_PROJECTORS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HOLOGRAPHIC_PROJECTORS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

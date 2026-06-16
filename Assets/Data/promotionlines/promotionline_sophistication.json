@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_SOPHISTICATION",
+ "description": "TXT_KEY_PROMOTIONLINE_SOPHISTICATION",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Sophistication1Promotion.dds"
+  }
+ }
+}

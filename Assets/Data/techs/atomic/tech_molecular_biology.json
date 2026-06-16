@@ -64,11 +64,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/molecularbiology.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_MOLECULARBIOLOGY",
-  "soundMP": "AS2D_TECH_MOLECULARBIOLOGY",
-  "icon": "Art/Interface/Buttons/TechTree/molecularbiology.dds"
+  "soundMP": "AS2D_TECH_MOLECULARBIOLOGY"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

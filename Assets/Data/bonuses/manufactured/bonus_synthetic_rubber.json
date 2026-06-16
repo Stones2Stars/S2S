@@ -14,8 +14,10 @@
    "tradeModifier": 10
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SYNTHETIC_RUBBER"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SYNTHETIC_RUBBER"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

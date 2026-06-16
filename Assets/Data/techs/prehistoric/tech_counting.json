@@ -51,11 +51,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/counting.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_COUNTING",
-  "soundMP": "AS2D_TECH_COUNTING",
-  "icon": "Art/Interface/Buttons/TechTree/counting.dds"
+  "soundMP": "AS2D_TECH_COUNTING"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

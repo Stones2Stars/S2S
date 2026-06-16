@@ -73,11 +73,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Replaceable_Parts.dds,Art/Interface/Buttons/TechTree_Atlas.dds,2,7"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_REPLACE_PARTS",
-  "soundMP": "AS2D_TECH_MP_REPLACE_PARTS",
-  "icon": ",Art/Interface/Buttons/TechTree/Replaceable_Parts.dds,Art/Interface/Buttons/TechTree_Atlas.dds,2,7"
+  "soundMP": "AS2D_TECH_MP_REPLACE_PARTS"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

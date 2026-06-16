@@ -8,8 +8,10 @@
    "UNIT_SINTASHTA_CHARIOT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SINTASHTA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SINTASHTA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

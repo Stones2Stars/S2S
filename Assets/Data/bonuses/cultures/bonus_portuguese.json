@@ -9,8 +9,10 @@
    "UNIT_PORTUGAL_CARRACK"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PORTUGUESE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PORTUGUESE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

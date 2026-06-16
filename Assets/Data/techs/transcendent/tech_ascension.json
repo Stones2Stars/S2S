@@ -58,11 +58,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/ascension.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ASCENSION",
-  "soundMP": "AS2D_TECH_ASCENSION",
-  "icon": "Art/Interface/Buttons/TechTree/ascension.dds"
+  "soundMP": "AS2D_TECH_ASCENSION"
  },
  "identity": {
   "era": "C2C_ERA_TRANSCENDENT",

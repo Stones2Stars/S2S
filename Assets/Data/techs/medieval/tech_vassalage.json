@@ -65,11 +65,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/Civics/Vassalage.dds,Art/Interface/Buttons/Civics_Civilizations_Religions_Atlas.dds,1,4"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_VASSALAGE",
-  "soundMP": "AS2D_TECH_VASSALAGE",
-  "icon": ",Art/Interface/Buttons/Civics/Vassalage.dds,Art/Interface/Buttons/Civics_Civilizations_Religions_Atlas.dds,1,4"
+  "soundMP": "AS2D_TECH_VASSALAGE"
  },
  "identity": {
   "era": "C2C_ERA_MEDIEVAL",

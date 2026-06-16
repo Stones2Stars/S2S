@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_TRANSPORT_FIGHTERS",
+ "description": "TXT_KEY_PROMOTIONLINE_TRANSPORT_FIGHTERS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/TransportFighters.dds"
+  }
+ }
+}

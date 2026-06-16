@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_COWARDLY_PROMOTION",
+ "description": "TXT_KEY_PROMOTIONLINE_COWARDLY_PROMOTION",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/PromotionCowardly.dds"
+  }
+ }
+}

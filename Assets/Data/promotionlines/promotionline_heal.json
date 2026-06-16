@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_HEAL",
+ "description": "TXT_KEY_PROMOTIONLINE_HEAL",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Heal1Promotion.dds"
+  }
+ }
+}

@@ -8,8 +8,10 @@
    "UNIT_LIGHT_HOPLITE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PHILISTINES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PHILISTINES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

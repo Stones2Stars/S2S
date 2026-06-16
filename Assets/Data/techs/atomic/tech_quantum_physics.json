@@ -62,11 +62,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/QuantumPhysics.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,14"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_QUANTUM_PHYSICS",
-  "soundMP": "AS2D_TECH_QUANTUM_PHYSICS",
-  "icon": ",Art/Interface/Buttons/TechTree/QuantumPhysics.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,14"
+  "soundMP": "AS2D_TECH_QUANTUM_PHYSICS"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

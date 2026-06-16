@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_MAMMOTH_HUNTER",
+ "description": "TXT_KEY_PROMOTIONLINE_MAMMOTH_HUNTER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/MammothHunterLine.dds"
+  }
+ }
+}

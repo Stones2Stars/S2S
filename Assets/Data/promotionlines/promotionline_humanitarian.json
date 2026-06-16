@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_HUMANITARIAN",
+ "description": "TXT_KEY_PROMOTIONLINE_HUMANITARIAN",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitHumanitarian.dds"
+  }
+ }
+}

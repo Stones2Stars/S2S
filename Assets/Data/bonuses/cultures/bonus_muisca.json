@@ -8,8 +8,10 @@
    "UNIT_PEDRO_DE_AGUADO"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MUISCA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MUISCA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

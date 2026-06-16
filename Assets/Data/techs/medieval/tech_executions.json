@@ -55,11 +55,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/executions.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_EXECUTIONS",
-  "soundMP": "AS2D_TECH_EXECUTIONS",
-  "icon": "Art/Interface/Buttons/TechTree/executions.dds"
+  "soundMP": "AS2D_TECH_EXECUTIONS"
  },
  "identity": {
   "era": "C2C_ERA_MEDIEVAL",

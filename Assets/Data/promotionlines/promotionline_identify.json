@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_IDENTIFY",
+ "description": "TXT_KEY_PROMOTIONLINE_IDENTIFY",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Identify1Promotion.dds"
+  }
+ }
+}

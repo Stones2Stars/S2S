@@ -131,11 +131,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Button_GrainGathering.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_GATHERING",
-  "soundMP": "AS2D_TECH_GATHERING",
-  "icon": "Art/Interface/Buttons/TechTree/Button_GrainGathering.dds"
+  "soundMP": "AS2D_TECH_GATHERING"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

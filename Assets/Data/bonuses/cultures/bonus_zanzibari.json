@@ -8,8 +8,10 @@
    "UNIT_SAMBUK"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ZANZIBARI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ZANZIBARI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

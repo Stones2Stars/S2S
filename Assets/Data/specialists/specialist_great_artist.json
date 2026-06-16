@@ -1,0 +1,143 @@
+{
+ "type": "SPECIALIST_GREAT_ARTIST",
+ "description": "TXT_KEY_SPECIALIST_GREAT_ARTIST",
+ "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
+ "production": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_CREATIVE": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_CREATIVE1": {
+     "flat": 1
+    },
+    "TRAIT_UNREFINED": {
+     "flat": -1
+    },
+    "TRAIT_UNREFINED1": {
+     "flat": -1
+    },
+    "TRAIT_NATURALIST": {
+     "flat": 1
+    },
+    "TRAIT_NATURALIST1": {
+     "flat": 1
+    },
+    "TRAIT_SLOB": {
+     "flat": -1
+    },
+    "TRAIT_SLOB1": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_WALK_OF_FAME": {
+     "flat": 5
+    }
+   }
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_CREATIVE": {
+     "flat": 1
+    },
+    "TRAIT_CREATIVE2": {
+     "flat": 1
+    },
+    "TRAIT_UNREFINED": {
+     "flat": -1
+    },
+    "TRAIT_UNREFINED2": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 12,
+   "buildings": {
+    "BUILDING_WARHOLS_FACTORY": {
+     "flat": 4
+    }
+   }
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_CREATIVE": {
+     "flat": 2
+    },
+    "TRAIT_CREATIVE2": {
+     "flat": 2
+    },
+    "TRAIT_UNREFINED": {
+     "flat": -2
+    },
+    "TRAIT_UNREFINED2": {
+     "flat": -2
+    },
+    "TRAIT_COMPLEX_PHILOSOPHICAL": {
+     "flat": 1
+    },
+    "TRAIT_PHILOSOPHICAL3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_POPULIST": {
+     "flat": -1
+    },
+    "TRAIT_POPULIST3": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_ORGANIZED1": {
+     "flat": -1
+    },
+    "TRAIT_IMPULSIVE1": {
+     "flat": 1
+    },
+    "TRAIT_NATURALIST": {
+     "flat": 1
+    },
+    "TRAIT_NATURALIST1": {
+     "flat": 1
+    },
+    "TRAIT_SLOB": {
+     "flat": -1
+    },
+    "TRAIT_SLOB1": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_CHARISMATIC1": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_ENTERTAINER": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/MainScreen/CityScreen/Great_Artist.dds",
+  "button": "Art/Interface/MainScreen/CityScreen/Great_Artist.dds"
+ },
+ "identity": {
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_CULTURAL"
+  ]
+ }
+}

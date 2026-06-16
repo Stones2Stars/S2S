@@ -59,11 +59,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/solarpropulsion.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SOLAR_PROPULSION",
-  "soundMP": "AS2D_TECH_SOLAR_PROPULSION",
-  "icon": "Art/Interface/Buttons/TechTree/solarpropulsion.dds"
+  "soundMP": "AS2D_TECH_SOLAR_PROPULSION"
  },
  "identity": {
   "era": "C2C_ERA_INFORMATION",

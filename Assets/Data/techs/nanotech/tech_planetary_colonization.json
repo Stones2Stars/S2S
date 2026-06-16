@@ -56,11 +56,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/planetarycolonization.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_PLANETARY_COLONIZATION",
-  "soundMP": "AS2D_TECH_PLANETARY_COLONIZATION",
-  "icon": "Art/Interface/Buttons/TechTree/planetarycolonization.dds"
+  "soundMP": "AS2D_TECH_PLANETARY_COLONIZATION"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

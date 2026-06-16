@@ -16,8 +16,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "art/interface/buttons/improvements/megawormhole_route.dds"
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/megawormhole_route.dds"
+  }
  },
  "identity": {
   "value": 4,

@@ -8,8 +8,10 @@
    "UNIT_SAKAYENGA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ADENAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ADENAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

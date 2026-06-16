@@ -8,8 +8,10 @@
    "UNIT_SEARCH_BLOC"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_COLOMBIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_COLOMBIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

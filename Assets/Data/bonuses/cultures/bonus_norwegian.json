@@ -7,8 +7,10 @@
    "UNIT_SKI_PATROL"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NORWEGIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NORWEGIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

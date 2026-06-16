@@ -1,0 +1,38 @@
+{
+ "type": "FEATURE_OCEAN_PLANET",
+ "description": "TXT_KEY_FEATURE_OCEAN_PLANET",
+ "civilopedia": "TXT_KEY_FEATURE_OCEAN_PLANET_PEDIA",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_OCEAN_PLANET"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_ASTEROIDS_SELECT_AMB"
+ },
+ "identity": {
+  "popDestroys": -1,
+  "validTerrains": [
+   "TERRAIN_TRANSTELLAR_SPACE"
+  ]
+ }
+}

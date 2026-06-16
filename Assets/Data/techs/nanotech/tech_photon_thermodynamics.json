@@ -89,11 +89,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/photonthermodynamics.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_PHOTON_THERMODYNAMICS",
-  "soundMP": "AS2D_TECH_PHOTON_THERMODYNAMICS",
-  "icon": "Art/Interface/Buttons/TechTree/photonthermodynamics.dds"
+  "soundMP": "AS2D_TECH_PHOTON_THERMODYNAMICS"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

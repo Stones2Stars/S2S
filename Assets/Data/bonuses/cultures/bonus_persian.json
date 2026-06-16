@@ -9,8 +9,10 @@
    "UNIT_SHAPUR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PERSIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PERSIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

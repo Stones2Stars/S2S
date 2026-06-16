@@ -54,8 +54,10 @@
    "tradeModifier": 6
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SILK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SILK"
+  }
  },
  "mapGeneration": {
   "placementOrder": 5,

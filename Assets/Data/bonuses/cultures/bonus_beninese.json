@@ -9,8 +9,10 @@
    "UNIT_OZOLUA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BENINESE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BENINESE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

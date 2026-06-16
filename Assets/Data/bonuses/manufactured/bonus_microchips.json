@@ -43,8 +43,10 @@
    "objective": 10
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MICROCHIPS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MICROCHIPS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

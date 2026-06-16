@@ -8,8 +8,10 @@
    "UNIT_ISOKELEKEL"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MICRONESIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MICRONESIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

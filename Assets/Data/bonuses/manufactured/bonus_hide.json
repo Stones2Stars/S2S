@@ -13,8 +13,10 @@
    "BUILDING_TEXTILE_MILL"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HIDE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HIDE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

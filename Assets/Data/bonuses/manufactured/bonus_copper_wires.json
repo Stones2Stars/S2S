@@ -16,8 +16,10 @@
    "BUILDING_TELESCREEN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_COPPER_WIRES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_COPPER_WIRES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

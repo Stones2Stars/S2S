@@ -7,8 +7,10 @@
    "UNIT_HYPER_BATTLECRUISER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NEUTRONIUM"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NEUTRONIUM"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

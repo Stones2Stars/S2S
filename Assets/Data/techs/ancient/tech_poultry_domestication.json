@@ -77,11 +77,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Poultry_Domestication.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_POULTRY_DOMESTICATION",
-  "soundMP": "AS2D_TECH_POULTRY_DOMESTICATION",
-  "icon": "Art/Interface/Buttons/TechTree/Poultry_Domestication.dds"
+  "soundMP": "AS2D_TECH_POULTRY_DOMESTICATION"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

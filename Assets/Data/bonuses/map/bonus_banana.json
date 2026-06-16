@@ -46,8 +46,10 @@
    "tradeModifier": 5
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BANANA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BANANA"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

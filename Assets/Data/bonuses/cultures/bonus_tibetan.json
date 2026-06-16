@@ -9,8 +9,10 @@
    "UNIT_TRISONG_DETSEN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TIBETAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TIBETAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

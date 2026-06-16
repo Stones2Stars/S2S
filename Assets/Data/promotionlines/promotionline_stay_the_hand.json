@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_STAY_THE_HAND",
+ "description": "TXT_KEY_PROMOTIONLINE_STAY_THE_HAND",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/StayTheHandStatus.dds"
+  }
+ }
+}

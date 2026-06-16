@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_CLOUT",
+ "description": "TXT_KEY_PROMOTIONLINE_CLOUT",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Clout1Promotion.dds"
+  }
+ }
+}

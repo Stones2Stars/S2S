@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_ALCHEMIST",
+ "description": "TXT_KEY_PROMOTIONLINE_ALCHEMIST",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Alchemist1.dds"
+  }
+ }
+}

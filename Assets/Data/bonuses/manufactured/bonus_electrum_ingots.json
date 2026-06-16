@@ -7,8 +7,10 @@
    "BUILDING_SMITH_ELECTRUM"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ELECTRUM_INGOTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ELECTRUM_INGOTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

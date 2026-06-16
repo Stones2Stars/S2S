@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_COASTAL_ASSAULT",
+ "description": "TXT_KEY_PROMOTIONLINE_COASTAL_ASSAULT",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/attack1.dds,Art/RoM_Promotions_Atlas.dds,1,3"
+  }
+ }
+}

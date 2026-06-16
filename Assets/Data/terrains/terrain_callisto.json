@@ -17,9 +17,15 @@
    "flat": 1
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_CALLISTO",
-  "icon": "Art/Interface/Buttons/WorldBuilder/callisto.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/callisto.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_CALLISTO"
+  }
  },
  "identity": {
   "found": true,

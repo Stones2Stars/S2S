@@ -8,8 +8,10 @@
    "UNIT_MALI_SKIRMISHER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_KANEM_BORNU"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_KANEM_BORNU"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

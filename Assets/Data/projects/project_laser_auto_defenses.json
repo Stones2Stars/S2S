@@ -1,0 +1,34 @@
+{
+ "type": "PROJECT_LASER_AUTO_DEFENSES",
+ "description": "TXT_KEY_PROJECT_LASER_AUTO_DEFENSES",
+ "civilopedia": "TXT_KEY_PROJECT_MISSILE_DEFENCE_PEDIA",
+ "combat": {
+  "team": {
+   "nukeInterception": {
+    "percent": 15
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "all": {
+    "percent": 5
+   },
+   "numCities": {
+    "percent": 5
+   }
+  }
+ },
+ "cost": {
+  "create": 33160
+ },
+ "art": {
+  "icon": "art/Interface/Buttons/Projects/LaserDefenses.dds"
+ },
+ "identity": {
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "maxTeamInstances": 1
+ }
+}

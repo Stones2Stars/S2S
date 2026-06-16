@@ -1,0 +1,31 @@
+{
+ "type": "PROJECT_ANTI_MISSILE_RAILGUN",
+ "description": "TXT_KEY_PROJECT_ANTI_MISSILE_RAILGUN",
+ "civilopedia": "TXT_KEY_PROJECT_MISSILE_DEFENCE_PEDIA",
+ "combat": {
+  "team": {
+   "nukeInterception": {
+    "percent": 25
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "all": {
+    "percent": 15
+   }
+  }
+ },
+ "cost": {
+  "create": 21000
+ },
+ "art": {
+  "icon": "art/Interface/Buttons/Projects/AntiMissile_Railgun.dds"
+ },
+ "identity": {
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "maxTeamInstances": 1
+ }
+}

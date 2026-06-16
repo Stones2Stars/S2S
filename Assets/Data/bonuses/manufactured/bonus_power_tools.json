@@ -11,8 +11,10 @@
    "UNIT_REPLICATION_MECHANIC"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_POWER_TOOLS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_POWER_TOOLS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

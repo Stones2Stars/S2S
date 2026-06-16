@@ -9,8 +9,10 @@
    "UNIT_SPANISH_CONQUISTADOR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SPANISH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SPANISH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

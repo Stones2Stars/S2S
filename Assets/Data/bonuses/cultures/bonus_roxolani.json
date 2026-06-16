@@ -8,8 +8,10 @@
    "UNIT_TASIUS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ROXOLANI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ROXOLANI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

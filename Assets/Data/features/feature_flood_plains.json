@@ -1,0 +1,76 @@
+{
+ "type": "FEATURE_FLOOD_PLAINS",
+ "description": "TXT_KEY_FEATURE_FLOOD_PLAINS",
+ "civilopedia": "TXT_KEY_FEATURE_FLOOD_PLAINS_PEDIA",
+ "food": {
+  "plot": {
+   "flat": [
+    2,
+    {
+     "value": 3,
+     "enabled": "HAS_RIVER"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "HAS_RIVER"
+    }
+   ]
+  }
+ },
+ "health": {
+  "plot": {
+   "percent": -40
+  }
+ },
+ "properties": [
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_WATER_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": -5
+  }
+ ],
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_FLOOD_PLAINS"
+  }
+ },
+ "sound": {
+  "footsteps": [
+   {
+    "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_HUMAN_LOW": "AS3D_UN_FOOT_UNIT_LOW_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL": "AS3D_UN_ANIMAL_FOOT_LARGE_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL_LOW": "AS3D_UN_ANIMAL_FOOT_LARGE_LOW_MUD"
+   }
+  ]
+ },
+ "identity": {
+  "appearance": 4000,
+  "popDestroys": 6,
+  "requiresFlatlands": true,
+  "requiresRiver": true,
+  "validTerrains": [
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES",
+   "TERRAIN_MUDDY",
+   "TERRAIN_PLAINS",
+   "TERRAIN_SCRUB"
+  ],
+  "ignoreTerrainCulture": true
+ }
+}

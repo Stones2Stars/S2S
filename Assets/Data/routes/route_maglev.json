@@ -98,8 +98,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Builds/BuildMaglev.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/BuildMaglev.dds"
+  }
  },
  "identity": {
   "value": 8,

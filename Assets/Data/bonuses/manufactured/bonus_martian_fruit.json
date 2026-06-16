@@ -7,8 +7,10 @@
    "BUILDING_MARTIAN_MEGACITY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MARTIAN_FRUIT"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MARTIAN_FRUIT"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

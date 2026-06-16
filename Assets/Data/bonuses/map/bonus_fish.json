@@ -40,8 +40,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FISH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FISH"
+  }
  },
  "mapGeneration": {
   "placementOrder": 8,

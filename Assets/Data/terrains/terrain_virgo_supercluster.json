@@ -17,9 +17,15 @@
    "flat": 1
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_VIRGO_SUPERCLUSTER",
-  "icon": "Art/Interface/Buttons/WorldBuilder/virgo_supercluster.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/virgo_supercluster.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_VIRGO_SUPERCLUSTER"
+  }
  },
  "identity": {
   "found": true,

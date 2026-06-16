@@ -7,8 +7,10 @@
    "UNIT_KANISHKA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SAKA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SAKA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

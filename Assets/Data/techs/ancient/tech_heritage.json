@@ -62,11 +62,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/heritage.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_HERITAGE",
-  "soundMP": "AS2D_TECH_HERITAGE",
-  "icon": "Art/Interface/Buttons/TechTree/heritage.dds"
+  "soundMP": "AS2D_TECH_HERITAGE"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

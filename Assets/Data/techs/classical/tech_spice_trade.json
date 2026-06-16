@@ -113,11 +113,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/spice_trade.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SPICE_TRADE",
-  "soundMP": "AS2D_TECH_SPICE_TRADE",
-  "icon": "Art/Interface/Buttons/TechTree/spice_trade.dds"
+  "soundMP": "AS2D_TECH_SPICE_TRADE"
  },
  "identity": {
   "era": "C2C_ERA_CLASSICAL",

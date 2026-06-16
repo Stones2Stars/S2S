@@ -42,11 +42,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/consciousness.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_CONSCIOUSNESS",
-  "soundMP": "AS2D_TECH_CONSCIOUSNESS",
-  "icon": "Art/Interface/Buttons/TechTree/consciousness.dds"
+  "soundMP": "AS2D_TECH_CONSCIOUSNESS"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

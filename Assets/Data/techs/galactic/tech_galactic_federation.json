@@ -71,11 +71,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/galacticfederation.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_GALACTIC_FEDERATION",
-  "soundMP": "AS2D_TECH_GALACTIC_FEDERATION",
-  "icon": "Art/Interface/Buttons/TechTree/galacticfederation.dds"
+  "soundMP": "AS2D_TECH_GALACTIC_FEDERATION"
  },
  "identity": {
   "era": "C2C_ERA_GALACTIC",

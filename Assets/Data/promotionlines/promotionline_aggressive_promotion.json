@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_AGGRESSIVE_PROMOTION",
+ "description": "TXT_KEY_PROMOTIONLINE_AGGRESSIVE_PROMOTION",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/PromotionAggressive.dds"
+  }
+ }
+}

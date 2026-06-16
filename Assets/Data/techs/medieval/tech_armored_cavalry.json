@@ -91,11 +91,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/armoredcavalry.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ARMORED_CAVALRY",
-  "soundMP": "AS2D_TECH_ARMORED_CAVALRY",
-  "icon": "Art/Interface/Buttons/TechTree/armoredcavalry.dds"
+  "soundMP": "AS2D_TECH_ARMORED_CAVALRY"
  },
  "identity": {
   "era": "C2C_ERA_MEDIEVAL",

@@ -15,8 +15,10 @@
    "BUILDING_VENUS_BIOTIC_ATMOSPHERE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NOVUS_CHEMICALS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NOVUS_CHEMICALS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

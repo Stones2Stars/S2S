@@ -13,8 +13,10 @@
    "BUILDING_PESTS_SEAGULLS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SHELLFISH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SHELLFISH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

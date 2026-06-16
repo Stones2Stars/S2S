@@ -70,11 +70,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/timetravel.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_TIME_TRAVEL",
-  "soundMP": "AS2D_TECH_TIME_TRAVEL",
-  "icon": "Art/Interface/Buttons/TechTree/timetravel.dds"
+  "soundMP": "AS2D_TECH_TIME_TRAVEL"
  },
  "identity": {
   "era": "C2C_ERA_COSMIC",

@@ -17,9 +17,15 @@
    "flat": 1
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_INTERGALACTIC_VOID",
-  "icon": "Art/Interface/Buttons/WorldBuilder/galactic_void.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/galactic_void.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_INTERGALACTIC_VOID"
+  }
  },
  "identity": {
   "found": true,

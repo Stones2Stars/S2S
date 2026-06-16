@@ -51,11 +51,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/basketry.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_BASKETRY",
-  "soundMP": "AS2D_TECH_BASKETRY",
-  "icon": "Art/Interface/Buttons/TechTree/basketry.dds"
+  "soundMP": "AS2D_TECH_BASKETRY"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

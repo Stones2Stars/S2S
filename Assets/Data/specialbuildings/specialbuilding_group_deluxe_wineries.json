@@ -1,0 +1,8 @@
+{
+ "type": "SPECIALBUILDING_GROUP_DELUXE_WINERIES",
+ "description": "TXT_KEY_SPECIALBUILDING_GROUP_DELUXE_WINERIES",
+ "identity": {
+  "maxPlayerInstances": 1,
+  "valid": true
+ }
+}

@@ -11,8 +11,10 @@
    "BUILDING_WATER_PIPES"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_LEAD_WARES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_LEAD_WARES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

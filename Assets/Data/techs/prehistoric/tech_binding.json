@@ -63,11 +63,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/binding.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_BINDING",
-  "soundMP": "AS2D_TECH_BINDING",
-  "icon": "Art/Interface/Buttons/TechTree/binding.dds"
+  "soundMP": "AS2D_TECH_BINDING"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

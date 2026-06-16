@@ -1,0 +1,12 @@
+{
+ "type": "SPECIALBUILDING_PUNK_SPACE",
+ "description": "TXT_KEY_SPECIALBUILDING_PUNK_SPACE",
+ "ui": {
+  "art": {
+   "icon": "Art/interface/buttons/TechTree/spacepunk.dds"
+  }
+ },
+ "identity": {
+  "valid": true
+ }
+}

@@ -8,8 +8,10 @@
    "UNIT_JACHAL"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CAPAYAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CAPAYAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

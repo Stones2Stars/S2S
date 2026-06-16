@@ -8,8 +8,10 @@
    "UNIT_PERSIAN_POET"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SAFFARID"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SAFFARID"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

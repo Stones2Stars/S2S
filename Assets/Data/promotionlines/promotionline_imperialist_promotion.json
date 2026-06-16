@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_IMPERIALIST_PROMOTION",
+ "description": "TXT_KEY_PROMOTIONLINE_IMPERIALIST_PROMOTION",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/PromotionImperialist.dds"
+  }
+ }
+}

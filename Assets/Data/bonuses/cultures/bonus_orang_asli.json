@@ -8,8 +8,10 @@
    "UNIT_ORANG_BOWMAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ORANG_ASLI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ORANG_ASLI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

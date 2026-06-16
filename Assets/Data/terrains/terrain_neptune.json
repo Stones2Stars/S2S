@@ -22,10 +22,18 @@
    "flat": 3
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_NEPTUNE",
-  "icon": "Art/Interface/Buttons/baseterrain/neptune.dds",
-  "worldSoundscapeAudioScript": "ASSS_TUNDRA_SELECT_AMB"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/baseterrain/neptune.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_NEPTUNE"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_TUNDRA_SELECT_AMB"
  },
  "identity": {
   "found": true,

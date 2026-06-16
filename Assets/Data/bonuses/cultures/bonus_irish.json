@@ -7,8 +7,10 @@
    "UNIT_INNISKILLING"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_IRISH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_IRISH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

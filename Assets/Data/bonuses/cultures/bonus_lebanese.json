@@ -8,8 +8,10 @@
    "UNIT_HEZBOLLAH"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_LEBANESE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_LEBANESE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -74,11 +74,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/Extreme_Sports.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_EXTREME_SPORTS",
-  "soundMP": "AS2D_TECH_EXTREME_SPORTS",
-  "icon": "Art/Interface/Buttons/TechTree/Extreme_Sports.dds"
+  "soundMP": "AS2D_TECH_EXTREME_SPORTS"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

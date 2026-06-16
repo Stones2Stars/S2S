@@ -8,8 +8,10 @@
    "UNIT_PHILIBERT_TSIRANANA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MALAGASY"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MALAGASY"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

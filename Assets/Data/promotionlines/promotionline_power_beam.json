@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_POWER_BEAM",
+ "description": "TXT_KEY_PROMOTIONLINE_POWER_BEAM",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/PowerBeam1Promotion.dds"
+  }
+ }
+}

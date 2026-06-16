@@ -91,11 +91,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Robotics.dds,Art/Interface/Buttons/NextWar_Atlas.dds,1,3"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SHIELDING",
-  "soundMP": "AS2D_TECH_SHIELDING",
-  "icon": ",Art/Interface/Buttons/TechTree/Robotics.dds,Art/Interface/Buttons/NextWar_Atlas.dds,1,3"
+  "soundMP": "AS2D_TECH_SHIELDING"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

@@ -102,11 +102,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,1,16"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_MILITARY_TRADITION",
-  "soundMP": "AS2D_TECH_MP_MILITARY_TRADITION",
-  "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,1,16"
+  "soundMP": "AS2D_TECH_MP_MILITARY_TRADITION"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

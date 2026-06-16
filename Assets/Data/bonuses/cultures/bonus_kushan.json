@@ -8,8 +8,10 @@
    "UNIT_KUSHAN_RIDER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_KUSHAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_KUSHAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

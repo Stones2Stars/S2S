@@ -7,8 +7,10 @@
    "UNIT_KLAMATH_RIFLEMAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_KLAMATH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_KLAMATH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

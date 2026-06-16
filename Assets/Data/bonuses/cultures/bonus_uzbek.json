@@ -8,8 +8,10 @@
    "UNIT_SHAYBANI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_UZBEK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_UZBEK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

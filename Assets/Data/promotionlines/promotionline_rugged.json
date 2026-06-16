@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_RUGGED",
+ "description": "TXT_KEY_PROMOTIONLINE_RUGGED",
+ "ui": {
+  "art": {
+   "icon": "art/Tweaks/art/ruggedcombat1.dds"
+  }
+ }
+}

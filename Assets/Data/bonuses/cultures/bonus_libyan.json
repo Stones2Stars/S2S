@@ -8,8 +8,10 @@
    "UNIT_SHOSHENQ_I"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_LIBYAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_LIBYAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

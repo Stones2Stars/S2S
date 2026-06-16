@@ -10,8 +10,10 @@
    "UNIT_WORLDSHIP4"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ALICE_MATTER"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ALICE_MATTER"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

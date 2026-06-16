@@ -8,8 +8,10 @@
    "UNIT_GAEROAS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BRITON"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BRITON"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

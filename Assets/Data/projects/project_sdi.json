@@ -1,0 +1,35 @@
+{
+ "type": "PROJECT_SDI",
+ "description": "TXT_KEY_PROJECT_SDI",
+ "civilopedia": "TXT_KEY_PROJECT_SDI_PEDIA",
+ "combat": {
+  "team": {
+   "nukeInterception": {
+    "percent": 25
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "all": {
+    "percent": 10
+   },
+   "numCities": {
+    "percent": 10
+   }
+  }
+ },
+ "cost": {
+  "create": 15400
+ },
+ "art": {
+  "movie": "ART_DEF_MOVIE_SDI",
+  "icon": ",Art/Interface/Buttons/Buildings/SDI.dds,Art/Interface/Buttons/Buildings_Atlas.dds,1,6"
+ },
+ "identity": {
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "maxTeamInstances": 1
+ }
+}

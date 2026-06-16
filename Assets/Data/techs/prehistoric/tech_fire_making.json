@@ -55,11 +55,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Button_TheFire.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_FIRE_MAKING",
-  "soundMP": "AS2D_TECH_FIRE_MAKING",
-  "icon": "Art/Interface/Buttons/TechTree/Button_TheFire.dds"
+  "soundMP": "AS2D_TECH_FIRE_MAKING"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

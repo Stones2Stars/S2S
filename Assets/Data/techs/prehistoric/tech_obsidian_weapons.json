@@ -81,11 +81,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/obsidianweapons.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_OBSIDIAN_WEAPONS",
-  "soundMP": "AS2D_TECH_OBSIDIAN_WEAPONS",
-  "icon": "Art/Interface/Buttons/TechTree/obsidianweapons.dds"
+  "soundMP": "AS2D_TECH_OBSIDIAN_WEAPONS"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

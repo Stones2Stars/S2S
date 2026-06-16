@@ -12,8 +12,10 @@
    "UNIT_SENTINEL"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ANTI_GRAVITY_FIELD_GENERATORS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ANTI_GRAVITY_FIELD_GENERATORS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

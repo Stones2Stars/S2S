@@ -57,11 +57,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_RELIGION",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": ",Art/Interface/Buttons/TechTree/justice.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,6,9"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_JURISPRUDENCE",
-  "soundMP": "AS2D_TECH_JURISPRUDENCE",
-  "icon": ",Art/Interface/Buttons/TechTree/justice.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,6,9"
+  "soundMP": "AS2D_TECH_JURISPRUDENCE"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

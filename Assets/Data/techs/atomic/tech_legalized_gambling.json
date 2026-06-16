@@ -68,11 +68,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/Gambling.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,7"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_LEGALIZED_GAMBLING",
-  "soundMP": "AS2D_TECH_LEGALIZED_GAMBLING",
-  "icon": ",Art/Interface/Buttons/TechTree/Gambling.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,7"
+  "soundMP": "AS2D_TECH_LEGALIZED_GAMBLING"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

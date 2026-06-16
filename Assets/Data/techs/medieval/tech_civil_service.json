@@ -105,11 +105,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Civil_Service.dds,Art/Interface/Buttons/TechTree_Atlas.dds,1,2"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_CIVIL_SERVICE",
-  "soundMP": "AS2D_TECH_MP_CIVIL_SERVICE",
-  "icon": ",Art/Interface/Buttons/TechTree/Civil_Service.dds,Art/Interface/Buttons/TechTree_Atlas.dds,1,2"
+  "soundMP": "AS2D_TECH_MP_CIVIL_SERVICE"
  },
  "identity": {
   "era": "C2C_ERA_MEDIEVAL",

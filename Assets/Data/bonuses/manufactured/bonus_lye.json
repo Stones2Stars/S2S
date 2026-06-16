@@ -8,8 +8,10 @@
    "BUILDING_SOAP_MAKER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_LYE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_LYE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

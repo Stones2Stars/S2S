@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_GUERILLA",
+ "description": "TXT_KEY_PROMOTIONLINE_GUERILLA",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Guerilla1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,5,5"
+  }
+ }
+}

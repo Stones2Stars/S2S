@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_ALOOF",
+ "description": "TXT_KEY_PROMOTIONLINE_ALOOF",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitAloof.dds"
+  }
+ }
+}

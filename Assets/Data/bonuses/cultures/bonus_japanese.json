@@ -9,8 +9,10 @@
    "UNIT_YAMAMOTO"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_JAPANESE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_JAPANESE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

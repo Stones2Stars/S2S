@@ -9,8 +9,10 @@
    "BUILDING_FACTORY_ELECTROACTIVE_POLYMERS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_WAX"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_WAX"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

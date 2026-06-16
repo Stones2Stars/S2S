@@ -8,8 +8,10 @@
    "BUILDING_PEAT_FIRED_DYNAMO"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PEAT"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PEAT"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -52,11 +52,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/locks.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_LOCKS",
-  "soundMP": "AS2D_TECH_LOCKS",
-  "icon": "Art/Interface/Buttons/TechTree/locks.dds"
+  "soundMP": "AS2D_TECH_LOCKS"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

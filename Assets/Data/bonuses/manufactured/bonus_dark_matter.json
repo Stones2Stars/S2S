@@ -8,8 +8,10 @@
    "BUILDING_INTERGALACTIC_DARK_MATTER_HIGHWAY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_DARK_MATTER"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_DARK_MATTER"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

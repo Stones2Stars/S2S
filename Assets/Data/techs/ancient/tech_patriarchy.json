@@ -34,11 +34,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/patriarchy.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_PATRIARCHY",
-  "soundMP": "AS2D_TECH_PATRIARCHY",
-  "icon": "Art/Interface/Buttons/TechTree/patriarchy.dds"
+  "soundMP": "AS2D_TECH_PATRIARCHY"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

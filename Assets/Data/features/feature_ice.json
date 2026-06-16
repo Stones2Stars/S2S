@@ -1,0 +1,64 @@
+{
+ "type": "FEATURE_ICE",
+ "description": "TXT_KEY_FEATURE_ICE",
+ "civilopedia": "TXT_KEY_FEATURE_ICE_PEDIA",
+ "cultureDistance": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "properties": [
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_WATER_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": -2
+  },
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_AIR_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": -1
+  }
+ ],
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_ICE"
+  }
+ },
+ "sound": {
+  "footsteps": [
+   {
+    "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT_SNOW"
+   },
+   {
+    "FOOTSTEP_AUDIO_HUMAN_LOW": "AS3D_UN_FOOT_UNIT_LOW_SNOW"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL": "AS3D_UN_ANIMAL_FOOT_LARGE_SNOW"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL_LOW": "AS3D_UN_ANIMAL_FOOT_LARGE_LOW_SNOW"
+   }
+  ]
+ },
+ "identity": {
+  "addsFreshWater": true,
+  "impassable": true,
+  "validTerrains": [
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_TRENCH_POLAR"
+  ]
+ }
+}

@@ -8,8 +8,10 @@
    "UNIT_QUEBEC_DEFENDERS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_QUEBECKER"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_QUEBECKER"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

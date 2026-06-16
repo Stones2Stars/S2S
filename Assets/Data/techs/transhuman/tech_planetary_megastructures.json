@@ -83,11 +83,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/planetarymegastructures.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_PLANETARY_MEGASTRUCTURES",
-  "soundMP": "AS2D_TECH_PLANETARY_MEGASTRUCTURES",
-  "icon": "Art/Interface/Buttons/TechTree/planetarymegastructures.dds"
+  "soundMP": "AS2D_TECH_PLANETARY_MEGASTRUCTURES"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

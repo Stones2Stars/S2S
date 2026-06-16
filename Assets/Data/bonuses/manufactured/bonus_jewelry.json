@@ -14,8 +14,10 @@
    "BUILDING_WATCHMAKERS_SHOP"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_JEWELRY"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_JEWELRY"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

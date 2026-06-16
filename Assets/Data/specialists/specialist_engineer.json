@@ -1,0 +1,187 @@
+{
+ "type": "SPECIALIST_ENGINEER",
+ "description": "TXT_KEY_SPECIALIST_ENGINEER",
+ "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
+ "production": {
+  "city": {
+   "flat": 2,
+   "buildings": {
+    "BUILDING_ARCHIMEDES_WORKSHOP": {
+     "flat": 1
+    },
+    "BUILDING_EDISONS_WORKSHOP": {
+     "flat": 1
+    },
+    "BUILDING_GREAT_WALL_OF_CHINA": {
+     "flat": 1
+    },
+    "BUILDING_HADRIANS_WALL": {
+     "flat": 1
+    },
+    "BUILDING_LEONARDOS_WORKSHOP": {
+     "flat": 1
+    }
+   }
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_INDUSTRIOUS": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_INDUSTRIOUS1": {
+     "flat": 1
+    },
+    "TRAIT_INDUSTRIOUS2": {
+     "flat": 1
+    },
+    "TRAIT_INDUSTRIOUS3": {
+     "flat": 1
+    },
+    "TRAIT_LAZY": {
+     "flat": -1
+    },
+    "TRAIT_LAZY1": {
+     "flat": -1
+    },
+    "TRAIT_LAZY2": {
+     "flat": -1
+    },
+    "TRAIT_LAZY3": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_PHILOSOPHICAL": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_PHILOSOPHICAL1": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_POPULIST": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_POPULIST1": {
+     "flat": -1
+    },
+    "TRAIT_UNSANITARY": {
+     "flat": -1
+    },
+    "TRAIT_UNSANITARY3": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "buildings": {
+    "BUILDING_LONDON_EYE": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_INDUSTRIOUS": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_INDUSTRIOUS1": {
+     "flat": -1
+    },
+    "TRAIT_INDUSTRIOUS2": {
+     "flat": -1
+    },
+    "TRAIT_INDUSTRIOUS3": {
+     "flat": -1
+    },
+    "TRAIT_GRIM": {
+     "flat": 1
+    },
+    "TRAIT_GRIM2": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "buildings": {
+    "BUILDING_ATOMIUM": {
+     "flat": 1
+    }
+   },
+   "civics": {
+    "CIVIC_TECHNOCRACY": {
+     "percent": 200
+    },
+    "CIVIC_GUILDS": {
+     "percent": 50
+    }
+   }
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_PROGRESSIST": {
+     "flat": 1
+    },
+    "TRAIT_PROGRESSIST1": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_BAUHAUS_SCHOOL": {
+     "flat": 2
+    }
+   }
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_LAZY": {
+     "flat": 1
+    },
+    "TRAIT_LAZY1": {
+     "flat": 1
+    },
+    "TRAIT_LAZY2": {
+     "flat": 1
+    },
+    "TRAIT_LAZY3": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_WORKER": {
+     "flat": 1
+    },
+    "UNITCOMBAT_SEA_WORKER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/MainScreen/CityScreen/engineer.dds",
+  "button": "Art/Interface/MainScreen/CityScreen/engineer.dds"
+ },
+ "identity": {
+  "visible": true,
+  "categories": [
+   "CATEGORY_ASSIGNABLE_SPECIALISTS",
+   "CATEGORY_SPECIALIST_GROUP_ARCHITECTURAL"
+  ],
+  "greatPeopleUnit": "UNIT_GREAT_ENGINEER"
+ }
+}

@@ -17,9 +17,15 @@
    "flat": 1
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_SUBSURFACE_OCEAN",
-  "icon": "Art/Interface/Buttons/WorldBuilder/ocean.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/ocean.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_SUBSURFACE_OCEAN"
+  }
  },
  "identity": {
   "distanceToLand": 1,

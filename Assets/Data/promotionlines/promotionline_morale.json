@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_MORALE",
+ "description": "TXT_KEY_PROMOTIONLINE_MORALE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/morale1.dds"
+  }
+ }
+}

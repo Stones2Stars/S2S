@@ -103,8 +103,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Builds/BuildJumplane.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/BuildJumplane.dds"
+  }
  },
  "identity": {
   "value": 11,

@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_URBAN_TACTICS",
+ "description": "TXT_KEY_PROMOTIONLINE_URBAN_TACTICS",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/roadwar1.dds"
+  }
+ }
+}

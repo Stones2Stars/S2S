@@ -9,8 +9,10 @@
    "UNIT_ULUGH_BEG"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TURKMEN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TURKMEN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

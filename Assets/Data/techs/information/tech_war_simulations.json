@@ -68,11 +68,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Warsimulation.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_WAR_SIMULATIONS",
-  "soundMP": "AS2D_TECH_WAR_SIMULATIONS",
-  "icon": "Art/Interface/Buttons/TechTree/Warsimulation.dds"
+  "soundMP": "AS2D_TECH_WAR_SIMULATIONS"
  },
  "identity": {
   "era": "C2C_ERA_INFORMATION",

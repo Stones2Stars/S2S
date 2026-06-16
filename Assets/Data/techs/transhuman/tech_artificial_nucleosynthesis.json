@@ -79,11 +79,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/artificialnucleosynthesis.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
-  "soundMP": "AS2D_TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
-  "icon": "Art/Interface/Buttons/TechTree/artificialnucleosynthesis.dds"
+  "soundMP": "AS2D_TECH_ARTIFICIAL_NUCLEOSYNTHESIS"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

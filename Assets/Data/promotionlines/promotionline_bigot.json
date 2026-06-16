@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_BIGOT",
+ "description": "TXT_KEY_PROMOTIONLINE_BIGOT",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitBigot.dds"
+  }
+ }
+}

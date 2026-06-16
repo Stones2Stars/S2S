@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_STREET_FIGHTER",
+ "description": "TXT_KEY_PROMOTIONLINE_STREET_FIGHTER",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/StreetFighterPromotion1.dds"
+  }
+ }
+}

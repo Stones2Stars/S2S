@@ -7,8 +7,10 @@
    "BUILDING_HERPETOLOGY_LAB"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_LIZARDS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_LIZARDS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

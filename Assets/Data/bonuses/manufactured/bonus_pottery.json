@@ -30,8 +30,10 @@
    "tradeModifier": 3
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_POTTERY"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_POTTERY"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

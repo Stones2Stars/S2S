@@ -73,11 +73,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/fungiculture.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_FUNGICULTURE",
-  "soundMP": "AS2D_TECH_FUNGICULTURE",
-  "icon": "Art/Interface/Buttons/TechTree/fungiculture.dds"
+  "soundMP": "AS2D_TECH_FUNGICULTURE"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

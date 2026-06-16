@@ -66,11 +66,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/navigation.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,13"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_NAVIGATION",
-  "soundMP": "AS2D_TECH_NAVIGATION",
-  "icon": ",Art/Interface/Buttons/TechTree/navigation.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,13"
+  "soundMP": "AS2D_TECH_NAVIGATION"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

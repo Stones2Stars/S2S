@@ -49,11 +49,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/meritocracy.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_MERITOCRACY",
-  "soundMP": "AS2D_TECH_MERITOCRACY",
-  "icon": "Art/Interface/Buttons/TechTree/meritocracy.dds"
+  "soundMP": "AS2D_TECH_MERITOCRACY"
  },
  "identity": {
   "era": "C2C_ERA_CLASSICAL",

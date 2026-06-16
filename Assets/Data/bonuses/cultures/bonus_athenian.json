@@ -9,8 +9,10 @@
    "UNIT_THORAX_HOPLITE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ATHENIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ATHENIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

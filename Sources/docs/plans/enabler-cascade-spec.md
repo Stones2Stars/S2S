@@ -322,6 +322,34 @@ resource/bonus**. Authored on the target, scope-tagged per clause:
       only when a feature AND a river coincide → feature-owned, gated by `HAS_RIVER` (Feature #21).
     - **`ImprovementInfo.RiverSideYieldChange`**, **`BuildingInfo.RiverPlotYieldChanges`** → improvement-/building-owned,
       authored at their passes. There is no river field on `CvTerrainInfo`.
+- **PREDICATES ARE ORGANIZED BY SYSTEM — each is a system's ISOLATED QUERY-SURFACE (owner, 2026-06-16).** A system
+  exposes its runtime state through its own predicate(s), which any data references to gate on that system *without
+  coupling to its internals*: `HAS_RIVER` (river), `HAS_RELIGION`/`STATE_RELIGION`/`HOLY_CITY` (religion),
+  `HAS_CORPORATION` (corporation), `IS_CAPITAL` (capital). This is the conditioning counterpart of the dedicated-block
+  rule (modifier-spec §0.8): system *data* clusters in its block; a system's *state* is queried only through its
+  predicate surface — together they keep systems modular with isolated surfaces. Two rules keep that surface robust:
+  - **Each SYSTEM documents its OWN predicates** — the predicate is part of that system's surface and responsibility,
+    not a central monolithic registry. Adding a system adds *and documents* its predicate(s); the vocabulary grows
+    per-system, owned where the system lives.
+  - **A missing / unknown predicate is IGNORED — DROPPED from the evaluation, NOT substituted with `false` (owner,
+    2026-06-16). `inactive == ignored, NOT false`.** Substituting `false` is wrong in two ways: (1) a deposit
+    `enabled` by a now-missing predicate would evaluate `enabled=false` and be spuriously turned **OFF** — "the
+    disable would kick in" — even though nothing meant to disable it; (2) a `false` would corrupt `all`/`any`
+    compounds. Instead the dangling predicate atom is **removed from the boolean expression** and the deposit is
+    evaluated on its remaining (known) conditions. So retiring a system (and its predicate object) never forces
+    unrelated data off and never errors — the reference simply goes quiet. This graceful "ignore the unknown" is what
+    makes a whole system safely *removable* (e.g. Global Warming) without hunting down every reference — the
+    isolated-surface guarantee in practice. *(Exact compound-logic semantics for a dropped atom — incl. a deposit
+    whose ONLY condition went missing — pin at #430.)*
+  - **PLANNED ALIGNMENT PASS (owner, 2026-06-16) — after data migration, BEFORE #430 parsing.** Once every info is
+    curated, a dedicated pass brings *today's* predicates into line with this modularity rule: treat **Religion,
+    Corporations, and Traits (both the simple and the complex/Thunderbrd versions)** as **isolated systems**, and edit
+    their infos so each system's predicate surface is self-contained, self-documented, and gracefully-ignorable. Done
+    *before* the engine parser exists, so #430 implements against already-aligned data (no retrofit churn mid-parse).
+    This is the predicate-side companion to the §12 retrofit. **This list is the first batch, NOT exhaustive — ANY
+    concept we define as a system gets the same treatment (owner, 2026-06-16):** dedicated data block, its own
+    predicate surface, gracefully ignorable. (Religion / Corporation / Trait / vision / global-warming / each
+    `PROPERTY_*` are instances of the one universal rule, modifier-spec §0.8.)
 
 ---
 
@@ -618,6 +646,40 @@ religion, connectable bonuses) feed the **gate**.
   city can WORK the resource, i.e. it sits on a plot in the city's work radius, which is what lets a special
   building be built there) → `requires`, at **CITY scope** (owner, 2026-06-15: "vicinity is a city scope, NOT
   area"). The city is also where the per-candidate `requires` gate is finally evaluated.
+  - **What VICINITY *is*, precisely (owner, 2026-06-16): the collection of plots a city can CURRENTLY REACH —
+    its workable radius, which GROWS with culture: 1 ring → 2 rings → 3 rings at high culture / metropolitan
+    administration.** It is not a fixed shape; the predicate evaluates against the city's *current* reach. **A
+    single plot can be in the vicinity of TWO cities** (overlapping work radii) — so a vicinity-bonus on a shared
+    plot is present for *both* cities (vicinity is per-city, computed from that city's reach, not a partition of
+    the map). This is the live-state the `hasVicinityBonus` / vicinity-`connection` clause queries; the static
+    Info data only names the bonus + `connection:"vicinity"`, the city answers "can I currently reach it?" at
+    evaluation (a city-scope predicate, akin to the §3 object-evaluated predicates). The growing-radius rule is
+    the **city work-radius system**'s own surface (modifier-spec §0.8 / §3 — a system whose state the vicinity
+    predicate reads).
+  - **Why this matters + an ACCEPTED consequence (owner, 2026-06-16): vicinity has always been slightly fuzzy and
+    is a suspected source of bugs** — pinning it to "the city's currently-reachable plots, per-city, overlapping"
+    removes that fuzz. One deliberate side-effect, owner-accepted ("I can live with it"): it **slightly buffs
+    natural wonders.** A natural wonder grants its effect via an autobuild gated on a vicinity bonus; under the
+    precise overlapping model, if **two cities overlap on the natural-wonder plot, BOTH** now satisfy the vicinity
+    condition and BOTH get the wonder's autobuild (previously fuzzy/single). **The same holds for ANY
+    vicinity-bonus-gated build, incl. PLOT RESOURCES:** if two cities overlap on a bonus plot (e.g. oil), BOTH can
+    build the bonus-gated improvement/building (the oil rig), **even though only ONE city can WORK the plot at a
+    time** — both *qualify to build*, one *works* it. **The point is NOT whether this is perfectly logical gameplay
+    (owner, 2026-06-16) — it's that the precise definition creates a CLEAN, well-defined BARRIER that can be
+    ITERATED ON later.** A clean rule first, gameplay nuance tuned afterward; the small buff/oddity is the accepted
+    cost of that clarity. Flag if a vicinity-bonus / natural-wonder balance question arises later.
+  - **Concrete iteration path (owner, 2026-06-16): a `workedBy: SELF` predicate.** If the overlap buff is later
+    judged wrong, gate the vicinity-bonus build on the plot being **worked by THIS city** (`workedBy: SELF`),
+    restricting "qualify to build" to the city actually working the plot. The point: it's a **one-predicate add,
+    no restructuring** — slotted into a post-migration review pass. That this refinement costs a single new
+    predicate (which then self-documents + gracefully-degrades like any other) IS the modular-predicate payoff
+    demonstrated: nail the clean barrier now, iterate behaviour cheaply later.
+    - **NB — `workedBy: SELF` is NEEDED at the BUILDING pass anyway (owner, 2026-06-16):** there are buildings that
+      **scale bonuses by WORKED TILES** (e.g. +X per worked tile of a type), which read the same city work-radius
+      worked-plot state. So it lands as a real Building requirement, not only a vicinity-overlap tweak. Two forms,
+      one underlying system: the **presence** form is the predicate `workedBy: SELF` ("is this plot worked by this
+      city?"); the **count** form is a `per`-count over worked tiles (modifier-spec §4 — "+X per worked tile of
+      type T", a count read from the work-radius system). ⚑ Flag for the Building pass (#32).
 - **world** — game-wide presence + game-option gates (mostly load-prune, §10).
 
 **Trade-connected bonus — RESOLVED (owner): TEAM scope, gathered EARLY.** A trade-connected bonus comes in via the

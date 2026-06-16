@@ -7,8 +7,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CRYSTAL_GLASSWARE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CRYSTAL_GLASSWARE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_WONDER"

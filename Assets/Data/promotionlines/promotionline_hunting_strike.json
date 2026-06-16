@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_HUNTING_STRIKE",
+ "description": "TXT_KEY_PROMOTIONLINE_HUNTING_STRIKE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/HuntingStrike1Promotion.dds"
+  }
+ }
+}

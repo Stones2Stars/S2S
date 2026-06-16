@@ -80,11 +80,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/Irrigation.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_IRRIGATION",
-  "soundMP": "AS2D_TECH_IRRIGATION",
-  "icon": "Art/Interface/Buttons/TechTree/Irrigation.dds"
+  "soundMP": "AS2D_TECH_IRRIGATION"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

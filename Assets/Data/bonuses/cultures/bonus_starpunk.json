@@ -8,8 +8,10 @@
    "BUILDING_STARGATE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_STARPUNK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_STARPUNK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

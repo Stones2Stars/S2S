@@ -7,8 +7,10 @@
    "UNIT_HEADHUNTER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_JIVARO"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_JIVARO"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

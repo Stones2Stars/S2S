@@ -92,11 +92,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Education.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,2,6"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_COMPULSORY_EDUCATION",
-  "soundMP": "AS2D_TECH_COMPULSORY_EDUCATION",
-  "icon": ",Art/Interface/Buttons/TechTree/Education.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,2,6"
+  "soundMP": "AS2D_TECH_COMPULSORY_EDUCATION"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

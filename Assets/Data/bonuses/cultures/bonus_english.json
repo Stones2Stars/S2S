@@ -10,8 +10,10 @@
    "UNIT_ROBIN_HOOD"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ENGLISH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ENGLISH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

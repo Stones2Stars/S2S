@@ -181,8 +181,10 @@
    "PROMOTION_WEATHER_FORECAST_NAVAL"
   ]
  },
- "art": {
-  "icon": ",Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5"
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5"
+  }
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_BOTTLENECK",
+ "description": "TXT_KEY_PROMOTIONLINE_BOTTLENECK",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Bottleneck1Promotion.dds"
+  }
+ }
+}

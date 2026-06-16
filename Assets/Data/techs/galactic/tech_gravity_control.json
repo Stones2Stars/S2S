@@ -59,11 +59,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Buttons/Techs/TechGravityControl.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_GRAVITY_CONTROL",
-  "soundMP": "AS2D_TECH_GRAVITY_CONTROL",
-  "icon": "Art/Buttons/Techs/TechGravityControl.dds"
+  "soundMP": "AS2D_TECH_GRAVITY_CONTROL"
  },
  "identity": {
   "era": "C2C_ERA_GALACTIC",

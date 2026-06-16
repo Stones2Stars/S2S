@@ -7,8 +7,10 @@
    "UNIT_MORAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MASAI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MASAI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

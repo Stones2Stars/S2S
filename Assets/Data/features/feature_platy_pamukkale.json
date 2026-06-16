@@ -1,0 +1,39 @@
+{
+ "type": "FEATURE_PLATY_PAMUKKALE",
+ "description": "TXT_KEY_FEATURE_PAMUKKALE",
+ "civilopedia": "TXT_KEY_FEATURE_PAMUKKALE_PEDIA",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_PAMUKKALE"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "requiresFlatlands": true,
+  "addsFreshWater": true,
+  "noCity": true,
+  "noImprovement": true,
+  "noBonus": true,
+  "nukeImmune": true,
+  "ignoreTerrainCulture": true,
+  "validTerrains": [
+   "TERRAIN_TAIGA",
+   "TERRAIN_ICE",
+   "TERRAIN_TUNDRA"
+  ]
+ }
+}

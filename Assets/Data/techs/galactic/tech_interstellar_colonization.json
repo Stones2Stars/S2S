@@ -86,11 +86,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/interstellarcolonization.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_INTERSTELLAR_COLONIZATION",
-  "soundMP": "AS2D_TECH_INTERSTELLAR_COLONIZATION",
-  "icon": "Art/Interface/Buttons/TechTree/interstellarcolonization.dds"
+  "soundMP": "AS2D_TECH_INTERSTELLAR_COLONIZATION"
  },
  "identity": {
   "era": "C2C_ERA_GALACTIC",

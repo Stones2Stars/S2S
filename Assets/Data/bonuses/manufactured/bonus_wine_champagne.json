@@ -7,8 +7,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_WINE_CHAMPAGNE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_WINE_CHAMPAGNE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_WONDER"

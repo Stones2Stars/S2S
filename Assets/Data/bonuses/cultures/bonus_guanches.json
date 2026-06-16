@@ -8,8 +8,10 @@
    "UNIT_MADEIRA_AXEMAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_GUANCHES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_GUANCHES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

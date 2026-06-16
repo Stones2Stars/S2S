@@ -1,0 +1,164 @@
+{
+ "type": "SPECIALIST_GREAT_SPY",
+ "description": "TXT_KEY_SPECIALIST_GREAT_SPY",
+ "civilopedia": "TXT_KEY_CONCEPT_GREAT_SPY_PEDIA",
+ "commerce": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_DECEIVER": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_DECEIVER1": {
+     "flat": 1
+    },
+    "TRAIT_DECEIVER3": {
+     "flat": 1
+    },
+    "TRAIT_NAIVE": {
+     "flat": -1
+    },
+    "TRAIT_NAIVE1": {
+     "flat": -1
+    },
+    "TRAIT_NAIVE3": {
+     "flat": -1
+    },
+    "TRAIT_LAWFUL": {
+     "flat": 1
+    },
+    "TRAIT_LAWFUL1": {
+     "flat": 1
+    },
+    "TRAIT_CROOKED": {
+     "flat": -1
+    },
+    "TRAIT_CROOKED1": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_POLITICIAN": {
+     "flat": 1
+    },
+    "TRAIT_POLITICIAN3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_FOREIGN": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_FOREIGN1": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_POLITICIAN": {
+     "flat": 1
+    },
+    "TRAIT_POLITICIAN2": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_FOREIGN": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_FOREIGN1": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_POLITICIAN": {
+     "flat": 1
+    },
+    "TRAIT_POLITICIAN3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_FOREIGN": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_FOREIGN1": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 12
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_DECEIVER": {
+     "flat": 2
+    },
+    "TRAIT_DECEIVER2": {
+     "flat": 2
+    },
+    "TRAIT_NAIVE": {
+     "flat": -2
+    },
+    "TRAIT_NAIVE2": {
+     "flat": -2
+    },
+    "TRAIT_COMPLEX_PHILOSOPHICAL": {
+     "flat": 1
+    },
+    "TRAIT_PHILOSOPHICAL3": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_POPULIST": {
+     "flat": -1
+    },
+    "TRAIT_POPULIST3": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_POLITICIAN": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_POLITICIAN1": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_FOREIGN": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_FOREIGN1": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_SPY": {
+     "flat": 2
+    },
+    "UNITCOMBAT_DIPLOMAT": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,6,14",
+  "button": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,6,14"
+ },
+ "identity": {
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_ESPIONAGE"
+  ]
+ }
+}

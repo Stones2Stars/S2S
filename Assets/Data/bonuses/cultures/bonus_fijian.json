@@ -8,8 +8,10 @@
    "UNIT_SERU_EPENISA_CAKOBAU"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FIJIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FIJIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

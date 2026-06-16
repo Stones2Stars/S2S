@@ -66,11 +66,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/TheoreticalPhysics.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_IMAGINARY_PHYSICS",
-  "soundMP": "AS2D_TECH_IMAGINARY_PHYSICS",
-  "icon": "Art/Interface/Buttons/TechTree/TheoreticalPhysics.dds"
+  "soundMP": "AS2D_TECH_IMAGINARY_PHYSICS"
  },
  "identity": {
   "era": "C2C_ERA_INFORMATION",

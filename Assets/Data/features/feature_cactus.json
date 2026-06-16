@@ -1,0 +1,83 @@
+{
+ "type": "FEATURE_CACTUS",
+ "description": "TXT_KEY_FEATURE_CACTUS",
+ "civilopedia": "TXT_KEY_FEATURE_CACTUS_PEDIA",
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "properties": [
+  {
+   "source": "CONSTANT",
+   "property": "PROPERTY_AIR_POLLUTION",
+   "on": "GAMEOBJECT_PLOT",
+   "relation": "RELATION_NEAR",
+   "distance": 1,
+   "amountPerTurn": -1
+  }
+ ],
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_CACTUS",
+   "effect": {
+    "type": "EFFECT_BIRDSCATTER",
+    "probability": 5
+   }
+  }
+ },
+ "sound": {
+  "footsteps": [
+   {
+    "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT_FOREST"
+   },
+   {
+    "FOOTSTEP_AUDIO_HUMAN_LOW": "AS3D_UN_FOOT_UNIT_LOW_FOREST"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL": "AS3D_UN_ANIMAL_FOOT_LARGE_FOREST"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL_LOW": "AS3D_UN_ANIMAL_FOOT_LARGE_LOW_FOREST"
+   },
+   {
+    "FOOTSTEP_AUDIO_HORSE": "AS3D_UN_HORSE_RUN_FOREST"
+   },
+   {
+    "LOOPSTEP_TANK": "AS3D_UN_TANK_LOOP_FOREST"
+   },
+   {
+    "ENDSTEP_TANK": "AS3D_UN_TANK_END_FOREST"
+   },
+   {
+    "LOOPSTEP_MOD_ARMOUR": "AS3D_UN_MOD_ARMOUR_LOOP_FOREST"
+   },
+   {
+    "ENDSTEP_MOD_ARMOUR": "AS3D_UN_MOD_ARMOUR_END_FOREST"
+   },
+   {
+    "LOOPSTEP_ARTILLERY": "AS3D_UN_ARTILL_RUN_LOOP_FOREST"
+   },
+   {
+    "ENDSTEP_ARTILLERY": "AS3D_UN_ARTILL_RUN_END_FOREST"
+   },
+   {
+    "LOOPSTEP_WHEELS_3": "AS3D_UN_TREBUCHET_RUN_LEAVES"
+   },
+   {
+    "ENDSTEP_WHEELS_3": "AS3D_UN_TREBUCHET_STOP_LEAVES"
+   }
+  ],
+  "soundscape": "ASSS_DESERT_SELECT_AMB"
+ },
+ "identity": {
+  "appearance": 800,
+  "growth": 10,
+  "popDestroys": 10,
+  "requiresFlatlands": true,
+  "validTerrains": [
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB"
+  ]
+ }
+}

@@ -44,8 +44,10 @@
    "UNIT_LEVITATION_ARTILLERY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TITANIUM_WARES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TITANIUM_WARES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -7,8 +7,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FINE_STONEWARE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FINE_STONEWARE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_WONDER"

@@ -9,8 +9,10 @@
    "UNIT_GERMAN_PANZER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_GERMAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_GERMAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

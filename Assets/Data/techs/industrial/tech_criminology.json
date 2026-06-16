@@ -87,11 +87,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/criminology.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_CRIMINOLOGY",
-  "soundMP": "AS2D_TECH_CRIMINOLOGY",
-  "icon": "Art/Interface/Buttons/TechTree/criminology.dds"
+  "soundMP": "AS2D_TECH_CRIMINOLOGY"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

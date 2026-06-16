@@ -8,8 +8,10 @@
    "BUILDING_MARTIAN_GEOLOGY_LAB"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MARTIAN_ROCKS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MARTIAN_ROCKS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

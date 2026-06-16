@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_PYROTECHNICS",
+ "description": "TXT_KEY_PROMOTIONLINE_PYROTECHNICS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Pyrotechnics1Promotion.dds"
+  }
+ }
+}

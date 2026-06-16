@@ -8,8 +8,10 @@
    "UNIT_TAUTALUS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_LUSITANIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_LUSITANIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

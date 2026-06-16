@@ -43,8 +43,10 @@
    "UNIT_VET"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SCROLLS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SCROLLS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

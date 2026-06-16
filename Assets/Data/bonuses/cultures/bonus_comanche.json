@@ -8,8 +8,10 @@
    "UNIT_COMANCHE_HORSE_ARCHER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_COMANCHE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_COMANCHE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

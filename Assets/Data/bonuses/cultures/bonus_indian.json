@@ -9,8 +9,10 @@
    "UNIT_URUMI_SWORDSMAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_INDIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_INDIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

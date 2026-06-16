@@ -17,8 +17,10 @@
    "UNIT_TECHNARCHIST"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ORGANIC_COMPUTERS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ORGANIC_COMPUTERS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

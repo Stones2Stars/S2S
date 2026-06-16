@@ -7,8 +7,10 @@
    "UNIT_DAHOMEY_MINO"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_DAHOMEY"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_DAHOMEY"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

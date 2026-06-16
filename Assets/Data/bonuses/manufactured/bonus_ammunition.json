@@ -84,8 +84,10 @@
    "tradeModifier": 10
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_AMMUNITION"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_AMMUNITION"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -12,8 +12,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_OMEGA_FATTY_ACID"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_OMEGA_FATTY_ACID"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -10,8 +10,10 @@
    "UNIT_LIGHTNING_WARRIOR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ZAPOTEC"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ZAPOTEC"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

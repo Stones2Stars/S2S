@@ -64,11 +64,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Biomathmatics.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_BIOMATHEMATICS",
-  "soundMP": "AS2D_TECH_BIOMATHEMATICS",
-  "icon": "Art/Interface/Buttons/TechTree/Biomathmatics.dds"
+  "soundMP": "AS2D_TECH_BIOMATHEMATICS"
  },
  "identity": {
   "era": "C2C_ERA_INFORMATION",

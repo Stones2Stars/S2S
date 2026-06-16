@@ -1,0 +1,71 @@
+{
+ "type": "FEATURE_PLAGUED_SMOG",
+ "description": "TXT_KEY_FEATURE_PLAGUED_SMOG",
+ "civilopedia": "TXT_KEY_FEATURE_PLAGUED_SMOG_PEDIA",
+ "food": {
+  "plot": {
+   "flat": -25
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": -25
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": -25
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 6
+  }
+ },
+ "health": {
+  "plot": {
+   "percent": -200
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_PLAGUED_SMOG"
+  }
+ },
+ "identity": {
+  "disappearance": 150,
+  "spread": 1000,
+  "popDestroys": -1,
+  "validTerrains": [
+   "TERRAIN_BADLAND",
+   "TERRAIN_BARREN",
+   "TERRAIN_COAST",
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_COAST_TROPICAL",
+   "TERRAIN_LAKE_SHORE",
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_ICE",
+   "TERRAIN_JAGGED",
+   "TERRAIN_LUSH",
+   "TERRAIN_MARSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_PLAINS",
+   "TERRAIN_ROCKY",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_SCRUB",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA"
+  ]
+ }
+}

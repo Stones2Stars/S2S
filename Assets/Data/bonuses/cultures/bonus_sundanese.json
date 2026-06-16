@@ -8,8 +8,10 @@
    "UNIT_JAIPONGAN_DANCER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SUNDANESE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SUNDANESE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

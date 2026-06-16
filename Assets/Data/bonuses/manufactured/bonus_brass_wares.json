@@ -10,8 +10,10 @@
    "BUILDING_FIRE_HYDRANTS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BRASS_WARES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BRASS_WARES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

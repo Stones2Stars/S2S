@@ -17,9 +17,15 @@
    "flat": 1
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_STAR_CLUSTER",
-  "icon": "Art/Interface/Buttons/WorldBuilder/star_cluster.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/star_cluster.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_STAR_CLUSTER"
+  }
  },
  "identity": {
   "found": true,

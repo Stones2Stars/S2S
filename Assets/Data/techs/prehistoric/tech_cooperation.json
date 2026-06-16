@@ -62,11 +62,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/cooperation.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_COOPERATION",
-  "soundMP": "AS2D_TECH_COOPERATION",
-  "icon": "Art/Interface/Buttons/TechTree/cooperation.dds"
+  "soundMP": "AS2D_TECH_COOPERATION"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

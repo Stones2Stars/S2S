@@ -10,8 +10,10 @@
    "BUILDING_STEEL_RECLAMATION_PLANT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SODA_POP"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SODA_POP"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

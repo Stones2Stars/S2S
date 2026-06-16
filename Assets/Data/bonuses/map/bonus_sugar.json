@@ -47,8 +47,10 @@
    "tradeModifier": 2
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SUGAR"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SUGAR"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

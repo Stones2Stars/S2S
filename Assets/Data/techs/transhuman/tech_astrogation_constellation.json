@@ -87,11 +87,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/astrogationconstellation.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ASTROGATION_CONSTELLATION",
-  "soundMP": "AS2D_TECH_ASTROGATION_CONSTELLATION",
-  "icon": "Art/Interface/Buttons/TechTree/astrogationconstellation.dds"
+  "soundMP": "AS2D_TECH_ASTROGATION_CONSTELLATION"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

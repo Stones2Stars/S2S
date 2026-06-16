@@ -45,8 +45,10 @@
    "objective": 10
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NANOBOTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NANOBOTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

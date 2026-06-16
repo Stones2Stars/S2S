@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_SHIP_COMMAND",
+ "description": "TXT_KEY_PROMOTIONLINE_SHIP_COMMAND",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/CommodoreCommand1.dds"
+  }
+ }
+}

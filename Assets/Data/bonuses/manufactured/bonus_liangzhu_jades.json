@@ -7,8 +7,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_LIANGZHU_JADES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_LIANGZHU_JADES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_WONDER"

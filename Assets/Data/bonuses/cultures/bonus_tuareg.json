@@ -7,8 +7,10 @@
    "UNIT_TUAREG_CAMEL"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TUAREG"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TUAREG"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

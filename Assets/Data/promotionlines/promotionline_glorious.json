@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_GLORIOUS",
+ "description": "TXT_KEY_PROMOTIONLINE_GLORIOUS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitGlorious.dds"
+  }
+ }
+}

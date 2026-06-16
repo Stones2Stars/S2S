@@ -9,8 +9,10 @@
    "UNIT_JOAN_OF_ARC"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FRENCH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FRENCH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

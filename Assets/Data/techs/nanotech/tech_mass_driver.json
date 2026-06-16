@@ -61,11 +61,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/massdriver.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_MASS_DRIVER",
-  "soundMP": "AS2D_TECH_MASS_DRIVER",
-  "icon": "Art/Interface/Buttons/TechTree/massdriver.dds"
+  "soundMP": "AS2D_TECH_MASS_DRIVER"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

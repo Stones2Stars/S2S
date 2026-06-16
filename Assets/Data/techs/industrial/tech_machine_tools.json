@@ -67,11 +67,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/MachineTools.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,10"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_MACHINETOOLS",
-  "soundMP": "AS2D_TECH_MACHINETOOLS",
-  "icon": ",Art/Interface/Buttons/TechTree/MachineTools.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,10"
+  "soundMP": "AS2D_TECH_MACHINETOOLS"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

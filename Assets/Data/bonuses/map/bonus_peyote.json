@@ -29,8 +29,10 @@
    "flat": -1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PEYOTE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PEYOTE"
+  }
  },
  "mapGeneration": {
   "placementOrder": 1,

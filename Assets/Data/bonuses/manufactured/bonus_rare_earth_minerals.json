@@ -8,8 +8,10 @@
    "BUILDING_TABLET_MANUFACTURER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_RARE_EARTH_MINERALS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_RARE_EARTH_MINERALS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

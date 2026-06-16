@@ -8,8 +8,10 @@
    "UNIT_VASCO_DE_BALBOA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PANAMAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PANAMAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

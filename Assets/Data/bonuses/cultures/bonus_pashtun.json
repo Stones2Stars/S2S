@@ -8,8 +8,10 @@
    "UNIT_SHER_ALI_KHAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PASHTUN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PASHTUN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

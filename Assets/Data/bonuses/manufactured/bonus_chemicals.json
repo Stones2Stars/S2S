@@ -51,8 +51,10 @@
    "objective": 10
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CHEMICALS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CHEMICALS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -11,8 +11,10 @@
    "BUILDING_WEATHER_VANES"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TIN_WARES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TIN_WARES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

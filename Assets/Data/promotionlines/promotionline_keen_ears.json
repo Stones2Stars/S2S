@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_KEEN_EARS",
+ "description": "TXT_KEY_PROMOTIONLINE_KEEN_EARS",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/KeenEars1Promotion.dds"
+  }
+ }
+}

@@ -61,8 +61,10 @@
    "tradeModifier": 10
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_OBSIDIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_OBSIDIAN"
+  }
  },
  "mapGeneration": {
   "placementOrder": 3,

@@ -8,8 +8,10 @@
    "UNIT_ORANG_KAYA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BANDANESE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BANDANESE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

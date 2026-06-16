@@ -7,8 +7,10 @@
    "BUILDING_APPLIANCE_STORE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_DISHWASHERS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_DISHWASHERS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

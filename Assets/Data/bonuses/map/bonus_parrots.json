@@ -37,8 +37,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PARROTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PARROTS"
+  }
  },
  "mapGeneration": {
   "placementOrder": 6,

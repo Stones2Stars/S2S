@@ -8,8 +8,10 @@
    "UNIT_MUHAMMAD_AHMAD"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SUDANESE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SUDANESE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

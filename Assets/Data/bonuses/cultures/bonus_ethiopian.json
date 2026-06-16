@@ -9,8 +9,10 @@
    "UNIT_MENELIK"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ETHIOPIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ETHIOPIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

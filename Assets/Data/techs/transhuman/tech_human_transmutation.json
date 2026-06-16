@@ -66,11 +66,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/humantransmutation.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_HUMAN_TRANSMUTATION",
-  "soundMP": "AS2D_TECH_HUMAN_TRANSMUTATION",
-  "icon": "Art/Interface/Buttons/TechTree/humantransmutation.dds"
+  "soundMP": "AS2D_TECH_HUMAN_TRANSMUTATION"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

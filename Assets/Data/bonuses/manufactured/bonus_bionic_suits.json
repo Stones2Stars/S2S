@@ -12,8 +12,10 @@
    "UNIT_HTSNIPER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BIONIC_SUITS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BIONIC_SUITS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

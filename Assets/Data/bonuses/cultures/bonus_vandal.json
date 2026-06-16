@@ -8,8 +8,10 @@
    "UNIT_VANDAL_PILLAGER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_VANDAL"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_VANDAL"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

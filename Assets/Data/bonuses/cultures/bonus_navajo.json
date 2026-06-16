@@ -8,8 +8,10 @@
    "UNIT_NAVAJO_RIFLEMAN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NAVAJO"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NAVAJO"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

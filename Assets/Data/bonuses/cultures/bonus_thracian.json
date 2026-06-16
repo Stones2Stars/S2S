@@ -8,8 +8,10 @@
    "UNIT_THRACIAN_PELTAST"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_THRACIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_THRACIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

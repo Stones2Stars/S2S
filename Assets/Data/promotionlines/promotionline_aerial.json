@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_AERIAL",
+ "description": "TXT_KEY_PROMOTIONLINE_AERIAL",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitAerial.dds"
+  }
+ }
+}

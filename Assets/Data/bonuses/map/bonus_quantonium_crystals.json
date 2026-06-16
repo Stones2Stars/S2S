@@ -7,8 +7,10 @@
    "flat": 5
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_QUANTONIUM_CRYSTALS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_QUANTONIUM_CRYSTALS"
+  }
  },
  "mapGeneration": {
   "constAppearance": 100,

@@ -66,11 +66,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/trapping.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_TRAPPING",
-  "soundMP": "AS2D_TECH_TRAPPING",
-  "icon": "Art/Interface/Buttons/TechTree/trapping.dds"
+  "soundMP": "AS2D_TECH_TRAPPING"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

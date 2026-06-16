@@ -56,11 +56,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_RELIGION",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/divination.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_DIVINATION",
-  "soundMP": "AS2D_TECH_DIVINATION",
-  "icon": "Art/Interface/Buttons/TechTree/divination.dds"
+  "soundMP": "AS2D_TECH_DIVINATION"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

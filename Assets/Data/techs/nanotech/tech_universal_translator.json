@@ -77,11 +77,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/universaltranslator.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_UNIVERSAL_TRANSLATOR",
-  "soundMP": "AS2D_TECH_UNIVERSAL_TRANSLATOR",
-  "icon": "Art/Interface/Buttons/TechTree/universaltranslator.dds"
+  "soundMP": "AS2D_TECH_UNIVERSAL_TRANSLATOR"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

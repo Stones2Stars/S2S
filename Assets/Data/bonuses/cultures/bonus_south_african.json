@@ -8,8 +8,10 @@
    "UNIT_NELSON_MANDELA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SOUTH_AFRICAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SOUTH_AFRICAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

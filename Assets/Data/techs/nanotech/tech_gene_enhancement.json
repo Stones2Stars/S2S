@@ -104,11 +104,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Geneenhancement.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_GENE_ENHANCEMENT",
-  "soundMP": "AS2D_TECH_GENE_ENHANCEMENT",
-  "icon": "Art/Interface/Buttons/TechTree/Geneenhancement.dds"
+  "soundMP": "AS2D_TECH_GENE_ENHANCEMENT"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

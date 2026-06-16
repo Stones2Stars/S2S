@@ -11,8 +11,10 @@
    "BUILDING_INSECT_MANIPULATION_LAB"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CYBERPUNK"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CYBERPUNK"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

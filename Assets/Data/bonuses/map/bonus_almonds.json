@@ -39,8 +39,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ALMONDS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ALMONDS"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

@@ -18,8 +18,10 @@
    "flat": 2
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ANCIENT_RELICS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ANCIENT_RELICS"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

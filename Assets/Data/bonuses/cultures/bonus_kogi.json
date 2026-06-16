@@ -8,8 +8,10 @@
    "UNIT_FARUK_IMAM"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_KOGI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_KOGI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

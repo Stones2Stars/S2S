@@ -7,8 +7,10 @@
    "UNIT_HIGHLANDER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SCOTTISH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SCOTTISH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

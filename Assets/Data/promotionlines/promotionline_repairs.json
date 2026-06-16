@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_REPAIRS",
+ "description": "TXT_KEY_PROMOTIONLINE_REPAIRS",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CityRaider2.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,1,9"
+  }
+ }
+}

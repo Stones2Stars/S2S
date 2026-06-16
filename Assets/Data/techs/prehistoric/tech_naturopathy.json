@@ -87,11 +87,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/naturopath.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,12"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_NATUROPATHY",
-  "soundMP": "AS2D_TECH_NATUROPATHY",
-  "icon": ",Art/Interface/Buttons/TechTree/naturopath.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,12"
+  "soundMP": "AS2D_TECH_NATUROPATHY"
  },
  "identity": {
   "era": "C2C_ERA_PREHISTORIC",

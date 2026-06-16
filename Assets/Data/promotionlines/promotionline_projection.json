@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_PROJECTION",
+ "description": "TXT_KEY_PROMOTIONLINE_PROJECTION",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Projection1.dds"
+  }
+ }
+}

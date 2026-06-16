@@ -20,8 +20,10 @@
    "UNIT_SYSTEMS_ANALYST"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NEUROIMPLANTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NEUROIMPLANTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

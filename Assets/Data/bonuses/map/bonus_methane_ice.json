@@ -27,8 +27,10 @@
    "tradeModifier": 20
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_METHANE_ICE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_METHANE_ICE"
+  }
  },
  "mapGeneration": {
   "placementOrder": 8,

@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_SECURITY",
+ "description": "TXT_KEY_PROMOTIONLINE_SECURITY",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Security1.dds"
+  }
+ }
+}

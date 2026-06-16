@@ -7,8 +7,10 @@
    "UNIT_LEIDANG"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ICELANDIC"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ICELANDIC"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

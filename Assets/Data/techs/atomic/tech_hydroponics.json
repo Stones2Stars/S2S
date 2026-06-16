@@ -48,11 +48,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Ecology.dds,Art/Interface/Buttons/NextWar_Atlas.dds,8,3"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_HYDROPONICS",
-  "soundMP": "AS2D_TECH_HYDROPONICS",
-  "icon": ",Art/Interface/Buttons/TechTree/Ecology.dds,Art/Interface/Buttons/NextWar_Atlas.dds,8,3"
+  "soundMP": "AS2D_TECH_HYDROPONICS"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

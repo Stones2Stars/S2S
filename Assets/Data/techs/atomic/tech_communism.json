@@ -93,11 +93,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Communism.dds,Art/Interface/Buttons/TechTree_Atlas.dds,4,2"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_COMMUNISM",
-  "soundMP": "AS2D_TECH_MP_UTOPIA",
-  "icon": ",Art/Interface/Buttons/TechTree/Communism.dds,Art/Interface/Buttons/TechTree_Atlas.dds,4,2"
+  "soundMP": "AS2D_TECH_MP_UTOPIA"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

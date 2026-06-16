@@ -8,8 +8,10 @@
    "UNIT_TISH_ATAL"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HURRIANS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HURRIANS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

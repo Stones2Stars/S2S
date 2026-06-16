@@ -70,8 +70,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Builds/BuildHighway.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/BuildHighway.dds"
+  }
  },
  "identity": {
   "value": 6,

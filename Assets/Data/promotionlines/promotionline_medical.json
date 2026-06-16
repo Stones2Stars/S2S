@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_MEDICAL",
+ "description": "TXT_KEY_PROMOTIONLINE_MEDICAL",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitMedical.dds"
+  }
+ }
+}

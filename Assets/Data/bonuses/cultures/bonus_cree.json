@@ -7,8 +7,10 @@
    "UNIT_CREE_TRACKER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CREE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CREE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

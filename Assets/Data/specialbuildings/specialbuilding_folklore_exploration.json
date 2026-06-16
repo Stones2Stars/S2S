@@ -1,0 +1,12 @@
+{
+ "type": "SPECIALBUILDING_FOLKLORE_EXPLORATION",
+ "description": "TXT_KEY_SPECIALBUILDING_FOLKLORE_EXPLORATION",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/DartFrog.dds"
+  }
+ },
+ "identity": {
+  "valid": true
+ }
+}

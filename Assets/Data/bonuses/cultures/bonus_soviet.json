@@ -8,8 +8,10 @@
    "UNIT_TROTSKY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SOVIET"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SOVIET"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

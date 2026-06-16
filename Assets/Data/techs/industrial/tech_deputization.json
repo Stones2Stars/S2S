@@ -61,11 +61,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "art/buttons/techs/DeputizationTech.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_DEPUTIZATION",
-  "soundMP": "AS2D_TECH_DEPUTIZATION",
-  "icon": "art/buttons/techs/DeputizationTech.dds"
+  "soundMP": "AS2D_TECH_DEPUTIZATION"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

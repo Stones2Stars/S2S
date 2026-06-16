@@ -8,8 +8,10 @@
    "UNIT_SHEBA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SABBATEAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SABBATEAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_WARMONGER",
+ "description": "TXT_KEY_PROMOTIONLINE_WARMONGER",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitWarmonger.dds"
+  }
+ }
+}

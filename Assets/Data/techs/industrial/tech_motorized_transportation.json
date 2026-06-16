@@ -134,11 +134,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Motorized_transportation.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,12"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_MOTORIZED_TRANSPORTATION",
-  "soundMP": "AS2D_TECH_MOTORIZED_TRANSPORTATION",
-  "icon": ",Art/Interface/Buttons/TechTree/Motorized_transportation.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,12"
+  "soundMP": "AS2D_TECH_MOTORIZED_TRANSPORTATION"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

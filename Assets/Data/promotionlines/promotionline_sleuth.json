@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_SLEUTH",
+ "description": "TXT_KEY_PROMOTIONLINE_SLEUTH",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Sleuth1Promotion.dds"
+  }
+ }
+}

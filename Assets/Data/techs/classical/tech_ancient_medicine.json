@@ -78,11 +78,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/ancientmedicine.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ANCIENT_MEDICINE",
-  "soundMP": "AS2D_TECH_ANCIENT_MEDICINE",
-  "icon": "Art/Interface/Buttons/TechTree/ancientmedicine.dds"
+  "soundMP": "AS2D_TECH_ANCIENT_MEDICINE"
  },
  "identity": {
   "era": "C2C_ERA_CLASSICAL",

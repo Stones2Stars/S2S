@@ -8,8 +8,10 @@
    "BUILDING_SMITH_TIN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TIN_INGOTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TIN_INGOTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

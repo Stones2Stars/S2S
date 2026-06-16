@@ -8,8 +8,10 @@
    "UNIT_PRIEST_KING"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_INDUS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_INDUS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -8,8 +8,10 @@
    "UNIT_KORA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ANDAMANESE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ANDAMANESE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

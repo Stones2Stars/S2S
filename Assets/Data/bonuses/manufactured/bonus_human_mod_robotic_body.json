@@ -9,8 +9,10 @@
    "BUILDING_HUMAN_MOD_HEAT_TOLERANCE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HUMAN_MOD_ROBOTIC_BODY"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HUMAN_MOD_ROBOTIC_BODY"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

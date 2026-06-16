@@ -77,11 +77,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Graphene.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_GRAPHENE_ALLOYS",
-  "soundMP": "AS2D_TECH_GRAPHENE_ALLOYS",
-  "icon": "Art/Interface/Buttons/TechTree/Graphene.dds"
+  "soundMP": "AS2D_TECH_GRAPHENE_ALLOYS"
  },
  "identity": {
   "era": "C2C_ERA_INFORMATION",

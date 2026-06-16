@@ -47,11 +47,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_RELIGION",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/Zoroastrianism.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ZOROASTRIANISM",
-  "soundMP": "AS2D_TECH_ZOROASTRIANISM",
-  "icon": "Art/Interface/Buttons/TechTree/Zoroastrianism.dds"
+  "soundMP": "AS2D_TECH_ZOROASTRIANISM"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

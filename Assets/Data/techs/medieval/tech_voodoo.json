@@ -43,11 +43,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_RELIGION",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/Voodoo.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_VOODOO",
-  "soundMP": "AS2D_TECH_GENERIC",
-  "icon": "Art/Interface/Buttons/TechTree/Voodoo.dds"
+  "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
   "era": "C2C_ERA_MEDIEVAL",

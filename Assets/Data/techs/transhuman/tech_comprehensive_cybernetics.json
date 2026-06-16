@@ -88,11 +88,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/comprehensivecybernetics.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_COMPREHENSIVE_CYBERNETICS",
-  "soundMP": "AS2D_TECH_COMPREHENSIVE_CYBERNETICS",
-  "icon": "Art/Interface/Buttons/TechTree/comprehensivecybernetics.dds"
+  "soundMP": "AS2D_TECH_COMPREHENSIVE_CYBERNETICS"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

@@ -8,8 +8,10 @@
    "UNIT_JAN_FRANS_WILLEMS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FLEMISH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FLEMISH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

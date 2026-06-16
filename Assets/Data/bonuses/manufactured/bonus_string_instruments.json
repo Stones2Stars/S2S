@@ -2,8 +2,10 @@
  "type": "BONUS_STRING_INSTRUMENTS",
  "description": "TXT_KEY_BONUS_STRING_INSTRUMENTS",
  "civilopedia": "TXT_KEY_BONUS_STRING_INSTRUMENTS_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_STRING_INSTRUMENTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_STRING_INSTRUMENTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

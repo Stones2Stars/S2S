@@ -8,8 +8,10 @@
    "UNIT_KUTAMA_INFANTRY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FATIMID"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FATIMID"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

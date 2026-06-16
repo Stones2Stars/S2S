@@ -9,8 +9,10 @@
    "UNIT_POMBOS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_KONGOLESE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_KONGOLESE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

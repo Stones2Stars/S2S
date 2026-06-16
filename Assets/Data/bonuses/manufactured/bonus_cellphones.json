@@ -15,8 +15,10 @@
    "UNIT_HACKER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CELLPHONES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CELLPHONES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -7,8 +7,10 @@
    "BUILDING_HUMAN_MOD_ALIEN_HYBRID"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HUMAN_MOD_MARTIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HUMAN_MOD_MARTIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

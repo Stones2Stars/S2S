@@ -32,10 +32,18 @@
    "flat": 1
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_SCRUB",
-  "icon": "Art/Interface/Buttons/TerrainFeatures/DuneRock.dds",
-  "footstepSounds": [
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/TerrainFeatures/DuneRock.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_SCRUB"
+  }
+ },
+ "sound": {
+  "footsteps": [
    {
     "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT_SAND"
    },
@@ -130,7 +138,7 @@
     "ENDSTEP_WHEELS_3": "AS3D_UN_TREBUCHET_STOP"
    }
   ],
-  "worldSoundscapeAudioScript": "ASSS_DESERT_SELECT_AMB"
+  "soundscape": "ASSS_DESERT_SELECT_AMB"
  },
  "identity": {
   "found": true,

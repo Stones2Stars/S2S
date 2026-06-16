@@ -7,8 +7,10 @@
    "UNIT_SCYTHIAN_HORSE_ARCHER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SCYTHIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SCYTHIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

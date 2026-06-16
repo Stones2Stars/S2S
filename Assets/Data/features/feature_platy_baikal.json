@@ -1,0 +1,41 @@
+{
+ "type": "FEATURE_PLATY_BAIKAL",
+ "description": "TXT_KEY_FEATURE_BAIKAL",
+ "civilopedia": "TXT_KEY_FEATURE_BAIKAL_PEDIA",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_BAIKAL"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "noCoast": true,
+  "noRiver": true,
+  "requiresFlatlands": true,
+  "addsFreshWater": true,
+  "noCity": true,
+  "noImprovement": true,
+  "noBonus": true,
+  "nukeImmune": true,
+  "ignoreTerrainCulture": true,
+  "validTerrains": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_PLAINS",
+   "TERRAIN_TAIGA"
+  ]
+ }
+}

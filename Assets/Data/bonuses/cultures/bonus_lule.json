@@ -8,8 +8,10 @@
    "UNIT_LULE_NOMADS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_LULE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_LULE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

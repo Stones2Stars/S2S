@@ -7,8 +7,10 @@
    "UNIT_SHARKTOOTH_ARCHER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SEMINOLE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SEMINOLE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

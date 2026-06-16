@@ -29,8 +29,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PRICKLY_PEAR"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PRICKLY_PEAR"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

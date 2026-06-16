@@ -30,8 +30,10 @@
    "flat": 3
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FOSSIL_BEDS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FOSSIL_BEDS"
+  }
  },
  "mapGeneration": {
   "placementOrder": 5,

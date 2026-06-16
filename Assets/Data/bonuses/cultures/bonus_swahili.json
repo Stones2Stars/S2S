@@ -9,8 +9,10 @@
    "UNIT_SIYU_WARRIOR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SWAHILI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SWAHILI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

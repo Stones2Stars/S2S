@@ -7,8 +7,10 @@
    "UNIT_MAHOUT_LANCER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CHAM"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CHAM"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

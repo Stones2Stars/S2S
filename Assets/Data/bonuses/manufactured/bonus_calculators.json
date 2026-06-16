@@ -7,8 +7,10 @@
    "BUILDING_ELECTRONICS_STORE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CALCULATORS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CALCULATORS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

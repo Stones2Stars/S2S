@@ -7,8 +7,10 @@
    "BUILDING_ELECTRONIC_PAPER_MAKER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ELECTROACTIVE_POLYMERS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ELECTROACTIVE_POLYMERS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

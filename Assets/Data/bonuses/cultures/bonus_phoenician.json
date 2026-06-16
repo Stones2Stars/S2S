@@ -9,8 +9,10 @@
    "UNIT_PHOENICAN_BIREME"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PHOENICIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PHOENICIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

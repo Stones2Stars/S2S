@@ -48,11 +48,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Buttons/Techs/postmodernism.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_GENERIC",
-  "soundMP": "AS2D_TECH_GENERIC",
-  "icon": "Art/Buttons/Techs/postmodernism.dds"
+  "soundMP": "AS2D_TECH_GENERIC"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

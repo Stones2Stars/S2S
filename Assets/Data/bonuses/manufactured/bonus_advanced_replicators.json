@@ -7,8 +7,10 @@
    "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ADVANCED_REPLICATORS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ADVANCED_REPLICATORS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

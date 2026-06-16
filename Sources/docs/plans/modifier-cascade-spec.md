@@ -49,6 +49,26 @@
    values; a shape that only parses if you know the engine is wrong, simplify it. *(These caught a real error:
    GameSpeed `iSpeedPercent` was mis-authored `multiplier` by reverse-engineering the engine's `×p/100` product;
    it is `percent` — "1000%". See the §1.4 reconciliation flag.)*
+8. **DEDICATED BLOCKS — system-specific data lives in ITS OWN block, never scattered onto unrelated entities
+   (owner, 2026-06-16).** When a datum belongs to a specific *system*, it is grouped under that system's dedicated
+   block (a family/section, or its own Info/base object), not bolted onto whatever entity happened to hold it in the
+   legacy data. Worked cases: feature line-of-sight → a **`vision`** block (`iSeeThrough` → `vision.plot.seeThrough`),
+   grouped so the rest of the vision rework lands beside it; a future **Global Warming** mechanic gets its OWN base
+   object for its data (`WarmingDefense` would live there, not on `CvFeatureInfo` — so #428 simply drops the dead
+   field); each `PROPERTY_*` is its own family. The complement to the §6.1 deliveryguy rule: ownership says *which
+   entity* holds a modifier; this says *system-coherent data clusters into its own block* rather than smearing across
+   the entity that legacy code parked it on. Keeps each system's data discoverable and self-contained.
+   - **The aspiration (owner, 2026-06-16): MODULAR SYSTEMS with ISOLATED SURFACES.** A system whose data is its own
+     block can be developed, swapped, or removed *as a unit* without touching the entities it decorates — add or
+     retire Global Warming wholesale via its own object; rework vision behind the `vision` surface; a modder extends
+     one system without reading the rest. The dedicated-block discipline is what makes the surfaces isolated.
+   - **CAVEAT — PRODUCED data lives WHERE IT'S PRODUCED, tagged by a system PREDICATE (owner, 2026-06-16).** A datum
+     the engine reads at a specific *location* — a tile yield, produced by the terrain/feature on its plot — cannot
+     move into an abstract system block; it stays on the producing entity. Its system membership is expressed instead
+     by a **system-specific predicate** on the deposit: the river yield lives on the terrain/feature
+     (`commerce.plot.flat`), tagged `enabled: HAS_RIVER` (the river system's surface), NOT relocated to a "river
+     block". So the split is: **pure system data → its own block** (`WarmingDefense`, `vision`); **produced data →
+     stays put, gated by the system's predicate** (enabler-spec §3).
 
 ---
 

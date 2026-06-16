@@ -8,8 +8,10 @@
    "UNIT_URHO_KEKKONEN"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FINNISH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FINNISH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

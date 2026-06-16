@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_SEA_HUNTER",
+ "description": "TXT_KEY_PROMOTIONLINE_SEA_HUNTER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/seahunter1.dds"
+  }
+ }
+}

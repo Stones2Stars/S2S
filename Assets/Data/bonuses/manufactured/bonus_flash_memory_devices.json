@@ -17,8 +17,10 @@
    "UNIT_SYSTEMS_ANALYST"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FLASH_MEMORY_DEVICES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FLASH_MEMORY_DEVICES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

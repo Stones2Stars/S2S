@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_LONG_ARM",
+ "description": "TXT_KEY_PROMOTIONLINE_LONG_ARM",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/LongArm1Promotion.dds"
+  }
+ }
+}

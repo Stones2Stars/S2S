@@ -43,8 +43,10 @@
    }
   }
  },
- "art": {
-  "icon": "Art/Interface/Buttons/Builds/BuildPavedRoad.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/BuildPavedRoad.dds"
+  }
  },
  "identity": {
   "value": 4,

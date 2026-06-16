@@ -8,8 +8,10 @@
    "UNIT_TARUMA_WARRIOR"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_JAVANESE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_JAVANESE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

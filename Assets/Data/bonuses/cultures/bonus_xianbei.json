@@ -8,8 +8,10 @@
    "UNIT_TUOBA_LIWEI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_XIANBEI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_XIANBEI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

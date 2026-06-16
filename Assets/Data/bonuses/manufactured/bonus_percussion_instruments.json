@@ -2,8 +2,10 @@
  "type": "BONUS_PERCUSSION_INSTRUMENTS",
  "description": "TXT_KEY_BONUS_PERCUSSION_INSTRUMENTS",
  "civilopedia": "TXT_KEY_BONUS_PERCUSSION_INSTRUMENTS_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_PERCUSSION_INSTRUMENTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PERCUSSION_INSTRUMENTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

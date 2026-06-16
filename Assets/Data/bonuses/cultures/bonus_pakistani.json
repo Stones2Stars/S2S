@@ -9,8 +9,10 @@
    "UNIT_SSG"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PAKISTANI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PAKISTANI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

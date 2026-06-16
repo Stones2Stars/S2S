@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_HILL_WORKER",
+ "description": "TXT_KEY_PROMOTIONLINE_HILL_WORKER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/workerhills1.dds"
+  }
+ }
+}

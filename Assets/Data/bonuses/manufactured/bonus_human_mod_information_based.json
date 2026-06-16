@@ -8,8 +8,10 @@
    "BUILDING_HUMAN_MOD_TRANSAPIENT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HUMAN_MOD_INFORMATION_BASED"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HUMAN_MOD_INFORMATION_BASED"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

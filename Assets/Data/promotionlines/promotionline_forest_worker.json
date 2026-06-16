@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_FOREST_WORKER",
+ "description": "TXT_KEY_PROMOTIONLINE_FOREST_WORKER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/workerforest1.dds"
+  }
+ }
+}

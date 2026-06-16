@@ -84,8 +84,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MARBLE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MARBLE"
+  }
  },
  "mapGeneration": {
   "placementOrder": 2,

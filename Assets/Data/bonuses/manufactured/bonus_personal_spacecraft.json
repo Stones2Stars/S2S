@@ -7,8 +7,10 @@
    "BUILDING_OMEGA_ASSEMBLER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PERSONAL_SPACECRAFT"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PERSONAL_SPACECRAFT"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

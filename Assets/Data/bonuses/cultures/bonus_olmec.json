@@ -12,8 +12,10 @@
    "UNIT_PO_NGBE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_OLMEC"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_OLMEC"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

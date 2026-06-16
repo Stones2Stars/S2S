@@ -67,8 +67,10 @@
    "objective": 10
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NANOTUBES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NANOTUBES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

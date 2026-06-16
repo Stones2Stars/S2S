@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_PREEMINENT",
+ "description": "TXT_KEY_PROMOTIONLINE_PREEMINENT",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPreeminent.dds"
+  }
+ }
+}

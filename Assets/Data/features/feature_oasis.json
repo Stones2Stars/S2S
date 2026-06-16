@@ -1,0 +1,59 @@
+{
+ "type": "FEATURE_OASIS",
+ "description": "TXT_KEY_FEATURE_OASIS",
+ "civilopedia": "TXT_KEY_FEATURE_OASIS_PEDIA",
+ "food": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "vision": {
+  "plot": {
+   "seeThrough": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_FEATURE_OASIS"
+  }
+ },
+ "sound": {
+  "footsteps": [
+   {
+    "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_HUMAN_LOW": "AS3D_UN_FOOT_UNIT_LOW_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL": "AS3D_UN_ANIMAL_FOOT_LARGE_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL_LOW": "AS3D_UN_ANIMAL_FOOT_LARGE_LOW_MUD"
+   }
+  ],
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "appearance": 1000,
+  "popDestroys": -1,
+  "noCoast": true,
+  "noRiver": true,
+  "noAdjacent": true,
+  "requiresFlatlands": true,
+  "addsFreshWater": true,
+  "ignoreTerrainCulture": true,
+  "validTerrains": [
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES",
+   "TERRAIN_SCRUB"
+  ]
+ }
+}

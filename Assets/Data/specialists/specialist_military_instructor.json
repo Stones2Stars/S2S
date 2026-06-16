@@ -1,0 +1,50 @@
+{
+ "type": "SPECIALIST_MILITARY_INSTRUCTOR",
+ "description": "TXT_KEY_SPECIALIST_MILITARY_INSTRUCTOR",
+ "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
+ "gold": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_HUMANITARIAN": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_HUMANITARIAN1": {
+     "flat": -1
+    },
+    "TRAIT_HUMANITARIAN3": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_HUMANITARIAN": {
+     "flat": -1
+    },
+    "TRAIT_HUMANITARIAN2": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_COMBATANT": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": "Art/Interface/Buttons/Specialists/Warlord_Instructor.dds",
+  "button": "Art/Interface/Buttons/Specialists/Warlord_Instructor.dds"
+ },
+ "identity": {
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_MILITARY"
+  ]
+ }
+}

@@ -58,11 +58,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/NavalTactics.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,2,13"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_NAVAL_TACTICS",
-  "soundMP": "AS2D_TECH_NAVAL_TACTICS",
-  "icon": ",Art/Interface/Buttons/TechTree/NavalTactics.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,2,13"
+  "soundMP": "AS2D_TECH_NAVAL_TACTICS"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

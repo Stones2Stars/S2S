@@ -83,11 +83,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Tissueengineering.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_MOLECULAR_MEDICINE",
-  "soundMP": "AS2D_TECH_MOLECULAR_MEDICINE",
-  "icon": "Art/Interface/Buttons/TechTree/Tissueengineering.dds"
+  "soundMP": "AS2D_TECH_MOLECULAR_MEDICINE"
  },
  "identity": {
   "era": "C2C_ERA_INFORMATION",

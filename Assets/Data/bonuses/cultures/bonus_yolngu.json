@@ -8,8 +8,10 @@
    "UNIT_YOLNGU_MESSENGER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_YOLNGU"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_YOLNGU"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

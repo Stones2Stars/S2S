@@ -67,11 +67,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/binarylegislation.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_BINARY_LEGISLATION",
-  "soundMP": "AS2D_TECH_BINARY_LEGISLATION",
-  "icon": "Art/Interface/Buttons/TechTree/binarylegislation.dds"
+  "soundMP": "AS2D_TECH_BINARY_LEGISLATION"
  },
  "identity": {
   "era": "C2C_ERA_TRANSHUMAN",

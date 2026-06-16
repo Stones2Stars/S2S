@@ -7,8 +7,10 @@
    "BUILDING_SHIPWRIGHT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SAILS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SAILS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

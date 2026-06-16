@@ -54,11 +54,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/lunartourism.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_LUNAR_TOURISM2",
-  "soundMP": "AS2D_TECH_LUNAR_TOURISM2",
-  "icon": "Art/Interface/Buttons/TechTree/lunartourism.dds"
+  "soundMP": "AS2D_TECH_LUNAR_TOURISM2"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

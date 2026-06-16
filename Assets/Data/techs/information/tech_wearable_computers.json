@@ -93,11 +93,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/wearable_electronics.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_WEARABLE_COMPUTERS",
-  "soundMP": "AS2D_TECH_WEARABLE_COMPUTERS",
-  "icon": "Art/Interface/Buttons/TechTree/wearable_electronics.dds"
+  "soundMP": "AS2D_TECH_WEARABLE_COMPUTERS"
  },
  "identity": {
   "era": "C2C_ERA_INFORMATION",

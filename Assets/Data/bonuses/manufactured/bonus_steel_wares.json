@@ -179,8 +179,10 @@
    "UNIT_WW2_BATTLESHIP"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_STEEL_WARES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_STEEL_WARES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

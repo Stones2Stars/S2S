@@ -8,8 +8,10 @@
    "UNIT_ZBOJNIK"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SLOVAKIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SLOVAKIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

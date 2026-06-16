@@ -12,8 +12,10 @@
    "BUILDING_SIMULATED_WORLD"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HUMAN_MOD_NOVEL_SENSES"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HUMAN_MOD_NOVEL_SENSES"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

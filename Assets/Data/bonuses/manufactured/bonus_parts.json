@@ -44,8 +44,10 @@
    "UNIT_MOTORPOOL"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PARTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PARTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -71,11 +71,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/smart_weapons.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,5,16"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_GUIDED_WEAPONS",
-  "soundMP": "AS2D_TECH_GUIDED_WEAPONS",
-  "icon": ",Art/Interface/Buttons/TechTree/smart_weapons.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,5,16"
+  "soundMP": "AS2D_TECH_GUIDED_WEAPONS"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

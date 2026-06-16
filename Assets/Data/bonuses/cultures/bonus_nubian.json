@@ -8,8 +8,10 @@
    "UNIT_TAHARQA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NUBIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NUBIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

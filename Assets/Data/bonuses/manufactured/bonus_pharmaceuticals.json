@@ -18,8 +18,10 @@
    "UNIT_MODERN_MEDIVAC"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PHARMACEUTICALS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PHARMACEUTICALS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

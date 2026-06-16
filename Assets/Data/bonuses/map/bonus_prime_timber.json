@@ -149,8 +149,10 @@
    "tradeModifier": 2
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PRIME_TIMBER"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PRIME_TIMBER"
+  }
  },
  "mapGeneration": {
   "placementOrder": 6,

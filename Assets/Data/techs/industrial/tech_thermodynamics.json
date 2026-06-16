@@ -56,11 +56,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/Thermodynamics.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,7,2"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_THERMODYNAMICS",
-  "soundMP": "AS2D_TECH_THERMODYNAMICS",
-  "icon": ",Art/Interface/Buttons/TechTree/Thermodynamics.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,7,2"
+  "soundMP": "AS2D_TECH_THERMODYNAMICS"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

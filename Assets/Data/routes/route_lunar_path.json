@@ -1,8 +1,10 @@
 {
  "type": "ROUTE_LUNAR_PATH",
  "description": "TXT_KEY_ROUTE_LUNAR_PATH",
- "art": {
-  "icon": "Art/Interface/Buttons/Builds/buildlunarpath.dds"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/buildlunarpath.dds"
+  }
  },
  "identity": {
   "value": 1,

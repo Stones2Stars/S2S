@@ -102,8 +102,10 @@
    }
   }
  },
- "art": {
-  "icon": "art/interface/buttons/improvements/hyperloop.dds"
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/hyperloop.dds"
+  }
  },
  "identity": {
   "value": 9,

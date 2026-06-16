@@ -44,11 +44,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/catalyticpolymerization.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_PHYSICAL_CHEMISTRY",
-  "soundMP": "AS2D_TECH_PHYSICAL_CHEMISTRY",
-  "icon": "Art/Interface/Buttons/TechTree/catalyticpolymerization.dds"
+  "soundMP": "AS2D_TECH_PHYSICAL_CHEMISTRY"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

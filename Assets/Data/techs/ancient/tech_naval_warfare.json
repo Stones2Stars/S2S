@@ -74,11 +74,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/NavalWarfare.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,13"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_NAVAL_WARFARE",
-  "soundMP": "AS2D_TECH_NAVAL_WARFARE",
-  "icon": ",Art/Interface/Buttons/TechTree/NavalWarfare.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,13"
+  "soundMP": "AS2D_TECH_NAVAL_WARFARE"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

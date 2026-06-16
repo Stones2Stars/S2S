@@ -20,8 +20,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_OLIVE_OIL"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_OLIVE_OIL"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

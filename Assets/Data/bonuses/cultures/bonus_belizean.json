@@ -8,8 +8,10 @@
    "UNIT_MAHOGANY_WOODCUTTER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BELIZEAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BELIZEAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

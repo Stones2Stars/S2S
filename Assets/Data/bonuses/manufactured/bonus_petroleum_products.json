@@ -139,8 +139,10 @@
    "tradeModifier": 10
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PETROLEUM_PRODUCTS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PETROLEUM_PRODUCTS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

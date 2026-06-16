@@ -10,8 +10,10 @@
    "BUILDING_SVALBARD_GLOBAL_SEED_VAULT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_REFRIGERATORS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_REFRIGERATORS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

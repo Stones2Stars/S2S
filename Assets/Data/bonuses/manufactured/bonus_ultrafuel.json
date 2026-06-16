@@ -8,8 +8,10 @@
    "objective": 5
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ULTRAFUEL"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ULTRAFUEL"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

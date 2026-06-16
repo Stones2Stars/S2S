@@ -1,0 +1,165 @@
+{
+ "type": "SPECIALIST_GREAT_MILITARY_INSTRUCTOR",
+ "description": "TXT_KEY_SPECIALIST_GREAT_MILITARY_INSTRUCTOR",
+ "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
+ "food": {
+  "empire": {
+   "traits": {
+    "TRAIT_AERIAL1": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_AGGRESSIVE": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_AGGRESSIVE1": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_PROTECTIVE": {
+     "flat": 1
+    },
+    "TRAIT_PROTECTIVE2": {
+     "flat": 1
+    },
+    "TRAIT_AERIAL3": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "traits": {
+    "TRAIT_DEFENSIVE": {
+     "flat": 1
+    },
+    "TRAIT_DEFENSIVE1": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_IMPERIALIST": {
+     "flat": 1
+    },
+    "TRAIT_COMPLEX_IMPERIALIST1": {
+     "flat": 1
+    },
+    "TRAIT_AERIAL": {
+     "flat": 1
+    },
+    "TRAIT_AERIAL2": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": -1
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_AGGRESSIVE": {
+     "flat": 2
+    },
+    "TRAIT_AGGRESSIVE2": {
+     "flat": 2
+    },
+    "TRAIT_TIMID": {
+     "flat": -2
+    },
+    "TRAIT_AERIAL3": {
+     "flat": 2
+    },
+    "TRAIT_COMPLEX_HUMANITARIAN": {
+     "flat": -1
+    },
+    "TRAIT_COMPLEX_HUMANITARIAN1": {
+     "flat": -1
+    },
+    "TRAIT_HUMANITARIAN3": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "traits": {
+    "TRAIT_DEFENSIVE": {
+     "flat": 2
+    },
+    "TRAIT_DEFENSIVE2": {
+     "flat": 2
+    },
+    "TRAIT_AERIAL1": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "buildings": {
+    "BUILDING_BAYREUTH_FESTSPIELHAUS": {
+     "flat": 4
+    }
+   }
+  },
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_PROTECTIVE": {
+     "flat": 2
+    },
+    "TRAIT_COMPLEX_PROTECTIVE1": {
+     "flat": 2
+    },
+    "TRAIT_COMPLEX_HUMANITARIAN": {
+     "flat": -1
+    },
+    "TRAIT_HUMANITARIAN2": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "traits": {
+    "TRAIT_COMPLEX_IMPERIALIST": {
+     "flat": 2
+    },
+    "TRAIT_IMPERIALIST2": {
+     "flat": 2
+    },
+    "TRAIT_AERIAL": {
+     "flat": 2
+    },
+    "TRAIT_AERIAL2": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_COMBATANT": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "art": {
+  "icon": ",Art/Interface/MainScreen/CityScreen/Great_Engineer.dds,Art/Interface/Buttons/Warlords_Atlas_2.dds,2,6",
+  "button": ",Art/Interface/MainScreen/CityScreen/Great_Engineer.dds,Art/Interface/Buttons/Warlords_Atlas_2.dds,2,6"
+ },
+ "identity": {
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_MILITARY"
+  ]
+ }
+}

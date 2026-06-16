@@ -8,8 +8,10 @@
    "UNIT_MEDE_RETINUES"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MEDIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MEDIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

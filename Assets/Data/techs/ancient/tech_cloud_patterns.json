@@ -43,11 +43,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/CloudPatterns.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_CLOUD_PATTERNS",
-  "soundMP": "AS2D_TECH_CLOUD_PATTERNS",
-  "icon": "Art/Interface/Buttons/TechTree/CloudPatterns.dds"
+  "soundMP": "AS2D_TECH_CLOUD_PATTERNS"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

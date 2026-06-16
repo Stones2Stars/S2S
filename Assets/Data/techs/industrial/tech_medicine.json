@@ -115,11 +115,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Medicine.dds,Art/Interface/Buttons/TechTree_Atlas.dds,4,5"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_MEDICINE",
-  "soundMP": "AS2D_TECH_MP_MEDICINE",
-  "icon": ",Art/Interface/Buttons/TechTree/Medicine.dds,Art/Interface/Buttons/TechTree_Atlas.dds,4,5"
+  "soundMP": "AS2D_TECH_MP_MEDICINE"
  },
  "identity": {
   "era": "C2C_ERA_INDUSTRIAL",

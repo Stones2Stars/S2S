@@ -7,8 +7,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_THEREMIN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_THEREMIN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

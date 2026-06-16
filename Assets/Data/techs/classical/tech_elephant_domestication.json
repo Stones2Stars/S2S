@@ -53,11 +53,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/ElephantRiding.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,6"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ELEPHANT_DOMESTICATION",
-  "soundMP": "AS2D_TECH_ELEPHANT_DOMESTICATION",
-  "icon": ",Art/Interface/Buttons/TechTree/ElephantRiding.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,6"
+  "soundMP": "AS2D_TECH_ELEPHANT_DOMESTICATION"
  },
  "identity": {
   "era": "C2C_ERA_CLASSICAL",

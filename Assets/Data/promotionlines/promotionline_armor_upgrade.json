@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_ARMOR_UPGRADE",
+ "description": "TXT_KEY_PROMOTIONLINE_ARMOR_UPGRADE",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CityGarrison1.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,5,1"
+  }
+ }
+}

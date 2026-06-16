@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_LIAR",
+ "description": "TXT_KEY_PROMOTIONLINE_LIAR",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitLiar.dds"
+  }
+ }
+}

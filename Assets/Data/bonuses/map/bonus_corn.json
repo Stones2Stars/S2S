@@ -44,8 +44,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CORN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CORN"
+  }
  },
  "mapGeneration": {
   "placementOrder": 6,

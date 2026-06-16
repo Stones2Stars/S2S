@@ -2,8 +2,10 @@
  "type": "BONUS_RAINBOW_SERPENT",
  "description": "TXT_KEY_BONUS_RAINBOW_SERPENT",
  "civilopedia": "TXT_KEY_BONUS_RAINBOW_SERPENT_PEDIA",
- "art": {
-  "icon": "ART_DEF_BONUS_RAINBOW_SERPENT"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_RAINBOW_SERPENT"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_WONDER"

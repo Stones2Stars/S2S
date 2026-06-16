@@ -8,8 +8,10 @@
    "UNIT_SIEGE_ELEPHANT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_MUGHAL"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_MUGHAL"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

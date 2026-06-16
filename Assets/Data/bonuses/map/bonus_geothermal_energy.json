@@ -23,8 +23,10 @@
    "tradeModifier": 10
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_GEOTHERMAL_ENERGY"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_GEOTHERMAL_ENERGY"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

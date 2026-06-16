@@ -7,8 +7,10 @@
    "flat": 3
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_METALLIC_ASTEROID"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_METALLIC_ASTEROID"
+  }
  },
  "mapGeneration": {
   "constAppearance": 35,

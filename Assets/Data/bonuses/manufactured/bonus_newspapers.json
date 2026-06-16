@@ -8,8 +8,10 @@
    "BUILDING_PAPER_RECLAMATION_PLANT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NEWSPAPERS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NEWSPAPERS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

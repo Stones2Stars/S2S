@@ -8,8 +8,10 @@
    "UNIT_LIUTPRAND"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_LONGOBARDIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_LONGOBARDIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

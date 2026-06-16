@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_COLD",
+ "description": "TXT_KEY_PROMOTIONLINE_COLD",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Cold1.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,5,3"
+  }
+ }
+}

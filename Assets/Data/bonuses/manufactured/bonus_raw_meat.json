@@ -17,8 +17,10 @@
    "BUILDING_SMOKEHOUSE"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_RAW_MEAT"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_RAW_MEAT"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

@@ -9,8 +9,10 @@
    "BUILDING_HUMAN_MOD_NON_SPATIAL"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HUMAN_MOD_HIGH_DIMENSIONAL"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HUMAN_MOD_HIGH_DIMENSIONAL"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

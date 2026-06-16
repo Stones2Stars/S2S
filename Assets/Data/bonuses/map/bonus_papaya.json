@@ -39,8 +39,10 @@
    "tradeModifier": 10
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PAPAYA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PAPAYA"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

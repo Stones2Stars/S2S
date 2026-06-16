@@ -7,8 +7,10 @@
    "UNIT_AXE_THROWER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FRANKISH"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FRANKISH"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

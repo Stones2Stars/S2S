@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_INTERCEPTION",
+ "description": "TXT_KEY_PROMOTIONLINE_INTERCEPTION",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/interception.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,3,15"
+  }
+ }
+}

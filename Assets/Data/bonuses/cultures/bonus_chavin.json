@@ -8,8 +8,10 @@
    "UNIT_QHATUQ"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CHAVIN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CHAVIN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

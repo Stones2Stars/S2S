@@ -63,11 +63,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/blitzkrieg.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,5,3"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ARMORED_VEHICLES",
-  "soundMP": "AS2D_TECH_ARMORED_VEHICLES",
-  "icon": ",Art/Interface/Buttons/TechTree/blitzkrieg.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,5,3"
+  "soundMP": "AS2D_TECH_ARMORED_VEHICLES"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

@@ -8,8 +8,10 @@
    "UNIT_KHOISAN_RUNNER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_NAMA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_NAMA"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

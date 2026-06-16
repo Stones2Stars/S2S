@@ -8,8 +8,10 @@
    "UNIT_JOSE_MUJICA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_URUGUAYAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_URUGUAYAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

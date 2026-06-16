@@ -32,8 +32,10 @@
    "tradeModifier": 3
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_DYE"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_DYE"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

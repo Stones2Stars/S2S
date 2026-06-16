@@ -7,8 +7,10 @@
    "flat": 3
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_XENOFAUNA"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_XENOFAUNA"
+  }
  },
  "mapGeneration": {
   "constAppearance": 35,

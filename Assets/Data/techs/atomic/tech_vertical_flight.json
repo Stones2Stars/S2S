@@ -89,11 +89,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/VerticalFlight.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,7,3"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_VERTICAL_FLIGHT",
-  "soundMP": "AS2D_TECH_VERTICAL_FLIGHT",
-  "icon": ",Art/Interface/Buttons/TechTree/VerticalFlight.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,7,3"
+  "soundMP": "AS2D_TECH_VERTICAL_FLIGHT"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

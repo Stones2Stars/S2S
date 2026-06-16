@@ -8,8 +8,10 @@
    "UNIT_ZAGON"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TATAR"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TATAR"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

@@ -48,8 +48,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_COW"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_COW"
+  }
  },
  "mapGeneration": {
   "placementOrder": 6,

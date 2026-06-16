@@ -9,8 +9,10 @@
    "UNIT_SIMEON"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BULGARIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BULGARIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

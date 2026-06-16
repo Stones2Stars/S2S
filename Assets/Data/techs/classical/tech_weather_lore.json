@@ -63,11 +63,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/techtree/weather_lore.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_WEATHER_LORE",
-  "soundMP": "AS2D_TECH_WEATHER_LORE",
-  "icon": "Art/Interface/Buttons/techtree/weather_lore.dds"
+  "soundMP": "AS2D_TECH_WEATHER_LORE"
  },
  "identity": {
   "era": "C2C_ERA_CLASSICAL",

@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_ROLLING_THUNDER",
+ "description": "TXT_KEY_PROMOTIONLINE_ROLLING_THUNDER",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/RollingThunder1Promotion.dds"
+  }
+ }
+}

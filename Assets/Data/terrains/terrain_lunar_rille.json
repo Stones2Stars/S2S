@@ -29,10 +29,18 @@
    }
   }
  },
- "art": {
-  "artDefineTag": "ART_DEF_TERRAIN_LUNAR_RILLE",
-  "icon": "Art/Interface\\Buttons\\WorldBuilder\\lunarRilles.dds",
-  "worldSoundscapeAudioScript": "ASSS_TUNDRA_SELECT_AMB"
+ "ui": {
+  "art": {
+   "icon": "Art/Interface\\Buttons\\WorldBuilder\\lunarRilles.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_TERRAIN_LUNAR_RILLE"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_TUNDRA_SELECT_AMB"
  },
  "identity": {
   "found": true,

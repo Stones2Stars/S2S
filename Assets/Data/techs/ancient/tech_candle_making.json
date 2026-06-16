@@ -56,11 +56,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/candlemaking.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_CANDLE_MAKING",
-  "soundMP": "AS2D_TECH_CANDLE_MAKING",
-  "icon": "Art/Interface/Buttons/TechTree/candlemaking.dds"
+  "soundMP": "AS2D_TECH_CANDLE_MAKING"
  },
  "identity": {
   "era": "C2C_ERA_ANCIENT",

@@ -8,8 +8,10 @@
    "UNIT_UACUSECHA"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TARASCAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TARASCAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

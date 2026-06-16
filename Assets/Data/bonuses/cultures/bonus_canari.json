@@ -8,8 +8,10 @@
    "UNIT_YUPANQUI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CANARI"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CANARI"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

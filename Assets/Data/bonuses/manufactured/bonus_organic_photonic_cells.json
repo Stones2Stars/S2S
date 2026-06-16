@@ -10,8 +10,10 @@
    "BUILDING_OLED_LAMPS"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ORGANIC_PHOTONIC_CELLS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ORGANIC_PHOTONIC_CELLS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

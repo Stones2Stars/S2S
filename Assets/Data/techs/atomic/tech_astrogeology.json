@@ -73,11 +73,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/astrogeology.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ASTROGEOLOGY",
-  "soundMP": "AS2D_TECH_ASTROGEOLOGY",
-  "icon": "Art/Interface/Buttons/TechTree/astrogeology.dds"
+  "soundMP": "AS2D_TECH_ASTROGEOLOGY"
  },
  "identity": {
   "era": "C2C_ERA_ATOMIC",

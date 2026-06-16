@@ -1,0 +1,12 @@
+{
+ "type": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+ "description": "TXT_KEY_SPECIALBUILDING_PUNK_MEGAFAUNA",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/TechTree/megafaunadomestication.dds"
+  }
+ },
+ "identity": {
+  "valid": true
+ }
+}

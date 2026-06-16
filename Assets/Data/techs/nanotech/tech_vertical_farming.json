@@ -107,11 +107,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_GROWTH",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Vertical_Farming.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_VERTICAL_FARMING",
-  "soundMP": "AS2D_TECH_VERTICAL_FARMING",
-  "icon": "Art/Interface/Buttons/TechTree/Vertical_Farming.dds"
+  "soundMP": "AS2D_TECH_VERTICAL_FARMING"
  },
  "identity": {
   "era": "C2C_ERA_NANOTECH",

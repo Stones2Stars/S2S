@@ -7,8 +7,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_CARVED_EMU_EGGS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_CARVED_EMU_EGGS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_WONDER"

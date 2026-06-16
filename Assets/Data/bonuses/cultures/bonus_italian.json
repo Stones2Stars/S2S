@@ -7,8 +7,10 @@
    "UNIT_ELMETI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_ITALIAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_ITALIAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

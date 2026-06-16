@@ -43,11 +43,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_CULTURE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/brassworking.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_BRASS_WORKING",
-  "soundMP": "AS2D_TECH_BRASS_WORKING",
-  "icon": "Art/Interface/Buttons/TechTree/brassworking.dds"
+  "soundMP": "AS2D_TECH_BRASS_WORKING"
  },
  "identity": {
   "era": "C2C_ERA_CLASSICAL",

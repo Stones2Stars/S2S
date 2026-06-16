@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_EFFICIENT",
+ "description": "TXT_KEY_PROMOTIONLINE_EFFICIENT",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitEfficient.dds"
+  }
+ }
+}

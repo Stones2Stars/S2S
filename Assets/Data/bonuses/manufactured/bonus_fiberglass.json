@@ -12,8 +12,10 @@
    "BUILDING_ZOO"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_FIBERGLASS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_FIBERGLASS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

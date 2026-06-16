@@ -7,8 +7,10 @@
    "BUILDING_SKI_RESORT"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SKIS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SKIS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

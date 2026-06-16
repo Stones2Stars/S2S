@@ -97,11 +97,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Sanitation.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,5,15"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_SANITATION",
-  "soundMP": "AS2D_TECH_SANITATION",
-  "icon": ",Art/Interface/Buttons/TechTree/Sanitation.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,5,15"
+  "soundMP": "AS2D_TECH_SANITATION"
  },
  "identity": {
   "era": "C2C_ERA_CLASSICAL",

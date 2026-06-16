@@ -70,11 +70,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_MILITARY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/torture.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_TORTURE",
-  "soundMP": "AS2D_TECH_TORTURE",
-  "icon": "Art/Interface/Buttons/TechTree/torture.dds"
+  "soundMP": "AS2D_TECH_TORTURE"
  },
  "identity": {
   "era": "C2C_ERA_MEDIEVAL",

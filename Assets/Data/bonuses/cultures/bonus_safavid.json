@@ -8,8 +8,10 @@
    "UNIT_TOFANGCHI"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SAFAVID"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SAFAVID"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

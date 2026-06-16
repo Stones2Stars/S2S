@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_LIVE",
+ "description": "TXT_KEY_PROMOTIONLINE_LIVE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Phoenix1.dds"
+  }
+ }
+}

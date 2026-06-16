@@ -15,8 +15,10 @@
    "BUILDING_WINERY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_BARRELS"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_BARRELS"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"

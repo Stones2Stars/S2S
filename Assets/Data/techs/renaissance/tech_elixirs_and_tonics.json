@@ -54,11 +54,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_SCIENCE",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "art/buttons/techs/ElixirsandTonicsTech.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ELIXIRS_AND_TONICS",
-  "soundMP": "AS2D_TECH_ELIXIRS_AND_TONICS",
-  "icon": "art/buttons/techs/ElixirsandTonicsTech.dds"
+  "soundMP": "AS2D_TECH_ELIXIRS_AND_TONICS"
  },
  "identity": {
   "era": "C2C_ERA_RENAISSANCE",

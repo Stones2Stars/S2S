@@ -28,8 +28,10 @@
    "flat": 1
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_PISTACHIO"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_PISTACHIO"
+  }
  },
  "mapGeneration": {
   "placementOrder": 7,

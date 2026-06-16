@@ -1,0 +1,20 @@
+{
+ "type": "PROJECT_FIRST_CLONED_MAMMAL",
+ "description": "TXT_KEY_PROJECT_FIRST_CLONED_MAMMAL",
+ "civilopedia": "TXT_KEY_PROJECT_FIRST_CLONED_MAMMAL_PEDIA",
+ "grants": {
+  "grantsSpecialBuilding": "SPECIALBUILDING_CLONING_LABORATORY"
+ },
+ "cost": {
+  "create": 15400
+ },
+ "art": {
+  "icon": "Art/Interface/Buttons/Buildings/Cloned_mammal.dds"
+ },
+ "identity": {
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "maxGlobalInstances": 1
+ }
+}

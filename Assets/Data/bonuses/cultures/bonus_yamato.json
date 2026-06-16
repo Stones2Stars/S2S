@@ -7,8 +7,10 @@
    "UNIT_YUMI_ARCHER"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_YAMATO"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_YAMATO"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_CULTURE"

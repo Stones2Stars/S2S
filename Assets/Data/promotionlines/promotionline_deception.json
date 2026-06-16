@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_DECEPTION",
+ "description": "TXT_KEY_PROMOTIONLINE_DECEPTION",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Deception1.dds"
+  }
+ }
+}

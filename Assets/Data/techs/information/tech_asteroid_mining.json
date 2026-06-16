@@ -81,11 +81,15 @@
    }
   ]
  },
- "art": {
-  "advisor": "ADVISOR_ECONOMY",
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/asteroidmining.dds"
+  }
+ },
+ "sound": {
   "sound": "AS2D_TECH_ASTEROID_MINING",
-  "soundMP": "AS2D_TECH_ASTEROID_MINING",
-  "icon": "Art/Interface/Buttons/TechTree/asteroidmining.dds"
+  "soundMP": "AS2D_TECH_ASTEROID_MINING"
  },
  "identity": {
   "era": "C2C_ERA_INFORMATION",

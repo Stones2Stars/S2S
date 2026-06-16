@@ -22,8 +22,10 @@
    "tradeModifier": 5
   }
  },
- "art": {
-  "icon": "ART_DEF_BONUS_SALT"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_SALT"
+  }
  },
  "mapGeneration": {
   "placementOrder": 4,

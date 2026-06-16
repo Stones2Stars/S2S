@@ -7,8 +7,10 @@
    "BUILDING_HUMAN_MOD_IMMORTAL"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_HUMAN_MOD_INDEFINITE_LIFESPAN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_HUMAN_MOD_INDEFINITE_LIFESPAN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_GENMODS"

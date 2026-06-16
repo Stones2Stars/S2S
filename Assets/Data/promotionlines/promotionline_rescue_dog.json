@@ -1,0 +1,9 @@
+{
+ "type": "PROMOTIONLINE_RESCUE_DOG",
+ "description": "TXT_KEY_PROMOTIONLINE_RESCUE_DOG",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/rescuedog1.dds"
+  }
+ }
+}

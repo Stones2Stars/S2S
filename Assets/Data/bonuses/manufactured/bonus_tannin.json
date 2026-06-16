@@ -9,8 +9,10 @@
    "BUILDING_TANNERY"
   ]
  },
- "art": {
-  "icon": "ART_DEF_BONUS_TANNIN"
+ "world": {
+  "art": {
+   "icon": "ART_DEF_BONUS_TANNIN"
+  }
  },
  "identity": {
   "bonusClassType": "BONUSCLASS_MANUFACTURED"
