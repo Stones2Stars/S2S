@@ -1,0 +1,307 @@
+{
+ "type": "LEADER_SELASSIE",
+ "description": "TXT_KEY_LEADER_SELASSIE",
+ "civilopedia": "TXT_KEY_LEADER_SELASSIE_PEDIA",
+ "grants": {
+  "traits": [
+   "TRAIT_PHILOSOPHICAL",
+   "TRAIT_PROGRESSIST",
+   "TRAIT_IDEALISTIC",
+   "TRAIT_PHILOSOPHICAL1",
+   "TRAIT_PROGRESSIST1",
+   "TRAIT_IDEALISTIC1"
+  ]
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ],
+  "personality": {
+   "wonderConstructRand": 10,
+   "baseAttitude": 1,
+   "basePeaceWeight": 1,
+   "peaceWeightRand": 3,
+   "espionageWeight": 80,
+   "buildUnitProb": 30,
+   "freedomAppreciation": 10
+  },
+  "war": {
+   "refuseToTalkWarThreshold": 8,
+   "maxWarRand": 200,
+   "maxWarNearbyPowerRatio": 110,
+   "maxWarDistantPowerRatio": 60,
+   "maxWarMinAdjacentLandPercent": 1,
+   "limitedWarRand": 60,
+   "limitedWarPowerRatio": 120,
+   "dogpileWarRand": 50,
+   "makePeaceRand": 40,
+   "declareWarTradeRand": 40,
+   "demandRebukedSneakProb": 40,
+   "demandRebukedWarProb": 5,
+   "attackOddsChangeRand": 10
+  },
+  "victory": {
+   "culture": 60,
+   "space": 25,
+   "conquest": 10,
+   "domination": 10,
+   "diplomacy": 35
+  },
+  "trade": {
+   "noTechTradeThreshold": 5,
+   "techTradeKnownPercent": 50,
+   "maxGoldPercent": 20,
+   "maxGoldPerTurnPercent": 10
+  },
+  "attitude": {
+   "closeBorders": {
+    "change": -2
+   },
+   "lostWar": {
+    "change": -1
+   },
+   "atWar": {
+    "divisor": -5,
+    "changeLimit": 5
+   },
+   "atPeace": {
+    "divisor": 60,
+    "changeLimit": 1
+   },
+   "sameReligion": {
+    "change": 1,
+    "divisor": 10,
+    "changeLimit": 2
+   },
+   "differentReligion": {
+    "divisor": -5,
+    "changeLimit": -1
+   },
+   "bonusTrade": {
+    "divisor": 50,
+    "changeLimit": 2
+   },
+   "openBorders": {
+    "divisor": 25,
+    "changeLimit": 2
+   },
+   "defensivePact": {
+    "divisor": 12,
+    "changeLimit": 2
+   },
+   "shareWar": {
+    "change": 1,
+    "divisor": 8,
+    "changeLimit": 3
+   },
+   "favoriteCivic": {
+    "change": 1,
+    "divisor": 10,
+    "changeLimit": 6
+   }
+  },
+  "refuse": {
+   "demandTribute": "ATTITUDE_CAUTIOUS",
+   "noGiveHelp": "ATTITUDE_CAUTIOUS",
+   "tech": "ATTITUDE_ANNOYED",
+   "strategicBonus": "ATTITUDE_CAUTIOUS",
+   "happinessBonus": "ATTITUDE_ANNOYED",
+   "healthBonus": "ATTITUDE_ANNOYED",
+   "map": "ATTITUDE_ANNOYED",
+   "declareWar": "ATTITUDE_CAUTIOUS",
+   "declareWarThem": "ATTITUDE_PLEASED",
+   "stopTrading": "ATTITUDE_ANNOYED",
+   "stopTradingThem": "ATTITUDE_CAUTIOUS",
+   "adoptCivic": "ATTITUDE_PLEASED",
+   "convertReligion": "ATTITUDE_CAUTIOUS",
+   "openBorders": "ATTITUDE_ANNOYED",
+   "defensivePact": "ATTITUDE_PLEASED",
+   "permanentAlliance": "ATTITUDE_PLEASED"
+  },
+  "memory": {
+   "decay": {
+    "MEMORY_GIVE_HELP": 200,
+    "MEMORY_REFUSED_HELP": 100,
+    "MEMORY_ACCEPT_DEMAND": 50,
+    "MEMORY_REJECTED_DEMAND": 150,
+    "MEMORY_ACCEPTED_RELIGION": 80,
+    "MEMORY_DENIED_RELIGION": 50,
+    "MEMORY_ACCEPTED_CIVIC": 200,
+    "MEMORY_DENIED_CIVIC": 150,
+    "MEMORY_ACCEPTED_JOIN_WAR": 150,
+    "MEMORY_DENIED_JOIN_WAR": 100,
+    "MEMORY_ACCEPTED_STOP_TRADING": 100,
+    "MEMORY_DENIED_STOP_TRADING": 50,
+    "MEMORY_STOPPED_TRADING_RECENT": 30,
+    "MEMORY_MADE_DEMAND_RECENT": 20,
+    "MEMORY_CANCELLED_OPEN_BORDERS": 10,
+    "MEMORY_TRADED_TECH_TO_US": 100,
+    "MEMORY_RECEIVED_TECH_FROM_ANY": 20,
+    "MEMORY_VOTED_AGAINST_US": 10,
+    "MEMORY_VOTED_FOR_US": 10,
+    "MEMORY_EVENT_GOOD_TO_US": 50,
+    "MEMORY_EVENT_BAD_TO_US": 50,
+    "MEMORY_INQUISITION": 25
+   },
+   "attitudePercent": {
+    "MEMORY_DECLARED_WAR": -400,
+    "MEMORY_DECLARED_WAR_ON_FRIEND": -150,
+    "MEMORY_HIRED_WAR_ALLY": -150,
+    "MEMORY_NUKED_US": -600,
+    "MEMORY_NUKED_FRIEND": -200,
+    "MEMORY_USED_NUKE": -100,
+    "MEMORY_RAZED_CITY": -300,
+    "MEMORY_RAZED_HOLY_CITY": -100,
+    "MEMORY_SPY_CAUGHT": -100,
+    "MEMORY_GIVE_HELP": 100,
+    "MEMORY_REFUSED_HELP": -100,
+    "MEMORY_ACCEPT_DEMAND": 100,
+    "MEMORY_REJECTED_DEMAND": -100,
+    "MEMORY_ACCEPTED_RELIGION": 100,
+    "MEMORY_DENIED_RELIGION": -20,
+    "MEMORY_ACCEPTED_CIVIC": 200,
+    "MEMORY_DENIED_CIVIC": -170,
+    "MEMORY_DENIED_JOIN_WAR": -100,
+    "MEMORY_ACCEPTED_STOP_TRADING": 50,
+    "MEMORY_DENIED_STOP_TRADING": -100,
+    "MEMORY_STOPPED_TRADING": -100,
+    "MEMORY_HIRED_TRADE_EMBARGO": -100,
+    "MEMORY_MADE_DEMAND": -100,
+    "MEMORY_TRADED_TECH_TO_US": 5,
+    "MEMORY_VOTED_AGAINST_US": -200,
+    "MEMORY_VOTED_FOR_US": 200,
+    "MEMORY_EVENT_GOOD_TO_US": 100,
+    "MEMORY_EVENT_BAD_TO_US": -100,
+    "MEMORY_LIBERATED_CITIES": 150,
+    "MEMORY_INQUISITION": -100
+   }
+  },
+  "contact": {
+   "rand": {
+    "CONTACT_RELIGION_PRESSURE": 1000,
+    "CONTACT_CIVIC_PRESSURE": 50,
+    "CONTACT_JOIN_WAR": 20,
+    "CONTACT_STOP_TRADING": 50,
+    "CONTACT_GIVE_HELP": 500,
+    "CONTACT_ASK_FOR_HELP": 100,
+    "CONTACT_DEMAND_TRIBUTE": 500,
+    "CONTACT_OPEN_BORDERS": 20,
+    "CONTACT_DEFENSIVE_PACT": 80,
+    "CONTACT_PERMANENT_ALLIANCE": 80,
+    "CONTACT_PEACE_TREATY": 20,
+    "CONTACT_TRADE_TECH": 5,
+    "CONTACT_TRADE_BONUS": 5,
+    "CONTACT_TRADE_MAP": 20
+   },
+   "delay": {
+    "CONTACT_RELIGION_PRESSURE": 50,
+    "CONTACT_CIVIC_PRESSURE": 50,
+    "CONTACT_JOIN_WAR": 20,
+    "CONTACT_STOP_TRADING": 20,
+    "CONTACT_GIVE_HELP": 50,
+    "CONTACT_ASK_FOR_HELP": 50,
+    "CONTACT_DEMAND_TRIBUTE": 50,
+    "CONTACT_OPEN_BORDERS": 20,
+    "CONTACT_DEFENSIVE_PACT": 20,
+    "CONTACT_PERMANENT_ALLIANCE": 20,
+    "CONTACT_PEACE_TREATY": 10,
+    "CONTACT_TRADE_TECH": 30,
+    "CONTACT_TRADE_BONUS": 20,
+    "CONTACT_TRADE_MAP": 50
+   }
+  },
+  "noWarProb": {
+   "ATTITUDE_ANNOYED": 30,
+   "ATTITUDE_CAUTIOUS": 50,
+   "ATTITUDE_PLEASED": 80,
+   "ATTITUDE_FRIENDLY": 100
+  },
+  "unitWeights": {
+   "UNITAI_PILLAGE": 100
+  },
+  "improvementWeights": {
+   "IMPROVEMENT_WORKSHOP": 20,
+   "IMPROVEMENT_WATERMILL": 20
+  },
+  "favorites": {
+   "civic": "CIVIC_NATIONALIST",
+   "religion": "RELIGION_CHRISTIANITY"
+  }
+ },
+ "world": {
+  "art": {
+   "icon": "ART_DEF_LEADER_SELASSIE"
+  }
+ },
+ "sound": {
+  "diploIntroMusicPeace": [
+   "C2C_ERA_PREHISTORIC",
+   "C2C_ERA_ANCIENT",
+   "C2C_ERA_CLASSICAL",
+   "C2C_ERA_MEDIEVAL",
+   "C2C_ERA_RENAISSANCE",
+   "C2C_ERA_INDUSTRIAL",
+   "C2C_ERA_ATOMIC",
+   "C2C_ERA_INFORMATION",
+   "C2C_ERA_NANOTECH",
+   "C2C_ERA_TRANSHUMAN",
+   "C2C_ERA_GALACTIC",
+   "C2C_ERA_COSMIC",
+   "C2C_ERA_TRANSCENDENT",
+   "C2C_ERA_FUTURE"
+  ],
+  "diploMusicPeace": {
+   "C2C_ERA_PREHISTORIC": "AS2D_DIPLO_AFRICA_EARLY",
+   "C2C_ERA_ANCIENT": "AS2D_DIPLO_AFRICA_EARLY",
+   "C2C_ERA_CLASSICAL": "AS2D_DIPLO_AFRICA_EARLY",
+   "C2C_ERA_MEDIEVAL": "AS2D_DIPLO_AFRICA_MIDDLE",
+   "C2C_ERA_RENAISSANCE": "AS2D_DIPLO_AFRICA_MIDDLE",
+   "C2C_ERA_INDUSTRIAL": "AS2D_DIPLO_AFRICA_LATE",
+   "C2C_ERA_ATOMIC": "AS2D_DIPLO_AFRICA_LATE",
+   "C2C_ERA_INFORMATION": "AS2D_DIPLO_AFRICA_LATE",
+   "C2C_ERA_NANOTECH": "AS2D_DIPLO_AFRICA_LATE",
+   "C2C_ERA_TRANSHUMAN": "AS2D_DIPLO_AFRICA_LATE",
+   "C2C_ERA_GALACTIC": "AS2D_DIPLO_AFRICA_LATE",
+   "C2C_ERA_COSMIC": "AS2D_DIPLO_AFRICA_LATE",
+   "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_AFRICA_LATE",
+   "C2C_ERA_FUTURE": "AS2D_DIPLO_AFRICA_LATE"
+  },
+  "diploIntroMusicWar": [
+   "C2C_ERA_PREHISTORIC",
+   "C2C_ERA_ANCIENT",
+   "C2C_ERA_CLASSICAL",
+   "C2C_ERA_MEDIEVAL",
+   "C2C_ERA_RENAISSANCE",
+   "C2C_ERA_INDUSTRIAL",
+   "C2C_ERA_ATOMIC",
+   "C2C_ERA_INFORMATION",
+   "C2C_ERA_NANOTECH",
+   "C2C_ERA_TRANSHUMAN",
+   "C2C_ERA_GALACTIC",
+   "C2C_ERA_COSMIC",
+   "C2C_ERA_TRANSCENDENT",
+   "C2C_ERA_FUTURE"
+  ],
+  "diploMusicWar": {
+   "C2C_ERA_PREHISTORIC": "AS2D_DIPLO_WARDRUMS_EARLY",
+   "C2C_ERA_ANCIENT": "AS2D_DIPLO_WARDRUMS_EARLY",
+   "C2C_ERA_CLASSICAL": "AS2D_DIPLO_WARDRUMS_EARLY",
+   "C2C_ERA_MEDIEVAL": "AS2D_DIPLO_WARDRUMS_MIDDLE",
+   "C2C_ERA_RENAISSANCE": "AS2D_DIPLO_WARDRUMS_MIDDLE",
+   "C2C_ERA_INDUSTRIAL": "AS2D_DIPLO_WARDRUMS_LATE",
+   "C2C_ERA_ATOMIC": "AS2D_DIPLO_WARDRUMS_LATE",
+   "C2C_ERA_INFORMATION": "AS2D_DIPLO_WARDRUMS_LATE",
+   "C2C_ERA_NANOTECH": "AS2D_DIPLO_WARDRUMS_LATE",
+   "C2C_ERA_TRANSHUMAN": "AS2D_DIPLO_WARDRUMS_LATE",
+   "C2C_ERA_GALACTIC": "AS2D_DIPLO_WARDRUMS_LATE",
+   "C2C_ERA_COSMIC": "AS2D_DIPLO_WARDRUMS_LATE",
+   "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
+   "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
+  }
+ }
+}

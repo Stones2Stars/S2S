@@ -75,6 +75,7 @@ ENTITIES = {
     "PropertyInfo":      "*CIV4PropertyInfos.xml",       # defines the PROPERTY_* channels (crime/education/…)
     "VoteInfo":          "*CIV4VoteInfo.xml",            # diplo-vote resolutions (config for the voting subsystem)
     "CivilizationInfo":  "*CIV4CivilizationInfos.xml",   # game-start grants + per-civ policy/art (source entity)
+    "LeaderHeadInfo":    "*CIV4LeaderHeadInfos.xml",     # AI personality/diplo params (-> ai) + leader trait grants
     "TerrainInfo":       "*CIV4TerrainInfos.xml",        # plot-leaf TARGET (forms the plot's base yields); enables nothing
     "FeatureInfo":       "*CIV4FeatureInfos.xml",        # plot-leaf TARGET / deliveryguy (modifies the plot it sits on); enables nothing
     "YieldInfo":         "*CIV4YieldInfos.xml",          # the 3 yields' config; source of the hills/peak/river plot-yield deltas (migrated onto terrains)

@@ -515,3 +515,35 @@ derived at the Promotion pass from the line's promotions — surveyed: only 4 of
 drops. ⚑ **WATCH (owner, unverified):** the C++ that matches the correct promotion line to a unit MAY be complex —
 not confirmed, just anticipated at this stage; approach the unit-plane enabling carefully (safe rather than sorry) and
 verify it at the Promotion pass rather than assuming either way.
+
+## LeaderHead  (`curate_leaderhead.py`)  — Tier D #30 (119 records, base only)
+
+The AI PERSONALITY entity — ~90 AI/diplomacy/strategy params defining how an AI player behaves all game. NOT a
+cascade source/target (zero per-turn-effect fields): virtually everything lands in the unified **`ai`** group,
+subgrouped. This is the densest `ai` entity, so it shapes the `ai` sub-group vocabulary — but that vocabulary is
+PROVISIONAL (expected to be reworked at the load-writing/readJson phase, owner 2026-06-16), so it is NOT logged as a
+locked spec; the subgroup→field map below IS the reader's lookup. EXE-link: **1 `DllExport`** (`getArtInfo` →
+`ArtDefineTag`). Bespoke curator; `LeaderHeadInfo` newly registered in `store.ENTITIES` (no enabler edges). Mechanical
+de-Hungarian within each subgroup not re-logged.
+
+| old XML | new JSON path | note |
+|---|---|---|
+| `Flavors` | `ai.flavours` | FLAVOR_* weights. |
+| personality scalars (`iBaseAttitude`/`iBasePeaceWeight`/`iPeaceWeightRand`/`iWarmongerRespect`/`iEspionageWeight`/`iWonderConstructRand`/`iBuildUnitProb`/`iFreedomAppreciation`/`iVassalPowerModifier`) | `ai.personality.{…}` | The misc personality knobs. |
+| war/peace rands (`iMaxWar*`/`iLimitedWar*`/`iDogpileWarRand`/`iMakePeaceRand`/`iDeclareWarTradeRand`/`iDemandRebuked*`/`iRefuseToTalkWarThreshold`/`iBaseAttackOddsChange`/`iAttackOddsChangeRand`/`iRazeCityProb`) | `ai.war.{…}` | AI war/peace decision parameters. |
+| `i{Culture,Space,Conquest,Domination,Diplomacy}VictoryWeight` | `ai.victory.{culture,space,conquest,domination,diplomacy}` | AI victory-pursuit weights. |
+| `iMaxGoldTradePercent`/`iMaxGoldPerTurnTradePercent`/`iNoTechTradeThreshold`/`iTechTradeKnownPercent` | `ai.trade.{maxGoldPercent,maxGoldPerTurnPercent,noTechTradeThreshold,techTradeKnownPercent}` | AI trade thresholds. |
+| the attitude relation families (`i{CloseBorders,LostWar,AtWar,AtPeace,SameReligion,DifferentReligion,BonusTrade,OpenBorders,DefensivePact,ShareWar,FavoriteCivic}Attitude{Change,Divisor,ChangeLimit}` + `i{Better,Worse}RankDifferenceAttitudeChange`) | `ai.attitude.<relation>.{change,divisor,changeLimit}` | Relation-driven attitude deltas, grouped per relation. |
+| the `*RefuseAttitudeThreshold` + `DemandTribute`/`NoGiveHelp AttitudeThreshold` strings | `ai.refuse.<deal>: ATTITUDE_*` | Min attitude to agree to each deal/action. |
+| `MemoryDecays` / `MemoryAttitudePercents` | `ai.memory.{decay,attitudePercent}: {MEMORY_*: n}` | Per-memory decay rand + attitude impact. |
+| `ContactRands` / `ContactDelays` | `ai.contact.{rand,delay}: {CONTACT_*: n}` | Per-contact-type initiation odds + cooldown. |
+| `NoWarAttitudeProbs` | `ai.noWarProb: {ATTITUDE_*: n}` | Per-attitude no-war probability. |
+| `UnitAIWeightModifiers` / `ImprovementWeightModifiers` | `ai.unitWeights: {UNITAI_*: n}` / `ai.improvementWeights: {IMPROVEMENT_*: n}` | AI build/value weightings. |
+| `FavoriteCivic` / `FavoriteReligion` | `ai.favorites.{civic,religion}` | AI attitude drivers (owner-agreed → ai, not identity). |
+| `bNPC` | `ai.npc: true` | AI-only (barbarian/NPC) leader — an AI classification (owner 2026-06-16: fits `ai`, not identity; 3 leaders). Empties `identity` entirely. |
+| `Traits` / `DefaultTraits` / `DefaultComplexTraits` | `grants.{traits, developingTraits, complexTraits}` | The leader grants its traits at game start. FAITHFUL lists; the option-driven SELECTION/filtering (`GAMEOPTION_LEADER_{COMPLEX_TRAITS,DEVELOPING,START_NO_POSITIVE_TRAITS,PURE_TRAITS}` + `isValidTrait` + LinePriority) is the create-player subroutine = engine machinery (§0.6), not data conditions. ⚑ **DEFERRED:** the simple→complex MIRRORING (deriving `complexTraits` for the 117 base-only leaders by `TRAIT_X`↔`TRAIT_COMPLEX_X` name-match; "developing" = an original with no complex twin) is a derivation depending on the simple↔complex correspondence the Trait pass dropped → resolve at the trait-system coding pass (#430). Mid-game trait-type swaps are catastrophic (WB-safe-swap ticket #438). |
+| `ArtDefineTag` | `world.art.icon` | On-map leaderhead portrait FK (EXE-bound `getArtInfo`). |
+| `Diplomacy{Intro,}Music{Peace,War}` | `sound.diplo{Intro,}Music{Peace,War}` | Diplo-screen audio. Full music = `{era: DiploScriptId}` map; intro music = era LIST (its entries carry only `EraType`, no script). Kept faithful (4 maps × ~14 eras/leader); run-collapse trimming deferred to a later audio pass (owner 2026-06-16). |
+
+*Toolkit: `curate_leaderhead.py` (bespoke); `LeaderHeadInfo` added to `store.ENTITIES`. The `ai` subgroup vocabulary
+is provisional (reworked at the load-writing phase) — captured here as the reader's old→new lookup, not a spec lock.*
