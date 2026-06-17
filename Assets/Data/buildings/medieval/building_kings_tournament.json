@@ -9,11 +9,6 @@
      "type": "POPULATION",
      "scope": "city",
      "min": 7
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ],
    "any": [
@@ -64,6 +59,9 @@
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "commerce": {
   "city": {

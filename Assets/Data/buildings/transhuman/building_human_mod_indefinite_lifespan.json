@@ -10,12 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "HAS_POWER",
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
-    }
+    "HAS_POWER"
    ],
    "any": [
     [
@@ -30,6 +25,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "cost": {
   "production": 12310

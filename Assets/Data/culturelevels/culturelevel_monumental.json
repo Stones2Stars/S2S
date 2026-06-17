@@ -1,6 +1,11 @@
 {
  "type": "CULTURELEVEL_MONUMENTAL",
  "description": "TXT_KEY_CULTURELEVEL_MONUMENTAL",
+ "allowed": {
+  "worldWonders": 14,
+  "teamWonders": 16,
+  "nationalWonders": 31
+ },
  "defense": {
   "city": {
    "amount": {
@@ -10,10 +15,6 @@
  },
  "identity": {
   "cityRadius": 3,
-  "maxWorldWonders": 14,
-  "maxTeamWonders": 16,
-  "maxNationalWonders": 31,
-  "maxNationalWondersOCC": 62,
   "cultureThreshold": 2129920
  }
 }

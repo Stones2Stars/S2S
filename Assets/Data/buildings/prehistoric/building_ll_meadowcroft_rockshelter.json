@@ -2,16 +2,8 @@
  "type": "BUILDING_LL_MEADOWCROFT_ROCKSHELTER",
  "description": "TXT_KEY_BUILDING_LL_MEADOWCROFT_ROCKSHELTER",
  "civilopedia": "TXT_KEY_BUILDING_LL_MEADOWCROFT_ROCKSHELTER_PEDIA",
- "requires": {
-  "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
-    }
-   ]
-  }
+ "allowed": {
+  "world": 1
  },
  "food": {
   "city": {

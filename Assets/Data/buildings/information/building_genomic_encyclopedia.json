@@ -20,11 +20,6 @@
      "type": "BUILDING_COMPUTER_NETWORK",
      "scope": "empire",
      "min": 10
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ],
    "any": [
@@ -37,6 +32,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "gold": {
   "city": {

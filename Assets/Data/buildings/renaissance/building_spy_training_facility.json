@@ -7,16 +7,8 @@
    "UNIT_SLEEPER"
   ]
  },
- "requires": {
-  "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
-    }
-   ]
-  }
+ "allowed": {
+  "empire": 1
  },
  "gold": {
   "city": {

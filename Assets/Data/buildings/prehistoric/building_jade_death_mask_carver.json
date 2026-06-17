@@ -13,11 +13,6 @@
     {
      "type": "BUILDING_C_L_SOUTH_AMERICAN",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ],
    "any": [
@@ -41,6 +36,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "commerce": {
   "city": {

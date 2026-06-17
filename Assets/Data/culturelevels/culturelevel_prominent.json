@@ -1,6 +1,11 @@
 {
  "type": "CULTURELEVEL_PROMINENT",
  "description": "TXT_KEY_CULTURELEVEL_PROMINENT",
+ "allowed": {
+  "worldWonders": 3,
+  "teamWonders": 3,
+  "nationalWonders": 10
+ },
  "defense": {
   "city": {
    "amount": {
@@ -15,10 +20,6 @@
  },
  "identity": {
   "cityRadius": 2,
-  "maxWorldWonders": 3,
-  "maxTeamWonders": 3,
-  "maxNationalWonders": 10,
-  "maxNationalWondersOCC": 20,
   "cultureThreshold": 1040
  }
 }

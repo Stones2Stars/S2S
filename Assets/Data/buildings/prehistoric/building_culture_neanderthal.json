@@ -5,13 +5,6 @@
  "help": "TXT_KEY_BUILDING_CULTURE_NEANDERTHAL_HELP",
  "requires": {
   "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
-    }
-   ],
    "any": [
     [
      {
@@ -85,6 +78,9 @@
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "research": {
   "city": {

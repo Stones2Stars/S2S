@@ -14,11 +14,6 @@
      "type": "CITY",
      "scope": "empire",
      "min": 8
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ],
    "disabled": "IS_CAPITAL"
@@ -32,6 +27,9 @@
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "culture": {
   "city": {

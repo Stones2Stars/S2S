@@ -3,16 +3,8 @@
  "description": "TXT_KEY_UNIT_SPARTACUS",
  "civilopedia": "TXT_KEY_UNIT_SPARTACUS_PEDIA",
  "help": "TXT_KEY_UNIT_SPARTACUS_HELP",
- "requires": {
-  "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
-    }
-   ]
-  }
+ "allowed": {
+  "world": 1
  },
  "strength": {
   "unit": {

@@ -17,14 +17,12 @@
     {
      "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "culture": {
   "city": {

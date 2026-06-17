@@ -10,11 +10,6 @@
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 10
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ],
    "any": [
@@ -34,6 +29,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "buildRate": {
   "city": {

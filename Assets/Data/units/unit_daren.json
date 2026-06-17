@@ -13,11 +13,6 @@
     {
      "type": "BUILDING_ANIMAL_TRAINER_HORSE",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 5
     }
    ],
    "any": [
@@ -30,6 +25,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "empire": 5
  },
  "buildRate": {
   "self": {

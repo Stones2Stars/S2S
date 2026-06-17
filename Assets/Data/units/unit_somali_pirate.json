@@ -15,11 +15,6 @@
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 10
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 5
     }
    ],
    "any": [
@@ -32,6 +27,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "empire": 5
  },
  "withdrawal": {
   "unit": {

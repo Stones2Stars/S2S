@@ -9,14 +9,12 @@
      "type": "BONUS_SUPERSTRONG_ALLOYS",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 7
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 7
  },
  "buildRate": {
   "self": {

@@ -9,11 +9,6 @@
     {
      "type": "BUILDING_COMPUTER_NETWORK",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ],
    "noneOf": [
@@ -57,6 +52,9 @@
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "PROPERTY_CRIME": {
   "city": {

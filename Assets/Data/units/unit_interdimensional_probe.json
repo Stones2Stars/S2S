@@ -8,14 +8,12 @@
     {
      "type": "BUILDING_DISTANT_HORIZON_PORT",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 3
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 3
  },
  "capabilities": {
   "canMoveAllTerrain": true,

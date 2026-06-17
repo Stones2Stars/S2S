@@ -6,11 +6,6 @@
   "build": {
    "all": [
     {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
-    },
-    {
      "type": "BONUS_FURNITURE",
      "scope": "city",
      "connection": "trade|vicinity"
@@ -55,6 +50,9 @@
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "culture": {
   "city": {

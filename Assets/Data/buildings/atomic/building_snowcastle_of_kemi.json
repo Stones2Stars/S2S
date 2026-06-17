@@ -14,11 +14,6 @@
      "latitude": {
       "min": 55
      }
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ],
    "any": [
@@ -34,6 +29,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "commerce": {
   "city": {

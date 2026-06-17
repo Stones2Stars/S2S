@@ -2,16 +2,8 @@
  "type": "BUILDING_ACHIEVEMENT_COMMERCIAL",
  "description": "TXT_KEY_BUILDING_ACHIEVEMENT_COMMERCIAL",
  "civilopedia": "TXT_KEY_BUILDING_ACHIEVEMENT_PEDIA",
- "requires": {
-  "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
-    }
-   ]
-  }
+ "allowed": {
+  "empire": 1
  },
  "commerce": {
   "empire": {

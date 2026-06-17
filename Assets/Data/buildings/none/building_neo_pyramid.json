@@ -19,14 +19,12 @@
      "type": "BUILDING_THE_GREAT_PYRAMID",
      "scope": "empire",
      "min": 1
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "production": {
   "city": {

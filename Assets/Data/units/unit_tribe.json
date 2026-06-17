@@ -2,16 +2,8 @@
  "type": "UNIT_TRIBE",
  "description": "TXT_KEY_UNIT_TRIBE",
  "civilopedia": "TXT_KEY_UNIT_TRIBE_PEDIA",
- "requires": {
-  "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
-    }
-   ]
-  }
+ "allowed": {
+  "empire": 1
  },
  "capabilities": {
   "food": true,

@@ -14,11 +14,6 @@
     {
      "type": "BUILDING_ANIMAL_TAMER_COMPLEX",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 5
     }
    ],
    "any": [
@@ -38,6 +33,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "empire": 5
  },
  "strength": {
   "unit": {

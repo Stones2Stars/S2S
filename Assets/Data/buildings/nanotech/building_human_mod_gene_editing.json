@@ -9,14 +9,12 @@
     {
      "type": "BUILDING_STEM_CELL_LAB",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "cost": {
   "production": 6770

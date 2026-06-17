@@ -4,13 +4,6 @@
  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_BELIEF_KARMA_PEDIA",
  "requires": {
   "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
-    }
-   ],
    "any": [
     [
      {
@@ -40,6 +33,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "world": {
   "art": {

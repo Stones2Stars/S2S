@@ -12,11 +12,6 @@
     {
      "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ],
    "any": [
@@ -28,6 +23,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "food": {
   "city": {

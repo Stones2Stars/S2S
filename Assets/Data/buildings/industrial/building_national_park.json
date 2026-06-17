@@ -2,16 +2,8 @@
  "type": "BUILDING_NATIONAL_PARK",
  "description": "TXT_KEY_BUILDING_NATIONAL_PARK",
  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_PARK_PEDIA",
- "requires": {
-  "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
-    }
-   ]
-  }
+ "allowed": {
+  "empire": 1
  },
  "culture": {
   "city": {

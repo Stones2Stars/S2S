@@ -9,11 +9,6 @@
      "type": "POPULATION",
      "scope": "city",
      "min": 3
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ],
    "any": [
@@ -34,6 +29,9 @@
     "STATE_RELIGION_IN_CITY"
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "food": {
   "city": {

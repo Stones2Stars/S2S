@@ -11,11 +11,6 @@
      "scope": "city"
     },
     {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
-    },
-    {
      "type": "BONUS_HUMAN_MOD_WINGS",
      "scope": "city",
      "connection": "trade|vicinity"
@@ -56,6 +51,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "gold": {
   "empire": {

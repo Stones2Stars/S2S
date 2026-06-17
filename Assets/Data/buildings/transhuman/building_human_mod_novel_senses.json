@@ -9,11 +9,6 @@
      "type": "BONUS_HUMAN_MOD_COGNITIVE_ENHANCEMENT",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ],
    "any": [
@@ -26,6 +21,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "cost": {
   "production": 10110

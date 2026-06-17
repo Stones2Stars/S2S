@@ -8,14 +8,12 @@
     {
      "type": "BUILDING_DISTANT_FUTURE_CITY",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "food": {
   "city": {

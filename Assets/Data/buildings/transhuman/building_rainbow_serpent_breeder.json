@@ -18,11 +18,6 @@
     {
      "type": "BUILDING_C_L_OCEANIAN",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ],
    "noneOf": [
@@ -52,6 +47,9 @@
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "culture": {
   "city": {

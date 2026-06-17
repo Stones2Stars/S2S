@@ -18,14 +18,12 @@
      "type": "BUILDING_ARTIST_COLONY",
      "scope": "empire",
      "min": 3
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "gold": {
   "empire": {

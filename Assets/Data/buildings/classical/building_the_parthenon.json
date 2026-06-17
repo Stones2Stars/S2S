@@ -13,11 +13,6 @@
     {
      "type": "BUILDING_HELLENIC_PANTHEON",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ]
   },
@@ -30,6 +25,9 @@
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "research": {
   "city": {

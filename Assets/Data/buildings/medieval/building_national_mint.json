@@ -15,11 +15,6 @@
      "type": "BUILDING_BANK",
      "scope": "empire",
      "min": 5
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ]
   },
@@ -45,6 +40,9 @@
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "commerce": {
   "city": {

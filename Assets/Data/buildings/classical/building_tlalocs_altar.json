@@ -13,11 +13,6 @@
     {
      "type": "BUILDING_TEMPLE_OF_TLALOC",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ]
   },
@@ -33,6 +28,9 @@
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "culture": {
   "city": {

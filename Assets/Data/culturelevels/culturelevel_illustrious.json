@@ -1,6 +1,11 @@
 {
  "type": "CULTURELEVEL_ILLUSTRIOUS",
  "description": "TXT_KEY_CULTURELEVEL_ILLUSTRIOUS",
+ "allowed": {
+  "worldWonders": 10,
+  "teamWonders": 12,
+  "nationalWonders": 22
+ },
  "defense": {
   "city": {
    "amount": {
@@ -10,10 +15,6 @@
  },
  "identity": {
   "cityRadius": 3,
-  "maxWorldWonders": 10,
-  "maxTeamWonders": 12,
-  "maxNationalWonders": 22,
-  "maxNationalWondersOCC": 44,
   "cultureThreshold": 133120
  }
 }

@@ -9,14 +9,12 @@
      "type": "BONUS_AUSTRIAN",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "withdrawal": {
   "unit": {

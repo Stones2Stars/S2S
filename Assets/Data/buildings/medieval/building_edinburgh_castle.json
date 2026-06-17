@@ -14,11 +14,6 @@
      "type": "POPULATION",
      "scope": "city",
      "min": 3
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ],
    "any": [
@@ -39,6 +34,9 @@
    ],
    "disabled": "IS_CAPITAL"
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "culture": {
   "city": {

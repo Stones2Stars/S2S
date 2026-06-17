@@ -424,7 +424,26 @@ COEXIST on the same entity:
   - So **CAN GET = union(`enables` over HAS) − (`disables` ∪ `obsoletes` ∪ `replaces` over HAS)** — generation is the
     whole source-side family, read forward, bounded by HAS. No reverse lookup.
 - **`requires` — the TARGET-side gate: "do I have the MEANS" (§3).** Positive means (civic/religion/resource via
-  `all`/`any`) + `min`/`max` counts; checked forward per candidate against HAS/tally.
+  `all`/`any`) + `min`/`max` counts of OTHER types; checked forward per candidate against HAS/tally.
+- **`allowed` — the declarative CAP: "how many may EXIST" (owner 2026-06-17; §5a below).** The ceiling, distinct from the
+  `requires` "needed" means. Authored with the REAL number; the gate permits a build while `count(X) < allowed`.
+
+**§5a — `allowed` (the instance / category CAP).** "Allowed" names the ceiling unambiguously, fixing the off-by-one the old
+SELF-`requires`-atom forced (cap 1 had to be written `max:0`). Two shapes, discriminated by key namespace:
+- **Self-cap** `allowed:{<scope>:N}` (scope key `world`/`team`/`empire`) — "at most N of ME at scope." For a building the cap
+  scope IS its wonder-category marker (`isWorldWonder == getMaxGlobalInstances()!=-1`, CvGameCoreUtils.cpp:340-369): world→
+  worldWonder, team→teamWonder, empire→nationalWonder. A unique unit → `allowed:{empire:1}`. (Today's `iMaxGlobalInstances`/
+  `iMaxTeamInstances`/`iMaxPlayerInstances` + the SpecialBuilding group cap + tech `bGlobal` all fold to this single idiom;
+  `bGlobal` = `allowed:{world:1}`, the religion-founding-once race, replacing the old `requires.build.noneOf:[SELF@world]`.)
+- **Category count-cap** `allowed:{<wonderCategory>:N}` (`worldWonders`/`teamWonders`/`nationalWonders`, + reserved
+  `totalWonders`) — a **per-city** cap on how many of a category a city may hold, authored on **CultureLevel** (it grants the
+  city its allowance; city scope implicit). Replaces CultureLevel's old `identity.maxWorldWonders…`.
+- **Enforcement is ENGINE, reading the TALLY (§7):** build permitted while `tally.count(SELF|category, scope) < allowed`.
+  Absent ⇒ uncapped. The engine OWNS the dynamic parts — ignoring the cap under `NO_WONDER_LIMIT`/`NO_NATIONAL_UNIT_LIMIT`/
+  `CHALLENGE_ONE_CITY`, era-scaling the base, `+extra` bumps — none of which touch the parser (§0.6 boundary, and the
+  rebuild-out-to-the-canDoStuff-gates ruling). **OCC carries no separate limits** (it just forces wonder limits off); any
+  future game-option-specific override is a *game-option-specific JSON* the engine loads on option-enable (the
+  override-by-design mechanism, generalizing the `replacedBy`/CvInfoReplacements swap).
 
 **`disables` is a DESTRUCTIVE ban — it tears the thing down (owner, 2026-06-15).** A ban does not park a building
 dormant — it **destroys** it. Ban the death penalty → the electric chair is removed and its space repurposed; ban
@@ -836,8 +855,12 @@ is withdrawn. The retrofit is formalization + adding the `requires` (means) side
    - **Stage 2 — the conditions under that gate.** Each atom's check against state: a **presence** test (`∈ HAS`,
      read directly at scope — no tally), or a **count** test **`min(TYPE, N)`** / **`max(TYPE, N)`** (read at scope:
      city = local count, empire/team = **TALLY**, the only tally consumer). `min(BUILDING_BARRACKS,12)` = West Point
-     prereq; `max(UNIT_COMMANDER,5)` = instance CAP (`getMaxPlayerInstances` family). Both grounded + first-class.
-     exact-N = `min(X,N) ∧ max(X,N)` — a combination, no separate primitive.
+     prereq (a genuine "needed" count of ANOTHER type). exact-N = `min(X,N) ∧ max(X,N)` — a combination, no separate primitive.
+     - **⚠ INSTANCE CAPS ARE NOT A `requires` ATOM (owner 2026-06-17) — they are the declarative `allowed` cap (§5a).**
+       The earlier framing (`max(UNIT_COMMANDER,5)` / SELF-cap as a `requires` count atom) is **WITHDRAWN**: a SELF-atom forced
+       an off-by-one (cap 1 → `max:0`) and conflated "needed" with "allowed." A cap is a property OF the entity, authored as
+       `allowed:{scope:N}` with the real number; `requires` keeps only genuine *needed* counts of OTHER types. `SELF` no longer
+       appears in `requires` (it left entirely).
    - **Predictable ⇒ CACHEABLE.** The verdict is a pure function of (combinator, conditions, state) → cache it *if
      measured worthwhile*, with predictable invalidation. Caching stays the optional wrapper of §2, never the model.
      - **Routing by Type PREFIX:** the id prefix — `BUILDING_` / `UNIT_` / `UNITGROUP_` / `BONUS_` / … — selects which

@@ -13,14 +13,12 @@
      "type": "BUILDING_SPACE_COLONY_INTERSTELLAR_MOTHERSHIP",
      "scope": "empire",
      "min": 3
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "gold": {
   "city": {

@@ -19,11 +19,6 @@
     {
      "type": "BUILDING_MILITARY_SPACEPORT",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ],
    "any": [
@@ -36,6 +31,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "espionage": {
   "empire": {

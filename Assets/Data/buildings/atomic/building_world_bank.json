@@ -13,14 +13,12 @@
     {
      "type": "BUILDING_BANK",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "commerce": {
   "empire": {

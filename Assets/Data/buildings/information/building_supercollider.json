@@ -19,14 +19,12 @@
      "type": "BUILDING_ACCELERATOR",
      "scope": "empire",
      "min": 4
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "research": {
   "city": {

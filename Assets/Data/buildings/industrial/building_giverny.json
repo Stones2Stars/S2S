@@ -5,14 +5,12 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_RIVER",
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
-    }
+    "HAS_RIVER"
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "culture": {
   "city": {

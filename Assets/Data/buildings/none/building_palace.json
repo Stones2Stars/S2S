@@ -81,15 +81,11 @@
  },
  "requires": {
   "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
-    }
-   ],
    "disabled": "IS_CAPITAL"
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "food": {
   "city": {

@@ -7,16 +7,8 @@
    "BUILDING_RESOURCES_BONE"
   ]
  },
- "requires": {
-  "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
-    }
-   ]
-  }
+ "allowed": {
+  "world": 1
  },
  "food": {
   "city": {

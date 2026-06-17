@@ -8,11 +8,6 @@
     {
      "type": "BUILDING_C_L_OCEANIAN",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ],
    "any": [
@@ -32,6 +27,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "commerce": {
   "city": {

@@ -18,11 +18,6 @@
     {
      "type": "BUILDING_LUNAR_SILICON_PROCESSING_FACILITY",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ],
    "any": [
@@ -35,6 +30,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "production": {
   "city": {

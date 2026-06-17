@@ -14,14 +14,12 @@
     {
      "type": "BUILDING_EFFECT_LAUNCH_SITE",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 2
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 2
  },
  "capabilities": {
   "canMoveAllTerrain": true,

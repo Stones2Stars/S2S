@@ -9,11 +9,6 @@
     {
      "type": "BUILDING_TELEPHONE_NETWORK",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ],
    "any": [
@@ -36,6 +31,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "gold": {
   "city": {

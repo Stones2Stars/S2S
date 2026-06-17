@@ -22,7 +22,7 @@ build-time error (modifier-spec §1.1).
 
 | group | sections | what they are |
 |---|---|---|
-| **Availability** (the *enabler*) | `enables` · `obsoletes` · `replaces` · `disables` · `requires` | what this unlocks / removes (source side) and what it needs to be built & to keep operating (target side) |
+| **Availability** (the *enabler*) | `enables` · `obsoletes` · `replaces` · `disables` · `requires` · `allowed` | what this unlocks / removes (source side), what it needs to be built & to keep operating (target side), and the **cap** on how many may exist (`allowed`, §4.2a) |
 | **Provisions** | `grants` | one-shot / recurring things this hands out (units, buildings, pulses) |
 | **Effects** (the *modifier*) | every **family** key (`food`, `production`, `happiness`, `maintenance`, `strength`, one per `PROPERTY_*`, …) | per-turn magnitudes this deposits onto targets |
 | **Intrinsic** ("what am I") | `identity` (incl. **TEXT**: `description`/`help`/`civilopedia`/`message`/`quote`/`strategy`/`adjective`/`shortDescription`) · `cost` · `ui` · `world` · `sound` · `ai` | empire-agnostic self-description, art, AI metadata. **TEXT fields live under `identity`** (decision A 2026-06-16) — text *is* "what am I". |
@@ -150,6 +150,23 @@ Authored on the source, per target-kind:
   the gate is the caller's job; engine outcomes that must always happen bypass it).
 - **Tech** appears in `requires.build` only as a per-candidate CONFIRM (multi-parent AND/OR), never as a generation driver.
 
+### 4.2a `allowed` — the declarative INSTANCE CAP (owner 2026-06-17)
+The ceiling on **how many may exist** — a distinct concept from `requires` ("what I NEED"). `allowed` names the cap with the
+**real number**, so the engine permits a build while `count < allowed`; nobody authors the off-by-one neighbor (the SELF
+`requires` atom forced "cap 1" to be written `max:0`, which conflated *needed* with *allowed* — withdrawn). Two shapes, told
+apart by the **key namespace**:
+- **Self-cap** — `allowed: { <scope>: N }` (scope key: `world`/`team`/`empire`) = "at most N of ME at scope." For a building
+  the cap scope ALSO derives its wonder category (`world`→worldWonder, `team`→teamWonder, `empire`→nationalWonder; this is
+  literally `isWorldWonder == getMaxGlobalInstances() != -1`, CvGameCoreUtils.cpp:340-369). A unique unit is `allowed:{empire:1}`.
+- **Category count-cap** — `allowed: { <wonderCategory>: N }` (category key: `worldWonders`/`teamWonders`/`nationalWonders`,
+  + reserved `totalWonders`) = a **per-city** cap on how many of that category a city may hold. Authored on **CultureLevel**
+  (a culture level grants the city its allowance); city scope is implicit. (Replaces CultureLevel's old `identity.maxWorldWonders…`.)
+- **Absent ⇒ uncapped.** Engine owns everything dynamic: ignoring the cap under game options
+  (`NO_WONDER_LIMIT`/`NO_NATIONAL_UNIT_LIMIT`/`CHALLENGE_ONE_CITY`), era-scaling the base, and `+extra` bumps — none touch the
+  parser (§0.6). Enforcement reads the **tally** count of the (SELF or category) at scope. **OCC-specific limits are NOT
+  authored here** — OCC simply forces wonder limits off; any future game-option-specific override is a *game-option-specific
+  JSON* the engine loads when the option is enabled (the override-by-design mechanism, generalizing `replacedBy`).
+
 ### 4.3 Modifier families — `<family>.<scope>[.<targetType>.{TARGET}][.<member>].<unit> = value`
 Flat per-family surface, **no `modifiers` wrapper** (modifier-spec §1.2). Examples:
 ```jsonc
@@ -250,4 +267,9 @@ at #430 — never authored.
 - ⚑ the fresh runtime object's relationship to the **EXE-bound `CvXxxInfo` surface** at cutover — cascade-engine-430.md §3.
 - ⚑ `outcomes` (deferred to the #430 outcome-system pass) + the event system (deferred to #425) are NOT in the machine
   read-interface yet.
+- ⚑ **Per-info-type SCHEMA / section allowlist (owner 2026-06-17, a "when everything is nailed" step).** Once the structure
+  is fully settled, ship per-info-type specifications the parser matches against — which reserved sections + modifier
+  families are valid on each info type — so misplaced keys (building-only data on a unit, etc.) are REJECTED rather than
+  silently ignored. (Distinct from the `allowed` cap §4.2a; this is structural validation. Modder-facing note in
+  `docs/datastructure/README.md`.) Not built during the migration; a post-settle hardening pass.
 ```

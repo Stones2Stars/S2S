@@ -13,14 +13,12 @@
     {
      "type": "BUILDING_ALAMUT",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 5
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 5
  },
  "culture": {
   "unit": {

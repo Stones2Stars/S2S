@@ -243,10 +243,9 @@ def requires_unit(rec, store):
     ms = _int(rec, "iMinAreaSize")
     if ms and ms > 0:
         allc.append(_atom("AREA_SIZE", "world", min=ms))
-    for tag, scope in (("iMaxGlobalInstances", "world"), ("iMaxPlayerInstances", "empire")):
-        v = _int(rec, tag)
-        if v is not None and v >= 0:
-            allc.append(_atom("SELF", scope, max=v))
+    # --- instance caps are NOT a requires SELF-atom (owner 2026-06-17): they move to the declarative `allowed`
+    # cap (authored by allowed_unit() below). SELF leaves requires entirely; uniform with Building/Tech/CultureLevel.
+    # enabler-spec §5a/§13.7. ---
     # --- TrainCondition BoolExpr -> build (checked at canTrain, CvCity.cpp:1961-1963). Folded via the shared
     # boolexpr converter (And/Or of Has over bonus/building + the one ATTRIBUTE_POPULATION>=N case). owner 2026-06-16. ---
     boolexpr.merge_into(boolexpr.convert_field(rec.find("TrainCondition")), allc, anyc, none)
@@ -258,6 +257,19 @@ def requires_unit(rec, store):
     if none:
         build["noneOf"] = none
     return {"build": build} if build else None
+
+
+def allowed_unit(rec):
+    """The declarative INSTANCE CAP (owner 2026-06-17): `allowed:{<scope>:N}` — the real cap number, scope-keyed
+    (world/empire), NOT a `requires` SELF-atom. Engine enforces (build while tally.count(SELF,scope) < N) and owns
+    ignoring it (NO_NATIONAL_UNIT_LIMIT, honoring the per-unit `identity.unlimitedException` exception) + era-scaling
+    the base + `+extra` — none touch the parser. A unique unit -> `allowed:{empire:1}`. enabler-spec §5a/§13.7."""
+    allowed = OrderedDict()
+    for tag, scope in (("iMaxGlobalInstances", "world"), ("iMaxPlayerInstances", "empire")):
+        v = _int(rec, tag)
+        if v is not None and v >= 0:
+            allowed[scope] = v
+    return allowed or None
 
 
 _FOUND_BUILDINGS = None
@@ -582,6 +594,9 @@ def curate(typ, rec, store):
     requires = requires_unit(rec, store)
     if requires:
         out["requires"] = requires
+    allowed = allowed_unit(rec)
+    if allowed:
+        out["allowed"] = allowed
     ordered = [f for f in FAMILY_ORDER if f in fams] + [f for f in fams if f not in FAMILY_ORDER]
     for f in ordered:
         out[f] = fams[f]
@@ -655,11 +670,11 @@ def main():
         print("COVERAGE: all XML tags handled or deferred (pass 2).")
 
     has = lambda k: sum(1 for o in results.values() if k in o)
-    STRUCT = {"type", "description", "civilopedia", "help", "enables", "obsoletes", "requires", "capabilities",
+    STRUCT = {"type", "description", "civilopedia", "help", "enables", "obsoletes", "requires", "allowed", "capabilities",
               "vision", "outcomes", "grants", "succession", "cost", "ai", "loadPrune", "ui", "world", "sound", "identity"}
     seen = sorted({f for o in results.values() for f in o if f not in STRUCT})
     print("UnitInfo curated: %d  | SpecialUnitInfo: %d" % (n, len(su_results)))
-    for k in ("enables", "obsoletes", "requires", "capabilities", "grants", "succession", "cost", "identity"):
+    for k in ("enables", "obsoletes", "requires", "allowed", "capabilities", "grants", "succession", "cost", "identity"):
         print("  with %-11s: %d" % (k, has(k)))
     print("  families seen: %s" % ", ".join(seen))
     if args.sample is not None:

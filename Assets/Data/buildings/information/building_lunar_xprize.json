@@ -2,16 +2,8 @@
  "type": "BUILDING_LUNAR_XPRIZE",
  "description": "TXT_KEY_BUILDING_LUNAR_XPRIZE",
  "civilopedia": "TXT_KEY_BUILDING_LUNAR_XPRIZE_PEDIA",
- "requires": {
-  "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
-    }
-   ]
-  }
+ "allowed": {
+  "world": 1
  },
  "gold": {
   "city": {

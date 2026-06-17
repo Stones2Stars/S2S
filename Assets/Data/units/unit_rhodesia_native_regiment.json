@@ -11,11 +11,6 @@
      "connection": "trade|vicinity"
     },
     {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 5
-    },
-    {
      "type": "BONUS_AMMUNITION",
      "scope": "city",
      "connection": "trade|vicinity"
@@ -31,6 +26,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "empire": 5
  },
  "costs": {
   "empire": {

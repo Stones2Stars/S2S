@@ -14,14 +14,12 @@
      "type": "BUILDING_SECURITY_BUREAU",
      "scope": "empire",
      "min": 3
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "espionage": {
   "city": {

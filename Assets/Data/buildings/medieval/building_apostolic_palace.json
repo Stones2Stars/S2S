@@ -23,11 +23,6 @@
     {
      "type": "VICTORY_DIPLOMATIC",
      "scope": "world"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ]
   },
@@ -36,6 +31,9 @@
     "STATE_RELIGION_IN_CITY"
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "culture": {
   "city": {

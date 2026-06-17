@@ -2,16 +2,8 @@
  "type": "BUILDING_HIPPOCRATIC_OATH",
  "description": "TXT_KEY_BUILDING_HIPPOCRATIC_OATH",
  "civilopedia": "TXT_KEY_BUILDING_HIPPOCRATIC_OATH_PEDIA",
- "requires": {
-  "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
-    }
-   ]
-  }
+ "allowed": {
+  "world": 1
  },
  "production": {
   "specialist": {

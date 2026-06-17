@@ -8,14 +8,12 @@
     {
      "type": "BUILDING_SPY_TRAINING_FACILITY",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 5
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 5
  },
  "costs": {
   "empire": {

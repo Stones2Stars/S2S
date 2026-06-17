@@ -19,14 +19,12 @@
      "type": "BUILDING_LUNAR_SILICON_PROCESSING_FACILITY",
      "scope": "empire",
      "min": 1
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "gold": {
   "city": {

@@ -19,11 +19,6 @@
     {
      "type": "BUILDING_SKYSCRAPER",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ],
    "any": [
@@ -46,6 +41,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "gold": {
   "empire": {

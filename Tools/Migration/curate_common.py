@@ -256,7 +256,7 @@ def apply_channel(families, spec, c):
 class EntityConfig:
     """Per-entity config, mostly read from mapping/<Entity>.json (channels/cost/art/prereqs)."""
     def __init__(self, entity, cost_rename=None, grants=None, era_fn=None, extra_drop=None, map_gen=None,
-                 families=None, id_rename=None, to_identity=None, requires_fn=None, art_rename=None):
+                 families=None, id_rename=None, to_identity=None, requires_fn=None, art_rename=None, allowed_fn=None):
         m = json.load(open(os.path.join(MAPDIR, entity + ".json")))
         self.entity = entity
         # `families` = verified per-field modifier specs (from the classification) that OVERRIDE the first-pass
@@ -285,6 +285,10 @@ class EntityConfig:
         # `requires.{build,operate}` BoolExpr authored ON this entity from its OWN prereq fields (the fields the
         # store does NOT invert away). Returns a dict or None. Per-entity, since prereq shapes differ.
         self.requires_fn = requires_fn or (lambda rec, store: None)
+        # allowed_fn(rec, store) -> the declarative INSTANCE CAP (enabler-spec §5/§13.7): `allowed:{<scope>:N}`
+        # (self-cap, scope-keyed) "at most N of me at scope". The real cap number; engine owns enforcement +
+        # ignoring it under game options. Returns a dict or None. Per-entity, since cap fields differ.
+        self.allowed_fn = allowed_fn or (lambda rec, store: None)
 
 
 def curate(typ, rec, cfg, store, boosts):
@@ -356,6 +360,9 @@ def curate(typ, rec, cfg, store, boosts):
     requires = cfg.requires_fn(rec, store)
     if requires:
         out["requires"] = requires
+    allowed = cfg.allowed_fn(rec, store)                   # declarative instance cap (enabler-spec §5/§13.7)
+    if allowed:
+        out["allowed"] = allowed
     for family in FAMILY_ORDER:                            # families at TOP LEVEL (no `modifiers` wrapper, §3)
         if family in families:
             out[family] = families[family]
@@ -404,7 +411,7 @@ def main(cfg, boosts_config, out_dir, post_process=None):
     n = len(result)
     has = lambda k: sum(1 for (o, _) in result.values() if k in o)
     STRUCT = {"type", "description", "civilopedia", "help", "quote", "strategy", "enables", "obsoletes",
-              "replaces", "disables", "requires", "grants", "cost", "ai", "ui", "world", "sound", "mapGeneration", "identity"}
+              "replaces", "disables", "requires", "allowed", "grants", "cost", "ai", "ui", "world", "sound", "mapGeneration", "identity"}
     fams = lambda o: [k for k in o if k not in STRUCT]
     print("%s curated: %d" % (cfg.entity, n))
     for k in ("enables", "obsoletes", "replaces", "disables", "requires", "grants", "ai"):

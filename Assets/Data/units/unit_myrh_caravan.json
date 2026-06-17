@@ -13,14 +13,12 @@
     {
      "type": "BUILDING_CARAVAN_POST",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 5
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 5
  },
  "costs": {
   "empire": {

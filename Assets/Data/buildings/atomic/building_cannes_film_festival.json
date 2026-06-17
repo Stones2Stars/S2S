@@ -14,11 +14,6 @@
      "type": "BUILDING_MOVIE_STUDIO",
      "scope": "empire",
      "min": 1
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ],
    "noneOf": [
@@ -28,6 +23,9 @@
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "culture": {
   "city": {

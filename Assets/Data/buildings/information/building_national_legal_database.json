@@ -23,14 +23,12 @@
     {
      "type": "BUILDING_POLICE_PRECINCT",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "hurryCost": {
   "city": {

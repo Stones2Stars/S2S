@@ -22,14 +22,12 @@
     {
      "type": "BUILDING_INDUSTRIAL_PARK",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "food": {
   "city": {

@@ -1,12 +1,12 @@
 {
  "type": "SPECIALBUILDING_GROUP_ELITE_UNIVERSITIES",
  "description": "TXT_KEY_SPECIALBUILDING_GROUP_ELITE_UNIVERSITIES",
+ "allowed": {
+  "empire": 1
+ },
  "ui": {
   "art": {
    "icon": ",Art/Interface/Buttons/TechTree/Education.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,2,6"
   }
- },
- "identity": {
-  "maxPlayerInstances": 1
  }
 }

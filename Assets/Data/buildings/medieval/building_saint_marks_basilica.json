@@ -14,11 +14,6 @@
     {
      "type": "BUILDING_CHRISTIAN_CATHEDRAL",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ]
   },
@@ -31,6 +26,9 @@
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "production": {
   "plot": {

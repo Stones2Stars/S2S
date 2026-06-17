@@ -1,7 +1,7 @@
 {
  "type": "SPECIALBUILDING_GROUP_PREHISTORIC_CAVES",
  "description": "TXT_KEY_SPECIALBUILDING_GROUP_PREHISTORIC_CAVES",
- "identity": {
-  "maxPlayerInstances": 1
+ "allowed": {
+  "empire": 1
  }
 }

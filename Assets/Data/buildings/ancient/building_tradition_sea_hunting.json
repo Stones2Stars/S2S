@@ -8,14 +8,12 @@
     {
      "type": "BUILDING_MASTER_SEA_HUNTER",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "ui": {
   "art": {

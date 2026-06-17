@@ -9,11 +9,6 @@
      "type": "BONUS_GERMAN",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 5
     }
    ],
    "any": [
@@ -38,6 +33,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "empire": 5
  },
  "collateral": {
   "unit": {

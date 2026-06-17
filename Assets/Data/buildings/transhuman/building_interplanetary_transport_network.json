@@ -8,14 +8,12 @@
     {
      "type": "BUILDING_SPACE_COLONY_CISLUNAR",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "commerce": {
   "city": {

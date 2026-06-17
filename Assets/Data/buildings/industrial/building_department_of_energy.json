@@ -18,11 +18,6 @@
     {
      "type": "BUILDING_POWER_LINES",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ],
    "any": [
@@ -42,6 +37,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "hurryCost": {
   "city": {

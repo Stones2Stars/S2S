@@ -9,11 +9,6 @@
      "type": "BONUS_WAYANA",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 5
     }
    ],
    "any": [
@@ -56,6 +51,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "empire": 5
  },
  "strength": {
   "unit": {

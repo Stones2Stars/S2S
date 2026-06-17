@@ -14,14 +14,12 @@
     {
      "type": "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "gold": {
   "empire": {

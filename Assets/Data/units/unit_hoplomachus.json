@@ -9,11 +9,6 @@
      "type": "BONUS_ETRUSCAN",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 5
     }
    ],
    "any": [
@@ -45,6 +40,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "empire": 5
  },
  "culture": {
   "unit": {

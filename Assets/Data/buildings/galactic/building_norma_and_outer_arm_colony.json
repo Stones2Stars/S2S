@@ -4,13 +4,6 @@
  "civilopedia": "TXT_KEY_BUILDING_NORMA_AND_OUTER_ARM_COLONY_PEDIA",
  "requires": {
   "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
-    }
-   ],
    "any": [
     [
      {
@@ -34,6 +27,9 @@
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "commerce": {
   "city": {

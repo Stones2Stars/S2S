@@ -13,11 +13,6 @@
     {
      "type": "BUILDING_TRACTION_ENGINE_WORKSHOP",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 5
     }
    ],
    "any": [
@@ -35,6 +30,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "empire": 5
  },
  "collateral": {
   "unit": {

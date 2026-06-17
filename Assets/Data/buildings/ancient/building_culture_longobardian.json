@@ -18,14 +18,12 @@
     {
      "type": "BUILDING_C_L_EUROPEAN",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "culture": {
   "city": {

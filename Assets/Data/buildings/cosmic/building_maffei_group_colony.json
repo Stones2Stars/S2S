@@ -8,11 +8,6 @@
     {
      "type": "BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ],
    "any": [
@@ -42,6 +37,9 @@
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "commerce": {
   "city": {

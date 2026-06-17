@@ -13,14 +13,12 @@
     {
      "type": "BUILDING_SIEGE_WEAPONS_WORKSHOP",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 5
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 5
  },
  "buildRate": {
   "self": {

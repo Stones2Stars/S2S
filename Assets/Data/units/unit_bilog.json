@@ -18,14 +18,12 @@
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 10
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 5
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 5
  },
  "buildRate": {
   "self": {

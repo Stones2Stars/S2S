@@ -24,11 +24,6 @@
     {
      "type": "BUILDING_JAIL",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ],
    "any": [
@@ -44,6 +39,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "gold": {
   "city": {

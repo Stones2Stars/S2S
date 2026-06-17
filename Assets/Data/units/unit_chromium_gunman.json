@@ -11,11 +11,6 @@
      "connection": "trade|vicinity"
     },
     {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 5
-    },
-    {
      "type": "BONUS_PETROLEUM_PRODUCTS",
      "scope": "city",
      "connection": "trade|vicinity"
@@ -46,6 +41,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "empire": 5
  },
  "buildRate": {
   "self": {

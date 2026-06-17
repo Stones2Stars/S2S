@@ -12,11 +12,6 @@
     {
      "type": "BUILDING_URANIAN_LUNAR_MAGNETIC_FIELD",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ],
    "any": [
@@ -34,6 +29,9 @@
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "food": {
   "city": {

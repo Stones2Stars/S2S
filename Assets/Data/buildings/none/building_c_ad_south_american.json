@@ -14,11 +14,6 @@
      "type": "BUILDING_C_L_SOUTH_AMERICAN",
      "scope": "empire",
      "min": 3
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ],
    "noneOf": [
@@ -28,6 +23,9 @@
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "world": {
   "art": {

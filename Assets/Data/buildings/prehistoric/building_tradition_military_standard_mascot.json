@@ -8,14 +8,12 @@
     {
      "type": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "ui": {
   "art": {

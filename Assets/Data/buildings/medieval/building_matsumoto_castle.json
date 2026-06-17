@@ -4,13 +4,6 @@
  "civilopedia": "TXT_KEY_BUILDING_MATSUMOTO_CASTLE_PEDIA",
  "requires": {
   "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
-    }
-   ],
    "any": [
     [
      {
@@ -35,6 +28,9 @@
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "culture": {
   "city": {

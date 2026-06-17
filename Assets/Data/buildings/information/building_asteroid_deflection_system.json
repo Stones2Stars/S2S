@@ -9,11 +9,6 @@
      "type": "BUILDING_SENTINEL",
      "scope": "empire",
      "min": 1
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ],
    "any": [
@@ -29,6 +24,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "gold": {
   "city": {

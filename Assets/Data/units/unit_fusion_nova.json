@@ -4,13 +4,6 @@
  "civilopedia": "TXT_KEY_UNIT_FUSION_NOVA_PEDIA",
  "requires": {
   "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 5
-    }
-   ],
    "any": [
     [
      {
@@ -36,6 +29,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "empire": 5
  },
  "air": {
   "unit": {

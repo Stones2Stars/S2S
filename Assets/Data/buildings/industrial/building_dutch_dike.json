@@ -21,11 +21,6 @@
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 10
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ],
    "any": [
@@ -43,6 +38,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "greatPeopleRate": {
   "city": {

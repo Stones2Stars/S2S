@@ -2,16 +2,8 @@
  "type": "BUILDING_ANCIENT_WAY_OF_THE_WARRIOR",
  "description": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_WARRIOR",
  "civilopedia": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_WARRIOR_PEDIA",
- "requires": {
-  "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
-    }
-   ]
-  }
+ "allowed": {
+  "world": 1
  },
  "PROPERTY_EDUCATION": {
   "city": {

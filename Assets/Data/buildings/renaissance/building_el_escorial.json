@@ -9,11 +9,6 @@
      "type": "BONUS_STONE",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ],
    "disabled": "IS_CAPITAL"
@@ -27,6 +22,9 @@
     "STATE_RELIGION_IN_CITY"
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "culture": {
   "city": {

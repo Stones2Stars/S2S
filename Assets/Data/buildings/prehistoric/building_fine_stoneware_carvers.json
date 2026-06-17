@@ -13,14 +13,12 @@
     {
      "type": "BUILDING_C_L_MIDDLE_EASTERN",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "commerce": {
   "city": {

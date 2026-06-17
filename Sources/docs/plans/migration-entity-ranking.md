@@ -286,6 +286,16 @@ grows as more accumulate):
   `put_art`/`emit_art` helpers). Applied to the cc-curated set AND all 11 art-bearing bespoke curators; entities not
   yet curated (Unit — heaviest — Building, Improvement, …) adopt it natively via `ART_BLOCK` at their pass. No
   retrofit owed. (building-cascade-conversion "ART BLOCKS … DONE".)
+- **Instance/category CAPS → `allowed` — DONE 2026-06-17 (owner).** Instance caps are NOT a `requires` SELF-atom (that
+  conflated *needed* with *allowed* and forced an off-by-one — `max:0` for "cap 1"). They are the declarative `allowed`
+  ceiling, authoring the REAL number: self-cap `allowed:{<scope>:N}` (Building/Unit/Tech `bGlobal`/SpecialBuilding group
+  cap — `SELF` left `requires` entirely), per-city category-cap `allowed:{worldWonders|teamWonders|nationalWonders:N}`
+  (CultureLevel, moved out of `identity`). Engine enforces (build while `tally.count < allowed`) + owns the opt-outs
+  (`NO_WONDER_LIMIT`/`NO_NATIONAL_UNIT_LIMIT`/`CHALLENGE_ONE_CITY`), era-scaling, `+extra`, and the per-unit
+  `unlimitedException`. OCC carries no separate cap (forces limits off; future option-specific limits → game-option-specific
+  JSON via override-by-design). Applied across Building/SpecialBuilding/Tech/CultureLevel/Unit; harness recognizes/renders
+  `allowed`; 0 conformance flags held. (data-model-spec §4.2a, enabler-spec §5a/§13.7, tally-spec §2, renames §§Building/
+  SpecialBuilding/CultureLevel/Tech/Unit.)
 - **Any shape an entity locked AFTER an earlier entity was committed** — e.g. the family names
   defense/movement/cultureDistance/buildTime/`vision` (blessed at Terrain/Feature), the deliveryguy/semantic-sense
   ownership rule (modifier-spec §6.1), the dedicated-block rule (§0.8).

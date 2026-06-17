@@ -4,13 +4,6 @@
  "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
  "requires": {
   "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 2
-    }
-   ],
    "any": [
     [
      {
@@ -21,6 +14,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "empire": 2
  },
  "buildRate": {
   "self": {

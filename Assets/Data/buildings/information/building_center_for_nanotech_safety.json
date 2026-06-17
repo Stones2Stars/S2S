@@ -8,14 +8,12 @@
     {
      "type": "BUILDING_APPLIED_SOCIOLOGY_LAB",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "production": {
   "city": {

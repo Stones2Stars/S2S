@@ -4,13 +4,6 @@
  "civilopedia": "TXT_KEY_BUILDING_ABU_SIMBEL_PEDIA",
  "requires": {
   "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
-    }
-   ],
    "any": [
     [
      {
@@ -21,6 +14,9 @@
    ],
    "disabled": "IS_CAPITAL"
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "culture": {
   "city": {

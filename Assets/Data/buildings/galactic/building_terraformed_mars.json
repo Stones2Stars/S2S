@@ -49,14 +49,12 @@
      "type": "BUILDING_MARTIAN_ORBITAL_MIRROR_ARRAY",
      "scope": "empire",
      "min": 1
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "culture": {
   "city": {

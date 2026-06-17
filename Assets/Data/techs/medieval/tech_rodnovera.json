@@ -15,14 +15,11 @@
      "type": "TECH_MEDIEVAL_LIFESTYLE",
      "scope": "team"
     }
-   ],
-   "noneOf": [
-    {
-     "type": "SELF",
-     "scope": "world"
-    }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "grants": {
   "firstFreeProphet": "UNIT_PROPHET"

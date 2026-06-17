@@ -6,6 +6,11 @@
    "BUILDING_MARTIAN_GOVERNING_COUNCIL"
   ]
  },
+ "allowed": {
+  "worldWonders": 5,
+  "teamWonders": 5,
+  "nationalWonders": 14
+ },
  "defense": {
   "city": {
    "amount": {
@@ -20,10 +25,6 @@
  },
  "identity": {
   "cityRadius": 2,
-  "maxWorldWonders": 5,
-  "maxTeamWonders": 5,
-  "maxNationalWonders": 14,
-  "maxNationalWondersOCC": 28,
   "cultureThreshold": 4160
  }
 }

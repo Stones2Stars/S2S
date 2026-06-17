@@ -9,14 +9,12 @@
      "type": "BONUS_OLMEC",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 5
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 5
  },
  "buildRate": {
   "self": {

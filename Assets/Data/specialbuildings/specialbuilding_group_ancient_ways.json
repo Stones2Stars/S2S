@@ -1,12 +1,12 @@
 {
  "type": "SPECIALBUILDING_GROUP_ANCIENT_WAYS",
  "description": "TXT_KEY_SPECIALBUILDING_GROUP_ANCIENT_WAYS",
+ "allowed": {
+  "empire": 1
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Buildings/BeachResort.dds"
   }
- },
- "identity": {
-  "maxPlayerInstances": 1
  }
 }

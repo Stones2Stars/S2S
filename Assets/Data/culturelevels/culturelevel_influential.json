@@ -6,6 +6,11 @@
    "BUILDING_METROPOLITAN_ADMINISTRATION"
   ]
  },
+ "allowed": {
+  "worldWonders": 6,
+  "teamWonders": 5,
+  "nationalWonders": 16
+ },
  "defense": {
   "city": {
    "amount": {
@@ -15,10 +20,6 @@
  },
  "identity": {
   "cityRadius": 3,
-  "maxWorldWonders": 6,
-  "maxTeamWonders": 5,
-  "maxNationalWonders": 16,
-  "maxNationalWondersOCC": 32,
   "cultureThreshold": 8320
  }
 }

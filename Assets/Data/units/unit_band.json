@@ -2,16 +2,8 @@
  "type": "UNIT_BAND",
  "description": "TXT_KEY_UNIT_BAND",
  "civilopedia": "TXT_KEY_UNIT_BAND_PEDIA",
- "requires": {
-  "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 0
-    }
-   ]
-  }
+ "allowed": {
+  "empire": 0
  },
  "capabilities": {
   "found": true,

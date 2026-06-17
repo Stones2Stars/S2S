@@ -9,14 +9,12 @@
      "type": "BONUS_HUMAN_MOD_DESIGNER_BABIES",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "cost": {
   "production": 10110

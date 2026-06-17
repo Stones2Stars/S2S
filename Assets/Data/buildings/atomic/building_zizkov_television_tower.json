@@ -3,16 +3,8 @@
  "description": "TXT_KEY_BUILDING_ZIZKOV_TELEVISION_TOWER",
  "civilopedia": "TXT_KEY_BUILDING_ZIZKOV_TELEVISION_TOWER_PEDIA",
  "help": "TXT_KEY_BUILDING_ZIZKOV_TELEVISION_TOWER_HELP",
- "requires": {
-  "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
-    }
-   ]
-  }
+ "allowed": {
+  "world": 1
  },
  "culture": {
   "city": {

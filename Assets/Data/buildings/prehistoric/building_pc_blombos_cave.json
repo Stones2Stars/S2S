@@ -10,12 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_WATER",
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
-    }
+    "IS_WATER"
    ],
    "any": [
     [
@@ -26,6 +21,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "food": {
   "city": {

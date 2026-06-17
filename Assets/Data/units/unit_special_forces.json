@@ -13,11 +13,6 @@
     {
      "type": "BUILDING_BIVOUAC_GROUNDS",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 5
     }
    ],
    "any": [
@@ -30,6 +25,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "empire": 5
  },
  "movement": {
   "unit": {

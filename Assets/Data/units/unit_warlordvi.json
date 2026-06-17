@@ -9,14 +9,12 @@
      "type": "BONUS_NANOTUBES",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 6
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 6
  },
  "buildRate": {
   "self": {

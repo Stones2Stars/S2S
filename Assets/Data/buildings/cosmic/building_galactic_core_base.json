@@ -13,11 +13,6 @@
     {
      "type": "BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ],
    "any": [
@@ -29,6 +24,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "production": {
   "city": {

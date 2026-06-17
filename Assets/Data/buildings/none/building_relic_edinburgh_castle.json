@@ -2,16 +2,8 @@
  "type": "BUILDING_RELIC_EDINBURGH_CASTLE",
  "description": "TXT_KEY_BUILDING_RELIC_EDINBURGH_CASTLE",
  "civilopedia": "TXT_KEY_BUILDING_EDINBURGH_CASTLE_PEDIA",
- "requires": {
-  "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
-    }
-   ]
-  }
+ "allowed": {
+  "world": 1
  },
  "culture": {
   "city": {

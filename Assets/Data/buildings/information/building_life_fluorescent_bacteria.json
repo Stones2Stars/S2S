@@ -10,14 +10,12 @@
      "type": "BUILDING_LIFE_CRISPR_CAS9_BACTERIA",
      "scope": "empire",
      "min": 1
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "gold": {
   "empire": {

@@ -6,6 +6,11 @@
    "BUILDING_CITY_COUNCIL"
   ]
  },
+ "allowed": {
+  "worldWonders": 4,
+  "teamWonders": 4,
+  "nationalWonders": 12
+ },
  "defense": {
   "city": {
    "amount": {
@@ -15,10 +20,6 @@
  },
  "identity": {
   "cityRadius": 2,
-  "maxWorldWonders": 4,
-  "maxTeamWonders": 4,
-  "maxNationalWonders": 12,
-  "maxNationalWondersOCC": 24,
   "cultureThreshold": 2080
  }
 }

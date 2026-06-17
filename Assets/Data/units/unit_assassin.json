@@ -8,14 +8,12 @@
     {
      "type": "BUILDING_ASSASSINS_DEN",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 5
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 5
  },
  "culture": {
   "unit": {

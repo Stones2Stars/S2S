@@ -14,14 +14,12 @@
     {
      "type": "BUILDING_COMMERCIAL_SPACEPORT",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 5
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 5
  },
  "capabilities": {
   "canMoveAllTerrain": true,

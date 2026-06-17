@@ -5,12 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_RIVER",
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
-    }
+    "HAS_RIVER"
    ],
    "any": [
     [
@@ -36,6 +31,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "production": {
   "city": {

@@ -14,11 +14,6 @@
      "type": "BONUS_TIN_ORE",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ],
    "any": [
@@ -34,6 +29,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "production": {
   "city": {

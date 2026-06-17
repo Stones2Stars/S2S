@@ -18,11 +18,6 @@
     {
      "type": "BUILDING_GRAND_MANOR",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ]
   },
@@ -34,6 +29,9 @@
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "culture": {
   "city": {

@@ -9,11 +9,6 @@
      "type": "BONUS_GOLD_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ],
    "any": [
@@ -35,6 +30,9 @@
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "production": {
   "specialist": {

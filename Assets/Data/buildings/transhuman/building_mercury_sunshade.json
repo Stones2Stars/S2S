@@ -8,11 +8,6 @@
     {
      "type": "BUILDING_MERCURY_COMETARY_BOMBARDMENT",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ],
    "any": [
@@ -24,6 +19,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "food": {
   "city": {

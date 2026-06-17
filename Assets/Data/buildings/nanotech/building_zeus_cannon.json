@@ -8,14 +8,12 @@
     {
      "type": "BUILDING_CISLUNAR_ION_CANNON",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "hurryCost": {
   "city": {

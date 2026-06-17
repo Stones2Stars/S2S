@@ -8,14 +8,12 @@
     {
      "type": "BUILDING_MIND_CONTROL_CENTER",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 5
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 5
  },
  "costs": {
   "empire": {

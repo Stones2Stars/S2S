@@ -18,14 +18,12 @@
      "type": "BUILDING_STOCK_MARKET",
      "scope": "empire",
      "min": 4
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "commerce": {
   "city": {

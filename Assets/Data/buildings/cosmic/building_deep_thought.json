@@ -13,14 +13,12 @@
      "type": "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
      "scope": "empire",
      "min": 1
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "gold": {
   "city": {

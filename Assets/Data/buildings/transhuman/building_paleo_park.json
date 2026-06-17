@@ -5,12 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
-    }
+    "HAS_POWER"
    ],
    "any": [
     [
@@ -33,6 +28,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "gold": {
   "city": {

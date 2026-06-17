@@ -1,6 +1,11 @@
 {
  "type": "CULTURELEVEL_MINISCULE",
  "description": "TXT_KEY_CULTURELEVEL_MINISCULE",
+ "allowed": {
+  "worldWonders": 1,
+  "teamWonders": 1,
+  "nationalWonders": 5
+ },
  "defense": {
   "city": {
    "amount": {
@@ -15,10 +20,6 @@
  },
  "identity": {
   "cityRadius": 2,
-  "maxWorldWonders": 1,
-  "maxTeamWonders": 1,
-  "maxNationalWonders": 5,
-  "maxNationalWondersOCC": 10,
   "cultureThreshold": 65
  }
 }

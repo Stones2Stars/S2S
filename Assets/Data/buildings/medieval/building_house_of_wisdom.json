@@ -4,13 +4,6 @@
  "civilopedia": "TXT_KEY_BUILDING_HOUSE_OF_WISDOM_PEDIA",
  "requires": {
   "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
-    }
-   ],
    "any": [
     [
      {
@@ -41,6 +34,9 @@
     "STATE_RELIGION_IN_CITY"
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "gold": {
   "specialist": {

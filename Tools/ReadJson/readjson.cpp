@@ -33,7 +33,7 @@
 // ===================== known vocabulary (data-model-spec §1/§2) =====================
 static const char* RESERVED_SECTIONS[] = {
     "type", "text", "description", "help", "civilopedia", "message",
-    "enables", "obsoletes", "replaces", "disables", "requires", "grants",
+    "enables", "obsoletes", "replaces", "disables", "requires", "allowed", "grants",
     "cost", "ui", "world", "sound", "identity", "ai",
     "loadPrune", "policies", "succession", "excludes", "produces", "condition", "effect",
     "vision", "outcomes", "capabilities", "mapGeneration", "replacedBy", 0
@@ -78,13 +78,17 @@ static const char* PRED_PARAM[] = {
 // HAS_TERRAIN/HAS_FEATURE/HAS_BONUS (in PRED_PARAM) are the canonical single-valued predicates; the list is the
 // compact authoring form (improvement placement make-valid sets).
 static const char* MEMBERSHIP[] = { "terrain", "feature", "bonus", 0 };
+// `allowed` cap keys (owner 2026-06-17): a SCOPE (world/team/empire — self-cap "at most N of me") OR a wonder-CATEGORY
+// discriminator below (per-city count cap "at most N of this category"). totalWonders = the all-encompassing aggregate
+// (reserved; no source field today). Self-cap vs category-cap is told by which namespace the key is in.
+static const char* ALLOWED_CATEGORIES[] = { "worldWonders", "teamWonders", "nationalWonders", "totalWonders", 0 };
 
 static std::set<std::string> mk(const char** a) {
     std::set<std::string> s;
     for (int i = 0; a[i]; ++i) s.insert(a[i]);
     return s;
 }
-static std::set<std::string> S_RESERVED, S_INTRINSIC, S_SCOPES, S_UNITS, S_ATOMK, S_PERK, S_BUCKETS, S_PBARE, S_PPARAM, S_MEMBERSHIP;
+static std::set<std::string> S_RESERVED, S_INTRINSIC, S_SCOPES, S_UNITS, S_ATOMK, S_PERK, S_BUCKETS, S_PBARE, S_PPARAM, S_MEMBERSHIP, S_ALLOWEDCAT;
 static bool has(const std::set<std::string>& s, const std::string& k) { return s.find(k) != s.end(); }
 
 // ===================== report =====================
@@ -166,6 +170,20 @@ static void check_enables(const picojson::value& v, const std::string& path, Rep
         r.enablesBuckets[it->first] += 1;
         if (!has(S_BUCKETS, it->first)) r.flag(path, "enables: unknown bucket '" + it->first + "'");
         if (!it->second.is<picojson::array>()) r.flag(path + "." + it->first, "enables bucket not array");
+    }
+}
+
+// ----- allowed: the declarative instance/category CAP (owner 2026-06-17) -----
+// `allowed:{<scope>:N}` self-cap (scope key) OR `allowed:{<category>:N}` per-city count cap (wonder-category key).
+// Each value is a plain count (number). enabler-spec §5/§13.7.
+static void check_allowed(const picojson::value& v, const std::string& path, Report& r) {
+    if (!v.is<picojson::object>()) { r.flag(path, "allowed not object"); return; }
+    const picojson::object& o = v.get<picojson::object>();
+    for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it) {
+        bool isScope = has(S_SCOPES, it->first), isCat = has(S_ALLOWEDCAT, it->first);
+        if (isScope) r.scopes[it->first] += 1;
+        if (!isScope && !isCat) r.flag(path, "allowed: key not a scope or wonder-category '" + it->first + "'");
+        if (!it->second.is<double>()) r.flag(path, "allowed: value not a count for '" + it->first + "'");
     }
 }
 
@@ -322,8 +340,10 @@ static void render_entity(const picojson::value& v) {
     }
     const picojson::value* rq = mget(o, "requires");
     if (rq && rq->is<picojson::object>()) { const picojson::object& ro = rq->get<picojson::object>(); for (picojson::object::const_iterator it = ro.begin(); it != ro.end(); ++it) std::printf("  requires to %s: %s\n", it->first.c_str(), render_cond(it->second).c_str()); }
+    const picojson::value* al = mget(o, "allowed");
+    if (al && al->is<picojson::object>()) { const picojson::object& ao = al->get<picojson::object>(); for (picojson::object::const_iterator it = ao.begin(); it != ao.end(); ++it) std::printf("  allowed %s %s\n", num(it->second).c_str(), it->first.c_str()); }
     for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it) {
-        if (has(S_INTRINSIC, it->first) || it->first == "enables" || it->first == "obsoletes" || it->first == "replaces" || it->first == "disables" || it->first == "requires" || it->first == "grants") continue;
+        if (has(S_INTRINSIC, it->first) || it->first == "enables" || it->first == "obsoletes" || it->first == "replaces" || it->first == "disables" || it->first == "requires" || it->first == "allowed" || it->first == "grants") continue;
         std::vector<std::string> leaves; flatten(it->second, "", "", leaves);
         std::printf("  modifier %s: %s\n", it->first.c_str(), join(leaves, "; ").c_str());
     }
@@ -345,6 +365,7 @@ static void walk_entity(const picojson::value& v, Report& r) {
         const std::string& k = it->first;
         r.topKeys[k] += 1;
         if (k == "requires")                                              check_requires(it->second, k, r);
+        else if (k == "allowed")                                          check_allowed(it->second, k, r);
         else if (k == "enables" || k == "obsoletes" || k == "replaces" || k == "disables") check_enables(it->second, k, r);
         else if (k == "grants")                                           check_grants(it->second, k, r);
         else if (has(S_INTRINSIC, k))                                     { /* intrinsic — light touch */ }
@@ -391,7 +412,7 @@ static void print_map(const char* title, const std::map<std::string, int>& m) {
 int main(int argc, char** argv) {
     S_RESERVED = mk(RESERVED_SECTIONS); S_INTRINSIC = mk(INTRINSIC); S_SCOPES = mk(SCOPES);
     S_UNITS = mk(UNITS); S_ATOMK = mk(ATOM_KEYS); S_PERK = mk(PER_KEYS); S_BUCKETS = mk(ENABLES_BUCKETS);
-    S_PBARE = mk(PRED_BARE); S_PPARAM = mk(PRED_PARAM); S_MEMBERSHIP = mk(MEMBERSHIP);
+    S_PBARE = mk(PRED_BARE); S_PPARAM = mk(PRED_PARAM); S_MEMBERSHIP = mk(MEMBERSHIP); S_ALLOWEDCAT = mk(ALLOWED_CATEGORIES);
 
     std::string root = "Assets/Data", renderType; bool doComplex = false;
     for (int i = 1; i < argc; ++i) {

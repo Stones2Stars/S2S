@@ -649,11 +649,10 @@ def requires_building(rec, store):
     vp = _txt(rec, "VictoryPrereq")
     if vp:
         build_all.append(_atom(vp, "world"))
-    # --- instance caps -> max(SELF,N) (world wonder = noneOf SELF world) ---
-    for tag, scope in (("iMaxGlobalInstances", "world"), ("iMaxTeamInstances", "team"), ("iMaxPlayerInstances", "empire")):
-        v = _int(rec, tag)
-        if v is not None and v >= 0:
-            build_all.append(_atom("SELF", scope, max=v))
+    # --- instance caps are NOT a requires atom (owner 2026-06-17) — they move to the declarative `allowed` cap.
+    # A requires SELF-atom forced an off-by-one (cap 1 -> max:0) and conflated "needed" (requires) with "allowed"
+    # (the ceiling). `allowed:{scope:N}` names the ceiling with the REAL number; SELF leaves requires entirely.
+    # Authored in curate() via allowed_building(). enabler-spec §5/§13.7. ---
     # --- civics / state-religion -> OPERATE (dormancy) ---
     for x in _typelist_struct(rec, "PrereqAndCivics", "PrereqCivic") or _typelist(rec, "PrereqAndCivics"):
         op_all.append(_atom(x, "empire"))
@@ -700,6 +699,22 @@ def requires_building(rec, store):
         out["operate"] = OrderedDict([("all", op_all)])
     # loadPrune (game options) lives in its own section, but author it here for now under requires for visibility.
     return out or None
+
+
+def allowed_building(rec):
+    """The declarative INSTANCE CAP (owner 2026-06-17): `allowed:{<scope>:N}` = "at most N of THIS may exist at
+    scope" — the REAL cap number (NOT a requires SELF-atom, which forced an off-by-one and conflated needed/allowed).
+    Scope-keyed (world/team/empire); for a building the cap scope ALSO derives its wonder category
+    (world->worldWonder, team->teamWonder, empire->nationalWonder; CvGameCoreUtils.cpp:340-369 isWorldWonder =
+    getMaxGlobalInstances()!=-1). Absent => uncapped. The new canDoStuff gate enforces it (build while
+    tally.count(SELF,scope) < N) and owns ignoring it (NO_WONDER_LIMIT/NO_NATIONAL_UNIT_LIMIT/CHALLENGE_ONE_CITY),
+    era-scaling, and +extra — all engine, never the parser (enabler-spec §5/§13.7)."""
+    allowed = OrderedDict()
+    for tag, scope in (("iMaxGlobalInstances", "world"), ("iMaxTeamInstances", "team"), ("iMaxPlayerInstances", "empire")):
+        v = _int(rec, tag)
+        if v is not None and v >= 0:
+            allowed[scope] = v
+    return allowed or None
 
 
 def _typelist_struct(rec, wrapper, keytag):
@@ -786,6 +801,7 @@ def curate(typ, rec, store):
     grants = OrderedDict()
     repeatable = []
     requires = requires_building(rec, store)
+    allowed = allowed_building(rec)
     loadprune = loadprune_building(rec)
 
     # --- PASS 2: keyed inversions (§6.1), properties, repeatable grants, one-shot grants, enables-from-XML ---
@@ -839,6 +855,8 @@ def curate(typ, rec, store):
         out["replaces"] = OrderedDict((k, replaces[k]) for k in sorted(replaces))
     if requires:
         out["requires"] = requires
+    if allowed:
+        out["allowed"] = allowed
     ordered = [f for f in FAMILY_ORDER if f in fams] + [f for f in fams if f not in FAMILY_ORDER]
     for f in ordered:
         out[f] = fams[f]
@@ -870,10 +888,10 @@ def curate_special(typ, rec, store):
     obsoletes = store.obsoletes_of(typ)
     if obsoletes:
         out["obsoletes"] = OrderedDict((k, obsoletes[k]) for k in sorted(obsoletes))
-    identity = OrderedDict()
     cap = _int(rec, "iMaxPlayerInstances")
     if cap is not None and cap >= 0:
-        identity["maxPlayerInstances"] = cap          # the per-player GROUP cap (the key gameplay)
+        out["allowed"] = OrderedDict([("empire", cap)])   # the per-player GROUP cap -> unified `allowed` idiom
+    identity = OrderedDict()
     if engine.text(rec.find("bValid")) in ("0", "false", "False"):
         identity["valid"] = False                      # bValid=0 -> the group is disabled (rare)
     art_blocks = OrderedDict()
@@ -949,14 +967,14 @@ def main():
 
     has = lambda k: sum(1 for o in results.values() if k in o)
     STRUCT = {"type", "description", "civilopedia", "help", "enables", "obsoletes", "replaces", "requires",
-              "cost", "ai", "loadPrune", "ui", "world", "sound", "identity"}
+              "allowed", "cost", "ai", "loadPrune", "ui", "world", "sound", "identity"}
     seen = sorted({f for o in results.values() for f in o if f not in STRUCT})
     print("BuildingInfo curated: %d" % n)
-    for k in ("enables", "obsoletes", "replaces", "requires", "cost", "ai", "loadPrune", "identity"):
+    for k in ("enables", "obsoletes", "replaces", "requires", "allowed", "cost", "ai", "loadPrune", "identity"):
         print("  with %-9s: %d" % (k, has(k)))
     print("  families seen: %s" % ", ".join(seen))
     print("SpecialBuildingInfo curated: %d  (with cap: %d)"
-          % (len(sb_results), sum(1 for o in sb_results.values() if (o.get("identity") or {}).get("maxPlayerInstances") is not None)))
+          % (len(sb_results), sum(1 for o in sb_results.values() if o.get("allowed") is not None)))
     if args.sample is not None:
         for nm in (args.sample or list(results)[:1]):
             src = results if nm in results else (sb_results if nm in sb_results else None)

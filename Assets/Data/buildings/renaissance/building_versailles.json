@@ -4,15 +4,11 @@
  "civilopedia": "TXT_KEY_BUILDING_VERSAILLES_PEDIA",
  "requires": {
   "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
-    }
-   ],
    "disabled": "IS_CAPITAL"
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "production": {
   "specialist": {

@@ -2,16 +2,8 @@
  "type": "BUILDING_LL_MONTE_VERDE",
  "description": "TXT_KEY_BUILDING_LL_MONTE_VERDE",
  "civilopedia": "TXT_KEY_BUILDING_LL_MONTE_VERDE_PEDIA",
- "requires": {
-  "build": {
-   "all": [
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
-    }
-   ]
-  }
+ "allowed": {
+  "world": 1
  },
  "food": {
   "city": {

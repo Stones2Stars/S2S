@@ -23,11 +23,6 @@
      "type": "BUILDING_GLAZE_MAKER",
      "scope": "empire",
      "min": 1
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ],
    "any": [
@@ -51,6 +46,9 @@
     ]
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "commerce": {
   "city": {

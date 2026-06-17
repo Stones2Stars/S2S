@@ -52,9 +52,17 @@ SPEED_PERCENT = OrderedDict([
 ])
 BASE_SPEED = "GAMESPEED_NORMAL"
 
+# Per-city wonder COUNT caps -> the declarative `allowed` ceiling (owner 2026-06-17): a culture level grants a
+# city an allowance of each wonder CATEGORY. It is part of the ENABLING (not identity) — the cap gates how many
+# of a category a city may hold. Keyed by the wonder-category DISCRIMINATOR (owner: worldWonders/teamWonders/
+# nationalWonders + the reserved totalWonders); city scope is implicit (a culture level is per-city). The new
+# canDoStuff gate enforces it (a category building drops from the city frontier when its count hits the allowance)
+# and owns ignoring it under NO_WONDER_LIMIT / CHALLENGE_ONE_CITY (engine, never the parser). `iMaxNationalWondersOCC`
+# is DROPPED: OCC forces wonder limits off in-engine; any OCC-specific limit belongs in the game-option's own
+# definition (out of #428 scope), never on every CultureLevel. enabler-spec §5/§13.7.
 WONDER_CAPS = OrderedDict([
-    ("iMaxWorldWonders", "maxWorldWonders"), ("iMaxTeamWonders", "maxTeamWonders"),
-    ("iMaxNationalWonders", "maxNationalWonders"), ("iMaxNationalWondersOCC", "maxNationalWondersOCC"),
+    ("iMaxWorldWonders", "worldWonders"), ("iMaxTeamWonders", "teamWonders"),
+    ("iMaxNationalWonders", "nationalWonders"),
 ])
 
 
@@ -103,6 +111,13 @@ def curate(typ, rec, store):
     enables = store.enabled_by(typ)
     if enables:
         out["enables"] = OrderedDict((k, enables[k]) for k in sorted(enables))
+    allowed = OrderedDict()                                  # per-city wonder-category COUNT caps (the enabling ceiling)
+    for tag, key in WONDER_CAPS.items():
+        v = engine.text(rec.find(tag))
+        if engine.is_int(v):
+            allowed[key] = int(v)
+    if allowed:
+        out["allowed"] = allowed
     cdm = engine.text(rec.find("iCityDefenseModifier"))
     if engine.is_int(cdm) and int(cdm) != 0:                 # additive modifier (drop the 0-identity, lossless).
         # top-level `defense` family, member `amount` = additive extra-defense %. The sibling `min` member
@@ -118,10 +133,6 @@ def curate(typ, rec, store):
     rad = engine.text(rec.find("iCityRadius"))
     if engine.is_int(rad):                                   # REPLACE/override (workable radius), not additive
         identity["cityRadius"] = int(rad)
-    for tag, key in WONDER_CAPS.items():                     # per-city CAPS (clamps), not additive flats
-        v = engine.text(rec.find(tag))
-        if engine.is_int(v):
-            identity[key] = int(v)
     thr = _collapse_thresholds(rec)
     if thr is not None:
         identity["cultureThreshold"] = thr
@@ -145,6 +156,7 @@ def main():
         overrides += len(ct.get("overrides", {})) if isinstance(ct, dict) else 0
     print("CultureLevelInfo curated: %d" % len(results))
     print("  with enables:     %d" % sum(1 for o in results.values() if "enables" in o))
+    print("  with allowed:     %d" % sum(1 for o in results.values() if "allowed" in o))
     print("  with defense:     %d" % sum(1 for o in results.values() if "defense" in o))
     print("  with replacedBy:  %d" % sum(1 for o in results.values() if "replacedBy" in o))
     print("  threshold overrides (~0 expected, purely geometric): %d" % overrides)

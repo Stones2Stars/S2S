@@ -64,6 +64,12 @@ SHADOW** alongside the existing XML-driven machinery, behind **gated logging** (
   same `CvInfoUtil` wrappers (format-agnostic — §3).
 - **Parity is NOT the success metric** (the cascade is *expected* to correct latent bugs). The shadow log surfaces
   DIVERGENCES for triage — bug-in-old vs bug-in-new — never byte-parity enforcement.
+- **The readJson cleartext RENDER is the JSON-INTENT surface, cross-checked against the shadow LOGS (owner 2026-06-17).**
+  `readjson.exe --render TYPE` (→ `Tools/ReadJson/testOutput/`) states in plain English what an entity's JSON *says* it does
+  ("Versailles: allowed 1 world; builds faster with marble; +10 culture, doubled after 1000 turns"). That is the **intent**;
+  the gated shadow comparison logs are what the engine **actually does**. Validation = the render conforms to the logged
+  behavior — a third leg beside new-vs-old: *intent (render) ↔ new-engine behavior (shadow log) ↔ old-engine behavior*. A
+  render/log divergence is a triage item (data wrong, or engine wrong). Keep renders for the entities under active wiring.
 - **The hard switch (last step):** `readJson` replaces `readXml` at the load seam (§3) **and** the shadow accumulators
   become the sole source as the demolished machinery (§4) is deleted. One atomic landing.
 

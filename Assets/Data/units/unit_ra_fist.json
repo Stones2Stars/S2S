@@ -17,14 +17,12 @@
     {
      "type": "RELIGION_KEMETISM",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "strength": {
   "unit": {

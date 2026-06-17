@@ -14,14 +14,12 @@
      "type": "BUILDING_ADVERTISING_AGENCY",
      "scope": "empire",
      "min": 6
-    },
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "commerce": {
   "city": {

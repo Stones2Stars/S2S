@@ -20,13 +20,17 @@ bolt-on.
 - **City is the leaf / bottom-out (enabler-spec §8).** Each city holds its own counts; empire/team/world counts are the
   additive roll-up of the per-city reports. So the tally never crosses city isolation — it aggregates reports.
 
-## 2. The THREE readers (one module, many consumers — wanted regardless of the cascade)
+## 2. The readers (one module, many consumers — wanted regardless of the cascade)
 1. **Enabler `requires` count-thresholds** — `min(TYPE,N)` / `max(TYPE,N)` at empire/team/world scope read the tally; the
    higher-scope **HAS sets themselves ARE the tally** (enabler-spec §8: "Tally IS the higher-scope HAS"). City-scope `requires`
    reads the local city count directly, NOT the tally.
-2. **Modifier `per` count-scaler** (modifier-spec §4) — `per:{type,each,scope}` at cross-city scopes (empire/team/world)
+2. **Enabler `allowed` CAP enforcement** (owner 2026-06-17; enabler-spec §5a) — a build is permitted only while
+   `tally.count(X, scope) < allowed`, where X is SELF (self-cap, scope `world`/`team`/`empire`) or a wonder-category counted
+   **per city** (`worldWonders`/…). So the declarative `allowed` ceiling is just another tally read; the engine, not the parser,
+   does the `count < cap` check (and ignores it under the no-limit game options).
+3. **Modifier `per` count-scaler** (modifier-spec §4) — `per:{type,each,scope}` at cross-city scopes (empire/team/world)
    resolves via the tally; `city`/`plot` = the local count. "One module, two readers" (modifier-spec §4).
-3. **Demographics / UI / AI / score** — current counts AND lifetime/historical facts (§6). Wanted independent of the
+4. **Demographics / UI / AI / score** — current counts AND lifetime/historical facts (§6). Wanted independent of the
    cascade, which is part of why it's its own module.
 
 ## 3. Structure — per-`(type, scope)` count, additive roll-up

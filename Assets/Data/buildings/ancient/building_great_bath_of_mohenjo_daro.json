@@ -6,14 +6,12 @@
  "requires": {
   "build": {
    "all": [
-    "IS_FRESHWATER",
-    {
-     "type": "SELF",
-     "scope": "world",
-     "max": 1
-    }
+    "IS_FRESHWATER"
    ]
   }
+ },
+ "allowed": {
+  "world": 1
  },
  "culture": {
   "city": {

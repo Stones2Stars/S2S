@@ -8,14 +8,12 @@
     {
      "type": "BUILDING_PALACE",
      "scope": "city"
-    },
-    {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 1
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 1
  },
  "cost": {
   "production": 23510

@@ -10,11 +10,6 @@
      "scope": "city"
     },
     {
-     "type": "SELF",
-     "scope": "empire",
-     "max": 5
-    },
-    {
      "type": "BONUS_SULPHUR",
      "scope": "city",
      "connection": "trade|vicinity"
@@ -31,6 +26,9 @@
     }
    ]
   }
+ },
+ "allowed": {
+  "empire": 5
  },
  "buildRate": {
   "self": {
