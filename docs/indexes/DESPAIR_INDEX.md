@@ -298,7 +298,32 @@ fortified. The uranium has been returned.*
 
 ---
 
-## 14. The .vcxproj of Lies — 47 cp
+## 14. The Merger With No Undo (Bring a Boat) — 54 cp
+
+Size Matters lets you fuse three units into one bigger one. The merge stamped the new unit
+with an *inhibit-split* flag — and the only line in the entire codebase that ever cleared it
+was the one that loads a unit onto a **transport ship**. So a merged army could never be
+split apart again *unless you first put it on a boat*.
+
+It gets better. The individual-unit merge path — a second, inline copy of the merge logic —
+quietly never set the flag, so *that* path worked fine. The "merge everyone in this group"
+path went through the shared merge core and inherited the permanent lock: same feature, two
+implementations, opposite behaviour. And the AI's own Size-Matters city-defense fallback
+*splits a merged defender back into pieces* — so the lock silently disabled a defensive move
+the AI still believed it had.
+
+The flag was an anti-oscillation band-aid, almost certainly from the pre-git era, back when
+the AI's decision tree would thrash a single stack merge→split→merge forever on contradictory
+logic. The AI has improved measurably since; the band-aid outlived the wound and stayed on,
+quietly confiscating everyone's Split button.
+
+*Status: fixed (#440) — the guard now scopes to the merge itself and releases the instant the
+merge completes, so merged units split again. A proper per-turn AI guard is on file for if the
+oscillation ever returns. Boats are once more optional.*
+
+---
+
+## 15. The .vcxproj of Lies — 47 cp
 
 The Visual Studio project file confidently states `PlatformToolset: v142`. The actual
 compiler is the **Microsoft Visual C++ Toolkit 2003** (MSVC 7.1). The project file drives
