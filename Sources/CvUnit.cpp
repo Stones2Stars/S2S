@@ -27137,6 +27137,14 @@ CvUnit* CvUnit::mergeUnits(CvUnit* pUnit1, CvUnit* pUnit2, CvUnit* pUnit3, CvSel
 
 	CvUnit* pkMergedUnit = GET_PLAYER(eOwner).initUnit(eUnitType, pPlot->getX(), pPlot->getY(), NO_UNITAI, NO_DIRECTION, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
 
+	// Oscillation guard (scoped to THIS merge operation): forbid splitting while the merge is in
+	// progress, so a split fired re-entrantly mid-merge can't tear the half-formed unit apart. It is
+	// RELEASED the moment the merge completes (below) -- it is NOT a permanent lock. Leaving it set was
+	// the #440 bug: group-merged units could never split, which also broke the SM city-defense fallback
+	// that splits a merged defender. The merge<->split CYCLE stays guarded the other way by inhibitMerge
+	// (set on split units, checked in canMerge), so releasing this does not enable thrash.
+	pkMergedUnit->setInhibitSplit(true);
+
 	pUnit1->setFortifyTurns(0);
 	pUnit2->setFortifyTurns(0);
 	pUnit3->setFortifyTurns(0);
@@ -27229,7 +27237,6 @@ CvUnit* CvUnit::mergeUnits(CvUnit* pUnit1, CvUnit* pUnit2, CvUnit* pUnit3, CvSel
 	{
 		pkMergedUnit->setLeaderUnitType(pUnit3->getLeaderUnitType());
 	}
-	pkMergedUnit->setInhibitSplit(true);
 	if (pJoinGroup != NULL)
 	{
 		pkMergedUnit->joinGroup(pJoinGroup);
@@ -27253,6 +27260,12 @@ CvUnit* CvUnit::mergeUnits(CvUnit* pUnit1, CvUnit* pUnit2, CvUnit* pUnit3, CvSel
 	pUnit2->kill(true, NO_PLAYER, true);
 	pUnit3->getGroup()->AI_setMissionAI(MISSIONAI_DELIBERATE_KILL, NULL, NULL);
 	pUnit3->kill(true, NO_PLAYER, true);
+
+	// Merge complete -- release the operation-scoped guard. The merged unit is now freely splittable
+	// (the human Split button and the SM city-defense fallback both depend on this). Strategic
+	// merge<->split oscillation is NOT prevented here; that belongs in the AI decision tree (a
+	// per-turn, per-unit merge/split cap), not in a permanent flag on the unit.
+	pkMergedUnit->setInhibitSplit(false);
 
 	return pkMergedUnit;
 }
