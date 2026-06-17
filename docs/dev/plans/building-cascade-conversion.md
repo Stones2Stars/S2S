@@ -689,7 +689,7 @@ Tooling under `Tools/Migration/`:
   `grants` (+ `grants.ai`); advanced-start → `identity.advancedStart` (not a modifier, needs review); `Goodies`
   → `identity`. All 12 written, every tag classified. Scope = APPLICATION level (empire/team/world/city),
   DISTINCT from the SOURCING handicap (own vs game vs team — a consumption rule in
-  `Sources/docs/reference/handicaps.md`: base ← own, `ai` ← game, EXCEPT `advancedStart.ai` ← own).
+  `docs/dev/reference/handicaps.md`: base ← own, `ai` ← game, EXCEPT `advancedStart.ai` ← own).
   `maintenance` mirrors `CvCity::calculateBaseMaintenanceTimes100` (components each modified, then a
   whole-maintenance modifier = the future `all` member); GOLD-only, post-income; `maxColony` caps the colony
   component. Verified vs 3 ground truths: the hand-built prototype (value-for-value), `CvHandicapInfo.h`,

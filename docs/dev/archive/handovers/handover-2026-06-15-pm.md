@@ -82,14 +82,14 @@ improvements). Do NOT blanket-trust the mapping.
   a dedicated Size-Matters pass.
 
 ## Pointers
-- **Curation order (full-context + reasons): `Sources/docs/plans/migration-entity-ranking.md`.**
-- **Modifier structure (LOCKED): `Sources/docs/plans/modifier-cascade-spec.md` (v3) — READ FIRST.**
-- Enabler model: `Sources/docs/plans/enabler-cascade-spec.md` (v0.3; instance-fate table accepted).
-- Migration plan + per-entity rulings: `Sources/docs/plans/building-cascade-conversion.md` (its §3
+- **Curation order (full-context + reasons): `docs/dev/plans/migration-entity-ranking.md`.**
+- **Modifier structure (LOCKED): `docs/dev/plans/modifier-cascade-spec.md` (v3) — READ FIRST.**
+- Enabler model: `docs/dev/plans/enabler-cascade-spec.md` (v0.3; instance-fate table accepted).
+- Migration plan + per-entity rulings: `docs/dev/plans/building-cascade-conversion.md` (its §3
   modifier-structure section is **superseded** by the v3 modifier spec).
-- From→to field mapping: `Sources/docs/plans/modifier-cascade-mapping.json` (⚠ re-render to locked shapes).
+- From→to field mapping: `docs/dev/plans/modifier-cascade-mapping.json` (⚠ re-render to locked shapes).
 - Toolkit: `Tools/Migration/` (`store.py`, `curate_common.py`, bespoke `curate_*.py`).
-- Prior handover: `Sources/docs/plans/handover-2026-06-15.md` (AM — enabler lock + branch reset).
+- Prior handover: `docs/dev/plans/handover-2026-06-15.md` (AM — enabler lock + branch reset).
 
 ## Git state
 - Branch **`json-data-migration`**: docs + `Tools/Migration/` toolkit (no `Assets/Data`). This session added

@@ -1260,7 +1260,7 @@ void CvCity::doTurn()
 	{
 		PERF_SCOPE("city.cacheFlush", getOwner());
 		//	Building-value retention (derived-data repository pilot, bounded staleness --
-		//	Sources/docs/plans/derived-data-repository.md §6.2). The per-city building-value
+		//	docs/dev/plans/derived-data-repository.md §6.2). The per-city building-value
 		//	cache is retained across turns: a full refresh runs only every
 		//	BUILDING_VALUE_REFRESH_PERIOD turns, staggered by city id so ~1/period of the
 		//	cities recompute each turn. Building changes still flush immediately

@@ -3,7 +3,7 @@
 Player- and designer-facing explanations of how individual game systems work —
 the rules, the costs, and the knobs (GlobalDefines / civics / XML) that govern
 them. These describe **behaviour as it currently ships**, not planned changes
-(developer refactor plans live in [`Sources/docs/plans/`](../../Sources/docs/plans/)).
+(developer refactor plans live in [`docs/dev/plans/`](../../docs/dev/plans/)).
 
 Each page links to the governing source and XML so a designer can find the exact
 numbers and a developer can find the implementation.

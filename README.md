@@ -56,11 +56,11 @@ This repository holds the sources the releases are built from:
 
 Start with [AGENTS.md](AGENTS.md) for repository layout, build instructions
 (`Tools/_Build.ps1`, FastBuild) and conventions; developer docs live in
-[`Sources/docs/`](Sources/docs/README.md). Pushing the `release` branch
+[`docs/dev/`](docs/dev/README.md). Pushing the `release` branch
 triggers the AppVeyor build that publishes to both channels above.
 
 ## Community
 
 - Discord: [discord.gg/R8Uejx6uaK](https://discord.gg/R8Uejx6uaK)
-- [The Despair Index](docs/DESPAIR_INDEX.md) — a rigorously unscientific
+- [The Despair Index](docs/indexes/DESPAIR_INDEX.md) — a rigorously unscientific
   ranking of bugs unearthed by the rework

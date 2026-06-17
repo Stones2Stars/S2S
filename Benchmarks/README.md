@@ -1,7 +1,7 @@
 # Benchmarks/ — live-game observation data
 
 Per-game benchmark runs for the AI-vs-human benchmarking initiative
-(`Sources/docs/plans/ai-vs-human-benchmarking.md`). Everything in this folder **except this
+(`docs/dev/plans/ai-vs-human-benchmarking.md`). Everything in this folder **except this
 README is gitignored** — the data is per-developer observation material (CSV time series,
 log captures, snapshot copies), often hundreds of MB per game. The *conventions* live here;
 the *data* stays local.

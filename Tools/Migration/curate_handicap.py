@@ -55,7 +55,7 @@ WHAT EACH FAMILY MEANS (current behaviour — the meanings that must survive the
 - `identity.advancedStart` — the pre-game POINTS BUDGET mod (buys techs/cities/units before turn 1). NOT a
   modifier, poorly supported in the DLL → parked in identity pending an advanced-start review.
 
-Verified against Sources/Infos/CvHandicapInfo.h + Sources/docs/reference/handicaps.md (read-sites, sourcing,
+Verified against Sources/Infos/CvHandicapInfo.h + docs/dev/reference/handicaps.md (read-sites, sourcing,
 the maintenance computation, the no-dead-fields verdict). PROVISIONAL family names: growth/techCost/workRate/
 buildCost/perEra (kept until the future rework). Manual renames logged in migration-renames.md.
 

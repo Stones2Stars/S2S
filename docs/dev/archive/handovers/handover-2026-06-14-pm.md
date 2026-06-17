@@ -19,7 +19,7 @@ branch EXCEPT the index pages, which were also published to **`main`** (hosted w
   entity; threshold-collapse assumes a not-yet-existing GameSpeed field), Vote (new policy-family
   vocab + 2 enabler edges), Civilization (grants at 3 scopes + hand-written read). Curate from the
   saved classification.
-- **Combat-class system AUDITED** (`Sources/docs/reference/unitcombat.md`, commits `ff2046e5`,
+- **Combat-class system AUDITED** (`docs/dev/reference/unitcombat.md`, commits `ff2046e5`,
   `321b131c`) + issues **#434** (swapped vs-class/vs-type UI labels) and **#435** (the rework).
   Key finding: the class-vs-class matrix is vestigial (18 edges / 14 of 418 classes; 96% inert
   tags); the real strength logic is 966 per-unit edges (54×) summed additively into one
@@ -85,9 +85,9 @@ building-GROUP concept **with the Building pass** (it belongs there, not as an e
    Property · LeaderHead → **Building, Unit LAST** (per the migration order ruling).
 
 ## Pointers
-- Migration model + per-entity rulings: `Sources/docs/plans/building-cascade-conversion.md`
+- Migration model + per-entity rulings: `docs/dev/plans/building-cascade-conversion.md`
   (read the "⇒ CHECKPOINT & RESUME" + "THE MODEL" sections).
-- Combat-class reference + audit: `Sources/docs/reference/unitcombat.md`.
+- Combat-class reference + audit: `docs/dev/reference/unitcombat.md`.
 - Classifications (resume analyses): `Tools/Migration/classifications/`.
 - Toolkit: `Tools/Migration/` (`store.py`, `curate_common.py`, bespoke `curate_*.py`).
 - Open issues: #433 (space founding), #434 (swapped combat labels), #435 (combat-class rework).

@@ -1,7 +1,7 @@
 # S2S #428 — JSON Data-Model Design Handoff
 
 **Status: model LOCKED 2026-06-14 — the authoritative spec + the live RESUME POINT now live in
-`Sources/docs/plans/building-cascade-conversion.md`. Read its "⇒ CHECKPOINT & RESUME (2026-06-14)" section
+`docs/dev/plans/building-cascade-conversion.md`. Read its "⇒ CHECKPOINT & RESUME (2026-06-14)" section
 FIRST (it has the current state, what's done, what's next, and the resume checklist), then "THE MODEL
 (locked 2026-06-14)" below it.** This handoff is kept for history; where it differs, the locked model wins.
 (The prior conversation contained an abandoned mass-migration detour — do not re-load it.)
@@ -137,8 +137,8 @@ An enabler Info additionally carries (NO prereqs):
 - `Tools/Migration/map_workflow.js` → the classification workflow (chunked to dodge rate limits). Reference.
 - `Assets/Data/*/` → generic database DRAFT (loose plural, **uncommitted scratch** — fine to delete/regen).
 - `Assets/Data/handicaps/` → hand-built **prototype** = the format reference (committed).
-- `Sources/docs/plans/building-cascade-conversion.md` → design spec (committed; conventions, prune principle).
-- `Sources/docs/plans/cross-entity-inversion-blueprint.md` → cross-entity reference inventory (committed).
+- `docs/dev/plans/building-cascade-conversion.md` → design spec (committed; conventions, prune principle).
+- `docs/dev/plans/cross-entity-inversion-blueprint.md` → cross-entity reference inventory (committed).
 
 ## Git state (branch `buildings-json`)
 - **Committed:** mapping files, design docs, consolidated DB (`186c2ed5`), unit-fix (`bc873817`).

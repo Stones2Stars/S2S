@@ -11,6 +11,6 @@ belong in `AGENTS.md` (the one unified place) or the docs it points to.
 
 @Sources/AGENTS.md
 
-Before editing any subsystem, also read its notes under `Sources/docs/` (reference/ for
+Before editing any subsystem, also read its notes under `docs/dev/` (reference/ for
 how code behaves, plans/ for in-flight initiatives) — see the index in
-`Sources/docs/README.md`.
+`docs/dev/README.md`.

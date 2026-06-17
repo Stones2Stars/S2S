@@ -11449,7 +11449,7 @@ bool CvGame::canEverConstruct(BuildingTypes eBuilding) const
 // tech-unlocked at least one unit that can see that class (e.g. barbarian Thieves stay
 // out of the game until the dog line is universally available). Invisibility classes with
 // no trainable seer anywhere in the XML keep the gate closed by the same principle.
-// See Sources/docs/plans/ai-vs-human-benchmarking.md (criminal finding).
+// See docs/dev/plans/ai-vs-human-benchmarking.md (criminal finding).
 bool CvGame::canNPCFieldUnit(UnitTypes eUnit) const
 {
 	PROFILE_EXTRA_FUNC();

@@ -594,7 +594,7 @@ public:
 	// the list of buildings whose constructibility B (or a free bonus B grants) can
 	// flip from false to true. Load-derived from info data only -> identical on every
 	// client. Lets the CABV PreLoop replace its O(buildings^2) enabler re-scan with an
-	// O(dependents) lookup. See Sources/docs/plans/unified-prerequisites-and-constructibility.md
+	// O(dependents) lookup. See docs/dev/plans/unified-prerequisites-and-constructibility.md
 	const std::vector<BuildingTypes>& getBuildingsEnabledBy(BuildingTypes eEnabler) const;
 	// Analogue for unit training: for enabler building B, the units whose train
 	// condition / typed prereqs B (or a free bonus B grants) can satisfy. Lets the
@@ -608,7 +608,7 @@ public:
 	// Static invisibility counter reverse-index: for invisibility class I, the trainable
 	// units that can see I. Load-derived from info data only -> identical on every client.
 	// Backs CvGame::canNPCFieldUnit's "every civ can counter it" gate on NPC invisible
-	// units. See Sources/docs/plans/ai-vs-human-benchmarking.md (criminal finding).
+	// units. See docs/dev/plans/ai-vs-human-benchmarking.md (criminal finding).
 	const std::vector<UnitTypes>& getUnitsSeeingInvisible(InvisibleTypes eInvisible) const;
 
 	int getNumSpecialBuildingInfos() const;

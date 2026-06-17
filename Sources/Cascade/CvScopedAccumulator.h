@@ -6,7 +6,7 @@
 
 //
 //	CvScopedAccumulator -- the shared SUBSTRATE primitive of the #430 cascade.
-//	Design: Sources/docs/plans/cascade-engine-430.md (section 1.0, "the scope spine + an additive
+//	Design: docs/dev/plans/cascade-engine-430.md (section 1.0, "the scope spine + an additive
 //	accumulator") + tally-cascade-spec.md.
 //
 //	NAME -- read it as "an accumulator SCOPED TO (owned by) a scope", NOT "an accumulator OF scopes".

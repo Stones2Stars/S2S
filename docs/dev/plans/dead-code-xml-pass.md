@@ -3,7 +3,7 @@
 Status: **candidate generation started (2026-06-11)** — Tier-1 items verified, a
 dead-GlobalDefines sweep done, and a batch of dead members found by the #196
 migration campaign filed as issues (#352–#359). No removals yet. Companion to the
-standing bug-hunt (`Sources/docs/plans/codebase-bug-hunt.md`). Same discipline:
+standing bug-hunt (`docs/dev/plans/codebase-bug-hunt.md`). Same discipline:
 tooling/grep *generates candidates*, but every removal is **personally verified
 against source before deletion**, in small reviewable PRs, Assert-build before
 each C++ PR.

@@ -92,7 +92,7 @@ not findings to re-discover.
   NEVER retype a unit (the historic unconditional retype in `AI_guardCity` corrupted the
   demand picture — owner ruling: overdefended > underdefended, join eagerly/release
   reluctantly via `GARRISON_RELEASE_MARGIN_PERCENT`). Details:
-  `Sources/docs/reference/CvUnitAI.md` (garrison-tiers section).
+  `docs/dev/reference/CvUnitAI.md` (garrison-tiers section).
 
 ### Unit AI fallback terminals
 - **Audit pattern: idle-unit fallback terminals must not park units wherever they happen
@@ -137,7 +137,7 @@ not findings to re-discover.
   registration, FastBuild unity grouping that exposes latent missing includes, graphics
   paths that run pre-init, the dead `.vcxproj`, etc. — see "Key Subsystem Knowledge"). Before
   any change, **read the relevant core docs first** (this file, the nearest `AGENTS.md`, and
-  the subsystem's `Sources/docs/` notes), trace every caller/consumer of what you touch, and
+  the subsystem's `docs/dev/` notes), trace every caller/consumer of what you touch, and
   assume a small edit has ripples until you've checked. Do not skip this because a change
   "looks trivial" — that assumption has repeatedly produced regressions and contradicted
   documented design.
@@ -150,8 +150,8 @@ not findings to re-discover.
   branches while the user may be mid-build.** (Read-only git — `status`/`log`/`diff` — is
   always fine.)
 - **Docs-only changes may be committed and pushed straight to `main`** (owner ruling
-  2026-06-12): the indexes (`docs/DESPAIR_INDEX.*`, `docs/REALISM_INDEX.*`), player docs,
-  `Sources/docs/` notes, AGENTS.md — provided NOTHING else rides in the commit. Anything
+  2026-06-12): the indexes (`docs/indexes/DESPAIR_INDEX.*`, `docs/indexes/REALISM_INDEX.*`), player docs,
+  `docs/dev/` notes, AGENTS.md — provided NOTHING else rides in the commit. Anything
   gameplay-affecting (C++ code, `Assets/XML` data, Python) keeps the careful path:
   branch + PR + playtest per the conventions above.
 - **Verify the current branch immediately before every commit.** Run
@@ -202,14 +202,20 @@ subsystem works, a design decision, a plan, a non-obvious "gotcha", the state of
 standing initiative — write it into the appropriate committed doc *in the same
 change*, so every contributor and every agent sees one shared source of truth:
 
-- How existing code behaves → `Sources/docs/reference/`.
-- A change or initiative you intend to make (plan, scope, rollout, removal) → `Sources/docs/plans/`.
+All documentation lives under **`docs/`**, split by audience (map: [`docs/README.md`](docs/README.md)):
+`docs/dev/` (engineers/agents), `docs/modders/` (data authoring), `docs/players/` (manuals/mechanics/FAQs),
+`docs/indexes/` (the hosted DESPAIR/REALISM/COMPLEXITY catalogs), `docs/crap/` (half-outdated holding pen).
+(Engine docs used to live under `Sources/docs/` — consolidated into `docs/dev/` on 2026-06-17.)
+
+- How existing code behaves → `docs/dev/reference/`.
+- A change or initiative you intend to make (plan, scope, rollout, removal) → `docs/dev/plans/`.
+- A superseded dev doc → move it to `docs/dev/archive/` (don't delete history; get it out of the live set).
 - Cross-cutting, must-not-rediscover facts → "Key Subsystem Knowledge" above (or the nearest `AGENTS.md`).
-- Player-facing rules, manuals, FAQs → top-level `docs/`.
+- Player-facing rules, manuals, FAQs → `docs/players/`. How to author data / mods → `docs/modders/`.
 - A newly-found bug of exceptional absurdity may *additionally* earn an entry in
-  [`docs/DESPAIR_INDEX.md`](docs/DESPAIR_INDEX.md) (owner-sanctioned, lighthearted,
+  [`docs/indexes/DESPAIR_INDEX.md`](docs/indexes/DESPAIR_INDEX.md) (owner-sanctioned, lighthearted,
   optional — never a substitute for the real fix/issue/doc). Its sibling
-  [`docs/REALISM_INDEX.md`](docs/REALISM_INDEX.md) catalogues "super realistic" *mechanics*
+  [`docs/indexes/REALISM_INDEX.md`](docs/indexes/REALISM_INDEX.md) catalogues "super realistic" *mechanics*
   — absurdities working exactly as designed (same policy: optional, never a substitute
   for the real issue).
 - **Rules and conventions for agents/contributors → THIS file (`AGENTS.md`), always.**
@@ -220,14 +226,14 @@ change*, so every contributor and every agent sees one shared source of truth:
 Any per-developer assistant memory store is a personal *index/cache* only — it is
 **not** a substitute for the in-repo copy, and the in-repo copy is authoritative.
 If you record something locally, mirror the shareable part into the repo in the same
-change, and keep these docs current as the code moves. See `Sources/docs/README.md`.
+change, and keep these docs current as the code moves. See `docs/dev/README.md`.
 
 **⛔ HARD RULE — every owner ruling goes into the repo docs IMMEDIATELY, unprompted.**
 When the owner makes a ruling in conversation — a design decision, a workflow rule, a
 relaxed or tightened constraint, a "from now on do X" — writing it to assistant memory is
 NOT enough and never the end state. In the SAME work item (same commit/PR, without being
 asked) write it into the right repo home: workflow/convention rulings → this file's
-Conventions; subsystem/design rulings → the relevant `Sources/docs/` page. A ruling that
+Conventions; subsystem/design rulings → the relevant `docs/dev/` page. A ruling that
 exists only in one developer's local memory is invisible to every other contributor and
 agent, and has repeatedly had to be re-requested — treat "saved to memory only" as an
 unfinished task.

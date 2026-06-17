@@ -242,7 +242,7 @@ longer than most software lives.
 preparation), blind where it matters (`AI_foundValue` scores the raw, pre-terraform yield,
 so the AI never founds the one city that would teach itself the rest). AI space awareness is
 explicitly deferred to Phase B7 of the multimap→zone rework
-(`Sources/docs/plans/multimap-zone-rework.md`), and the founding blindness is now tracked as
+(`docs/dev/plans/multimap-zone-rework.md`), and the founding blindness is now tracked as
 issue #433. ETA: historically, "next version."*
 
 ---

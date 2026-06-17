@@ -1,10 +1,11 @@
 # Cascade engine (#430) — implementation plan
 
-**Status: design-complete, implementation starting (owner architecture session 2026-06-16).** The DESIGN lives in THREE
-specs — `enabler-cascade-spec.md` (v0.3) + `modifier-cascade-spec.md` (v3) + `tally-cascade-spec.md` (the count machine,
-consolidated 2026-06-16) — one per machine. This is the IMPLEMENTATION roadmap — the runtime engine that consumes the #428
-JSON and replaces ~7–8k lines of scattered availability + modifier machinery. Read the three specs first; this doc is the
-build plan + the validated load/demolition map, not a re-derivation of the model.
+**Status: design-complete, implementation starting (owner architecture session 2026-06-16).** The DESIGN lives in the
+machine specs — `enabler-cascade-spec.md` (v0.3) + `modifier-cascade-spec.md` (v3) + `tally-cascade-spec.md` (the count
+machine, consolidated 2026-06-16) — one per machine, plus **`event-spine-spec.md`** (the front-door event system the tally /
+`grants` / logging all consume — design session 2026-06-17). This is the IMPLEMENTATION roadmap — the runtime engine that
+consumes the #428 JSON and replaces ~7–8k lines of scattered availability + modifier machinery. Read the specs first; this
+doc is the build plan + the validated load/demolition map, not a re-derivation of the model.
 
 ---
 
@@ -60,8 +61,11 @@ SHADOW** alongside the existing XML-driven machinery, behind **gated logging** (
   developed incrementally and shadow-validated first. This is engine development, NOT shipping data slices (which the rule
   forbids) — the new paths are gated instrumentation until the flip.
 - **Shadow data source = the CURRENT (XML-loaded) info objects** (the same getters the old machinery reads) → an
-  apples-to-apples new-vs-old compare. The JSON only becomes the source at the FINAL cutover, when `readJson` populates the
-  same `CvInfoUtil` wrappers (format-agnostic — §3).
+  apples-to-apples new-vs-old compare. The JSON only becomes the source at the FINAL cutover, when `readJson`'s FRESH
+  structures become the source the machines read. **(Corrected 2026-06-17: an earlier draft of this line said readJson
+  "populates the same `CvInfoUtil` wrappers" — that CONTRADICTS §2b/§3, which is the governing ruling: build FRESH,
+  actively AVOID `CvInfoUtil`/the old `read()` path. `readJson` is its own fresh reader; at cutover the fresh structures
+  serve the EXE-bound accessor surface (§3), they do NOT repopulate `CvInfoUtil`.)**
 - **Parity is NOT the success metric** (the cascade is *expected* to correct latent bugs). The shadow log surfaces
   DIVERGENCES for triage — bug-in-old vs bug-in-new — never byte-parity enforcement.
 - **The readJson cleartext RENDER is the JSON-INTENT surface, cross-checked against the shadow LOGS (owner 2026-06-17).**

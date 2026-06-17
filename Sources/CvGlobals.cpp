@@ -2806,7 +2806,7 @@ void cvInternalGlobals::switchMap(MapTypes eMap)
 	FASSERT_BOUNDS(0, NUM_MAPS, eMap);
 
 	// Multi-map is soft-disabled pending the single-map collapse (see
-	// Sources/docs/plans/multimap-zone-rework.md): never initialise / page in a map that
+	// docs/dev/plans/multimap-zone-rework.md): never initialise / page in a map that
 	// isn't already live. New games only have MAP_EARTH loaded, so no other map is
 	// reachable; an existing save's already-loaded maps stay switchable so it can't be
 	// trapped. The single-map collapse + zone paging replaces this wholesale.

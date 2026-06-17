@@ -39,14 +39,14 @@ we get there.
 ## 2. Content taxonomy & single sources (game-side)
 
 Three kinds of game content, each with exactly one authoritative home. (Developer reference —
-`Sources/docs/` — is the fourth kind and is already single-sourced under
-[`Sources/docs/README.md`](../README.md); not repeated here.)
+`docs/dev/` — is the fourth kind and is already single-sourced under
+[`docs/dev/README.md`](../README.md); not repeated here.)
 
 | Kind | Single source of truth | Surfaces it should feed (generated/rendered, never re-typed) |
 |---|---|---|
 | **Game-data entities** — units, buildings, techs, civics, traits, bonuses/resources, improvements, promotions, projects, eras, terrain, features, religions, specialists, … | the loaded `Cv*Info` tables, defined by `Assets/XML/**/CIV4*Infos.xml` and read via `CvInfoUtil`/`getDataMembers`. XML is the on-disk form; the loaded table is the in-memory truth. | the in-game Python pedia (queries the loaded tables); downstream, the website (via the converter, in `s2swebsite`). |
 | **Display / help text** — names, pedia paragraphs, strategy, help | the GameText `TXT_KEY_*` catalog (`Assets/XML/GameText/*.xml`, multilingual). Entities hold only the *key*; resolution is `CyTranslator.getText`. | the in-game pedia (resolved at runtime); downstream, the website. |
-| **Game-mechanics prose** — "how X works" narrative not tied to one entity (active defense, conscription, power, combat odds, BUG options…) | the **`NewConceptInfo` Civilopedia text** (`TXT_KEY_CONCEPT_*_PEDIA`), declared in `Assets/XML/BasicInfos/CIV4NewConceptInfos.xml`. This is the ONE home. | the in-game pedia "Concepts/Strategy/Shortcuts" sections (already render concept text); the player docs under `docs/mechanics/` **link/transclude** it, they do not re-author it; downstream, the website. |
+| **Game-mechanics prose** — "how X works" narrative not tied to one entity (active defense, conscription, power, combat odds, BUG options…) | the **`NewConceptInfo` Civilopedia text** (`TXT_KEY_CONCEPT_*_PEDIA`), declared in `Assets/XML/BasicInfos/CIV4NewConceptInfos.xml`. This is the ONE home. | the in-game pedia "Concepts/Strategy/Shortcuts" sections (already render concept text); the player docs under `docs/players/mechanics/` **link/transclude** it, they do not re-author it; downstream, the website. |
 
 **The cross-cutting join.** Entities and concepts carry only `TXT_KEY_*` references; the strings
 live separately. The audit lever: a key referenced by an entity with no GameText entry is a
@@ -76,7 +76,7 @@ a clean, minimal, uniform model first; never bless the current haphazard XML as-
   happen and noise in every surface.
 - **De-duplicate authored prose against the data.** Where a player doc restates numbers that
   live authoritatively in XML/`CvCity.cpp`/concept text (e.g.
-  [`docs/mechanics/conscription.md`](../../../docs/mechanics/conscription.md) re-typing
+  [`docs/players/mechanics/conscription.md`](../../../docs/players/mechanics/conscription.md) re-typing
   cost/requirement values), retrofit the doc to **link/transclude the governing concept**, not
   re-edit a copy whenever the source moves.
 
@@ -121,7 +121,7 @@ the mechanism the cleanup above feeds, and the reason the data becomes uniformly
    (every entity/concept key has GameText).
 4. **Don't port garbage.** A category is not declared "done" (or handed downstream) until it is
    clean and declarative. We never bless data we know is dead or malformed.
-5. **Docs governance is already the model.** [`Sources/docs/README.md`](../README.md) + the
+5. **Docs governance is already the model.** [`docs/dev/README.md`](../README.md) + the
    `AGENTS.md` "every owner ruling goes into the repo immediately" rule keep knowledge
    single-sourced; this plan extends the same discipline to game *content*.
 

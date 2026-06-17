@@ -48,7 +48,7 @@ root `AGENTS.md`.
 - Some mod/runtime behavior depends on local tooling and setup scripts; avoid assuming clean-room runtime behavior without validation.
 
 ## Reference Docs
-- **Developer docs index: [`Sources/docs/README.md`](docs/README.md)** — split into
+- **Developer docs index: [`docs/dev/README.md`](docs/README.md)** — split into
   `docs/reference/` (how the code works today, one note per class/system) and
   `docs/plans/` (refactor scopes, rollouts, removal maps, standing initiatives).
   Player-facing documentation lives separately under the top-level `docs/` folder.

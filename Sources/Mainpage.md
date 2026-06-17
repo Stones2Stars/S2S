@@ -335,7 +335,7 @@ profiler for performance measurement of hot paths.
 
 ## Navigation
 
-Individual class reference pages (in [Sources/docs/reference/](docs/reference/)):
+Individual class reference pages (in [docs/dev/reference/](docs/reference/)):
 
 ### AI Classes
 | Class | Description |

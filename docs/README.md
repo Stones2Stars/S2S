@@ -1,31 +1,24 @@
-# Documentation (player & end-user)
+# S2S documentation — map
 
-End-user–facing documentation for Stones2Stars: how to install it, how to play,
-and how the game's systems work. **Developer / engine documentation lives
-separately** under [`Sources/docs/`](../Sources/docs/README.md) — keep the two apart.
+All Stones2Stars documentation lives here, split by **audience** so it's obvious where to look (and where new
+docs go). Engine/source docs used to live under `Sources/docs/` — they were consolidated here 2026-06-17.
 
-## Getting started
-- [MOD-README.md](MOD-README.md) — what the mod is and how to install it.
-- Caveman2Cosmos Readme.pdf / .odt — the inherited C2C manual.
-- [List of keyboard shortcuts.txt](List%20of%20keyboard%20shortcuts.txt) — key bindings.
+| folder | audience | what's in it |
+|---|---|---|
+| **[`dev/`](dev/README.md)** | **engineers / agents** | how the code works (`dev/reference/`), in-flight initiatives + specs (`dev/plans/`), and superseded/historical docs (`dev/archive/`). **Start here for any code work.** |
+| **[`modders/`](modders/)** | mod authors | how to author game data — the JSON [`datastructure/`](modders/datastructure/README.md) reference, [`modding/`](modders/modding/) guides, the civics/XML FAQ |
+| **[`players/`](players/)** | players | gameplay [`mechanics/`](players/mechanics/), the Caveman2Cosmos manual, keyboard shortcuts, Snofru map-pack readmes |
+| **[`indexes/`](indexes/)** | everyone (hosted) | the curated catalogs — DESPAIR / REALISM / COMPLEXITY (`.md` + the hostable `.html`). Owner outlet; served via GitHub Pages |
+| **`crap/`** | nobody, yet | half-outdated holding pen (e.g. `WebDocumentation/` stale link bookmarks). Triage out of here over time |
 
-## Game mechanics
-How individual game systems actually work, at the player/designer level.
-See **[mechanics/](mechanics/README.md)**.
+Root files: **[`MOD-README.md`](MOD-README.md)** — what the mod is + how to install it (the repo front door).
 
-## Reference & FAQs
-- Revolution_Civics_XML_FAQ.htm — civics / Revolution system FAQ.
-- [WebDocumentation/](WebDocumentation/) — links to C2C combat-mod and feature guides.
+## Where new docs go
+- **How some code behaves today** → `dev/reference/` (one note per class/system).
+- **A change/initiative you intend to make** (plan, spec, rollout) → `dev/plans/`.
+- **How to author data / mod** → `modders/`.
+- **Player-facing** (manual, mechanics, FAQ) → `players/`.
+- **Rules & conventions for agents/contributors** → the top-level **`AGENTS.md`** (the single rule home), *not* here.
+- **Superseded** dev docs → `dev/archive/` (don't delete history; move it out of the live set).
 
-## Culture
-- [DESPAIR_INDEX.md](DESPAIR_INDEX.md) — The S2S Despair Index™: the standout bugs of the
-  rework, ranked by developer despair in centiphants. Not holy writ; pure outlet.
-  Hostable version: [DESPAIR_INDEX.html](DESPAIR_INDEX.html) (self-contained, served via
-  GitHub Pages from this folder).
-
-## Map packs
-- SnofruSpacemaps readmes — the bundled Snofru space-map scripts (Duel / Large / Standard).
-
----
-*Looking for how the **code** is organised? Start at
-[`Sources/docs/README.md`](../Sources/docs/README.md).*
+*Looking for the engineering docs? → [`dev/README.md`](dev/README.md).*

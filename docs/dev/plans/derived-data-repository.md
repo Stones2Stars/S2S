@@ -1,5 +1,14 @@
 # Derived-data repository — architecture plan
 
+> **⛔ SUPERSEDED (owner 2026-06-17) — do NOT build on this; do NOT treat as the live plan.** The #430 cascade
+> (the scope-accumulator substrate + tally + modifier + enabler — see `cascade-engine-430.md`, `event-spine-spec.md`,
+> `tally-cascade-spec.md`) subsumes this repository's intended purposes. The cascade accumulator is deliberately NOT a
+> repository tenant (authoritative additive aggregation, no `TLazy`/version/dirty machinery). The skeleton
+> (`CvDerivedData.{h,cpp}` + the `dataRepository()` wiring) **stays physically in place during shadow** (its
+> `init()`/`reset()` is live), and its removal is a deferred cutover/demolition step. The one genuinely-useful leftover
+> idea — a build-list cache for UI responsiveness on selection-change — IS the enabler's generated frontier, cacheable
+> cleanly later if measured. Kept below as the historical record of the design we iterated through.
+
 > **Part of a larger frame.** This is the **read-side** of the AI architecture north-star
 > ([`ai-architecture-north-star.md`](ai-architecture-north-star.md)) — the change-driven derived-data
 > modules. Read the north-star for the goal, the hard constraints (VC2003/C++03, EXE base-class ABI,

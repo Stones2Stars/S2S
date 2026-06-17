@@ -5,7 +5,7 @@
 Let a building grant a yield bonus to **a group of improvements** (e.g. "all farmland",
 "all forest-production tiles", "all mines") instead of naming each improvement and each
 of its upgrade stages individually. This is the general form of the per-improvement
-`<ImprovementYieldChanges>` lever (see `Sources/docs/plans/` siblings and the
+`<ImprovementYieldChanges>` lever (see `docs/dev/plans/` siblings and the
 `Yield-parity` blocks in `Regular_CIV4BuildingInfos.xml`) and it cleanly solves the
 "bonus must follow the tile when it upgrades" problem by membership rather than by
 walking the upgrade chain.

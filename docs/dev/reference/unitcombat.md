@@ -163,4 +163,4 @@ readable, single-origin set of modifiers instead of four additive channels nobod
 - Class: `Sources/CvUnitCombatInfo.{h,cpp}` · Data: `Assets/XML/Units/CIV4UnitCombatInfos.xml`
 - Related: [CvOutcome](CvOutcome.md), [CvProperties](CvProperties.md), the combat model
   (`Sources/CvCombatModel.*`), and the migration plan
-  (`Sources/docs/plans/building-cascade-conversion.md`).
+  (`docs/dev/plans/building-cascade-conversion.md`).

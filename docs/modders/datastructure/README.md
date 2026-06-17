@@ -398,5 +398,5 @@ fast with connected marble; +10 culture, doubling after it has stood 1000 turns.
 ---
 
 *This is the modder-facing reference. The internal engine rationale and the migration's field-by-field mapping live in
-`Sources/docs/plans/` (`data-model-spec.md`, `enabler-cascade-spec.md`, `modifier-cascade-spec.md`,
+`docs/dev/plans/` (`data-model-spec.md`, `enabler-cascade-spec.md`, `modifier-cascade-spec.md`,
 `tally-cascade-spec.md`, `migration-renames.md`) and are not needed to author data.*

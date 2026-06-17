@@ -1,0 +1,24 @@
+// markdownlint config for S2S docs — tuned to FIT OUR STYLE, not the other way round.
+// Picked up automatically by the VS Code "markdownlint" extension (and the CLI).
+// We disable the stylistic rules that conflict with how we deliberately write our docs,
+// and keep the checks that catch genuinely broken structure.
+{
+  "default": true,
+
+  // --- disabled: these fire constantly on our deliberate style -------------------------
+  "MD013": false,  // line-length: we write long prose/table lines on purpose.
+  "MD033": false,  // no-inline-html: tables and the occasional <br>/<sub> are fine.
+  "MD036": false,  // no-emphasis-as-heading: we use **bold lead-ins:** as structure heavily.
+  "MD026": false,  // trailing-punctuation-in-heading: our headings use "?" and ":" intentionally.
+  "MD041": false,  // first-line-h1: many docs open with a status blockquote/note, not an H1.
+  "MD034": false,  // bare-urls: we paste bare URLs (issue links, hosting paths).
+  "MD029": false,  // ordered-list-prefix: we mix "1." and sequential numbering as reads best.
+  "MD040": false,  // fenced-code-language: some illustrative blocks are intentionally plain ```.
+
+  // --- relaxed (kept, but tuned) -------------------------------------------------------
+  // duplicate headings are fine across DIFFERENT sections (specs reuse "Open"/"Status"/"Next"),
+  // but still flag a true duplicate under the SAME parent.
+  "MD024": { "siblings_only": true }
+
+  // everything else stays at markdownlint defaults (broken-structure checks we want).
+}

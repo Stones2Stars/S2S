@@ -271,5 +271,5 @@ at #430 — never authored.
   is fully settled, ship per-info-type specifications the parser matches against — which reserved sections + modifier
   families are valid on each info type — so misplaced keys (building-only data on a unit, etc.) are REJECTED rather than
   silently ignored. (Distinct from the `allowed` cap §4.2a; this is structural validation. Modder-facing note in
-  `docs/datastructure/README.md`.) Not built during the migration; a post-settle hardening pass.
+  `docs/modders/datastructure/README.md`.) Not built during the migration; a post-settle hardening pass.
 ```

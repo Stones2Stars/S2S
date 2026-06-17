@@ -1,4 +1,4 @@
-// PlotSnapshot.cpp -- see Sources/docs/reference/PlotSnapshot.md for schema and conventions.
+// PlotSnapshot.cpp -- see docs/dev/reference/PlotSnapshot.md for schema and conventions.
 //
 // Emits one CSV file per call:
 //   PlotSnapshot_<tag>_t<turn>.csv
