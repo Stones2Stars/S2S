@@ -1,5 +1,12 @@
 # Unified Prerequisites & Constructibility (#195)
 
+> **⛔ SUPERSEDED going forward (2026-06-14, owner) — but the SHIPPED work STANDS.** The forward goal (fold the
+> remaining ~38 `Prereq*` into a `BoolExpr` prereq model) is DROPPED: the #428 top-down model + the #430 enabler
+> cascade replace it (prereqs invert to top-down `enables` + a derived reverse-index; see `enabler-cascade-spec.md`,
+> `cascade-engine-430.md`). What's **kept**: the merged Phase-1 PreLoop fix (PR #314) and the enabler reverse-index
+> (PR #315) — the index is **partly reused** by #430's `enables` generation. So: don't undo the shipped index/PreLoop
+> work; don't pursue the BoolExpr-prereq goal. Kept below as rollout/measurement history.
+
 > This is the **plan / rollout / measurement history**. For how the shipped system works
 > today (the model, the enabler index, help-text rendering), see the reference note
 > [`../reference/constructibility-and-prerequisites.md`](../reference/constructibility-and-prerequisites.md).

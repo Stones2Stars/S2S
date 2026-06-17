@@ -1,5 +1,11 @@
 # Declarative info loading (`CvInfoUtil`)
 
+> **⚠ The MECHANISM below is still current (XML loads via `CvInfoUtil` until the #430 cutover) — but the #196
+> GOAL is SUPERSEDED (2026-06-17).** Do NOT follow the "migrate the remaining hand-written infos to declarative
+> XML" recipe: the direction is now **top-down JSON via `readJson`** (#428/#430), which deliberately AVOIDS
+> `CvInfoUtil` and builds fresh (see `cascade-engine-430.md` §2b/§3). At the cutover `readJson` replaces the XML
+> load entirely. Keep this as accurate reference for *today's* loader; ignore its forward migration recipe.
+
 How `Cv*Info` classes load themselves from XML, and the recipe + pitfalls for migrating
 the remaining hand-written ones. Tracking issue: **#196**.
 
