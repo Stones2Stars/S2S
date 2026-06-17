@@ -50,6 +50,7 @@ Settings
                     + ' /I"$SOURCE_DIR$/include"'
                     + ' /I"$SOURCE_DIR$"'
                     + ' /I"$SOURCE_DIR$/Infos"'
+                    + ' /I"$SOURCE_DIR$/Cascade"'
 
 .INCS               = '$PROJECT_INCS$ $GLOBAL_INCS$'
 
@@ -199,7 +200,7 @@ Settings
 
 Unity( 'Sources-Unity' )
 {
-    .UnityInputPath = { '$SOURCE_DIR$', '$SOURCE_DIR$/Infos', '$SOURCE_DIR$/Repos', '$SOURCE_DIR$/Utils' }
+    .UnityInputPath = { '$SOURCE_DIR$', '$SOURCE_DIR$/Infos', '$SOURCE_DIR$/Repos', '$SOURCE_DIR$/Utils', '$SOURCE_DIR$/Cascade' }
     .UnityInputExcludePattern = '*/Cy*'
     // Keep our pch file out of the unity files
     .UnityInputExcludedFiles = { "CvGameCoreDLL.cpp" }

@@ -366,6 +366,7 @@
     <ClCompile Include="Repos\BuildingsRepo.cpp" />
     <ClCompile Include="Repos\BuildsRepo.cpp" />
     <ClCompile Include="Utils\PlotSnapshot.cpp" />
+    <ClCompile Include="Cascade\CvScopedAccumulator.cpp" />
     <ClCompile Include="Infos\CvRiverModelInfo.cpp" />
     <ClCompile Include="Infos\CvRouteInfo.cpp" />
     <ClCompile Include="Infos\CvRouteModelInfo.cpp" />
@@ -680,6 +681,7 @@
     <ClInclude Include="Repos\BuildingsRepo.h" />
     <ClInclude Include="Repos\BuildsRepo.h" />
     <ClInclude Include="Utils\PlotSnapshot.h" />
+    <ClInclude Include="Cascade\CvScopedAccumulator.h" />
     <ClInclude Include="Infos\CvRiverModelInfo.h" />
     <ClInclude Include="Infos\CvRouteInfo.h" />
     <ClInclude Include="Infos\CvRouteModelInfo.h" />

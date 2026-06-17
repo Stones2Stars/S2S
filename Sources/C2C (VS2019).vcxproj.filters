@@ -85,6 +85,9 @@
     <Filter Include="Source\Base\Utils">
       <UniqueIdentifier>{c4e2a371-9b86-4f4d-bd57-2e8f3a517d04}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Base\Cascade">
+      <UniqueIdentifier>{ca5cade0-1111-4222-8333-444455556666}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source\Base\Properties">
       <UniqueIdentifier>{534a1ab8-2aff-4b46-aa86-ae1735a3ccd8}</UniqueIdentifier>
     </Filter>
@@ -671,6 +674,9 @@
     </ClCompile>
     <ClCompile Include="Utils\PlotSnapshot.cpp">
       <Filter>Source\Base\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Cascade\CvScopedAccumulator.cpp">
+      <Filter>Source\Base\Cascade</Filter>
     </ClCompile>
     <ClCompile Include="Infos\CvRiverModelInfo.cpp">
       <Filter>Source\Base\Infos</Filter>
@@ -1696,6 +1702,9 @@
     </ClInclude>
     <ClInclude Include="Utils\PlotSnapshot.h">
       <Filter>Source\Base\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Cascade\CvScopedAccumulator.h">
+      <Filter>Source\Base\Cascade</Filter>
     </ClInclude>
     <ClInclude Include="Infos\CvRiverModelInfo.h">
       <Filter>Source\Base\Infos</Filter>

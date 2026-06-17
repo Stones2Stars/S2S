@@ -91,6 +91,16 @@ SHADOW** alongside the existing XML-driven machinery, behind **gated logging** (
 - **ACTIVELY AVOID reusing existing engine code.** Do NOT thread the new path through `CvInfoUtil` / the old `read()` /
   `SetGlobalClassInfo`. The old machinery is demolition fodder (§4), not a foundation. The new path is its OWN, parallel and
   independent of the old during shadow (§2).
+- **The derived-data REPOSITORY (`CvDerivedData` / `TLazy` / `dataRepository()`) is NOT built upon — and NOT removed yet
+  (owner 2026-06-17).** The cascade's substrate ACCUMULATOR is *not* a repository tenant and borrows none of its
+  version/dirty/staleness machinery (it is authoritative additive aggregation, the repository is advisory lazy memoization;
+  `CvScopedAccumulator.h` carries this boundary). We iterated the repository through several structures (v1-on-AI-subclasses →
+  v2-on-base-objects) — that prior tinkering must NOT poison the clean accumulator design. **BUT the skeleton stays in place
+  during shadow:** its `init()`/`reset()` wiring is live in the game lifecycle, and we never remove live machinery before the
+  atomic cutover (§2) — its removal is a §4 demolition item, deferred. The cascade (accumulators + tally + the enabler's
+  generated frontier) subsumes the repository's *intended* purposes; the one genuinely-useful leftover idea — a build-list
+  cache for UI responsiveness on selection-change — IS the enabler frontier, cacheable cleanly later if measured, not a
+  reason to keep the empty skeleton past cutover.
 - **The ONLY things kept/shared are the hard EXE boundary (§3)** — the type registry + the accessor surface the closed
   `.exe` binds. Everything else is fresh.
 - **DELIBERATE REUSE EXCEPTION — `BoolExpr` for the conditionals (owner 2026-06-16).** The JSON conditionals
