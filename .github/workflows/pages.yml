@@ -1,0 +1,41 @@
+# Publishes ONLY docs/indexes/ (the curated DESPAIR/REALISM/COMPLEXITY catalogs + the ranked index.html
+# frontpage) to GitHub Pages — so the hosted site is just the indexes, not all of /docs.
+#
+# ⚠ PREREQUISITE (one-time, owner): set repo Settings → Pages → "Build and deployment" → Source = "GitHub Actions".
+#   Until that's switched, runs of this workflow fail with "Pages site not configured for Actions" (harmless noise).
+#   After switching, run it once via the "Run workflow" button (workflow_dispatch) to do the first deploy.
+#
+# The published site root is docs/indexes/, so index.html is the landing page and the catalogs sit at clean URLs
+# (…/DESPAIR_INDEX.html etc.), not …/docs/indexes/….
+name: Deploy indexes to Pages
+
+on:
+  push:
+    branches: [main]
+    paths: ['docs/indexes/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# one deploy at a time; don't cancel an in-progress real deploy
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/indexes
+      - id: deployment
+        uses: actions/deploy-pages@v4
