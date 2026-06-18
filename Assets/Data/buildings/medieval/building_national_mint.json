@@ -23,25 +23,21 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_COINAGE",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_FREE_MARKET",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_MERCANTILISM",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_COINAGE",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_FREE_MARKET",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_MERCANTILISM",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

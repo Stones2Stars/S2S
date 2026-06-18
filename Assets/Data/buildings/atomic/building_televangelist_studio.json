@@ -17,33 +17,29 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_DIVINE_CULT",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_STATE_CHURCH",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_FREE_CHURCH",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_INQUISITORIAL",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_SECULARISM",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_DIVINE_CULT",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_STATE_CHURCH",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_FREE_CHURCH",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_INQUISITORIAL",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_SECULARISM",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

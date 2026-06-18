@@ -16,21 +16,17 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_MONARCHY",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_FEUDAL",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_MONARCHY",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_FEUDAL",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

@@ -26,37 +26,33 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_CORPORATISM",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_GREEN",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_GUILDS",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_MERCANTILISM",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_PLANNED",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_REGULATED",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_CORPORATISM",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_GREEN",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_GUILDS",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_MERCANTILISM",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_PLANNED",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_REGULATED",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

@@ -17,21 +17,17 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_MARXIST",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_SOCIALIZED",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_MARXIST",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_SOCIALIZED",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

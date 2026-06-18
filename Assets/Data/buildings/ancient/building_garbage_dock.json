@@ -37,17 +37,13 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_WASTE_TO_SEA",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_WASTE_TO_SEA",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

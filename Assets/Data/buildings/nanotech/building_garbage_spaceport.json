@@ -21,17 +21,13 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_OFF_PLANET_DUMPING",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_OFF_PLANET_DUMPING",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

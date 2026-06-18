@@ -33,21 +33,17 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_SOCIALIZED",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_ECO_FRIENDLY",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_SOCIALIZED",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_ECO_FRIENDLY",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

@@ -24,29 +24,25 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_AGRICULTURAL_GUILDS",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_PRIVATE_OWNED",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_INCENTIVIZED",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_ORGANIC_FARMING",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_AGRICULTURAL_GUILDS",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_PRIVATE_OWNED",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_INCENTIVIZED",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_ORGANIC_FARMING",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

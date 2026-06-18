@@ -45,37 +45,33 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_DESPOTISM",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_MONARCHY",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_FEUDAL",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_NATIONALIST",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_MERCANTILISM",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_BANDITRY",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_DESPOTISM",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_MONARCHY",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_FEUDAL",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_NATIONALIST",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_MERCANTILISM",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_BANDITRY",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

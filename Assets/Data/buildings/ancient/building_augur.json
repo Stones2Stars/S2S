@@ -12,29 +12,25 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_PROPHETS",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_STATE_CHURCH",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_FREE_CHURCH",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_RELIGIOUS",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_PROPHETS",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_STATE_CHURCH",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_FREE_CHURCH",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_RELIGIOUS",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

@@ -4,17 +4,13 @@
  "civilopedia": "TXT_KEY_BUILDING_ALPHAGENDER_PEDIA",
  "requires": {
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_STRONGMAN",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_STRONGMAN",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

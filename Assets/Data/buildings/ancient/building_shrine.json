@@ -26,25 +26,21 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_FOLKLORE",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_DIVINE_CULT",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_PROPHETS",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_FOLKLORE",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_DIVINE_CULT",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_PROPHETS",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

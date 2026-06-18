@@ -12,21 +12,17 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_MAGISTRATES",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_BOURGEOIS",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_MAGISTRATES",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_BOURGEOIS",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

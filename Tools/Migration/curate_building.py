@@ -578,7 +578,7 @@ def _atom(typ, scope, **kw):
 def requires_building(rec, store):
     """The TARGET-side reversible MEANS gate (enabler-spec §3/§5): build (greying) vs operate (dormancy).
     Most SOURCE->building enabler edges are store-wired onto the source; here we author the building's OWN means."""
-    build_all, build_any, build_none, op_all = [], [], [], []
+    build_all, build_any, build_none, op_all, op_any = [], [], [], [], []
     # --- resources (build-time greying; PrereqBonuses are a presence check) ---
     b = _txt(rec, "Bonus")
     if b:
@@ -689,7 +689,10 @@ def requires_building(rec, store):
         op_all.append(_atom(x, "empire"))
     orciv = _typelist_struct(rec, "PrereqOrCivics", "PrereqCivic") or _typelist(rec, "PrereqOrCivics")
     if orciv:
-        op_all.append(OrderedDict([("any", [[_atom(x, "empire") for x in orciv]])]))
+        # OR-group -> operate.any (a TOP-LEVEL any), NOT a nested {any:} inside operate.all: the cascade parser
+        # (CvCascadeReadJson.cpp:218-224) treats each operate.all element as a LEAF, so a nested {any:} was SKIPPED
+        # -> the civic gate was dropped -> over-offer. Mirror build_any. (A2 "civics" cluster fix, 2026-06-18.)
+        op_any.append([_atom(x, "empire") for x in orciv])
     pc = _txt(rec, "PrereqCivic")
     if pc:
         op_all.append(_atom(pc, "empire"))
@@ -731,8 +734,13 @@ def requires_building(rec, store):
     out = OrderedDict()
     if build:
         out["build"] = build
-    if op_all:
-        out["operate"] = OrderedDict([("all", op_all)])
+    if op_all or op_any:
+        operate = OrderedDict()
+        if op_all:
+            operate["all"] = op_all
+        if op_any:
+            operate["any"] = op_any
+        out["operate"] = operate
     # loadPrune (game options) lives in its own section, but author it here for now under requires for visibility.
     return out or None
 

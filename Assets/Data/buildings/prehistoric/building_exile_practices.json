@@ -17,21 +17,17 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_PRIMITIVE",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_TRIBAL",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_PRIMITIVE",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_TRIBAL",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

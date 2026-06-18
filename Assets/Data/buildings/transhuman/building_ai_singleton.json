@@ -17,17 +17,13 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_MACHINE_RULE",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_MACHINE_RULE",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

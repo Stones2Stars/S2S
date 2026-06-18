@@ -28,25 +28,21 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_COMMUNALISM",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_BARTER",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_SUBSISTENCE",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_COMMUNALISM",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_BARTER",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_SUBSISTENCE",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

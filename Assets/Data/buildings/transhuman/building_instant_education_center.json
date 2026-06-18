@@ -16,17 +16,13 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_INSTANT",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_INSTANT",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

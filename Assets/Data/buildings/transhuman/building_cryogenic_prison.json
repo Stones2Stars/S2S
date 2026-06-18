@@ -33,29 +33,25 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_DESPOTISM",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_MONARCHY",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_TOTALITARIANISM",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_SUPERHUMAN",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_DESPOTISM",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_MONARCHY",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_TOTALITARIANISM",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_SUPERHUMAN",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

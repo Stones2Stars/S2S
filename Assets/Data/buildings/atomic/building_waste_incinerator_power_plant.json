@@ -25,25 +25,21 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_WASTE_TO_ENERGY",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_WASTE_IMPORTATION",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_LANDFILLS",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_WASTE_TO_ENERGY",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_WASTE_IMPORTATION",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_LANDFILLS",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

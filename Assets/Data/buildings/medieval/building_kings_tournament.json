@@ -46,21 +46,17 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_FEUDAL",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_VASSAL_LEVIES",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_FEUDAL",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_VASSAL_LEVIES",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

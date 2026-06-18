@@ -28,29 +28,27 @@
     {
      "type": "CIVIC_PRIVATIZED",
      "scope": "empire"
-    },
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_CORPORATISM",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_FREE_MARKET",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_GREEN",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_REGULATED",
-        "scope": "empire"
-       }
-      ]
-     ]
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "CIVIC_CORPORATISM",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_FREE_MARKET",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_GREEN",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_REGULATED",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

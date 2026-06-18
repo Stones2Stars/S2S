@@ -12,25 +12,21 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_CLOSED_BORDERS",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_SKILLED_WORKERS",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_SECURED_BORDERS",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_CLOSED_BORDERS",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_SKILLED_WORKERS",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_SECURED_BORDERS",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

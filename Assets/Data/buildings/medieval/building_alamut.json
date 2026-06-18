@@ -43,25 +43,23 @@
   },
   "operate": {
    "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_DIVINE_CULT",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_STATE_CHURCH",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_INQUISITORIAL",
-        "scope": "empire"
-       }
-      ]
-     ]
-    },
     "STATE_RELIGION_IN_CITY"
+   ],
+   "any": [
+    [
+     {
+      "type": "CIVIC_DIVINE_CULT",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_STATE_CHURCH",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_INQUISITORIAL",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

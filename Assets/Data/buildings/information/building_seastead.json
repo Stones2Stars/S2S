@@ -29,25 +29,21 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_CITY_STATES",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_OPEN_BORDERS",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_POLYSTATE",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_CITY_STATES",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_OPEN_BORDERS",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_POLYSTATE",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

@@ -12,17 +12,13 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_WASTE_IMPORTATION",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_WASTE_IMPORTATION",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

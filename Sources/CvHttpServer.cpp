@@ -473,6 +473,99 @@ namespace
 		o["cap"] = picojson::value(cap);
 	}
 
+	// Diagnostic: WHY does legacy canConstruct block eBuilding in pCity? Returns the FIRST failing legacy gate by
+	// CALLING the same legacy accessors canConstruct uses (no logic duplication) -- so cluster diagnosis stops
+	// reverse-engineering the failing clause from the data. Order roughly follows CvPlayer/CvCity::canConstructInternal.
+	const char* legacyBlockReason(const CvCity* pCity, BuildingTypes eBuilding)
+	{
+		if (pCity == NULL) return "noCity";
+		if (pCity->canConstruct(eBuilding)) return "(buildable)";
+		const CvPlayer& kP = GET_PLAYER(pCity->getOwner());
+		const CvTeam& kT = GET_TEAM(pCity->getTeam());
+		const CvBuildingInfo& kB = GC.getBuildingInfo(eBuilding);
+		const SpecialBuildingTypes eSB = kB.getSpecialBuilding();
+
+		if (kB.getExtendsBuilding() > NO_BUILDING && !pCity->hasBuilding(kB.getExtendsBuilding())) return "extends";
+		if (kB.getPrereqAndTech() != NO_TECH && !kT.isHasTech((TechTypes)kB.getPrereqAndTech())) return "tech";
+		foreach_(const TechTypes eT, kB.getPrereqAndTechs()) { if (!kT.isHasTech(eT)) return "techAnd"; }
+		if (eSB != NO_SPECIALBUILDING)
+		{
+			const TechTypes eRT = GC.getSpecialBuildingInfo(eSB).getTechPrereq();
+			if (eRT != NO_TECH && !kT.isHasTech(eRT)) return "specialBuildingTech";
+		}
+		if (kT.isObsoleteBuilding(eBuilding)) return "obsolete";
+		if (kP.isBuildingMaxedOut(eBuilding) || kT.isBuildingMaxedOut(eBuilding) || GC.getGame().isBuildingMaxedOut(eBuilding)) return "cap";
+		if (eSB != NO_SPECIALBUILDING && kP.isBuildingGroupMaxedOut(eSB)) return "groupCap";
+		if (!kP.hasValidCivics(eBuilding)) return "civics";
+		if (kB.isPrereqWar() && !kT.isAtWar()) return "war";
+		if (kB.getProductionCost() == -1) return "notConstructible";
+		{
+			const ReligionTypes ePSR = (ReligionTypes)kB.getPrereqStateReligion();
+			if (ePSR != NO_RELIGION && ePSR != kP.getStateReligion()) return "prereqStateReligion";
+		}
+		if (pCity->hasBuilding(eBuilding)) return "alreadyBuilt";
+		if (pCity->isDisabledBuilding(eBuilding)) return "disabled";
+		if (kB.needStateReligionInCity())
+		{
+			const ReligionTypes eSR = kP.getStateReligion();
+			if (eSR == NO_RELIGION || !pCity->isHasReligion(eSR)) return "stateReligionInCity";
+		}
+		{
+			const ReligionTypes ePR = (ReligionTypes)kB.getPrereqReligion();
+			if (ePR != NO_RELIGION && !pCity->isHasReligion(ePR)) return "prereqReligion";
+		}
+		{
+			const CorporationTypes ePC = (CorporationTypes)kB.getPrereqCorporation();
+			if (ePC != NO_CORPORATION && !pCity->isHasCorporation(ePC)) return "prereqCorp";
+		}
+		if (!pCity->isValidBuildingLocation(eBuilding)) return "location";
+		for (int i = 0; i < kB.getNumPrereqInCityBuildings(); i++)
+		{
+			const BuildingTypes eP = (BuildingTypes)kB.getPrereqInCityBuilding(i);
+			if (eP != NO_BUILDING && !kT.isObsoleteBuilding(eP) && !pCity->isActiveBuilding(eP)) return "prereqInCity";
+		}
+		// --- expanded gates (whittling down the "other" bucket; order approximate, not canConstruct-exact) ---
+		if (!GC.getGame().canEverConstruct(eBuilding)) return "canEverConstruct";
+		if (GC.getGame().countCivTeamsEverAlive() < kB.getNumTeamsPrereq()) return "teamsPrereq";
+		if (kB.getMaxStartEra() != NO_ERA && GC.getGame().getStartEra() > kB.getMaxStartEra()) return "maxStartEra";
+		if (kB.getVictoryPrereq() != NO_VICTORY
+		&& (kP.isMinorCiv() || !GC.getGame().isVictoryValid((VictoryTypes)kB.getVictoryPrereq())
+		    || kT.getVictoryCountdown((VictoryTypes)kB.getVictoryPrereq()) >= 0)) return "victory";
+		if (kB.getFoundsCorporation() != NO_CORPORATION
+		&& GC.getGame().isCorporationFounded((CorporationTypes)kB.getFoundsCorporation())) return "foundsCorp";
+		if (kB.isNoHolyCity() && pCity->isHolyCity()) return "noHolyCity";
+		{
+			bool bReqH = false, bValidH = false;
+			foreach_(const HeritageTypes eH, kB.getPrereqOrHeritage())
+			{ bReqH = true; if (kP.hasHeritage(eH)) { bValidH = true; break; } }
+			if (bReqH && !bValidH) return "heritage";
+		}
+		if (!kB.getPrereqNumOfBuildings().empty())
+		{
+			for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+			{
+				const BuildingTypes eX = (BuildingTypes)iI;
+				if (!kT.isObsoleteBuilding(eX) && kP.getBuildingCount(eX) < kP.getBuildingPrereqBuilding(eBuilding, eX, 0))
+					return "prereqNumBuildings";
+			}
+		}
+		return "other";
+	}
+
+	// Symmetric diagnostic: WHY does the CASCADE block eBuilding (the under-offer side -- legacy allows, cascade hides)?
+	// Mirrors the sweep's cascade verdict, broken into its clauses. On-demand only; holds no state.
+	const char* cascadeBlockReason(const CvEntityAvailability& kA, BuildingTypes iIdx, const CvCity* pCity, int iTeam, const CvCascadeContext& kCtx)
+	{
+		if (kA.notConstructible) return "notConstructible";
+		if (pCity != NULL && pCity->hasBuilding(iIdx)) return "alreadyBuilt";
+		if (cascadeIsObsoleteForTeam(COUNTDOMAIN_BUILDING, iIdx, iTeam)) return "obsolete";
+		if (!cascadeBuildingGroupAllows(iIdx, kCtx)) return "groupCap";
+		if (!cascadeEvalCondition(kA.requiresBuild, kCtx)) return "requiresBuild";
+		if (!cascadeEvalCondition(kA.requiresOperate, kCtx)) return "requiresOperate";
+		if (!cascadeWithinAllowed(COUNTDOMAIN_BUILDING, iIdx, kA.allowedScope, kA.allowedCap, kCtx)) return "allowedCap";
+		return "(buildable)";
+	}
+
 	CvString evaluateGate(const char* szAction, const char* szType, int iPlayer, int iCityReq)
 	{
 		picojson::value::object o;
@@ -541,6 +634,11 @@ namespace
 						e["type"] = picojson::value(std::string(szT));
 						e["cascade"] = picojson::value(bC);
 						e["legacy"] = picojson::value(bL);
+						if (!bUnits && pCity != NULL)
+						{
+							e["reason"] = picojson::value(std::string(legacyBlockReason(pCity, (BuildingTypes)i)));
+							e["cascadeReason"] = picojson::value(std::string(cascadeBlockReason(kA, (BuildingTypes)i, pCity, iTeam, kCtx)));
+						}
 						kDiv.push_back(picojson::value(e));
 					}
 				}
@@ -571,6 +669,7 @@ namespace
 		{
 			o["city"] = picojson::value((double)iCityId);
 			o["legacy"] = (pCity != NULL) ? picojson::value(pCity->canConstruct((BuildingTypes)iIdx)) : picojson::value();
+			o["legacyReason"] = (pCity != NULL) ? picojson::value(std::string(legacyBlockReason(pCity, (BuildingTypes)iIdx))) : picojson::value();
 			if (bParsed)
 			{
 				CvCascadeContext kCtx(iPlayer, iCityId);
@@ -580,6 +679,7 @@ namespace
 				if (cascadeIsObsoleteForTeam(COUNTDOMAIN_BUILDING, iIdx, iTeam)) bC = false;      // generation: obsolete
 				if (!cascadeBuildingGroupAllows(iIdx, kCtx)) bC = false;                          // SpecialBuilding group cap
 				o["cascade"] = picojson::value(bC);
+				o["cascadeReason"] = picojson::value(std::string(cascadeBlockReason(kAvail, (BuildingTypes)iIdx, pCity, iTeam, kCtx)));
 				rjAddCapShadow(o, kAvail, COUNTDOMAIN_BUILDING, iIdx, kCtx);
 			}
 			else o["cascade"] = picojson::value();

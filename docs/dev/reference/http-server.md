@@ -122,10 +122,20 @@ cascade equivalent, returning both so divergences surface as triage items.
 - `player` is optional → defaults to the **active player**. `type` is required (a `PREFIX_NAME` id).
 - Example response (`/diagnostic/canConstruct?type=BUILDING_ABU_SIMBEL`):
   `{"action":"canConstruct","type":"BUILDING_ABU_SIMBEL","player":0,"legacy":false,"cascade":true,`
-  `"notes":"0 atoms wired, 2 pending [build:scope-pending(plot); build:disabled-predicate-pending]",`
-  `"cap":{"scope":"world","json":1,"legacy":1,"tally":0}}` — the cascade `cap` shadow proves the parsed
-  `allowed.world` equals the engine's `getMaxGlobalInstances` and the live tally count; `notes` lists what the
-  tally can't evaluate yet (option A: plot/city scope, predicates).
+  `"legacyReason":"obsolete","cascadeReason":"(buildable)",`
+  `"notes":"0 atoms wired, 2 pending [...]","cap":{"scope":"world","json":1,"legacy":1,"tally":0}}` — the cascade
+  `cap` shadow proves the parsed `allowed.world` equals the engine's `getMaxGlobalInstances` and the live tally count.
+- **`legacyReason` / `cascadeReason` — WHY each side blocks (2026-06-18).** Both are on-demand reporters that CALL the
+  same accessors the gates use (no logic duplication), returning the FIRST failing clause so cluster diagnosis stops
+  reverse-engineering it from data. `legacyReason` ∈ `tech`/`obsolete`/`cap`/`groupCap`/`civics`/`war`/`location`/
+  `prereqInCity`/`stateReligionInCity`/`prereqStateReligion`/`prereqReligion`/`prereqCorp`/`teamsPrereq`/`victory`/
+  `maxStartEra`/`heritage`/`prereqNumBuildings`/`canEverConstruct`/`foundsCorp`/`noHolyCity`/`notConstructible`/
+  `(buildable)`/`other` (`other` = a gate not yet in the reporter — expand it). `cascadeReason` ∈ `requiresBuild`/
+  `requiresOperate`/`allowedCap`/`obsolete`/`groupCap`/`notConstructible`/`alreadyBuilt`/`(buildable)`.
+- **`GET /diagnostic/sweep?type=buildings|units&player=N`** — the full-roster shadow: `{total, agree, diverge,
+  divergences[cap 250]}`; each building divergence carries `{type, cascade, legacy, reason, cascadeReason}` so a sweep
+  cause-tags every divergence in one call. (Buildings only for the reasons; the eval-mailbox window means the FIRST
+  call may return empty — retry.)
 - **Evaluated on the game thread, never the server thread** (the hard constraint): the request is parked in a
   single-slot mailbox that `publishIfDue` services on its next frame tick (so the answer is a consistent
   game-state read; "5s-stale is sufficient"). A second concurrent request gets `503`; a non-ticking (paused with

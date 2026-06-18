@@ -12,33 +12,29 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_DESPOTISM",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_MONARCHY",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_FEUDAL",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_CHIEFDOM",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_SOVEREIGNTY",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_DESPOTISM",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_MONARCHY",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_FEUDAL",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_CHIEFDOM",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_SOVEREIGNTY",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

@@ -68,17 +68,13 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_COMMUNAL",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_COMMUNAL",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

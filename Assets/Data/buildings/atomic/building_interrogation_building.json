@@ -31,21 +31,17 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_JUNTA",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_MARTIAL_LAW",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_JUNTA",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_MARTIAL_LAW",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

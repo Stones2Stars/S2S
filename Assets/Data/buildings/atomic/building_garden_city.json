@@ -12,21 +12,17 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_GREEN",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_PUBLIC_WORKS",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_GREEN",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_PUBLIC_WORKS",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

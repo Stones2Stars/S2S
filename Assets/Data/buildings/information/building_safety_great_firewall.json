@@ -17,37 +17,33 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_INQUISITORIAL",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_TOTALITARIANISM",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_MARXIST",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_PROPAGANDA",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_SINGLE_PARTY",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_GRID",
-        "scope": "empire"
-       }
-      ]
-     ]
-    }
+   "any": [
+    [
+     {
+      "type": "CIVIC_INQUISITORIAL",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_TOTALITARIANISM",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_MARXIST",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_PROPAGANDA",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_SINGLE_PARTY",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_GRID",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },

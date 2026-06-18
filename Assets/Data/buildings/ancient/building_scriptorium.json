@@ -37,25 +37,23 @@
   },
   "operate": {
    "all": [
-    {
-     "any": [
-      [
-       {
-        "type": "CIVIC_STATE_CHURCH",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_FREE_CHURCH",
-        "scope": "empire"
-       },
-       {
-        "type": "CIVIC_RELIGIOUS",
-        "scope": "empire"
-       }
-      ]
-     ]
-    },
     "STATE_RELIGION_IN_CITY"
+   ],
+   "any": [
+    [
+     {
+      "type": "CIVIC_STATE_CHURCH",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_FREE_CHURCH",
+      "scope": "empire"
+     },
+     {
+      "type": "CIVIC_RELIGIOUS",
+      "scope": "empire"
+     }
+    ]
    ]
   }
  },
