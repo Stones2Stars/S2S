@@ -19,15 +19,26 @@ it yet).
 
 ---
 
-## A. Buildability divergences (from the sweep — `type=buildings&player=0`, 2026-06-18: 48 diverge = 38 over + 10 under)
+## A. Buildability divergences — FULLY CAUSE-TAGGED by the reason-reporters (2026-06-18: 28 diverge = 27 over + 1 under)
 
-| # | What | Status | Disposition |
-|---|---|---|---|
-| A1 | **OVER (25): obsolete/replace-chain buildings.** The sweep's cascade verdict (CvHttpServer.cpp:527-530) checks obsoletion but **NOT `replaces`** — a building whose successor exists isn't subtracted from CAN GET. AND legacy's *effective* obsolete-tech can differ from the XML `ObsoleteTech` the cascade reads (canonical: `COAL_PLANT` — legacy runtime `TECH_ARMORED_CAVALRY` ≠ XML `TECH_FUSION`; a module-merge / replace-chain quirk). Reclamation plants, subdued-animal/herd builds, burial traditions, `COAL_PLANT`/`BUNKER`, … | ⚠ DIAGNOSED | ALIGN — add a `replaces` subtraction to the cascade verdict + reconcile obsolete runtime-vs-XML (data quirk; may be a real base-data bug) |
-| A2 | **OVER (12): cause NOT pinned — needs LIVE per-clause diagnosis (game went down mid-dig).** RULED OUT (static): civic (cascade `requires.operate` exactly matches `hasValidCivics`, CvPlayer.cpp:26218); map-category (`MAPCATEGORY_EARTH` on 84% of buildings — not distinguishing on an Earth map); `MaxStartEra` (none); **and the special-building-waiver mismatch I first suspected — DISPROVEN: NONE of the A2 prereqs are special-building-group members, so that waiver never fires, and the obsolete-prereq waiver MATCHES legacy (CvCity.cpp:2858).** 6 of the 12 (`GARDEN_CITY`/`EXILE_PRACTICES`/`SHRINE`/`INTERROGATION_BUILDING`/`GRAND_VILLA`/`JUNKYARD`) have NO in-city prereqs at all → no prereq angle can explain them. **One real-but-LATENT difference noted (not the current cause):** the cascade building atom tests `hasBuilding`; legacy uses `isActiveBuilding` (CvCity.cpp:2859) — a *disabled* prereq would diverge, but none are disabled now. | ❓ NOT PINNED | LIVE per-clause diagnosis when the game is up; do NOT speculative-fix |
-| A3 | **UNDER (~9): `bWater` mis-mapped to `IS_WATER`.** The cascade evaluated a building's water requirement as `pl->isWater()` (the city PLOT is water — always false, cities sit on land), so every coastal/naval building was hidden. Legacy `isValidBuildingLocation` (CvCity.cpp:18500-18506) gates `bWater` on **`isCoastal()`**. `NAVAL_YARD`, `DESALINATION_PLANT`, `FACTORY_SAILS`, `PIRATES_COVE`, `MONTREAL_BIODOME`, `CULTURE_DAHOMEY/KUSHITE/NUMIDIAN`, … | ✅ DIAGNOSED + FIXED + VERIFIED (curator `bWater→IS_COASTAL`, incl. water-OR-river): under-offers 10→1. NB unmasked 2 coastal over-offers the buggy always-false `IS_WATER` had been hiding — always divergent, now visible in A1/A2 | CHANGE — curator fix (done) |
-| A4 | **UNDER (`LEECH_CATCHER` etc.): the cascade OVER-obsoletes.** Its obsolete index holds the XML `ObsoleteTech` (a future tech the player has), so it hides the building — but legacy still offers it (legacy's *effective* obsolete differs). The inverse of A1's runtime-vs-XML obsolete mismatch | ⚠ DIAGNOSED | ALIGN with A1 (one obsolete reconciliation) |
-| A5 | **BONUS-connection primitive** `hasBonus`/`hasVicinityBonus` — flagged "fuzzy/suspect" in CvCascadeCondition.cpp:7-10; the cascade's connection test may differ from legacy's | ⚠ KNOWN-GAP | the cascade's own trade-network model is deferred; ALIGN or replace at #430 — watch for it behind A2 |
+The on-demand `legacyReason`/`cascadeReason` reporters (http-server.md) tag every divergence with its first failing
+gate, so this is the **COMPLETE map — zero `other`.** (This superseded ~310→28 of guess-based clustering; the
+diagnostic is the single biggest time-saver here — see the process note at the bottom.)
+
+| reason (count) | What | Disposition |
+|---|---|---|
+| **`alreadyQueued` (12)** | the building is already in the city's build queue (`getFirstBuildingOrder`); the cascade correctly reports it as constructible | ✅ **ACCEPTABLE** — the cascade is *right*; queue-filtering is a UI layer, not a cascade gate. CHANGE-accept |
+| **`replaced` (10)** | the building's `ReplacementBuilding` is active (`COAL_PLANT`/`BUNKER`/`DONKEY_BREEDER`/`ELECTRIC_CHAIR`/`FARM_ANIMAL_*`/…); legacy blocks at CvCity.cpp:2917, the cascade verdict has **no `replaces` subtraction** | ⚠ **ALIGN** — add a `replaces` check to the cascade building verdict. (This is the old "A1" cluster, now PRECISELY tagged: it is `replaces`, NOT the obsolete-runtime≠XML I first guessed.) |
+| **`latitude` (2)** | `CAMP_MOOSE`/`SALT_EVAPORATION_WORKS` — the `{latitude:{min,max}}` atom isn't evaluated (no latitude predicate in `CvCascadeCondition`) | ⚠ ALIGN — add a latitude predicate |
+| **`prereqOrBuildings` (2)** | `BURIAL_TRADITION_BONE/MUMMY` — legacy's OR-building group requires one **active & non-obsolete** (CvCity.cpp:2883); the cascade's building atom waives obsolete | ⚠ ALIGN — scope the obsolete-waiver out of OR-building groups |
+| **`location` (1)** | `FARM_SUPPLY` — `isValidBuildingLocation` terrain gate, not modeled by the cascade | ⚠ ALIGN or accept (terrain predicate) |
+| **`requiresBuild` (1, UNDER)** | `LEECH_CATCHER` — the cascade's `requires.build` blocks it but legacy allows (cascade too strict on a build clause) | ❓ dig the failing build clause |
+
+**Already FIXED + verified this session** (the bulk of the original 310): `notConstructible` (cost==-1, ~234),
+religion gates (`STATE_RELIGION_IN_CITY` + specific state religion, 14), building-group inheritance (TechPrereq +
+ObsoleteTech), `bWater→IS_COASTAL` (~9 coastal under-offers), and the **operate-OR-civics** `any`-hoist (13 `civics`).
+*(The earlier guess-based A1–A5 framing is superseded — the reporters disproved the obsolete-runtime and bonus-connection
+guesses; the real over-offer causes are `replaced` + a few small predicate gaps.)*
 
 ## B. Runtime-maintainer behaviours (the sweep CANNOT see — it tests buildability, not already-built things)
 

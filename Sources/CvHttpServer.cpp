@@ -549,6 +549,61 @@ namespace
 					return "prereqNumBuildings";
 			}
 		}
+		// --- city-side gates (CvCity::canConstructInternal 2664-2792) ---
+		if (pCity->getFirstBuildingOrder(eBuilding) != -1) return "alreadyQueued";
+		if (isLimitedWonder(eBuilding) && !kB.isNoLimit()
+		&& ((isWorldWonder(eBuilding)    && pCity->isWorldWondersMaxed())
+		||  (isTeamWonder(eBuilding)     && pCity->isTeamWondersMaxed())
+		||  (isNationalWonder(eBuilding) && pCity->isNationalWondersMaxed()))) return "wonderCategoryMaxed";
+		if (kB.getHolyCity() != NO_RELIGION && !pCity->isHolyCity((ReligionTypes)kB.getHolyCity())) return "holyCity";
+		if (kB.getPrereqAndBonus() != NO_BONUS && !pCity->hasBonus((BonusTypes)kB.getPrereqAndBonus())) return "bonus";
+		if (!(*pCity->getPropertiesConst() <= *(kB.getPrereqMaxProperties()))
+		||  !(*pCity->getPropertiesConst() >= *(kB.getPrereqMinProperties()))) return "propertyThreshold";
+		if (pCity->plot()->getLatitude() > kB.getMaxLatitude() || pCity->plot()->getLatitude() < kB.getMinLatitude()) return "latitude";
+		{
+			const int iReqPop = std::max(kB.getPrereqPopulation(), 1 + pCity->getNumPopulationEmployed() + kB.getNumPopulationEmployed());
+			if (iReqPop > 1 && pCity->getPopulation() < iReqPop) return "population";
+		}
+		if (kB.getPrereqCultureLevel() != NO_CULTURELEVEL && pCity->getCultureLevel() < kB.getPrereqCultureLevel()) return "cultureLevel";
+		{
+			const BuildingTypes eAny = kB.getPrereqAnyoneBuilding();
+			if (eAny != NO_BUILDING && GC.getGame().getBuildingCreatedCount(eAny) == 0) return "prereqAnyone";
+		}
+		{
+			bool bReqOB = false, bHasOB = false;
+			foreach_(const BonusTypes eB, kB.getPrereqOrBonuses()) { bReqOB = true; if (pCity->hasBonus(eB)) { bHasOB = true; break; } }
+			if (bReqOB && !bHasOB) return "prereqOrBonus";
+		}
+		if (kB.getPrereqVicinityBonus() != NO_BONUS && !pCity->hasVicinityBonus((BonusTypes)kB.getPrereqVicinityBonus())) return "vicinityBonus";
+		if (kB.getPrereqRawVicinityBonus() != NO_BONUS && !pCity->hasRawVicinityBonus((BonusTypes)kB.getPrereqRawVicinityBonus())) return "rawVicinityBonus";
+		{
+			bool bReqOV = false, bHasOV = false;
+			foreach_(const BonusTypes eB, kB.getPrereqOrVicinityBonuses()) { bReqOV = true; if (pCity->hasVicinityBonus(eB)) { bHasOV = true; break; } }
+			if (bReqOV && !bHasOV) return "prereqOrVicinityBonus";
+		}
+		{
+			bool bReqORV = false, bHasORV = false;
+			foreach_(const BonusTypes eB, kB.getPrereqOrRawVicinityBonuses()) { bReqORV = true; if (pCity->hasRawVicinityBonus(eB)) { bHasORV = true; break; } }
+			if (bReqORV && !bHasORV) return "prereqOrRawVicinityBonus";
+		}
+		for (int iI = 0; iI < kB.getNumPrereqNotInCityBuildings(); ++iI)
+			if (pCity->hasBuilding((BuildingTypes)kB.getPrereqNotInCityBuilding(iI))) return "prereqNotInCity";
+		{
+			bool bReqB = false, bValidB = false;
+			for (int iI = 0; iI < kB.getNumPrereqOrBuilding(); ++iI)
+			{
+				const BuildingTypes eP = (BuildingTypes)kB.getPrereqOrBuilding(iI);
+				if (!kT.isObsoleteBuilding(eP)) { bReqB = true; if (pCity->isActiveBuilding(eP)) { bValidB = true; break; } }
+			}
+			if (bReqB && !bValidB) return "prereqOrBuildings";
+		}
+		for (int iI = 0; iI < kB.getNumReplacementBuilding(); ++iI)
+		{
+			const BuildingTypes eRepl = (BuildingTypes)kB.getReplacementBuilding(iI);
+			if (pCity->isActiveBuilding(eRepl)
+			|| (kP.isModderOption(MODDEROPTION_HIDE_REPLACED_BUILDINGS) && pCity->canConstruct(eRepl, true, false, false, true)))
+				return "replaced";
+		}
 		return "other";
 	}
 
