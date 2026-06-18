@@ -85,6 +85,7 @@
   }
  },
  "identity": {
+  "notConstructible": true,
   "nukeImmune": true,
   "conquestProbability": 100,
   "mapCategories": [

@@ -100,6 +100,7 @@
   "specialistSlots": {
    "SPECIALIST_SLAVES": 1
   },
+  "notConstructible": true,
   "neverCapture": true,
   "worth": 2,
   "advisor": "ADVISOR_ECONOMY",

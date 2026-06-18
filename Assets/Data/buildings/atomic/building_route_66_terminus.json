@@ -27,6 +27,7 @@
   }
  },
  "identity": {
+  "notConstructible": true,
   "nukeImmune": true,
   "worth": 10,
   "conquestProbability": 100,

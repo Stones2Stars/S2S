@@ -49,6 +49,7 @@
   }
  },
  "identity": {
+  "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,
   "centerInCity": true,

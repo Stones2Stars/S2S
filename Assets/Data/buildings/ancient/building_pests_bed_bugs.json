@@ -38,6 +38,7 @@
   }
  },
  "identity": {
+  "notConstructible": true,
   "nukeImmune": true,
   "autoBuild": true,
   "conquestProbability": 100,

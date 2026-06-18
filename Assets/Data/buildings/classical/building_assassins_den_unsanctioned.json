@@ -59,6 +59,7 @@
   }
  },
  "identity": {
+  "notConstructible": true,
   "nukeImmune": true,
   "militaryWorth": 1,
   "conquestProbability": 100,

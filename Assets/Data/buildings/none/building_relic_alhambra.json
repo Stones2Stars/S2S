@@ -26,6 +26,7 @@
   }
  },
  "identity": {
+  "notConstructible": true,
   "nukeImmune": true,
   "noInstanceLimit": true,
   "worth": 4,

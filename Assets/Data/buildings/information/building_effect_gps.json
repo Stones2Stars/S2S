@@ -79,6 +79,7 @@
   }
  },
  "identity": {
+  "notConstructible": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

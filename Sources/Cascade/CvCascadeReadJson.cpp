@@ -377,14 +377,18 @@ bool cascadeReadJsonAvailability(const char* szTypeKey, CvEntityAvailability& kO
 		}
 	}
 
-	// identity.spawnOnly -- the clean flag (migrated from the legacy iCost==-1 sentinel) marking a unit as NOT
-	// player-buildable (wildlife/spawned). Settlers (no iCost tag, population cost) are NOT spawnOnly -> buildable.
+	// identity.spawnOnly / identity.notConstructible -- the clean flags (migrated from the legacy iCost==-1 sentinel)
+	// marking an entity as NOT player-producible. spawnOnly = a unit (wildlife/spawned); notConstructible = the building
+	// twin (autobuilt / property-spawned / outcome-granted / GP-or-event placed / doctrine toggle). Settlers (no iCost
+	// tag, population cost) are NOT spawnOnly -> buildable. The gate keys on the flag, never on a raw -1 cost.
 	picojson::object::const_iterator itId = o.find("identity");
 	if (itId != o.end() && itId->second.is<picojson::object>())
 	{
 		const picojson::object& oId = itId->second.get<picojson::object>();
 		picojson::object::const_iterator itSp = oId.find("spawnOnly");
 		if (itSp != oId.end() && itSp->second.is<bool>()) kOut.spawnOnly = itSp->second.get<bool>();
+		picojson::object::const_iterator itNc = oId.find("notConstructible");
+		if (itNc != oId.end() && itNc->second.is<bool>()) kOut.notConstructible = itNc->second.get<bool>();
 	}
 
 	std::ostringstream ss;

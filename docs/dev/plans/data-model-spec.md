@@ -199,6 +199,46 @@ apart by the **key namespace**:
   authored here** — OCC simply forces wonder limits off; any future game-option-specific override is a *game-option-specific
   JSON* the engine loads when the option is enabled (the override-by-design mechanism, generalizing `replacedBy`).
 
+### 4.2b `notConstructible` + `autoBuild` — the buildability GATE vs the PLACEMENT behavior (owner 2026-06-18)
+
+Two ORTHOGONAL questions about a non-queued building, kept as **distinct flags** (they overlap but neither contains the
+other):
+
+- **`identity.notConstructible` — the GATE: "is it offered in the player's build queue?"** Set by the curator when legacy
+  `iCost == -1` (or absent → the XML read default is -1, `CvBuildingInfo.cpp:1764`) — i.e. the `CvPlayer::canConstruct`
+  `getProductionCost()==-1` gate (`CvPlayer.cpp:6667`). The **building twin of the unit `identity.spawnOnly`**. The cascade
+  excludes a `notConstructible` building from the buildable frontier — it is instantiated by some OTHER system, never the
+  production queue. **Broad:** covers autobuilds, property-effect spawns (`BUILDING_CRIME_*`/`POLLUTION_*`/`DISEASE_*`/
+  `EDUCATION_*`), GP/event relics, outcome-mission grants (herds / subdued animals), and doctrine toggles
+  (`WORLDVIEW_*`/`ORDINANCE_*`). The gate keys on the flag, never on a raw -1 cost. **The property-effect subset are
+  *really effects, not buildings*** and are slated to formalize OUT of the building roster into the `PropertyEffect` /
+  `BaseEffect` classes (enabler-spec §3, #429-adjacent — *"leave as-is during the migration"*); at that point they leave the
+  building sweep entirely. `notConstructible` is the correct **INTERIM** — it makes the cascade agree with legacy now without
+  preempting that reorg.
+
+- **`identity.autoBuild` — one PLACEMENT behavior: "auto-place me in every city where my `requires` holds."** Repurposed
+  (owner 2026-06-18) from the legacy `bAutoBuild` into a modder-facing lever: author the condition the normal way
+  (`requires.build.all:[TECH_X]`, a civic, a resource) and flag `autoBuild`; the engine auto-instantiates the building
+  wherever that condition is met — e.g. *"research Sanitation → every city auto-gets the Sewer."* The building **SELF-declares**
+  its placement rule (locality — cleaner than hiding "what auto-places this crime building" inside a tech's authored data).
+  At **LOAD TIME `autoBuild` is PURELY a PLACEMENT marker on the `enables` side — NO new machinery, and it does NOT own
+  dormancy or destruction (owner 2026-06-18):** when the building's enabling condition fires (its tech `enables` it —
+  `TECH_X.enables.buildings:[BUILDING_X]`, forward), the engine **auto-places** it instead of offering it in the queue.
+  That is ALL `autoBuild` does. A placed autobuild's subsequent lifecycle — **stay / go dormant / be destroyed** — is
+  governed by the SAME existing structures every building uses, **independently of `autoBuild`**: `requires.operate` for
+  dormancy, `disables`/`obsoletes`/`replaces` for destruction. So a tech-gated autobuild is just the tech's
+  `enables.buildings` edge + the placement marker; the source-side reverse view (tech → the buildings it auto-places) is
+  **derived at load** (forward-authored on the natural end, reverse materialized on load, §6.2). The legacy
+  `bAutoBuild`→`identity.autoBuild` migration already gives the data shape; the auto-placement engine itself is **#430
+  placement work, NOT built during the gate fix.**
+
+- **`grants` — the OTHER placement behavior (§4.4):** an explicit source hands out a building one-shot / event-driven.
+  `autoBuild` = self-driven by the building's own condition; `grants` = a specific source places it.
+
+So **`notConstructible` answers *is it queueable*; `autoBuild` / `grants` / property-spawn answer *then how is it placed*.**
+`autoBuild ⊂ notConstructible` (an autobuild is also not queued), but `notConstructible` is broader. (Units: the same gate is
+`identity.spawnOnly`, `curate_unit.py`; buildings: `identity.notConstructible`, `curate_building.py`.)
+
 ### 4.3 Modifier families — `<family>.<scope>[.<targetType>.{TARGET}][.<member>].<unit> = value`
 
 Flat per-family surface, **no `modifiers` wrapper** (modifier-spec §1.2). Examples:

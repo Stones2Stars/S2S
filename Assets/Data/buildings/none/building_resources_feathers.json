@@ -112,6 +112,7 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
+  "notConstructible": true,
   "autoBuild": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

@@ -39,6 +39,7 @@
   }
  },
  "identity": {
+  "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,
   "applyFreePromotionOnMove": true,

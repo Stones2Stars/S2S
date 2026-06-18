@@ -52,6 +52,7 @@
   }
  },
  "identity": {
+  "notConstructible": true,
   "autoBuild": true,
   "worth": 2,
   "militaryWorth": 2,

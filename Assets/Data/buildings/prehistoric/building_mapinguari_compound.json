@@ -32,6 +32,7 @@
   }
  },
  "identity": {
+  "notConstructible": true,
   "worth": 2,
   "militaryWorth": 2,
   "mapCategories": [

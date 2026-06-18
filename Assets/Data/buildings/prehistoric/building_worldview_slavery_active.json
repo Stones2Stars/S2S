@@ -264,6 +264,7 @@
   "specialistSlots": {
    "SPECIALIST_SLAVES": 3
   },
+  "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,
   "mapCategories": [

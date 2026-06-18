@@ -96,6 +96,7 @@
   }
  },
  "identity": {
+  "notConstructible": true,
   "nukeImmune": true,
   "worth": 1,
   "advisor": "ADVISOR_ECONOMY",

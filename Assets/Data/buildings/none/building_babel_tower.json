@@ -47,6 +47,7 @@
  },
  "identity": {
   "shrine": "RELIGION_MESOPOTAMISM",
+  "notConstructible": true,
   "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,

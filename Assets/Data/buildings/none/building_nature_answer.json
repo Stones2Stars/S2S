@@ -52,6 +52,7 @@
   "specialistSlots": {
    "SPECIALIST_PRIEST": 3
   },
+  "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

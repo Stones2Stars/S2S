@@ -227,6 +227,7 @@
   }
  },
  "identity": {
+  "notConstructible": true,
   "applyFreePromotionOnMove": true,
   "worth": 1,
   "militaryWorth": 4,

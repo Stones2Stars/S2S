@@ -55,6 +55,7 @@
   "specialistSlots": {
    "SPECIALIST_PRIEST": 3
   },
+  "notConstructible": true,
   "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,

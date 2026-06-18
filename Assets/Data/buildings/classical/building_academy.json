@@ -48,6 +48,7 @@
   "construct": "AS2D_BUILD_LIBRARY"
  },
  "identity": {
+  "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,
   "worth": 6,

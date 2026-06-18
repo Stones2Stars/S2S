@@ -825,6 +825,16 @@ def curate(typ, rec, store):
         if v is not None and v != -1 and v != 0:
             cost[key] = v
 
+    # legacy iCost == -1 (or absent -> the XML read default is -1, CvBuildingInfo.cpp:1764) = NOT player-constructible
+    # (the CvPlayer::canConstruct getProductionCost()==-1 gate, CvPlayer.cpp:6667). Such buildings are instantiated by
+    # OTHER systems -- autobuild-on-condition, property spawn, outcome missions, GP/event relics, doctrine toggles --
+    # never built via the city production queue. Translate the dumb sentinel into an explicit clean flag (the building
+    # twin of the unit identity.spawnOnly); the cascade gates buildability on this, never on a raw -1 cost. NB this is
+    # the buildability GATE only -- it is distinct from identity.autoBuild (a PLACEMENT behavior: "auto-place me where
+    # my requires holds"), which overlaps but is not the same.
+    if _int(rec, "iCost") in (None, -1):
+        identity["notConstructible"] = True
+
     # --- capabilities -> identity ---
     for tag, name in CAP_IDENTITY.items():
         if _bool(rec, tag):

@@ -90,6 +90,7 @@
   "specialistSlots": {
    "SPECIALIST_SPY": 1
   },
+  "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,
   "mapCategories": [

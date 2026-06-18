@@ -59,6 +59,7 @@
  },
  "identity": {
   "shrine": "RELIGION_ANDEANISM",
+  "notConstructible": true,
   "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,

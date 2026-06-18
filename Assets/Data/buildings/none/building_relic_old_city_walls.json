@@ -18,6 +18,7 @@
   }
  },
  "identity": {
+  "notConstructible": true,
   "worth": 1,
   "conquestProbability": 80,
   "mapCategories": [

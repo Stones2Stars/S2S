@@ -70,6 +70,7 @@
   }
  },
  "identity": {
+  "notConstructible": true,
   "autoBuild": true,
   "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",
   "advisor": "ADVISOR_GROWTH",

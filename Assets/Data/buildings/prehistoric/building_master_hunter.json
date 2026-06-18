@@ -215,6 +215,7 @@
   }
  },
  "identity": {
+  "notConstructible": true,
   "worth": 1,
   "militaryWorth": 4,
   "conquestProbability": 25,

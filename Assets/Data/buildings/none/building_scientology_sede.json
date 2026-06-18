@@ -54,6 +54,7 @@
  },
  "identity": {
   "shrine": "RELIGION_SCIENTOLOGY",
+  "notConstructible": true,
   "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,

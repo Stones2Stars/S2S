@@ -32,6 +32,7 @@
   "construct": "SND_AMB_HORSE_COBBLESTONES"
  },
  "identity": {
+  "notConstructible": true,
   "worth": 3,
   "conquestProbability": 75,
   "advisor": "ADVISOR_GROWTH",

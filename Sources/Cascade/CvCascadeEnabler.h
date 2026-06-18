@@ -20,8 +20,11 @@ struct CvEntityAvailability
 	CountScope         allowedScope;    // scope the SELF cap applies at (world/team/empire)
 	int                allowedCap;      // at most N of SELF at allowedScope; -1 == uncapped (the common case)
 	bool               spawnOnly;       // identity.spawnOnly: NOT player-buildable (wildlife/spawned) -> never offered
+	bool               notConstructible; // identity.notConstructible (building twin of spawnOnly): legacy getProductionCost()==-1
+	                                      // -> the player never constructs it via the production queue (it is autobuilt / property-
+	                                      // spawned / outcome-granted / GP-or-event placed / a doctrine toggle) -> never offered.
 
-	CvEntityAvailability() : allowedScope(COUNTSCOPE_WORLD), allowedCap(-1), spawnOnly(false) {}
+	CvEntityAvailability() : allowedScope(COUNTSCOPE_WORLD), allowedCap(-1), spawnOnly(false), notConstructible(false) {}
 };
 
 // Build-time gate: requires.build AND requires.operate must hold, AND the SELF count must be under the allowed

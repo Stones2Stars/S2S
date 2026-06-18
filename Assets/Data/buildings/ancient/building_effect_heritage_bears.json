@@ -30,6 +30,7 @@
   "construct": "AS2D_BUILD_BARRACKS"
  },
  "identity": {
+  "notConstructible": true,
   "neverCapture": true,
   "worth": 2,
   "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",

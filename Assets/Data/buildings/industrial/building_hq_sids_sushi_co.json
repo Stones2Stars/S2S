@@ -78,6 +78,7 @@
  },
  "identity": {
   "corporationHQ": "CORPORATION_2",
+  "notConstructible": true,
   "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,

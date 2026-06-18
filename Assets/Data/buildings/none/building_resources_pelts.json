@@ -105,6 +105,7 @@
   }
  },
  "identity": {
+  "notConstructible": true,
   "autoBuild": true,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

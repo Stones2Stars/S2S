@@ -30,6 +30,7 @@
   }
  },
  "identity": {
+  "notConstructible": true,
   "nukeImmune": true,
   "autoBuild": true,
   "mapCategories": [

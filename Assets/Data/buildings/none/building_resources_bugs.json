@@ -213,6 +213,7 @@
   }
  },
  "identity": {
+  "notConstructible": true,
   "autoBuild": true,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

@@ -43,6 +43,7 @@
   "construct": "SND_AMB_HORSE_COBBLESTONES"
  },
  "identity": {
+  "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,
   "worth": 3,

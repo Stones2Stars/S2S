@@ -26,6 +26,7 @@
   "construct": "AS2D_BUILD_CEREMONIAL_ALTAR"
  },
  "identity": {
+  "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,
   "advisor": "ADVISOR_ECONOMY",

@@ -47,6 +47,7 @@
   "specialistSlots": {
    "SPECIALIST_SCIENTIST": 1
   },
+  "notConstructible": true,
   "autoBuild": true,
   "conquestProbability": 100,
   "advisor": "ADVISOR_ECONOMY",

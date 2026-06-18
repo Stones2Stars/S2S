@@ -33,6 +33,7 @@
   }
  },
  "identity": {
+  "notConstructible": true,
   "neverCapture": true,
   "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",
   "mapCategories": [

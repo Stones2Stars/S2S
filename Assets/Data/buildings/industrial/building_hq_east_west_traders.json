@@ -79,6 +79,7 @@
  },
  "identity": {
   "corporationHQ": "CORPORATION_EWTRADE",
+  "notConstructible": true,
   "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,

@@ -101,6 +101,7 @@
   }
  },
  "identity": {
+  "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,
   "advisor": "ADVISOR_SCIENCE",

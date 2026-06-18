@@ -525,6 +525,7 @@ namespace
 				else
 				{
 					bC = cascadeBuildable(kA, COUNTDOMAIN_BUILDING, i, kCtx)
+					     && !kA.notConstructible                                                  // cost==-1: never player-constructible
 					     && (pCity == NULL || !pCity->hasBuilding((BuildingTypes)i))
 					     && !cascadeIsObsoleteForTeam(COUNTDOMAIN_BUILDING, i, iTeam)
 					     && cascadeBuildingGroupAllows(i, kCtx);
@@ -574,6 +575,7 @@ namespace
 			{
 				CvCascadeContext kCtx(iPlayer, iCityId);
 				bool bC = cascadeBuildable(kAvail, COUNTDOMAIN_BUILDING, iIdx, kCtx);
+				if (kAvail.notConstructible) bC = false;                                         // cost==-1: never player-constructible
 				if (pCity != NULL && pCity->hasBuilding((BuildingTypes)iIdx)) bC = false;        // generation: already built here
 				if (cascadeIsObsoleteForTeam(COUNTDOMAIN_BUILDING, iIdx, iTeam)) bC = false;      // generation: obsolete
 				if (!cascadeBuildingGroupAllows(iIdx, kCtx)) bC = false;                          // SpecialBuilding group cap

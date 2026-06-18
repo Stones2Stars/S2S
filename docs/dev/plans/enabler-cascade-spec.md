@@ -252,6 +252,24 @@ resource/bonus**. Authored on the target, scope-tagged per clause:
     effect-markers hacked in as real buildings; `PropertyEffect` formalizes them OUT of the building roster into their
     own class (much of `BuildingEffect` gets repurposed this way). NB: bare `effect` was rejected — `CvEffectInfo` is
     EXE-bound (`DllExport getPath()` imported by the engine for the `.nif`), so it can't be renamed/repurposed.
+    - **The "reverse enabler" — placement folds into the uniform cascade, GAMEPLAY-NEUTRAL (owner 2026-06-18).** Today a
+      crime/disease effect building is spawned by a bespoke property-system push ("built the first time the crime level is
+      hit"). In the model that is just an **enable whose trigger is a property-threshold condition** instead of a tech:
+      `{type:PROPERTY_CRIME, scope:city, min:N}` **enables** (one-time auto-places, §autoBuild) `BUILDING_CRIME_X` — the
+      "reverse" being that the enable comes from a runtime city-STATE condition, not a permanent tech unlock. Everything
+      after placement is the EXISTING structures, untouched: removal via `disables`/`obsoletes`, dormancy via
+      `requires.operate`. So the bespoke property-spawn push retires into the uniform cascade with **no gameplay difference**
+      (same building, same band, same clear). **Placement semantics = CONTINUOUS band-membership, NOT one-time (VERIFIED
+      2026-06-18, trust-but-verify):** the mechanism is the **`PropertyBuilding` band system** (`CvPropertyInfo`
+      `iMinValue`/`iMaxValue`/`BuildingType`), distinct from `bAutoBuild`. `CvCity::checkPropertyBuildings` (CvCity.cpp:1490,
+      *"checked each turn"*) ADDS the building when the property value enters the band `[iMinValue,iMaxValue]` and REMOVES it
+      (`changeHasBuilding(false)`) when it leaves — it comes and goes with the level. So the cascade condition is a CONTINUOUS
+      property-in-band atom (`{type:PROPERTY_CRIME, scope:city, min, max}`), mapping to the `requires.operate` / threshold-band
+      side — **not** a one-time enables-side placement (the owner's "built the first time" was the hypothesis; the code tracks
+      the band continuously). NB the property system places these via `canConstruct(..., bIgnoreCost=true)`, which BYPASSES
+      the cost==-1 gate — so `notConstructible` correctly gates only the PLAYER queue, never the property system's own
+      placement. This is the deferred `PropertyEffect` direction (do NOT build now); the `notConstructible` gate is the correct
+      interim while these remain `BUILDING_*`. (data-model-spec §4.2b.)
   - **`BaseEffect` hierarchy — a SEPARATE, LATER issue; do NOT touch during the migration (owner, 2026-06-15).** The
     `BUILDING_EFFECT_*` pseudobuildings **work fine as-is for now** — the cascade just treats them as buildings, so
     leave them alone. The future improvement is ORGANIZATIONAL: `PropertyEffect`, `BuildingEffect`, and the other

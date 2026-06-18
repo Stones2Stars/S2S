@@ -83,6 +83,7 @@
   "construct": "AS2D_BUILD_SLAVE_MARKET"
  },
  "identity": {
+  "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,
   "worth": 3,
