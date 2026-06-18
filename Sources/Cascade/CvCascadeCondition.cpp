@@ -163,7 +163,21 @@ bool cascadeEvalPredicate(const CvPredicate& pr, const CvCascadeContext& kCtx)
 	case PRED_HAS_IRRIGATION:     return pl != NULL && pl->isIrrigated();
 	case PRED_HAS_FEATURE_ANY:    return pl != NULL && pl->getFeatureType() != NO_FEATURE;
 	case PRED_HAS_FEATURE:        return pl != NULL && pl->getFeatureType() == (FeatureTypes)pr.iParam;
-	case PRED_HAS_TERRAIN:        return pl != NULL && pl->getTerrainType() == (TerrainTypes)pr.iParam;
+	case PRED_HAS_TERRAIN:
+	{
+		// VICINITY (enabler-spec §8): terrain present anywhere in the city's CURRENT workable radius (culture-grown,
+		// getNumCityPlots). Per-city, overlapping, NO ownership/canWork filter -- deliberately more permissive than
+		// legacy isValidTerrainForBuildings (which excludes contested plots). Building PrereqOrTerrain is vicinity;
+		// improvement center-plot terrain is the flagged Phase-F divergence (migration-renames), not a consumer yet.
+		if (c == NULL) return false;
+		const int iNumPlots = c->getNumCityPlots();
+		for (int iI = 0; iI < iNumPlots; iI++)
+		{
+			const CvPlot* plotX = c->getCityIndexPlot(iI);
+			if (plotX != NULL && plotX->getTerrainType() == (TerrainTypes)pr.iParam) return true;
+		}
+		return false;
+	}
 	case PRED_HAS_BONUS:          return pl != NULL && pl->getBonusType() == (BonusTypes)pr.iParam;
 	case PRED_LATITUDE:           return pl != NULL && pl->getLatitude() >= pr.iMin && pl->getLatitude() <= pr.iMax;
 	case PRED_HAS_RELIGION:       return c != NULL && c->isHasReligion((ReligionTypes)pr.iParam);

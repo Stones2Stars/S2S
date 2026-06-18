@@ -758,6 +758,14 @@ religion, connectable bonuses) feed the **gate**.
       one underlying system: the **presence** form is the predicate `workedBy: SELF` ("is this plot worked by this
       city?"); the **count** form is a `per`-count over worked tiles (modifier-spec §4 — "+X per worked tile of
       type T", a count read from the work-radius system). ⚑ Flag for the Building pass (#32).
+    - **VICINITY is NOT bonus-only — it is the model for TERRAIN/FEATURE plot prereqs too (owner 2026-06-18).**
+      A building's `PrereqOrTerrain`/`PrereqOrFeature` (→ `{HAS_TERRAIN:X}`/`{HAS_FEATURE:X}` = `PRED_HAS_TERRAIN`/
+      `PRED_HAS_FEATURE`) is a vicinity query, evaluated as a scan of the city's **current workable radius**
+      (`getCityIndexPlot(0..getNumCityPlots())`, culture-grown), with **no ownership/worked filter** — the broadest
+      clean barrier, deliberately MORE PERMISSIVE than BOTH legacy terrain semantics it subsumes: `PrereqOrTerrain`
+      (`isValidTerrainForBuildings`, CvCity.cpp:20402 — **owned** radius plots) and `ConstructCondition` `GOM_TERRAIN`
+      (CvGameObject.cpp:1241 — **worked** plots, `RELATION_WORKING`). Same `workedBy:SELF` tightening path applies.
+      (NB the **improvement** `{terrain:[…]}` is the flagged Phase-F CENTER-plot divergence — not this building scope.)
 - **world** — game-wide presence + game-option gates (mostly load-prune, §10).
 
 **Trade-connected bonus — RESOLVED (owner): TEAM scope, gathered EARLY.** A trade-connected bonus comes in via the
