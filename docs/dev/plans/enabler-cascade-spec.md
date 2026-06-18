@@ -268,7 +268,12 @@ resource/bonus**. Authored on the target, scope-tagged per clause:
       side — **not** a one-time enables-side placement (the owner's "built the first time" was the hypothesis; the code tracks
       the band continuously). NB the property system places these via `canConstruct(..., bIgnoreCost=true)`, which BYPASSES
       the cost==-1 gate — so `notConstructible` correctly gates only the PLAYER queue, never the property system's own
-      placement. This is the deferred `PropertyEffect` direction (do NOT build now); the `notConstructible` gate is the correct
+      placement. **END-STATE (owner 2026-06-18): retire the bespoke per-turn `checkPropertyBuildings` ENTIRELY — model the
+      property-band as a uniform `requires` dormancy condition.** The building is enabled once; `requires` toggles it
+      active/dormant as the value enters/leaves the band — **no per-turn `changeHasBuilding` add/remove churn, no "property
+      special case."** Dormancy presentation is a UI concern: **dormant property-effect buildings are delisted in the Python
+      UI's SEPARATE property-effect list** (which already exists), so the **NORMAL building listing stays exactly as it is
+      today**. This is the deferred `PropertyEffect` direction (do NOT build now); the `notConstructible` gate is the correct
       interim while these remain `BUILDING_*`. (data-model-spec §4.2b.)
   - **`BaseEffect` hierarchy — a SEPARATE, LATER issue; do NOT touch during the migration (owner, 2026-06-15).** The
     `BUILDING_EFFECT_*` pseudobuildings **work fine as-is for now** — the cascade just treats them as buildings, so

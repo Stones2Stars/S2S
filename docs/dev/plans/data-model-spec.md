@@ -353,6 +353,18 @@ at #430 — never authored.
   member→group read in the cascade currently scans building JSONs — fine, but revisit whether the group index should be a
   derived load-time index shared with the pedia; (c) representation review of the whole `SpecialBuilding`/group surface
   (cap + waiver §enabler-3 + display) once all infos are migrated. Owner: "we should do a review pass when all is said and done."
+  - **⛔ UPGRADED TO A PRE-HARD-SWITCH DELIVERABLE (owner 2026-06-18): the ENTIRE building-group (`SpecialBuilding`) concept
+    must be RESOLVED + IMPLEMENTED before the hard switch — not an "end-of-migration review."** The driver: a member building
+    must inherit its GROUP's shared gates **UNIFORMLY**, via ONE coherent first-class group model — `{cap, TechPrereq →
+    requires.build, ObsoleteTech → obsoletion, waiver}` — instead of the current scattered handling (cap in
+    `cascadeBuildingGroupAllows`, waiver in the atom evaluator `CvCascadeCondition.cpp:64-69`, and the group's **TechPrereq +
+    ObsoleteTech missing entirely**). Symptom that surfaced it: the costed-monastery over-offers — `SPECIALBUILDING_MONASTERY`
+    carries `TechPrereq=TECH_MEDITATION` + `ObsoleteTech=TECH_MODERN_PHYSICS`, but the member monasteries have neither in
+    their data, so the cascade neither tech-gates nor obsoletes them while legacy does (`CvPlayer.cpp:6599` / `isObsoleteBuilding`).
+    Owner: *"otherwise we will end up creating 28934289349234 special cases."* Preferred shape = DATA-DRIVEN group-gate
+    inheritance (the member's effective gates = own ∪ group's, materialized at curation/load), so the cascade reads members
+    through its normal `requires`/obsoletion/cap paths with **no `SpecialBuilding` special-casing**. Resolve the model, then
+    implement (data + cascade) before cutover.
 - ⚑ token + predicate **registries** concrete form (code-side, extensible) — #430.
 - ⚑ cascade **arithmetic / combine modes** (`sum`/`max`/`min`, cost-asymmetric, multiplier composition, `flatPlacement`) —
   modifier-spec §7/§9.
