@@ -998,6 +998,49 @@ things you HAVE.
 `appendRequirementHelp` / `appendVicinityRequirementHelp` / `appendCivicRequirementHelp` / `buildRequirementItemLink`
 → re-point from `ConstructRequirement` to the cascade's `requires` + reverse index.
 
+**H. STATE MAINTAINERS — the scattered per-turn/per-event "decide a building's state" quirks → REPLACED by `requires`
+dormancy + the `enables` family as DEFINED FACTS (owner 2026-06-18).** Today a building's *active / present / dormant*
+state is decided by a zoo of independent engine mechanisms, each its own bespoke rule — the owner's *"we rely on
+quirks."* Wrangle ALL of them into the ONE declared cascade model so behaviour is governed by **our own defined facts,
+not engine quirks.** The set surfaced this session:
+
+- `CvCity::isReligiouslyLimitedBuilding` / `m_pabReligiouslyDisabledBuilding` + `setReligiouslyLimitedBuilding`
+  (CvCity.cpp:14940-14981, 21279-21319) — religion dormancy (`stateReligion != building-religion`, with the
+  `hasAllReligionsActive` exemption; reversible `processBuilding ∓1`) → `requires.operate` (`STATE_RELIGION` /
+  `STATE_RELIGION_IN_CITY` + a `hasAllReligionsActive` waiver clause).
+- `CvCity::checkPropertyBuildings` (CvCity.cpp:1490-1518) — the per-turn property-band add/remove → `requires.operate`
+  property-in-band dormancy (the §3 PropertyEffect "reverse enabler"; data-model §4.2b).
+- `bAutoBuild` + the per-turn autobuild loop (CvCity.cpp:1459-1487) — auto-placement → `enables` + the `autoBuild`
+  placement marker (data-model §4.2b).
+- `isSpecialBuildingNotRequired` + the building-GROUP cap/tech/obsolete — → uniform group-gate inheritance
+  (data-model §7, the pre-hard-switch building-group deliverable).
+- `hasAllReligionsActive()` (CvPlayer; civic `isAllReligionsActive`) — the religion-exemption → a declared `requires`
+  waiver clause (not a buried `if`).
+- `isActiveBuilding` + `PrereqBonuses` resource dormancy (CvCity.cpp:14364) → `requires.operate` resource dormancy.
+
+**⚠ THE SCOPE CONCERN (owner 2026-06-18) — the hard switch must wrangle ALL of these, NOT shadow-coexist.** The failure
+mode is stopping at shadow-parity: the cascade computes the right answer but the quirks still RUN → two systems, still
+"relying on quirks." Each maintainer above must be **DELETED at the switch, its behaviour re-derived from the cascade**
+— a maintainer still running post-switch is unfinished. Owner suspects the planned scope *"will not go as far as we need"*;
+this checklist is the measure of "far enough." (Each item resolves to a defined `requires`/`enables`/`autoBuild` fact in
+the data, evaluated in one place — the unification, not N quirks.)
+
+**⛔ BIAS = OVER-REACH, NOT UNDER-REACH (owner 2026-06-18): *"I rather go further than needed, than not far enough."***
+This INVERTS the usual minimal-change default, but only for this demolition: when unsure whether a maintainer/quirk
+should fold into the cascade, **FOLD IT.** Under-reach (leaving a quirk) perpetuates the two-system problem and is the
+expensive mistake; over-reach (folding something that arguably could have stayed) is cheap and recoverable. Resolve every
+scope ambiguity TOWARD the cascade. The sweep hitting zero divergences is NOT the finish line — deleting the maintainers is.
+
+**MAP BEFORE YOU DELETE — and the buildability sweep is NOT the whole map (owner 2026-06-18).** Demolition is safe ONLY
+after every current behaviour is mapped + shadow-verified that the cascade replicates it — *"map every current behaviour so
+we don't completely break the game on switch."* Capture-before-delete. **The key gap: `/diagnostic/sweep` maps BUILDABILITY
+only** (the cascade verdict vs `canConstruct` / `canTrain`) — it does NOT exercise the RUNTIME state-maintenance behaviours
+(dormancy, religiously-limited, property-band placement, autobuild, resource-dormancy), because those act on ALREADY-BUILT
+things the sweep excludes (`!hasBuilding`). So **zero buildability-divergence ≠ fully mapped.** Each §14 H maintainer needs
+its OWN behaviour shadow — *does the cascade's active/dormant/placement state match the maintainer's, turn over turn?* —
+before that maintainer is deleted. "Do it properly" (owner) = build those maintainer shadows, not just trust the buildability
+sweep. (This is the runtime twin of the buildability sweep, and the honest scope of "map every current behaviour.")
+
 ---
 
 *Status: model GROUNDED and design-complete (v0.3 — HAS → CAN GET → HAS THE MEANS TO; `enables` family =
