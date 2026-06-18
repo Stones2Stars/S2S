@@ -1,7 +1,12 @@
 ⛔ POST-COMPACTION RELOAD — do this before any further action.
 Project rules may have been summarized away by compaction. FIRST:
 
-1. RE-READ now: AGENTS.md, Sources/AGENTS.md, and the touched subsystem's docs/dev/ notes.
+1. ACTIVELY FIND + READ + VERIFY the docs for what you are working on. Re-read AGENTS.md + Sources/AGENTS.md,
+   then grep docs/dev/ for the touched subsystem and read its spec/reference END-TO-END. Confirm the design FROM
+   THE DOC — never reconstruct it from live code or memory; never propose matching legacy before checking whether
+   the spec deliberately diverges. A HOLE in the docs is NOT the absence of docs (keep reading the surrounding
+   sections). Genuinely no doc AND you do not understand -> ASK; otherwise create/extend it in the same change.
+   Deferring, skimming, or assuming is how this codebase slaps you -- with the whole accumulated past, not just C++03.
 2. Non-negotiables that hold no matter what:
    • .vcxproj/.sln are DEAD for build facts. Build truth = Sources/fbuild.bff.
      Toolchain = MSVC 7.1 (VC++ Toolkit 2003), C++03, 32-bit/x86, Python 2.4, Boost 1.32/1.55.

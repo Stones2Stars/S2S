@@ -179,6 +179,21 @@ not findings to re-discover.
   this: the migration curators were undocumented and `engine.py`'s superseded `--write` clobbered
   the curated DB → `Tools/Migration/README.md` written + the toolkit doc corrected.) This sharpens
   the "keep knowledge in the repo" rule below: *encountering* a doc gap obligates *closing* it.
+- **ACTIVELY find, READ, and VERIFY the docs for whatever you are working on — BEFORE and WHILE you work,
+  not after being told (owner ruling 2026-06-18).** For ANY subsystem you touch: search `docs/dev/` for it
+  (grep the topic; read the relevant spec/reference page end-to-end) and confirm the intended design FROM THE
+  DOC. Do **not** reconstruct the model from the live code or from memory, and do **not** propose matching legacy
+  behaviour before checking whether the spec deliberately diverges from it. **A HOLE in the docs is NOT the
+  absence of docs:** if the one detail you want isn't where you looked but the subsystem is documented, the docs
+  still exist — keep reading the surrounding sections. Only if there is genuinely NO doc *and* you do not
+  understand the intent do you **ASK**; otherwise **create/extend the doc** in the same change (the fix-docs-now
+  rule above). This holds at session start AND after every context compaction — re-read the subsystem's docs;
+  never assume the summary carried the design. **Deferring, skimming, or assuming is how this codebase slaps you —
+  and not just with C++03/VC2003, but with the entire accumulated past (decades of Civ4/BTS/C2C ad-hoc wiring).**
+  (Concrete failure that prompted this: working the #428 cascade *vicinity* logic, I traced legacy
+  `isValidTerrainForBuildings` and proposed to match it — when `enabler-cascade-spec` §8 had already defined a
+  *different, deliberately-more-permissive* vicinity model that should have been read first. Twice in one session
+  the design was in the docs and I worked from code/memory instead.)
 - **Nothing here is ever "just a one-liner" — expect hidden consequences.** This is a
   large, tightly-coupled Civ4/C2C codebase with non-obvious cross-cutting wiring (combat
   math shared across UI/AI/resolution, name-tagged save serialization, dual Python-enum
