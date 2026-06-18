@@ -37,6 +37,10 @@ bool cascadeIsObsoleteForTeam(int eDomain, int iEntity, int iTeam);
 // building is in no group, or its group is uncapped. Lazy group index (build JSON scan, cached), game thread.
 bool cascadeBuildingGroupAllows(int iBuilding, const CvCascadeContext& kCtx);
 
+// True when the building is REPLACED in the context city -- a successor (a building whose `replaces.buildings` names
+// it) is active there (legacy CvCity.cpp:2917). The verdict's destructive `replaces` subtraction. Lazy index, game thread.
+bool cascadeIsReplacedInCity(int iBuilding, const CvCascadeContext& kCtx);
+
 // GENERATION (forward enables): is the entity tech-reachable -- has the team researched a tech whose JSON
 // `enables` names it? Returns true when the entity has no tech enabler (enabled by non-tech / always).
 // NOT used for buildability anymore: the multi-tech AND confirm lives in requires.build TECH atoms (enables

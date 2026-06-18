@@ -614,6 +614,7 @@ namespace
 		if (kA.notConstructible) return "notConstructible";
 		if (pCity != NULL && pCity->hasBuilding(iIdx)) return "alreadyBuilt";
 		if (cascadeIsObsoleteForTeam(COUNTDOMAIN_BUILDING, iIdx, iTeam)) return "obsolete";
+		if (cascadeIsReplacedInCity(iIdx, kCtx)) return "replaced";
 		if (!cascadeBuildingGroupAllows(iIdx, kCtx)) return "groupCap";
 		if (!cascadeEvalCondition(kA.requiresBuild, kCtx)) return "requiresBuild";
 		if (!cascadeEvalCondition(kA.requiresOperate, kCtx)) return "requiresOperate";
@@ -676,6 +677,7 @@ namespace
 					     && !kA.notConstructible                                                  // cost==-1: never player-constructible
 					     && (pCity == NULL || !pCity->hasBuilding((BuildingTypes)i))
 					     && !cascadeIsObsoleteForTeam(COUNTDOMAIN_BUILDING, i, iTeam)
+					     && !cascadeIsReplacedInCity(i, kCtx)                                      // a successor is active in the city
 					     && cascadeBuildingGroupAllows(i, kCtx);
 					bL = (pCity != NULL) && pCity->canConstruct((BuildingTypes)i);
 				}
@@ -732,6 +734,7 @@ namespace
 				if (kAvail.notConstructible) bC = false;                                         // cost==-1: never player-constructible
 				if (pCity != NULL && pCity->hasBuilding((BuildingTypes)iIdx)) bC = false;        // generation: already built here
 				if (cascadeIsObsoleteForTeam(COUNTDOMAIN_BUILDING, iIdx, iTeam)) bC = false;      // generation: obsolete
+				if (cascadeIsReplacedInCity(iIdx, kCtx)) bC = false;                              // a successor is active in the city
 				if (!cascadeBuildingGroupAllows(iIdx, kCtx)) bC = false;                          // SpecialBuilding group cap
 				o["cascade"] = picojson::value(bC);
 				o["cascadeReason"] = picojson::value(std::string(cascadeBlockReason(kAvail, (BuildingTypes)iIdx, pCity, iTeam, kCtx)));

@@ -549,6 +549,56 @@ bool cascadeBuildingGroupAllows(int iBuilding, const CvCascadeContext& kCtx)
 	return iCount < itN->second; // at most N of the whole group at the cap's scope
 }
 
+// REPLACES (destructive succession, enabler-spec §6): a building is REPLACED -- blocked -- when a SUCCESSOR (a
+// building whose `replaces.buildings` names it) is active in the context city. Legacy CvCity.cpp:2917. The successor
+// carries `replaces`; invert ONCE into predecessor -> [successors] by scanning building JSONs, then check
+// isActiveBuilding in the city. The verdict's missing destructive `replaces` subtraction -- the obsolete index's sibling.
+namespace
+{
+	std::map<int, std::vector<int> > g_replacedBy;   // predecessor buildingIdx -> [successor buildingIdx]
+	bool g_replBuilt = false;
+
+	void rjBuildReplaceIndex()
+	{
+		if (g_replBuilt) return;
+		g_replBuilt = true;
+		const int iNum = GC.getNumBuildingInfos();
+		for (int i = 0; i < iNum; ++i) // i = the SUCCESSOR
+		{
+			std::string sContent;
+			if (!rjLocateEntityJson(GC.getBuildingInfo((BuildingTypes)i).getType(), sContent)) continue;
+			picojson::value root;
+			if (!picojson::parse(root, sContent).empty() || !root.is<picojson::object>()) continue;
+			const picojson::object& o = root.get<picojson::object>();
+			picojson::object::const_iterator itR = o.find("replaces");
+			if (itR == o.end() || !itR->second.is<picojson::object>()) continue;
+			const picojson::object& oR = itR->second.get<picojson::object>();
+			picojson::object::const_iterator itB = oR.find("buildings");
+			if (itB == oR.end() || !itB->second.is<picojson::array>()) continue;
+			const picojson::array& a = itB->second.get<picojson::array>();
+			for (size_t k = 0; k < a.size(); ++k)
+			{
+				if (!a[k].is<std::string>()) continue;
+				const int pred = GC.getInfoTypeForString(a[k].get<std::string>().c_str(), true);
+				if (pred >= 0) g_replacedBy[pred].push_back(i);
+			}
+		}
+	}
+}
+
+bool cascadeIsReplacedInCity(int iBuilding, const CvCascadeContext& kCtx)
+{
+	rjBuildReplaceIndex();
+	std::map<int, std::vector<int> >::const_iterator it = g_replacedBy.find(iBuilding);
+	if (it == g_replacedBy.end()) return false;
+	if (kCtx.iPlayer < 0 || kCtx.iPlayer >= MAX_PLAYERS || kCtx.iCity < 0) return false;
+	const CvCity* c = GET_PLAYER((PlayerTypes)kCtx.iPlayer).getCity(kCtx.iCity);
+	if (c == NULL) return false;
+	for (size_t k = 0; k < it->second.size(); ++k)
+		if (c->isActiveBuilding((BuildingTypes)it->second[k])) return true;
+	return false;
+}
+
 // GENERATION (forward enables tech-gate): is this entity reachable -- i.e. has the team researched a tech whose
 // JSON `enables` names it? If the entity has NO tech enabler (enabled by a building/civic/always), this does not
 // gate (returns true) -- a non-tech enable is the deeper enables-generation pass. eDomain: COUNTDOMAIN_* values.
