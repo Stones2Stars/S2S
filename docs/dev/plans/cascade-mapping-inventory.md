@@ -29,11 +29,44 @@ API) so its per-turn behaviour is visible. (owner 2026-06-18, "for when we map i
 *(This list is a SEED, not exhaustive — add systems as they surface. A system the owner can't explain off-hand is
 prima-facie unmapped and a priority for the "render-from-API" bar.)*
 
-## B. STATE MAINTAINERS (from enabler-spec §14 H)
+## B. STATE MAINTAINERS (enabler-spec §14 H) — investigation 2026-06-18
 
-The per-turn/per-event "decide a building's state" quirks (religiously-limited, `checkPropertyBuildings`, autobuild,
-SpecialBuilding group, `hasAllReligionsActive`, resource dormancy) — each must be mapped + shadowed before deletion.
-See enabler-spec §14 H for the list + the over-reach / map-before-delete rulings.
+The per-turn/per-event "decide a building's state" quirks. The buildability sweep does NOT exercise these (they act on
+already-built/auto-placed things) → each needs its OWN behaviour shadow before deletion. Grouped by what they DO, with
+current `file:line`, the cascade replacement, and the shadow the cutover needs. (Over-reach bias + map-before-delete: §14 H.)
+
+### B-i. AUTO-PLACEMENT — per-turn `changeHasBuilding(true/false)` that MUTATES the building set (the riskiest)
+Both run in `CvCity::doTurn`'s building-maintenance block (~CvCity.cpp:1455-1488) and both call the to-be-replaced `canConstruct`.
+- **Autobuild loop** (CvCity.cpp:1459-1487) — over `BuildingsRepo::get().autoBuildings()`: if absent + `canConstruct(…,bIgnoreCost)`
+  → ADD (+"auto-build" message); if present + non-wonder + a `PrereqNumOfBuildings` modifier dropped below threshold → REMOVE
+  (the adopted-cultures rule; wonders `getMaxGlobalInstances()==-1` exempt from removal). → cascade **`autoBuild` placement marker
+  + `requires`** (place when `requires` hold, drop when they go false; the owner's "autoBuild ≡ enables/requires slots" ruling).
+- **`checkPropertyBuildings`** (CvCity.cpp:1490-1518, non-NPC only, called 1457) — for each PropertyType × each `PropertyBuilding`
+  `{eBuilding,[iMinValue,iMaxValue]}`: ADD when the city's property value is IN-band + `canConstruct`, REMOVE when out-of-band or
+  not constructible. These are the `BUILDING_EFFECT_*` "really effects, not buildings". → cascade **`requires.operate`
+  property-in-band dormancy (the §3 PropertyEffect reverse-enabler; data-model §4.2b)** + autoBuild placement; formalizes OUT to
+  `PropertyEffect`/`BaseEffect` (#429-adjacent).
+- **SHADOW:** per city per turn, does the cascade's placed/removed set EQUAL these loops' `changeHasBuilding` actions? (presence diff)
+
+### B-ii. DORMANCY — a BUILT building goes inactive-but-PRESENT when a condition fails
+- **Religiously-limited** — `isReligiouslyLimitedBuilding` / `m_pabReligiouslyDisabledBuilding` / `setReligiouslyLimitedBuilding`
+  (CvCity.cpp:21279-21319; the 14940-ish trigger), with the `hasAllReligionsActive` exemption; reversible `processBuilding ∓1`.
+  → `requires.operate` (`STATE_RELIGION`/`STATE_RELIGION_IN_CITY` + a `hasAllReligionsActive` waiver clause). **B1 in
+  known-discrepancies: MATCH verified 2026-06-18** (currently moot — no civic sets AllReligionsActive).
+- **Resource dormancy** — `isActiveBuilding` (CvCity.cpp:14364) folding `PrereqBonuses` / `isDisabledBuilding` (`setDisabledBuilding`
+  21239-21269) → `requires.operate` resource dormancy. The `setDisabledBuilding` replace/re-enable chain (§14 F) is the imperative
+  twin to derive away.
+- **SHADOW:** per city per turn, does the cascade's active/dormant set EQUAL `isActiveBuilding`?
+
+### B-iii. GROUP GATE — `isSpecialBuildingNotRequired` (CvPlayer.cpp:13927; civic-driven count 18239)
+The SpecialBuilding group cap/tech/obsolete/waiver. → uniform group-gate inheritance (data-model §7, the building-group deliverable;
+the cap half + TechPrereq/ObsoleteTech inheritance already shipped this session). **SHADOW:** group membership active/waived parity.
+
+### B-iv. WAIVER — `hasAllReligionsActive` (CvPlayer.cpp:30299; civic `isAllReligionsActive`)
+The religion-exemption → a DECLARED `requires` waiver clause, not a buried `if`. Currently moot (no civic sets it) but must be a
+defined fact pre-switch. Folds into B-ii's religion dormancy.
+
+**⚠ The shadows above are the honest scope of "map every current behaviour" — a runtime twin of the buildability sweep, NOT yet built.**
 
 ## C. CASCADE DIVERGENCES (from cascade-known-discrepancies.md)
 

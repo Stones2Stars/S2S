@@ -966,6 +966,20 @@ out). The cascade (gather HAS → generate CAN GET via the `enables` family → 
 subsumes all of this — and because each step is bounded by HAS, the replacement runs on a far smaller list than the
 gates below, which re-scan the whole database:
 
+> **REFRESHED 2026-06-18 (line numbers drift; items confirmed all present):** gates — `CvCity::canConstruct`
+> 2470-2528 / `canConstructInternal` 2531-3005, `CvPlayer::canConstruct` 6510-6567 / internal 6569-6799;
+> `CvCity::canTrain` 2331-2403 / `canTrainInternal` 2162-2270, `CvPlayer::canTrain` 6371-6507; `CvPlayer::canEverResearch`
+> 8259-8287 / `CvGame::canEverResearch` 11331-11351; `canDoCivics` 8448-8479; `canFoundReligion` 10104,
+> `CvCity::canCreate` 3008 / `CvPlayer::canCreate` 6801-6883, `canMaintain` 3024/6886, `canFound` 6196-6267.
+> **~36 call sites across 12 files** — now INCL. `CvHttpServer.cpp` (the /diagnostic endpoints: canConstruct/canDoCivics
+> /canCreate/canMaintain ~773-793) on top of CvCity/CvCityAI/CvDLLButtonPopup/CvDLLWidgetData/CvGame/CvGameTextMgr/
+> CvPlayer/CvPlayerAI/CvTeam/CvUnit/CvUnitAI/CyGame. Caches: `CvPlayer` 4 arrays (`m_bCanConstruct[Cached][DefaultParam]`
+> CvPlayer.h:2398-2401, used 6521-6564) + `CvCity` lazy `m_bCanConstruct` map (CvCity.h:2004) + `VALIDATE_CAN_CONSTRUCT_CACHE`
+> (2500-2507) + `FlushCanConstructCache` (14399). PreLoop memoized: CvCityAI.cpp 12809-12860 (`m_buildingsToCalculateValid`
+> + `getBuildingsEnabledBy`). ConstructRequirement.h 31-52 + `logConstructRequirementFidelity` CvGlobals.cpp:3470-3543;
+> `buildConstructibilityEnablerIndex` 3294-3376. Imperative: `setHasBuilding` extends-cascade 14432-14445 + replace chain
+> 14448-14477; `setDisabledBuilding` 21239-21269; `isDisabledBuilding` 21271-21275.
+
 **A. The ~7 scattered gate functions + internals (~2100 lines)** — each → HAS (pass 1) + `enables`-family
 generation + per-candidate `requires` gate (pass 2):
 
