@@ -98,6 +98,7 @@ namespace
 		if (s == "IS_CAPITAL")           { k = PRED_IS_CAPITAL;         return true; }
 		if (s == "HAS_POWER")            { k = PRED_HAS_POWER;          return true; }
 		if (s == "HAS_STATE_RELIGION")   { k = PRED_HAS_STATE_RELIGION; return true; }
+		if (s == "STATE_RELIGION_IN_CITY") { k = PRED_STATE_RELIGION_IN_CITY; return true; }
 		if (s == "IS_COASTAL" || s == "COASTAL_LAND") { k = PRED_IS_COASTAL; return true; }
 		if (s == "HAS_RIVER")            { k = PRED_HAS_RIVER;          return true; }
 		if (s == "IS_WATER")             { k = PRED_IS_WATER;           return true; }

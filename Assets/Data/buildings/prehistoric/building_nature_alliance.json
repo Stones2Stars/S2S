@@ -29,6 +29,9 @@
    "all": [
     "STATE_RELIGION_IN_CITY",
     {
+     "STATE_RELIGION": "RELIGION_DRUIDIC_TRADITIONS"
+    },
+    {
      "type": "RELIGION_DRUIDIC_TRADITIONS",
      "scope": "city"
     }

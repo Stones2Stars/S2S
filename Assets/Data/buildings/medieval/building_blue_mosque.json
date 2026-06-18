@@ -19,6 +19,9 @@
    "all": [
     "STATE_RELIGION_IN_CITY",
     {
+     "STATE_RELIGION": "RELIGION_ISLAM"
+    },
+    {
      "type": "RELIGION_ISLAM",
      "scope": "city"
     }

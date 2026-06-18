@@ -38,6 +38,9 @@
   "operate": {
    "all": [
     {
+     "STATE_RELIGION": "RELIGION_KEMETISM"
+    },
+    {
      "type": "RELIGION_KEMETISM",
      "scope": "city"
     }

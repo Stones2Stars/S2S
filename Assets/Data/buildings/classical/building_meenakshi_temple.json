@@ -24,6 +24,9 @@
    "all": [
     "STATE_RELIGION_IN_CITY",
     {
+     "STATE_RELIGION": "RELIGION_HINDUISM"
+    },
+    {
      "type": "RELIGION_HINDUISM",
      "scope": "city"
     }

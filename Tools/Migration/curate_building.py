@@ -674,8 +674,13 @@ def requires_building(rec, store):
         op_all.append(_atom(pc, "empire"))
     if _bool(rec, "bNeedStateReligionInCity"):
         op_all.append("STATE_RELIGION_IN_CITY")
-    if _bool(rec, "StateReligion"):
-        op_all.append("HAS_STATE_RELIGION")
+    # StateReligion holds a RELIGION TYPE (the legacy getPrereqStateReligion gate, m_iStateReligion ->
+    # CvPlayer.cpp:6674: "this religion must be your STATE religion"), NOT a bool. Emit the parameterized
+    # {STATE_RELIGION: RELIGION_X} predicate (cascade PRED_STATE_RELIGION) -- same pattern as StateReligionCommerces
+    # (line ~382). The old `_bool(...) -> "HAS_STATE_RELIGION"` both mis-typed the field AND lost the specific religion.
+    sr = _txt(rec, "StateReligion")
+    if sr:
+        op_all.append(OrderedDict([("STATE_RELIGION", sr)]))
     # PrereqReligion / PrereqCorporation / PrereqCultureLevel are store-wired onto the source, BUT they are also
     # the building's reversible MEANS (a religion can leave via inquisition) -> author on operate too (forward check).
     for tag, scope in (("PrereqReligion", "city"), ("PrereqCorporation", "city"), ("PrereqCultureLevel", "city")):

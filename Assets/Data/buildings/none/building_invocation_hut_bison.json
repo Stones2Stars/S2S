@@ -23,6 +23,9 @@
   "operate": {
    "all": [
     {
+     "STATE_RELIGION": "RELIGION_SHAMANISM"
+    },
+    {
      "type": "RELIGION_SHAMANISM",
      "scope": "city"
     }

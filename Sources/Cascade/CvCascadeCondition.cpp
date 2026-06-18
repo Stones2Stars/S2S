@@ -146,6 +146,13 @@ bool cascadeEvalPredicate(const CvPredicate& pr, const CvCascadeContext& kCtx)
 	case PRED_IS_CAPITAL:         return c != NULL && c->isCapital();
 	case PRED_HAS_POWER:          return c != NULL && c->isPower();
 	case PRED_HAS_STATE_RELIGION: return kCtx.iPlayer >= 0 && GET_PLAYER((PlayerTypes)kCtx.iPlayer).getStateReligion() != NO_RELIGION;
+	case PRED_STATE_RELIGION_IN_CITY:
+	{
+		// Legacy needStateReligionInCity (CvCity.cpp:2594): the player's state religion is present in THIS city.
+		if (c == NULL || kCtx.iPlayer < 0) return false;
+		const ReligionTypes eSR = GET_PLAYER((PlayerTypes)kCtx.iPlayer).getStateReligion();
+		return eSR != NO_RELIGION && c->isHasReligion(eSR);
+	}
 	case PRED_IS_COASTAL:         return c != NULL && c->isCoastal(GC.getWorldInfo(GC.getMap().getWorldSize()).getOceanMinAreaSize());
 	case PRED_HAS_RIVER:          return pl != NULL && pl->isRiver();
 	case PRED_IS_WATER:           return pl != NULL && pl->isWater();

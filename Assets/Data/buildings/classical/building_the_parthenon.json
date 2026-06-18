@@ -28,6 +28,9 @@
    "all": [
     "STATE_RELIGION_IN_CITY",
     {
+     "STATE_RELIGION": "RELIGION_HELLENISM"
+    },
+    {
      "type": "RELIGION_HELLENISM",
      "scope": "city"
     }

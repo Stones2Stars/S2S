@@ -62,6 +62,7 @@ enum PredicateKind
 	PRED_IS_CAPITAL = 0,
 	PRED_HAS_POWER,
 	PRED_HAS_STATE_RELIGION,
+	PRED_STATE_RELIGION_IN_CITY,    // player has a state religion AND this city has it (legacy needStateReligionInCity)
 	PRED_IS_COASTAL,
 	PRED_HAS_RIVER,
 	PRED_IS_WATER,

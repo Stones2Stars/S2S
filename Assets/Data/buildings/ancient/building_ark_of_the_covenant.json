@@ -29,6 +29,9 @@
    "all": [
     "STATE_RELIGION_IN_CITY",
     {
+     "STATE_RELIGION": "RELIGION_JUDAISM"
+    },
+    {
      "type": "RELIGION_JUDAISM",
      "scope": "city"
     }

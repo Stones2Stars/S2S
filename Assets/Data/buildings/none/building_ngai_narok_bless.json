@@ -22,6 +22,9 @@
    "all": [
     "STATE_RELIGION_IN_CITY",
     {
+     "STATE_RELIGION": "RELIGION_NGAIISM"
+    },
+    {
      "type": "RELIGION_NGAIISM",
      "scope": "city"
     }

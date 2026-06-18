@@ -16,6 +16,9 @@
    "all": [
     "STATE_RELIGION_IN_CITY",
     {
+     "STATE_RELIGION": "RELIGION_YORUBA"
+    },
+    {
      "type": "RELIGION_YORUBA",
      "scope": "city"
     }

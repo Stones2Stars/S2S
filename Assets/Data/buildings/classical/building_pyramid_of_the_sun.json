@@ -20,6 +20,9 @@
    "all": [
     "STATE_RELIGION_IN_CITY",
     {
+     "STATE_RELIGION": "RELIGION_NAGHUALISM"
+    },
+    {
      "type": "RELIGION_NAGHUALISM",
      "scope": "city"
     }

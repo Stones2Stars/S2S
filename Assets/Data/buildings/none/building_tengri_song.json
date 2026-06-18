@@ -19,6 +19,9 @@
   "operate": {
    "all": [
     {
+     "STATE_RELIGION": "RELIGION_TENGRIISM"
+    },
+    {
      "type": "RELIGION_TENGRIISM",
      "scope": "city"
     }

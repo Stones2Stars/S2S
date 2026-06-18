@@ -24,6 +24,9 @@
    "all": [
     "STATE_RELIGION_IN_CITY",
     {
+     "STATE_RELIGION": "RELIGION_ANDEANISM"
+    },
+    {
      "type": "RELIGION_ANDEANISM",
      "scope": "city"
     }

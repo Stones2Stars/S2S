@@ -58,6 +58,9 @@
   "operate": {
    "all": [
     {
+     "STATE_RELIGION": "RELIGION_MESOPOTAMISM"
+    },
+    {
      "type": "RELIGION_MESOPOTAMISM",
      "scope": "city"
     }

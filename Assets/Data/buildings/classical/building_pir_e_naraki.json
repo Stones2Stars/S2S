@@ -27,6 +27,9 @@
   "operate": {
    "all": [
     {
+     "STATE_RELIGION": "RELIGION_ZOROASTRIANISM"
+    },
+    {
      "type": "RELIGION_ZOROASTRIANISM",
      "scope": "city"
     }
