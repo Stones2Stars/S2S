@@ -13,6 +13,14 @@
     {
      "type": "BUILDING_CONSPIRATORS_HIDEOUT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_POLITICAL_PHILOSOPHY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MATCHLOCK",
+     "scope": "team"
     }
    ]
   }

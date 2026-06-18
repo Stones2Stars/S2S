@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_FARMSCRAPER_III",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ATOMIC_SCALE_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

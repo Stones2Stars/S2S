@@ -17,6 +17,16 @@
    "BUILDING_CEMENT_BARRIER"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FLINTLOCK",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -1

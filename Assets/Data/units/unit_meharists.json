@@ -15,6 +15,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_MILITARY_TRADITION",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_CAMEL",
      "scope": "city",
      "connection": "trade|vicinity"

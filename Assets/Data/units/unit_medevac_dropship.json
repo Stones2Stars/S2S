@@ -19,6 +19,14 @@
      "scope": "city"
     },
     {
+     "type": "TECH_REGENERATIVE_MEDICINE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SKYROADS",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_BIOFUEL",
      "scope": "city",
      "connection": "trade|vicinity"

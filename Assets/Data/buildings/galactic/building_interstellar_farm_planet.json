@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_TERRAFORMED_PLANET",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ASTROIMPERIALISM",
+     "scope": "team"
     }
    ]
   }

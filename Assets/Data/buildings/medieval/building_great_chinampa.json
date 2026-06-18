@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_CHINAMPA",
      "scope": "city"
+    },
+    {
+     "type": "TECH_AGRICULTURAL_TOOLS",
+     "scope": "team"
     }
    ],
    "any": [

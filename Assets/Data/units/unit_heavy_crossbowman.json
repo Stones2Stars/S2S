@@ -2,6 +2,16 @@
  "type": "UNIT_HEAVY_CROSSBOWMAN",
  "description": "TXT_KEY_UNIT_HEAVY_CROSSBOWMAN",
  "civilopedia": "TXT_KEY_UNIT_CROSSBOWMAN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_METALLURGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {

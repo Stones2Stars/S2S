@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_MARTIAN_METROPOLIS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SPECULATIVE_PHYSIOLOGY",
+     "scope": "team"
     }
    ]
   }

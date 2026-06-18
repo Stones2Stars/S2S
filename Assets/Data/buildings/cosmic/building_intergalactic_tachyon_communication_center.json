@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERGALACTIC_TACHYON_DETECTOR",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TACHYON_COMMUNICATIONS",
+     "scope": "team"
     }
    ]
   }

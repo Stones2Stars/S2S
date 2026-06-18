@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_ANIMAL_TRAINER_BEAR",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HERITAGE",
+     "scope": "team"
     }
    ]
   }

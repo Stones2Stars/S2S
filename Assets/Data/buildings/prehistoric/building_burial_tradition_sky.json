@@ -24,6 +24,10 @@
     {
      "type": "BUILDING_FOLKLORE_E_SKY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CEREMONIAL_BURIAL",
+     "scope": "team"
     }
    ],
    "noneOf": [

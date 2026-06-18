@@ -28,6 +28,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_WEAPONIZED_LASERS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

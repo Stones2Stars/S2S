@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_ENCLOSURE_BIG_CAT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SPECIALIZATION",
+     "scope": "team"
     }
    ]
   }

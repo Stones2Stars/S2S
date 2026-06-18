@@ -15,6 +15,10 @@
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 10
+    },
+    {
+     "type": "TECH_COAST_GUARD",
+     "scope": "team"
     }
    ],
    "any": [

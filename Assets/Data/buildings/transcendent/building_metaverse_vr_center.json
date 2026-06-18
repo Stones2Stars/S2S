@@ -7,6 +7,16 @@
    "BUILDING_HYPERURANION"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_METAVERSE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "flat": 5

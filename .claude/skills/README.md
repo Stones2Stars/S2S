@@ -5,6 +5,7 @@ Unlike personal skills (under `~/.claude/skills/`), these are committed to the
 repo, so they are shared by everyone who works on S2S.
 
 ## How skills work
+
 Each skill is a directory containing a `SKILL.md` file with YAML frontmatter:
 
 ```
@@ -30,6 +31,7 @@ Step-by-step instructions, commands, and context the agent needs to do the task.
 ```
 
 ## Conventions for S2S skills
+
 - `name` must be kebab-case and match the directory name.
 - Write the `description` around the trigger — what request should pull this skill in.
 - Encode the project's hard-won knowledge (exact build commands, validation steps,
@@ -39,6 +41,7 @@ Step-by-step instructions, commands, and context the agent needs to do the task.
   generates or edits `Sources/` code.
 
 ## Invoking
+
 Users invoke a skill by typing `/<skill-name>`, or the agent invokes it
 automatically when a request matches the `description`.
 

@@ -3,6 +3,14 @@
  "description": "TXT_KEY_BUILDING_WARRIORS_HUT",
  "civilopedia": "TXT_KEY_BUILDING_WARRIORS_HUT_PEDIA",
  "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WARFARE",
+     "scope": "team"
+    }
+   ]
+  },
   "operate": {
    "all": [
     {

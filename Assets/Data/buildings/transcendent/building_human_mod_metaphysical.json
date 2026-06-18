@@ -6,6 +6,10 @@
   "build": {
    "all": [
     {
+     "type": "TECH_ARCHETYPAL_VECTOR_SPACES",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_HUMAN_MOD_ARCHAILECT",
      "scope": "city",
      "connection": "trade|vicinity"

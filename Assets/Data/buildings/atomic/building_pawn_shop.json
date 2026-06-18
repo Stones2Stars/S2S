@@ -7,6 +7,16 @@
    "UNIT_ROBBER"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CONSUMERISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "flat": 12

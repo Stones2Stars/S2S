@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_SHOPPING_DISTRICT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CONSUMERISM",
+     "scope": "team"
     }
    ],
    "any": [

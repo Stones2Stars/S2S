@@ -29,6 +29,10 @@
     {
      "type": "BUILDING_FOLKLORE_T_FISH",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MARINE_BIOLOGY",
+     "scope": "team"
     }
    ]
   }

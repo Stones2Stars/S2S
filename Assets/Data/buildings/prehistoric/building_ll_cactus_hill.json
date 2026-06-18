@@ -2,6 +2,16 @@
  "type": "BUILDING_LL_CACTUS_HILL",
  "description": "TXT_KEY_BUILDING_LL_CACTUS_HILL",
  "civilopedia": "TXT_KEY_BUILDING_LL_CACTUS_HILL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AXE_MAKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

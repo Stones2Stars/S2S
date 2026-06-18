@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_ASTRONOMICAL_DATABASE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_JOVIAN_EXPLORATION",
+     "scope": "team"
     }
    ]
   }

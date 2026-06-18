@@ -14,6 +14,10 @@
      "type": "BONUS_RUBBER",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_BICYCLES",
+     "scope": "team"
     }
    ],
    "any": [

@@ -18,6 +18,10 @@
      "type": "BUILDING_LIFE_JOVIAN_CLOUDS",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_JOVIAN_TERRAFORMING",
+     "scope": "team"
     }
    ],
    "any": [

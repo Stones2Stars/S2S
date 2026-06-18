@@ -2,6 +2,16 @@
  "type": "BUILDING_SAFETY_ALCATRAZ",
  "description": "TXT_KEY_BUILDING_SAFETY_ALCATRAZ",
  "civilopedia": "TXT_KEY_BUILDING_SAFETY_ALCATRAZ_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CRIMINOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "PROPERTY_CRIME": {
   "city": {
    "flat": -50

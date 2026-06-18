@@ -38,6 +38,10 @@
     {
      "type": "BUILDING_POWER_LINES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_INDUSTRIAL_ECOLOGY",
+     "scope": "team"
     }
    ]
   }

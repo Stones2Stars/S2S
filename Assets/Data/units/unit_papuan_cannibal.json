@@ -9,6 +9,10 @@
      "type": "BONUS_PAPUAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_WARFARE",
+     "scope": "team"
     }
    ]
   }

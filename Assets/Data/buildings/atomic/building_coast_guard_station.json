@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_NAVAL_ACADEMY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COAST_GUARD",
+     "scope": "team"
     }
    ]
   }

@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_MULTIVERSE_CITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_REALITY_REPROGRAMMING",
+     "scope": "team"
     }
    ]
   }

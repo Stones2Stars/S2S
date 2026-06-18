@@ -2,6 +2,16 @@
  "type": "UNIT_GAME_HUNTER",
  "description": "TXT_KEY_UNIT_GAME_HUNTER",
  "civilopedia": "TXT_KEY_UNIT_HUNTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MATCHLOCK",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "cityAttack": {

@@ -9,6 +9,10 @@
      "type": "BONUS_CETACEA_SAPIENS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_SPECIES_UPLIFTING",
+     "scope": "team"
     }
    ],
    "any": [

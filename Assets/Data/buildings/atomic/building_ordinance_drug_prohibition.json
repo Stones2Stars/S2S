@@ -9,6 +9,16 @@
    "BUILDING_METH_LAB"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COUNTERCULTURE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -5

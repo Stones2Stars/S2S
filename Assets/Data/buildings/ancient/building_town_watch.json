@@ -27,6 +27,16 @@
    "BUILDING_SENTRY_POST"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DUALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -3

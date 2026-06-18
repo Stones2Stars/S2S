@@ -6,6 +6,14 @@
   "build": {
    "all": [
     {
+     "type": "TECH_RADIO",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MOTORIZED_TRANSPORTATION",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_FIREARMS",
      "scope": "city",
      "connection": "trade|vicinity"

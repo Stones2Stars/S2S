@@ -12,6 +12,14 @@
     {
      "type": "BUILDING_REPET",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HOMO_SUPERIOR",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEGAFAUNA_DOMESTICATION",
+     "scope": "team"
     }
    ]
   }

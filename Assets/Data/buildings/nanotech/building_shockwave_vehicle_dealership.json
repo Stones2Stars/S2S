@@ -31,6 +31,14 @@
      "scope": "city"
     },
     {
+     "type": "TECH_INTERNAL_SHOCKWAVE_ENGINE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HOLOGRAPHICS",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_GRAPHENE",
      "scope": "city",
      "connection": "trade|vicinity"

@@ -9,6 +9,10 @@
      "type": "BONUS_ARVERNIAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MASONRY",
+     "scope": "team"
     }
    ]
   }

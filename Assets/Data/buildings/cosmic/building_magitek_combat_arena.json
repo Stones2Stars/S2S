@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_ULTIMATE_COMBAT_ARENA",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MENSIOKINESIS",
+     "scope": "team"
     }
    ]
   }

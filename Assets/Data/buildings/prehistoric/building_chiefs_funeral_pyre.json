@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_CHIEFS_HUT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CHIEFDOM",
+     "scope": "team"
     }
    ],
    "any": [

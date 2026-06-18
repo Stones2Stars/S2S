@@ -32,6 +32,10 @@
     {
      "type": "BUILDING_COMMUNICATIONS_SATELLITE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_VIRTUAL_REALITY",
+     "scope": "team"
     }
    ],
    "any": [

@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_PHYSICS_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_IMAGINARY_PHYSICS",
+     "scope": "team"
     }
    ]
   }

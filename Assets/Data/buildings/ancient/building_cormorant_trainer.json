@@ -20,7 +20,15 @@
      "scope": "city",
      "connection": "vicinity"
     },
-    "IS_WATER"
+    "IS_WATER",
+    {
+     "type": "TECH_POULTRY_DOMESTICATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FISHING",
+     "scope": "team"
+    }
    ],
    "any": [
     [

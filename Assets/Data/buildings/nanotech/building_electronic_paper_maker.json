@@ -26,6 +26,10 @@
     {
      "type": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PLASTIC_ELECTRONICS",
+     "scope": "team"
     }
    ]
   }

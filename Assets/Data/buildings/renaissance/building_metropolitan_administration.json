@@ -55,6 +55,10 @@
      "type": "POPULATION",
      "scope": "city",
      "min": 30
+    },
+    {
+     "type": "TECH_SOCIAL_CONTRACT",
+     "scope": "team"
     }
    ],
    "any": [

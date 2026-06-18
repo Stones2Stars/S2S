@@ -17,6 +17,16 @@
    "UNIT_WORLDSHIP4"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HORIZON_BREAKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "flat": 25

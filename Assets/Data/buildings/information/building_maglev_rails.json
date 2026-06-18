@@ -16,6 +16,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MAGNETIC_LEVITATION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

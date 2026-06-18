@@ -20,6 +20,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MATHEMATICS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

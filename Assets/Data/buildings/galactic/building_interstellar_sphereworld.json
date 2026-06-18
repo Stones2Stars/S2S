@@ -19,6 +19,14 @@
     {
      "type": "BUILDING_INTERSTELLAR_ECUMENOPOLIS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ASTROENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASTROIMPERIALISM",
+     "scope": "team"
     }
    ]
   }

@@ -28,6 +28,10 @@
     {
      "type": "BUILDING_MEGATOWER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SUPERSONIC_RAILS",
+     "scope": "team"
     }
    ]
   }

@@ -27,6 +27,10 @@
     {
      "type": "BUILDING_SOLAR_POWER_SATELLITE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MICROWAVE_WEAPONRY",
+     "scope": "team"
     }
    ],
    "any": [

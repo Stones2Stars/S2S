@@ -15,6 +15,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_SUPERSONIC_FLIGHT",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_AIRCRAFT",
      "scope": "city",
      "connection": "trade|vicinity"

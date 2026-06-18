@@ -16,6 +16,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_JET_PROPULSION",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_AIRCRAFT",
      "scope": "city",
      "connection": "trade|vicinity"

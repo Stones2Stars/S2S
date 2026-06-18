@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_TRANSGENICS_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NUTRACEUTICAL_ANIMALS",
+     "scope": "team"
     }
    ]
   }

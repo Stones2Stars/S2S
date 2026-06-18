@@ -13,6 +13,10 @@
     {
      "type": "TERRAIN_LAKE_SHORE",
      "scope": "plot"
+    },
+    {
+     "type": "TECH_CAVE_DWELLING",
+     "scope": "team"
     }
    ],
    "any": [

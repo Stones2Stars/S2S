@@ -20,6 +20,10 @@
      "type": "BUILDING_LUNAR_SEA",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_LUNAR_TERRAFORMING",
+     "scope": "team"
     }
    ]
   }

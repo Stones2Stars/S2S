@@ -10,6 +10,16 @@
    "UNIT_HYPERSHIP"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRANSDIMENSIONAL_COMMERCE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": 500,

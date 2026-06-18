@@ -15,6 +15,10 @@
     {
      "type": "BUILDING_ARTIFICIAL_REEF",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PROTOTYPED_PATHOGENS",
+     "scope": "team"
     }
    ]
   }

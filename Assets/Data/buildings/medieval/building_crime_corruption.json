@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_CORRUPTION",
  "description": "TXT_KEY_BUILDING_CRIME_CORRUPTION",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_CORRUPTION_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CIVIL_SERVICE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -10,

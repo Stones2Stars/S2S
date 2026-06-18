@@ -2,6 +2,16 @@
  "type": "BUILDING_EFFECT_ACHIEVEMENT_TOURISM",
  "description": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_TOURISM",
  "civilopedia": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_TOURISM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TOURISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "PROPERTY_TOURISM": {
   "city": {
    "flat": 10

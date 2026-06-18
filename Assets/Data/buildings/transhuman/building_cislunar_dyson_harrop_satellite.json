@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_CISLUNAR_ONEILL_CYLINDER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PHOTONIC_SATELLITES",
+     "scope": "team"
     }
    ]
   }

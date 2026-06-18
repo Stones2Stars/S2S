@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_OPERA_HOUSE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_REALISM",
+     "scope": "team"
     }
    ]
   }

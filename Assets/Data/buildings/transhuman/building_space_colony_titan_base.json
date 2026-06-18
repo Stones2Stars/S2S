@@ -14,7 +14,11 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER"
+    "HAS_POWER",
+    {
+     "type": "TECH_ABYSS_COLONIZATION",
+     "scope": "team"
+    }
    ]
   }
  },

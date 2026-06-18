@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_PRESS_AGENCY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MASS_MEDIA",
+     "scope": "team"
     }
    ]
   }

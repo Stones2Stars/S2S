@@ -19,6 +19,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_BANKING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

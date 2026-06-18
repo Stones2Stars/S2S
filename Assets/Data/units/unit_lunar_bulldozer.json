@@ -2,6 +2,16 @@
  "type": "UNIT_LUNAR_BULLDOZER",
  "description": "TXT_KEY_UNIT_LUNAR_BULLDOZER",
  "civilopedia": "TXT_KEY_UNIT_LUNAR_BULLDOZER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LUNAR_COLONIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "capabilities": {
   "onlyDefensive": true
  },

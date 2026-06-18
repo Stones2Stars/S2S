@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_ASTEROID_CERES_TRADING_POST",
      "scope": "city"
+    },
+    {
+     "type": "TECH_LUNAR_TERRAFORMING",
+     "scope": "team"
     }
    ],
    "any": [

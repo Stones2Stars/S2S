@@ -25,6 +25,10 @@
     {
      "type": "BUILDING_MEDICAL_CLINIC",
      "scope": "city"
+    },
+    {
+     "type": "TECH_AUTOMATED_ROBOTICS",
+     "scope": "team"
     }
    ],
    "any": [

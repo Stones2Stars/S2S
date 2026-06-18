@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_C_L_NEANDERTHAL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HUNTING",
+     "scope": "team"
     }
    ]
   }
@@ -54,6 +58,7 @@
   "upkeep": 1
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 3,
   "militaryWorth": 5,
   "xpValueAttack": 1,

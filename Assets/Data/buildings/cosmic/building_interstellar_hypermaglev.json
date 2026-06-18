@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_STAR_ROAD",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ELECTROWEAK_MATTER",
+     "scope": "team"
     }
    ]
   }

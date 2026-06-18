@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_MARTIAN_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PLANETARY_MANUFACTURING",
+     "scope": "team"
     }
    ]
   }

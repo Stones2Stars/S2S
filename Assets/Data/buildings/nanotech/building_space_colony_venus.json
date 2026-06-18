@@ -20,6 +20,16 @@
    "UNIT_VENUS_INFANTRY"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_COLONIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "flat": 150

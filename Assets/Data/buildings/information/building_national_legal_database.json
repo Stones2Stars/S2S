@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_POLICE_PRECINCT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CLOUD_COMPUTING",
+     "scope": "team"
     }
    ]
   }

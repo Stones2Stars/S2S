@@ -9,6 +9,10 @@
      "type": "BONUS_GOTH",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MILITARY_TRAINING",
+     "scope": "team"
     }
    ]
   }

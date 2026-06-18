@@ -19,6 +19,14 @@
     {
      "type": "BUILDING_GENOTYPE_STUDIO",
      "scope": "city"
+    },
+    {
+     "type": "TECH_INTERACTIVE_GLASS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ACCELERATED_GERMINATION",
+     "scope": "team"
     }
    ]
   }

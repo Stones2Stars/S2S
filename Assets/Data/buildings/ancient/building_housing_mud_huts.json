@@ -16,6 +16,10 @@
      "type": "BONUS_CLAY",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_POTTERY",
+     "scope": "team"
     }
    ],
    "any": [

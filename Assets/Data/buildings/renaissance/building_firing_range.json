@@ -26,6 +26,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MILITARY_TRADITION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

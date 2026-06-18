@@ -9,6 +9,16 @@
    "BUILDING_POLLUTION_MODERATE_GLOBAL_WARMING"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DYSTOPIA_PATHOGENS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100

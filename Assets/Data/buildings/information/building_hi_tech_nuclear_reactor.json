@@ -35,6 +35,10 @@
     {
      "type": "BUILDING_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SUPERCONDUCTORS",
+     "scope": "team"
     }
    ],
    "any": [

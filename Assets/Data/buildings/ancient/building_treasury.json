@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_PALACE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MONARCHY",
+     "scope": "team"
     }
    ]
   }

@@ -9,6 +9,10 @@
      "type": "BONUS_SCULPTURES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_SUNDIAL",
+     "scope": "team"
     }
    ],
    "any": [

@@ -27,6 +27,10 @@
     {
      "type": "BUILDING_CONSTRUCTION_FIRM",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MEGASTRUCTURE_ENGINEERING",
+     "scope": "team"
     }
    ],
    "any": [

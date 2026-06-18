@@ -9,6 +9,14 @@
     {
      "type": "BUILDING_CLOUD_SERVER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_RAPID_PROTOTYPING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DIGITIZATION",
+     "scope": "team"
     }
    ]
   }

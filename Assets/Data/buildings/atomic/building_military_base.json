@@ -37,6 +37,10 @@
      "type": "BONUS_CEMENT",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_LOGISTICS",
+     "scope": "team"
     }
    ],
    "any": [

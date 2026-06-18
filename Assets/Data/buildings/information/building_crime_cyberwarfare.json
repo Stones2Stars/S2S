@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_CYBERWARFARE",
  "description": "TXT_KEY_BUILDING_CRIME_CYBERWARFARE",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_CYBERWARFARE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CYBERWARFARE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -40,

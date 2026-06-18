@@ -16,6 +16,10 @@
     {
      "type": "BUILDING_UNIVERSITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PATENT_RIGHTS",
+     "scope": "team"
     }
    ]
   }

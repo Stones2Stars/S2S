@@ -24,6 +24,10 @@
      "type": "BONUS_GRAINS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MACHINERY",
+     "scope": "team"
     }
    ],
    "any": [

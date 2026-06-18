@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_ELEPHANT_DOMESTICATION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

@@ -23,6 +23,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CHEMISTRY",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

@@ -9,6 +9,10 @@
      "type": "BONUS_MECHS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_WARMACHINES",
+     "scope": "team"
     }
    ]
   }

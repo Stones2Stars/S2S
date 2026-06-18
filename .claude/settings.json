@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "compact|resume|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh -NoProfile -Command \"[Console]::OutputEncoding=[Text.Encoding]::UTF8; Get-Content -Raw -LiteralPath (Join-Path $env:CLAUDE_PROJECT_DIR '.claude/post-compaction-reload.txt')\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

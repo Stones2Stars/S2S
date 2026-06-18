@@ -9,6 +9,10 @@
      "type": "BONUS_SOAP",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_VETERINARY_MEDICINE",
+     "scope": "team"
     }
    ],
    "any": [

@@ -40,7 +40,11 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER"
+    "HAS_POWER",
+    {
+     "type": "TECH_ATOMIC_SCALE_ENGINEERING",
+     "scope": "team"
+    }
    ]
   }
  },

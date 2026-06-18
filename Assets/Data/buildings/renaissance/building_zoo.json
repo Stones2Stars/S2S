@@ -62,6 +62,10 @@
      "type": "BONUS_CEMENT",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_ZOOLOGY",
+     "scope": "team"
     }
    ],
    "any": [

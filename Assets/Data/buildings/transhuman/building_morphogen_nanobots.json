@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_CIRCADIAN_CHAMBER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SYNTHETIC_SYNESTHESIA",
+     "scope": "team"
     }
    ]
   }

@@ -15,7 +15,11 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "IS_WATER"
+    "IS_WATER",
+    {
+     "type": "TECH_ABYSS_COLONIZATION",
+     "scope": "team"
+    }
    ]
   }
  },

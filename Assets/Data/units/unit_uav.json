@@ -11,6 +11,10 @@
      "connection": "trade|vicinity"
     },
     {
+     "type": "TECH_UNMANNED_AIR_VEHICLES",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_ALUMINUM_WARES",
      "scope": "city",
      "connection": "trade|vicinity"

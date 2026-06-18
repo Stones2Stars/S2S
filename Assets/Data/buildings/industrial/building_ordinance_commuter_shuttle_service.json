@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_COURTHOUSE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MOTORIZED_TRANSPORTATION",
+     "scope": "team"
     }
    ]
   }

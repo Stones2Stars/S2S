@@ -2,6 +2,16 @@
  "type": "BUILDING_LIFE_HYPERSPACE",
  "description": "TXT_KEY_BUILDING_LIFE_HYPERSPACE",
  "civilopedia": "TXT_KEY_BUILDING_LIFE_HYPERSPACE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "empire": 1
  },

@@ -9,6 +9,10 @@
      "type": "BONUS_LEBANESE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_ASTRONOMY",
+     "scope": "team"
     }
    ]
   }

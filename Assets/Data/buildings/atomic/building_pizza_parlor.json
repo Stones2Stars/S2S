@@ -14,6 +14,10 @@
      "type": "BONUS_FLOUR",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_FRANCHISES",
+     "scope": "team"
     }
    ],
    "any": [

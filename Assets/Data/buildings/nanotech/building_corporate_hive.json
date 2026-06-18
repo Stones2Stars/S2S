@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_MARKET_RESEARCH",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MEGACORPORATIONS",
+     "scope": "team"
     }
    ]
   }

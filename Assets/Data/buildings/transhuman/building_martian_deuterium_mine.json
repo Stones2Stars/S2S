@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_MARTIAN_CITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_UNIFICATION_PHYSICS",
+     "scope": "team"
     }
    ]
   }

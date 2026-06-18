@@ -7,6 +7,20 @@
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GAMES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NATURAL_PIGMENTS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": 1

@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_STONEWORKER_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_HARD_HAMMER_PERCUSSION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

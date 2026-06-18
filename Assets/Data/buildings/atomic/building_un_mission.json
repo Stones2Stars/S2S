@@ -24,6 +24,10 @@
     {
      "type": "VICTORY_DIPLOMATIC",
      "scope": "world"
+    },
+    {
+     "type": "TECH_MASS_MEDIA",
+     "scope": "team"
     }
    ],
    "any": [

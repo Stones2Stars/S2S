@@ -12,6 +12,20 @@
    "BUILDING_DAY_CARE_CENTER"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COOPERATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SHELTER_BUILDING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": 2,

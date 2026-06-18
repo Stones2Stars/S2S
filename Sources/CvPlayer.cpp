@@ -12,6 +12,7 @@
 #include "CvCity.h"
 #include "CvCityAI.h"
 #include "CvContractBroker.h"
+#include "CvEventSpine.h"   // #430 cascade spine -- first real DOMAIN emit at changeBuildingCount
 #include "CvDeal.h"
 #include "CvDiploParameters.h"
 #include "CvEventReporter.h"
@@ -13636,6 +13637,8 @@ void CvPlayer::changeUnitCount(const UnitTypes eUnit, const int iChange)
 		m_unitCount[itr->first] += iChange;
 	}
 	GET_TEAM(getTeam()).changeUnitCount(eUnit, iChange);
+	// #430 cascade DOMAIN emit (mirror of changeBuildingCount): real per-player unit-count change -> the tally.
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DOMAIN, CASCADE_EVT_UNIT_COUNT, (int)eUnit, getUnitCount(eUnit), iChange, (int)getID()));
 }
 
 int CvPlayer::getUnitCount(const UnitTypes eUnit) const
@@ -13725,6 +13728,12 @@ void CvPlayer::changeBuildingCount(BuildingTypes eIndex, int iChange)
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
 	m_paiBuildingCount[eIndex] += iChange;
 	FASSERT_NOT_NEGATIVE(getBuildingCount(eIndex));
+
+	// #430 cascade FIRST REAL EMIT (temporary first-pass, beside the original counter): every genuine empire
+	// building gain/loss drives a DOMAIN event through the spine, carrying the real building type + new empire
+	// count + delta. This proves the spine on REAL gameplay input and shadows m_paiBuildingCount -- the exact
+	// counter the tally will replace. DOMAIN = synced state change (tally-eligible). No-op until consumers register.
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DOMAIN, CASCADE_EVT_BUILDING_COUNT, (int)eIndex, getBuildingCount(eIndex), iChange, (int)getID()));
 
 	clearCanConstructCache(eIndex, true);
 }

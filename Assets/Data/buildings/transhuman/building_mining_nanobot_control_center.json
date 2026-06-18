@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_MINING_MECH_CONTROL_CENTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NANOMINING",
+     "scope": "team"
     }
    ]
   }

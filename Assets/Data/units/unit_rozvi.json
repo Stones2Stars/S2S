@@ -9,6 +9,10 @@
      "type": "BONUS_MUTAPA",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_CIVIL_SERVICE",
+     "scope": "team"
     }
    ],
    "any": [

@@ -16,7 +16,11 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER"
+    "HAS_POWER",
+    {
+     "type": "TECH_LEGALIZED_GAMBLING",
+     "scope": "team"
+    }
    ],
    "any": [
     [

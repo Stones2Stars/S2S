@@ -14,6 +14,10 @@
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 10
+    },
+    {
+     "type": "TECH_SEMICONDUCTORS",
+     "scope": "team"
     }
    ],
    "any": [
@@ -90,6 +94,7 @@
   "upkeep": 3
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 4,
   "militaryWorth": 288,
   "xpValueAttack": 3,

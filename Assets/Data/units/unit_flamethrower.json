@@ -9,6 +9,10 @@
      "type": "BONUS_CHEMICALS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_AUTOMATIC_WEAPONS",
+     "scope": "team"
     }
    ],
    "any": [

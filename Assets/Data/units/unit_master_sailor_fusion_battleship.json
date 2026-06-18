@@ -9,6 +9,10 @@
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 10
+    },
+    {
+     "type": "TECH_ADVANCED_WARMACHINES",
+     "scope": "team"
     }
    ]
   }
@@ -72,6 +76,7 @@
   "upkeep": 3
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 4,
   "militaryWorth": 675,
   "xpValueAttack": 3,

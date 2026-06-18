@@ -3,6 +3,16 @@
  "description": "TXT_KEY_UNIT_LAWYER",
  "civilopedia": "TXT_KEY_CONCEPT_CORPORATIONS_PEDIA",
  "help": "TXT_KEY_UNIT_LAWYER_REMOVE_CORPORATIONS_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CORPORATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "empire": 5
  },

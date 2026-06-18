@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_SEXUAL_HARASSMENT",
  "description": "TXT_KEY_BUILDING_CRIME_SEXUAL_HARASSMENT",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_SEXUAL_HARASSMENT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WOMENS_SUFFRAGE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "espionage": {
   "city": {
    "insidiousness": {

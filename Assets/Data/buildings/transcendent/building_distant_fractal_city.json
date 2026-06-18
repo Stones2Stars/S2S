@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_DISTANT_PARALLEL_UNIVERSE_PORTAL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TRANSFINITE_STRUCTURES",
+     "scope": "team"
     }
    ]
   }

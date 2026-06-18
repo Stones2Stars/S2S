@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_VENUS_SURFACE_CITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_THERMAL_NEGATION",
+     "scope": "team"
     }
    ]
   }

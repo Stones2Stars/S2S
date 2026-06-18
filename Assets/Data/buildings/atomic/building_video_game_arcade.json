@@ -24,6 +24,14 @@
     {
      "type": "BUILDING_SHOPPING_DISTRICT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PERSONAL_COMPUTERS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ANIMATION",
+     "scope": "team"
     }
    ],
    "any": [

@@ -9,6 +9,14 @@
     {
      "type": "BUILDING_LUNAR_SOIL_GENERATOR",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ASTROECOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PARATERRAFORMING",
+     "scope": "team"
     }
    ]
   }

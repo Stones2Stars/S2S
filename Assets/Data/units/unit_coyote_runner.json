@@ -9,6 +9,10 @@
      "type": "BONUS_TOLTEC",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_OBSIDIAN_WEAPONS",
+     "scope": "team"
     }
    ]
   }

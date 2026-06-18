@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_MEMORY_TRANSFER_STATION",
      "scope": "city"
+    },
+    {
+     "type": "TECH_KNOWLEDGE_MERCANTILISM",
+     "scope": "team"
     }
    ]
   },

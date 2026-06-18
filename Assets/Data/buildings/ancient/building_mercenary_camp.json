@@ -10,6 +10,16 @@
    "UNIT_BANDIT_FOOTPAD"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BRONZE_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": 5

@@ -8,6 +8,14 @@
     {
      "type": "BUILDING_SPACE_COLONY_TITAN_BASE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NANOMINING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ABYSS_COLONIZATION",
+     "scope": "team"
     }
    ]
   }

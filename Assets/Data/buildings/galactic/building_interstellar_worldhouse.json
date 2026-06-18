@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_AEROPONICS_ARCOLOGY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ECOSYNTHESIS",
+     "scope": "team"
     }
    ]
   }

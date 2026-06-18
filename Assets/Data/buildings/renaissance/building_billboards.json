@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_BILLBOARDS_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_PRINTING_PRESS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_DOMESTIC_VIOLENCE",
  "description": "TXT_KEY_BUILDING_CRIME_DOMESTIC_VIOLENCE",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_DOMESTIC_VIOLENCE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WOMENS_SUFFRAGE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "espionage": {
   "city": {
    "insidiousness": {

@@ -21,6 +21,10 @@
     {
      "type": "BUILDING_ANIMA_CHAMBER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_LIFE",
+     "scope": "team"
     }
    ]
   }

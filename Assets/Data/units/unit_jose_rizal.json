@@ -9,6 +9,10 @@
      "type": "BONUS_TAGALOG",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_CONSTITUTION",
+     "scope": "team"
     }
    ]
   }

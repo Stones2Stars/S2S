@@ -19,6 +19,10 @@
      "type": "BONUS_OBSIDIAN",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "TECH_MASONRY",
+     "scope": "team"
     }
    ]
   }

@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_SPY_TRAINING_FACILITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_POLITICAL_PHILOSOPHY",
+     "scope": "team"
     }
    ]
   }

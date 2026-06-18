@@ -21,6 +21,14 @@
     {
      "type": "BUILDING_INTUITIVE_ALGORITHMS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_UBIQUITOUS_COMPUTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_THOUGHT_SCANNING",
+     "scope": "team"
     }
    ]
   }

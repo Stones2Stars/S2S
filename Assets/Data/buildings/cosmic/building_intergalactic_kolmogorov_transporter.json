@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_INTERGALACTIC_ROMAN_RING",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PURE_INFORMATION_SOCIETY",
+     "scope": "team"
     }
    ]
   }

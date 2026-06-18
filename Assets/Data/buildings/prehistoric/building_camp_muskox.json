@@ -25,6 +25,10 @@
      "latitude": {
       "min": 40
      }
+    },
+    {
+     "type": "TECH_TRACKING",
+     "scope": "team"
     }
    ],
    "any": [

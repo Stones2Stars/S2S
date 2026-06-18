@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_OORT_CLOUD_BASE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_INTERSTELLAR_TRAVEL",
+     "scope": "team"
     }
    ],
    "any": [

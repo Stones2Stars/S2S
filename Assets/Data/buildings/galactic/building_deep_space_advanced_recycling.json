@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_DEEP_SPACE_ECOSYSTEM",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CLOSED_ECONOMIES",
+     "scope": "team"
     }
    ]
   }

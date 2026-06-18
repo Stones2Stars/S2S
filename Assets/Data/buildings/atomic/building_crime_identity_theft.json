@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_IDENTITY_THEFT",
  "description": "TXT_KEY_BUILDING_CRIME_IDENTITY_THEFT",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_IDENTITY_THEFT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PERSONAL_COMPUTERS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -15,

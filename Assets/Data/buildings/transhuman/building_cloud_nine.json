@@ -9,6 +9,14 @@
     {
      "type": "BUILDING_HYBRID_AIRSHIP_PORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SYNERGETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WEIGHTLESS_FLIGHT",
+     "scope": "team"
     }
    ]
   }

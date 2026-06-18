@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_AUTOMATED_TAXI_SERVICE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_AUTOMATED_TRAFFIC",
+     "scope": "team"
     }
    ]
   }

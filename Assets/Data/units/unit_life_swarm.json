@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_LIFE_CHIRAL_FLEXIBLE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GRAND_UNIFICATION_BIOLOGY",
+     "scope": "team"
     }
    ]
   }

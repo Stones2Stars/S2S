@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_EXOTIC_ARCHITECTURE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TESSERACT_CONSTRUCTION",
+     "scope": "team"
     }
    ]
   }

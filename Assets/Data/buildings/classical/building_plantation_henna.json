@@ -26,6 +26,10 @@
      "type": "BONUS_HENNA",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "TECH_FLORISTRY",
+     "scope": "team"
     }
    ]
   }

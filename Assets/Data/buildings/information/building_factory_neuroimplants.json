@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BRAIN_MACHINE_INTERFACE",
+     "scope": "team"
     }
    ]
   }

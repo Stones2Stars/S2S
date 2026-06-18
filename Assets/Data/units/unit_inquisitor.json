@@ -5,6 +5,12 @@
  "help": "TXT_KEY_UNIT_INQUISITOR_HELP",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_FUNDAMENTALISM",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

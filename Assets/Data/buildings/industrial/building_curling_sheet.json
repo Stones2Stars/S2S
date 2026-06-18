@@ -13,6 +13,14 @@
     {
      "type": "BUILDING_ICE_RINK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_REFRIGERATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LAWN_SPORTS",
+     "scope": "team"
     }
    ]
   }

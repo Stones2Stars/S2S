@@ -10,6 +10,16 @@
    "BUILDING_EDUCATION_KNOWLEDGEABLE"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RENAISSANCE_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "percent": 25

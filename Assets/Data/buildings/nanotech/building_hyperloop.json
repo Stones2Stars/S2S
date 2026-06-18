@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_MEGATOWER_OFFICE_LEVEL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SUPERSONIC_RAILS",
+     "scope": "team"
     }
    ],
    "any": [

@@ -25,7 +25,11 @@
      "scope": "city",
      "connection": "vicinity"
     },
-    "HAS_RIVER"
+    "HAS_RIVER",
+    {
+     "type": "TECH_POULTRY_DOMESTICATION",
+     "scope": "team"
+    }
    ],
    "any": [
     [

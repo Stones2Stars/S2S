@@ -2,6 +2,16 @@
  "type": "BUILDING_EDUCATION_KNOWLEDGE_BASE_ANCIENT",
  "description": "TXT_KEY_BUILDING_EDUCATION_KNOWLEDGE_BASE_ANCIENT",
  "civilopedia": "TXT_KEY_BUILDING_EDUCATION_KNOWLEDGE_BASE_ANCIENT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "PROPERTY_EDUCATION": {
   "city": {
    "flat": {

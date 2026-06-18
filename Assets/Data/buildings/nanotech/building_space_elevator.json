@@ -18,6 +18,10 @@
     {
      "type": "VICTORY_SPACE_RACE",
      "scope": "world"
+    },
+    {
+     "type": "TECH_SUPERSTRONG_ALLOYS",
+     "scope": "team"
     }
    ]
   }

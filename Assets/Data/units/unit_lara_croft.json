@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_MUSEUM",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MASS_MEDIA",
+     "scope": "team"
     }
    ]
   }

@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_CENSUS_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_STATISTICS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

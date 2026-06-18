@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_GAS_GIANT_SURFACE_SHELL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_JOVIAN_TERRAFORMING",
+     "scope": "team"
     }
    ]
   }

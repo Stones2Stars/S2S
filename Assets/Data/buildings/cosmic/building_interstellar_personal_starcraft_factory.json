@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_REACTIONLESS_DRIVE",
+     "scope": "team"
     }
    ]
   }

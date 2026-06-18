@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_FOLKLORE_WALRUS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ZOOLOGY",
+     "scope": "team"
     }
    ],
    "any": [

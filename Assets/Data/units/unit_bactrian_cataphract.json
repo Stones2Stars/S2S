@@ -13,6 +13,18 @@
     {
      "type": "BUILDING_ANIMAL_TRAINER_CAMEL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ANIMAL_RIDING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CAMELID_DOMESTICATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_IRON_WORKING",
+     "scope": "team"
     }
    ],
    "any": [

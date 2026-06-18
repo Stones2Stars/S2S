@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_SEWER_SYSTEM",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SANITATION",
+     "scope": "team"
     }
    ],
    "any": [

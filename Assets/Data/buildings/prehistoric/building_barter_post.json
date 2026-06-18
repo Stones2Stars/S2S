@@ -77,6 +77,16 @@
    "BUILDING_TRADING_POST"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BARTER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "percent": 1

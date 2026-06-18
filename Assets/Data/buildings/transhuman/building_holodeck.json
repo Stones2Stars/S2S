@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_SIMULATED_WORLD",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NANOTROIDS",
+     "scope": "team"
     }
    ]
   }

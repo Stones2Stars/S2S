@@ -24,6 +24,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_CYBERIMMUNOLOGY",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_NANOBOTS",
      "scope": "city",
      "connection": "trade|vicinity"

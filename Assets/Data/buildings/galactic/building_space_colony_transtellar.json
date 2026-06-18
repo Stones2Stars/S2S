@@ -10,6 +10,16 @@
    "BUILDING_TRANSTELLAR_SUBTERRANEAN_FARM"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INTERSTELLAR_TRAVEL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 5

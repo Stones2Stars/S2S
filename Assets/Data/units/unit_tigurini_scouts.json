@@ -9,6 +9,10 @@
      "type": "BONUS_HELVETIAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_ROAD_BUILDING",
+     "scope": "team"
     }
    ]
   }

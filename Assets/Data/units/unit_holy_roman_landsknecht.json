@@ -9,6 +9,10 @@
      "type": "BONUS_HOLY_ROMAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_SIEGE_WARFARE",
+     "scope": "team"
     }
    ],
    "any": [

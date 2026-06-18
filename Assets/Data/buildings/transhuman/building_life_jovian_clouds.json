@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_LIFE_JOVIAN_CLOUDS_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_SPECULATIVE_PHYSIOLOGY",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

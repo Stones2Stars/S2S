@@ -11,6 +11,10 @@
      "connection": "trade|vicinity"
     },
     {
+     "type": "TECH_NANO_ARCHITECTURE",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_BIOPOLYMERS",
      "scope": "city",
      "connection": "trade|vicinity"

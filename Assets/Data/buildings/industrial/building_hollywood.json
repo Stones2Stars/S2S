@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_MOVIE_STUDIO",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MOTION_PICTURES",
+     "scope": "team"
     }
    ]
   }

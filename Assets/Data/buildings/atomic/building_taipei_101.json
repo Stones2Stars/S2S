@@ -15,6 +15,10 @@
     {
      "type": "BUILDING_SKYSCRAPER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_POSTMODERNISM",
+     "scope": "team"
     }
    ]
   }

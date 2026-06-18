@@ -9,6 +9,10 @@
      "type": "BONUS_FILIPINO",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_SMITHING",
+     "scope": "team"
     }
    ],
    "any": [

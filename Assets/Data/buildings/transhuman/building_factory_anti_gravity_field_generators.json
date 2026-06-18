@@ -24,6 +24,10 @@
     {
      "type": "BUILDING_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ANTI_GRAVITY_FIELDS",
+     "scope": "team"
     }
    ],
    "any": [

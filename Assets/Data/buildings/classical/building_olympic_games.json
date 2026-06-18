@@ -9,6 +9,18 @@
      "type": "POPULATION",
      "scope": "city",
      "min": 3
+    },
+    {
+     "type": "TECH_CONSTRUCTION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ATHLETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COMBAT_SPORTS",
+     "scope": "team"
     }
    ],
    "any": [

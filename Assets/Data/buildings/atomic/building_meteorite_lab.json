@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_GEOLOGY_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ASTROGEOLOGY",
+     "scope": "team"
     }
    ],
    "any": [

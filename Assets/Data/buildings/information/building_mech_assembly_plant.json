@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_EPSILON_ASSEMBLER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_POWERED_EXOSKELETON",
+     "scope": "team"
     }
    ],
    "any": [

@@ -19,6 +19,10 @@
      "type": "BUILDING_INTERGALACTIC_UNIVERSAL_AC",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_ATEMPORAL_BEINGS",
+     "scope": "team"
     }
    ]
   }

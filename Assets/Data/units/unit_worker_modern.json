@@ -2,6 +2,16 @@
  "type": "UNIT_WORKER_MODERN",
  "description": "TXT_KEY_UNIT_WORKER_MODERN",
  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LOGISTICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "capabilities": {
   "food": true,
   "workerTrade": true

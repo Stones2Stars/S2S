@@ -17,6 +17,10 @@
     {
      "type": "RELIGION_KEMETISM",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CHIVALRY",
+     "scope": "team"
     }
    ]
   }

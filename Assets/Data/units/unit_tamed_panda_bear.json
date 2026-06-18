@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_FOLKLORE_GIANT_PANDA",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SPECIALIZATION",
+     "scope": "team"
     }
    ]
   }

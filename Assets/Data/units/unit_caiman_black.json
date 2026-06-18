@@ -51,6 +51,7 @@
   ]
  },
  "identity": {
+  "spawnOnly": true,
   "xpValueAttack": 10,
   "xpValueDefense": 6,
   "aggression": 3,

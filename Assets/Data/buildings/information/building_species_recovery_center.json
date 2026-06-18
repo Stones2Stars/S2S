@@ -15,6 +15,10 @@
      "type": "BUILDING_BIOINFORMATICS_LAB",
      "scope": "empire",
      "min": 10
+    },
+    {
+     "type": "TECH_GENESIS_BIOLOGY",
+     "scope": "team"
     }
    ],
    "any": [

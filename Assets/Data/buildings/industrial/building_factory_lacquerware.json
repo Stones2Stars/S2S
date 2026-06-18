@@ -25,6 +25,10 @@
     {
      "type": "BUILDING_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ASSEMBLY_LINE",
+     "scope": "team"
     }
    ],
    "any": [

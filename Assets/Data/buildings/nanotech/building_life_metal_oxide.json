@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_LIFE_METAL_OXIDE_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_HYPOTHETICAL_BIOCHEMISTRY",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

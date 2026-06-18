@@ -25,6 +25,10 @@
     {
      "type": "BUILDING_FOLKLORE_T_BEAR",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TRADE",
+     "scope": "team"
     }
    ],
    "any": [

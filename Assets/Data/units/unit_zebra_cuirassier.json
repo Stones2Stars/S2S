@@ -9,6 +9,14 @@
      "type": "BONUS_FIREARMS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_CAVALRY_TACTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEGAFAUNA_DOMESTICATION",
+     "scope": "team"
     }
    ],
    "any": [

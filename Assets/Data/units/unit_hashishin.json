@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_ALAMUT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FUNDAMENTALISM",
+     "scope": "team"
     }
    ]
   }

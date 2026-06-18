@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_EFFECT_MULTIVERSAL_ECONOMY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_OMEGA_POINT",
+     "scope": "team"
     }
    ]
   }

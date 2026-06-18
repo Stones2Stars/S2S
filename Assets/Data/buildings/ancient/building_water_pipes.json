@@ -42,7 +42,11 @@
  "requires": {
   "build": {
    "all": [
-    "IS_FRESHWATER"
+    "IS_FRESHWATER",
+    {
+     "type": "TECH_PLUMBING",
+     "scope": "team"
+    }
    ],
    "any": [
     [

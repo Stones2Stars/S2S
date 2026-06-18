@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_UNIT_SWORDSMAN_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_IRON_WORKING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

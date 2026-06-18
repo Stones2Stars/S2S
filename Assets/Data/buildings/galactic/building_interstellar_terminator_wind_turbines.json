@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_BASE_TIDALLY_LOCKED_PLANET",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FORGE_WORLDS",
+     "scope": "team"
     }
    ]
   }

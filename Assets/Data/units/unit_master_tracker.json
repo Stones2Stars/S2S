@@ -2,6 +2,16 @@
  "type": "UNIT_MASTER_TRACKER",
  "description": "TXT_KEY_UNIT_MASTER_TRACKER",
  "civilopedia": "TXT_KEY_UNIT_MASTER_HUNTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRACKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "empire": 1
  },
@@ -45,6 +55,7 @@
   "upkeep": 1
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 2,
   "militaryWorth": 2,
   "xpValueAttack": 1,

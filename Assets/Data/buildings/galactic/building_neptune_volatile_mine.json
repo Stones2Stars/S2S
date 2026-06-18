@@ -13,6 +13,10 @@
      "type": "BUILDING_NEPTUNE_ORBITAL_RING",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_PLANET_CRACKING",
+     "scope": "team"
     }
    ],
    "any": [

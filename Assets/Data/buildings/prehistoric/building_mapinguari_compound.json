@@ -11,6 +11,16 @@
    "UNIT_MAPINGUARI_WOODEN"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SIMPLE_WOOD_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -1

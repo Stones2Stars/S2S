@@ -19,6 +19,10 @@
      "type": "BONUS_WHEAT",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "TECH_AGRICULTURE",
+     "scope": "team"
     }
    ],
    "any": [

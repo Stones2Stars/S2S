@@ -10,7 +10,11 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER"
+    "HAS_POWER",
+    {
+     "type": "TECH_AUTONOMOUS_VEHICLES",
+     "scope": "team"
+    }
    ],
    "any": [
     [

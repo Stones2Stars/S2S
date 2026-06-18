@@ -20,6 +20,10 @@
     {
      "type": "BUILDING_HYDROPONICS_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MOLECULAR_MEDICINE",
+     "scope": "team"
     }
    ]
   }

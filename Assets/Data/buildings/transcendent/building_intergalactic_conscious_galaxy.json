@@ -16,6 +16,10 @@
     {
      "type": "BUILDING_INTERGALACTIC_WORMHOLE_COMMUNICATION_NETWORK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HYPERINTELLIGENCE",
+     "scope": "team"
     }
    ]
   }

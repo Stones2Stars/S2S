@@ -2,6 +2,16 @@
  "type": "BUILDING_DISEASE_MEASLES",
  "description": "TXT_KEY_BUILDING_DISEASE_MEASLES",
  "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "percent": -4

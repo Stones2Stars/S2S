@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_ASTEROID_SHELL_WORLD",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PARATERRAFORMING",
+     "scope": "team"
     }
    ],
    "any": [

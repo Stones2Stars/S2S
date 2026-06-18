@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS",
+     "scope": "team"
     }
    ],
    "any": [

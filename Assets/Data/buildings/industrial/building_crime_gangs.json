@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_GANGS",
  "description": "TXT_KEY_BUILDING_CRIME_GANGS",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_GANGS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LABOR_UNIONS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -10,

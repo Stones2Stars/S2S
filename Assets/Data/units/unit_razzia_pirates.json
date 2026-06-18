@@ -18,6 +18,14 @@
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 10
+    },
+    {
+     "type": "TECH_MERCANTILISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NAVAL_CANNON",
+     "scope": "team"
     }
    ],
    "any": [

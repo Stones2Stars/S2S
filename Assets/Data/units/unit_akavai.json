@@ -9,6 +9,10 @@
      "type": "BONUS_WAYANA",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_OIL_LAMPS",
+     "scope": "team"
     }
    ],
    "any": [

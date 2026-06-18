@@ -8,6 +8,14 @@
     {
      "type": "BUILDING_MANUFACTURING_PLANT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MICROGENERATORS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CONTROLLED_PLASMA",
+     "scope": "team"
     }
    ]
   }

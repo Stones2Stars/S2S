@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_UNIT_WISE_WOMAN_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_HERBALISM",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

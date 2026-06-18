@@ -17,6 +17,14 @@
     {
      "type": "RELIGION_VOODOO",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ALCHEMY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FUNDAMENTALISM",
+     "scope": "team"
     }
    ]
   }

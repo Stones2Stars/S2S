@@ -9,6 +9,10 @@
      "type": "BONUS_TANKS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_ARMORED_VEHICLES",
+     "scope": "team"
     }
    ],
    "any": [

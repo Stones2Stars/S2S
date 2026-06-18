@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_FOLKLORE_DONKEY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_THE_WHEEL",
+     "scope": "team"
     }
    ],
    "any": [

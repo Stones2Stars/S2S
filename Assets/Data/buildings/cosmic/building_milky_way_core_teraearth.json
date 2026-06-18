@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_MILKY_WAY_CORE_COLONY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_EXOTIC_STARS",
+     "scope": "team"
     }
    ],
    "any": [

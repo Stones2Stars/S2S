@@ -3,6 +3,14 @@
  "description": "TXT_KEY_BUILDING_AUGUR",
  "civilopedia": "TXT_KEY_BUILDING_AUGUR_PEDIA",
  "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DIVINATION",
+     "scope": "team"
+    }
+   ]
+  },
   "operate": {
    "all": [
     {

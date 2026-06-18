@@ -44,6 +44,10 @@
     {
      "type": "BUILDING_FARMSCRAPER_I",
      "scope": "city"
+    },
+    {
+     "type": "TECH_VERTICAL_FARMING",
+     "scope": "team"
     }
    ]
   }

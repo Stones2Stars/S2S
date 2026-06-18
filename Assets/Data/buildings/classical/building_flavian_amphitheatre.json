@@ -9,6 +9,16 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CONSTRUCTION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COMBAT_SPORTS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

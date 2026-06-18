@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_VIRTUAL_WORLD_GUILD",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CYBERSOCIAL_INTEGRATION",
+     "scope": "team"
     }
    ]
   }

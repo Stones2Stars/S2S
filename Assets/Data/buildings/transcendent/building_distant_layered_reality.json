@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_DISTANT_HORIZON_PORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MANIFOLD_COLONIZATION",
+     "scope": "team"
     }
    ]
   }

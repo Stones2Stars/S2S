@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_ALMAGEST_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_GEOCENTRISM",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

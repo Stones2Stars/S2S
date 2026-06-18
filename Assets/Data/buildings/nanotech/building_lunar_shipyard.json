@@ -16,6 +16,14 @@
      "scope": "city"
     },
     {
+     "type": "TECH_PLASTIC_ELECTRONICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LUNAR_MANUFACTURING",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_GLASSWARE",
      "scope": "city",
      "connection": "trade|vicinity"

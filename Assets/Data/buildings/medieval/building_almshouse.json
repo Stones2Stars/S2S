@@ -7,6 +7,16 @@
    "BUILDING_RETIREMENT_HOME"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CIVIL_SERVICE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -1

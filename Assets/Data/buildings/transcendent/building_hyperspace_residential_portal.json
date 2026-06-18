@@ -7,6 +7,16 @@
    "BUILDING_HYPERSPACE_TESSERACT_HOMES"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 10

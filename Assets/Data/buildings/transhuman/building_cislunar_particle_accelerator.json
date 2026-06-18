@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_CISLUNAR_SPACEPORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_UNIFICATION_PHYSICS",
+     "scope": "team"
     }
    ]
   }

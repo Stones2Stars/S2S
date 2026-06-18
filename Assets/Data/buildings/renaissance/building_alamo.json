@@ -3,6 +3,16 @@
  "description": "TXT_KEY_BUILDING_ALAMO",
  "civilopedia": "TXT_KEY_BUILDING_ALAMO_PEDIA",
  "help": "TXT_KEY_BUILDING_ALAMO_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NATIONALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

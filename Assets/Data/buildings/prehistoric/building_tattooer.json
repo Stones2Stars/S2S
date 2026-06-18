@@ -19,6 +19,10 @@
      "type": "BONUS_DYE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_TATTOOS",
+     "scope": "team"
     }
    ],
    "any": [

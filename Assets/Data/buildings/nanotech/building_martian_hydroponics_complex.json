@@ -22,6 +22,18 @@
     {
      "type": "BUILDING_SPACE_COLONY_MARTIAN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ELECTROMAGNETIC_FIELD_SHIELDING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AUGMENTED_CONSUMABLES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PLANETARY_MANUFACTURING",
+     "scope": "team"
     }
    ]
   }

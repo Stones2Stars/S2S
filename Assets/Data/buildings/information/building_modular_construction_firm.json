@@ -12,6 +12,16 @@
    "BUILDING_CAD_STUDIO"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEGACITIES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "percent": 25

@@ -19,6 +19,16 @@
    "BUILDING_ANCIENT_CUSTOMS"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRAPPING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": [

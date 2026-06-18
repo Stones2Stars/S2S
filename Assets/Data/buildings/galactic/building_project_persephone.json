@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_CIRCULAR_WASTE_MANAGEMENT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CLOSED_ECONOMIES",
+     "scope": "team"
     }
    ],
    "any": [

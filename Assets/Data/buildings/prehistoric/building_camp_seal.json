@@ -24,6 +24,10 @@
      "latitude": {
       "min": 40
      }
+    },
+    {
+     "type": "TECH_HARPOON_MAKING",
+     "scope": "team"
     }
    ],
    "any": [

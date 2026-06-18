@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SOCIAL_CONTRACT",
+     "scope": "team"
     }
    ]
   }

@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_WATER_PUMPING_STATION",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MEGASTRUCTURE_ENGINEERING",
+     "scope": "team"
     }
    ],
    "any": [

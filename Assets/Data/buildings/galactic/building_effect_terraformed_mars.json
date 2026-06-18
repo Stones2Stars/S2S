@@ -2,6 +2,16 @@
  "type": "BUILDING_EFFECT_TERRAFORMED_MARS",
  "description": "TXT_KEY_BUILDING_EFFECT_TERRAFORMED_MARS",
  "civilopedia": "TXT_KEY_BUILDING_EFFECT_TERRAFORMED_MARS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_TERRAFORMING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 20

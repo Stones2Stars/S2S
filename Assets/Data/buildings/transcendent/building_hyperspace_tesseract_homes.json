@@ -13,6 +13,14 @@
     {
      "type": "BUILDING_HYPERSPACE_PAN_DIMENSIONAL_CITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TESSERACT_CONSTRUCTION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY",
+     "scope": "team"
     }
    ]
   }

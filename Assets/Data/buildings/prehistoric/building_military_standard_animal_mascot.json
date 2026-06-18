@@ -16,6 +16,16 @@
    "BUILDING_TRADITION_MILITARY_STANDARD_MASCOT"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CULTURAL_IDENTITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "experience": {
   "city": {
    "unitCombats": {

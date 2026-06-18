@@ -20,6 +20,10 @@
     {
      "type": "BUILDING_WATER_PIPES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_INDUSTRIALISM",
+     "scope": "team"
     }
    ]
   }

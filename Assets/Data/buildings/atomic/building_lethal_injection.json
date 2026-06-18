@@ -31,6 +31,10 @@
     {
      "type": "BUILDING_JAIL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MODERN_HEALTH_CARE",
+     "scope": "team"
     }
    ]
   }

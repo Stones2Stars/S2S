@@ -19,6 +19,10 @@
      "type": "BUILDING_LUNAR_HE3_EXTRACTION_FACILITY",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_NANOMINING",
+     "scope": "team"
     }
    ]
   }

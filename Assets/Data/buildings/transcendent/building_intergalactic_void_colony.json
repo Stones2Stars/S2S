@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERGALACTIC_VOID_BASE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ENTROPY_REVERSAL",
+     "scope": "team"
     }
    ],
    "any": [

@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_NEUTRINO_SCANNER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DARK_MATTER_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

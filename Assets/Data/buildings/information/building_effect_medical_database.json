@@ -7,6 +7,16 @@
    "BUILDING_3D_BODY_ATLAS"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_KNOWLEDGE_MANAGEMENT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "health": {
   "city": {
    "flat": 5

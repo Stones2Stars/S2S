@@ -31,6 +31,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_PLAGUE_MEDICINE",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

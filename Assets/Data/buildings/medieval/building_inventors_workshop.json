@@ -2,6 +2,16 @@
  "type": "BUILDING_INVENTORS_WORKSHOP",
  "description": "TXT_KEY_BUILDING_INVENTORS_WORKSHOP",
  "civilopedia": "TXT_KEY_BUILDING_INVENTORS_WORKSHOP_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INVENTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "flat": [

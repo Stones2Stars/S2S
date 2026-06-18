@@ -17,6 +17,18 @@
     {
      "type": "BUILDING_SIEGE_WEAPONS_WORKSHOP",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SIEGE_WARFARE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ELEPHANT_DOMESTICATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MOUNTED_ARCHERY",
+     "scope": "team"
     }
    ]
   }

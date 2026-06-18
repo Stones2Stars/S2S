@@ -14,6 +14,10 @@
      "type": "BONUS_FINE_CLAY",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_ORNAMENTATION",
+     "scope": "team"
     }
    ],
    "any": [

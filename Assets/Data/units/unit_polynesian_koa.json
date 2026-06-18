@@ -9,6 +9,10 @@
      "type": "BONUS_HAWAIIAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_SEAFARING",
+     "scope": "team"
     }
    ]
   }

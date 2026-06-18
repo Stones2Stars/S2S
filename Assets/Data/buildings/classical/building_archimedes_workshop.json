@@ -2,6 +2,20 @@
  "type": "BUILDING_ARCHIMEDES_WORKSHOP",
  "description": "TXT_KEY_BUILDING_ARCHIMEDES_WORKSHOP",
  "civilopedia": "TXT_KEY_BUILDING_ARCHIMEDES_WORKSHOP_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MATHEMATICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MILITARY_TRAINING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

@@ -1,5 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# ============================================================================
+# NOT THE BUILD. This .sln and its .vcxproj are DEAD, IDE-display-ONLY artifacts
+# (Despair Index: "The .vcxproj of Lies"). They do NOT drive the build and are
+# NOT kept in sync. Read no build fact (toolset, defines, C++ std) from them.
+# Build truth = Sources/fbuild.bff (+ Tools/_Build.ps1). Real toolchain: MSVC 7.1
+# (VC++ Toolkit 2003), C++03, 32-bit/x86, Python 2.4, Boost 1.32/1.55. No C++11+.
+# ============================================================================
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34321.82
 MinimumVisualStudioVersion = 10.0.40219.1

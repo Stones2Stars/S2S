@@ -25,6 +25,10 @@
     {
      "type": "BUILDING_NUCLEIC_ACID_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BIOINFORMATICS",
+     "scope": "team"
     }
    ]
   }

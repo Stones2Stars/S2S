@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_ORBITAL_HEAT_SINK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PLANETARY_MEGASTRUCTURES",
+     "scope": "team"
     }
    ]
   }

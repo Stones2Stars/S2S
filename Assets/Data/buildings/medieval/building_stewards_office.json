@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_KINGS_COUNCIL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PARLIAMENTS",
+     "scope": "team"
     }
    ]
   },

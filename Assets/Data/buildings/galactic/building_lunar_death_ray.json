@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_LUNAR_ARCOLOGY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_WEAPONIZED_DISINTEGRATION",
+     "scope": "team"
     }
    ]
   }

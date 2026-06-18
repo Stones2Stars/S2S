@@ -9,6 +9,10 @@
      "type": "BONUS_BENGALI",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_VASSALAGE",
+     "scope": "team"
     }
    ]
   }

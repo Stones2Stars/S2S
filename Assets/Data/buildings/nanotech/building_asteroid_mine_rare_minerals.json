@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_ASTEROID_MINE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ACOUSTOPHORESIS",
+     "scope": "team"
     }
    ]
   }

@@ -9,6 +9,16 @@
    "BUILDING_CISLUNAR_HOTEL"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AUGMENTED_CONSUMABLES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": [

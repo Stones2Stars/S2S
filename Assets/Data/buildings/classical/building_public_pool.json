@@ -9,6 +9,16 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_SANITATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ATHLETICS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

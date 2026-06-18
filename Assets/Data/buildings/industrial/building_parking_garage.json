@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_PARKING_LOT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MOTORIZED_TRANSPORTATION",
+     "scope": "team"
     }
    ],
    "any": [

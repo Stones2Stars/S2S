@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_FOUNDATION_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_USURY",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

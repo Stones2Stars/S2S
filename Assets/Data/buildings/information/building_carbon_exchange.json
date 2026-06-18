@@ -7,6 +7,16 @@
    "BUILDING_ECOSYSTEM_SERVICES_MARKET"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECOLOGICAL_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "percent": 1

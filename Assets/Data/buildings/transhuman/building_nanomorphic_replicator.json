@@ -29,6 +29,10 @@
     {
      "type": "BUILDING_MEDICAL_MEGACOMPLEX",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NANOTROIDS",
+     "scope": "team"
     }
    ]
   }

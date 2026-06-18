@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_SIMPLE_WOOD_WORKING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

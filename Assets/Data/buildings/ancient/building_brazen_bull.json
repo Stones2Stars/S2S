@@ -9,6 +9,10 @@
      "type": "POPULATION",
      "scope": "city",
      "min": 8
+    },
+    {
+     "type": "TECH_DUALISM",
+     "scope": "team"
     }
    ],
    "any": [

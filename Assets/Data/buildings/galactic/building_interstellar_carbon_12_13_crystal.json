@@ -8,6 +8,16 @@
    "BUILDING_INTERSTELLAR_WHITE_DWARF_COLONY"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DATA_ARCHIVAL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "research": {
   "city": {
    "flat": 125

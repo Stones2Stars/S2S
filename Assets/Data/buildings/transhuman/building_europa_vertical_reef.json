@@ -8,6 +8,14 @@
     {
      "type": "BUILDING_EUROPA_ECOSYSTEM",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SPECULATIVE_PHYSIOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GAIA_ECOLOGY",
+     "scope": "team"
     }
    ],
    "any": [

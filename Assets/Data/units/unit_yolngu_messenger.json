@@ -9,6 +9,10 @@
      "type": "BONUS_YOLNGU",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_BARTER",
+     "scope": "team"
     }
    ]
   }

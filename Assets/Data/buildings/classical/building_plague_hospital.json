@@ -6,6 +6,10 @@
   "build": {
    "all": [
     {
+     "type": "TECH_ANCIENT_MEDICINE",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_FURNITURE",
      "scope": "city",
      "connection": "trade|vicinity"

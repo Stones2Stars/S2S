@@ -15,6 +15,16 @@
    "BUILDING_DISTANT_SMART_GRAVITY_GENERATOR"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HORIZON_BREAKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "flat": 150

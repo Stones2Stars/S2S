@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_C_L_NORTH_AMERICAN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TRACKING",
+     "scope": "team"
     }
    ]
   }

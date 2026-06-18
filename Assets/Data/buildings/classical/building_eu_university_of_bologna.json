@@ -27,6 +27,10 @@
      "type": "BUILDING_COURTHOUSE",
      "scope": "empire",
      "min": 4
+    },
+    {
+     "type": "TECH_CODE_OF_LAWS",
+     "scope": "team"
     }
    ]
   }

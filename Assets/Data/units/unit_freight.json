@@ -2,6 +2,16 @@
  "type": "UNIT_FREIGHT",
  "description": "TXT_KEY_UNIT_FREIGHT",
  "civilopedia": "TXT_KEY_CONCEPT_FREIGHT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MOTORIZED_TRANSPORTATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "capabilities": {
   "noCapture": true,
   "noNonTypeProdMods": true,

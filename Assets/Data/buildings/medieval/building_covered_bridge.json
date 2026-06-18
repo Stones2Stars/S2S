@@ -19,7 +19,11 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_RIVER"
+    "HAS_RIVER",
+    {
+     "type": "TECH_ENGINEERING",
+     "scope": "team"
+    }
    ],
    "any": [
     [

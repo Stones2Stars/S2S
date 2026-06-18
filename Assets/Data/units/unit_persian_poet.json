@@ -9,6 +9,10 @@
      "type": "BONUS_SAFFARID",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_LINGUISTICS",
+     "scope": "team"
     }
    ]
   }

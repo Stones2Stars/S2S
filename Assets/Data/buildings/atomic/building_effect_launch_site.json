@@ -30,6 +30,16 @@
    "UNIT_SPACE_SHUTTLE"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ADVANCED_ROCKETRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_EFFECT_LAUNCH_SITE"

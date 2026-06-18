@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_WORLDHOUSE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DIRECTED_PANSPERMIA",
+     "scope": "team"
     }
    ]
   }

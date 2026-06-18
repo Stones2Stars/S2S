@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_HEIMDALL_SANCTUARY_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_SHIP_BUILDING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

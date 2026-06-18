@@ -16,6 +16,10 @@
      "connection": "trade|vicinity"
     },
     {
+     "type": "TECH_SOAP_MAKING",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_BARRELS",
      "scope": "city",
      "connection": "trade|vicinity"

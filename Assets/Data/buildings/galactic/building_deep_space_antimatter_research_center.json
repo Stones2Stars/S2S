@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_DEEP_SPACE_FUSION_CORE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ANTIMATTER_PRODUCTION",
+     "scope": "team"
     }
    ]
   }

@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CAVE_DWELLING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

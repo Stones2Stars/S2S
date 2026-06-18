@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_MORTUARY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CHEMISTRY",
+     "scope": "team"
     }
    ]
   }

@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_MODERN_WAREHOUSE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_RAILROAD",
+     "scope": "team"
     }
    ],
    "any": [

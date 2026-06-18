@@ -19,6 +19,10 @@
      "type": "BONUS_POMEGRANATE",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "TECH_ORCHARDS",
+     "scope": "team"
     }
    ]
   }

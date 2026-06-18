@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_CLOUD_SERVER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MICROGENERATORS",
+     "scope": "team"
     }
    ]
   }

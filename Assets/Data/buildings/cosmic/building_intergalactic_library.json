@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERGALACTIC_RESEARCH_BASE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CULTURAL_LONGEVITY",
+     "scope": "team"
     }
    ]
   }

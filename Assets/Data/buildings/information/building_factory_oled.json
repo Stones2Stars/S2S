@@ -25,6 +25,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_ORGANIC_PHOTONICS",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_BIOPOLYMERS",
      "scope": "city",
      "connection": "trade|vicinity"

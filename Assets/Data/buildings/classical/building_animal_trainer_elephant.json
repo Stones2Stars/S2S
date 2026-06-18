@@ -30,6 +30,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MILITARY_TRAINING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

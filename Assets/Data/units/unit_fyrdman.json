@@ -9,6 +9,10 @@
      "type": "BONUS_ALEMANNIC",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_SIEGE_WARFARE",
+     "scope": "team"
     }
    ],
    "any": [

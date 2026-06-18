@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_RABBIT_BREEDER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_AESTHETICS",
+     "scope": "team"
     }
    ],
    "any": [

@@ -15,6 +15,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_CONSUMERISM",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_AMMUNITION",
      "scope": "city",
      "connection": "trade|vicinity"

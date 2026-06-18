@@ -7,6 +7,16 @@
    "BUILDING_TOY_MAKER"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BOARD_GAMES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "flat": 1

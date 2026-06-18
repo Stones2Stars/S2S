@@ -7,6 +7,16 @@
    "BUILDING_INTERSTELLAR_DEGENERATE_ERA_SURVIVAL_PLAN"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ADAPTIVE_RADIATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "health": {
   "city": {
    "flat": 1

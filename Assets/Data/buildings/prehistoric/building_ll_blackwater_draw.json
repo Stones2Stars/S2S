@@ -7,6 +7,16 @@
    "BUILDING_RESOURCES_BONE"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BONE_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

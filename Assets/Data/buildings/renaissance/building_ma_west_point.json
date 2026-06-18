@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_MILITARY_ACADEMY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MILITARY_TRADITION",
+     "scope": "team"
     }
    ]
   }

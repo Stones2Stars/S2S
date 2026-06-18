@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_GOBEKLI_TEPE_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MEGALITH_CONSTRUCTION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

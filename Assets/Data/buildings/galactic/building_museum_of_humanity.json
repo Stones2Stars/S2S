@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_MUSEUM",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ASTROANTHROPOLOGY",
+     "scope": "team"
     }
    ]
   }

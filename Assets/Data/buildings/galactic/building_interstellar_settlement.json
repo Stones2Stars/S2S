@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
      "scope": "city"
+    },
+    {
+     "type": "TECH_INTERSTELLAR_COLONIZATION",
+     "scope": "team"
     }
    ]
   }

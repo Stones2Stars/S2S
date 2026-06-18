@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_VENUS_CITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_OPTRONICS",
+     "scope": "team"
     }
    ]
   }

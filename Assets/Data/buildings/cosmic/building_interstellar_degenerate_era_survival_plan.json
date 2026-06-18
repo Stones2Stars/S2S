@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_ADAPTED_HUMANS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_IMMORTALITY",
+     "scope": "team"
     }
    ]
   }

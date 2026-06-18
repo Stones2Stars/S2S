@@ -2,6 +2,16 @@
  "type": "BUILDING_ENVIRONMENTAL_ART_STUDIO",
  "description": "TXT_KEY_BUILDING_ENVIRONMENTAL_ART_STUDIO",
  "civilopedia": "TXT_KEY_BUILDING_ENVIRONMENTAL_ART_STUDIO_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_POSTMODERNISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "flat": 3

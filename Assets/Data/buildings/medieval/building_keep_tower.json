@@ -22,6 +22,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_ENGINEERING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

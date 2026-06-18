@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_MUSEUM",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PALEONTOLOGY",
+     "scope": "team"
     }
    ],
    "any": [

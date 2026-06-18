@@ -9,6 +9,14 @@
      "type": "BONUS_LYDIAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_WRITING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_POLYTHEISM",
+     "scope": "team"
     }
    ]
   }

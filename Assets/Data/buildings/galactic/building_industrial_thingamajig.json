@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_SELF_ASSEMBLY_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FORGE_WORLDS",
+     "scope": "team"
     }
    ]
   }

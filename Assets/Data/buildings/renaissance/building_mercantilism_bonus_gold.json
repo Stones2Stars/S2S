@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_MERCANTILISM_BONUS_GOLD_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MERCANTILISM",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

@@ -13,6 +13,10 @@
      "type": "BUILDING_SPIRITS_ALLIANCE",
      "scope": "empire",
      "min": 2
+    },
+    {
+     "type": "TECH_MEGALITH_CONSTRUCTION",
+     "scope": "team"
     }
    ]
   },

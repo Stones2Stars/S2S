@@ -10,6 +10,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CULTURAL_EVOLUTION",
+     "scope": "team"
+    }
+   ],
    "noneOf": [
     {
      "type": "BUILDING_INTERSTELLAR_CULTURE_AGGRESSIVE",

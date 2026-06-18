@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_KNOWLEDGE_INHERITANCE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CULTURAL_IDENTITY",
+     "scope": "team"
     }
    ]
   }

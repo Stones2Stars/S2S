@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_CUSTOMS_OFFICE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ECONOMICS",
+     "scope": "team"
     }
    ]
   }

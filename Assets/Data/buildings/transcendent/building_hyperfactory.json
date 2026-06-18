@@ -18,7 +18,11 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER"
+    "HAS_POWER",
+    {
+     "type": "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY",
+     "scope": "team"
+    }
    ]
   }
  },

@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_EUROPA_COLONY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+     "scope": "team"
     }
    ],
    "any": [

@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_SIMULATED_WORLD",
      "scope": "city"
+    },
+    {
+     "type": "TECH_WHOLE_BRAIN_EMULATION",
+     "scope": "team"
     }
    ]
   }

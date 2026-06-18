@@ -9,6 +9,10 @@
      "type": "BONUS_ABBASID",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_CODE_OF_LAWS",
+     "scope": "team"
     }
    ]
   }

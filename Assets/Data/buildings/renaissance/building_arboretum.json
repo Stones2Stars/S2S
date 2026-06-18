@@ -60,6 +60,16 @@
    "BUILDING_WEAVING_SPIDER_SANCTUARY"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BOTANY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 20

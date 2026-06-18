@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_TANNING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

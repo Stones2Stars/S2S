@@ -16,6 +16,16 @@
    "BUILDING_EDUCATION_WUNDERKIND"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GALACTIC_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "percent": 55

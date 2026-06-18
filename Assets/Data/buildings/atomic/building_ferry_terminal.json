@@ -26,6 +26,10 @@
     {
      "type": "BUILDING_COURTHOUSE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COAST_GUARD",
+     "scope": "team"
     }
    ],
    "any": [

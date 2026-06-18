@@ -9,6 +9,10 @@
      "type": "BONUS_BOOKS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_CORPORATION",
+     "scope": "team"
     }
    ],
    "any": [

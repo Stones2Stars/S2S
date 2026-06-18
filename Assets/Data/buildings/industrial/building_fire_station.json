@@ -21,6 +21,14 @@
      "type": "BONUS_AUTOMOBILES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MOTORIZED_TRANSPORTATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FIREFIGHTING",
+     "scope": "team"
     }
    ],
    "any": [

@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_SHOPLIFTING",
  "description": "TXT_KEY_BUILDING_CRIME_SHOPLIFTING",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_SHOPLIFTING_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRADE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -2,

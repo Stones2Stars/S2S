@@ -20,6 +20,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CANAL_SYSTEMS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

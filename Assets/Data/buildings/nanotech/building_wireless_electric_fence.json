@@ -23,7 +23,11 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "HAS_POWER"
+    "HAS_POWER",
+    {
+     "type": "TECH_WIRELESS_ELECTRICITY",
+     "scope": "team"
+    }
    ]
   }
  },

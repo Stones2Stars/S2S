@@ -11,6 +11,18 @@
      "connection": "trade|vicinity"
     },
     {
+     "type": "TECH_MODERN_WARFARE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_VERTICAL_FLIGHT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MODERN_HEALTH_CARE",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_PETROLEUM_PRODUCTS",
      "scope": "city",
      "connection": "trade|vicinity"

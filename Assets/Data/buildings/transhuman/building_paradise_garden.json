@@ -8,6 +8,16 @@
    "BUILDING_ASCENSION_GATE"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WEATHER_CONTROL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "happiness": {
   "city": {
    "flat": 2

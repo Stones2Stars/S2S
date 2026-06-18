@@ -22,6 +22,10 @@
     {
      "type": "BUILDING_MATERIALIZER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MATERIALIZATION",
+     "scope": "team"
     }
    ]
   }

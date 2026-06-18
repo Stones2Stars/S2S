@@ -24,6 +24,10 @@
     {
      "type": "BUILDING_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PLASTICS",
+     "scope": "team"
     }
    ],
    "any": [

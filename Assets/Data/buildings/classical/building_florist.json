@@ -14,6 +14,10 @@
      "type": "BONUS_FLOWERS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_FLORISTRY",
+     "scope": "team"
     }
    ]
   }

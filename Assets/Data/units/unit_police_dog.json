@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_POLICE_DOG_TRAINER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CRIMINOLOGY",
+     "scope": "team"
     }
    ]
   }

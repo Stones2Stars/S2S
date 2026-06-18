@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_SPORTS_RIOTS",
  "description": "TXT_KEY_BUILDING_CRIME_SPORTS_RIOTS",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_SPORTS_RIOTS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MODERN_SPORTS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -5

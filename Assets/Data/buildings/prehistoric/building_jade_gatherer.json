@@ -19,6 +19,10 @@
      "type": "BONUS_JADE",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "TECH_SOFT_HAMMER_PERCUSSION",
+     "scope": "team"
     }
    ]
   }

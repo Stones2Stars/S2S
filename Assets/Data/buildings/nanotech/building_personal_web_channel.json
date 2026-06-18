@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_INTERNET_TELEVISION_STATION",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MEDIA_HIVEMIND",
+     "scope": "team"
     }
    ]
   }

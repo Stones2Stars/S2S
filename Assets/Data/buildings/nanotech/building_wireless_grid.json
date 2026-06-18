@@ -31,6 +31,10 @@
     {
      "type": "BUILDING_POWER_LINES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_WIRELESS_ELECTRICITY",
+     "scope": "team"
     }
    ]
   }

@@ -11,6 +11,16 @@
    "BUILDING_ROKOS_BASILISK"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HORIZON_BREAKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 10

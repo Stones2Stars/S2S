@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERGALACTIC_ROMAN_RING",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MEGAWORMHOLES",
+     "scope": "team"
     }
    ]
   }

@@ -17,6 +17,10 @@
     {
      "type": "HERITAGE_FOLKLORE_TAPIR_MALAYAN",
      "scope": "empire"
+    },
+    {
+     "type": "TECH_SPECIALIZATION",
+     "scope": "team"
     }
    ]
   }

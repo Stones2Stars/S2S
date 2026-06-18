@@ -12,6 +12,14 @@
     {
      "type": "BUILDING_POLICE_CAT_TRAINER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CRIMINOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEGAFAUNA_DOMESTICATION",
+     "scope": "team"
     }
    ]
   }

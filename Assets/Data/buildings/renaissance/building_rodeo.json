@@ -14,6 +14,10 @@
      "type": "BONUS_HORSE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_CAVALRY_TACTICS",
+     "scope": "team"
     }
    ],
    "any": [

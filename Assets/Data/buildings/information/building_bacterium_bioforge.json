@@ -36,6 +36,10 @@
     {
      "type": "BUILDING_INTUITIVE_ALGORITHMS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BACTERIUM_ENGINEERING",
+     "scope": "team"
     }
    ],
    "any": [

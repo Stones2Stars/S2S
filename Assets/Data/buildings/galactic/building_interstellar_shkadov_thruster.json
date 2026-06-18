@@ -15,6 +15,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_STELLAR_ENGINE",
+     "scope": "team"
     }
    ]
   }

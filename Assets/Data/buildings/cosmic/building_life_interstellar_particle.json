@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_OSMIUM_CORE_PLANET",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PARTICLE_GENETICS",
+     "scope": "team"
     }
    ]
   }

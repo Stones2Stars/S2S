@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_CONCEPT_FOOD_CARAVAN_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_ENGINEERING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

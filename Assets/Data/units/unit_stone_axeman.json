@@ -2,6 +2,16 @@
  "type": "UNIT_STONE_AXEMAN",
  "description": "TXT_KEY_UNIT_STONE_AXEMAN",
  "civilopedia": "TXT_KEY_UNIT_STONE_AXEMAN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AXE_MAKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "buildRate": {
   "self": {
    "percent": [

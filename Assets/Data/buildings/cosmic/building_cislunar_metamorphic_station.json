@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_CISLUNAR_CLAYTRONIC_STATION",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SHAPESHIFTING",
+     "scope": "team"
     }
    ]
   }

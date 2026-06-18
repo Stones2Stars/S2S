@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_HYPERSPACE_COMMERCIAL_CENTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HYPERLANES",
+     "scope": "team"
     }
    ]
   }

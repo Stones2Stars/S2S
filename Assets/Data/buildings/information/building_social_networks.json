@@ -28,6 +28,10 @@
     {
      "type": "BUILDING_ENCRYPTED_FIREWALL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ONLINE_COMMUNITY",
+     "scope": "team"
     }
    ]
   }

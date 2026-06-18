@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_DEEP_SPACE_FOCUSED_SUNLIGHT_PLANT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_STAR_LIFTING",
+     "scope": "team"
     }
    ],
    "any": [

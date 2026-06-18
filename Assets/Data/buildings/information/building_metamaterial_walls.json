@@ -30,6 +30,10 @@
      "type": "BONUS_METAMATERIALS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_METAMATERIALS",
+     "scope": "team"
     }
    ]
   }

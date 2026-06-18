@@ -8,6 +8,14 @@
   ]
  },
  "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CHIEFDOM",
+     "scope": "team"
+    }
+   ]
+  },
   "operate": {
    "all": [
     {

@@ -81,6 +81,10 @@
     {
      "type": "BUILDING_CORE_MINE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NANOMINING",
+     "scope": "team"
     }
    ]
   }

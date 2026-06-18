@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_HYPERFACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY",
+     "scope": "team"
     }
    ]
   }

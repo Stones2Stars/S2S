@@ -28,6 +28,10 @@
     {
      "type": "BUILDING_CLONING_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_RAPID_RECUPERATION",
+     "scope": "team"
     }
    ]
   }

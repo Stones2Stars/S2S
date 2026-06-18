@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
      "scope": "city"
+    },
+    {
+     "type": "TECH_WOMENS_SUFFRAGE",
+     "scope": "team"
     }
    ],
    "any": [

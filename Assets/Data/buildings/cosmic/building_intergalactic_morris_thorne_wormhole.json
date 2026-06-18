@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MEGAWORMHOLES",
+     "scope": "team"
     }
    ]
   }

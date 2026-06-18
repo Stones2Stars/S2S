@@ -3,6 +3,14 @@
  "description": "TXT_KEY_BUILDING_SQUATTER_CAMPS",
  "civilopedia": "TXT_KEY_BUILDING_SQUATTER_CAMPS_PEDIA",
  "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FEUDALISM",
+     "scope": "team"
+    }
+   ]
+  },
   "operate": {
    "all": [
     {

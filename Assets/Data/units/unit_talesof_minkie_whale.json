@@ -15,6 +15,7 @@
   ]
  },
  "identity": {
+  "spawnOnly": true,
   "domain": "DOMAIN_SEA",
   "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
   "formationType": "FORMATION_TYPE_DEFAULT",

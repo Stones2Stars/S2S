@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_CHAMBER_OF_COMMERCE_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_ASSEMBLY_LINE",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

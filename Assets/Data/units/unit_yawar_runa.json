@@ -9,6 +9,10 @@
      "type": "BONUS_YAGUA",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MUSICAL_NOTATION",
+     "scope": "team"
     }
    ]
   }

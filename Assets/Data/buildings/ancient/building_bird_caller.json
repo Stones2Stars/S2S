@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_HUNTERS_CAMP",
      "scope": "city"
+    },
+    {
+     "type": "TECH_POULTRY_DOMESTICATION",
+     "scope": "team"
     }
    ],
    "any": [

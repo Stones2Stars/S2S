@@ -14,6 +14,14 @@
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 10
+    },
+    {
+     "type": "TECH_NAVIGATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NAVAL_CANNON",
+     "scope": "team"
     }
    ],
    "any": [
@@ -64,6 +72,7 @@
   "upkeep": 1
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 2,
   "militaryWorth": 43,
   "xpValueAttack": 3,

@@ -20,6 +20,10 @@
      "type": "BUILDING_ZOO",
      "scope": "empire",
      "min": 4
+    },
+    {
+     "type": "TECH_ECOLOGY",
+     "scope": "team"
     }
    ]
   }

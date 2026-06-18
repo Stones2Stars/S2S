@@ -21,6 +21,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_WORMHOLE_BEACON",
      "scope": "city"
+    },
+    {
+     "type": "TECH_WORMHOLE_TRAVERSAL",
+     "scope": "team"
     }
    ]
   }

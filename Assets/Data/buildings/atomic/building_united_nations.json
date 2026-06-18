@@ -28,6 +28,10 @@
     {
      "type": "VICTORY_DIPLOMATIC",
      "scope": "world"
+    },
+    {
+     "type": "TECH_GLOBALIZATION",
+     "scope": "team"
     }
    ]
   }

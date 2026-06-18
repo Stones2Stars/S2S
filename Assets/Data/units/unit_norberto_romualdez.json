@@ -9,6 +9,10 @@
      "type": "BONUS_WARAY",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_RIFLING",
+     "scope": "team"
     }
    ]
   }

@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_HYPERSPACE_EXPORTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TRANSDIMENSIONAL_COMMERCE",
+     "scope": "team"
     }
    ]
   }

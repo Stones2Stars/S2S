@@ -2,6 +2,16 @@
  "type": "BUILDING_ACHIEVEMENT_SAFETY",
  "description": "TXT_KEY_BUILDING_ACHIEVEMENT_SAFETY",
  "civilopedia": "TXT_KEY_BUILDING_ACHIEVEMENT_SAFETY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CODE_OF_LAWS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "empire": 1
  },

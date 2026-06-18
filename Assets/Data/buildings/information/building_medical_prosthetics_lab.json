@@ -29,6 +29,10 @@
     {
      "type": "BUILDING_MEDICAL_CLINIC",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MOLECULAR_MEDICINE",
+     "scope": "team"
     }
    ]
   }

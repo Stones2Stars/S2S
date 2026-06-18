@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_MILITARY_DESERTION",
  "description": "TXT_KEY_BUILDING_CRIME_MILITARY_DESERTION",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_MILITARY_DESERTION_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MILITARY_TRAINING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "espionage": {
   "city": {
    "insidiousness": {

@@ -19,6 +19,10 @@
      "type": "BUILDING_LUNAR_SILICON_PROCESSING_FACILITY",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_LUNAR_MANUFACTURING",
+     "scope": "team"
     }
    ]
   }

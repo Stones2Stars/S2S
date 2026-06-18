@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_GRAVEYARD",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SCRIPTURES",
+     "scope": "team"
     }
    ],
    "any": [

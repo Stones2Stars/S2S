@@ -5,6 +5,16 @@
  "help": "TXT_KEY_BUILDING_THE_ISHTAR_GATE_HELP",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_AESTHETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GLASS_BLOWING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

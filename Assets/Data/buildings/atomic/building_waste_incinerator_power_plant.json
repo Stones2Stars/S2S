@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_RECYCLING_CENTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_RECYCLING",
+     "scope": "team"
     }
    ]
   },

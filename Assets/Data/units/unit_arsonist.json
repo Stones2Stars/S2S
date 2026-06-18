@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_UNIT_ARSONIST_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_OIL_LAMPS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

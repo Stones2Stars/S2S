@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_GLOBAL_RAIL_NETWORK_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_ECONOMICS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

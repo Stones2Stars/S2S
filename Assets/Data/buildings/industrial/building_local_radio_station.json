@@ -19,6 +19,10 @@
      "type": "BONUS_RADIOS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_RADIO",
+     "scope": "team"
     }
    ],
    "any": [

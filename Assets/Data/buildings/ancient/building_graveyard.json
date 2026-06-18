@@ -19,6 +19,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_SCRIPTURES",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

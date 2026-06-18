@@ -21,6 +21,10 @@
     {
      "type": "BUILDING_VIRTUAL_WORLD_DATA_ANALYSIS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SIMULATED_REALITY",
+     "scope": "team"
     }
    ]
   }

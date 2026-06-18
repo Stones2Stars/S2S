@@ -62,6 +62,16 @@
    "BUILDING_TUMULUS"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HERITAGE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": [

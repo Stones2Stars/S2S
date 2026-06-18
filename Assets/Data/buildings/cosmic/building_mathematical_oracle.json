@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_OMEGA_ASSEMBLER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_UNIFICATION_MATHEMATICS",
+     "scope": "team"
     }
    ]
   }

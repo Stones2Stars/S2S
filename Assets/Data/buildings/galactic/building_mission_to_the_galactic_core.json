@@ -8,6 +8,14 @@
     {
      "type": "BUILDING_INTERSTELLAR_STARPORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ADVANCED_SEEDSHIPS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ANTIMATTER_ROCKETS",
+     "scope": "team"
     }
    ]
   }

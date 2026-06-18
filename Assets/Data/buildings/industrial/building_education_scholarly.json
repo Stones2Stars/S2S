@@ -11,6 +11,16 @@
    "BUILDING_EDUCATION_KNOWLEDGEABLE"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INDUSTRIAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "percent": 30

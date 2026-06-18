@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_C_L_OCEANIAN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FOLK_MEDICINE",
+     "scope": "team"
     }
    ]
   }

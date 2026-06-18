@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_MEGATOWER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NANO_ARCHITECTURE",
+     "scope": "team"
     }
    ]
   }

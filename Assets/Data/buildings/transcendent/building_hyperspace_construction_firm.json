@@ -10,6 +10,10 @@
      "type": "BUILDING_HYPERSPACE_CONSTRUCTION_CENTER",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_3D_PROJECTIONS",
+     "scope": "team"
     }
    ]
   }

@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_CHRISTIAN_TEMPLE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CRITICAL_THOUGHT",
+     "scope": "team"
     }
    ]
   },

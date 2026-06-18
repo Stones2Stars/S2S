@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_CASINO",
      "scope": "city"
+    },
+    {
+     "type": "TECH_LEGALIZED_GAMBLING",
+     "scope": "team"
     }
    ],
    "any": [

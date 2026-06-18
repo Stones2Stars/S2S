@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_CISLUNAR_MATERIALS_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PHOTON_THERMODYNAMICS",
+     "scope": "team"
     }
    ]
   }

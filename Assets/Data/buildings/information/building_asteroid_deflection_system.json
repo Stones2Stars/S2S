@@ -9,6 +9,10 @@
      "type": "BUILDING_SENTINEL",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_ASTEROID_BELT_PROBES",
+     "scope": "team"
     }
    ],
    "any": [

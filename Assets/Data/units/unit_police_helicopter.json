@@ -6,6 +6,10 @@
   "build": {
    "all": [
     {
+     "type": "TECH_VERTICAL_FLIGHT",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_HELICOPTERS",
      "scope": "city",
      "connection": "trade|vicinity"

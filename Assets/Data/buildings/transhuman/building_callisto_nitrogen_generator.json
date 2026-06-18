@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_CALLISTO_RESUPPLY_BASE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_APOCALYPTIC_PATHOGENS",
+     "scope": "team"
     }
    ],
    "any": [

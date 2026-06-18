@@ -26,6 +26,10 @@
     {
      "type": "BUILDING_STOCK_MARKET",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DIGITIZATION",
+     "scope": "team"
     }
    ]
   }

@@ -52,6 +52,10 @@
      "type": "POPULATION",
      "scope": "city",
      "min": 20
+    },
+    {
+     "type": "TECH_CITY_PLANNING",
+     "scope": "team"
     }
    ],
    "any": [

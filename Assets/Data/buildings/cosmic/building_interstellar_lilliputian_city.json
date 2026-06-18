@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_SPHEREWORLD",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PARTICLE_GENETICS",
+     "scope": "team"
     }
    ]
   }

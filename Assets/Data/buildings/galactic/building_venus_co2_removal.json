@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_VENUS_MAGNESIUM_AND_CALCIUM_MINE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ASTROECOLOGY",
+     "scope": "team"
     }
    ]
   }

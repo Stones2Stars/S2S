@@ -2,6 +2,16 @@
  "type": "BUILDING_SAFETY_AESOPS_FABLES",
  "description": "TXT_KEY_BUILDING_SAFETY_AESOPS_FABLES",
  "civilopedia": "TXT_KEY_BUILDING_SAFETY_AESOPS_FABLES_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LITERATURE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "PROPERTY_CRIME": {
   "city": {
    "flat": -5

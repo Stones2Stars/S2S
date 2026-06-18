@@ -14,6 +14,10 @@
      "type": "POPULATION",
      "scope": "city",
      "min": 2
+    },
+    {
+     "type": "TECH_CANINE_DOMESTICATION",
+     "scope": "team"
     }
    ],
    "any": [

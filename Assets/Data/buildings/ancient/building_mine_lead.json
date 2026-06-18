@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_MINING_CAMP",
      "scope": "city"
+    },
+    {
+     "type": "TECH_LEAD_WORKING",
+     "scope": "team"
     }
    ]
   }

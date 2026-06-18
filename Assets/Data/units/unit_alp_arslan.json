@@ -9,6 +9,10 @@
      "type": "BONUS_SELJUK",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_THEOLOGY",
+     "scope": "team"
     }
    ]
   }

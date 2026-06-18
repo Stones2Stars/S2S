@@ -15,6 +15,10 @@
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 10
+    },
+    {
+     "type": "TECH_SUBMARINE_WARFARE",
+     "scope": "team"
     }
    ],
    "any": [
@@ -105,6 +109,7 @@
   "upkeep": 1
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 4,
   "militaryWorth": 28,
   "xpValueAttack": 4,

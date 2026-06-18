@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_POACHERS_CAMP_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_WILDLIFE_CONSERVATION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

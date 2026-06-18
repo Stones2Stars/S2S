@@ -2,6 +2,16 @@
  "type": "BUILDING_ACOUSTIC_GRAVITY_WAVES",
  "description": "TXT_KEY_BUILDING_ACOUSTIC_GRAVITY_WAVES",
  "civilopedia": "TXT_KEY_BUILDING_ACOUSTIC_GRAVITY_WAVES_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ACOUSTOPHORESIS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -2

@@ -29,6 +29,10 @@
     {
      "type": "BUILDING_COURTHOUSE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_EXECUTIONS",
+     "scope": "team"
     }
    ],
    "any": [

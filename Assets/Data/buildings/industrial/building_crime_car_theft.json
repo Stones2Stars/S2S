@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_CRIME_CAR_THEFT_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MOTORIZED_TRANSPORTATION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

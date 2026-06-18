@@ -7,6 +7,7 @@
   "onlyDefensive": true
  },
  "identity": {
+  "spawnOnly": true,
   "xpValueAttack": 4,
   "xpValueDefense": 4,
   "domain": "DOMAIN_LAND",

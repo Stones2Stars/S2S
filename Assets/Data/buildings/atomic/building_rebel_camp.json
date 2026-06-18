@@ -14,6 +14,10 @@
      "type": "BONUS_AMMUNITION",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_GUERRILLA_WARFARE",
+     "scope": "team"
     }
    ]
   }

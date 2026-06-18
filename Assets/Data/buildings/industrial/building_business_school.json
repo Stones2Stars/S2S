@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_UNIVERSITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MANAGEMENT",
+     "scope": "team"
     }
    ]
   }

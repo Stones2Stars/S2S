@@ -8,6 +8,14 @@
   ]
  },
  "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DECEPTION",
+     "scope": "team"
+    }
+   ]
+  },
   "operate": {
    "all": [
     {

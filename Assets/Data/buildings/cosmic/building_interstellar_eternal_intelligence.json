@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_BLACK_HOLE_COMPUTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_IMMORTALITY",
+     "scope": "team"
     }
    ],
    "any": [

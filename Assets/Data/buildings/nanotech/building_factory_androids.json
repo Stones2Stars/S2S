@@ -31,6 +31,10 @@
     {
      "type": "BUILDING_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ANDROIDS",
+     "scope": "team"
     }
    ],
    "any": [

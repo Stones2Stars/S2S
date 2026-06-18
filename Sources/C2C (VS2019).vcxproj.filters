@@ -1,4 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- ============================================================================
+     NOT THE BUILD. This .vcxproj.filters is an IDE-display-ONLY artifact: it only
+     groups files into folders for Visual Studio. It does not drive the build and is
+     not kept in sync. Build truth = Sources/fbuild.bff. See the .vcxproj banner and
+     Despair Index: "The .vcxproj of Lies".
+     ============================================================================ -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
@@ -676,6 +682,12 @@
       <Filter>Source\Base\Utils</Filter>
     </ClCompile>
     <ClCompile Include="Cascade\CvScopedAccumulator.cpp">
+      <Filter>Source\Base\Cascade</Filter>
+    </ClCompile>
+    <ClCompile Include="Cascade\CvEventSpine.cpp">
+      <Filter>Source\Base\Cascade</Filter>
+    </ClCompile>
+    <ClCompile Include="Cascade\CvCascadeSelfTest.cpp">
       <Filter>Source\Base\Cascade</Filter>
     </ClCompile>
     <ClCompile Include="Infos\CvRiverModelInfo.cpp">
@@ -1704,6 +1716,12 @@
       <Filter>Source\Base\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Cascade\CvScopedAccumulator.h">
+      <Filter>Source\Base\Cascade</Filter>
+    </ClInclude>
+    <ClInclude Include="Cascade\CvEventSpine.h">
+      <Filter>Source\Base\Cascade</Filter>
+    </ClInclude>
+    <ClInclude Include="Cascade\CvCascadeSelfTest.h">
       <Filter>Source\Base\Cascade</Filter>
     </ClInclude>
     <ClInclude Include="Infos\CvRiverModelInfo.h">

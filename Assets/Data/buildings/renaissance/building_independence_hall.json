@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_COURTHOUSE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_REPRESENTATIVE_DEMOCRACY",
+     "scope": "team"
     }
    ]
   }

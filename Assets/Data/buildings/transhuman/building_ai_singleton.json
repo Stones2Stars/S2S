@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TECHNOLOGICAL_SINGULARITY",
+     "scope": "team"
     }
    ]
   },

@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TIME_REVERSAL",
+     "scope": "team"
     }
    ]
   }

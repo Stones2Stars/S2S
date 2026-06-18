@@ -2,6 +2,16 @@
  "type": "UNIT_SPY",
  "description": "TXT_KEY_UNIT_SPY",
  "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WRITING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "capabilities": {
   "counterSpy": true,
   "alwaysInvisible": true,

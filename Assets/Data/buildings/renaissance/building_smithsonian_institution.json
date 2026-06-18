@@ -18,6 +18,10 @@
      "type": "BUILDING_MUSEUM",
      "scope": "empire",
      "min": 3
+    },
+    {
+     "type": "TECH_SCIENTIFIC_METHOD",
+     "scope": "team"
     }
    ]
   }

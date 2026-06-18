@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_LIBRARY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_LITERATURE",
+     "scope": "team"
     }
    ]
   }

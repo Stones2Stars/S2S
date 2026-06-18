@@ -22,6 +22,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_ANCIENT_MEDICINE",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

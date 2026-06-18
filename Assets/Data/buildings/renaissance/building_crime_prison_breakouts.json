@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_CRIME_PRISON_BREAKOUTS_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CONSTITUTION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

@@ -21,6 +21,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_SUPERSTRONG_ALLOYS",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_METAMATERIALS",
      "scope": "city",
      "connection": "trade|vicinity"

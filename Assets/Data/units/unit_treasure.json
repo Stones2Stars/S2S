@@ -39,6 +39,7 @@
   ]
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_ENGINEER",

@@ -2,6 +2,16 @@
  "type": "BUILDING_EFFECT_DEPARTMENT_OF_FOREIGN_POLICY",
  "description": "TXT_KEY_BUILDING_EFFECT_DEPARTMENT_OF_FOREIGN_POLICY",
  "civilopedia": "TXT_KEY_BUILDING_DEPARTMENT_OF_FOREIGN_POLICY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FOREIGN_POLICY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "espionage": {
   "city": {
    "percent": 10

@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_CISLUNAR_MATERIALS_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FROST_BEAMS",
+     "scope": "team"
     }
    ]
   }

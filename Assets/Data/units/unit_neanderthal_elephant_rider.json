@@ -21,6 +21,14 @@
     {
      "type": "BUILDING_ANIMAL_TRAINER_ELEPHANT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ANIMAL_RIDING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ELEPHANT_DOMESTICATION",
+     "scope": "team"
     }
    ]
   }

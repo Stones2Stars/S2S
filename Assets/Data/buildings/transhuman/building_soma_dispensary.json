@@ -5,7 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER"
+    "HAS_POWER",
+    {
+     "type": "TECH_SYNTHETIC_SYNESTHESIA",
+     "scope": "team"
+    }
    ],
    "any": [
     [

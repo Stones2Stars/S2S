@@ -3,6 +3,16 @@
  "description": "TXT_KEY_BUILDING_WOODSTOCK",
  "civilopedia": "TXT_KEY_BUILDING_WOODSTOCK_PEDIA",
  "help": "TXT_KEY_BUILDING_WOODSTOCK_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COUNTERCULTURE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

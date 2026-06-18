@@ -32,6 +32,10 @@
     {
      "type": "BUILDING_MODERN_OFFICES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PERSONAL_COMPUTERS",
+     "scope": "team"
     }
    ]
   }

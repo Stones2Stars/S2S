@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_COMPUTER_NETWORK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HOLOGRAPHICS",
+     "scope": "team"
     }
    ]
   }

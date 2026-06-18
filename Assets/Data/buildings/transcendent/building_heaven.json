@@ -22,6 +22,10 @@
      "type": "BUILDING_HUMAN_MOD_METAPHYSICAL",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_OMEGA_POINT",
+     "scope": "team"
     }
    ]
   }

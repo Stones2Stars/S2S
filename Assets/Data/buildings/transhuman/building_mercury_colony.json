@@ -15,6 +15,10 @@
     {
      "type": "BUILDING_DEEP_SPACE_ORBITAL_BASE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_THERMAL_NEGATION",
+     "scope": "team"
     }
    ],
    "any": [

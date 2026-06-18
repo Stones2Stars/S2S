@@ -97,7 +97,11 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "HAS_POWER"
+    "HAS_POWER",
+    {
+     "type": "TECH_COLONY_ARCOLOGY",
+     "scope": "team"
+    }
    ]
   }
  },

@@ -2,6 +2,16 @@
  "type": "BUILDING_BEHAVIOR_PREDICTION",
  "description": "TXT_KEY_BUILDING_BEHAVIOR_PREDICTION",
  "civilopedia": "TXT_KEY_BUILDING_BEHAVIOR_PREDICTION_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WHOLE_BRAIN_EMULATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100

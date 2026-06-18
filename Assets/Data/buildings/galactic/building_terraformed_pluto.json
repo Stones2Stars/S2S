@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_PLUTO_RESEARCH_BASE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_LUNAR_TERRAFORMING",
+     "scope": "team"
     }
    ],
    "any": [

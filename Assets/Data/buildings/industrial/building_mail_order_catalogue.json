@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_POST_OFFICE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TELEGRAPH",
+     "scope": "team"
     }
    ],
    "any": [

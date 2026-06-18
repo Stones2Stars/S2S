@@ -13,6 +13,10 @@
      "type": "BUILDING_INTERSTELLAR_STADIUM",
      "scope": "empire",
      "min": 2
+    },
+    {
+     "type": "TECH_WORMHOLE_TRAVERSAL",
+     "scope": "team"
     }
    ]
   }

@@ -2,6 +2,16 @@
  "type": "BUILDING_ACHIEVEMENT_ENVIRONMENTAL",
  "description": "TXT_KEY_BUILDING_ACHIEVEMENT_ENVIRONMENTAL",
  "civilopedia": "TXT_KEY_BUILDING_ACHIEVEMENT_ENVIRONMENTAL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WILDLIFE_CONSERVATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "empire": 1
  },

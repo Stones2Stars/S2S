@@ -22,6 +22,10 @@
      "type": "BUILDING_INTERGALACTIC_SHKADOV_THRUSTER",
      "scope": "empire",
      "min": 2
+    },
+    {
+     "type": "TECH_COSMIC_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

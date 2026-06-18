@@ -2,6 +2,16 @@
  "type": "UNIT_BARD",
  "description": "TXT_KEY_UNIT_BARD",
  "civilopedia": "TXT_KEY_UNIT_BARD_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LINGUISTICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "PROPERTY_EDUCATION": {
   "city": {
    "flat": 2

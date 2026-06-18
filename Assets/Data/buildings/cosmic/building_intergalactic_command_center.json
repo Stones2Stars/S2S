@@ -14,6 +14,16 @@
    "BUILDING_INTERGALACTIC_VOID_BASE"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SPACE_CREASING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "espionage": {
   "city": {
    "flat": 50

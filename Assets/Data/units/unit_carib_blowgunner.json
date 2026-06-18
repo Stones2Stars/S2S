@@ -9,6 +9,10 @@
      "type": "BONUS_CARIB",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_POISON_CRAFTING",
+     "scope": "team"
     }
    ]
   }

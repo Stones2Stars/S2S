@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_MODERN_WAREHOUSE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MOTORIZED_TRANSPORTATION",
+     "scope": "team"
     }
    ]
   }

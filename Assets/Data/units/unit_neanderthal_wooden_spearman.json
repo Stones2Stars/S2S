@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_C_L_NEANDERTHAL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SIMPLE_WOOD_WORKING",
+     "scope": "team"
     }
    ]
   }

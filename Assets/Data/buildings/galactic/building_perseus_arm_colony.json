@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_PERSEUS_ARM_COLONY_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

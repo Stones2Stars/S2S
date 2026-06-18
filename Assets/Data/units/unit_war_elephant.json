@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_ANIMAL_TRAINER_ELEPHANT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ARMORED_CAVALRY",
+     "scope": "team"
     }
    ],
    "any": [

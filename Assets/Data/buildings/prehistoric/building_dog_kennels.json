@@ -10,6 +10,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CANINE_DOMESTICATION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

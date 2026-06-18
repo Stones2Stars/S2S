@@ -122,6 +122,7 @@
   ]
  },
  "identity": {
+  "spawnOnly": true,
   "xpValueAttack": 4,
   "xpValueDefense": 3,
   "domain": "DOMAIN_SEA",

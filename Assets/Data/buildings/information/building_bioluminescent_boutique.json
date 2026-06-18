@@ -24,6 +24,10 @@
     {
      "type": "BUILDING_NEON_BOUTIQUE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MICROGENERATORS",
+     "scope": "team"
     }
    ],
    "any": [

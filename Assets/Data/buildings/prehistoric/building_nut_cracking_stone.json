@@ -2,6 +2,16 @@
  "type": "BUILDING_NUT_CRACKING_STONE",
  "description": "TXT_KEY_BUILDING_NUT_CRACKING_STONE",
  "civilopedia": "TXT_KEY_BUILDING_NUT_CRACKING_STONE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TOOL_MAKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 1

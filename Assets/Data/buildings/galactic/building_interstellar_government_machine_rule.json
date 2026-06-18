@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_GOVERNMENT_MACHINE_RULE_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_COLONY_GOVERNANCE",
+     "scope": "team"
+    }
+   ],
    "noneOf": [
     {
      "type": "BUILDING_INTERSTELLAR_GOVERNMENT_NOOCRACY",

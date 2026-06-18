@@ -35,6 +35,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_PAVED_ROADS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

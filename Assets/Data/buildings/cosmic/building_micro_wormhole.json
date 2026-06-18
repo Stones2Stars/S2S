@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_TELEPORT_BOOTH",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COMPACT_WORMHOLES",
+     "scope": "team"
     }
    ]
   }

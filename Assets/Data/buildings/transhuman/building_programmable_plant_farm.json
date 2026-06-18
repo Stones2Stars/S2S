@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_CHEMOSYNTHESIS_PLANT_FARM",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+     "scope": "team"
     }
    ],
    "any": [

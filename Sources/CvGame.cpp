@@ -10,6 +10,10 @@
 #include "CvBuildingInfo.h"
 #include "CvCity.h"
 #include "CvEventReporter.h"
+#include "CvEventSpine.h"
+#include "CvCascadeSelfTest.h"
+#include "CvCascadeReadJson.h"
+#include "CvCascadeTally.h"
 #include "CvGameAI.h"
 #include "CvGlobals.h"
 #include "CvHttpServer.h"
@@ -618,6 +622,14 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 			}
 		}
 	}
+
+	// #430 cascade -- (re)SEED the tally from the freshly-loaded objects on EVERY load/new-game (this hook fires
+	// for both), so the authoritative count gates (allowed caps, requires count-thresholds) are correct from the
+	// FIRST gate read -- not only after the first end-of-turn (tally-cascade-spec.md §9). Without this, a stale/
+	// empty tally would read count=0 and briefly let capped wonders/units look buildable. Register the consumers
+	// (idempotent) then rebuild from live state; DOMAIN events maintain it thereafter. A 2nd in-session load reseeds.
+	cascadeRegisterConsumers();
+	cascadeTally().rebuild();
 
 	OutputDebugString("onFinalInitialized: End\n");
 }
@@ -5812,6 +5824,15 @@ void CvGame::addGreatPersonBornName(const CvWString& szName)
 void CvGame::doTurn()
 {
 	PROFILE_BEGIN("CvGame::doTurn()",DOTURN1);
+
+	// #430 cascade -- TEMPORARY self-test (PURGE before readJson wiring): register the spine consumers once,
+	// then run the test events + test tallies over the OLD/live data (gated by gPlayerLogLevel). Results stream
+	// to Cascade.log + the live /events feed. docs/dev/plans/event-spine-spec.md + Sources/Cascade/CvCascadeSelfTest.h
+	cascadeRegisterConsumers();
+	cascadeSelfTest();
+	// #430 option B -- the thin DLL-side readJson slice: parse two real building JSONs, run cascadeBuildable,
+	// shadow the `allowed` cap vs the engine + the live tally. Gated by gPlayerLogLevel. Sources/Cascade/CvCascadeReadJson.h
+	cascadeReadJsonSlice();
 
 	//	Turn-boundary accounting for the frame-driven span the doTurn tree does not cover:
 	//	turn.wall is the true wall-clock between consecutive turn boundaries (what a player's

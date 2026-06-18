@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_SPACE_COLONY_MARTIAN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SUPERSONIC_RAILS",
+     "scope": "team"
     }
    ]
   }

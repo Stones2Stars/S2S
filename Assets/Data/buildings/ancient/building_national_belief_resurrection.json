@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_BELIEF_RESURRECTION_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_RESURRECTION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

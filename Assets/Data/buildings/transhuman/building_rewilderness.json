@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_STATE_PARK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GAIA_ECOLOGY",
+     "scope": "team"
     }
    ]
   }

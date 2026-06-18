@@ -19,6 +19,10 @@
      "type": "BONUS_CORN",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "TECH_PLOUGH",
+     "scope": "team"
     }
    ],
    "any": [

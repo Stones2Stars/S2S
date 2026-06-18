@@ -31,6 +31,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_LEVITATION",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_LEVITATION_GENERATORS",
      "scope": "city",
      "connection": "trade|vicinity"

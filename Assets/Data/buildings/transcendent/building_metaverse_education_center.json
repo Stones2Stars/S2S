@@ -2,6 +2,16 @@
  "type": "BUILDING_METAVERSE_EDUCATION_CENTER",
  "description": "TXT_KEY_BUILDING_METAVERSE_EDUCATION_CENTER",
  "civilopedia": "TXT_KEY_BUILDING_METAVERSE_EDUCATION_CENTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_METAVERSE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "research": {
   "city": {
    "flat": 100

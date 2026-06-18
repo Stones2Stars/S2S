@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_COMMERCIAL_SPACEPORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COMMERCIAL_SPACEFLIGHT",
+     "scope": "team"
     }
    ]
   }

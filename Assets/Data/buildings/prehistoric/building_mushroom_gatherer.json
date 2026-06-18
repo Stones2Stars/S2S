@@ -9,6 +9,10 @@
      "type": "BONUS_MUSHROOMS",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "TECH_GATHERING",
+     "scope": "team"
     }
    ]
   }

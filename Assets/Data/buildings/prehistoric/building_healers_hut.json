@@ -25,6 +25,16 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_NATUROPATHY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SHELTER_BUILDING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

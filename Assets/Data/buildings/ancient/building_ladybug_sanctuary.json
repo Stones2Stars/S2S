@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_COMMUNITY_GARDEN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GARDENING",
+     "scope": "team"
     }
    ],
    "any": [

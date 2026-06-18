@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_ENCRYPTED_FIREWALL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DIGITIZATION",
+     "scope": "team"
     }
    ]
   }

@@ -6,6 +6,10 @@
   "build": {
    "all": [
     {
+     "type": "TECH_NANOMORPHIC_TROIDS",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS",
      "scope": "city",
      "connection": "trade|vicinity"

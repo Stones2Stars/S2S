@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CONTROLLED_INFLATION",
+     "scope": "team"
     }
    ]
   }

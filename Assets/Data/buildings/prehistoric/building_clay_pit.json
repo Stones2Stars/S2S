@@ -15,7 +15,11 @@
  "requires": {
   "build": {
    "all": [
-    "IS_FRESHWATER"
+    "IS_FRESHWATER",
+    {
+     "type": "TECH_NATURAL_PIGMENTS",
+     "scope": "team"
+    }
    ],
    "any": [
     [

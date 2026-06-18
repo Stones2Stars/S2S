@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_BODY_EXCHANGE_CLINIC",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MENSIOKINESIS",
+     "scope": "team"
     }
    ]
   }

@@ -14,6 +14,10 @@
      "type": "BONUS_NEUROIMPLANTS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_NEURON_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

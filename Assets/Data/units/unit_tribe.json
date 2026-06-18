@@ -2,6 +2,16 @@
  "type": "UNIT_TRIBE",
  "description": "TXT_KEY_UNIT_TRIBE",
  "civilopedia": "TXT_KEY_UNIT_TRIBE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRIBALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "empire": 1
  },

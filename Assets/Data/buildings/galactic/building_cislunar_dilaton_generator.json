@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_CISLUNAR_ION_CANNON",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SINGULARITY_STABILIZATION",
+     "scope": "team"
     }
    ]
   }

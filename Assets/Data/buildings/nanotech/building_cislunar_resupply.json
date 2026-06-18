@@ -19,6 +19,14 @@
      "type": "BUILDING_MAGLEV_LAUNCHER",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_MASS_DRIVER",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+     "scope": "team"
     }
    ]
   }

@@ -9,6 +9,16 @@
    "BUILDING_EDUCATION_INTUITIVE"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEDIEVAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "percent": 20

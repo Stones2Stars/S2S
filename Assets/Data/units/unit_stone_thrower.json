@@ -2,6 +2,16 @@
  "type": "UNIT_STONE_THROWER",
  "description": "TXT_KEY_UNIT_STONE_THROWER",
  "civilopedia": "TXT_KEY_UNIT_STONE_THROWER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TOOL_MAKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "buildRate": {
   "self": {
    "percent": [

@@ -27,6 +27,10 @@
      "min": 1
     },
     {
+     "type": "TECH_LUNAR_TRADE",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_ORGANIC_PHOTONIC_CELLS",
      "scope": "city",
      "connection": "trade|vicinity"

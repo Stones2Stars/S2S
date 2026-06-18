@@ -14,6 +14,10 @@
      "type": "BONUS_RARE_EARTH_MINERALS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_WEARABLE_COMPUTERS",
+     "scope": "team"
     }
    ],
    "any": [

@@ -22,6 +22,10 @@
     {
      "type": "BUILDING_EFFECT_GPS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_AUTONOMOUS_VEHICLES",
+     "scope": "team"
     }
    ]
   }

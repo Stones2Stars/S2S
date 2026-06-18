@@ -18,6 +18,14 @@
     {
      "type": "BUILDING_BURIAL_TRADITION_FIRE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CEREMONIAL_BURIAL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FIRE_MAKING",
+     "scope": "team"
     }
    ],
    "any": [

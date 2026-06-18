@@ -7,6 +7,16 @@
    "BUILDING_JAIL"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CONDUCT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "espionage": {
   "city": {
    "flat": 2

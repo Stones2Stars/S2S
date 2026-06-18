@@ -15,6 +15,16 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_AESTHETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CAMELID_DOMESTICATION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

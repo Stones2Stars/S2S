@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_VIRTUAL_WORLD",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MASS_SURVEILLANCE",
+     "scope": "team"
     }
    ]
   }

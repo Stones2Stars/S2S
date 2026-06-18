@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_DISTANT_LAYERED_REALITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TRANSFINITE_COMPUTATION",
+     "scope": "team"
     }
    ]
   }

@@ -37,6 +37,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_WARRANTS_AND_DECREES",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

@@ -40,6 +40,10 @@
     {
      "type": "BUILDING_MANUFACTURING_DISTRICT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MEGACORPORATIONS",
+     "scope": "team"
     }
    ]
   }

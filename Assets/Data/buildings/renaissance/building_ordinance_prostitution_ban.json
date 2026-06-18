@@ -10,6 +10,16 @@
    "BUILDING_HAREMS"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_JURISPRUDENCE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -5

@@ -9,6 +9,10 @@
      "type": "BONUS_SAMOAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_RIFLING",
+     "scope": "team"
     }
    ]
   }

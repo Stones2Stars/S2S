@@ -67,6 +67,10 @@
     {
      "type": "BUILDING_MEGATOWER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BATTLEFIELD_SPORTS",
+     "scope": "team"
     }
    ]
   }

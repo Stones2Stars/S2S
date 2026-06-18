@@ -2,6 +2,16 @@
  "type": "BUILDING_CABARET_VOLTAIRE",
  "description": "TXT_KEY_BUILDING_CABARET_VOLTAIRE",
  "civilopedia": "TXT_KEY_BUILDING_CABARET_VOLTAIRE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DADA",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

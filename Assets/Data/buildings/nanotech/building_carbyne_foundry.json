@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_DELTA_ASSEMBLER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SUPERSTRONG_ALLOYS",
+     "scope": "team"
     }
    ]
   }

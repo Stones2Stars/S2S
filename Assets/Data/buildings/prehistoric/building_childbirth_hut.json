@@ -13,6 +13,16 @@
    "BUILDING_ANCIENT_CUSTOMS"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SHELTER_BUILDING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "health": {
   "city": {
    "flat": 1

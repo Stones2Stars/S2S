@@ -15,6 +15,10 @@
      "type": "POPULATION",
      "scope": "city",
      "min": 7
+    },
+    {
+     "type": "TECH_HOLOGRAPHICS",
+     "scope": "team"
     }
    ],
    "any": [

@@ -34,7 +34,11 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER"
+    "HAS_POWER",
+    {
+     "type": "TECH_ELECTROMAGNETIC_VOLTAGE",
+     "scope": "team"
+    }
    ]
   }
  },

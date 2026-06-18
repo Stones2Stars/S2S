@@ -2,6 +2,16 @@
  "type": "BUILDING_TOURISM_LEVEL_10",
  "description": "TXT_KEY_BUILDING_TOURISM_LEVEL_10",
  "civilopedia": "TXT_KEY_BUILDING_TOURISM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GALACTIC_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "flat": 20

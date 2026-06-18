@@ -10,6 +10,16 @@
    "BUILDING_INTERGALACTIC_SUPERCOMPUTER"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SPACE_CREASING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "research": {
   "city": {
    "flat": 75

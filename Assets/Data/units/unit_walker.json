@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_ROBOTICS_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MACHINE_LEARNING",
+     "scope": "team"
     }
    ],
    "any": [

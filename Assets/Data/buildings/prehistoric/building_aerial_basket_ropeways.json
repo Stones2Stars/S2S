@@ -9,6 +9,10 @@
      "type": "BONUS_BASKETS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_ARITHMETIC",
+     "scope": "team"
     }
    ],
    "any": [

@@ -10,6 +10,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_LOGISTICS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

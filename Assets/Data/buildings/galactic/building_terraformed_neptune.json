@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_NEPTUNE_CHANDELIER_CITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_JOVIAN_TERRAFORMING",
+     "scope": "team"
     }
    ],
    "any": [

@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CHAOS_THEORY",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

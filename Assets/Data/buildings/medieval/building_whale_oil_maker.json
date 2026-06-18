@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_WHALERS_DOCK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COMMERCIAL_WHALING",
+     "scope": "team"
     }
    ],
    "any": [

@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_INTERGALACTIC_YOTTAFACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DARK_ENERGY_HARVESTING",
+     "scope": "team"
     }
    ]
   }

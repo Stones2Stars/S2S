@@ -17,6 +17,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_LOCKS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

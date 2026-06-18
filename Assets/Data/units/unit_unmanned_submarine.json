@@ -20,6 +20,10 @@
      "min": 10
     },
     {
+     "type": "TECH_DISASTER_ROBOTS",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_URANIUM",
      "scope": "city",
      "connection": "trade|vicinity"

@@ -9,6 +9,10 @@
      "type": "BONUS_ARMENIAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_ARMORED_CAVALRY",
+     "scope": "team"
     }
    ]
   }

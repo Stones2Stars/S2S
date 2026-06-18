@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_INTERGALACTIC_SUPERCOMPUTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TACHYON_COMMUNICATIONS",
+     "scope": "team"
     }
    ]
   }

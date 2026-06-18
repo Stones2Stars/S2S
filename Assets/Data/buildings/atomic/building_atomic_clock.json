@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_PHYSICS_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MODERN_PHYSICS",
+     "scope": "team"
     }
    ]
   }

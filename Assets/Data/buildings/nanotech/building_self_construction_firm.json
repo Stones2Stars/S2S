@@ -25,6 +25,10 @@
     {
      "type": "BUILDING_MEGATOWER_OFFICE_LEVEL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_AUTOMATED_URBANIZATION",
+     "scope": "team"
     }
    ]
   }

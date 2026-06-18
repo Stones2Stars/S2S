@@ -2,6 +2,16 @@
  "type": "UNIT_EARLY_MERCHANT_C2C",
  "description": "TXT_KEY_UNIT_EARLY_MERCHANT",
  "civilopedia": "TXT_KEY_CONCEPT_TRADE_CARAVAN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BARTER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "buildRate": {
   "self": {
    "percent": [

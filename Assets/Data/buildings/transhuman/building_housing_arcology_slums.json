@@ -35,6 +35,10 @@
     {
      "type": "BUILDING_TELEPHONE_NETWORK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MEGASTRUCTURE_ENGINEERING",
+     "scope": "team"
     }
    ],
    "any": [

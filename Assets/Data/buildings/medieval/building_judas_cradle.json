@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_TORTURE_CHAMBER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TORTURE",
+     "scope": "team"
     }
    ]
   }

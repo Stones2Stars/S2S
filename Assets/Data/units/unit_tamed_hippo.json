@@ -17,6 +17,10 @@
     {
      "type": "HERITAGE_TAXON_HIPPOPOTAMIDAE",
      "scope": "empire"
+    },
+    {
+     "type": "TECH_SPECIALIZATION",
+     "scope": "team"
     }
    ]
   }

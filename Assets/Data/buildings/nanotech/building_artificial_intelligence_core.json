@@ -36,6 +36,14 @@
     {
      "type": "BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_QUANTUM_COMPUTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DROIDS",
+     "scope": "team"
     }
    ]
   }

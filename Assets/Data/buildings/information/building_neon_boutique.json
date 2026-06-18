@@ -24,6 +24,10 @@
     {
      "type": "BUILDING_SHOPPING_DISTRICT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_3D_PRINTING",
+     "scope": "team"
     }
    ],
    "any": [

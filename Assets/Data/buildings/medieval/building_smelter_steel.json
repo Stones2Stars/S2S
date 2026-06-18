@@ -21,6 +21,10 @@
      "type": "BONUS_IRON_INGOTS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_CRUCIBLE_STEEL",
+     "scope": "team"
     }
    ],
    "any": [

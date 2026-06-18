@@ -31,6 +31,14 @@
     {
      "type": "BUILDING_JAIL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CRIMINOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ELECTRICITY",
+     "scope": "team"
     }
    ]
   }

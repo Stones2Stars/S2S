@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_CLONING_LABORATORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BIONICS",
+     "scope": "team"
     }
    ],
    "any": [

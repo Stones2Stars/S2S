@@ -2,6 +2,16 @@
  "type": "BUILDING_EFFECT_TRADITION_AESTHETIC_APPRECIATION",
  "description": "TXT_KEY_BUILDING_EFFECT_TRADITION_AESTHETIC_APPRECIATION",
  "civilopedia": "TXT_KEY_BUILDING_TRADITION_AESTHETIC_APPRECIATION_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AESTHETICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "PROPERTY_AIR_POLLUTION": {
   "city": {
    "flat": -2

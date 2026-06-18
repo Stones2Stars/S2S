@@ -9,6 +9,14 @@
      "type": "BONUS_SURINAMESE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_FLIGHT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INDUSTRIALISM",
+     "scope": "team"
     }
    ]
   }

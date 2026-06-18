@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_AMUNDSEN_SCOTT_SOUTH_POLE_STATION_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CLIMATE_MODELS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

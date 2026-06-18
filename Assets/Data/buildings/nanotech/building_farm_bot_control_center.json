@@ -24,6 +24,10 @@
     {
      "type": "BUILDING_AEROPONICS_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BIOMETRIC_WARFARE",
+     "scope": "team"
     }
    ]
   }

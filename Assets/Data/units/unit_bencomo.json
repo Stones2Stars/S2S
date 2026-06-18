@@ -9,6 +9,10 @@
      "type": "BONUS_GUANCHES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_GUNPOWDER",
+     "scope": "team"
     }
    ]
   }

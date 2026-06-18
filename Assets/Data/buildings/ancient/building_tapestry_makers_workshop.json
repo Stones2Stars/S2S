@@ -9,6 +9,16 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_TEXTILE_LOOM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRADE",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

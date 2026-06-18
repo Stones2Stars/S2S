@@ -15,6 +15,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_ARMORED_CAVALRY",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_IRON_WARES",
      "scope": "city",
      "connection": "trade|vicinity"

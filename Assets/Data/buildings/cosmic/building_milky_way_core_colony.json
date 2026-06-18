@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_KUGELBLITZ_POWER_PLANT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_APPLIED_RELATIVITY",
+     "scope": "team"
     }
    ],
    "any": [

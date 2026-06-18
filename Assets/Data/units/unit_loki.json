@@ -12,6 +12,10 @@
     {
      "type": "RELIGION_ASATRU",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CIVIL_SERVICE",
+     "scope": "team"
     }
    ],
    "any": [

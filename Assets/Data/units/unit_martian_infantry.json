@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_MARTIAN_ELECTRONICS_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ION_BEAMS",
+     "scope": "team"
     }
    ]
   }

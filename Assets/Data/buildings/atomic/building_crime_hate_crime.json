@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_HATE_CRIME",
  "description": "TXT_KEY_BUILDING_CRIME_HATE_CRIME",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_HATE_CRIME_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MINORITY_RIGHTS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "culture": {
   "city": {
    "percent": -10

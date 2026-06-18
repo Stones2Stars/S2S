@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_STOCK_MARKET",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DERIVATIVES",
+     "scope": "team"
     }
    ]
   }

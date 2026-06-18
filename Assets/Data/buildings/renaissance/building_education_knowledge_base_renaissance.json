@@ -9,6 +9,16 @@
    "BUILDING_EDUCATION_KNOWLEDGE_BASE_MEDIEVAL"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RENAISSANCE_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "PROPERTY_EDUCATION": {
   "city": {
    "flat": {

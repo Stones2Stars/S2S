@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_MAJOR_LEAGUE_STADIUM",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SATELLITES",
+     "scope": "team"
     }
    ]
   }

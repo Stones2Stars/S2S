@@ -12,6 +12,16 @@
    "BUILDING_ALMSHOUSE"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MODERN_HEALTH_CARE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -1

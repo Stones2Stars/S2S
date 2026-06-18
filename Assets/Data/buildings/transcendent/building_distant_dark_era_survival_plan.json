@@ -13,6 +13,10 @@
      "type": "BUILDING_INTERGALACTIC_BLACK_HOLE_ERA_SURVIVAL_PLAN",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_ENTROPY_REVERSAL",
+     "scope": "team"
     }
    ]
   }

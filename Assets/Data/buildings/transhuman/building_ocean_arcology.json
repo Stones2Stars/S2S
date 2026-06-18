@@ -15,6 +15,10 @@
     {
      "type": "BUILDING_OCEAN_CITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MEGASTRUCTURE_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

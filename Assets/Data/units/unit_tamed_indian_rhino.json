@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_FOLKLORE_INDIAN_RHINOCEROS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SPECIALIZATION",
+     "scope": "team"
     }
    ]
   }

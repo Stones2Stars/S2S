@@ -31,6 +31,10 @@
      "latitude": {
       "max": 50
      }
+    },
+    {
+     "type": "TECH_POULTRY_DOMESTICATION",
+     "scope": "team"
     }
    ],
    "any": [

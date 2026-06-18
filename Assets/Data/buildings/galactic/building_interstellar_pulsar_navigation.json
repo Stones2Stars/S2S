@@ -7,6 +7,16 @@
    "BUILDING_TRANSTELLAR_LASER_HIGHWAY_RELAY"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INTERSTELLAR_COMMUNICATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "flat": 10

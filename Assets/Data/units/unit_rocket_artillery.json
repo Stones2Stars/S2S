@@ -9,6 +9,10 @@
      "type": "BONUS_PETROLEUM_PRODUCTS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_COMPOSITES",
+     "scope": "team"
     }
    ],
    "any": [

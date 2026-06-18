@@ -5,6 +5,12 @@
  "help": "TXT_KEY_BUILDING_LASCAUX_CAVES_HELP",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_PETROGLYPHS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

@@ -7,6 +7,16 @@
    "BUILDING_BATTLEMECH_ARENA"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ROBOTICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "flat": 4

@@ -24,6 +24,10 @@
     {
      "type": "BUILDING_DEEP_SPACE_HYDROPONICS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GAIA_ECOLOGY",
+     "scope": "team"
     }
    ]
   }

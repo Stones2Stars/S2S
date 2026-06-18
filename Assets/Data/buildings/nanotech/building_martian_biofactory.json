@@ -22,6 +22,10 @@
     {
      "type": "BUILDING_MARTIAN_RADIATION_SHIELD",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DYSTOPIA_PATHOGENS",
+     "scope": "team"
     }
    ],
    "any": [

@@ -23,6 +23,16 @@
    "BUILDING_MINOR_LEAGUE_STADIUM"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MODERN_SPORTS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "flat": 17

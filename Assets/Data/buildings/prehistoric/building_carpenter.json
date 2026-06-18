@@ -18,6 +18,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CARPENTRY",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

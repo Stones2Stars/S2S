@@ -2,6 +2,16 @@
  "type": "UNIT_ARCHER",
  "description": "TXT_KEY_UNIT_ARCHER",
  "civilopedia": "TXT_KEY_UNIT_ARCHER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ARCHERY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "buildRate": {
   "self": {
    "percent": [

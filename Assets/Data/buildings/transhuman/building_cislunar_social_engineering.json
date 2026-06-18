@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_CISLUNAR_SPACEPORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SOCIAL_CALCULUS",
+     "scope": "team"
     }
    ]
   }

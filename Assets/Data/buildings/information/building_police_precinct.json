@@ -72,6 +72,10 @@
      "connection": "trade|vicinity"
     },
     {
+     "type": "TECH_FORENSICS",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_AUTOMOBILES",
      "scope": "city",
      "connection": "trade|vicinity"

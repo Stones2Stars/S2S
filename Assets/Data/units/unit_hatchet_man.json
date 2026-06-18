@@ -2,6 +2,16 @@
  "type": "UNIT_HATCHET_MAN",
  "description": "TXT_KEY_UNIT_HATCHET_MAN",
  "civilopedia": "TXT_KEY_UNIT_APOCALYPSE_URBAN_CROSSBOWMAN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GUERRILLA_WARFARE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "unitCombat": {

@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_ORNAMENTATION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

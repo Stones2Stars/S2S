@@ -2,6 +2,16 @@
  "type": "BUILDING_MOB_STOREFRONT_UNSANCTIONED",
  "description": "TXT_KEY_BUILDING_MOB_STOREFRONT_UNSANCTIONED",
  "civilopedia": "TXT_KEY_BUILDING_MOB_STOREFRONT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AUTOMATIC_WEAPONS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": 10

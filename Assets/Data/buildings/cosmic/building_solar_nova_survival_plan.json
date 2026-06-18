@@ -13,6 +13,10 @@
      "type": "BUILDING_SPACE_COLONY_INTERSTELLAR_MOTHERSHIP",
      "scope": "empire",
      "min": 3
+    },
+    {
+     "type": "TECH_CULTURAL_LONGEVITY",
+     "scope": "team"
     }
    ]
   }

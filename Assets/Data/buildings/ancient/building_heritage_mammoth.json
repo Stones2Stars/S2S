@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_ANIMAL_TRAINER_MAMMOTH",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HERITAGE",
+     "scope": "team"
     }
    ]
   }

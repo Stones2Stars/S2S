@@ -18,6 +18,10 @@
      "type": "BUILDING_STOCK_MARKET",
      "scope": "empire",
      "min": 4
+    },
+    {
+     "type": "TECH_STOCK_BROKERING",
+     "scope": "team"
     }
    ]
   }

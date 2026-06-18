@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_FOLKLORE_SPECTACLED_BEAR",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SPECIALIZATION",
+     "scope": "team"
     }
    ]
   }

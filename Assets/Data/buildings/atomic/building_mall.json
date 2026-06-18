@@ -30,6 +30,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CONSUMERISM",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

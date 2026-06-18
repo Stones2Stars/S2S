@@ -15,6 +15,10 @@
      "type": "BONUS_GRASS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_SHELTER_BUILDING",
+     "scope": "team"
     }
    ],
    "any": [

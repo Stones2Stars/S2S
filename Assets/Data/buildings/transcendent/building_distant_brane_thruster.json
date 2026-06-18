@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_DISTANT_BRANE_ASSEMBLER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BRANE_CROSSOVER",
+     "scope": "team"
     }
    ]
   }

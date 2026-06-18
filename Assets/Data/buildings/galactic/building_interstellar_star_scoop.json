@@ -15,6 +15,18 @@
     {
      "type": "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PLANET_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PLANET_SCOUTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_STAR_LIFTING",
+     "scope": "team"
     }
    ]
   }

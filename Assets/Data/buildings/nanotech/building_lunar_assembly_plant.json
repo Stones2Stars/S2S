@@ -22,6 +22,10 @@
     {
      "type": "BUILDING_LUNAR_ROCK_QUARRY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_LUNAR_MANUFACTURING",
+     "scope": "team"
     }
    ],
    "any": [

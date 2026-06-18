@@ -30,6 +30,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_ACCELERATED_GERMINATION",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_GEODE",
      "scope": "city",
      "connection": "trade|vicinity"

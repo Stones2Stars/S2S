@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_DRUG_CARTELS",
  "description": "TXT_KEY_BUILDING_CRIME_DRUG_CARTELS",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_DRUG_CARTELS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_POLITICAL_PHILOSOPHY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "percent": -15

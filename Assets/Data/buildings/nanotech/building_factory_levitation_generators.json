@@ -25,6 +25,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_LEVITATION",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_SUPERSTRONG_ALLOYS",
      "scope": "city",
      "connection": "trade|vicinity"

@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_C_L_SOUTH_AMERICAN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PERSONAL_ADORNMENTS",
+     "scope": "team"
     }
    ],
    "any": [

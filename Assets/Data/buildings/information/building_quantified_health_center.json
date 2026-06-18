@@ -14,6 +14,10 @@
      "type": "BONUS_CELLPHONES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_WEARABLE_COMPUTERS",
+     "scope": "team"
     }
    ],
    "any": [

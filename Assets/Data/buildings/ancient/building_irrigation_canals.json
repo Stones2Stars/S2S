@@ -15,7 +15,11 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_RIVER"
+    "HAS_RIVER",
+    {
+     "type": "TECH_IRRIGATION",
+     "scope": "team"
+    }
    ]
   }
  },

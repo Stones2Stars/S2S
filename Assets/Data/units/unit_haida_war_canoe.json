@@ -18,6 +18,10 @@
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 5
+    },
+    {
+     "type": "TECH_HARPOON_MAKING",
+     "scope": "team"
     }
    ]
   }

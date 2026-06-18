@@ -5,7 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "IS_WATER"
+    "IS_WATER",
+    {
+     "type": "TECH_SEAFARING",
+     "scope": "team"
+    }
    ],
    "any": [
     [

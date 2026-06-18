@@ -29,6 +29,10 @@
      "type": "BUILDING_SETI_PROGRAM",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_AMPLIFIED_WAVELENGTHS",
+     "scope": "team"
     }
    ]
   }

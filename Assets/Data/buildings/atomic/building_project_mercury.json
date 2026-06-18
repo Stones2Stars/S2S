@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_EFFECT_LAUNCH_SITE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SATELLITES",
+     "scope": "team"
     }
    ]
   }

@@ -10,6 +10,10 @@
     {
      "type": "BUILDING_WATER_TREATMENT_PLANT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ECOLOGICAL_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

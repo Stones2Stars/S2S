@@ -9,6 +9,10 @@
      "type": "BONUS_SIAMESE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_DIVINE_RIGHT",
+     "scope": "team"
     }
    ]
   }

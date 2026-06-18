@@ -13,6 +13,10 @@
      "type": "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
      "scope": "empire",
      "min": 3
+    },
+    {
+     "type": "TECH_ASTROENGINEERING",
+     "scope": "team"
     }
    ]
   }

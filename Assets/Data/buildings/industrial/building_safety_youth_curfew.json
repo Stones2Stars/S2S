@@ -2,6 +2,16 @@
  "type": "BUILDING_SAFETY_YOUTH_CURFEW",
  "description": "TXT_KEY_BUILDING_SAFETY_YOUTH_CURFEW",
  "civilopedia": "TXT_KEY_BUILDING_SAFETY_YOUTH_CURFEW_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMPULSORY_EDUCATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "perPopulation": -50

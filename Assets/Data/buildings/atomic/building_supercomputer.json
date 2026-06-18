@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_LABORATORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COMPUTER_SCIENCE",
+     "scope": "team"
     }
    ]
   }

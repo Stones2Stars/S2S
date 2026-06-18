@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_DARK_MATTER_REACTOR",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MATERIALIZATION",
+     "scope": "team"
     }
    ]
   }

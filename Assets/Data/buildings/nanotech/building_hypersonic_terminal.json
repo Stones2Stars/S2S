@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_COMMERCIAL_AIRPORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HYPERSONIC_FLIGHT",
+     "scope": "team"
     }
    ]
   }

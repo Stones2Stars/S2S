@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_CLIMATOLOGY_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CHAOS_THEORY",
+     "scope": "team"
     }
    ]
   }

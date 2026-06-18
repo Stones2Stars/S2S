@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CLOAKING",
+     "scope": "team"
     }
    ]
   }

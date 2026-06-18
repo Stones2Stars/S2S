@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_GRAND_MANOR",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HUMANISM",
+     "scope": "team"
     }
    ],
    "any": [

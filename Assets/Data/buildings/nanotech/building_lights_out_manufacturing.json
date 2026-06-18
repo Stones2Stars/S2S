@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_EPSILON_ASSEMBLER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_AUTOMATED_ROBOTICS",
+     "scope": "team"
     }
    ]
   }

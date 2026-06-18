@@ -33,6 +33,7 @@
   "upkeep": 1
  },
  "identity": {
+  "spawnOnly": true,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_CITY_SPECIAL",
   "formationType": "FORMATION_TYPE_DEFAULT",

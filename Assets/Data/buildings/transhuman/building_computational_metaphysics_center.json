@@ -16,6 +16,10 @@
     {
      "type": "BUILDING_INTUITIVE_ALGORITHMS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BINARY_SEMIOTICS",
+     "scope": "team"
     }
    ]
   }

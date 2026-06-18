@@ -31,6 +31,10 @@
     {
      "type": "BUILDING_STRATOSPHERIC_TOWER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FRICTIONLESS_FLIGHT",
+     "scope": "team"
     }
    ]
   }

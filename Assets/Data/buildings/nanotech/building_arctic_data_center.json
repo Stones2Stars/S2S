@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_CLOUD_SERVER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_UBIQUITOUS_COMPUTING",
+     "scope": "team"
     }
    ],
    "any": [

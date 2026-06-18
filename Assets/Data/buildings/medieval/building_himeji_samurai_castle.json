@@ -10,6 +10,14 @@
      "type": "POPULATION",
      "scope": "city",
      "min": 3
+    },
+    {
+     "type": "TECH_VASSALAGE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ENGINEERING",
+     "scope": "team"
     }
    ],
    "any": [

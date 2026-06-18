@@ -19,6 +19,10 @@
      "type": "BONUS_POTTERY",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MOSAIC_WORKING",
+     "scope": "team"
     }
    ],
    "any": [

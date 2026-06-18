@@ -53,6 +53,7 @@
   ]
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 2,
   "militaryWorth": 5,
   "xpValueAttack": 4,

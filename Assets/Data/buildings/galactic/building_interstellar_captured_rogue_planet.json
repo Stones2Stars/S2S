@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ORBITAL_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

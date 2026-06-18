@@ -9,6 +9,10 @@
      "type": "BUILDING_JET_PROPULSION_LABORATORY",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_SUPERSTRING_THEORY",
+     "scope": "team"
     }
    ]
   }

@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_DATA_COLLECTION",
      "scope": "city"
+    },
+    {
+     "type": "TECH_INTERSTELLAR_COMMUNICATION",
+     "scope": "team"
     }
    ]
   }

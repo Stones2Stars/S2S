@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_CHEMISTRY_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BIOMECHANICAL_HARVESTING",
+     "scope": "team"
     }
    ],
    "any": [

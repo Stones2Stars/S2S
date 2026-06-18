@@ -22,6 +22,10 @@
     {
      "type": "BUILDING_CLOUD_SERVER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_VIRTUAL_SOCIETY",
+     "scope": "team"
     }
    ]
   }

@@ -24,7 +24,7 @@ int gPerfLogLevel = 0;
 // one int compare. Lines must be single-line (no embedded \n) -- all helpers comply.
 int gStreamLogLevel = 0;
 
-static void streamLogTee(int level, const char* szLine)
+void streamLogTee(int level, const char* szLine)
 {
 	if (level <= gStreamLogLevel && CvHttpServer::isEnabled())
 	{

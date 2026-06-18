@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_SLAVE_COMPOUND",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TRADE",
+     "scope": "team"
     }
    ]
   }

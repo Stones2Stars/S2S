@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_COUNTING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

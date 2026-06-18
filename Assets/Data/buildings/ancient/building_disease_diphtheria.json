@@ -2,6 +2,16 @@
  "type": "BUILDING_DISEASE_DIPHTHERIA",
  "description": "TXT_KEY_BUILDING_DISEASE_DIPHTHERIA",
  "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRADE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "percent": -4

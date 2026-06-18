@@ -29,6 +29,10 @@
     {
      "type": "BUILDING_SPACE_COLONY_DEEP_SPACE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ORBITAL_MEGASTRUCTURES",
+     "scope": "team"
     }
    ]
   }

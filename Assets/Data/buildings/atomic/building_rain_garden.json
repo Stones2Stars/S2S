@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_COMMUNITY_GARDEN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ECOLOGY",
+     "scope": "team"
     }
    ]
   }

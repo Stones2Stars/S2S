@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_TIME_MACHINE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SIMULATION_AWARENESS",
+     "scope": "team"
     }
    ]
   }

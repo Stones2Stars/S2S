@@ -28,6 +28,10 @@
     {
      "type": "BUILDING_AUTOMATED_PARKING_GARAGE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_AUTONOMOUS_VEHICLES",
+     "scope": "team"
     }
    ]
   }

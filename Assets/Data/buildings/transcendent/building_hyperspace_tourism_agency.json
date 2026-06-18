@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_HYPERSPACE_IMPORTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION",
+     "scope": "team"
     }
    ]
   }

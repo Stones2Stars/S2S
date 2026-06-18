@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_C_L_SOUTH_AMERICAN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MILITARY_TRADITION",
+     "scope": "team"
     }
    ]
   }

@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_DEEP_SPACE_SUN_SCOOP",
      "scope": "city"
+    },
+    {
+     "type": "TECH_STAR_LIFTING",
+     "scope": "team"
     }
    ],
    "any": [

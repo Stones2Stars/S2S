@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_APPLIED_SOCIOLOGY_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COMPUTATIONAL_SOCIOLOGY",
+     "scope": "team"
     }
    ]
   }

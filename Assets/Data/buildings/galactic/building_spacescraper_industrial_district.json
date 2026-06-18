@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_SELF_ASSEMBLY_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ATOMIC_SCALE_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

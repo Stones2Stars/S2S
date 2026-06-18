@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_MINING_CAMP",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COPPER_WORKING",
+     "scope": "team"
     }
    ],
    "any": [

@@ -21,6 +21,10 @@
     {
      "type": "BUILDING_C_AC_EUROPEAN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CAVALRY_TACTICS",
+     "scope": "team"
     }
    ]
   }

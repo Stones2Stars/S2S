@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_GALACTIC_PORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_REACTIONLESS_DRIVE",
+     "scope": "team"
     }
    ]
   }

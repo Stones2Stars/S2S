@@ -29,6 +29,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_APICULTURE",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

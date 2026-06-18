@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_WORLDVIEW_HUMAN_SACRIFICE_ACTIVE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SACRIFICE_CULT",
+     "scope": "team"
     }
    ]
   }

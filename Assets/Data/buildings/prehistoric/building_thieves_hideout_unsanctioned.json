@@ -2,6 +2,16 @@
  "type": "BUILDING_THIEVES_HIDEOUT_UNSANCTIONED",
  "description": "TXT_KEY_BUILDING_THIEVES_HIDEOUT_UNSANCTIONED",
  "civilopedia": "TXT_KEY_BUILDING_THIEVES_HIDEOUT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_THEFT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "espionage": {
   "city": {
    "insidiousness": {

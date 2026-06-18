@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERGALACTIC_CORE_DYSON_SPHERE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GALACTIFORMING",
+     "scope": "team"
     }
    ],
    "any": [

@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_EFFECT_CISLUNAR_ECONOMY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PHOTONIC_SATELLITES",
+     "scope": "team"
     }
    ]
   },

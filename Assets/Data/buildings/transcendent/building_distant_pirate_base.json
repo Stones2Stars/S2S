@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_DISTANT_HORIZON_PORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ENDLESS_EXPLORATION",
+     "scope": "team"
     }
    ]
   }

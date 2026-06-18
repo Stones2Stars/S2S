@@ -29,6 +29,10 @@
     {
      "type": "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_EXPERIMENTAL_COSMOLOGY",
+     "scope": "team"
     }
    ]
   }

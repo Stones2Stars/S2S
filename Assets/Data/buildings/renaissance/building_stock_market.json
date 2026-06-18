@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_BANK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_STOCK_BROKERING",
+     "scope": "team"
     }
    ]
   }

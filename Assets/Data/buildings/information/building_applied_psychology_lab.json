@@ -28,6 +28,10 @@
     {
      "type": "BUILDING_NEUROSCIENCE_CENTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MEDIA_PSYCHOLOGY",
+     "scope": "team"
     }
    ]
   }

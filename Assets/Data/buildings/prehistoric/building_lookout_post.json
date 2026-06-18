@@ -13,6 +13,16 @@
    "BUILDING_SENTRY_POST"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DECEPTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -1

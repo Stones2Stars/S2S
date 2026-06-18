@@ -9,6 +9,10 @@
      "type": "BONUS_POTTERY",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_APICULTURE",
+     "scope": "team"
     }
    ],
    "any": [

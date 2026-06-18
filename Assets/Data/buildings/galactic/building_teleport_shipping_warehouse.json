@@ -29,6 +29,10 @@
     {
      "type": "BUILDING_TELEPORT_BOOTH",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TELEPORTATION",
+     "scope": "team"
     }
    ]
   }

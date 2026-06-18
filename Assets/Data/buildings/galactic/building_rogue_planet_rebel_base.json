@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_ROGUE_PLANET_OUTPOST",
      "scope": "city"
+    },
+    {
+     "type": "TECH_INTERSTELLAR_TRADE",
+     "scope": "team"
     }
    ],
    "any": [

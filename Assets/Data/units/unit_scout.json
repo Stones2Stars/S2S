@@ -2,6 +2,16 @@
  "type": "UNIT_SCOUT",
  "description": "TXT_KEY_UNIT_SCOUT",
  "civilopedia": "TXT_KEY_UNIT_SCOUT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRAILS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 50

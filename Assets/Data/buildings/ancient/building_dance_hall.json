@@ -27,6 +27,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_FOLK_DANCE",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

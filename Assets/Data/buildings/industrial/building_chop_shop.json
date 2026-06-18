@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_CHOP_SHOP_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MOTORIZED_TRANSPORTATION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

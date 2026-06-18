@@ -27,7 +27,9 @@ dropped, plot-properties verified inert → no-loss); the **3 `PrereqOrBuildings
 ---
 
 ## CORE PREMISE — the foundation of the whole model (ESTABLISHED; do NOT re-derive)
+
 The data model **is** two cascades, both strictly **top-down**:
+
 - **Cascading enablers** — enablement flows DOWN the entity chain (tech enables buildings, buildings enable units).
   An entity is available iff something above enables it. There are **no prerequisites**; nothing ever queries
   upward. *(If a future session "discovers" that no-prerequisites is the purest top-down form — that IS this
@@ -42,12 +44,15 @@ is just *how we express these two cascades cleanly*. **Start from this premise; 
 ---
 
 ## The pivot (why we're restarting)
+
 We built a **generic mass migration** — one engine transforming all 34 Info types at once
 (`Tools/Migration/engine.py`). It worked mechanically but **mixed relation structures inconsistently and did
 not adhere to top-down** (e.g. it left units carrying prerequisites). **Abandoned as the approach.** The engine
-+ its generic output stay on disk as *scratch/reference only*.
+
+- its generic output stay on disk as *scratch/reference only*.
 
 **New approach (decided):**
+
 - Treat the **XML as a real relational database** — each Info type is a table, each `*_TYPE` ref is a foreign key.
 - Define + load **one Info at a time**, deliberately (the hand-built `handicaps` prototype is the quality bar).
 - Each Info's JSON is a **top-down VIEW** built by *querying* the XML; downward edges via **reverse-lookup**
@@ -57,6 +62,7 @@ not adhere to top-down** (e.g. it left units carrying prerequisites). **Abandone
 ---
 
 ## Settled conventions (locked)
+
 - **One modifier shape everywhere:** `modifiers.{scope}.{channel}.{unit}: value`.
   - scope ∈ `game / team / empire / area / city` (+ `plot` for properties). The empire-wide scope is **`empire`**
     (matches the handicaps prototype — NOT `player`).
@@ -88,6 +94,7 @@ not adhere to top-down** (e.g. it left units carrying prerequisites). **Abandone
 ---
 
 ## The base Info skeleton (near-locked, prereq-free)
+
 ```jsonc
 {
   "type": "BUILDING_FORGE",
@@ -106,7 +113,9 @@ not adhere to top-down** (e.g. it left units carrying prerequisites). **Abandone
   "identity": { … }
 }
 ```
+
 An enabler Info additionally carries (NO prereqs):
+
 ```jsonc
   "enables": { "buildings": [ "BUILDING_…" ], "units": [ "UNIT_…" ] }
 ```
@@ -114,6 +123,7 @@ An enabler Info additionally carries (NO prereqs):
 ---
 
 ## Open questions (resolve next session)
+
 1. **Lock the skeleton** — keep `identity` as a named catch-all, or force every field into a real section?
 2. **Multi-enabler semantics** — "needs tech AND bonus AND civic": each enables it; presence is all-of or any-of?
 3. **`enables` structure** — grouped (`enables: {buildings:[], units:[]}`) vs flat (`enabledBuildings: []`).
@@ -127,6 +137,7 @@ An enabler Info additionally carries (NO prereqs):
 ---
 
 ## Artifacts on disk (what to reuse vs ignore)
+
 - `Tools/Migration/extract_tags.py` → per-entity distinct-tag lists with samples (writes `tags/`, gitignored).
   **Reuse** — authoritative field inventory per Info.
 - `Tools/Migration/mapping/*.json` → per-entity field classifications from the 34-agent workflow (committed).
@@ -141,10 +152,12 @@ An enabler Info additionally carries (NO prereqs):
 - `docs/dev/plans/cross-entity-inversion-blueprint.md` → cross-entity reference inventory (committed).
 
 ## Git state (branch `buildings-json`)
+
 - **Committed:** mapping files, design docs, consolidated DB (`186c2ed5`), unit-fix (`bc873817`).
 - **Uncommitted scratch:** latest `engine.py` refinements + loose plural DB + handicap-skip. No need to commit.
 
 ## First moves next session
+
 1. Fresh context; read this doc only.
 2. Lock the base skeleton (Q1).
 3. Settle `modifiers` end-to-end — including the properties fold and the relation qualifier (Q4).

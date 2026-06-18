@@ -3,6 +3,16 @@
  "description": "TXT_KEY_BUILDING_MAGINOT_LINE",
  "civilopedia": "TXT_KEY_BUILDING_MAGINOT_LINE_PEDIA",
  "help": "TXT_KEY_BUILDING_MAGINOT_LINE_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRENCH_WARFARE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

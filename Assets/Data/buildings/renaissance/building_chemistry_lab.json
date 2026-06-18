@@ -35,6 +35,10 @@
     {
      "type": "BUILDING_UNIVERSITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CHEMISTRY",
+     "scope": "team"
     }
    ]
   }

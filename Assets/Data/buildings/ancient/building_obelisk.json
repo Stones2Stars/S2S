@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_OBELISK_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_ORNAMENTATION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

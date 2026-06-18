@@ -1,0 +1,15 @@
+⛔ POST-COMPACTION RELOAD — do this before any further action.
+Project rules may have been summarized away by compaction. FIRST:
+
+1. RE-READ now: AGENTS.md, Sources/AGENTS.md, and the touched subsystem's docs/dev/ notes.
+2. Non-negotiables that hold no matter what:
+   • .vcxproj/.sln are DEAD for build facts. Build truth = Sources/fbuild.bff.
+     Toolchain = MSVC 7.1 (VC++ Toolkit 2003), C++03, 32-bit/x86, Python 2.4, Boost 1.32/1.55.
+     No C++11+ — no auto, lambdas, range-for, nullptr, override.
+   • Edit the WORKING TREE only. No commit/branch/switch/push/PR unless explicitly asked or
+     tied to an active GitHub issue. NEVER switch branches mid-build. Verify branch before any commit.
+   • #428 migration is STRICTLY SERIAL: one info at a time; owner inspects + approves the JSON
+     before EVERY commit; ASK before any new mechanic/token/shape and WAIT.
+   • Every owner ruling → written into the repo docs (AGENTS.md / docs/dev) in the SAME change.
+   • Trust but verify EVERY claim (the owner's, your memory's, a doc line) against ground truth.
+3. AGENTS.md is authoritative; this file is only a reload reminder, not a second source of truth.

@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_AUGMENTED_EQUIPMENT_CENTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_AUGMENTED_REALITY",
+     "scope": "team"
     }
    ],
    "any": [

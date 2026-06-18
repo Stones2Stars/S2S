@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_ROBOTICS_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_3D_PRINTING",
+     "scope": "team"
     }
    ]
   }

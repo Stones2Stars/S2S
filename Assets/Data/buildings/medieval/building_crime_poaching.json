@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_POACHING",
  "description": "TXT_KEY_BUILDING_CRIME_POACHING",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_POACHING_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FEUDALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "percent": -3

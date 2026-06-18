@@ -21,6 +21,10 @@
      "type": "BUILDING_PRESENCE_OF_METAL",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_SOFT_HAMMER_PERCUSSION",
+     "scope": "team"
     }
    ]
   }

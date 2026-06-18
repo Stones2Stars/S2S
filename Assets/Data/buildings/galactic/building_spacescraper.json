@@ -26,6 +26,10 @@
     {
      "type": "BUILDING_STRATOSPHERIC_TOWER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ATOMIC_SCALE_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

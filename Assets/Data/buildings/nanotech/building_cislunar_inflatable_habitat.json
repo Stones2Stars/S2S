@@ -2,6 +2,16 @@
  "type": "BUILDING_CISLUNAR_INFLATABLE_HABITAT",
  "description": "TXT_KEY_BUILDING_CISLUNAR_INFLATABLE_HABITAT",
  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_INFLATABLE_HABITAT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 4

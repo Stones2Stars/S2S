@@ -9,6 +9,10 @@
      "type": "BONUS_BRICKS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MILITARY_TRAINING",
+     "scope": "team"
     }
    ]
   }

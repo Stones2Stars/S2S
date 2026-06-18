@@ -2,6 +2,16 @@
  "type": "BUILDING_ANCIENT_WAY_OF_THE_FIST",
  "description": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_FIST",
  "civilopedia": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_FIST_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMMUNITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

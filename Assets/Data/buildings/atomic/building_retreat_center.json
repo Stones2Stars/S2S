@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_MODERN_OFFICES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_POSTMODERNISM",
+     "scope": "team"
     }
    ]
   }

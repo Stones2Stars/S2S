@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_EFFECT_GPS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_WEARABLE_COMPUTERS",
+     "scope": "team"
     }
    ],
    "any": [

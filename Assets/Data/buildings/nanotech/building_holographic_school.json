@@ -43,6 +43,10 @@
     {
      "type": "BUILDING_MEGATOWER_EDUCATION_LEVEL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HOLOGRAPHICS",
+     "scope": "team"
     }
    ]
   }

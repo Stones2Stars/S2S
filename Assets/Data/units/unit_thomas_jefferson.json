@@ -9,6 +9,10 @@
      "type": "BONUS_AMERICAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_REPRESENTATIVE_DEMOCRACY",
+     "scope": "team"
     }
    ]
   }

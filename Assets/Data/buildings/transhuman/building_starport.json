@@ -21,6 +21,16 @@
    "UNIT_TRANSHUMAN_WORK_CREW"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASTROGATION_CONSTELLATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "flat": [

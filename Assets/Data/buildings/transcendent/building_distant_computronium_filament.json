@@ -9,6 +9,16 @@
    "BUILDING_DISTANT_INFINITE_SPEED_TACHYON_GENERATOR"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HORIZON_BREAKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "flat": 25

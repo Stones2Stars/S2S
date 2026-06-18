@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_INTUITIVE_ALGORITHMS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NANOELECTRONICS",
+     "scope": "team"
     }
    ],
    "any": [

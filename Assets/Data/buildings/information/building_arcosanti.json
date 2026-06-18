@@ -9,6 +9,10 @@
      "type": "BONUS_BRONZE_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_RENEWABLE_ENERGY",
+     "scope": "team"
     }
    ],
    "any": [

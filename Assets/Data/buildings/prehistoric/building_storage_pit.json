@@ -55,6 +55,16 @@
    "BUILDING_GRANARY"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GATHERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "foodKept": {
   "city": {
    "percent": 5

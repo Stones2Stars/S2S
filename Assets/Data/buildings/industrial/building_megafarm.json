@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_MEGAFARM_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_AGRICULTURAL_ENGINEERING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

@@ -2,6 +2,16 @@
  "type": "UNIT_SPIKED_CLUBMAN",
  "description": "TXT_KEY_UNIT_SPIKED_CLUBMAN",
  "civilopedia": "TXT_KEY_UNIT_SPIKED_CLUBMAN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SHARPENING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "buildRate": {
   "self": {
    "percent": [

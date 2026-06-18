@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_ATHLETIC_MEGACOMPLEX",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TRANSHUMANISM",
+     "scope": "team"
     }
    ],
    "any": [

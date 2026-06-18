@@ -22,6 +22,10 @@
     {
      "type": "BUILDING_FOLKLORE_E_SEA",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CEREMONIAL_BURIAL",
+     "scope": "team"
     }
    ],
    "noneOf": [

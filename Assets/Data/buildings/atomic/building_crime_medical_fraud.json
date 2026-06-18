@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_MEDICAL_FRAUD",
  "description": "TXT_KEY_BUILDING_CRIME_MEDICAL_FRAUD",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_MEDICAL_FRAUD_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MODERN_HEALTH_CARE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -10,

@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_MINE_IRON",
      "scope": "city"
+    },
+    {
+     "type": "TECH_IRON_WORKING",
+     "scope": "team"
     }
    ]
   }

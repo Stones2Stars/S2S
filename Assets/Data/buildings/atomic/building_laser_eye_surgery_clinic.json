@@ -15,7 +15,15 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "HAS_POWER"
+    "HAS_POWER",
+    {
+     "type": "TECH_LASER",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MODERN_HEALTH_CARE",
+     "scope": "team"
+    }
    ],
    "any": [
     [

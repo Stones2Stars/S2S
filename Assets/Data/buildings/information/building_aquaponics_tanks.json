@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_NUCLEIC_ACID_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_INDUSTRIAL_ECOLOGY",
+     "scope": "team"
     }
    ]
   }

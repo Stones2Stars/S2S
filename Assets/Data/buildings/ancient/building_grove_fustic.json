@@ -20,6 +20,10 @@
      "type": "BONUS_INDIGO",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "TECH_ORCHARDS",
+     "scope": "team"
     }
    ],
    "any": [

@@ -9,6 +9,10 @@
      "type": "BONUS_ZENU",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_ENGINEERING",
+     "scope": "team"
     }
    ],
    "any": [

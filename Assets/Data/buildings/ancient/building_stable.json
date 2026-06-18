@@ -31,6 +31,10 @@
      "type": "BONUS_SADDLES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_ANIMAL_RIDING",
+     "scope": "team"
     }
    ],
    "any": [

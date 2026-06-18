@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_UNDERWORLD_GODDESS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SPIRITUAL_REALMS",
+     "scope": "team"
     }
    ]
   }

@@ -32,6 +32,10 @@
     {
      "type": "BUILDING_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+     "scope": "team"
     }
    ],
    "any": [

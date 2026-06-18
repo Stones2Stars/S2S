@@ -7,6 +7,16 @@
    "BUILDING_DEEP_SPACE_SIMULATED_WORLD"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMPREHENSIVE_CYBERNETICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_EFFECT_NEUROIMPLANT_EXPORTER"

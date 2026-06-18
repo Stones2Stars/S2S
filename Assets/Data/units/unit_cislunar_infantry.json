@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_CISLUNAR_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ELECTRIC_ARC_WEAPONRY",
+     "scope": "team"
     }
    ]
   }

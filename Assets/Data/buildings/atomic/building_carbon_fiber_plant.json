@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_MANUFACTURING_PLANT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COMPOSITES",
+     "scope": "team"
     }
    ]
   }

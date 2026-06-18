@@ -7,6 +7,16 @@
    "BUILDING_DISTANT_SPACE_WHALING_GUILD"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HORIZON_BREAKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 12

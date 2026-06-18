@@ -19,6 +19,10 @@
      "type": "BONUS_PELTS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_SKINNING",
+     "scope": "team"
     }
    ]
   }

@@ -25,6 +25,10 @@
     {
      "type": "BUILDING_CYBERNETIC_ORGAN_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_LIFE",
+     "scope": "team"
     }
    ]
   }

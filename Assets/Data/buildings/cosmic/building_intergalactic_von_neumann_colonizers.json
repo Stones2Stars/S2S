@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_INTERGALACTIC_FUSION_PLANTS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GALACTIC_ECOLOGY",
+     "scope": "team"
     }
    ]
   }

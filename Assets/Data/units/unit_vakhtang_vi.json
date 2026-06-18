@@ -9,6 +9,10 @@
      "type": "BONUS_GEORGIAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MERCANTILISM",
+     "scope": "team"
     }
    ]
   }

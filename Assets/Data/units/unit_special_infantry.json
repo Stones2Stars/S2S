@@ -2,6 +2,16 @@
  "type": "UNIT_SPECIAL_INFANTRY",
  "description": "TXT_KEY_UNIT_SPECIAL_INFANTRY",
  "civilopedia": "TXT_KEY_UNIT_SPECIAL_INFANTRY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INVISIBILITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "air": {
   "unit": {
    "intercept": {

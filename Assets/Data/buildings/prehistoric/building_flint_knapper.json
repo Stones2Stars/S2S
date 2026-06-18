@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_FLINT_KNAPPER_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_FLINT_KNAPPING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

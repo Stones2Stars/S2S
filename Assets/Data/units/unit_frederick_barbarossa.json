@@ -9,6 +9,10 @@
      "type": "BONUS_GERMAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_NATIONALISM",
+     "scope": "team"
     }
    ]
   }

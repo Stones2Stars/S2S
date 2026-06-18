@@ -8,6 +8,14 @@
     {
      "type": "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TACHYON_COMMUNICATIONS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_STABLE_TIME_LOOPS",
+     "scope": "team"
     }
    ]
   }

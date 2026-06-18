@@ -32,6 +32,10 @@
     {
      "type": "BUILDING_SPACE_COLONY_MARTIAN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
+     "scope": "team"
     }
    ],
    "any": [

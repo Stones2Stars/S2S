@@ -14,6 +14,14 @@
      "type": "BUILDING_RADIO_TELESCOPE",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_RADIO_ASTRONOMY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_EARLY_COMPUTING",
+     "scope": "team"
     }
    ]
   }

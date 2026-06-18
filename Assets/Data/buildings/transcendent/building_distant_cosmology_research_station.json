@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_DISTANT_COMPUTRONIUM_FILAMENT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_EXPERIMENTAL_COSMOLOGY",
+     "scope": "team"
     }
    ]
   }

@@ -21,6 +21,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_LUNAR_MANUFACTURING",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_CEMENT",
      "scope": "city",
      "connection": "trade|vicinity"

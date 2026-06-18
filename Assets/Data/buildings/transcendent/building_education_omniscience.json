@@ -18,6 +18,16 @@
    "BUILDING_EDUCATION_WUNDERKIND"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRANSCENDENT_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "percent": 65

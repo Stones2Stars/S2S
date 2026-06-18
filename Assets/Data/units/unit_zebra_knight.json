@@ -4,6 +4,16 @@
  "civilopedia": "TXT_KEY_UNIT_KNIGHT_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_ARMORED_CAVALRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEGAFAUNA_DOMESTICATION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

@@ -7,6 +7,16 @@
    "UNIT_SLEEPER"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_POLITICAL_PHILOSOPHY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "empire": 1
  },

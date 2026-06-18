@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_FIELD_GENERATOR",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ALPHA_POINT",
+     "scope": "team"
     }
    ]
   }

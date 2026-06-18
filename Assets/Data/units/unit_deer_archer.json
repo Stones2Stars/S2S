@@ -4,6 +4,16 @@
  "civilopedia": "TXT_KEY_UNIT_DEER_ARCHER_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MOUNTED_ARCHERY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEGAFAUNA_DOMESTICATION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

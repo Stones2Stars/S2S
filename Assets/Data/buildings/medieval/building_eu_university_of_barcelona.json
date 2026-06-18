@@ -27,6 +27,10 @@
      "type": "BUILDING_ANATOMY_LAB",
      "scope": "empire",
      "min": 4
+    },
+    {
+     "type": "TECH_ANATOMY",
+     "scope": "team"
     }
    ]
   }

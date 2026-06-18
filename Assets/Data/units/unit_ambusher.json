@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_POISON_CRAFTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NOCTURNALISM",
+     "scope": "team"
     }
    ]
   }

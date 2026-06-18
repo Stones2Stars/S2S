@@ -2,6 +2,16 @@
  "type": "UNIT_NOBLE",
  "description": "TXT_KEY_UNIT_NOBLE",
  "civilopedia": "TXT_KEY_UNIT_NOBLE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ARISTOCRACY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "empire": 1
  },

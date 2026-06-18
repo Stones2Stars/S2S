@@ -30,6 +30,10 @@
      "type": "BONUS_TIRES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MOTORIZED_TRANSPORTATION",
+     "scope": "team"
     }
    ],
    "any": [

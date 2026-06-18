@@ -15,6 +15,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MACHINERY",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

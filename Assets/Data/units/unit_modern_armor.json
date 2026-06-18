@@ -11,6 +11,14 @@
      "connection": "trade|vicinity"
     },
     {
+     "type": "TECH_ROBOTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COMPOSITES",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_ALUMINUM_WARES",
      "scope": "city",
      "connection": "trade|vicinity"

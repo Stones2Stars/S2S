@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_UNIVERSITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CLOUD_COMPUTING",
+     "scope": "team"
     }
    ]
   }

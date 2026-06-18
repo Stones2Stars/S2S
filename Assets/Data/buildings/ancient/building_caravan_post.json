@@ -18,6 +18,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_TRADE",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

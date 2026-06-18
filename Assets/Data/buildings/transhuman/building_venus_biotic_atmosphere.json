@@ -26,6 +26,10 @@
      "type": "BUILDING_LIFE_SULFURIC_ACID",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_GAIA_ECOLOGY",
+     "scope": "team"
     }
    ]
   }

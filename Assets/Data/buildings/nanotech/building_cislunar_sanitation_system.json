@@ -13,6 +13,14 @@
     {
      "type": "BUILDING_CISLUNAR_SOLAR_MONITOR",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PROTOTYPED_PATHOGENS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+     "scope": "team"
     }
    ]
   }

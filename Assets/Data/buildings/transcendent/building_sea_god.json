@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_OCEAN_ARCOLOGY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DEITIES",
+     "scope": "team"
     }
    ]
   }

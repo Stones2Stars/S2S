@@ -19,6 +19,14 @@
     {
      "type": "BUILDING_INTERGALACTIC_COMMAND_CENTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CULTURAL_LONGEVITY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INTERGALACTIC_COLONIZATION",
+     "scope": "team"
     }
    ]
   }

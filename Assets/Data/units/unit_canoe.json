@@ -13,6 +13,10 @@
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 5
+    },
+    {
+     "type": "TECH_BOAT_BUILDING",
+     "scope": "team"
     }
    ]
   }

@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_URANIAN_LUNAR_MAGNETIC_FIELD",
      "scope": "city"
+    },
+    {
+     "type": "TECH_LUNAR_TERRAFORMING",
+     "scope": "team"
     }
    ],
    "any": [

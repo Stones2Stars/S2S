@@ -23,6 +23,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_KUIPER_BELT_EXPLORATION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

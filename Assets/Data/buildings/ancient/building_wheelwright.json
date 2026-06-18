@@ -23,6 +23,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_THE_WHEEL",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

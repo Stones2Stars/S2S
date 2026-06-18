@@ -19,6 +19,10 @@
      "type": "BONUS_BANANA",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "TECH_ORCHARDS",
+     "scope": "team"
     }
    ]
   }

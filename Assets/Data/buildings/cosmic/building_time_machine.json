@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_ALEPH_ASSEMBLER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_STABLE_TIME_LOOPS",
+     "scope": "team"
     }
    ]
   }

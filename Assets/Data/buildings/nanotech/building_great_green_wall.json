@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_STATE_PARK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ENVIRONMENTAL_ECONOMICS",
+     "scope": "team"
     }
    ],
    "any": [

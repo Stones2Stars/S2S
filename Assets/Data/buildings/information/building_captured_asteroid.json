@@ -15,6 +15,10 @@
      "type": "BUILDING_COMMERCIAL_SPACEPORT",
      "scope": "empire",
      "min": 3
+    },
+    {
+     "type": "TECH_ASTEROID_MINING",
+     "scope": "team"
     }
    ],
    "any": [

@@ -12,6 +12,16 @@
    "BUILDING_INDUSTRIAL_FARMS"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BONE_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "flat": 1

@@ -12,6 +12,16 @@
    "UNIT_WAR_RHINO"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HERITAGE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_HERITAGE_RHINOCEROS"

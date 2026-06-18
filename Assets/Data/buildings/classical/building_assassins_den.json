@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CODE_OF_LAWS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

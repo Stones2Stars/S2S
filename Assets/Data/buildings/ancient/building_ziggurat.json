@@ -4,6 +4,16 @@
  "civilopedia": "TXT_KEY_BUILDING_ZIGGURAT_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MASONRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_POLYTHEISM",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

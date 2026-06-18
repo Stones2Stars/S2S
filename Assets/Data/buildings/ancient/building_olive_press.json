@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_ORCHARD_OLIVE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FERMENTATION",
+     "scope": "team"
     }
    ],
    "any": [

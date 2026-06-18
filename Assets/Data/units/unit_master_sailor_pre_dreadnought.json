@@ -14,6 +14,14 @@
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 10
+    },
+    {
+     "type": "TECH_ARTILLERY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COMBUSTION",
+     "scope": "team"
     }
    ],
    "any": [
@@ -67,6 +75,7 @@
   "upkeep": 2
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 4,
   "militaryWorth": 117,
   "xpValueAttack": 3,

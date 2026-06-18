@@ -25,6 +25,10 @@
     {
      "type": "BUILDING_LABORATORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_URBAN_CULTURE",
+     "scope": "team"
     }
    ]
   }

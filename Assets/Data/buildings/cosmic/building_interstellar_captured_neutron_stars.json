@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_SHKADOV_THRUSTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_INDUCED_SUPERNOVA",
+     "scope": "team"
     }
    ],
    "any": [

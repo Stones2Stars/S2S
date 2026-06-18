@@ -11,6 +11,14 @@
   "build": {
    "all": [
     {
+     "type": "TECH_MACHINE_TOOLS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_JOURNALISM",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_PARTS",
      "scope": "city",
      "connection": "trade|vicinity"

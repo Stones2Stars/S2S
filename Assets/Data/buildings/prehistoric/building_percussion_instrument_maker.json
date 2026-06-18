@@ -9,6 +9,16 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_PREHISTORIC_MUSIC",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TOOL_MAKING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

@@ -23,7 +23,11 @@
   "build": {
    "all": [
     "IS_WATER",
-    "HAS_RIVER"
+    "HAS_RIVER",
+    {
+     "type": "TECH_BOAT_BUILDING",
+     "scope": "team"
+    }
    ],
    "any": [
     [

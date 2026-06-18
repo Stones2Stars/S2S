@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_LIBRARY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_THEOLOGY",
+     "scope": "team"
     }
    ]
   },

@@ -7,6 +7,16 @@
    "BUILDING_GAMBLING_HALL"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BOARD_GAMES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "percent": 1

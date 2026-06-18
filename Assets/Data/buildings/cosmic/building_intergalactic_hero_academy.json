@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERGALACTIC_COMMAND_CENTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NOOGENESIS",
+     "scope": "team"
     }
    ]
   }

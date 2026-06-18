@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_EFFECT_SOLAR_ECONOMY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ASTROENGINEERING",
+     "scope": "team"
     }
    ]
   }

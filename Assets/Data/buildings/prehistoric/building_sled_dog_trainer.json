@@ -14,6 +14,10 @@
      "latitude": {
       "min": 50
      }
+    },
+    {
+     "type": "TECH_CANINE_DOMESTICATION",
+     "scope": "team"
     }
    ],
    "any": [

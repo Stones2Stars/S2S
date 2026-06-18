@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_SHIELDING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

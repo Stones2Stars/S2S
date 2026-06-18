@@ -44,6 +44,10 @@
      "type": "BUILDING_INTERGALACTIC_NEUTRONIUM_FOUNDRY",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_REALITY_REPROGRAMMING",
+     "scope": "team"
     }
    ]
   }

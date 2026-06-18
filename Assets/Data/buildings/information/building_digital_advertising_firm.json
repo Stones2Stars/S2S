@@ -23,6 +23,14 @@
     {
      "type": "BUILDING_DIGITAL_OFFICES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MACHINE_LEARNING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ONLINE_COMMUNITY",
+     "scope": "team"
     }
    ]
   }

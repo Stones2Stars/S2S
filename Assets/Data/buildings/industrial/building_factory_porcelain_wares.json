@@ -25,7 +25,11 @@
      "scope": "city",
      "connection": "vicinity"
     },
-    "HAS_POWER"
+    "HAS_POWER",
+    {
+     "type": "TECH_ASSEMBLY_LINE",
+     "scope": "team"
+    }
    ],
    "any": [
     [

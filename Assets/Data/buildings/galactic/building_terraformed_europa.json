@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_EUROPA_SF6_GENERATOR",
      "scope": "city"
+    },
+    {
+     "type": "TECH_LUNAR_TERRAFORMING",
+     "scope": "team"
     }
    ],
    "any": [

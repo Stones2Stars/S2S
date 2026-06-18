@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_DEEP_SEA_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DEEP_SEA_EXPLORATION",
+     "scope": "team"
     }
    ],
    "any": [

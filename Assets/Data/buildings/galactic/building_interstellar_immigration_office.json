@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_STARPORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ADVANCED_SEEDSHIPS",
+     "scope": "team"
     }
    ]
   }

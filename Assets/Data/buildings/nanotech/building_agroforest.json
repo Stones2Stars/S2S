@@ -90,6 +90,16 @@
    "BUILDING_WEAVING_SPIDER_SANCTUARY"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ENVIRONMENTAL_ECONOMICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 60

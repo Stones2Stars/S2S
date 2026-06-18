@@ -9,6 +9,10 @@
      "type": "BONUS_NABATEANS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_WARRANTS_AND_DECREES",
+     "scope": "team"
     }
    ],
    "any": [

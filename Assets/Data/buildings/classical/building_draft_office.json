@@ -3,6 +3,14 @@
  "description": "TXT_KEY_BUILDING_DRAFT_OFFICE",
  "civilopedia": "TXT_KEY_BUILDING_DRAFT_OFFICE_PEDIA",
  "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MILITARY_TRAINING",
+     "scope": "team"
+    }
+   ]
+  },
   "operate": {
    "all": [
     {

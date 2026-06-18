@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_FOLKLORE_PEACOCK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_POULTRY_DOMESTICATION",
+     "scope": "team"
     }
    ],
    "any": [

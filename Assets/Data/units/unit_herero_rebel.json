@@ -11,6 +11,10 @@
      "connection": "trade|vicinity"
     },
     {
+     "type": "TECH_RIFLING",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_FIREARMS",
      "scope": "city",
      "connection": "trade|vicinity"

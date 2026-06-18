@@ -26,6 +26,10 @@
      "type": "BONUS_AUTOMOBILES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_HIGHWAY_SYSTEMS",
+     "scope": "team"
     }
    ],
    "any": [

@@ -29,6 +29,18 @@
     {
      "type": "VICTORY_SCIENTIFIC",
      "scope": "world"
+    },
+    {
+     "type": "TECH_ASCENSION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ALPHA_POINT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SIMULATION_AWARENESS",
+     "scope": "team"
     }
    ],
    "any": [

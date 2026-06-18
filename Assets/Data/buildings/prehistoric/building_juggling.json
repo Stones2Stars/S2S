@@ -7,6 +7,16 @@
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GAMES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": 1

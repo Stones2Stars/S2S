@@ -21,6 +21,10 @@
     {
      "type": "BUILDING_JADE_CARVER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BARTER",
+     "scope": "team"
     }
    ]
   }

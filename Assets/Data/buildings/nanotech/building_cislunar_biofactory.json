@@ -22,6 +22,10 @@
     {
      "type": "BUILDING_CISLUNAR_AGRICULTURAL_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DYSTOPIA_PATHOGENS",
+     "scope": "team"
     }
    ]
   }

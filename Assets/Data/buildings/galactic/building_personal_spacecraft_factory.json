@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_BETA_ASSEMBLER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FUSION_SPACECRAFT",
+     "scope": "team"
     }
    ]
   }

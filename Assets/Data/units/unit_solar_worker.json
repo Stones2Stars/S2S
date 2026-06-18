@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_DEEP_SPACE_HOUSING_WORKERS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ASTROGATION_CONSTELLATION",
+     "scope": "team"
     }
    ]
   }

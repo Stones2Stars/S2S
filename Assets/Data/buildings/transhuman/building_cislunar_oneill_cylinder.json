@@ -36,6 +36,10 @@
     {
      "type": "BUILDING_EFFECT_CISLUNAR_ECONOMY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ORBITAL_MEGASTRUCTURES",
+     "scope": "team"
     }
    ]
   }

@@ -7,6 +7,16 @@
    "BUILDING_INTERGALACTIC_STARPORT"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SPACE_CREASING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "flat": 30

@@ -2,6 +2,16 @@
  "type": "BUILDING_EFFECT_DISNEYLAND",
  "description": "TXT_KEY_BUILDING_EFFECT_DISNEYLAND",
  "civilopedia": "TXT_KEY_BUILDING_EFFECT_DISNEYLAND_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ANIMATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "happiness": {
   "city": {
    "flat": 1

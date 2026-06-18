@@ -22,6 +22,10 @@
      "type": "BUILDING_JADE_CARVER",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_TRADE",
+     "scope": "team"
     }
    ],
    "any": [

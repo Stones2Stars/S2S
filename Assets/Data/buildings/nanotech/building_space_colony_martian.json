@@ -20,6 +20,16 @@
    "BUILDING_MARTIAN_WATER_EXTRACTION"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_COLONIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 1

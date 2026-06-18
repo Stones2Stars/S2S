@@ -52,6 +52,10 @@
     {
      "type": "BUILDING_HELIUM_3_IMPORTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+     "scope": "team"
     }
    ]
   }

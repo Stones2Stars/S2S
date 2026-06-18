@@ -9,6 +9,10 @@
      "type": "BONUS_INDIAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_AESTHETICS",
+     "scope": "team"
     }
    ]
   }

@@ -9,6 +9,10 @@
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 5
+    },
+    {
+     "type": "TECH_SAILING",
+     "scope": "team"
     }
    ]
   }
@@ -43,6 +47,7 @@
   "upkeep": 1
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 2,
   "militaryWorth": 3,
   "xpValueAttack": 2,

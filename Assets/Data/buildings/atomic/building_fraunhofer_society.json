@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_LABORATORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MANUFACTURING",
+     "scope": "team"
     }
    ]
   }

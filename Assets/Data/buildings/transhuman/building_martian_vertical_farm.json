@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_MARTIAN_METROPOLIS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BOTANICAL_ALCHEMY",
+     "scope": "team"
     }
    ]
   }

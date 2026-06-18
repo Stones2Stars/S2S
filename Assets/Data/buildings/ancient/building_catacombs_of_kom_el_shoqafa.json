@@ -2,6 +2,16 @@
  "type": "BUILDING_CATACOMBS_OF_KOM_EL_SHOQAFA",
  "description": "TXT_KEY_BUILDING_CATACOMBS_OF_KOM_EL_SHOQAFA",
  "civilopedia": "TXT_KEY_BUILDING_CATACOMBS_OF_KOM_EL_SHOQAFA_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MASONRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

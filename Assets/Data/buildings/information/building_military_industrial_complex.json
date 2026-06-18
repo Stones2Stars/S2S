@@ -46,6 +46,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_MILITARY_ROBOTICS",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_PLASTIC",
      "scope": "city",
      "connection": "trade|vicinity"

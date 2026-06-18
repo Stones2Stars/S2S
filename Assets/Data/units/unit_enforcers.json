@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_UNIT_ENFORCERS_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CONDUCT",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

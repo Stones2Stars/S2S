@@ -2,6 +2,16 @@
  "type": "BUILDING_EFFECT_TERRAFORMED_VENUS",
  "description": "TXT_KEY_BUILDING_EFFECT_TERRAFORMED_VENUS",
  "civilopedia": "TXT_KEY_BUILDING_EFFECT_TERRAFORMED_VENUS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_TERRAFORMING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 20

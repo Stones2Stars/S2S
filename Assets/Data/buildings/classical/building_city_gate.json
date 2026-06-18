@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_CITY_GATEHOUSE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MACHINERY",
+     "scope": "team"
     }
    ]
   }

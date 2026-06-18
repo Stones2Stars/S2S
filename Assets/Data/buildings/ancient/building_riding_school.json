@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_ANIMAL_RIDING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

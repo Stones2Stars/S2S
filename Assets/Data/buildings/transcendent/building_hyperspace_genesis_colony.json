@@ -9,6 +9,10 @@
      "type": "BUILDING_LIFE_HYPERSPACE",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY",
+     "scope": "team"
     }
    ]
   }

@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_TV_STUDIO",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CLOUD_COMPUTING",
+     "scope": "team"
     }
    ]
   }

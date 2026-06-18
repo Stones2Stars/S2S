@@ -9,6 +9,10 @@
      "type": "BONUS_POLYNESIAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_OPTICS",
+     "scope": "team"
     }
    ]
   }

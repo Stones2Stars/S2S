@@ -19,6 +19,10 @@
      "latitude": {
       "max": 80
      }
+    },
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
     }
    ],
    "any": [

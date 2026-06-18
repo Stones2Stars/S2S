@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_VIBRO_WIND_GENERATORS_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MICROGENERATORS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

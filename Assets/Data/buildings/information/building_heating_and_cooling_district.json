@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_HEATING_AND_COOLING_DISTRICT_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_INDUSTRIAL_ECOLOGY",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

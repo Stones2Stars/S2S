@@ -58,6 +58,16 @@
    "BUILDING_SALT_QUARRY"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MINING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "flat": [

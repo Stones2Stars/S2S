@@ -14,6 +14,14 @@
     {
      "type": "BUILDING_CALLISTO_NITROGEN_GENERATOR",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_APOCALYPTIC_PATHOGENS",
+     "scope": "team"
     }
    ],
    "any": [

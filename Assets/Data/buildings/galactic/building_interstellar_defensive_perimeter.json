@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_ARTIFICIAL_MOON",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ASTROIMPERIALISM",
+     "scope": "team"
     }
    ]
   }

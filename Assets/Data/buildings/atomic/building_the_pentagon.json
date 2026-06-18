@@ -14,6 +14,10 @@
      "type": "BUILDING_MILITARY_BASE",
      "scope": "empire",
      "min": 4
+    },
+    {
+     "type": "TECH_LOGISTICS",
+     "scope": "team"
     }
    ]
   }

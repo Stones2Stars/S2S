@@ -13,6 +13,16 @@
    "BUILDING_INDUSTRIAL_FARMS"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ANIMAL_HUSBANDRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 3

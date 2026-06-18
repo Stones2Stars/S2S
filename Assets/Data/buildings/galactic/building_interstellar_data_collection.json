@@ -9,6 +9,16 @@
    "BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INTERSTELLAR_COMMUNICATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -10

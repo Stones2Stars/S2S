@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_ADVANCED_SHIELDING",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION",
+     "scope": "team"
     }
    ]
   }

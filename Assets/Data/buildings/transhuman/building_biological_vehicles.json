@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_GAMMA_ASSEMBLER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NUTRACEUTICAL_ANIMALS",
+     "scope": "team"
     }
    ]
   }

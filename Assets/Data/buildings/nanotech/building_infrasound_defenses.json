@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_SECURITY_CENTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ACOUSTIC_WEAPONRY",
+     "scope": "team"
     }
    ]
   }

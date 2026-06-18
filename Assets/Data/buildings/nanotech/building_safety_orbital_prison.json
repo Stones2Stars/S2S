@@ -13,6 +13,16 @@
    "BUILDING_SAFETY_MAXIMUM_SECURITY_PRISON"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "espionage": {
   "city": {
    "percent": 125

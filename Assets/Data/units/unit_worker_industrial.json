@@ -2,6 +2,16 @@
  "type": "UNIT_WORKER_INDUSTRIAL",
  "description": "TXT_KEY_UNIT_WORKER_INDUSTRIAL",
  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NITROGLYCERIN",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "capabilities": {
   "food": true,
   "workerTrade": true

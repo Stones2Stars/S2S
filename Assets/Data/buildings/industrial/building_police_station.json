@@ -70,6 +70,10 @@
      "connection": "trade|vicinity"
     },
     {
+     "type": "TECH_CRIMINOLOGY",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_FIREARMS",
      "scope": "city",
      "connection": "trade|vicinity"

@@ -11,6 +11,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_SPECIES_AMALGAMATION",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_HUMAN_MOD_WINGS",
      "scope": "city",
      "connection": "trade|vicinity"

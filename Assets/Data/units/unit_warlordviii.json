@@ -2,6 +2,16 @@
  "type": "UNIT_WARLORDVIII",
  "description": "TXT_KEY_UNIT_WARLORDVIII",
  "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GALACTIC_WARFARE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "empire": 8
  },

@@ -34,6 +34,10 @@
     {
      "type": "BUILDING_POWER_LINES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SEMICONDUCTORS",
+     "scope": "team"
     }
    ],
    "any": [

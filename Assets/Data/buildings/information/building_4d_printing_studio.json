@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_4D_PRINTING_STUDIO_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MICROMECHANICS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

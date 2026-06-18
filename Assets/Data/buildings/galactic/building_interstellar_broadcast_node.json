@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_NETWORK_NODE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_INTERSTELLAR_COMMUNICATION",
+     "scope": "team"
     }
    ]
   }

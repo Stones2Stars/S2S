@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_MOVIE_THEATRE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MOTION_PICTURES",
+     "scope": "team"
     }
    ]
   }

@@ -16,6 +16,16 @@
    "BUILDING_EDUCATION_UNAWARE"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GALACTIC_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "percent": -55

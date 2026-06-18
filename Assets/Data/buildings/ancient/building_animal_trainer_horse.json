@@ -117,6 +117,10 @@
      "type": "BONUS_HORSE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_EQUINE_DOMESTICATION",
+     "scope": "team"
     }
    ],
    "any": [

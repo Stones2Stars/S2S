@@ -13,6 +13,10 @@
      "type": "BUILDING_INTERSTELLAR_CARBON_12_13_CRYSTAL",
      "scope": "empire",
      "min": 2
+    },
+    {
+     "type": "TECH_DATA_ARCHIVAL",
+     "scope": "team"
     }
    ]
   }

@@ -35,6 +35,10 @@
      "min": 1
     },
     {
+     "type": "TECH_NUCLEAR_POWER",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_HEAVY_WATER",
      "scope": "city",
      "connection": "trade|vicinity"

@@ -2,6 +2,16 @@
  "type": "BUILDING_YASNAYA_POLYANA",
  "description": "TXT_KEY_BUILDING_YASNAYA_POLYANA",
  "civilopedia": "TXT_KEY_BUILDING_YASNAYA_POLYANA_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LABOR_UNIONS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

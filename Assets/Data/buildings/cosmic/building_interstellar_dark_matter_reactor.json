@@ -15,6 +15,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DARK_MATTER_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

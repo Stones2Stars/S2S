@@ -13,6 +13,14 @@
     {
      "type": "BUILDING_CHARIOT_WORKSHOP",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BRONZE_WORKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CHARIOTRY",
+     "scope": "team"
     }
    ]
   }

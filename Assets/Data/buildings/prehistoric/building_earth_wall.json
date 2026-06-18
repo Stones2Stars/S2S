@@ -12,6 +12,16 @@
    "BUILDING_PALISADE"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEGALITH_CONSTRUCTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -3

@@ -28,6 +28,10 @@
      "type": "BUILDING_CONSTRUCTION_FIRM",
      "scope": "empire",
      "min": 3
+    },
+    {
+     "type": "TECH_GLOBALIZATION",
+     "scope": "team"
     }
    ],
    "any": [

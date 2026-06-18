@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_TRAINING_DOJO",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MARTIAL_ARTS",
+     "scope": "team"
     }
    ]
   }

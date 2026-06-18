@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_MEGATOWER_HOTEL_LEVEL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_WEIGHTLESS_FLIGHT",
+     "scope": "team"
     }
    ]
   }

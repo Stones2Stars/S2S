@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_WATER_PIPES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_THERMODYNAMICS",
+     "scope": "team"
     }
    ]
   }

@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_DISTANT_COSMOPOLIS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TIME_REVERSAL",
+     "scope": "team"
     }
    ],
    "any": [

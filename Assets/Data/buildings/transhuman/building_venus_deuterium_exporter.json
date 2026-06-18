@@ -13,6 +13,14 @@
     {
      "type": "BUILDING_VENUS_HYDROGEN_GENERATOR",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PLANETARY_TRADE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+     "scope": "team"
     }
    ]
   }

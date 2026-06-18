@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_IO_BASE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_THERMAL_NEGATION",
+     "scope": "team"
     }
    ],
    "any": [

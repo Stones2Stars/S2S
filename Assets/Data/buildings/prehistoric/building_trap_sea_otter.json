@@ -20,7 +20,11 @@
      "scope": "city",
      "connection": "vicinity"
     },
-    "IS_WATER"
+    "IS_WATER",
+    {
+     "type": "TECH_TRAPPING",
+     "scope": "team"
+    }
    ],
    "any": [
     [

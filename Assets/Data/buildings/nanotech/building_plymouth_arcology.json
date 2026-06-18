@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_CONTROL_CENTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MEDIA_HIVEMIND",
+     "scope": "team"
     }
    ],
    "any": [

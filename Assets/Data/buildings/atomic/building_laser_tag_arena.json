@@ -15,7 +15,15 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "HAS_POWER"
+    "HAS_POWER",
+    {
+     "type": "TECH_EXTREME_SPORTS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LASER",
+     "scope": "team"
+    }
    ],
    "any": [
     [

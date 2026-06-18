@@ -15,6 +15,16 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_COOKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SHELTER_BUILDING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

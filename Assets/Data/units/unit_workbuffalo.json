@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_ANIMAL_TRAINER_BUFFALO",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PLOUGH",
+     "scope": "team"
     }
    ]
   }

@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_TRANSTELLAR_ARTIFICIAL_GAS_GIANT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DARK_MATTER_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

@@ -35,6 +35,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_COLONY_ARCOLOGY",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_SUPERINTELLIGENT_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"

@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_SPACE_COLONY_MARTIAN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PLANETARY_COLONIZATION",
+     "scope": "team"
     }
    ]
   }

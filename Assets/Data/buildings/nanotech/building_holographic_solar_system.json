@@ -19,6 +19,14 @@
     {
      "type": "BUILDING_DIGITAL_GLOBE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HOLOGRAPHICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_JOVIAN_EXPLORATION",
+     "scope": "team"
     }
    ]
   }

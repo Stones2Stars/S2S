@@ -2,6 +2,16 @@
  "type": "BUILDING_HYPERSPACE_RESEARCH_PROBE",
  "description": "TXT_KEY_BUILDING_HYPERSPACE_RESEARCH_PROBE",
  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_RESEARCH_PROBE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "research": {
   "city": {
    "flat": 100

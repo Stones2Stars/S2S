@@ -9,6 +9,10 @@
      "type": "BONUS_JOMON",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_CANINE_DOMESTICATION",
+     "scope": "team"
     }
    ],
    "any": [

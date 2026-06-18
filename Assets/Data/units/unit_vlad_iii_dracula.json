@@ -9,6 +9,10 @@
      "type": "BONUS_WALLACHIAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_CHIVALRY",
+     "scope": "team"
     }
    ]
   }

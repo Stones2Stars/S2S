@@ -80,6 +80,10 @@
     {
      "type": "BUILDING_MANUFACTURING_PLANT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_RAPID_PROTOTYPING",
+     "scope": "team"
     }
    ]
   }

@@ -23,6 +23,16 @@
    "BUILDING_WORLDVIEW_SLAVERY_ZOROASTRIANISM_II"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EMANCIPATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 3

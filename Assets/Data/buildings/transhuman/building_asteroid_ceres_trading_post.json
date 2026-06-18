@@ -12,6 +12,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_TRADE",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

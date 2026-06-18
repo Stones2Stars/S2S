@@ -16,6 +16,10 @@
     {
      "type": "BUILDING_COMPUTER_NETWORK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MESH_NETWORKS",
+     "scope": "team"
     }
    ]
   }

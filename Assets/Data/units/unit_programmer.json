@@ -9,6 +9,10 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_PERSONAL_COMPUTERS",
+     "scope": "team"
     }
    ],
    "any": [

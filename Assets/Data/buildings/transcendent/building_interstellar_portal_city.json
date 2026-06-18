@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_ECUMENOPOLIS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY",
+     "scope": "team"
     }
    ]
   }

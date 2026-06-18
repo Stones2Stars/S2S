@@ -2,6 +2,16 @@
  "type": "UNIT_SETTLER",
  "description": "TXT_KEY_UNIT_SETTLER",
  "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "capabilities": {
   "food": true,
   "found": true

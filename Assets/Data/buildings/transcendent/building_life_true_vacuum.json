@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_DISTANT_SPACE_WHALING_GUILD",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NONSTANDARD_MATHEMATICS",
+     "scope": "team"
     }
    ]
   }

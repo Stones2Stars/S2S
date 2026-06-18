@@ -8,6 +8,16 @@
    "BUILDING_HYPERSPACE_TOURISM_AGENCY"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRANSDIMENSIONAL_COMMERCE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 10

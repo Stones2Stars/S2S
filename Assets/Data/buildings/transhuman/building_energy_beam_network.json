@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_CISLUNAR_DYSON_HARROP_SATELLITE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PHOTONIC_SATELLITES",
+     "scope": "team"
     }
    ]
   }

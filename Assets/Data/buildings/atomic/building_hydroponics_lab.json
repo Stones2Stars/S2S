@@ -25,6 +25,10 @@
     {
      "type": "BUILDING_WATER_PIPES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HYDROPONICS",
+     "scope": "team"
     }
    ]
   }

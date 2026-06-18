@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_SUBTERRANEAN_CITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SUBTERRANEAN_EXPLORATION",
+     "scope": "team"
     }
    ]
   }

@@ -41,6 +41,10 @@
      "connection": "trade|vicinity"
     },
     {
+     "type": "TECH_ELIXIRS_AND_TONICS",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_DRUGS",
      "scope": "city",
      "connection": "trade|vicinity"

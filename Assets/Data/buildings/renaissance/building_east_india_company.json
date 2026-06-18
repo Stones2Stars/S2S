@@ -2,6 +2,16 @@
  "type": "BUILDING_EAST_INDIA_COMPANY",
  "description": "TXT_KEY_BUILDING_EAST_INDIA_COMPANY",
  "civilopedia": "TXT_KEY_BUILDING_EAST_INDIA_COMPANY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NAVAL_CANNON",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

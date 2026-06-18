@@ -2,6 +2,16 @@
  "type": "BUILDING_LOUVRE_MUSEUM",
  "description": "TXT_KEY_BUILDING_LOUVRE_MUSEUM",
  "civilopedia": "TXT_KEY_BUILDING_LOUVRE_MUSEUM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SCIENTIFIC_METHOD",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

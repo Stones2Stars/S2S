@@ -14,6 +14,10 @@
      "type": "POPULATION",
      "scope": "city",
      "min": 4
+    },
+    {
+     "type": "TECH_AGRICULTURE",
+     "scope": "team"
     }
    ]
   }

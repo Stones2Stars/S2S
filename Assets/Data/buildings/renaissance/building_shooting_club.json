@@ -21,6 +21,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MATCHLOCK",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

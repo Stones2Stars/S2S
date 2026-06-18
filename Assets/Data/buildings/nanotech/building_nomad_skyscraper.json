@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_PEER_TO_PEER_RENTALS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MESH_NETWORKS",
+     "scope": "team"
     }
    ],
    "any": [

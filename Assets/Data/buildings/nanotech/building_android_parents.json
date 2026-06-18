@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_SOCIABLE_ROBOTS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CYBERSOCIAL_INTEGRATION",
+     "scope": "team"
     }
    ]
   }

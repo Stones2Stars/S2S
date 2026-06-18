@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_MASTER_SEA_HUNTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SAILING",
+     "scope": "team"
     }
    ]
   }

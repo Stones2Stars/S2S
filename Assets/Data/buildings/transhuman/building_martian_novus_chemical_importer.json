@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_MARTIAN_CITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PLANETARY_TRADE",
+     "scope": "team"
     }
    ]
   }

@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_BLIMP_ADVERTISING_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MASS_MEDIA",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

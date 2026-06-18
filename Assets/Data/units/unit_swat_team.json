@@ -10,6 +10,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_FORENSICS",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_FIREARMS",
      "scope": "city",
      "connection": "trade|vicinity"

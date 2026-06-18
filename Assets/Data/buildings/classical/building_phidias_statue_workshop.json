@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_PHIDIAS_STATUE_WORKSHOP_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CITY_PLANNING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

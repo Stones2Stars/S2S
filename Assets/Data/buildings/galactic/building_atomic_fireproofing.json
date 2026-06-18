@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_CLAYTRONIC_FIRE_SUPPRESSION",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PICOTECHNOLOGY",
+     "scope": "team"
     }
    ]
   }

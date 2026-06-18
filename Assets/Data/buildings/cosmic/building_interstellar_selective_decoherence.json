@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_SPATIAL_EMULATION_STUDIO",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MACROSCOPIC_SUPERPOSITION",
+     "scope": "team"
     }
    ]
   }

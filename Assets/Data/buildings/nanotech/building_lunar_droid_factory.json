@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_LUNAR_ASSEMBLY_PLANT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ANDROIDS",
+     "scope": "team"
     }
    ],
    "any": [

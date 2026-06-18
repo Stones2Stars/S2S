@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_ELECTROWEAK_MATTER",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

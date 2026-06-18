@@ -43,6 +43,10 @@
     {
      "type": "BUILDING_COMMERCIAL_AIRPORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COMMERCIAL_SPACEFLIGHT",
+     "scope": "team"
     }
    ],
    "any": [

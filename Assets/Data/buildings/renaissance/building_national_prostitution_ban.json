@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_SUPREME_COURT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_JURISPRUDENCE",
+     "scope": "team"
     }
    ]
   }

@@ -20,6 +20,16 @@
    "BUILDING_VIP_CLUB"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LEGALIZED_GAMBLING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -5

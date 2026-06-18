@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_C_L_ASIAN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SPICE_TRADE",
+     "scope": "team"
     }
    ],
    "any": [

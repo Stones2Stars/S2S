@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_DISTANT_PORTAL_TO_DIMENSION_X",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MULTIVERSE_TRAVERSAL",
+     "scope": "team"
     }
    ]
   }

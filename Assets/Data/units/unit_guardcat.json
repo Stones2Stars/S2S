@@ -8,6 +8,14 @@
     {
      "type": "BUILDING_EFFECT_HERITAGE_BIG_CATS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_LEADERSHIP",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEGAFAUNA_DOMESTICATION",
+     "scope": "team"
     }
    ],
    "any": [

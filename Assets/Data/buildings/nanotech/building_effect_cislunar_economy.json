@@ -12,6 +12,16 @@
    "BUILDING_SOLAR_ECONOMY"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LUNAR_TRADE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_EFFECT_CISLUNAR_ECONOMY"

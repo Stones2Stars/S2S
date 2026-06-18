@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_CISLUNAR_AGRICULTURAL_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DESIGNER_MICROBIOLOGY",
+     "scope": "team"
     }
    ]
   }

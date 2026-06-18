@@ -9,6 +9,10 @@
      "type": "BONUS_ORANG_ASLI",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_YEOMANRY",
+     "scope": "team"
     }
    ]
   }

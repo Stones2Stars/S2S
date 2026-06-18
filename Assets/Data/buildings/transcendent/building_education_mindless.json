@@ -18,6 +18,16 @@
    "BUILDING_EDUCATION_UNAWARE"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRANSCENDENT_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "percent": -65

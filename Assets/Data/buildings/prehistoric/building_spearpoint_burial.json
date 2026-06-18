@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_SPEARPOINT_BURIAL_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CEREMONIAL_BURIAL",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

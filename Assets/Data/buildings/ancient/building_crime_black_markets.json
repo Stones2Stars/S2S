@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_BLACK_MARKETS",
  "description": "TXT_KEY_BUILDING_CRIME_BLACK_MARKETS",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_BLACK_MARKETS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRADE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "percent": -10

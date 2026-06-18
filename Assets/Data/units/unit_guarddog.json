@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_GUARD_DOG_TRAINER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_LEADERSHIP",
+     "scope": "team"
     }
    ],
    "any": [

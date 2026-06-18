@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_ISLAMIC_MOSQUE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DIVINE_RIGHT",
+     "scope": "team"
     }
    ]
   },

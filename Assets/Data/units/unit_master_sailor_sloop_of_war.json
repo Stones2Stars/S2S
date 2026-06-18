@@ -9,6 +9,10 @@
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 10
+    },
+    {
+     "type": "TECH_COMPASS",
+     "scope": "team"
     }
    ]
   }
@@ -58,6 +62,7 @@
   "upkeep": 1
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 3,
   "militaryWorth": 10,
   "xpValueAttack": 4,

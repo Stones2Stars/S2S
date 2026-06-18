@@ -7,6 +7,16 @@
    "BUILDING_MODERN_WAREHOUSE"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MASONRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "health": {
   "city": {
    "flat": 1

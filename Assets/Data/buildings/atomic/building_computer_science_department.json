@@ -15,6 +15,10 @@
     {
      "type": "BUILDING_MATHEMATICS_DEPARTMENT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COMPUTER_SCIENCE",
+     "scope": "team"
     }
    ]
   }

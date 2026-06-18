@@ -2,6 +2,16 @@
  "type": "UNIT_PLANETARY_INFANTRY",
  "description": "TXT_KEY_UNIT_PLANETARY_INFANTRY",
  "civilopedia": "TXT_KEY_UNIT_PLANETARY_INFANTRY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_KUIPER_BELT_EXPLORATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "cityDefense": {

@@ -9,6 +9,10 @@
      "type": "BONUS_FIBER_OPTIC_CABLES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_OPTRONICS",
+     "scope": "team"
     }
    ]
   }

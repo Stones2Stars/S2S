@@ -24,6 +24,10 @@
     {
      "type": "BUILDING_SKYSCRAPER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MEDIA_PSYCHOLOGY",
+     "scope": "team"
     }
    ]
   }

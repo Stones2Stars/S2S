@@ -3,6 +3,16 @@
  "description": "TXT_KEY_UNIT_FANATIC",
  "civilopedia": "TXT_KEY_UNIT_FANATIC_PEDIA",
  "help": "TXT_KEY_UNIT_FANATIC_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DIVINE_RIGHT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "capabilities": {
   "pillage": true,
   "stateReligion": true,

@@ -6,6 +6,10 @@
   "build": {
    "all": [
     {
+     "type": "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_HUMAN_MOD_IMMORTAL",
      "scope": "city",
      "connection": "trade|vicinity"

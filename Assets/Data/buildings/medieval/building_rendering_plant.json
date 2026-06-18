@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_SLAUGHTERHOUSE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COMMERCIAL_WHALING",
+     "scope": "team"
     }
    ],
    "any": [

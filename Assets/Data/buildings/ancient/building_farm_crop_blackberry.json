@@ -19,6 +19,10 @@
      "type": "BONUS_GRAPES",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "TECH_IRRIGATION",
+     "scope": "team"
     }
    ],
    "any": [

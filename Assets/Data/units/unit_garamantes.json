@@ -13,6 +13,14 @@
     {
      "type": "BUILDING_MERCENARY_STABLES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BRONZE_WORKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ANIMAL_RIDING",
+     "scope": "team"
     }
    ],
    "any": [

@@ -2,6 +2,16 @@
  "type": "UNIT_WORKBOAT_MODERN",
  "description": "TXT_KEY_UNIT_WORKBOAT_MODERN",
  "civilopedia": "TXT_KEY_UNIT_WORKBOAT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SCREW_PROPELLER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "capabilities": {
   "canMoveImpassable": true,
   "ignoreTerrainCost": true,

@@ -19,6 +19,10 @@
      "type": "BONUS_CHEMICALS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_POLYMERIZATION",
+     "scope": "team"
     }
    ],
    "any": [

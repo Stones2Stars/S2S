@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_MUGGING",
  "description": "TXT_KEY_BUILDING_CRIME_MUGGING",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_MUGGING_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CONDUCT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -5,

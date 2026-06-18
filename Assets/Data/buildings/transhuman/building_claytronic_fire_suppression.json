@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_STRATOSPHERIC_TOWER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ANIMAMATERIALS",
+     "scope": "team"
     }
    ]
   }

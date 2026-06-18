@@ -18,6 +18,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CEREMONIAL_BURIAL",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

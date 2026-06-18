@@ -7,6 +7,16 @@
    "BUILDING_LUMBER_MILL"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BARK_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "flat": 1

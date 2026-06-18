@@ -4,6 +4,16 @@
  "civilopedia": "TXT_KEY_BUILDING_DANCE_BIRD_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_PREHISTORIC_DANCE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SHELTER_BUILDING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

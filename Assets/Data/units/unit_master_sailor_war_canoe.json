@@ -56,6 +56,7 @@
   "upkeep": 1
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 1,
   "militaryWorth": 4,
   "xpValueAttack": 4,

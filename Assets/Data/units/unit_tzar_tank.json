@@ -9,6 +9,10 @@
      "type": "BONUS_DIESELPUNK",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_DIESELPUNK",
+     "scope": "team"
     }
    ],
    "any": [

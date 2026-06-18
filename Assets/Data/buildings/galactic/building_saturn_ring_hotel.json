@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_DEEP_SPACE_HOTEL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FUSION_SPACECRAFT",
+     "scope": "team"
     }
    ],
    "any": [

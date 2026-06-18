@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_CANNON_FORGE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GRAND_WAR",
+     "scope": "team"
     }
    ],
    "any": [

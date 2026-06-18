@@ -59,6 +59,10 @@
     {
      "type": "BUILDING_CARPENTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SAILING",
+     "scope": "team"
     }
    ],
    "any": [

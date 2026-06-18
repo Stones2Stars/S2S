@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_TRANSTELLAR_ARTIFICIAL_RED_DWARF",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ULTIMA_ARCHITECTURE",
+     "scope": "team"
     }
    ]
   }

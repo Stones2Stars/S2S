@@ -13,6 +13,14 @@
     {
      "type": "BUILDING_HELLENIC_PANTHEON",
      "scope": "city"
+    },
+    {
+     "type": "TECH_AESTHETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CONSTRUCTION",
+     "scope": "team"
     }
    ]
   },

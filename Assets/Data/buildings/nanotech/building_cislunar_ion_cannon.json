@@ -8,6 +8,16 @@
    "BUILDING_ZEUS_CANNON"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ION_BEAMS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "defense": {
   "city": {
    "amount": {

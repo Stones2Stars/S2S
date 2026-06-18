@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_HARBORMASTERS_OFFICE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SEAFARING",
+     "scope": "team"
     }
    ]
   }

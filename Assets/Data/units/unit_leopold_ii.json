@@ -9,6 +9,10 @@
      "type": "BONUS_BELGIAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_STEAM_POWER",
+     "scope": "team"
     }
    ]
   }

@@ -18,6 +18,10 @@
      "type": "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
      "scope": "empire",
      "min": 2
+    },
+    {
+     "type": "TECH_ALPHA_POINT",
+     "scope": "team"
     }
    ]
   }

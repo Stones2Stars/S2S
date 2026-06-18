@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_MEGATOWER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BIOMIMETICS",
+     "scope": "team"
     }
    ]
   }

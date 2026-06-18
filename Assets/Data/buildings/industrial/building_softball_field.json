@@ -7,6 +7,16 @@
    "BUILDING_ATHLETIC_MEGACOMPLEX"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LAWN_SPORTS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": 1

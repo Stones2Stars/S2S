@@ -7,6 +7,16 @@
    "BUILDING_INTERSTELLAR_FUSION_ENGINE"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INTERSTELLAR_TRAVEL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "flat": 50

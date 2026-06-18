@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_COMMERCIAL_SPACEPORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HYPERSONIC_FLIGHT",
+     "scope": "team"
     }
    ]
   }

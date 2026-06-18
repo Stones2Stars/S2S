@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_INDUSTRIAL_PARK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NOVUS_CHEMISTRY",
+     "scope": "team"
     }
    ]
   }

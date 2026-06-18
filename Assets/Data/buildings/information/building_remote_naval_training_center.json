@@ -17,7 +17,11 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "IS_WATER"
+    "IS_WATER",
+    {
+     "type": "TECH_UNMANNED_NAVAL_VEHICLES",
+     "scope": "team"
+    }
    ],
    "any": [
     [

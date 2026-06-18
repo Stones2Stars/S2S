@@ -20,6 +20,10 @@
     {
      "type": "BUILDING_DEEP_SPACE_ORGANIC_VOLATILE_EXTRACTION",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FORGE_WORLDS",
+     "scope": "team"
     }
    ]
   }

@@ -9,6 +9,10 @@
      "type": "BONUS_SUPERSTRONG_ALLOYS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_ADVANCED_WARMACHINES",
+     "scope": "team"
     }
    ]
   }
@@ -27,6 +31,7 @@
   "upkeep": 1
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 1,
   "leaderExperience": 25,
   "domain": "DOMAIN_LAND",

@@ -7,6 +7,16 @@
    "BUILDING_VENUS_BIOTIC_ATMOSPHERE"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HYPOTHETICAL_BIOCHEMISTRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "empire": 1
  },

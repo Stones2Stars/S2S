@@ -9,6 +9,10 @@
      "type": "BONUS_WARI",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_DUALISM",
+     "scope": "team"
     }
    ],
    "any": [

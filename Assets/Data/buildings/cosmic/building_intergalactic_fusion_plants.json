@@ -9,6 +9,16 @@
    "BUILDING_INTERGALACTIC_VON_NEUMANN_COLONIZERS"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SPACE_CREASING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "flat": 50

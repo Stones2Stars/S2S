@@ -36,6 +36,10 @@
     {
      "type": "BUILDING_COMPUTER_NETWORK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TERRA_COMPUTER",
+     "scope": "team"
     }
    ]
   }

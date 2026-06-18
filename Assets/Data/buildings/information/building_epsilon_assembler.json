@@ -37,6 +37,10 @@
     {
      "type": "BUILDING_GESTURE_RECOGNITION_SOFTWARE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BIOMECHANICAL_HARVESTING",
+     "scope": "team"
     }
    ],
    "any": [

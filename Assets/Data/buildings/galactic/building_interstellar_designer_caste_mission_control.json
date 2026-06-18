@@ -8,6 +8,14 @@
     {
      "type": "BUILDING_INTERSTELLAR_CONTROLLED_BREEDING",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PRECISION_SOCIAL_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COLONY_GOVERNANCE",
+     "scope": "team"
     }
    ]
   }

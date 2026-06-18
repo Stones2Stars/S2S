@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SAILING",
+     "scope": "team"
     }
    ]
   }

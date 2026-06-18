@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_MOVIE_THEATRE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ANIMATION",
+     "scope": "team"
     }
    ],
    "any": [

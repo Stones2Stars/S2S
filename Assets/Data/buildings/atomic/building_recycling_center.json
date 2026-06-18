@@ -28,6 +28,10 @@
     {
      "type": "BUILDING_INDUSTRIAL_PARK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_RECYCLING",
+     "scope": "team"
     }
    ]
   }

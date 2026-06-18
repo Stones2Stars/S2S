@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_WHALE_SHRINE_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_HARPOON_MAKING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

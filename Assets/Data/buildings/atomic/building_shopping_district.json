@@ -256,6 +256,10 @@
      "type": "BONUS_GLASSWARE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_CONSUMERISM",
+     "scope": "team"
     }
    ],
    "any": [

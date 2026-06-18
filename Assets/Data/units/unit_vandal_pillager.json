@@ -15,6 +15,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_HORSE_BREEDING",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_HORSE",
      "scope": "city",
      "connection": "trade|vicinity"

@@ -27,6 +27,10 @@
     {
      "type": "BUILDING_REJUVENATION_TANK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_REGENERATIVE_MEDICINE",
+     "scope": "team"
     }
    ],
    "any": [

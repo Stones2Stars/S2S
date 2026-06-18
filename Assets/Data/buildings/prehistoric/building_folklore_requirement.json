@@ -167,6 +167,10 @@
      "type": "BUILDING_PALACE",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_LANGUAGE",
+     "scope": "team"
     }
    ]
   }

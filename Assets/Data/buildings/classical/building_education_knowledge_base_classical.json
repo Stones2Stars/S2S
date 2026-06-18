@@ -7,6 +7,16 @@
    "BUILDING_EDUCATION_KNOWLEDGE_BASE_ANCIENT"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CLASSICAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "PROPERTY_EDUCATION": {
   "city": {
    "flat": {

@@ -2,6 +2,16 @@
  "type": "UNIT_TESLA_INFANTRY",
  "description": "TXT_KEY_UNIT_TESLA_INFANTRY",
  "civilopedia": "TXT_KEY_UNIT_TESLA_INFANTRY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WIRELESS_ELECTRICITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "cityAttack": {

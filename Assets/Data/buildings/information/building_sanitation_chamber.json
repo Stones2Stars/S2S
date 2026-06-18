@@ -31,6 +31,10 @@
     {
      "type": "BUILDING_COMPUTER_NETWORK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_VIRTUAL_SOCIETY",
+     "scope": "team"
     }
    ]
   }

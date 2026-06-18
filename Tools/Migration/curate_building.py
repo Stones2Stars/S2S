@@ -649,6 +649,16 @@ def requires_building(rec, store):
     vp = _txt(rec, "VictoryPrereq")
     if vp:
         build_all.append(_atom(vp, "world"))
+    # --- tech prereqs -> build.all (AND only: single PrereqTech + every TechTypes entry; buildings have NO OR-tech
+    # -- only techs themselves model alternate tech-tree paths). The SOURCE->building enable edge is store-wired
+    # (generation/frontier); this is the per-candidate CONFIRM the condition engine evaluates via isHasTech.
+    # Without it the cascade can't gate future-tech wonders (the modern-wonder over-offer). enabler-spec §13.8;
+    # legacy gate CvPlayer::canConstruct 6584 (PrereqAndTech) + 6589 (PrereqAndTechs). Mirrors curate_unit. ---
+    t = _txt(rec, "PrereqTech")
+    if t:
+        build_all.append(_atom(t, "team"))
+    for x in _typelist_struct(rec, "TechTypes", "PrereqTech"):
+        build_all.append(_atom(x, "team"))
     # --- instance caps are NOT a requires atom (owner 2026-06-17) — they move to the declarative `allowed` cap.
     # A requires SELF-atom forced an off-by-one (cap 1 -> max:0) and conflated "needed" (requires) with "allowed"
     # (the ceiling). `allowed:{scope:N}` names the ceiling with the REAL number; SELF leaves requires entirely.

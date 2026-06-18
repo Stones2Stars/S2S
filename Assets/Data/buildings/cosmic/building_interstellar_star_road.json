@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GALACTIC_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

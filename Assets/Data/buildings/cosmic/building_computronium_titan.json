@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_TITAN_ARCOLOGY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COMPUTRONIUM_UNIVERSE",
+     "scope": "team"
     }
    ]
   }

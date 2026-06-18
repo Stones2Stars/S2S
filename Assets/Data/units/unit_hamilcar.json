@@ -9,6 +9,10 @@
      "type": "BONUS_CARTHAGINIAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_IRON_WORKING",
+     "scope": "team"
     }
    ]
   }

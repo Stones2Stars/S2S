@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_MONEY_LAUNDERING",
  "description": "TXT_KEY_BUILDING_CRIME_MONEY_LAUNDERING",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_MONEY_LAUNDERING_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CORPORATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -20,

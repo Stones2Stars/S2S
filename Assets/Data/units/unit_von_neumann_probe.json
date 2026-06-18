@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_STARPORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FOLDING_SPACE",
+     "scope": "team"
     }
    ]
   }

@@ -27,6 +27,10 @@
     {
      "type": "BUILDING_CHEMISTRY_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MOLECULAR_BIOLOGY",
+     "scope": "team"
     }
    ]
   }

@@ -13,6 +13,14 @@
     {
      "type": "BUILDING_BIVOUAC_GROUNDS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_LASER",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GUERRILLA_WARFARE",
+     "scope": "team"
     }
    ],
    "any": [

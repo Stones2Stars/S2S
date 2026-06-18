@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_STARPORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ASTROIMPERIALISM",
+     "scope": "team"
     }
    ]
   }

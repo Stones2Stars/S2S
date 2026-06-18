@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_DISTANT_BLAZAR_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DIRECTED_COSMIC_EVOLUTION",
+     "scope": "team"
     }
    ]
   }

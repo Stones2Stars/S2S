@@ -9,6 +9,10 @@
      "type": "BONUS_CALIFORNIAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_NITROGLYCERIN",
+     "scope": "team"
     }
    ]
   }

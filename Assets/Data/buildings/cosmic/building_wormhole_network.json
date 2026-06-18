@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GALACTIC_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

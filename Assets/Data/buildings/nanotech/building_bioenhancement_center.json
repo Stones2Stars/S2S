@@ -11,6 +11,10 @@
   "build": {
    "all": [
     {
+     "type": "TECH_GENE_ENHANCEMENT",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"

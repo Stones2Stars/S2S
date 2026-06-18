@@ -8,6 +8,16 @@
    "BUILDING_EDUCATION_UNAWARE"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CLASSICAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "percent": -15

@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_MATHEMATICS_DEPARTMENT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ABSTRACT_MATHEMATICS",
+     "scope": "team"
     }
    ]
   }

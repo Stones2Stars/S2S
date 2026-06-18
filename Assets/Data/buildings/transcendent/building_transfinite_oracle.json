@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_HYPERINTELLIGENT_ORACLE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TRANSFINITE_COMPUTATION",
+     "scope": "team"
     }
    ]
   }

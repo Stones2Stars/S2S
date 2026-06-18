@@ -24,6 +24,10 @@
     {
      "type": "BUILDING_DUNGEON",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TORTURE",
+     "scope": "team"
     }
    ]
   }

@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_SPACE_COLONY_CISLUNAR",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ELECTROMAGNETIC_VOLTAGE",
+     "scope": "team"
     }
    ]
   }

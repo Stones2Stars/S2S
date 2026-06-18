@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_NEPTUNE_WIND_TURBINE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PLANET_CRACKING",
+     "scope": "team"
     }
    ],
    "any": [

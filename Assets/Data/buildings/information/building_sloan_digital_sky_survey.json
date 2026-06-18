@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_OBSERVATORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SUPERSTRING_THEORY",
+     "scope": "team"
     }
    ]
   }

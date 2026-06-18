@@ -9,6 +9,10 @@
      "type": "BONUS_BIONIC_SUITS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_HOMO_SUPERIOR",
+     "scope": "team"
     }
    ],
    "any": [

@@ -39,6 +39,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_FLINTLOCK",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

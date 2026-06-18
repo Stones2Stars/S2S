@@ -15,6 +15,14 @@
      "scope": "city"
     },
     {
+     "type": "TECH_CAVALRY_TACTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEGAFAUNA_DOMESTICATION",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_IRON_WARES",
      "scope": "city",
      "connection": "trade|vicinity"

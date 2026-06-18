@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_3_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_ORGANIC_CHEMISTRY",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

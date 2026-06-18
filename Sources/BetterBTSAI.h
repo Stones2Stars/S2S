@@ -27,6 +27,10 @@ extern int gStreamLogLevel;
 
 void logCB(CvString message);
 void logToFile(CvString message, const char* filename);
+// Tee an already-formatted, single-line log line onto the /events SSE "log" stream (#419) when it passes the
+// stream gate (level <= gStreamLogLevel) and the server is on. The shared "log line -> live stream" path: the BBAI
+// log helpers call it, and so does the #430 cascade event spine's logging consumer. Off-state cost: one int compare.
+void streamLogTee(int level, const char* szLine);
 void logContractBroker(int level, const char* format, ...);
 void logBuildEvaluation(int level, const char* format, ...);
 void logHunterAI(int level, const char* format, ...);

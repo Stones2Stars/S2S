@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_SHIP_BUILDING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

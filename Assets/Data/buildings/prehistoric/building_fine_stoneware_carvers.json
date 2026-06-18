@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_C_L_MIDDLE_EASTERN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BARTER",
+     "scope": "team"
     }
    ]
   }

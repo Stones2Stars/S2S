@@ -12,6 +12,16 @@
    "UNIT_WORKMAMMOTH"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HERITAGE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_EFFECT_HERITAGE_MAMMOTHS"

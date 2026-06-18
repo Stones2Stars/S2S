@@ -15,6 +15,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_STARPORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SPACE_CREASING",
+     "scope": "team"
     }
    ]
   }

@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_UNIVERSITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CRIMINOLOGY",
+     "scope": "team"
     }
    ],
    "any": [

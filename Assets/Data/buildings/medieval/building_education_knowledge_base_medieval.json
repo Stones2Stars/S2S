@@ -8,6 +8,16 @@
    "BUILDING_EDUCATION_KNOWLEDGE_BASE_CLASSICAL"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEDIEVAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "PROPERTY_EDUCATION": {
   "city": {
    "flat": {

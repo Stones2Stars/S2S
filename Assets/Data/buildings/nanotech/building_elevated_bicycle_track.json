@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_MIXED_USE_DEVELOPMENT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_AUTOMATED_TRAFFIC",
+     "scope": "team"
     }
    ]
   }

@@ -11,6 +11,16 @@
    "BUILDING_OMNIVERSE"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_REALITY_REPROGRAMMING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_EFFECT_MULTIVERSAL_ECONOMY"

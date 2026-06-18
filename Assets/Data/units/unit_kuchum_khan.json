@@ -9,6 +9,10 @@
      "type": "BONUS_TUNGUS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MILITARY_TRADITION",
+     "scope": "team"
     }
    ]
   }

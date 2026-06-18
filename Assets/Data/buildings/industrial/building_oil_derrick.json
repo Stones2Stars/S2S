@@ -14,6 +14,10 @@
      "type": "BONUS_OIL",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "TECH_REFINING",
+     "scope": "team"
     }
    ],
    "any": [

@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_SKYSCRAPER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MASS_MEDIA",
+     "scope": "team"
     }
    ]
   }

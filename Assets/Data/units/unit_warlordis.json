@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MILITARY_TRAINING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {
@@ -37,6 +43,7 @@
   "upkeep": 1
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 1,
   "leaderExperience": 5,
   "domain": "DOMAIN_LAND",

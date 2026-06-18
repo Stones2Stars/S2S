@@ -13,6 +13,10 @@
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 5
+    },
+    {
+     "type": "TECH_SAILING",
+     "scope": "team"
     }
    ]
   }

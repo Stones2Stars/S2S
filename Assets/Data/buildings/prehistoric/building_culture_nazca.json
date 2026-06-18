@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_C_L_SOUTH_AMERICAN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_OBSIDIAN_WEAPONS",
+     "scope": "team"
     }
    ],
    "any": [

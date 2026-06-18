@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_DEFENSIVE_PERIMETER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS",
+     "scope": "team"
     }
    ]
   }

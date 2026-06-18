@@ -27,6 +27,10 @@
      "type": "BUILDING_BANK",
      "scope": "empire",
      "min": 4
+    },
+    {
+     "type": "TECH_BANKING",
+     "scope": "team"
     }
    ]
   }

@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_EFFECT_HERITAGE_BIG_CATS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CRIMINOLOGY",
+     "scope": "team"
     }
    ],
    "any": [

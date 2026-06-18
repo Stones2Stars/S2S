@@ -14,6 +14,10 @@
      "type": "POPULATION",
      "scope": "city",
      "min": 13
+    },
+    {
+     "type": "TECH_FLIGHT",
+     "scope": "team"
     }
    ]
   }

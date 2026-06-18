@@ -20,6 +20,10 @@
      "min": 10
     },
     {
+     "type": "TECH_GLOBALIZATION",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_AMMUNITION",
      "scope": "city",
      "connection": "trade|vicinity"

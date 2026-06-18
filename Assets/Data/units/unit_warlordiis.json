@@ -4,6 +4,16 @@
  "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_HERALDRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SMITHING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {
@@ -29,6 +39,7 @@
   "upkeep": 1
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 1,
   "leaderExperience": 10,
   "domain": "DOMAIN_LAND",

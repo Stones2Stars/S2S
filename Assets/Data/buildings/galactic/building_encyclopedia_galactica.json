@@ -13,6 +13,10 @@
      "type": "BUILDING_UNIVERSAL_LIBRARY",
      "scope": "empire",
      "min": 3
+    },
+    {
+     "type": "TECH_GALACTIC_FEDERATION",
+     "scope": "team"
     }
    ]
   }

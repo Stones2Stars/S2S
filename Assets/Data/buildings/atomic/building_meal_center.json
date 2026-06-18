@@ -7,6 +7,16 @@
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMMUNISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 4

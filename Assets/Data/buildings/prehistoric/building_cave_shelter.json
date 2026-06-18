@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_CAVE_SHELTER_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CAVE_DWELLING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

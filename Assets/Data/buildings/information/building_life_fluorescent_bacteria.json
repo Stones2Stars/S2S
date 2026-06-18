@@ -10,6 +10,10 @@
      "type": "BUILDING_LIFE_CRISPR_CAS9_BACTERIA",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_BACTERIUM_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

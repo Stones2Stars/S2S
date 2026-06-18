@@ -8,6 +8,16 @@
    "UNIT_WISE_WOMAN"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HERBALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": [

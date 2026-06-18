@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_UTILITY_FOG",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ATOMIZATION_FIELD",
+     "scope": "team"
     }
    ]
   }

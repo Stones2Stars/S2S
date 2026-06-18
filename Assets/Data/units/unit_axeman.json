@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_UNIT_AXEMAN_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_BRONZE_WORKING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

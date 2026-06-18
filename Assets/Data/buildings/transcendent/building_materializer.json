@@ -31,6 +31,10 @@
     {
      "type": "BUILDING_ALEPH_ASSEMBLER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MATERIALIZATION",
+     "scope": "team"
     }
    ]
   }

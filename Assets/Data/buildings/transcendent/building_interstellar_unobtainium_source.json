@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SIMULATION_AWARENESS",
+     "scope": "team"
     }
    ]
   }

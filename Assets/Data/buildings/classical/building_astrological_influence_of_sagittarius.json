@@ -4,6 +4,16 @@
  "civilopedia": "TXT_KEY_BUILDING_ASTROLOGICAL_INFLUENCE_OF_SAGITTARIUS_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_HORSE_BREEDING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASTROLOGY",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

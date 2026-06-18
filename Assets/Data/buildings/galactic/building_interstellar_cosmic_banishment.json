@@ -2,6 +2,16 @@
  "type": "BUILDING_INTERSTELLAR_COSMIC_BANISHMENT",
  "description": "TXT_KEY_BUILDING_INTERSTELLAR_COSMIC_BANISHMENT",
  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_COSMIC_BANISHMENT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PHASING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "revolution": {
   "city": {
    "flat": -5

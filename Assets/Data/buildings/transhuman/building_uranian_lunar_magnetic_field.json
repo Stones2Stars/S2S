@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_URANIAN_LUNAR_HEATING",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PLANETARY_DEFENSES",
+     "scope": "team"
     }
    ],
    "any": [

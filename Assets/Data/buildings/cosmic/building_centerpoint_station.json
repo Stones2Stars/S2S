@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_GALACTIC_PORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GRAVITRONICS",
+     "scope": "team"
     }
    ]
   }

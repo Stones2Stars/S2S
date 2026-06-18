@@ -2,6 +2,16 @@
  "type": "UNIT_WOODEN_SPEARMAN",
  "description": "TXT_KEY_UNIT_WOODEN_SPEARMAN",
  "civilopedia": "TXT_KEY_UNIT_WOODEN_SPEARMAN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SIMPLE_WOOD_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "buildRate": {
   "self": {
    "percent": [

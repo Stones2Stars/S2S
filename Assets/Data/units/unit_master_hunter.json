@@ -2,6 +2,16 @@
  "type": "UNIT_MASTER_HUNTER",
  "description": "TXT_KEY_UNIT_MASTER_HUNTER",
  "civilopedia": "TXT_KEY_UNIT_MASTER_HUNTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HUNTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "empire": 1
  },
@@ -40,6 +50,7 @@
   "upkeep": 1
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 3,
   "militaryWorth": 5,
   "xpValueAttack": 1,

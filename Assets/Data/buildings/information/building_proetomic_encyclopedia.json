@@ -20,6 +20,10 @@
      "type": "BUILDING_COMPUTER_NETWORK",
      "scope": "empire",
      "min": 10
+    },
+    {
+     "type": "TECH_GENOMIC_ENCYCLOPEDIA",
+     "scope": "team"
     }
    ],
    "any": [

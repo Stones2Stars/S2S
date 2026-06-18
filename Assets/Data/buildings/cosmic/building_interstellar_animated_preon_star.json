@@ -13,6 +13,14 @@
     {
      "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FANTASY_MATERIALS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION",
+     "scope": "team"
     }
    ]
   }

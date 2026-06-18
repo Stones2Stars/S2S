@@ -38,6 +38,10 @@
      "connection": "trade|vicinity"
     },
     {
+     "type": "TECH_COMPULSORY_EDUCATION",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_FURNITURE",
      "scope": "city",
      "connection": "trade|vicinity"

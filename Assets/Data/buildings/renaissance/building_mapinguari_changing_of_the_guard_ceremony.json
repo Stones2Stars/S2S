@@ -16,6 +16,16 @@
    "BUILDING_MAPINGUARI_COMPOUND"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GUNPOWDER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -1

@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_GEODESIC_DOME",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ORGANIC_CITIES",
+     "scope": "team"
     }
    ],
    "any": [

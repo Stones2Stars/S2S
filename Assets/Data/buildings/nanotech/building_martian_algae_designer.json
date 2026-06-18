@@ -13,6 +13,18 @@
     {
      "type": "BUILDING_MARTIAN_BIOFACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DYSTOPIA_PATHOGENS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DESIGNER_MICROBIOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
+     "scope": "team"
     }
    ]
   }

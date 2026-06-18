@@ -26,6 +26,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_LIQUID_METALS",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_METAMATERIALS",
      "scope": "city",
      "connection": "trade|vicinity"

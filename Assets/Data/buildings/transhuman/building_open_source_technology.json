@@ -2,6 +2,16 @@
  "type": "BUILDING_OPEN_SOURCE_TECHNOLOGY",
  "description": "TXT_KEY_BUILDING_OPEN_SOURCE_TECHNOLOGY",
  "civilopedia": "TXT_KEY_BUILDING_OPEN_SOURCE_TECHNOLOGY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_KNOWLEDGE_MERCANTILISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": 5

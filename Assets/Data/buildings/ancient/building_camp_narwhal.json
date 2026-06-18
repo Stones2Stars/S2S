@@ -26,6 +26,10 @@
      "latitude": {
       "min": 40
      }
+    },
+    {
+     "type": "TECH_SAILING",
+     "scope": "team"
     }
    ],
    "any": [

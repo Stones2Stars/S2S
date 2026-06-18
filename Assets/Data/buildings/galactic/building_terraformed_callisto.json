@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_CALLISTO_NOBLE_GAS_GENERATOR",
      "scope": "city"
+    },
+    {
+     "type": "TECH_LUNAR_TERRAFORMING",
+     "scope": "team"
     }
    ],
    "any": [

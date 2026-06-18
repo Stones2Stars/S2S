@@ -1,0 +1,768 @@
+//
+//	CvCascadeReadJson -- the DLL-side readJson harness (#430). See CvCascadeReadJson.h.
+//	Locates an entity's JSON under Assets/Data, parses requires/allowed into a fresh CvEntityAvailability via
+//	picojson, and (doTurn slice) shadows cascadeBuildable vs the engine. ⛔ TEMPORARY; purge when full readJson lands.
+//
+//	rj-prefixed file-local helpers -- FastBuild unity batches concatenate .cpp, so generic anon-namespace names
+//	could collide with a sibling in the blob.
+//
+
+#include "CvGameCoreDLL.h"   // PCH: engine globals + picojson + windows.h (FindFirstFile)
+#include "CvCascadeReadJson.h"
+#include "CvCascadeCondition.h"
+#include "CvCascadeTally.h"
+#include "CvGlobals.h"
+#include "CvInitCore.h"
+#include "CvGameAI.h"
+#include "CvPlayerAI.h"
+#include "CvTeamAI.h"        // GET_TEAM / isHasTech (obsoletion index)
+#include "CvCity.h"
+#include "CvInfos.h"         // GC.getTechInfo (type strings for the obsoletion scan)
+#include "CvBuildingInfo.h"
+#include "BetterBTSAI.h"     // gPlayerLogLevel, streamLogTee
+#include <fstream>
+#include <sstream>
+#include <cctype>
+
+namespace
+{
+	// ---------- small string helpers ----------
+	bool rjHasPrefix(const std::string& s, const char* pfx)
+	{
+		const size_t n = strlen(pfx);
+		return s.size() >= n && s.compare(0, n, pfx) == 0;
+	}
+
+	std::string rjToLowerStr(const char* s)
+	{
+		std::string out;
+		for (const char* p = s; *p != '\0'; ++p) out += (char)tolower((unsigned char)*p);
+		return out;
+	}
+
+	void rjAppendNote(std::string& sNotes, const std::string& sReason)
+	{
+		if (sNotes.size() > 320) return;
+		if (!sNotes.empty()) sNotes += "; ";
+		sNotes += sReason;
+	}
+
+	// ---------- vocabulary maps ----------
+	bool rjAtomDomain(const std::string& s, AtomDomain& eOut, bool& bToken)
+	{
+		bToken = false;
+		if (s == "POPULATION")          { eOut = ATOMDOMAIN_POPULATION;  bToken = true; return true; }
+		if (s == "CITY")                { eOut = ATOMDOMAIN_CITYCOUNT;   bToken = true; return true; }
+		if (rjHasPrefix(s, "BUILDING_"))    { eOut = ATOMDOMAIN_BUILDING;    return true; }
+		if (rjHasPrefix(s, "UNIT_"))        { eOut = ATOMDOMAIN_UNIT;        return true; }
+		if (rjHasPrefix(s, "TECH_"))        { eOut = ATOMDOMAIN_TECH;        return true; }
+		if (rjHasPrefix(s, "BONUS_"))       { eOut = ATOMDOMAIN_BONUS;       return true; }
+		if (rjHasPrefix(s, "CIVIC_"))       { eOut = ATOMDOMAIN_CIVIC;       return true; }
+		if (rjHasPrefix(s, "RELIGION_"))    { eOut = ATOMDOMAIN_RELIGION;    return true; }
+		if (rjHasPrefix(s, "CORPORATION_")) { eOut = ATOMDOMAIN_CORPORATION; return true; }
+		if (rjHasPrefix(s, "HERITAGE_"))    { eOut = ATOMDOMAIN_HERITAGE;    return true; }
+		return false;
+	}
+
+	CountScope rjDefaultScope(AtomDomain d)
+	{
+		switch (d)
+		{
+		case ATOMDOMAIN_TECH:      return COUNTSCOPE_TEAM;
+		case ATOMDOMAIN_CIVIC:     return COUNTSCOPE_EMPIRE;
+		case ATOMDOMAIN_HERITAGE:  return COUNTSCOPE_EMPIRE;
+		case ATOMDOMAIN_CITYCOUNT: return COUNTSCOPE_EMPIRE;
+		default:                   return COUNTSCOPE_CITY; // building/bonus/religion/corporation/population
+		}
+	}
+
+	bool rjScope(const std::string& s, CountScope& eOut)
+	{
+		if (s == "world")  { eOut = COUNTSCOPE_WORLD;  return true; }
+		if (s == "team")   { eOut = COUNTSCOPE_TEAM;   return true; }
+		if (s == "empire") { eOut = COUNTSCOPE_EMPIRE; return true; }
+		if (s == "city")   { eOut = COUNTSCOPE_CITY;   return true; }
+		if (s == "plot")   { eOut = COUNTSCOPE_PLOT;   return true; }
+		return false;
+	}
+
+	void rjConn(const std::string& s, ConnReq& eOut)
+	{
+		if (s == "trade")    eOut = CONN_TRADE;
+		else if (s == "vicinity") eOut = CONN_VICINITY;
+		else eOut = CONN_TRADE_OR_VICINITY; // "trade|vicinity" and anything else
+	}
+
+	bool rjBarePredicate(const std::string& s, PredicateKind& k)
+	{
+		if (s == "IS_CAPITAL")           { k = PRED_IS_CAPITAL;         return true; }
+		if (s == "HAS_POWER")            { k = PRED_HAS_POWER;          return true; }
+		if (s == "HAS_STATE_RELIGION")   { k = PRED_HAS_STATE_RELIGION; return true; }
+		if (s == "IS_COASTAL" || s == "COASTAL_LAND") { k = PRED_IS_COASTAL; return true; }
+		if (s == "HAS_RIVER")            { k = PRED_HAS_RIVER;          return true; }
+		if (s == "IS_WATER")             { k = PRED_IS_WATER;           return true; }
+		if (s == "IS_HILLS")             { k = PRED_IS_HILLS;           return true; }
+		if (s == "IS_PEAK")              { k = PRED_IS_PEAK;            return true; }
+		if (s == "IS_FLATLANDS")         { k = PRED_IS_FLATLANDS;       return true; }
+		if (s == "IS_FRESHWATER")        { k = PRED_IS_FRESHWATER;      return true; }
+		if (s == "HAS_IRRIGATION")       { k = PRED_HAS_IRRIGATION;     return true; }
+		if (s == "HAS_FEATURE")          { k = PRED_HAS_FEATURE_ANY;    return true; }
+		return false;
+	}
+
+	bool rjParamPredicateKind(const std::string& key, PredicateKind& k)
+	{
+		if (key == "HAS_FEATURE")     { k = PRED_HAS_FEATURE;     return true; }
+		if (key == "HAS_TERRAIN")     { k = PRED_HAS_TERRAIN;     return true; }
+		if (key == "HAS_BONUS")       { k = PRED_HAS_BONUS;       return true; }
+		if (key == "HAS_RELIGION")    { k = PRED_HAS_RELIGION;    return true; }
+		if (key == "STATE_RELIGION")  { k = PRED_STATE_RELIGION;  return true; }
+		if (key == "HOLY_CITY")       { k = PRED_HOLY_CITY;       return true; }
+		if (key == "HAS_CORPORATION") { k = PRED_HAS_CORPORATION; return true; }
+		return false;
+	}
+
+	// ---------- leaf parsing ----------
+	bool rjParseAtomObj(const picojson::object& o, CvCountAtom& out, std::string& reason)
+	{
+		picojson::object::const_iterator it = o.find("type");
+		const std::string sType = it->second.get<std::string>();
+
+		AtomDomain eDomain; bool bToken;
+		if (!rjAtomDomain(sType, eDomain, bToken)) { reason = "domain-pending(" + sType + ")"; return false; }
+		int iType = -1;
+		if (!bToken)
+		{
+			iType = GC.getInfoTypeForString(sType.c_str(), true);
+			if (iType < 0) { reason = "type-not-loaded(" + sType + ")"; return false; }
+		}
+
+		CountScope eScope = rjDefaultScope(eDomain);
+		it = o.find("scope");
+		if (it != o.end() && it->second.is<std::string>())
+		{
+			if (!rjScope(it->second.get<std::string>(), eScope)) { reason = "scope-unknown(" + it->second.get<std::string>() + ")"; return false; }
+		}
+
+		ConnReq eConn = CONN_NONE;
+		it = o.find("connection");
+		if (it != o.end() && it->second.is<std::string>()) rjConn(it->second.get<std::string>(), eConn);
+
+		int iMin = 1, iMax = -1;
+		it = o.find("min"); if (it != o.end() && it->second.is<double>()) iMin = (int)it->second.get<double>();
+		it = o.find("max"); if (it != o.end() && it->second.is<double>()) iMax = (int)it->second.get<double>();
+
+		out = CvCountAtom(eDomain, iType, eScope, iMin, iMax, eConn);
+		return true;
+	}
+
+	// A leaf = a bare-predicate string, a {type,...} count atom (or a TERRAIN_/FEATURE_ plot predicate authored
+	// as an atom), or a {PREDICATE: param} object. Anything else (membership sugar, latitude, existedFor, ...)
+	// is DROPPED with a reason -- never silently satisfied.
+	bool rjParseLeaf(const picojson::value& v, CvCascadeLeaf& out, std::string& reason)
+	{
+		if (v.is<std::string>())
+		{
+			PredicateKind k;
+			if (rjBarePredicate(v.get<std::string>(), k)) { out.bPredicate = true; out.pred = CvPredicate(k, -1); return true; }
+			reason = "bare-predicate-unknown(" + v.get<std::string>() + ")";
+			return false;
+		}
+		if (!v.is<picojson::object>()) { reason = "non-object-leaf"; return false; }
+		const picojson::object& o = v.get<picojson::object>();
+
+		picojson::object::const_iterator itType = o.find("type");
+		if (itType != o.end() && itType->second.is<std::string>())
+		{
+			const std::string sType = itType->second.get<std::string>();
+			// plot-substrate types authored as atoms are really plot predicates
+			if (rjHasPrefix(sType, "TERRAIN_") || rjHasPrefix(sType, "FEATURE_"))
+			{
+				const int ip = GC.getInfoTypeForString(sType.c_str(), true);
+				if (ip < 0) { reason = "type-not-loaded(" + sType + ")"; return false; }
+				out.bPredicate = true;
+				out.pred = CvPredicate(rjHasPrefix(sType, "TERRAIN_") ? PRED_HAS_TERRAIN : PRED_HAS_FEATURE, ip);
+				return true;
+			}
+			CvCountAtom a;
+			if (rjParseAtomObj(o, a, reason)) { out.bPredicate = false; out.atom = a; return true; }
+			return false;
+		}
+
+		// parameterized predicate: a single recognized key with a string param
+		for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
+		{
+			PredicateKind k;
+			if (rjParamPredicateKind(it->first, k) && it->second.is<std::string>())
+			{
+				const int ip = GC.getInfoTypeForString(it->second.get<std::string>().c_str(), true);
+				if (ip < 0) { reason = "pred-param-not-loaded(" + it->second.get<std::string>() + ")"; return false; }
+				out.bPredicate = true; out.pred = CvPredicate(k, ip);
+				return true;
+			}
+		}
+
+		reason = "leaf-pending(";
+		if (!o.empty()) reason += o.begin()->first;
+		reason += ")";
+		return false;
+	}
+
+	void rjParseConditionObject(const picojson::object& oPart, CvCascadeCondition& kCond,
+		int& iSup, int& iSkip, std::string& sNotes)
+	{
+		picojson::object::const_iterator it = oPart.find("all");
+		if (it != oPart.end() && it->second.is<picojson::array>())
+		{
+			const picojson::array& a = it->second.get<picojson::array>();
+			for (size_t i = 0; i < a.size(); ++i)
+			{
+				CvCascadeLeaf l; std::string r;
+				if (rjParseLeaf(a[i], l, r)) { kCond.all.push_back(l); ++iSup; }
+				else { ++iSkip; rjAppendNote(sNotes, "all:" + r); }
+			}
+		}
+		it = oPart.find("any");
+		if (it != oPart.end() && it->second.is<picojson::array>())
+		{
+			const picojson::array& groups = it->second.get<picojson::array>();
+			for (size_t g = 0; g < groups.size(); ++g)
+			{
+				if (!groups[g].is<picojson::array>()) { ++iSkip; rjAppendNote(sNotes, "any:non-array-group"); continue; }
+				const picojson::array& grp = groups[g].get<picojson::array>();
+				std::vector<CvCascadeLeaf> vGroup;
+				for (size_t i = 0; i < grp.size(); ++i)
+				{
+					CvCascadeLeaf l; std::string r;
+					if (rjParseLeaf(grp[i], l, r)) { vGroup.push_back(l); ++iSup; }
+					else { ++iSkip; rjAppendNote(sNotes, "any:" + r); }
+				}
+				if (!vGroup.empty()) kCond.any.push_back(vGroup);
+			}
+		}
+		it = oPart.find("noneOf");
+		if (it != oPart.end() && it->second.is<picojson::array>())
+		{
+			const picojson::array& a = it->second.get<picojson::array>();
+			for (size_t i = 0; i < a.size(); ++i)
+			{
+				CvCascadeLeaf l; std::string r;
+				if (rjParseLeaf(a[i], l, r)) { kCond.noneOf.push_back(l); ++iSup; }
+				else { ++iSkip; rjAppendNote(sNotes, "noneOf:" + r); }
+			}
+		}
+		// the bare-predicate twins: `disabled` -> noneOf (forbidden while it holds), `enabled` -> all
+		it = oPart.find("disabled");
+		if (it != oPart.end())
+		{
+			CvCascadeLeaf l; std::string r;
+			if (rjParseLeaf(it->second, l, r)) { kCond.noneOf.push_back(l); ++iSup; }
+			else { ++iSkip; rjAppendNote(sNotes, "disabled:" + r); }
+		}
+		it = oPart.find("enabled");
+		if (it != oPart.end())
+		{
+			CvCascadeLeaf l; std::string r;
+			if (rjParseLeaf(it->second, l, r)) { kCond.all.push_back(l); ++iSup; }
+			else { ++iSkip; rjAppendNote(sNotes, "enabled:" + r); }
+		}
+	}
+
+	const char* const RJ_ALLOWED_KEYS[3] = { "world", "team", "empire" };
+	const CountScope RJ_ALLOWED_VALS[3]  = { COUNTSCOPE_WORLD, COUNTSCOPE_TEAM, COUNTSCOPE_EMPIRE };
+
+	bool rjParseAllowed(const picojson::object& oAllowed, CountScope& eScopeOut, int& iCapOut)
+	{
+		for (int i = 0; i < 3; ++i)
+		{
+			picojson::object::const_iterator it = oAllowed.find(RJ_ALLOWED_KEYS[i]);
+			if (it != oAllowed.end() && it->second.is<double>())
+			{
+				eScopeOut = RJ_ALLOWED_VALS[i];
+				iCapOut = (int)it->second.get<double>();
+				return true;
+			}
+		}
+		return false;
+	}
+
+	// ---------- file location (prefix -> Data/<folder>, search any grouping sub-folders) ----------
+	bool rjEntityFolder(const char* szTypeKey, std::string& sFolder)
+	{
+		const std::string s(szTypeKey);
+		if (rjHasPrefix(s, "BUILDING_"))    { sFolder = "buildings";    return true; }
+		if (rjHasPrefix(s, "UNIT_"))        { sFolder = "units";        return true; }
+		if (rjHasPrefix(s, "TECH_"))        { sFolder = "techs";        return true; }
+		if (rjHasPrefix(s, "CIVIC_"))       { sFolder = "civics";       return true; }
+		if (rjHasPrefix(s, "PROJECT_"))     { sFolder = "projects";     return true; }
+		if (rjHasPrefix(s, "RELIGION_"))    { sFolder = "religions";    return true; }
+		if (rjHasPrefix(s, "CORPORATION_")) { sFolder = "corporations"; return true; }
+		if (rjHasPrefix(s, "SPECIALBUILDING_")) { sFolder = "specialbuildings"; return true; }
+		return false;
+	}
+
+	bool rjReadFile(const std::string& sPath, std::string& sOut)
+	{
+		std::ifstream f(sPath.c_str(), std::ios::in | std::ios::binary);
+		if (!f.good()) return false;
+		std::ostringstream ss;
+		ss << f.rdbuf();
+		sOut = ss.str();
+		return !sOut.empty();
+	}
+
+	bool rjLocateEntityJson(const char* szTypeKey, std::string& sContent)
+	{
+		std::string sFolder;
+		if (!rjEntityFolder(szTypeKey, sFolder)) return false;
+		const std::string sFile = rjToLowerStr(szTypeKey) + ".json";
+		const std::string sBase = std::string(GC.getInitCore().getDLLPath().c_str()) + "\\Data\\" + sFolder;
+
+		if (rjReadFile(sBase + "\\" + sFile, sContent)) return true; // flat layout
+
+		// foldered: try each immediate sub-directory (era / category / source / ...)
+		WIN32_FIND_DATAA fd;
+		const std::string sGlob = sBase + "\\*";
+		HANDLE h = FindFirstFileA(sGlob.c_str(), &fd);
+		if (h == INVALID_HANDLE_VALUE) return false;
+		bool bFound = false;
+		do
+		{
+			if ((fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0
+				&& strcmp(fd.cFileName, ".") != 0 && strcmp(fd.cFileName, "..") != 0)
+			{
+				if (rjReadFile(sBase + "\\" + fd.cFileName + "\\" + sFile, sContent)) { bFound = true; break; }
+			}
+		} while (FindNextFileA(h, &fd) != 0);
+		FindClose(h);
+		return bFound;
+	}
+} // namespace
+
+// ===================== exported: parse one entity's availability =====================
+
+bool cascadeReadJsonAvailability(const char* szTypeKey, CvEntityAvailability& kOut, std::string& szNotes)
+{
+	std::string sContent;
+	if (!rjLocateEntityJson(szTypeKey, sContent)) { szNotes = "no JSON file found"; return false; }
+
+	picojson::value root;
+	const std::string sErr = picojson::parse(root, sContent);
+	if (!sErr.empty() || !root.is<picojson::object>()) { szNotes = "parse-error:" + sErr; return false; }
+	const picojson::object& o = root.get<picojson::object>();
+
+	int iSup = 0, iSkip = 0;
+	std::string sAtomNotes;
+
+	picojson::object::const_iterator itReq = o.find("requires");
+	if (itReq != o.end() && itReq->second.is<picojson::object>())
+	{
+		const picojson::object& oReq = itReq->second.get<picojson::object>();
+		picojson::object::const_iterator itB = oReq.find("build");
+		if (itB != oReq.end() && itB->second.is<picojson::object>())
+			rjParseConditionObject(itB->second.get<picojson::object>(), kOut.requiresBuild, iSup, iSkip, sAtomNotes);
+		picojson::object::const_iterator itO = oReq.find("operate");
+		if (itO != oReq.end() && itO->second.is<picojson::object>())
+			rjParseConditionObject(itO->second.get<picojson::object>(), kOut.requiresOperate, iSup, iSkip, sAtomNotes);
+	}
+
+	picojson::object::const_iterator itAllowed = o.find("allowed");
+	if (itAllowed != o.end() && itAllowed->second.is<picojson::object>())
+	{
+		CountScope eScope; int iCap;
+		if (rjParseAllowed(itAllowed->second.get<picojson::object>(), eScope, iCap))
+		{
+			kOut.allowedScope = eScope;
+			kOut.allowedCap = iCap;
+		}
+	}
+
+	// identity.spawnOnly -- the clean flag (migrated from the legacy iCost==-1 sentinel) marking a unit as NOT
+	// player-buildable (wildlife/spawned). Settlers (no iCost tag, population cost) are NOT spawnOnly -> buildable.
+	picojson::object::const_iterator itId = o.find("identity");
+	if (itId != o.end() && itId->second.is<picojson::object>())
+	{
+		const picojson::object& oId = itId->second.get<picojson::object>();
+		picojson::object::const_iterator itSp = oId.find("spawnOnly");
+		if (itSp != oId.end() && itSp->second.is<bool>()) kOut.spawnOnly = itSp->second.get<bool>();
+	}
+
+	std::ostringstream ss;
+	ss << iSup << " wired, " << iSkip << " pending";
+	if (!sAtomNotes.empty()) ss << " [" << sAtomNotes << "]";
+	szNotes = ss.str();
+	return true;
+}
+
+// ===================== GENERATION (partial): the obsoletion reverse index =====================
+// A target is obsolete for a team if the team has researched a tech whose JSON `obsoletes` edge names it. The
+// model authors obsoletion FORWARD on the tech (tech.obsoletes.{buildings,units}); we invert it ONCE into a
+// reverse index (entity -> obsoleting techs) by scanning the tech JSONs, then check team-HAS per query. Built
+// fresh from the JSON (NOT the legacy getObsoleteTech), game-thread only (no locking).
+
+namespace
+{
+	std::map<int, std::vector<int> > g_obsBuildingTechs;    // buildingIdx -> [techIdx that obsolete it]
+	std::map<int, std::vector<int> > g_obsUnitTechs;        // unitIdx     -> [techIdx]
+	std::map<int, std::vector<int> > g_enableBuildingTechs; // buildingIdx -> [techIdx whose enables.buildings names it]
+	std::map<int, std::vector<int> > g_enableUnitTechs;     // unitIdx     -> [techIdx whose enables.units names it]
+	bool g_techBuilt = false;
+
+	void rjIndexTechEdge(std::map<int, std::vector<int> >& m, const picojson::object& oSection, const char* szKey, int iTech)
+	{
+		picojson::object::const_iterator it = oSection.find(szKey);
+		if (it == oSection.end() || !it->second.is<picojson::array>()) return;
+		const picojson::array& a = it->second.get<picojson::array>();
+		for (size_t i = 0; i < a.size(); ++i)
+		{
+			if (!a[i].is<std::string>()) continue;
+			const int idx = GC.getInfoTypeForString(a[i].get<std::string>().c_str(), true);
+			if (idx >= 0) m[idx].push_back(iTech);
+		}
+	}
+
+	// ONE scan of the tech JSONs builds BOTH reverse indices: enables (entity -> enabling techs) and obsoletes
+	// (entity -> obsoleting techs). enables gives the forward tech-gate; obsoletes the obsolescence gate.
+	void rjBuildTechIndex()
+	{
+		if (g_techBuilt) return;
+		g_techBuilt = true; // set first -- a parse miss must not retry-loop the whole scan
+		const int iNumTechs = GC.getNumTechInfos();
+		for (int i = 0; i < iNumTechs; ++i)
+		{
+			const char* szType = GC.getTechInfo((TechTypes)i).getType(); // type registry only (EXE-bound, allowed)
+			std::string sContent;
+			if (!rjLocateEntityJson(szType, sContent)) continue;
+			picojson::value root;
+			if (!picojson::parse(root, sContent).empty() || !root.is<picojson::object>()) continue;
+			const picojson::object& o = root.get<picojson::object>();
+			picojson::object::const_iterator itE = o.find("enables");
+			if (itE != o.end() && itE->second.is<picojson::object>())
+			{
+				const picojson::object& oEn = itE->second.get<picojson::object>();
+				rjIndexTechEdge(g_enableBuildingTechs, oEn, "buildings", i);
+				rjIndexTechEdge(g_enableUnitTechs, oEn, "units", i);
+			}
+			picojson::object::const_iterator itO = o.find("obsoletes");
+			if (itO != o.end() && itO->second.is<picojson::object>())
+			{
+				const picojson::object& oObs = itO->second.get<picojson::object>();
+				rjIndexTechEdge(g_obsBuildingTechs, oObs, "buildings", i);
+				rjIndexTechEdge(g_obsUnitTechs, oObs, "units", i);
+			}
+		}
+	}
+} // namespace
+
+bool cascadeIsObsoleteForTeam(int eDomain, int iEntity, int iTeam)
+{
+	if (iTeam < 0 || iTeam >= MAX_TEAMS) return false;
+	rjBuildTechIndex();
+	const std::map<int, std::vector<int> >& m = (eDomain == COUNTDOMAIN_UNIT) ? g_obsUnitTechs : g_obsBuildingTechs;
+	std::map<int, std::vector<int> >::const_iterator it = m.find(iEntity);
+	if (it == m.end()) return false;
+	const CvTeam& kTeam = GET_TEAM((TeamTypes)iTeam);
+	for (size_t i = 0; i < it->second.size(); ++i)
+	{
+		if (kTeam.isHasTech((TechTypes)it->second[i])) return true;
+	}
+	return false;
+}
+
+// ===================== SpecialBuilding GROUP CAP (owner 2026-06-17) =====================
+// A SpecialBuilding is a building GROUP with a shared cap (e.g. SPECIALBUILDING_GROUP_ELITE_UNIVERSITIES -- pick ONE
+// of 15 elite universities). MEMBER->group is authored FORWARD on the building (identity.specialBuildingType, the
+// migrated XML FK); GROUP->members is the derived reverse index we build here ONCE by scanning the building JSONs.
+// The cap (allowed:{scope:N}) lives on the GROUP entity's JSON. Enforcement: a member is buildable only while
+// count(its whole group at the cap's scope) < N -- "at most N of my OWN GROUP". Coexists with the member's own
+// self-cap (allowed:{world:1}); this only adds the group dimension. (Built from JSON, game-thread, no locking.)
+namespace
+{
+	std::map<int, int>               g_buildingGroup;   // buildingIdx -> specialBuildingIdx (its group), or absent
+	std::map<int, std::vector<int> > g_groupMembers;    // specialBuildingIdx -> [member buildingIdx]
+	std::map<int, int>               g_groupCapN;        // specialBuildingIdx -> cap N (absent/-1 == uncapped group)
+	std::map<int, int>               g_groupCapScope;    // specialBuildingIdx -> CountScope of the cap
+	bool g_groupBuilt = false;
+
+	void rjBuildGroupIndex()
+	{
+		if (g_groupBuilt) return;
+		g_groupBuilt = true; // set first -- a parse miss must not retry-loop the scan
+		// PASS 1: building -> group, from each building JSON's identity.specialBuildingType (the migrated FK).
+		const int iNumBuildings = GC.getNumBuildingInfos();
+		for (int i = 0; i < iNumBuildings; ++i)
+		{
+			const char* szType = GC.getBuildingInfo((BuildingTypes)i).getType();
+			std::string sContent;
+			if (!rjLocateEntityJson(szType, sContent)) continue;
+			picojson::value root;
+			if (!picojson::parse(root, sContent).empty() || !root.is<picojson::object>()) continue;
+			const picojson::object& o = root.get<picojson::object>();
+			picojson::object::const_iterator itId = o.find("identity");
+			if (itId == o.end() || !itId->second.is<picojson::object>()) continue;
+			const picojson::object& oId = itId->second.get<picojson::object>();
+			picojson::object::const_iterator itSB = oId.find("specialBuildingType");
+			if (itSB == oId.end() || !itSB->second.is<std::string>()) continue;
+			const int sb = GC.getInfoTypeForString(itSB->second.get<std::string>().c_str(), true);
+			if (sb < 0) continue;
+			g_buildingGroup[i] = sb;
+			g_groupMembers[sb].push_back(i);
+		}
+		// PASS 2: group -> cap, from each grouped SpecialBuilding's JSON `allowed` (only the ~dozens with members).
+		for (std::map<int, std::vector<int> >::const_iterator it = g_groupMembers.begin(); it != g_groupMembers.end(); ++it)
+		{
+			const char* szSB = GC.getSpecialBuildingInfo((SpecialBuildingTypes)it->first).getType();
+			CvEntityAvailability kA;
+			std::string sNotes;
+			if (cascadeReadJsonAvailability(szSB, kA, sNotes))
+			{
+				g_groupCapN[it->first]     = kA.allowedCap;   // -1 if the group is uncapped
+				g_groupCapScope[it->first] = (int)kA.allowedScope;
+			}
+		}
+	}
+} // namespace
+
+bool cascadeBuildingGroupAllows(int iBuilding, const CvCascadeContext& kCtx)
+{
+	rjBuildGroupIndex();
+	std::map<int, int>::const_iterator itG = g_buildingGroup.find(iBuilding);
+	if (itG == g_buildingGroup.end()) return true; // not in any group
+	const int sb = itG->second;
+	std::map<int, int>::const_iterator itN = g_groupCapN.find(sb);
+	if (itN == g_groupCapN.end() || itN->second < 0) return true; // group is uncapped
+	const CountScope eScope = (CountScope)g_groupCapScope[sb];
+	std::map<int, std::vector<int> >::const_iterator itM = g_groupMembers.find(sb);
+	int iCount = 0;
+	if (itM != g_groupMembers.end())
+	{
+		for (size_t k = 0; k < itM->second.size(); ++k)
+		{
+			iCount += cascadeTally().count(COUNTDOMAIN_BUILDING, itM->second[k], eScope, kCtx.contextFor(eScope));
+		}
+	}
+	return iCount < itN->second; // at most N of the whole group at the cap's scope
+}
+
+// GENERATION (forward enables tech-gate): is this entity reachable -- i.e. has the team researched a tech whose
+// JSON `enables` names it? If the entity has NO tech enabler (enabled by a building/civic/always), this does not
+// gate (returns true) -- a non-tech enable is the deeper enables-generation pass. eDomain: COUNTDOMAIN_* values.
+bool cascadeTechReachable(int eDomain, int iEntity, int iTeam)
+{
+	if (iTeam < 0 || iTeam >= MAX_TEAMS) return true; // no team context -> don't gate
+	rjBuildTechIndex();
+	const std::map<int, std::vector<int> >& m = (eDomain == COUNTDOMAIN_UNIT) ? g_enableUnitTechs : g_enableBuildingTechs;
+	std::map<int, std::vector<int> >::const_iterator it = m.find(iEntity);
+	if (it == m.end() || it->second.empty()) return true; // not tech-enabled -> not gated on tech
+	const CvTeam& kTeam = GET_TEAM((TeamTypes)iTeam);
+	for (size_t i = 0; i < it->second.size(); ++i)
+	{
+		if (kTeam.isHasTech((TechTypes)it->second[i])) return true; // an enabling tech is researched
+	}
+	return false; // tech-enabled but none of the enablers researched -> not reachable
+}
+
+// ===================== GENERATION (units): the all-branches-alive upgrade resolver =====================
+// Our clean model of CvCity::allUpgradesAvailable's intent. buildable() is the cascade base (requires+cap+
+// obsolete, NOT the upgrade rule). A unit hides only when EVERY upgrade branch is alive (fully superseded).
+
+namespace
+{
+	std::map<int, std::vector<int> > g_upgradesTo; // unitIdx -> direct upgrade targets (succession.upgradesTo)
+	bool g_upgradeBuilt = false;
+
+	// Parsed-availability cache (static JSON, game-state-independent) -- so a full-roster sweep + the chain
+	// recursion don't re-parse the same unit JSON thousands of times.
+	std::map<int, CvEntityAvailability> g_unitAvailCache;
+	std::map<int, bool> g_unitAvailKnown; // unitIdx -> has-JSON
+
+	const CvEntityAvailability* rjUnitAvail(int iUnit)
+	{
+		std::map<int, bool>::iterator k = g_unitAvailKnown.find(iUnit);
+		if (k != g_unitAvailKnown.end()) return k->second ? &g_unitAvailCache[iUnit] : NULL;
+		CvEntityAvailability kAvail;
+		std::string sNotes;
+		const char* szType = GC.getUnitInfo((UnitTypes)iUnit).getType();
+		const bool bOk = cascadeReadJsonAvailability(szType, kAvail, sNotes);
+		g_unitAvailKnown[iUnit] = bOk;
+		if (bOk) g_unitAvailCache[iUnit] = kAvail;
+		return bOk ? &g_unitAvailCache[iUnit] : NULL;
+	}
+
+	void rjBuildUpgradeIndex()
+	{
+		if (g_upgradeBuilt) return;
+		g_upgradeBuilt = true;
+		const int iNumUnits = GC.getNumUnitInfos();
+		for (int i = 0; i < iNumUnits; ++i)
+		{
+			const char* szType = GC.getUnitInfo((UnitTypes)i).getType();
+			std::string sContent;
+			if (!rjLocateEntityJson(szType, sContent)) continue;
+			picojson::value root;
+			if (!picojson::parse(root, sContent).empty() || !root.is<picojson::object>()) continue;
+			const picojson::object& o = root.get<picojson::object>();
+			picojson::object::const_iterator it = o.find("succession");
+			if (it == o.end() || !it->second.is<picojson::object>()) continue;
+			const picojson::object& succ = it->second.get<picojson::object>();
+			picojson::object::const_iterator itU = succ.find("upgradesTo");
+			if (itU == succ.end() || !itU->second.is<picojson::array>()) continue;
+			const picojson::array& a = itU->second.get<picojson::array>();
+			for (size_t k = 0; k < a.size(); ++k)
+			{
+				if (!a[k].is<std::string>()) continue;
+				const int idx = GC.getInfoTypeForString(a[k].get<std::string>().c_str(), true);
+				if (idx >= 0) g_upgradesTo[i].push_back(idx);
+			}
+		}
+	}
+
+	// The cascade BASE buildability (requires + cap + not-obsolete) -- the recursion's base case, NOT the upgrade rule.
+	bool rjUnitBuildable(int iUnit, const CvCascadeContext& kCtx)
+	{
+		if (iUnit < 0 || iUnit >= GC.getNumUnitInfos()) return false;
+		const CvEntityAvailability* pAvail = rjUnitAvail(iUnit);
+		if (pAvail == NULL) return false; // no JSON -> can't assess -> not buildable
+		if (pAvail->spawnOnly) return false; // wildlife/spawned -> not player-buildable (clean flag, not the iCost==-1 hack)
+		if (!cascadeBuildable(*pAvail, COUNTDOMAIN_UNIT, iUnit, kCtx)) return false; // requires.build now carries the AND techs (isHasTech)
+		const int iTeam = (kCtx.iPlayer >= 0) ? (int)GET_PLAYER((PlayerTypes)kCtx.iPlayer).getTeam() : -1;
+		// NOTE: tech is enforced via requires.build TECH atoms above (the multi-tech AND confirm). The old
+		// cascadeTechReachable() was an OR-over-enables stopgap that over-offered any unit sharing one of several
+		// enabling techs (the MODERN_ARMOR/tank-line bug) -- enables cannot encode AND, so it is gone from the gate.
+		if (cascadeIsObsoleteForTeam(COUNTDOMAIN_UNIT, iUnit, iTeam)) return false; // obsoletion
+		return true;
+	}
+
+	// A branch from v is ALIVE if v is buildable OR some upgrade of v has an alive branch. Memoized per query;
+	// the in-progress 0 doubles as a cycle-guard (a back-edge contributes no aliveness).
+	bool rjBranchAlive(int v, const CvCascadeContext& kCtx, std::map<int, int>& memo)
+	{
+		std::map<int, int>::iterator m = memo.find(v);
+		if (m != memo.end()) return m->second == 1;
+		memo[v] = 0;
+		bool bAlive = rjUnitBuildable(v, kCtx);
+		if (!bAlive)
+		{
+			std::map<int, std::vector<int> >::const_iterator it = g_upgradesTo.find(v);
+			if (it != g_upgradesTo.end())
+			{
+				for (size_t i = 0; i < it->second.size(); ++i)
+				{
+					if (rjBranchAlive(it->second[i], kCtx, memo)) { bAlive = true; break; }
+				}
+			}
+		}
+		memo[v] = bAlive ? 1 : 0;
+		return bAlive;
+	}
+} // namespace
+
+bool cascadeUnitTrainable(int iUnit, const CvCascadeContext& kCtx)
+{
+	if (!rjUnitBuildable(iUnit, kCtx)) return false; // base: must be buildable at all
+	rjBuildUpgradeIndex();
+
+	std::map<int, std::vector<int> >::const_iterator it = g_upgradesTo.find(iUnit);
+	if (it == g_upgradesTo.end() || it->second.empty()) return true; // no upgrades -> top of chain -> kept
+
+	// hidden iff EVERY direct upgrade branch is alive; kept if any branch is dead (the fall-back band)
+	std::map<int, int> memo;
+	for (size_t i = 0; i < it->second.size(); ++i)
+	{
+		if (!rjBranchAlive(it->second[i], kCtx, memo)) return true; // a dead branch keeps this unit on the list
+	}
+	return false; // all branches alive -> fully superseded -> hidden
+}
+
+// ===================== the doTurn shadow harness (buildings, vs the capital city) =====================
+
+namespace
+{
+	void rjLogLine(const CvString& s)
+	{
+		gDLL->logMsg("Cascade.log", s.c_str());
+		streamLogTee(1, s.c_str());
+	}
+
+	int rjEngineCount(int iBuilding, CountScope eScope, int iCtxPlayer)
+	{
+		int iSum = 0;
+		for (int p = 0; p < MAX_PLAYERS; ++p)
+		{
+			const CvPlayer& kP = GET_PLAYER((PlayerTypes)p);
+			if (!kP.isAlive()) continue;
+			if (eScope == COUNTSCOPE_EMPIRE && p != iCtxPlayer) continue;
+			if (eScope == COUNTSCOPE_TEAM && iCtxPlayer >= 0 &&
+				kP.getTeam() != GET_PLAYER((PlayerTypes)iCtxPlayer).getTeam()) continue;
+			iSum += kP.getBuildingCount((BuildingTypes)iBuilding);
+		}
+		return iSum;
+	}
+
+	void rjRunOne(const char* szTypeKey, int iPlayer)
+	{
+		const int iBuilding = GC.getInfoTypeForString(szTypeKey, true);
+		if (iBuilding < 0) { rjLogLine(CvString::format("[READJSON] %s -- type not loaded this game", szTypeKey)); return; }
+
+		CvEntityAvailability kAvail;
+		std::string sNotes;
+		if (!cascadeReadJsonAvailability(szTypeKey, kAvail, sNotes))
+		{
+			rjLogLine(CvString::format("[READJSON] %s -- %s", szTypeKey, sNotes.c_str()));
+			return;
+		}
+
+		CvCity* pCap = (iPlayer >= 0) ? GET_PLAYER((PlayerTypes)iPlayer).getCapitalCity() : NULL;
+		const int iCity = (pCap != NULL) ? pCap->getID() : -1;
+		const int iTeam = (iPlayer >= 0) ? (int)GET_PLAYER((PlayerTypes)iPlayer).getTeam() : -1;
+		CvCascadeContext kCtx(iPlayer, iCity);
+		bool bCascade = cascadeBuildable(kAvail, COUNTDOMAIN_BUILDING, iBuilding, kCtx);
+		if (pCap != NULL && pCap->hasBuilding((BuildingTypes)iBuilding)) bCascade = false;        // generation: already built here
+		if (cascadeIsObsoleteForTeam(COUNTDOMAIN_BUILDING, iBuilding, iTeam)) bCascade = false;    // generation: obsolete
+
+		CvString szCap = "cap=none";
+		if (kAvail.allowedCap >= 0)
+		{
+			const CvBuildingInfo& kInfo = GC.getBuildingInfo((BuildingTypes)iBuilding);
+			int iLegacyCap = -1; const char* szScope = "?";
+			switch (kAvail.allowedScope)
+			{
+			case COUNTSCOPE_WORLD:  iLegacyCap = kInfo.getMaxGlobalInstances(); szScope = "world";  break;
+			case COUNTSCOPE_TEAM:   iLegacyCap = kInfo.getMaxTeamInstances();   szScope = "team";   break;
+			case COUNTSCOPE_EMPIRE: iLegacyCap = kInfo.getMaxPlayerInstances(); szScope = "empire"; break;
+			default: break;
+			}
+			const int iTally = cascadeTally().count(COUNTDOMAIN_BUILDING, iBuilding, kAvail.allowedScope, kCtx.contextFor(kAvail.allowedScope));
+			const int iEngine = rjEngineCount(iBuilding, kAvail.allowedScope, iPlayer);
+			szCap = CvString::format("cap=%s json=%d legacy=%d %s | count tally=%d engine=%d %s",
+				szScope, kAvail.allowedCap, iLegacyCap, (iLegacyCap == kAvail.allowedCap) ? "MATCH" : "DIVERGE",
+				iTally, iEngine, (iTally == iEngine) ? "MATCH" : "DIVERGE");
+		}
+
+		bool bLegacy = false;
+		if (pCap != NULL) bLegacy = pCap->canConstruct((BuildingTypes)iBuilding); // plain "buildable now" -- apples-to-apples
+		const bool bAgree = (bCascade == bLegacy);
+
+		rjLogLine(CvString::format("[READJSON] %s p=%d city=%d | %s | %s | cascade=%d legacy=%d %s",
+			szTypeKey, iPlayer, iCity, sNotes.c_str(), szCap.c_str(), bCascade ? 1 : 0, bLegacy ? 1 : 0,
+			bAgree ? "AGREE" : "DIVERGE"));
+	}
+} // namespace
+
+void cascadeReadJsonSlice()
+{
+	if (gPlayerLogLevel < 1) return;
+
+	int iCtx = (int)GC.getGame().getActivePlayer();
+	if (iCtx < 0 || iCtx >= MAX_PLAYERS || !GET_PLAYER((PlayerTypes)iCtx).isAlive())
+	{
+		iCtx = -1;
+		for (int p = 0; p < MAX_PLAYERS; ++p)
+		{
+			if (GET_PLAYER((PlayerTypes)p).isAlive()) { iCtx = p; break; }
+		}
+	}
+
+	rjRunOne("BUILDING_ABU_SIMBEL", iCtx);          // allowed:{world:1} + disabled:IS_CAPITAL + any:[HAS_TERRAIN(PEAK)]
+	rjRunOne("BUILDING_ACUPUNCTURISTS_SHOP", iCtx); // requires.build.all: BUILDING_C_L_ASIAN @ city
+}

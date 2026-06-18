@@ -23,6 +23,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_GUILDS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

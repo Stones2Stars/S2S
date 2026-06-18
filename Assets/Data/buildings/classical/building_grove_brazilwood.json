@@ -21,6 +21,10 @@
      "type": "BONUS_PRIME_TIMBER",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "TECH_MACHINERY",
+     "scope": "team"
     }
    ],
    "any": [

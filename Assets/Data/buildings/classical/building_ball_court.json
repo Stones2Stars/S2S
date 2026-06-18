@@ -14,6 +14,10 @@
      "type": "BONUS_STONE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_COMBAT_SPORTS",
+     "scope": "team"
     }
    ],
    "any": [

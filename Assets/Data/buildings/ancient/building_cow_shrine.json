@@ -9,6 +9,10 @@
      "type": "BONUS_COW",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_REINCARNATION",
+     "scope": "team"
     }
    ]
   },

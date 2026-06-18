@@ -2,6 +2,16 @@
  "type": "UNIT_ENTERTAINER",
  "description": "TXT_KEY_UNIT_ENTERTAINER",
  "civilopedia": "TXT_KEY_CONCEPT_ENTERTAINER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HERALDRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "PROPERTY_EDUCATION": {
   "city": {
    "flat": 3

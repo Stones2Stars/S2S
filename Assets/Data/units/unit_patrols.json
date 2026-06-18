@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_UNIT_PATROLS_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_LAW_ENFORCEMENT",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

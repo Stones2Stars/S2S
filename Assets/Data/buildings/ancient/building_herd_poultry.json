@@ -17,6 +17,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_POULTRY_DOMESTICATION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

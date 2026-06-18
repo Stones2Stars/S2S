@@ -28,6 +28,16 @@
    "BUILDING_WINERY"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WOMENS_SUFFRAGE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -5

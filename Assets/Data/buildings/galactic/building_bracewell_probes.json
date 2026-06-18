@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_DEEP_SPACE_BISHOP_RING",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ACNP_PROPULSION",
+     "scope": "team"
     }
    ]
   }

@@ -16,6 +16,10 @@
      "type": "BONUS_COW",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "TECH_TRACKING",
+     "scope": "team"
     }
    ],
    "any": [

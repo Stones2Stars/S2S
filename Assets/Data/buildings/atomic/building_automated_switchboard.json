@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_TELEPHONE_NETWORK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ENCRYPTION_MACHINES",
+     "scope": "team"
     }
    ]
   }

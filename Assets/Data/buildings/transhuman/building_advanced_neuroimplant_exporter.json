@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_STARPORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COMPREHENSIVE_CYBERNETICS",
+     "scope": "team"
     }
    ]
   }

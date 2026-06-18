@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_INTERGALACTIC_CULTURE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_IMMORTALITY",
+     "scope": "team"
     }
    ]
   }

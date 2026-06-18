@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_LAVA_ROCK_GATHERER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_WATERPROOF_CONCRETE",
+     "scope": "team"
     }
    ],
    "any": [

@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MUSICAL_NOTATION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

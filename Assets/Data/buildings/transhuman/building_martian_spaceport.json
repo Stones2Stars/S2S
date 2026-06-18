@@ -17,6 +17,14 @@
     {
      "type": "BUILDING_MARTIAN_METROPOLIS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HYPERMAGNETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_KUIPER_BELT_EXPLORATION",
+     "scope": "team"
     }
    ]
   }

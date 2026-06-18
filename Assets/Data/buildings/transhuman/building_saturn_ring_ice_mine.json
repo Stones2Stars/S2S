@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_SATURN_RING_ICE_MINE_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_KUIPER_BELT_EXPLORATION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

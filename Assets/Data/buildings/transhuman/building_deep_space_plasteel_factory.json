@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_DEEP_SPACE_ASSEMBLER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HYPERMAGNETICS",
+     "scope": "team"
     }
    ]
   }

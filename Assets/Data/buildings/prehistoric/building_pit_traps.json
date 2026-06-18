@@ -7,6 +7,20 @@
    "BUILDING_SPIKED_PIT_TRAPS"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CARVING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRAPPING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "happiness": {
   "city": {
    "flat": -1

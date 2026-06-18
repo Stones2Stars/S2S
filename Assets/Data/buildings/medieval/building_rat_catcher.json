@@ -24,6 +24,10 @@
      "latitude": {
       "max": 80
      }
+    },
+    {
+     "type": "TECH_RAT_CATCHING",
+     "scope": "team"
     }
    ],
    "any": [

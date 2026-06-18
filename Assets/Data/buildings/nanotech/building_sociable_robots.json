@@ -24,6 +24,10 @@
     {
      "type": "BUILDING_INTUITIVE_ALGORITHMS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CYBERSOCIAL_INTEGRATION",
+     "scope": "team"
     }
    ]
   }

@@ -13,6 +13,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_PIRACY",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

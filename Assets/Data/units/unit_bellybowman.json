@@ -2,6 +2,16 @@
  "type": "UNIT_BELLYBOWMAN",
  "description": "TXT_KEY_UNIT_BELLYBOWMAN",
  "civilopedia": "TXT_KEY_UNIT_CROSSBOWMAN_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ANCIENT_MACHINERY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {

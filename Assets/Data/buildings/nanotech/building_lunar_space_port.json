@@ -23,6 +23,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_LUNAR_TOURISM",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_PLASTIC",
      "scope": "city",
      "connection": "trade|vicinity"

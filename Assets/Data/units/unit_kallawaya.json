@@ -9,6 +9,10 @@
      "type": "BONUS_MOLLO",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_ELIXIRS_AND_TONICS",
+     "scope": "team"
     }
    ],
    "any": [

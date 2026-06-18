@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_SHOPPING_DISTRICT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DISASTER_ROBOTS",
+     "scope": "team"
     }
    ]
   }

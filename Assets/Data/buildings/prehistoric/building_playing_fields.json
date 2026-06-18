@@ -12,6 +12,16 @@
    "BUILDING_ATHLETIC_FIELDS"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GAMES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "happiness": {
   "city": {
    "flat": 1

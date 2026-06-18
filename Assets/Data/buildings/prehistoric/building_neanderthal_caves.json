@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_C_L_NEANDERTHAL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CAVE_DWELLING",
+     "scope": "team"
     }
    ],
    "any": [

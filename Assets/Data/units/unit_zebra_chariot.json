@@ -4,6 +4,16 @@
  "civilopedia": "TXT_KEY_UNIT_CHARIOT_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CHARIOTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEGAFAUNA_DOMESTICATION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

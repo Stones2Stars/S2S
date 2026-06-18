@@ -2,6 +2,16 @@
  "type": "UNIT_BLEEDER",
  "description": "TXT_KEY_UNIT_BLEEDER",
  "civilopedia": "TXT_KEY_UNIT_BLEEDER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_REGENERATIVE_MEDICINE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "capabilities": {
   "ignoreBuildingDefense": true,
   "militaryHappiness": true,

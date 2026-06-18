@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERGALACTIC_VON_NEUMANN_COLONIZERS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COMPUTRONIUM_UNIVERSE",
+     "scope": "team"
     }
    ]
   }

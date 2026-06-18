@@ -9,6 +9,10 @@
      "type": "BONUS_MASSAGETAE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MASONRY",
+     "scope": "team"
     }
    ]
   }

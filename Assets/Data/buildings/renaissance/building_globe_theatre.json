@@ -18,6 +18,10 @@
      "type": "BUILDING_THEATRE",
      "scope": "empire",
      "min": 4
+    },
+    {
+     "type": "TECH_FREE_ARTISTRY",
+     "scope": "team"
     }
    ]
   }

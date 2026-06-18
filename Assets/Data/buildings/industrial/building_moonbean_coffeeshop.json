@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_MOONBEAN_COFFEESHOP_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MASS_TRANSIT",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

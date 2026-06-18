@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_WELFARE_OFFICE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_LABOR_UNIONS",
+     "scope": "team"
     }
    ]
   },

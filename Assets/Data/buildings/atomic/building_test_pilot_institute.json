@@ -9,6 +9,10 @@
      "type": "BONUS_STEEL_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_COMPOSITES",
+     "scope": "team"
     }
    ],
    "any": [

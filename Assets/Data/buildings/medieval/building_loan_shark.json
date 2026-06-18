@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_USURY",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

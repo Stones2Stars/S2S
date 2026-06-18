@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_ART_GALLERY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MODERN_ART",
+     "scope": "team"
     }
    ]
   }

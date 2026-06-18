@@ -35,6 +35,10 @@
     {
      "type": "BUILDING_AQUARIUM",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ECOLOGY",
+     "scope": "team"
     }
    ],
    "any": [

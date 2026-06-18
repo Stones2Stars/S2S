@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_LUNAR_SPACE_PORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_LUNAR_TOURISM",
+     "scope": "team"
     }
    ]
   }

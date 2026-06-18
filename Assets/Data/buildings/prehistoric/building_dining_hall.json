@@ -4,6 +4,16 @@
  "civilopedia": "TXT_KEY_BUILDING_DINING_HALL_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_SIMPLE_WOOD_WORKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COOKING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

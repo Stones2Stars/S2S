@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_C_L_AFRICAN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COMMUNISM",
+     "scope": "team"
     }
    ],
    "any": [

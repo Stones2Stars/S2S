@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST",
      "scope": "city"
+    },
+    {
+     "type": "TECH_APPLIED_RELATIVITY",
+     "scope": "team"
     }
    ],
    "any": [

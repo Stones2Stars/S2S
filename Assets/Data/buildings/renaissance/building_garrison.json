@@ -27,6 +27,16 @@
    "BUILDING_BARRACKS"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LEADERSHIP",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "buildRate": {
   "city": {
    "domains": {

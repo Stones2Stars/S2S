@@ -5,6 +5,12 @@
  "help": "TXT_KEY_BUILDING_CULTURE_NEANDERTHAL_HELP",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CAVE_DWELLING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

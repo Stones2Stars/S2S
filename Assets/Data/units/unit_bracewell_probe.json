@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ACNP_PROPULSION",
+     "scope": "team"
     }
    ]
   }

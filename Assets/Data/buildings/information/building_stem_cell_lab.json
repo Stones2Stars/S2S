@@ -28,6 +28,10 @@
     {
      "type": "BUILDING_CLONING_LABORATORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CLONING",
+     "scope": "team"
     }
    ],
    "any": [

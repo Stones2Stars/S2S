@@ -10,6 +10,10 @@
      "type": "BONUS_WARP_DRIVES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_SPACE_CREASING",
+     "scope": "team"
     }
    ],
    "any": [

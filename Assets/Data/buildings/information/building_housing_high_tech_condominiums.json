@@ -53,6 +53,10 @@
     {
      "type": "BUILDING_COMPUTER_NETWORK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_RAPID_PROTOTYPING",
+     "scope": "team"
     }
    ]
   }

@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERGALACTIC_GOVERNMENT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_INTERGALACTIC_EMPIRE",
+     "scope": "team"
     }
    ],
    "noneOf": [

@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SPECIALIZATION",
+     "scope": "team"
     }
    ]
   }

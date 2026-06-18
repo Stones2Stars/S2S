@@ -9,6 +9,10 @@
      "type": "BONUS_BRAZILIAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_LIBERALISM",
+     "scope": "team"
     }
    ]
   }

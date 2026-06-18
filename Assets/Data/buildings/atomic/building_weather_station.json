@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_MODERN_OFFICES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_LONG_RANGE_FORECASTING",
+     "scope": "team"
     }
    ],
    "any": [

@@ -14,6 +14,10 @@
      "type": "BONUS_ALCOHOL",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_ELIXIRS_AND_TONICS",
+     "scope": "team"
     }
    ]
   }

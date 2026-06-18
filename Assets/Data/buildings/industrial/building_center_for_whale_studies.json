@@ -22,6 +22,10 @@
      "type": "BUILDING_MARINE_INSTITUTE",
      "scope": "empire",
      "min": 3
+    },
+    {
+     "type": "TECH_MARINE_BIOLOGY",
+     "scope": "team"
     }
    ],
    "noneOf": [

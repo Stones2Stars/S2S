@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_BANKS_ORBITAL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ULTIMA_ARCHITECTURE",
+     "scope": "team"
     }
    ]
   }

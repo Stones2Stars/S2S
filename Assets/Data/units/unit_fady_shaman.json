@@ -11,6 +11,10 @@
      "connection": "trade|vicinity"
     },
     {
+     "type": "TECH_ANCIENT_MEDICINE",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_SOAP",
      "scope": "city",
      "connection": "trade|vicinity"

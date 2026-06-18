@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_INTERNET_FRAUD",
  "description": "TXT_KEY_BUILDING_CRIME_INTERNET_FRAUD",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_INTERNET_FRAUD_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FIBER_OPTICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -10,

@@ -10,6 +10,10 @@
      "type": "BONUS_ALICE_MATTER",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_HORIZON_BREAKING",
+     "scope": "team"
     }
    ],
    "any": [

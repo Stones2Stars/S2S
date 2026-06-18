@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_ANIMAL_TRAINER_DONKEY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PLOUGH",
+     "scope": "team"
     }
    ]
   }

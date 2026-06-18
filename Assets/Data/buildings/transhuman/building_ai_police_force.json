@@ -25,6 +25,10 @@
     {
      "type": "BUILDING_MEGATOWER_POLICE_STATION_LEVEL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_UTOPIA_DESTINY",
+     "scope": "team"
     }
    ]
   }

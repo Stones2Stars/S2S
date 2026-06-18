@@ -20,6 +20,10 @@
     {
      "type": "BUILDING_CLOUD_SERVER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_OPTRONICS",
+     "scope": "team"
     }
    ]
   }

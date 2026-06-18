@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_UNIVERSAL_LIBRARY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MENSIOKINESIS",
+     "scope": "team"
     }
    ]
   }

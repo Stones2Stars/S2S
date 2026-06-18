@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MANIFOLD_COLONIZATION",
+     "scope": "team"
     }
    ]
   }

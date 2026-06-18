@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_MIND_CONTROL_CENTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MIND_UPLOADING",
+     "scope": "team"
     }
    ]
   }

@@ -7,16 +7,19 @@ Every flag against the VALID tree is a parser gap or a spec ambiguity; every fla
 is a hole in the harness's diagnostics.
 
 ## Two trees
+
 - **valid** (`buildings/ units/ bonuses/ techs/ civics/ religions/ heritages/`) — spec-legal, maximally gnarly.
   **Goal: ZERO conformance flags.** Run: `readjson.exe Tools/ReadJson/testdata` (skip `invalid/` — see below).
 - **invalid** (`invalid/`) — deliberately malformed. **Goal: each known error is FLAGGED.** Negative-test oracle.
   Run it alone: `readjson.exe Tools/ReadJson/testdata/invalid`.
 
 ## The linked "gnarl" web (to surface BONUS weirdness)
+
 The valid entities cross-reference each other, centered on **`BONUS_GNARLITE`**, because the model's invariant is
 that **a bonus is only ever a conditioner / enabler / own-deposit — NEVER a modifier target** (the "coal test").
 If anything inverts a modifier ONTO the bonus, `--render BONUS_GNARLITE` will show it receiving instead of only
 emitting/enabling. The edges:
+
 - `BONUS_GNARLITE` — `enables` the building/unit/route; owns plot yields + empire health/happiness. (hub)
 - `TECH_GNARLOLOGY` — spine root: `enables` the building/unit/bonus/civic/religion/build; `obsoletes`; multi-parent
   `requires.build` (all + any); a downward deposit keyed onto the building (`gold.city.buildings.{TEMPLE}`).
@@ -37,6 +40,7 @@ emitting/enabling. The edges:
   `ai` siblings, active-gated property sources (`enabled:{TECH,team}` — the corrected `active.GOM_TECH` shape).
 
 ## Negative-test oracle — `invalid/building_gnarl_abomination.json` SHOULD flag (≈15):
+
 `enables: unknown bucket 'gizmos'` · `enables bucket not array` (units) · `enables-family not object` (obsoletes) ·
 `requires: unknown sub 'maintain'` · `'all' not array` · `atom: bad scope 'galaxy'` · `atom: unknown key 'wat'` ·
 `unrecognized condition object` (noneOf atom w/ no type) · `condition: unexpected value type` (enabled:42) ·
@@ -46,11 +50,13 @@ emitting/enabling. The edges:
 (If the harness raises FEWER than these, its diagnostics have a gap — fix the harness, not the file.)
 
 Other invalid files (each a separate error path the abomination can't reach):
+
 - `invalid/not_an_object.json` (root is a JSON array) → `entity not an object`.
 - `invalid/requires_not_object.json` (`requires` is a string) → `requires not object`.
 - `invalid/broken_containers.json` → `'any' not array` · `'noneOf' not array` · `per not object`.
 
 ## The MODDER-TOOL vision (owner 2026-06-16)
+
 This harness is a candidate to **ship to modders** as a standalone validator: feed it your JSON, get (1) conformance
 flags (grammar/vocab errors) and (2) a clear-text RENDER (`--render TYPE`) of what the entity MEANS. The render is
 the **intent check** — a modder reads "Temple of Gnarl builds faster with gnarlite; +2 happiness; dorms without

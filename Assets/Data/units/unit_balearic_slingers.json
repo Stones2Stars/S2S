@@ -9,6 +9,10 @@
      "type": "BONUS_CELTIBERIAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_ANCIENT_MACHINERY",
+     "scope": "team"
     }
    ]
   }

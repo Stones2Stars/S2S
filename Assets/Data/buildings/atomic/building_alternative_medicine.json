@@ -24,6 +24,16 @@
    "BUILDING_TRANCE_HUT"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COUNTERCULTURE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "flat": 10,

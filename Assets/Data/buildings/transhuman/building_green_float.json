@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_FARMSCRAPER_III",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BOTANICAL_ALCHEMY",
+     "scope": "team"
     }
    ]
   }

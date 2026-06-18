@@ -27,6 +27,10 @@
      "type": "BUILDING_ARTIST_COLONY",
      "scope": "empire",
      "min": 4
+    },
+    {
+     "type": "TECH_FREE_ARTISTRY",
+     "scope": "team"
     }
    ]
   }

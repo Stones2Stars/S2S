@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_BACTERIUM_BIOFORGE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DYSTOPIA_PATHOGENS",
+     "scope": "team"
     }
    ]
   }

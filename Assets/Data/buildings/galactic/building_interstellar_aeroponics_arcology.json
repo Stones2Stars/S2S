@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_ADAPTIVE_ARCHITECTURE",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

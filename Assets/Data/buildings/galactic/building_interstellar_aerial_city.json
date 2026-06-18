@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_AERIAL_CITY_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_ADAPTIVE_ARCHITECTURE",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

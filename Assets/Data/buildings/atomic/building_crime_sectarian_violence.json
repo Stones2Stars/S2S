@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_SECTARIAN_VIOLENCE",
  "description": "TXT_KEY_BUILDING_CRIME_SECTARIAN_VIOLENCE",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_SECTARIAN_VIOLENCE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PROPAGANDA",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "percent": -10

@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_DISTANT_FUTURE_CITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TIME_REVERSAL",
+     "scope": "team"
     }
    ]
   }

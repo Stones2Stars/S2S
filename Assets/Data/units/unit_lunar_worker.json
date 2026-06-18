@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_LUNAR_DROID_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ANDROIDS",
+     "scope": "team"
     }
    ]
   }

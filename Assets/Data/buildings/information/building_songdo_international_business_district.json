@@ -9,6 +9,10 @@
      "type": "POPULATION",
      "scope": "city",
      "min": 20
+    },
+    {
+     "type": "TECH_MEGACITIES",
+     "scope": "team"
     }
    ]
   }

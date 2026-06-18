@@ -41,6 +41,10 @@
      "type": "BONUS_GLASSWARE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_ASTRONOMY",
+     "scope": "team"
     }
    ],
    "any": [

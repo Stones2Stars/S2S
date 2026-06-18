@@ -19,6 +19,10 @@
      "type": "BONUS_AUTOMOBILES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MASS_TRANSIT",
+     "scope": "team"
     }
    ],
    "any": [

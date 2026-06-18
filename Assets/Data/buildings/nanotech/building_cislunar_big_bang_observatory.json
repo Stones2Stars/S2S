@@ -16,6 +16,10 @@
     {
      "type": "BUILDING_CISLUNAR_TELESCOPE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_AMPLIFIED_WAVELENGTHS",
+     "scope": "team"
     }
    ]
   }

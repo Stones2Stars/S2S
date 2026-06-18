@@ -20,6 +20,10 @@
      "latitude": {
       "min": 35
      }
+    },
+    {
+     "type": "TECH_SALT_PROCESSING",
+     "scope": "team"
     }
    ],
    "any": [

@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_DEEP_SPACE_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NANOSHIELDING",
+     "scope": "team"
     }
    ],
    "any": [

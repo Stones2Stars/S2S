@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_REPLACEABLE_PARTS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

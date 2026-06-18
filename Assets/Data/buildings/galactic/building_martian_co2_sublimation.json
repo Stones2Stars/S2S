@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_MARTIAN_MEGACITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ASTROECOLOGY",
+     "scope": "team"
     }
    ]
   }

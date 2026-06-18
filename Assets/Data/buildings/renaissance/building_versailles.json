@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_VERSAILLES_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_DIVINE_RIGHT",
+     "scope": "team"
+    }
+   ],
    "disabled": "IS_CAPITAL"
   }
  },

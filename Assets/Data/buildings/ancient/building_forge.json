@@ -32,6 +32,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_METAL_CASTING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

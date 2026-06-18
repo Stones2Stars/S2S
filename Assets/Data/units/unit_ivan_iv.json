@@ -9,6 +9,10 @@
      "type": "BONUS_RUSSIAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_GUILDS",
+     "scope": "team"
     }
    ]
   }

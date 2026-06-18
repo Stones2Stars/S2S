@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_DEEP_SPACE_ORBITAL_BASE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_KUIPER_BELT_EXPLORATION",
+     "scope": "team"
     }
    ],
    "any": [

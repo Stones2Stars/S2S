@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_TRANSTELLAR_DYSON_SPHERE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HYPERLANES",
+     "scope": "team"
     }
    ]
   }

@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_LABORATORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ADVANCED_ROCKETRY",
+     "scope": "team"
     }
    ],
    "any": [

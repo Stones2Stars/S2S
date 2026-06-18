@@ -20,6 +20,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CEREMONIAL_BURIAL",
+     "scope": "team"
+    }
+   ],
    "noneOf": [
     {
      "type": "BUILDING_BURIAL_TRADITION_CAVE",

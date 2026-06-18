@@ -13,6 +13,16 @@
    "BUILDING_LUNAR_WATER_EXTRACTION_FACILITY"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LUNAR_COLONIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -1000

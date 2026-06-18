@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_VIRTUAL_ECONOMY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BINARY_LEGISLATION",
+     "scope": "team"
     }
    ]
   }

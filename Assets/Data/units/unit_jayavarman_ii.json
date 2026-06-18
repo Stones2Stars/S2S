@@ -9,6 +9,10 @@
      "type": "BONUS_KHMER",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MUSICAL_NOTATION",
+     "scope": "team"
     }
    ]
   }

@@ -16,6 +16,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_WORMHOLE_COMMUNICATIONS",
+     "scope": "team"
     }
    ]
   }

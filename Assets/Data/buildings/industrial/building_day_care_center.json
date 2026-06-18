@@ -17,6 +17,16 @@
    "BUILDING_CHILDCARE_HUT"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WOMENS_SUFFRAGE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "flat": 1

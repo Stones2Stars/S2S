@@ -2,6 +2,16 @@
  "type": "UNIT_BALLOON",
  "description": "TXT_KEY_UNIT_BALLOON",
  "civilopedia": "TXT_KEY_UNIT_BALLOON_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HOT_AIR_BALLOON",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 25

@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_TRITON_HEAT_RING",
      "scope": "city"
+    },
+    {
+     "type": "TECH_LAUNCH_ARCOLOGY",
+     "scope": "team"
     }
    ],
    "any": [

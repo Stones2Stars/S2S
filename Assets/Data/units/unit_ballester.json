@@ -9,6 +9,10 @@
      "type": "BONUS_CATALONIAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

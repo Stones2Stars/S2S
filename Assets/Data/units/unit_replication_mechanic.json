@@ -11,6 +11,10 @@
      "connection": "trade|vicinity"
     },
     {
+     "type": "TECH_3D_PRINTING",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_HELICOPTERS",
      "scope": "city",
      "connection": "trade|vicinity"

@@ -16,6 +16,10 @@
     {
      "type": "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MOLECULAR_SCANNING",
+     "scope": "team"
     }
    ]
   }

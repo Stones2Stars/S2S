@@ -30,6 +30,14 @@
     {
      "type": "BUILDING_MEDICAL_CLINIC",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NEURAL_NETWORKS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GENETIC_BIOCHEMISTRY",
+     "scope": "team"
     }
    ]
   }

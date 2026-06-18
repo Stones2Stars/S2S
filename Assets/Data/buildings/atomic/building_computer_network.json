@@ -77,6 +77,10 @@
     {
      "type": "BUILDING_MODERN_OFFICES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COMPUTER_NETWORKS",
+     "scope": "team"
     }
    ],
    "any": [

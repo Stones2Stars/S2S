@@ -2,6 +2,16 @@
  "type": "UNIT_MILITIA_INDUSTRIAL",
  "description": "TXT_KEY_UNIT_MILITIA_INDUSTRIAL",
  "civilopedia": "TXT_KEY_UNIT_MILITIA_INDUSTRIAL_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASSEMBLY_LINE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "capabilities": {
   "pillage": true,
   "militaryHappiness": true,
@@ -17,6 +27,7 @@
   "upkeep": 1
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 2,
   "militaryWorth": 16,
   "xpValueAttack": 5,

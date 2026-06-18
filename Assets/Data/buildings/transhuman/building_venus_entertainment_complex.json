@@ -2,6 +2,16 @@
  "type": "BUILDING_VENUS_ENTERTAINMENT_COMPLEX",
  "description": "TXT_KEY_BUILDING_VENUS_ENTERTAINMENT_COMPLEX",
  "civilopedia": "TXT_KEY_BUILDING_VENUS_ENTERTAINMENT_COMPLEX_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NEURON_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": 120

@@ -14,6 +14,10 @@
      "type": "BONUS_CHEMICALS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_ORGANIC_CHEMISTRY",
+     "scope": "team"
     }
    ],
    "any": [

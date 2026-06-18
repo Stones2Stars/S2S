@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_ECUMENOPOLIS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SPECIES_AMALGAMATION",
+     "scope": "team"
     }
    ]
   }

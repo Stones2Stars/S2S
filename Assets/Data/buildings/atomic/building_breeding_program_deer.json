@@ -29,6 +29,10 @@
     {
      "type": "BUILDING_ZOO",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ECOLOGY",
+     "scope": "team"
     }
    ]
   }

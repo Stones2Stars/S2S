@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_INTERGALACTIC_RESEARCH_BASE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_LUMINAL_BEINGS",
+     "scope": "team"
     }
    ]
   }

@@ -9,6 +9,10 @@
      "type": "BONUS_ABORIGINE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_DEPUTIZATION",
+     "scope": "team"
     }
    ]
   }

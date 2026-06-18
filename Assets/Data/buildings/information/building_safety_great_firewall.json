@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_COMPUTER_NETWORK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CYBERWARFARE",
+     "scope": "team"
     }
    ]
   },

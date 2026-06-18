@@ -27,6 +27,14 @@
     {
      "type": "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BIOMETRIC_WARFARE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANO_ARCHITECTURE",
+     "scope": "team"
     }
    ]
   }

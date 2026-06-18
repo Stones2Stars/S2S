@@ -16,6 +16,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_FELINE_DOMESTICATION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

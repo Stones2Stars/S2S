@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_TRAFFIC_SIGNALS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_KNOWLEDGE_MANAGEMENT",
+     "scope": "team"
     }
    ]
   }

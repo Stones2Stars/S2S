@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_ALEPH_ASSEMBLER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ELECTROWEAK_MATTER",
+     "scope": "team"
     }
    ]
   }

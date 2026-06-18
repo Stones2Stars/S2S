@@ -2,6 +2,16 @@
  "type": "UNIT_SS2_REWARD",
  "description": "TXT_KEY_UNIT_SS2_REWARD",
  "civilopedia": "TXT_KEY_UNIT_SS2_REWARD_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SPACE_TOURISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "capabilities": {
   "canMoveAllTerrain": true,
   "canMoveImpassable": true,
@@ -36,6 +46,7 @@
   "upkeep": 1
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

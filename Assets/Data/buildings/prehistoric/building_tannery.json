@@ -19,6 +19,10 @@
      "type": "BONUS_HIDE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_TANNING",
+     "scope": "team"
     }
    ],
    "any": [

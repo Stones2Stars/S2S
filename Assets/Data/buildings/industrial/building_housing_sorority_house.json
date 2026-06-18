@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_UNIVERSITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_WOMENS_SUFFRAGE",
+     "scope": "team"
     }
    ]
   }

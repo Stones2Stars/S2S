@@ -9,6 +9,10 @@
      "type": "BONUS_MARTIAN_ROCKS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_PLANETARY_EXTRACTION",
+     "scope": "team"
     }
    ]
   }

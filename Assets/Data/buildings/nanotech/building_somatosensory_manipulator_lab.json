@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_NEURON_REGENERATOR_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CYBERNETICS",
+     "scope": "team"
     }
    ]
   }

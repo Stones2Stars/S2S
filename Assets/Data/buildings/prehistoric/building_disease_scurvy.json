@@ -2,6 +2,16 @@
  "type": "BUILDING_DISEASE_SCURVY",
  "description": "TXT_KEY_BUILDING_DISEASE_SCURVY",
  "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NATUROPATHY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "percent": -1

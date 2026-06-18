@@ -9,6 +9,10 @@
      "type": "BONUS_AZANDE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MERCANTILISM",
+     "scope": "team"
     }
    ]
   }

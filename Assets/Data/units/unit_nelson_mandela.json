@@ -9,6 +9,10 @@
      "type": "BONUS_SOUTH_AFRICAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MASS_MEDIA",
+     "scope": "team"
     }
    ]
   }

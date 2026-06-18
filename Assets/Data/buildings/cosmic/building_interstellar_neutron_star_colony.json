@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_CAPTURED_NEUTRON_STARS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GRAND_UNIFICATION_BIOLOGY",
+     "scope": "team"
     }
    ],
    "any": [

@@ -3,6 +3,16 @@
  "description": "TXT_KEY_BUILDING_ZIZKOV_TELEVISION_TOWER",
  "civilopedia": "TXT_KEY_BUILDING_ZIZKOV_TELEVISION_TOWER_PEDIA",
  "help": "TXT_KEY_BUILDING_ZIZKOV_TELEVISION_TOWER_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MASS_MEDIA",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

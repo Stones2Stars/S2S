@@ -3,6 +3,16 @@
  "description": "TXT_KEY_BUILDING_ROUTE_66_TERMINUS",
  "civilopedia": "TXT_KEY_BUILDING_ROUTE_66_PEDIA",
  "help": "TXT_KEY_BUILDING_ROUTE_66_TERMINUS_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HIGHWAY_SYSTEMS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "tradeRoutes": {
   "city": {
    "flat": 3,

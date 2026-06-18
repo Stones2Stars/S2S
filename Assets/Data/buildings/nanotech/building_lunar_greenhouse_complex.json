@@ -16,6 +16,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_LUNAR_MANUFACTURING",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_FERTILIZERS",
      "scope": "city",
      "connection": "trade|vicinity"

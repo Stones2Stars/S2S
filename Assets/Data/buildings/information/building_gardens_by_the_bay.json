@@ -15,6 +15,10 @@
     {
      "type": "BUILDING_ECOSCRAPER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ECOLOGICAL_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

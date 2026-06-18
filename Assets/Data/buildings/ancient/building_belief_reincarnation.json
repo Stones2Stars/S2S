@@ -2,6 +2,16 @@
  "type": "BUILDING_BELIEF_REINCARNATION",
  "description": "TXT_KEY_BUILDING_BELIEF_REINCARNATION",
  "civilopedia": "TXT_KEY_BUILDING_BELIEF_REINCARNATION_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_REINCARNATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": 1

@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_C_L_OCEANIAN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PREHISTORIC_DANCE",
+     "scope": "team"
     }
    ],
    "any": [

@@ -19,6 +19,14 @@
     {
      "type": "BUILDING_COURTHOUSE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CODE_OF_LAWS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CURRENCY",
+     "scope": "team"
     }
    ]
   }

@@ -24,6 +24,10 @@
      "type": "BUILDING_GIGAVERSE_PORTAL",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_MACROVERSE_TRAVERSAL",
+     "scope": "team"
     }
    ]
   }

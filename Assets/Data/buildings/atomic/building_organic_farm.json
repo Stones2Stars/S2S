@@ -12,6 +12,16 @@
    "BUILDING_FARMSCRAPER_I"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AGRICHEMICALS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 4

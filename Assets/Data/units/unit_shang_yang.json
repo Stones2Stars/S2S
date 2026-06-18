@@ -9,6 +9,10 @@
      "type": "BONUS_QIN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_PHILOSOPHY",
+     "scope": "team"
     }
    ]
   }

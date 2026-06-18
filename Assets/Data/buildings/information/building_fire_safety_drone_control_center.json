@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_FIRE_STATION",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DISASTER_ROBOTS",
+     "scope": "team"
     }
    ]
   }

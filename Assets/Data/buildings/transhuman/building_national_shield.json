@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_INDUSTRIAL_PARK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ADVANCED_SHIELDING",
+     "scope": "team"
     }
    ]
   }

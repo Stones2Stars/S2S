@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_E_STOCK_MARKET",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SPACETIME_ECONOMICS",
+     "scope": "team"
     }
    ]
   }

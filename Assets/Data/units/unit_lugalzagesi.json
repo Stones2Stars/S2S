@@ -9,6 +9,10 @@
      "type": "BONUS_SUMERIAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MONARCHY",
+     "scope": "team"
     }
    ]
   }

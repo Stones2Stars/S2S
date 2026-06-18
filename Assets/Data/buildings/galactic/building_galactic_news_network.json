@@ -9,6 +9,10 @@
      "type": "BUILDING_INTERSTELLAR_WORMHOLE_BEACON",
      "scope": "empire",
      "min": 3
+    },
+    {
+     "type": "TECH_WORMHOLE_COMMUNICATIONS",
+     "scope": "team"
     }
    ]
   }

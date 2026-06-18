@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FEMTOTECHNOLOGY",
+     "scope": "team"
     }
    ]
   }

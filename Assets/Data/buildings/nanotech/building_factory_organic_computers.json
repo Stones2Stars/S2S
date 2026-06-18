@@ -14,6 +14,14 @@
     {
      "type": "BUILDING_ORGANIC_COMPUTER_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MAINSTREAM_CLONING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AUGMENTED_CONSUMABLES",
+     "scope": "team"
     }
    ]
   }

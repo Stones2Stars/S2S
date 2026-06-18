@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
      "scope": "city"
+    },
+    {
+     "type": "TECH_POSTHUMANISM",
+     "scope": "team"
     }
    ],
    "any": [

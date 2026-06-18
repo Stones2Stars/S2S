@@ -17,6 +17,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_ADVANCED_SEEDSHIPS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

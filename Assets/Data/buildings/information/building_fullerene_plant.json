@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_EPSILON_ASSEMBLER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GRAPHENE_ALLOYS",
+     "scope": "team"
     }
    ]
   }

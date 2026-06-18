@@ -2,6 +2,16 @@
  "type": "BUILDING_INTERSTELLAR_CRYONIC_SLEEPING_QUARTERS",
  "description": "TXT_KEY_BUILDING_INTERSTELLAR_CRYONIC_SLEEPING_QUARTERS",
  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CRYONIC_SLEEPING_QUARTERS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INTERSTELLAR_TRAVEL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": 25

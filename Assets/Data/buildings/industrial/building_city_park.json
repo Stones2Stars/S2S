@@ -17,6 +17,16 @@
    "BUILDING_ROCK_GARDEN"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CIVIL_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": 7

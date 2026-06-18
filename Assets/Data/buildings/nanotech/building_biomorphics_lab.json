@@ -23,6 +23,14 @@
     {
      "type": "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_THOUGHT_SCANNING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GENESIS_BIOLOGY",
+     "scope": "team"
     }
    ],
    "any": [

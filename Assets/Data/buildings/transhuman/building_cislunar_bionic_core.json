@@ -16,6 +16,14 @@
     {
      "type": "BUILDING_CISLUNAR_SOCIAL_ENGINEERING",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BOTANICAL_ALCHEMY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_EVOLVED_CONSTRUCTION",
+     "scope": "team"
     }
    ]
   }

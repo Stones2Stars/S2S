@@ -8,6 +8,16 @@
    "BUILDING_GETTY_CENTER"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FREE_ARTISTRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": 2,

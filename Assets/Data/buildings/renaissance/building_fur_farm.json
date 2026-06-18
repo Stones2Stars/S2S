@@ -9,6 +9,10 @@
      "latitude": {
       "max": 60
      }
+    },
+    {
+     "type": "TECH_FREE_ARTISTRY",
+     "scope": "team"
     }
    ],
    "any": [

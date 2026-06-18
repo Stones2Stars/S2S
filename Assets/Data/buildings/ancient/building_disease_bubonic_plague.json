@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_PESTS_FLEAS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
     }
    ]
   }

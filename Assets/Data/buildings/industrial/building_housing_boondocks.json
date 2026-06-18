@@ -26,6 +26,10 @@
     {
      "type": "BUILDING_SEWER_SYSTEM",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TELEPHONE",
+     "scope": "team"
     }
    ]
   }

@@ -3,6 +3,14 @@
  "description": "TXT_KEY_BUILDING_WASTE_EXPORTATION_OFFICE",
  "civilopedia": "TXT_KEY_BUILDING_WASTE_EXPORTATION_OFFICE_PEDIA",
  "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECONOMICS",
+     "scope": "team"
+    }
+   ]
+  },
   "operate": {
    "all": [
     {

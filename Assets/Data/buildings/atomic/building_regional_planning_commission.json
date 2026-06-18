@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_REGIONAL_PLANNING_COMMISSION_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_NEW_URBANISM",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

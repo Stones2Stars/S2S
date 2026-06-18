@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_ASTEROID_WATER_SHIELD",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ASTEROID_EXTRACTION",
+     "scope": "team"
     }
    ],
    "any": [

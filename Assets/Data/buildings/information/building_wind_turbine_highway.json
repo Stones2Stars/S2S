@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_POWER_LINES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_RENEWABLE_ENERGY",
+     "scope": "team"
     }
    ],
    "any": [

@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_VENUS_SURFACE_CITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FUSION_SPACECRAFT",
+     "scope": "team"
     }
    ]
   }

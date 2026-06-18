@@ -10,6 +10,16 @@
    "BUILDING_INTERGALACTIC_QUASAR_PLANT"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SPACE_CREASING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "flat": 50

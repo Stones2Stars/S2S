@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_STARPORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_WEAPONIZED_DISINTEGRATION",
+     "scope": "team"
     }
    ]
   }

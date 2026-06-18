@@ -14,6 +14,10 @@
      "type": "BONUS_GLASSWARE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_REPLACEABLE_PARTS",
+     "scope": "team"
     }
    ],
    "any": [

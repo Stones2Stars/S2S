@@ -11,6 +11,10 @@
   "build": {
    "all": [
     {
+     "type": "TECH_FURNITURE_MAKING",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_BRICKS",
      "scope": "city",
      "connection": "trade|vicinity"

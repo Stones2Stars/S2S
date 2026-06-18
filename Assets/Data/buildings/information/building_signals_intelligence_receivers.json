@@ -18,6 +18,14 @@
     {
      "type": "BUILDING_SECURITY_CENTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_WAR_SIMULATIONS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CYBERWARFARE",
+     "scope": "team"
     }
    ],
    "any": [

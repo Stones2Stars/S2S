@@ -10,7 +10,11 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_RIVER"
+    "HAS_RIVER",
+    {
+     "type": "TECH_CAVE_DWELLING",
+     "scope": "team"
+    }
    ],
    "any": [
     [

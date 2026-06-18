@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_UMBRIEL_COLONY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SHIELDING",
+     "scope": "team"
     }
    ],
    "any": [

@@ -10,6 +10,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_ALCHEMY",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_SULPHUR",
      "scope": "city",
      "connection": "trade|vicinity"

@@ -5,7 +5,11 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER"
+    "HAS_POWER",
+    {
+     "type": "TECH_ANTI_AGING_MEDICINE",
+     "scope": "team"
+    }
    ],
    "any": [
     [

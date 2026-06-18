@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_WATER_PUMPING_STATION",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MODERN_SANITATION",
+     "scope": "team"
     }
    ],
    "any": [

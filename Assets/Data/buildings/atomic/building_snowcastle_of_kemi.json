@@ -14,6 +14,10 @@
      "latitude": {
       "min": 55
      }
+    },
+    {
+     "type": "TECH_TOURISM",
+     "scope": "team"
     }
    ],
    "any": [

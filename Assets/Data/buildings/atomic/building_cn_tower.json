@@ -15,6 +15,10 @@
      "type": "BUILDING_NATIONAL_TV_STATION",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_MASS_MEDIA",
+     "scope": "team"
     }
    ]
   }

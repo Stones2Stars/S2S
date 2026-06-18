@@ -3,6 +3,14 @@
  "description": "TXT_KEY_BUILDING_MONEY_PRESS",
  "civilopedia": "TXT_KEY_BUILDING_MONEY_PRESS_PEDIA",
  "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PRINTING_PRESS",
+     "scope": "team"
+    }
+   ]
+  },
   "operate": {
    "all": [
     {

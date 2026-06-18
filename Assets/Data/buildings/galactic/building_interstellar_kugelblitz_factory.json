@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SINGULARITY_STABILIZATION",
+     "scope": "team"
     }
    ]
   }

@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_DISTANT_NON_ORIENTABLE_WORMHOLE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MANIFOLD_COLONIZATION",
+     "scope": "team"
     }
    ]
   }

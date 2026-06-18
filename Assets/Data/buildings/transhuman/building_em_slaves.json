@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_WHOLE_BRAIN_EMULATION",
+     "scope": "team"
     }
    ],
    "noneOf": [

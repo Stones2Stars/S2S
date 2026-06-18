@@ -9,6 +9,10 @@
      "type": "BONUS_DRUGS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_PLAGUE_MEDICINE",
+     "scope": "team"
     }
    ],
    "any": [

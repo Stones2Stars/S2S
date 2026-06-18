@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_SHRINE_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_ANCESTOR_WORSHIP",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

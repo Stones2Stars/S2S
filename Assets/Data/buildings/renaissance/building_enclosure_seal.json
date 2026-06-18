@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_FOLKLORE_SEA_LION",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ZOOLOGY",
+     "scope": "team"
     }
    ],
    "any": [

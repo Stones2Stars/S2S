@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_HEAVEN_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_DIVINE_RIGHT",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

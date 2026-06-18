@@ -16,6 +16,10 @@
     {
      "type": "BUILDING_MICROBIOLOGY_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MOLECULAR_BIOLOGY",
+     "scope": "team"
     }
    ],
    "any": [

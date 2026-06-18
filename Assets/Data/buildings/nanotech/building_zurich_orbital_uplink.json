@@ -20,6 +20,10 @@
      "type": "BUILDING_ZURICH_ORBITAL",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_ORBITAL_FLIGHT",
+     "scope": "team"
     }
    ]
   }

@@ -15,6 +15,10 @@
     {
      "type": "BUILDING_CISLUNAR_CONTROL_SYSTEM",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BINARY_LEGISLATION",
+     "scope": "team"
     }
    ]
   }

@@ -9,6 +9,10 @@
      "type": "BONUS_VALDIVIAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_HUMANISM",
+     "scope": "team"
     }
    ]
   }

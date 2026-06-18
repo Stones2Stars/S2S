@@ -11,6 +11,10 @@
      "connection": "trade|vicinity"
     },
     {
+     "type": "TECH_SEMICONDUCTORS",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_AUTOMOBILES",
      "scope": "city",
      "connection": "trade|vicinity"

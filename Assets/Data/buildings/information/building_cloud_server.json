@@ -27,6 +27,10 @@
     {
      "type": "BUILDING_COMPUTER_NETWORK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CLOUD_COMPUTING",
+     "scope": "team"
     }
    ]
   }

@@ -99,6 +99,10 @@
     {
      "type": "BUILDING_SHOPPING_DISTRICT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PLASTIC_ELECTRONICS",
+     "scope": "team"
     }
    ]
   }

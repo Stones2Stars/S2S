@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_VENUS_FUSION_PLANT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_WEAPONIZED_DISINTEGRATION",
+     "scope": "team"
     }
    ]
   }

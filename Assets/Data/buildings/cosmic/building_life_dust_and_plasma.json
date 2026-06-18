@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_TRANSTELLAR_HYDROGEN_MAP",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DIRECTED_PANSPERMIA",
+     "scope": "team"
     }
    ]
   }

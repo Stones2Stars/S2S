@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_DISTANT_BUBBLE_TRANSFER_STATION",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TRANSFINITE_STRUCTURES",
+     "scope": "team"
     }
    ]
   }

@@ -78,6 +78,7 @@
   ]
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 25,
   "militaryWorth": 75,
   "commandRange": 1,

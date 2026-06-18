@@ -13,6 +13,10 @@
      "type": "BUILDING_DEEP_SPACE_MICROVAC",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_HYPERINTELLIGENCE",
+     "scope": "team"
     }
    ]
   }

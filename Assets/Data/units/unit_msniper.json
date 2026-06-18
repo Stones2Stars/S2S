@@ -9,6 +9,10 @@
      "type": "BONUS_FIREARMS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_LASER",
+     "scope": "team"
     }
    ],
    "any": [

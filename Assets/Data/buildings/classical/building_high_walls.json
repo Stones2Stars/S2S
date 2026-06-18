@@ -26,6 +26,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_SIEGE_WARFARE",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

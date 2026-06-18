@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERGALACTIC_CHRONOTON_GENERATOR",
      "scope": "city"
+    },
+    {
+     "type": "TECH_STABLE_TIME_LOOPS",
+     "scope": "team"
     }
    ]
   }

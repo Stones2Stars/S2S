@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_EFFECT_SOLAR_ECONOMY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ACNP_PROPULSION",
+     "scope": "team"
     }
    ],
    "any": [

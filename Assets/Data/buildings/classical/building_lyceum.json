@@ -28,6 +28,10 @@
     {
      "type": "BUILDING_GRAMMATICUS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PHILOSOPHY",
+     "scope": "team"
     }
    ],
    "any": [

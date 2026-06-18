@@ -7,6 +7,16 @@
    "BUILDING_FRESCO_MURAL"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PETROGLYPHS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "research": {
   "city": {
    "flat": 1,

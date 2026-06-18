@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERGALACTIC_MATTER_PRESERVER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_STRING_MANIPULATION",
+     "scope": "team"
     }
    ]
   }

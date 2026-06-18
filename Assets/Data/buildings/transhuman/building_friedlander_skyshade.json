@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_ADVANCED_SHIELDING",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PLANETARY_DEFENSES",
+     "scope": "team"
     }
    ]
   }

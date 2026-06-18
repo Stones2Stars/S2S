@@ -2,6 +2,16 @@
  "type": "BUILDING_ORDINANCE_EFFECT_TIRE_RECYCLING_PROGRAM",
  "description": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_TIRE_RECYCLING_PROGRAM",
  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_TIRE_RECYCLING_PROGRAM_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RECYCLING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -1

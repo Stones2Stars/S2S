@@ -5,7 +5,15 @@
  "requires": {
   "build": {
    "all": [
-    "IS_WATER"
+    "IS_WATER",
+    {
+     "type": "TECH_NAVAL_CANNON",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASTRONOMY",
+     "scope": "team"
+    }
    ]
   },
   "operate": {

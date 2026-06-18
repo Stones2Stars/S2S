@@ -9,6 +9,10 @@
      "type": "BONUS_HUMAN_MOD_NANOMORPHISM",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_POSTHUMANISM",
+     "scope": "team"
     }
    ]
   }

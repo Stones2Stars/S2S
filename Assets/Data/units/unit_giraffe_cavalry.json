@@ -9,6 +9,14 @@
      "type": "BONUS_AMMUNITION",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MILITARY_TRADITION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEGAFAUNA_DOMESTICATION",
+     "scope": "team"
     }
    ],
    "any": [

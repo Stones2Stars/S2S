@@ -9,6 +9,10 @@
      "type": "BONUS_MICROCHIPS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_GUIDED_WEAPONS",
+     "scope": "team"
     }
    ],
    "any": [

@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_PALACE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GALACTIC_FEDERATION",
+     "scope": "team"
     }
    ]
   }

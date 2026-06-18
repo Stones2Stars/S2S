@@ -8,6 +8,14 @@
     {
      "type": "BUILDING_INTERSTELLAR_BASE_SUPER_EARTH",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PLANET_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADAPTIVE_RADIATION",
+     "scope": "team"
     }
    ]
   }

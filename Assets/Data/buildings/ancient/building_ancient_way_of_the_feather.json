@@ -2,6 +2,16 @@
  "type": "BUILDING_ANCIENT_WAY_OF_THE_FEATHER",
  "description": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_FEATHER",
  "civilopedia": "TXT_KEY_BUILDING_ANCIENT_WAY_OF_THE_FEATHER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ARCHERY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

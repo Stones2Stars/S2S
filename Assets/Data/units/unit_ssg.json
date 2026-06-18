@@ -15,6 +15,14 @@
      "scope": "city"
     },
     {
+     "type": "TECH_LASER",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GUERRILLA_WARFARE",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_AMMUNITION",
      "scope": "city",
      "connection": "trade|vicinity"

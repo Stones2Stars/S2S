@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_HYPERFACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_3D_PROJECTIONS",
+     "scope": "team"
     }
    ]
   }

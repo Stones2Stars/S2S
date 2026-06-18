@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_TAX_EVASION",
  "description": "TXT_KEY_BUILDING_CRIME_TAX_EVASION",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_TAX_EVASION_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_USURY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -10,

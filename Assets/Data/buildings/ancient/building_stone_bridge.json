@@ -22,7 +22,11 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "HAS_RIVER"
+    "HAS_RIVER",
+    {
+     "type": "TECH_MASONRY",
+     "scope": "team"
+    }
    ],
    "any": [
     [

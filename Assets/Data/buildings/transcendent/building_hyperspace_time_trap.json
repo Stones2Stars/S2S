@@ -2,6 +2,16 @@
  "type": "BUILDING_HYPERSPACE_TIME_TRAP",
  "description": "TXT_KEY_BUILDING_HYPERSPACE_TIME_TRAP",
  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_TIME_TRAP_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COSMIC_WARFARE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "defense": {
   "city": {
    "amount": {

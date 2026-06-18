@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_EXTREME_FORCE_CONCENTRATOR",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SUBDIMENSIONAL_UNIVERSE",
+     "scope": "team"
     }
    ]
   }

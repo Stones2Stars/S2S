@@ -1,7 +1,9 @@
 #include "CvGameCoreDLL.h"
 #include "CvHttpServer.h"
 #include "CvBuildingInfo.h"
+#include "CvBonusInfo.h" // bonus-name resolution in the /diagnostic/whyNot trace
 #include "CvCity.h"
+#include "CvPlot.h" // pCity->plot()->canTrain in the /diagnostic/whyNot trace
 #include "CvGameAI.h"
 #include "CvGlobals.h"
 #include "CvInfos.h"
@@ -9,6 +11,8 @@
 #include "CvSelectionGroup.h"
 #include "CvTeamAI.h"
 #include "CvUnit.h"
+#include "CvCascadeReadJson.h" // cascadeReadJsonBuildingAvailability -- the /diagnostic/canConstruct cascade verdict
+#include "CvCascadeTally.h"    // cascadeTally / CountDomain / CountScope (CvEntityAvailability + cascadeBuildable via the above)
 
 // Deliberately the winsock 1.1 header, NOT winsock2.h: some unity batches pull a
 // full-fat windows.h (no WIN32_LEAN_AND_MEAN) which includes winsock.h, and
@@ -143,6 +147,21 @@ namespace
 	const size_t EVENT_QUEUE_CAP = 2048;
 	std::vector<SOCKET> g_sseClients;      // server thread only
 	const size_t SSE_CLIENT_CAP = 8;
+
+	// --- diagnostic gate-eval mailbox (#430 readJson testing) ------------------------------
+	// /diagnostic/* gate queries (canConstruct/canTrain/...) read live CvPlayer/CvCity, so they run on the
+	// GAME thread (the server thread NEVER touches game objects -- the hard constraint). One in-flight slot:
+	// the server thread fills the request + flips to EVAL_PENDING; serviceEvalMailbox() (game thread, from
+	// publishIfDue) renders the JSON answer + flips to EVAL_DONE; the server reads it back. "5s-stale is
+	// sufficient" (owner) -- the answer reflects a consistent game-state read on the game thread's next tick.
+	enum { EVAL_IDLE = 0, EVAL_PENDING = 1, EVAL_DONE = 2 };
+	CRITICAL_SECTION g_evalLock;       // initialized alongside g_snapshotLock / g_eventLock
+	volatile LONG g_evalState = EVAL_IDLE;
+	char g_evalAction[40] = { 0 };     // "canConstruct" | "canTrain" | ...   (server -> game)
+	char g_evalType[96]   = { 0 };     // e.g. BUILDING_FORGE
+	int  g_evalPlayer     = -1;        // -1 == use the active player (resolved game-side)
+	int  g_evalCity       = -1;        // -1 == the player's capital (resolved game-side); else a city id
+	CvString g_evalResult;             // the rendered JSON answer            (game -> server), guarded by g_evalLock
 
 	bst::shared_ptr<const GameSnapshot> grabSnapshot()
 	{
@@ -425,6 +444,316 @@ namespace
 		}
 	}
 
+	// --- diagnostic gate-eval (#430 readJson testing) -------------------------------------
+	// GAME-THREAD ONLY: evaluate one engine gate (+ the cascade equivalent where wired) and render the JSON
+	// answer. Called from serviceEvalMailbox -- it reads live CvPlayer state, which the server thread may not.
+	// Add the building/unit cap shadow (parsed allowed vs the engine getMax*Instances vs the live tally).
+	void rjAddCapShadow(picojson::value::object& o, const CvEntityAvailability& kAvail, CountDomain eDomain,
+		int iIdx, const CvCascadeContext& kCtx)
+	{
+		if (kAvail.allowedCap < 0) return;
+		int iLegacyCap = -1; const char* szScope = "?";
+		// legacy cap accessor (building has all three; unit exposes global/player)
+		if (eDomain == COUNTDOMAIN_BUILDING)
+		{
+			const CvBuildingInfo& kInfo = GC.getBuildingInfo((BuildingTypes)iIdx);
+			switch (kAvail.allowedScope)
+			{
+			case COUNTSCOPE_WORLD:  iLegacyCap = kInfo.getMaxGlobalInstances(); szScope = "world";  break;
+			case COUNTSCOPE_TEAM:   iLegacyCap = kInfo.getMaxTeamInstances();   szScope = "team";   break;
+			case COUNTSCOPE_EMPIRE: iLegacyCap = kInfo.getMaxPlayerInstances(); szScope = "empire"; break;
+			default: break;
+			}
+		}
+		picojson::value::object cap;
+		cap["scope"] = picojson::value(std::string(szScope));
+		cap["json"] = picojson::value((double)kAvail.allowedCap);
+		cap["legacy"] = picojson::value((double)iLegacyCap);
+		cap["tally"] = picojson::value((double)cascadeTally().count(eDomain, iIdx, kAvail.allowedScope, kCtx.contextFor(kAvail.allowedScope)));
+		o["cap"] = picojson::value(cap);
+	}
+
+	CvString evaluateGate(const char* szAction, const char* szType, int iPlayer, int iCityReq)
+	{
+		picojson::value::object o;
+		o["action"] = picojson::value(std::string(szAction));
+		o["type"] = picojson::value(std::string(szType));
+
+		if (iPlayer < 0)
+		{
+			iPlayer = (int)GC.getGame().getActivePlayer();
+		}
+		o["player"] = picojson::value((double)iPlayer);
+
+		if (iPlayer < 0 || iPlayer >= MAX_PLAYERS || !GET_PLAYER((PlayerTypes)iPlayer).isAlive())
+		{
+			o["error"] = picojson::value(std::string("player not alive"));
+			return CvString(picojson::value(o).serialize().c_str());
+		}
+		CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+
+		// City for the city-relative gates (canConstruct/canTrain/sweep): the requested city, else the capital.
+		CvCity* pCity = (iCityReq >= 0) ? kPlayer.getCity(iCityReq) : kPlayer.getCapitalCity();
+		const int iCityId = (pCity != NULL) ? pCity->getID() : -1;
+		const int iTeam = (int)kPlayer.getTeam();
+
+		// SWEEP: iterate a whole domain (szType = "units" | "buildings") and report cascade-vs-legacy
+		// divergences in one pass -- the large-surface lens. Runs on the game thread; the parsed-availability
+		// cache keeps a full-roster scan affordable.
+		if (strcmp(szAction, "sweep") == 0)
+		{
+			CvCascadeContext kCtx(iPlayer, iCityId);
+			const bool bUnits = (strcmp(szType, "units") == 0);
+			const int iN = bUnits ? GC.getNumUnitInfos() : GC.getNumBuildingInfos();
+			int iTotal = 0, iEval = 0, iNoJson = 0, iAgree = 0, iDiv = 0;
+			picojson::value::array kDiv;
+			for (int i = 0; i < iN; ++i)
+			{
+				++iTotal;
+				const char* szT = bUnits ? GC.getUnitInfo((UnitTypes)i).getType()
+				                         : GC.getBuildingInfo((BuildingTypes)i).getType();
+				CvEntityAvailability kA;
+				std::string sN;
+				if (!cascadeReadJsonAvailability(szT, kA, sN)) { ++iNoJson; continue; }
+				++iEval;
+				bool bC, bL;
+				if (bUnits)
+				{
+					bC = cascadeUnitTrainable(i, kCtx);
+					bL = (pCity != NULL) && pCity->canTrain((UnitTypes)i);
+				}
+				else
+				{
+					bC = cascadeBuildable(kA, COUNTDOMAIN_BUILDING, i, kCtx)
+					     && (pCity == NULL || !pCity->hasBuilding((BuildingTypes)i))
+					     && !cascadeIsObsoleteForTeam(COUNTDOMAIN_BUILDING, i, iTeam)
+					     && cascadeBuildingGroupAllows(i, kCtx);
+					bL = (pCity != NULL) && pCity->canConstruct((BuildingTypes)i);
+				}
+				if (bC == bL) { ++iAgree; }
+				else
+				{
+					++iDiv;
+					if (kDiv.size() < 250)
+					{
+						picojson::value::object e;
+						e["type"] = picojson::value(std::string(szT));
+						e["cascade"] = picojson::value(bC);
+						e["legacy"] = picojson::value(bL);
+						kDiv.push_back(picojson::value(e));
+					}
+				}
+			}
+			o["domain"] = picojson::value(std::string(bUnits ? "units" : "buildings"));
+			o["city"] = picojson::value((double)iCityId);
+			o["total"] = picojson::value((double)iTotal);
+			o["evaluated"] = picojson::value((double)iEval);
+			o["noJson"] = picojson::value((double)iNoJson);
+			o["agree"] = picojson::value((double)iAgree);
+			o["diverge"] = picojson::value((double)iDiv);
+			o["divergences"] = picojson::value(kDiv);
+			return CvString(picojson::value(o).serialize().c_str());
+		}
+
+		const int iIdx = GC.getInfoTypeForString(szType, true);
+		if (iIdx < 0)
+		{
+			o["error"] = picojson::value(std::string("type not loaded this game"));
+			return CvString(picojson::value(o).serialize().c_str());
+		}
+
+		CvEntityAvailability kAvail;
+		std::string sNotes;
+		const bool bParsed = cascadeReadJsonAvailability(szType, kAvail, sNotes);
+
+		if (strcmp(szAction, "canConstruct") == 0)
+		{
+			o["city"] = picojson::value((double)iCityId);
+			o["legacy"] = (pCity != NULL) ? picojson::value(pCity->canConstruct((BuildingTypes)iIdx)) : picojson::value();
+			if (bParsed)
+			{
+				CvCascadeContext kCtx(iPlayer, iCityId);
+				bool bC = cascadeBuildable(kAvail, COUNTDOMAIN_BUILDING, iIdx, kCtx);
+				if (pCity != NULL && pCity->hasBuilding((BuildingTypes)iIdx)) bC = false;        // generation: already built here
+				if (cascadeIsObsoleteForTeam(COUNTDOMAIN_BUILDING, iIdx, iTeam)) bC = false;      // generation: obsolete
+				if (!cascadeBuildingGroupAllows(iIdx, kCtx)) bC = false;                          // SpecialBuilding group cap
+				o["cascade"] = picojson::value(bC);
+				rjAddCapShadow(o, kAvail, COUNTDOMAIN_BUILDING, iIdx, kCtx);
+			}
+			else o["cascade"] = picojson::value();
+		}
+		else if (strcmp(szAction, "canTrain") == 0)
+		{
+			o["city"] = picojson::value((double)iCityId);
+			o["legacy"] = (pCity != NULL) ? picojson::value(pCity->canTrain((UnitTypes)iIdx)) : picojson::value();
+			if (bParsed)
+			{
+				CvCascadeContext kCtx(iPlayer, iCityId);
+				// all-branches-alive resolver: requires + cap + obsolete + the upgrade band (build-list model)
+				o["cascade"] = picojson::value(cascadeUnitTrainable(iIdx, kCtx));
+				rjAddCapShadow(o, kAvail, COUNTDOMAIN_UNIT, iIdx, kCtx);
+			}
+			else o["cascade"] = picojson::value();
+		}
+		else if (strcmp(szAction, "canResearch") == 0)
+		{
+			o["legacy"] = picojson::value(kPlayer.canResearch((TechTypes)iIdx));
+			if (bParsed)
+			{
+				CvCascadeContext kCtx(iPlayer, -1); // tech is team-scope -- no city
+				bool bC = cascadeEvalCondition(kAvail.requiresBuild, kCtx) && cascadeEvalCondition(kAvail.requiresOperate, kCtx);
+				if (GET_TEAM((TeamTypes)iTeam).isHasTech((TechTypes)iIdx)) bC = false;            // generation: already researched
+				o["cascade"] = picojson::value(bC);
+				if (kAvail.allowedCap >= 0) sNotes += " [cap pending: tech not tallied]";
+			}
+			else o["cascade"] = picojson::value();
+		}
+		else if (strcmp(szAction, "canDoCivics") == 0)
+		{
+			o["legacy"] = picojson::value(kPlayer.canDoCivics((CivicTypes)iIdx));
+			if (bParsed)
+			{
+				CvCascadeContext kCtx(iPlayer, -1);
+				o["cascade"] = picojson::value(cascadeEvalCondition(kAvail.requiresBuild, kCtx) && cascadeEvalCondition(kAvail.requiresOperate, kCtx));
+			}
+			else o["cascade"] = picojson::value();
+		}
+		else if (strcmp(szAction, "canCreate") == 0)
+		{
+			o["legacy"] = picojson::value(kPlayer.canCreate((ProjectTypes)iIdx));
+			if (bParsed)
+			{
+				CvCascadeContext kCtx(iPlayer, iCityId);
+				o["cascade"] = picojson::value(cascadeEvalCondition(kAvail.requiresBuild, kCtx) && cascadeEvalCondition(kAvail.requiresOperate, kCtx));
+			}
+			else o["cascade"] = picojson::value();
+		}
+		else if (strcmp(szAction, "canMaintain") == 0)
+		{
+			o["legacy"] = picojson::value(kPlayer.canMaintain((ProcessTypes)iIdx));
+			o["cascade"] = picojson::value();
+			sNotes = "cascade: no JSON requires surface for processes yet";
+		}
+		else if (strcmp(szAction, "whyNot") == 0)
+		{
+			// Trace the legacy canTrain decision INPUTS for a UNIT -- the lit map of the canTrain cavern, so the
+			// hide-reason is self-evident (e.g. obsoleteTechResearched:true). type= must be a UNIT_*.
+			const UnitTypes eU = (UnitTypes)iIdx;
+			const CvUnitInfo& kU = GC.getUnitInfo(eU);
+			o["city"] = picojson::value((double)iCityId);
+			o["legacyCanTrain"] = (pCity != NULL) ? picojson::value(pCity->canTrain(eU)) : picojson::value();
+
+			const int iObs = kU.getObsoleteTech();
+			if (iObs >= 0)
+			{
+				o["obsoleteTech"] = picojson::value(std::string(GC.getTechInfo((TechTypes)iObs).getType()));
+				o["obsoleteTechResearched"] = picojson::value(GET_TEAM((TeamTypes)iTeam).isHasTech((TechTypes)iObs));
+			}
+			const int iPre = kU.getPrereqAndTech();
+			if (iPre >= 0)
+			{
+				o["prereqAndTech"] = picojson::value(std::string(GC.getTechInfo((TechTypes)iPre).getType()));
+				o["prereqAndTechResearched"] = picojson::value(GET_TEAM((TeamTypes)iTeam).isHasTech((TechTypes)iPre));
+			}
+			o["forceUpgrade"] = picojson::value(kU.isForceUpgrade());
+			o["numUnitUpgrades"] = picojson::value((double)kU.getNumUnitUpgrades());
+			if (pCity != NULL)
+			{
+				o["supersedingUnitAvailable"] = picojson::value(pCity->isSupersedingUnitAvailable(eU));
+				o["canUpgradeUnit"] = picojson::value(pCity->canUpgradeUnit(eU));
+				o["plotCanTrain"] = picojson::value(pCity->plot()->canTrain(eU, false));   // CvPlot gate: bonus/terrain/domain
+			}
+			// unit bonus prereqs (the cascade's requires source) + does THIS city actually have them (public reads)?
+			{
+				picojson::value::object bonuses;
+				const int iVic = kU.getPrereqVicinityBonus();
+				if (iVic >= 0 && pCity != NULL)
+					bonuses[GC.getBonusInfo((BonusTypes)iVic).getType()] =
+						picojson::value(std::string("vicinity:") + (pCity->hasVicinityBonus((BonusTypes)iVic) ? "yes" : "NO"));
+				const int iAnd = kU.getPrereqAndBonus();
+				if (iAnd >= 0 && pCity != NULL)
+					bonuses[GC.getBonusInfo((BonusTypes)iAnd).getType()] =
+						picojson::value(std::string("and:") + (pCity->hasBonus((BonusTypes)iAnd) ? "yes" : "NO"));
+				const std::vector<BonusTypes>& vOr = kU.getPrereqOrBonuses();
+				for (size_t i = 0; i < vOr.size(); ++i)
+				{
+					const int iOr = (int)vOr[i];
+					if (iOr >= 0 && pCity != NULL)
+						bonuses[GC.getBonusInfo((BonusTypes)iOr).getType()] = picojson::value(std::string("or:")
+							+ ((pCity->hasBonus((BonusTypes)iOr) || pCity->hasVicinityBonus((BonusTypes)iOr)) ? "yes" : "NO"));
+				}
+				if (!bonuses.empty()) o["unitBonusPrereqs"] = picojson::value(bonuses);
+			}
+			sNotes = "legacy canTrain inputs (obsolete/prereq/forceUpgrade/superseding/plot/bonus)";
+		}
+		else
+		{
+			o["error"] = picojson::value(std::string("unknown diagnostic action"));
+			return CvString(picojson::value(o).serialize().c_str());
+		}
+
+		o["notes"] = picojson::value(sNotes);
+		return CvString(picojson::value(o).serialize().c_str());
+	}
+
+	// GAME THREAD (publishIfDue): if a diagnostic request is pending, render its answer and mark it done.
+	void serviceEvalMailbox()
+	{
+		if (!g_bLockInitialized || g_evalState != EVAL_PENDING)
+		{
+			return; // fast idle peek -- no lock taken when nothing is pending
+		}
+		char szAction[40]; char szType[96]; int iPlayer; int iCity;
+		EnterCriticalSection(&g_evalLock);
+		if (g_evalState != EVAL_PENDING) { LeaveCriticalSection(&g_evalLock); return; }
+		strncpy(szAction, g_evalAction, sizeof(szAction)); szAction[sizeof(szAction) - 1] = '\0';
+		strncpy(szType, g_evalType, sizeof(szType)); szType[sizeof(szType) - 1] = '\0';
+		iPlayer = g_evalPlayer;
+		iCity = g_evalCity;
+		LeaveCriticalSection(&g_evalLock);
+
+		const CvString szResult = evaluateGate(szAction, szType, iPlayer, iCity); // safe: game thread
+
+		EnterCriticalSection(&g_evalLock);
+		g_evalResult = szResult;
+		g_evalState = EVAL_DONE;
+		LeaveCriticalSection(&g_evalLock);
+	}
+
+	// SERVER THREAD: enqueue a request, then wait (bounded) for the game thread to render the answer.
+	bool evalRequestBlocking(const char* szAction, const char* szType, int iPlayer, int iCity, CvString& szAnswerOut)
+	{
+		if (!g_bLockInitialized)
+		{
+			return false;
+		}
+		EnterCriticalSection(&g_evalLock);
+		if (g_evalState == EVAL_PENDING) { LeaveCriticalSection(&g_evalLock); return false; } // another request in flight
+		strncpy(g_evalAction, szAction, sizeof(g_evalAction)); g_evalAction[sizeof(g_evalAction) - 1] = '\0';
+		strncpy(g_evalType, szType, sizeof(g_evalType)); g_evalType[sizeof(g_evalType) - 1] = '\0';
+		g_evalPlayer = iPlayer;
+		g_evalCity = iCity;
+		g_evalState = EVAL_PENDING;
+		LeaveCriticalSection(&g_evalLock);
+
+		// publishIfDue() ticks every frame, so this normally returns well under a second; the cap stops a
+		// paused / non-ticking game thread from wedging the handler. Sized to absorb the one-time index builds
+		// (obsoletion scan over tech JSONs + the upgrade scan over ~2k unit JSONs on the first gate query).
+		for (int iWaited = 0; iWaited < 18000; iWaited += 10)
+		{
+			if (g_evalState == EVAL_DONE)
+			{
+				EnterCriticalSection(&g_evalLock);
+				szAnswerOut = g_evalResult;
+				g_evalState = EVAL_IDLE;
+				LeaveCriticalSection(&g_evalLock);
+				return true;
+			}
+			Sleep(10);
+		}
+		return false; // timeout: leave the slot (the game thread flips it to DONE; the next request reclaims it)
+	}
+
 	// Returns true if the socket joined the SSE client list and must stay open.
 	bool handleRequest(SOCKET sock, const char* szRequest)
 	{
@@ -546,6 +875,70 @@ namespace
 				beginEventStream(sock);
 				g_sseClients.push_back(sock);
 				return true;
+			}
+		}
+		else if (strcmp(szTarget, "/diagnostic") == 0)
+		{
+			sendResponse(sock, "200 OK", "application/json", CvString(
+				"{\"endpoints\":["
+				"\"/diagnostic/canConstruct?type=BUILDING_X&player=N\","
+				"\"/diagnostic/canTrain?type=UNIT_X&player=N\","
+				"\"/diagnostic/canResearch?type=TECH_X&player=N\","
+				"\"/diagnostic/canDoCivics?type=CIVIC_X&player=N\","
+				"\"/diagnostic/canCreate?type=PROJECT_X&player=N\","
+				"\"/diagnostic/canMaintain?type=PROCESS_X&player=N\"],"
+				"\"note\":\"player defaults to the active player; evaluated against the current game state, "
+				"no construction performed; canConstruct also returns the cascade verdict + cap shadow\"}\n"),
+				snapshotTurn());
+		}
+		else if (strncmp(szTarget, "/diagnostic/", 12) == 0)
+		{
+			const char* szAction = szTarget + 12; // e.g. "canConstruct"
+			char szType[96];
+			szType[0] = '\0';
+			int iPlayer = -1; // -1 == the active player (resolved on the game thread)
+			int iCity = -1;   // -1 == the player's capital (resolved on the game thread)
+			char* szTok = szQuery;
+			while (szTok != NULL && *szTok != '\0')
+			{
+				char* szNext = strchr(szTok, '&');
+				if (szNext != NULL)
+				{
+					*szNext = '\0';
+					++szNext;
+				}
+				if (strncmp(szTok, "type=", 5) == 0)
+				{
+					strncpy(szType, szTok + 5, sizeof(szType));
+					szType[sizeof(szType) - 1] = '\0';
+				}
+				else if (strncmp(szTok, "player=", 7) == 0)
+				{
+					iPlayer = atoi(szTok + 7);
+				}
+				else if (strncmp(szTok, "city=", 5) == 0)
+				{
+					iCity = atoi(szTok + 5);
+				}
+				szTok = szNext;
+			}
+			if (szType[0] == '\0')
+			{
+				sendResponse(sock, "400 Bad Request", "application/json",
+					CvString("{\"error\":\"missing required query param: type=PREFIX_NAME\"}\n"), snapshotTurn());
+			}
+			else
+			{
+				CvString szAnswer;
+				if (evalRequestBlocking(szAction, szType, iPlayer, iCity, szAnswer))
+				{
+					sendResponse(sock, "200 OK", "application/json", szAnswer, snapshotTurn());
+				}
+				else
+				{
+					sendResponse(sock, "503 Service Unavailable", "application/json",
+						CvString("{\"error\":\"eval busy or game thread not ticking; retry\"}\n"), snapshotTurn());
+				}
 			}
 		}
 		else
@@ -744,6 +1137,7 @@ void CvHttpServer::setEnabled(bool bEnable)
 		{
 			InitializeCriticalSection(&g_snapshotLock);
 			InitializeCriticalSection(&g_eventLock);
+			InitializeCriticalSection(&g_evalLock);
 			g_bLockInitialized = true;
 		}
 		g_iLastPublishTick = 0; // force a fresh snapshot on the next frame
@@ -816,6 +1210,11 @@ void CvHttpServer::publishIfDue()
 	{
 		return; // server off -- this bool check is the entire cost
 	}
+
+	// Service any pending /diagnostic gate query first (every frame, ahead of the snapshot throttle): the
+	// gates read live game objects, so the game thread -- this one -- is the only place they may run.
+	serviceEvalMailbox();
+
 	const DWORD iNow = GetTickCount();
 	if (g_iLastPublishTick != 0 && iNow - g_iLastPublishTick < PUBLISH_INTERVAL_MS)
 	{

@@ -22,6 +22,14 @@
     {
      "type": "BUILDING_INTERGALACTIC_VON_NEUMANN_COLONIZERS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GALACTIC_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GALACTIC_ECOLOGY",
+     "scope": "team"
     }
    ]
   }

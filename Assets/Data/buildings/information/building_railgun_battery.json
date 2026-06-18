@@ -32,6 +32,10 @@
      "type": "BONUS_NANOTUBES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_RAILGUN",
+     "scope": "team"
     }
    ]
   }

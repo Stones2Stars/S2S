@@ -7,6 +7,16 @@
    "BUILDING_PROJECT_PERSEPHONE"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CLOSED_ECONOMIES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 1

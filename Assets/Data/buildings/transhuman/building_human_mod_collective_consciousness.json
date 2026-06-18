@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_NETWORK_NODE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SENTIENT_EARTH",
+     "scope": "team"
     }
    ],
    "any": [

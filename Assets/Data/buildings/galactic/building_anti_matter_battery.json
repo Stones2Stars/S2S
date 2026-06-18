@@ -29,6 +29,10 @@
      "type": "BONUS_ANTIMATTER",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_WEAPONIZED_ANTIMATTER",
+     "scope": "team"
     }
    ]
   }

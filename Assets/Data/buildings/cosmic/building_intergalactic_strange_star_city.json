@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_STRANGE_STAR_CITY_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_EXOTIC_STARS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

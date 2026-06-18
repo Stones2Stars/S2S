@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MEDICINE",
+     "scope": "team"
     }
    ],
    "any": [

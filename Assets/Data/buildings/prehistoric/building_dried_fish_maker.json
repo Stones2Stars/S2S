@@ -9,6 +9,16 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_TRAP_FISHING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DRYING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

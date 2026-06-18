@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_POISON_CRAFTING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

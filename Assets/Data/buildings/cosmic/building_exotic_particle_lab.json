@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_EXOTIC_MATTER_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION",
+     "scope": "team"
     }
    ]
   }

@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_TREE_CARVINGS_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CARVING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

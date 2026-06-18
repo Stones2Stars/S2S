@@ -9,6 +9,16 @@
    "BUILDING_INTERSTELLAR_DESIGNER_CASTE_MISSION_CONTROL"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PRECISION_SOCIAL_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "flat": 10

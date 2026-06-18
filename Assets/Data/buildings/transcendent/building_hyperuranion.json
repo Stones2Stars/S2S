@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_METAVERSE_VR_CENTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ARCHETYPAL_VECTOR_SPACES",
+     "scope": "team"
     }
    ]
   }

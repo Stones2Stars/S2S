@@ -12,6 +12,16 @@
    "BUILDING_EDUCATION_SCHOLARLY"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ATOMIC_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "percent": 35

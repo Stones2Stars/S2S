@@ -12,6 +12,10 @@
      }
     },
     {
+     "type": "TECH_AQUACULTURE",
+     "scope": "team"
+    },
+    {
      "type": "BUILDING_FOLKLORE_T_FISH",
      "scope": "city"
     }

@@ -2,6 +2,16 @@
  "type": "UNIT_MASTER_BIG_GAME_HUNTER",
  "description": "TXT_KEY_UNIT_MASTER_BIG_GAME_HUNTER",
  "civilopedia": "TXT_KEY_UNIT_MASTER_HUNTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RIFLING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "empire": 1
  },
@@ -38,6 +48,7 @@
   "upkeep": 1
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 10,
   "militaryWorth": 24,
   "xpValueAttack": 1,

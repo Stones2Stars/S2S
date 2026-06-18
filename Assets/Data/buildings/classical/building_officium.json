@@ -50,6 +50,16 @@
    "BUILDING_TAXPERSON"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CITY_PLANNING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "percent": -2

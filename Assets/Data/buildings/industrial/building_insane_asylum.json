@@ -19,6 +19,10 @@
      "type": "BONUS_FURNITURE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_PSYCHOLOGY",
+     "scope": "team"
     }
    ],
    "any": [

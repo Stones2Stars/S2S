@@ -13,6 +13,10 @@
      "type": "BUILDING_ANIMAL_RACE_TRACK",
      "scope": "empire",
      "min": 3
+    },
+    {
+     "type": "TECH_LAWN_SPORTS",
+     "scope": "team"
     }
    ]
   }

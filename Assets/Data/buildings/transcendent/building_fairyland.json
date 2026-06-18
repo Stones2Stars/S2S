@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_HYPERSPACE_INFLATON_FIELD",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ATEMPORAL_BEINGS",
+     "scope": "team"
     }
    ]
   }

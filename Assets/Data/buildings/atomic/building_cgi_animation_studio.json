@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_ANIMATION_STUDIO",
      "scope": "city"
+    },
+    {
+     "type": "TECH_3D_MODELLING",
+     "scope": "team"
     }
    ],
    "any": [

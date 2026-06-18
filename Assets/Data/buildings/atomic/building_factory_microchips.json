@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_MANUFACTURING_PLANT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SEMICONDUCTORS",
+     "scope": "team"
     }
    ],
    "any": [

@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_EXOTIC_ARCHITECTURE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SHAPESHIFTING",
+     "scope": "team"
     }
    ]
   }

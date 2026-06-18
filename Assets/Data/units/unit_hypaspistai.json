@@ -9,6 +9,10 @@
      "type": "BONUS_MACEDONIAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_COPPER_WORKING",
+     "scope": "team"
     }
    ],
    "any": [

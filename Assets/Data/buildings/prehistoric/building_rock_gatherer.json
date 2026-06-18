@@ -9,6 +9,16 @@
    "BUILDING_STONE_TOOL_MAKER"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GATHERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "flat": 1

@@ -43,6 +43,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_DEPUTIZATION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

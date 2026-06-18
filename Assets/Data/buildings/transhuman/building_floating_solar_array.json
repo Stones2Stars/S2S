@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_POWER_LINES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_WEIGHTLESS_FLIGHT",
+     "scope": "team"
     }
    ]
   }

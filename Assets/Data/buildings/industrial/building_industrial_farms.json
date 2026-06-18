@@ -127,6 +127,10 @@
     {
      "type": "BUILDING_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ANTIBIOTICS",
+     "scope": "team"
     }
    ]
   }

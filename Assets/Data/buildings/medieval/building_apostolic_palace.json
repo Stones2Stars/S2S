@@ -23,6 +23,10 @@
     {
      "type": "VICTORY_DIPLOMATIC",
      "scope": "world"
+    },
+    {
+     "type": "TECH_PAPACY",
+     "scope": "team"
     }
    ]
   },

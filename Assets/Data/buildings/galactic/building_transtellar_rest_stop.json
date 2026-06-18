@@ -7,6 +7,16 @@
    "BUILDING_TRANSTELLAR_CUSTOMS_CENTER"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASTROANTHROPOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "flat": 25

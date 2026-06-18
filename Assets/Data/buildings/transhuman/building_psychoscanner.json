@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_MEDICAL_DIAGNOSTAT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_LIFE",
+     "scope": "team"
     }
    ],
    "any": [

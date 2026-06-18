@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_HYPERSPACE_PAN_DIMENSIONAL_CITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DECOMPACTIFIED_SPACE",
+     "scope": "team"
     }
    ]
   }

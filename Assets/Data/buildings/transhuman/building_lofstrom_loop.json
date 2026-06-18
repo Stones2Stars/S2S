@@ -19,6 +19,10 @@
      "type": "BUILDING_MAGLEV_LAUNCHER",
      "scope": "empire",
      "min": 2
+    },
+    {
+     "type": "TECH_HYPERMAGNETICS",
+     "scope": "team"
     }
    ]
   }

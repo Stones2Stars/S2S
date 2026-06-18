@@ -26,6 +26,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_ASTROLOGY",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

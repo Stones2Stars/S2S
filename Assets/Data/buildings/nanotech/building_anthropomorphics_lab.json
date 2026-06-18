@@ -23,6 +23,14 @@
     {
      "type": "BUILDING_EVOLUTIONARY_ALGORITHMS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BIONICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WIRELESS_ELECTRICITY",
+     "scope": "team"
     }
    ],
    "any": [

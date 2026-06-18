@@ -19,6 +19,10 @@
      "type": "BONUS_STEEL_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_RAILROAD",
+     "scope": "team"
     }
    ],
    "any": [

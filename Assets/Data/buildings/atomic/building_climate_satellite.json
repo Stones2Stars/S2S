@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_CLIMATOLOGY_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CLIMATE_MODELS",
+     "scope": "team"
     }
    ]
   }

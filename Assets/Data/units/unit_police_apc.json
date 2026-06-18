@@ -6,6 +6,10 @@
   "build": {
    "all": [
     {
+     "type": "TECH_MECHANIZED_WARFARE",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_FIREARMS",
      "scope": "city",
      "connection": "trade|vicinity"

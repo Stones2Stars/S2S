@@ -22,6 +22,10 @@
     {
      "type": "BUILDING_MODERN_OFFICES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TELEVISION",
+     "scope": "team"
     }
    ],
    "any": [

@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_TRANSTELLAR_REST_STOP",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GALACTIC_FEDERATION",
+     "scope": "team"
     }
    ]
   }

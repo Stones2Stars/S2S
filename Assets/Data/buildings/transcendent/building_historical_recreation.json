@@ -9,6 +9,14 @@
     {
      "type": "BUILDING_HISTORY_REPAIR_CENTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ALTERNATE_HISTORY_EXPLORATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TIMELINE_RECTIFICATION",
+     "scope": "team"
     }
    ]
   }

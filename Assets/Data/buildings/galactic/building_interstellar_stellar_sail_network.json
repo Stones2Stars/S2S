@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_STAR_CLUSTER_COLONY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ORBITAL_ENGINEERING",
+     "scope": "team"
     }
    ],
    "any": [

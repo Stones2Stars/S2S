@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_DISTANT_COMPUTRONIUM_FILAMENT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_UNIVERSAL_SINGULARITY",
+     "scope": "team"
     }
    ]
   }

@@ -2,6 +2,16 @@
  "type": "BUILDING_MARTIAN_ASTEROID_MINE",
  "description": "TXT_KEY_BUILDING_MARTIAN_ASTEROID_MINE",
  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_ASTEROID_MINE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_EXTRACTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 2

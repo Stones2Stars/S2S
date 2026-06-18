@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_PLANET_SCANNING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

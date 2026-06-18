@@ -13,6 +13,14 @@
     {
      "type": "BUILDING_ANIMAL_TRAINER_ELEPHANT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MILITARY_TRAINING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ELEPHANT_DOMESTICATION",
+     "scope": "team"
     }
    ]
   }

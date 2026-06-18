@@ -7,6 +7,16 @@
    "BUILDING_TRANSTELLAR_HIVEMIND"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANET_SCANNING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "flat": 10

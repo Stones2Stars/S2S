@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_VENUS_SKY_ARCOLOGY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GRAVITY_CONTROL",
+     "scope": "team"
     }
    ]
   }

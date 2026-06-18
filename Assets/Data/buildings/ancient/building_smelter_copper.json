@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_MINE_COPPER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COPPER_WORKING",
+     "scope": "team"
     }
    ]
   }

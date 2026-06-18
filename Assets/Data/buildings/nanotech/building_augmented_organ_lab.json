@@ -15,7 +15,15 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "HAS_POWER"
+    "HAS_POWER",
+    {
+     "type": "TECH_GENE_ENHANCEMENT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOGENERATORS",
+     "scope": "team"
+    }
    ],
    "any": [
     [

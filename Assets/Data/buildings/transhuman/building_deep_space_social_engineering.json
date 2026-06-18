@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_DEEP_SPACE_HOUSING_MANAGEMENT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SOCIAL_CALCULUS",
+     "scope": "team"
     }
    ]
   }

@@ -28,6 +28,10 @@
     {
      "type": "BUILDING_MAGLEV_ELEVATORS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HYPERMAGNETICS",
+     "scope": "team"
     }
    ]
   }

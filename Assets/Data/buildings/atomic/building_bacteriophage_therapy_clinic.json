@@ -24,6 +24,14 @@
      "scope": "city"
     },
     {
+     "type": "TECH_PERSONAL_COMPUTERS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MOLECULAR_BIOLOGY",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_ENZYMES",
      "scope": "city",
      "connection": "trade|vicinity"

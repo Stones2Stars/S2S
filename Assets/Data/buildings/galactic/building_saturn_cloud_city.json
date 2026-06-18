@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COLONY_ARCOLOGY",
+     "scope": "team"
     }
    ],
    "any": [

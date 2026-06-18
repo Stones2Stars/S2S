@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_VENUS_SURFACE_CITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ABYSS_COLONIZATION",
+     "scope": "team"
     }
    ]
   }

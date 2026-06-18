@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PURE_INFORMATION_SOCIETY",
+     "scope": "team"
     }
    ]
   }

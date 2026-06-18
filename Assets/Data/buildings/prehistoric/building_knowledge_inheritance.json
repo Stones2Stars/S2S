@@ -12,6 +12,16 @@
    "BUILDING_LYCEUM"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORAL_TRADITION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "research": {
   "city": {
    "flat": 1

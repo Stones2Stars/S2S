@@ -15,6 +15,14 @@
      "scope": "city"
     },
     {
+     "type": "TECH_ANCIENT_BALLISTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MOUNTED_ARCHERY",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_HORSE",
      "scope": "city",
      "connection": "trade|vicinity"

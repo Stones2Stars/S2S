@@ -20,6 +20,10 @@
     {
      "type": "BUILDING_PHENOTYPE_STUDIO",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GENE_JURISPRUDENCE",
+     "scope": "team"
     }
    ]
   }

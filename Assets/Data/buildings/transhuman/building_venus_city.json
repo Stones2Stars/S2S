@@ -22,6 +22,10 @@
     {
      "type": "BUILDING_SPACE_COLONY_VENUS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+     "scope": "team"
     }
    ]
   }

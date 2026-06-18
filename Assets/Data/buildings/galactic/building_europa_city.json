@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_EUROPA_COLONY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COLONY_ARCOLOGY",
+     "scope": "team"
     }
    ],
    "any": [

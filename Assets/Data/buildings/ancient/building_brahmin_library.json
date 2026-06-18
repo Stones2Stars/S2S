@@ -4,6 +4,16 @@
  "civilopedia": "TXT_KEY_BUILDING_BRAHMIN_LIBRARY_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_WRITING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CASTE_SYSTEM",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

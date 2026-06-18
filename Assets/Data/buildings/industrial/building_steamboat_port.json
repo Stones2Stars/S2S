@@ -25,6 +25,10 @@
     {
      "type": "BUILDING_COURTHOUSE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_STEAM_POWER",
+     "scope": "team"
     }
    ],
    "any": [

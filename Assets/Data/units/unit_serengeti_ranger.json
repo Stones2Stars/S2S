@@ -9,6 +9,10 @@
      "type": "BONUS_TANZANIAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_WILDLIFE_CONSERVATION",
+     "scope": "team"
     }
    ],
    "any": [

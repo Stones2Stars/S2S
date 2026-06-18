@@ -7,6 +7,16 @@
    "BUILDING_CISLUNAR_BIG_BANG_OBSERVATORY"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MESH_NETWORKS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "flat": 10

@@ -2,6 +2,16 @@
  "type": "BUILDING_LUNAR_OUTPOST",
  "description": "TXT_KEY_BUILDING_LUNAR_OUTPOST",
  "civilopedia": "TXT_KEY_BUILDING_LUNAR_OUTPOST_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LUNAR_BASES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "empire": 1
  },

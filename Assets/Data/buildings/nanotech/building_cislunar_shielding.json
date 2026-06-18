@@ -7,6 +7,16 @@
    "BUILDING_CISLUNAR_NUCLEAR_DAMPER"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ELECTROMAGNETIC_FIELD_SHIELDING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "defense": {
   "city": {
    "amount": {

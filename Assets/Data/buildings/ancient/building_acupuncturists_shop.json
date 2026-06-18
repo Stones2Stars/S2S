@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_C_L_ASIAN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FOLK_MEDICINE",
+     "scope": "team"
     }
    ]
   }

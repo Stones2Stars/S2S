@@ -2,6 +2,16 @@
  "type": "UNIT_GREAT_FARMER",
  "description": "TXT_KEY_UNIT_GREAT_FARMER",
  "civilopedia": "TXT_KEY_UNIT_GREAT_FARMER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AGRICULTURAL_TOOLS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "empire": 1
  },

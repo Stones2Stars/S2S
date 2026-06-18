@@ -30,6 +30,10 @@
     {
      "type": "BUILDING_COURTHOUSE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_JURISPRUDENCE",
+     "scope": "team"
     }
    ],
    "any": [

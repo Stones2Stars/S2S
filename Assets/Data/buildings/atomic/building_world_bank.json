@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_BANK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GLOBALIZATION",
+     "scope": "team"
     }
    ]
   }

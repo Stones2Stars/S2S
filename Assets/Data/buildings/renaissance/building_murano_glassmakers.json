@@ -14,6 +14,10 @@
      "type": "BUILDING_GLAZE_MAKER",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_LEAD_GLASS",
+     "scope": "team"
     }
    ]
   }

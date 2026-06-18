@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_FIRE_MAKING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

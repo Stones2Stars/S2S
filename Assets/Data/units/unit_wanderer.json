@@ -2,6 +2,16 @@
  "type": "UNIT_WANDERER",
  "description": "TXT_KEY_UNIT_WANDERER",
  "civilopedia": "TXT_KEY_UNIT_WANDERER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NOMADISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 20

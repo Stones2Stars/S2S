@@ -9,6 +9,10 @@
      "type": "BONUS_PHARMACEUTICALS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MEDICINE",
+     "scope": "team"
     }
    ],
    "any": [

@@ -22,6 +22,10 @@
     {
      "type": "BUILDING_TISSUE_ENGINEERING_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_REPLACEMENT_ORGANS",
+     "scope": "team"
     }
    ]
   }

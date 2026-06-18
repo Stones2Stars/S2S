@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_LABORATORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BIOLOGICAL_WARFARE",
+     "scope": "team"
     }
    ]
   }

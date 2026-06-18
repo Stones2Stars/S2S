@@ -18,6 +18,10 @@
      "type": "BUILDING_NATURE_CIRCLE_OF_POWER",
      "scope": "empire",
      "min": 2
+    },
+    {
+     "type": "TECH_MEGALITH_CONSTRUCTION",
+     "scope": "team"
     }
    ]
   },

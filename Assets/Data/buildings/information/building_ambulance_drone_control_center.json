@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_MEDICAL_CLINIC",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DISASTER_ROBOTS",
+     "scope": "team"
     }
    ]
   }

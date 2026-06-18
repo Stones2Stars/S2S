@@ -19,6 +19,10 @@
      "type": "BONUS_GRAINS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_FERMENTATION",
+     "scope": "team"
     }
    ],
    "any": [

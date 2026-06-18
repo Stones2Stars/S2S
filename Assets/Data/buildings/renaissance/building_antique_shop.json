@@ -17,6 +17,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_ARCHEOLOGY",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

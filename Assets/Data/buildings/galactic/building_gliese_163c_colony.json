@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_GLIESE_163C_COLONY_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_ACNP_PROPULSION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

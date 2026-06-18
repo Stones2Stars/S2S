@@ -14,6 +14,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MAIL",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

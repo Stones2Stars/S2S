@@ -24,6 +24,10 @@
     {
      "type": "BUILDING_JAIL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CRIMINOLOGY",
+     "scope": "team"
     }
    ],
    "any": [

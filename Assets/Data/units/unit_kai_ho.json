@@ -9,6 +9,10 @@
      "type": "BONUS_HONGKONGER",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_ARTILLERY",
+     "scope": "team"
     }
    ]
   }

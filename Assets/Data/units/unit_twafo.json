@@ -9,6 +9,10 @@
      "type": "BONUS_ASHANTI",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_EXPLOSIVES",
+     "scope": "team"
     }
    ],
    "any": [

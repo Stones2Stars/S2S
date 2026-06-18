@@ -14,6 +14,16 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_PREHISTORIC_MUSIC",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SHELTER_BUILDING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

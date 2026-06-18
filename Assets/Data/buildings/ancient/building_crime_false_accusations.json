@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_FALSE_ACCUSATIONS",
  "description": "TXT_KEY_BUILDING_CRIME_FALSE_ACCUSATIONS",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_FALSE_ACCUSATIONS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORATORY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "flat": -1

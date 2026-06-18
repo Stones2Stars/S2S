@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_3D_BODY_ATLAS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PERSONALIZED_HEALTH",
+     "scope": "team"
     }
    ],
    "any": [

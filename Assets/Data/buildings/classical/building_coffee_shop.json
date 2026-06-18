@@ -14,6 +14,10 @@
      "type": "BONUS_ROASTED_COFFEE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_SPICE_TRADE",
+     "scope": "team"
     }
    ],
    "any": [

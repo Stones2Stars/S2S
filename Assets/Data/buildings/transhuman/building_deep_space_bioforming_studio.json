@@ -16,6 +16,10 @@
     {
      "type": "BUILDING_DEEP_SPACE_SOCIAL_ENGINEERING",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HUMAN_TRANSMUTATION",
+     "scope": "team"
     }
    ],
    "any": [

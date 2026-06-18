@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_SPACE_COLONY_INTERSTELLAR_MOTHERSHIP",
      "scope": "city"
+    },
+    {
+     "type": "TECH_WEAPONIZED_ANTIMATTER",
+     "scope": "team"
     }
    ]
   }

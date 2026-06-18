@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_HYPERSPACE_PAN_DIMENSIONAL_CITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MULTIDIMENSIONAL_TIME",
+     "scope": "team"
     }
    ]
   }

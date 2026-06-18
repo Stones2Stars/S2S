@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_GALACTIC_PORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HYPERLANES",
+     "scope": "team"
     }
    ]
   }

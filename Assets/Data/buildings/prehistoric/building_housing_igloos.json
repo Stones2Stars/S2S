@@ -9,6 +9,10 @@
      "latitude": {
       "min": 50
      }
+    },
+    {
+     "type": "TECH_SHELTER_BUILDING",
+     "scope": "team"
     }
    ],
    "any": [

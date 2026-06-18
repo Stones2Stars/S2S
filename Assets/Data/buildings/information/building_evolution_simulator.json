@@ -20,6 +20,10 @@
     {
      "type": "BUILDING_BIOLOGY_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_VIRTUAL_REALITY",
+     "scope": "team"
     }
    ],
    "any": [

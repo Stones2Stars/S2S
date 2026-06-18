@@ -9,6 +9,10 @@
     {
      "type": "RELIGION_CHRISTIANITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FUNDAMENTALISM",
+     "scope": "team"
     }
    ]
   }
@@ -35,6 +39,7 @@
   "upkeep": 1
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 3,
   "militaryWorth": 34,
   "xpValueAttack": 3,

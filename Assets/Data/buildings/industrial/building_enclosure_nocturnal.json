@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_ZOO",
      "scope": "city"
+    },
+    {
+     "type": "TECH_INCANDESCENT_LIGHTING",
+     "scope": "team"
     }
    ],
    "any": [

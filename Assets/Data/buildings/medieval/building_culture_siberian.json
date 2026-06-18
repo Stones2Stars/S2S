@@ -25,6 +25,10 @@
     {
      "type": "BUILDING_C_L_EUROPEAN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FEUDALISM",
+     "scope": "team"
     }
    ],
    "any": [

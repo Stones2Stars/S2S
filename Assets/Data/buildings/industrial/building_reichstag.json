@@ -3,6 +3,16 @@
  "description": "TXT_KEY_BUILDING_REICHSTAG",
  "civilopedia": "TXT_KEY_BUILDING_REICHSTAG_PEDIA",
  "help": "TXT_KEY_BUILDING_REICHSTAG_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_IMPERIALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

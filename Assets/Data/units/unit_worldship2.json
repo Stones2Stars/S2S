@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_STARPORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ADVANCED_SEEDSHIPS",
+     "scope": "team"
     }
    ]
   }

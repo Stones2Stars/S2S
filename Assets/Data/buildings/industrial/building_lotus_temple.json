@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_BAHAI_DAR_BE_MEHR",
      "scope": "city"
+    },
+    {
+     "type": "TECH_RADIO",
+     "scope": "team"
     }
    ]
   }

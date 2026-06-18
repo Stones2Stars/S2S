@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_SHIPWRIGHT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_RUDDER",
+     "scope": "team"
     }
    ]
   }

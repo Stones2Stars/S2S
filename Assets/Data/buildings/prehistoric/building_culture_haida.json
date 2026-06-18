@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_C_L_NORTH_AMERICAN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HARPOON_MAKING",
+     "scope": "team"
     }
    ],
    "any": [

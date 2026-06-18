@@ -40,6 +40,10 @@
     {
      "type": "BUILDING_SHOPPING_DISTRICT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MAINSTREAM_CLONING",
+     "scope": "team"
     }
    ]
   }

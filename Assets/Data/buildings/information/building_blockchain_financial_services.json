@@ -22,6 +22,10 @@
     {
      "type": "BUILDING_BLOCKCHAIN_AUTHENTICATION",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DIRECT_MERCHANDISING",
+     "scope": "team"
     }
    ]
   }

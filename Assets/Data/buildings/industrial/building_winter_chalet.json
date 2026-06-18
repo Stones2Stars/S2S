@@ -19,6 +19,10 @@
      "latitude": {
       "min": 40
      }
+    },
+    {
+     "type": "TECH_ROMANTICISM",
+     "scope": "team"
     }
    ],
    "any": [

@@ -21,6 +21,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_FURNITURE",
      "scope": "city",
      "connection": "trade|vicinity"

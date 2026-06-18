@@ -21,6 +21,14 @@
     {
      "type": "BUILDING_EVOLUTIONARY_ALGORITHMS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_EXOCORTEX_NETWORKS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADVANCED_COMPUTERS",
+     "scope": "team"
     }
    ]
   }

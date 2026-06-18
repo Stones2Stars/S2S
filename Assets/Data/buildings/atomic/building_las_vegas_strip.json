@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_LUXOR_CASINO",
      "scope": "city"
+    },
+    {
+     "type": "TECH_LEGALIZED_GAMBLING",
+     "scope": "team"
     }
    ],
    "any": [

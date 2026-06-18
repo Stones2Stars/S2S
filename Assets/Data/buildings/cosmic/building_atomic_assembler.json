@@ -33,6 +33,10 @@
     {
      "type": "BUILDING_OMEGA_ASSEMBLER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GRAVITRONICS",
+     "scope": "team"
     }
    ]
   }

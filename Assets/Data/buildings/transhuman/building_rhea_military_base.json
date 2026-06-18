@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_RHEA_MILITARY_BASE_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_DEFENSES",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

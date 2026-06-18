@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_MARTIAN_METROPOLIS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FUSION_SPACECRAFT",
+     "scope": "team"
     }
    ]
   }

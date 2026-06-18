@@ -19,6 +19,16 @@
    "BUILDING_ENCLOSURE_WOLF"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRADE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "culture": {
   "city": {
    "percent": 1

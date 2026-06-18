@@ -73,6 +73,7 @@
   ]
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 25,
   "commandRange": 1,
   "controlPoints": 5,

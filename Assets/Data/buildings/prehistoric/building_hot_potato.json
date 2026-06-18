@@ -9,6 +9,16 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_GAMES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CONTROLLED_FIRE",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

@@ -37,6 +37,10 @@
     {
      "type": "BUILDING_CARPENTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ANCIENT_MACHINERY",
+     "scope": "team"
     }
    ]
   }

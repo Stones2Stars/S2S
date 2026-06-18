@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_IRON_WORKING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

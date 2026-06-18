@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_DREAM_VISUALIZER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NEURON_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

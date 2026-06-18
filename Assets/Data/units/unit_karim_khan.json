@@ -9,6 +9,10 @@
      "type": "BONUS_KURDISH",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_FLINTLOCK",
+     "scope": "team"
     }
    ]
   }

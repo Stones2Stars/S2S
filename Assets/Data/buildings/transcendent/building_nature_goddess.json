@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_REWILDERNESS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DEITIES",
+     "scope": "team"
     }
    ]
   }

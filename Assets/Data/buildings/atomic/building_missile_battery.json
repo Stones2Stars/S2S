@@ -24,6 +24,16 @@
    "BUILDING_WATCH_TOWER"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ADVANCED_ROCKETRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -1

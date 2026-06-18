@@ -19,6 +19,10 @@
      "type": "BONUS_FRUIT",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_ALCHEMY",
+     "scope": "team"
     }
    ],
    "any": [

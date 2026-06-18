@@ -8,6 +8,14 @@
     {
      "type": "BUILDING_VENUS_CITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BINARY_LEGISLATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+     "scope": "team"
     }
    ]
   }

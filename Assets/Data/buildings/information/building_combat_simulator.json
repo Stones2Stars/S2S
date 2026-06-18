@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_MILITARY_BASE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_WAR_SIMULATIONS",
+     "scope": "team"
     }
    ]
   }

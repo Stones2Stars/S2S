@@ -2,6 +2,16 @@
  "type": "BUILDING_ASCENSION_STUDIO",
  "description": "TXT_KEY_BUILDING_ASCENSION_STUDIO",
  "civilopedia": "TXT_KEY_BUILDING_ASCENSION_STUDIO_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASCENSION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -10

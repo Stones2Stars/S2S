@@ -38,6 +38,10 @@
     {
      "type": "BUILDING_MANUFACTURING_DISTRICT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ATOMIC_SCALE_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

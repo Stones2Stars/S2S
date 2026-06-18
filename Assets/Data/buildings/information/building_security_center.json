@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_MODERN_OFFICES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_WAR_SIMULATIONS",
+     "scope": "team"
     }
    ]
   }

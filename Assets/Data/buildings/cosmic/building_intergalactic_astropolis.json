@@ -8,6 +8,16 @@
    "BUILDING_INTERGALACTIC_MEGAGALAXY_CAPITOL"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INTERGALACTIC_COLONIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 5

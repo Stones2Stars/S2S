@@ -9,6 +9,10 @@
      "type": "BONUS_FIREARMS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_URBAN_CULTURE",
+     "scope": "team"
     }
    ]
   }

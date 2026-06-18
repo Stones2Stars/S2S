@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_NATURAL_LANGUAGE_ALGORITHMS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ONTOLOGICAL_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

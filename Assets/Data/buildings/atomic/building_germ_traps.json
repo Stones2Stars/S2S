@@ -22,6 +22,10 @@
     {
      "type": "BUILDING_BIOLOGICAL_WARFARE_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BIOLOGICAL_WARFARE",
+     "scope": "team"
     }
    ]
   }

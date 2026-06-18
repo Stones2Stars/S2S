@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_TRANSGENICS_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HYPOTHETICAL_BIOCHEMISTRY",
+     "scope": "team"
     }
    ]
   }

@@ -4,6 +4,16 @@
  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_COLONY_EUGENICS_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_PRECISION_SOCIAL_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CULTURAL_EVOLUTION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

@@ -17,6 +17,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_FERMENTATION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

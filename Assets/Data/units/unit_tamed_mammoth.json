@@ -14,6 +14,14 @@
     {
      "type": "BUILDING_ANIMAL_TAMER_COMPLEX",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SPECIALIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEGAFAUNA_DOMESTICATION",
+     "scope": "team"
     }
    ],
    "any": [

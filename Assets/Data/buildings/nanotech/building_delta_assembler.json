@@ -26,6 +26,14 @@
      "scope": "city"
     },
     {
+     "type": "TECH_ELECTRIC_ARC_WEAPONRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_UBIQUITOUS_COMPUTING",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_LIQUID_METAL",
      "scope": "city",
      "connection": "trade|vicinity"

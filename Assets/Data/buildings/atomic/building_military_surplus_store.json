@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_SHOPPING_DISTRICT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MODERN_WARFARE",
+     "scope": "team"
     }
    ]
   }

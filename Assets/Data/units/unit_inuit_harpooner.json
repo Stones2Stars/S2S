@@ -9,6 +9,10 @@
      "type": "BONUS_INUIT",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_HARPOON_MAKING",
+     "scope": "team"
     }
    ]
   }

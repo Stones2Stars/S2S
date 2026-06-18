@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_WATER_TOWER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_REPLACEABLE_PARTS",
+     "scope": "team"
     }
    ],
    "any": [

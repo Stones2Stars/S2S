@@ -9,6 +9,14 @@
      "type": "BONUS_HYDROGEN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_DIESELPUNK",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ZEPPELINS",
+     "scope": "team"
     }
    ],
    "any": [

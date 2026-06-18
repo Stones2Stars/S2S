@@ -9,6 +9,16 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_LEISURE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GARDENING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

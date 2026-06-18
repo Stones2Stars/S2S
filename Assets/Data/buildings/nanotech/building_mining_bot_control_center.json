@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_CONTROL_CENTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BIOMETRIC_WARFARE",
+     "scope": "team"
     }
    ],
    "any": [

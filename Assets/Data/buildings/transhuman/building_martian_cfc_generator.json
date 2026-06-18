@@ -14,6 +14,14 @@
     {
      "type": "BUILDING_MARTIAN_MEGACITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_APOCALYPTIC_PATHOGENS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ANIMAMATERIALS",
+     "scope": "team"
     }
    ]
   }

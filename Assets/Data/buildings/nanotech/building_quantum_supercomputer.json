@@ -24,6 +24,10 @@
     {
      "type": "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_QUANTUM_COMPUTING",
+     "scope": "team"
     }
    ]
   }

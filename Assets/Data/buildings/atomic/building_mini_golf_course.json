@@ -7,6 +7,16 @@
    "BUILDING_ATHLETIC_MEGACOMPLEX"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MODERN_SPORTS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "flat": 1

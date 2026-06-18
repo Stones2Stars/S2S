@@ -16,6 +16,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_DRAMA",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

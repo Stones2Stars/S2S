@@ -3,6 +3,14 @@
  "description": "TXT_KEY_BUILDING_COMPOST_DUMP",
  "civilopedia": "TXT_KEY_BUILDING_COMPOST_DUMP_PEDIA",
  "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECOLOGY",
+     "scope": "team"
+    }
+   ]
+  },
   "operate": {
    "all": [
     {

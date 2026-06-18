@@ -23,7 +23,11 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "HAS_RIVER"
+    "HAS_RIVER",
+    {
+     "type": "TECH_CONSTRUCTION",
+     "scope": "team"
+    }
    ],
    "any": [
     [

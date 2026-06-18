@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_SUBTERRANEAN_CITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NEUTRINO_COMMUNICATIONS",
+     "scope": "team"
     }
    ]
   }

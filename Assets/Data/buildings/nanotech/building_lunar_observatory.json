@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_SPACE_COLONY_LUNAR_BASE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_LUNAR_MANUFACTURING",
+     "scope": "team"
     }
    ],
    "any": [

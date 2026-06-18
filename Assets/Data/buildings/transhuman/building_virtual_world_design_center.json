@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_VIRTUAL_GOVERNANCE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SOCIAL_CALCULUS",
+     "scope": "team"
     }
    ]
   }

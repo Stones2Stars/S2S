@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_LICHEN_GATHERER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COOKING",
+     "scope": "team"
     }
    ],
    "any": [

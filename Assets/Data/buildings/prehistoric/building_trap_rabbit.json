@@ -19,6 +19,10 @@
      "type": "BONUS_RABBIT",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "TECH_TRAPPING",
+     "scope": "team"
     }
    ],
    "any": [

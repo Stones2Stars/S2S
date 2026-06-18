@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_SKYSCRAPER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CONGLOMERATES",
+     "scope": "team"
     }
    ]
   }

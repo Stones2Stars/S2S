@@ -19,6 +19,10 @@
      "latitude": {
       "max": 70
      }
+    },
+    {
+     "type": "TECH_TRIBALISM",
+     "scope": "team"
     }
    ],
    "any": [

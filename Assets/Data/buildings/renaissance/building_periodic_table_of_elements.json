@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_PERIODIC_TABLE_OF_ELEMENTS_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CHEMISTRY",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

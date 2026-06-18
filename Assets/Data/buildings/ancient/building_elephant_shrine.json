@@ -9,6 +9,14 @@
      "type": "BONUS_ELEPHANTS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_REINCARNATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ELEPHANT_DOMESTICATION",
+     "scope": "team"
     }
    ]
   },

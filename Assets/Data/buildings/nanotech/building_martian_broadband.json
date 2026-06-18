@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_SPACE_COLONY_MARTIAN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PHOTON_THERMODYNAMICS",
+     "scope": "team"
     }
    ]
   }

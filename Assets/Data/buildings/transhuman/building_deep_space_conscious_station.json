@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_DEEP_SPACE_SOCIAL_ENGINEERING",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TECHNOLOGICAL_SINGULARITY",
+     "scope": "team"
     }
    ]
   }

@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_SEA_GOD",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SPIRITUAL_REALMS",
+     "scope": "team"
     }
    ]
   }

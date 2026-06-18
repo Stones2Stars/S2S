@@ -14,6 +14,10 @@
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 10
+    },
+    {
+     "type": "TECH_ADVANCED_ROCKETRY",
+     "scope": "team"
     }
    ],
    "any": [
@@ -96,6 +100,7 @@
   "upkeep": 2
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 4,
   "militaryWorth": 177,
   "xpValueAttack": 3,

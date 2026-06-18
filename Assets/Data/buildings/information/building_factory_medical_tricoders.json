@@ -27,6 +27,10 @@
     {
      "type": "BUILDING_TISSUE_ENGINEERING_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PERSONALIZED_HEALTH",
+     "scope": "team"
     }
    ]
   }

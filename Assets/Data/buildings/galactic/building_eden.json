@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_DEEP_SPACE_CONSCIOUS_STATION",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ECOSYNTHESIS",
+     "scope": "team"
     }
    ]
   }

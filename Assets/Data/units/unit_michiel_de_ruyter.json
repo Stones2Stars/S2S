@@ -9,6 +9,10 @@
      "type": "BONUS_DUTCH",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MILITARY_SCIENCE",
+     "scope": "team"
     }
    ]
   }

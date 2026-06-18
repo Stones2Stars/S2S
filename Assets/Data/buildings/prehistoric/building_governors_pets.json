@@ -7,6 +7,16 @@
    "BUILDING_GOVERNORS_MENAGERIE"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CHIEFDOM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": 2

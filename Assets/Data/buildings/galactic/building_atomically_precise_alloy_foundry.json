@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_BETA_ASSEMBLER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ATOMIC_SCALE_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

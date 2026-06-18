@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_SAGE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ANIMISM",
+     "scope": "team"
     }
    ],
    "any": [

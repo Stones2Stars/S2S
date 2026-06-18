@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_GLAZE_MAKER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GLASS_BLOWING",
+     "scope": "team"
     }
    ],
    "any": [

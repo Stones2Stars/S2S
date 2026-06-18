@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_PLANETARIUM",
      "scope": "city"
+    },
+    {
+     "type": "TECH_EXOPLANET_DISCOVERY",
+     "scope": "team"
     }
    ]
   }

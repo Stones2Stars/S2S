@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_CLONING_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MAINSTREAM_CLONING",
+     "scope": "team"
     }
    ]
   }

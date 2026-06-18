@@ -36,6 +36,10 @@
     {
      "type": "BUILDING_SELF_AWARE_CITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ATOMIC_SCALE_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

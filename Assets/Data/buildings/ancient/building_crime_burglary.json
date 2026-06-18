@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_BURGLARY",
  "description": "TXT_KEY_BUILDING_CRIME_BURGLARY",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_BURGLARY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MASONRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -5,

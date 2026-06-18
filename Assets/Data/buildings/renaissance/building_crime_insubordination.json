@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_INSUBORDINATION",
  "description": "TXT_KEY_BUILDING_CRIME_INSUBORDINATION",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_INSUBORDINATION_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MILITARY_TRADITION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "espionage": {
   "city": {
    "insidiousness": {

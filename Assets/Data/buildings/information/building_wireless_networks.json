@@ -20,6 +20,10 @@
     {
      "type": "BUILDING_COMMUNICATIONS_SATELLITE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COMMUNICATION_NETWORKS",
+     "scope": "team"
     }
    ],
    "any": [

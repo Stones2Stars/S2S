@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_MAGLEV_LAUNCHER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MASS_DRIVER",
+     "scope": "team"
     }
    ]
   }

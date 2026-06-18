@@ -25,6 +25,10 @@
     {
      "type": "BUILDING_FISH_TRAPS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TRAP_FISHING",
+     "scope": "team"
     }
    ]
   }

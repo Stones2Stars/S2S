@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_OCEAN_CITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MARINE_ARCHITECTURE",
+     "scope": "team"
     }
    ]
   }

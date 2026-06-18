@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_DISTANT_HORIZON_PORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CONTROLLED_INFLATION",
+     "scope": "team"
     }
    ]
   }

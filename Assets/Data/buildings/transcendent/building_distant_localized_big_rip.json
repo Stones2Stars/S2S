@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_DISTANT_BIG_BANG_PROBE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PARAMETER_TUNING",
+     "scope": "team"
     }
    ],
    "any": [

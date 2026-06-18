@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_DEEP_SPACE_ORBITAL_BASE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PARATERRAFORMING",
+     "scope": "team"
     }
    ],
    "any": [

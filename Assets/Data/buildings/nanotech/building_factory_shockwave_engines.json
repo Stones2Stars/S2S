@@ -25,6 +25,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_INTERNAL_SHOCKWAVE_ENGINE",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_METAMATERIALS",
      "scope": "city",
      "connection": "trade|vicinity"

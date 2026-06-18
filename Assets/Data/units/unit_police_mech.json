@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_POLICE_PRECINCT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DISASTER_ROBOTS",
+     "scope": "team"
     }
    ]
   }

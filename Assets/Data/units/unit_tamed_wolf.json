@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_DOG_KENNELS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SPECIALIZATION",
+     "scope": "team"
     }
    ],
    "any": [

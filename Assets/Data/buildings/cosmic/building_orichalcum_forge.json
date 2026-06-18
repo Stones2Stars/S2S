@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_AERIAL_CITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FANTASY_MATERIALS",
+     "scope": "team"
     }
    ],
    "any": [

@@ -16,6 +16,10 @@
     {
      "type": "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+     "scope": "team"
     }
    ]
   }

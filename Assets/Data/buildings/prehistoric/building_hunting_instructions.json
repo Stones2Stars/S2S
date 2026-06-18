@@ -7,6 +7,16 @@
    "BUILDING_GREAT_HOLMEGAARD_HUNT"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PERSISTENCE_HUNTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -1

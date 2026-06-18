@@ -9,6 +9,10 @@
      "type": "BONUS_KHITAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_SMITHING",
+     "scope": "team"
     }
    ],
    "any": [

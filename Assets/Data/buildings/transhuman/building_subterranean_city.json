@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_ADVANCED_SHIELDING",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SUBTERRANEAN_EXPLORATION",
+     "scope": "team"
     }
    ]
   }

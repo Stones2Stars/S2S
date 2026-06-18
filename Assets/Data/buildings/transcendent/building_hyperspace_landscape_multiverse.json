@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_HYPERSPACE_POINCARE_DODECAHEDRAL_SPACE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ALPHA_POINT",
+     "scope": "team"
     }
    ]
   }

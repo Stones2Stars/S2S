@@ -29,6 +29,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_WOODWORKING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

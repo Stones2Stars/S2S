@@ -70,6 +70,7 @@
   ]
  },
  "identity": {
+  "spawnOnly": true,
   "xpValueAttack": 10,
   "xpValueDefense": 8,
   "domain": "DOMAIN_SEA",

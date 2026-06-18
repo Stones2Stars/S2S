@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_HIGHWAYMANS_HIDEOUT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MATCHLOCK",
+     "scope": "team"
     }
    ],
    "any": [

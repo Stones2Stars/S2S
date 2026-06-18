@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_DEEP_SPACE_MAGLEV",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BINARY_PSYCHOKINESIS",
+     "scope": "team"
     }
    ]
   }

@@ -9,6 +9,10 @@
      "type": "BONUS_PORTUGUESE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_COMPASS",
+     "scope": "team"
     }
    ]
   }

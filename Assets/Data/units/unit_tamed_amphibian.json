@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_ENCLOSURE_AMPHIBIAN_POND",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BIOLOGY",
+     "scope": "team"
     }
    ]
   }

@@ -2,6 +2,20 @@
  "type": "BUILDING_VENUS_OF_WILLENDORF",
  "description": "TXT_KEY_BUILDING_VENUS_OF_WILLENDORF",
  "civilopedia": "TXT_KEY_BUILDING_VENUS_OF_WILLENDORF_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CARVING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_RITUALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

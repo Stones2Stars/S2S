@@ -3,6 +3,16 @@
  "description": "TXT_KEY_BUILDING_GREAT_ZIMBABWE",
  "civilopedia": "TXT_KEY_BUILDING_GREAT_ZIMBABWE_PEDIA",
  "help": "TXT_KEY_BUILDING_GREAT_ZIMBABWE_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CITY_PLANNING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

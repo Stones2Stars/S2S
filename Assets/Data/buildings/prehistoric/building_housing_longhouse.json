@@ -21,6 +21,10 @@
      "type": "POPULATION",
      "scope": "city",
      "min": 3
+    },
+    {
+     "type": "TECH_CARPENTRY",
+     "scope": "team"
     }
    ],
    "any": [

@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_WEAPONS_TRAFFICKING",
  "description": "TXT_KEY_BUILDING_CRIME_WEAPONS_TRAFFICKING",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_WEAPONS_TRAFFICKING_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AUTOMATIC_WEAPONS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "espionage": {
   "city": {
    "insidiousness": {

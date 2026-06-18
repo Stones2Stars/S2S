@@ -21,6 +21,10 @@
     {
      "type": "BUILDING_WATER_TOWER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SCREW_PROPELLER",
+     "scope": "team"
     }
    ],
    "any": [

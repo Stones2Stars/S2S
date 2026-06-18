@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_HOSPITAL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_EVOLUTION",
+     "scope": "team"
     }
    ]
   }

@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_TITAN_BIOFACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_LUNAR_MEGASTRUCTURES",
+     "scope": "team"
     }
    ]
   }

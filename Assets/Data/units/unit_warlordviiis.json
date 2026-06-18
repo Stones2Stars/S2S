@@ -2,6 +2,16 @@
  "type": "UNIT_WARLORDVIIIS",
  "description": "TXT_KEY_UNIT_WARLORDVIIIS",
  "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GALACTIC_WARFARE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "grants": {
   "greatPeople": [
    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR"
@@ -11,6 +21,7 @@
   "upkeep": 1
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 1,
   "leaderExperience": 25,
   "domain": "DOMAIN_LAND",

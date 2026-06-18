@@ -22,6 +22,16 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_PREHISTORIC_DANCE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SHELTER_BUILDING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

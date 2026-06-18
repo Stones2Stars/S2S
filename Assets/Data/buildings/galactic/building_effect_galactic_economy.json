@@ -10,6 +10,16 @@
    "BUILDING_UNIVERSAL_ECONOMY"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FOLDING_SPACE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_EFFECT_GALACTIC_ECONOMY"

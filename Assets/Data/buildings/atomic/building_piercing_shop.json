@@ -19,6 +19,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_COUNTERCULTURE",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

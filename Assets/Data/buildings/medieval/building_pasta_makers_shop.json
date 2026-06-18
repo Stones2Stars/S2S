@@ -9,6 +9,16 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CROP_ROTATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ALCHEMY",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

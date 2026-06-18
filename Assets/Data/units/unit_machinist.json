@@ -11,6 +11,10 @@
      "connection": "trade|vicinity"
     },
     {
+     "type": "TECH_MACHINE_TOOLS",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_TOOLS",
      "scope": "city",
      "connection": "trade|vicinity"

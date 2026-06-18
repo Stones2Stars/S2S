@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_TV_STUDIO",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TELEVISION",
+     "scope": "team"
     }
    ]
   },

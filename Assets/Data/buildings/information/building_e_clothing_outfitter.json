@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MICROGENERATORS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

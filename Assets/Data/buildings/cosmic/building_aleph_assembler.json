@@ -30,6 +30,10 @@
     {
      "type": "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ZEPTOTECHNOLOGY",
+     "scope": "team"
     }
    ]
   }

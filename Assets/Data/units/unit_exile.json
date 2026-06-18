@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_EXILE_PRACTICES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DECEPTION",
+     "scope": "team"
     }
    ]
   }

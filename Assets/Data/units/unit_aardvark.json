@@ -46,6 +46,7 @@
   ]
  },
  "identity": {
+  "spawnOnly": true,
   "xpValueAttack": 3,
   "xpValueDefense": 1,
   "domain": "DOMAIN_LAND",

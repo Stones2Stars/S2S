@@ -15,6 +15,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_ORAL_TRADITION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_SPEECH_RECOGNITION_SOFTWARE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_AFFECTIVE_ALGORITHMS",
+     "scope": "team"
     }
    ]
   }

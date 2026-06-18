@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_CREATION_MYTH_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_ORAL_TRADITION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

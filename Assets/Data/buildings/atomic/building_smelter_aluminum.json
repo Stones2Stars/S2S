@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_MINE_BAUXITE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_INDUSTRIALISM",
+     "scope": "team"
     }
    ]
   }

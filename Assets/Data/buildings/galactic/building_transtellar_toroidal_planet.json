@@ -8,6 +8,14 @@
     {
      "type": "BUILDING_TRANSTELLAR_ARTIFICIAL_ROCKY_PLANET",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ORBITAL_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_PLANETS",
+     "scope": "team"
     }
    ]
   }

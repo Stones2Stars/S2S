@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_MEETING_HALL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MONARCHY",
+     "scope": "team"
     }
    ]
   }

@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_KUIPER_BELT_FUSION_PLANT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COSMIC_PERSPECTIVE",
+     "scope": "team"
     }
    ],
    "any": [

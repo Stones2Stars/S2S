@@ -28,6 +28,10 @@
     {
      "type": "BUILDING_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_3D_PRINTING",
+     "scope": "team"
     }
    ],
    "any": [

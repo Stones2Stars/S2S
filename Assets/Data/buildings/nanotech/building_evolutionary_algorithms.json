@@ -28,6 +28,14 @@
     {
      "type": "BUILDING_EVOLUTION_SIMULATOR",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NANOELECTRONICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ONTOLOGICAL_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

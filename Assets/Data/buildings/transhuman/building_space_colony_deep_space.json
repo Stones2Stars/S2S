@@ -16,6 +16,16 @@
    "BUILDING_DEEP_SPACE_SOLAR_ARRAY_TRANSNEPTUNIAN"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DEEP_SPACE_COLONIES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 10

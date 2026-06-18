@@ -9,6 +9,10 @@
      "type": "BONUS_ARAWAK",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_ARCHERY",
+     "scope": "team"
     }
    ]
   }

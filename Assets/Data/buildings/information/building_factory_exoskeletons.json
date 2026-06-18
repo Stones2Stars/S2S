@@ -29,6 +29,10 @@
     {
      "type": "BUILDING_MECHATRONICS_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_POWERED_EXOSKELETON",
+     "scope": "team"
     }
    ],
    "any": [

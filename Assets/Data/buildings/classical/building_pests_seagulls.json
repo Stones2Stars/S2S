@@ -15,6 +15,10 @@
      "latitude": {
       "max": 80
      }
+    },
+    {
+     "type": "TECH_SANITATION",
+     "scope": "team"
     }
    ],
    "any": [

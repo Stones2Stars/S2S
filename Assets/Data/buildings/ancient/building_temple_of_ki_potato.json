@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_TEMPLE_OF_KI",
      "scope": "city"
+    },
+    {
+     "type": "TECH_POLYTHEISM",
+     "scope": "team"
     }
    ],
    "any": [

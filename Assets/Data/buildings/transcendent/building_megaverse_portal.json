@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_UNIVERSE_PORTAL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MACROVERSE_TRAVERSAL",
+     "scope": "team"
     }
    ]
   }

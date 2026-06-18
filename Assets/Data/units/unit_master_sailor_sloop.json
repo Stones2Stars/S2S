@@ -14,6 +14,14 @@
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 10
+    },
+    {
+     "type": "TECH_METALLURGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASTROLABE",
+     "scope": "team"
     }
    ],
    "any": [
@@ -87,6 +95,7 @@
   "upkeep": 1
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 1,
   "militaryWorth": 25,
   "xpValueAttack": 3,

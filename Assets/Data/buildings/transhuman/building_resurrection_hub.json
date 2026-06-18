@@ -38,6 +38,10 @@
     {
      "type": "BUILDING_BODY_EXCHANGE_CLINIC",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_LIFE",
+     "scope": "team"
     }
    ]
   }

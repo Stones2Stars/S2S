@@ -58,6 +58,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_SPECIALIZATION",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

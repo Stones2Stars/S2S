@@ -34,6 +34,10 @@
      "type": "BONUS_IRON_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_GUNPOWDER",
+     "scope": "team"
     }
    ],
    "any": [

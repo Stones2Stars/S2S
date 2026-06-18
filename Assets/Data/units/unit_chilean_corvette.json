@@ -20,6 +20,10 @@
      "min": 10
     },
     {
+     "type": "TECH_NAVAL_TACTICS",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_SULPHUR",
      "scope": "city",
      "connection": "trade|vicinity"

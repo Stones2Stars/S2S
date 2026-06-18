@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_SUBTERRANEAN_CITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GRAVITRONICS",
+     "scope": "team"
     }
    ]
   }

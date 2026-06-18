@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_MICRO_WORMHOLE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MULTIVERSE_TRAVERSAL",
+     "scope": "team"
     }
    ]
   }

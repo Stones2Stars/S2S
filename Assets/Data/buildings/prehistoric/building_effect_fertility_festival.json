@@ -12,6 +12,16 @@
    "BUILDING_FERTILITY_DANCE"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CELEBRATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 2

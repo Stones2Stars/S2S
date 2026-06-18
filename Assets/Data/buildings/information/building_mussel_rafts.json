@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_MARINE_BIOLOGY_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_AQUACULTURE",
+     "scope": "team"
     }
    ],
    "any": [

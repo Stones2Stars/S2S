@@ -7,6 +7,16 @@
    "BUILDING_OUTHOUSE"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CARVING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "health": {
   "city": {
    "flat": 1

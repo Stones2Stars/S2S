@@ -29,6 +29,10 @@
     {
      "type": "BUILDING_DELTA_ASSEMBLER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NANOELECTRONICS",
+     "scope": "team"
     }
    ]
   }

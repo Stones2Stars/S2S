@@ -15,6 +15,10 @@
     {
      "type": "BUILDING_CLONING_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_LIFE",
+     "scope": "team"
     }
    ]
   }

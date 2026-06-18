@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_MEGATOWER_FIRE_STATION_LEVEL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NOVUS_CHEMISTRY",
+     "scope": "team"
     }
    ]
   }

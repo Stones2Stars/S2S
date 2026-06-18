@@ -23,6 +23,16 @@
    "BUILDING_LOOKOUT_POST"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CONDUCT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -2

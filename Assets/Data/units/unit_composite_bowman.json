@@ -2,6 +2,16 @@
  "type": "UNIT_COMPOSITE_BOWMAN",
  "description": "TXT_KEY_UNIT_COMPOSITE_BOWMAN",
  "civilopedia": "TXT_KEY_UNIT_ARCHER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BRONZE_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "buildRate": {
   "self": {
    "percent": [

@@ -24,6 +24,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_EARTH_OVEN",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

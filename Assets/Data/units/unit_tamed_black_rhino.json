@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_FOLKLORE_BLACK_RHINOCEROS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SPECIALIZATION",
+     "scope": "team"
     }
    ]
   }

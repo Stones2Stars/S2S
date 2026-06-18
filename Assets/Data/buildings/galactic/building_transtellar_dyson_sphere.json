@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_TRANSTELLAR_ARTIFICIAL_RED_DWARF",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_STARS",
+     "scope": "team"
     }
    ]
   }

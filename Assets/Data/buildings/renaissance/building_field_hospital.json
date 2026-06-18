@@ -12,6 +12,16 @@
    "BUILDING_HEALTHCARE_MEGACOMPLEX"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BATTLEFIELD_MEDICINE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -5

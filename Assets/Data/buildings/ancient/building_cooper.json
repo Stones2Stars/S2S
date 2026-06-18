@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_CARPENTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FERMENTATION",
+     "scope": "team"
     }
    ],
    "any": [

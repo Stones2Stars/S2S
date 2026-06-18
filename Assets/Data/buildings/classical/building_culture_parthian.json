@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_C_L_MIDDLE_EASTERN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HORSE_BREEDING",
+     "scope": "team"
     }
    ]
   }

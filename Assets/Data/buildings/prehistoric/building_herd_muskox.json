@@ -23,6 +23,10 @@
      "latitude": {
       "min": 30
      }
+    },
+    {
+     "type": "TECH_ANIMAL_HUSBANDRY",
+     "scope": "team"
     }
    ]
   }

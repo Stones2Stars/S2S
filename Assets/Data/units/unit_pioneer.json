@@ -3,6 +3,16 @@
  "description": "TXT_KEY_UNIT_PIONEER",
  "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",
  "help": "TXT_KEY_UNIT_PIONEER_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STEAM_POWER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "capabilities": {
   "food": true,
   "found": true,

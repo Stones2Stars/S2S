@@ -24,6 +24,14 @@
     {
      "type": "BUILDING_ANIMAL_TRAINER_HORSE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BRONZE_WORKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ANIMAL_RIDING",
+     "scope": "team"
     }
    ]
   }

@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_CONVENTION_CENTRE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COMMUNICATION_NETWORKS",
+     "scope": "team"
     }
    ]
   }

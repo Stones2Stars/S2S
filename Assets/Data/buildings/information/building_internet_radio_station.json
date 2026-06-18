@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_LOCAL_RADIO_STATION",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CLOUD_COMPUTING",
+     "scope": "team"
     }
    ]
   }

@@ -9,6 +9,10 @@
      "type": "BONUS_OPHIR",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_LAW_ENFORCEMENT",
+     "scope": "team"
     }
    ],
    "any": [

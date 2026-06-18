@@ -13,6 +13,14 @@
     {
      "type": "BUILDING_INTERSTELLAR_STARPORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_WEAPONIZED_GRAVITY_FIELDS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADVANCED_SEEDSHIPS",
+     "scope": "team"
     }
    ]
   }

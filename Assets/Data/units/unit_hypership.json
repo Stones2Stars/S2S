@@ -5,6 +5,12 @@
  "help": "TXT_KEY_UNIT_HYPERSHIP_HELP",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

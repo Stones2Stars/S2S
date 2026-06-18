@@ -11,6 +11,16 @@
    "BUILDING_MARTIAN_RARE_MINERAL_EXPORTER"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_TRADE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "flat": 5

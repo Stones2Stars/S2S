@@ -15,6 +15,10 @@
     {
      "type": "BUILDING_HOTEL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MARINE_ARCHITECTURE",
+     "scope": "team"
     }
    ]
   }

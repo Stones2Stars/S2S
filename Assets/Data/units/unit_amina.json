@@ -9,6 +9,10 @@
      "type": "BONUS_HAUSA",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_EDUCATION",
+     "scope": "team"
     }
    ]
   }

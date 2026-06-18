@@ -9,6 +9,16 @@
    "BUILDING_SMARTPHONE_MANUFACTURER"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMMUNICATION_NETWORKS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": [

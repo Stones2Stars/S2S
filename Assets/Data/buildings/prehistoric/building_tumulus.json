@@ -13,6 +13,16 @@
    "BUILDING_ANCIENT_CUSTOMS"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CEREMONIAL_BURIAL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": 1

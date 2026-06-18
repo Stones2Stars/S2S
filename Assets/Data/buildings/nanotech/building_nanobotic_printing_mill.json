@@ -25,6 +25,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_NANOROBOTICS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

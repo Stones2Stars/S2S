@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_UBIQUITOUS_SENSORS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NANO_ARCHITECTURE",
+     "scope": "team"
     }
    ]
   }

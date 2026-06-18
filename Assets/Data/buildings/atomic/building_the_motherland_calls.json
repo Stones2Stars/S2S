@@ -3,6 +3,16 @@
  "description": "TXT_KEY_BUILDING_THE_MOTHERLAND_CALLS",
  "civilopedia": "TXT_KEY_BUILDING_THE_MOTHERLAND_CALLS_PEDIA",
  "help": "TXT_KEY_BUILDING_THE_MOTHERLAND_CALLS_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMPOSITES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

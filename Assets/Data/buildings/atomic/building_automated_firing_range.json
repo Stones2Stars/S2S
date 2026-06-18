@@ -31,6 +31,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MECHANIZED_WARFARE",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

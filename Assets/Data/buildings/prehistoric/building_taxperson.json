@@ -7,6 +7,16 @@
    "BUILDING_OFFICIUM"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ARITHMETIC",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "percent": -1

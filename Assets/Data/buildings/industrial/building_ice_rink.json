@@ -13,6 +13,20 @@
    "BUILDING_ATHLETIC_MEGACOMPLEX"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_REFRIGERATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LAWN_SPORTS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "flat": 1

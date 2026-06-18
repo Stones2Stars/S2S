@@ -7,6 +7,10 @@
   "build": {
    "all": [
     {
+     "type": "TECH_CONSTRUCTION",
+     "scope": "team"
+    },
+    {
      "type": "POPULATION",
      "scope": "city",
      "min": 10

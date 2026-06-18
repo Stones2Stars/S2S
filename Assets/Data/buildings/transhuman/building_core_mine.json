@@ -71,6 +71,10 @@
     {
      "type": "BUILDING_MODERN_EARTHWORKS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NANOMINING",
+     "scope": "team"
     }
    ]
   }

@@ -22,6 +22,10 @@
     {
      "type": "BUILDING_COURTHOUSE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_RECYCLING",
+     "scope": "team"
     }
    ]
   }

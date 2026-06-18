@@ -22,6 +22,10 @@
     },
     "HAS_POWER",
     {
+     "type": "TECH_MASS_TRANSIT",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_PARTS",
      "scope": "city",
      "connection": "trade|vicinity"

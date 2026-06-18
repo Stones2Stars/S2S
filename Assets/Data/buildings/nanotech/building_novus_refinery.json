@@ -25,6 +25,14 @@
      "scope": "city"
     },
     {
+     "type": "TECH_NOVUS_CHEMISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOELECTRONICS",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_LIQUID_METAL",
      "scope": "city",
      "connection": "trade|vicinity"

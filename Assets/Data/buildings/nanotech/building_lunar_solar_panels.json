@@ -14,6 +14,10 @@
      "type": "BUILDING_COMMERCIAL_SPACEPORT",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_LUNAR_COLONIZATION",
+     "scope": "team"
     }
    ]
   }

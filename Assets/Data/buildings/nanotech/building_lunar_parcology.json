@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_LUNAR_HYDROPONICS_FARM",
      "scope": "city"
+    },
+    {
+     "type": "TECH_LUNAR_TRADE",
+     "scope": "team"
     }
    ]
   }

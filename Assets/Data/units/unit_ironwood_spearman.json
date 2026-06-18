@@ -9,6 +9,10 @@
      "type": "BONUS_MAPUCHE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_HEAT_TREATMENT",
+     "scope": "team"
     }
    ]
   }

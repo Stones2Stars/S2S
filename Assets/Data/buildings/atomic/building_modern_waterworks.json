@@ -22,6 +22,16 @@
    "BUILDING_TOWN_WELL"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NEW_URBANISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": [

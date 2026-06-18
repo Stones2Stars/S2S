@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_LANDFILL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MODERN_SANITATION",
+     "scope": "team"
     }
    ]
   },

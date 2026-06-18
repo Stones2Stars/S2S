@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_OCEAN_FLOOR_CITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ABYSS_COLONIZATION",
+     "scope": "team"
     }
    ]
   }

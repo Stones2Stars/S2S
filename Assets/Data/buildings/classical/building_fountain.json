@@ -24,6 +24,14 @@
     {
      "type": "BUILDING_WATER_PIPES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_AESTHETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CANAL_SYSTEMS",
+     "scope": "team"
     }
    ]
   }

@@ -24,6 +24,10 @@
      "type": "BUILDING_WIKIA",
      "scope": "empire",
      "min": 3
+    },
+    {
+     "type": "TECH_ONLINE_COMMUNITY",
+     "scope": "team"
     }
    ]
   }

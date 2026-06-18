@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_STELLAR_FUSION_PLANT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FEMTOTECHNOLOGY",
+     "scope": "team"
     }
    ]
   }

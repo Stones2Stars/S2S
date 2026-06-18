@@ -14,6 +14,14 @@
     {
      "type": "BUILDING_ANIMA_CHAMBER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COMPREHENSIVE_CYBERNETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_LIFE",
+     "scope": "team"
     }
    ]
   }

@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_CISLUNAR_SPACEPORT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CRYONICS",
+     "scope": "team"
     }
    ]
   }

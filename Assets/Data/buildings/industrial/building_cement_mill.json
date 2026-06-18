@@ -24,6 +24,10 @@
      "type": "BONUS_SAND",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_THERMODYNAMICS",
+     "scope": "team"
     }
    ],
    "any": [

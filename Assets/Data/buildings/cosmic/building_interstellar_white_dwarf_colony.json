@@ -12,6 +12,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET",
      "scope": "city"
+    },
+    {
+     "type": "TECH_IMMORTALITY",
+     "scope": "team"
     }
    ],
    "any": [

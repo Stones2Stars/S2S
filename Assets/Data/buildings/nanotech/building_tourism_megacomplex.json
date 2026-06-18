@@ -20,6 +20,16 @@
    "BUILDING_WILD_WEST_HOTEL"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORBITAL_FLIGHT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 5

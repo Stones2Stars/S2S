@@ -14,6 +14,16 @@
    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PSYCHOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "flat": 3

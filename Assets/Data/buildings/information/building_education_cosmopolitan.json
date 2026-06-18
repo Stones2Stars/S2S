@@ -13,6 +13,16 @@
    "BUILDING_EDUCATION_SCHOLARLY"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INFORMATION_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "percent": 40

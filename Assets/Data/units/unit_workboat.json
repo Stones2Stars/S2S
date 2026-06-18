@@ -2,6 +2,16 @@
  "type": "UNIT_WORKBOAT",
  "description": "TXT_KEY_UNIT_WORKBOAT",
  "civilopedia": "TXT_KEY_UNIT_WORKBOAT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FISHING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "capabilities": {
   "mechanized": true,
   "renderBelowWater": true,

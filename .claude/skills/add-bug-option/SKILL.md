@@ -118,10 +118,12 @@ const bool bOn  = getBugOptionBOOL("CityScreen__MyToggle", true);
 ## Validate
 
 1. **XML well-formedness** of the two edited XML files (PowerShell):
+
    ```powershell
    @("C:\code\s2s\s2s\Assets\XML\GameText\BUG_CIV4GameText.xml","C:\code\s2s\s2s\Assets\Config\BUG <Module>.xml") |
      ForEach-Object { try { [xml](Get-Content -Raw -LiteralPath $_ -ErrorAction Stop) | Out-Null; "OK: $_" } catch { "FAIL: $_ -> $($_.Exception.Message)" } }
    ```
+
    Or `Tools/XmlValidator.exe -a` for the full schema pass.
 2. **If you touched `Sources/`**, build with the `build-dll` skill (`Assert build`
    for a compile-check; `Release rebuild deploy` to test in-game). C++2003 only.

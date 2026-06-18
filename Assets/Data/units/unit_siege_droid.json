@@ -9,6 +9,10 @@
      "type": "BONUS_SERVICE_BOTS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_SUPERSTRONG_ALLOYS",
+     "scope": "team"
     }
    ],
    "any": [

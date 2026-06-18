@@ -27,6 +27,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_BATTLEFIELD_MEDICINE",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

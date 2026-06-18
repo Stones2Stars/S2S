@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_ANIMAL_TRAINER_HORSE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MOUNTED_ARCHERY",
+     "scope": "team"
     }
    ],
    "any": [

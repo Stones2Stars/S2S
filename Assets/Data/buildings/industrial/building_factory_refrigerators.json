@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_REFRIGERATION",
+     "scope": "team"
     }
    ],
    "any": [

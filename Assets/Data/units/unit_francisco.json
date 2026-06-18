@@ -9,6 +9,10 @@
      "type": "BONUS_VENEZUELAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MILITARY_TRADITION",
+     "scope": "team"
     }
    ]
   }

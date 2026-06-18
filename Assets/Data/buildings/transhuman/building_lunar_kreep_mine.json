@@ -9,6 +9,14 @@
     {
      "type": "BUILDING_LUNAR_MANUFACTURING_PLANT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NANOMINING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LUNAR_TRADE",
+     "scope": "team"
     }
    ],
    "any": [

@@ -2,6 +2,16 @@
  "type": "BUILDING_INTERSTELLAR_GOVERNMENT_GERONTOCRACY",
  "description": "TXT_KEY_BUILDING_INTERSTELLAR_GOVERNMENT_GERONTOCRACY",
  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_GOVERNMENT_GERONTOCRACY_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GERONTOCRACY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "espionage": {
   "city": {
    "flat": 10

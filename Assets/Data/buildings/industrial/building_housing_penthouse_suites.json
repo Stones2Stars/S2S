@@ -32,6 +32,14 @@
     {
      "type": "BUILDING_TELEPHONE_NETWORK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CIVIL_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TELEPHONE",
+     "scope": "team"
     }
    ]
   }

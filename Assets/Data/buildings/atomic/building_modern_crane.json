@@ -31,6 +31,10 @@
     {
      "type": "BUILDING_CONSTRUCTION_FIRM",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ELECTRONICS",
+     "scope": "team"
     }
    ],
    "any": [

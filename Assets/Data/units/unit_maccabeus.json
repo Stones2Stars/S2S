@@ -9,6 +9,10 @@
      "type": "BONUS_ISRAELI",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MONOTHEISM",
+     "scope": "team"
     }
    ]
   }

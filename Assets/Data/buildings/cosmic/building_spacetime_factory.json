@@ -15,6 +15,10 @@
     {
      "type": "BUILDING_ALEPH_ASSEMBLER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_OMEGA_MINUS_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

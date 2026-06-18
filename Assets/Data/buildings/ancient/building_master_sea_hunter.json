@@ -7,6 +7,16 @@
    "BUILDING_TRADITION_SEA_HUNTING"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SAILING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "experience": {
   "city": {
    "unitCombats": {

@@ -40,6 +40,10 @@
     {
      "type": "BUILDING_MARKET_RESEARCH",
      "scope": "city"
+    },
+    {
+     "type": "TECH_EXOCORTEX_NETWORKS",
+     "scope": "team"
     }
    ]
   }

@@ -10,6 +10,10 @@
      "type": "BONUS_SOAP",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_THEOLOGY",
+     "scope": "team"
     }
    ],
    "any": [

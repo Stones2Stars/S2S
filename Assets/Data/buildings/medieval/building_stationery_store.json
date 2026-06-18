@@ -14,6 +14,10 @@
      "type": "BONUS_PAPER",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_PAPER",
+     "scope": "team"
     }
    ],
    "any": [

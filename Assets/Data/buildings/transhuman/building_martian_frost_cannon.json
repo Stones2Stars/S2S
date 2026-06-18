@@ -9,6 +9,14 @@
     {
      "type": "BUILDING_MARTIAN_METROPOLIS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FROST_BEAMS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HYPERMAGNETICS",
+     "scope": "team"
     }
    ]
   }

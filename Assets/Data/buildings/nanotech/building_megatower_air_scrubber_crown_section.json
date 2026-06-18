@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_ARTIFICIAL_TREE_FARM",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NANO_ARCHITECTURE",
+     "scope": "team"
     }
    ]
   }

@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_BLACK_HOLE_COLONY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GRAVITRONICS",
+     "scope": "team"
     }
    ],
    "any": [

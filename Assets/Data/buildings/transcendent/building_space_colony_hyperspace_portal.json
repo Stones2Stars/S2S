@@ -8,6 +8,16 @@
    "BUILDING_HYPERSPACE_INFLATON_FIELD"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 10

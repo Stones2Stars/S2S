@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ELECTRIC_ARC_WEAPONRY",
+     "scope": "team"
     }
    ],
    "any": [

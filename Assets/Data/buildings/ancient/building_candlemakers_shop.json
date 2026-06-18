@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_CANDLE_MAKING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

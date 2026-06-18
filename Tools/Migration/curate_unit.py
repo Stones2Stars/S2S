@@ -243,6 +243,16 @@ def requires_unit(rec, store):
     ms = _int(rec, "iMinAreaSize")
     if ms and ms > 0:
         allc.append(_atom("AREA_SIZE", "world", min=ms))
+    # --- tech prereqs -> build.all (AND only: the single PrereqAndTech + every TechTypes entry; units have NO
+    # OR-tech — only techs themselves model alternate tech-tree paths, owner 2026-06-17). The SOURCE->unit enable
+    # edge is ALSO store-wired (generation/frontier proposal), but that edge cannot encode the multi-tech AND;
+    # the per-candidate CONFIRM lives here and the condition engine evaluates it via isHasTech (team-scope).
+    # Legacy gate: CvPlayer::canTrain 6392 (PrereqAndTech) + 6407 (PrereqAndTechs). enabler-spec §12 retrofit. ---
+    t = _txt(rec, "PrereqTech")
+    if t:
+        allc.append(_atom(t, "team"))
+    for x in _typelist_struct(rec, "TechTypes", "PrereqTech"):
+        allc.append(_atom(x, "team"))
     # --- instance caps are NOT a requires SELF-atom (owner 2026-06-17): they move to the declarative `allowed`
     # cap (authored by allowed_unit() below). SELF leaves requires entirely; uniform with Building/Tech/CultureLevel.
     # enabler-spec §5a/§13.7. ---
@@ -265,10 +275,19 @@ def allowed_unit(rec):
     ignoring it (NO_NATIONAL_UNIT_LIMIT, honoring the per-unit `identity.unlimitedException` exception) + era-scaling
     the base + `+extra` — none touch the parser. A unique unit -> `allowed:{empire:1}`. enabler-spec §5a/§13.7."""
     allowed = OrderedDict()
-    for tag, scope in (("iMaxGlobalInstances", "world"), ("iMaxPlayerInstances", "empire")):
+    g = _int(rec, "iMaxGlobalInstances")
+    if g is not None and g >= 0:
+        allowed["world"] = g
+    # A TEAM instance cap makes no sense for a UNIT -- units belong to PLAYERS, not teams (owner ruling
+    # 2026-06-17). So iMaxTeamInstances folds into EMPIRE alongside iMaxPlayerInstances (the tighter of the two
+    # wins if a unit ever carries both); it is NOT dropped (the old code silently discarded team caps -> uncapped).
+    emp = None
+    for tag in ("iMaxPlayerInstances", "iMaxTeamInstances"):
         v = _int(rec, tag)
         if v is not None and v >= 0:
-            allowed[scope] = v
+            emp = v if emp is None else min(emp, v)
+    if emp is not None:
+        allowed["empire"] = emp
     return allowed or None
 
 
@@ -549,6 +568,12 @@ def curate(typ, rec, store):
     if icm:
         fams.setdefault("costs", OrderedDict()).setdefault("empire", OrderedDict())["perInstance"] = \
             OrderedDict([("percent", icm), ("per", _atom("SELF", "empire"))])
+    # spawn-only nature: legacy marks NON-player-buildable units (wildlife/spawned) with the iCost == -1 SENTINEL
+    # (the CvPlayer::canTrain getProductionCost()==-1 gate). Translate that dumb sentinel into an explicit clean
+    # flag — the cascade gates buildability on this, never on a -1 cost. NB settlers carry NO iCost tag (their
+    # real cost is population-based, "not the full cost") so they are NOT spawn-only and stay buildable.
+    if _int(rec, "iCost") == -1:
+        identity["spawnOnly"] = True
     # --- identity scalars / lists ---
     for tag, key in ID_SCALAR.items():
         iv = _int(rec, tag)

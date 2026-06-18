@@ -37,6 +37,16 @@
    "BUILDING_WATER_BURIALS"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MODERN_SANITATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "flat": [

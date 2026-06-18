@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_BLOOD_DANCE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TATTOOS",
+     "scope": "team"
     }
    ],
    "any": [

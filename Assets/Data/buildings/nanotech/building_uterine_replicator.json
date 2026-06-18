@@ -29,6 +29,10 @@
     {
      "type": "BUILDING_CYBERNETIC_ORGAN_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CYBERNETICS",
+     "scope": "team"
     }
    ]
   }

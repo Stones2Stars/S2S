@@ -11,6 +11,10 @@
      "connection": "trade|vicinity"
     },
     {
+     "type": "TECH_MICROPROCESSOR",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_MICROCHIPS",
      "scope": "city",
      "connection": "trade|vicinity"

@@ -12,6 +12,10 @@
      }
     },
     {
+     "type": "TECH_MASONRY",
+     "scope": "team"
+    },
+    {
      "type": "BUILDING_FOLKLORE_T_FISH",
      "scope": "city"
     }

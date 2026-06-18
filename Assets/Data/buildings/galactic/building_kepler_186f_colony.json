@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_KEPLER_186F_COLONY_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_ANTIMATTER_ROCKETS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

@@ -4,6 +4,16 @@
  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_2_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MEDICINE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SCREW_PROPELLER",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

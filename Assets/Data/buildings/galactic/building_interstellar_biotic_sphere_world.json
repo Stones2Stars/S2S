@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_SPHEREWORLD",
      "scope": "city"
+    },
+    {
+     "type": "TECH_STELLAR_COMPUTING",
+     "scope": "team"
     }
    ]
   }

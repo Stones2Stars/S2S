@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_DISTANT_EXPLORERS_BASE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TIMELINE_RECTIFICATION",
+     "scope": "team"
     }
    ]
   }

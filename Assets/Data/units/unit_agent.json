@@ -2,6 +2,16 @@
  "type": "UNIT_AGENT",
  "description": "TXT_KEY_UNIT_AGENT",
  "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PHOTOGRAPHY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "capabilities": {
   "counterSpy": true,
   "investigate": true,

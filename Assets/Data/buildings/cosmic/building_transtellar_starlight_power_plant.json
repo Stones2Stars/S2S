@@ -2,6 +2,16 @@
  "type": "BUILDING_TRANSTELLAR_STARLIGHT_POWER_PLANT",
  "description": "TXT_KEY_BUILDING_TRANSTELLAR_STARLIGHT_POWER_PLANT",
  "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_STARLIGHT_POWER_PLANT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FEMTOTECHNOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 5

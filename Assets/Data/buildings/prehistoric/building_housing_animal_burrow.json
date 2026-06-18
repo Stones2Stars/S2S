@@ -7,6 +7,16 @@
    "BUILDING_HOUSING_HOMELESS"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CAVE_DWELLING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "health": {
   "city": {
    "flat": -3

@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_DEEP_SPACE_ASSEMBLER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DEEP_SPACE_COLONIES",
+     "scope": "team"
     }
    ]
   }

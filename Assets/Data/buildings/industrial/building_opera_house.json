@@ -16,6 +16,10 @@
      "type": "BONUS_FURNITURE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_REALISM",
+     "scope": "team"
     }
    ],
    "any": [

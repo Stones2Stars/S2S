@@ -14,6 +14,18 @@
     {
      "type": "BUILDING_MODERN_OFFICES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_RADIO",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_METEOROLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CIVIL_ENGINEERING",
+     "scope": "team"
     }
    ],
    "any": [

@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_ANIMAL_TAMER_COMPLEX",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SPECIALIZATION",
+     "scope": "team"
     }
    ]
   }

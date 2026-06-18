@@ -9,6 +9,10 @@
      "type": "BONUS_BABYLONIAN",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MATHEMATICS",
+     "scope": "team"
     }
    ]
   }

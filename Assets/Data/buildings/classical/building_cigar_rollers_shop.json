@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_DRUG_TRADE",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

@@ -9,6 +9,10 @@
      "type": "BONUS_CHRONOTON",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_OMEGA_MINUS_ENGINEERING",
+     "scope": "team"
     }
    ]
   }

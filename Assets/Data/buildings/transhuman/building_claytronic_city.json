@@ -22,6 +22,10 @@
     {
      "type": "BUILDING_CLAYTRONIC_TOWER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NANOTROIDS",
+     "scope": "team"
     }
    ]
   }

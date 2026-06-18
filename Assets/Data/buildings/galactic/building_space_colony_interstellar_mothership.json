@@ -8,6 +8,16 @@
    "UNIT_WORLDSHIP_DEFENDER"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INTERSTELLAR_TRAVEL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 5

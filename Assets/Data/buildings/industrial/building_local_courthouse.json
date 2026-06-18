@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_LABOR_UNIONS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

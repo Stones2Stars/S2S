@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_POWER_LINES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SOLAR_POWER",
+     "scope": "team"
     }
    ],
    "any": [

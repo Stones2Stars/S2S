@@ -3,6 +3,16 @@
  "description": "TXT_KEY_BUILDING_TOPKAPI_PALACE",
  "civilopedia": "TXT_KEY_BUILDING_TOPKAPI_PALACE_PEDIA",
  "help": "TXT_KEY_BUILDING_TOPKAPI_PALACE_HELP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FEUDALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

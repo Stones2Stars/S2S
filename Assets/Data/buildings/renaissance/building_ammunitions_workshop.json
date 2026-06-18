@@ -27,6 +27,10 @@
      "type": "BONUS_SULPHUR",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_EXPLOSIVES",
+     "scope": "team"
     }
    ],
    "any": [

@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_BUILDING_BONEMARROWER_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_BONE_WORKING",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

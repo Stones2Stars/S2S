@@ -7,6 +7,16 @@
    "BUILDING_WEATHER_VANES"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CLOUD_PATTERNS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 1

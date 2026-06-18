@@ -19,6 +19,10 @@
      "type": "BONUS_SPICES",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "TECH_DRUG_TRADE",
+     "scope": "team"
     }
    ],
    "any": [

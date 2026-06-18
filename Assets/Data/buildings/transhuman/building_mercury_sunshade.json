@@ -8,6 +8,14 @@
     {
      "type": "BUILDING_MERCURY_COMETARY_BOMBARDMENT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PLANETARY_DEFENSES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASTEROID_EXTRACTION",
+     "scope": "team"
     }
    ],
    "any": [

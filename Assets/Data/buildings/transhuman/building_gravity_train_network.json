@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_GRAVITY_TRAIN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SUBTERRANEAN_EXPLORATION",
+     "scope": "team"
     }
    ]
   }

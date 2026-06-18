@@ -22,6 +22,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_STAR_SCOOP",
      "scope": "city"
+    },
+    {
+     "type": "TECH_STELLAR_COMPUTING",
+     "scope": "team"
     }
    ]
   }

@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_TRANSTELLAR_SCOUTING_FLEET",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SPECIES_AMALGAMATION",
+     "scope": "team"
     }
    ]
   }

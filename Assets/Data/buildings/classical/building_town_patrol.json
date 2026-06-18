@@ -33,6 +33,16 @@
    "BUILDING_TOWN_WATCH"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LAW_ENFORCEMENT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": -1

@@ -17,6 +17,10 @@
      "type": "POPULATION",
      "scope": "city",
      "min": 7
+    },
+    {
+     "type": "TECH_MASS_TRANSIT",
+     "scope": "team"
     }
    ],
    "any": [

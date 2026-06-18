@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_THEATRE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_DRAMA",
+     "scope": "team"
     }
    ],
    "any": [

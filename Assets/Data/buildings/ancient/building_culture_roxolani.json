@@ -17,6 +17,10 @@
     {
      "type": "BUILDING_C_L_EUROPEAN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ANIMAL_RIDING",
+     "scope": "team"
     }
    ]
   }

@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_PERSONAL_ADORNMENTS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

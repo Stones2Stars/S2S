@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_FORENSICS_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MASS_SURVEILLANCE",
+     "scope": "team"
     }
    ]
   }

@@ -27,6 +27,10 @@
      "type": "POPULATION",
      "scope": "city",
      "min": 10
+    },
+    {
+     "type": "TECH_COMMUNITY",
+     "scope": "team"
     }
    ],
    "any": [

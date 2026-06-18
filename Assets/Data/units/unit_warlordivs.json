@@ -9,6 +9,10 @@
      "type": "BONUS_IRON_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MILITARY_SCIENCE",
+     "scope": "team"
     }
    ],
    "any": [
@@ -36,6 +40,7 @@
   "upkeep": 1
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 1,
   "leaderExperience": 20,
   "domain": "DOMAIN_LAND",

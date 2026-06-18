@@ -9,6 +9,10 @@
      "type": "BONUS_ROPE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_MEGALITH_CONSTRUCTION",
+     "scope": "team"
     }
    ],
    "any": [

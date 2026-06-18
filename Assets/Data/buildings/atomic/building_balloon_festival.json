@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_BALLOON_RIDES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TOURISM",
+     "scope": "team"
     }
    ]
   }

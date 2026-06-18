@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_PRISON_PLANET",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TIMELINE_RECTIFICATION",
+     "scope": "team"
     }
    ]
   }

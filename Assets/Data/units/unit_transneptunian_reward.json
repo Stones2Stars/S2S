@@ -2,6 +2,16 @@
  "type": "UNIT_TRANSNEPTUNIAN_REWARD",
  "description": "TXT_KEY_UNIT_TRANSNEPTUNIAN_REWARD",
  "civilopedia": "TXT_KEY_UNIT_TRANSNEPTUNIAN_REWARD_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MAGNETIC_SAILS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "capabilities": {
   "canMoveAllTerrain": true,
   "canMoveImpassable": true,
@@ -28,6 +38,7 @@
   "upkeep": 1
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 1,
   "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_WORKER",

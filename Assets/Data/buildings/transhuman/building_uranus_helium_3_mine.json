@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_UMBRIEL_COLONY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NUCLEAR_PULSE_PROPULSION",
+     "scope": "team"
     }
    ],
    "any": [

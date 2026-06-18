@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_UNIVERSITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_FISSION",
+     "scope": "team"
     }
    ],
    "any": [

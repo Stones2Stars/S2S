@@ -2,6 +2,16 @@
  "type": "BUILDING_HYPERSPACE_ENERGY_CANNON",
  "description": "TXT_KEY_BUILDING_HYPERSPACE_ENERGY_CANNON",
  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_ENERGY_CANNON_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COSMIC_WARFARE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "defense": {
   "city": {
    "amount": {

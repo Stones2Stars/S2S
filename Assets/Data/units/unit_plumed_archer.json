@@ -9,6 +9,10 @@
      "type": "BONUS_HUASTEC",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_ARCHERY",
+     "scope": "team"
     }
    ]
   }

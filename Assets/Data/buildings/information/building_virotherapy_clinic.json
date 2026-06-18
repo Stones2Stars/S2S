@@ -26,6 +26,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_MOLECULAR_MEDICINE",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_IMMUNITY_DRUGS",
      "scope": "city",
      "connection": "trade|vicinity"

@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_DISTANT_LAYERED_REALITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_SPIRITUAL_REALMS",
+     "scope": "team"
     }
    ]
   }

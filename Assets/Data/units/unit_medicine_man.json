@@ -4,6 +4,12 @@
  "civilopedia": "TXT_KEY_UNIT_MEDICINE_MAN_PEDIA",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_FOLK_MEDICINE",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

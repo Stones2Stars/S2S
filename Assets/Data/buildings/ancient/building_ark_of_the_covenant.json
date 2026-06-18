@@ -9,6 +9,10 @@
      "type": "BONUS_GOLD_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_PRIESTHOOD",
+     "scope": "team"
     }
    ],
    "any": [

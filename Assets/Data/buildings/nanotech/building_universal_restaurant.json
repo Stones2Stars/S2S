@@ -21,6 +21,10 @@
     {
      "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_AUGMENTED_CONSUMABLES",
+     "scope": "team"
     }
    ]
   }

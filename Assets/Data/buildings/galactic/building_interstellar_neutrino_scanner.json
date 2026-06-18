@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_INTERSTELLAR_PLANETARY_AWARENESS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NEUTRINO_COMMUNICATIONS",
+     "scope": "team"
     }
    ]
   }

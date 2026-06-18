@@ -8,6 +8,14 @@
     {
      "type": "BUILDING_SCOTLAND_YARD",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ELECTRONICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AVIATION",
+     "scope": "team"
     }
    ]
   }

@@ -17,6 +17,16 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_FORGE_WORLDS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADAPTIVE_ARCHITECTURE",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

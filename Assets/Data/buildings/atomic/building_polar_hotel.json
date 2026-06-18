@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_HOTEL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TOURISM",
+     "scope": "team"
     }
    ],
    "any": [

@@ -9,6 +9,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_PREHISTORIC_DANCE",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

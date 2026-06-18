@@ -30,6 +30,16 @@
    "BUILDING_INTERSTELLAR_COMET_DUST_COLLECTION"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ADVANCED_SEEDSHIPS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 40

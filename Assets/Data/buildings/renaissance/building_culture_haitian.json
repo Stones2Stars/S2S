@@ -26,6 +26,10 @@
     {
      "type": "BUILDING_C_AC_AFRICAN",
      "scope": "city"
+    },
+    {
+     "type": "TECH_COLONIALISM",
+     "scope": "team"
     }
    ]
   }

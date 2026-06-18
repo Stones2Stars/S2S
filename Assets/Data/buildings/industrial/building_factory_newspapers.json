@@ -22,6 +22,10 @@
     {
      "type": "BUILDING_PRESS_AGENCY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ASSEMBLY_LINE",
+     "scope": "team"
     }
    ],
    "any": [

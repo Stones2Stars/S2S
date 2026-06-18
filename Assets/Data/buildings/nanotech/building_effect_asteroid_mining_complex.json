@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_EFFECT_CISLUNAR_ECONOMY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_LUNAR_TRADE",
+     "scope": "team"
     }
    ]
   }

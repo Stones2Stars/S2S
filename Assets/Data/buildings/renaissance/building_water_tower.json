@@ -15,6 +15,10 @@
     {
      "type": "BUILDING_WATER_PIPES",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PHYSICS",
+     "scope": "team"
     }
    ]
   }

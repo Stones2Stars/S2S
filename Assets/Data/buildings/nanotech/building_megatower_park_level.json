@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_CITY_PARK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NANO_ARCHITECTURE",
+     "scope": "team"
     }
    ]
   }

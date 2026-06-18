@@ -10,6 +10,16 @@
    "BUILDING_GUILD_ARTISTS"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FREE_ARTISTRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": 4,

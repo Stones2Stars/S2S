@@ -13,6 +13,16 @@
    "BUILDING_MASTER_HUNTER_TRADITION"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRACKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": [

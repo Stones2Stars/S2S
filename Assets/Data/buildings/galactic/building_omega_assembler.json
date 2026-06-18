@@ -34,6 +34,10 @@
     {
      "type": "BUILDING_ALPHA_ASSEMBLER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_PICOTECHNOLOGY",
+     "scope": "team"
     }
    ]
   }

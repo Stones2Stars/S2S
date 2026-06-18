@@ -7,6 +7,16 @@
    "BUILDING_INTERGALACTIC_GALACTIC_COLONY"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SPACE_CREASING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 10

@@ -11,6 +11,10 @@
      "connection": "trade|vicinity"
     },
     {
+     "type": "TECH_STEAMPUNK",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_COAL",
      "scope": "city",
      "connection": "trade|vicinity"

@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_INTERGALACTIC_ELECTROWEAK_STAR_BASE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_NEUTRONIUM",
+     "scope": "team"
     }
    ]
   }

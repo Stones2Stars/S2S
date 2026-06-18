@@ -2,6 +2,16 @@
  "type": "BUILDING_CRIME_KIDNAPPING",
  "description": "TXT_KEY_BUILDING_CRIME_KIDNAPPING",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_KIDNAPPING_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "espionage": {
   "city": {
    "insidiousness": {

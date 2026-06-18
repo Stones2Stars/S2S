@@ -2,6 +2,16 @@
  "type": "UNIT_HUNTER",
  "description": "TXT_KEY_UNIT_HUNTER",
  "civilopedia": "TXT_KEY_UNIT_HUNTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HUNTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "buildRate": {
   "self": {
    "percent": [

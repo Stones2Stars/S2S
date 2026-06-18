@@ -9,6 +9,10 @@
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 5
+    },
+    {
+     "type": "TECH_BOAT_BUILDING",
+     "scope": "team"
     }
    ],
    "any": [
@@ -62,6 +66,7 @@
   "upkeep": 1
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 3,
   "militaryWorth": 1,
   "xpValueAttack": 2,

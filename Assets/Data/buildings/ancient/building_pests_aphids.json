@@ -14,6 +14,10 @@
      "type": "POPULATION",
      "scope": "city",
      "min": 6
+    },
+    {
+     "type": "TECH_PLOUGH",
+     "scope": "team"
     }
    ],
    "any": [

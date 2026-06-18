@@ -19,6 +19,10 @@
      "type": "BONUS_CARCASS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_SKINNING",
+     "scope": "team"
     }
    ],
    "any": [

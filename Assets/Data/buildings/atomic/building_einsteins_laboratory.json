@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_UNIVERSITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_THEORY_OF_RELATIVITY",
+     "scope": "team"
     }
    ]
   }

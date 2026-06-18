@@ -9,6 +9,10 @@
      "type": "AREA_SIZE",
      "scope": "world",
      "min": 10
+    },
+    {
+     "type": "TECH_GRAND_WAR",
+     "scope": "team"
     }
    ]
   }
@@ -64,6 +68,7 @@
   "upkeep": 1
  },
  "identity": {
+  "spawnOnly": true,
   "worth": 2,
   "militaryWorth": 62,
   "xpValueAttack": 3,

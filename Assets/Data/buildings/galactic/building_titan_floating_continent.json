@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_TITAN_SF6_GENERATOR",
      "scope": "city"
+    },
+    {
+     "type": "TECH_GEOSCULPTING",
+     "scope": "team"
     }
    ]
   }

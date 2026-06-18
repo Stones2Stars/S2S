@@ -2,6 +2,16 @@
  "type": "UNIT_GUIDE",
  "description": "TXT_KEY_UNIT_GUIDE",
  "civilopedia": "TXT_KEY_UNIT_GUIDE_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EXPLORATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 50

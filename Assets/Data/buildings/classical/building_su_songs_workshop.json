@@ -5,7 +5,15 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_RIVER"
+    "HAS_RIVER",
+    {
+     "type": "TECH_WATERWHEELS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CALENDAR",
+     "scope": "team"
+    }
    ],
    "any": [
     [

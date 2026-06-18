@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_LUNAR_SILICON_PROCESSING_FACILITY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_HYPOTHETICAL_BIOCHEMISTRY",
+     "scope": "team"
     }
    ]
   }

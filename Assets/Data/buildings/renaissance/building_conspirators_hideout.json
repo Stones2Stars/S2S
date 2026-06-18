@@ -8,6 +8,16 @@
    "UNIT_SCOUNDREL"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_POLITICAL_PHILOSOPHY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "research": {
   "city": {
    "flat": 2

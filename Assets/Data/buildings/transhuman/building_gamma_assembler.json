@@ -23,6 +23,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_SUPERSTRONG_ALLOYS",
      "scope": "city",
      "connection": "trade|vicinity"

@@ -39,6 +39,10 @@
     {
      "type": "BUILDING_OCEAN_ARCOLOGY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ABYSS_COLONIZATION",
+     "scope": "team"
     }
    ]
   }

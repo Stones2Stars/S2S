@@ -19,6 +19,10 @@
      "type": "BUILDING_ACCELERATOR",
      "scope": "empire",
      "min": 4
+    },
+    {
+     "type": "TECH_SUPERCONDUCTORS",
+     "scope": "team"
     }
    ]
   }

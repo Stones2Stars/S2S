@@ -9,6 +9,10 @@
      "type": "BONUS_PLASMA_GENERATORS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_ELECTRIC_ARC_WEAPONRY",
+     "scope": "team"
     }
    ]
   }

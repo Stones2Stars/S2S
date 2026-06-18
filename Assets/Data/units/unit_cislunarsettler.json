@@ -5,6 +5,12 @@
  "help": "TXT_KEY_UNIT_CISLUNARSETTLER_HELP",
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

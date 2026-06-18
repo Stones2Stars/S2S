@@ -14,6 +14,10 @@
      "type": "BUILDING_OPERA_HOUSE",
      "scope": "empire",
      "min": 3
+    },
+    {
+     "type": "TECH_REALISM",
+     "scope": "team"
     }
    ]
   }

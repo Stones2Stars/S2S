@@ -38,6 +38,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_METALLURGY",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

@@ -31,6 +31,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_NANO_ARCHITECTURE",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_PHARMACEUTICALS",
      "scope": "city",
      "connection": "trade|vicinity"

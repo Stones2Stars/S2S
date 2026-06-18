@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_INTELLIGENCE_AGENCY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ELECTRONICS",
+     "scope": "team"
     }
    ]
   }

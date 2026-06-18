@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_OMEGA_POINT",
+     "scope": "team"
     }
    ]
   }

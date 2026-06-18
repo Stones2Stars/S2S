@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_WORLDVIEW_SLAVERY_ACTIVE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TRADE",
+     "scope": "team"
     }
    ]
   }

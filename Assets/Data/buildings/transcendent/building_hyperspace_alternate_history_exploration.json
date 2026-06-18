@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ALTERNATE_HISTORY_EXPLORATION",
+     "scope": "team"
     }
    ]
   }

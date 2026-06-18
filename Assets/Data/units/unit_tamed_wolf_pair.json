@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_DOG_KENNELS",
      "scope": "city"
+    },
+    {
+     "type": "TECH_THE_WHEEL",
+     "scope": "team"
     }
    ],
    "any": [

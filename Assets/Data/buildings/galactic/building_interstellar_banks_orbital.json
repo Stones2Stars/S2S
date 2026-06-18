@@ -10,6 +10,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_MEGASTRONG_ALLOYS",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {

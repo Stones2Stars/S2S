@@ -2,6 +2,16 @@
  "type": "BUILDING_HYPERSPACE_MEDIA_CENTER",
  "description": "TXT_KEY_BUILDING_HYPERSPACE_MEDIA_CENTER",
  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_MEDIA_CENTER_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "gold": {
   "city": {
    "flat": 50

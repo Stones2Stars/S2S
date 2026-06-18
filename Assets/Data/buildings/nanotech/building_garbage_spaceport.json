@@ -13,6 +13,10 @@
     {
      "type": "BUILDING_EFFECT_LAUNCH_SITE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ORBITAL_FLIGHT",
+     "scope": "team"
     }
    ]
   },

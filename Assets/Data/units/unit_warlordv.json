@@ -9,6 +9,14 @@
      "type": "BONUS_STEEL_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_LOGISTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GUERRILLA_WARFARE",
+     "scope": "team"
     }
    ],
    "any": [

@@ -9,6 +9,10 @@
      "type": "BONUS_DRUGS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_POLITICAL_PHILOSOPHY",
+     "scope": "team"
     }
    ]
   }

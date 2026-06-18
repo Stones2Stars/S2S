@@ -9,6 +9,10 @@
      "type": "BONUS_BACTRIC",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_LITERATURE",
+     "scope": "team"
     }
    ]
   }

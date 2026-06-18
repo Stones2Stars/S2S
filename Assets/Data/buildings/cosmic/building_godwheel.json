@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_TRANSTELLAR_ALDERSON_DISK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MENSIOKINESIS",
+     "scope": "team"
     }
    ]
   }

@@ -14,6 +14,16 @@
    "BUILDING_FLETCHERS_HUT"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BRONZE_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "experience": {
   "city": {
    "unitCombats": {

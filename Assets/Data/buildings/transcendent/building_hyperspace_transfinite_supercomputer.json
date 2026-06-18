@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_HYPERSPACE_11_DIMENSIONAL_FACTORY",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TRANSFINITE_COMPUTATION",
+     "scope": "team"
     }
    ]
   }

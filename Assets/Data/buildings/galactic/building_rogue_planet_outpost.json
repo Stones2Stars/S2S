@@ -12,6 +12,12 @@
  },
  "requires": {
   "build": {
+   "all": [
+    {
+     "type": "TECH_INTERSTELLAR_TRADE",
+     "scope": "team"
+    }
+   ],
    "any": [
     [
      {
