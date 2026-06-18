@@ -8,6 +8,10 @@
     {
      "type": "TECH_INDUSTRIALISM",
      "scope": "team"
+    },
+    {
+     "type": "TECH_CORPORATION",
+     "scope": "team"
     }
    ]
   },

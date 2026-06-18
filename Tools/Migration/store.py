@@ -324,6 +324,25 @@ class Store:
         self.obsoletes = self._build_index(OBSOLETE_FIELDS)
         self.replaces = self._build_index(REPLACE_FIELDS)
         self.disables = self._build_index(DISABLE_FIELDS)  # empty today (no live source); see DISABLE_FIELDS
+        self._inherit_group_obsoletes()
+
+    def _inherit_group_obsoletes(self):
+        """SpecialBuilding GROUP obsoletion inheritance (data-model §7, the building-group wrangle): a MEMBER
+        building inherits its group's ObsoleteTech. The cascade reads tech.obsoletes.buildings, so expand each
+        SpecialBuilding's ObsoleteTech onto its member buildings (those whose SpecialBuildingType is that group).
+        1 group today (SPECIALBUILDING_MONASTERY -> TECH_MODERN_PHYSICS); hardens the edge for future groups.
+        (The group TechPrereq inheritance is curator-side, curate_building.requires_building.)"""
+        sb_obs = {}
+        for sb, rec in self.tables.get("SpecialBuildingInfo", {}).items():
+            ot = engine.text(rec.find("ObsoleteTech"))
+            if ot and ot != "NONE":
+                sb_obs[sb] = ot
+        if not sb_obs:
+            return
+        for typ, rec in self.tables.get("BuildingInfo", {}).items():
+            sb = engine.text(rec.find("SpecialBuildingType"))
+            if sb in sb_obs:
+                self.obsoletes.setdefault(sb_obs[sb], {}).setdefault("buildings", set()).add(typ)
 
     def _build_index(self, fields):
         idx = {}

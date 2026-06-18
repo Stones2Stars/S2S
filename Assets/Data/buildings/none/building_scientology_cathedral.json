@@ -9,6 +9,10 @@
     {
      "type": "BUILDING_SCIENTOLOGY_TEMPLE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MUSICAL_NOTATION",
+     "scope": "team"
     }
    ],
    "any": [

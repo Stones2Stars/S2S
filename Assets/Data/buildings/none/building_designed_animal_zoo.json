@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_ZOO",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BIOPUNK",
+     "scope": "team"
     }
    ]
   }

@@ -2,6 +2,16 @@
  "type": "BUILDING_CULTURE_CRYSTALPUNK",
  "description": "TXT_KEY_BUILDING_CULTURE_CRYSTALPUNK",
  "civilopedia": "TXT_KEY_BUILDING_CULTURE_CRYSTALPUNK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CRYSTALPUNK",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

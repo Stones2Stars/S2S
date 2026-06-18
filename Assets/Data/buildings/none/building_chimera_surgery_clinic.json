@@ -28,6 +28,10 @@
     {
      "type": "BUILDING_BIOPUNK_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_BIOPUNK",
+     "scope": "team"
     }
    ]
   }

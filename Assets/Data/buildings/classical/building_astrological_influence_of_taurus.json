@@ -12,6 +12,10 @@
     {
      "type": "TECH_ASTROLOGY",
      "scope": "team"
+    },
+    {
+     "type": "TECH_CLASSICAL_LIFESTYLE",
+     "scope": "team"
     }
    ],
    "any": [

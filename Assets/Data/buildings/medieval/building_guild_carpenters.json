@@ -22,6 +22,10 @@
     {
      "type": "TECH_SURVEYING",
      "scope": "team"
+    },
+    {
+     "type": "TECH_GUILDS",
+     "scope": "team"
     }
    ]
   }

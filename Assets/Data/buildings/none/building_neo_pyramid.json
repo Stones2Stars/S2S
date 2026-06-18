@@ -19,6 +19,10 @@
      "type": "BUILDING_THE_GREAT_PYRAMID",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_STARPUNK",
+     "scope": "team"
     }
    ]
   }

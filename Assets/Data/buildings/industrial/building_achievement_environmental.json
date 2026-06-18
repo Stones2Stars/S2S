@@ -8,6 +8,10 @@
     {
      "type": "TECH_WILDLIFE_CONSERVATION",
      "scope": "team"
+    },
+    {
+     "type": "TECH_WRITING",
+     "scope": "team"
     }
    ]
   }

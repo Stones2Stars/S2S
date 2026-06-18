@@ -21,6 +21,10 @@
     {
      "type": "TECH_ORAL_TRADITION",
      "scope": "team"
+    },
+    {
+     "type": "TECH_TAXONOMY",
+     "scope": "team"
     }
    ],
    "any": [

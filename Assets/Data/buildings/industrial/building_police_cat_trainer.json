@@ -22,6 +22,10 @@
     {
      "type": "TECH_CRIMINOLOGY",
      "scope": "team"
+    },
+    {
+     "type": "TECH_MEGAFAUNA_DOMESTICATION",
+     "scope": "team"
     }
    ],
    "any": [

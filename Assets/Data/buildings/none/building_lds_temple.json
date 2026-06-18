@@ -3,6 +3,14 @@
  "description": "TXT_KEY_BUILDING_LDS_TEMPLE",
  "civilopedia": "TXT_KEY_BUILDING_LDS_TEMPLE_PEDIA",
  "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MUSICAL_NOTATION",
+     "scope": "team"
+    }
+   ]
+  },
   "operate": {
    "all": [
     {

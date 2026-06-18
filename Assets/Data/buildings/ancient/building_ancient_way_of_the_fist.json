@@ -8,6 +8,10 @@
     {
      "type": "TECH_COMMUNITY",
      "scope": "team"
+    },
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
     }
    ]
   }

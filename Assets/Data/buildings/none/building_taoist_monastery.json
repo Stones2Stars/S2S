@@ -14,6 +14,10 @@
   "build": {
    "all": [
     {
+     "type": "TECH_MEDITATION",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_FURNITURE",
      "scope": "city",
      "connection": "trade|vicinity"

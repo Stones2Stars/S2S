@@ -25,6 +25,10 @@
      "latitude": {
       "min": 45
      }
+    },
+    {
+     "type": "TECH_MEGAFAUNA_DOMESTICATION",
+     "scope": "team"
     }
    ],
    "any": [

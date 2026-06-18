@@ -31,6 +31,10 @@
     {
      "type": "TECH_BANKING",
      "scope": "team"
+    },
+    {
+     "type": "TECH_EDUCATION",
+     "scope": "team"
     }
    ]
   }

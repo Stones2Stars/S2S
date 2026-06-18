@@ -9,6 +9,10 @@
      "type": "BONUS_COAL",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "TECH_STEAMPUNK",
+     "scope": "team"
     }
    ]
   }

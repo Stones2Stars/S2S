@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_FOLKLORE_REQUIREMENT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_TAXONOMY",
+     "scope": "team"
     }
    ],
    "any": [

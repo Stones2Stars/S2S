@@ -22,6 +22,10 @@
     {
      "type": "BUILDING_INDUSTRIAL_PARK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ATOMPUNK",
+     "scope": "team"
     }
    ]
   }

@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_ZOROASTRIAN_FIRE_TEMPLE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MATHEMATICS",
+     "scope": "team"
     }
    ],
    "any": [

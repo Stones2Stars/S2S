@@ -2,6 +2,16 @@
  "type": "BUILDING_CULTURE_NANOPUNK",
  "description": "TXT_KEY_BUILDING_CULTURE_NANOPUNK",
  "civilopedia": "TXT_KEY_BUILDING_CULTURE_NANOPUNK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NANOPUNK",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

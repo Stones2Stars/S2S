@@ -20,6 +20,10 @@
     {
      "type": "TECH_POULTRY_DOMESTICATION",
      "scope": "team"
+    },
+    {
+     "type": "TECH_MEGAFAUNA_DOMESTICATION",
+     "scope": "team"
     }
    ]
   }

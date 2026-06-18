@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_FOLKLORE_REQUIREMENT",
      "scope": "city"
+    },
+    {
+     "type": "TECH_ORAL_TRADITION",
+     "scope": "team"
     }
    ]
   }

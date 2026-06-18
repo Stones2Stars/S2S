@@ -19,6 +19,10 @@
     {
      "type": "TECH_ZEPPELINS",
      "scope": "team"
+    },
+    {
+     "type": "TECH_DIESELPUNK",
+     "scope": "team"
     }
    ],
    "any": [

@@ -21,6 +21,10 @@
     {
      "type": "TECH_HERITAGE",
      "scope": "team"
+    },
+    {
+     "type": "TECH_MEGAFAUNA_DOMESTICATION",
+     "scope": "team"
     }
    ]
   }

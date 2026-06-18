@@ -19,6 +19,10 @@
     {
      "type": "TECH_MUMMIFICATION",
      "scope": "team"
+    },
+    {
+     "type": "TECH_PRIESTHOOD",
+     "scope": "team"
     }
    ]
   },

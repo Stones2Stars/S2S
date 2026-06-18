@@ -8,6 +8,10 @@
     {
      "type": "TECH_TOURISM",
      "scope": "team"
+    },
+    {
+     "type": "TECH_WRITING",
+     "scope": "team"
     }
    ]
   }

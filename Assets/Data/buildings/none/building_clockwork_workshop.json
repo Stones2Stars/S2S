@@ -26,6 +26,10 @@
     {
      "type": "BUILDING_ENGINEERING_SCHOOL",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CLOCKPUNK",
+     "scope": "team"
     }
    ],
    "any": [

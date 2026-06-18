@@ -19,6 +19,10 @@
     {
      "type": "TECH_EARLY_COMPUTING",
      "scope": "team"
+    },
+    {
+     "type": "TECH_DIESELPUNK",
+     "scope": "team"
     }
    ]
   }

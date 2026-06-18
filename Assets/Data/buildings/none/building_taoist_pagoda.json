@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_TAOIST_TEMPLE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MUSICAL_NOTATION",
+     "scope": "team"
     }
    ],
    "any": [

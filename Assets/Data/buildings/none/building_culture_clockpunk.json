@@ -9,6 +9,10 @@
      "type": "BONUS_SULPHUR",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "TECH_CLOCKPUNK",
+     "scope": "team"
     }
    ]
   }

@@ -9,6 +9,10 @@
      "type": "BONUS_URANIUM",
      "scope": "city",
      "connection": "vicinity"
+    },
+    {
+     "type": "TECH_ATOMPUNK",
+     "scope": "team"
     }
    ]
   }

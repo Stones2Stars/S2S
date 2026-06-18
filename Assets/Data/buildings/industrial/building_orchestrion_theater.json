@@ -27,6 +27,10 @@
     {
      "type": "TECH_REALISM",
      "scope": "team"
+    },
+    {
+     "type": "TECH_CLOCKPUNK",
+     "scope": "team"
     }
    ]
   }

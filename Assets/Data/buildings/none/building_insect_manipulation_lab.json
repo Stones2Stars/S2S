@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_CYBER_INSECT_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CYBERPUNK",
+     "scope": "team"
     }
    ],
    "any": [

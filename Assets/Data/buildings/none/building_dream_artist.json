@@ -19,6 +19,10 @@
     {
      "type": "BUILDING_DREAM_SIMULATION_CENTER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CYBERPUNK",
+     "scope": "team"
     }
    ]
   }

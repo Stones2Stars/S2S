@@ -14,6 +14,10 @@
     {
      "type": "BUILDING_CRYSTAL_JEWELLER",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CRYSTALPUNK",
+     "scope": "team"
     }
    ]
   }

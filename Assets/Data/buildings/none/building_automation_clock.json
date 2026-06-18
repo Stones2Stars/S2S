@@ -18,6 +18,10 @@
     {
      "type": "BUILDING_TOWNCLOCK",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CLOCKPUNK",
+     "scope": "team"
     }
    ]
   }

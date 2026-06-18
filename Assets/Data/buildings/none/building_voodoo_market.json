@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_LOA_HWE",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MUSICAL_NOTATION",
+     "scope": "team"
     }
    ],
    "any": [

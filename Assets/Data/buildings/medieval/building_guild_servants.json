@@ -13,6 +13,10 @@
     {
      "type": "TECH_CIVIL_SERVICE",
      "scope": "team"
+    },
+    {
+     "type": "TECH_GUILDS",
+     "scope": "team"
     }
    ],
    "any": [

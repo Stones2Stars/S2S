@@ -2,6 +2,16 @@
  "type": "BUILDING_CULTURE_BIOPUNK",
  "description": "TXT_KEY_BUILDING_CULTURE_BIOPUNK",
  "civilopedia": "TXT_KEY_BUILDING_CULTURE_BIOPUNK_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BIOPUNK",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

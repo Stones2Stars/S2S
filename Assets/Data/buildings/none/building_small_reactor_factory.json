@@ -21,6 +21,10 @@
      "scope": "city"
     },
     {
+     "type": "TECH_ATOMPUNK",
+     "scope": "team"
+    },
+    {
      "type": "BONUS_HEAVY_WATER",
      "scope": "city",
      "connection": "trade|vicinity"

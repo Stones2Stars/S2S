@@ -19,6 +19,10 @@
     {
      "type": "TECH_ORGANIC_CITIES",
      "scope": "team"
+    },
+    {
+     "type": "TECH_BIOPUNK",
+     "scope": "team"
     }
    ]
   }

@@ -14,6 +14,10 @@
      "type": "BONUS_BRICKS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "TECH_PRIESTHOOD",
+     "scope": "team"
     }
    ],
    "any": [

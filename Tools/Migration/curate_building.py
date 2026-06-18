@@ -659,6 +659,18 @@ def requires_building(rec, store):
         build_all.append(_atom(t, "team"))
     for x in _typelist_struct(rec, "TechTypes", "PrereqTech"):
         build_all.append(_atom(x, "team"))
+    # --- SpecialBuilding GROUP-gate inheritance (data-model §7, the building-group wrangle): a member building
+    # inherits its GROUP's shared gates. TechPrereq -> the same build.all TECH confirm (the group carries the tech
+    # the member lacks -- monasteries/temples/cathedrals/punk lines; legacy CvPlayer::canConstruct 6599). NB
+    # TechPrereqAnyone is UNUSED across all 36 groups -> skipped; the group cap + waiver are handled in curate()/the
+    # cascade; ObsoleteTech inheritance is store-wired (store.py). ---
+    sb = _txt(rec, "SpecialBuildingType")
+    if sb and store is not None:
+        sbrec = store.get("SpecialBuildingInfo", sb)
+        if sbrec is not None:
+            sbt = sbrec.findtext("TechPrereq")
+            if sbt:
+                build_all.append(_atom(sbt, "team"))
     # --- instance caps are NOT a requires atom (owner 2026-06-17) — they move to the declarative `allowed` cap.
     # A requires SELF-atom forced an off-by-one (cap 1 -> max:0) and conflated "needed" (requires) with "allowed"
     # (the ceiling). `allowed:{scope:N}` names the ceiling with the REAL number; SELF leaves requires entirely.

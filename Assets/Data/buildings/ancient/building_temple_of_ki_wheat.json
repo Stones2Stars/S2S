@@ -12,6 +12,10 @@
     {
      "type": "TECH_POLYTHEISM",
      "scope": "team"
+    },
+    {
+     "type": "TECH_PRIESTHOOD",
+     "scope": "team"
     }
    ],
    "any": [

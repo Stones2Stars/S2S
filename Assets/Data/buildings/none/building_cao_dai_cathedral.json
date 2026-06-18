@@ -9,6 +9,10 @@
      "type": "BUILDING_CAO_DAI_TEMPLE",
      "scope": "empire",
      "min": 2
+    },
+    {
+     "type": "TECH_MUSICAL_NOTATION",
+     "scope": "team"
     }
    ]
   },

@@ -23,6 +23,10 @@
     {
      "type": "BUILDING_CLOCKWORK_WORKSHOP",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CLOCKPUNK",
+     "scope": "team"
     }
    ]
   }

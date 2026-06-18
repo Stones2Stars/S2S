@@ -2,6 +2,16 @@
  "type": "BUILDING_ACHIEVEMENT_AGRICULTURAL",
  "description": "TXT_KEY_BUILDING_ACHIEVEMENT_AGRICULTURAL",
  "civilopedia": "TXT_KEY_BUILDING_ACHIEVEMENT_PEDIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WRITING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
  "allowed": {
   "empire": 1
  },

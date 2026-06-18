@@ -18,6 +18,10 @@
      "type": "BUILDING_UNIVERSITY",
      "scope": "empire",
      "min": 4
+    },
+    {
+     "type": "TECH_EDUCATION",
+     "scope": "team"
     }
    ]
   }

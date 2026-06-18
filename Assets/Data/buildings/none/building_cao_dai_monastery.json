@@ -8,6 +8,14 @@
   ]
  },
  "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEDITATION",
+     "scope": "team"
+    }
+   ]
+  },
   "operate": {
    "all": [
     {

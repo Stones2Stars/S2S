@@ -8,6 +8,10 @@
     {
      "type": "BUILDING_TEMPLE_OF_RA",
      "scope": "city"
+    },
+    {
+     "type": "TECH_MATHEMATICS",
+     "scope": "team"
     }
    ],
    "any": [

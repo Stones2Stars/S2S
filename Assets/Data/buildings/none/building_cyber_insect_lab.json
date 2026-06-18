@@ -24,6 +24,10 @@
     {
      "type": "BUILDING_BIOLOGY_LAB",
      "scope": "city"
+    },
+    {
+     "type": "TECH_CYBERPUNK",
+     "scope": "team"
     }
    ]
   }

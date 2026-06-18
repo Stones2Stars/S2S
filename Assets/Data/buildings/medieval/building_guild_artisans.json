@@ -13,6 +13,10 @@
     {
      "type": "TECH_INVENTION",
      "scope": "team"
+    },
+    {
+     "type": "TECH_GUILDS",
+     "scope": "team"
     }
    ],
    "any": [

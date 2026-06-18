@@ -9,6 +9,10 @@
      "type": "BUILDING_PATTAKY_OF_OLOFIN",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_PRIESTHOOD",
+     "scope": "team"
     }
    ]
   },

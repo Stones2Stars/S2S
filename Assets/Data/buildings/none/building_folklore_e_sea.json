@@ -27,6 +27,10 @@
      "type": "BUILDING_PRESENCE_OF_SEA",
      "scope": "empire",
      "min": 1
+    },
+    {
+     "type": "TECH_ORAL_TRADITION",
+     "scope": "team"
     }
    ]
   }

@@ -13,6 +13,10 @@
     {
      "type": "TECH_PAPER",
      "scope": "team"
+    },
+    {
+     "type": "TECH_GUILDS",
+     "scope": "team"
     }
    ],
    "any": [

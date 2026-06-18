@@ -25,6 +25,10 @@
     {
      "type": "TECH_SOFT_HAMMER_PERCUSSION",
      "scope": "team"
+    },
+    {
+     "type": "TECH_ORAL_TRADITION",
+     "scope": "team"
     }
    ]
   }
