@@ -21,7 +21,7 @@
      "scope": "city",
      "connection": "vicinity"
     },
-    "IS_WATER",
+    "IS_COASTAL",
     {
      "latitude": {
       "min": 40

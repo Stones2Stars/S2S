@@ -15,8 +15,6 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "IS_WATER",
-    "HAS_RIVER",
     "HAS_POWER",
     {
      "type": "BUILDING_FACTORY",
@@ -30,6 +28,12 @@
      "type": "TECH_RENEWABLE_ENERGY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     "IS_COASTAL",
+     "HAS_RIVER"
+    ]
    ]
   }
  },

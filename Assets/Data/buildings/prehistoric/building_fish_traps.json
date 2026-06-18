@@ -25,12 +25,16 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "IS_WATER",
-    "HAS_RIVER",
     {
      "type": "TECH_TRAP_FISHING",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     "IS_COASTAL",
+     "HAS_RIVER"
+    ]
    ]
   }
  },

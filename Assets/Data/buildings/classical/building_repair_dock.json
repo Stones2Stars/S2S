@@ -5,7 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_WATER",
+    "IS_COASTAL",
     {
      "type": "BUILDING_HARBORMASTERS_OFFICE",
      "scope": "city"

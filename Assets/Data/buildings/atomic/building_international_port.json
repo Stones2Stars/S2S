@@ -37,7 +37,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "IS_WATER",
+    "IS_COASTAL",
     {
      "type": "TECH_LOGISTICS",
      "scope": "team"

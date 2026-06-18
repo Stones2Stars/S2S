@@ -10,7 +10,7 @@
      "scope": "city",
      "connection": "vicinity"
     },
-    "IS_WATER",
+    "IS_COASTAL",
     {
      "type": "BUILDING_C_AC_NORTH_AMERICAN",
      "scope": "city"

@@ -25,7 +25,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_WATER",
+    "IS_COASTAL",
     {
      "type": "TECH_CITY_PLANNING",
      "scope": "team"

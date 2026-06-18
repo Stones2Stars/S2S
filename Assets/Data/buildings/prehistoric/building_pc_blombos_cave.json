@@ -10,7 +10,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_WATER",
+    "IS_COASTAL",
     {
      "type": "TECH_CAVE_DWELLING",
      "scope": "team"

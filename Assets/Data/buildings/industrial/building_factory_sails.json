@@ -15,7 +15,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_WATER",
+    "IS_COASTAL",
     "HAS_POWER",
     {
      "type": "BUILDING_FACTORY",

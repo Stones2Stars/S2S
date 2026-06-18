@@ -5,7 +5,7 @@
  "requires": {
   "build": {
    "all": [
-    "IS_WATER",
+    "IS_COASTAL",
     {
      "latitude": {
       "max": 80

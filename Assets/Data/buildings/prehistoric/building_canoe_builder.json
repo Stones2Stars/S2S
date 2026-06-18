@@ -22,8 +22,6 @@
  "requires": {
   "build": {
    "all": [
-    "IS_WATER",
-    "HAS_RIVER",
     {
      "type": "TECH_BOAT_BUILDING",
      "scope": "team"
@@ -46,6 +44,10 @@
       "scope": "city",
       "connection": "trade|vicinity"
      }
+    ],
+    [
+     "IS_COASTAL",
+     "HAS_RIVER"
     ],
     [
      {

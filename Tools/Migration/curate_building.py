@@ -595,10 +595,19 @@ def requires_building(rec, store):
         lst = _typelist(rec, tag)
         if lst:
             build_any.append([_atom(x, "city", connection="vicinity") for x in lst])
-    # --- plot-state predicates (bare) ---
-    for tag, pred in (("bWater", "IS_WATER"), ("bRiver", "HAS_RIVER"), ("bFreshWater", "IS_FRESHWATER")):
-        if _bool(rec, tag):
-            build_all.append(pred)
+    # --- plot-state predicates (bare). bWater = the city is COASTAL, not the plot being water: legacy
+    # isValidBuildingLocation (CvCity.cpp:18500-18506) gates bWater on isCoastal() (a city sits on LAND, so
+    # IS_WATER/pl->isWater() is always false -> every coastal building wrongly hidden). With bRiver also set it is
+    # coastal OR river (line 18502). bRiver-alone / bFreshWater stay plot predicates (lines 18507/18516). ---
+    bw, br = _bool(rec, "bWater"), _bool(rec, "bRiver")
+    if bw and br:
+        build_any.append(["IS_COASTAL", "HAS_RIVER"])   # water OR river
+    elif bw:
+        build_all.append("IS_COASTAL")
+    elif br:
+        build_all.append("HAS_RIVER")
+    if _bool(rec, "bFreshWater"):
+        build_all.append("IS_FRESHWATER")
     # --- power (presence) ---
     if _bool(rec, "bPower") or _bool(rec, "bPrereqPower"):
         build_all.append("HAS_POWER")

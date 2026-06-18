@@ -10,7 +10,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "IS_WATER",
+    "IS_COASTAL",
     {
      "type": "BUILDING_FIRE_STATION",
      "scope": "city"
