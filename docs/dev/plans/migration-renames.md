@@ -8,6 +8,7 @@ curator (the cold-modder rule means new names are chosen for clarity, so the old
 readers pass — and modders/pedia — need).
 
 **Two kinds of rename:**
+
 - **Mechanical de-Hungarianization** (`iGridX`→`gridX`, `bTrade`→`tradeable`, `Button`→`ui.art.icon`) is applied
   uniformly by `engine.de_i` / `engine.FIELD_RENAME` / `curate_common.{B_FLAG_NAMES,ART_BLOCK,AI_BEHAVIOUR}`.
   Those shared maps ARE the documentation for the mechanical class — not re-logged per field here.
@@ -565,6 +566,7 @@ carries the real vocabulary. Coverage-checked: every XML tag handled.
 
 **THE UNIT-STAT FAMILY VOCABULARY (owner-blessed 2026-06-16; names PROVISIONAL — a reader-pass refines them).** All
 at **`unit` scope**.
+
 - **`strength`** — THE combat family: *"the strength of something, or weakness ON / INTO / AGAINST something"* (owner).
   Members: `percent`←`iCombatPercent` · `flat`←`iStrengthChange` · `sizeModifier`←`iStrengthModifier`(SM) ·
   `attack`/`defense`←`i{Attack,Defense}CombatModifierChange` · `vsBarbs` · `religious` · `stealth` · `damageModifier`
@@ -647,7 +649,7 @@ unit); the SM-module + outcome-system + the merchant trade-mission consolidation
 ## Building  (`curate_building.py`)  — Tier E #32, THE MONSTER (5202 records) + SpecialBuilding #31 (36 records)
 
 The deepest modifier surface (288 fields), curated from `classifications/building-classification.json` (the adversarial
-classify-building workflow) + owner rulings (handover-2026-06-16-6). **0 `DllExport` -> data UNCONSTRAINED.** A fully
+classify-building workflow) + owner rulings. **0 `DllExport` -> data UNCONSTRAINED.** A fully
 BESPOKE curator (modeled on `curate_promotion`) with a COVERAGE CHECK + era foldering (era from the PrereqTech). The
 SOURCE->building enabler edges (tech/bonus/civic/religion/corp/cultureLevel `enables`, `ReplacementBuildings`->replaces,
 `ObsoleteTech`->tech) are ALREADY store-wired -> DROP building-side. The ~70 scalar/percent families + the yield/commerce
@@ -656,7 +658,7 @@ split are field->family.member.unit with **scopes corrected from the classificat
 
 | old XML | new JSON path | note |
 |---|---|---|
-| (prereqs) `PrereqTech`/`TechTypes`/`Bonus`/`PrereqBonuses`/`VicinityBonus`/`RawVicinityBonus`/civic/religion/corp/cultureLevel/`bWater`/`bRiver`/`bFreshWater`/`bPower`/counts/`ConstructCondition`/… | `requires.{build,operate}` (`all`/`any`/`noneOf`) | The TARGET-side MEANS gate. **build** = greying (resources `{type,scope:city,connection:"trade|vicinity"}`, plot predicates `IS_WATER`/`HAS_RIVER`/`IS_FRESHWATER`/**`HAS_POWER`**, counts→tally `{type:POPULATION\|CITY\|TEAM\|UNIT_LEVEL\|AREA_SIZE,min}` of OTHER types, in-city buildings, `{latitude:{min,max}}`); **operate** = dormancy (civics, religion/corp/cultureLevel, `HAS_STATE_RELIGION`/`STATE_RELIGION_IN_CITY`). **RawVicinity FOLDS into `connection:"vicinity"`** (owner: lose the adjacency strictness). ⚑ NEW tokens (owner-approved): `HAS_POWER`, `HAS_STATE_RELIGION`, `STATE_RELIGION_IN_CITY`, the count kinds, `{latitude}`. **PALACE-TYPE (`bCapital` Palace + 8 `bGovernmentCenter` pseudo-palaces — Forbidden Palace/El Escorial/Versailles/Edinburgh Castle/…) → `requires.build.disabled:"IS_CAPITAL"`** (owner 2026-06-16): the `disabled` twin (enabler-spec §3), can't player-build where a government center already exists (CvCity.cpp:2654); PLAYER gate only — the engine's forced capital-move bypasses (#437 placement-gate invariant). `IS_CAPITAL` = "city has a palace/gov-center building". Surfaced by the readjson harness render. |
+| (prereqs) `PrereqTech`/`TechTypes`/`Bonus`/`PrereqBonuses`/`VicinityBonus`/`RawVicinityBonus`/civic/religion/corp/cultureLevel/`bWater`/`bRiver`/`bFreshWater`/`bPower`/counts/`ConstructCondition`/… | `requires.{build,operate}` (`all`/`any`/`noneOf`) | The TARGET-side MEANS gate. **build** = greying (resources `{type,scope:city,connection:"trade"/"vicinity"}`, plot predicates`IS_WATER`/`HAS_RIVER`/`IS_FRESHWATER`/**`HAS_POWER`**, counts→tally`{type:POPULATION\|CITY\|TEAM\|UNIT_LEVEL\|AREA_SIZE,min}` of OTHER types, in-city buildings, `{latitude:{min,max}}`); **operate** = dormancy (civics, religion/corp/cultureLevel,`HAS_STATE_RELIGION`/`STATE_RELIGION_IN_CITY`). **RawVicinity FOLDS into`connection:"vicinity"`** (owner: lose the adjacency strictness). ⚑ NEW tokens (owner-approved):`HAS_POWER`,`HAS_STATE_RELIGION`,`STATE_RELIGION_IN_CITY`, the count kinds,`{latitude}`. **PALACE-TYPE (`bCapital` Palace + 8 `bGovernmentCenter` pseudo-palaces — Forbidden Palace/El Escorial/Versailles/Edinburgh Castle/…) → `requires.build.disabled:"IS_CAPITAL"`** (owner 2026-06-16): the`disabled` twin (enabler-spec §3), can't player-build where a government center already exists (CvCity.cpp:2654); PLAYER gate only — the engine's forced capital-move bypasses (#437 placement-gate invariant). `IS_CAPITAL` = "city has a palace/gov-center building". Surfaced by the readjson harness render. |
 | `iMaxGlobalInstances` / `iMaxTeamInstances` / `iMaxPlayerInstances` | `allowed.{world,team,empire}` | **The instance CAP → declarative `allowed`, NOT a `requires` SELF-atom** (owner 2026-06-17). `allowed:{world:1}` = "at most 1 may exist in the world" (the real number; the old `requires.build SELF max:N` forced an off-by-one — `max:0` for a cap of 1 — and conflated *needed* with *allowed*). The cap scope ALSO derives the wonder category (`isWorldWonder == getMaxGlobalInstances()!=-1`, CvGameCoreUtils.cpp:340-369). 1307 buildings (1044 world + 263 empire). Engine enforces (build while `tally.count(SELF,scope) < N`) + owns ignoring it under `NO_WONDER_LIMIT`/`NO_NATIONAL_UNIT_LIMIT`/`CHALLENGE_ONE_CITY`, era-scaling, `+extra`. `SELF` left `requires` entirely. enabler-spec §5a/§13.7. |
 | `iCoastalTradeRoutes`/Area*/Global*/National* etc. (~70 scalars) | `<family>.<scope>[.<member>].<unit>` | Corrected scopes. NEW families: **`cityCapture`** (National/Local Capture Probability/Resistance — capturing CITIES, distinct from the §5 unit `capture` gradient), `espionage`{insidiousness,investigation}, `espionageDefense`, `healing`, `foodKept`, `hurryCost`/`hurryAnger`, `cityCapture`, `pillageGold` (`iPillageGoldModifier` REVIVED, §8-ii), `populationGrowthRate`, `occupationTime`. `defense` is grouped (`amount`/`min` floor/`bombardDefense`/`nukeDefense`/`airDefense`/`noEntryLevel`/`dynamicDefense`/`riverDefensePenalty`/recovery/`damageAttackerChance`/`damageToAttacker`/`adjacentDamage`/`repel`). |
 | the 22 "inversions" (`Tech*Changes`/`Bonus*Changes`/`Improvement`/`Terrain`/`Plot`/`ReligionChanges`/Building-on-building/`Specialist*`/`UnitCombat*`/`Unit*`/`Domain*`) | KEEP-ON-BUILDING (§6.1) | The mapping's `inversionsOut` is the STALE pre-v3 rule. **CONDITION-gated** (`enabled`): Tech (`{type:TECH,scope:team}`, PROVISIONAL pending Phase-F), Bonus (`{type:BONUS,scope:city,min:1}`), Building-on-building (`{type:BUILDING}`), Power (`HAS_POWER`). **TARGET-keyed** (effect lands on the entity): Improvement/Terrain/Plot yields (`food.city.improvements.{IMP}.flat`), `ReligionChanges` (`religion.city.{RELIGION}.flat`), Specialist yields/commerce (`.specialist.specialists.{SPEC}`), UnitCombat/Domain experience+production+strength (`experience.city.unitCombats.{UC}` — the §5 building→unit crossover). |
@@ -747,6 +749,7 @@ addition is caught, never silently mis-converted — owner: "if parsing is too c
 | `GreaterEqual(ATTRIBUTE_POPULATION, N)` | `{type:POPULATION, scope:city, min:N}` | Established count kind (Building #32); the lone UNIT_IMMIGRANT case. |
 
 **The four consumers (retrofit; Building + Unit JSON regenerated):**
+
 | field (entity) | old | new | note |
 |---|---|---|---|
 | `ConstructCondition` (Building) | parked/coverage-only | folded into `requires.build` (`merge_into`) | Checked ONLY at `canConstruct` (CvCity.cpp:2976-2999), never `isActiveBuilding` → **build (greying), NOT operate** (losing a ConstructCondition bonus post-build does nothing). 97 buildings. |
@@ -775,6 +778,7 @@ builds the list. `_survey_boolexpr.py` was a throwaway vocabulary survey (delete
 **Two distinct concepts the first-pass migration flattened into `production.city` — the "Versailles bug" (DESPAIR_INDEX
 #12 sibling):** a production-modifier may scale the **whole city's hammer output** OR speed the **construction of a
 specific target**. Verified in the C++ (the two are applied in different places):
+
 - **`production` = TOTAL CITY OUTPUT.** `CvCity::getYieldRate100(PRODUCTION) = (base + specialistYield) ×
   getBaseYieldRateModifier(PRODUCTION) + 100·extraYield`. Authored as `production.city.flat` (a hammer ADD —
   `YieldChanges[PRODUCTION]`) + `production.city.percent` (the city-wide multiplier on *everything* —
@@ -815,6 +819,7 @@ Tests: `building_torture_wonder.json` (BUILDING_TEMPLE_OF_GNARL) + `unit_sir_gna
 
 **Property behaves "like any other yield" — same `flat`/`percent`/`per`/`enabled` deposit shape; it just has more varied
 GENERATION methods (owner 2026-06-16).** All map onto the v3 vocabulary via `engine.property_source_v3`:
+
 - `PROPERTYSOURCE_CONSTANT` (`iAmountPerTurn`) → **`flat`**.
 - `PROPERTYSOURCE_DECAY` → currently **`percent`** (`iPercent`; all decay sources today), though decay's magnitude can
   equally be flat/other — the unit is just read like any modifier. **The JSON does NOT know or care about the equilibrium

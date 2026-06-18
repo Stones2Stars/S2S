@@ -23,6 +23,7 @@ worker AI scoring.
 Both fixes need the same primitive: *which own tiles are unreachable by land, and why.*
 
 Two implementation options:
+
 - **(A) Connectivity components (principled).** BFS the player's worker-traversable land
   (own + open-borders land, excluding water/peaks/closed-foreign) into connected components.
   An own tile in a component that contains no worker source (city/worker) is *stranded-by-land*.
@@ -40,16 +41,19 @@ that both tracks consume.
 
 `[WAI/city/plot/skip] reason=noPath` now logs `adjOwn / adjForeign / adjWater / adjPeak`
 (adjacency of the stranded tile). Aggregating this sizes the sub-cases:
+
 - `adjForeign` dominant, `adjOwn=0` → **Open-Borders** case.
 - `adjWater` dominant → **sea-transport** case.
 - `adjPeak` dominant → likely **unavoidable**.
 - `adjOwn>0` but still noPath → larger stranded salient (whole pocket cut off).
 
 Play a few turns, then:
+
 ```
 grep 'reason=noPath' BuildEvaluation.log \
   | grep -oE 'adjForeign=[0-9]+ adjWater=[0-9]+ adjPeak=[0-9]+' | sort | uniq -c | sort -rn | head
 ```
+
 The dominant bucket decides where to invest first.
 
 ## Track #1 — efficiency (SHIPPED)
@@ -59,6 +63,7 @@ Implemented as a **per-worker, per-turn path-unreachable memo** in `CvWorkerAI`
 `m_pathMemo{UnitId,UnitPlot,Turn}`). In `improveCity`, before the `generatePath` call we
 skip plots already found unreachable this pass; on a `generatePath` failure we record the
 plot. Key correctness constraints:
+
 - **Negative-only:** `generatePath` has a side effect (sets the unit's current path, read by
   downstream `getPathMovementRemaining()`), so reachable plots always run the real call;
   only failures are memoised (a failed plot is `continue`d, needing no path state).
@@ -72,6 +77,7 @@ noPath log lines are suppressed (less log spam) since the tile was logged on fir
 ### Original framing (superseded by the above)
 
 Once a tile is known stranded-by-land:
+
 - Skip it in the land worker's `improveCity` evaluation (no repeated `generatePath`).
 - Don't let it inflate a city's "needs work" so workers stop being routed toward cities
   they can't actually serve (the `found=0`-after-travel waste).
@@ -80,6 +86,7 @@ Once a tile is known stranded-by-land:
 ## DECISIVE classification (Jun 2026, joined noPath tiles vs PlotSnapshot t1135)
 
 444 distinct stranded tiles, classified by landmass `area` vs their city's area:
+
 - **389 (88%) land-blocked on the SAME landmass as their city** → a land path exists ignoring
   borders → blocked by **closed foreign borders** → **Open Borders is the dominant fix.**
 - 51 (11%) the target tile is itself a **peak** (worker can't traverse; e.g. Mountain Mine) —

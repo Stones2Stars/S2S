@@ -4,6 +4,7 @@
 **Inherits:** [`CvPlayer`](CvPlayer.md)
 
 ## Overview
+
 The full AI decision stack for a single civilisation. Every non-human player has
 its per-turn logic driven by this class. Key responsibilities:
 
@@ -16,6 +17,7 @@ Static helpers `getPlayer(PlayerTypes)` and `areStaticsInitialized()` expose the
 global player array; `initStatics()` / `freeStatics()` manage its lifetime.
 
 ## Turn Entry Points
+
 | Method | Description |
 |---|---|
 | `AI_doTurnPre()` | First phase: flavour evaluation, research, diplomacy posture, strategy flags. |
@@ -25,6 +27,7 @@ global player array; `initStatics()` / `freeStatics()` manage its lifetime.
 | `AI_unitUpdate()` | Drives the per-turn AI update for each selection group owned by this player. |
 
 ## Strategy & Research
+
 | Method | Description |
 |---|---|
 | `AI_getFlavorValue(FlavorTypes)` | Returns the player's weighted preference for a strategic flavour. |
@@ -36,6 +39,7 @@ global player array; `initStatics()` / `freeStatics()` manage its lifetime.
 | `AI_commerceWeight(CommerceTypes, ...)` | Returns the player's weight for a commerce type. |
 
 ## Military & Danger
+
 | Method | Description |
 |---|---|
 | `AI_getPlotDanger(pPlot, iRange, bTestMoves)` | Returns a cached danger value for a plot; uses `plotDangerCache`. |
@@ -47,6 +51,7 @@ global player array; `initStatics()` / `freeStatics()` manage its lifetime.
 | `AI_movementPriority(pGroup)` | Returns a movement-priority score for a selection group. |
 
 ## Economy / Finance
+
 | Method | Description |
 |---|---|
 | `AI_isFinancialTrouble()` | Returns true if the player is running dangerously low on gold. |
@@ -57,6 +62,7 @@ global player array; `initStatics()` / `freeStatics()` manage its lifetime.
 | `AI_goldTarget()` | Returns the desired gold reserve target. |
 
 ## City & Settlement
+
 | Method | Description |
 |---|---|
 | `AI_foundValue(iX, iY, ...)` | Scores a plot as a city founding location. |
@@ -69,6 +75,7 @@ global player array; `initStatics()` / `freeStatics()` manage its lifetime.
 | `AI_doCentralizedProduction()` | Coordinates production across cities for global strategic goals. |
 
 ## Diplomacy
+
 | Method | Description |
 |---|---|
 | `AI_doPeace()` | Evaluates unsolicited peace opportunities with enemies. |
@@ -79,6 +86,7 @@ global player array; `initStatics()` / `freeStatics()` manage its lifetime.
 | `AI_getGreeting(PlayerTypes)` | Returns the appropriate `DiploCommentTypes` greeting string. |
 
 ## Area / Territory
+
 | Method | Description |
 |---|---|
 | `AI_isPrimaryArea(CvArea*)` | Returns true if this area contains the player's capital or most cities. |
@@ -87,6 +95,7 @@ global player array; `initStatics()` / `freeStatics()` manage its lifetime.
 | `AI_isCommercePlot(CvPlot*)` | Returns true if a plot is commercially valuable for this player. |
 
 ## Caching Structures
+
 | Structure | Description |
 |---|---|
 | `plotDangerCache` | 24-entry fixed-size cache keyed on `(x, y, range, bTestMoves)`. Cleared at the start of each turn via `clear()`. |
@@ -94,6 +103,7 @@ global player array; `initStatics()` / `freeStatics()` manage its lifetime.
 | `MissionTargetInfo` | Summarises unit mission targeting: count, closest distance, total volume. |
 
 ## Related
+
 - [`CvPlayer`](CvPlayer.md) — base class (non-AI state)  
 - [`CvCityAI`](CvCityAI.md) — city AI driven by player AI  
 - [`CvUnitAI`](CvUnitAI.md) — unit AI driven by player AI  

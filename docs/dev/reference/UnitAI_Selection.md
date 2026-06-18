@@ -428,6 +428,7 @@ Once a role and unit are chosen, the order carries **both**:
    ```cpp
    CvUnit* pUnit = owner.initUnit(eTrainUnit, getX(), getY(), eTrainAIUnit, ...);
    ```
+
 4. **`CvPlayer::initUnit`** (`CvPlayer.cpp:2988-3001`) — if the role is
    `NO_UNITAI`, it falls back to `getUnitInfo(eUnit).getDefaultUnitAIType()`.
 5. **`CvUnit::init`** (`CvUnit.cpp:323-402`, line 341) calls

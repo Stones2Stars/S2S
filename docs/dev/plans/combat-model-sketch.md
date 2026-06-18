@@ -1,6 +1,7 @@
 # CvCombatModel — Engine API Sketch (for review)
 
 ## STATUS — Phase 3a landed (Layer 1 RoundModel)
+
 `buildRoundModel()` (CvCombatModel.h/.cpp) is now the single per-round formula:
 strength-ratio odds (with barb free-wins via `isNPC`), firepower-ratio damage,
 combat limit, first-strike inputs. Consumers routed through it:
@@ -107,6 +108,7 @@ int                 winProbPercent (const CvUnit& a, const CvUnit& d, const CvPl
 ```
 
 ## Consumers after unification
+
 - `getCombatOdds` -> `combat::winProbPermille` (preview + Python `cyGetCombatOdds`).
 - `getCombatOddsSpecific` -> reader over `combat::predict` (ACO).
 - `CvUnitAI::AI_attackOddsAtPlotInternal` -> `combat::winProbPercent` (+ keep its
@@ -118,6 +120,7 @@ int                 winProbPercent (const CvUnit& a, const CvUnit& d, const CvPl
   stays separate.
 
 ## Game-option -> where it plugs (the pluggable map)
+
 | Option | Plug point |
 |--------|-----------|
 | `COMBAT_SIZE_MATTERS` | already inside `currCombatStr` (Layer 0) — enters via StrengthInputs; not a separate rule today |
@@ -127,6 +130,7 @@ int                 winProbPercent (const CvUnit& a, const CvUnit& d, const CvPl
 | ACO | display consumer of `predict`, not a rule |
 
 ## GAPS / things we may have missed (decide before building)
+
 1. **Air combat is a separate path** (`resolveAirCombat` CvUnit.cpp:2030,
    `airCombatDamage` :14043, `airCombatLimit` :14000; `getCombatOdds` already branches
    on air via `airCurrCombatStr`). Decide: engine covers air too, or v1 = land/sea
@@ -160,6 +164,7 @@ int                 winProbPercent (const CvUnit& a, const CvUnit& d, const CvPl
 ## Findings from footprint exploration (resolves several gaps)
 
 ### Save format is tolerant — removals are low-risk for saves
+
 Serialization uses name-tagged `WRAPPER_READ/WRITE` ("Class::field"). The loader reads
 by name and is "tolerant provided their value was 0/-1/MIN_INT (likely defaults)"
 (CvTaggedSaveFormatWrapper.cpp ~3448). So removing a serialized CvUnit field generally
@@ -168,10 +173,12 @@ worry is largely moot. (Still: leave unrelated adjacent fields alone; the wrappe
 name-keyed not positional, so even that is safe.)
 
 ### The mechanics to remove are (mostly) game-option clusters
+
 There are 15 `GAMEOPTION_COMBAT_*` options — effectively the natural "rules":
 AMNESTY, BATTLEWORN, EQUIPMENT, FIGHT_OR_FLIGHT, HEART_OF_WAR, HIDE_SEEK,
 NEW_RANDOM_SEED, OUTBREAKS_AND_AFFLICTIONS, REALISTIC_SIEGE, SIZE_MATTERS,
 STRENGTH_IN_NUMBERS, SURROUND_DESTROY, UPRANGE, VANILLA_ENGINE, WITHOUT_WARNING.
+
 - **Afflictions + critical hits** are gated by `COMBAT_OUTBREAKS_AND_AFFLICTIONS`
   (resolveCombat ~2769/2971, checkForCritical ~2708). Clean removal boundary: drop the
   option + its mechanics. `assignCritical()` feeds the affliction system — same cluster.
@@ -185,6 +192,7 @@ STRENGTH_IN_NUMBERS, SURROUND_DESTROY, UPRANGE, VANILLA_ENGINE, WITHOUT_WARNING.
   ~2572) — the engine design should treat "vanilla vs TB-combat" as a rule too.
 
 ### Bombard / air / collateral share a damage primitive (per exploration)
+
 - The damage core `iStrengthFactor=(fpA+fpD+1)/2` and `DAMAGE*(fp+factor)/(fp+factor)`
   is shared by **melee, air-v-air, and collateral**. → the engine should own ONE
   `computeRoundDamage` primitive these all call.
@@ -196,12 +204,15 @@ STRENGTH_IN_NUMBERS, SURROUND_DESTROY, UPRANGE, VANILLA_ENGINE, WITHOUT_WARNING.
   air path; ground bombard (city defense) is the separate one.
 
 ## Revised sequencing (supersedes the phase order in the plan)
+
 Removing the dead/option mechanics FIRST strips per-round complexity out of
 `resolveCombat`, making the resolution-unification far smaller. Proposed order:
+
 - **R1** Remove cold damage (surgical) — warm-up, proves the save-tolerance assumption.
 - **R2** Remove stuns; **R3** remove power-shots; **R4** remove afflictions + critical
   (the `COMBAT_OUTBREAKS_AND_AFFLICTIONS` cluster) — keep endurance.
 - Then the unify phases (1b/2/3) over a much-simplified `resolveCombat`, with options as
   pluggable rules and one shared `computeRoundDamage` primitive (melee + air-v-air +
   collateral; city-bombard + interception as separate consumers).
+
 ```

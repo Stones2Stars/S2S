@@ -16,6 +16,7 @@ Three independent mechanisms stack, and **none of them looks at how many huntabl
 actually remain**:
 
 ### A1. The "needed hunters" target never decays with animals — **[V]** `CvPlayerAI::AI_neededHunters` (`CvPlayerAI.cpp:11653`)
+
 ```cpp
 int iHuntersneeded = std::min(
         intSqrt(getNumCities()) + pArea->getNumUnownedTiles() / 16 + 1,
@@ -24,6 +25,7 @@ int iMaxhunters = 4 + int(NB_MAX_HUNTERS * pow((iWorldSize + 1) / 6.0, 0.8)); //
 return std::min(iHuntersneeded, iMaxhunters);
 return (iHuntersneeded);   // <-- dead code after the return above
 ```
+
 - Inputs: **city count, unowned-tile count, world size.** *Not* the number of animals/neutral
   units on the map. So once the animals are hunted out, the target does **not** fall.
 - Late game `getNumUnownedTiles()→~0`, so the target collapses to `min(sqrt(cities)+1,
@@ -32,6 +34,7 @@ return (iHuntersneeded);   // <-- dead code after the return above
 - Minor: the trailing `return (iHuntersneeded);` is dead (a [[dead-code-xml-pass]] nit).
 
 ### A2. The hunter unit value has no era/animal decay — **[V]** `AI_unitValue` UNITAI_HUNTER case (`CvPlayerAI.cpp:11187`)
+
 ```cpp
 case UNITAI_HUNTER:
     iValue += iCombatValue;
@@ -40,11 +43,13 @@ case UNITAI_HUNTER:
         kUnitInfo.getAnimalCombatModifier() + kUnitInfo.getUnitCombatModifier(GC.getUNITCOMBAT_ANIMAL()));
     if (kUnitInfo.hasUnitCombat(GC.getUNITCOMBAT_HUNTER())) iValue = iValue * 3/2;
 ```
+
 - Pure function of combat strength, extra moves, and anti-animal modifiers. **No term decays
   as the era advances or as animals disappear.** A hunter is scored the same in the space age
   as in the stone age.
 
 ### A3. Production keeps firing because the deficit never closes — **[A]** `CvCityAI::AI_chooseProduction`
+
 Hunter build gates are a ladder of `iHunterDeficitPercent` thresholds (agent-reported approx.
 lines): `iOwnedHunters<1 && deficit>80%` (~1650), `<8 && >50%` (~1985), `<16 && >25%`
 (~2446), and `iNeededHunters > iOwnedHunters*2/3` (~2613). With
@@ -52,12 +57,14 @@ lines): `iOwnedHunters<1 && deficit>80%` (~1650), `<8 && >50%` (~1985), `<16 && 
 the deficit stays positive, so cities keep queueing hunters.
 
 ### A4. Existing hunters don't retire — **[A]** `CvHunterAI::hunterMove` (`CvHunterAI.cpp:~250`, `~366`)
+
 A hunter only reverts to its default UNITAI when `iOwnedHunters>5` (or deficit ≤80% with
 >1 owned), and only **scraps** under `AI_isFinancialTrouble()` **and** positive upkeep **and**
 surplus. So absent financial pressure, hunters persist on the roster indefinitely, which feeds
 back into A3 (owned count) but never satisfies the inflated need.
 
 ### A5. Merging deflates the count under a count-based target — **[H]** (owner hypothesis, 2026-06-11)
+
 Hunter-line units can merge (`CvUnit::canMerge`/`doMerge`; note §B's dog exception — dogs
 cannot). Every merge (e.g. 3 units → 1 stronger unit) drops `iOwnedHunters` while hunting
 *capacity* is preserved, so the A3 deficit reopens and cities rebuild toward the count
@@ -82,6 +89,7 @@ retires the ones it has. That's the dog/hunter glut.
 > the merge factor never touches them. Size Matters / merge is a **dead end for the dog glut.**
 
 ### B1. The merge factor only applies to *mergeable* units — **[V]** `EVAL_MERGE_FACTOR` — **RETIRED (#395, 2026-06-12)**
+
 ```cpp
 #ifndef NO_CAN_MERGE_BONUS
     #define EVAL_MERGE_FACTOR  2
@@ -90,6 +98,7 @@ retires the ones it has. That's the dog/hunter glut.
 if (kUnitInfo.canMergeSplit() && GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
     iValue = int(iValue * EVAL_MERGE_FACTOR);   // doubles the value
 ```
+
 Was applied in UNITAI_ATTACK, ATTACK_CITY, COUNTER, CITY_DEFENSE, ESCORT — gated on
 `kUnitInfo.canMergeSplit()`. **Deleted by the #395 mix-sanity pass**
 ([`size-matters-ai.md`](size-matters-ai.md)): it biased the unit mix toward mergeable
@@ -98,6 +107,7 @@ ledgers and need-driven merges the thumb on the scale is gone. (B2/B3 below rema
 relevant as history: the factor never applied to dogs.)
 
 ### B2. Dogs are non-mergeable — **[V]** `canMergeSplit()` vs `UNITCOMBAT_SUBDUED`
+
 - `CvUnitInfo::canMergeSplit()` returns `m_bCanMergeSplit`, which is forced **`false` if any of
   the unit's combat types `isCannotMergeSplit()`** (`CvUnitInfo.cpp:4887`).
 - `UNITCOMBAT_SUBDUED` sets `<bCannotMergeSplit>1</bCannotMergeSplit>`
@@ -106,6 +116,7 @@ relevant as history: the factor never applied to dogs.)
   **never taken** for them. (Confirmed by the project owner: "dogs cannot be merged.")
 
 ### B3. The recent "Size Matters check" fix doesn't touch dogs — **[V]** git `f2542b71` (2026-06-05, #125)
+
 The fix the dogs were suspected to be "remnants" of moved a `break;` to **after** the
 `canMergeSplit()` block in **UNITAI_CITY_DEFENSE** and **UNITAI_ESCORT** (it was dead code), so
 merge-capable defenders/escorts now get the same 2× that ATTACK/ATTACK_CITY/COLLATERAL already
@@ -158,6 +169,7 @@ the `AI_safetyEval` city-plot scoring (§3) and the broader fallback prefer-own-
 
 The spammed "dog" is the trainable **`UNIT_WARDOG`** (`U_Land_CIV4UnitInfos.xml:24785`) — owner-
 confirmed. **[V]** its actual profile:
+
 - `<DefaultUnitAI>UNITAI_PILLAGE_COUNTER</DefaultUnitAI>`; eligible UnitAIs:
   **CITY_COUNTER, PILLAGE_COUNTER, HUNTER_ESCORT, SEE_INVISIBLE**. **No `UNITAI_COLLATERAL`,
   no `<iCollateralDamage>`** — it deals zero collateral, so the "collateral soak" framing
@@ -168,6 +180,7 @@ confirmed. **[V]** its actual profile:
   Guard Dog. (Primary combat `UNITCOMBAT_ANIMAL`; non-mergeable, consistent with §B.)
 
 **Ruled out as the cause:**
+
 - Size Matters merge bonus (§B) — non-mergeable.
 - `UNITAI_COLLATERAL` valuation — the War Dog isn't a collateral unit.
 
@@ -183,6 +196,7 @@ logging should record base combat next to value so this gap is visible in the da
 
 **Where the cause must be (still open):** the production picker (`AI_unitValue` big switch
 `~10700+`) and the **needed-counts** for the War Dog's real roles. Prime suspects:
+
 - **`UNITAI_SEE_INVISIBLE`** — the War Dog is one of the cheapest camouflage-detectors; if the
   see-invisible *need* is uncapped or the value high, it gets mass-produced. (No
   `AI_neededSeeInvisible` cap was found by grep — verify.)
@@ -204,6 +218,7 @@ value). This inflates **tech** value for those unit families. It does **not** hi
 ## Open questions / where logging would help
 
 Per [[ai-logging-before-bug-audit]], before fixing, instrument and watch:
+
 - Log `AI_neededHunters` vs owned per area per turn (does the target really stay ~sqrt(cities)
   with zero animals?) and the actual remaining-animal count for comparison.
 - Log `AI_unitValue` per (unit, UNITAI) at production-choice time (the `[CIT]` path) to see the
@@ -212,6 +227,7 @@ Per [[ai-logging-before-bug-audit]], before fixing, instrument and watch:
   it parks on, to quantify the foreign-city loitering.
 
 ## Candidate fixes (hypotheses, not yet decided)
+
 - **A:** make `AI_neededHunters` actually decay with huntable-animal count in the area (and/or
   era), so the target falls once the map is tamed.
 - **A/B:** add an era/obsolescence decay to cheap-unit `AI_unitValue` so dogs/hunters lose
@@ -224,6 +240,7 @@ Per [[ai-logging-before-bug-audit]], before fixing, instrument and watch:
   fallback once exploration is complete.
 
 ## Cross-references
+
 - Memory: [[sea-ai-rework]], [[hunter-ai-module-split]], [[ai-logging-before-bug-audit]],
   [[ai-unit-movement-to-player-level]].
 - Related: the planned `CvHunterAI` evolution (hunter+explorer module vs a dedicated army

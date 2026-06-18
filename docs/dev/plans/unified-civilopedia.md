@@ -128,6 +128,7 @@ the mechanism the cleanup above feeds, and the reason the data becomes uniformly
 ---
 
 ## Downstream
+
 The website / web Civilopedia (converter, JSON contract, React frontend, community) consumes the
 clean XML this plan produces and is planned entirely in
 [`s2swebsite/unified-civilopedia-plan.md`](../../../../s2swebsite/unified-civilopedia-plan.md).

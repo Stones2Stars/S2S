@@ -47,6 +47,7 @@ from conditions via `BoolExpr::getInvolvedGOMs` (the gather visitor sibling of
 
 `CvGameTextMgr::buildBuildingRequiresString` renders a building's prerequisites from the
 model:
+
 - `appendVicinityRequirementHelp` — terrain/feature/improvement "in city vicinity".
 - `appendRequirementHelp` + `buildRequirementItemLink` — status-aware list of **unmet**
   items as clickable links, filtered by `CvGameObject::hasGOM` (the same oracle the

@@ -101,6 +101,7 @@ the doc-comment beside each `log<Domain>AI` in `BetterBTSAI.cpp` and the headers
 ### `[CIT]` — city production (`CityAI.log`)
 
 Decision side (`CvCityAI::AI_chooseProduction`):
+
 - `[CIT/begin]` (1) — production-choice context (pop, danger, finances).
 - `[CIT/order]` (1) — the order the city commits to (TRAIN/CONSTRUCT/CREATE/MAINTAIN) + reason.
 - `[CIT/danger]` (2) — inputs to the "minimal attack (danger)" military gate
@@ -113,6 +114,7 @@ Decision side (`CvCityAI::AI_chooseProduction`):
   `[UNT/merge]`.
 
 Pipeline side (`CvCity::pushOrder`/`popOrder`/`doProduction`):
+
 - `[CIT/push]` (2) — an order enters the queue (catches contract-driven units).
 - `[CIT/push/reject]` (2) — the queue anti-spam guard blocked another copy of a unit/building.
 - `[CIT/produced]` (1) — a unit/building/project actually completes. UNIT lines carry

@@ -23,16 +23,19 @@ The mod spans from Prehistoric (before the Stone Age) through a Space/Future era
 The Custom Game screen exposes approximately 60 configurable options. Key options by category:
 
 ### Economy and Trade
+
 - **Advanced Economy** — enables inflation, decimalized trade values
 - **No Technology Trading / No Technology Brokering**
 - **Realistic Corporations**
 
 ### Diplomacy
+
 - **Advanced Diplomacy** — adds embassies, Rites of Passage agreements
 - **Permanent Alliances**
 - **No Vassal States**
 
 ### Combat and Military
+
 - **Fight or Flight** — enhanced withdrawal mechanics (Early Withdrawal, Pursuit, Repel, Knockback; see §7)
 - **Without Warning Combat Mod** — ambush mechanics with stealth combat modifiers
 - **Surround and Destroy** — unit positioning grants combat bonuses from adjacent support units
@@ -41,6 +44,7 @@ The Custom Game screen exposes approximately 60 configurable options. Key option
 - **Require Complete Kills**
 
 ### Population and Culture
+
 - **Realistic Culture Spread (RCS)** — terrain and tech resist cultural expansion; jungles, hills, rivers, forests slow spread based on culture level
 - **Equilibrium Culture** — culture decays toward a natural equilibrium level
 - **No City Flipping from Culture / City Flipping After Conquest**
@@ -48,6 +52,7 @@ The Custom Game screen exposes approximately 60 configurable options. Key option
 - **Culturally Linked Starts**
 
 ### Religion
+
 - **Choose Religions** — players may select which religion to found when reaching a religious tech
 - **Divine Prophets** — Great Prophets found religions rather than automatic assignment (see §9)
 - **Limited Religions**
@@ -56,32 +61,39 @@ The Custom Game screen exposes approximately 60 configurable options. Key option
 - **No Inquisitions**
 
 ### Difficulty and Progression
+
 - **Increasing Difficulty** — difficulty scales upward as the game progresses
 - **Upscaled Building and Unit Costs** / **Upscaled Research Costs**
 - **Flexible Difficulty** (v41) — mid-game difficulty adjustment
 
 ### Civilization Development
+
 - **Developing Leaders** — leader traits are selected organically through play rather than preset definitions; combine with "No Positive Traits on Gamestart" for full organic play
 - **Start Without Positive Traits / No Negative Traits**
 - **Pure Traits** / **Complex Traits** — alternative trait set with tiered system and point-buy balance (see §10)
 - **Unrestricted Leaders / Random Personalities**
 
 ### Barbarians and NPCs
+
 - **No Barbarians / Raging Barbarians / Barbarian World**
 - **No Barbarian Civs / Barbarians Always Raze**
 
 ### Espionage and Crime
+
 - **Advanced Espionage** — spy leveling, additional mission types
 - **No Espionage**
 
 ### Military Units
+
 - **No Nukes / Advanced Nukes**
 - **Infinite XP / Unlimited National Units / Usable Mountains**
 
 ### Size Matters (Combat)
+
 - **Size Matters** — enables Combat Quality, Group Volume, and Individual Entity Size dimensions on all units (see §8)
 
 ### Miscellaneous
+
 - **Advanced Start** — begin game with pre-placed improvements
 - **Final Five** — eliminates the weakest player every 50 turns
 - **High to Low** — rotating player control
@@ -102,6 +114,7 @@ The tech tree spans multiple eras from Prehistoric through Information/Future. E
 ### Gateway Techs
 
 When a player reaches an era-transition ("gateway") technology, penalties take effect for all civs:
+
 - Education cost per population point increases
 - A cumulative 10% production cost increase applies to units and buildings
 - With the Beeline Stings option active: technologies skipped in the previous era cost 20% more
@@ -137,6 +150,7 @@ Gold held in the treasury incurs a per-turn upkeep cost that scales steeply at h
 ### Group Wonders (v37+)
 
 A "Group Wonder" is a set of wonders where:
+
 - Each individual wonder can only be built once in the entire game
 - Each player can only build one wonder from the set total
 
@@ -149,11 +163,13 @@ Example: Elite University group wonders, each specializing in a different yield 
 ### Statuses (Unit Operational Modes)
 
 Statuses are promotion-like abilities displayed as diamond-shaped icons. Key properties:
+
 - Only one status per status group can be active simultaneously
 - Selecting a status typically consumes all movement points ("quick" statuses are exceptions)
 - A status with an "X" overlay icon removes the current status in that group
 
 **Named statuses:**
+
 - **Stay the Hand** — prevents attacking; allows peaceful passage through enemy territory
 - **Standout** — removes all unit invisibility for reliable escort duty
 - **Surprise** — reveals to defenders; grants stealth combat bonuses for defending unit
@@ -170,6 +186,7 @@ Routes no longer auto-upgrade when technologies are discovered. Workers must man
 ### Armed Guards
 
 Units with the Armed Guard promotion line (distinguished by a tall shield icon) gain:
+
 - Strong defensive bonuses against criminal/strike unit attacks
 - Escort protection capabilities
 
@@ -178,6 +195,7 @@ Trade-off: taking the promotion permanently prevents the unit from attacking.
 ### Criminals, Strike Teams, Ruffians
 
 These unit types have distinct roles:
+
 - **Criminals:** Infiltration missions (subject to investigation checks); black market trade missions; movement halts if "wanted" (failed investigation); successful investigations return unit to training city.
 - **Strike Teams / Ruffians:** Separate roles with distinct capabilities (details not fully recovered — see original thread).
 
@@ -272,6 +290,7 @@ A merged unit is worth 3× more gold when disbanded than each of its three compo
 ### Divine Prophets (when enabled)
 
 When the "Divine Prophets" option is active:
+
 - The first civilization to research a religious technology receives a **Great Prophet** rather than automatically founding a religion.
 - That Great Prophet can spread any tech-qualifying religion to a chosen city. The first city to receive the spread founds that religion there.
 - With "Choose Religions" OFF: Prophets can only found religions tied to their possessed tech.
@@ -301,6 +320,7 @@ When enabled, leaders begin with no preset traits and accumulate trait points th
 ### Complex Traits (Optional System)
 
 An alternative trait set designed for deep strategic planning:
+
 - Tier system: Tier I (early), Tier II (mid-game), Tier III (late-game). Each tier unlocks stronger trait versions with bigger bonuses and bigger penalties.
 - **Point-buy balance:** Every trait within a tier is designed to be approximately equal total value — benefits purchase penalties of matching weight.
 - **Synergies:** Certain trait combinations produce outsized effects beyond the sum of their parts.
@@ -313,6 +333,7 @@ An alternative trait set designed for deep strategic planning:
 ## 11. Civic System
 
 C2C substantially expanded the vanilla civic system. Major changes (v41):
+
 - Significant rebalancing of early-game civics to make early civic choice meaningful.
 - Civic categories and slot counts expanded far beyond vanilla BtS.
 - The Revolution system (when enabled) tracks stability based on civic choices, city contentment, financial state, and war weariness.
@@ -320,6 +341,7 @@ C2C substantially expanded the vanilla civic system. Major changes (v41):
 ### Revolution System
 
 When the "No Revolutions" option is **not** active, civilizations accumulate instability. Triggers include:
+
 - Civic mismatches (civics that poorly fit the civilization's state)
 - Widespread unhappiness or unhealthiness
 - Financial strain
@@ -350,6 +372,7 @@ Food consumption scales gradually with population changes — it increments or d
 ## 13. Gateway Tech Penalties
 
 When any civilization reaches an era gateway technology, all civilizations face:
+
 - Increased education cost per population point
 - +10% cumulative production cost for all units and buildings
 - With Beeline Stings: techs skipped in the prior era cost 20% more to research
@@ -363,6 +386,7 @@ The first civilization to reach the gateway receives one free technology as a re
 When the Multi-Maps game option is active, multiple independent maps run simultaneously. The primary application in C2C was separating Space as a distinct map from the surface world.
 
 **Player experience:**
+
 - Units can transfer between maps via mission actions (teleport-style transition without loading screen)
 - Players must manually check each map each turn — there is no automatic notification of events on other maps
 - WorldBuilder can edit each map independently

@@ -1,5 +1,15 @@
 # Developer documentation
 
+> ## ⛔ RESUMING AFTER A CONTEXT COMPACTION? RE-READ EVERYTHING FIRST.
+>
+> If your context was just compacted/summarized mid-session, **STOP — do not touch code or make decisions from the
+> summary alone.** Compaction has poisoned context before. Before any further work on the **#428/#430 cascade**,
+> re-read the full set in `docs/dev/plans/`: `data-model-spec.md`, `enabler-cascade-spec.md`, `modifier-cascade-spec.md`,
+> `tally-cascade-spec.md`, `event-spine-spec.md`, `cascade-engine-430.md`, `migration-renames.md`,
+> `migration-entity-ranking.md` — plus the live code in `Sources/Cascade/`. Look concepts UP; never reconstruct them
+> from the summary or from how the C++ currently reads (the C++ is reworked to fit the data, not ground truth). A
+> stale spec line loses to a later owner ruling. (Owner 2026-06-17 — this re-read gate is being deliberately tested.)
+
 Notes for people working on the **DLL and engine** (C++/Python internals).
 Player- and end-user-facing documentation lives separately in the top-level
 [`docs/`](../../docs/) folder — keep the two apart.
@@ -39,6 +49,7 @@ This folder is split by intent:
 | [CvPropertySolver](reference/CvPropertySolver.md) | Per-turn solver for the property simulation system |
 | [PlotSnapshot](reference/PlotSnapshot.md) | Plot-state snapshot schema + call-site conventions for logging |
 | [ai-logging-reference](reference/ai-logging-reference.md) | The structured/tagged AI decision logs as they exist today |
+| [http-server](reference/http-server.md) | `CvHttpServer` — the live observability/query layer: `127.0.0.1:7227` endpoints (`/units`/`/players`/`/cities`/`/events`), the `/events` SSE log-tee (#419), gating (`Autolog__HttpServer`/`Autolog__LogLevelStream`), snapshot isolation, and the planned `/tally` |
 | [UnitAI_Selection](reference/UnitAI_Selection.md) | How the AI picks a unit's `UNITAI` and concrete unit type |
 | [UnitSelection_Mechanics](reference/UnitSelection_Mechanics.md) | The selection step itself: role → chosen `UnitTypes` |
 | [doProduction](reference/doProduction.md) | `CvCity::doProduction` — the per-turn city production step |
@@ -48,12 +59,31 @@ This folder is split by intent:
 | [MapScript_Process](reference/MapScript_Process.md) | End-to-end lifecycle of a C2C mapscript (`C2C_World`) |
 | [handicaps](reference/handicaps.md) | The difficulty system: per-player vs game handicap, the human-field/AI-field split, a per-field "what each value does" reference (+ #423 cascade-migration fit), and what setting a non-Noble AI actually changes |
 | [unitcombat](reference/unitcombat.md) | What `UnitCombatType` is: a core Civ4 combat-class axis (promotion-gating, vs-class bonuses, AI) that C2C grew into a 636-entry, many-to-many, ~150-field "innate-promotion tag" class mirroring `CvPromotionInfo`; + its #428 migration fit |
+| [save-load-format](reference/save-load-format.md) | How saves work: the name-keyed `CvTaggedSaveFormatWrapper`, soft-vs-hard change rules, and the derived-state-serializes-nothing lever (the tally rebuilds on load). *Recovered 2026-06-17; branch-only until the cascade save handling finalizes.* |
 
 ## Plans — work in flight
 
+### #428 / #430 — data migration + cascade engine (this branch's core work)
+
+The locked / in-flight specs the whole migration builds on. (Resuming after a context compaction? Re-read these
+first — see the banner at the top of this file.)
+
 | Doc | Subject |
 |---|---|
-| [handover-2026-06-14-pm](plans/handover-2026-06-14-pm.md) | ⏩ **Session resume (2026-06-14 PM):** Trait done, equipment combat-purge, SpecialBuilding re-curate flag, combat-class audit (#435), lighter-four classified; the "no true POCO" + "unreferenced ≠ dead" rules; queue |
+| [data-model-spec](plans/data-model-spec.md) | The canonical object & vocabulary reference (consolidated): reserved sections + modifier families, the shared atom / condition / predicate vocabulary, scopes, the one entry shape. The #430 prototype interface + modder-docs foundation. |
+| [enabler-cascade-spec](plans/enabler-cascade-spec.md) | Availability (v0.3 baseline): HAS → CAN GET → HAS THE MEANS TO; the `enables` family (constructive/destructive) + reversible `requires` means + the `allowed` cap; greying; the empire/team-building tier (§5). |
+| [modifier-cascade-spec](plans/modifier-cascade-spec.md) | Magnitude (v3, LOCKED): the standardized object/vocabulary, split families, `enabled`/`disabled` + `per` count-scaling, keep-on-source / deliveryguy (§6/§6.1), the demolition list (§9). |
+| [tally-cascade-spec](plans/tally-cascade-spec.md) | The additive count machine: presence/counts at any scope, the report + roll-up, the `requires`/`allowed`/`per` readers, and save handling (§9 — rebuilt on load, serializes nothing). |
+| [event-spine-spec](plans/event-spine-spec.md) | The #430 front-door event dispatch: `emit(KIND,…)`, the DOMAIN/DIAGNOSTIC/TRACE OOS firewall, raw payloads, consumers (logging / tally / grants). Slice-1 built in `Sources/Cascade/`. |
+| [cascade-engine-430](plans/cascade-engine-430.md) | The #430 engine implementation plan: substrate → tally → modifier → enabler; build order, the `readJson` consume path, shadow discipline. |
+| [building-cascade-conversion](plans/building-cascade-conversion.md) | The #428 building → cascade/JSON conversion plan + **THE MODEL** (locked 2026-06-14) the whole migration builds on. |
+| [migration-renames](plans/migration-renames.md) | The canonical old→new RENAME REGISTRY — every Info's fields mapped to the new shape. |
+| [migration-entity-ranking](plans/migration-entity-ranking.md) | The serial entity-conversion ranking + cross-cutting migration rules (one info at a time, verify-before-commit). |
+
+### Other plans
+
+| Doc | Subject |
+|---|---|
 | [ai-architecture-north-star](plans/ai-architecture-north-star.md) | The coherence frame for the AI/data rework: goal, hard constraints, module taxonomy, roadmap |
 | [ai-vs-human-benchmarking](plans/ai-vs-human-benchmarking.md) | Live playthrough observation: does the AI run ahead of or lag the player; competence-not-handicaps principle |
 | [codebase-bug-hunt](plans/codebase-bug-hunt.md) | Standing C++/Python bug-sweep initiative + GitHub issue convention |
@@ -78,6 +108,10 @@ This folder is split by intent:
 | [worker-stranded-tiles-reachability](plans/worker-stranded-tiles-reachability.md) | AI border tiles unimproved because unreachable by land; reachability + efficiency fix |
 | [unified-prerequisites-and-constructibility](plans/unified-prerequisites-and-constructibility.md) | Unify the ~38 `Prereq*` families into the introspectable requirement model (#195) |
 | [multimap-zone-rework](plans/multimap-zone-rework.md) | One-map viewport-region approach to multi-zone play (vs separate-CvMap switching) |
+| [cross-entity-inversion-blueprint](plans/cross-entity-inversion-blueprint.md) | #428 cross-entity reference catalog (245 refs, consumer-site-verified). *Recovered 2026-06-17; inversion verdicts superseded by keep-on-source/deliveryguy (modifier-spec §6/§6.1) — kept for the catalog, not the verdicts.* |
+| [cascade-modifier-inventory](plans/cascade-modifier-inventory.md) | Coverage checklist: every flat/percent modifier + its scopes + source accessors. *Recovered 2026-06-17; map rows to modifier families (modifier-spec §1), not the old `CASCADEFLAT_/CASCADEMOD_` bundle.* |
+| [team-buildings](plans/team-buildings.md) | Empire/team-scope "buildings" as the per-city-autobuild replacement (#421). *Recovered 2026-06-17; concept current, the `CvCascadingModifierBundle` implementation superseded — see enabler-spec §5.* |
+| [global-warming-mod](plans/global-warming-mod.md) | Global Warming mod scrapped — vestiges to remove (#436) + a concept worth revisiting. |
 
 ## Where docs go
 

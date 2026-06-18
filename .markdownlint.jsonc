@@ -14,6 +14,14 @@
   "MD034": false,  // bare-urls: we paste bare URLs (issue links, hosting paths).
   "MD029": false,  // ordered-list-prefix: we mix "1." and sequential numbering as reads best.
   "MD040": false,  // fenced-code-language: some illustrative blocks are intentionally plain ```.
+  "MD060": false,  // table-column-style: not auto-fixable, cosmetic pipe-spacing only; enforcing it
+                   //   means thousands of manual table edits across hosted docs for zero readability gain.
+  "MD018": false,  // no-missing-space-atx: we put issue refs (`#429`) at line-start; this rule "fixes"
+                   //   `#429`→`# 429`, turning it into a bogus H1. Disabled so refs stay literal — and so
+                   //   we never backslash-escape a `#` (an escape an agent could misread as real syntax).
+  "MD052": false,  // reference-links-images: we use [BRACKETS] as literal notation (key suffixes, array
+                   //   forms), NOT links. Disabled so we never write `\[ \]` — a `\]` inside a type string
+                   //   could be misread by a future reader as part of the actual data. Readability > lint.
 
   // --- relaxed (kept, but tuned) -------------------------------------------------------
   // duplicate headings are fine across DIFFERENT sections (specs reuse "Open"/"Status"/"Next"),

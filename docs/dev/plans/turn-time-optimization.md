@@ -105,6 +105,7 @@ re-decides/turn**; sea cluster ~9 s (`RESERVE/ATTACK/EXPLORE/SETTLER/WORKER_SEA`
 per-slice Python `gameUpdate` (~5 ms), `updateScore`, `testAlive`; `plotPaging` load-only.
 
 **CITY_DEFENSE churn — investigation log (hypothesis 1 FALSIFIED):**
+
 - *Attempt 1 (2026-06-10):* capped the `ACTIVITY_SLEEP → setForceUpdate` auto-wake in
   `CvSelectionGroupAI::AI_update` to once per turn (`m_iLastSleepWakeTurn`, transient).
   **Measured: NO effect** — CITY_DEFENSE still 13–19 s / 14–25k calls per turn. The parked
@@ -307,6 +308,7 @@ CvPlayerAI::AI_doTurnUnitsPre (CvPlayerAI.cpp:539)
 ## Detailed findings
 
 ### 1. Full-map visibility recompute ("stickytape") — `CvGame.cpp:5869`
+
 Every game turn, `doTurn` clears visibility counts on **every plot** and then calls
 `GC.getMap().updateSight(true, false)`, which re-applies sight for every unit/city.
 
@@ -318,6 +320,7 @@ for (int iJ = 0; iJ < GC.getMap().numPlots(); iJ++)
     GC.getMap().plotByIndex(iJ)->clearVisibilityCounts();
 GC.getMap().updateSight(true, false);
 ```
+
 - **Cost:** O(plots) clear + O(units × sightRange²) re-apply, **every turn, for the whole game**.
 - **Why it's the #1 suspect:** it is an acknowledged hack working around a visibility-count
   drift bug, not a designed per-turn cost. If the underlying drift were fixed (or this were
@@ -325,11 +328,14 @@ GC.getMap().updateSight(true, false);
   removed entirely. **Verify with the profiler first** (look for `updateSight` self-time).
 
 ### 2. `AI_doEnemyUnitData` — `CvPlayerAI.cpp:24686`
+
 Scans **every plot visible to the team**, and for each, iterates the units on it to tally
 enemy strength used by AI threat assessment.
+
 - **Cost:** O(visible plots × units-per-plot). Grows as the map is revealed and armies grow.
 
 ### 3. Per-unit pathfinding × group re-decide cascades
+
 Two multiplied costs:
 
 - **Pathfinder** `CvPathGenerator::generatePath` (`CvPathGenerator.cpp:819`): A* with a hard
@@ -346,6 +352,7 @@ Two multiplied costs:
   likely place where "more units" turns into super-linear wall-clock.
 
 Known spin patterns (some fixed, all worth re-checking with the profiler):
+
 - **Heal spin** (`CvUnitAI.cpp:~12721`) — mitigated by a `canHeal()` guard; can still spin if
   a unit claims heal while `canHeal()` is false mid-cascade. See memory
   `hunter-move-reinvocation`.
@@ -359,44 +366,57 @@ Known spin patterns (some fixed, all worth re-checking with the profiler):
   range is exhausted. Linked to the still-open sea-AI spin (memory `sea-ai-rework`).
 
 ### 4. Found values — clear is cheap, recompute is lazy — `CvPlayerAI.cpp:1189`
+
 **Correction to first-pass notes:** the per-turn call `AI_updateFoundValues(true)`
 (`AI_doTurnUnitsPre:551`) takes the `bClear` branch, which only walks plots calling
 `clearFoundValue` and **early-returns at line 1209**. The expensive part — per-plot
 `AI_foundValue()` — is the `bClear=false` path (lines 1213–1245) and is **gated by
 `bNeedsCalculating`** (only areas lacking a cached best-found value), i.e. lazy/on-demand,
 not every plot every turn.
+
 - **Per-turn cost:** O(revealed plots) memory clears per AI player. Real and plot-scaling,
   but far cheaper than "recompute every plot every turn." Don't over-prioritize it.
 
 ### 5. `AI_doDiplo` — `CvPlayerAI.cpp:17394`
+
 Tech-source precompute over players × techs, a 2-pass players loop scanning all active deals
 and all bonuses for trade offers.
+
 - **Cost:** ~O(players² × max(techs, bonuses, deals)). Player count is fixed, but tech/bonus/
   deal counts climb through the game.
 
 ### 6. `recalculateAllResourceConsumption` — `CvPlayer.cpp:27065`
+
 Loops every bonus type and, per bonus, every city and that city's buildings.
+
 - **Cost:** O(bonuses × cities × buildings-per-city), every turn per player. Grows on three
   axes that all increase over a game.
 
 ### 7. `clearCanConstructCache(NO_BUILDING)` — `CvPlayer.cpp:27773`
+
 Per-turn cache flush over all building types; with `bIncludeCities` it also flushes per city.
+
 - **Cost:** O(buildingTypes [× cities]). Cheap per element but unconditional; worth checking
   whether the whole cache must be dropped every turn vs. invalidated on actual state change.
 
 ### 8. Property solver — single-pass, not iterative — `CvPropertySolver.cpp:447`
+
 Good news: **no convergence loop.** `gatherAndSolve` (`CvPropertySolver.cpp:420`) runs a fixed
 3-phase predict→correct→apply pipeline (propagators, interactions, sources). Manipulator
 gathering (`gatherActiveManipulators`, line 312) iterates the 7 game-object types; the CITY/
 UNIT/PLOT iterators are O(cities)/O(units)/O(plots).
+
 - **Cost:** O(objects-with-manipulators) per map per turn — linear, no hidden iteration blow-up.
   Lower priority unless the profiler says otherwise. Reference: `docs/reference/CvPropertySolver.md`.
 
 ### 9. `updateTradeRoutes` — `CvPlayer.cpp:4257`
+
 Clears then re-establishes routes by comparing cities pairwise.
+
 - **Cost:** ~O(cities²) per player.
 
 ### 10. Plot-group flood-fill — `CvPlayer.cpp:4095`
+
 When plot groups are dirty, re-colors regions via recursive flood-fill across all plots.
 Dirty-driven (not literally every turn) but O(plots) when it fires, and can chain into
 `updateTradeRoutes`.
@@ -443,6 +463,7 @@ are preserved** across a reload. Therefore a phase that grows-and-resets is driv
 **in-memory accumulated state**, NOT by unit/city count (count-driven cost would survive the
 reload). Decoder ring for `Performance.log` (`awk -F'phase=| ms=' '/PERF/{print $3"\t"$2}'`
 grouped by turn, watch each phase's ms trend):
+
 - **All phases inflate ~uniformly** → allocator/heap fragmentation from per-turn churn
   (CvReachablePlotSet/path objects). Reload defrags. Hard to fix in-code.
 - **`doTurn.visibilityRebuild` climbs alone** → the visibility-count **drift** the stickytape
@@ -457,6 +478,7 @@ grouped by turn, watch each phase's ms trend):
 
 **Accumulator hunt — results (verified).** Searched for in-memory state that grows per turn and
 resets on load:
+
 - **FALSE POSITIVES (verified):** the static "current-X" caches do NOT accumulate — they self-
   clear during normal iteration. `resultsCache` (`CvUnitAI.cpp:1078`) clears whenever the owning
   player changes (many times/turn); `g_bestDefenderCache` (`CvPlot.cpp:3840`) clears whenever a
@@ -465,7 +487,7 @@ resets on load:
 - **GENUINE CANDIDATE:** `CvContractBroker::m_workRequests`. Per-turn `cleanup()`
   (`CvContractBroker.cpp:54`) erases only **fulfilled** requests (`:77-88`); unfulfilled ones
   persist, and the broker is only fully wiped by `reset()` (`:41`) on load. Chronically-unfulfilled
-  + re-posted requests ⇒ grows per turn, resets on reload. **Already self-instrumented:**
+  - re-posted requests ⇒ grows per turn, resets on reload. **Already self-instrumented:**
   `[CTB/turn] workRequestsRemaining=N` (`:91`) — enable `[CTB]`/player logging and watch that
   number across turns; a monotonic climb confirms the leak. Would surface in PERF as
   `CvPlayer::doTurnUnits` rising.
@@ -507,6 +529,7 @@ player-level AI economy.
 ### Full `[PERF]` scope inventory (comprehensive pass)
 
 Instrumented top-to-bottom through the per-turn hot path (prune later if noisy). Labels:
+
 - **Game/player:** `CvGame::doTurn`, `CvPlayer::doTurn`, `CvPlayer::doTurnUnits`,
   `doTurn.visibilityRebuild`, `CvPropertySolver::doTurn`, `recalculateAllResourceConsumption`,
   `updateTradeRoutes`, `AI_doDiplo`.
@@ -537,13 +560,17 @@ Instrumented top-to-bottom through the per-turn hot path (prune later if noisy).
 
 Per-city scopes log once per city (and `AI_bestUnitAI` several times per production choice), so
 **aggregate by phase label**. Total ms per phase across the whole log:
+
 ```
 awk -F'phase=| ms=' '/PERF\/phase/{sum[$2]+=$3; n[$2]++} END{for(p in sum) printf "%12.1f  %6d  %s\n", sum[p], n[p], p}' Performance.log | sort -rn
 ```
+
 Per phase **per owner** (which empire dominates each phase):
+
 ```
 awk -F'owner=| phase=| ms=' '/PERF\/phase/{k=$3"|owner="$2; sum[k]+=$4} END{for(k in sum) printf "%12.1f  %s\n", sum[k], k}' Performance.log | sort -rn | head -40
 ```
+
 Read it as a tree: `CvPlayer::doTurn` ≈ `doTurn.cities` + `doTurn.AI_doTurnPre` +
 `doTurn.AI_doTurnPost` + misc; `doTurn.cities` ≈ Σ `city.doTurn`; `city.doTurn` ≈ `city.AI_doTurn`
 (+ `AI_updateBestBuild`/`WorkersNeededHere`) + `city.doProduction` (→ `AI_chooseProduction` →
@@ -556,12 +583,14 @@ the optimization target.
 across the session, and prints the slope (ms added per turn), %/turn of the mean, R²
 (trustworthiness of the trend) and a `CREEP` / `weak` / `flat` verdict. It drops a partial
 trailing turn automatically and needs ≥3 complete turns.
+
 ```
 LOGS="$USERPROFILE/Documents/My Games/Beyond The Sword/Logs"
 awk -f Tools/turn-perf-trend.awk                       "$LOGS/Performance.log"  # CvPlayer::doTurn
 awk -f Tools/turn-perf-trend.awk -v phase=total        "$LOGS/Performance.log"  # whole-turn wall clock
 awk -f Tools/turn-perf-trend.awk -v phase=doTurn.cities -v lo=1300 -v hi=1360 "$LOGS/Performance.log"
 ```
+
 **Leak vs growth:** a positive slope alone doesn't prove a per-session leak — teching up grows
 the CABV constructible set, so `doTurn.cities` heavier late-game is *expected*. To separate them,
 play a window, save+reload mid-session, and re-run the script on a fresh-session log: if the
@@ -608,6 +637,7 @@ From a focused read of `CvCityAI`/`CvUnitAI` (structural claims; the *magnitudes
 until measured — earlier agent "savings %" estimates were discarded as fabricated):
 
 **City AI**
+
 - Building-value cache is **flushed every turn unconditionally** — `CvCity::doTurn` calls
   `AI_FlushBuildingValueCache(false)` (`CvCity.cpp:~1253`) and `AI_doTurn` clears
   `m_buildValueCache` (`CvCityAI.cpp:~239`). A lazy/`bRetainValues=true` path exists but isn't
@@ -620,6 +650,7 @@ until measured — earlier agent "savings %" estimates were discarded as fabrica
   per building per focus-flag; some are stable unless tech/bonus changes.
 
 **Unit AI** (aligns with the suspect-#3 cascade work above)
+
 - The attack cascade (`AI_attackMove`, `CvUnitAI.cpp:2401`) can construct **many**
   `CvReachablePlotSet` objects in one call (each `AI_anyAttack`/`AI_cityAttack`/`AI_pillageRange`
   builds its own). Candidate: build once per attack phase and share.
@@ -639,6 +670,7 @@ but only 921 ms total (well cached); `AI_updateBestBuild` 264 ms; visibility 80 
 unit AI, AI_bestUnitAI pre-filter) are all dead — the cost is building-value recompute.**
 
 **Two compounding causes:**
+
 1. **Cache destroyed every turn** — `CvCity::doTurn:1256` calls `AI_FlushBuildingValueCache()`
    with default `bRetainValues=false` → `SAFE_DELETE(cachedBuildingValues)` (`CvCityAI.cpp:12450`).
    Only 3 callers total ⇒ **no event-driven invalidation**; the design brute-forces a full
@@ -671,6 +703,7 @@ Optional (B): gate `AI_chooseProduction` so process-running cities don't re-deci
 
 Why a single call is ~80-100 ms: it re-derives **static prereq relationships by brute force**
 every call. Per building it scans all unit/building types:
+
 - `.NotDeveloping` (`CvCityAI.cpp:13061`) — **O(buildings × units)** + `BoolExpr::evaluateChange`
   per match (13090, expensive) — which units the building enables (`isPrereqAndBuilding`).
 - `.Sea` (13229) — O(buildings × units) — sea-unit free-XP (`canTrain` + domain).
@@ -716,6 +749,7 @@ call** (multiple/city/turn) producing the identical set — pure redundant waste
 wrong; only measurement found it.
 
 **Fix tiers (safest first):**
+
 1. **Memoize `buildingsToCalculate` on the per-city `BuildingValueCache`** — compute once per
    cache-lifetime, not per CABV call. No new staleness (same rebuild schedule as today; flushed by
    `setHasBuilding`), no loop risk (it's an input set, not a control-flow value). ~2-3× off PreLoop.
@@ -744,6 +778,7 @@ for relevant entries. O(B×U)/O(B²) → O(B × few). Confirm the split first wi
 those three blocks if desired.
 
 ## Three orthogonal optimization tracks (they stack)
+
 - **(a) Call it less** — queue multiple buildings and only re-decide `AI_chooseProduction` on
   events (owner's idea), plus the periodic cache refresh already shipped. Attacks frequency.
 - **(b) Make each call cheaper** — the reverse-prereq indices above. Attacks per-call cost.
@@ -752,6 +787,7 @@ those three blocks if desired.
   quality too.
 
 ## Cross-references
+
 - Memory: `ai-unit-movement-to-player-level`, `hunter-move-reinvocation`,
   `property-control-oscillation`, `sea-ai-rework`, `worker-escort-stall-mechanism`.
 - Reference docs: `CvPathGenerator.md`, `pathfinding.md`, `CvPropertySolver.md`,

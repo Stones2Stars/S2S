@@ -4,12 +4,14 @@
 **Inherits:** [`CvSelectionGroup`](CvSelectionGroup.md)
 
 ## Overview
+
 Adds AI decision logic to a group of one or more units that move and act together.
 The class bridges `CvUnitAI` (individual unit decisions) and `CvPlayerAI` (player-level
 strategy) by coordinating attacks, garrison assignment, and mission state for the whole
 group at once.
 
 ## Lifecycle & State
+
 | Method | Description |
 |---|---|
 | `AI_reset()` | Resets all AI members (mission type, plot, unit reference, force-separate flag, group-attack flag). |
@@ -17,6 +19,7 @@ group at once.
 | `write(FDataStreamBase*)` | Saves AI state to a save stream. |
 
 ## Separation Utilities
+
 | Method | Description |
 |---|---|
 | `AI_separate()` | Splits the group into single-unit groups. |
@@ -26,11 +29,13 @@ group at once.
 | `AI_separateEmptyTransports()` | Splits out transports that are carrying no units. |
 
 ## Turn Update
+
 | Method | Description |
 |---|---|
 | `AI_update()` | Drives all units in the group through their `CvUnitAI::AI_update()` cycle; returns `true` if any unit is still active. |
 
 ## Combat Evaluation
+
 | Method | Description |
 |---|---|
 | `AI_attackOdds(pPlot, bPotentialEnemy, bForce, bWin, iThreshold)` | Returns combined attack odds for the whole group against a target plot. |
@@ -40,6 +45,7 @@ group at once.
 | `AI_sumStrength(pAttackedPlot, eDomainType, flags)` | Sums total combat strength of all group members, filtered by domain and strength flags. |
 
 ## Group Attack Queue
+
 | Method | Description |
 |---|---|
 | `AI_queueGroupAttack(iX, iY)` | Schedules a combined group attack on the given coordinates next turn. |
@@ -47,6 +53,7 @@ group at once.
 | `AI_isGroupAttack()` | Returns `true` if a group attack is currently queued. |
 
 ## Mission AI State
+
 | Method | Description |
 |---|---|
 | `AI_getMissionAIType()` | Returns the current `MissionAITypes` enum value. |
@@ -56,6 +63,7 @@ group at once.
 | `AI_noteSizeChange(iChange, iVolume)` | Updates internal size and volume counters when units join/leave. |
 
 ## Control / Status
+
 | Method | Description |
 |---|---|
 | `AI_isControlled()` | Returns `true` if the group is under AI control (not human-moved this turn). |
@@ -64,6 +72,7 @@ group at once.
 | `AI_makeForceSeparate()` | Sets the force-separate flag so the group splits on next update. |
 
 ## Garrison
+
 | Method | Description |
 |---|---|
 | `AI_isCityGarrison(pCity)` | Returns `true` if this group is tasked as the garrison of a specific city. |
@@ -75,6 +84,7 @@ count toward city defense strength, not the primary-defender quota. See the garr
 section in [`CvUnitAI.md`](CvUnitAI.md) (#384).
 
 ## Defender Selection
+
 | Method | Description |
 |---|---|
 | `AI_findBestDefender(pTargetPlot, allowAllDefenders, bConsiderPropertyValues)` | Returns the best defending unit in the group for a target plot, optionally considering property effects. |
@@ -85,6 +95,7 @@ section in [`CvUnitAI.md`](CvUnitAI.md) (#384).
 | `AI_isFull()` | Returns `true` if all transports in the group are at cargo capacity. |
 
 ## Protected Members
+
 | Member | Type | Description |
 |---|---|---|
 | `m_iMissionAIX` / `m_iMissionAIY` | `int` | Coordinates of the mission target plot. |
@@ -95,6 +106,7 @@ section in [`CvUnitAI.md`](CvUnitAI.md) (#384).
 | `m_iGroupAttackX` / `m_iGroupAttackY` | `int` | Coordinates of the queued group attack. |
 
 ## Related
+
 - [`CvSelectionGroup`](CvSelectionGroup.md) — base class  
 - [`CvUnitAI`](CvUnitAI.md) — individual unit decisions within the group  
 - [`CvPlayerAI`](CvPlayerAI.md) — player AI that coordinates groups  

@@ -96,6 +96,7 @@ A 4-agent audit (wf_e1bffcc4) traced the resolution math, the modifier sources, 
 and the contradiction. Findings:
 
 ### Combat resolution is additive-accumulate, multiply-once
+
 A fight is a ratio of two strength numbers: `defenderOdds = DIE_SIDES * defStr / (atkStr + defStr)`
 (`CvCombatModel.cpp:39`). Each strength is built in `CvUnit::maxCombatStr` (`CvUnit.cpp:11464-12189`)
 by summing **~40 signed-percentage layers into ONE int** (`iModifier`), then applying it **once**,
@@ -105,9 +106,11 @@ opponent/plot-blind; every situational "vs X" modifier is folded into the **defe
 signed delta (attacker offence enters as a *negative* delta on the defender).
 
 ### The class-vs-class matrix (the concept worth keeping) is vestigial
+
 The "join a class → innately strong/weak vs another class" matrix is authored in one shared tag,
 `<UnitCombatMods>` (key `<UnitCombatType>` + `<iUnitCombatMod>`), summed at `CvUnit.cpp:11897-11919`
 over every class the opponent *has*. The concept is real and well-localized — **but barely used:**
+
 - **418 live classes; only 14 (3.3%) define any vs-class edge — 18 edges total.** 0 class-level
   flanking. The 18 are accreted one-offs (`GUNSHIP +50% vs TRACKED`, `CRIMINAL +100% vs TRADE`,
   the CANINE/STRIKE_TEAM animal triad, equipment `SHIELD_* vs MELEE`), not a designed matrix.
@@ -117,8 +120,10 @@ over every class the opponent *has*. The concept is real and well-localized — 
   promotions.
 
 ### The contradiction (the part to defenestrate over) is quantified
+
 The real strength logic migrated **down to individual units**, in **four overlapping, additive,
 unreconciled "vs" channels** with no precedence:
+
 1. **vs-CLASS** — `<UnitCombatMods>` on the unit + on its promotions + on each class it belongs to.
    **528–668 units author 966 per-unit edges — 54× the 18 class edges.**
 2. **vs-SPECIFIC-UNIT attack** — `<UnitAttackMods>` (keyed by `UnitType`); ~110 units, 436 edges.
@@ -131,13 +136,16 @@ number just **adds on top, silently inverting/double-counting the class matrix**
 **mathematically indistinguishable** — `unitCombatModifier()` = `unit-XML term + getExtra…() term`
 (`CvUnit.cpp:13295`), the same accumulator `processUnitCombat` and `processPromotion` both deposit
 into (a combat class *is* "a free promotion every member is born with").
+
 - **Real bug found:** the help-text labels for the two axes are **swapped** — vs-class renders as
   "vs. Type" and vs-unit-type as "vs. Class" (`CvGameTextMgr.cpp:1009/1043/12860/12896`).
 - AI valuation sums the overlapping channels → **over-values** units that get the same edge twice
   (once vs-class, once vs the specific type in that class).
 
 ### Removal caveats — why "unreferenced ≠ dead" (the purge blind spots)
+
 A by-name XML scan is **not** sufficient to call a combat class dead. Two confirmed blind spots:
+
 1. **Module content** — an inactive module's class looks unreferenced because the module's own units
    aren't active in the scan (the `*punk`/Cultures `UNITCOMBAT_CULTURE_*` tags). Intended ≠ dead.
 2. **Engine attribute-matches** — the engine selects classes **by attribute in code**, never naming
@@ -152,6 +160,7 @@ core) so no module reference is missed. (A 2026-06-14 blunt purge over-reached o
 was fully reverted; do it carefully next time.)
 
 ### Toward a real structure (owner's aspiration)
+
 A clean redesign: (a) ONE source of truth for "strength vs X," class-level by default with **explicit,
 precedence-defined** per-unit overrides (not silent addition); (b) **split the orthogonal taxonomies**
 (size/species/motility/heal-type) out of the combat-role enum into their own dimensions; (c) collapse
@@ -160,6 +169,7 @@ labels. This is the combat-class counterpart to the #428 cascade: a unit's comba
 readable, single-origin set of modifiers instead of four additive channels nobody can audit.
 
 ## Files
+
 - Class: `Sources/CvUnitCombatInfo.{h,cpp}` · Data: `Assets/XML/Units/CIV4UnitCombatInfos.xml`
 - Related: [CvOutcome](CvOutcome.md), [CvProperties](CvProperties.md), the combat model
   (`Sources/CvCombatModel.*`), and the migration plan

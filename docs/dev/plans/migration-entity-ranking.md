@@ -4,9 +4,10 @@ The top-down curation order for #428, **annotated with the current agent's full 
 agent inherits the reasoning (edges, modifier surface, status, decisions) rather than a bare list.
 
 > **ROLE: this is THE authoritative curation-order artifact for #428 — the working document the curating
-> agent executes from.** Resume via `handover-2026-06-15-pm.md` first (orientation), then read the two
-> LOCKED specs (`modifier-cascade-spec.md` v3 + `enabler-cascade-spec.md` v0.3), then work through this
-> ranking top-down, entity by entity.
+> agent executes from.** Orient via the [`docs/dev/README.md`](../README.md) "re-read after a compaction" banner
+>
+> + the LOCKED specs (`data-model-spec.md`, `enabler-cascade-spec.md` v0.3, `modifier-cascade-spec.md` v3,
+> `tally-cascade-spec.md`), then work through this ranking top-down, entity by entity.
 
 **Ordering principle:** config & sources first, monster targets last. A source is migrated before what it
 `enables`/conditions (so the first-migrated entity owns a shared edge; later entities conform). Derived
@@ -39,6 +40,7 @@ one at a time so later ones conform to earlier edges — the inversion rule.)
 **⛔ TWO HANDOVER/RESUME GATES — every handover MUST state them, every resuming agent MUST honor them (owner
 ruling 2026-06-15; the handover process is the countermeasure to context-poisoning on compaction, and it must
 not drift):**
+
 1. **READ ALL THE SURROUNDING DOCUMENTATION before touching anything** — not just a skim of the resume list.
    Mandatory each resume: the two specs, `building-cascade-conversion.md`, this ranking, **`migration-renames.md`
    (the canonical old→new registry + the decisions already made)**, the entity's
@@ -68,6 +70,7 @@ as records of what that session did; correct them when they actively mislead, bu
 
 **⛔ THREE GOVERNING RULINGS for what the JSON IS (owner, 2026-06-15) — they OVERRIDE any "make it match the
 code" instinct:**
+
 1. **Author the data for WHAT IT IS, not how the current C++ fetches/combines it.** Choose the unit/shape from
    the datum's own nature. A value stored as a percentage is `percent` even if today's engine happens to apply
    it multiplicatively — do NOT reverse-engineer the unit from the consumer's combination math. *(Concrete: the
@@ -274,19 +277,20 @@ the latest conventions.** The model evolves *during* migration — each entity s
 entities lag the conventions later ones established. One consistency sweep at the end is the countermeasure: *"I
 don't want a future agent to go 'hurr?!?' because it's different"* (owner). Known divergences to reconcile (the list
 grows as more accumulate):
-- **Predicate modularity** (enabler-spec §3): treat Religion / Corporations / Traits (simple + complex) — and any
+
++ **Predicate modularity** (enabler-spec §3): treat Religion / Corporations / Traits (simple + complex) — and any
   concept we define as a system — as isolated systems; bare-string predicate forms; per-system self-documentation;
   ignore-not-false degradation. (The `workedBy: SELF` predicate also lands here / at Buildings.) **✅ Membership-predicate
   reconcile DONE 2026-06-16 (owner, hole #1):** `HAS_TERRAIN`/`HAS_FEATURE`/`HAS_BONUS` are canonical single-valued
   predicates; Improvement #22's `{terrain|feature|bonus:[…]}` is the compact membership SUGAR (desugars to `any`-of-`HAS_X`,
   no data churn). `COASTAL_LAND` unused in real data (0)→moot; `IS_COASTAL` (`CvCity::isCoastal`) stays distinct. Cleared
   229 conformance flags. (data-model-spec §2.5, enabler-spec §3.)
-- **Art blocks — DONE 2026-06-16 (for all migrated entities).** Flat `art.*` → the three **top-level** blocks
++ **Art blocks — DONE 2026-06-16 (for all migrated entities).** Flat `art.*` → the three **top-level** blocks
   `ui` / `world` / `sound` (`art` a sub-block within `ui`/`world`; canonical map `curate_common.ART_BLOCK`, shared
   `put_art`/`emit_art` helpers). Applied to the cc-curated set AND all 11 art-bearing bespoke curators; entities not
   yet curated (Unit — heaviest — Building, Improvement, …) adopt it natively via `ART_BLOCK` at their pass. No
   retrofit owed. (building-cascade-conversion "ART BLOCKS … DONE".)
-- **Instance/category CAPS → `allowed` — DONE 2026-06-17 (owner).** Instance caps are NOT a `requires` SELF-atom (that
++ **Instance/category CAPS → `allowed` — DONE 2026-06-17 (owner).** Instance caps are NOT a `requires` SELF-atom (that
   conflated *needed* with *allowed* and forced an off-by-one — `max:0` for "cap 1"). They are the declarative `allowed`
   ceiling, authoring the REAL number: self-cap `allowed:{<scope>:N}` (Building/Unit/Tech `bGlobal`/SpecialBuilding group
   cap — `SELF` left `requires` entirely), per-city category-cap `allowed:{worldWonders|teamWonders|nationalWonders:N}`
@@ -296,10 +300,10 @@ grows as more accumulate):
   JSON via override-by-design). Applied across Building/SpecialBuilding/Tech/CultureLevel/Unit; harness recognizes/renders
   `allowed`; 0 conformance flags held. (data-model-spec §4.2a, enabler-spec §5a/§13.7, tally-spec §2, renames §§Building/
   SpecialBuilding/CultureLevel/Tech/Unit.)
-- **Any shape an entity locked AFTER an earlier entity was committed** — e.g. the family names
++ **Any shape an entity locked AFTER an earlier entity was committed** — e.g. the family names
   defense/movement/cultureDistance/buildTime/`vision` (blessed at Terrain/Feature), the deliveryguy/semantic-sense
   ownership rule (modifier-spec §6.1), the dedicated-block rule (§0.8).
-- **MODIFIER OWNERSHIP REVIEW — up/down placement, "who BRINGS the modifier" (owner ruling 2026-06-16).** Once all
++ **MODIFIER OWNERSHIP REVIEW — up/down placement, "who BRINGS the modifier" (owner ruling 2026-06-16).** Once all
   infos are moved, do a deliberate pass to confirm the correct OWNER (and scope direction, up vs down) of every
   cross-entity modifier against the deliveryguy/§6.1 rule. **Specifically the TECH-MODIFIER GATES** (the `Tech*Changes`
   inverted ONTO the tech: `curate_tech` TECH_BOOSTS — Building/Improvement/Specialist/Route `TechYieldChanges` etc.,
@@ -317,14 +321,15 @@ generator carries the `enables` family on the SOURCE, every buildable target car
 corp → operate dormancy; units → build-only as leaf actions). So Phase F doesn't need to find everything up front — **we
 will surface and fix more alignment issues as we walk through WIRING #430** (owner: don't over-invest in an exhaustive
 audit). Known items to carry into the wiring (fix when hit, not as a blocking pre-pass):
-- **build-vs-operate for CONTINUOUS building gates:** building **resource** (`bonus`, ~6.6k) and **power** (`HAS_POWER`,
+
++ **build-vs-operate for CONTINUOUS building gates:** building **resource** (`bonus`, ~6.6k) and **power** (`HAS_POWER`,
   ~1k) prereqs currently sit in `requires.build` (grey-only); per the grounding they are the continuous `CvCity::isActiveBuilding`
   gates → they should `operate` (grey at build AND go dormant when the input is lost). Verify vs `isActiveBuilding`, then move.
-- **grey-vs-hide consistency:** buildings/units put bonus prereqs in `requires` (grey); routes invert theirs to
++ **grey-vs-hide consistency:** buildings/units put bonus prereqs in `requires` (grey); routes invert theirs to
   `bonus.enables.routes` (hide). Same concept, two treatments — pick one convention.
-- the previously-listed items (predicate modularity + `IS_COASTAL`/`HAS_FEATURE` reconcile, modifier-ownership/tech-gate
++ the previously-listed items (predicate modularity + `IS_COASTAL`/`HAS_FEATURE` reconcile, modifier-ownership/tech-gate
   review, family names) — handle as encountered.
-- minor: the SpecialBuilding per-group instance cap is in `identity.maxPlayerInstances`, not a member-building `requires` `max`.
++ minor: the SpecialBuilding per-group instance cap is in `identity.maxPlayerInstances`, not a member-building `requires` `max`.
 
 ## Tier G — UNRANKED gameplay infos / "stragglers" (SCOPE VERIFIED 2026-06-16)
 
@@ -338,35 +343,37 @@ gameplay entities below + a little config. **Owner rulings folded in: the EVENT 
 true POCO"; entity purges are a SEPARATE deliberate pass, not done mid-migration).
 
 **GAMEPLAY — to migrate (the small/medium tail).** *(`CvOutcomeInfo` was attempted but DEFERRED to #430 — see "Deferred" below.)*
-- **`CvSpawnInfo`** (327) — **the BARBARIAN / ANIMAL / WILDLIFE map-spawn system** (owner 2026-06-16); 28 fields,
+
++ **`CvSpawnInfo`** (327) — **the BARBARIAN / ANIMAL / WILDLIFE map-spawn system** (owner 2026-06-16); 28 fields,
   tech/date/terrain/density-gated, `TreatAsBarbarian`/neutral-only + a BoolExpr spawn condition. Large, dense.
-- **`CvGoodyInfo`** (106) — the DEFINITIONS of the possible goody-hut grants (gold/xp/heal/unit/research, era/tech-gated) —
++ **`CvGoodyInfo`** (106) — the DEFINITIONS of the possible goody-hut grants (gold/xp/heal/unit/research, era/tech-gated) —
   a `grants`-shaped entity. **WHICH goodies appear + their weighting lives on the Handicap, NOT here** (owner 2026-06-16:
   "possible grants based on naming of goodyhut, referenced in handicap") — VERIFIED: `CvHandicapInfo` has `<Goodies>` and
   the migrated Handicap #2 already carries it as `identity.goodies` (per-difficulty `GOODY_*` ref lists). So GoodyInfo
   migrates only the grant DEFINITIONS those refs point at. Medium.
-- **`CvEspionageMissionInfo`** (29) — espionage missions; PROCEDURAL one-shot effects (not modifiers) + tech/option gate. Small.
-- **`CvEmphasizeInfo`** (8) — city production-emphasis (yield/commerce modifiers + avoid-growth/angry/unhealthy flags);
++ **`CvEspionageMissionInfo`** (29) — espionage missions; PROCEDURAL one-shot effects (not modifiers) + tech/option gate. Small.
++ **`CvEmphasizeInfo`** (8) — city production-emphasis (yield/commerce modifiers + avoid-growth/angry/unhealthy flags);
   **LIVE AI + UI** (#367–370). *(Was wrongly in the OUT list.)*
-- **`CvVoteSourceInfo`** (3) — UN / Apostolic Palace / Congress; free specialist + per-religion yields/commerce (Vote #6 deferred it here).
-- **`CvCommerceInfo`** (4) — the 4 commerces' config (initialPercent, initialHappiness, AI weight, flexible). Sibling to `YieldInfo`.
-- **`CvUpkeepInfo`** (4) — civic-upkeep tiers (populationPercent / cityPercent), read every turn for civic gold cost.
-- **`CvWorldInfo`** (8) — **PREGAME config (owner 2026-06-16): map SIZE is chosen at setup then FIXED** — limited *ongoing*
++ **`CvVoteSourceInfo`** (3) — UN / Apostolic Palace / Congress; free specialist + per-religion yields/commerce (Vote #6 deferred it here).
++ **`CvCommerceInfo`** (4) — the 4 commerces' config (initialPercent, initialHappiness, AI weight, flexible). Sibling to `YieldInfo`.
++ **`CvUpkeepInfo`** (4) — civic-upkeep tiers (populationPercent / cityPercent), read every turn for civic gold cost.
++ **`CvWorldInfo`** (8) — **PREGAME config (owner 2026-06-16): map SIZE is chosen at setup then FIXED** — limited *ongoing*
   gameplay impact; its 8 "modifiers" (distance/colony/corp/numCities maintenance%, conscript%, trade%, anarchy%,
   building-prereq%, city-limits scale%) are map-size-DERIVED CONSTANTS, not dynamic cascade deposits. **SPLIT** the map-gen
   grid/grain half from the gameplay-constant half; migrate as a pregame-config section, NOT cascade. *(Was not flagged at all.)*
-- **`CvMapCategoryInfo`** (17) — **PREGAME config (owner 2026-06-16):** a pure enum (Type/Description) that gates which
++ **`CvMapCategoryInfo`** (17) — **PREGAME config (owner 2026-06-16):** a pure enum (Type/Description) that gates which
   buildings/units/bonuses exist on which map kind (`m_aeMapCategoryTypes`) — set by the map at setup, fixed; "pregame, kinda"
   not ongoing gameplay. Migrate as a slim enum registry; the membership lives on the gated entity. *(Was in the OUT list.)*
-- **`CvInvisibleInfo`** (14) — thin registry; the LOS resolver keys on the `INVISIBLE_*` ENUM, only the `intrinsic` flag is
++ **`CvInvisibleInfo`** (14) — thin registry; the LOS resolver keys on the `INVISIBLE_*` ENUM, only the `intrinsic` flag is
   gameplay → slim registry, LOW priority. *(Not the meaty gameplay entity earlier assumed.)*
-- **finish `CvYieldInfo`** — the min-city/golden-age/trade/colour/symbols remainder (hills/peak/river already on the terrains).
++ **finish `CvYieldInfo`** — the min-city/golden-age/trade/colour/symbols remainder (hills/peak/river already on the terrains).
 
 **CONFIG / map-gen (migrate as config sections, NOT cascade):** `CvClimateInfo` (5), `CvSeaLevelInfo` (4) — pure map-gen
 latitude/sea params; `CvTurnTimerInfo` (6) — UI turn-pacing; the `CvWorldInfo` grid half.
 
 **DEFERRED to their OWN system reworks, NOT migrated faithfully in #428 (owner rulings 2026-06-16):**
-- **`CvOutcomeInfo`** (134) → the **#430 outcome-system pass.** A standalone migration was AUTHORED then BACKED OUT. The
+
++ **`CvOutcomeInfo`** (134) → the **#430 outcome-system pass.** A standalone migration was AUTHORED then BACKED OUT. The
   entity is **misnamed and is only the GATING HALF of a two-part system.** "Outcome" implies a RESULT, but `CvOutcomeInfo`
   holds **no result** — it is the *eligibility/definition* side: WHEN may a result-type fire and at what odds (tech/civic/
   building prereqs + ObsoleteTech, allowed territory, on/off-city, capture flag, per-promotion chance deltas, supersession)
@@ -377,7 +384,7 @@ latitude/sea params; `CvTurnTimerInfo` (6) — UI turn-pacing; the `CvWorldInfo`
   Owner 2026-06-16: *"Outcome is the worst naming possible — it's the mission IN, not the result of a mission."* (The backed-out
   gating shape, if useful later: requires.build + dedicated `territory`/`location` + `extraChance` + `replaces.outcomes` +
   `identity.{capture,toCoastalCity}`.)
-- **`CvEventInfo`** (873) + **`CvEventTriggerInfo`** (509) → the **EVENT-SYSTEM REWORK (#425).** The random-event monster: ~half of all remaining records,
++ **`CvEventInfo`** (873) + **`CvEventTriggerInfo`** (509) → the **EVENT-SYSTEM REWORK (#425).** The random-event monster: ~half of all remaining records,
   48/65+ fields, sparse building-yield vectors + property prereqs, and **766 Python callbacks** (433 + 333). The system is
   "OOS-prone and catastrophically coded" (#425), so it gets a REWORK, not a port — its data migration rides that pass.
 

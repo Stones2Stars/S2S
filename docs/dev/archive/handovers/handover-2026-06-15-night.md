@@ -13,6 +13,7 @@ order); (4) `migration-renames.md` (the per-entity old→new registry — has Te
 ---
 
 ## ⛔ THE PROCESS — non-negotiable (owner rulings, reinforced this session)
+
 - **STRICTLY SERIAL, one info at a time.** curate → `--write` → **OWNER reviews & PASSES** → only then commit → next.
 - **PRESENT before COMMITTING, ASK before introducing a mechanic/token/shape** — every change incl. corrections, not
   just the first cut. "It's in the vocab already" / "it follows from a ruling" ≠ pre-approved. (The SELF-in-`requires`
@@ -24,11 +25,13 @@ order); (4) `migration-renames.md` (the per-entity old→new registry — has Te
   EXE-link check per entity (grep `DllExport` on the `Cv*Info.h`). Drop re-check vs `Assets/Python` AND intent.
 
 ## STATE — Tier A (12) + Tier B (5) DONE, all committed on `json-data-migration`
+
 **Tier A:** GameSpeed · Handicap · Era · Process · Victory · Vote · CultureLevel · Hurry · BonusClass · CivicOption ·
 Property · Civilization. **Tier B:** Tech (#13) · Civic (#14) · Religion (#15) · Corporation (#16) · Trait (#17).
 Each JSON under `Assets/Data/<plural>/`. **Module inclusion CONFIRMED** (store committed).
 
 ## ⛔ MODEL LAW locked/extended this session (all in the specs + memory)
+
 - **OBJECT-EVALUATED PREDICATES (enabler-spec §3).** Conditions needing runtime object state the static Info can't
   hold are a single conditional `{PREDICATE: param}` (or `{PREDICATE: true}`); the **object (city/player) self-reports**;
   the engine's predicate owns any compound logic. Vocab: `HAS_RELIGION:R`, `STATE_RELIGION:R`, `HOLY_CITY:R`,
@@ -58,15 +61,19 @@ Each JSON under `Assets/Data/<plural>/`. **Module inclusion CONFIRMED** (store c
   pass (#430). Classifier: complex iff a ReplacementID variant OR `GAMEOPTION_LEADER_COMPLEX_TRAITS`-gated.
 
 ## MODULE INCLUSION — CONFIRMED (gate before Bonus/monsters; memory `module-inclusion-case-by-case`)
+
 `store.EXCLUDED_MODULE_SUBPATHS = ["/modules/zwip/", "/modules/bad_karma/", "/modules/p2k_multimaps_test/"]`.
+
 - **INCLUDE (bLoad=1):** Cultures (1618), Pepper2000 (1136), Thunderbrd (473), Alt_Timelines (217), NotSoGood (131).
 - **EXCLUDE:** zWIP; Bad_Karma (all content subs bLoad=0); P2K_Multimaps_Test (bLoad=0; its 92 "space" units are a
   100% DUPLICATE of loaded Pepper2000 units — space content stays via Pepper2000, net roster change zero).
 - Authority = `Assets/Modules/MLF_CIV4ModularLoadingControls.xml` (config `Modules_Main_1` + nested MLFs).
 
 ## NEXT — Tier C (resources & map substrate)
+
 Per the ranking: **Bonus (#18)** · Route (#19) · Terrain (#20 ☐) · Feature (#21 ☐) · Improvement (#22 ☐) ·
 Build (#23). Bonus/Route were curated pre-reset (RE-VERIFY vs v3 + drop re-check + EXE-link, exactly as Tier B).
+
 - **Bonus (#18):** ~45% are CULTURE intermediary bonuses (all the Cultures module's 399) → `Assets/Data/bonuses/
   cultures/`; migrate the building→bonus→building chain faithfully, collapse in the post-migration purge.
   `TechReveal`/`TechCityTrade` (tech→reveal/trade); `TechObsolete`. **DROP the `buildRate` fold from `curate_bonus`**
@@ -76,15 +83,17 @@ Build (#23). Bonus/Route were curated pre-reset (RE-VERIFY vs v3 + drop re-check
   SpecialBuilding→Building, SpecialUnit→Unit, LAST).
 
 ## DEFERRED NEIGHBORS (don't lose these)
+
 - **Building pass owes:** corp HQ `FoundsCorporation` `requires.build` (the corp's PrereqBonuses found-req) +
   GlobalCorporationCommerce HQ amplifier; Religion **shrine** (`GlobalReligionCommerce × countReligionLevels`,
   world-scaled, routed through a shrine building — religion files carry a parked `shrine` section of raw values).
 - **Coding pass (#430):** complex-trait NEW Info type behind the shared trait interface; the object-predicate
   engine evaluation; the `each`/`anyOf`/`noneOf` branches; corp rework pass (HeadquarterCommerces perCorporationLevel
-  + spread); civic `capital`→`IS_CAPITAL` + `stateReligion` predicate retrofit; property-system second pass.
+  - spread); civic `capital`→`IS_CAPITAL` + `stateReligion` predicate retrofit; property-system second pass.
 - **P2K units:** if any truly break the Unit pass, that's where to look (excluded now; Pepper2000 is canonical).
 
 ## Pointers
+
 - Specs: `modifier-cascade-spec.md` (v3) · `enabler-cascade-spec.md` (v0.3). Order: `migration-entity-ranking.md`.
   Renames: `migration-renames.md`. Prior handoff: `handover-2026-06-15-evening.md` (Tier A complete).
 - Toolkit: `Tools/Migration/` — `store.py` (module merge + enabler indexes + EXCLUDED_MODULE_SUBPATHS),
@@ -92,5 +101,6 @@ Build (#23). Bonus/Route were curated pre-reset (RE-VERIFY vs v3 + drop re-check
   per-entity `curate_*.py`.
 
 ## Git state
+
 Branch `json-data-migration`; Tier A + Tier B (#13–17) + the module-confirmation all committed. Working tree clean
 except this handoff (commit it docs-only with the migration on the branch).

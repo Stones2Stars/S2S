@@ -6,7 +6,7 @@
 > `cascade-engine-430.md`). What's **kept**: the merged Phase-1 PreLoop fix (PR #314) and the enabler reverse-index
 > (PR #315) — the index is **partly reused** by #430's `enables` generation. So: don't undo the shipped index/PreLoop
 > work; don't pursue the BoolExpr-prereq goal. Kept below as rollout/measurement history.
-
+>
 > This is the **plan / rollout / measurement history**. For how the shipped system works
 > today (the model, the enabler index, help-text rendering), see the reference note
 > [`../reference/constructibility-and-prerequisites.md`](../reference/constructibility-and-prerequisites.md).
@@ -15,6 +15,7 @@
 on PR #315, user-verified. Index is authoritative; legacy O(buildings²) scan removed.
 
 ## Current state (what's built)
+
 - `BoolExpr::getInvolvedGOMs(vector<GOMQuery>&)` — one-pass gather visitor that
   appends every (GOM,id) leaf a condition references (`Sources/BoolExpr.{h,cpp}`).
   Mirrors `getInvolvesGOM`; only `BoolExprHas` contributes, composites forward.
@@ -40,6 +41,7 @@ confirmed superset. The shadow/verify code was then removed and the index made
 authoritative. The `[PERF/cabvset]` summary line is kept (gated) for turn-time tracking.
 
 **Measured turn-time win (same save, FinalRelease, per-rebuild mean / max):**
+
 | | BEFORE (O(buildings²)) | AFTER (index) | speedup |
 |---|---|---|---|
 | Building PreLoop | 123.82 ms / 1042 ms | 0.32 ms / 0.99 ms | ~390× / ~1050× |
@@ -69,8 +71,10 @@ prereq fields** evaluated inline in a 475-line `canConstructInternal`, *and* a
 ## What's actually there today
 
 ### canConstruct
+
 `CvCity::canConstructInternal` (`CvCity.cpp:2511`, ~475 lines) runs the ~38 typed
 checks, stratified by three gate args:
+
 - `bExposed` — skip checks the caller already handled
 - `bTestVisible` — include "could become available" (greyed-but-shown) checks
 - `bIgnoreBuildings`/`bIgnoreCost` — partial-evaluation modes
@@ -79,10 +83,12 @@ then evaluates `getConstructCondition()->evaluate(pObject)` (`CvCity.cpp:2956`).
 Unit training mirrors this in `CvPlayer::canTrain` + `getTrainCondition()`.
 
 ### BoolExpr — already evaluable AND introspectable
+
 `Sources/BoolExpr.h`. Node types: `Has`(GOM, id) / `Is` / `And` / `Or` / `Not` /
 `If` / `BEqual` / `Comp`(Greater/Equal over IntExpr) / `IntegrateOr` / `Constant`.
 GOM types cover tech, civic, building, bonus, terrain, feature, religion,
 corporation, promotion, unit, trait, etc. Three operations matter here:
+
 - `evaluate(pObject)` → bool (used by canConstruct)
 - `evaluateChange(pObject, overrides)` → BECOMES_TRUE/FALSE/… (used by the PreLoop)
 - **`getInvolvesGOM(queries)` → bool** — walks the whole tree, answers "does this
@@ -94,12 +100,14 @@ introspection contract (help text via `buildDisplayString`, civic validation,
 Python, the enabler-graph derivation) that the typed fields satisfy ad-hoc.
 
 ### The enabler graph — derived twice, persisted nowhere
+
 1. **Load-time boolean:** `calculateEnablesOtherBuildings`
    (`CvBuildingInfo.cpp:1342`) computes a per-building flag `EnablesOtherBuildings()`
    — "does completing X unlock *anything*?" — by scanning all buildings for
    `isPrereqInCityBuilding(X)`/`isPrereqOrBuilding(X)` and bonus prereqs against X's
    free bonuses. It throws away *which* buildings; it keeps only the bool.
 2. **Per-turn re-derivation:** the CABV PreLoop (`CvCityAI.cpp:12599-12661`) does:
+
    ```
    for each building B:                       // O(buildings)
        if !canConstruct(B): continue
@@ -112,6 +120,7 @@ Python, the enabler-graph derivation) that the typed fields satisfy ad-hoc.
                        if canConstructInternal(C, …, eExtraBuilding=B):
                            add C to set
    ```
+
    The inner loop re-discovers "B unlocks C" from scratch every time the cache
    rebuilds. That relationship is **static** — it depends only on C's prereq
    definition mentioning B, not on any game state.
@@ -134,6 +143,7 @@ GOM key (e.g. {GOM_BUILDING, X}, {GOM_BONUS, b})  →  set<BuildingTypes> depend
 It can be built **once at load** by introspecting every building's prereqs +
 construct-condition (the typed building/bonus prereq fields are directly readable;
 `BoolExpr::getInvolvesGOM` covers the condition). Then:
+
 - The PreLoop's inner O(buildings) re-scan becomes an **O(1) index lookup** of B's
   dependents → PreLoop drops from O(B²) to O(B × avg-dependents).
 - More importantly, it makes the constructible-set **change-driven**: when the city
@@ -149,6 +159,7 @@ index-driven set must equal the current PreLoop set, building-for-building.
 ## Why unify the prereqs (#195 proper) — and why it's separable
 
 The typed prereqs split cleanly:
+
 - **GOM-expressible** (has-tech / has-civic / has-building / has-bonus / has-religion
   / has-corp / game-option / …): the bulk of the 38, and *exactly* the enabler-
   relevant ones. These already have a `BoolExpr` equivalent (`Has` nodes).
@@ -165,6 +176,7 @@ so the turn-time win does not block on the (gameplay-sensitive) unification.
 ## Plan
 
 ### Phase 1 — Static enabler reverse-index → change-driven set  *(turn-time win, read-only, low risk)*
+
 1. Build `map<GOMKey, set<BuildingTypes>>` (and the unit analogue) at load, from
    typed building/bonus prereqs + `getConstructCondition()->getInvolvesGOM`. Live on
    the Game-level derived-data repository (or `CvGlobals` to start).
@@ -184,6 +196,7 @@ best served by a unifying interface, not by rewriting the evaluator. `canConstru
 `canTrain` evaluation (and its hints / gate stratification) stays untouched.
 
 **Increment 1 — DONE (model + first consumer):**
+
 - `Sources/ConstructRequirement.h` — `ConstructRequirement { GOMTypes eGOM;
   ConstructRequirementOp eOp (ALL/ANY/FORBID/COUNT); vector<int> aiIds; int iCount; }`:
   one introspectable prereq over a GOM type. Read-only description, not an evaluator.
@@ -197,6 +210,7 @@ best served by a unifying interface, not by rewriting the evaluator. `canConstru
   enablers). Builds clean (Assert).
 
 **Increment 2 — DONE (unit/train side):**
+
 - `CvUnitInfo::getTrainRequirements()` — same model, built at load
   (`buildTrainRequirements` in `doPostLoadCaching`): GOM_BUILDING (And=ALL, Or=ANY),
   GOM_TECH, GOM_BONUS (And=ALL, Or=ANY), GOM_RELIGION, GOM_CORPORATION, GOM_CIVIC (Or).
@@ -217,6 +231,7 @@ channel, which ships in every DLL. It is fired once per session from the CABV Pr
 `[PERF/reqmodel] … mismatches=0` line and no `[PERF/reqmodel] MISMATCH …` lines.
 
 **Increment 3 — DONE (building coverage completed):**
+
 - Building model extended to GOM_TERRAIN (And/Or), GOM_FEATURE (Or), GOM_IMPROVEMENT (Or),
   GOM_HERITAGE (Or). The building model now covers every clean GOM-mappable typed prereq.
 - Deliberately still NOT modelled (bespoke semantics, no consumer): vicinity / raw-vicinity
@@ -227,6 +242,7 @@ channel, which ships in every DLL. It is fired once per session from the CABV Pr
 **Increment 4 — IN PROGRESS (help-text migration, cluster by cluster):**
 `CvGameTextMgr::buildBuildingRequiresString` (~570 lines) hand-enumerates every typed
 prereq field. Migrating it onto the model, one cluster at a time, each visually verified.
+
 - **Cluster 1 — DONE:** terrain (Or/And) / improvement (Or) / feature (Or) "in city
   vicinity" requirements — four near-identical hand-rolled loops → one model loop +
   `appendVicinityRequirementHelp()` (no status filtering; `IN_CITY_VICINITY` suffix kept).
@@ -254,6 +270,7 @@ prereq field. Migrating it onto the model, one cluster at a time, each visually 
 shadow-verified, preserving probability hints + gate stratification.
 
 ## Invariants to preserve
+
 - The `bExposed`/`bTestVisible`/`bIgnoreBuildings` gate stratification.
 - Introspectability for help text, `CvPlayer::hasValidCivics`, Python bindings,
   enabler-graph derivation.

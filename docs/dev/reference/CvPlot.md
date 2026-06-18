@@ -4,23 +4,27 @@
 **Uses:** `CvGameObject`, `CvProperties`, `CvPlotPaging`
 
 ## Overview
+
 `CvPlot` represents a single tile on the game map. It is the most queried object in
 the DLL — almost every AI evaluation, movement check, combat calculation, and
 city-founding score reads from `CvPlot`.
 
 Each plot carries:
+
 - Terrain, feature, bonus resource, improvement, and route identifiers.
 - Owner, city pointer, unit stack, and river/coast edge flags.
 - A [`CvProperties`](CvProperties.md) instance for simulation variables (crime, pollution, …).
 - Path-planner cache (`CvPathGeneratorPlotInfo`) for `CvPathGenerator`.
 
 ## Coordinate Access
+
 | Method | Description |
 |---|---|
 | `getX()` / `getY()` | Grid coordinates. |
 | `getViewportX()` / `getViewportY()` | Screen-space coordinates (via `CvViewport`). |
 
 ## Terrain & Features
+
 | Method | Description |
 |---|---|
 | `getTerrainType()` | Returns the `TerrainTypes` enum value. |
@@ -32,6 +36,7 @@ Each plot carries:
 | `isHills()` / `isPeak()` / `isFlatlands()` | Elevation tests. |
 
 ## Ownership & Vision
+
 | Method | Description |
 |---|---|
 | `getOwner()` | Returns the `PlayerTypes` who owns this plot. |
@@ -39,6 +44,7 @@ Each plot carries:
 | `isRevealed(TeamTypes, bool)` | Returns `true` if a team has ever seen this plot. |
 
 ## Units & Cities
+
 | Method | Description |
 |---|---|
 | `getPlotCity()` | Returns the `CvCity*` on this plot, or `NULL`. |
@@ -51,6 +57,7 @@ Each plot carries:
 ## Strength Evaluation (Flag Sets)
 
 ### `EDefenderScore::flags`
+
 Controls which considerations apply when selecting a best defender:
 
 | Flag | Effect |
@@ -62,6 +69,7 @@ Controls which considerations apply when selecting a best defender:
 | `ClearCache` | Bypass cached result and recompute. |
 
 ### `StrengthFlags::flags`
+
 Controls strength summation for the same plot:
 
 | Flag | Effect |
@@ -72,6 +80,7 @@ Controls strength summation for the same plot:
 | `CollateralDamage` | Account for collateral damage splash when summing attack strength. |
 
 ## Properties
+
 `CvPlot` embeds a `CvProperties` instance for tile-level simulation variables.
 
 | Method | Description |
@@ -80,10 +89,12 @@ Controls strength summation for the same plot:
 | `getPropertiesWritable()` | Returns a mutable `CvProperties*` for modification. |
 
 ## Path Cache
+
 `CvPlot` also caches pathfinding metadata (`CvPathGeneratorPlotInfo`) so that
 `CvPathGenerator` can avoid redundant edge-validity lookups during a single search.
 
 ## Related
+
 - [`CvMap`](CvMap.md) — owns and indexes all `CvPlot` instances  
 - [`CvProperties`](CvProperties.md) — embedded property system  
 - [`CvPathGenerator`](CvPathGenerator.md) — consumes per-plot path cache  

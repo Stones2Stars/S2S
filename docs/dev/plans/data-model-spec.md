@@ -6,6 +6,7 @@ across `modifier-cascade-spec.md` (§1–4), `enabler-cascade-spec.md` (§3/§5/
 the *shape* into ONE reference. **Zero new invention** — anything that would extend the design is flagged ⚑.
 
 **TWO audiences, one document:**
+
 1. **The #430 PROTOTYPE** — this is the shared interface: what `readJson` parses the JSON into, and what the three machines
    (tally / modifier / enabler) read. The four components prototype against §1–4 (shape) + §6 (runtime + read-interface).
 2. **MODDER DOCS foundation** — the authoritative "how to author the data" reference. It must honor the **cold-modder rule**
@@ -45,31 +46,40 @@ The whole point of the migration: the same atoms compose `requires`, `enabled`/`
 and `grants` — they are not separate shapes (modifier-spec §1.4).
 
 ### 2.1 Types
+
 - **Data Types** — `BONUS_COAL`, `UNIT_AXEMAN`, `TECH_POTTERY`, `BUILDING_FORGE`, … (the `PREFIX_NAME` ids). Resolved to
   engine indices via the shared type registry (`getInfoTypeForString`).
 - **Catch-all tokens** — engine concepts that aren't data Types: `TURN`, `POPULATION`, `MILITARY`, `CITY`, `TEAM`,
   `UNIT_LEVEL`, `AREA_SIZE`, … A code-side registry (extensible, engine-resolved) — uniform vocabulary, not info special-cases.
-- **`SELF`** — the owning entity's OWN type, resolved per-entity at evaluation (e.g. `requires.build.noneOf:[{type:SELF,
-  scope:world}]` = global-uniqueness, the world-wonder / religion-founding-once idiom).
+- **`SELF`** — the owning entity's OWN type, resolved per-entity at evaluation. Its live use is the `per` count-scaler
+  (`per:{type:SELF,scope:world}` = count of own type at scope, §2.6). **⚠ SUPERSEDED (2026-06-17): SELF no longer appears in
+  `requires`.** The old `requires.build.noneOf:[{type:SELF,scope:world}]` global-uniqueness idiom (world-wonder /
+  religion-founding-once / unique-unit caps) is now the declarative `allowed` CAP (§4.2a) — that conflated *needed* with
+  *allowed* and is withdrawn.
 
 ### 2.2 Scopes — the containment spine
+
 `world → team → empire → area → city → plot{improvement|feature|terrain|route} → building | specialist | unit`.
 `empire` = the player (all cities). `unit` is a self-accumulator (a unit-scope deposit sums onto the unit itself).
 
 ### 2.3 Units (a modifier magnitude names what the value IS, not how it combines)
+
 - `flat` — an additive amount. · `percent` — an additive percent delta (`+50%` = `50`). · `multiplier` — a true ×factor,
   identity `100` (`×2` = `200`). (+ rare `postMultiplier`/`rawPercent`, engine detail.) The combine math (sum / product /
   cost-asymmetric) is **family metadata** the engine owns (modifier-spec §7), never the per-value unit.
 
 ### 2.4 Conditions — the `requires` object (the ONE serialization, reused as `requires` / `enabled` / `disabled`)
+
 A bounded boolean tree: **`{ all:[…], any:[[…]], noneOf:[…] }`** (AND of clauses; `any` = a list of OR-groups; `noneOf` =
 none-present). Leaves are one of:
+
 - **a count / presence ATOM** — `{ type, scope, min?, max?, connection? }`. Presence is the `min:1` case (volumetric-ready).
   `connection` ∈ `trade` | `vicinity` | `"trade|vicinity"` (for resource atoms). Atoms are **full + explicit + self-describing**
   (always carry their own `type`+`scope`; the parser never infers context — enabler-spec §6.1).
 - **a PREDICATE** — a system's runtime-state query (§2.5).
 
 ### 2.5 Predicates — each a system's isolated query-surface
+
 - **bare** (parameter-free, desugars to `{PRED:true}`): `IS_WATER` · `IS_FRESHWATER` · `IS_FLATLANDS` · `IS_HILLS` ·
   `IS_PEAK` · `HAS_RIVER` · `HAS_IRRIGATION` · `COASTAL_LAND` · `IS_COASTAL` · `IS_CAPITAL` · `HAS_POWER` ·
   `HAS_STATE_RELIGION` · `STATE_RELIGION_IN_CITY`.
@@ -97,11 +107,13 @@ none-present). Leaves are one of:
   requirement says "but not where one already exists."
 
 ### 2.6 `per` — the count-scaler (modifier-spec §4)
+
 `per: { type | anyOf:[TYPE…], each, scope }` — scale a deposit by `count(type) / each` at `scope`. Cross-city scopes
 (empire/team/world) resolve via the **tally**; `city`/`plot` = the local count. `each` = the quantum ("per 5 population" =
 `each:5`); state it explicitly.
 
 ### 2.7 `interval` — the temporal scaler (modifier-spec §4.1, for `grants.repeatable`)
+
 `interval: { perTurn: N }` (every N turns); bare `interval: perTurn` ≡ `{perTurn:1}`.
 
 ---
@@ -111,6 +123,7 @@ none-present). Leaves are one of:
 ```jsonc
 { <payload>, "scope"?, "per"?, "enabled"?, "disabled"?, "ai"? }
 ```
+
 - **payload** — a modifier magnitude (`flat`/`percent`/`multiplier`: value), OR a grant (`type`+`count`), OR a predicate.
 - **`scope`** default = the containing scope · **`per`** default ×1 · **`enabled`** default true · **`disabled`** default
   false · **`ai`** an optional AI-only sibling deposit (same inner shape; applies on top, AI players only).
@@ -121,7 +134,9 @@ none-present). Leaves are one of:
 ## 4. The sections in detail (with modder examples)
 
 ### 4.1 `enables` family — what a SOURCE unlocks/removes (forward; drives generation)
+
 Authored on the source, per target-kind:
+
 - **`enables`** — CONSTRUCTIVE (permanent): `enables:{buildings:[],units:[],builds:[],techs:[],civics:[],religions:[],
   corporations:[],projects:[],processes:[],promotions:[],improvements:[],bonuses:[],…}`. **Tech lives here.**
 - **`obsoletes`** — passive supersession (new builds barred; existing instances persist).
@@ -131,12 +146,14 @@ Authored on the source, per target-kind:
   FORWARD. The reverse view ("who unlocks me") is a cold-path/pedia index, never the hot path.
 
 ### 4.2 `requires` — what a TARGET needs (the reversible means gate)
+
 ```jsonc
 "requires": {
   "build":   { "all":[ {"type":"BONUS_STONE","scope":"city","connection":"trade|vicinity"} ] },  // one-time: greys if missing
   "operate": { "all":[ {"type":"CIVIC_GUILDS","scope":"empire"} ] }                               // continuous: dorms if lost
 }
 ```
+
 - **`build`** = the one-time construction gate (greying); **`operate`** = the continuous gate (dormancy — lose it and the
   built thing goes inactive, not demolished). Each is an `{all/any/noneOf}` tree (§2.4). Units carry `build` only (leaf
   actions, no dormancy). ⚑ continuous resource/power gates currently sit in `build` but should be `operate` (Phase F).
@@ -151,16 +168,31 @@ Authored on the source, per target-kind:
 - **Tech** appears in `requires.build` only as a per-candidate CONFIRM (multi-parent AND/OR), never as a generation driver.
 
 ### 4.2a `allowed` — the declarative INSTANCE CAP (owner 2026-06-17)
+
 The ceiling on **how many may exist** — a distinct concept from `requires` ("what I NEED"). `allowed` names the cap with the
 **real number**, so the engine permits a build while `count < allowed`; nobody authors the off-by-one neighbor (the SELF
 `requires` atom forced "cap 1" to be written `max:0`, which conflated *needed* with *allowed* — withdrawn). Two shapes, told
 apart by the **key namespace**:
+
 - **Self-cap** — `allowed: { <scope>: N }` (scope key: `world`/`team`/`empire`) = "at most N of ME at scope." For a building
   the cap scope ALSO derives its wonder category (`world`→worldWonder, `team`→teamWonder, `empire`→nationalWonder; this is
   literally `isWorldWonder == getMaxGlobalInstances() != -1`, CvGameCoreUtils.cpp:340-369). A unique unit is `allowed:{empire:1}`.
+  - **UNITS have NO `team` cap (owner ruling 2026-06-17): a team-scope instance cap is meaningless for a unit** — units
+    belong to PLAYERS, not teams. So unit caps are `world` or `empire` only; the migration folds any `iMaxTeamInstances`
+    into `empire` (tighter of team/player wins if both), rather than dropping it (`curate_unit.allowed_unit`). The world
+    cap reads LIFETIME-CREATED (`CvCascadeTally::countForCap` → `getUnitCreatedCount`); empire reads the live count.
+    (Buildings keep all three scopes incl. `team`/teamWonder.)
 - **Category count-cap** — `allowed: { <wonderCategory>: N }` (category key: `worldWonders`/`teamWonders`/`nationalWonders`,
-  + reserved `totalWonders`) = a **per-city** cap on how many of that category a city may hold. Authored on **CultureLevel**
+  - reserved `totalWonders`) = a **per-city** cap on how many of that category a city may hold. Authored on **CultureLevel**
   (a culture level grants the city its allowance); city scope is implicit. (Replaces CultureLevel's old `identity.maxWorldWonders…`.)
+- **Group cap (SpecialBuilding group, owner 2026-06-17)** — a `SpecialBuilding` is a building GROUP with a shared cap (e.g.
+  `SPECIALBUILDING_GROUP_ELITE_UNIVERSITIES`: pick ONE of the 15 elite universities). **Group-on-MEMBER (forward):** each
+  member building authors `identity.specialBuildingType: SPECIALBUILDING_X` (direct from the XML FK); the GROUP entity holds
+  the cap (`allowed:{empire:N}` from `iMaxPlayerInstances`). **member→group is authored; group→members is the derived reverse
+  index** (built once on load). Enforcement = "at most N of my OWN GROUP at the group's scope": `count(group members, scope) <
+  N`, over-cap ⇒ member hidden. Coexists with the member's own self-cap (`allowed:{world:1}` — one Oxford *globally* AND one
+  elite-university *per player*). The same group→members index is intended to drive pedia / build-list **group-membership
+  display** (retiring the hardcoded `EU`/`MA`/`LL` name prefixes) — a representation to refine in the end-of-migration review pass.
 - **Absent ⇒ uncapped.** Engine owns everything dynamic: ignoring the cap under game options
   (`NO_WONDER_LIMIT`/`NO_NATIONAL_UNIT_LIMIT`/`CHALLENGE_ONE_CITY`), era-scaling the base, and `+extra` bumps — none touch the
   parser (§0.6). Enforcement reads the **tally** count of the (SELF or category) at scope. **OCC-specific limits are NOT
@@ -168,13 +200,16 @@ apart by the **key namespace**:
   JSON* the engine loads when the option is enabled (the override-by-design mechanism, generalizing `replacedBy`).
 
 ### 4.3 Modifier families — `<family>.<scope>[.<targetType>.{TARGET}][.<member>].<unit> = value`
+
 Flat per-family surface, **no `modifiers` wrapper** (modifier-spec §1.2). Examples:
+
 ```jsonc
 "happiness":  { "city": { "flat": 2 } },                                  // single-concept family
 "production": { "city": { "percent": [ 25, {"value":25,"enabled":{"min":["BONUS_COAL",1]}} ] } },
 "food":       { "city": { "improvements": { "IMPROVEMENT_FARM": { "flat": 1 } } } },  // entity-targeted (keyed)
 "maintenance":{ "empire": { "distance": { "percent": -10 } } }            // grouped family, member `distance`
 ```
+
 - **SPLIT families**: `yield`→`food`/`production`/`commerce`; `commerce`→`gold`/`research`/`culture`/`espionage`;
   `property`→ one family per `PROPERTY_*`. **GROUPED families** keep members (`maintenance`/`defense`/…). Entity-targeted
   deposits stay **keep-on-source** keyed by `targetType.{TARGET}` (modifier-spec §6.1). The unit plane adds its own family
@@ -183,6 +218,7 @@ Flat per-family surface, **no `modifiers` wrapper** (modifier-spec §1.2). Examp
   (one per concept), so this doc gives the *kinds*, not a frozen enumeration.
 
 ### 4.4 `grants` — one-shot / recurring provisions (top-down, NOT cascading)
+
 - **lists**: `grants:{buildings,units,techs,civics,specialists,promotions,traits,bonuses,freePromotions,foundBuildings,…}`.
 - **numeric pulses**: `grants.<channel>: value` (e.g. `grants.revolution: -100`, `grants.population: 1`, `grants.goldenAge`).
 - **`grants.repeatable`**: `[ {<payload>, interval, chance?, enabled?} ]` — recurring (PropertySpawn → a criminal; per-turn
@@ -191,10 +227,12 @@ Flat per-family surface, **no `modifiers` wrapper** (modifier-spec §1.2). Examp
 - **`outcomes:{kill,actions}`** — DEFERRED mission-triggered grants; carried RAW today, reworked at the #430 outcome-system pass.
 
 ### 4.5 How counts read the TALLY
+
 A count atom (`{type,scope,min/max}`) at empire/team/world scope, and a `per` scaler at those scopes, read the **tally**
 (the additive count machine, `tally-cascade-spec.md`); city/plot counts read the local city. Presence = `min:1`.
 
 ### 4.6 Intrinsic + auxiliary sections (read by their own systems, not the 3 machines)
+
 `text`/`cost`/`ui`/`world`/`sound`/`identity`/`ai` (intrinsic; the 3 art blocks via `curate_common.ART_BLOCK`); `loadPrune`
 (load-time game-option prune); `policies` (civ playability); `succession` (`upgradesTo`/promotion-line); `excludes`
 (mutual exclusion); `produces` (a Build's outcome FKs); `condition` (Victory); `effect` (Vote); `vision` (the LOS resolver
@@ -203,6 +241,7 @@ sub-object); `capabilities` (unit boolean abilities); `mapGeneration`; `replaced
 ---
 
 ## 5. Worked example — a building, everything composing
+
 ```jsonc
 {
   "type": "BUILDING_FORGE",
@@ -217,6 +256,7 @@ sub-object); `capabilities` (unit boolean abilities); `mapGeneration`; `replaced
   "identity": { "capital": false }
 }
 ```
+
 Reads cold: *a Forge describes itself; unlocks the Crossbowman; needs connected iron to keep operating; +25% production and
 (while powered) +1 happiness in its city; each turn may spawn a criminal scaled by crime; costs 120 hammers.* No engine
 knowledge required — that is the bar for every authored entity.
@@ -226,6 +266,7 @@ knowledge required — that is the bar for every authored entity.
 ## 6. The runtime layer (for the #430 prototype)
 
 ### 6.1 How `readJson` CONSUMES the shape (picojson → in-memory structures of the SAME shape)
+
 `readJson` does not *produce* a shape — the shape is defined by §1–4 (and authored by modders); `readJson` **consumes** it,
 loading each entity's JSON into an in-memory structure that **mirrors that shape** (it does not transform into a different
 model). The only load-time work on the values: FK Type-strings resolved to indices via the shared type registry; readable
@@ -236,14 +277,17 @@ lists. These are FRESH structures (picojson, NOT the old `CvXxxInfo` layout / `C
 but their shape IS this data model — one shape, consumed here, read by the machines (§6.4).
 
 ### 6.2 Derived indices (built once on load)
+
 The **`enables` FORWARD index** keyed by the HAS-side type (generation; the #195 enabler index, partly kept) + the
 **reverse index** (cold-path: pedia "unlocked by / required by / obsoleted by").
 
 ### 6.3 Registries (engine-resolved, extensible) ⚑ #430
+
 The catch-all **token registry** (`TURN`/`POPULATION`/`SELF`/…) and the per-system **predicate registry**
 (`HAS_RIVER`/`IS_CAPITAL`/…). Each system documents + owns its tokens/predicates; unknown ⇒ ignored.
 
 ### 6.4 The machine read-interface (the contract the 4 components share)
+
 - **tally** ← count atoms (`{type,scope,min/max}` cross-city) + `per` scalers (cross-city). Roll-up UP the spine.
 - **modifier** ← deposit records; flow DOWN the spine; targets read O(1) summed accumulators per `(family,member,unit)`;
   `enabled`/`disabled`/`per` re-evaluated each recompute. `effective = (base+Σflat)×(100+Σpercent)/100×Π(mult/100)`.
@@ -251,6 +295,7 @@ The catch-all **token registry** (`TURN`/`POPULATION`/`SELF`/…) and the per-sy
   higher scopes). One shared frontier read by UI greying + AI `doProduction`.
 
 ### 6.5 Boundary — engine machinery is NOT in the data (§0.6)
+
 The data carries only payloads / conditions / relationships. The **tally, the event-hook system (fires `grants` +
 `repeatable`, maintains the tally), the cascade arithmetic (combine modes, multiplier composition), the type/token/predicate
 registries, and the producers/resolvers (create-unit, the vision LOS best-of, the outcome system)** are engine-side, built
@@ -259,6 +304,15 @@ at #430 — never authored.
 ---
 
 ## 7. OPEN / flagged for the prototype
+
+- ⚑ **GROUPS as a first-class concept (owner direction 2026-06-17) — "building groups and unit groups are interesting
+  concepts we can do more to bring out."** The `SpecialBuilding` group cap (§4.2a) is the first concrete instance; the same
+  group→members reverse index should power **pedia + build-list group-membership display** (show "1 of 15 Elite Universities"
+  dynamically, retiring the hardcoded `EU`/`MA`/`LL` name prefixes). FUTURE ideas to develop in the end-of-migration review
+  pass: (a) **unit groups** as the parallel concept (mutually-exclusive / pick-one unit families, group caps); (b) the
+  member→group read in the cascade currently scans building JSONs — fine, but revisit whether the group index should be a
+  derived load-time index shared with the pedia; (c) representation review of the whole `SpecialBuilding`/group surface
+  (cap + waiver §enabler-3 + display) once all infos are migrated. Owner: "we should do a review pass when all is said and done."
 - ⚑ token + predicate **registries** concrete form (code-side, extensible) — #430.
 - ⚑ cascade **arithmetic / combine modes** (`sum`/`max`/`min`, cost-asymmetric, multiplier composition, `flatPlacement`) —
   modifier-spec §7/§9.
@@ -272,4 +326,5 @@ at #430 — never authored.
   families are valid on each info type — so misplaced keys (building-only data on a unit, etc.) are REJECTED rather than
   silently ignored. (Distinct from the `allowed` cap §4.2a; this is structural validation. Modder-facing note in
   `docs/modders/datastructure/README.md`.) Not built during the migration; a post-settle hardening pass.
+
 ```

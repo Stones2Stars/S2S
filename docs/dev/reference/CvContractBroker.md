@@ -3,6 +3,7 @@
 **File:** `CvContractBroker.h` / `CvContractBroker.cpp`
 
 ## Overview
+
 `CvContractBroker` is a publish/subscribe coordination layer that decouples the
 "I need a unit" signal from the "I am available to fulfil that need" signal. This removes
 the need for cities and units to search for each other directly, which improves
@@ -13,6 +14,7 @@ Each `CvPlayer` owns one `CvContractBroker` instance.
 ## Key Concepts
 
 ### Work Requests (`workRequest`)
+
 Posted by cities or player AI logic when a capability is needed.
 
 | Field | Type | Description |
@@ -30,6 +32,7 @@ Posted by cities or player AI logic when a capability is needed.
 | `criteria` | `CvUnitSelectionCriteria` | Additional filter criteria. |
 
 ### Advertising Units (`advertisingUnit`)
+
 Posted by idle units broadcasting their current capabilities and location.
 
 | Field | Type | Description |
@@ -46,6 +49,7 @@ Posted by idle units broadcasting their current capabilities and location.
 | `iMinPriority` | `int` | Minimum request priority this unit will accept. |
 
 ### City Tenders (`cityTender`)
+
 Cities broadcast willingness to build a unit for the highest-priority outstanding request.
 
 | Field | Type | Description |
@@ -54,6 +58,7 @@ Cities broadcast willingness to build a unit for the highest-priority outstandin
 | `iMinPriority` | `int` | Minimum priority the city will satisfy. |
 
 ### Capability Flags (`unitCapabilities`)
+
 | Flag | Value | Description |
 |---|---|---|
 | `NO_UNITCAPABILITIES` | `0` | No capability. |
@@ -76,11 +81,13 @@ Cities broadcast willingness to build a unit for the highest-priority outstandin
 | `LOW_PRIORITY_ESCORT_PRIORITY` | 100 | Low-urgency escort. |
 
 ## Compile Switch
+
 `USE_UNIT_TENDERING` (defined in the header) enables the full city-tendering flow
 where cities advertise build slots for outstanding requests. Disabling it falls back to
 direct unit assignment only.
 
 ## Related
+
 - [`CvPlayerAI`](CvPlayerAI.md) — owns and drives the broker  
 - [`CvCityAI`](CvCityAI.md) — posts work requests and city tenders  
 - [`CvUnitAI`](CvUnitAI.md) — advertises units and reads contracted work requests  

@@ -106,6 +106,7 @@ Two module *kinds*, mirroring two directions of data flow:
 | **Decide-side** (behaviour) | "what do I do about it?" | per-UNITAI behaviour, city production choice, player strategy | decision methods |
 
 **Two data-flow rules (firm):**
+
 - **Reads pull *up* the ownership tree, lazily.** A City getter needing player/team data calls the
   parent getter, which recomputes itself if dirty. Cross-level read dependencies self-resolve — no
   ordering logic.
@@ -147,6 +148,7 @@ parallel reduction must be deterministic — see constraint §2.3.)
 pull-up; the constraints (§2); advisory-only safety; no rewrite.
 
 **Fluid (candidate, decide per-module):**
+
 - Invalidation wiring: **typed cascade** (one `onXxx()` per event per level, cascading down —
   generalises the existing `clearCanConstructCache` cascade; recommended for ~6–8 events) **vs** a
   central event/registry bus.
@@ -161,6 +163,7 @@ pull-up; the constraints (§2); advisory-only safety; no rewrite.
 ## 6. Module catalog (where responsibilities go)
 
 Read-side (repository, base objects, change-driven):
+
 - **Static (DELIVERED):** XML reverse-indices (prereq → units/buildings, the enabler graph) live on
   `cvInternalGlobals` (`getBuildingsEnabledBy`/`getUnitsEnabledBy`, built once in
   `doPostLoadCaching`, never invalidated — #195 Phase 1, PR #314). The Game *repository* is for
@@ -181,6 +184,7 @@ Read-side (repository, base objects, change-driven):
     gap the declared-needs work fills deliberately.
 
 Decide-side (behaviour, interfaces):
+
 - **`IUnitAI`** — one concrete per UNITAI type (WorkerAI, HunterAI, …). Split **flyweight behaviour**
   (one shared instance per type, zero per-unit memory) from **per-unit state** (only the type's
   slice). Precedent already in tree: `CvHunterAI`/`CvWorkerAI` (currently per-player).

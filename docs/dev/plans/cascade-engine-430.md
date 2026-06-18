@@ -1,5 +1,12 @@
 # Cascade engine (#430) — implementation plan
 
+> ## ⛔ RESUMING AFTER A CONTEXT COMPACTION? RE-READ EVERYTHING FIRST.
+>
+> If your context was just compacted mid-session, do NOT act from the summary. Re-read the full spec set (the
+> machine specs + `event-spine-spec.md` + this doc + `migration-renames.md` + `migration-entity-ranking.md`) and the
+> live code in `Sources/Cascade/` before touching anything — compaction has poisoned context before; a stale line
+> loses to a later owner ruling. (Owner 2026-06-17; this gate is being deliberately tested.)
+
 **Status: design-complete, implementation starting (owner architecture session 2026-06-16).** The DESIGN lives in the
 machine specs — `enabler-cascade-spec.md` (v0.3) + `modifier-cascade-spec.md` (v3) + `tally-cascade-spec.md` (the count
 machine, consolidated 2026-06-16) — one per machine, plus **`event-spine-spec.md`** (the front-door event system the tally /
@@ -14,28 +21,38 @@ doc is the build plan + the validated load/demolition map, not a re-derivation o
 The entire new system roots in a shared **scope-accumulator substrate** with **three machines** on it. They are not three
 tangles — they are three instantiations of one primitive, which is what makes the engine coherent.
 
-### 0. Substrate — the scope spine + an additive accumulator (interface-bounded)
+### 0. Substrate — the scope spine + an additive accumulator + the EVENT SPINE (interface-bounded)
+
 - **Scope spine:** `world → team → empire → area → city → plot{improvement|feature|terrain|route} → building | specialist | unit`.
 - **Additive accumulator:** deposit → O(1) summed read, parameterized by what it sums. One primitive, three instances. The
   enabler additionally walks the SIDEWAYS/progression axis (tech tree, build chain — enabler-spec §9); modifiers are
-  containment-only.
+  containment-only. (Implemented: `Sources/Cascade/CvScopedAccumulator`.)
+- **Event spine — the dispatch FRONT DOOR (added 2026-06-17; full design: `event-spine-spec.md`).** `emit(KIND,type,payload)`
+  → consumers read the kinds they care about. The tally, `grants`, and logging are all CONSUMERS of it; the spine sits IN
+  FRONT OF the tally (the tally never reaches into game state — domain events come to it). So the build order below reads
+  "tally" as *the first COUNTING machine*, but **the event spine + accumulator (the substrate) come before it**, and the
+  tally is the spine's first authoritative consumer. (Implemented: `Sources/Cascade/CvEventSpine`.)
 
 ### 1. Tally — counts, roll UP  *(build FIRST; spec: `tally-cascade-spec.md`)*
+
 Per-type had-counts, additive roll-up the spine. Serves three readers: `requires` count-thresholds (`min(BUILDING_X,12)`,
 empire/team) + the **higher-scope HAS sets** (the empire/team/world HAS *is* the tally), the modifier's cross-city `per`
 count-scaler, and demographics/AI/score (wanted regardless). First because the enabler depends on it (tally-spec §2/§7).
 
 ### 2. Modifier — magnitudes, deposit DOWN
+
 Per `(family, member, unit, scope)` summed deposits; targets read O(1).
 `effective = (base + Σflat) × (100 + Σpercent)/100 × Π(multiplier/100)` (modifier-spec §2). Replaces the CvCity yield/
 commerce/health/happiness/defense/maintenance accumulators + the `process*` apply-loops + the unit extra-stat stack.
 
 ### 3. Enabler — availability, 2-pass
+
 gather **HAS** (reads the tally for higher scopes) → generate **CAN GET** (the `enables`-family forward index) → gate
 **`requires`** (enabler-spec §2). One shared frontier, read by UI greying + AI `doProduction`. Replaces the scattered
 `can*` gates + the PreLoop + the caches.
 
 ### 4. readJson — the DATA INPUT *(owner 2026-06-16: "we HAVE to do this before we go anywhere")*
+
 Extend `readJson` to implement **all** the new JSON-based logic — parse the full new vocabulary (`enables`/`obsoletes`/
 `replaces`/`requires` trees, the modifier families `<family>.<scope>[.<member>].<unit>`, `grants`/`grants.repeatable`, the
 predicate tokens, count atoms, scopes) into the runtime structures the three machines consume. It is the **data-feed
@@ -151,6 +168,7 @@ demographics/score scans become reads of the one tally.
 ---
 
 ## 5. HARD BOUNDARIES (cannot rewire)
+
 - **EXE ABI** (§3) — the closed Firaxis `.exe` binds the DllExport surface + base classes.
 - **Save format** — name-tagged (`CvTaggedSaveFormatWrapper`); removing a serialized member is soft; intentional breaks →
   `@SAVEBREAK`. Derived/accumulator state serializes nothing (recomputed on load).
@@ -161,6 +179,7 @@ demographics/score scans become reads of the one tally.
 ---
 
 ## 6. NEXT
+
 Build **substrate + tally** first (interface-bounded), running in SHADOW with a gated comparison log against the current
 cross-city count consumers (the `getNum*` prereq scans + demographics). Validate, then **modifier**, then **enabler**. Each
 machine carries the Phase-F alignment fixes it touches (ranking "Phase F", now light/iterative) as it's wired.

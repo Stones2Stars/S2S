@@ -8,7 +8,7 @@
 > `init()`/`reset()` is live), and its removal is a deferred cutover/demolition step. The one genuinely-useful leftover
 > idea — a build-list cache for UI responsiveness on selection-change — IS the enabler's generated frontier, cacheable
 > cleanly later if measured. Kept below as the historical record of the design we iterated through.
-
+>
 > **Part of a larger frame.** This is the **read-side** of the AI architecture north-star
 > ([`ai-architecture-north-star.md`](ai-architecture-north-star.md)) — the change-driven derived-data
 > modules. Read the north-star for the goal, the hard constraints (VC2003/C++03, EXE base-class ABI,
@@ -298,6 +298,7 @@ unmap code under the running thread.
 ## 9. Decisions — resolved & open
 
 Resolved:
+
 - **Placement:** base objects (`dataRepository()`), not the AI subclasses. Done.
 - **Mechanics:** per-member `TLazy` idiom + automatic registration; no central registry for now.
 - **Cross-level staleness:** version pull (`TDependency`), not invalidation fan-out.
@@ -305,11 +306,13 @@ Resolved:
 - **Verification channel:** gated `[PERF]` logging, not asserts.
 
 Open:
+
 - Per-datum event endpoints vs coarse scope invalidation where a dependency is broad — decide per
   tenant.
 - When (if ever) the per-member idiom gets repetitive enough to justify a central event registry.
 
 ## Cross-references
+
 - [`turn-time-optimization.md`](turn-time-optimization.md) — the measurements; current lever ranking.
 - [`unified-prerequisites-and-constructibility.md`](unified-prerequisites-and-constructibility.md) —
   the static enabler index (#195) that killed the PreLoop.

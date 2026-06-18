@@ -7,6 +7,7 @@ special-casing the loader.
 Status: **IMPLEMENTED 2026-06** (awaiting in-game playtest). The resulting model is
 documented in `../reference/calendar-and-gamespeed.md`; this doc remains as the findings
 record and decision log. Deviations from the plan below, per owner direction:
+
 - Phases 2+3 were merged — the intermediate "GameTurnInfos as declarative struct-vector"
   state was skipped (no doing the work twice); the table went straight to derivation.
 - The `<Adapt>` grammar became tag-dispatched (`<Adapt>`/`<AdaptHammerCost>`/`<AdaptUnitYield>`,
@@ -116,6 +117,7 @@ record and decision log. Deviations from the plan below, per owner direction:
 ### Phase 3 (optional, behaviour-affecting — owner decision) — derive the table
 
 Replace the 9×14 generated table with derivation from single sources of truth:
+
 - Move the era→year ranges from the `HISTORICAL_ACCURATE_ERA_RANGE_*` GlobalDefines onto
   `CvEraInfo` (e.g. `iHistoricalStartYear`/`iHistoricalEndYear`); `initEraYearRanges` dies.
 - Store one base turns-per-era list (Normal speed, on `CvEraInfo`); scale by

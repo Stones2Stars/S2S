@@ -334,7 +334,9 @@ The single most authoritative-*looking* file in the repository is a museum exhib
 it and you'll write `auto`, and the year 2003 will personally reach through the linker to
 stop you.
 
-*Status: mitigated by documentation and fear.*
+*Status: mitigated by documentation, fear, and a warning now stapled to every one of the
+seven lying `PlatformToolset` lines (plus banners atop the `.vcxproj`/`.filters`/`.sln`) so an
+agent that greps straight to the lie meets the truth on the same line.*
 
 ---
 

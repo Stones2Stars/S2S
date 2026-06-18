@@ -81,3 +81,17 @@ DevExtras/.vs/
 DevExtras/__pycache__/
 DevExtras/PyScripts/Profiling/Backup/
 DevExtras/PyScripts/Profiling/__pycache__/
+
+# Migration tooling generated artifacts (no surprises in git add -A)
+Tools/Migration/__pycache__/
+Tools/Migration/tags/
+Tools/Migration/curate_out.txt
+
+# ReadJson build output (readjson.exe + vendored VC7.1 runtime + test output).
+# The /Tools/ReadJson/*.dll line re-ignores the runtime DLLs that line ~22's
+# "!/Tools/**/*.dll" exception would otherwise force back in.
+Tools/ReadJson/readjson.exe
+/Tools/ReadJson/*.dll
+Tools/ReadJson/testOutput/
+Tools/ReadJson/_conformance.txt
+Tools/ReadJson/_render.txt

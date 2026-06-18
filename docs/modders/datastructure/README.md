@@ -2,7 +2,9 @@
 
 How to author Stones2Stars game data. Every game entity — a building, unit, tech, civic, religion, terrain, … — is
 a single **JSON object in its own file** under `Assets/Data/<entity-type>/`. This document is the authoritative
-reference for what those files may contain.
+reference for what those files may **contain**; for **where** each file lives (the `Assets/Data/` folder
+organization — which types are foldered by era / category / source, which are flat), see
+[`ORGANIZATION.md`](ORGANIZATION.md).
 
 **The promise: the data reads cold.** A well-authored entity file should be understandable to someone with *zero*
 knowledge of the game engine. Keys say what they mean; values say what they are. If a shape only makes sense once you
@@ -19,6 +21,7 @@ know how the C++ works, it is wrong — the engine is built to fit the data, nev
 ---
 
 ## Table of contents
+
 1. [The big picture](#1-the-big-picture)
 2. [Anatomy of an entity](#2-anatomy-of-an-entity)
 3. [The shared vocabulary](#3-the-shared-vocabulary)
@@ -71,6 +74,7 @@ Everything below is detail under this one idea: **one object structure, one shar
 The same atoms compose conditions, count-scalers, grants, and modifier targets. Learn them once.
 
 ### 3.1 Types, tokens, and `SELF`
+
 - **Data Types** — the `PREFIX_NAME` ids: `BONUS_COAL`, `UNIT_AXEMAN`, `TECH_POTTERY`, `BUILDING_FORGE`, … The prefix
   identifies the kind (`BUILDING_`, `UNIT_`, `BONUS_`, …).
 - **Catch-all tokens** — engine concepts that aren't data Types: `TURN`, `POPULATION`, `MILITARY`, `CITY`, `TEAM`,
@@ -78,6 +82,7 @@ The same atoms compose conditions, count-scalers, grants, and modifier targets. 
 - **`SELF`** — "this entity's own type," resolved per-entity. Used in a `per` count-scaler ("per how many of me exist").
 
 ### 3.2 Scopes — the containment spine
+
 From widest to narrowest:
 
 ```
@@ -88,6 +93,7 @@ world → team → empire → area → city → plot{improvement|feature|terrain
 itself). A scope says *where* something applies or *where* a count is taken.
 
 ### 3.3 Conditions — `all` / `any` / `noneOf`
+
 A bounded boolean tree, used identically wherever a condition is needed (`requires`, and the `enabled`/`disabled` on a
 deposit):
 
@@ -105,6 +111,7 @@ Each leaf is **either** a count/presence **atom** or a **predicate** (§3.4):
 
 An **atom** is `{ type, scope, min?, max?, connection? }` and is always **fully explicit** — it carries its own `type`
 and `scope`; the engine never infers them from context.
+
 - **presence** = `min: 1` (i.e. "have at least one"). Authoring presence as `min:1` keeps it future-proof if a resource
   later gains amounts.
 - **count thresholds** = `min: N` (≥ N) and/or `max: N` (≤ N). Both are **inclusive**. Exact-N is `min` and `max` together.
@@ -114,6 +121,7 @@ and `scope`; the engine never infers them from context.
 > e.g. "≥12 Barracks"). "How many of THIS may exist" is **not** a condition — it is the [`allowed`](#44-allowed--caps) cap.
 
 ### 3.4 Predicates — a system's runtime-state query
+
 A predicate asks the game state a yes/no question a static file can't hold ("is this the capital? is there a river?").
 
 - **bare** (parameter-free) — written as a plain string:
@@ -130,7 +138,9 @@ A predicate asks the game state a yes/no question a static file can't hold ("is 
   unrelated data.
 
 ### 3.5 Units — what a modifier value *is*
+
 A modifier magnitude names the **nature of the value**, not how the engine combines it:
+
 - **`flat`** — an additive amount (`+2` = `2`).
 - **`percent`** — an additive percent delta (`+50%` = `50`).
 - **`multiplier`** — a true ×factor, identity `100` (`×2` = `200`).
@@ -138,23 +148,28 @@ A modifier magnitude names the **nature of the value**, not how the engine combi
 (Plus rare `postMultiplier` / `rawPercent` — engine detail, seldom authored.)
 
 ### 3.6 `per` — count-scaling
+
 Scale a value by how many of something exist:
 
 ```jsonc
 "per": { "type": "POPULATION", "each": 5, "scope": "city" }   // value × (count / 5)
 "per": { "anyOf": ["BONUS_COW","BONUS_PIG"], "scope": "city" } // value × (summed count of any listed)
 ```
+
 `each` is the quantum ("per 5 population" → `each: 5`); state it explicitly. `scope` defaults to the deposit's own scope.
 
 ### 3.7 `interval` — recurrence (for repeatable grants)
+
 `interval: { perTurn: N }` = every N turns; the bare string `interval: "perTurn"` = every turn.
 
 ### 3.8 The one entry shape
+
 Every deposit, grant, or conditioned value is the same shape:
 
 ```jsonc
 { <payload>, "scope"?, "per"?, "enabled"?, "disabled"?, "ai"? }
 ```
+
 - **payload** — a unit magnitude (`flat`/`percent`/`multiplier`: value), OR a grant (`type` + `count`), OR a predicate.
 - **`scope`** — default: the containing scope. **`per`** — default ×1. **`enabled`** — default true (applies only while
   the condition holds). **`disabled`** — default false (suppressed while the condition holds). **`ai`** — an optional
@@ -175,16 +190,19 @@ Every deposit, grant, or conditioned value is the same shape:
 The availability sections decide **what is offered** — what unlocks what, what an entity needs, and how many may exist.
 
 ### 4.1 `enables` — what this unlocks (permanent)
+
 Listed on the **source**, per target-kind. Having this entity makes its `enables` targets reachable.
 
 ```jsonc
 "enables": { "units": ["UNIT_CROSSBOWMAN"], "buildings": ["BUILDING_BANK"] }
 ```
+
 Buckets: `buildings · units · builds · techs · civics · religions · corporations · projects · processes · promotions ·
 promotionLines · heritages · specialBuildings · specialBuildingsWaived · improvements · bonuses · routes · votes ·
 hurries · traits · specialists`. **Tech unlocks live here** (a tech `enables` what it researches).
 
 ### 4.2 `obsoletes` / `replaces` / `disables` — removal (permanent)
+
 - **`obsoletes`** — supersession: new builds are barred; existing instances persist (an obsolete unit stays on the map).
 - **`replaces`** — succession: a successor takes the predecessor's slot.
 - **`disables`** — a destructive, reversible **ban** (e.g. a law banning a building): existing instances are removed;
@@ -193,6 +211,7 @@ hurries · traits · specialists`. **Tech unlocks live here** (a tech `enables` 
 Same per-kind bucket shape as `enables`.
 
 ### 4.3 `requires` — what this NEEDS (reversible)
+
 The means a target needs, on the **target**. Two timings:
 
 ```jsonc
@@ -201,6 +220,7 @@ The means a target needs, on the **target**. Two timings:
   "operate": { "all": [ {"type":"CIVIC_GUILDS","scope":"empire"} ] }
 }
 ```
+
 - **`build`** — needed to construct it (greyed out if missing). Checked once, at build.
 - **`operate`** — needed to construct **and** to keep running; if lost later the built thing goes **dormant** (inactive,
   not destroyed) and wakes when it returns. (Units carry `build` only.)
@@ -215,6 +235,7 @@ Each is an `all`/`any`/`noneOf` tree (§3.3). A single bare predicate may also b
 hold "how many of myself" — that's `allowed`.
 
 ### 4.4 `allowed` — caps
+
 How many of this entity may **exist**. Author the **real number**; the engine permits a build while the current count
 is below it. Absent ⇒ uncapped. Two shapes, told apart by the key:
 
@@ -223,6 +244,7 @@ is below it. Absent ⇒ uncapped. Two shapes, told apart by the key:
 "allowed": { "empire": 1 }    //           at most one per player (a national wonder; a unique unit)
 "allowed": { "team": 1 }      //           at most one per team (a team wonder)
 ```
+
 - **self-cap** — a **scope** key (`world`/`team`/`empire`) = "at most N of *me* at that scope." For a building, the
   cap scope is also what makes it a world / team / national wonder.
 - **category count-cap** — a **wonder-category** key, used on `CultureLevel` to cap how many of a category a *city* may
@@ -231,6 +253,7 @@ is below it. Absent ⇒ uncapped. Two shapes, told apart by the key:
 ```jsonc
 "allowed": { "worldWonders": 3, "teamWonders": 2, "nationalWonders": 8 }
 ```
+
 (`totalWonders` is reserved for an all-categories cap.)
 
 Caps you do **not** author: the engine owns ignoring caps under the relevant game options, any era-scaling of a base
@@ -254,6 +277,7 @@ One-shot or recurring things an entity hands out (not per-turn modifiers).
   ]
 }
 ```
+
 - **lists** — `buildings · units · techs · civics · specialists · promotions · traits · bonuses · freePromotions ·
   foundBuildings`.
 - **numeric pulses** — `grants.<channel>: value` (e.g. `grants.revolution: -100`, `grants.goldenAge`).
@@ -306,6 +330,7 @@ Empire-agnostic self-description. Read directly (never summed or cascaded).
 ## 8. `capabilities` & `skills`
 
 Boolean abilities. The **section name carries the scope**, so the engine never has to guess:
+
 - **`capabilities`** — **team-wide, tech-unlocked** civilization abilities (found-on-peaks, pass-peaks, move-on-water,
   tech-trading, irrigation, bridge-building, river-trade).
 - **`skills`** — a **unit's innate** abilities (blitz, walk-on-mountains, fly-over-water, amphibious, move-impassable, …).
@@ -339,6 +364,7 @@ is "on" iff its block exists and is non-empty.
 ## 10. Worked examples
 
 ### A building
+
 ```jsonc
 {
   "type": "BUILDING_FORGE",
@@ -350,10 +376,12 @@ is "on" iff its block exists and is non-empty.
   "cost": { "production": 120 }
 }
 ```
+
 *A Forge unlocks the Crossbowman; needs connected iron to keep operating; +25% production and (while powered) +1
 happiness in its city; costs 120 hammers.*
 
 ### A world wonder (a cap + a conditional bonus)
+
 ```jsonc
 {
   "type": "BUILDING_VERSAILLES",
@@ -364,10 +392,12 @@ happiness in its city; costs 120 hammers.*
   "culture": { "city": { "flat": [ 10, { "value": 10, "enabled": { "existedFor": { "min": 1000 } } } ] } }
 }
 ```
+
 *Only one Versailles may exist in the world; you can't build it where a capital already sits; it builds itself twice as
 fast with connected marble; +10 culture, doubling after it has stood 1000 turns.*
 
 ### A culture level (per-city wonder caps)
+
 ```jsonc
 {
   "type": "CULTURELEVEL_DEVELOPING",
@@ -376,6 +406,7 @@ fast with connected marble; +10 culture, doubling after it has stood 1000 turns.
   "defense": { "city": { "amount": { "percent": 12 } } }
 }
 ```
+
 *At this culture level a city may hold up to 2 world wonders, 2 team wonders, 8 national wonders, and gets +12% defense.*
 
 ---

@@ -4,6 +4,7 @@
 **Compile guard:** `CVARMY_BREAKSAVE` (disabled by default)
 
 ## Overview
+
 `CvArmy` groups multiple `CvSelectionGroup` objects under a single strategic command,
 allowing coordinated multi-stack operations (e.g. a combined land assault). It tracks a
 designated leader group, a list of member groups, a mission type, and a target plot.
@@ -13,6 +14,7 @@ designated leader group, a list of member groups, a mission type, and a target p
 > unless that symbol is defined.
 
 ## Lifecycle
+
 | Method | Description |
 |---|---|
 | `CvArmy()` | Constructor; zero-initialises all members. |
@@ -22,6 +24,7 @@ designated leader group, a list of member groups, a mission type, and a target p
 | `reset(iID, eOwner, bConstructorCall)` | Full reset; used at construction and on game reset. |
 
 ## Identity
+
 | Method | Description |
 |---|---|
 | `getID()` | Returns the army's unique integer identifier. |
@@ -29,6 +32,7 @@ designated leader group, a list of member groups, a mission type, and a target p
 | `getOwner()` | Returns the `PlayerTypes` of the owning civilisation. |
 
 ## Leader & Groups
+
 | Method | Description |
 |---|---|
 | `getLeader()` | Returns the `CvSelectionGroup*` designated as the army's leader. |
@@ -41,6 +45,7 @@ designated leader group, a list of member groups, a mission type, and a target p
 | `findNewLeader()` | Selects a replacement leader from remaining member groups. |
 
 ## Mission & Target
+
 | Method | Description |
 |---|---|
 | `getMission()` | Returns the current mission type (`int` / army-mission enum). |
@@ -49,6 +54,7 @@ designated leader group, a list of member groups, a mission type, and a target p
 | `setTargetPlot(CvPlot*)` | Updates the target objective. |
 
 ## Turn Logic
+
 | Method | Description |
 |---|---|
 | `doTurn()` | Per-turn update: checks whether group missions should be refreshed, evaluates target validity, and coordinates movement. |
@@ -57,6 +63,7 @@ designated leader group, a list of member groups, a mission type, and a target p
 | `disband()` | Dissolves the army; member groups are released back to independent operation. |
 
 ## Private Members
+
 | Member | Type | Description |
 |---|---|---|
 | `m_iID` | `int` | Unique army ID. |
@@ -67,6 +74,7 @@ designated leader group, a list of member groups, a mission type, and a target p
 | `m_groupIDs` | `std::vector<int>` | IDs of all member groups. |
 
 ## Related
+
 - [`CvSelectionGroupAI`](CvSelectionGroupAI.md) — member groups of the army  
 - [`CvPlayerAI`](CvPlayerAI.md) — creates and disbands armies  
 - [`CvPlot`](CvPlot.md) — army target coordinate  

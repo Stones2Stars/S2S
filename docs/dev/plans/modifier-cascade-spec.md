@@ -90,6 +90,7 @@ modifier deposits, `grants`, conditions, count-scaling. They are not separate sh
 composition.** Nailing this is what ends the JSON re-flopping.
 
 ### 1.1 Top-level object — reserved sections + flat modifier families
+
 An entity's top level is a fixed set of **RESERVED SECTION keywords** — `enables` · `obsoletes` ·
 `replaces` · `requires` · `grants` · `text` · `cost` · `ui` · `world` · `sound` · `identity` · `ai` — and
 **every other top-level key is a MODIFIER FAMILY**
@@ -103,14 +104,17 @@ error, never a silent clash. The reserved list is **non-exhaustive / provisional
 appear); no family↔reserved overlap exists today (2026-06-15).
 
 ### 1.2 A family addresses as
+
 `<family>.<scope>.<targetType>.{TARGET}.<member>.<unit>` = value
 (`<targetType>.{TARGET}` omitted for scope-wide deposits — the identifier lives in the family name;
 `<member>` omitted for single-concept families.)
 
 ### 1.3 An entry (deposit / grant) — one shape everywhere
+
 ```
 { <payload>, scope?, per?, enabled?, disabled? }     // scope/per/enabled/disabled OPTIONAL, default no-op
 ```
+
 - **payload** — a **modifier magnitude** (a `flat`/`percent`/`multiplier` value) **OR a grant** (`type` +
   `count`).
 - **`scope`** — where it applies (default: the entry's containing scope).
@@ -128,6 +132,7 @@ fetching, not data**, §0.7). The audience axis is `all` (bare, default) vs `ai`
 yet needed (add consciously if a case appears).
 
 ### 1.4 Vocabulary — shared by all of the above
+
 - **Types** = data Types (`BONUS_*`, `UNIT_*`, `RELIGION_*`, `BUILDING_*`, …) **+ engine CATCH-ALL tokens**
   (`TURN`, `POPULATION`, `MILITARY`, `SELF`, …). Data Types resolve via `getInfoTypeForString`; the
   catch-all tokens are a code-side registry (designed in #430, extensible) resolved by the engine, never
@@ -137,11 +142,11 @@ yet needed (add consciously if a case appears).
   ONE token used wherever a Type appears, with the natural reading in each place:
   - in a **`per`** count-scaler → the COUNT of the owning entity's own type at the scope
     (`per:{type:SELF, scope:world}` = how many of this thing exist in the world).
-  - in a **`requires` / `enabled` / `disabled`** atom → a presence/count reference to the owning entity's own
-    type. The canonical use is the **global-uniqueness gate**: `requires.build.noneOf:[{type:SELF, scope:world}]`
-    = "none of this SAME entity exists anywhere in the world" → buildable only while unique. This is the tech
-    `bGlobal` religion-founding-once rule (enabler §3), and the mechanism world wonders use (owner, 2026-06-15:
-    "we will need it for world wonders, so it works").
+  - **⚠ SUPERSEDED (owner 2026-06-17): SELF no longer appears in `requires`/`enabled`/`disabled`.** Its former
+    canonical use — the global-uniqueness gate `requires.build.noneOf:[{type:SELF,scope:world}]` (tech `bGlobal`,
+    world wonders, unique units) — is now the declarative `allowed` CAP (`allowed:{world:1}`; enabler-spec §5a,
+    data-model §4.2a). The SELF-`requires` atom conflated *needed* with *allowed* (forced "cap 1" as `max:0`) and is
+    withdrawn. SELF survives ONLY in the `per` count-scaler above.
 - **Scopes** = `world | team | empire | area | city | plot{improvement|feature|terrain|route} | building |
   specialist | unit`. `empire` = player = all cities. `unit` is a SELF-ACCUMULATOR (§5).
 - **Conditions** (`enabled`/`disabled`; the `requires` gate; `per`'s implicit count) = the enabler
@@ -163,6 +168,7 @@ yet needed (add consciously if a case appears).
     nature (§0.7a), and let the family's combine-mode carry the math.
 
 ### 1.5 Worked example (a building) — everything composing
+
 ```jsonc
 {
   "enables":  { "units": ["UNIT_CROSSBOWMAN"] },
@@ -182,6 +188,7 @@ yet needed (add consciously if a case appears).
 ```
 
 ### 1.6 Why this is the win
+
 The same composition — *payload + scope + per + enabled* — expresses a coal-gated production bonus, a tech's
 free unit (`Tracking`), Great Baths' empire population grant, a state-religion happiness deposit, a
 wonder's empire-wide unit modifier. No per-concept shapes, no nesting fiesta, no parallel gate languages:
@@ -190,6 +197,7 @@ wonder's empire-wide unit modifier. No per-concept shapes, no nesting fiesta, no
 ---
 
 ## 2. The cascade
+
 A modifier is a per-turn effect a source deposits onto a TARGET (anything with a modifiable per-turn
 effect). It flows DOWN the containment spine and accumulates; the target reads the summed accumulator. One
 step (deposit→accumulate), versus the enabler's two-step (generate→gate).
@@ -209,8 +217,10 @@ are top-level.
 ---
 
 ## 3. Conditioning — the `enabled` / `disabled` keystone
+
 Conditioning lives **near the value, per deposit**, as two OPTIONAL fields, and **nowhere else** — this is
 what keeps the construct from becoming a nesting fiesta.
+
 - **`enabled`** — defaults **true**; present → the deposit applies only while its expression holds.
 - **`disabled`** — defaults **false**; present → the deposit is suppressed while its expression holds.
 - **Value of each = the enabler `requires` object, verbatim** (§0.2). **Absent = unconditioned** (the common
@@ -230,12 +240,15 @@ what keeps the construct from becoming a nesting fiesta.
 ---
 
 ## 4. Count-scaling — `per: { type, each, scope }`
+
 "Increase/decrease in something based on the NUMBER of something else." An OPTIONAL count-scaler on a
 deposit, default ×1 — the same opt-in philosophy as `enabled`.
+
 ```jsonc
 "food": { "city": { "flat": { "value": 1, "per": { "type": "BONUS_COAL", "each": 1, "scope": "plot" } } } }   // +1 food per coal on the plot
 "happiness": { "city": { "flat": { "value": 1, "per": { "type": "POPULATION", "each": 5, "scope": "city" } } } } // +1 happy per 5 population
 ```
+
 - **`per: { type, each, scope }`** scales the deposit value by the COUNT of `type` at `scope`, in quanta of
   `each`: **effect = `value × (count(type) / each)`**.
 - **`per: { anyOf: [TYPE…], scope }`** — scale by the SUMMED count of *any* of a SET of types (owner 2026-06-15;
@@ -256,10 +269,12 @@ deposit, default ×1 — the same opt-in philosophy as `enabled`.
   data Type at a scope, or a catch-all token). `SELF` = count of the owning entity's own type.
 
 ### 4.1 REPEATABLE GRANTS + the `interval` temporal primitive (owner-blessed 2026-06-16, Building #32)
+
 The one-shot `grants` (enabler-spec §6) fires ONCE on an event. The deferred `outcomes` (UnitCombat #29) parks on a
 unit and fires when a mission is pushed. The THIRD grant-lifecycle variant — **`grants.repeatable`** — fires
 **recurringly on an INTERVAL**, optionally gated by a CHANCE the engine rolls. It introduces ONE new model
 primitive — **`interval`**, the temporal sibling of `per` (count, §4):
+
 - **`interval`** — when/how-often the grant fires. **`interval: { perTurn: N }` = every N turns**; the bare string
   **`interval: perTurn` DESUGARS to `{ perTurn: 1 }`** (every turn) — the same bare-shorthand pattern as the §3
   predicates. (Other interval kinds — e.g. `everyEra` — grow per case; `perTurn` is the only one #428 needs.)
@@ -278,12 +293,14 @@ primitive — **`interval`**, the temporal sibling of `per` (count, §4):
   **barbarian-owned**, `PropertyInfo.AIWeight < 0`). Exact chance arithmetic (crime `value/2`, criminal-count
   damping) pins at #430.
 - **Worked example (PropertySpawn → criminal):**
+
   ```jsonc
   "grants": { "repeatable": [
     { "unit": "UNIT_PROPERTY_CRIMINAL", "interval": "perTurn",
       "chance": { "per": { "type": "PROPERTY_CRIME", "scope": "city" } } }
   ] }
   ```
+
 - **NOT a repeatable grant: a continuous count-scaled RATE is just a `per`-scaled MODIFIER** (owner 2026-06-16) — the
   *shrine* (`GlobalReligionCommerce`) adds commerce every turn scaled by cities holding its religion, which is
   exactly `commerce.city.flat: { value, per: { type: RELIGION_X, scope: world } }`. A continuous rate is a modifier;
@@ -292,6 +309,7 @@ primitive — **`interval`**, the temporal sibling of `per` (count, §4):
 ---
 
 ## 5. The `unit` plane — a SELF-ACCUMULATOR
+
 ~380 fields author at `*.unit.*` (all Promotion/UnitCombat + most Unit). `unit` is a spine leaf, but a
 unit-scope deposit is a **self-accumulator** (source == target, via the existing promotion/unitcombat
 additive stack) — NOT a downward cascade. Cross-edges use `byOccupant` (a host-scope family summed over
@@ -312,8 +330,10 @@ line-hierarchy check) as each promotion is added to the one unit. Full vocabular
 ---
 
 ## 6. CREST / stay-vs-invert — RESOLVED (keep-on-source)
+
 `enabled`/`per` are exactly the clean "keep-on-source" expression the dilemma was missing, so the fork is
 **closed**:
+
 - A deposit keyed by entity B that LANDS ON B (B is the target) STAYS on the source keyed by B.
 - A **tech**-conditioned effect is a downward deposit *from* the tech (§0.4) — no dilemma.
 - A **bonus/religion/civic-conditioned** effect STAYS on source A, referencing the conditioner via
@@ -323,8 +343,10 @@ line-hierarchy check) as each promotion is added to the one unit. Full vocabular
   `curate_bonus`; author on the source at the Building/Unit/Project pass. **(Done — see §6.2 for the home.)**
 
 ### 6.2 `production` (total city OUTPUT) vs `buildRate` (build a TARGET faster) — owner ruling 2026-06-16
+
 **Two distinct concepts the first-pass migration flattened into `production.city` (the "Versailles bug",
 DESPAIR_INDEX #12).** Pinned against the C++ (applied in different places):
+
 - **`production` = TOTAL CITY OUTPUT** — `CvCity::getYieldRate100(PRODUCTION)`: a hammer ADD (`production.city.flat` ←
   `YieldChanges[PRODUCTION]`) or a city-wide multiplier on *everything* (`production.city.percent` ←
   `YieldModifiers[PRODUCTION]` = Factory, Power/Area/Capital yield-rate). Scales every build, every turn.
@@ -340,6 +362,7 @@ DESPAIR_INDEX #12).** Pinned against the C++ (applied in different places):
   `migration-renames.md` "Production vs buildRate".)
 
 ### 6.1 The DELIVERYGUY — who OWNS an entity-keyed modifier (owner ruling 2026-06-16)
+
 Resolved while curating Route (#19) and Terrain (#20). **The root test is SEMANTIC SENSE (owner 2026-06-16): where
 does this modifier sensibly belong?** The anchoring case is that **a thing ON A PLOT OWNS ITS OWN MODIFIERS** — *"it
 doesn't make sense that things on a plot don't own their own modifiers."* The operational reading of that sense:
@@ -352,6 +375,7 @@ rule (owner 2026-06-16):** (a) **keep-on-source** — the source owns the modifi
 *condition* (`enabled` presence / `per` count); (b) **fold-onto-the-owner** — the modifier lives on the entity that
 semantically owns it (the deliveryguy / the thing on the plot), keyed by the source. Both are first-class and equally
 expressible; per case, author it wherever it **makes semantic sense** as the home.
+
 - **Abstract enabler-sources (civic, trait, religion) OWN their buffs**, even when keyed by a target or *improved
   by* a resource. *"+happiness from this civic, if you also have `BONUS_X`"* is the **civic's** buff, conditioned on
   the resource via `enabled`/`per` — it **STAYS on the civic**. (The "something to make it work" is the existing
@@ -383,7 +407,9 @@ the target, NOT inverted. Re-decide each at the Building pass against this rule.
 ---
 
 ## 7. Resolved accommodations (the former mechanical tail)
+
 The grounding's seven "accommodations" mostly collapsed into the keystone/`per`/§0.6 boundary:
+
 - **Non-additive:** (a) clamp-on-channel-total (`iMinDefense` floor, caps) is specified **in the family's own
   structure** (e.g. `defense` declares additive `amount` + a `min` member that floors the total) — not a
   generic rule. (b) min/max-across-sources (anarchy turns, yield thresholds, `naturalDefense`,
@@ -408,6 +434,7 @@ The grounding's seven "accommodations" mostly collapsed into the keystone/`per`/
 ---
 
 ## 8. Out of scope / relocated / drops
+
 **Spatial leakage → #429 (redesigned, not cut):** the property `NEAR` radius-diffusion (crime/disease/
 pollution leaking city↔plot↔plot — inert today) is dropped from the containment cascade and rebuilt in the
 dedicated "sideways static influence" pass; preserve the crime/disease unit→city emission via containment.
@@ -419,6 +446,7 @@ is #429's — never accommodated in the #428 modifier structure.**
 
 **The dead-list re-splits FOUR ways (the grounding verified "dead" against C++ only — re-verify each against
 `Assets/Python` AND intent; ~4 of 15 were misclassified):**
+
 - **(i) TRULY dead → drop:** Building `iMaxPopulationAllowed`/`iMaxPopulationChange` ·
   Bonus `m_piImprovementChange` · Promotion `iDamageperTurn`/`iWeakenperTurn`/`iStrAdjperTurn` · UnitCombat
   `m_PropertyManipulators` · PromotionLine `*ContractChanceChanges` · root Improvement `m_iDepletionRand`.
@@ -458,6 +486,7 @@ mechanic, `MODDERGAMEOPTION_RESOURCE_DEPLETION`)*.
 ---
 
 ## 9. Demolition list (what the cascade DELETES — parallel to enabler §14)
+
 - **CvCity yield/commerce accumulator + per-building reads** (`getBaseCommerceRateFromBuilding100`,
   `getBuildingYield`; CvCity.cpp:11326-11364, 12104-12203, 12272-12291) → the split yield/commerce cascade
   accumulators (additive deposit → O(1) summed read).
@@ -484,7 +513,7 @@ mechanic, `MODDERGAMEOPTION_RESOURCE_DEPLETION`)*.
   family-metadata applied once per cost channel.
 - **CvArea per-player good/bad health/happiness pools** (CvPlayer.cpp:7412-7457) → area-scope deposits.
 - **CvGame world-scope vote/project/tech accumulators** (CvGame.cpp:7917-7988, 7923) → world-scope deposits
-  + enables-family for the reversible-doctrine vote actions.
+  - enables-family for the reversible-doctrine vote actions.
 - **CvCity `CommerceChangeDoubleTimes` post-sum ×2 path** (CvCity.cpp:12197-12203) → a second age-gated
   `enabled` deposit reading the created-timestamp — no engine stage.
 - **CvPlayer MIN/MAX combinator updaters** (`updateMaxAnarchyTurns`/`updateMinAnarchyTurns`/
@@ -496,6 +525,7 @@ mechanic, `MODDERGAMEOPTION_RESOURCE_DEPLETION`)*.
 ---
 
 ## 10. Banked for later phases (not migration blockers)
+
 - **Enabler-spec additions** (record there — the enabler objects are reused verbatim, changed only
   consciously): an **age/duration predicate** (`existedFor` + a created-timestamp, created where an entity
   lacks one); a **`firstToResearch`/`firstToDiscover`** predicate; the `grants` family includes **bonuses**

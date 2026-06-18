@@ -13,18 +13,20 @@ subordinate to this when they conflict (e.g. whole-entity `writeJson`, byte/effe
 and mass-migration are NOT how we proceed).
 
 ---
-### ⇒ CHECKPOINT & RESUME (2026-06-14) — START HERE to pick up the migration
 
-> **⏩ LATEST: read [`handover-2026-06-14-pm.md`](handover-2026-06-14-pm.md) FIRST** — the PM-marathon
-> session handover (Trait DONE; equipment-tier combat purge; the "unreferenced ≠ dead" lessons;
-> SpecialBuilding re-curate-with-Building-pass flag; combat-class audit + #434/#435; lighter-four
-> classified-not-curated; indices live on main). It supersedes the per-line state below where they differ.
+### ⇒ RESUME — how to pick up the migration
+
+> This doc is **not** the resume entry point. Resume via the [`docs/dev/README.md`](../README.md) "re-read after
+> a compaction" banner + the **#428/#430 spec cluster** it lists (data-model / enabler / modifier / tally /
+> event-spine specs, cascade-engine-430, migration-renames, migration-entity-ranking) — read those first, then
+> work this doc top-down.
 
 **State:** branch **`json-data-migration`** (~19 commits off `origin/main`, working tree clean). The #421/#423
 cascade **C++** stays on `buildings-json` for its own PR — this branch is JSON DATA + the offline Python
 toolkit only (C++ readers come dead-last). The model below is LOCKED; read §0–§7 + "HEAVY-ENTITY CAUTIONS".
 
 **DONE (19 entities — curate → verify-vs-C++ → write → commit):**
+
 - Gameplay (careful, verified against the live C++ consumer): **Tech 943 · Bonus 907 · Handicap 12 ·
   GameSpeed 9 · Era 14 · Process 13.**
 - POCO data-holders (fast-path, `curate_pocos.py`, text/identity/art only): **BonusClass 12 · CivicOption 15 ·
@@ -35,7 +37,7 @@ toolkit only (C++ readers come dead-last). The model below is LOCKED; read §0�
   (cost-vs-costs, condition-as-member, inversion-vs-target-keying, dead-structure drops, gated-property lists).
 - **Civic — FIRST HEAVY entity, DONE (2026-06-14): 175, category-foldered.** Both enabler+modifier; empire scope;
   `policies` section; `revolution` kept faithful (Python→C++ port pending); grouped `stateReligion`. Full detail
-  + all rulings in the §7 "Civic" note. The big architecture work it triggered (the **cascade ontology** — one
+  - all rulings in the §7 "Civic" note. The big architecture work it triggered (the **cascade ontology** — one
   cascade, every per-turn-effect producer is a target, sources/enablers never targets, the coal test, the
   stay-vs-invert rule, and the unresolved **"CREST"**) is recorded in **§0**.
 - **Trait — SECOND HEAVY entity / "Mount Doom", DONE (2026-06-14): 390** (87 base + 240 developing-line + 63
@@ -54,7 +56,7 @@ toolkit only (C++ readers come dead-last). The model below is LOCKED; read §0�
   CvPlayer.cpp:13784-13867). **CONSEQUENCE:** every entity already fast-pathed via `curate_pocos.py` (BonusClass,
   CivicOption, Hurry, Victory, PromotionLine, SpecialBuilding) must be RE-VERIFIED against `getDataMembers` + its
   consumers before being trusted as inert — a POCO must be PROVEN inert, not assumed. (SpecialBuilding re-curates
-  with the Building pass; see `handover-2026-06-14-pm.md`.)
+  with the Building pass.)
   - **AUDIT DONE (2026-06-14 PM, wf verify-pocos — 5-entity parallel classify + adversarial verify): of the 6
     fast-pathed POCOs, ZERO are truly inert data-holders** — five carry mis-homed gameplay and the sixth (CivicOption) is a
     structural category/slot axis (not inert either; see below). Mis-classified:
@@ -100,7 +102,9 @@ toolkit only (C++ readers come dead-last). The model below is LOCKED; read §0�
     placeholders until their parent pass re-curates them (preserved-but-mis-homed in `identity`; nothing reads
     them yet).
 
-**TOOLKIT** (`Tools/Migration/`, all offline Python, run with `python curate_<x>.py --sample <TYPE>` / `--write`):
+**TOOLKIT** (`Tools/Migration/`, all offline Python, run with `python curate_<x>.py --sample <TYPE>` / `--write`).
+**Operational runner reference (which script to run, what it writes, the footguns) = [`Tools/Migration/README.md`](../../../Tools/Migration/README.md)** — read it before running anything; it documents the per-entity-curator pipeline and the `engine.py`/`migrate_buildings.py` clobber traps below.
+
 - `store.py` — XML-as-DB: loads every gameplay Info from base XML + `Assets/Modules` (merged by Type, content
   preserved), builds the generic **enable/obsolete reverse-index** by inverting prereq fields. `ENTITIES` dict
   registers each entity + its glob; add a new entity there before curating it.
@@ -109,8 +113,14 @@ toolkit only (C++ readers come dead-last). The model below is LOCKED; read §0�
   (assembles type/text/enables/obsoletes/**families**/grants/ai/art/identity), `SPLIT_FAMILIES = {yield,
   commerce}`, `FAMILY_ORDER`. Thin entities ride this via a tiny config (curate_tech/bonus/process).
 - bespoke curators (own field tables) for the special ones: `curate_handicap.py`, `curate_gamespeed.py`,
-  `curate_era.py`. `curate_pocos.py` batches the data-holders. `engine.py` = shared helpers
-  (text/generic/named_array/formula_node/clean_property_source/FIELD_RENAME/plural).
+  `curate_era.py`. `curate_pocos.py` batches the data-holders. **The authoritative re-export of any entity is
+  `python curate_<entity>.py --write`** (regenerates that entity's `Assets/Data/<entity>/` folder).
+- `engine.py` has a **DUAL role**: (a) the **shared-helper module** every curator `import`s
+  (`FIELD_RENAME`/text/generic/named_array/formula_node/clean_property_source/plural) — alive; AND (b) a
+  **⛔ SUPERSEDED standalone `--write` emitter** that rewrites the WHOLE `Assets/Data/` with RAW un-curated shapes
+  (`cost:{iCost:…}`, `requires:null`) — running it CLOBBERS the curated DB (~9500 files). **Import it; never run
+  `engine.py --write`.** Likewise `migrate_buildings.py` is the superseded "first cut" building emitter — use
+  `curate_building.py` instead. (Recovery from a clobber: `git checkout -- Assets/Data && git clean -fd Assets/Data`.)
 - `mapping/<Entity>.json` — first-pass field classification from the 2026-06-13 workflow. **A FILTER, NOT
   GOSPEL** — it under-classified real gameplay (Promotion/Terrain/UnitCombat/Property) and mis-scoped many
   fields. Always verify against the live C++ consumer.
@@ -129,6 +139,7 @@ block. The medium-batch curators (`curate_route/project/heritage/religion/specia
 worked examples of every pattern the heavy entities reuse.
 
 **LIGHT-BATCH DECISIONS (2026-06-14) — now cross-entity conventions; consult before the heavy entities:**
+
 - **`cost` (intrinsic base) ≠ `costs` (multiplier family).** A thing's own base cost is a `cost` section
   (Project `cost.create`, Corp `cost.spread`); the GameSpeed/Era percent MULTIPLIER is the `costs` family.
   Don't file a base gold/hammer cost under `costs`. (Corrected the classification twice.)
@@ -165,6 +176,7 @@ worked examples of every pattern the heavy entities reuse.
   the source, not a per-turn modifier). Author these when Building/Unit/Civic are curated.
 
 **TOOLKIT GROWTH this batch** (`curate_common` stayed the shared core; bespoke curators model the rest):
+
 - `curate_common.EntityConfig` gained `families` (verified per-field specs OVERRIDING the under-classified
   mapping channels), `id_rename` (per-entity identity key names), `to_identity` (force a field into identity at
   a dotted path, overriding cost/art classification); `apply_channel` honours an explicit grouped `member`.
@@ -186,6 +198,7 @@ MONSTERS **Building** (101ch + 22 inversions + 47 prereqs; inter-building A→B 
 flat `art` section regrouped into THREE **top-level** dedicated blocks (NOT `art.ui`/`art.world`/`art.sound` — the
 SUBSYSTEM is the top-level block, with `art` a SUB-block *within* `ui`/`world` so non-art members like key-triggers
 sit BESIDE art):
+
 - **`ui`** — on-screen surface. `ui.art.icon` (UI icon ← `Button`/`Texture`), `ui.art.texture` (a 2nd distinct UI
   icon where one exists — Specialist), `ui.art.movie.{file,sound}`, `ui.art.{techButton,genericTechButton,advisor,
   fontButton,tgaIndex}`, plus non-art `ui.{hotkey,altDown,…}` key triggers.
@@ -215,6 +228,7 @@ CIV4RouteModelInfos.xml`, ~840 rows: one `.nif` per route-type × connection-ori
 the UI icon ONLY — its placed/3D art is owned by a distinct art entity. This is NOT a migration drop (the model
 art was never a `CvRouteInfo` field); it is an entire **unmigrated art tier** that was never on the gameplay
 roster:
+
 - **Model / landscape / effect infos** (on-map rendering geometry): `RouteModelInfo` (+ a `P2K_` module file),
   `RiverModelInfo`, `LandscapeInfo`, `EffectInfo`.
 - **Art-define infos** (the `ArtDefineTag` indirection target — the `CvArtInfo*` family from
@@ -237,7 +251,9 @@ add prereq/obsolete edges to `store.PREREQ_FIELDS`/`OBSOLETE_FIELDS` as you drop
 AFTER all data is migrated.
 
 ---
+
 ### 0. Core premise — two strictly top-down cascades
+
 The migration *is* the migration of two top-down cascades from XML into JSON; the JSON object shapes
 merely serialize them, and **remodeling those shapes to fit the cascades is expected** — the handicap
 prototype, `Tools/Migration/engine.py` output, and `mapping/*.json` are reshape-able drafts, not fixed
@@ -290,6 +306,7 @@ migration completes** — during the migration, preserve ALL content; shedding d
 dropping that happens during the move. Don't make "should this entity exist" calls while reshaping it.
 
 **Post-migration purge backlog (capture, don't act yet):**
+
 - **The "culture" intermediary bonuses** (`BONUS_ABBASID`/`BONUS_ATOMPUNK`/… one per Culture). Verified
   mechanism: a Culture national wonder (`SPECIALBUILDING_C2C_CULTURE`) grants its `BONUS_*` via
   `ExtraFreeBonuses`, purely so the buildings that require it (PrereqAndBonus `<Bonus>`) become buildable —
@@ -387,6 +404,7 @@ dropping that happens during the move. Don't make "should this entity exist" cal
   leaves this as a clean future seam — it absorbs the dropped `NEAR` relation (§5).
 
 ### 1. Governing invariant — the HOT PATH is top-down only
+
 | | Hot path (per-turn compute) | Cold path (open a screen / pedia / website) |
 |---|---|---|
 | What | effective modifier values + "is it enabled" | build-list rendering, pedia cross-links, greying |
@@ -408,6 +426,7 @@ not gated instrumentation, so the keep-instrumentation rule does not apply). The
 *observability* endpoint is separate instrumentation and is unaffected by this.
 
 ### 2. Authored object shape — top-down OUT-edges + intrinsic; nothing upward or reverse
+
 | Section | Cascade | Contents |
 |---|---|---|
 | `enables` | enabler | what this entity makes available (`{buildings:[],units:[],builds:[]}`) |
@@ -432,10 +451,12 @@ doc; low priority.)*
 indirection — owner wants to align EVERYTHING to art-defines; a future cleanup, low priority.)*
 
 ### 3. Standardized modifier structure
+>
 > **RESHAPED 2026-06-14 — FLAT FAMILY layout (owner ruling).** There is **no `modifiers` wrapper**.
 > The old `"modifiers": {scope:{channel:{unit}}}` (shown below) is replaced by **one top-level section per
 > modifier FAMILY** — the *kind* of thing modified — each in the uniform shape
 > **`<family>.<scope>.<member>.<unit>`** (`<member>` omitted for single-concept families):
+>
 > ```jsonc
 > "maintenance": { "empire": { "colony": { "percent": 60, "cap": 120 }, "distance": { "percent": 60 } } },
 > "upkeep":      { "empire": { "unit": { "percent": 60, "ai": { "percent": 120 } } } },
@@ -443,6 +464,7 @@ indirection — owner wants to align EVERYTHING to art-defines; a future cleanup
 > "happiness":   { "empire": { "flat": 7 } },                  // single-concept family: no member level
 > "property":    { "city": { "PROPERTY_CRIME": { "perTurn": <formula> } } }
 > ```
+>
 > **Why:** the families are genuinely distinct KINDS (you never add a 5th commerce into `yield`); they
 > interact but never merge. A flat per-family surface keeps each focused and stops one concern — a gold
 > COST (maintenance/upkeep), a behavioural knob (diplomacy) — from bleeding into the output modifiers; a
@@ -465,9 +487,11 @@ indirection — owner wants to align EVERYTHING to art-defines; a future cleanup
 > grouped family "adheres to the same structure" — modifier is the STRUCTURE, the family layout is the data.
 
 The original framing (now reshaped per the note above — `channel` → `family`+`member`, no wrapper):
+
 ```jsonc
 "modifiers": { "<scope>": { "<channel>": { "<unit>": <value> } } }
 ```
+
 - **scope/target hierarchy** ∈ `world | team | empire | area | city | plot | building | specialist`, where
   the `plot` carries the producers `improvement | feature | terrain | route`. **EVERY node is a legitimate
   modifier target** (anything with a modifiable PER-TURN EFFECT — yield/commerce/happiness/health/property/
@@ -528,6 +552,7 @@ calculations, so divergence from the old result is expected and is frequently a 
 regression. Verification is effect-sensibility (no value silently dropped to default), never byte/value-parity.
 
 **Two conscious simplifications the uniform rule makes (flagged, owner to confirm — NOT silent):**
+
 1. **Building flat yields become multipliable.** Today plot+specialist yields are inside the
    multiply but building flat / per-pop / corp yields are added RAW post-multiplier
    (`CvCity.cpp:11363`); the uniform rule folds all flats into base, so a yield% modifier now
@@ -543,6 +568,7 @@ channels. Flat-only channels: happiness/health carry no `percent` unit (consumer
 sums flats — `CvCity.cpp:5933-5985`, `8543-8581`).
 
 ### 4. The reverse index — derived, cold path, display-only
+
 Built ONCE on load by inverting the typed top-down edges (owner-confirmed cheap). **Never used to
 compute enablement** — the top-down forward index does that. It exists to power the in-game pedia +
 city UI and the future web-Civilopedia, and it must reproduce every feature the game has today.
@@ -566,6 +592,7 @@ enabled-by-researched-tech ∩ not-obsoleted; **greyed** = listed but missing a 
 the screen evaluates met/unmet per atom for greying — off the hot path, never the buildability gate.
 
 ### 5. Open questions + decisions locked this session (2026-06-14)
+
 - **Property scope — RESOLVED (owner, 2026-06-14; verified inert):** properties are scope-spine
   accumulator channels reaching the leaf targets via **containment only** — `SAME_PLOT` to the plot leaf,
   `ASSOCIATED` to the city — exactly like a yield. **The `NEAR` "passive-leak" diffusion is DROPPED**
@@ -616,7 +643,7 @@ the screen evaluates met/unmet per atom for greying — off the hot path, never 
   `game`; `empire` retained (the brief `player` was a slip). Update the handicap prototype
   (`cascadeModifiers`→`modifiers`; scope keys already `empire`).
 - **Delayed resolution (#362) — RESOLVED by the model:** the per-ref `isDelayedResolutionRequired` hack
-  + the hand-maintained category load order are not needed. The on-tech-reached modifier family inverts
+  - the hand-maintained category load order are not needed. The on-tech-reached modifier family inverts
   onto the conditioner and resolves at runtime/deposit (every Info already loaded), and enabler prereqs
   are acyclic by construction → resolve in topological load order / a single link pass. Physical removal
   of the mechanism is #428 reader-phase work.
@@ -635,6 +662,7 @@ the screen evaluates met/unmet per atom for greying — off the hot path, never 
   once the core migration is done.
 
 ### 6. File layout & loading (owner, 2026-06-14)
+
 - **One JSON per Info** (individual files), **loaded recursively**.
 - **Era sub-folders ONLY WHEN APPLICABLE** — i.e. for entity types that are BOTH *numerous* AND
   *unlockable/era-tied* (buildings, units): `Assets/Data/<type>/<era>/<entity>.json`, era derived from the
@@ -655,7 +683,9 @@ the screen evaluates met/unmet per atom for greying — off the hot path, never 
   loose like the XML does (if packing is ever needed, switch enumeration to a manifest/VFS).
 
 ### 7. Implementation status (2026-06-14)
+
 Tooling under `Tools/Migration/`:
+
 - **`store.py`** — the XML-as-DB store: loads every gameplay Info from base XML + modules, merges module
   overlays by Type (preserving content — 1567 of 5211 buildings are module-added), and builds the generic
   **enabler + obsolete reverse-indexes** (17 entities: tech/bonus/building/civic/corp/project/process/
@@ -682,7 +712,7 @@ Tooling under `Tools/Migration/`:
   **FLAT FAMILY** layout (§3): every modifier family is a top-level section in `<family>.<scope>.<member>.<unit>`,
   no `modifiers` wrapper. Families emitted: `maintenance` (distance/numCities/colony{+`cap`}/corporation),
   `upkeep` (unit/civic/inflation/supply/upgrade), `diplomacy` (attitude/declareWar/warWeariness `empire`
-  + noTechTrade/techTradeKnown `team`), `combat` (animal/barbarian `world` + freeWinsVsBarbs `empire`),
+  - noTechTrade/techTradeKnown `team`), `combat` (animal/barbarian `world` + freeWinsVsBarbs `empire`),
   `barbarians` (`world` spawn rules), each `PROPERTY_*` a top-level family (`city`; SPLIT, no `property`
   wrapper), `happiness`/`health` (`empire` flat), and the AI-economy singletons `growth`/`techCost`/`workRate`/
   `buildCost`/`perEra`/`revolution` (names PROVISIONAL). Human/AI duality = `ai:` audience; one-shot setup →
@@ -813,7 +843,7 @@ Tooling under `Tools/Migration/`:
   NOMADISM/SCAVENGING/LANGUAGE) and can never research `TECH_SEDENTARY_LIFESTYLE` (stays nomadic; no Palace
   either); every other civ starts at base. Both LIVE (CvGame:1226 / CvPlayer:8266) but minimal — kept faithfully.
   - **Forward civ-capability semantic (owner 2026-06-14 — LOOSE/FUTURE, not in today's data):** `grants` (gives)
-    + `disables` (forbids) are the first two of a symmetric capability vocabulary; future siblings — **`replaces`**
+    - `disables` (forbids) are the first two of a symmetric capability vocabulary; future siblings — **`replaces`**
     (a unique unit/building SUBSTITUTES a default), **`allows`** (a civ-specific enable), and a **`unique`**
     semantic to finish. **This leads NEATLY into the existing cascading ENABLER (owner):** `allows`/`replaces` ARE
     enabler edges (the civ enables/substitutes a target), `disables` is the anti-enabler — so each could become
@@ -868,7 +898,7 @@ Tooling under `Tools/Migration/`:
   `WeLoveTheKing`→identity. Store gains civic→building/unit enables (`PrereqCivic`/And/Or).
 - **Trait (heavy entity #2 — "Mount Doom", DONE 2026-06-14):** `curate_trait.py` (bespoke), classified by the
   `classify-trait` workflow (`wf_cc8659b5`: 3 ground-truth agents + 6 field slices, each adversarially verified,
-  + a coverage/conflict/CREST/dev-leader audit) against `CvTraitInfo` + `CvPlayer::processTrait` + the
+  - a coverage/conflict/CREST/dev-leader audit) against `CvTraitInfo` + `CvPlayer::processTrait` + the
   CvCity/CvGameTextMgr consumers. Analysis saved to `Tools/Migration/classifications/trait-classification.json`.
   **ONE `CvTraitInfo` class serves BOTH trait systems** — the "developing/complex leaders" system is the SAME
   class, assigned differently: `CvLeaderHeadInfo` carries `DefaultTraits` AND `DefaultComplexTraits` (both lists of
@@ -976,6 +1006,7 @@ Tooling under `Tools/Migration/`:
 **modifiers, prerequisites, cost, art defines, FKs, identity — all of it.**
 
 **Per-entity JSON shape** (building example):
+
 ```json
 {
   "type": "BUILDING_X",
@@ -993,6 +1024,7 @@ Tooling under `Tools/Migration/`:
   "identity":      { ... }    // special-building, obsolete, extends/upgrade FKs, flags
 }
 ```
+
 - **`modifiers`, not `cascadeModifiers` (owner ruling 2026-06-13).** A modder follows the *scope* rule (`city`/`area`/
   `player`/…); they never need to know the value cascades. "Cascading" is an internal C++ concern, not modder vocabulary.
 - **Modifier shape:** `scope → channel → kind`, kind ∈ {`flat`, `percent`, `enabler`}; indexed channels are keyed objects.
@@ -1042,6 +1074,7 @@ what's useful, mark the rest semi-obsolete, and get the migration done without b
 
 **Static-prune vs dynamic-query — resolve every gate at the latest moment it CANNOT change, not later (owner insight
 2026-06-13).** A gate splits by WHEN its condition is fixed:
+
 - **LOAD-STABLE gates** (GameOption on/off, module/map/world/speed setup — changed only RARELY and by hand:
   WorldBuilder, or a one-off BUG-menu toggle; never an automatic gameplay loop): resolve at load against the current
   config. If false, **do not load the data at all** — prune the whole entity (a promotion `NotOnGameOptions` an active
@@ -1128,6 +1161,7 @@ value actually changes something." So:
   datastructure until a consumer needs cross-scope indexed cascading.
 
 ### Proper architecture: complete `readJson` across the CvInfoUtil wrappers (not per-field hacks)
+
 `CvInfoUtil` already loads every field type from XML via typed wrappers (IntWrapper, EnablerWrapper [done],
 EnumWrapper / EnumWithDelayedResolutionWrapper, IntInfoClassWrapper [addEnumAsInt], StringWrapper /
 FixedCharArrayWrapper, VectorWrapper, IDValueMapWrapper / …, the BoolExpr wrapper). Add the JSON mirror
@@ -1136,6 +1170,7 @@ civics), is JSON-native generically. This is the reusable lever; it also makes t
 JSON-native for free.
 
 ### Staged plan
+
 1. **Foundation** — complete `readJson` across all wrappers (enum/FK by-name, string, vector, IDValueMap, BoolExpr).
 2. **Schema** — the full building JSON shape: `cascadeModifiers` + `prerequisites` + `cost` + `art` + `identity`.
 3. **Convert + verify** — emit complete JSON per building from current XML, parity-check (endpoint/log).
@@ -1152,10 +1187,12 @@ tech effect: *the tech says "I boost `BUILDING_X`"*.
 
 **Moves OFF the building → onto the tech** (and they CONSOLIDATE — four parallel building maps become one
 per-building bundle on `CvTechInfo`):
+
 - `TechYieldChanges`, `TechHappinessChanges`, `TechHealthChanges`, `TechCommerceChanges`
   → `CvTechInfo.buildingBoosts: { BUILDING_X: { yield: {food:1}, happiness: 1, health: 1, commerce: {gold:2} } }`.
 
 **Same rule, pending the owner's call on each** (candidates to move to their conditioner):
+
 - `BonusHealthChanges` / `BonusHappinessChanges` → the bonus? · `ReligionChanges` → the religion? ·
   civic-gated / vicinity-bonus-gated effects → their conditioner?
 
@@ -1307,6 +1344,7 @@ Three invariants emerged while fixing the bonus-health leak; they govern the ent
 
 The derived-data **repository** (`TLazy` / `CvDerivedData`) is a *separate, pre-existing* caching project
 (building-values, constructible sets). The cascade/JSON migration does **not** require it. Clean boundary:
+
 - **Cascade/JSON = the deliverable** — data lives on its owner, in JSON, aggregated by recompute over sources.
   Repository-FREE by default.
 - **Repository = an optional, selective perf cache** — added only where a recompute proves hot. Most cascade
@@ -1318,6 +1356,7 @@ The derived-data **repository** (`TLazy` / `CvDerivedData`) is a *separate, pre-
 ## STATUS: owner green-light, Wave 0 starting (2026-06-13)
 
 The 7 owner decisions (blueprint §7) are RESOLVED with the recommended choices:
+
 1. **Improvement/Terrain effects** → KEEP building-side, keyed by improvement/terrain (NOT inverted onto
    Improvement/Terrain), unless a cross-building aggregation win emerges later.
 2. **ReligionChanges** → INVERT to `CvReligionInfo` (conditioner rule).
@@ -1392,6 +1431,7 @@ off in C++ only** (the closed EXE reads enum-indexed yield/commerce arrays as AB
 data/JSON/modder surface never sees it. Yield/commerce are *the only types in the game that will never change in any
 capacity* (3 yields, 4 commerces, locked forever), which makes their name↔index table the one mapping safe to
 **hardcode permanently**. Therefore:
+
 - Yield/commerce keys are **short, enum-free names** in JSON: `{"food": 2, "production": 1}`, `{"gold": 25}`. No
   `YIELD_` prefix — they are first-class named quantities, the game's universal vocabulary.
 - Data-driven keys (Bonus/Tech/Building/Religion/Improvement) use the **full Type string** (`BONUS_COAL`,
@@ -1413,6 +1453,7 @@ Improvement/GlobalImprovementYieldChanges. `(PropertyManipulators)` stays a self
 ## FLAGGED for owner (decide before converting — each is a silent data-drop or scope error if guessed)
 
 **False negatives** (inventory said non-modifier, but the committed cascade design DOES cover them — verified in C++):
+
 1. **bPower** → `city.power.enabler` (CvCity.cpp:4656 changePowerCount → getPowerCount>0 presence; doc CASCADEFLAT_PROVIDES_POWER).
 2. **iInsidiousness / iInvestigation** → `city.insidiousness.flat` / `city.investigation.flat` (committed CASCADEFLAT_EXTRA_*).
 3. **iConquestProb** → `city.conquestProbability.percent` (committed CASCADEMOD_CONQUEST_PROBABILITY).
@@ -1435,6 +1476,7 @@ Only their *cascade-surface participation* (cascading across Game→…→City) 
 few genuinely scoped ones (AreaYieldModifiers, Global*Modifiers). Wave 1 is unblocked regardless.
 
 ## Order
+
 1. Wave 1 — 95 scalar/enabler drop-ins (mechanical, parity-logged).
 2. Wave 2 — reconcile §flag false-negatives (bPower, iInsidiousness, iInvestigation, iConquestProb) + fix iWorkableRadius doc.
 3. Wave 3 — indexed families (after the gating decision + the indexed-channel model).

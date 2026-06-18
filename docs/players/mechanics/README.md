@@ -9,9 +9,11 @@ Each page links to the governing source and XML so a designer can find the exact
 numbers and a developer can find the implementation.
 
 ## Pages
+
 - [Conscription (the draft)](conscription.md) — turning city population into units.
 
 ## Planned
+
 Topics queued for documentation (contributions welcome):
 combat resolution & odds · corporations and their maintenance · specialists &
 city commerce · culture and culture pressure · trade routes.

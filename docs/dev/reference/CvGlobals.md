@@ -4,6 +4,7 @@
 **Singleton** — accessed as the global `GC` object
 
 ## Overview
+
 `CvGlobals` (macro-aliased to `GC`) is the single entry point for virtually every
 piece of global state in the DLL. It owns:
 
@@ -21,6 +22,7 @@ Almost every `.cpp` file in the DLL includes `CvGlobals.h` and uses `GC.*`.
 ## Major Accessor Categories
 
 ### Game & Map
+
 | Accessor | Returns | Description |
 |---|---|---|
 | `getGame()` | `CvGameAI&` | The global game-state and AI object. |
@@ -28,12 +30,14 @@ Almost every `.cpp` file in the DLL includes `CvGlobals.h` and uses `GC.*`.
 | `getMap(MapTypes)` | `CvMap&` | A specific parallel-map slot. |
 
 ### Player & Team
+
 | Accessor | Returns | Description |
 |---|---|---|
 | `getPlayer(PlayerTypes)` | `CvPlayerAI&` | Forwarded to `CvPlayerAI::getPlayer()`. |
 | `getTeam(TeamTypes)` | `CvTeamAI&` | Forwarded to `CvTeamAI::getTeam()`. |
 
 ### Info Arrays
+
 All `CvInfo*` objects are bulk-loaded from XML at game start and stored in typed
 arrays. Example accessors:
 
@@ -53,6 +57,7 @@ arrays. Example accessors:
 _(Many more arrays exist; see `CvGlobals.h` for the complete list.)_
 
 ### Engine Interfaces
+
 The DLL calls back into the engine through a set of pure-virtual interface objects.
 These are stored on `CvGlobals` and allocated by the engine at DLL load time:
 
@@ -66,6 +71,7 @@ These are stored on `CvGlobals` and allocated by the engine at DLL load time:
 | `m_pInterfaceIFace` | `CvDLLInterfaceIFaceBase` | UI / HUD callbacks. |
 
 ### Supporting Services
+
 | Accessor | Returns | Description |
 |---|---|---|
 | `getPropertySolver()` | `CvPropertySolver&` | The property simulation solver. |
@@ -74,6 +80,7 @@ These are stored on `CvGlobals` and allocated by the engine at DLL load time:
 | `getDefineSTRING(key)` | `const char*` | String constant. |
 
 ## Compile-Time Feature Flags
+
 Several important features are toggled by `#define` symbols that appear in the headers
 included by `CvGameCoreDLL.h`:
 
@@ -85,6 +92,7 @@ included by `CvGameCoreDLL.h`:
 | `CVARMY_BREAKSAVE` | Compiles in the `CvArmy` class (breaks old saves). |
 
 ## Related
+
 - [`CvGameAI`](CvGameAI.md) — returned by `GC.getGame()`  
 - [`CvMap`](CvMap.md) — returned by `GC.getMap()`  
 - [`CvPropertySolver`](CvPropertySolver.md) — returned by `GC.getPropertySolver()`  

@@ -60,6 +60,7 @@ Specialist yields now receive the city yield modifier exactly like worked tiles.
 
 Flatten the threshold escalation and/or era-scale the rates so the GPP half of a specialist's
 value survives past the early game. Candidate knobs (pick after step 1 settles in play):
+
 - `GREAT_PEOPLE_THRESHOLD_INCREASE` 50 → ~25, or cap the `(created/5 + 2)` factor.
 - Era-scale `iGreatPeopleRateChange` in data (3 flat → 3/4/5/6…), or a player-level
   era multiplier in code.
@@ -76,8 +77,9 @@ around them, so specialists and tiles SYNERGIZE ("one doesn't overtake the other
   makes mines better, a Farmer-type makes farms better…).
 
 Implementation guidance (from the 2026-06 infrastructure work):
+
 - (b) rides the **shipped building→improvement-yields accumulation path** (per-city accumulation
-  + upgrade-chain propagation) with a new source: specialist-grants-ImprovementYieldChanges.
+  - upgrade-chain propagation) with a new source: specialist-grants-ImprovementYieldChanges.
 - (a) should be shaped as a **conditional-effects block per #363** (condition: building present;
   scale: per assigned specialist of type X) — NOT a new bespoke 2D `int**` table (#196 lesson).
 - Both must be visible to the governor's `AI_specialistValue` (the amplification IS the value)
@@ -95,7 +97,7 @@ Implementation guidance (from the 2026-06 infrastructure work):
 
 ## Governor follow-through (tracked elsewhere)
 
-#367/#370: emphasis strength + forced-specialist semantics (specialist emphasis is currently a
+[#367](https://github.com/Stones2Stars/S2S/issues/367)/[#370](https://github.com/Stones2Stars/S2S/issues/370): emphasis strength + forced-specialist semantics (specialist emphasis is currently a
 1.75× nudge with no forcing link — `AI_setEmphasizeSpecialist` never touches
 `ForceSpecialistCount`); #368 missing emphasis buttons; #369 building values × emphasis.
 

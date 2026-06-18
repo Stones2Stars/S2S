@@ -49,6 +49,7 @@ enforced at the call site, not sniffed.
 ```
 Event = { KIND, type, <raw payload fields> }
 ```
+
 - **`type`** — the data Type index (building/unit/…); the KIND axis stays tiny (the firewall axis), `type` carries
   the specificity.
 - **payload = RAW fields** (ints, type-indices, plot ids, a damage value) — **never a pre-formatted string.** The
@@ -108,13 +109,53 @@ not the rule. (⚑ verify VC7.1 variadic-macro support if we ever need that macr
 
 The spine is the foundational piece **in front of** the tally, so it comes first among the consumers' shared
 machinery (it + `CvScopedAccumulator` are the substrate). Then:
-1. **spine** + `CvScopedAccumulator` (the substrate — accumulator done; spine next).
+
+1. **spine** + `CvScopedAccumulator` — **DONE (slice 1, 2026-06-17):** `Sources/Cascade/CvEventSpine.{h,cpp}`
+   (`EventKind`/`CvCascadeEvent`/`IEventConsumer`/`CvEventSpine` + `eventSpine()`), pure C++03/STL, allocation-free
+   hot path + interest-guard. First consumer = the broad **logging consumer** (Cascade.log + the live `/events`
+   tee). Proof emit in `CvGame::doTurn`. Compiles + links (Assert).
 2. **tally** — first authoritative consumer; domain events → counts; shadow-diff vs `m_pai*Count`.
 3. **logging** consumer — broad/gated; reproduces channel fields + counts; shadow-diff vs the old lines.
 4. **grants** — fires provisions on its kinds.
 5. **modifier**, then **enabler** (read the tally) — per `cascade-engine-430.md`.
 
+## 9a. Observability — `CvHttpServer` is the FORMAL live layer (owner 2026-06-17)
+
+`CvHttpServer` is **not an experimental bolt-on** — it is the cascade's formal **live-observability / query layer**,
+and consumers publish to it. (Full endpoint/gating/architecture reference:
+[`../reference/http-server.md`](../reference/http-server.md).)
+
+- **Assessed: it needs NO redesign.** It already has the right architecture for this role — publish-and-serve with
+  **snapshot isolation** (the server thread never touches game objects), a **bounded** event queue
+  (`EVENT_QUEUE_CAP = 2048`, ~few-hundred-KB transient, and it **drains even with no client** so it can't bloat),
+  the `/events` SSE stream, and the **#419 live-log mechanism** (raw gated log lines teed onto `/events` for
+  out-of-process parsing — "the counter-strike way"). The owner's original cost worry (CPU/MAF/bloat) proved
+  unfounded; it's already 32-bit-safe. So we **extend + formalize**, not rebuild.
+- **The spine streams through the shared `streamLogTee`** (`BetterBTSAI.{h,cpp}`, promoted from file-local `static`
+  to a shared public tee 2026-06-17): the BBAI log helpers AND the spine's logging consumer both call it, so a log
+  line goes to the live `/events` stream via one canonical path (gated by `gStreamLogLevel`). Post-cutover the spine
+  is the central logging path and that tee lives in one place.
+- **The tally will expose a `/tally` snapshot endpoint** the same publish-and-serve way (like `/cities`) when it lands —
+  **PLANNED, not yet built** (live routes today are only `/`, `/units`, `/players`, `/cities`, `/events`). Tally DOMAIN
+  *emits* are already observable via `/events` (the `[SPINE/DOMAIN]` `log` frames); the missing piece is the snapshot GET
+  of current aggregated counts. It must publish from the game thread (never read `cascadeTally()` on the server thread —
+  the snapshot-isolation HARD CONSTRAINT). See [`../reference/http-server.md`](../reference/http-server.md).
+
+## 9b. SPEED + the 32-bit ceiling (owner 2026-06-17) — non-negotiable
+
+Speed is a given; the harder constraint is **memory on a 32-bit (LAA ~4GB) process** — avoid bloat / allocation
+failure. The design holds to it:
+
+- **Allocation-free hot path:** `CvCascadeEvent` is a small POD passed by const-ref (no heap per emit); the
+  interest-guard makes a dormant DIAGNOSTIC/TRACE firehose ≈ one bit-test; the logging consumer formats into a stack
+  buffer. No per-event `new`.
+- **Bounded observability buffers:** the `/events` queue is capped + self-draining (above). No ever-growing
+  in-memory log.
+- **Compact counts:** the tally weighs sparse (`std::map`) vs dense (`int[]`) per domain against memory
+  (per-node overhead × scopes × players adds up on 32-bit) when it lands — pick per domain.
+
 ## 9. Open / flagged
+
 - ⚑ Event payload concrete representation (self-describing field set vs tagged union vs per-kind struct) — §3.
 - ⚑ KIND taxonomy beyond the firewall axis (do we need domain sub-kinds, or does `type` carry it?) — lean: keep
   KIND tiny, `type` carries specificity.

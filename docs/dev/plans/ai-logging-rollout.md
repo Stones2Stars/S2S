@@ -38,6 +38,7 @@ scope (no new BUG option, matching the DAI choice):
 a per-module BUG option is a later refinement if needed.
 
 **Level mapping** (identical to WorkerAI, so levels mean the same everywhere):
+
 - **1** = headline: `begin`, `end`, `baseline`/`flavors`, `best`, final `decision`/`mission`.
 - **2** = per-decision: `score`, per-option/per-candidate decisions, `dedup`, `skip` (summary).
 - **3** = per-candidate trace: `cand`, per-flavour/per-factor detail, `skip` (detail).
@@ -62,6 +63,7 @@ module has no class, put the block atop the owning function or in a short
 `docs/dev/<domain>-ai-log.md`.
 
 **Per-branch implementation checklist** (reference implementation = the CvDecisionAI work):
+
 1. Add `log<Domain>AI` to `BetterBTSAI.{h,cpp}`.
 2. (Optional) add `Cv<Domain>AI.{h,cpp}`, wire ownership + `onTurnBegin`, register in
    `C2C (VS2019).vcxproj`. Mind unity grouping — add any directly-needed `#include`s
@@ -107,10 +109,12 @@ only `*AI` holdovers — already shipped, left unchanged. Lock this registry bef
 ### Tier P1 — heaviest former BBAI coverage / highest analytic value
 
 **`ai-logging/conventions`** (do first, tiny)
+
 - Add `docs/dev/ai-logging-conventions.md` capturing Section 1 (the registry + level
   vocabulary). Single source of truth every other branch links to. No code.
 
 **`ai-logging/war`** — `[TAI]` → WarAI.log (gTeamLogLevel)
+
 - Instrument `CvTeamAI::AI_doWar` (warplan open/abandon, total/limited/dogpile decisions,
   funding-gap gates — the ~20 logBBAI sites removed here), `AI_calculateAreaAIType`
   (area strategy per area), `AI_startWarVal`/`AI_endWarVal`/`AI_declareWarTradeVal`.
@@ -119,6 +123,7 @@ only `*AI` holdovers — already shipped, left unchanged. Lock this registry bef
 - Optional baseline: `[WAR/begin]` once/turn per team with enemy-power summary.
 
 **`ai-logging/unit`** — `[UAI]` → UnitAI.log (gUnitLogLevel)
+
 - The biggest former surface (~100+ logBBAI in CvUnitAI). Instrument the
   `AI_*Move` dispatcher and the high-traffic routines (`AI_attackMove`, `AI_defenseMove`,
   `AI_settleMove`, `AI_workerMove` handoff to CvWorkerAI, etc.).
@@ -128,6 +133,7 @@ only `*AI` holdovers — already shipped, left unchanged. Lock this registry bef
 - Big file → scope to the dispatch + top N routines first; expand later.
 
 **`ai-logging/city`** — `[CAI]` → CityAI.log (gCityLogLevel)
+
 - Instrument `CvCityAI::AI_chooseProduction` end-to-end (focus flags, emergency
   branches, the unit/building/project/process pick) and `AI_bestUnit`/`AI_bestBuilding`
   selection. Complements the flavour-only `[DAI/city/*]` already in DecisionAI.
@@ -138,11 +144,13 @@ only `*AI` holdovers — already shipped, left unchanged. Lock this registry bef
 ### Tier P2
 
 **`ai-logging/group`** — `[GAI]` → GroupAI.log (gUnitLogLevel)
+
 - `CvSelectionGroupAI` (stack AI update, stuck-loop detection, stack-compare) and
   `CvArmy` (mission execution, leader assignment) — the removed LOG_UNIT_BLOCK sites.
 - Tags: `[GRP/begin]`, `[GRP/decision]` (split/merge/move), `[GRP/skip]`, `[GRP/army]`.
 
 **`ai-logging/diplomacy`** — `[DIP]` → DiploAI.log (gPlayerLogLevel) — **DONE in the current working tree** (folded into current work per request, not a separate branch). Implemented in `CvPlayerAI::AI_dealVal` (`[DIP/cand]` per item + `[DIP/dealval]` list total) and `AI_considerOffer` (`[DIP/begin]`, `[DIP/score]` our-vs-their value, `[DIP/decision]` accept/reject incl. denial/grant/renewal). Optional later extension: `AI_doDiplo` (proactive proposals/demands) + `AI_counterPropose`.
+
 - **Known gap this restores:** Phase 2 deleted CvDeal's 14 per-trade-item logs (they were
   `gTeamLogLevel >= 2`), so "why the AI valued/accepted/refused a given trade item" is
   currently invisible. This branch is where that observability comes back, in the new

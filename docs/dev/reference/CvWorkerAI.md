@@ -137,6 +137,7 @@ iValue  = AI_bonusVal(bonus)
 ```
 
 Then if still positive:
+
 ```
 iValue += max(0, weights.aiObjectiveScale * bonus.getAIObjective)
 iValue *= (getNumTradeableBonuses(bonus) == 0
@@ -183,6 +184,7 @@ behaviour exactly.
 entries. Player is implicit (the cache lives on a per-player object).
 
 **Validity rules:** an entry is a hit only if
+
 - the key matches,
 - `turnComputed == gameTurn` (defensive; `onTurnBegin` should have cleared it),
 - and `bonus == currentBonus` (a plot's bonus can reveal mid-turn).

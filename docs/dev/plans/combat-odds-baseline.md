@@ -13,6 +13,7 @@ before the CvCombatModel unification. Later phases diff against this.
   reproduce `final` for the same `ourStr/theirStr/dmg*/nr*/climit` inputs.
 
 ## A) AI per-unit odds across defender strength (low -> high theirStr)
+
 Format: def ourStr theirStr dmgUs dmgThem nrUs nrThem climit hitLimit base wd rep kb -> final
 
 ```
@@ -37,6 +38,7 @@ GREATWHITE    235 19237  22  4 38  4 150 0 11  0 0 0 -> 1
 ```
 
 ## B) Weak prey now resolve to a high win% (the bug this session fixed)
+
 Lizard/duck/pheasant/kookaburra (defCur 0-1) vs hunters (atkCur ~300-1260) now read
 `odds=99` and get `[HAI/target/best]` + `[HAI/engage]` (172 engage events this run),
 instead of the old ~6%. Representative enriched skips (non-best candidates):
@@ -47,10 +49,12 @@ KOOKABURRA  defBase=1 defCur=0 atkBase=1050 atkCur=945  (odds ~99)
 ```
 
 ## How to diff after each phase
+
 1. `grep "[HAI/oddscalc]" HunterAI.log` for the same matchups; `final` should match
    table A (Phases 1-2) — or change only in the known-correct direction.
 2. Weak-prey cases should keep reading ~99 and engaging (table B).
 3. Phase 3: real combat outcomes (win-rate over many seeded battles) unchanged; no OOS.
 4. Preview path (`getCombatOdds`/ACO) is not in these logs — spot-check via the
    in-game combat hover for a couple of matchups, or add a temporary log if needed.
+
 ```

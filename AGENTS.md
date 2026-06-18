@@ -9,6 +9,7 @@ This file is the top-level guide. Subdirectory-specific rules live in nested
 architecture rules that apply to DLL source.
 
 ## Repository Layout
+
 - `Sources/` — C++ DLL source (`Cv*` engine classes, `Cy*` Python wrappers). Has its own `AGENTS.md`.
 - `Assets/XML/` — game data definitions (validated by `Tools/XmlValidator.exe`).
 - `Assets/Python/` — Python event callbacks (`CvEventManager.py`, etc.).
@@ -47,13 +48,16 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
 - Full dev bootstrap: `DevSetup.bat`. CI flow: `appveyor.yml`.
 
 ### Validation
+
 - XML: `Tools/XmlValidator.exe -a`.
 - Python callbacks: `Tools/XMLTools/verify-python-callbacks.py`.
 
 ### Adding a new source subdirectory
+
 `Sources/fbuild.bff` is the **source-of-truth for what FastBuild compiles** — the
 `.vcxproj` files are IDE-only and do NOT drive the build. When you create a new
 `Sources/<NewDir>/`:
+
 1. Add `$SOURCE_DIR$/<NewDir>` to the `.UnityInputPath` array in `Sources/fbuild.bff` (~line 201).
 2. Add the files to `Sources/C2C (VS2019).vcxproj` and `…vcxproj.filters` (IDE display).
 3. Both are required. Symptom of a missing `fbuild.bff` entry: compiles in the IDE
@@ -61,10 +65,12 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
    symbol in the new directory. `Sources/Repos/` and `Sources/Utils/` are reference examples.
 
 ## Key Subsystem Knowledge
+
 These are hard-won, non-obvious facts about the codebase. Treat as current state,
 not findings to re-discover.
 
 ### Worker AI
+
 - **Workers evaluate builds individually** — there is no per-player coordination
   layer. Each `CvUnit` worker independently calls `CvUnitAI` evaluation methods
   (`AI_irrigateTerritory`, `AI_improveBonus`, `AI_fortTerritory`, `AI_findBestFort`),
@@ -83,6 +89,7 @@ not findings to re-discover.
   The class doc comment in `Sources/CvWorkerAI.h` is the authoritative tag reference.
 
 ### City garrison tiers
+
 - **City defense runs on two ledgers — do not conflate them (#384).** Garrison
   *membership* (`CvUnitAI::AI_setAsGarrison`, self-expiring) is the **auxiliary** tier:
   any combat unit parked in a city counts toward actual defense strength
@@ -95,6 +102,7 @@ not findings to re-discover.
   `docs/dev/reference/CvUnitAI.md` (garrison-tiers section).
 
 ### Unit AI fallback terminals
+
 - **Audit pattern: idle-unit fallback terminals must not park units wherever they happen
   to stand.** Three owner-observed "lost contact with the mothership" cases share it:
   hunters advertising for escorts while idling in rival borders (#392), property-control
@@ -116,6 +124,7 @@ not findings to re-discover.
   never turn-satisfying terminals in their own right.
 
 ### Graphics / map generation
+
 - Any plot-graphics mutation must be guarded by **`GC.IsGraphicsInitialized()`**.
   During a NEW game, world generation (`addGameElements` → rivers/features/bonuses)
   runs *before* the render engine landscape exists, so symbol updaters that fire
@@ -126,11 +135,50 @@ not findings to re-discover.
   `shouldHaveGraphics`; `CvMap::setupGraphical`.
 
 ## Conventions
+
+- **Run the post-compaction reload hook — RECOMMENDED to mitigate context poisoning (owner ruling
+  2026-06-18).** Auto-compaction can silently drop this guide from context (the project-root
+  `CLAUDE.md` is re-read on compaction, but its `@AGENTS.md` / `Sources/AGENTS.md` content and
+  nested rules are NOT reliably re-injected), leaving an agent operating on a *poisoned* context that
+  looks complete but has lost the rules — the failure mode behind the recurring `.vcxproj`-is-truth
+  mistake. Mitigation, committed in the repo: a `SessionStart` hook (matcher `compact|resume|clear`
+  in `.claude/settings.json`) that re-injects `.claude/post-compaction-reload.txt` — a short notice
+  that orders a re-read of AGENTS.md and restates the few absolute non-negotiables. It is the *digest*,
+  not a second source of truth; AGENTS.md stays authoritative. The hook runs the digest through
+  **PowerShell 7 (`pwsh`)**, which emits UTF-8 cleanly, so emoji/Unicode are fine — do NOT route it
+  through legacy Windows PowerShell 5.1 (`powershell.exe`), which mangles non-ASCII on stdout. This is
+  the harness-level twin of the in-file banners on the dead `.vcxproj`/`.sln`/`.filters`: put the
+  antidote where compaction can't summarize it away.
+- **The real rule: `pwsh` == good, `powershell` == bad (owner ruling 2026-06-18).** `pwsh`
+  (PowerShell 7) is the standard shell and the owner's primary shell; `powershell.exe` (Windows
+  PowerShell 5.1) is the bad one — never invoke it, and never nest it inside a `pwsh` session. 5.1
+  defaults to a non-UTF-8 console encoding (mangles emoji/Unicode on stdout — the exact bug that forced
+  an ASCII-only digest until the hook moved to `pwsh`) and lacks the modern operators (`&&`/`||`,
+  ternary, null-coalescing) `pwsh` provides. This is `pwsh`-over-5.1, NOT PowerShell-over-bash: Git Bash
+  / the Bash tool is equally fine. (The build wrapper is still documented below as `powershell.exe -File
+  ../Tools/_Build.ps1`; migrating that invocation to `pwsh` is a verify-then-change follow-up — confirm
+  `_Build.ps1` runs clean under `pwsh` first, per "nothing is a one-liner".)
 - **Narrate your work verbosely (owner ruling 2026-06-11).** While investigating or
   changing anything, explain *what you are looking for and why* as you go — before each
   search/read/build step, not just in a final summary. The owner follows along in real
   time; terse status lines ("checking X…") hide the reasoning. State the question each
   step is meant to answer, what you expect to find, and what the result actually told you.
+- **Trust but verify — EVERY claim, including the owner's (owner ruling 2026-06-17).** Treat
+  every stated fact — a doc line, a `.vcxproj` value, an owner aside ("units have no OR-techs"),
+  your own recollection, a memory entry — as a starting hypothesis to CONFIRM against ground
+  truth (the live code, the actual data, the running game), not as settled. The owner explicitly
+  flags their own statements as "trust but verify, not a confirmation." A stale doc line loses to
+  the code; a guess that "looks obvious" has repeatedly produced regressions (and a whole-database
+  clobber when a tool's real behaviour wasn't checked first). Verify before you build on it, and
+  say what you verified it against.
+- **When documentation is lacking or wrong, FIX IT NOW — it is required, not a note-for-later
+  (owner ruling 2026-06-17).** If you hit a gap, an ambiguity, or a misleading line in the docs
+  (a runner not documented, a footgun undocumented, a stale description), writing/correcting that
+  doc is part of THE SAME work item — never "noted for the next agent." A lacking doc that bit you
+  will bite the next contributor; close it in the same change. (Specific instance that prompted
+  this: the migration curators were undocumented and `engine.py`'s superseded `--write` clobbered
+  the curated DB → `Tools/Migration/README.md` written + the toolkit doc corrected.) This sharpens
+  the "keep knowledge in the repo" rule below: *encountering* a doc gap obligates *closing* it.
 - **Nothing here is ever "just a one-liner" — expect hidden consequences.** This is a
   large, tightly-coupled Civ4/C2C codebase with non-obvious cross-cutting wiring (combat
   math shared across UI/AI/resolution, name-tagged save serialization, dual Python-enum
@@ -196,6 +244,7 @@ not findings to re-discover.
 - Do not modernize or replace the build chain/toolchain.
 
 ## Documentation & Knowledge — keep it in the repo
+
 **Durable knowledge lives in the repository, never only in a developer's or AI
 assistant's local/private notes.** When you learn something worth keeping — how a
 subsystem works, a design decision, a plan, a non-obvious "gotcha", the state of a
@@ -228,6 +277,20 @@ Any per-developer assistant memory store is a personal *index/cache* only — it
 If you record something locally, mirror the shareable part into the repo in the same
 change, and keep these docs current as the code moves. See `docs/dev/README.md`.
 
+**Handovers are TRANSIENT one-time relays — nothing durable may hinge on one (owner ruling 2026-06-17).** A
+handover is **in essence a task list** — work done + work still upcoming — whose only job is to carry state to
+the NEXT session; once that session has read it, it stops being a handover. (Writing an end-of-session handover
+is a fine practice; it just is never load-bearing.) Therefore:
+
+- **Nothing durable may hinge on data that lives ONLY in a handover.** Any fact, ruling, decision, or state that
+  matters beyond the next session MUST be captured in a durable doc (the relevant `docs/dev/` spec/reference, or
+  this `AGENTS.md`) in the SAME change — never left only in the handover.
+- **A durable doc must NEVER reference a handover as "latest / read-first / resume here"** (that is literally the
+  handover's own job), nor cite one as the home of a ruling or load-bearing detail. A durable doc must read
+  correctly with every handover deleted.
+- A handover is **deletable-without-loss** on completion. We don't actually delete them — they are kept as
+  historical context of *work deferred* — but no durable doc may depend on that retention.
+
 **⛔ HARD RULE — every owner ruling goes into the repo docs IMMEDIATELY, unprompted.**
 When the owner makes a ruling in conversation — a design decision, a workflow rule, a
 relaxed or tightened constraint, a "from now on do X" — writing it to assistant memory is
@@ -239,11 +302,13 @@ agent, and has repeatedly had to be re-requested — treat "saved to memory only
 unfinished task.
 
 ## Project Skills
+
 Project-exclusive Claude Code skills live in **`.claude/skills/<skill-name>/SKILL.md`**.
 These are committed with the repo, so they're shared across everyone working on S2S.
 See `.claude/skills/README.md` for the authoring convention and a template.
 
 ## Reference Docs
+
 - Sources/C++ rules: `Sources/AGENTS.md`
 - AI overview: `Sources/Mainpage.dox`
 - Source formatting policy: `Sources/.editorconfig`

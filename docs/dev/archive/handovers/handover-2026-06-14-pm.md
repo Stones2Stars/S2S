@@ -85,6 +85,7 @@ building-GROUP concept **with the Building pass** (it belongs there, not as an e
    Property · LeaderHead → **Building, Unit LAST** (per the migration order ruling).
 
 ## Pointers
+
 - Migration model + per-entity rulings: `docs/dev/plans/building-cascade-conversion.md`
   (read the "⇒ CHECKPOINT & RESUME" + "THE MODEL" sections).
 - Combat-class reference + audit: `docs/dev/reference/unitcombat.md`.

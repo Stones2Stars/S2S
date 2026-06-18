@@ -13,6 +13,7 @@ readers-pass mapping). Then start Tier B.
 ---
 
 ## ⛔ THE PROCESS — non-negotiable (owner rulings, this session)
+
 - **STRICTLY SERIAL, one info at a time, NEVER in parallel.** The catastrophe of the abandoned mass-migration
   was loss of VERIFIABILITY, not the conversions. (memory: `serial-info-conversion-only`)
 - **The per-info loop:** curate → `--write` the JSON under `Assets/Data/<info>/` → **the OWNER reviews & PASSES
@@ -27,6 +28,7 @@ readers-pass mapping). Then start Tier B.
   Process/Hurry/CultureLevel/BonusClass=0.
 
 ## ⛔ THE MODEL LAW locked/extended this session (all in the specs + memory)
+
 - **Data-authoring (memory `migration-data-authoring-principles`):** (1) author the unit/shape for what the
   DATUM IS, NOT how the engine combines it (a percentage is `percent` even if the engine multiplies — combination
   is §7 engine metadata; this fixed a GameSpeed `multiplier` error); (2) **the C++ data-fetching is reworked to
@@ -56,14 +58,16 @@ readers-pass mapping). Then start Tier B.
   with utf-8. `cityNames` stay (integral to founding); only the un-encodable names are filtered (`_encodable`).
 
 ## STATE — Tier A DONE (12/12), all committed on `json-data-migration`
+
 GameSpeed · Handicap · Era · Process · Victory · Vote · CultureLevel · Hurry · BonusClass · CivicOption ·
 Property · Civilization. Latest commit `4ca436fc`. Each its own bespoke/thin curator under `Tools/Migration/`;
 each JSON under `Assets/Data/<plural>/`. **Property is a FIRST PASS** (memory `properties-first-class`): decay =
 modifiers (toward `targetLevel`), effect-buildings = `grants` (pure list; the `requires` value-band is the
 building's, Building pass), `targetLevel` isolated, leaking (operationalRange + diffusion + ChangePropagators) →
-#429; the property SYSTEM (C++ + heavy Python) gets reworked to fit the data — a 2nd pass is expected.
+[#429](https://github.com/Stones2Stars/S2S/issues/429); the property SYSTEM (C++ + heavy Python) gets reworked to fit the data — a 2nd pass is expected.
 
 ## TOOLKIT state (`Tools/Migration/`)
+
 - `store.py` — four enables-family indexes (`enabled_by`/`obsoletes_of`/`replaces_of`/`disables_of`); zWIP filter;
   PropertyInfo registered. **TODO at Tech:** retain child tech `AndPreReqs`/`OrPreReqs` as `requires.build.all`/
   `.any` (store currently flattens both into `enables.techs`, losing AND/OR — the tech-tree multi-parent fix;
@@ -74,6 +78,7 @@ building's, Building pass), `targetLevel` isolated, leaking (operationalRange + 
   `engine.de_i`/`FIELD_RENAME` maps, not re-logged). Keep adding per entity.
 
 ## NEXT — Tier B (top-of-cascade sources; HEAVY)
+
 Per the ranking: **Tech (#13 — the SPINE ROOT, ~943 records)** · Civic · Religion · Corporation · Trait. These
 were curated pre-reset (✅) — RE-VERIFY each against v3 + the drop re-check + the EXE-link check, exactly as Tier
 A. Tech specifics: the `requires.build` retrofit above; tech modifiers are DOWNWARD `enabled`-deposits authored
@@ -82,6 +87,7 @@ dead). Then Tier C (Bonus/Route/Terrain/Feature/Improvement/Build) · D (Special
 Promotion/UnitCombat/LeaderHead) · E (the monsters: SpecialBuilding→**Building**, SpecialUnit→**Unit**, LAST).
 
 ## Pointers
+
 - Specs: `modifier-cascade-spec.md` (v3) · `enabler-cascade-spec.md` (v0.3 + §6.1 + Uniformity Law).
 - Order: `migration-entity-ranking.md`. Renames: `migration-renames.md`. Plan: `building-cascade-conversion.md`.
 - Prior handoff: `handover-2026-06-15-pm.md` (the locked structures going in).
@@ -97,6 +103,7 @@ Promotion/UnitCombat/LeaderHead) · E (the monsters: SpecialBuilding→**Buildin
   was fixed EARLY. Get the count + specifics right before it goes in the index.
 
 ## Git state
+
 Branch `json-data-migration`; Tier A all committed (12 infos + the foundation/toolkit + the zWIP filter). Working
 tree clean except this handoff + the despair entry (commit them docs-only). Docs-only may go to `main`, but these
 sit with the migration on the branch.

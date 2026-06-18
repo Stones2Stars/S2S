@@ -4,6 +4,7 @@
 **Standalone class** (not in the `CvGame` / `CvPlayer` hierarchy)
 
 ## Overview
+
 A generic, extensible attribute container that can be attached to *any* game object
 (game, team, player, city, unit, or plot). Each property is identified by a
 `PropertyTypes` enum value and stores both a **current value** and a **per-turn change
@@ -15,8 +16,10 @@ objects each turn and applies source, interaction, and propagation rules to upda
 property values.
 
 ## Construction
+
 `CvProperties` provides explicit constructors for each game-object type it can be owned
 by:
+
 ```cpp
 CvProperties()                    // standalone / unowned
 explicit CvProperties(CvGame*)
@@ -28,6 +31,7 @@ explicit CvProperties(CvPlot*)
 ```
 
 ## Data Access
+
 | Method | Description |
 |---|---|
 | `getNumProperties()` | Returns the number of distinct properties currently stored. |
@@ -39,6 +43,7 @@ explicit CvProperties(CvPlot*)
 | `getChangeByProperty(PropertyTypes)` | Returns the per-turn change for a property type directly. |
 
 ## Mutation
+
 | Method | Description |
 |---|---|
 | `setValue(int index, int)` | Sets the value at a list index. |
@@ -51,6 +56,7 @@ explicit CvProperties(CvPlot*)
 | `propagateChange(PropertyTypes, int)` | Propagates a change to this object and any configured propagators. |
 
 ## Aggregate Operations
+
 | Method | Description |
 |---|---|
 | `addProperties(const CvProperties*)` | Adds all values and changes from another instance. |
@@ -61,6 +67,7 @@ explicit CvProperties(CvPlot*)
 | `clearForRecalculate()` | Resets change rates in preparation for a full recalculation. |
 
 ## Comparison
+
 The comparison operators are **asymmetric**: only properties defined in the *right-hand*
 operand are considered. This means any object is simultaneously less-than and
 greater-than the empty-property object.
@@ -70,6 +77,7 @@ greater-than the empty-property object.
 | `operator<(const CvProperties&)` | Returns `true` if this instance is dominated by the other. |
 
 ## Serialisation & Checksum
+
 | Method | Description |
 |---|---|
 | `read(CvXMLLoadUtility*)` | Loads property definitions from XML. |
@@ -77,6 +85,7 @@ greater-than the empty-property object.
 | `getCheckSum(uint32_t&)` | Folds property state into a running checksum for save validation. |
 
 ## Related
+
 - [`CvPropertySolver`](CvPropertySolver.md) — solves the per-turn update for all properties  
 - [`CvPropertySource`](../CvPropertySource.h) — defines where properties come from  
 - [`CvPropertyInteraction`](../CvPropertyInteraction.h) — defines how properties interact  

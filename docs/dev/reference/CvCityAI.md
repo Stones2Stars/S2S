@@ -4,6 +4,7 @@
 **Inherits:** [`CvCity`](CvCity.md)
 
 ## Overview
+
 Provides full automated management of a city. The class is the most method-rich in the
 DLL; it covers citizen placement, production selection, building evaluation, worker
 coordination, defence contracts, and property control.
@@ -12,11 +13,13 @@ Caching is central to its design: two dedicated caches prevent redundant calcula
 during a single turn.
 
 ## Turn Entry Point
+
 | Method | Description |
 |---|---|
 | `AI_doTurn()` | Main per-turn entry. Runs in order: update assignments → floating-defender contracts → choose production → update worker needs → property/threat update → governor/emphasis handling. |
 
 ## Citizen Assignment
+
 | Method | Description |
 |---|---|
 | `AI_assignWorkingPlots()` | Optimises which tiles are worked and which specialist slots are filled. Ensures the city-centre tile is always worked; removes excess specialists; fills remaining population optimally. Updates UI when city is selected. |
@@ -26,6 +29,7 @@ during a single turn.
 | `AI_specialistValue(eSpecialist, bAvoidGrowth, bRemove)` | Scores a specialist slot: yields, commerce, GPP (scaled by civics/era), experience, health, happiness, property effects, and investigation values for crime mechanics. |
 
 ## Production Selection
+
 | Method | Description |
 |---|---|
 | `AI_chooseProduction()` | Top-level production decision. Checks for anarchy/occupation/danger; sets economic, military, and cultural priority flags; handles emergencies (defence, happiness, health, property control); scores and queues units, buildings, projects, or processes. |
@@ -36,6 +40,7 @@ during a single turn.
 ## Building Evaluation
 
 ### Focus Flags (`BUILDINGFOCUS_*`)
+
 Buildings are scored against bitmasks of focus flags:
 
 | Flag | Meaning |
@@ -59,6 +64,7 @@ Buildings are scored against bitmasks of focus flags:
 | `BUILDINGFOCUS_INVESTIGATION` | Investigator coverage |
 
 ### Building scoring methods
+
 | Method | Description |
 |---|---|
 | `AI_buildingValue(BuildingTypes, iFocusFlags, ...)` | Full building score against a focus-flag set. |
@@ -73,6 +79,7 @@ Buildings are scored against bitmasks of focus flags:
 | `AI_FlushBuildingValueCache()` | Invalidates `BuildingValueCache` (called on city state changes). |
 
 ## Plot & Improvement
+
 | Method | Description |
 |---|---|
 | `AI_plotValue(pPlot, ...)` | Scores a plot for citizen assignment. |
@@ -85,6 +92,7 @@ Buildings are scored against bitmasks of focus flags:
 | `AI_getBestBuild(int)` | Returns the cached best build for the nth plot slot. |
 
 ## City Importance & Strategy
+
 | Method | Description |
 |---|---|
 | `AI_getCityImportance(...)` | Returns a strategic weight for the city used in production prioritisation. |
@@ -97,6 +105,7 @@ Buildings are scored against bitmasks of focus flags:
 | `AI_cachePlayerCloseness(...)` | Caches proximity to rival players for threat evaluation. |
 
 ## Defence
+
 | Method | Description |
 |---|---|
 | `AI_doContractFloatingDefenders()` | Requests defenders through `CvContractBroker` based on threat level. |
@@ -104,6 +113,7 @@ Buildings are scored against bitmasks of focus flags:
 | `AI_establishInvestigatorCoverage()` | Ensures investigator units are present for crime detection. |
 
 ## Property Control
+
 | Method | Description |
 |---|---|
 | `AI_isNegativePropertyUnit(pUnit)` | Returns true if a unit would worsen a property (e.g. increase crime). |
@@ -116,12 +126,14 @@ Buildings are scored against bitmasks of focus flags:
 | `healthValue(...)` | Health component of a building score. |
 
 ## Caching Structures
+
 | Structure | Description |
 |---|---|
 | `yieldCache` | 16-entry cache keyed on `(yields[], commerce[], flags)`. Prevents redundant `AI_yieldValue()` calls within a turn. |
 | `BuildingValueCache` | Per-focus-bitmask pre-calculated building scores. Flushed by `AI_FlushBuildingValueCache()`. |
 
 ## Related
+
 - [`CvCity`](CvCity.md) — base class  
 - [`CvPlayerAI`](CvPlayerAI.md) — drives `AI_doTurn()` and production decisions  
 - [`CvContractBroker`](CvContractBroker.md) — defender and worker unit requests  

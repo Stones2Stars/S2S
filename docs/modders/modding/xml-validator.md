@@ -15,16 +15,19 @@ It uses **relative paths** (`..\Assets\Xml`, `..\Assets\Modules`), so it must be
 run from the `Tools\` folder.
 
 **Easy way — double-click:**
+
 1. Open the `Tools\` folder.
 2. Double-click `XmlValidator.exe`.
 3. It scans everything, prints the results, and waits on **"Press any key to
    exit…"** so you can read the output before the window closes.
 
 **Terminal way — same as CI:**
+
 ```powershell
 cd Tools
 .\XmlValidator.exe -a
 ```
+
 The `-a` flag is the automated/CI mode: it does not pause for a keypress and just
 returns when finished. Run it from a **real** PowerShell or cmd window — not piped
 or redirected into another program — because the tool resizes the console window
@@ -44,12 +47,13 @@ search than scrolling the console. Each line is one of:
 - an error in the form `<file>,<line>: <message>` — **these are what you fix.**
 
 **Tip:** open `Tools\XmlValidator.log` and look for any line that does *not* start
-with `Validating ` — those are your actual problems, each with the file and line
+with `Validating` — those are your actual problems, each with the file and line
 number to jump to. Fix, re-run, repeat until you get `complete without error(s)!`.
 
 ## What it does and does not catch
 
 **Catches** (these fail the build):
+
 - Malformed XML — unclosed or mismatched tags, stray/illegal characters, broken
   encoding.
 - Schema violations — wrong or misspelled tag names, tags in the wrong order,
@@ -71,6 +75,7 @@ game's log files instead:
 
 The `Tools\` folder also has helpers for keeping XML tidy (see `.vscode/tasks.json`
 for the wired-up VS Code tasks):
+
 - **Sort by tag** (`Tools\XMLTools\SortByTag.bat <file>`) — reorders a file's tags
   into schema order, which removes a whole class of "tag in the wrong order" errors.
 - **Autocorrect** (`Tools\Autocorrect\Autocorrect.bat --interactive <file>`) —

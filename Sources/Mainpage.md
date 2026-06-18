@@ -7,6 +7,7 @@ Civilization IV: Beyond the Sword. It is compiled as a Win32 DLL (`CvGameCoreDLL
 and loaded by the game engine at startup.
 
 The DLL is written in **C++ (pre-C++11 / VS2003-compatible)** and relies on:
+
 - **Boost 1.55** (smart pointers, bind, foreach, range adaptors, optional, format, …).
 - **Python C-API** for the `Cy*` binding layer that exposes game objects to Python scripts.
 - **Doxygen + Graphviz** for auto-generated API documentation.
@@ -33,6 +34,7 @@ The codebase is organised into the following broad layers, each described in det
 ## Core Game Objects
 
 ### `CvGame` / `CvGameAI`
+
 - `CvGame` is the global game-state singleton, accessed via `GC.getGame()`.
   - Manages turn flow, score, diplomacy initialisation, map regeneration, trade routes,
     blockades, replay messages, and end-game conditions.
@@ -43,6 +45,7 @@ The codebase is organised into the following broad layers, each described in det
     citizen-assignment caches for all players.
 
 ### `CvPlayer` / `CvPlayerAI`
+
 - `CvPlayer` represents a single civilisation (human or AI). It owns the city list,
   unit list, selection groups, build lists, contract broker, and player-level properties.
 - `CvPlayerAI` extends `CvPlayer` with the full AI decision stack:
@@ -58,6 +61,7 @@ The codebase is organised into the following broad layers, each described in det
     (space, conquest, culture, domination, diplomacy — each in four escalating stages).
 
 ### `CvCity` / `CvCityAI`
+
 - `CvCity` stores all city state (population, buildings, worked plots, specialists, …).
 - `CvCityAI` provides automated city management:
   - **Citizen assignment** — `AI_assignWorkingPlots()` optimises which plots citizens
@@ -80,6 +84,7 @@ The codebase is organised into the following broad layers, each described in det
     `STAGING`, `LICHPIN`).
 
 ### `CvUnit` / `CvUnitAI`
+
 - `CvUnit` stores all unit state (type, owner, plot, promotions, moves remaining, …).
 - `CvUnitAI` wraps `CvUnit` with the full unit behaviour loop:
   - `AI_update()` — main per-turn entry point; handles automation, mission execution,
@@ -93,6 +98,7 @@ The codebase is organised into the following broad layers, each described in det
     coordinated through `CvContractBroker`.
 
 ### `CvTeam` / `CvTeamAI`
+
 - `CvTeam` aggregates multiple players sharing vision, research, and diplomacy.
 - `CvTeamAI` drives team-level strategy:
   - `AI_doTurnPre()` — early-turn setup.
@@ -106,6 +112,7 @@ The codebase is organised into the following broad layers, each described in det
     optionally including defensive bonuses and vassal forces.
 
 ### `CvSelectionGroup` / `CvSelectionGroupAI`
+
 - `CvSelectionGroup` groups one or more units that move and act together.
 - `CvSelectionGroupAI` adds cooperative decision logic:
   - Separation utilities (`AI_separate*`) split groups by AI type, impassable terrain,
@@ -123,6 +130,7 @@ The codebase is organised into the following broad layers, each described in det
 ## Supporting Systems
 
 ### Property System (`CvProperties`, `CvPropertySolver`)
+
 The property system is a generic extensible attribute mechanism that can be attached to
 any game object (game, team, player, city, unit, plot). Properties represent named
 integer values (e.g. crime, pollution, tourism) with both a current value and a per-turn
@@ -137,6 +145,7 @@ change rate.
   propagators a building, improvement, or unit applies.
 
 ### Contract Broker (`CvContractBroker`)
+
 Decouples the "need a unit" signal from the "I can provide a unit" signal:
 
 - **Work requests** (`workRequest`) — posted by cities or the player AI with a priority,
@@ -150,6 +159,7 @@ Decouples the "need a unit" signal from the "I can provide a unit" signal:
   `LOW_PRIORITY_ESCORT_PRIORITY` (100).
 
 ### Pathfinding (`CvPathGenerator`, `CvPath`)
+
 Custom A\*-based pathfinder with pluggable cost and validity callbacks:
 
 - `CvPath` — an immutable linked list of `CvPathNode` objects iterable via
@@ -162,6 +172,7 @@ Custom A\*-based pathfinder with pluggable cost and validity callbacks:
   subclassing.
 
 ### Outcome System (`CvOutcome`, `CvOutcomeList`, `CvOutcomeMission`)
+
 Encapsulates probabilistic results of unit missions:
 
 - `CvOutcome` — a single possible result: yield/commerce grants, unit spawning,
@@ -172,6 +183,7 @@ Encapsulates probabilistic results of unit missions:
 - `CvOutcomeMission` — binds an outcome list to a specific unit mission type.
 
 ### Army System (`CvArmy`)
+
 Groups multiple `CvSelectionGroup` objects under a unified command:
 
 - Tracks a leader group, a list of member group IDs, a target plot, and a mission type.
@@ -181,6 +193,7 @@ Groups multiple `CvSelectionGroup` objects under a unified command:
   save-game compatibility).
 
 ### Map and Plot (`CvMap`, `CvPlot`)
+
 - `CvMap` — owns the flat array of all `CvPlot` objects; manages areas, plot groups,
   fog-of-war, viewports, and multi-map support. `coordRange()` handles wrapping.
 - `CvPlot` — stores per-tile state (terrain, feature, bonus, improvement, route, owner,
@@ -189,6 +202,7 @@ Groups multiple `CvSelectionGroup` objects under a unified command:
   strength queries.
 
 ### Globals Singleton (`CvGlobals` / `GC`)
+
 `CvGlobals` is the single giant singleton (accessed as `GC`) that holds every loaded
 `CvInfo*` array (terrain, feature, bonus, building, unit, tech, civic, …), pointers to
 the engine interfaces (`CvDLLEngineIFaceBase`, etc.), the map, the game object, and all
@@ -223,6 +237,7 @@ the Python C-API. The binding files are grouped by domain:
 Defined in `AI_Defines.h`; stored as bitmasks on `CvPlayerAI`.
 
 ### Military / Domestic Strategy (`AI_STRATEGY_*`)
+
 | Flag | Meaning |
 |---|---|
 | `AI_DEFAULT_STRATEGY` | Baseline balanced posture |
@@ -243,6 +258,7 @@ Defined in `AI_Defines.h`; stored as bitmasks on `CvPlayerAI`.
 | `AI_STRATEGY_ECONOMY_FOCUS` | Catch-up tech at military expense |
 
 ### Victory Strategies (`AI_VICTORY_*`)
+
 Each victory type has four escalating stages (e.g. `SPACE1`…`SPACE4`):
 
 | Victory type | Description |
@@ -254,6 +270,7 @@ Each victory type has four escalating stages (e.g. `SPACE1`…`SPACE4`):
 | `DIPLOMACY` | UN / diplomatic victory |
 
 ### City Role Flags (`AI_CITY_ROLE_*`)
+
 Set per city to bias production choices:
 `VALID`, `BIG_CULTURE`, `BIG_PRODUCTION`, `BIG_MILITARY`, `SCIENCE`, `GOLD`,
 `PRODUCTION`, `SPECIALIST`, `FISHING`, `STAGING`, `LICHPIN`.
@@ -338,6 +355,7 @@ profiler for performance measurement of hot paths.
 Individual class reference pages (in [docs/dev/reference/](docs/reference/)):
 
 ### AI Classes
+
 | Class | Description |
 |---|---|
 | [CvGameAI](docs/reference/CvGameAI.md) | Global AI helpers; normalised combat value; dirty-work propagation |
@@ -348,6 +366,7 @@ Individual class reference pages (in [docs/dev/reference/](docs/reference/)):
 | [CvSelectionGroupAI](docs/reference/CvSelectionGroupAI.md) | Group coordination: attacks, garrison, mission state |
 
 ### Supporting Systems
+
 | Class | Description |
 |---|---|
 | [CvProperties](docs/reference/CvProperties.md) | Generic extensible property container (crime, pollution, …) |

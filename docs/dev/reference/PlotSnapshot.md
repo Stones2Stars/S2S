@@ -95,7 +95,7 @@ plotIdx,x,y,terrain,feature,improvement,route,bonus,isWater,isHills,isPeak,isCit
 | `area` | `pPlot->area()->getID()` | useful for filtering same-landmass plots |
 | `improvementCurrentValue` | `pPlot->getImprovementCurrentValue()` | **read-only access** — the snapshot deliberately does NOT call the lazy-init mutator `setImprovementCurrentValue()`; `0` here means "field not yet initialised" |
 | `numUnits` | `pPlot->getNumUnits()` | total units on the plot (all owners) |
-| `animals` | per-animal token list | `|`-separated, one token per `isAnimal()` unit: `<UnitType>@o<owner>c<combat>a<aggression>e<enemyOfActiveTeam>`. `c` is XML `iCombat` (in-game strength = `c/100`); `a` is `iAggression` (`0` = passive prey); `e` is `1`/`0`/`-1` for at-war-with-active-team / not / no-active-team. Empty when no animals. Companion to `HunterAI.log` `[HAI/*]` lines — join on `(x,y)` to see which animal a hunter engaged or walked past, and whether it was a recognised target (`e`). |
+| `animals` | per-animal token list | pipe-separated, one token per`isAnimal()` unit: `<UnitType>@o<owner>c<combat>a<aggression>e<enemyOfActiveTeam>`.`c` is XML `iCombat` (in-game strength = `c/100`);`a` is `iAggression`(`0` = passive prey); `e` is `1`/`0`/`-1` for at-war-with-active-team / not / no-active-team. Empty when no animals. Companion to `HunterAI.log` `[HAI/*]` lines — join on `(x,y)`to see which animal a hunter engaged or walked past, and whether it was a recognised target (`e`). |
 
 ## Cross-referencing with BuildEvaluation.log
 
@@ -103,16 +103,21 @@ Worker AI log lines reference plots by `at=(x,y)`. To recover the full plot
 state for a logged decision:
 
 1. Find the relevant line in `BuildEvaluation.log`:
+
    ```
    [WAI/best] at=(48,32) bonus=BONUS_WHEAT build=BUILD_FARM value=30000 (improve)
    ```
+
 2. Find the matching snapshot (look at the `t<turn>` suffix in filenames —
    pick the most recent one before the BuildEvaluation entry's turn).
 3. Grep the snapshot:
+
    ```
    grep ",48,32," PlotSnapshot_start_t0.csv
    ```
+
    Output:
+
    ```
    2588,48,32,TERRAIN_GRASS,NONE,NONE,NONE,BONUS_WHEAT,0,0,0,0,1,0,-1,,3,0
    ```

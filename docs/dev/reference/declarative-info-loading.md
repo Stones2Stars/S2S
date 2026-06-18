@@ -62,6 +62,7 @@ un-migrated classes are a harmless no-op. `CvBuildInfo` is the fully-migrated re
 | `addYields(int*&, tag)` / `addCommerce(int*&, tag)` | `int[NUM_YIELD/COMMERCE_TYPES]` | **wrapper owns the array** — dtor must call `uninitDataMembers()` |
 
 ### Not yet supported (each blocks a cluster of classes)
+
 1. **2D `m_ppi` arrays** (`int**`) — blocks Civic, Improvement, Property, Trait.
 2. **Delayed-resolution enum-as-int** — `addEnumAsInt` is immediate-only, so an `int` FK that
    used `addDelayedResolution` (e.g. `CvVoteSourceInfo::m_iCivic`) can't use it yet.

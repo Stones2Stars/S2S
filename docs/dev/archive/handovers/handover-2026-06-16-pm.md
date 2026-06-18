@@ -6,6 +6,7 @@
 this session.
 
 ## ⛔ READ-FIRST GATES (unchanged — honor every resume)
+
 1. **READ ALL THE DOCS before touching anything** — both LOCKED specs (`modifier-cascade-spec.md` v3 +
    `enabler-cascade-spec.md` v0.3), `building-cascade-conversion.md`, `migration-entity-ranking.md`,
    **`migration-renames.md`**, the entity's `classifications/*.json`, and the prior handovers. Look concepts UP; never
@@ -17,12 +18,15 @@ this session.
    audios default in the EXE so they're droppable).
 
 ## STATE — Tier C through Feature #21, all committed on `json-data-migration`
+
 Bonus #18 · Route #19 · Terrain #20 (+ river/hills-peak follow-up) · **Feature #21** ✅. Latest commit `8f0f3af6`.
 Working tree clean except this handover. **3429 `Assets/Data/**/*.json` parse.**
 
 ## ⛔⛔ IMMEDIATE NEXT TASK — FINISH THE ART RESTRUCTURE (owner: do this before "whatever is next")
+
 The art model was redesigned this session (owner 2026-06-16). **New shape — top-level `ui`/`world`/`sound` blocks,
 with `art` a SUB-block of ui/world** (so non-art members sit beside it):
+
 - `ui.art.icon` (UI icon ← `Button`/`Texture`), `ui.art.movie.{file,sound}` (video+sound TOGETHER, UI-only),
   `ui.art.{techButton,genericTechButton,advisor,fontButton,tgaIndex}`, `ui.{hotkey,altDown,ctrlDown,shiftDown,hotKeyPriority}` (non-art key triggers)
 - `world.art.icon` (on-map graphic ← `ArtDefineTag`), `world.art.effect.{type,probability}` (cosmetic effect+chance),
@@ -39,6 +43,7 @@ process, bonusclass, civicoption, + any thin `EntityConfig` curator). **The BESP
 and STILL emit flat `art`** — they need re-aligning to `ART_BLOCK`. Bespoke list to fix (each has its own art
 handling, e.g. `curate_religion.py:110` `art[ART[tag]] = v`): **religion, civic, trait, specialist, civilization,
 era, gamespeed, handicap, victory, vote, culturelevel, hurry, corporation, project, heritage, property, pocos.**
+
 - **HOW:** add a shared helper to `curate_common` (e.g. `put_art(art_blocks, tag, val)` wrapping
   `_set_path(...ART_BLOCK...)` + `drop_empty_audio`), and in each bespoke curator replace its local `art`-dict +
   `out["art"]=art` with the `ui`/`world`/`sound` emit (mirror `cc.curate` lines ~278 + ~338). Re-render each, owner
@@ -48,6 +53,7 @@ era, gamespeed, handicap, victory, vote, culturelevel, hurry, corporation, proje
   art fields are already in `ART_BLOCK`.
 
 ## ⛔ MODEL LAW locked this session (all in the specs)
+
 - **DELIVERYGUY / SEMANTIC-SENSE ownership (modifier-spec §6.1):** "who BRINGS the modifier to the table?" owns it;
   the root test is *what makes semantic sense*. A thing ON A PLOT owns its own modifiers. TWO first-class tools —
   keep-on-source (conditioned via `enabled`/`per`) vs fold-onto-the-owner; semantic sense picks.
@@ -71,22 +77,26 @@ era, gamespeed, handicap, victory, vote, culturelevel, hurry, corporation, proje
   blocks; family names). The art restructure above is this gate brought forward.
 
 ## Terrain #20 river model (committed; recap for context)
+
 River = a plot edge-attribute, NOT an entity. The +1 commerce base river bonus lives ON THE TERRAIN as
 `commerce.plot.flat[].{value:1, enabled:"HAS_RIVER"}` on the 19 river-capable LAND terrains (EARTH ∧ ¬AQUATIC +
 HILL/PEAK). Hills/peak plot-yields moved off `YieldInfo` onto `TERRAIN_HILL`/`PEAK`. Feature `RiverYieldChange`
 compounds on top. `YieldInfo` (its other fields) is a small later curation.
 
 ## GLOBAL WARMING — scrapped mod, issue #436
+
 `GLOBAL_WARMING` is `// #define`d out (compiled out). `iWarmingDefense` DROPPED from Feature (a future GW mechanic
 gets its own base object). Vestige-removal scope + concept captured in `global-warming-mod.md`; issue
 **Stones2Stars/S2S#436**. (`global-warming-mod.md` is committed on this branch — reaches `main` when #428 merges.)
 
 ## NEXT — after the art alignment is finished
+
 Per the ranking: **Improvement #22** (heavy plot-leaf; ≡ its Build; run a `classify-improvement` workflow like
 terrain/feature) · **Build #23** · then Tier D (Specialist done; Heritage done; Project done; PromotionLine →
 Promotion · UnitCombat · LeaderHead) · Tier E (SpecialBuilding→Building, SpecialUnit→Unit, LAST). Then Phase F.
 
 ## Pointers
+
 - Specs: `modifier-cascade-spec.md` (v3, now §0.8/§6.1) · `enabler-cascade-spec.md` (v0.3, now §3/§8). Order +
   Phase F: `migration-entity-ranking.md`. Renames (has §Terrain/§Feature): `migration-renames.md`. Art deferral +
   the icon-headache resolution: `building-cascade-conversion.md` "DEFERRED — ART SUB-BLOCKS".
@@ -96,5 +106,6 @@ Promotion · UnitCombat · LeaderHead) · Tier E (SpecialBuilding→Building, Sp
 - Prior handover: `handover-2026-06-16.md` (Bonus #18 / start-of-day).
 
 ## Git
+
 Branch `json-data-migration`; everything committed (`8f0f3af6`). Commit this handover docs-only. **Resume: finish
 the art alignment (bespoke curators) FIRST, owner-inspect+commit, then Improvement #22.**

@@ -108,6 +108,7 @@ selection *profile*. Structure:
 | **No per-unit value cache across roles** | `AI_unitValue` recomputes the combat normalization and modifier loops every call; a unit evaluated for ATTACK and again for COUNTER does the shared sub-work twice. |
 
 **Speed levers to evaluate later** (not yet implemented):
+
 - Precompute, per player per turn, the set of `canTrain`-able units (and their
   `AI_combatValue`) once, instead of per city per role.
 - Share a player-level `(role) → best unit` memo, invalidated on tech/civic/limit

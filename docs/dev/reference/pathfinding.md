@@ -19,6 +19,7 @@ EXE/DLL boundary — the DLL cannot construct a finder's internals directly, onl
 drive it through this interface).
 
 A **finder is a stateful object.** It owns:
+
 - a node grid sized to the map,
 - the open/closed lists for the current search,
 - a "last node" pointer to the destination node of the **most recent** search run on it,
@@ -65,6 +66,7 @@ The `int data` parameter carries an `ASNC_*` phase flag (e.g. `ASNC_INITIALADD`
 for the start node) so a callback can special-case the first node.
 
 ### `FAStarNode` fields you will use
+
 - `m_iX`, `m_iY` — the plot coordinate of this node.
 - `m_iData1`, `m_iData2` — **finder-specific payload**, written by the NotifyChild/Add
   callback. For the **step finder**, `m_iData1` accumulates the **tile count** from the
@@ -102,18 +104,22 @@ The step finder answers "how many tiles is the shortest path?" Its callbacks
 (`Sources/CvGameCoreUtils.cpp`):
 
 **`stepCost` → always `1`.**
+
 ```cpp
 int stepCost(...) { return 1; }
 ```
+
 Every legal move costs one. So step "distance" is a **tile hop count**, independent
 of terrain, roads, or movement points — *not* a turn count. With `stepHeuristic =
 stepDistance` (the wrap-aware Chebyshev / king-move tile distance) the search is
 effectively a uniform-cost BFS for the fewest-tiles path.
 
 **`stepAdd` → accumulates the distance into `m_iData1`.**
+
 ```cpp
 node->m_iData1 = (data == ASNC_INITIALADD) ? 0 : (parent->m_iData1 + 1);
 ```
+
 This is why `GetLastNode(finder)->m_iData1` is the path length.
 
 **`stepValid` → terrain-only edge gate (the *global* step finder uses this).**
@@ -125,6 +131,7 @@ finder's info int names a land plot it permits a single water↔land transition 
 to find transport assault landing spots).
 
 ### `teamStepValid` — the team-restricted variant
+
 `teamStepValid` is **not** wired to the global step finder. It is supplied to a
 *locally created* finder when callers want "where could this team's units actually
 go on the ground" (e.g. `CvPlot::calculatePathDistanceToPlot`). Differences from
@@ -139,12 +146,14 @@ go on the ground" (e.g. `CvPlot::calculatePathDistanceToPlot`). Differences from
   with, or covered by open borders; otherwise **blocked** (neutral closed borders).
 
 The team data arrives via `SetData`:
+
 ```cpp
 std::vector<TeamTypes> teamVec;
 teamVec.push_back(eTeam);     // teamVec[0] = the team being pathed for
 teamVec.push_back(NO_TEAM);   // teamVec[1] = optional "also allowed" team (none)
 gDLL->getFAStarIFace()->SetData(finder, &teamVec);
 ```
+
 Inside the callback, `pointer` is that `teamVec`; `teamVec[0]` drives all the
 diplomacy checks and `teamVec[1]` is an extra "treat this team's tiles as passable"
 exception.
@@ -161,6 +170,7 @@ with a **destination of `(-1, -1)`** and the region id in the info int:
 gDLL->getFAStarIFace()->GeneratePath(&GC.getAreaFinder(), pPlot->getX(), pPlot->getY(),
                                      -1, -1, pPlot->isWater(), iArea);
 ```
+
 The NotifyList callback (`joinArea`, `countPlotGroup`, `countRegion`) runs for every
 node visited, stamping/counting membership.
 
@@ -253,6 +263,7 @@ still `Initialize`d in `CvMap::setup` but, with the macro off, are not driven fo
 in-DLL unit movement.
 
 ## See also
+
 - [`CvPathGenerator`](CvPathGenerator.md) — the unit-movement pathfinder.
 - [`CvMap`](CvMap.md) — owns the finders; `CvMap::setup` wires them.
 - [`CvPlot`](CvPlot.md) — `calculatePathDistanceToPlot` and other finder consumers.

@@ -8,6 +8,7 @@ automation. Goal: make the AI treat subdued animals as a **managed strategic res
 Legend: **[V]** verified in code; **[O]** owner-reported design knowledge, not yet code-verified.
 
 ## Owner rulings (2026-06-11)
+
 - **Spread first**: animals prefer "religion-spreading" their buildings (carry the herd
   building to every city lacking the bonus) over terminal options. Bonus access is
   **city-local** — a city needs the resource in the city itself (or the national wonder) —
@@ -22,6 +23,7 @@ Legend: **[V]** verified in code; **[O]** owner-reported design knowledge, not y
   instead of being manually ferried.
 
 ## The distinction that matters [O]
+
 - **Subdued animal** = the captured mobile *unit* (`UNITCOMBAT_SUBDUED`, `UNITAI_SUBDUED_ANIMAL`;
   cannot merge — `bCannotMergeSplit`). It can be walked into a city and consumed.
 - **Tamed animal** = the in-city *building/resource* produced from a subdued animal (e.g. a
@@ -29,6 +31,7 @@ Legend: **[V]** verified in code; **[O]** owner-reported design knowledge, not y
   yield. The AI currently doesn't model "unit → which in-city outcome" as a strategic choice.
 
 ## What the AI does today [V]
+
 - Keep-value self-limits: in the unit keep/disband valuation, `UNITAI_SUBDUED_ANIMAL` value is
   scaled **down** the more you already have — `iValue *= max(0, cities*2 - numSubdued)/max(1,
   cities)` (`CvPlayerAI.cpp:20916`). So ~2/city is the soft target → the old glut is mostly gone
@@ -39,6 +42,7 @@ Legend: **[V]** verified in code; **[O]** owner-reported design knowledge, not y
   values a subdued animal if it can build a *currently-needed* building somewhere.
 
 ## Gaps to fix [O]
+
 1. **No butcher evaluation.** The AI never weighs *butchering* an animal in a city — which is
    often worth it when there is **no building left to create** with that animal (one-off
    food/yield). Today an animal with nothing to construct just lingers. → add a butcher-vs-build
@@ -52,6 +56,7 @@ Legend: **[V]** verified in code; **[O]** owner-reported design knowledge, not y
    the unit. Each subdued animal should be routed to its best in-city outcome.
 
 ## Verified (2026-06-11) [V]
+
 - **Butcher** = `MISSION_SLAY_ANIMAL` → `OUTCOME_SLAY_ANIMAL` (food ~20+rand, production,
   commerce; requires a city plot in friendly territory). **Culture** = `MISSION_RECORD_TALE` →
   per-size-class outcomes granting 1–37 culture (+research at the top end), defined on the
@@ -70,6 +75,7 @@ Legend: **[V]** verified in code; **[O]** owner-reported design knowledge, not y
   spread blockers were in `getBestConstructValue` (below).
 
 ## Shipped (2026-06-11, #381)
+
 - **`getBestConstructValue` skips cities that already have every bonus a building grants**:
   herd buildings fan out to bonus-lacking cities, has-bonus cities stop swallowing herd units
   for ~zero value, and the `assumeSameValueEverywhere` cache gets seeded from a city that
@@ -83,11 +89,13 @@ Legend: **[V]** verified in code; **[O]** owner-reported design knowledge, not y
   holds in place when nothing currently needs it.
 
 ## North star
+
 Cities (or the player AI) declare what they need (a resource they lack, food when starving), and
 each subdued animal is valued for its **best** in-city action: build-to-spread-resource, butcher,
 or hold. Ties into [[city-driven-worker-valuation]] (cities declaring needs) and the
 [[hunter-ai-module-split]] / hunter economy that produces these animals.
 
 ## Cross-references
+
 - Related report: `unit-ai-valuation.md` (hunter glut; dog/War-Dog spam still open).
 - Memory: [[unit-ai-valuation]], [[city-driven-worker-valuation]], [[building-improvement-yields]].

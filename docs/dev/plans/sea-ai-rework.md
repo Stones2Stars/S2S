@@ -43,9 +43,11 @@ CvHunterAI`. Peace-safe — pathing still refuses would-be-war territory, so aut
 never auto-declares war.
 
 ### `seaExplore` — naval exploration that drives into the dark
+
 `AI_explore` is a *land* explorer: it adds large `+adjacentToLand` / `+owned` score, so
 ships hug the coast and home waters instead of open ocean (the "doesn't explore dark
 areas / all take the same path" symptom). `CvHunterAI::seaExplore` instead:
+
 - scores frontier water plots (adjacent to unrevealed map) and **prefers open water**
   (a bonus for *not* being adjacent to land), so ships head into the dark;
 - **spreads the fleet** via the per-player claim ledger (`tryClaim`/`isClaimedByOther`)
@@ -70,6 +72,7 @@ areas / all take the same path" symptom). `CvHunterAI::seaExplore` instead:
   Log reasons: `seaExplore` (picked a new target) / `seaExploreKeep` (committed heading).
 
 ### `detectSpin` — turn-hang safety
+
 A hunter/explore routine that pushes a mission which never advances the unit leaves it
 `readyToMove`, so the AI re-invokes it at the same plot until the engine's `iTempHack>50`
 backstop fires — ~50 expensive re-decides per stuck unit per turn (observed on AI

@@ -14,6 +14,7 @@ docs go). Engine/source docs used to live under `Sources/docs/` — they were co
 Root files: **[`MOD-README.md`](MOD-README.md)** — what the mod is + how to install it (the repo front door).
 
 ## Where new docs go
+
 - **How some code behaves today** → `dev/reference/` (one note per class/system).
 - **A change/initiative you intend to make** (plan, spec, rollout) → `dev/plans/`.
 - **How to author data / mod** → `modders/`.

@@ -4,11 +4,13 @@
 **Inherits:** [`CvUnit`](CvUnit.md)
 
 ## Overview
+
 Adds automated behaviour to every unit in the game. The class manages the full unit
 lifecycle from AI perspective: mission selection, movement, combat decisions, contract
 dispatch, healing, promotion, upgrade, and serialisation.
 
 ## Contract State Machine
+
 Units participate in the `CvContractBroker` workflow through a five-state machine:
 
 | State | Description |
@@ -20,6 +22,7 @@ Units participate in the `CvContractBroker` workflow through a five-state machin
 | `CONTRACTUAL_STATE_NO_WORK_FOUND` | Broker search failed; falls back to default behaviour. |
 
 ## Lifecycle
+
 | Method | Description |
 |---|---|
 | `CvUnitAI(bool bIsDummy)` | Constructor; initialises all AI state. Pass `true` for placeholder/dummy units. |
@@ -31,6 +34,7 @@ Units participate in the `CvContractBroker` workflow through a five-state machin
 | `write(FDataStreamBase*)` | Saves all AI state to a save stream. |
 
 ## Core Behaviour
+
 | Method | Description |
 |---|---|
 | `AI_update()` | Main per-turn entry. Checks if the unit can move, handles automation/contracts, executes the current mission, and finalises state. Returns `true` if the unit should wait until next turn. |
@@ -40,6 +44,7 @@ Units participate in the `CvContractBroker` workflow through a five-state machin
 | `AI_promote()` | Evaluates the available promotion tree and selects the best option. |
 
 ## Combat
+
 | Method | Description |
 |---|---|
 | `AI_attackOdds(pPlot, bPotentialEnemy, ...)` | Calculates attack odds against the best defender on a plot (0–100). |
@@ -48,6 +53,7 @@ Units participate in the `CvContractBroker` workflow through a five-state machin
 | `scoreCityHealerNeed(eUnitCombat, eDomain, pCity)` | Scores a city's need for a healer of a given combat type and domain. |
 
 ## Build & City Support
+
 | Method | Description |
 |---|---|
 | `AI_bestCityBuild(pCity, ...)` | Finds the best tile improvement to build in or around a city. Returns the target plot and build type. |
@@ -71,6 +77,7 @@ City defense runs on **two independent ledgers**, and they must not be conflated
   searches in `AI_guardCityMinDefender`, `AI_getTotalFloatingDefenders`).
 
 Rules that follow (owner rulings, issue #384):
+
 - **Garrisoning never retypes a unit.** `AI_guardCity` and the leave-a-defender-behind
   paths (`AI_goToTargetCity`, `AI_cityAttack`) mark membership + park persistently
   (FORTIFY → SLEEP → SKIP), keeping the unit's UNITAI. A strong-but-unsuited unit (e.g. a
@@ -110,6 +117,7 @@ Rules that follow (owner rulings, issue #384):
   (CITY_DEFENSE) from auxiliary members.
 
 ## Group & Mission
+
 | Method | Description |
 |---|---|
 | `AI_groupFirstVal()` | Leader-priority value for group formation (range: `LEADER_PRIORITY_MIN`–`LEADER_PRIORITY_MAX`). |
@@ -118,6 +126,7 @@ Rules that follow (owner rulings, issue #384):
 | `AI_isAwaitingContract()` | Returns `true` if the unit is in `CONTRACTUAL_STATE_AWAITING_ANSWER`. |
 
 ## Birthmark & direction finding (automation spreading)
+
 Every unit gets a **birthmark** at `AI_init` — a stable per-unit AI seed. Wherever several
 automated units would otherwise make identical choices, behaviour variation is keyed off it
 (`AI_getBirthmark() % N` gates exist across the unit AI). For DIRECTIONS there is exactly **one
@@ -129,6 +138,7 @@ different ring directions). New direction-spreading behaviours must use these he
 re-derive birthmark math.
 
 ## Border Patrol (AUTOMATE_BORDER_PATROL)
+
 `AI_borderPatrol()` is the human "Border Patrol" automation. Cascade (2026-06-11, #24):
 return-to-borders (when >2 tiles out) → heal → **intercept** visible enemies nearest-first out
 to range 12 (odds bar = the `AUTO_PATROL_MIN_COMBAT_ODDS` modder option, +5/+10/+15 at range
@@ -150,6 +160,7 @@ visibility-staleness-weighted wander + the shared birthmark direction bias, with
 "Territory Patrol").
 
 ## State / Identity
+
 | Method | Description |
 |---|---|
 | `AI_getUnitAIType()` | Returns the current `UnitAITypes` role. |
@@ -161,6 +172,7 @@ visibility-staleness-weighted wander + the shared birthmark direction bias, with
 | `getIntendedHeritage()` | Returns the heritage this unit intends to found (if any). |
 
 ## Related
+
 - [`CvUnit`](CvUnit.md) — base class (non-AI state)  
 - [`CvSelectionGroupAI`](CvSelectionGroupAI.md) — groups of units driven together  
 - [`CvContractBroker`](CvContractBroker.md) — work-request dispatch system  

@@ -4,6 +4,7 @@
 **Standalone singleton**
 
 ## Overview
+
 The `CvPropertySolver` is the engine that drives the [property system](CvProperties.md)
 each turn. It collects all active `CvPropertySource`, `CvPropertyInteraction`, and
 `CvPropertyPropagator` rules from every game object, runs a predict–correct cycle, and
@@ -12,6 +13,7 @@ applies the resulting value changes back to each object's `CvProperties` contain
 The class is accessed as a global singleton through `GC.getPropertySolver()`.
 
 ## Core Solve Cycle
+
 Each game turn the solver performs two passes:
 
 1. **Predict** — calls `doPredict()` on every `PropertySourceContext`, computing
@@ -20,6 +22,7 @@ Each game turn the solver performs two passes:
    `PropertySolverMap::applyChanges()`.
 
 ## `PropertySolverMap`
+
 An internal helper class that maps `CvGameObject*` → `CvProperties` for both predicted
 values and pending changes.
 
@@ -31,6 +34,7 @@ values and pending changes.
 | `applyChanges()` | Commits all pending changes to the actual `CvProperties` containers. |
 
 ## `PropertySourceContext`
+
 Carries runtime state for a single `CvPropertySource` operating on a specific
 `CvGameObject`.
 
@@ -45,6 +49,7 @@ Carries runtime state for a single `CvPropertySource` operating on a specific
 | `doCorrect(pSolver)` | Calls the source's correct step; finalises the actual change. |
 
 ## Related
+
 - [`CvProperties`](CvProperties.md) — per-object property storage  
 - [`CvPropertySource`](../CvPropertySource.h) — interface for property input sources  
 - [`CvPropertyInteraction`](../CvPropertyInteraction.h) — interface for property cross-effects  

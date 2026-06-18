@@ -8,6 +8,7 @@ while curating `FeatureInfo` for #428 (the `iWarmingDefense` field).
 Tracking issue: **(file via `gh issue create`; link here once created).**
 
 ## The concept (worth keeping in mind)
+
 Pollution accumulates globally; once it crosses a threshold each turn there's a chance a random land plot
 **downgrades** (forest → plains → desert, ice melts, etc.). **Features resist** the downgrade via a per-feature
 `WarmingDefense` value (forests especially — the "tree-hugger" defence bonus), and nukes spike it
@@ -16,6 +17,7 @@ map. The problem was never the idea; it was that a good version needs careful tu
 property/pollution system (it requires finesse — a quality this codebase has historically rationed).
 
 ## Why it's inert today
+
 - The whole system is gated on `#define GLOBAL_WARMING`, and that define is **commented out**:
   `Sources/CvGameCoreDLL.h:232` → `// #define GLOBAL_WARMING`.
 - So `CvGame::doGlobalWarming()` (`CvGame.cpp:6556-6819`), its turn-loop call (`CvGame.cpp:5959-5960`), and the
@@ -24,10 +26,12 @@ property/pollution system (it requires finesse — a quality this codebase has h
   **shown to the player** (the classic "dead but on display" signature).
 
 ## Vestige inventory (for the removal issue)
+
 **Dead C++ (inside `#ifdef GLOBAL_WARMING`, compiled out):** `CvGame::doGlobalWarming` + call site + decl
 (`CvGame.cpp` 5959-5960 / 6556-6819, `CvGame.h` 513-514).
 
 **Orphaned-but-LIVE traces (always compiled — these are the real cleanup risk):**
+
 - `CvFeatureInfo` `m_iWarmingDefense` + `getWarmingDefense()` (`CvFeatureInfo.h/.cpp`) — read only by the dead pass.
 - Python binding `getWarmingDefense` (`CyInfoInterface2.cpp:249`) — exposes the getter to a non-existent mechanic.
 - Pedia display (`Assets/Python/Screens/Pedia/PediaFeature.py:156`) — renders the inert value to players.
@@ -38,6 +42,7 @@ property/pollution system (it requires finesse — a quality this codebase has h
 
 **FOOTPRINT TO AUDIT (interconnected — finesse required, do NOT blind-delete):** the grep hits ~27 files, and
 several are NOT pure dead code — they tie into still-live systems and need per-reference judgement:
+
 - the **air-pollution property** (`Assets/Data/properties/property_air_pollution.json`, `CIV4PropertyInfos.xml`) —
   pollution is a live property; only its *global-warming consumer* is dead.
 - **Events** (`CIV4EventInfos.xml` / `CIV4EventTriggerInfos.xml` / `Events_CIV4GameText.xml` /
@@ -46,6 +51,7 @@ several are NOT pure dead code — they tie into still-live systems and need per
   Each needs "is this reference only-for-global-warming, or shared?" before removal.
 
 ## Recommendation
+
 1. **Remove** the dead C++ + the orphaned getter/binding/pedia/define/schema/field vestiges (low risk).
 2. **Audit then prune** the interconnected footprint (events/property/buildings/audio) carefully — keep anything
    the live pollution system still uses.

@@ -3,15 +3,18 @@
 **Files:** `CvPathGenerator.h` / `CvPathGenerator.cpp`
 
 ## Overview
+
 A custom A\*-based pathfinder with fully pluggable cost and validity callbacks. It
 replaces the engine's default `FAStar` with a more flexible implementation that
 supports per-unit-type customisation, multi-turn path planning, and AI-always pathing
 mode — all without subclassing.
 
 ## `CvPath`
+
 An immutable, forward-iterable path computed by `CvPathGenerator`.
 
 ### Iteration
+
 ```cpp
 for (CvPath::const_iterator it = path.begin(); it != path.end(); ++it)
 {
@@ -21,6 +24,7 @@ for (CvPath::const_iterator it = path.begin(); it != path.end(); ++it)
 ```
 
 ### Query Methods
+
 | Method | Description |
 |---|---|
 | `length()` | Total number of nodes in the path. |
@@ -32,6 +36,7 @@ for (CvPath::const_iterator it = path.begin(); it != path.end(); ++it)
 | `cost()` | Total computed path cost. |
 
 ## `CvPathGeneratorBase`
+
 Abstract base providing the `useAIPathingAlways()` flag and the `getTerminalPlot()`
 contract.
 
@@ -41,6 +46,7 @@ contract.
 | `getTerminalPlot()` | Returns the destination plot (pure virtual). |
 
 ## Callback Typedefs
+
 All path behaviour is customised through function-pointer callbacks:
 
 | Typedef | Signature excerpt | Purpose |
@@ -52,14 +58,17 @@ All path behaviour is customised through function-pointer callbacks:
 | `TurnEndValidityCheckRequired` | `(pGroup, flags) → bool` | Returns `true` if turn-end validity must be re-checked for this group. |
 
 ## `CvPathGeneratorBase` Implementors
+
 Any class that drives pathfinding (e.g. selection-group movement, air-strike range
 checks) implements `CvPathGeneratorBase` and supplies the callbacks above.
 
 ## Node Pool
+
 `CvPathGenerator` manages a pool of `CvPathNode` objects (stored in `PoolBucket`
 vectors) to avoid per-node heap allocation during each search.
 
 ## Related
+
 - [`CvSelectionGroup`](CvSelectionGroup.md) — primary consumer of generated paths  
 - [`CvMap`](CvMap.md) — provides terrain data consumed by callbacks  
 - [`CvPlot`](CvPlot.md) — individual nodes in every path  

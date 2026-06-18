@@ -35,6 +35,7 @@ The engine reads XML via a schema-and-info-file pair for each data type. The sch
 Boolean tags can have dangerous defaults if omitted — consult the schema for each tag.
 
 **Multi-tag pattern:**
+
 ```xml
 <UnitAIs>
   <UnitAI>
@@ -49,6 +50,7 @@ Boolean tags can have dangerous defaults if omitted — consult the schema for e
 C2C introduced a module loading system inherited by S2S. Modules live under `Assets/Modules/` (or `Alt_Timelines/<ModName>/`). Each module directory registers itself in `MLF_CIV4ModularLoadingControls.xml` using `<Directory>` and `<bLoad>` tags (`1` = active, `0` = disabled). A module that is a standalone content addition needs its own schema file, info file, art defines file, and text file.
 
 **Minimum file set for a new building module:**
+
 - `CIV4BuildingsSchema.xml`
 - `CIV4BuildingInfos.xml`
 - `CIV4BuildingClassInfos.xml`
@@ -56,6 +58,7 @@ C2C introduced a module loading system inherited by S2S. Modules live under `Ass
 - Text key file (`CIV4GameText_…xml`)
 
 **Text key naming convention:**
+
 - Display name: `TXT_KEY_BUILDING_<NAME>`
 - Strategy blurb: `TXT_KEY_BUILDING_<NAME>_STRATEGY`
 - Pedia entry: `TXT_KEY_BUILDING_<NAME>_PEDIA`
@@ -72,12 +75,14 @@ Flavor tags are AI decision weights. They do **not** affect player gameplay at a
 Each AI leader has personality preferences for certain flavor types (e.g. `FLAVOR_MILITARY`, `FLAVOR_CULTURE`, `FLAVOR_GROWTH`). A building tagged with `FLAVOR_CULTURE 50` signals to any culture-oriented AI that this building is a high priority. Flavor values are not globally consistent — calibrate by comparing similar existing entries in the same category.
 
 **Rough scale:**
+
 - `0`: No weight (default)
 - `~50`: Moderate priority
 - `100+`: High priority (factories, spaceship parts, unique wonders)
 - `-999`: Strong avoidance signal
 
 **Multi-tag structure (C2C schema style):**
+
 ```xml
 <Flavors>
   <Flavor>
@@ -127,6 +132,7 @@ Properties are a generalized "resource on a game object" framework. They can exi
 The Expression System allows conditional XML logic — a tag's value or a check's outcome can depend on a computed expression rather than a hardcoded constant. This enables promotion prerequisites, mission costs, and outcome probabilities to vary with game state.
 
 **Outcome system example (mission cost with property payment):**
+
 ```xml
 <Action>
   <MissionType>MISSION_NOMAD_DEFENDER</MissionType>
@@ -162,6 +168,7 @@ Every unit has one primary `<Combat>` type and can additionally carry multiple `
 - Leader trait interactions
 
 **Unit XML:**
+
 ```xml
 <Combat>UNITCOMBAT_ANIMAL</Combat>
 <SubCombatTypes>
@@ -170,6 +177,7 @@ Every unit has one primary `<Combat>` type and can additionally carry multiple `
 ```
 
 **Promotion granting a SubCombat:**
+
 ```xml
 <SubCombatChangeTypes>
   <SubCombatChangeType>UNITCOMBAT_MELEE</SubCombatChangeType>
@@ -340,6 +348,7 @@ Size Matters makes three unit attributes mechanically meaningful: Combat Quality
 **Affected values:** Strength, Max HP, Asset/Power Value, Cargo, Bombard rates, Work Rate, Revolt Protection.
 
 **GlobalDefines.xml multipliers:**
+
 ```xml
 <Define>
   <DefineName>SIZE_MATTERS_MOST_MULTIPLIER</DefineName>
@@ -362,12 +371,14 @@ Size Matters makes three unit attributes mechanically meaningful: Combat Quality
 Improvements accumulate upgrade points while worked (or manned for forts). At threshold, the system checks the primary `<ImprovementUpgrade>` target first, then falls through to `<AlternativeImprovementUpgradeTypes>` if the primary fails qualification.
 
 **XML:**
+
 ```xml
 <AlternativeImprovementUpgradeTypes>
   <ImprovementType>IMPROVEMENT_FARM</ImprovementType>
   <ImprovementType>IMPROVEMENT_PASTURE</ImprovementType>
 </AlternativeImprovementUpgradeTypes>
 ```
+
 (This tag follows immediately after `<ImprovementUpgrade>`.)
 
 **Qualification checks:** terrain/feature requirements, resource presence, freshwater/coastal access, flatland/hill/peak specification, and crucially — a valid Build definition that the player's tech qualifies for must exist somewhere in XML.
@@ -389,6 +400,7 @@ Multi-Maps allows the game to run multiple independent maps simultaneously (e.g.
 - Turns end globally; AI processes all maps each turn.
 
 **Python API (partial):**
+
 ```python
 bool viewportsEnabled()
 int getViewportWidth()
@@ -410,6 +422,7 @@ void switchMap(int iMap)
 - Values scale between these points
 
 **Wonder multipliers:**
+
 - National Wonder: 4× the normal building cost for that tech column
 - World Wonder: 8× the normal building cost
 - Project: 12× the normal building cost

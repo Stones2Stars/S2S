@@ -59,7 +59,7 @@ that drives it, and what the engine expects back.
 | Sizing | `getTopLatitude` / `getBottomLatitude` | `CvMap::init` — `CvMap.cpp:206` | Override climate latitude band |
 | Sizing | `getWrapX` / `getWrapY` | `CvMap::init` — `CvMap.cpp:235` | Cylindrical / toroidal / flat |
 | Generation | `beforeGeneration` | `CvMapGenerator::generateRandomMap` — `CvMapGenerator.cpp:877` | Reseed RNG, build helper maps |
-| Generation | `generatePlotTypes` | `CvMapGenerator.cpp:893` | Returns the `[ocean|land|hill|peak]` array |
+| Generation | `generatePlotTypes` | `CvMapGenerator.cpp:893` | Returns the `[ocean/land/hill/peak]` array |
 | Generation | `generateTerrainTypes` | `CvMapGenerator.cpp:910` | Returns the terrain-id array |
 | Generation | `addRivers` | `CvMapGenerator.cpp:227` | Lay rivers (script supplies them, DLL skips its default) |
 | Generation | `addLakes` | `CvMapGenerator.cpp:203` | Lake placement (no-op here — lakes already placed in `generatePlotTypes`) |

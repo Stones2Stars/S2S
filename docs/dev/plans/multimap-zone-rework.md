@@ -21,14 +21,18 @@ Replace the inherited C2C **multi-map** (17 separate `CvMap` instances reached b
 ## Phase A — Remove old multimap
 
 ### A-soft (now; save-preserving, no `NUM_MAPS` change)
+
 Keeps the owner's load-only test fixture working; declutters reachable surface.
+
 - **Functional lock:** guard `cvInternalGlobals::switchMap` (`CvGlobals.cpp:2801`) to no-op for any map not already `plotsInitialized()` — no new map ever loads into memory; already-loaded maps stay switchable (no fixture trap).
 - **UI removal (save-safe, Python/XML):** delete `ParallelMapsInput.py`, `ParallelMapsScreen.py`; remove `init.xml:106` event; `CvMainInterface.py` `ParallelMapsBtn` + `showParallelMapsScreenButton` + `getNumMapsInitialized` checks + click handler; `CvScreensInterface.py` hooks; `CvScreenEnums.PARALLEL_MAPS_SCREEN`.
 - **Defer** XML mission/outcome removal: `MissionTypes`/`OutcomeTypes` are XML-order enums; deleting mid-file shifts indices and can corrupt the fixture's queued data. Left dormant (neutralised by the lock) until A-hard.
 - Verify: clean `XmlLoad.log`, fixture loads, single-map game plays.
 
 ### A-hard (later; the real wins; breaks/ salvages the save)
+
 Collapse to a single `CvMap`. The wins are simplicity/correctness + a modest turn-time/memory gain (removes hot-path `[CURRENT_MAP]` indirection in `CvPlayer.units()/cities()`, `GC.getMap()`, pathfinders).
+
 - Trim `MapTypes` (`CvEnums.h:677`) → `NUM_MAPS = 1`; trim Python enum exposure (`CyEnumsInterface.cpp` **and** `CvPythonEnumLoader.cpp`).
 - Remove dormant machinery: `switchMap`, `beforeSwitch`/`afterSwitch`, `moveUnitToMap`/`updateIncomingUnits`/`deleteOffMapUnits`/`TravelingUnit`/`m_IncomingUnits`, `getMapByIndex`/`getMaps`, the `switchMap` Python binding; `CURRENT_MAP` → constant `MAP_EARTH`.
 - Collapse `CvPlayer` per-map containers (`m_cities/m_units/m_selectionGroups/m_plotGroups/m_groupCycles`, `m_startingCoords`) and the per-map pathfinder arrays to single.
@@ -55,7 +59,9 @@ Collapse to a single `CvMap`. The wins are simplicity/correctness + a modest tur
 **XML/Python/data:** `CIV4MapInfo.xml` (17 maps); `CIV4MissionInfos.xml` `MISSION_GO_TO_MAP_*` (1795-1928); `CIV4OutcomeInfos.xml` `GO_TO_MAP`/`COLONIZE_MAP` (1428-1747); `CvOutcomeInterface.py` can*/go* (800-919); ParallelMaps UI + hooks; `P2K_Multimaps_Test` (disabled); Pepper2000 `EXPLORE_*` space content (separate gameplay pass); `PrivateMaps/Multimaps/*.WBSave` (15).
 
 ## Not used: c4lib
+
 `hankinsohl/c4lib` (C++ lib + `c4edit` CLI) reads/edits/writes **stock** BTS saves via `BTS.schema` (positional). S2S saves are tagged + class-remapped, which it has no schema for. Salvage is done in-DLL (it owns the format) — see A-hard shim.
 
 ## Filed
+
 GH Stones2Stars/S2S #324 — minidump filename month off-by-one (`tm_mon` not +1, `CvGlobals.cpp:224`).

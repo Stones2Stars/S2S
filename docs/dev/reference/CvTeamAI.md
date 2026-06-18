@@ -4,6 +4,7 @@
 **Inherits:** [`CvTeam`](CvTeam.md)
 
 ## Overview
+
 Manages team-level AI strategy — diplomacy, war planning, area strategies, and
 inter-team attitude. `CvTeamAI` aggregates multiple `CvPlayerAI` instances that share
 vision, research, and diplomatic standing.
@@ -12,6 +13,7 @@ The static `getTeam(TeamTypes)` accessor returns the global team array entry, si
 to `CvPlayerAI::getPlayer()`.
 
 ## Lifecycle
+
 | Method | Description |
 |---|---|
 | `AI_init()` | Initialises team AI state. |
@@ -19,6 +21,7 @@ to `CvPlayerAI::getPlayer()`.
 | `AI_reset(bool bConstructor)` | Full state reset; called at construction and on game reset. |
 
 ## Turn Entry Points
+
 | Method | Description |
 |---|---|
 | `AI_doTurnPre()` | Early-turn team setup before player turns run. |
@@ -26,6 +29,7 @@ to `CvPlayerAI::getPlayer()`.
 | `AI_makeAssignWorkDirty()` | Propagates a dirty-work signal to all team members. |
 
 ## War & Military
+
 | Method | Description |
 |---|---|
 | `AI_doWar()` | Executes war-related decisions: attacks, declarations, peace evaluations. |
@@ -39,6 +43,7 @@ to `CvPlayerAI::getPlayer()`.
 | `AI_shareWar(eTeam)` | Returns `true` if both teams are at war with the same third party. |
 
 ## Geography & Proximity
+
 | Method | Description |
 |---|---|
 | `AI_isPrimaryArea(pArea)` | Returns `true` if any team member considers this their primary (home) area. |
@@ -48,6 +53,7 @@ to `CvPlayerAI::getPlayer()`.
 | `AI_calculateCapitalProximity(eTeam)` | Measures the distance between this team's capital and another team's capital. |
 
 ## Diplomacy & Attitude
+
 | Method | Description |
 |---|---|
 | `AI_getAttitude(eTeam, bForced)` | Returns the enum `AttitudeTypes` toward another team. |
@@ -59,6 +65,7 @@ to `CvPlayerAI::getPlayer()`.
 | `AI_updateAreaTargets()` | Rebuilds the list of area-level attack targets. |
 
 ## Related
+
 - [`CvTeam`](CvTeam.md) — base class  
 - [`CvPlayerAI`](CvPlayerAI.md) — member players driven by this team  
 - [`AI_Defines.h`](../AI_Defines.h) — `AreaAITypes` and strategy constants  

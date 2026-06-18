@@ -24,6 +24,7 @@ functions, the preview, and the AI's *damage inputs* already share one formula.
 
 Today `CvUnitAI::AI_attackOddsAtPlotInternal` (CvUnitAI.cpp ~1167–1353) does NOT
 call `getCombatOdds`. It:
+
 1. Gets attacker `currCombatStr`/`currFirepower` (air uses `airCurrCombatStr`).
 2. Calls `getDefenderCombatValues` (now a `buildRoundModel` adapter) for per-round
    damage + odds.
@@ -48,6 +49,7 @@ Everything else in the function — the predicted-HP machinery — stays. See be
 ## Sub-problems (each must be handled, none are optional)
 
 ### 1. Predicted-HP side effects must survive
+
 `AI_setPredictedHitPoints` / `getHP()` reading it (CvUnit.cpp:11326) is load-bearing:
 `CvSelectionGroupAI::AI_attackOdds` chains it across the stack sim, and `CvPlot`
 checks `== 0` for "going to die". The engine (`getCombatOdds`) is pure — no HP
@@ -67,17 +69,20 @@ later want the predicted HP to match the engine's distribution too. Not needed
 for v1 of 3b.
 
 ### 2. Personality bias stays
+
 `AI_getAttackOddsChange()` (set per turn from the leader, CvPlayerAI.cpp ~16902)
 multiplicatively biases the odds before every threshold compare. Keep the bias line
 exactly, applied to the engine odds. Without it all leaders' aggression collapses.
 
 ### 3. Air combat has no engine path
+
 `getCombatOdds` uses `currCombatStr(NULL,NULL)`; it does not branch on air or use
 `airCurrCombatStr`/interception. For DOMAIN_AIR attackers, **keep the existing
 heuristic** (gate: `if (air) <old path> else iOdds = getCombatOdds(...)/10`).
 Unifying air odds is a separate task (see combat-model-sketch GAP #1).
 
 ### 4. Threshold recalibration — THE risk, and the real work
+
 ~40 AI thresholds (AI_anyAttack/AI_cityAttack/… 60/70/80/etc.) are tuned to the
 *current* strength-ratio distribution and then inflated by `AI_finalOddsThreshold`
 (CvUnitAI.cpp ~25406: ×6/5 base, ×6/7 city, ×6/9 attack, ×2/3 single-defender,
@@ -87,6 +92,7 @@ near 50/50 they roughly agree, but for lopsided matchups they diverge sharply
 will silently change how aggressive the AI is at every threshold.
 
 **Methodology (do NOT skip):**
+
 - a. **Instrument first.** Before changing the return value, log BOTH numbers
   (`iOdds_heuristic`, `getCombatOdds/10`) for every AI attack evaluation, with the
   matchup, to a dedicated log. Run several AI-vs-AI autoplay games. This gives the
@@ -103,6 +109,7 @@ will silently change how aggressive the AI is at every threshold.
   motivated the raw-odds path, so it may simplify.
 
 ### 5. Stack goodness inherits the change — RESOLVED structurally (#319)
+
 `CvSelectionGroupAI::AI_attackOdds` returns a loss-ratio "goodness" score, NOT a win%.
 Post-3b its inputs shifted (the last-round give-back now uses the binomial `iLastOdds`)
 while its bulk (predicted-HP survivorship) stayed heuristic. The deeper, pre-existing
@@ -133,6 +140,7 @@ the blockade `<50` bottleneck renormalize (`:17207`), the `>75` pre-filter befor
 calibration here, this is an *ongoing, report-driven process, NOT a tracked issue*; it
 folds into the per-leader/per-trait aggression work below ("Follow-up") rather than a
 one-off "calibrate #319" task:
+
 - The win% includes the per-leader personality bias, so personality now influences these
   gates (it previously only touched goodness indirectly).
 - `AI_ambush` dropped its goodness-inflation hacks (`+iOddsThreshold` when win-likely, `*2`
@@ -145,6 +153,7 @@ one-off "calibrate #319" task:
   ultimately subsume it into the per-leader bar.
 
 ### 6. Performance
+
 `getCombatOdds` (nested binomial + `pow`) is heavier than a strength ratio, and the
 AI evaluates many candidate attacks per turn. The per-player `AI_attackOddsAtPlot`
 cache (keyed on plot+attacker+defender) already absorbs repeats, but
@@ -167,6 +176,7 @@ strength ratio already puts >95% or <5%).
    and the dead strength-ratio-for-odds code. Update combat-model-sketch status.
 
 ## Acceptance criteria
+
 - AI-vs-AI autoplay over N turns shows aggression and unit-loss rates within an
   agreed band of the pre-3b baseline (or deliberately, justifiably different).
 - No measurable per-turn time regression (or mitigated by §6).
@@ -174,6 +184,7 @@ strength ratio already puts >95% or <5%).
   resolver rolls (the whole point: one combat number, end to end).
 
 ## Open questions — as resolved
+
 - Calibration target: **re-tuned by feel** with a single global recenter (§4b option ii),
   not a per-threshold remap. Validated on ~5.7k autoplay evals: heur 60% == binom 80%,
   heur 70% == binom 96%; post-swap odds are healthily bimodal (~56% clear loss, ~31%
@@ -185,6 +196,7 @@ strength ratio already puts >95% or <5%).
   task (combat-model-sketch GAP #1).
 
 ## Implemented (what actually shipped to the working tree)
+
 Two edits in `Sources/CvUnitAI.cpp`, plus this doc + `combat-model-sketch.md` +
 `ai-logging-reference.md`:
 
@@ -196,7 +208,7 @@ Two edits in `Sources/CvUnitAI.cpp`, plus this doc + `combat-model-sketch.md` +
    are now dead for the returned odds but still drive `AI_setPredictedHitPoints` (the
    stack sim in `CvSelectionGroupAI::AI_attackOdds` chains on it) and the `[COM/calib]` log.
 2. **`AI_finalOddsThreshold`** — non-air only, `iFinalOddsThreshold = iFinalOddsThreshold
-   * 23 / 20` at the tail (after the existing ×6/divisor block, before the `[COM/threshold]`
+   - 23 / 20` at the tail (after the existing ×6/divisor block, before the `[COM/threshold]`
    log). The recenter knob.
 
 Calibration log: `[COM/calib]` (level 3, `CombatAI.log`, via `logCombatAI`) emits
@@ -205,9 +217,11 @@ harness for re-tuning `23/20` and the per-player follow-up — folded into the e
 `[COM]` domain rather than a separate `CombatOddsCalibration.log`.
 
 ### Scope boundary — followups, NOT blockers for this foundation
+
 The foundation is in and FinalRelease-playtested: it plays soundly and the calibration log
 shows no anomalies. It still needs **long-term play to settle balance**. That balance work
 is deliberately out of scope here:
+
 - **Calibration is an ongoing, report-driven process — NOT a tracked issue.** The `23/20`
   recenter is a first cut; it gets re-tuned over time from playtest suggestions and bug
   reports (use the `[COM/calib]` log). Do not file a single "calibrate combat" issue.
@@ -225,9 +239,11 @@ is deliberately out of scope here:
   `AI_finalOddsThreshold`, so the recenter does not reach it.
 
 ## Follow-up: per-player / per-trait configurable aggression (FUTURE)
+
 Replace the hardcoded `23/20` with a data-driven, per-leader knob so aggression varies by
 civ/leader (barbarians reckless → lower bar; pacifists cautious → higher bar). The single
 chokepoint is `AI_finalOddsThreshold`'s recenter line. Smallest-first:
+
 1. Move `23/20` into a GlobalDefine (e.g. `AI_BINOMIAL_ODDS_THRESHOLD_PERCENT = 115`), read
    via `GC.getDefineINT(...)`; cache it if `AI_finalOddsThreshold` (PROFILE_FUNC) shows hot.
 2. Add a per-leader/trait aggression term combined multiplicatively; barbarians via

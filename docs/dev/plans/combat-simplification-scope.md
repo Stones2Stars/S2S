@@ -6,6 +6,7 @@ pluggable game-option rules. This doc is the single source of what stays vs goes
 Priorities: OOS-safe > maintainable/sane > save-compat (save-compat downprioritized).
 
 ## KEEP — the lean combat core
+
 - Strength/firepower: base/curr/max combat strength, firepower (incl. `SIZE_MATTERS`
   scaling and `STRENGTH_IN_NUMBERS` support).
 - Combat rounds: `COMBAT_DAMAGE`, HP, needed-rounds, win odds (the unified engine).
@@ -16,12 +17,13 @@ Priorities: OOS-safe > maintainable/sane > save-compat (save-compat downprioriti
 - Endurance (explicitly kept).
 
 ## REMOVE — confirmed
+
 - R1 Cold damage — **DONE** (code cold-free across 12 files incl. terrain-cold trigger,
   CvUnit fields/serialization, Info flags+XML schema, UI, AI; Assert build OK). Leftover
   unused TXT_KEY_*COLD* GameText entries are harmless; trim later if desired.
 - R2 Stuns — **DONE** (CvUnit fields/serialization incl. keyed-info member + temp-array
   save/load; resolveCombat gates rewritten to keep first-strike/hit logic; checkForStun
-  + accessors; Info vectors+XML+schema; UI combat-odds preview + help; AI valuation;
+  - accessors; Info vectors+XML+schema; UI combat-odds preview + help; AI valuation;
   Assert build OK; zero functional stun refs, only 2 harmless comments left for R4).
 - R3 Power-shots — **DONE** (5 scalar modifier sub-types; build OK).
 - R4 Afflictions + critical + `OUTBREAKS_AND_AFFLICTIONS` option — **DONE**:
@@ -62,9 +64,11 @@ Priorities: OOS-safe > maintainable/sane > save-compat (save-compat downprioriti
 - R5 modifier family (dodge/precision/armor/puncture/withdraw/repel/...).  R6 terrain damage.
 
 ## REMOVE — TB Combat Mods come out wholesale (user-confirmed)
+
 TB Combat Mods are overcomplicated, unmaintainable, poorly implemented. Remove the suite
 now; note the good ideas for proper reimplementation later (below). Boundary = "keep
 vanilla BTS combat, remove TB additions."
+
 - **R5 modifier family** (~250 refs) decomposed into THREE removals, **all DONE**:
   - **R5a accuracy:** dodge + precision — **DONE** (commit b6e35a42). Hit-chance modifiers
     gone; per-round odds are now plain strength-ratio (the resolveCombat hit-modifier is a
@@ -88,9 +92,12 @@ vanilla BTS combat, remove TB additions."
   2 modules); GameText keys; BUG toggle (RoMSettings.xml + ANewDawnSettings.py +
   RoMOptionsTab.py); Pedia. Build-verified, XML well-formed. Reimplement later as a
   terrain-attrition rule the AI understands — see good-ideas list.).
+
 ### `GAMEOPTION_COMBAT_*` triage (user-decided)
+
 Footprint measured as functional C++ refs (excludes the 3 boilerplate refs every option
 has: enum decl + 2 Python registrations).
+
 - **KEEP:** `SIZE_MATTERS` (~129, core feature), `STRENGTH_IN_NUMBERS` *(see below — now
   slated remove)*, `VANILLA_ENGINE` (1, the lean-core switch), `NEW_RANDOM_SEED` (~1,
   RNG/reload infra, not combat spaghetti), `WITHOUT_WARNING` *(user-confirmed keep — see below)*.
@@ -137,11 +144,13 @@ has: enum decl + 2 Python registrations).
   the matching XML `<GameOptionInfo>` + GameText.
 
 ## KEEP — vanilla BTS combat (the boundary)
+
 First strikes, vanilla withdrawal probability, collateral, combat limit, strength/
 firepower, XP/promotion-on-combat. (If any of these are actually TB reimplementations
 rather than vanilla, revisit.)
 
 ## Weapon types — RESOLVED
+
 This is the `UNITCOMBAT_WEAPON_STYLE_*` taxonomy gated by `GAMEOPTION_COMBAT_EQUIPMENT`
 (and `_UPRANGE`): ~75 weapon-style unitcombat classes in CIV4UnitCombatInfos.xml
 (single-hand / two-handed / primary+secondary / shield / H2H-vs-distance, …) toggled via
@@ -150,7 +159,9 @@ Decision pending: remove the whole weapon-style system (and its options) or keep
 decided, EQUIPMENT/UPRANGE stay.
 
 ## Good ideas to reimplement properly later (do NOT lose the concepts)
+
 Captured so the spirit survives the removal:
+
 - **Terrain/feature turn damage** — environmental attrition the AI actually understands.
 - **Accuracy (precision/dodge)** — hit-chance modifiers as a clean, optional rule.
 - **Mitigation (armor/puncture)** — damage-reduction vs penetration.
@@ -166,6 +177,7 @@ Captured so the spirit survives the removal:
 These become future "rules" plugged into the unified engine, not inline spaghetti.
 
 ## Status (current)
+
 The removal phase is **complete**: R1 cold, R2 stun, R3 power-shot, R4 afflictions+critical
 (+ orphan sweep), R5a dodge/precision, R5b armor/puncture, R5c FIGHT_OR_FLIGHT, R6 terrain
 damage — all removed and building green. Dead game options removed: HEART_OF_WAR, BATTLEWORN,
@@ -179,7 +191,9 @@ from `C2C_CIV4UnitSchema.xml` (alongside the dead ones) — restored from baseli
 referenced element is declared again (validator clean).
 
 ## Unify phase
+
 Removals done → now unifying the lean core onto `CvCombatModel`:
+
 - **Phase 3a — DONE.** Layer-1 `buildRoundModel()` is the single per-round formula;
   resolution, the odds functions, the preview, and the AI's damage inputs all consume it
   (prediction == resolution; barb free-wins + the round-1 hit-chance bug reconciled).
