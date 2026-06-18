@@ -79,6 +79,7 @@ enum PredicateKind
 	PRED_STATE_RELIGION,            // iParam = ReligionTypes (player's state religion)
 	PRED_HOLY_CITY,                 // iParam = ReligionTypes (city is its holy city)
 	PRED_HAS_CORPORATION,           // iParam = CorporationTypes (city)
+	PRED_LATITUDE,                  // range predicate: iMin <= plot getLatitude() <= iMax (data-model §2.5 {latitude:{min,max}})
 	NUM_PREDICATE_KINDS
 };
 
@@ -86,8 +87,10 @@ struct CvPredicate
 {
 	PredicateKind eKind;
 	int           iParam; // type index for parameterized predicates, else -1
-	CvPredicate() : eKind(PRED_IS_CAPITAL), iParam(-1) {}
-	CvPredicate(PredicateKind k, int p) : eKind(k), iParam(p) {}
+	int           iMin;   // range lower bound for range predicates (latitude); unbounded by default
+	int           iMax;   // range upper bound for range predicates; unbounded by default
+	CvPredicate() : eKind(PRED_IS_CAPITAL), iParam(-1), iMin(-2000000000), iMax(2000000000) {}
+	CvPredicate(PredicateKind k, int p) : eKind(k), iParam(p), iMin(-2000000000), iMax(2000000000) {}
 };
 
 // A condition leaf: a count atom OR a predicate.

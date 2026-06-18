@@ -165,6 +165,7 @@ bool cascadeEvalPredicate(const CvPredicate& pr, const CvCascadeContext& kCtx)
 	case PRED_HAS_FEATURE:        return pl != NULL && pl->getFeatureType() == (FeatureTypes)pr.iParam;
 	case PRED_HAS_TERRAIN:        return pl != NULL && pl->getTerrainType() == (TerrainTypes)pr.iParam;
 	case PRED_HAS_BONUS:          return pl != NULL && pl->getBonusType() == (BonusTypes)pr.iParam;
+	case PRED_LATITUDE:           return pl != NULL && pl->getLatitude() >= pr.iMin && pl->getLatitude() <= pr.iMax;
 	case PRED_HAS_RELIGION:       return c != NULL && c->isHasReligion((ReligionTypes)pr.iParam);
 	case PRED_STATE_RELIGION:     return kCtx.iPlayer >= 0 && GET_PLAYER((PlayerTypes)kCtx.iPlayer).getStateReligion() == (ReligionTypes)pr.iParam;
 	case PRED_HOLY_CITY:          return c != NULL && c->isHolyCity((ReligionTypes)pr.iParam);

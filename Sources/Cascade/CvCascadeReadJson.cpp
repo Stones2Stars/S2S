@@ -190,6 +190,22 @@ namespace
 			return false;
 		}
 
+		// object-parameterized RANGE predicate: {latitude:{min?,max?}} (data-model §2.5). Absent bound = unbounded.
+		{
+			picojson::object::const_iterator itLat = o.find("latitude");
+			if (itLat != o.end() && itLat->second.is<picojson::object>())
+			{
+				const picojson::object& r = itLat->second.get<picojson::object>();
+				out.bPredicate = true;
+				out.pred = CvPredicate(PRED_LATITUDE, -1);
+				picojson::object::const_iterator m = r.find("min");
+				if (m != r.end() && m->second.is<double>()) out.pred.iMin = (int)m->second.get<double>();
+				m = r.find("max");
+				if (m != r.end() && m->second.is<double>()) out.pred.iMax = (int)m->second.get<double>();
+				return true;
+			}
+		}
+
 		// parameterized predicate: a single recognized key with a string param
 		for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
 		{
