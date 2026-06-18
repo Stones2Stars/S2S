@@ -9,6 +9,14 @@
      "type": "TECH_AUTOMATIC_WEAPONS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

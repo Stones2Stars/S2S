@@ -18,6 +18,14 @@
      "type": "TECH_WEAPONIZED_DISINTEGRATION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_SOLAR_SYSTEM",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

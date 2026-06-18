@@ -17,6 +17,14 @@
      "type": "TECH_NANOMORPHIC_TROIDS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_VENUSIAN",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

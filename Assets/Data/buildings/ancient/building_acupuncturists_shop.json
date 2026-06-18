@@ -18,6 +18,14 @@
      "type": "TECH_FOLK_MEDICINE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

@@ -16,11 +16,6 @@
      "min": 3
     },
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
-    },
-    {
      "type": "TECH_STEAM_POWER",
      "scope": "team"
     }
@@ -41,6 +36,12 @@
     [
      "IS_COASTAL",
      "HAS_RIVER"
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

@@ -25,6 +25,14 @@
      "type": "TECH_MILITARY_ROBOTICS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

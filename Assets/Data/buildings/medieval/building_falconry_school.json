@@ -31,6 +31,12 @@
       "type": "BUILDING_FOLKLORE_HAWK",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

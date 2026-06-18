@@ -19,6 +19,14 @@
      "type": "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

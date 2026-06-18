@@ -13,6 +13,14 @@
      "type": "TECH_STOCK_BROKERING",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

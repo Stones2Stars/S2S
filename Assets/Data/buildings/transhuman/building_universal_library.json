@@ -19,6 +19,14 @@
      "type": "TECH_KNOWLEDGE_MERCANTILISM",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

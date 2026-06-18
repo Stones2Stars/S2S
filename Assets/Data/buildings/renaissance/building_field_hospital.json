@@ -19,6 +19,14 @@
      "type": "TECH_BATTLEFIELD_MEDICINE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

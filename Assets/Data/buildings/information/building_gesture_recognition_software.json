@@ -33,6 +33,12 @@
       "type": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

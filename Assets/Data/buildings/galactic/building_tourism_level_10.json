@@ -9,6 +9,14 @@
      "type": "TECH_GALACTIC_LIFESTYLE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

@@ -30,6 +30,18 @@
    "BUILDING_SUNDIAL"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": -20

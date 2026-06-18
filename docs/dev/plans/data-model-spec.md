@@ -83,9 +83,29 @@ none-present). Leaves are one of:
 - **bare** (parameter-free, desugars to `{PRED:true}`): `IS_WATER` · `IS_FRESHWATER` · `IS_FLATLANDS` · `IS_HILLS` ·
   `IS_PEAK` · `HAS_RIVER` · `HAS_IRRIGATION` · `COASTAL_LAND` · `IS_COASTAL` · `IS_CAPITAL` · `HAS_POWER` ·
   `HAS_STATE_RELIGION` · `STATE_RELIGION_IN_CITY`.
-- **parameterized** `{PRED: param}`: `{HAS_FEATURE:FEATURE_X}` · `{HAS_TERRAIN:TERRAIN_X}` · `{HAS_BONUS:BONUS_X}` ·
-  `{HAS_RELIGION:RELIGION_X}` · `{STATE_RELIGION:RELIGION_X}` · `{HOLY_CITY:RELIGION_X}` · `{HAS_CORPORATION:CORP_X}` ·
-  `{latitude:{min,max}}` · `{natureYield:{…}}` · `{workedBy:SELF}`.
+- **parameterized** `{PRED: param}`: `{HAS_FEATURE:FEATURE_X}` · `{HAS_TERRAIN:TERRAIN_X}` · `{HAS_IMPROVEMENT:IMPROVEMENT_X}` ·
+  `{HAS_BONUS:BONUS_X}` · `{HAS_MAP_CATEGORY:MAPCATEGORY_X}` · `{HAS_RELIGION:RELIGION_X}` · `{STATE_RELIGION:RELIGION_X}` ·
+  `{HOLY_CITY:RELIGION_X}` · `{HAS_CORPORATION:CORP_X}` · `{latitude:{min,max}}` · `{natureYield:{…}}` · `{workedBy:SELF}`.
+  - **SCOPE of the plot-substrate predicates (owner 2026-06-18):** `HAS_TERRAIN`/`HAS_FEATURE`/`HAS_IMPROVEMENT` are
+    **VICINITY** (the city's current workable radius, enabler-spec §8) — the building's `PrereqOr{Terrain,Feature,Improvement}`
+    gates. `HAS_MAP_CATEGORY` is **CENTER-plot** (the city's own plot, legacy `isMapCategory`; vicinity would mis-match a
+    city on the rim of an earth zone of a space map). `HAS_MAP_CATEGORY` also treats an **uncategorized plot as valid**.
+  - **⚑ TODO (owner 2026-06-18): real IMPROVEMENT GROUPS** — define improvement group types, modelled like **PROMOTION
+    GROUPS** (`PromotionLineInfo`, `CvBuildingInfo::getPromotionLineType`) / the existing **generic `Category` system**
+    (`CIV4CategoryInfos.xml`, `CATEGORY_*`, nestable). Then `requires` can predicate on a *group* (`{HAS_IMPROVEMENT_GROUP:G}`
+    ≈ "any farm") instead of enumerating every improvement in an `any:[…]`, AND **the same group becomes a modifier TARGET** —
+    which is how to cleanly + programmatically model the **building→improvement-group plot buff** (the
+    `improvement-category-yields.md` plan, the "plot buff by building" the owner added). Per-type `HAS_IMPROVEMENT` is the
+    current floor; groups are the layer on top, shared by the predicate (requires) and the modifier (yield buff).
+    **RANKS (owner 2026-06-18): promotion lines carry a per-member rank (cf. `getLinePriority`) — improvement groups
+    should too.** Then the building→improvement-group buff is **computed FROM the member's rank** (a tiered scale: a
+    higher-rank farm gets a bigger buff) instead of hand-listing every member into one buff — which **auto-includes new
+    members** and kills the recurring footgun of adding an improvement and forgetting to add it to the buff list.
+    **GENERALIZES to ANY "ranked" type (owner 2026-06-18, loose direction):** the group+rank model isn't improvement-only —
+    it fits any type that forms a ranked line (buildings already carry `getLinePriority`; units, etc.). And the rank ORDER
+    can **streamline the OBSOLETION/SUCCESSION path**: rank N+1 supersedes/obsoletes rank N *derived from the line*, instead
+    of authoring explicit per-pair `obsoletes`/`replaces`/`succession` edges (enabler-spec §6) — one ranked line replaces a
+    web of hand-wired edges (and the same "never miss a member" benefit). Floated as a direction, not a locked decision.
 - **membership SUGAR** `{terrain|feature|bonus:[Type,…]}` — the compact authoring form for "the plot's terrain/feature/
   bonus is ONE OF these" (improvement placement make-valid sets, e.g. valid on 17 terrains). **Desugars to `any`-of-the
   canonical single-valued predicate** (`{terrain:[A,B]}` ≡ `any:[{HAS_TERRAIN:A},{HAS_TERRAIN:B}]`). The `HAS_TERRAIN`/

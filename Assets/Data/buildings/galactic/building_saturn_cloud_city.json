@@ -25,6 +25,12 @@
       "type": "TERRAIN_SATURN",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_SOLAR_SYSTEM",
+      "scope": "plot"
+     }
     ]
    ]
   }

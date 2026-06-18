@@ -14,6 +14,14 @@
      "type": "TECH_NEURON_ENGINEERING",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_MARTIAN",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

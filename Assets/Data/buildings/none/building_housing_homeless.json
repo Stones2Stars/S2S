@@ -2,6 +2,18 @@
  "type": "BUILDING_HOUSING_HOMELESS",
  "description": "TXT_KEY_BUILDING_HOUSING_HOMELESS",
  "civilopedia": "TXT_KEY_BUILDING_HOUSING_HOMELESS_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "happiness": {
   "city": {
    "flat": -1

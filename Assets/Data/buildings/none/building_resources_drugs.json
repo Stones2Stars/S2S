@@ -59,6 +59,12 @@
       "type": "BUILDING_PLANTATION_TOBACCO",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

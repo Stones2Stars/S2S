@@ -26,6 +26,12 @@
       "type": "FEATURE_ICE",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

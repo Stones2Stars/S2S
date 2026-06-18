@@ -19,6 +19,14 @@
      "type": "TECH_ADVANCED_COMPUTERS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

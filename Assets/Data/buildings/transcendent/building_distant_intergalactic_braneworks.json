@@ -13,6 +13,14 @@
      "type": "TECH_BRANE_CONSTRUCTION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_DISTANT",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

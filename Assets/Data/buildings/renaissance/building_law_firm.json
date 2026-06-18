@@ -25,6 +25,12 @@
       "type": "BUILDING_LAW_SCHOOL",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

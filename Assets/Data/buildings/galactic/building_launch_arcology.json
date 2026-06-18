@@ -98,6 +98,14 @@
      "type": "TECH_INTERSTELLAR_COLONIZATION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

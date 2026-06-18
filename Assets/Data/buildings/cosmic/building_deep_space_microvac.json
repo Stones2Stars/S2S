@@ -13,6 +13,14 @@
      "type": "TECH_ULTRACOMPUTING",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_SOLAR_SYSTEM",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

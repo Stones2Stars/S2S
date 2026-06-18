@@ -12,14 +12,17 @@
     },
     "IS_COASTAL",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
-    },
-    {
      "type": "TECH_MEGALITH_CONSTRUCTION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

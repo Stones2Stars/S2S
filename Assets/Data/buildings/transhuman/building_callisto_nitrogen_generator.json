@@ -25,6 +25,12 @@
       "type": "TERRAIN_CALLISTO",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_SOLAR_SYSTEM",
+      "scope": "plot"
+     }
     ]
    ]
   }

@@ -71,6 +71,12 @@
       "type": "BUILDING_GROVE_WALNUT",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

@@ -18,6 +18,14 @@
      "type": "TECH_PANPSYCHISM",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_UNIVERSAL",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

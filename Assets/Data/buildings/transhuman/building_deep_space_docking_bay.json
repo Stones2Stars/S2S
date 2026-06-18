@@ -29,6 +29,14 @@
      "type": "TECH_ORBITAL_MEGASTRUCTURES",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_SOLAR_SYSTEM",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

@@ -23,6 +23,12 @@
       "type": "BUILDING_TIN_RECLAMATION_PLANT",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

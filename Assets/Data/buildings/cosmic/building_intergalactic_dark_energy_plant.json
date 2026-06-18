@@ -23,6 +23,14 @@
      "type": "TECH_DARK_ENERGY_HARVESTING",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_UNIVERSAL",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

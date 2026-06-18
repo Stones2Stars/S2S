@@ -41,6 +41,14 @@
      "type": "TECH_TERRA_COMPUTER",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

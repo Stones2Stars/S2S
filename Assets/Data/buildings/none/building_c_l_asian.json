@@ -79,6 +79,14 @@
      "type": "BUILDING_C_AC_ASIAN",
      "scope": "city"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

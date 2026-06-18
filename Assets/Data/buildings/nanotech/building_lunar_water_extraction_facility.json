@@ -23,6 +23,14 @@
      "type": "TECH_LUNAR_COLONIZATION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_LUNAR",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

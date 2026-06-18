@@ -8,11 +8,6 @@
     "IS_COASTAL",
     "HAS_POWER",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
-    },
-    {
      "type": "BUILDING_MEGATOWER",
      "scope": "city"
     },
@@ -20,6 +15,14 @@
      "type": "TECH_NANO_ARCHITECTURE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

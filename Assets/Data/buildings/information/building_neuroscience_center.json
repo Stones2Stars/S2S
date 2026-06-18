@@ -39,6 +39,14 @@
      "type": "TECH_GENETIC_BIOCHEMISTRY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

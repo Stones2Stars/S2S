@@ -20,6 +20,12 @@
       "type": "FEATURE_QUASAR",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_UNIVERSAL",
+      "scope": "plot"
+     }
     ]
    ]
   }

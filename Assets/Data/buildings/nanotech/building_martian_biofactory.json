@@ -35,6 +35,12 @@
       "scope": "city",
       "connection": "trade|vicinity"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_MARTIAN",
+      "scope": "plot"
+     }
     ]
    ]
   }

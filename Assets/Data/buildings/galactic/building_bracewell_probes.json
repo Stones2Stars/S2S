@@ -13,6 +13,14 @@
      "type": "TECH_ACNP_PROPULSION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_SOLAR_SYSTEM",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

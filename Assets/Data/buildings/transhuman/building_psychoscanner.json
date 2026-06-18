@@ -26,6 +26,12 @@
       "type": "BUILDING_NEUROTRANSMITTER_MANIPULATOR_LAB",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

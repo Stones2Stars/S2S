@@ -24,6 +24,14 @@
      "type": "TECH_ATEMPORAL_BEINGS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_HYPERSPACE",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

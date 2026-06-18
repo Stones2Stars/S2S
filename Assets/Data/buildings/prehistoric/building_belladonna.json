@@ -43,6 +43,12 @@
       "type": "FEATURE_FOREST_BURNT",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

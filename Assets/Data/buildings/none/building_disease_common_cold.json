@@ -2,6 +2,18 @@
  "type": "BUILDING_DISEASE_COMMON_COLD",
  "description": "TXT_KEY_BUILDING_DISEASE_COMMON_COLD",
  "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "production": {
   "city": {
    "percent": -1

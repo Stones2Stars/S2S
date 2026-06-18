@@ -20,6 +20,16 @@
       "type": "FEATURE_OORT_CLOUD",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_INTERSTELLAR",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_SOLAR_SYSTEM",
+      "scope": "plot"
+     }
     ]
    ]
   }

@@ -13,6 +13,14 @@
      "type": "TECH_PHOTONIC_SATELLITES",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_CISLUNAR",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

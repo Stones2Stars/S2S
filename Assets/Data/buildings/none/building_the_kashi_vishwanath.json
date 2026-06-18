@@ -2,6 +2,18 @@
  "type": "BUILDING_THE_KASHI_VISHWANATH",
  "description": "TXT_KEY_BUILDING_THE_KASHI_VISHWANATH",
  "civilopedia": "TXT_KEY_BUILDING_THE_KASHI_VISHWANATH_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": [

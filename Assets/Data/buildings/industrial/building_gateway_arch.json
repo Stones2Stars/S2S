@@ -19,6 +19,14 @@
      "type": "TECH_CIVIL_ENGINEERING",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

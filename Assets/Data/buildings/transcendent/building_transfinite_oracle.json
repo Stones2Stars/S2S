@@ -18,6 +18,14 @@
      "type": "TECH_TRANSFINITE_COMPUTATION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

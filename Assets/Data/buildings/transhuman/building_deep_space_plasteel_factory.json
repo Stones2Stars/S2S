@@ -17,6 +17,14 @@
      "type": "TECH_HYPERMAGNETICS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_SOLAR_SYSTEM",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

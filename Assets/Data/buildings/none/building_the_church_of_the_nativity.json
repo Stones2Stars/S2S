@@ -2,6 +2,18 @@
  "type": "BUILDING_THE_CHURCH_OF_THE_NATIVITY",
  "description": "TXT_KEY_BUILDING_THE_CHURCH_OF_THE_NATIVITY",
  "civilopedia": "TXT_KEY_BUILDING_THE_CHURCH_OF_THE_NATIVITY_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": [

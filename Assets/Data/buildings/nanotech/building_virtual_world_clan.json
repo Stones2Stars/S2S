@@ -14,6 +14,14 @@
      "type": "TECH_EXOCORTEX_NETWORKS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

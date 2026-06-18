@@ -91,6 +91,12 @@
     ],
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ],
+    [
+     {
       "type": "HERITAGE_FOLKLORE_PENGUIN_AFRICAN",
       "scope": "empire"
      },

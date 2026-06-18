@@ -30,6 +30,12 @@
       "type": "BUILDING_POLICE_STATION",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

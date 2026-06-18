@@ -23,6 +23,12 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ],
+    [
+     {
       "type": "TECH_ROAD_BUILDING",
       "scope": "team"
      },

@@ -32,6 +32,14 @@
      "type": "TECH_MOLECULAR_BIOLOGY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

@@ -22,6 +22,12 @@
       "type": "BUILDING_PLASTIC_RECLAMATION_PLANT",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

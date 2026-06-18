@@ -19,6 +19,12 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ],
+    [
+     {
       "type": "BUILDING_GOVERNORS_MENAGERIE",
       "scope": "city"
      },

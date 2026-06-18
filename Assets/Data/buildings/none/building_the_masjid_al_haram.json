@@ -2,6 +2,18 @@
  "type": "BUILDING_THE_MASJID_AL_HARAM",
  "description": "TXT_KEY_BUILDING_THE_MASJID_AL_HARAM",
  "civilopedia": "TXT_KEY_BUILDING_THE_MASJID_AL_HARAM_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": [

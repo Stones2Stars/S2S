@@ -14,6 +14,14 @@
      "type": "TECH_NANOMORPHIC_TROIDS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_MARTIAN",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

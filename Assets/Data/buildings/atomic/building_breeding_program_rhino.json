@@ -43,6 +43,12 @@
       "scope": "city",
       "connection": "vicinity"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

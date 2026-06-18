@@ -77,6 +77,12 @@
       "type": "TERRAIN_MARSH",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

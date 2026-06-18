@@ -19,6 +19,14 @@
      "type": "TECH_PLANETARY_MANUFACTURING",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_VENUSIAN",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

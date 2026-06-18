@@ -42,6 +42,12 @@
       "type": "BUILDING_THEATRE",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

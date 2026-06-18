@@ -53,6 +53,14 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_SOLAR_SYSTEM",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

@@ -17,6 +17,14 @@
      "type": "TECH_LUNAR_TERRAFORMING",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_TITANIC",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

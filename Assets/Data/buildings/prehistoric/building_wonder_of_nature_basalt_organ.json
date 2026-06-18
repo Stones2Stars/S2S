@@ -21,6 +21,12 @@
       "type": "FEATURE_PLATY_BASALT_ORGAN",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

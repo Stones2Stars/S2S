@@ -33,6 +33,14 @@
      "type": "TECH_MEDIA_PSYCHOLOGY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

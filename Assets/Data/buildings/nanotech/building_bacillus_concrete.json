@@ -24,6 +24,14 @@
      "type": "TECH_PROTOTYPED_PATHOGENS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

@@ -20,6 +20,12 @@
       "type": "FEATURE_DESERT_PLANET",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_PLASMA",
+      "scope": "plot"
+     }
     ]
    ]
   }

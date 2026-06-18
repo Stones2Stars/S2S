@@ -43,6 +43,18 @@
    "BUILDING_C_L_OCEANIAN"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_OCEANIAN"

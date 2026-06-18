@@ -24,6 +24,14 @@
      "type": "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_HYPERSPACE",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

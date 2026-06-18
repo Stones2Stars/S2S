@@ -12,11 +12,6 @@
      "min": 3
     },
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
-    },
-    {
      "type": "TECH_NAVIGATION",
      "scope": "team"
     }
@@ -34,6 +29,12 @@
      {
       "type": "BUILDING_NAVAL_YARD",
       "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
      }
     ]
    ]

@@ -6,6 +6,14 @@
   "build": {
    "all": [
     "IS_COASTAL"
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

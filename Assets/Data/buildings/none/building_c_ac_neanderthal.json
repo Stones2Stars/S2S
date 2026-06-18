@@ -47,6 +47,18 @@
    "UNIT_NEANDERTHAL_WORKBOAT"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "research": {
   "city": {
    "percent": -5

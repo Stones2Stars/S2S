@@ -32,6 +32,12 @@
       "type": "IMPROVEMENT_FISHING_BOATS",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

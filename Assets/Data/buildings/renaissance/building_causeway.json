@@ -67,6 +67,12 @@
       "type": "BUILDING_SKYROAD_CONTROL_TOWER",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

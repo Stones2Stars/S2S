@@ -18,6 +18,14 @@
      "type": "TECH_NATURAL_PIGMENTS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

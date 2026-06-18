@@ -15,6 +15,14 @@
      "type": "TECH_POLITICAL_PHILOSOPHY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

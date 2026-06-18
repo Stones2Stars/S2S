@@ -30,6 +30,12 @@
       "type": "BUILDING_HERCULES_BEETLE_GATHERER",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

@@ -28,6 +28,12 @@
       "type": "BUILDING_SKYSCRAPER",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   },

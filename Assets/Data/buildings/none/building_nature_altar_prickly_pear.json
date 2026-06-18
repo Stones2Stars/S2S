@@ -14,6 +14,14 @@
      "type": "BUILDING_NATURE_ALTAR",
      "scope": "city"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   },
   "operate": {

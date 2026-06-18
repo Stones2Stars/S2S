@@ -64,6 +64,12 @@
       "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   },

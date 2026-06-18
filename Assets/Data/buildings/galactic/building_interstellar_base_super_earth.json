@@ -25,6 +25,12 @@
       "type": "FEATURE_SUPER_EARTH",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_PLASMA",
+      "scope": "plot"
+     }
     ]
    ]
   }

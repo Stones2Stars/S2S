@@ -18,6 +18,14 @@
      "type": "TECH_REPRESENTATIVE_DEMOCRACY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

@@ -16,6 +16,16 @@
       "type": "TERRAIN_NEUTRON_STAR",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_GALACTIC",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_MILKY_WAY",
+      "scope": "plot"
+     }
     ]
    ]
   }

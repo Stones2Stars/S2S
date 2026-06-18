@@ -13,6 +13,14 @@
      "type": "TECH_FEMTOTECHNOLOGY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_INTERSTELLAR",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

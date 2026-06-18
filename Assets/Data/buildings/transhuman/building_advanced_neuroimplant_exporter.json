@@ -18,6 +18,14 @@
      "type": "TECH_COMPREHENSIVE_CYBERNETICS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

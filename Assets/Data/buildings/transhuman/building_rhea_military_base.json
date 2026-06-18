@@ -22,6 +22,12 @@
       "type": "FEATURE_SMALL_MOON",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_SOLAR_SYSTEM",
+      "scope": "plot"
+     }
     ]
    ]
   }

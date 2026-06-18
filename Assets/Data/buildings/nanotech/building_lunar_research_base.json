@@ -33,6 +33,12 @@
       "type": "BUILDING_LUNAR_OBSERVATORY",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_LUNAR",
+      "scope": "plot"
+     }
     ]
    ]
   }

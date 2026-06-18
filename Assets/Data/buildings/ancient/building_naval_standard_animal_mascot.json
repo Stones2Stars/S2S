@@ -37,6 +37,12 @@
       "type": "BUILDING_FOLKLORE_GIANT_SQUID",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

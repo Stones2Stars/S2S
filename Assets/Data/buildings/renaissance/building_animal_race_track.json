@@ -24,6 +24,12 @@
       "type": "BUILDING_MODERN_STABLE",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

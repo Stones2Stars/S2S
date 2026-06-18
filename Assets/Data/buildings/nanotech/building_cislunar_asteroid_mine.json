@@ -16,6 +16,12 @@
       "type": "FEATURE_ASTEROIDS",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_CISLUNAR",
+      "scope": "plot"
+     }
     ]
    ]
   }

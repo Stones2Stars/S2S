@@ -20,6 +20,20 @@
       "type": "BUILDING_DISTANT_PORTAL_TO_DIMENSION_X",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_UNIVERSAL",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_DISTANT",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_HYPERSPACE",
+      "scope": "plot"
+     }
     ]
    ]
   }

@@ -7,11 +7,6 @@
    "all": [
     "IS_COASTAL",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
-    },
-    {
      "type": "TECH_STEAM_POWER",
      "scope": "team"
     }
@@ -33,6 +28,12 @@
      {
       "type": "BUILDING_OCEAN_ADMINISTRATION",
       "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
      }
     ]
    ]

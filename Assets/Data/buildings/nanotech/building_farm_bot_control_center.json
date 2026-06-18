@@ -29,6 +29,14 @@
      "type": "TECH_BIOMETRIC_WARFARE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

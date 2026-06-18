@@ -42,6 +42,12 @@
       "type": "TERRAIN_DESERT",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

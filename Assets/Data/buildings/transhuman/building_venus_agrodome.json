@@ -18,6 +18,14 @@
      "type": "TECH_EXTRATERRESTRIAL_AGRICULTURE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_VENUSIAN",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

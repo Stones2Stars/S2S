@@ -26,6 +26,16 @@
       "type": "BUILDING_VENUS_MEGAFACTORY",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_MARTIAN",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_VENUSIAN",
+      "scope": "plot"
+     }
     ]
    ]
   }

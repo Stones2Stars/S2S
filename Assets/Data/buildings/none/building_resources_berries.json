@@ -43,6 +43,12 @@
       "type": "BUILDING_FARM_CROP_STRAWBERRY",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

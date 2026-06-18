@@ -33,6 +33,12 @@
       "type": "BUILDING_METALS_MEGACOMPLEX",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

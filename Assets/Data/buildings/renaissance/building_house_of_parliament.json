@@ -35,6 +35,12 @@
     ],
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ],
+    [
+     {
       "type": "BONUS_BRICKS",
       "scope": "city",
       "connection": "trade|vicinity"

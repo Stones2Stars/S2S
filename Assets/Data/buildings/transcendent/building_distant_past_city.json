@@ -20,6 +20,12 @@
       "type": "TERRAIN_DISTANT_PAST",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_DISTANT",
+      "scope": "plot"
+     }
     ]
    ]
   }

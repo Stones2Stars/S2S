@@ -19,6 +19,14 @@
      "type": "TECH_SENTIENT_ENERGY_FIELDS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

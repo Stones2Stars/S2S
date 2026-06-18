@@ -37,6 +37,14 @@
      "type": "TECH_ADVANCED_SEEDSHIPS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_MILKY_WAY",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

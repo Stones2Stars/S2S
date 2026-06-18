@@ -20,6 +20,14 @@
      "scope": "team"
     }
    ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ],
    "noneOf": [
     {
      "type": "BUILDING_HOLLYWOOD",

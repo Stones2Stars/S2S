@@ -8,11 +8,6 @@
    "all": [
     "IS_COASTAL",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
-    },
-    {
      "type": "BUILDING_ZOO",
      "scope": "city"
     },
@@ -25,6 +20,14 @@
      "type": "TECH_ECOLOGY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

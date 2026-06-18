@@ -3,6 +3,18 @@
  "description": "TXT_KEY_BUILDING_C_N_ASIAN",
  "civilopedia": "TXT_KEY_BUILDING_C_N_PEDIA",
  "help": "TXT_KEY_BUILDING_C_N_HELP",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_ASIAN"

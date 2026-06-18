@@ -37,6 +37,12 @@
       "type": "TERRAIN_TAIGA",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

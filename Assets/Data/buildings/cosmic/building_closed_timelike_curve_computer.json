@@ -21,6 +21,14 @@
      "type": "TECH_STABLE_TIME_LOOPS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

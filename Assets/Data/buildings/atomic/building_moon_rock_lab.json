@@ -9,6 +9,14 @@
      "type": "TECH_LUNAR_EXPLORATION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

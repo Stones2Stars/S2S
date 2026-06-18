@@ -29,6 +29,14 @@
      "type": "TECH_ORBITAL_FLIGHT",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

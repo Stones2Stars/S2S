@@ -34,6 +34,14 @@
      "type": "TECH_WEAPONIZED_ANTIMATTER",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

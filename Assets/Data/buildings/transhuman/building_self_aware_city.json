@@ -26,6 +26,14 @@
      "type": "TECH_TECHNOLOGICAL_SINGULARITY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

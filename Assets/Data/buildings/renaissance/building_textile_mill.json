@@ -62,6 +62,12 @@
       "type": "BUILDING_FACTORY",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

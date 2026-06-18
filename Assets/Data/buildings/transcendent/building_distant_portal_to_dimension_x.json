@@ -19,6 +19,14 @@
      "type": "TECH_CONTROLLED_VACUUM_COLLAPSE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_DISTANT",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

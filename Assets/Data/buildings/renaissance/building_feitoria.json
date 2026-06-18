@@ -12,11 +12,6 @@
      "min": 3
     },
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
-    },
-    {
      "type": "BUILDING_CUSTOMS_OFFICE",
      "scope": "city"
     },
@@ -24,6 +19,14 @@
      "type": "TECH_ECONOMICS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

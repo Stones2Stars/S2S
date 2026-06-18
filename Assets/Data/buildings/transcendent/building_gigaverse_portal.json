@@ -26,6 +26,16 @@
       "type": "BUILDING_LUNAR_ARCOLOGY",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_CISLUNAR",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_LUNAR",
+      "scope": "plot"
+     }
     ]
    ]
   }

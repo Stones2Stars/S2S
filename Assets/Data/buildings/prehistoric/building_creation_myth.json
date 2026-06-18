@@ -24,6 +24,12 @@
       "type": "BUILDING_LIBRARY",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   },

@@ -17,6 +17,14 @@
      "type": "TECH_LUNAR_TOURISM",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_CISLUNAR",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

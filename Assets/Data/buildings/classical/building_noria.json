@@ -42,6 +42,12 @@
       "type": "BUILDING_MODERN_WATERWORKS",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

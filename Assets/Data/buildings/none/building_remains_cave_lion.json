@@ -19,6 +19,12 @@
     ],
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ],
+    [
+     {
       "type": "HERITAGE_FOLKLORE_LION_CAVE",
       "scope": "empire"
      }

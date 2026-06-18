@@ -24,6 +24,12 @@
       "type": "BUILDING_SCOTLAND_YARD",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

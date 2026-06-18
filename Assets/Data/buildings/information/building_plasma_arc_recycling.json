@@ -17,6 +17,14 @@
      "type": "TECH_CONTROLLED_PLASMA",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

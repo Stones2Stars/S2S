@@ -40,6 +40,12 @@
       "type": "BUILDING_ASATRU_TEMPLE",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

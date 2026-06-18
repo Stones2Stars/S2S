@@ -18,6 +18,14 @@
      "type": "TECH_GALACTIFORMING",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_UNIVERSAL",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

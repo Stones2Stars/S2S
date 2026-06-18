@@ -19,6 +19,14 @@
      "type": "TECH_REPLACEMENT_ORGANS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

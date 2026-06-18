@@ -14,6 +14,18 @@
      "type": "TECH_INTERSTELLAR_TRAVEL",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_INTERSTELLAR",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_PLASMA",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

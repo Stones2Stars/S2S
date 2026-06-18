@@ -16,6 +16,12 @@
       "type": "TERRAIN_SUN_LIKE_STAR",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_PLASMA",
+      "scope": "plot"
+     }
     ]
    ],
    "noneOf": [

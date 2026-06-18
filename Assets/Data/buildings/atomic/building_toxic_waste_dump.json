@@ -14,6 +14,14 @@
      "type": "TECH_NUCLEAR_POWER",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

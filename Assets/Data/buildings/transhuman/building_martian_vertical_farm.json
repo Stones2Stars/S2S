@@ -24,6 +24,14 @@
      "type": "TECH_BOTANICAL_ALCHEMY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_MARTIAN",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

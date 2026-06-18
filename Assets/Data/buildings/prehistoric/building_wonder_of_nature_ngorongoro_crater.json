@@ -16,6 +16,12 @@
       "type": "FEATURE_PLATY_NGORONGORO_CRATER",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

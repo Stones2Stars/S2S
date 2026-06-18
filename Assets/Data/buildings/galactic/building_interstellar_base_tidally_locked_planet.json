@@ -25,6 +25,12 @@
       "type": "TERRAIN_RED_DWARF",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_PLASMA",
+      "scope": "plot"
+     }
     ]
    ]
   }

@@ -32,6 +32,12 @@
       "type": "BUILDING_CHEMICAL_PLANT",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

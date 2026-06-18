@@ -2,6 +2,18 @@
  "type": "BUILDING_POLLUTION_LIGHT_SMOG",
  "description": "TXT_KEY_BUILDING_POLLUTION_LIGHT_SMOG",
  "civilopedia": "TXT_KEY_BUILDING_AIR_POLLUTION_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": -3

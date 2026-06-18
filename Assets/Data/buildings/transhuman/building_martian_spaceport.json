@@ -26,6 +26,14 @@
      "type": "TECH_KUIPER_BELT_EXPLORATION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_MARTIAN",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

@@ -54,6 +54,12 @@
       "type": "TERRAIN_SCRUB",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

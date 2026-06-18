@@ -25,6 +25,12 @@
       "type": "BUILDING_POLICE_PRECINCT",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

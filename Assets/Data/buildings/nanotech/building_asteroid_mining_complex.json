@@ -30,6 +30,14 @@
      "type": "TECH_LUNAR_TRADE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_CISLUNAR",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

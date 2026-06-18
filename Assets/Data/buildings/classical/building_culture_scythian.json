@@ -26,6 +26,14 @@
      "type": "TECH_MOUNTED_ARCHERY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

@@ -31,6 +31,14 @@
      "type": "TECH_GAIA_ECOLOGY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_VENUSIAN",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

@@ -39,6 +39,12 @@
       "type": "BUILDING_COMMERCIAL_AIRPORT",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

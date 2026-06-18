@@ -19,6 +19,14 @@
      "type": "TECH_MACROVERSE_TRAVERSAL",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_SOLAR_SYSTEM",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

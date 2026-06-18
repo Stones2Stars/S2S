@@ -20,6 +20,14 @@
      "type": "TECH_DEEP_SPACE_COLONIES",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_SOLAR_SYSTEM",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

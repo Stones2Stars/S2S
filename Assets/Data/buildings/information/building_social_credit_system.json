@@ -14,6 +14,14 @@
      "type": "TECH_VIRTUAL_SOCIETY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

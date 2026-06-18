@@ -13,6 +13,16 @@
   ]
  },
  "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
   "operate": {
    "all": [
     {

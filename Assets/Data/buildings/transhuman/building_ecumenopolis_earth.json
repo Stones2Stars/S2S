@@ -18,6 +18,14 @@
      "type": "TECH_PLANETARY_MEGASTRUCTURES",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

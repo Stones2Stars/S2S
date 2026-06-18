@@ -29,6 +29,14 @@
      "type": "TECH_INTERGALACTIC_COLONIZATION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_UNIVERSAL",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

@@ -53,6 +53,7 @@ namespace
 		bToken = false;
 		if (s == "POPULATION")          { eOut = ATOMDOMAIN_POPULATION;  bToken = true; return true; }
 		if (s == "CITY")                { eOut = ATOMDOMAIN_CITYCOUNT;   bToken = true; return true; }
+		if (s == "AREA_SIZE")           { eOut = ATOMDOMAIN_AREASIZE;    bToken = true; return true; }
 		if (rjHasPrefix(s, "BUILDING_"))    { eOut = ATOMDOMAIN_BUILDING;    return true; }
 		if (rjHasPrefix(s, "UNIT_"))        { eOut = ATOMDOMAIN_UNIT;        return true; }
 		if (rjHasPrefix(s, "TECH_"))        { eOut = ATOMDOMAIN_TECH;        return true; }
@@ -176,13 +177,23 @@ namespace
 		if (itType != o.end() && itType->second.is<std::string>())
 		{
 			const std::string sType = itType->second.get<std::string>();
-			// plot-substrate types authored as atoms are really plot predicates
-			if (rjHasPrefix(sType, "TERRAIN_") || rjHasPrefix(sType, "FEATURE_"))
+			// plot-substrate types authored as atoms are really plot predicates (terrain/feature/improvement = VICINITY)
+			if (rjHasPrefix(sType, "TERRAIN_") || rjHasPrefix(sType, "FEATURE_") || rjHasPrefix(sType, "IMPROVEMENT_"))
 			{
 				const int ip = GC.getInfoTypeForString(sType.c_str(), true);
 				if (ip < 0) { reason = "type-not-loaded(" + sType + ")"; return false; }
 				out.bPredicate = true;
-				out.pred = CvPredicate(rjHasPrefix(sType, "TERRAIN_") ? PRED_HAS_TERRAIN : PRED_HAS_FEATURE, ip);
+				const PredicateKind ek = rjHasPrefix(sType, "TERRAIN_") ? PRED_HAS_TERRAIN
+				                       : rjHasPrefix(sType, "FEATURE_") ? PRED_HAS_FEATURE : PRED_HAS_IMPROVEMENT;
+				out.pred = CvPredicate(ek, ip);
+				return true;
+			}
+			if (rjHasPrefix(sType, "MAPCATEGORY_"))  // map-category placement gate (CENTER-plot, legacy isMapCategory)
+			{
+				const int ip = GC.getInfoTypeForString(sType.c_str(), true);
+				if (ip < 0) { reason = "type-not-loaded(" + sType + ")"; return false; }
+				out.bPredicate = true;
+				out.pred = CvPredicate(PRED_HAS_MAP_CATEGORY, ip);
 				return true;
 			}
 			CvCountAtom a;

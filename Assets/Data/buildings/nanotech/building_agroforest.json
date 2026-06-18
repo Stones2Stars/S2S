@@ -97,6 +97,14 @@
      "type": "TECH_ENVIRONMENTAL_ECONOMICS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

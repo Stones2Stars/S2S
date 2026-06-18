@@ -41,6 +41,12 @@
       "type": "BUILDING_EXOCORTEX_NETWORKS",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

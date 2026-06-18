@@ -2,6 +2,18 @@
  "type": "BUILDING_RELIC_CHEOMSEONGDAE",
  "description": "TXT_KEY_BUILDING_RELIC_CHEOMSEONGDAE",
  "civilopedia": "TXT_KEY_BUILDING_CHEOMSEONGDAE_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

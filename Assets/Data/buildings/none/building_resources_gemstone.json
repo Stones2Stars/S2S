@@ -83,6 +83,12 @@
       "type": "BUILDING_MINE_TURQUOISE",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

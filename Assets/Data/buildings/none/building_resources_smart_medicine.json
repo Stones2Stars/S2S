@@ -22,6 +22,12 @@
       "type": "BUILDING_RESEARCH_HOSPITAL",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

@@ -2,6 +2,18 @@
  "type": "BUILDING_PIR_E_SABZ",
  "description": "TXT_KEY_BUILDING_PIR_E_SABZ",
  "civilopedia": "TXT_KEY_BUILDING_PIR_E_SABZ_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": [

@@ -35,6 +35,12 @@
       "type": "BUILDING_SNAKE_PIT",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

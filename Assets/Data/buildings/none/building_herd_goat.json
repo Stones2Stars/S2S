@@ -14,6 +14,18 @@
    "BUILDING_INDUSTRIAL_FARMS"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": 2

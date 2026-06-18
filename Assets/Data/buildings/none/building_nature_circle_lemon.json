@@ -14,6 +14,14 @@
      "type": "BUILDING_NATURE_CIRCLE_OF_POWER",
      "scope": "city"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   },
   "operate": {

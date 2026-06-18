@@ -65,6 +65,18 @@
    "BUILDING_C_L_NORTH_AMERICAN"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CULTURE_NORTH_AMERICAN"

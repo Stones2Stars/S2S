@@ -27,6 +27,14 @@
      "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_VENUSIAN",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

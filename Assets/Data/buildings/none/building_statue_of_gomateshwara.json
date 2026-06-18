@@ -2,6 +2,18 @@
  "type": "BUILDING_STATUE_OF_GOMATESHWARA",
  "description": "TXT_KEY_BUILDING_STATUE_OF_GOMATESHWARA",
  "civilopedia": "TXT_KEY_BUILDING_STATUE_OF_GOMATESHWARA_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": [

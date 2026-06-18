@@ -36,6 +36,12 @@
       "type": "FEATURE_PLATY_KILIMANJARO",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

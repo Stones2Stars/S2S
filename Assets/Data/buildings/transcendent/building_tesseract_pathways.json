@@ -14,6 +14,14 @@
      "type": "TECH_TESSERACT_CONSTRUCTION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

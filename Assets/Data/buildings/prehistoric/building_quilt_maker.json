@@ -40,6 +40,12 @@
       "type": "BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

@@ -29,6 +29,12 @@
       "type": "BUILDING_GRAVITY_TRAIN",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

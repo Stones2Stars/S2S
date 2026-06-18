@@ -13,6 +13,14 @@
      "type": "TECH_ASTRO_ENVIRONMENTAL_SYSTEMS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

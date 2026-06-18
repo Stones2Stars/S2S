@@ -19,6 +19,14 @@
      "type": "TECH_GUERRILLA_WARFARE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

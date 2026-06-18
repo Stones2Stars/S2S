@@ -2,6 +2,18 @@
  "type": "BUILDING_THE_MAHABODHI",
  "description": "TXT_KEY_BUILDING_THE_MAHABODHI",
  "civilopedia": "TXT_KEY_BUILDING_THE_MAHABODHI_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": [

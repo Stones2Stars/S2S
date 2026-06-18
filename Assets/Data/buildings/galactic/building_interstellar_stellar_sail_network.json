@@ -20,6 +20,16 @@
       "type": "TERRAIN_STAR_CLUSTER",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_GALACTIC",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_MILKY_WAY",
+      "scope": "plot"
+     }
     ]
    ]
   }

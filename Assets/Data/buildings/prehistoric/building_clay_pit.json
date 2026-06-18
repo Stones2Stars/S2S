@@ -24,6 +24,12 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ],
+    [
+     {
       "HAS_TERRAIN": "TERRAIN_MUDDY"
      },
      {

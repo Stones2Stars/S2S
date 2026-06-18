@@ -2,6 +2,18 @@
  "type": "BUILDING_RELIC_ANGKOR_WAT",
  "description": "TXT_KEY_BUILDING_RELIC_ANGKOR_WAT",
  "civilopedia": "TXT_KEY_BUILDING_ANGKOR_WAT_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

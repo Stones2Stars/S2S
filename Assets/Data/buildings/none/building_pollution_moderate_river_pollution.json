@@ -6,6 +6,14 @@
   "build": {
    "all": [
     "HAS_RIVER"
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

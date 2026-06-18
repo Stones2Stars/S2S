@@ -53,6 +53,12 @@
       "type": "BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

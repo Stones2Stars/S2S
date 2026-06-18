@@ -9,6 +9,14 @@
      "type": "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_CISLUNAR",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

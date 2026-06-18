@@ -42,6 +42,12 @@
       "type": "BUILDING_TRADING_POST",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

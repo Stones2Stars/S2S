@@ -48,6 +48,12 @@
       "type": "BUILDING_SELF_ASSEMBLY_FACTORY",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

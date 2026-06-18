@@ -2,6 +2,18 @@
  "type": "BUILDING_KHAN_TENGRI",
  "description": "TXT_KEY_BUILDING_KHAN_TENGRI",
  "civilopedia": "TXT_KEY_BUILDING_KHAN_TENGRI_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": [

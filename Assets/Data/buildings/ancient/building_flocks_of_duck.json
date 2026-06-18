@@ -24,6 +24,12 @@
       "type": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

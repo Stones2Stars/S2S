@@ -29,6 +29,14 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_LUNAR",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

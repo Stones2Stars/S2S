@@ -24,6 +24,12 @@
       "type": "BUILDING_INTERSTELLAR_CULTURE_INDUSTRIOUS",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_GALACTIC",
+      "scope": "plot"
+     }
     ]
    ]
   }

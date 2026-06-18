@@ -27,6 +27,12 @@
       "type": "BUILDING_WONDER_OF_NATURE_KRAKATOA",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

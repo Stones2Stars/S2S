@@ -18,6 +18,14 @@
      "type": "TECH_WORMHOLE_HIVEMIND",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_MILKY_WAY",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

@@ -20,6 +20,14 @@
      "type": "TECH_WEAPONIZED_GRAVITY_FIELDS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

@@ -35,6 +35,12 @@
       "type": "FEATURE_FLOOD_PLAINS",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

@@ -29,6 +29,12 @@
       "type": "BUILDING_EFFECT_HERITAGE_BEARS",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

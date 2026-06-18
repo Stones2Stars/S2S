@@ -38,6 +38,14 @@
      "type": "TECH_ELECTRIC_ARC_WEAPONRY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

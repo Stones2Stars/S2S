@@ -21,6 +21,12 @@
       "type": "BUILDING_NANO_RESEARCH_DEPARTMENT",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

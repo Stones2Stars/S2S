@@ -25,6 +25,12 @@
       "type": "TERRAIN_DISTANT_FUTURE",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_DISTANT",
+      "scope": "plot"
+     }
     ]
    ]
   }

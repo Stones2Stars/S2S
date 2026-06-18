@@ -53,6 +53,12 @@
     ],
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ],
+    [
+     {
       "type": "BONUS_COPPER_INGOTS",
       "scope": "city",
       "connection": "trade|vicinity"

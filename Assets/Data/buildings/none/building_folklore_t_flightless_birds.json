@@ -40,6 +40,12 @@
       "type": "BUILDING_FOLKLORE_RHEA",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

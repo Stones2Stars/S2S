@@ -25,6 +25,12 @@
       "type": "BUILDING_CISLUNAR_RESUPPLY",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_CISLUNAR",
+      "scope": "plot"
+     }
     ]
    ]
   }

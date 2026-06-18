@@ -33,6 +33,14 @@
      "type": "TECH_FRICTIONLESS_FLIGHT",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

@@ -2,6 +2,18 @@
  "type": "BUILDING_MORMAN_SHRINE",
  "description": "TXT_KEY_BUILDING_MORMAN_SHRINE",
  "civilopedia": "TXT_KEY_BUILDING_MORMAN_SHRINE_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": [

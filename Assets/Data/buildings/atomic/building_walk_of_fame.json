@@ -37,6 +37,12 @@
       "type": "BUILDING_NATIONAL_TV_STATION",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

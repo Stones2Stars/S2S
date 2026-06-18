@@ -39,6 +39,12 @@
       "type": "BUILDING_TELEPORT_BOOTH",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

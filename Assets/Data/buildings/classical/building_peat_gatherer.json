@@ -21,6 +21,12 @@
       "type": "FEATURE_PEAT_BOG",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

@@ -8,11 +8,6 @@
     "IS_COASTAL",
     "HAS_POWER",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
-    },
-    {
      "type": "BUILDING_ARTIFICIAL_REEF",
      "scope": "city"
     },
@@ -20,6 +15,14 @@
      "type": "TECH_PROTOTYPED_PATHOGENS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

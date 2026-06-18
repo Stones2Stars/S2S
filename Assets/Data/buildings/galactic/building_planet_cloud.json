@@ -24,6 +24,14 @@
      "type": "TECH_LAUNCH_ARCOLOGY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_CISLUNAR",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

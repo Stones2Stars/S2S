@@ -27,6 +27,14 @@
      "type": "TECH_DYSTOPIA_PATHOGENS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_CISLUNAR",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

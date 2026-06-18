@@ -18,6 +18,12 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ],
+    [
+     {
       "type": "HERITAGE_FOLKLORE_BEAVER",
       "scope": "empire"
      },

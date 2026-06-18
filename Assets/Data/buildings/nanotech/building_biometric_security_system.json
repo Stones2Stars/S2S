@@ -36,6 +36,14 @@
      "type": "TECH_NANO_ARCHITECTURE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

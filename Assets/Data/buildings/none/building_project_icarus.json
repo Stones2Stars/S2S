@@ -21,6 +21,12 @@
       "scope": "city",
       "connection": "trade|vicinity"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_INTERSTELLAR",
+      "scope": "plot"
+     }
     ]
    ]
   }

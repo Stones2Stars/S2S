@@ -9,6 +9,58 @@
      "type": "TECH_METAVERSE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_HYPERSPACE",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_GALACTIC",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_SOLAR_SYSTEM",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_MARTIAN",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_VENUSIAN",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_JOVIAN",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_LUNAR",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_CISLUNAR",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_PLASMA",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_TITANIC",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_UNIVERSAL",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_DISTANT",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

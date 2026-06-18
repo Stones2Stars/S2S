@@ -15,6 +15,14 @@
      "type": "TECH_BACTERIUM_ENGINEERING",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

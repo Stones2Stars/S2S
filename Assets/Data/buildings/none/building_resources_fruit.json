@@ -187,6 +187,12 @@
       "type": "BUILDING_FARM_CROP_WATERMELON",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

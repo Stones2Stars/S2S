@@ -28,6 +28,14 @@
      "type": "TECH_AUTONOMOUS_VEHICLES",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

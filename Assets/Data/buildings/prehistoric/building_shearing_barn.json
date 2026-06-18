@@ -45,6 +45,12 @@
       "type": "BUILDING_WOOLLY_PIG_BREEDER",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

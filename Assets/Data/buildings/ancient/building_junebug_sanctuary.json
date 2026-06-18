@@ -30,6 +30,12 @@
       "type": "BUILDING_JUNEBUG_GATHERER",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

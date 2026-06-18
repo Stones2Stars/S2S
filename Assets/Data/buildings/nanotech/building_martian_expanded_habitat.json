@@ -18,6 +18,14 @@
      "type": "TECH_PLANETARY_MANUFACTURING",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_MARTIAN",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

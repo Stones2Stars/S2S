@@ -25,6 +25,14 @@
      "type": "TECH_ADVANCED_WARMACHINES",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

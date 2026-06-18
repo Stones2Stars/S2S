@@ -26,6 +26,16 @@
       "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_PLASMA",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_MILKY_WAY",
+      "scope": "plot"
+     }
     ]
    ]
   }

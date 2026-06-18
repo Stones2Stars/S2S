@@ -2,6 +2,18 @@
  "type": "BUILDING_THE_KONG_MIAO",
  "description": "TXT_KEY_BUILDING_THE_KONG_MIAO",
  "civilopedia": "TXT_KEY_BUILDING_THE_KONG_MIAO_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": [

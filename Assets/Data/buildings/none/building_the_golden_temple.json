@@ -2,6 +2,18 @@
  "type": "BUILDING_THE_GOLDEN_TEMPLE",
  "description": "TXT_KEY_BUILDING_THE_GOLDEN_TEMPLE",
  "civilopedia": "TXT_KEY_BUILDING_THE_GOLDEN_TEMPLE_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": [

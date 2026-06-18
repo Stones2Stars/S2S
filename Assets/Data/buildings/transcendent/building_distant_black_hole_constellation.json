@@ -18,6 +18,14 @@
      "type": "TECH_DIRECTED_COSMIC_EVOLUTION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_DISTANT",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

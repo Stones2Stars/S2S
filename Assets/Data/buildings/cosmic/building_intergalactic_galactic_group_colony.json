@@ -36,6 +36,12 @@
       "type": "TERRAIN_OBSERVABLE_UNIVERSE",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_UNIVERSAL",
+      "scope": "plot"
+     }
     ]
    ]
   }

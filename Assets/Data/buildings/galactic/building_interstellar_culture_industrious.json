@@ -16,6 +16,14 @@
      "scope": "team"
     }
    ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_GALACTIC",
+      "scope": "plot"
+     }
+    ]
+   ],
    "noneOf": [
     {
      "type": "BUILDING_INTERSTELLAR_CULTURE_AGGRESSIVE",

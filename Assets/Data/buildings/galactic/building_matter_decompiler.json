@@ -14,6 +14,14 @@
      "type": "TECH_ATOMIZATION_FIELD",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

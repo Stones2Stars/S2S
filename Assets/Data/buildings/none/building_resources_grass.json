@@ -19,6 +19,12 @@
       "type": "BUILDING_WONDER_OF_NATURE_BASALT_ORGAN",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

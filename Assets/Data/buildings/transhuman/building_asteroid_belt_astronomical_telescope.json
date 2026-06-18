@@ -25,6 +25,12 @@
       "type": "FEATURE_ASTEROIDS",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_SOLAR_SYSTEM",
+      "scope": "plot"
+     }
     ]
    ]
   }

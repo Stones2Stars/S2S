@@ -24,6 +24,14 @@
      "type": "TECH_ACOUSTIC_WEAPONRY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

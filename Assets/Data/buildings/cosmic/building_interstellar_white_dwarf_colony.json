@@ -24,6 +24,16 @@
       "type": "FEATURE_WHITE_DWARF",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_PLASMA",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_MILKY_WAY",
+      "scope": "plot"
+     }
     ]
    ]
   }

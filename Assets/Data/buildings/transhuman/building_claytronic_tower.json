@@ -19,6 +19,14 @@
      "type": "TECH_NANO_DISASSEMBLY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

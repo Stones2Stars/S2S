@@ -88,6 +88,12 @@
       "type": "FEATURE_PLATY_DEVILS_TABLE",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

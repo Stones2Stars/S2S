@@ -14,6 +14,18 @@
      "type": "TECH_ADAPTIVE_RADIATION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_GALACTIC",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_UNIVERSAL",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

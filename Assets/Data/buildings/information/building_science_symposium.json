@@ -17,6 +17,14 @@
      "type": "TECH_COMMUNICATION_NETWORKS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

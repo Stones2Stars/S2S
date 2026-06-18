@@ -23,6 +23,14 @@
      "type": "TECH_MOLECULAR_MEDICINE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

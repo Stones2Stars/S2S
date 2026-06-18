@@ -58,6 +58,12 @@
       "type": "BUILDING_PICOTECH_COMPLEX",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

@@ -25,6 +25,12 @@
       "type": "BUILDING_NATIONAL_AQUARIUM",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

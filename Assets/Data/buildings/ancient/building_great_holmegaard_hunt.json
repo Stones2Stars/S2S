@@ -45,6 +45,12 @@
       "type": "BUILDING_MASTER_HUNTER_TRADITION",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

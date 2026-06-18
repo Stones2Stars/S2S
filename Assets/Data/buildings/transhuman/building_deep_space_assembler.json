@@ -32,6 +32,12 @@
       "type": "BUILDING_DEEP_SPACE_SOLAR_ARRAY_TRANSNEPTUNIAN",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_SOLAR_SYSTEM",
+      "scope": "plot"
+     }
     ]
    ]
   }

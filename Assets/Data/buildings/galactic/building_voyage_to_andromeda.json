@@ -13,6 +13,14 @@
      "type": "TECH_FOLDING_SPACE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_MILKY_WAY",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

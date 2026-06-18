@@ -8,11 +8,6 @@
    "all": [
     "IS_COASTAL",
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
-    },
-    {
      "type": "TECH_REFRIGERATION",
      "scope": "team"
     }
@@ -26,6 +21,12 @@
      {
       "type": "BUILDING_SHOPPING_DISTRICT",
       "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
      }
     ]
    ]

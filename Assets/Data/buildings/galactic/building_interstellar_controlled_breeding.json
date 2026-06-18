@@ -16,6 +16,14 @@
      "type": "TECH_PRECISION_SOCIAL_ENGINEERING",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_GALACTIC",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

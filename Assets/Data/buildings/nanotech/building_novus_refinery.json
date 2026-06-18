@@ -47,6 +47,14 @@
      "scope": "city",
      "connection": "trade|vicinity"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

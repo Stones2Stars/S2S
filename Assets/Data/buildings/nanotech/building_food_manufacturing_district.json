@@ -110,6 +110,14 @@
      "type": "TECH_AUGMENTED_CONSUMABLES",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

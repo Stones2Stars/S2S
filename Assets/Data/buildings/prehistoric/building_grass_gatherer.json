@@ -26,6 +26,12 @@
       "type": "FEATURE_VERY_TALL_GRASS",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

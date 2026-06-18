@@ -13,6 +13,14 @@
      "type": "TECH_ATOMIZATION_FIELD",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_CISLUNAR",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

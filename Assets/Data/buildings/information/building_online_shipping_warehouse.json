@@ -56,6 +56,12 @@
       "type": "BUILDING_SPACE_SHIPPING_WAREHOUSE",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

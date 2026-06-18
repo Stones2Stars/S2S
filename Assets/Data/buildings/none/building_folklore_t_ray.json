@@ -29,6 +29,12 @@
       "type": "BUILDING_FOLKLORE_EAGLE_RAY",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

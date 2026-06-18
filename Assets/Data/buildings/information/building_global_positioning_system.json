@@ -24,6 +24,12 @@
       "type": "BUILDING_MILITARY_SPACEPORT",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

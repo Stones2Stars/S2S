@@ -35,6 +35,12 @@
       "type": "BUILDING_OCEAN_ADMINISTRATION",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

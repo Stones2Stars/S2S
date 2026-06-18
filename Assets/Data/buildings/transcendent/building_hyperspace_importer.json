@@ -15,6 +15,14 @@
      "type": "TECH_TRANSDIMENSIONAL_COMMERCE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_HYPERSPACE",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

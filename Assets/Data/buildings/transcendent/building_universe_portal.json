@@ -19,6 +19,14 @@
      "type": "TECH_BRANE_CROSSOVER",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

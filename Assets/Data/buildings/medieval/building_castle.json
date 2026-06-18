@@ -82,6 +82,12 @@
       "type": "BUILDING_MEGASTRONG_ALLOY_WALLS",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

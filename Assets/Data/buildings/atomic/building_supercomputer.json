@@ -18,6 +18,14 @@
      "type": "TECH_COMPUTER_SCIENCE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

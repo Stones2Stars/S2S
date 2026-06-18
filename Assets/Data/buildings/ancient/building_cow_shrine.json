@@ -14,6 +14,14 @@
      "type": "TECH_REINCARNATION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   },
   "operate": {

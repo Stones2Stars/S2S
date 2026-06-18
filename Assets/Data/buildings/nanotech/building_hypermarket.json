@@ -104,6 +104,14 @@
      "type": "TECH_PLASTIC_ELECTRONICS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

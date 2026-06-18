@@ -13,6 +13,12 @@
    "any": [
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ],
+    [
+     {
       "type": "BUILDING_CARNIVAL",
       "scope": "city"
      },

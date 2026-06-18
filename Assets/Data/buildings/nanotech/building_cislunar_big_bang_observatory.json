@@ -21,6 +21,14 @@
      "type": "TECH_AMPLIFIED_WAVELENGTHS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_CISLUNAR",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

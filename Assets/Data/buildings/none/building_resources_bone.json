@@ -19,6 +19,12 @@
       "type": "BUILDING_SLAUGHTERHOUSE",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

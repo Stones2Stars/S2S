@@ -55,6 +55,12 @@
       "type": "BUILDING_NET_SQUID",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

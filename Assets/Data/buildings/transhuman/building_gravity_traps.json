@@ -28,6 +28,14 @@
      "type": "TECH_ANTI_GRAVITY_FIELDS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

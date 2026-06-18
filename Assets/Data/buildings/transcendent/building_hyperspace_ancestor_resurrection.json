@@ -14,6 +14,14 @@
      "type": "TECH_TIMELINE_RECTIFICATION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_HYPERSPACE",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

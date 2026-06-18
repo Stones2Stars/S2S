@@ -33,6 +33,12 @@
     [
      "IS_COASTAL",
      "HAS_RIVER"
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

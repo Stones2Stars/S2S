@@ -13,6 +13,14 @@
      "type": "TECH_MAINSTREAM_CLONING",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

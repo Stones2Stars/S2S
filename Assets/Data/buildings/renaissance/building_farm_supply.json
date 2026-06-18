@@ -35,6 +35,12 @@
       "type": "IMPROVEMENT_VERTICAL_FARM",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

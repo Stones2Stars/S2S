@@ -20,6 +20,12 @@
       "type": "BUILDING_DISTANT_BLACK_HOLE_CONSTELLATION",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_DISTANT",
+      "scope": "plot"
+     }
     ]
    ]
   }

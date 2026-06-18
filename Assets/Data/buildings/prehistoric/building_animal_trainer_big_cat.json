@@ -34,6 +34,12 @@
       "type": "BUILDING_FOLKLORE_PALEOLITHIC_CAT",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

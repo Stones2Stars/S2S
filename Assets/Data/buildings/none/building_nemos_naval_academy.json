@@ -22,11 +22,6 @@
      "min": 7
     },
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
-    },
-    {
      "type": "BUILDING_NAVAL_ACADEMY",
      "scope": "city"
     },
@@ -39,6 +34,14 @@
      "type": "TECH_STEAMPUNK",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

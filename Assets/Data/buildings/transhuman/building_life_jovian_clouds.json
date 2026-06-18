@@ -16,6 +16,12 @@
       "type": "TERRAIN_JUPITER",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_SOLAR_SYSTEM",
+      "scope": "plot"
+     }
     ]
    ]
   }

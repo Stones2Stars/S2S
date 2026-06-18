@@ -45,6 +45,12 @@
       "type": "BUILDING_FOLKLORE_WHALE_SHARK",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

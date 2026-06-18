@@ -30,6 +30,12 @@
       "type": "BUILDING_SCORPION_GATHERER",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

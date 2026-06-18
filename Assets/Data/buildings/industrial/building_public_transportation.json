@@ -50,6 +50,12 @@
       "type": "BUILDING_CABLE_CARS",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

@@ -54,6 +54,12 @@
       "type": "BUILDING_MEDICAL_CLINIC",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

@@ -42,6 +42,12 @@
       "type": "TERRAIN_OCEAN_TROPICAL",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

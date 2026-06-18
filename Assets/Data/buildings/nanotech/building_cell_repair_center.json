@@ -19,6 +19,14 @@
      "type": "TECH_ANTI_AGING_MEDICINE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

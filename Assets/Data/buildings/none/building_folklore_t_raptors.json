@@ -49,6 +49,12 @@
       "type": "BUILDING_FOLKLORE_STELLERS_SEA_EAGLE",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

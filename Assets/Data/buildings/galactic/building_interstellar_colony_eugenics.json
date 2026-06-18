@@ -28,6 +28,12 @@
       "type": "BUILDING_INTERSTELLAR_CULTURE_OBEDIENT",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_GALACTIC",
+      "scope": "plot"
+     }
     ]
    ]
   }

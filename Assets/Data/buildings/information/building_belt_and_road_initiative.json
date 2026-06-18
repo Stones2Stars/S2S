@@ -24,6 +24,12 @@
       "type": "BUILDING_HYBRID_AIRSHIP_PORT",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

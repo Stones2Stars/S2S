@@ -30,6 +30,12 @@
       "type": "TERRAIN_SALT_FLATS",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

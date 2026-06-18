@@ -21,6 +21,12 @@
       "type": "FEATURE_PLATY_DEAD_SEA",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

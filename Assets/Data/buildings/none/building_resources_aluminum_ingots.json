@@ -23,6 +23,12 @@
       "type": "BUILDING_NATIONAL_SMELTER_ALUMINUM",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

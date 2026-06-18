@@ -95,6 +95,12 @@
       "type": "BUILDING_CAMP_SEAL",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

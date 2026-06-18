@@ -18,6 +18,14 @@
      "type": "TECH_EXPERIMENTAL_COSMOLOGY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_HYPERSPACE",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

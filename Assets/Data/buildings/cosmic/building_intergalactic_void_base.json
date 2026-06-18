@@ -29,6 +29,12 @@
       "type": "TERRAIN_INTERGALACTIC_VOID",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_UNIVERSAL",
+      "scope": "plot"
+     }
     ]
    ]
   }

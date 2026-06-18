@@ -30,6 +30,12 @@
       "type": "BUILDING_PRAYING_MANTIS_GATHERER",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

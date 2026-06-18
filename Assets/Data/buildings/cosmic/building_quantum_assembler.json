@@ -39,6 +39,14 @@
      "type": "TECH_MACROSCOPIC_SUPERPOSITION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

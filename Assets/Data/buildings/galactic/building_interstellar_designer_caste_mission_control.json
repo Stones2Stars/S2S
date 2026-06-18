@@ -17,6 +17,14 @@
      "type": "TECH_COLONY_GOVERNANCE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_GALACTIC",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

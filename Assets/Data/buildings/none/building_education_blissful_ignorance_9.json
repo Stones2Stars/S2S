@@ -21,6 +21,14 @@
      "type": "BUILDING_PALACE",
      "scope": "city"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

@@ -85,6 +85,12 @@
       "type": "BUILDING_GROVE_BRAZILWOOD",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

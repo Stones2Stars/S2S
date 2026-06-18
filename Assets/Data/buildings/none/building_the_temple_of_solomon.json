@@ -2,6 +2,18 @@
  "type": "BUILDING_THE_TEMPLE_OF_SOLOMON",
  "description": "TXT_KEY_BUILDING_THE_TEMPLE_OF_SOLOMON",
  "civilopedia": "TXT_KEY_BUILDING_THE_TEMPLE_OF_SOLOMON_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "gold": {
   "city": {
    "percent": 7

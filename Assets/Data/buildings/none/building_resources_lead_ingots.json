@@ -23,6 +23,12 @@
       "type": "BUILDING_SMELTER_LEAD",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

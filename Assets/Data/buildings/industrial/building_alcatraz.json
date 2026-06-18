@@ -17,11 +17,6 @@
      "min": 7
     },
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
-    },
-    {
      "type": "BUILDING_JAIL",
      "scope": "city"
     },
@@ -39,6 +34,12 @@
      {
       "type": "BUILDING_POLICE_PRECINCT",
       "scope": "city"
+     }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
      }
     ]
    ]

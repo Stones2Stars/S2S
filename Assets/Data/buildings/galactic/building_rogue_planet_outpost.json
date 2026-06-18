@@ -24,6 +24,16 @@
       "type": "FEATURE_ROGUE_PLANET",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_INTERSTELLAR",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_PLASMA",
+      "scope": "plot"
+     }
     ]
    ]
   }

@@ -28,6 +28,14 @@
      "type": "TECH_ACCELERATED_GERMINATION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

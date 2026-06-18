@@ -24,6 +24,14 @@
      "type": "TECH_UNIVERSAL_SINGULARITY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_DISTANT",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

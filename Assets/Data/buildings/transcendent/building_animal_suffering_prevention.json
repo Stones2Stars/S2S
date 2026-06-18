@@ -18,6 +18,14 @@
      "type": "TECH_OMNIBENEVOLENT_MANDATE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

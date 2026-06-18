@@ -3,6 +3,16 @@
  "description": "TXT_KEY_BUILDING_ALPHA_FEMALE",
  "civilopedia": "TXT_KEY_BUILDING_ALPHAGENDER_PEDIA",
  "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
   "operate": {
    "any": [
     [

@@ -2,6 +2,18 @@
  "type": "BUILDING_POLLUTION_MODERATE_GROUNDWATER_POLLUTION",
  "description": "TXT_KEY_BUILDING_POLLUTION_MODERATE_GROUNDWATER_POLLUTION",
  "civilopedia": "TXT_KEY_BUILDING_WATER_POLLUTION_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": -10

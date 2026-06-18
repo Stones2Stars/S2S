@@ -32,6 +32,12 @@
       "type": "BUILDING_JADE_MERCHANT_LOCAL",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

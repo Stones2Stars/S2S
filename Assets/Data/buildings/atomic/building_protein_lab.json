@@ -32,6 +32,12 @@
       "type": "BUILDING_CHEMICALS_DISTRICT",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

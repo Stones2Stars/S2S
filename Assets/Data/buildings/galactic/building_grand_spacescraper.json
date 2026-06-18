@@ -19,6 +19,14 @@
      "type": "TECH_ADAPTIVE_ARCHITECTURE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

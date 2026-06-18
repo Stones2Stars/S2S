@@ -31,6 +31,12 @@
       "type": "BUILDING_GROVE_TIMBER",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

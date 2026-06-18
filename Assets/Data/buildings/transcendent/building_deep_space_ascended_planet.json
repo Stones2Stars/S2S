@@ -13,6 +13,26 @@
      "type": "TECH_OMEGA_POINT",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_SOLAR_SYSTEM",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_VENUSIAN",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_MARTIAN",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_TITANIC",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

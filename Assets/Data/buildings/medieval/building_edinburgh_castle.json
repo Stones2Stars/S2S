@@ -34,6 +34,12 @@
       "type": "BUILDING_IMPERIAL_FORTRESS",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ],
    "disabled": "IS_CAPITAL"

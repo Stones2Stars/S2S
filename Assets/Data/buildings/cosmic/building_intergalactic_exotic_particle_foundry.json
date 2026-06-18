@@ -13,6 +13,14 @@
      "type": "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_UNIVERSAL",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

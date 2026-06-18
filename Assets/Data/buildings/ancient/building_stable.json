@@ -59,6 +59,12 @@
       "type": "BUILDING_ANIMAL_TRAINER_LLAMA",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

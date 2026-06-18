@@ -9,6 +9,14 @@
      "type": "TECH_ASTEROID_BELT_PROBES",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

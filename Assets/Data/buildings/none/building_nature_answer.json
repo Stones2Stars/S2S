@@ -2,6 +2,18 @@
  "type": "BUILDING_NATURE_ANSWER",
  "description": "TXT_KEY_BUILDING_NATURE_ANSWER",
  "civilopedia": "TXT_KEY_BUILDING_NATURE_ANSWER_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": [

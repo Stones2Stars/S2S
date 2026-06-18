@@ -15,6 +15,14 @@
      "type": "TECH_DATA_ARCHIVAL",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_GALACTIC",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

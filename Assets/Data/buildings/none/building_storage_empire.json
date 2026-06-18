@@ -3,6 +3,18 @@
  "description": "TXT_KEY_BUILDING_ECONOMY_STORAGE_BASE",
  "civilopedia": "TXT_KEY_BUILDING_ECONOMY_PEDIA",
  "help": "TXT_KEY_BUILDING_ECONOMY_HELP",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "food": {
   "city": {
    "flat": [

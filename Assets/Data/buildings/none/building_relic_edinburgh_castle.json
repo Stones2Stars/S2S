@@ -2,6 +2,18 @@
  "type": "BUILDING_RELIC_EDINBURGH_CASTLE",
  "description": "TXT_KEY_BUILDING_RELIC_EDINBURGH_CASTLE",
  "civilopedia": "TXT_KEY_BUILDING_EDINBURGH_CASTLE_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "allowed": {
   "world": 1
  },

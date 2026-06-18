@@ -58,6 +58,12 @@
       "type": "TERRAIN_ASTEROID_SURFACE",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_SOLAR_SYSTEM",
+      "scope": "plot"
+     }
     ]
    ]
   }

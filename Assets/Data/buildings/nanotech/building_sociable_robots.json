@@ -29,6 +29,14 @@
      "type": "TECH_CYBERSOCIAL_INTEGRATION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

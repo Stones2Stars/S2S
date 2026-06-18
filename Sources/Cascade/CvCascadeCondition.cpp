@@ -32,6 +32,29 @@ namespace
 		}
 		return GET_PLAYER((PlayerTypes)kCtx.iPlayer).getCity(kCtx.iCity);
 	}
+
+	// VICINITY (enabler-spec §8): does ANY plot in the city's CURRENT workable radius (culture-grown, getNumCityPlots)
+	// satisfy the plot predicate? No ownership/worked filter -- the broadest clean barrier, deliberately more permissive
+	// than legacy's owned (isValidTerrainForBuildings) / worked (GOM_TERRAIN/FEATURE) scans, which it subsumes.
+	bool ccVicinityMatch(const CvCity* c, const CvPredicate& pr)
+	{
+		if (c == NULL) return false;
+		const int iNumPlots = c->getNumCityPlots();
+		for (int iI = 0; iI < iNumPlots; iI++)
+		{
+			const CvPlot* plotX = c->getCityIndexPlot(iI);
+			if (plotX == NULL) continue;
+			switch (pr.eKind)
+			{
+			case PRED_HAS_TERRAIN:     if (plotX->getTerrainType() == (TerrainTypes)pr.iParam) return true; break;
+			case PRED_HAS_FEATURE:     if (plotX->getFeatureType() == (FeatureTypes)pr.iParam) return true; break;
+			case PRED_HAS_FEATURE_ANY: if (plotX->getFeatureType() != NO_FEATURE) return true; break;
+			case PRED_HAS_IMPROVEMENT: if (plotX->getImprovementType() == (ImprovementTypes)pr.iParam) return true; break;
+			default: break;
+			}
+		}
+		return false;
+	}
 }
 
 int CvCascadeContext::contextFor(CountScope eScope) const
@@ -124,6 +147,12 @@ int cascadeAtomCount(const CvCountAtom& a, const CvCascadeContext& kCtx)
 		if (a.eScope == COUNTSCOPE_TEAM) return GET_TEAM(GET_PLAYER((PlayerTypes)p).getTeam()).getNumCities();
 		return GET_PLAYER((PlayerTypes)p).getNumCities();
 
+	case ATOMDOMAIN_AREASIZE: // AREA_SIZE = the context city's LANDMASS tile count (land buildings; water uses IS_COASTAL)
+	{
+		const CvCity* c = ccCtxCity(kCtx);
+		return (c != NULL && c->area() != NULL) ? c->area()->getNumTiles() : 0;
+	}
+
 	default:
 		return 0;
 	}
@@ -161,25 +190,21 @@ bool cascadeEvalPredicate(const CvPredicate& pr, const CvCascadeContext& kCtx)
 	case PRED_IS_FLATLANDS:       return pl != NULL && pl->isFlatlands();
 	case PRED_IS_FRESHWATER:      return pl != NULL && pl->isFreshWater();
 	case PRED_HAS_IRRIGATION:     return pl != NULL && pl->isIrrigated();
-	case PRED_HAS_FEATURE_ANY:    return pl != NULL && pl->getFeatureType() != NO_FEATURE;
-	case PRED_HAS_FEATURE:        return pl != NULL && pl->getFeatureType() == (FeatureTypes)pr.iParam;
+	case PRED_HAS_FEATURE_ANY:    return ccVicinityMatch(c, pr);  // VICINITY: any feature in the workable radius
+	case PRED_HAS_FEATURE:        return ccVicinityMatch(c, pr);  // VICINITY: this feature in the workable radius
+	case PRED_HAS_IMPROVEMENT:    return ccVicinityMatch(c, pr);  // VICINITY: this improvement in the workable radius
 	case PRED_HAS_TERRAIN:
 	{
 		// VICINITY (enabler-spec §8): terrain present anywhere in the city's CURRENT workable radius (culture-grown,
 		// getNumCityPlots). Per-city, overlapping, NO ownership/canWork filter -- deliberately more permissive than
 		// legacy isValidTerrainForBuildings (which excludes contested plots). Building PrereqOrTerrain is vicinity;
 		// improvement center-plot terrain is the flagged Phase-F divergence (migration-renames), not a consumer yet.
-		if (c == NULL) return false;
-		const int iNumPlots = c->getNumCityPlots();
-		for (int iI = 0; iI < iNumPlots; iI++)
-		{
-			const CvPlot* plotX = c->getCityIndexPlot(iI);
-			if (plotX != NULL && plotX->getTerrainType() == (TerrainTypes)pr.iParam) return true;
-		}
-		return false;
+		return ccVicinityMatch(c, pr);
 	}
 	case PRED_HAS_BONUS:          return pl != NULL && pl->getBonusType() == (BonusTypes)pr.iParam;
 	case PRED_LATITUDE:           return pl != NULL && pl->getLatitude() >= pr.iMin && pl->getLatitude() <= pr.iMax;
+	// CENTER-plot map-category (legacy isMapCategory, CvGameCoreUtils.h:382): an UNCATEGORIZED plot is always valid.
+	case PRED_HAS_MAP_CATEGORY:   return pl != NULL && (pl->getMapCategories().empty() || pl->isMapCategoryType((MapCategoryTypes)pr.iParam));
 	case PRED_HAS_RELIGION:       return c != NULL && c->isHasReligion((ReligionTypes)pr.iParam);
 	case PRED_STATE_RELIGION:     return kCtx.iPlayer >= 0 && GET_PLAYER((PlayerTypes)kCtx.iPlayer).getStateReligion() == (ReligionTypes)pr.iParam;
 	case PRED_HOLY_CITY:          return c != NULL && c->isHolyCity((ReligionTypes)pr.iParam);

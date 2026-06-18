@@ -16,6 +16,12 @@
       "type": "TERRAIN_MILKY_WAY",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_MILKY_WAY",
+      "scope": "plot"
+     }
     ]
    ],
    "noneOf": [

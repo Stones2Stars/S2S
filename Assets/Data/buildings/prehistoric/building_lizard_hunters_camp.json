@@ -33,6 +33,12 @@
       "type": "BUILDING_HUNTERS_CAMP",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

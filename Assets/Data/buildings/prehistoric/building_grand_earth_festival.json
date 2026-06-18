@@ -116,6 +116,12 @@
       "type": "FEATURE_PLATY_ULURU",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ],
    "noneOf": [

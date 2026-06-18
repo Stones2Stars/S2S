@@ -54,6 +54,14 @@
      "type": "TECH_PLANETARY_TERRAFORMING",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_MARTIAN",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

@@ -24,6 +24,12 @@
       "type": "BUILDING_OFFICIUM",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   },

@@ -22,6 +22,14 @@
      "type": "TECH_SINGULARITY_STABILIZATION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_CISLUNAR",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

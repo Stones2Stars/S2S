@@ -32,6 +32,12 @@
       "type": "BUILDING_ATHLETIC_FIELDS",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

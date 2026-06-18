@@ -25,6 +25,14 @@
      "type": "BUILDING_SHAMANISTIC_TEMPLE",
      "scope": "city"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   },
   "operate": {

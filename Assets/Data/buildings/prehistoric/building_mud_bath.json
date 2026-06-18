@@ -53,6 +53,12 @@
       "type": "BUILDING_PHARMACY",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

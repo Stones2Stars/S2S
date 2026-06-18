@@ -15,6 +15,14 @@
      "type": "TECH_FUNDAMENTALISM",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   },
   "operate": {

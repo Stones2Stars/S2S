@@ -25,6 +25,12 @@
       "type": "FEATURE_CHTHONIAN_PLANET",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_PLASMA",
+      "scope": "plot"
+     }
     ]
    ]
   }

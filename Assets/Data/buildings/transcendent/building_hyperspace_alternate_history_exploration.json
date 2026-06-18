@@ -14,6 +14,14 @@
      "type": "TECH_ALTERNATE_HISTORY_EXPLORATION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_HYPERSPACE",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

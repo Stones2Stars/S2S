@@ -33,6 +33,12 @@
       "type": "BUILDING_STAR_FORT",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

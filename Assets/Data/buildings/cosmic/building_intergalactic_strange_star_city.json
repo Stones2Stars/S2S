@@ -20,6 +20,12 @@
       "type": "BUILDING_INTERGALACTIC_ELECTROWEAK_STAR_BASE",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_UNIVERSAL",
+      "scope": "plot"
+     }
     ]
    ]
   }

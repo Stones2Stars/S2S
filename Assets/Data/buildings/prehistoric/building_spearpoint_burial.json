@@ -20,6 +20,12 @@
     ],
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ],
+    [
+     {
       "type": "HERITAGE_FOLKLORE_MAMMOTH",
       "scope": "empire"
      }

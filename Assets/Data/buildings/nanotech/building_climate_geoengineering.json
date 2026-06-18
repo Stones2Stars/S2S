@@ -16,6 +16,14 @@
      "type": "TECH_DYSTOPIA_PATHOGENS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

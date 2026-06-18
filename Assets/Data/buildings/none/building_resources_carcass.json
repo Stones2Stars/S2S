@@ -291,6 +291,12 @@
       "type": "BUILDING_CAMP_ZEBRA",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

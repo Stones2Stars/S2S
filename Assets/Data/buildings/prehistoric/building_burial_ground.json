@@ -21,6 +21,12 @@
       "type": "BUILDING_BURIAL_TRADITION_EARTH",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

@@ -37,6 +37,14 @@
      "type": "TECH_PERSONAL_COMPUTERS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

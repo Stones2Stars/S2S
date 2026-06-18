@@ -40,6 +40,14 @@
      "type": "TECH_LAW_ENFORCEMENT",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

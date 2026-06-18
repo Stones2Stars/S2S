@@ -92,6 +92,12 @@
       "type": "BUILDING_LAUNCH_ARCOLOGY",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

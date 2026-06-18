@@ -18,6 +18,14 @@
      "type": "TECH_STELLAR_ENGINE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_MILKY_WAY",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

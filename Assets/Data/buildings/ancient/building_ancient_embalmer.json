@@ -65,6 +65,12 @@
       "type": "BUILDING_BURIAL_TRADITION_SEA",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

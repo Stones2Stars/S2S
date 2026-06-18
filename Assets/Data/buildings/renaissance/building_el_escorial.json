@@ -15,6 +15,14 @@
      "scope": "team"
     }
    ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ],
    "disabled": "IS_CAPITAL"
   },
   "operate": {

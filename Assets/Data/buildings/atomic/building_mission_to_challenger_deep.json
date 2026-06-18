@@ -12,11 +12,6 @@
      "min": 13
     },
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
-    },
-    {
      "type": "BUILDING_DEEP_SEA_LAB",
      "scope": "city"
     },
@@ -41,6 +36,12 @@
       "type": "BONUS_STEEL_WARES",
       "scope": "city",
       "connection": "trade|vicinity"
+     }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
      }
     ]
    ]

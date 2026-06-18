@@ -41,6 +41,12 @@
       "type": "BUILDING_CITY_PARK",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

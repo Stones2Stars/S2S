@@ -43,6 +43,14 @@
      "type": "TECH_ARTIFICIAL_LIFE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

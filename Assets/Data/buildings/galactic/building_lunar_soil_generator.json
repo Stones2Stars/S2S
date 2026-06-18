@@ -19,6 +19,14 @@
      "type": "TECH_PARATERRAFORMING",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_LUNAR",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

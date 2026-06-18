@@ -10,6 +10,14 @@
      "scope": "empire",
      "min": 1
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

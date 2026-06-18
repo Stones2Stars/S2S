@@ -14,6 +14,14 @@
      "type": "TECH_REACTIONLESS_DRIVE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

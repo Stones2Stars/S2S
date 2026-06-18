@@ -29,6 +29,12 @@
       "type": "BUILDING_TELEGRAPH_STATION",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

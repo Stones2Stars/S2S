@@ -17,6 +17,14 @@
      "type": "TECH_COMPUTRONIUM_UNIVERSE",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_TITANIC",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

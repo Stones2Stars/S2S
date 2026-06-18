@@ -2,6 +2,18 @@
  "type": "BUILDING_POLLUTION_REEF_BLEACHING",
  "description": "TXT_KEY_BUILDING_POLLUTION_REEF_BLEACHING",
  "civilopedia": "TXT_KEY_BUILDING_AIR_POLLUTION_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "food": {
   "plot": {
    "plotTypes": {

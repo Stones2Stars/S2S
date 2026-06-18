@@ -18,6 +18,14 @@
      "type": "TECH_GERONTOCRACY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_PLASMA",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

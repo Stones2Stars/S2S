@@ -9,6 +9,14 @@
      "type": "TECH_MOLECULAR_ASSEMBLY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_CISLUNAR",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

@@ -36,6 +36,14 @@
      "type": "TECH_WIRELESS_ELECTRICITY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

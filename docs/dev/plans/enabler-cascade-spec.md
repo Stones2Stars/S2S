@@ -758,7 +758,8 @@ religion, connectable bonuses) feed the **gate**.
       one underlying system: the **presence** form is the predicate `workedBy: SELF` ("is this plot worked by this
       city?"); the **count** form is a `per`-count over worked tiles (modifier-spec §4 — "+X per worked tile of
       type T", a count read from the work-radius system). ⚑ Flag for the Building pass (#32).
-    - **VICINITY is NOT bonus-only — it is the model for TERRAIN/FEATURE plot prereqs too (owner 2026-06-18).**
+    - **VICINITY is NOT bonus-only — it is the model for TERRAIN/FEATURE/IMPROVEMENT plot prereqs too (owner 2026-06-18).**
+      (`PrereqOrImprovement` → `{HAS_IMPROVEMENT:X}` = `PRED_HAS_IMPROVEMENT`, same `ccVicinityMatch` radius scan.)
       A building's `PrereqOrTerrain`/`PrereqOrFeature` (→ `{HAS_TERRAIN:X}`/`{HAS_FEATURE:X}` = `PRED_HAS_TERRAIN`/
       `PRED_HAS_FEATURE`) is a vicinity query, evaluated as a scan of the city's **current workable radius**
       (`getCityIndexPlot(0..getNumCityPlots())`, culture-grown), with **no ownership/worked filter** — the broadest

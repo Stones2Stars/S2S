@@ -46,6 +46,12 @@
       "type": "FEATURE_CRATER_SMALL",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_LUNAR",
+      "scope": "plot"
+     }
     ]
    ]
   }

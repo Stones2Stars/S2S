@@ -21,6 +21,12 @@
       "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

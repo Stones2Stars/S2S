@@ -28,6 +28,12 @@
       "type": "BUILDING_ANIMAL_PRESERVE",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

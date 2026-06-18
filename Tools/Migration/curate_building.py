@@ -616,12 +616,18 @@ def requires_building(rec, store):
         build_all.append(_atom(pb, "city", connection="trade|vicinity", role="power"))
     # --- city / world counts + size (tally) ---
     for tag, scope in (("iPrereqPopulation", "city"), ("iCitiesPrereq", "empire"), ("iTeamsPrereq", "world"),
-                       ("iLevelPrereq", "empire"), ("iMinAreaSize", "world")):
+                       ("iLevelPrereq", "empire")):
         v = _int(rec, tag)
         if v and v > 0:
             kind = {"iPrereqPopulation": "POPULATION", "iCitiesPrereq": "CITY", "iTeamsPrereq": "TEAM",
-                    "iLevelPrereq": "UNIT_LEVEL", "iMinAreaSize": "AREA_SIZE"}[tag]
+                    "iLevelPrereq": "UNIT_LEVEL"}[tag]
             build_all.append(_atom(kind, scope, min=v))
+    # iMinAreaSize: a LAND building -> AREA_SIZE atom = the landmass tile count (area()->getNumTiles()). A WATER
+    # building (bWater) means the SEA-BODY size (legacy isCoastal(N)), already covered by the IS_COASTAL it gets
+    # from bWater -> skip the atom (all 32 current iMinAreaSize buildings are water; the land atom is the capability).
+    mas = _int(rec, "iMinAreaSize")
+    if mas and mas > 0 and not bw:
+        build_all.append(_atom("AREA_SIZE", "city", min=mas))
     lo, hi = _int(rec, "iMinLatitude"), _int(rec, "iMaxLatitude")
     if (lo and lo > 0) or (hi is not None and hi != 90):
         lat = OrderedDict([("latitude", OrderedDict())])
@@ -651,6 +657,13 @@ def requires_building(rec, store):
             build_any.append([_atom(x, "plot") for x in lst])
     for x in _typelist(rec, "PrereqAndTerrain"):
         build_all.append(_atom(x, "plot"))
+    # MapCategoryTypes: the placement gate (legacy isMapCategory, CENTER-plot) -- the city plot must be in ONE of the
+    # building's map categories (uncategorized plot = valid, handled engine-side in PRED_HAS_MAP_CATEGORY). Also kept
+    # in identity.mapCategories (classification). Needed so space scenarios don't break (owner 2026-06-18); returns as
+    # a viewport/zone gate when "all maps in one map" lands (multimap-zone-rework).
+    mapcats = _typelist(rec, "MapCategoryTypes")
+    if mapcats:
+        build_any.append([_atom(x, "plot") for x in mapcats])
     orher = _typelist_struct(rec, "PrereqOrHeritage", "HeritageType") or _typelist(rec, "PrereqOrHeritage")
     if orher:
         build_any.append([_atom(x, "empire") for x in orher])

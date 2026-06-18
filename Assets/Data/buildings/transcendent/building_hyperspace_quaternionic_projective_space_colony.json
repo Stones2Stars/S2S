@@ -21,6 +21,12 @@
       "type": "BUILDING_HYPERSPACE_COMPLEX_PROJECTIVE_SPACE_COLONY",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_HYPERSPACE",
+      "scope": "plot"
+     }
     ]
    ]
   }

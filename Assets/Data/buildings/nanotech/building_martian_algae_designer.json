@@ -26,6 +26,14 @@
      "type": "TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_MARTIAN",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

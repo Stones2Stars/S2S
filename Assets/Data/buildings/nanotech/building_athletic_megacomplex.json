@@ -72,6 +72,14 @@
      "type": "TECH_BATTLEFIELD_SPORTS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

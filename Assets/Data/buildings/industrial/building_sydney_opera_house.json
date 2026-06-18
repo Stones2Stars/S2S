@@ -12,11 +12,6 @@
      "min": 13
     },
     {
-     "type": "AREA_SIZE",
-     "scope": "world",
-     "min": 10
-    },
-    {
      "type": "BUILDING_OPERA_HOUSE",
      "scope": "city"
     },
@@ -29,6 +24,14 @@
      "type": "TECH_REALISM",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

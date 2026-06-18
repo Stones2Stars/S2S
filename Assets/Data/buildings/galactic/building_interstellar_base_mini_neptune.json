@@ -20,6 +20,12 @@
       "type": "FEATURE_MINI_NEPTUNE",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_PLASMA",
+      "scope": "plot"
+     }
     ]
    ]
   }

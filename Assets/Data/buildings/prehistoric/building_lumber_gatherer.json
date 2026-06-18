@@ -44,6 +44,12 @@
       "type": "FEATURE_JUNGLE",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

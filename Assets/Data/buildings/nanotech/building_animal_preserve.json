@@ -94,6 +94,14 @@
      "type": "TECH_PLANETARY_ECONOMICS",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

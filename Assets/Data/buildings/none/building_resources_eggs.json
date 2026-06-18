@@ -43,6 +43,12 @@
       "type": "BUILDING_FARM_ANIMAL_TURKEY",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

@@ -25,6 +25,12 @@
       "type": "BUILDING_BUDDHIST_TEMPLE",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

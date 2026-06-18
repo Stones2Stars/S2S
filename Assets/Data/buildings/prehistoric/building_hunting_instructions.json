@@ -14,6 +14,14 @@
      "type": "TECH_PERSISTENCE_HUNTING",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

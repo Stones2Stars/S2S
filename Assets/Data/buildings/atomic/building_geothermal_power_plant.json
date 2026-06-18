@@ -37,6 +37,12 @@
       "type": "IMPROVEMENT_GEOTHERMAL_FACTORY",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

@@ -27,6 +27,12 @@
       "type": "BUILDING_SMELTER_COPPER",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

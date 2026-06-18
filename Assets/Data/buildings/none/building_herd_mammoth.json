@@ -19,6 +19,14 @@
      "type": "TECH_MEGAFAUNA_DOMESTICATION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

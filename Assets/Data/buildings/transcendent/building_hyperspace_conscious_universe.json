@@ -14,6 +14,14 @@
      "type": "TECH_UNIVERSAL_SINGULARITY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_HYPERSPACE",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

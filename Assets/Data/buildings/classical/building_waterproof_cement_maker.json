@@ -29,6 +29,12 @@
       "type": "BUILDING_CEMENT_MILL",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

@@ -39,6 +39,12 @@
       "type": "IMPROVEMENT_WHALING_SHIPS",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

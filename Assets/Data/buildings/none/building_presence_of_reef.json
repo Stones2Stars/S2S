@@ -24,6 +24,12 @@
       "type": "FEATURE_REEF_LIGHTHOUSE",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

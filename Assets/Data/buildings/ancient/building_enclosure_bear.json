@@ -45,6 +45,12 @@
       "type": "BUILDING_GOVERNORS_MENAGERIE",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

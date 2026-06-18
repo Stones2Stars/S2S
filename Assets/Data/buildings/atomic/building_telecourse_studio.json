@@ -34,6 +34,12 @@
       "type": "BUILDING_CITY_COLLEGE",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

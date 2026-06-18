@@ -49,6 +49,12 @@
       "type": "BUILDING_LETHAL_INJECTION",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

@@ -33,6 +33,12 @@
       "type": "TERRAIN_KUIPER_BELT_OBJECT",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_SOLAR_SYSTEM",
+      "scope": "plot"
+     }
     ]
    ]
   }

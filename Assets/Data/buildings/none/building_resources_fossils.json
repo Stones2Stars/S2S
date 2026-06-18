@@ -67,6 +67,12 @@
       "type": "BUILDING_DIG_SITE_VELOCIRAPTOR_FOSSILS",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

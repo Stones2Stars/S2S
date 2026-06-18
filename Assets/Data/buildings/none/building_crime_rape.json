@@ -2,6 +2,18 @@
  "type": "BUILDING_CRIME_RAPE",
  "description": "TXT_KEY_BUILDING_CRIME_RAPE",
  "civilopedia": "TXT_KEY_BUILDING_CRIME_RAPE_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "espionage": {
   "city": {
    "insidiousness": {

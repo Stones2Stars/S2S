@@ -26,6 +26,12 @@
       "type": "BUILDING_ELEMENTARY_SCHOOL",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

@@ -3,6 +3,16 @@
  "description": "TXT_KEY_BUILDING_EL_DORADO",
  "civilopedia": "TXT_KEY_BUILDING_EL_DORADO_PEDIA",
  "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  },
   "operate": {
    "all": [
     "STATE_RELIGION_IN_CITY",

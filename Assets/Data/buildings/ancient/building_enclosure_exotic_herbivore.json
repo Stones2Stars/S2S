@@ -43,6 +43,12 @@
     ],
     [
      {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ],
+    [
+     {
       "type": "HERITAGE_TAXON_SUIDAE",
       "scope": "empire"
      },

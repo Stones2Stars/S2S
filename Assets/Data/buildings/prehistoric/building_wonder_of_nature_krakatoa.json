@@ -21,6 +21,12 @@
       "type": "FEATURE_PLATY_KRAKATOA",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

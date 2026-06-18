@@ -28,6 +28,12 @@
       "type": "BUILDING_METROPOLITAN_ADMINISTRATION",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

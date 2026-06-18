@@ -52,6 +52,12 @@
       "type": "BUILDING_CANAANITE_TEMPLE",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

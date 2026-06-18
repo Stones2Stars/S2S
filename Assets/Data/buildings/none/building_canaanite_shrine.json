@@ -2,6 +2,18 @@
  "type": "BUILDING_CANAANITE_SHRINE",
  "description": "TXT_KEY_BUILDING_CANAANITE_SHRINE",
  "civilopedia": "TXT_KEY_BUILDING_CANAANITE_SHRINE_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": [

@@ -34,6 +34,12 @@
       "type": "FEATURE_SUPERMASSIVE_BLACK_HOLE",
       "scope": "plot"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_MILKY_WAY",
+      "scope": "plot"
+     }
     ]
    ]
   }

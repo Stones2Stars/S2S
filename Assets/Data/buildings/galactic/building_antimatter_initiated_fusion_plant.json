@@ -50,6 +50,14 @@
      "type": "TECH_ANTIMATTER_PRODUCTION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

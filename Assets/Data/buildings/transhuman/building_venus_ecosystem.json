@@ -18,6 +18,14 @@
      "type": "TECH_QUADRUPLE_HELIX",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_VENUSIAN",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

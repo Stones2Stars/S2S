@@ -2,6 +2,18 @@
  "type": "BUILDING_TEOTIHUACAN",
  "description": "TXT_KEY_BUILDING_TEOTIHUACAN",
  "civilopedia": "TXT_KEY_BUILDING_TEOTIHUACAN_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": [

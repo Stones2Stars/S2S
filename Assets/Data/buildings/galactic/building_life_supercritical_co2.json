@@ -17,6 +17,14 @@
      "type": "TECH_ADAPTIVE_RADIATION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_PLASMA",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

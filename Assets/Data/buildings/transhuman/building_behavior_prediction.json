@@ -9,6 +9,14 @@
      "type": "TECH_WHOLE_BRAIN_EMULATION",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

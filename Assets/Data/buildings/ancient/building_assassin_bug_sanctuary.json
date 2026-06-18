@@ -30,6 +30,12 @@
       "type": "BUILDING_ASSASSIN_BUG_GATHERER",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

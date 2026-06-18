@@ -9,6 +9,14 @@
      "type": "TECH_GERONTOCRACY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_GALACTIC",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

@@ -50,6 +50,12 @@
       "type": "BUILDING_FARMSCRAPER_III",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

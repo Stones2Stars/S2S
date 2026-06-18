@@ -42,6 +42,14 @@
      "type": "TECH_ANCIENT_MACHINERY",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

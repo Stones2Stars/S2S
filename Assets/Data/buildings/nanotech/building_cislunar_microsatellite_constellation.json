@@ -51,6 +51,12 @@
       "type": "BUILDING_PROPAGANDA_SATELLITES",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

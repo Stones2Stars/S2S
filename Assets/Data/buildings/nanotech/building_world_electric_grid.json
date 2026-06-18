@@ -24,6 +24,12 @@
       "type": "BUILDING_SUPERCONDUCTING_GRID",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

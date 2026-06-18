@@ -29,6 +29,12 @@
       "type": "BUILDING_NETWORK_NODE",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

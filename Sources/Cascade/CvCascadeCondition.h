@@ -32,6 +32,7 @@ enum AtomDomain
 	ATOMDOMAIN_HERITAGE,   // per-player acquired heritage (CvPlayer::hasHeritage); empire scope
 	ATOMDOMAIN_POPULATION, // catch-all token: the context city's population
 	ATOMDOMAIN_CITYCOUNT,  // catch-all token: number of cities (empire/team)
+	ATOMDOMAIN_AREASIZE,   // catch-all token AREA_SIZE: the context city's LANDMASS tile count (area()->getNumTiles())
 	NUM_ATOM_DOMAINS
 };
 
@@ -74,12 +75,14 @@ enum PredicateKind
 	PRED_HAS_FEATURE_ANY,           // "has ANY feature"
 	PRED_HAS_FEATURE,               // iParam = FeatureTypes
 	PRED_HAS_TERRAIN,               // iParam = TerrainTypes
+	PRED_HAS_IMPROVEMENT,           // iParam = ImprovementTypes (VICINITY: an improvement in the city's workable radius)
 	PRED_HAS_BONUS,                 // iParam = BonusTypes (plot has the bonus)
 	PRED_HAS_RELIGION,              // iParam = ReligionTypes (city)
 	PRED_STATE_RELIGION,            // iParam = ReligionTypes (player's state religion)
 	PRED_HOLY_CITY,                 // iParam = ReligionTypes (city is its holy city)
 	PRED_HAS_CORPORATION,           // iParam = CorporationTypes (city)
 	PRED_LATITUDE,                  // range predicate: iMin <= plot getLatitude() <= iMax (data-model §2.5 {latitude:{min,max}})
+	PRED_HAS_MAP_CATEGORY,          // iParam = MapCategoryTypes; CENTER-plot in that category (legacy isMapCategory; uncategorized plot = valid)
 	NUM_PREDICATE_KINDS
 };
 

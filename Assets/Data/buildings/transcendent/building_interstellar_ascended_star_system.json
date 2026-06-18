@@ -17,6 +17,14 @@
      "type": "TECH_OMEGA_POINT",
      "scope": "team"
     }
+   ],
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_MILKY_WAY",
+      "scope": "plot"
+     }
+    ]
    ]
   }
  },

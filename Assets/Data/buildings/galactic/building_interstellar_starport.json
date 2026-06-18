@@ -33,6 +33,16 @@
       "type": "BUILDING_SPACE_COLONY_MILKY_WAY",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_PLASMA",
+      "scope": "plot"
+     },
+     {
+      "type": "MAPCATEGORY_MILKY_WAY",
+      "scope": "plot"
+     }
     ]
    ]
   }

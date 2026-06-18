@@ -107,6 +107,12 @@
       "type": "BUILDING_FARM_CROP_WASABI",
       "scope": "city"
      }
+    ],
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
     ]
    ]
   }

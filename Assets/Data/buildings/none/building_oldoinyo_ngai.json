@@ -2,6 +2,18 @@
  "type": "BUILDING_OLDOINYO_NGAI",
  "description": "TXT_KEY_BUILDING_OLDOINYO_NGAI",
  "civilopedia": "TXT_KEY_BUILDING_OLDOINYO_NGAI_PEDIA",
+ "requires": {
+  "build": {
+   "any": [
+    [
+     {
+      "type": "MAPCATEGORY_EARTH",
+      "scope": "plot"
+     }
+    ]
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": [
