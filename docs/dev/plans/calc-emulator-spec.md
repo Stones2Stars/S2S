@@ -56,6 +56,13 @@ feature. Keep the formula core a clean, reusable library so that path stays open
 > solver), stochastic events. If it modifies a value during `doTurn()`, the emulator models it; if it doesn't, it's
 > someone else's job.
 
+> **MODELLING CONVENTION — start from a ZERO accumulator (owner 2026-06-19).** When all is said and done, every
+> `doTurn()` modifying calc ultimately ADDS its result to some accumulated value (a yield total, a property level, a
+> treasury, …). For our modelling we treat the **accumulated value already there as 0** and compute purely the
+> **per-turn CONTRIBUTION** — what this turn adds. This unifies the channels: a flow (yields) is recomputed fresh
+> each turn anyway, and an accumulator (a property) we model as its **±rate from a 0 base** (matching the property
+> rate-contribution scope, §3). The parity bar compares the *contribution*, never the standing total.
+
 **Same input vector → legacy combine vs new (cascade) combine → delta. The delta is PURELY formula-attributable.**
 Input parity is trivial: the inputs are just the raw contribution lists (base + the flat/percent/multiplier
 sources), **identical for both sides** — so any output difference isolates the *combination logic*, the only thing
