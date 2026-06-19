@@ -124,6 +124,7 @@ machinery (it + `CvScopedAccumulator` are the substrate). Then:
    hot path + interest-guard. First consumer = the broad **logging consumer** (Cascade.log + the live `/events`
    tee). Proof emit in `CvGame::doTurn`. Compiles + links (Assert).
 2. **tally** — first authoritative consumer; domain events → counts; shadow-diff vs `m_pai*Count`.
+   **(STATUS 2026-06-19: PARTIAL — built for buildings+units only, player-leaf; see cascade-engine-430 §Implementation Status.)**
 3. **logging** consumer — broad/gated; reproduces channel fields + counts; shadow-diff vs the old lines.
    - **PROGRESS 2026-06-18 — the RAW-FIELD logging contract + the HAI pilot are IN (Assert-clean, shadow):**
      `CvCascadeEvent` gained the raw-field payload (`CvCascadeEventField aFields[16]` + `addI`/`addF`), a per-line
@@ -156,7 +157,7 @@ machinery (it + `CvScopedAccumulator` are the substrate). Then:
      enum-ification (a separate spine-design decision). 3 CTB lines want a `SFT_UNITAI` (addable if wanted).
    - **Remaining threads:** `[DAI]` civ/flavor wide-strings (nominal); the 3 `SFT_UNITAI` CTB lines; per-domain legacy
      CUT after `/events` verification; and the Autolog BUG-option rework to the 0–5 Surveillance knob.
-4. **grants** — fires provisions on its kinds.
+4. **grants** — fires provisions on its kinds. **(STATUS 2026-06-19: NOT BUILT — no `grants` consumer is registered.)**
 5. **modifier**, then **enabler** (read the tally) — per `cascade-engine-430.md`.
 
 ## 9a. Observability — `CvHttpServer` is the FORMAL live layer (owner 2026-06-17)

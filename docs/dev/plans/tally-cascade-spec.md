@@ -6,6 +6,12 @@ threshold/waive, §8 scopes, §13.2/§13.7 the count atoms) + `modifier-cascade-
 gathers it into one place so the engine (#430) builds against it like the other two specs. Anything here that would EXTEND
 the design (vs restate it) is flagged ⚑ for an owner call — none is intended.
 
+> **⚠ IMPLEMENTATION DIVERGENCE 2026-06-19 (verified vs code):** the SHIPPED tally is wired for **buildings + units only**
+> (2 of the ~6 count domains §7 needs) and keys **per-PLAYER, not the city-leaf** this spec describes (CITY/PLOT scopes
+> read the live count directly via `cascadeAtomCount`, not the tally; per-city lifetime facts are unavailable). This is a
+> real design divergence the code made silently — **needs an owner ruling: accept player-leaf (rewrite this spec) or build
+> the city-leaf substrate.** Full status: `cascade-engine-430.md` §Implementation Status.
+
 ---
 
 ## 1. What the tally IS — the additive COUNT machine (sibling of the modifier)

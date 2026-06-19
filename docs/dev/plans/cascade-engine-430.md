@@ -7,12 +7,36 @@
 > live code in `Sources/Cascade/` before touching anything — compaction has poisoned context before; a stale line
 > loses to a later owner ruling. (Owner 2026-06-17; this gate is being deliberately tested.)
 
-**Status: design-complete, implementation starting (owner architecture session 2026-06-16).** The DESIGN lives in the
+**Status: implementation IN PROGRESS (see the status table below).** The DESIGN lives in the
 machine specs — `enabler-cascade-spec.md` (v0.3) + `modifier-cascade-spec.md` (v3) + `tally-cascade-spec.md` (the count
 machine, consolidated 2026-06-16) — one per machine, plus **`event-spine-spec.md`** (the front-door event system the tally /
 `grants` / logging all consume — design session 2026-06-17). This is the IMPLEMENTATION roadmap — the runtime engine that
 consumes the #428 JSON and replaces ~7–8k lines of scattered availability + modifier machinery. Read the specs first; this
 doc is the build plan + the validated load/demolition map, not a re-derivation of the model.
+
+---
+
+## ⓘ IMPLEMENTATION STATUS — verified against `Sources/Cascade/` on 2026-06-19
+
+> **The machine specs describe the TARGET shape; read as *status* they OVER-STATE completeness.** This table is the
+> ground truth from an adversarial docs-vs-code sweep (2026-06-19) — trust it over any "DONE/built" phrasing in the
+> design specs. (Owner session model: holes found are bucketed small=plugged / big=noted here + on the fix-now list.)
+
+| Component | Status | Reality |
+|---|---|---|
+| **Substrate** (spine + accumulator) | ✅ **BUILT** | `CvEventSpine` + `CvScopedAccumulator`; logging + tally consumers registered (`cascadeRegisterConsumers`). |
+| **Tally** | ⚠ **PARTIAL** | Wired + load-bearing for **buildings + units ONLY** (2 of the ~6 count domains §7 needs; tech/civic/religion/bonus/project/specialist absent → atoms over those silently read 0). Ships a **player-leaf** model, **not** the spec's city-leaf (CITY/PLOT read direct; per-city lifetime facts unavailable). §9 save handling (rebuild-on-load) DONE, hooked at `onFinalInitialized`. |
+| **Enabler** | ◐ **GATE built, GENERATOR inert** | `cascadeBuildable = requiresBuild ∧ requiresOperate ∧ allowed-cap` + `cascadeOperational` (dormancy) mature; allowed-cap enforced via tally. BUT the `enables`-family **CAN-GET generator is not built** (`cascadeTechReachable` dead, no frontier producer); **`disables` unparsed**; `notConstructible` parsed but never consumed. |
+| **Modifier** | ❌ **ABSENT** | Only the `CvModifierSlot` combine primitive — no deposit-flow, no per-target accumulators, no readJson modifier-family feed, no consumer. Build + shadow plan: [`modifier-cascade-shadow-spec.md`](modifier-cascade-shadow-spec.md). |
+| **Grants** | ❌ **ABSENT** | No `grants` consumer registered (the spine diagram lists it; not built). |
+| **readJson** | ◐ **gate-surface only** | Parses `requires.build/operate`, `allowed`, `identity.{spawnOnly,notConstructible,autoBuild}` + four ad-hoc reverse-index scans (tech/group/replace/upgrade). Does **not** parse modifier families or `grants`. Header marks it TEMPORARY. |
+
+**Big remaining #430 build items** (the honest roadmap): the modifier machine (per the shadow-spec); the `grants` consumer;
+tally **domain coverage** + the **player-leaf-vs-city-leaf model decision** (needs an owner ruling — the shipped code
+silently diverges from the spec); the enabler **`enables`-family generator** + **`disables`** parsing. **Smaller gaps the
+sweep found:** `ATOMDOMAIN_HERITAGE` implemented-but-undocumented (data-model §2.1); `workedBy`/`natureYield` predicates
+specced-but-unparsed; `CvCascadeReadJson.cpp` still `#include "CvInfos.h"` (contradicts the retire-umbrella ruling — folded
+into [`sources-structural-cleanup.md`](sources-structural-cleanup.md) 1B).
 
 ---
 
