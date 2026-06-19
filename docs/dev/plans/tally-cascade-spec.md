@@ -6,11 +6,16 @@ threshold/waive, §8 scopes, §13.2/§13.7 the count atoms) + `modifier-cascade-
 gathers it into one place so the engine (#430) builds against it like the other two specs. Anything here that would EXTEND
 the design (vs restate it) is flagged ⚑ for an owner call — none is intended.
 
-> **⚠ IMPLEMENTATION DIVERGENCE 2026-06-19 (verified vs code):** the SHIPPED tally is wired for **buildings + units only**
-> (2 of the ~6 count domains §7 needs) and keys **per-PLAYER, not the city-leaf** this spec describes (CITY/PLOT scopes
-> read the live count directly via `cascadeAtomCount`, not the tally; per-city lifetime facts are unavailable). This is a
-> real design divergence the code made silently — **needs an owner ruling: accept player-leaf (rewrite this spec) or build
-> the city-leaf substrate.** Full status: `cascade-engine-430.md` §Implementation Status.
+> **✅ MODEL DECIDED 2026-06-19 (owner ruling): the tally is PLAYER-LEAF, not city-leaf.** The shipped per-player tally is
+> ACCEPTED; this spec is the authoritative description of it. Rationale: §7's sweep found all six current-count consumers are
+> **cross-city, zero per-city** (player-leaf serves them); §6's persistence ruling puts lifetime facts on their owning
+> object, not the tally; per-city `allowed` caps read direct. And because the tally **serializes nothing (§9) + is
+> interface-bounded**, widening player-leaf → city-leaf later (if a real per-city tally consumer ever appears) is a
+> contained, no-save-break, single-module change — so player-leaf now is reversible, not a one-way door. **Where this spec
+> still says "city is the leaf", read it as the SCOPE SPINE the COUNTS roll up (city counts still roll into empire/team/
+> world) — but the tally's stored leaf is the PLAYER/empire; CITY/PLOT scopes read the live count directly (`cascadeAtomCount`),
+> not the tally.** Coverage today: buildings + units only (2 of ~6 domains); tech/civic/religion/bonus/project/specialist are
+> the remaining domain-coverage build item. Full status: `cascade-engine-430.md` §Implementation Status.
 
 ---
 
@@ -23,8 +28,11 @@ presence-COUNTS and rolls UP it. One primitive, two instantiations — which is 
 bolt-on.
 
 - **Scope spine (shared):** `world → team → empire → area → city → plot{…} → building | specialist | unit`.
-- **City is the leaf / bottom-out (enabler-spec §8).** Each city holds its own counts; empire/team/world counts are the
-  additive roll-up of the per-city reports. So the tally never crosses city isolation — it aggregates reports.
+- **City is the bottom of the SCOPE SPINE; the tally's STORED LEAF is the PLAYER (owner 2026-06-19).** Counts originate
+  per city and roll up to empire/team/world, but the tally STORES at player/empire granularity (the cross-city roll-up) —
+  it does NOT keep a per-city count table. So the tally never crosses city isolation (it aggregates reports into the
+  per-player total), and a CITY/PLOT-scope read goes DIRECT to the live object (`cascadeAtomCount`), not the tally. (See
+  the MODEL DECIDED note above for why per-player suffices + stays reversible.)
 
 ## 2. The readers (one module, many consumers — wanted regardless of the cascade)
 
@@ -128,8 +136,10 @@ One routine = one definition of "what counts" = the load-seed and the live event
 
 **Mechanics:**
 
-- **Granularity = the city leaf (§1).** The scan deposits per city (each city pushes its buildings / specialists / units);
-  the additive roll-up yields empire/team/world for free. (This is the "every loaded object's count gets pushed in".)
+- **Granularity = the PLAYER leaf (§1, owner 2026-06-19).** The seed scan walks each player's objects and deposits their
+  current counts into the per-player tally (buildings / units today; the other domains when added). Counts still ORIGINATE
+  per city, but they aggregate into the per-player total — the tally keeps no per-city table. (Earlier drafts said "per
+  city leaf"; the stored leaf is the player.)
 - **Per-domain, co-located.** Each tracked domain (buildings, units, techs, …) owns its incremental event hook AND its
   seed-scan contribution side by side — adding a domain adds both in one place, so they can't silently drift apart.
 - **Idempotent + deterministic.** `rebuild()` = CLEAR-then-repopulate (so a second load in the same EXE session can't

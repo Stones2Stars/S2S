@@ -516,11 +516,13 @@ count, most complex gate logic — see anomaly A-16).
 - Remove the `CvGameTextMgr` city-billboard spam (anomaly A-7).
 - Clean up the dead `PropertyBuildingOOS.log` commented code (anomaly A-19).
 
-**Stage 6 — BUG options screen alignment (owner 2026-06-18):** Once the consolidated
-structure is set, rework the in-game BUG options → Autolog screen to reflect the unified
-0-4 "Surveillance / log level" knob (aligned with the tier names: Oblivious / Telescreen /
-Informant / Big Brother / Thought Police + Meta at 5). Remove the phantom per-scope knobs
-(`LogLevelTeamBBAI` etc.) that exist in XML but are silently ignored.
+**Stage 6 — BUG options screen alignment (owner 2026-06-18). DEFERRED to near-live (owner 2026-06-19):** do NOT do the
+UI rework yet — **we don't know the full set of knob options/levels we want until we're closer to live** (the option set
+emerges as the cascade shadow surfaces land, or when noise starts hiding what we need to see). The owner can drive the
+gate globals manually in the meantime despite the FUBAR UI. When the option set IS known: rework the in-game BUG
+options → Autolog screen to the unified 0–5 "Surveillance / log level" knob (tier names: Oblivious / Telescreen /
+Informant / Big Brother / Thought Police + Meta at 5), and remove the phantom per-scope knobs (`LogLevelTeamBBAI` etc.)
+that exist in XML but are silently ignored.
 
 The consolidation is not done until the BUG options screen, the gate code
 (`refreshOptionsBUG`), the log-consumer routing, and this document are all aligned.

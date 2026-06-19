@@ -38,6 +38,11 @@ build + shadow plan, not just a test plan.
   keep cascade and legacy aligned. When parity is genuinely unreachable, surface the discrepancy to the owner, who
   assigns a **care level** (§4) — the adjudication that decides whether it blocks cutover or is an accepted win.
 - **R-M4 — PILOT CHANNEL = CITY YIELDS** (food/production/commerce — the split-family core).
+- **R-M5 — NAMES + DEFAULTS LOCKED (the §6 gate).** All shadow names/defaults confirmed (full list + the two real
+  sub-decisions in §6): `/diagnostic/modifierSweep`, `[MODSHADOW]`, `cascadeModifierEffective`, `cascadeModifierParityMode`
+  (build-time const), `modifier-cascade-known-discrepancies.md`; rung-1 tolerance = exact-zero in parity / `|delta| ≤ 1` in
+  capability mode. **The modifier build is unblocked.** (Sibling §0 decision, in `tally-cascade-spec.md`: the tally is
+  PLAYER-LEAF — accepted, not city-leaf.)
 - **The deliverable = (A) know WHAT to shadowtest (§2, the comparison surface) + (B) have the SETUP (§3, the harness).**
 
 ---
@@ -213,13 +218,20 @@ Legacy stays live and authoritative until its channel is cleared — the same ma
 
 ---
 
-## 6. Open / to confirm with the owner
+## 6. Names + defaults — LOCKED 2026-06-19 (owner)
 
-- **Names** (propose, confirm): endpoint `/diagnostic/modifierSweep`, tag `[MODSHADOW]`, toggle
-  `cascadeModifierParityMode`, doc `modifier-cascade-known-discrepancies.md`.
-- **Parity toggle** — build-time const vs a real BUG option (lean: const first, promote if live toggling is wanted).
-- **Rounding tolerance** for care level 1 (`rounding` cause) — absolute, relative, or per-channel.
+**All confirmed — the modifier build is unblocked.**
+
+- **Names (LOCKED):** endpoint `GET /diagnostic/modifierSweep?player=N`, tag `[MODSHADOW]`, read API
+  `cascadeModifierEffective(...)`, toggle `cascadeModifierParityMode`, discrepancies doc
+  `modifier-cascade-known-discrepancies.md`.
+- **Parity toggle (LOCKED):** a **build-time const** initially; promote to a BUG option only if live toggling is wanted.
+- **Rounding tolerance, care level 1 (LOCKED):** **exact zero in parity mode** (Mode A — any diff is a wiring bug);
+  in capability mode (Mode B), rung-1 "Fine" = off-by-1 in the last integer place (`int×100` rounding, `|delta| ≤ 1`).
+
+**Still open (NOT blocking the build — defaults stand until revisited):**
+
 - **Decomposed-diff granularity** — per-deposit-class (flat/percent/mult) is specced; whether to also break flat
-  down per *source entity* (per-building) by default or only under `?type=full`.
+  down per *source entity* (per-building) by default or only under `?type=full`. (Default: only under `?type=full`.)
 - **Care-level home** — provisional level computed in-engine (the cause→care table §3.4) vs assigned purely in the
-  catalogue doc. Lean: engine emits the provisional, the doc records the owner's final.
+  catalogue doc. Lean (default): engine emits the provisional, the doc records the owner's final.

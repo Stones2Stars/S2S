@@ -25,15 +25,15 @@ doc is the build plan + the validated load/demolition map, not a re-derivation o
 | Component | Status | Reality |
 |---|---|---|
 | **Substrate** (spine + accumulator) | ✅ **BUILT** | `CvEventSpine` + `CvScopedAccumulator`; logging + tally consumers registered (`cascadeRegisterConsumers`). |
-| **Tally** | ⚠ **PARTIAL** | Wired + load-bearing for **buildings + units ONLY** (2 of the ~6 count domains §7 needs; tech/civic/religion/bonus/project/specialist absent → atoms over those silently read 0). Ships a **player-leaf** model, **not** the spec's city-leaf (CITY/PLOT read direct; per-city lifetime facts unavailable). §9 save handling (rebuild-on-load) DONE, hooked at `onFinalInitialized`. |
+| **Tally** | ⚠ **PARTIAL** (model decided) | **Player-leaf model ACCEPTED (owner 2026-06-19)** — the shipped per-player tally is the design now (tally-spec rewritten to match; CITY/PLOT read direct, widening to city-leaf later is a contained no-save-break change). Wired + load-bearing for **buildings + units ONLY** (2 of the ~6 count domains §7 needs; tech/civic/religion/bonus/project/specialist absent → atoms over those silently read 0 — the remaining build item). §9 save handling (rebuild-on-load) DONE, hooked at `onFinalInitialized`. |
 | **Enabler** | ◐ **GATE built, GENERATOR inert** | `cascadeBuildable = requiresBuild ∧ requiresOperate ∧ allowed-cap` + `cascadeOperational` (dormancy) mature; allowed-cap enforced via tally. BUT the `enables`-family **CAN-GET generator is not built** (`cascadeTechReachable` dead, no frontier producer); **`disables` unparsed**; `notConstructible` parsed but never consumed. |
 | **Modifier** | ❌ **ABSENT** | Only the `CvModifierSlot` combine primitive — no deposit-flow, no per-target accumulators, no readJson modifier-family feed, no consumer. Build + shadow plan: [`modifier-cascade-shadow-spec.md`](modifier-cascade-shadow-spec.md). |
 | **Grants** | ❌ **ABSENT** | No `grants` consumer registered (the spine diagram lists it; not built). |
 | **readJson** | ◐ **gate-surface only** | Parses `requires.build/operate`, `allowed`, `identity.{spawnOnly,notConstructible,autoBuild}` + four ad-hoc reverse-index scans (tech/group/replace/upgrade). Does **not** parse modifier families or `grants`. Header marks it TEMPORARY. |
 
-**Big remaining #430 build items** (the honest roadmap): the modifier machine (per the shadow-spec); the `grants` consumer;
-tally **domain coverage** + the **player-leaf-vs-city-leaf model decision** (needs an owner ruling — the shipped code
-silently diverges from the spec); the enabler **`enables`-family generator** + **`disables`** parsing. **Smaller gaps the
+**Big remaining #430 build items** (the honest roadmap): the modifier machine (per the shadow-spec — names LOCKED 2026-06-19,
+build unblocked); the `grants` consumer; tally **domain coverage** (the player-leaf-vs-city-leaf model decision is RESOLVED
+— player-leaf accepted 2026-06-19); the enabler **`enables`-family generator** + **`disables`** parsing. **Smaller gaps the
 sweep found:** `ATOMDOMAIN_HERITAGE` implemented-but-undocumented (data-model §2.1); `workedBy`/`natureYield` predicates
 specced-but-unparsed; `CvCascadeReadJson.cpp` still `#include "CvInfos.h"` (contradicts the retire-umbrella ruling — folded
 into [`sources-structural-cleanup.md`](sources-structural-cleanup.md) 1B).
