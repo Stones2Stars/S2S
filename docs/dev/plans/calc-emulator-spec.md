@@ -190,6 +190,28 @@ fixtures. (3) Build the Python cascade simulator: read loadout + per-entity `Ass
 deposit-flow + combine → the new-model output. (4) Compare to legacy (dump) → test cases + parity + blindspots.
 (5) Extend to synthetic loadouts + the enabler frontier.
 
+### 2a.1 DEMO FINDINGS → the DLL-cascade build (owner 2026-06-19: "you can build the dll cascade")
+
+The offline demo (`Tools/ModifierCalc/cascade_sim.py`, increments 1–2) ran against real London/player-1 loadouts and
+produced the data + model to build the real DLL cascade. Carry these forward (durable — not stuck in a chat thread):
+
+- **The verified YIELD-SOURCE MAP (§2a) is the DLL cascade's source-coverage spec** — 7 buckets, MODIFIED vs
+  UNMODIFIED, corp excluded, golden-age & power as toggle-gated modifiers.
+- **The condition evaluator is ported + spec-grounded** (`cascade_sim` `eval_condition`/`_eval_atom`, from the
+  data-model-spec + enabler-cascade-spec §8 contract): `all`/`any`/`noneOf` + presence atoms + parameterized plot
+  predicates + state booleans (`HAS_POWER`/`IS_CAPITAL`/`IS_GOLDEN_AGE`/`HAS_RIVER`). On London: 1039 conditional
+  building-yield deposits, 0 unevaluable. **This is the reference for the DLL evaluator.**
+- **★ KEY FINDING — the DLL pilot cascade does NOT condition-gate.** `cascadeModifierCitySlot` (CvHttpServer dump
+  `cascadeFlat`) includes deposits gated by techs the team lacks (verified: future-tech `TECH_NANOMINING`/
+  `TECH_MEGASTRUCTURE_ENGINEERING`-gated production on London — the entire 21,827 flat gap). The Python evaluator
+  correctly excludes them. **DLL BUILD TASK #1: wire the enabler condition-eval into the modifier deposit-flow**
+  (`cascadeModifierCitySlot` / `CvCascadeModifier`), so the cascade gates each deposit's `enabled`/`disabled` like
+  the demo does. Until then the DLL cascade over-counts every state/tech-gated deposit.
+- **Validation pivot:** the `py-vs-DLL-cascade` check is exhausted (it proved the ungating); the live acceptance bar
+  is `cascade_sim`-vs-LEGACY full output (base × full modifier + flat) at parity-adjacency, across loadout states.
+- **Loadout completeness so far:** techs/civics/buildings/`resources`(available bonuses)/plots(+river)/`state`
+  (isPowered/isCapital/isGoldenAge). Known still-missing inputs surface as `cascade_sim` "unevaluable" atoms.
+
 ---
 
 ## 3. The validation credential — TWO comparisons, do not conflate them
