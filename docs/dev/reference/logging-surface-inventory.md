@@ -118,10 +118,19 @@ on every AI turn with zero level gate and are NOT part of the standard BBAI log 
 
 ### 1G. `OutputDebugString` (Win32 debugger sink — not a file)
 
-Two populations: `#ifdef _DEBUG`-gated (acceptable) and fully ungated (ship in all
-builds including FinalRelease). The ungated population is a cleanup target.
+> **⚠ CORRECTION 2026-06-19 (verified against `CvGameCoreDLL.h:363-367`):** `OutputDebugString` is **`#define`d to
+> nothing under `#ifdef FINAL_RELEASE`** — so it **compiles out entirely in the build players run (FinalRelease)**. The
+> "ungated → fires in FinalRelease, CRIT" framing throughout this section is therefore WRONG for the shipped build. The
+> calls ARE live in **Release / Assert / Debug** (the owner's *test* builds — and the owner runs Release for cascade
+> testing), so they're a **dev/test-build** firehose + clutter, not a shipped one. R-5 (retire the mechanism) still stands
+> — the owner doesn't use `OutputDebugString` — but the urgency is dev-hygiene, not a player-facing emergency. (The
+> crash-handler / `StackWalker` / `CvAllocator` uses are legitimate — they run when the normal logger may be dead — and
+> should KEEP it.)
 
-**Ungated `OutputDebugString` hotspots (fire in FinalRelease with any debugger/ETW attached):**
+Two populations: `#ifdef _DEBUG`-gated and otherwise-ungated (live in Release/Assert/Debug; **compiled out in
+FinalRelease** per the correction above). The ungated-in-dev-builds population is the R-5 cleanup target.
+
+**`OutputDebugString` hotspots (fire in Release/Assert/Debug with any debugger/ETW attached; NO-OP in FinalRelease):**
 
 | Location | Content | Frequency |
 |---|---|---|
@@ -214,13 +223,13 @@ These are the cleanup targets for the consolidation. Severity rated:
 **MED** = gated by compile flag or condition but bypasses helpers,
 **LOW** = dead code or debug-only.
 
-### A-1 CRIT: OutputDebugString duplicated inside every BBAI helper
+### A-1 ✅ RESOLVED 2026-06-19: OutputDebugString echo removed from every BBAI helper
 
-`Sources/BetterBTSAI.cpp:71` — every standard `log<Domain>AI` helper appends `\n` and
-calls `OutputDebugString` in addition to `gDLL->logMsg`. Every in-game AI log line is
-duplicated to the Win32 debug output stream at full verbosity whenever logging is on.
-This is a hidden secondary sink not visible in the file logs; it becomes a firehose in
-any debugger/ETW session when log level is ≥ 1.
+`Sources/AI/BetterBTSAI.cpp` — every `log<Domain>AI` helper appended `\n` + `OutputDebugString(buf)` *after* the file
+write (`gDLL->logMsg`) and the `/events` tee (`streamLogTee`). It was a pure DUPLICATE sink (the data is already in the
+file + on `/events`), so it was deleted — all 15 echoes (`logPerf`/`logContractBroker`/`logBuildEvaluation`/… + the
+`logToFile` one). This retires `OutputDebugString` from the entire AI-logging surface in one move (R-5, the highest-value
+slice). No data lost; Assert-clean. (Live only in Release/Assert/Debug anyway — null in FinalRelease per the §1G correction.)
 
 ### A-2 ~~HIGH~~ RESOLVED 2026-06-18: `logGameInfo` ungated → renamed `logInitInfo`, kept caller-gated
 

@@ -65,10 +65,6 @@ void logPerf(int level, const char* format, ...)
 		gDLL->logMsg("Performance.log", buf);
 
 		streamLogTee(level, buf);
-
-		// Echo to debugger
-		strcat(buf, "\n");
-		OutputDebugString(buf);
 	}
 }
 
@@ -102,10 +98,6 @@ void logContractBroker(int level, const char* format, ...)
 		gDLL->logMsg("ContractBroker.log", buf);
 
 		streamLogTee(level, buf);
-
-		// Echo to debugger
-		strcat(buf, "\n");
-		OutputDebugString(buf);
 	}
 
 }
@@ -119,10 +111,6 @@ void logBuildEvaluation(int level, const char* format, ...)
 		gDLL->logMsg("BuildEvaluation.log", buf);
 
 		streamLogTee(level, buf);
-
-		// Echo to debugger
-		strcat(buf, "\n");
-		OutputDebugString(buf);
 	}
 }
 
@@ -135,10 +123,6 @@ void logHunterAI(int level, const char* format, ...)
 		gDLL->logMsg("HunterAI.log", buf);
 
 		streamLogTee(level, buf);
-
-		// Echo to debugger
-		strcat(buf, "\n");
-		OutputDebugString(buf);
 	}
 }
 
@@ -153,10 +137,6 @@ void logDecisionAI(int level, const char* format, ...)
 		gDLL->logMsg("DecisionAI.log", buf);
 
 		streamLogTee(level, buf);
-
-		// Echo to debugger
-		strcat(buf, "\n");
-		OutputDebugString(buf);
 	}
 }
 
@@ -172,10 +152,6 @@ void logDiploAI(int level, const char* format, ...)
 		gDLL->logMsg("DiploAI.log", buf);
 
 		streamLogTee(level, buf);
-
-		// Echo to debugger
-		strcat(buf, "\n");
-		OutputDebugString(buf);
 	}
 }
 
@@ -193,10 +169,6 @@ void logWarAI(int level, const char* format, ...)
 		gDLL->logMsg("WarAI.log", buf);
 
 		streamLogTee(level, buf);
-
-		// Echo to debugger
-		strcat(buf, "\n");
-		OutputDebugString(buf);
 	}
 }
 
@@ -216,10 +188,6 @@ void logUnitAI(int level, const char* format, ...)
 		gDLL->logMsg("UnitAI.log", buf);
 
 		streamLogTee(level, buf);
-
-		// Echo to debugger
-		strcat(buf, "\n");
-		OutputDebugString(buf);
 	}
 }
 
@@ -247,10 +215,6 @@ void logCityAI(int level, const char* format, ...)
 		gDLL->logMsg("CityAI.log", buf);
 
 		streamLogTee(level, buf);
-
-		// Echo to debugger
-		strcat(buf, "\n");
-		OutputDebugString(buf);
 	}
 }
 
@@ -267,10 +231,6 @@ void logGroupAI(int level, const char* format, ...)
 		gDLL->logMsg("GroupAI.log", buf);
 
 		streamLogTee(level, buf);
-
-		// Echo to debugger
-		strcat(buf, "\n");
-		OutputDebugString(buf);
 	}
 }
 
@@ -286,10 +246,6 @@ void logEspionageAI(int level, const char* format, ...)
 		gDLL->logMsg("EspionageAI.log", buf);
 
 		streamLogTee(level, buf);
-
-		// Echo to debugger
-		strcat(buf, "\n");
-		OutputDebugString(buf);
 	}
 }
 
@@ -305,10 +261,6 @@ void logFoundAI(int level, const char* format, ...)
 		gDLL->logMsg("FoundAI.log", buf);
 
 		streamLogTee(level, buf);
-
-		// Echo to debugger
-		strcat(buf, "\n");
-		OutputDebugString(buf);
 	}
 }
 
@@ -327,10 +279,6 @@ void logCombatAI(int level, const char* format, ...)
 		gDLL->logMsg("CombatAI.log", buf);
 
 		streamLogTee(level, buf);
-
-		// Echo to debugger
-		strcat(buf, "\n");
-		OutputDebugString(buf);
 	}
 }
 
@@ -346,10 +294,6 @@ void logEngine(int level, const char* format, ...)
 		gDLL->logMsg("Engine.log", buf);
 
 		streamLogTee(level, buf);
-
-		// Echo to debugger
-		strcat(buf, "\n");
-		OutputDebugString(buf);
 	}
 }
 
@@ -366,10 +310,6 @@ void logInitInfo(const char* format, ...)
 
 	// Session headers always stream -- they are the context every parser wants first.
 	streamLogTee(0, buf);
-
-	// Echo to debugger
-	strcat(buf, "\n");
-	OutputDebugString(buf);
 }
 
 void logCB(CvString message) {
