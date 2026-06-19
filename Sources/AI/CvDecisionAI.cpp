@@ -4,7 +4,6 @@
 #include "BetterBTSAI.h"
 #include "CvGameAI.h"
 #include "Defines/CvGlobals.h"
-#include "CvInfos.h"
 #include "CvPlayerAI.h"
 #include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [DAI] through the event spine (shadow)
 

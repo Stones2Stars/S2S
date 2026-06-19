@@ -5,7 +5,6 @@
 #include "Engine/CvCity.h"
 #include "AI/CvGameAI.h"
 #include "Defines/CvGlobals.h"
-#include "CvInfos.h"
 #include "CvInitCore.h"
 #include "AI/CvPlayerAI.h"
 #include "Engine/CvPlot.h"
