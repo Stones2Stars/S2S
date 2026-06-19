@@ -40,6 +40,11 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
 
 - **Configs:** `Assert`, `Debug`, `Release`, `FinalRelease`, `Profile`, `ProfileExtra`.
   Output lands in `Build/<Config>/CvGameCoreDLL.dll` (+ `.pdb`).
+  - **Which config for in-game testing (owner ruling 2026-06-19):** for ordinary interactive testing — exercising a
+    feature, pulling an HTTP `/diagnostic` dump, watching `/events` — a normal **`Release`** build suffices and is
+    far faster than `FinalRelease` (a clean `FinalRelease` is a ~7-minute full rebuild). **Reserve `FinalRelease`
+    for turn-lag / performance hunting**, where its optimizations are the thing under test ("we are not here for max
+    performance… yet"). `Assert` stays the quick compile-check; `Release`/`FinalRelease` are for actually running.
 - **Verbs (composable, in order):** `clean`, `build` (incremental), `rebuild` (clean+build), `deploy` (xcopy DLL/PDB into `Assets/`).
 - **Quick compile check after an edit:** `Assert build` from `Sources/`.
   Incremental is ~30s; a clean rebuild is several minutes (~25 unity batches × ~30s).
@@ -144,6 +149,18 @@ not findings to re-discover.
 
 ### Cascade observability — the total-observability ("Orwell") bar (#428/#430)
 
+- **⛔ The running game holds its `.log` files OPEN — NEVER try to live-read them (owner ruling 2026-06-19; this trips
+  agents EVERY time).** While the game is running, `Documents/My Games/Beyond The Sword/Logs/*.log` (incl. `Cascade.log`,
+  `BuildEvaluation.log`, …) are held open by the process, so tailing/reading them mid-session is unreliable and gives
+  stale/empty/partial results — do **not** do it, and do **not** infer "logging is off" from a quiet log file. The live
+  reads are: **(1) the `/events` SSE stream** (`curl -sN http://127.0.0.1:7227/events`) — but the per-turn shadow lines
+  (`[MODSHADOW]`/`[PLACEMENT]`/`[DORMANCY]`/`[STATE/*]`/`[READJSON]`) **burst at the TOP of `doTurn`, so you must be
+  CONNECTED BEFORE the turn ticks** (connect-then-end-turn); and **(2) the `/diagnostic/*` endpoints** (e.g.
+  `/diagnostic/modifierSweep`, `/diagnostic/sweep`), which compute an on-demand snapshot via the mailbox and **do NOT
+  depend on `gPlayerLogLevel` or on any log file** — the most reliable read, no timing games. Gates are separate:
+  `gPlayerLogLevel ≥ 1` makes the per-turn shadows *generate* their lines (to `Cascade.log`), and the `/events` tee is a
+  *further* gate — so a line can be in `Cascade.log` yet absent from `/events`. When in doubt about a magnitude/state,
+  hit the endpoint, not the log.
 - **The events + logging + diagnostics must make the running game FULLY surveilled (owner ruling 2026-06-18).** The
   bar: *map an accurate game state purely from the endpoints + `/events` + the gated logs — open the game, but never
   look at the SCREEN.* This is **non-negotiable and load-bearing**, not polish: it is the ONLY way to reliably REBUILD

@@ -128,6 +128,24 @@ over-count is gone — commerce mean |gap| **29% → 14.3%**, **production 6/6**
 (TRAIT/TECH-downward/BONUS/AREA/POWER/CAPITAL + the legacy `[1,MAX]` clamp) and food-dormancy variance, the next
 source-wiring phase.
 
+**⚠ DEFERRED LEGACY-BUG — legacy applies DORMANT buildings' PERCENT modifiers (owner 2026-06-19, "spicy"; fix AFTER
+parity).** The all-present-vs-active-only decomposition (London) showed legacy's `getBaseYieldRateModifier` includes
+the % modifiers of buildings that are NOT `hasFullyActiveBuilding` — i.e. a dormant building still contributes its
+yield *percent* to the city (its *flat* `getExtraYield` behaves more as expected). So **the cascade must COUNT dormant
+buildings' percent to reach parity** (it already does, via all-present), even though that is a latent legacy bug. Owner:
+*"that legacy counts dormant buildings % modifiers is… spicy — we need an actual pass to fix crap like that after we
+got parity."* So: match it now (parity scaffold, R-M1), then a dedicated **post-parity cleanup pass** corrects the
+dormancy semantics deliberately (a `Better`, §4) rather than chasing it mid-parity. Captured here so it is not lost.
+
+## A.2 PER-BUILDING ATTRIBUTION (the cityInput decomposition — calc-emulator §5)
+
+The residual flat/percent divergence is per-source, so `/diagnostic/cityInput` now emits a **`buildingYields`** array
+(`CvHttpServer.cpp`): per ACTIVE building, its legacy flat (`getBaseYieldRateFromBuilding100`, ×100) and static
+percent (`getYieldModifier`) per food/production/commerce. The offline emulator diffs this against the cascade's
+per-building JSON deposit to attribute each +/- to a NAMED building, replacing the aggregate guesswork. Needs a
+`Release` rebuild + a fixture re-fetch. (Diagnostic: even active-only flat OVER-counts food +102 / commerce +187 on
+London, while production flat UNDER-counts — so it is per-source attribution, not a present-set/dormancy fix.)
+
 - **⛔ UNIFY THE CALCULATION, FIX THE DATA — do NOT replicate legacy's per-property calc quirks (owner ruling
   2026-06-19, the governing principle here).** Legacy very likely calculates its pseudobuildings DIFFERENTLY per
   property (crime / disease / education / tourism / pollution — "it would not surprise me in the slightest"). **We do
