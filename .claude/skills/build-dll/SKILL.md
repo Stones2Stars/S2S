@@ -43,6 +43,6 @@ source-of-truth. `Sources/fbuild.bff` — not the `.vcxproj` — decides what Fa
 compiles. Fix:
 
 1. Add `$SOURCE_DIR$/<Dir>` to the `.UnityInputPath` array in `Sources/fbuild.bff` (~line 201).
-2. Add the files to `Sources/C2C (VS2019).vcxproj` and `…vcxproj.filters` (IDE display only).
+2. Add the files to `Sources/S2S.vcxproj` and `…vcxproj.filters` (IDE display only).
 
 `Sources/Repos/` and `Sources/Utils/` are reference examples of a correctly wired subdirectory.

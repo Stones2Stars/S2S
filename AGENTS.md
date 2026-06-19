@@ -55,14 +55,21 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
 ### Adding a new source subdirectory
 
 `Sources/fbuild.bff` is the **source-of-truth for what FastBuild compiles** — the
-`.vcxproj` files are IDE-only and do NOT drive the build. When you create a new
-`Sources/<NewDir>/`:
+`.vcxproj` files are IDE-only and do NOT drive the build. **As of 2026-06-19 fbuild
+RECURSIVELY globs** every `.cpp` under `$SOURCE_DIR$` (the Unity + the `Cy*` ObjectList both
+`*PathRecurse = true`, excluding `include`/`lib`/`.vs`/`.vscode`/`nbproject`), so a new
+`Sources/<NewDir>/` is compiled **automatically — no `.UnityInputPath` edit needed**. When you
+add a subdir/files:
 
-1. Add `$SOURCE_DIR$/<NewDir>` to the `.UnityInputPath` array in `Sources/fbuild.bff` (~line 201).
-2. Add the files to `Sources/C2C (VS2019).vcxproj` and `…vcxproj.filters` (IDE display).
-3. Both are required. Symptom of a missing `fbuild.bff` entry: compiles in the IDE
-   but FastBuild fails at link with one `LNK2001: unresolved external symbol` per
-   symbol in the new directory. `Sources/Repos/` and `Sources/Utils/` are reference examples.
+1. Put the `.cpp`/`.h` under `Sources/<NewDir>/`. Cross-module `#include`s are **path-qualified**
+   root-relative (`"<Dir>/Header.h"`, resolved via `/I"$SOURCE_DIR$"`); same-folder includes stay
+   bare (MSVC searches the including file's own dir first). The shared layers `Infos`/`Cascade` are
+   on `/I` so their headers are included bare; PCH glue (`CvGameCoreDLL.h`, etc.) stays at root.
+2. (IDE display only) regenerate the project with `python Tools/regen_project.py` (rebuilds
+   `S2S.vcxproj` + `S2S.vcxproj.filters` from disk), or add the entries by hand.
+3. With recursive globbing, an `LNK2001: unresolved external symbol` now means a genuinely
+   missing definition (not a missing `UnityInputPath` entry). `Sources/Engine/`, `Sources/AI/` etc.
+   are reference examples of the flat bucket layout.
 
 ## Key Subsystem Knowledge
 

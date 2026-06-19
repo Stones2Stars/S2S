@@ -66,7 +66,7 @@ module has no class, put the block atop the owning function or in a short
 
 1. Add `log<Domain>AI` to `BetterBTSAI.{h,cpp}`.
 2. (Optional) add `Cv<Domain>AI.{h,cpp}`, wire ownership + `onTurnBegin`, register in
-   `C2C (VS2019).vcxproj`. Mind unity grouping — add any directly-needed `#include`s
+   `S2S.vcxproj`. Mind unity grouping — add any directly-needed `#include`s
    (see memory `fastbuild-unity-grouping-fragility`); never use range-based-for.
 3. Add the taxonomy doc-comment.
 4. Instrument the decision functions with `[XAI/...]` at the right levels.
