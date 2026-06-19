@@ -48,6 +48,14 @@ feature. Keep the formula core a clean, reusable library so that path stays open
 
 ## 1. The core idea — a pure FORMULA COMPARATOR over TWO calcs
 
+> **SCOPE IN ONE LINE (owner 2026-06-19, the real takeaway): we are modelling ALL the modifying calculations that
+> run during `doTurn()`.** That is the whole boundary — the per-turn value computations the engine performs each
+> turn (yields, commerce, maintenance, growth, health, happiness, great-people, property ±rates, the player-scope
+> per-turn rates, …). Anything that is NOT a `doTurn()` modifying calc is out: cross-turn/time-evolving meta
+> (win-for-losing, tech-diffusion — final-value modifiers), stateful accumulators + spatial propagation (the #429
+> solver), stochastic events. If it modifies a value during `doTurn()`, the emulator models it; if it doesn't, it's
+> someone else's job.
+
 **Same input vector → legacy combine vs new (cascade) combine → delta. The delta is PURELY formula-attributable.**
 Input parity is trivial: the inputs are just the raw contribution lists (base + the flat/percent/multiplier
 sources), **identical for both sides** — so any output difference isolates the *combination logic*, the only thing
