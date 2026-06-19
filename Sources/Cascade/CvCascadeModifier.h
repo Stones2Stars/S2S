@@ -2,6 +2,9 @@
 #ifndef CV_CASCADE_MODIFIER_H
 #define CV_CASCADE_MODIFIER_H
 
+#include <vector>
+#include "CvCascadeCondition.h" // CvCascadeCondition -- the per-deposit enabled/disabled gate (reused verbatim)
+
 //
 //	CvCascadeModifier -- the MAGNITUDE machine's combine core (modifier-cascade-spec.md). The tally sums COUNTS and
 //	rolls UP the scope spine; the modifier sums MAGNITUDES and flows DOWN it. This is the per-target accumulation
@@ -35,6 +38,56 @@ struct CvModifierSlot
 	int  effective(int iBase) const;
 	void clear() { iFlat = 0; iPercent = 0; iMultiplierX100 = 100; }
 	bool isIdentity() const { return iFlat == 0 && iPercent == 0 && iMultiplierX100 == 100; }
+};
+
+// ===================== the DATA-DRIVEN layer (fed by readJson) =====================
+// The target scope a deposit lands at (the JSON `<scope>` axis) = the CONTAINMENT SPINE, high -> low (enabler-spec §8 /
+// tally-spec §1). Encoded COMPLETE so the scope model has NO gaps to rediscover (owner 2026-06-19 -- build the proper
+// structure once; the spine is a fixed, known model, so this is not speculation). The parser + deposit-flow CONSUME each
+// scope as the data + families need it; the PILOT consumes CITY + PLOT (other scopes parsed + tagged-pending meanwhile).
+enum ModifierScope
+{
+	MODSCOPE_WORLD = 0,   // game-wide (all players)
+	MODSCOPE_TEAM,        // the player's TEAM -- shared across members (e.g. a wonder boosting the whole team's research)
+	MODSCOPE_EMPIRE,      // the player
+	MODSCOPE_AREA,        // the landmass / continent the city sits on
+	MODSCOPE_CITY,        // the city's total output
+	MODSCOPE_PLOT,        // a worked TILE's yield. Plots FEED the city's base yield AND are themselves modifiable by
+	                      // outside sources (buildings/civics/terrain-feature-improvement yield changes) -- a FIRST-CLASS
+	                      // scope (owner 2026-06-19). ENCAPSULATION: the plot SELF-CONTAINS its modifier detail and
+	                      // reports ONE rolled-up yield to the city -- "yep, this is what you get from me this turn"; the
+	                      // city NEVER sees which plot got buffed by which improvement (same report-isolation as the
+	                      // tally). Keyed plot sub-targets (terrains/features/improvements/routes) resolve INSIDE the plot.
+	MODSCOPE_SELF,        // the entity's own build cost (buildRate.self) -- not a city-output scope
+	MODSCOPE_SPECIALIST,  // a specialist's output
+	MODSCOPE_UNIT,        // a unit's stat (the unit-plane channel -- largest surface, last per the shadow-spec §2.2)
+	NUM_MODIFIER_SCOPES
+};
+
+// One parsed modifier deposit (the in-memory form of a `<family>.<scope>.<unit> = value [+ enabled/disabled]` leaf).
+// PILOT: city-scope yield flat/percent. The value folds into a CvModifierSlot per (family, scope, target) WHEN its
+// `enabled` holds AND its `disabled` doesn't (re-evaluated per turn -- the dormancy model). iFamily is stored as a raw
+// int so this header needs no enum coupling: the parser maps "food"/"production"/"commerce" -> YieldTypes (taxonomy
+// widens to commerce-split / health/happiness / PROPERTY_* / unit stats later).
+struct CvCascadeModifierDeposit
+{
+	int                iFamily; // PILOT: YieldTypes (YIELD_FOOD/PRODUCTION/COMMERCE)
+	int                iScope;  // ModifierScope
+	ModifierUnit       eUnit;   // MODUNIT_FLAT / MODUNIT_PERCENT (yields author no multipliers)
+	int                iValue;  // magnitude
+	CvCascadeCondition enabled; // empty = always on
+	CvCascadeCondition disabled;// empty = never off
+
+	CvCascadeModifierDeposit() : iFamily(-1), iScope(MODSCOPE_CITY), eUnit(MODUNIT_FLAT), iValue(0) {}
+};
+
+// One entity's parsed modifier deposits (readJson populates this; the deposit-flow folds them into per-target slots).
+struct CvEntityModifiers
+{
+	std::vector<CvCascadeModifierDeposit> deposits;
+	int iParsed;  // deposits wired (diagnostics)
+	int iSkipped; // leaves dropped/unmodelled this pass (diagnostics)
+	CvEntityModifiers() : iParsed(0), iSkipped(0) {}
 };
 
 #endif // CV_CASCADE_MODIFIER_H

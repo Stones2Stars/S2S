@@ -3,7 +3,8 @@
 #define CV_CASCADE_READ_JSON_H
 
 #include <string>
-#include "CvCascadeEnabler.h" // CvEntityAvailability
+#include "CvCascadeEnabler.h"  // CvEntityAvailability
+#include "CvCascadeModifier.h" // CvEntityModifiers (the parsed modifier-deposit list)
 
 //
 //	⛔ TEMPORARY harness -- the DLL-side readJson (#430). Parses a REAL entity JSON from Assets/Data via the
@@ -23,6 +24,12 @@
 // TECH_/CIVIC_/PROJECT_/RELIGION_/CORPORATION_). Returns false if the file can't be found/parsed; szNotes carries
 // the per-leaf diagnostics. Call on the GAME thread (it reads GC type indices + the live mod path).
 bool cascadeReadJsonAvailability(const char* szTypeKey, CvEntityAvailability& kOut, std::string& szNotes);
+
+// Parse an entity's MODIFIER deposits (the modifier-family layer, modifier-cascade-spec §1.3) into kOut. PILOT coverage:
+// city-scope yield families food/production/commerce, flat/percent (scalar | {value,enabled} | array). Other scopes /
+// sub-scopes (improvements/buildings/specialists) / perPopulation / commerce-split are counted as pending (kOut.iSkipped)
+// for now. Returns false if the JSON can't be found/parsed; szNotes carries the per-leaf diagnostics. Game thread.
+bool cascadeReadJsonModifiers(const char* szTypeKey, CvEntityModifiers& kOut, std::string& szNotes);
 
 // GENERATION (partial): is this entity obsolete for the team -- i.e. has the team researched a tech whose JSON
 // `obsoletes` edge names it? Lazily builds a reverse index from the tech JSONs on first call (game thread,

@@ -435,6 +435,118 @@ bool cascadeReadJsonAvailability(const char* szTypeKey, CvEntityAvailability& kO
 	return true;
 }
 
+// ===================== exported: parse one entity's MODIFIER deposits (the magnitude layer) =====================
+
+namespace
+{
+	// PILOT yield families (lowercase JSON key -> YieldTypes). Taxonomy widens (commerce-split, health/happiness,
+	// PROPERTY_*, unit stats) in later sub-passes.
+	struct RjModFamily { const char* sz; int iFamily; };
+	const RjModFamily RJ_MOD_FAMILIES[] = {
+		{ "food", YIELD_FOOD }, { "production", YIELD_PRODUCTION }, { "commerce", YIELD_COMMERCE }
+	};
+	const int RJ_NUM_MOD_FAMILIES = (int)(sizeof(RJ_MOD_FAMILIES) / sizeof(RJ_MOD_FAMILIES[0]));
+
+	// Scope keys (lowercase JSON -> ModifierScope) -- the full containment spine. PILOT consumes city + plot; the rest are
+	// parsed so coverage gaps are visible. Loop bound is sizeof-derived so adding a scope can't drift the bound.
+	struct RjModScope { const char* sz; int iScope; };
+	const RjModScope RJ_MOD_SCOPES[] = {
+		{ "world", MODSCOPE_WORLD }, { "team", MODSCOPE_TEAM }, { "empire", MODSCOPE_EMPIRE }, { "area", MODSCOPE_AREA },
+		{ "city", MODSCOPE_CITY }, { "plot", MODSCOPE_PLOT }, { "self", MODSCOPE_SELF },
+		{ "specialist", MODSCOPE_SPECIALIST }, { "unit", MODSCOPE_UNIT }
+	};
+	const int RJ_NUM_MOD_SCOPES = (int)(sizeof(RJ_MOD_SCOPES) / sizeof(RJ_MOD_SCOPES[0]));
+
+	// Emit 0+ deposits from a flat/percent value: scalar | { value, enabled?, disabled? } | array-of-those.
+	void rjEmitModDeposits(const picojson::value& v, int iFamily, int iScope, ModifierUnit eUnit,
+		CvEntityModifiers& kOut, int& iSup, int& iSkip, std::string& sNotes)
+	{
+		if (v.is<double>())
+		{
+			CvCascadeModifierDeposit d;
+			d.iFamily = iFamily; d.iScope = iScope; d.eUnit = eUnit; d.iValue = (int)v.get<double>();
+			kOut.deposits.push_back(d); ++iSup;
+		}
+		else if (v.is<picojson::object>())
+		{
+			const picojson::object& o = v.get<picojson::object>();
+			picojson::object::const_iterator itVal = o.find("value");
+			if (itVal == o.end() || !itVal->second.is<double>()) { ++iSkip; rjAppendNote(sNotes, "mod:noValue"); return; }
+			CvCascadeModifierDeposit d;
+			d.iFamily = iFamily; d.iScope = iScope; d.eUnit = eUnit; d.iValue = (int)itVal->second.get<double>();
+			picojson::object::const_iterator itEn = o.find("enabled");
+			if (itEn != o.end())
+			{
+				if (itEn->second.is<picojson::object>())
+					rjParseConditionObject(itEn->second.get<picojson::object>(), d.enabled, iSup, iSkip, sNotes);
+				else
+				{
+					CvCascadeLeaf l; std::string r;
+					if (rjParseLeaf(itEn->second, l, r)) d.enabled.all.push_back(l);
+					else { ++iSkip; rjAppendNote(sNotes, "mod.enabled:" + r); }
+				}
+			}
+			picojson::object::const_iterator itDis = o.find("disabled");
+			if (itDis != o.end() && itDis->second.is<picojson::object>())
+				rjParseConditionObject(itDis->second.get<picojson::object>(), d.disabled, iSup, iSkip, sNotes);
+			kOut.deposits.push_back(d); ++iSup;
+		}
+		else if (v.is<picojson::array>())
+		{
+			const picojson::array& a = v.get<picojson::array>();
+			for (size_t i = 0; i < a.size(); ++i)
+				rjEmitModDeposits(a[i], iFamily, iScope, eUnit, kOut, iSup, iSkip, sNotes);
+		}
+		else { ++iSkip; rjAppendNote(sNotes, "mod:badValue"); }
+	}
+
+	// Walk a building's root yield keys -> scope blocks -> flat/percent peer keys, emitting deposits. Sub-scopes
+	// (improvements/buildings/specialists) + perPopulation are tagged pending (a later sub-pass, not the pilot).
+	void rjParseModifiers(const picojson::object& root, CvEntityModifiers& kOut, int& iSup, int& iSkip, std::string& sNotes)
+	{
+		for (int f = 0; f < RJ_NUM_MOD_FAMILIES; ++f)
+		{
+			picojson::object::const_iterator itFam = root.find(RJ_MOD_FAMILIES[f].sz);
+			if (itFam == root.end() || !itFam->second.is<picojson::object>()) continue;
+			const picojson::object& oFam = itFam->second.get<picojson::object>();
+			for (int s = 0; s < RJ_NUM_MOD_SCOPES; ++s)
+			{
+				picojson::object::const_iterator itSc = oFam.find(RJ_MOD_SCOPES[s].sz);
+				if (itSc == oFam.end() || !itSc->second.is<picojson::object>()) continue;
+				const picojson::object& oSc = itSc->second.get<picojson::object>();
+				picojson::object::const_iterator itFlat = oSc.find("flat");
+				if (itFlat != oSc.end())
+					rjEmitModDeposits(itFlat->second, RJ_MOD_FAMILIES[f].iFamily, RJ_MOD_SCOPES[s].iScope, MODUNIT_FLAT, kOut, iSup, iSkip, sNotes);
+				picojson::object::const_iterator itPct = oSc.find("percent");
+				if (itPct != oSc.end())
+					rjEmitModDeposits(itPct->second, RJ_MOD_FAMILIES[f].iFamily, RJ_MOD_SCOPES[s].iScope, MODUNIT_PERCENT, kOut, iSup, iSkip, sNotes);
+				if (oSc.find("perPopulation") != oSc.end()) { ++iSkip; rjAppendNote(sNotes, "mod:perPopulation"); }
+				if (oSc.find("improvements") != oSc.end() || oSc.find("buildings") != oSc.end() || oSc.find("specialists") != oSc.end())
+					{ ++iSkip; rjAppendNote(sNotes, "mod:subScope"); }
+			}
+		}
+	}
+} // namespace
+
+bool cascadeReadJsonModifiers(const char* szTypeKey, CvEntityModifiers& kOut, std::string& szNotes)
+{
+	std::string sContent;
+	if (!rjLocateEntityJson(szTypeKey, sContent)) { szNotes = "no JSON file found"; return false; }
+	picojson::value root;
+	const std::string sErr = picojson::parse(root, sContent);
+	if (!sErr.empty() || !root.is<picojson::object>()) { szNotes = "parse-error:" + sErr; return false; }
+
+	int iSup = 0, iSkip = 0; std::string sNotes;
+	rjParseModifiers(root.get<picojson::object>(), kOut, iSup, iSkip, sNotes);
+	kOut.iParsed = iSup; kOut.iSkipped = iSkip;
+
+	std::ostringstream ss;
+	ss << iSup << " deposits, " << iSkip << " pending";
+	if (!sNotes.empty()) ss << " [" << sNotes << "]";
+	szNotes = ss.str();
+	return true;
+}
+
 // ===================== GENERATION (partial): the obsoletion reverse index =====================
 // A target is obsolete for a team if the team has researched a tech whose JSON `obsoletes` edge names it. The
 // model authors obsoletion FORWARD on the tech (tech.obsoletes.{buildings,units}); we invert it ONCE into a
@@ -856,6 +968,13 @@ void cascadeReadJsonSlice()
 
 	rjRunOne("BUILDING_ABU_SIMBEL", iCtx);          // allowed:{world:1} + disabled:IS_CAPITAL + any:[HAS_TERRAIN(PEAK)]
 	rjRunOne("BUILDING_ACUPUNCTURISTS_SHOP", iCtx); // requires.build.all: BUILDING_C_L_ASIAN @ city
+
+	// increment-1 verify (modifier parse): a yield-rich sample (food/production/commerce flat+percent, some conditional).
+	{
+		CvEntityModifiers kMods; std::string sNotes;
+		if (cascadeReadJsonModifiers("BUILDING_ANCIENT_CUSTOMS", kMods, sNotes))
+			rjLogLine(CvString::format("[MODPARSE] BUILDING_ANCIENT_CUSTOMS %s", sNotes.c_str()));
+	}
 }
 
 // ===================== §14 H AUTO-PLACEMENT SHADOW (B-i) =====================

@@ -115,6 +115,56 @@ This must exist before any modifier shadow can run. Built **for the pilot channe
 5. The per-deposit `enabled`/`disabled` (§3 of the modifier spec) reuse the **existing enabler condition evaluator
    verbatim** (modifier-spec §0.2) — no new condition machinery.
 
+#### 3.1a — VERIFIED BUILD MAP (2026-06-19, 5-agent ground-truth sweep) — the load-bearing facts the build rests on
+
+- **JSON shape (ground truth from `Assets/Data/buildings/<era>/<type>.json`):** yields live at the building ROOT, **no
+  `modifiers` wrapper** — `"<yield>": { "<scope>": { "flat": N, "percent": M } }`. `<yield>` ∈ `food|production|commerce|
+  gold|research|culture|espionage|health|happiness|PROPERTY_*|…`; `<scope>` ∈ `city|empire|specialist|self` (+ conditional
+  sub-scopes `improvements|buildings|specialists` keyed by entity type). `flat`/`percent` are **peer keys** (no `unit`
+  field). Values are scalar, an array, or `{value, enabled}` (conditional). `perPopulation` is a separate sub-key.
+  **Pilot scope:** `food|production|commerce` × `city`+`plot` × `{flat,percent}`, scalar first; conditional `{value,enabled}`/
+  arrays reuse the enabler condition evaluator; other scopes/sub-scopes/`perPopulation` are later sub-passes (tagged as gaps).
+- **SCOPE-MODEL BOUNDARIES (owner 2026-06-19):**
+  - **PLOT is a first-class modifier scope.** Plots feed the city's base yield AND are modifiable by outside sources
+    (buildings/civics/terrain-feature-improvement yield changes), so `MODSCOPE_PLOT` exists alongside city.
+  - **`ModifierScope` encodes the COMPLETE containment spine** (`world/team/empire/area/city/plot/self/specialist/unit`),
+    not piecemeal — the spine is a fixed, known model so encoding it whole is proper-once, not speculation (after team/plot
+    were each found missing). **TEAM is a real modifier scope** (research/tech is team-shared; a wonder can boost the whole
+    team — owner 2026-06-19). The parser maps every spine key; the deposit-flow consumes each as families need it (pilot =
+    city+plot). The building-yield data sweep showed only `city|empire|specialist|self` authored so far, but the model is whole.
+  - **Plot ENCAPSULATION — the plot reports a rolled-up total to the city; the city never sees per-plot detail.** A plot
+    self-contains its modifier detail (its terrain/feature/improvement/route + outside buffs resolve INSIDE the plot) and
+    reports ONE yield-per-turn to the city — *"yep, this is what you get from me this turn."* The city sums plot reports;
+    it never tracks which plot got buffed by which improvement (same report-isolation as the tally's HAS-builder, §4).
+  - **Vicinity/spatial scanning is REQUIREMENTS, not modifier.** "Does the city have improvement/buff X in vicinity (its
+    workable radius)" is an enabler PREDICATE (`PRED_HAS_IMPROVEMENT` vicinity, already built) used in `requires`/`enabled`
+    — NOT a modifier operation. The modifier machine does **no spatial scanning**: it deposits magnitudes and reads
+    `enabled` conditions via the existing enabler evaluator. Keeps the modifier machine free of spatial queries.
+- **The combine core already exists:** `CvModifierSlot` (`Sources/Cascade/CvCascadeModifier.h`) implements the §2 formula
+  exactly — `deposit(MODUNIT_FLAT|PERCENT|MULTIPLIER, v)`, `effective(base)`, `isIdentity()`, identity multiplier = 100.
+  Parity mode = multipliers stay identity (yields author none anyway). `CvScopedAccumulator` (sparse `map<int,int>`,
+  `deposit`/`get`/iterate) is the roll-up substrate for cross-scope.
+- **`readJson` has NO modifier parsing yet** (only `requires`/`allowed`/`identity`). Hook: in `cascadeReadJsonAvailability`
+  after the `allowed` block, parse the root yield keys into a new per-entity modifier-deposit list (parallel to the
+  count-atom parse). picojson; reuse `rjParseConditionObject` for `enabled`.
+- **Legacy parity target (`CvCity.cpp`, verified):** PRIMARY = `getYieldRate100(eYield)` =
+  `min(MAX, max(100, (getBaseYieldRate + m_aiSpecialistYieldTotal[y]) × getBaseYieldRateModifier(y) + 100×getExtraYield(y)))`.
+  DECOMPOSE: **base** = `getBaseYieldRate` (plot+trade+free+golden); **Σflat building** = `m_buildingExtraYield100[y]`
+  (+ `m_aiBaseYieldPerPopRate[y]×pop`); **Σpercent building** = `m_buildingYieldMod[y]`; full percent =
+  `getBaseYieldRateModifier` (building+event+bonus+power+area+capital+player). `processBuilding` is the legacy apply-loop
+  (writes `m_buildingExtraYield100`/`m_buildingYieldMod`/…). **Parity is driven to zero by ADDING deposit sources until
+  cascade `effective(getBaseYieldRate)` matches `getYieldRate100`** — the first run WILL diverge on sources not yet
+  deposited (bonus/civic/event/area/capital/player), each cause-tagged; that is the parity work, not a day-one expectation.
+- **Harness pattern (copy verbatim, `Sources/Tools/CvHttpServer.cpp`):** the `/diagnostic/<action>` route → the
+  **mailbox snapshot-isolation** (`evalRequestBlocking` on the server thread enqueues; the game thread's
+  `serviceEvalMailbox`→`evaluateGate` renders the answer — server thread NEVER touches game objects). Add `modifierSweep`
+  to the `bNoTypeAction` set + an `evaluateGate` branch. Per-turn `[MODSHADOW]` line via `rjLogLine` from `CvGame::doTurn`
+  (gated `gPlayerLogLevel` ≥1 headline / ≥2 per-divergence), beside `cascadePlacementShadow`/`cascadeDormancyShadow`.
+  JSON triage = cap-250 divergence sample + UNCAPPED reason histogram (the `placementSweep` helper shape).
+- **Build increments (compile-clean each):** (1) parse → per-entity modifier-deposit store + `rjParseModifiers`; (2)
+  deposit-flow + `cascadeModifierEffective(family,scope,city)` + `cascadeModifierParityMode`; (3) shadow — `[MODSHADOW]`
+  doTurn line + `/diagnostic/modifierSweep` + decomposed diff vs `getYieldRate100`.
+
 ### 3.2 Endpoint — `GET /diagnostic/modifierSweep?player=N`
 
 The snapshot surface, gated `Autolog__HttpServer` / `gPlayerLogLevel`, the magnitude analogue of `placementSweep`:
