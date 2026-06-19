@@ -90,4 +90,21 @@ struct CvEntityModifiers
 	CvEntityModifiers() : iParsed(0), iSkipped(0) {}
 };
 
+// ===================== the DEPOSIT-FLOW + effective read (the data-driven layer's runtime) =====================
+
+// Parity-first scaffold (R-M1, modifier-cascade-shadow-spec §6): a build-time const for now. When true, MULTIPLIER deposits
+// are treated as identity (skipped) so the engine is ADDITIVE-ONLY -- matching legacy -- to prove the deposit-flow wiring
+// before the new multiplier capability is enabled. (Yields author no multipliers, so it's a no-op for the pilot; the flag
+// is the framework hook.) Promote to a BUG option only if live toggling is wanted.
+extern const bool cascadeModifierParityMode;
+
+// Build a city's modifier slot for one family at MODSCOPE_CITY: deposit each PRESENT building's city-scope flat/percent
+// whose `enabled` holds and `disabled` doesn't (re-evaluated against kCtx -- the dormancy model). iFamily is a YieldTypes
+// for the pilot. PILOT scope; widens to plot (the plot self-reports, owner 2026-06-19) + other scopes/families later.
+void cascadeModifierCitySlot(int iFamily, const CvCascadeContext& kCtx, CvModifierSlot& slotOut);
+
+// The effective city-scope value for (family, ctx): slot.effective(getBaseYieldRate). PILOT scope = MODSCOPE_CITY (other
+// scopes return 0 for now). The single read the shadow + the per-entity endpoint compare against legacy getYieldRate100.
+int cascadeModifierEffective(int iFamily, int iScope, const CvCascadeContext& kCtx);
+
 #endif // CV_CASCADE_MODIFIER_H

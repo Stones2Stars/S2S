@@ -895,6 +895,42 @@ namespace
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 
+		// MODIFIER (owner 2026-06-19) -- the magnitude analogue of the can* gates: for the requested city (else the
+		// capital), the cascade effective per PILOT yield family (food/production/commerce) + its flat/percent decomposition
+		// + the legacy getYieldRate100, so the modifier computation is verifiable ON DEMAND (no per-turn-tee timing). No
+		// type param. cascade = city-scope building contribution only (pilot, x1); legacy100 = full realized (x100) -- their
+		// diff is the parity work (sources not yet deposited), surfaced in full by /diagnostic/modifierSweep (increment 3).
+		if (strcmp(szAction, "modifier") == 0)
+		{
+			o["city"] = picojson::value((double)iCityId);
+			if (pCity == NULL)
+			{
+				o["error"] = picojson::value(std::string("no city"));
+				return CvString(picojson::value(o).serialize().c_str());
+			}
+			CvCascadeContext kCtx(iPlayer, iCityId);
+			const int aFam[3] = { YIELD_FOOD, YIELD_PRODUCTION, YIELD_COMMERCE };
+			const char* aFamName[3] = { "food", "production", "commerce" };
+			picojson::value::array kFam;
+			for (int f = 0; f < 3; ++f)
+			{
+				CvModifierSlot slot;
+				cascadeModifierCitySlot(aFam[f], kCtx, slot);
+				const int iBase = pCity->getBaseYieldRate((YieldTypes)aFam[f]);
+				picojson::value::object e;
+				e["family"]    = picojson::value(std::string(aFamName[f]));
+				e["base"]      = picojson::value((double)iBase);
+				e["flat"]      = picojson::value((double)slot.iFlat);
+				e["percent"]   = picojson::value((double)slot.iPercent);
+				e["mult100"]   = picojson::value((double)slot.iMultiplierX100);
+				e["cascade"]   = picojson::value((double)slot.effective(iBase));
+				e["legacy100"] = picojson::value((double)pCity->getYieldRate100((YieldTypes)aFam[f]));
+				kFam.push_back(picojson::value(e));
+			}
+			o["families"] = picojson::value(kFam);
+			return CvString(picojson::value(o).serialize().c_str());
+		}
+
 		CvEntityAvailability kAvail;
 		std::string sNotes;
 		const bool bParsed = cascadeReadJsonAvailability(szType, kAvail, sNotes);
@@ -1243,6 +1279,7 @@ namespace
 				"\"/diagnostic/placementSweep?type=full&player=N\","
 				"\"/diagnostic/dormancySweep?type=full&player=N\","
 				"\"/diagnostic/game?player=N\","
+				"\"/diagnostic/modifier?player=N&city=M\","
 				"\"/diagnostic/tally?type=BUILDING_X|UNIT_X&player=N\"],"
 				"\"note\":\"player defaults to the active player; evaluated against the current game state, "
 				"no construction performed; canConstruct also returns the cascade verdict + cap shadow; "
@@ -1280,9 +1317,11 @@ namespace
 				}
 				szTok = szNext;
 			}
-			// type= is required for the per-type gate actions; the roster sweeps + the game-state dump need none.
+			// type= is required for the per-type gate actions; the roster sweeps + the game-state dump + the per-city
+			// modifier query need none.
 			const bool bNoTypeAction = (strcmp(szAction, "placementSweep") == 0
-				|| strcmp(szAction, "dormancySweep") == 0 || strcmp(szAction, "game") == 0);
+				|| strcmp(szAction, "dormancySweep") == 0 || strcmp(szAction, "game") == 0
+				|| strcmp(szAction, "modifier") == 0);
 			if (szType[0] == '\0' && !bNoTypeAction)
 			{
 				sendResponse(sock, "400 Bad Request", "application/json",
