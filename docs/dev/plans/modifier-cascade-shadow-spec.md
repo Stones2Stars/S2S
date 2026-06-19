@@ -187,6 +187,21 @@ This must exist before any modifier shadow can run. Built **for the pilot channe
       straightforward: the inputs are just the raw contribution lists (base + the flat/percent sources), identical for
       both sides. So the calculator is a pure FORMULA COMPARATOR (same input vector → legacy combine vs cascade combine →
       delta), NOT a game-state simulator — it isolates the combination logic, which is the only thing that differs.
+    - **★ SCOPE EXPANDED (owner 2026-06-19): EXTRACT + EMULATE *ALL* the legacy calculations, fed by REAL DATA — and this
+      IS the DESTROY-pass map.** The tool grows from the yield comparator into a complete external emulation of EVERY value
+      calculation the legacy game runs today (yields, commerce-split, health, happiness, maintenance/upkeep, defense, great
+      people, culture, unit stats, … — the modifier-spec §9 demolition list + §2.2 channels), each implemented for BOTH the
+      legacy and the cascade side. It takes **real "loadouts"** (building sets, tech sets, civics, bonuses — "all the fun
+      things") read from the migrated `Assets/Data` JSON, not just synthetic combos. **Why it's load-bearing:** the extensive
+      calculation mapping is **required anyway for the DESTROY pass** — you cannot safely delete a legacy calc you have not
+      fully mapped (map-before-delete, the Orwell bar applied to *calculations*). So this one artifact serves three masters:
+      parity-adjacent TUNING, formula-flow PROTOTYPING, and the demolition MAP. `modcalc.py` is the **city-yields seed**;
+      the build is channel-by-channel in demolition order. **(Likely graduates to its own plan doc + a `Tools/` emulator
+      package once the approach is confirmed.)**
+    - **It is also our de-facto TEST HARNESS (owner 2026-06-19).** A closed-EXE legacy C++ game can't carry real unit/
+      integration tests; a real-data old-vs-new emulator is the closest equivalent we will ever get — so it is very worth
+      having as the validation backbone, independent of the cascade. **Future upside:** the same engine powers a website
+      "simulate my city" premium feature down the line.
 - **Harness pattern (copy verbatim, `Sources/Tools/CvHttpServer.cpp`):** the `/diagnostic/<action>` route → the
   **mailbox snapshot-isolation** (`evalRequestBlocking` on the server thread enqueues; the game thread's
   `serviceEvalMailbox`→`evaluateGate` renders the answer — server thread NEVER touches game objects). Add `modifierSweep`
