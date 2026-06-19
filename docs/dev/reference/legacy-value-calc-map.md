@@ -86,4 +86,64 @@ What the cascade UNIFIES (delete N paths → one accumulator). From the 2026-06-
 
 ---
 
-*Build order off this map: cityInput already does yields; add commerce → health/happiness → defense → maintenance (city channels, one dump); add `unitInput` (aggregate stats + promotion/unitcombat lists). Each channel gets a modcalc fidelity guard. One compile, one live verify across all (calc-emulator-spec §3/§5).*
+## 8. THE COMPLETE FAMILY INVENTORY — "all the things that modify all the places" (checklist)
+
+The definitive universe of modifier FAMILIES (the modifiable variables / "places"), from a 2026-06-19 inventory
+sweep of data-model-spec §1.1 + modifier-spec §1.1/§2/§5 + the `migration-renames` per-entity family columns.
+Status = the EMULATOR's coverage (dump + fidelity guard), NOT the cascade engine's. The "things that modify" each
+= the source classes (buildings/civics/techs/traits/bonuses/religions/corps/specialists/events/handicap/era/cultureLevel/…).
+
+- **✅ LIVE (dump + guard verified):** `food`, `production`, `commerce` (city yields).
+- **◐ DUMP built, guard pending:** the commerce split — `gold`, `research`, `culture`, `espionage` (commerce-derived).
+- **📋 MAPPED (§1-5 above; dump + guard pending):** `health`, `happiness` (good/bad split), `defense` (amount/min/bombard/…), `maintenance`, `upkeep`.
+- **📋 MAPPED (§6; needs the `unitInput` endpoint, aggregate-only):** unit-plane — `strength` (+ all members), `withdrawal`, `firstStrike`, `bombard`, `collateral`, `air`, `heal`, `capture`, and partials `movement`/`experience`/`workRate`/`cargo`/`vision`/`espionage`(unit).
+- **✅ MAPPED (§9, 2026-06-19 wave-2):** each `PROPERTY_*` (solver, §9.1), `revolution` (Python-authoritative — only the C++ anger step is reproducible, §9.2), `growth`+`foodKept` (§9.3), `inflation`/`hurry`+`hurryAnger`/`freeExperience` (§9.4), `buildRate`/`greatPeopleRate`/`tradeRoutes` (§9.5). **NB `culture` RATE = `COMMERCE_CULTURE`** (already captured via commerce); only plot-culture *spread* is extra (spatial → #429).
+- **❓ STILL UNMAPPED (surfaced by this sweep — no minion yet; the next wave):**
+  - plot-substrate: `movement` (plot terrain/feature base + team/route), `cultureDistance`, `buildTime`, `vision` (plot).
+  - cost/duration scaling: `costs`/`buildCost`/`techCost`, `durations`, `perEra`, `missionYieldMultiplier` (the `getModifiedIntValue` + gamespeed/era/handicap scalers — §7 dedup overlaps these).
+  - building-level: `cityCapture` (capturing CITIES, ≠ unit `capture`), `pillageGold`, `occupationTime`, `espionageDefense`, `populationGrowthRate`, `healing`.
+  - unit-plane crossovers: `byOccupant` (garrison/celebrity/military happiness summed to the host city), `byCargo` (carrier).
+  - other: `spawnRate` (barb/NPC), `stateReligion` (conditional family), and inert/edge unit flags `poison`/`revoltProtection`/`survivor`/`pillage`.
+- **⛔ NOT modifier families (out of the emulator):** `grants`/`enables`/`obsoletes`/`replaces`/`requires`/`allowed`/`identity`/`ui`/`world`/`sound`/`cost`/`ai`; one-shot pulses (`goldenAge`, population/revolution bursts) live in `grants`.
+
+*(So the wave-1 6 channels + wave-2 in-flight 10 cover the per-turn city/unit value calcs; the "still unmapped" bucket — plot-substrate, cost/duration scalers, building-level + crossover families — is the next minion wave to reach the TRUE complete picture.)*
+
+## 9. Wave-2 channel maps (2026-06-19 minion wave)
+
+### 9.1 PROPERTY (each `PROPERTY_*`) — a STATEFUL SOLVER, not a sum
+
+Realized value getter: `CvProperties::getValueByProperty(eProp)` (CvProperties.cpp ~101) — **RAW INT, no x100** (a CRIME value of 50 is 50). Per-turn value = `CvPropertySolver::gatherAndSolve` (CvPropertySolver.cpp ~421) — **3 phases, each predict→computePredict→correct→apply**: **(1) Propagators** (cross-OBJECT spread/gather/diffuse), **(2) Interactions** (cross-PROPERTY convert-constant/convert-percent/inhibited-growth), **(3) Sources**.
+- **Sources (the yield-like deposits):** `CONSTANT` (`iAmountPerTurn`), `CONSTANT_LIMITED` (cap to `iLimit`), `DECAY` (`-(iPercent * max(|v| - iNoDecayAmount, 0)) / 100`, gated off below the no-decay threshold), `ATTRIBUTE_CONSTANT` (`object.getAttribute(eAttr) * iAmountPerTurn`, e.g. ×population). Authored on `CvPropertyInfo::m_PropertyManipulators` (+ per-object manipulators), NOT on the building directly.
+- **`targetLevel` / `operationalRangeMin/Max`** are AI-need + UI/heuristic only — **NOT solver clamps** (no per-turn hard bound; the predict/correct split is what converges).
+- **Effect bands** (`PropertyBuilding {iMinValue,iMaxValue,eBuilding}`) gate the effect-buildings each turn (`CvCity::checkPropertyBuildings` ~1507) — the dormancy the cascade models via `requires.operate` (data-model §4.2b).
+- **⚠ EMULATOR implication:** "first-class yield" is true for the DEPOSIT shape; the per-turn VALUE is the solver. **Propagators = the #429-deferred SPATIAL leakage** — so the emulator's property channel reproduces the **sources + interactions** delta (the non-spatial part) and flags propagators as #429 (out of the containment model). It is NOT a bare per-source sum like yields; it's `value + Σ(source deltas via predict/correct) (+ interactions)`, spatial excluded.
+
+### 9.2 REVOLUTION — PYTHON-authoritative index; only the C++ anger step is reproducible
+
+**The index is computed entirely in PYTHON** (`Assets/Python/Revolution/Gameready/Revolution.py` `updateLocalRevIndices` ~974): per-turn Δ = `gameSpeedMod × revIdxModifier × Σ(localEffects) + revIdxOffset + feedbackDecay`, over ~15 grievances (happiness, distance-to-capital, colony, connectivity, religion, cultureRate, nationality, health, garrison, spirit, size, starvation, occupation, civics/traits/buildings via `RevUtils`, difficulty) — using `pow()` + float math. **C++ is READ-ONLY:** `m_iRevolutionIndex` is set by Python (`setRevolutionIndex`/`changeRevolutionIndex`, CvCity.cpp ~956-969); `getRevolutionIndex`/`getLocalRevIndex` expose it.
+- **The one C++-reproducible part — anger conversion** (CvCity.cpp:5509): `getRevIndexPercentAnger = min(40, (125 + min(getLocalRevIndex()*5, 100)) * (getRevolutionIndex() - 325) / 7500)`, 0 below index 325; feeds `unhappyLevel` (already an input in §3).
+- **⚠ EMULATOR / OOS:** the INDEX calc is Python-authoritative + float/`pow` → **NOT C++-reproducible, NOT OOS-deterministic** (the pending Python→C++ port, `migration-renames` §Civic). The `revolution` channel reproduces ONLY the C++ anger step (dump `revolutionIndex` + `localRevIndex` → assert `getRevIndexPercentAnger`); the index computation is flagged Python-side / deferred. `m_iRevolutionIndex` saves as a plain int.
+
+### 9.3 GROWTH + foodKept — cost-style, reproducible
+
+`foodDifference()` (CvCity.cpp:5980) = `getYieldRate(YIELD_FOOD) - foodConsumption()` (disorder→0; foodProduction city→`min(0,·)`; pop1/food0→`max(0,·)`). `foodConsumption` = `getFoodConsumedByPopulation - (angryPop if noAngry) - healthRate + foodWastage`.
+`growthThreshold()` (CvCity.cpp:6003) = `getModifiedIntValue(player.getGrowthThreshold(pop), city.getPopulationgrowthratepercentage() + player.getPopulationgrowthratepercentage())`, `×0.5` if hominid, `max(1,·)`. `player.getGrowthThreshold` (CvPlayer.cpp:24435) = `BASE_CITY_GROWTH_THRESHOLD + (pop-1)*CITY_GROWTH_MULTIPLIER`, `×gamespeed% ×era.growthPercent% ×(AI handicap) ×(goldenAge less-food)`.
+`foodKept`: `getFoodKeptPercent` clamped **[0,99]** (per-source building `getFoodKept`); stored `m_iFoodKept` capped at `growthThreshold × pct/100`, refund-on-growth.
+- **EMULATOR:** `growth` (threshold + foodDifference) + `foodKept` — reproducible from base-threshold + growth% + food produced/consumed. Uses `getModifiedIntValue` + gamespeed/era/handicap/goldenAge scalers (overlaps §7 cost/duration dedup).
+
+### 9.4 INFLATION / HURRY / FREE-XP / CULTURE
+
+- **inflation** (CvPlayer.cpp:7965/8008): `getInflationMod10000` = base `100×getHurriedCount() × handicap.inflationPercent/100`, modified by `(m_iInflationModifier + civic+project+tech+building inflation − 100×isRebel)` via `getModifiedIntValue` (+AI handicap), returns `10000 + perTurn`. `getInflationCost = preInflated × mod/10000 − preInflated`; `preInflatedCosts` = treasuryUpkeep + totalMaintenance + civicUpkeep + finalUnitUpkeep + unitSupply + corpMaint. **Anarchy→0. x10000 scale.** Per-source: civic/project/tech/building inflation getters.
+- **hurry** (CvCity.cpp:6094/6117): gold = `hurryCost × hurry.goldPerProduction` (min 1); pop = `1+(cost-1)/prodPerPop` (min 1). **Anger** `getHurryPercentAnger` (CvCity.cpp:5448, timer-based, feeds `unhappyLevel` §3): `1+(1+(timer-1)/flatHurryAngerLength)×HURRY_POP_ANGER×PERCENT_ANGER_DIVISOR/pop`; `flatHurryAngerLength = HURRY_ANGER_DIVISOR ×gamespeed% ×(100+getHurryAngerModifier)%`. Per-source: building `m_iHurryAngerModifier` + player `getNationalHurryAngerModifier`.
+- **freeExperience** (CvCity.cpp:3187, at unit-build): `getFreeExperience(city) + player.getFreeExperience()` + (if `canAcquireExperience`) `getSpecialistFreeExperience` + `getUnitCombatFreeExperience(combat+sub)` (city+player) + `getDomainFreeExperience` (≥0). Per-source: building/civic/trait `changeFreeExperience`.
+- **culture** — ⚠ city culture RATE **IS** `getCommerceRateTimes100(COMMERCE_CULTURE)` (`doCulture`, CvCity.cpp:16386) → **already captured via commerce** (no separate channel needed). The EXTRA is **plot-culture SPREAD** (`doPlotCulture` distance-dropoff, CvCity.cpp:16393) = **SPATIAL (#429-adjacent)** + plot decay — out of the containment model, like property propagators. Storage x100.
+
+### 9.5 buildRate / greatPeopleRate / tradeRoutes
+
+- **buildRate** (`getProductionModifier(item)`, CvCity.cpp:3867/3911/3940): summed signed-% from player+city `unit/building/project/domain/unitCombat/military/space/stateReligion/bonus` mods. Applied as a **DISCOUNT**: `effectiveCost = max(1, getModifiedIntValue(player.getProductionNeeded(item), −modifier))` ≈ `base×(100−mod)/100`. x1 signed %.
+- **greatPeopleRate** (`getGreatPeopleRate`, CvCity.cpp:7153) = `getBaseGreatPeopleRate × getTotalGreatPeopleRateModifier / 100`; disorder→0. base = `max(0, m_iBaseGreatPeopleRate) + player.getNationalGreatPeopleRate`; modifier = `100 + city + player + (stateReligion) + (goldenAge)`, `max(0,·)`. Threshold = `player.greatPeopleThresholdNonMilitary` = `GREAT_PEOPLE_THRESHOLD ×era.greatPeoplePercent ×(GPThresholdMod) ×gamespeed /10000`, `max(1)`. Per-source: building `getGreatPeopleRateChange`/`getGreatPeopleRateModifier`(+global), specialist `getGreatPeopleRateChange`.
+- **tradeRoutes** — count `getTradeRoutes` (CvCity.cpp:15347) = `game + player + (coastal) + extra`, clamped `[0, getMaxTradeRoutes]` (`MAX_TRADE_ROUTES + player adj`). Per-route profit `calculateTradeProfitTimes100` = `getBaseTradeProfit × totalTradeModifier / 100` (x100, base floored at 100); yield `calculateTradeYield` = `profit × player.getTradeYieldModifier(yield) / 100`. `totalTradeModifier` = `100 + route + pop + team + capital + overseas + foreign + peace + sharedCivics`.
+
+---
+
+*Build order off this map: cityInput already does yields + commerce; add health/happiness → defense → maintenance (city channels, one dump); add `unitInput` (aggregate stats + promotion/unitcombat lists); then the in-flight + unmapped families as they land. Each channel gets a modcalc fidelity guard. One compile, one live verify across all (calc-emulator-spec §3/§5).*
