@@ -173,9 +173,30 @@ Realized value getter: `CvProperties::getValueByProperty(eProp)` (CvProperties.c
 - **spawnRate**: **event-driven per-plot RNG** (`CvGame` ~6375) — civ `spawnRateModifier`/`npcPeaceModifier` + `CvSpawnInfo.turnRate` set a per-plot probability. **Not a per-turn value-channel** (a stochastic event, like a `grants.repeatable` chance).
 - **stateReligion**: deterministic CONDITIONAL (gate `getStateReligion()!=NO_RELIGION ∧ isHasReligion`), **6 sub-modifiers routed through their host families**: unitProduction, buildingProduction, buildingCommerce, happiness, greatPeopleRate (holy-city), and **`HolyCityXPModifier` → feeds `getUnitCombatFreeExperience`** (a free-XP source beyond buildings/civics/traits). Not its own channel — a predicate gate on existing families.
 
+## 11. EMPIRE / player-scope + unit-plane (2026-06-19 wave-4)
+
+### 11.1 Player economy net-rates (playerInput) — reproducible
+- **gold/turn** `getGoldPerTurn` / `calculateGoldRate` (CvPlayer.cpp ~8224) = `getCommerceRate(GOLD) + getGoldPerTurn(deals) − getFinalExpense`. `getFinalExpense` = `isAnarchy()?0 : calculatePreInflatedCosts() × getInflationMod10000()/10000`; `preInflatedCosts` = `treasuryUpkeep + getTotalMaintenance + getCivicUpkeep + getFinalUnitUpkeep + calculateUnitSupply + getCorporateMaintenance`. **Reproducible from components.**
+- **science/turn** `calculateResearchRate`/`calculateBaseNetResearch` (~8203) = `getModifiedIntValue(BASE_RESEARCH_RATE + getCommerceRate(RESEARCH), getNationalTechResearchModifier + calculateResearchModifier)`; the diffusion/welfare `calculateResearchModifier` (≤100) rides in as a dumped value. **Reproducible.**
+- **culture/espionage per-turn** = the player commerce sums (`getCommerceRate(CULTURE/ESPIONAGE)`; espionage is team-pooled). **Roll-ups:** `getGold` (treasury), `getTotalMaintenance`.
+
+### 11.2 Score / power / demographics
+- **SCORE — OUT OF EMULATOR/CASCADE SCOPE (owner 2026-06-19: "not gameplay-affecting").** It's a display/demographic, so we DON'T reproduce it. (Technically it's Python-authoritative — `CvPlayer.cpp:4416` → `Assets/Python/CvGameUtils.calculateScore`, `Σ FACTOR×(component+free)/(free+max)` over pop/land/tech/wonders; components are C++ getters, combination is Python — but unlike the revolution index it doesn't matter, so it's not a dragon, just skipped.)
+- **power** (`getPower` ~11470) = `(m_iPower + m_iTechPower + m_iUnitPower)/100`; base = totalPopulation, unitPower = `Σ unit.getPowerValueTotal`. **Reproducible from components.** **assets** = `(10×(totalPopulation + totalLandScored) + Σ unit.assetValue)/100`.
+- **demographics (readings):** `getTotalPopulation`, `getRealPopulation`, `getTotalLand`, `getTotalLandScored`, `getNumMilitaryUnits`.
+
+### 11.3 Durations + war-weariness (live readings)
+- **golden-age / anarchy:** decrementing timers (`getGoldenAgeTurns`/`getAnarchyTurns`, −1/turn; mutually exclusive) + the length formulas (§10.2). Live readings.
+- **war-weariness:** ⚠ **STATEFUL + EVENT-DRIVEN** — the team `m_aiWarWearinessTimes100` accumulates per combat event (culture-scaled: kills/captures/nukes) and decays per turn (`WW_DECAY_RATE`/turn, ×0.99 on peace/enemy-weak). Player `getWarWearinessPercentAnger` is derived (feeds city happiness, already an input §3). **A live reading**, not an offline reproduction (the accumulation needs the combat history) — like property/revolution.
+
+### 11.4 Unit-plane (unitInput)
+- **baseCombatStr** (`baseCombatStrPreCheck` CvUnit.cpp:11341) = `(m_iBaseCombat + getExtraStrength()) × (100 + getExtraStrengthModifier())/100` — **OFFLINE-REPRODUCIBLE.** **maxCombatStr/currCombatStr are CONTEXT-DEPENDENT** (~730-line situational calc, needs attacker/plot) → NOT offline; dump base-str + HP + the aggregate stat set instead.
+- **Dump:** `m_iBaseCombat` + the full aggregate `getExtra*` set (combatPercent/city/hills/withdrawal/firstStrikes/collateral/bombard/air/heal/moves/visibility/workRate/capture + the terrain/feature/unitCombat/domain keyed maps) + HP. **Per-source = aggregate-only** → iterate `getPromotionKeyedInfo`/`getUnitCombatKeyedInfo` and sum from the Infos.
+- **unit-build start-XP** (`CvCity::getProductionExperience` ~3187, per unit-TYPE) = `getFreeExperience(city)+player + (canAcquireExp ? specialistFreeExp + unitCombatFreeExp(combat+sub)(city+player) + domainFreeExp)` — **REPRODUCIBLE** (the building→combat-class XP). **buildRate** = `getProductionModifier(item)` — **REPRODUCIBLE.** Both are per-(city × unitType) `CvCity` methods → the city/query side, not the per-unit-instance dump.
+
 ---
 
-**✅ THE MAP IS COMPLETE (waves 1-3, 2026-06-19).** Every per-turn value calc is mapped to its realized getter + per-source + gotchas; the dedup map (§7) + the family inventory (§8) round it out. **Emulator-relevant verdicts:** property + culture-spread + cultureDistance are SPATIAL (#429, out of containment); revolution is Python/non-deterministic (deferred); spawnRate is a stochastic event (not a value-channel); `celebrity happiness`/`byCargo` don't exist; `pillageGold` (building) is dead; `populationGrowthRate` is float (OOS care). The remaining channels are deterministic integer calcs the emulator can reproduce.
+**✅ THE MAP IS COMPLETE (waves 1-4, 2026-06-19).** Every per-turn value calc — city, empire/player, and unit-plane — is mapped to its realized getter + per-source + gotchas; the dedup map (§7) + the family inventory (§8) round it out. **Emulator-relevant verdicts:** SPATIAL → #429 (property/culture-spread/cultureDistance); **PYTHON-authoritative** (revolution index — deferred; **score — OUT of scope, not gameplay-affecting per owner**); STATEFUL/event-driven live-readings (war-weariness, property, golden-age/anarchy timers); stochastic event (spawnRate, not a value-channel); float/OOS-care (populationGrowthRate); nonexistent (`celebrity happiness`/`byCargo`); dead (`pillageGold` building). **Everything else is a deterministic integer calc the emulator reproduces** — the city scope is verified green; empire (gold-net/science/power/assets) + unit (baseCombatStr/start-XP/buildRate) are the next endpoints to build + verify.
 
 ---
 
