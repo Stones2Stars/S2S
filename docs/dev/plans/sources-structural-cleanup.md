@@ -69,6 +69,37 @@ these). `Tools/migrate_structure.py` holds the validated file→bucket move map 
   already included its header. So iwyu here is fragile: a "needed" include can look unnecessary, and removing the wrong
   one only breaks when batching changes. Verify by clean rebuild **and** by perturbing unity grouping (see §3).
 
+#### 1B EXECUTION NOTES — the 2026-06-19 ATTEMPT (reverted to green; hard-won lessons for the redo)
+
+A scripted retirement was attempted and **reverted** (it built down to a fragile tail, not clean). The structure
+cleanup (§1A collision-proof + §1C move/rename) is DONE + committed; the umbrella retirement is a **dedicated careful
+pass**, NOT a session-tail script run. What we learned (do the redo with these in hand):
+
+- **Scope:** ~**178** files `#include "CvInfos.h"`; the PCH's copy is **commented out** (so it is NOT globally
+  provided — retirement is real). Of the 178, **118 don't use any Info type** → pure dead-include removal (easy win).
+- **Detect usage by ACCESSOR too, not just type name:** most files touch an Info type via `GC.getXInfo()` and NEVER
+  write `CvXInfo`. A retirement that only scans for `\bCv\w+Info\b` tokens under-adds → 853 undefined-type errors.
+  Map **both** `\bCv\w+Info\b` AND `get<X>Info(` → `Cv<X>Info.h`.
+- **⛔ NEVER inject Info includes into FOUNDATIONAL / EXE-bound headers.** Adding `#include "CvXInfo.h"` to
+  `CvInfoBase.h` (the base every Info derives from), `CvEnums.h` (foundational enums), or the EXE-bound core headers
+  (`CvCity/CvUnit/CvPlayer/CvGame/CvTeam/CvPlot/CvGlobals.h`) creates **include cycles** (the Info header is pulled
+  before its base/enum is defined → "base class undefined" cascades). A blind script hit exactly this. **Headers must
+  forward-declare** Info types used by pointer/ref; only **by-value** use needs the include — so header retirement is
+  hand-careful, not scripted.
+- **The ART-INFO system is special:** `CvArtInfo*` form an inheritance chain instantiated via `boost::is_polymorphic`
+  inside `CvArtFileMgr.cpp`'s `ART_INFO_DEFN` macros — needs the art headers **in dependency order**. `CvArtFileMgr.cpp`
+  is a file where **keeping the umbrella is the pragmatic choice**.
+- **Unity-batch transitive reliance:** retiring the umbrella in file A breaks batch-mate B that used an Info type via
+  A's umbrella. Expect a tail of stragglers; the `UnityNumFiles` perturbation (§3) is how you flush them.
+- **`CvInfos.h` is INCOMPLETE** — it omits `CvImprovementInfo.h` + `CvBonusInfo.h` (so even "include the umbrella" can
+  miss types; that bit `PlotSnapshot` during the move).
+- **Reusable tooling (kept, with the flaw noted in-script):** `Tools/retire_cvinfos_umbrella.py` (umbrella→specifics)
+  + `Tools/fix_info_includes.py` (accessor-aware Info-include adder) encode the `class→header` map + accessor
+  detection. **They must gain a foundational/EXE-bound-header EXCLUDE list + header forward-decl handling before reuse.**
+- **Recommended redo order:** (1) drop the umbrella from the **118 non-users** (zero risk); (2) `.cpp` users →
+  specifics (accessor-aware); (3) headers → forward-decls (hand-careful, foundational headers excluded);
+  (4) `CvArtFileMgr` + art chain special-cased; (5) clean rebuild + `UnityNumFiles` perturbation each step.
+
 ### 1C. `.vcxproj`/`.filters` alignment + sensible folder structure
 
 - **The `.vcxproj`/`.sln`/`.filters` are DEAD for the BUILD** (`fbuild.bff` is the source of truth — AGENTS.md hard
