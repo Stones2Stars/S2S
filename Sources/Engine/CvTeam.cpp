@@ -124,7 +124,6 @@ void CvTeam::init(TeamTypes eID)
 	if (GC.getGame().isFinalInitialized())
 	{
 		cacheAdjacentResearch(); // Mid-game re-initialization
-		//logging::logMsg("C2C.log", "   Checking for declarations of war against reset team %d\n", (int)getID());
 
 		const bool bMinorCiv = isMinorCiv();
 		const bool bNPC = isNPC();
@@ -138,7 +137,6 @@ void CvTeam::init(TeamTypes eID)
 					GET_TEAM((TeamTypes)iI).declareWar(getID(), false, WARPLAN_LIMITED);
 					GET_TEAM((TeamTypes)iI).setHasMet(getID(), false);
 					setHasMet((TeamTypes)iI, false);
-					//logging::logMsg("C2C.log", "   Minor team %d declared war, using war plan %d\n", iI, (int)GET_TEAM((TeamTypes)iI).AI_getWarPlan(getID()));
 				}
 				//TBNOTE: THIS WILL NEED TO BE ADJUSTED so that it's not so patently sweeping for all NPCs IF AN NPC IS
 				//SUPPOSED TO BE FRIENDLY WITH PLAYERS or any other NPC faction!
@@ -149,7 +147,6 @@ void CvTeam::init(TeamTypes eID)
 						continue;
 					}
 					GET_TEAM((TeamTypes)iI).declareWar(getID(), false, WARPLAN_LIMITED);
-					//logging::logMsg("C2C.log", "   Barb team %d declared war, using war plan %d\n", iI, (int)GET_TEAM((TeamTypes)iI).AI_getWarPlan(getID()));
 				}
 			}
 		}
@@ -2781,26 +2778,6 @@ void CvTeam::setIsMinorCiv(bool bNewValue)
 	const TeamTypes eTeam = getID();
 	if (bNewValue != isMinorCiv())
 	{
-		if (isAlive())
-		{
-			if (bNewValue)
-			{
-				logging::logMsg("C2C.log", "Switching team %d to minor\n", eTeam);
-			}
-			else
-			{
-				logging::logMsg("C2C.log", "Switching minor team %d to full\n", eTeam);
-			}
-		}
-		else if (bNewValue)
-		{
-			logging::logMsg("C2C.log", "Setting non-alive team %d to minor\n", eTeam);
-		}
-		else
-		{
-			logging::logMsg("C2C.log", "Setting non-alive minor team %d to full\n", eTeam);
-		}
-
 		// Convert all team members
 		for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
 		{
@@ -2840,13 +2817,11 @@ void CvTeam::setIsMinorCiv(bool bNewValue)
 						const int iValue = GET_TEAM(eTeam).AI_getBarbarianCivWarVal(eTeamX, 16);
 						if (iValue > iMaxVal)
 						{
-							logging::logMsg("C2C.log", "    BarbCiv team %d is considering declaring war against victim Team %d\n", eTeam, iJ);
 							iMaxVal = iValue;
 							eBarbCivVictim = eTeamX;
 						}
 					}
 				}
-				logging::logMsg("C2C.log", "    BarbCiv team %d will declare war against victim Team %d\n", eTeam, eBarbCivVictim);
 			}
 			// Keep war againt some of those this team has met
 			for (int iI = 0; iI < MAX_PC_TEAMS; iI++)
@@ -2864,7 +2839,6 @@ void CvTeam::setIsMinorCiv(bool bNewValue)
 						if (eBarbCivVictim == eTeamX)
 						{
 							AI_setWarPlan(eBarbCivVictim, WARPLAN_TOTAL, true);
-							logging::logMsg("C2C.log", "    Team %d is the victim of ex-minor\n", iI);
 							continue;
 						}
 
@@ -2880,7 +2854,6 @@ void CvTeam::setIsMinorCiv(bool bNewValue)
 						{
 							AI_setWarPlan(eTeamX, WARPLAN_LIMITED, true);
 							GET_TEAM(eTeamX).AI_setWarPlan(eTeam, WARPLAN_LIMITED, true);
-							logging::logMsg("C2C.log", "    ex-minor decides to keep limited war against Team %d\n", iI);
 						}
 					}
 					else

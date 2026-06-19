@@ -59,7 +59,20 @@ namespace
 		DIP_DECISION_REJECT_RENEW,    // [DIP/decision] verdict=reject reason=renew
 		DIP_DECISION_ACCEPT,          // [DIP/decision] verdict=ACCEPT
 		DIP_DECISION_REJECT,          // [DIP/decision] verdict=reject
-		DIP_TRADE                     // [DIP/trade] (CvDeal.cpp emits this id too)
+		DIP_TRADE,                    // [DIP/trade] (CvDeal.cpp emits this id too)
+		// --- war-ally purchase trace (CvPlayerAI::AI_doDiplo; migrated from C2C.log 2026-06-19, owner: keep this reasoning) ---
+		DIP_WARALLY_CONSIDER,         // [DIP/warally] step=consider
+		DIP_WARALLY_RANDADJ,          // [DIP/warally] step=randAdjusted
+		DIP_WARALLY_PASSRAND,         // [DIP/warally] step=passedRand
+		DIP_WARALLY_TEAM,             // [DIP/warally] step=bestTeam
+		DIP_WARALLY_NOTEAM,           // [DIP/warally] step=noTeam
+		DIP_WARALLY_TECH,             // [DIP/warally] step=bestTech
+		DIP_WARALLY_NOTECH,           // [DIP/warally] step=noTech
+		DIP_WARALLY_TECH2,            // [DIP/warally] step=tech2
+		DIP_WARALLY_ASK,              // [DIP/warally] step=askGold
+		DIP_WARALLY_OFFER,            // [DIP/warally] step=offerGold
+		DIP_WARALLY_VALUES,           // [DIP/warally] step=values
+		DIP_WARALLY_PROCEED           // [DIP/warally] step=proceed
 	};
 	const char* diploLinePrefix(int iEventId)
 	{
@@ -77,6 +90,18 @@ namespace
 		case DIP_DECISION_ACCEPT:       return "[DIP/decision] verdict=ACCEPT";
 		case DIP_DECISION_REJECT:       return "[DIP/decision] verdict=reject";
 		case DIP_TRADE:                 return "[DIP/trade]";
+		case DIP_WARALLY_CONSIDER:      return "[DIP/warally] step=consider";
+		case DIP_WARALLY_RANDADJ:       return "[DIP/warally] step=randAdjusted";
+		case DIP_WARALLY_PASSRAND:      return "[DIP/warally] step=passedRand";
+		case DIP_WARALLY_TEAM:          return "[DIP/warally] step=bestTeam";
+		case DIP_WARALLY_NOTEAM:        return "[DIP/warally] step=noTeam";
+		case DIP_WARALLY_TECH:          return "[DIP/warally] step=bestTech";
+		case DIP_WARALLY_NOTECH:        return "[DIP/warally] step=noTech";
+		case DIP_WARALLY_TECH2:         return "[DIP/warally] step=tech2";
+		case DIP_WARALLY_ASK:           return "[DIP/warally] step=askGold";
+		case DIP_WARALLY_OFFER:         return "[DIP/warally] step=offerGold";
+		case DIP_WARALLY_VALUES:        return "[DIP/warally] step=values";
+		case DIP_WARALLY_PROCEED:       return "[DIP/warally] step=proceed";
 		default:                        return NULL;
 		}
 	}
@@ -86,7 +111,9 @@ namespace
 		DIPF_items, DIPF_total, DIPF_atWar,
 		DIPF_with, DIPF_give, DIPF_get, DIPF_iChange,
 		DIPF_ourValue, DIPF_theirValue, DIPF_threshold,
-		DIPF_to
+		DIPF_to,
+		// war-ally trace fields: actor/target/ally render as name(id) (SFT_PLAYER); tech as SFT_TECH; rest raw ints.
+		DIPF_actor, DIPF_target, DIPF_ally, DIPF_tech, DIPF_minAtWar, DIPF_rand, DIPF_gold
 	};
 	const char* diploFieldInfo(int iFieldTag, SpineFieldType* peType)
 	{
@@ -109,6 +136,13 @@ namespace
 		case DIPF_theirValue: return "theirValue";
 		case DIPF_threshold:  return "threshold";
 		case DIPF_to:         return "to";
+		case DIPF_actor:      *peType = SFT_PLAYER; return "actor";
+		case DIPF_target:     *peType = SFT_PLAYER; return "target";
+		case DIPF_ally:       *peType = SFT_PLAYER; return "ally";
+		case DIPF_tech:       *peType = SFT_TECH;   return "tech";
+		case DIPF_minAtWar:   return "minAtWar";
+		case DIPF_rand:       return "rand";
+		case DIPF_gold:       return "gold";
 		default:            return NULL;
 		}
 	}
@@ -19333,7 +19367,6 @@ void CvPlayerAI::AI_doDiplo()
 													if (!GET_PLAYER((PlayerTypes)iI).isHumanPlayer())
 													{
 														GC.getGame().implementDeal(getID(), ((PlayerTypes)iI), &ourList, &theirList);
-														logging::logMsg("C2C.log", "Player %d has traded contact of %d to %d for %d gold\n", getID(), GET_TEAM(eTeamX).getLeaderID(), iI, iGold);
 														CvWString szBuffer;
 														switch (AI_getAttitude(GET_TEAM(eTeamX).getLeaderID()))
 														{
@@ -19461,7 +19494,6 @@ void CvPlayerAI::AI_doDiplo()
 														else
 														{
 															GC.getGame().implementDeal(getID(), ((PlayerTypes)iI), &ourList, &theirList);
-															//logging::logMsg("C2C.log", "Player %d has traded a worker to %d for %d gold\n", getID(), iI, iGold);
 														}
 													}
 												}
@@ -19596,7 +19628,6 @@ void CvPlayerAI::AI_doDiplo()
 											if (!GET_PLAYER((PlayerTypes)iI).isHumanPlayer())
 											{
 												GC.getGame().implementDeal(getID(), ((PlayerTypes)iI), &ourList, &theirList);
-												//logging::logMsg("C2C.log", "Player %d has traded military units to %d.\n", getID(), iI);
 											}
 											else if (!abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()])
 											{
@@ -19778,7 +19809,9 @@ void CvPlayerAI::AI_doDiplo()
 								}
 							}
 
-							logging::logMsg("C2C.log", "%S considering contacting %S to buy a war ally, iMinAtWarCounter: %d, iDeclareWarTradeRand: %d\n", this->getName(), GET_PLAYER((PlayerTypes)iI).getName(), iMinAtWarCounter, iDeclareWarTradeRand);
+							eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_CONSIDER, 2)
+								.addI(DIPF_actor, getID()).addI(DIPF_target, iI)
+								.addI(DIPF_minAtWar, iMinAtWarCounter).addI(DIPF_rand, iDeclareWarTradeRand));
 
 							if (iMinAtWarCounter < 10)
 							{
@@ -19793,14 +19826,17 @@ void CvPlayerAI::AI_doDiplo()
 								iDeclareWarTradeRand++;
 							}
 
-							logging::logMsg("C2C.log", "%S considering contacting %S to buy a war ally, iMinAtWarCounter: %d, adjusted iDeclareWarTradeRand: %d\n", this->getName(), GET_PLAYER((PlayerTypes)iI).getName(), iMinAtWarCounter, iDeclareWarTradeRand);
+							eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_RANDADJ, 2)
+								.addI(DIPF_actor, getID()).addI(DIPF_target, iI)
+								.addI(DIPF_minAtWar, iMinAtWarCounter).addI(DIPF_rand, iDeclareWarTradeRand));
 
 							if (GC.getGame().getSorenRandNum(iDeclareWarTradeRand, "AI Diplo Declare War Trade") == 0)
 							{
 								iBestValue = 0;
 								eBestTeam = NO_TEAM;
 
-								logging::logMsg("C2C.log", "%S considering contacting %S to buy a war ally - passed rand check\n", this->getName(), GET_PLAYER((PlayerTypes)iI).getName());
+								eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_PASSRAND, 2)
+									.addI(DIPF_actor, getID()).addI(DIPF_target, iI));
 
 								for (int iJ = 0; iJ < MAX_PC_TEAMS; iJ++)
 								{
@@ -19831,8 +19867,12 @@ void CvPlayerAI::AI_doDiplo()
 								}
 
 								if (eBestTeam != NO_TEAM)
-									logging::logMsg("C2C.log", "%S considering contacting %S to buy a war ally, bestValue: %d, best team: %S\n", this->getName(), GET_PLAYER((PlayerTypes)iI).getName(), iBestValue, GET_PLAYER(GET_TEAM(eBestTeam).getLeaderID()).getCivilizationAdjectiveKey());
-								else logging::logMsg("C2C.log", "%S considering contacting %S to buy a war ally, no best team found!\n", this->getName(), GET_PLAYER((PlayerTypes)iI).getName());
+									eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_TEAM, 2)
+										.addI(DIPF_actor, getID()).addI(DIPF_target, iI)
+										.addI(DIPF_value, iBestValue).addI(DIPF_ally, GET_TEAM(eBestTeam).getLeaderID()));
+								else
+									eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_NOTEAM, 2)
+										.addI(DIPF_actor, getID()).addI(DIPF_target, iI));
 
 								if (eBestTeam != NO_TEAM)
 								{
@@ -19864,12 +19904,15 @@ void CvPlayerAI::AI_doDiplo()
 									if (eBestGiveTech != NO_TECH)
 									{
 										iTheirValue = GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_techTradeVal(eBestGiveTech, getTeam());
-										logging::logMsg("C2C.log", "%S considering contacting %S to buy a war ally, best tech offer %S at a value of %d\n", this->getName(), GET_PLAYER((PlayerTypes)iI).getName(), GC.getTechInfo((TechTypes)eBestGiveTech).getDescription(), iTheirValue);
+										eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_TECH, 2)
+											.addI(DIPF_actor, getID()).addI(DIPF_target, iI)
+											.addI(DIPF_tech, eBestGiveTech).addI(DIPF_theirValue, iTheirValue));
 									}
 									else
 									{
 										iTheirValue = 0;
-										logging::logMsg("C2C.log", "%S considering contacting %S to buy a war ally, no best tech offer\n", this->getName(), GET_PLAYER((PlayerTypes)iI).getName());
+										eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_NOTECH, 2)
+											.addI(DIPF_actor, getID()).addI(DIPF_target, iI));
 									}
 
 									int iBestValue2 = 0;
@@ -19904,7 +19947,9 @@ void CvPlayerAI::AI_doDiplo()
 										{
 											int iTechValue = GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_techTradeVal(eBestGiveTech2, getTeam());
 											iTheirValue += iTechValue;
-											logging::logMsg("C2C.log", "%S considering contacting %S to buy a war ally, 2nd best tech offer %S at a value of %d (total: %d)\n", this->getName(), GET_PLAYER((PlayerTypes)iI).getName(), GC.getTechInfo((TechTypes)eBestGiveTech2).getDescription(), iTechValue, iTheirValue);
+											eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_TECH2, 2)
+												.addI(DIPF_actor, getID()).addI(DIPF_target, iI)
+												.addI(DIPF_tech, eBestGiveTech2).addI(DIPF_value, iTechValue).addI(DIPF_total, iTheirValue));
 										}
 									}
 
@@ -19933,7 +19978,8 @@ void CvPlayerAI::AI_doDiplo()
 												}
 											}
 
-											logging::logMsg("C2C.log", "%S considering contacting %S to buy a war ally, asking for %d gold\n", this->getName(), GET_PLAYER((PlayerTypes)iI).getName(), iGold);
+											eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_ASK, 2)
+												.addI(DIPF_actor, getID()).addI(DIPF_target, iI).addI(DIPF_gold, iGold));
 
 											if (iGold > 0)
 											{
@@ -19973,7 +20019,8 @@ void CvPlayerAI::AI_doDiplo()
 												}
 											}
 
-											logging::logMsg("C2C.log", "%S considering contacting %S to buy a war ally, offering %d gold\n", this->getName(), GET_PLAYER((PlayerTypes)iI).getName(), iGold);
+											eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_OFFER, 2)
+												.addI(DIPF_actor, getID()).addI(DIPF_target, iI).addI(DIPF_gold, iGold));
 
 											if (iGold > 0)
 											{
@@ -19992,11 +20039,14 @@ void CvPlayerAI::AI_doDiplo()
 										}
 									}
 
-									logging::logMsg("C2C.log", "%S considering contacting %S to buy a war ally, iTheirValue: %d, iOurValue: %d\n", this->getName(), GET_PLAYER((PlayerTypes)iI).getName(), iTheirValue, iOurValue);
+									eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_VALUES, 2)
+										.addI(DIPF_actor, getID()).addI(DIPF_target, iI)
+										.addI(DIPF_theirValue, iTheirValue).addI(DIPF_ourValue, iOurValue));
 
 									if (iTheirValue > (iOurValue * 3 / 4))
 									{
-										logging::logMsg("C2C.log", "%S considering contacting %S to buy a war ally, trade offer proceeding\n", this->getName(), GET_PLAYER((PlayerTypes)iI).getName());
+										eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_PROCEED, 2)
+											.addI(DIPF_actor, getID()).addI(DIPF_target, iI));
 
 										ourList.clear();
 										theirList.clear();
@@ -26464,7 +26514,6 @@ int CvPlayerAI::AI_militaryUnitTradeVal(const CvUnit* pUnit) const
 		iValue = iValue * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getHammerCostPercent() / 50;
 	}
 
-	logging::logMsg("C2C.log", "AI Unit Value For %s is %d\n", GC.getUnitInfo(eUnit).getDescription(), iValue);
 	return iValue;
 }
 

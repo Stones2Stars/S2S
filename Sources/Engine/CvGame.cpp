@@ -6407,8 +6407,6 @@ void CvGame::doSpawns(PlayerTypes ePlayer)
 			iMinAreaPlotsPerUnitType = iMinAreaPlotsPerUnitType * 2/3;
 		}
 
-		logging::logMsg("C2C.log", "Spawn chance per plot for %s is 1 to %d .", spawnInfo.getType(), (int)adjustedSpawnRate);
-
 		//So we ARE going by spawn here but it's still a random check per plot rather than placing an amount.  Before this, determine how many should spawn this round, then pick a plot for each of those spawns.
 		//The density factor is going to be interesting.  Perhaps each plot should get a likelihood value and vary that by the density factor around that plot.
 		//The spawn rate... is high more likely or low and what kind of numeric range are we working with?
@@ -6579,7 +6577,6 @@ void CvGame::doSpawns(PlayerTypes ePlayer)
 				}
 			}
 		}
-		logging::logMsg("C2C.log", "%d units spawned for %s\n", spawnCount, spawnInfo.getType());
 	}
 }
 
@@ -10110,8 +10107,7 @@ void CvGame::doIncreasingDifficulty()
 void CvGame::doCalculateCurrentTick()
 {
 	bool bHistoricalCalendar = isModderGameOption(MODDERGAMEOPTION_USE_HISTORICAL_ACCURATE_CALENDAR);
-	//logging::logMsg("C2C.log", "[BUG] bHistoricalCalendar: %S", bHistoricalCalendar);
-	if (bHistoricalCalendar) 
+	if (bHistoricalCalendar)
 	{
 		if (turnHACValues.find(m_iDateTurn) == turnHACValues.end()) 
 		{
@@ -10149,7 +10145,6 @@ void CvGame::doCalculateCurrentTick()
 void CvGame::doFlexibleDifficulty()
 {
 	PROFILE_EXTRA_FUNC();
-	logging::logMsg("C2C.log", "doFlexibleDifficulty");
 
 	const bool bFlexDiffForAI = isModderGameOption(MODDERGAMEOPTION_AI_USE_FLEXIBLE_DIFFICULTY);
 	const bool bIncreasingDifficulty = isOption(GAMEOPTION_CHALLENGE_INCREASING_DIFFICULTY);
@@ -10177,21 +10172,16 @@ void CvGame::doFlexibleDifficulty()
 				}				
 			}
 
-			logging::logMsg("C2C.log", "[Flexible Difficulty] (%d / %d) turns until next flexible difficulty check for Player: %S\n", iTimer, iTurns, playerX.getName());
-
 			//Increase timer
 			iTimer++;
 			setFlexibleDifficultyTimer(ePlayer, iTimer);
 
 			if (iTimer < iTurns) continue;
 
-			logging::logMsg("C2C.log", "[Flexible Difficulty] Player: %S, Checking Flexible Difficulty\n", playerX.getName());
-
 			if (!playerX.isModderOption(MODDEROPTION_FLEXIBLE_DIFFICULTY) && (!bFlexDiffForAI || bHuman))
 			{
 				continue;
 			}
-			logging::logMsg("C2C.log", "[Flexible Difficulty] Player: %S has Flexible Difficulty Enabled\n", playerX.getName());
 
 			int iMinHandicap = 0;
 			// Toffer - The whole point of the increasing difficulty challenge is that the human handicap only increases.
@@ -10252,21 +10242,12 @@ void CvGame::doFlexibleDifficulty()
 					const int iScore = getPlayerScore((PlayerTypes)iJ);
 					// iVariance is sum of squared difference from mean
 					iVariance += (iMeanScore - iScore) * (iMeanScore - iScore);
-					logging::logMsg("C2C.log", "[Flexible Difficulty] Adding score for player %S, score: %d\n", pPlayer.getName(), iScore);
 				}
 			}
 			const int stddev = intSqrt(10000 * iVariance / iAliveCount);
 
 			const int iCurrentScore = getPlayerScore(ePlayer);
 
-			
-
-			logging::logMsg("C2C.log",
-				"[Flexible Difficulty] Player: %S, Score: %d, Difficulty: %S, Avg Score: %d, Std Dev: %d/100\n",
-				playerX.getName(), iCurrentScore,
-				GC.getHandicapInfo((HandicapTypes)playerX.getHandicapType()).getDescription(),
-				iMeanScore, stddev
-			);
 			int iNewHandicap =
 			(
 				playerX.getHandicapType() > iMaxHandicap
@@ -10308,38 +10289,18 @@ void CvGame::doFlexibleDifficulty()
 			bool isChangeIncrease = std::abs(std::max(increase1, increase2)-std::min(increase1, increase2)) > stddev;
     		bool isChangeDecrease = std::abs(std::max(decrease1, decrease2)-std::min(decrease1, decrease2)) > stddev;
 
-			logging::logMsg("C2C.log",
-				"[Flexible Difficulty DEBUG DATA] Player: %S, Score: %d, Total Score: %d, Alive Count: %d, iVariance: %d, Avg Score: %d, Handicap Bias: %d, atanh2: %f,Std Dev: %d\n",
-				playerX.getName(), iCurrentScore, iTotalScore, iAliveCount, iVariance,
-				iMeanScore, handicapBias, atanh2, stddev
-			);
-
 			//Increased Difficulty (player's score is > 1 std dev away)
 			if (increase1>increase2 && isChangeIncrease)
 			{
-				logging::logMsg("C2C.log", "[Flexible Difficulty] Player: %S score is > 1 std dev above average.\n", playerX.getName());
 				if (iNewHandicap < (GC.getNumHandicapInfos() - 1) && iNewHandicap < iMaxHandicap)
 				{
-					logging::logMsg("C2C.log",
-						"[Flexible Difficulty] Player: %S difficulty is increasing from %S to %S\n",
-						playerX.getName(),
-						GC.getHandicapInfo(playerX.getHandicapType()).getDescription(),
-						GC.getHandicapInfo((HandicapTypes)(playerX.getHandicapType() + 1)).getDescription()
-					);
 					iNewHandicap++;
 				}
 			}
 			else if (decrease1<decrease2 && isChangeDecrease)
 			{
-				logging::logMsg("C2C.log", "[Flexible Difficulty] Player: %S score is > 1 std dev below average.\n", playerX.getName());
 				if (iNewHandicap > 0 && iNewHandicap > iMinHandicap)
 				{
-					logging::logMsg("C2C.log",
-						"[Flexible Difficulty] Player: %S difficulty is decreasing from %S to %S\n",
-						playerX.getName(),
-						GC.getHandicapInfo(playerX.getHandicapType()).getDescription(),
-						GC.getHandicapInfo((HandicapTypes)(playerX.getHandicapType() - 1)).getDescription()
-					);
 					iNewHandicap--;
 				}
 			}
@@ -10358,12 +10319,6 @@ void CvGame::doFlexibleDifficulty()
 					:
 					iNewHandicap
 				)
-			);
-			logging::logMsg("C2C.log",
-				"[Flexible Difficulty] Player: %S, New Handicap: %d, Current Difficult: %S, Min Handicap: %d, Max Handicap: %d\n",
-				playerX.getName(), iNewHandicap,
-				GC.getHandicapInfo((HandicapTypes)playerX.getHandicapType()).getDescription(),
-				iMinHandicap, iMaxHandicap
 			);
 			if (iNewHandicap != playerX.getHandicapType())
 			{

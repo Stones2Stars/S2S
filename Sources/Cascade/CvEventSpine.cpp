@@ -190,7 +190,15 @@ void cascadeRenderEventLine(char* szBuf, int iBufSize, const CvCascadeEvent& kEv
 			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
 				(fld.v.i >= 0 && fld.v.i < GC.getNumSpecialistInfos()) ? GC.getSpecialistInfo((SpecialistTypes)fld.v.i).getType() : "?");
 			break;
-		default: // SFT_INT / SFT_BOOL / SFT_PLAYER -> the raw int
+		case SFT_PLAYER:
+			// Instance name + raw id, BOTH (owner 2026-06-19): name=human readability, (id)=stable machine join-key for the
+			// primary consumers (AI agents during shadow-verify + GameTracker). Resolved LIVE here, which is exact + safe:
+			// onEvent renders synchronously on the GAME thread, so this touches no live object off-thread and captures the
+			// name as-of-emit. m_iID is serialized (stable across load), so keying on the id holds across a reload too.
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%S(%d)", szName,
+				(fld.v.i >= 0 && fld.v.i < MAX_PLAYERS) ? GET_PLAYER((PlayerTypes)fld.v.i).getName() : L"?", fld.v.i);
+			break;
+		default: // SFT_INT / SFT_BOOL -> the raw int
 			m = _snprintf(szBuf + n, iBufSize - n, " %s=%d", szName, fld.v.i);
 			break;
 		}

@@ -3110,7 +3110,6 @@ void calculatePlayerInfluence(double playerInfluences[NUM_ERAS], const int total
             //playerInfluences[iEra] = pow(static_cast<double>(playerTechsInEra[iEra]) / totalTechsInEra[iEra], 0.5);
 			playerInfluences[iEra] = customDatePolynomial(static_cast<double>(playerTechsInEra[iEra]) / totalTechsInEra[iEra]);
         }
-        //logging::logMsg("C2C.log", "[CALENDAR] Player influence in era %d: %f", iEra, playerInfluences[iEra]);
     }
 }
 
@@ -3153,13 +3152,11 @@ void calculateTotalInfluence(double totalInfluences[NUM_ERAS], double weight[NUM
 					// If there is progress, add the player's current research progress
 					if (iResearchProgress > 0 && player.getCurrentResearch() == eTech) {
 						playerTechsInEra[eEra] += iResearchProgress;
-						//logging::logMsg("C2C.log", "[TECH] Player %d research tech %S, progress = %d", iPlayer, GC.getTechInfo(eTech).getDescription(), iResearchProgress);
 					}
                 }
             }
             double playerInfluences[NUM_ERAS] = {0.0};
 			//const char* playerName = player.getName();
-			//logging::logMsg("C2C.log", "[TECH] its Player %S influence", player.getName());
             calculatePlayerInfluence(playerInfluences, totalTechsInEra, playerTechsInEra);
 
             for (int iEra = 0; iEra < NUM_ERAS; ++iEra)
@@ -3172,8 +3169,7 @@ void calculateTotalInfluence(double totalInfluences[NUM_ERAS], double weight[NUM
     for (int iEra = 0; iEra < NUM_ERAS; ++iEra)
     {
         totalInfluences[iEra] /= numPlayers; 
-        weight[iEra] = totalInfluences[iEra] * pow(5.0, iEra); 
-        //logging::logMsg("C2C.log", "[CALENDAR] Era %d: Total Influence = %f, Weight = %f", iEra, totalInfluences[iEra], weight[iEra]);
+        weight[iEra] = totalInfluences[iEra] * pow(5.0, iEra);
     }
 }
 
@@ -3204,7 +3200,6 @@ int calculateCurrentTick()
 		int tick = calculateTickFromInfluence(kEra.getHistoricalStartYear(), kEra.getHistoricalEndYear(), totalInfluences[iEra]);
 		weightedTicks += tick * weight[iEra];
 		totalWeight += weight[iEra];
-		logging::logMsg("C2C.log", "[CALENDAR] Era %d: Year = %d", iEra, tick);
 	}
 	if (weightedTicks == 0.0 && totalWeight == 0.0)
 	{
@@ -3212,9 +3207,6 @@ int calculateCurrentTick()
 		totalWeight = 1.0;
 	}
 	int currentTick = static_cast<int>(weightedTicks / totalWeight);
-	int target_year = GC.getEraInfo((EraTypes)0).getHistoricalStartYear() + (currentTick / 360);
-	logging::logMsg("C2C.log", "[CALENDAR] Weighted Ticks = %f, Total Weight = %f, Current Ticks = %d", weightedTicks, totalWeight, currentTick);
-	logging::logMsg("C2C.log", "[CALENDAR] TARGET_YEAR = %d", target_year);
 	return currentTick;
 }
 
@@ -3224,13 +3216,11 @@ int getTurnYearForGame(int iGameTurn, int iStartYear, CalendarTypes eCalendar, G
 	{
 		if (iGameTurn == GC.getGame().getGameTurn())
 		{
-			//logging::logMsg("C2C.log", "[CALENDAR] year: %d", GC.getGame().getCurrentDate().getYear());
 			return GC.getGame().getCurrentDate().getYear();
 		}
-		
+
 		return CvDate::getDate(iGameTurn, eSpeed).getYear();
 	}
-	//logging::logMsg("C2C.log", "[CALENDAR] its getTurnMonthForGame");
 	return getTurnMonthForGame(iGameTurn, iStartYear, eCalendar, eSpeed) / std::max(1, GC.getNumMonthInfos());
 }
 

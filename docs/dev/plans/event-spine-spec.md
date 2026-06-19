@@ -151,12 +151,47 @@ machinery (it + `CvScopedAccumulator` are the substrate). Then:
      `IMPROVEMENT`/`PROMOTION`/`RELIGION`/`CORPORATION`/`FEATURE`/`TERRAIN`/`CIVIC`/`PROJECT`/`SPECIALIST`), so a former
      `"=%s", GC.getXInfo(eX).getType()` line now travels as the int index + `SFT_<X>` and the consumer prints the name.
      **21 lines recovered** (WAI near-fully covered: 20 event ids / 28 field tags; CTB `CF_unitType`→`SFT_UNIT`).
-   - **31 lines GENUINELY unrecoverable (architectural, not gaps to chase):** ~25 are runtime INSTANCE display names
-     (`pCity->getName()`, unit `getDescription()`) — not type-resolvable; would need to carry the entity ID + resolve at
-     display time. ~6 are caller-composed strings (`szDecision`/`szReason`/`szWorkCriteria`/mission literals) — would need
-     enum-ification (a separate spine-design decision). 3 CTB lines want a `SFT_UNITAI` (addable if wanted).
-   - **Remaining threads:** `[DAI]` civ/flavor wide-strings (nominal); the 3 `SFT_UNITAI` CTB lines; per-domain legacy
-     CUT after `/events` verification; and the Autolog BUG-option rework to the 0–5 Surveillance knob.
+   - **Of the 31 "unrecoverable" lines, ~25 are now RESOLVED (owner 2026-06-19) — carry the raw ID + resolve the live name,
+     render `name(id)` (BOTH).** These are runtime INSTANCE display names (`pCity->getName()`, a player/unit name). Ruling:
+     travel the **entity ID** as a raw field (`SFT_PLAYER` and future `SFT_CITY`/unit-instance tags) and render `name(id)` —
+     **both the human name AND the raw id**, additive (owner: *"if I want one thing in the logs it doesn't mean exclude the
+     other if useful"*). The name gives readability; the **raw id is the stable machine join-key** for the real primary
+     consumers — **AI agents** reading during shadow-verify, and **GameTracker** parsing `/events`.
+     - **Why live resolution is EXACT and SAFE (verified 2026-06-19):** `CvCascadeLogConsumer::onEvent` renders the line
+       SYNCHRONOUSLY on the GAME thread at emit time (`cascadeRenderEventLine` is called inside `onEvent`); only the finished
+       STRING is teed to the `/events` server thread. So resolving a live name during render touches no live object
+       off-thread (snapshot isolation HARD CONSTRAINT intact) AND captures the name as-of-emit (a later rename does not
+       retro-alter past lines — that is correct, not a discrepancy). This **supersedes** an earlier draft's "resolve from a
+       snapshot COPY + tolerate staleness" framing — unnecessary, since render is synchronous on the game thread.
+     - **IDs are stable across save/load (verified):** `m_iID` is serialized by the name-tagged wrapper for `CvUnit`
+       (`CvUnit.cpp` `WRAPPER_READ/WRITE "CvUnit" m_iID`) AND `CvCity` (`CvCity.cpp` ditto) — so keying on the raw id is
+       valid even across a reload.
+     - **NAME-CHANGE event — REQUIRED for the full Orwell bar (owner 2026-06-19, upgraded from "fallback").** A rename
+       (city/unit/player/civ) IS an observable STATE CHANGE: an out-of-process consumer (GameTracker / an agent) that maps
+       the game purely from `/events` + logs must SEE it to keep its id→name table accurate. So a **`DOMAIN` name-change
+       event (`entity-kind, id → newName`)** is emitted on the set-name paths (`CvCity::setName`, unit name, player/civ
+       rename) — part of the total-observability surface, not a contingency. (It is the event-sourced complement to the
+       inline `name(id)`: inline gives the name at each line; the name-change event lets a consumer rebuild the mapping and
+       resolve any historical id even after a rename.) **Build item** — not yet implemented.
+       - **Doubles as a bug lever (owner 2026-06-19):** building this likely helps resolve a year-long bug — *empire names
+         not updating when a civic changes* (with that game option on, dynamic civ names should refresh on civic switch and
+         don't). Instrumenting the set-name path with the name-change event surfaces whether the refresh fires at all, so the
+         observability work and the bug hunt share the same hook.
+     - **Refinement:** a unit's *default* `getDescription()` IS its type name, already carried cleanly via the `SFT_UNIT`
+       type-index — so only *custom-named* units and *player/city* names need the id-resolve path.
+   - **Still genuinely open (~6 lines):** caller-composed free text (`szDecision`/`szReason`/`szWorkCriteria`/mission
+     literals) — needs **enum-ification** (a separate spine-design decision, still owner-pending). Plus 3 CTB lines that
+     just want a `SFT_UNITAI` render-type tag (trivially addable).
+   - **Cleanup is MIGRATE-not-blanket-delete (owner 2026-06-19):** during the R-4/R-5 firehose cleanup, genuinely-valuable
+     lines are MIGRATED to their correct home (agent judgment — *the agent is the primary log reader during the shadow
+     passes*), not deleted. First instance: the `AI_doDiplo` war-ally-purchasing reasoning (ex-`C2C.log`) → `[DIP/warally]`.
+   - **Trade/deal AI is broadly buggy (owner 2026-06-19) — EXPAND trade logging LATER, when-needed.** `[DIP/warally]` is a
+     first slice; deeper `AI_doDiplo` / `CvDeal` trade-path tracing is a deferred enrichment we add *when actively debugging
+     trades*, not pre-emptively. (So the ex-`C2C.log` "traded contact for gold" + "AI unit trade value" lines stay deleted
+     for now — actual deals are already covered by `[DIP/trade]`.)
+   - **Remaining threads:** the `name(id)` id-resolve path rollout for the ~25 (build item, `SFT_PLAYER` landed first); the
+     `szReason`-family enum-ify decision; the 3 `SFT_UNITAI` CTB lines; `[DAI]` civ/flavor wide-strings (nominal);
+     per-domain legacy CUT after `/events` verification; and the Autolog BUG-option rework to the 0–5 Surveillance knob.
 4. **grants** — fires provisions on its kinds. **(STATUS 2026-06-19: NOT BUILT — no `grants` consumer is registered.)**
 5. **modifier**, then **enabler** (read the tally) — per `cascade-engine-430.md`.
 

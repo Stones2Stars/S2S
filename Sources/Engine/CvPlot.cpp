@@ -900,7 +900,6 @@ void CvPlot::doBonusDepletion()
 			NULL, MESSAGE_TYPE_MINOR_EVENT, GC.getBonusInfo(eBonus).getButton(),
 			GC.getCOLOR_RED(), getX(), getY(), true, true
 		);
-		logging::logMsg("C2C.log", "Resource Depleted! Resource was %d, The odds were 1 in %d\n", eBonus, iOdds);
 
 		setBonusType(NO_BONUS);
 
