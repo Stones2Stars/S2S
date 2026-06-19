@@ -176,7 +176,36 @@ The bears are now mostly unbothered, and exclusively by professionals.*
 
 ---
 
-## 9. The Eternal Anesthesiologist — 60 cp
+## 9. Education Secedes From the Union — 61 cp
+
+Every property in the game runs on one rule: a building switches on when the property
+crosses a threshold and stays on — cumulatively, to infinity. Crime, disease, pollution,
+tourism: all the same shape, one line of intent.
+
+Then there is **education**. Education's author surveyed this and built **four parallel
+thirteen-band succession ladders** — positive era, negative era, *Argumentative Awareness*,
+and *Blissful Ignorance* — wired together with `ReplacementBuildings` so each band *removes*
+the one beneath it, and each band re-declares the **full** cumulative bonus. A fifty-two-
+building lattice to express what every other property says with a single threshold. To be
+smart. For science.
+
+Summed the way the new cascade sums everything else, it over-counts roughly fourfold:
+London's education was paying **+140% commerce** where **+35%** was intended. The fix was to
+repatriate education into the union — strip the inter-band `replace`s, re-author each band as
+merely its *increment*, and let the bands stack like every other property.
+
+Bonus secessionist: the air-pollution band `BLACKENED_SKIES` used that same `replace` to
+**delete** your observatories — a replace means *remove* — so one smoggy afternoon
+permanently demolished the James Webb Space Telescope until you rebuilt it from scratch. It
+now merely **disables** them (dormant), because an observatory should go dark under smog, not
+be nuked from orbit.
+
+*Status: pulled in line on `json-data-migration` (#428). Education stacks cumulatively like
+crime; `BLACKENED_SKIES` disables instead of demolishing. The breakaway republic has rejoined.*
+
+---
+
+## 10. The Eternal Anesthesiologist — 60 cp
 
 `AI_heal` returned `true` for a heal no-op when the unit *couldn't heal*, so units
 re-decided "heal in city" **49–196 times per turn** — and in rare alignments, the turn
@@ -189,7 +218,7 @@ pressing it 195 more times. Except occasionally the building never lets you leav
 
 ---
 
-## 10. The Wonder That Builds Character — 59 cp
+## 11. The Wonder That Builds Character — 59 cp
 
 A National Wonder reaches into your civilization and hands it a personality. Build the right
 one and you don't get a bonus — you acquire a *trait*, the same kind of thing a leader is
@@ -214,7 +243,7 @@ dares touch it. The wonder giveth a personality; the wrecking ball taketh it awa
 
 ---
 
-## 11. The Trait in a Trenchcoat — 58 cp
+## 12. The Trait in a Trenchcoat — 58 cp
 
 There is no such thing as a "complex trait." There are 64 ordinary traits, each of which is
 secretly *two* traits standing on each other's shoulders in one `<Type>`. The vanilla
@@ -243,7 +272,7 @@ is now finalized in two separate filing cabinets.*
 
 ---
 
-## 12. The Settler's Phantom Mortgage — 57 cp
+## 13. The Settler's Phantom Mortgage — 57 cp
 
 Open a settler's `UnitInfo`, change its production cost, build a settler. The price barely
 moves. The number you edited (`iCost`) is real, but it is a sliver — the *actual* cost of a
@@ -276,7 +305,7 @@ founder's `cost.production`). A settler has never once been priced by its own da
 
 ---
 
-## 13. International Civil Asset Forfeiture — 55 cp
+## 14. International Civil Asset Forfeiture — 55 cp
 
 Foreign police cars were observed parked on the human player's **resource tiles**, mission
 hover proudly reading *"Maintain property control."* The mechanism: when a property-control
@@ -298,7 +327,7 @@ fortified. The uranium has been returned.*
 
 ---
 
-## 14. The Merger With No Undo (Bring a Boat) — 54 cp
+## 15. The Merger With No Undo (Bring a Boat) — 54 cp
 
 Size Matters lets you fuse three units into one bigger one. The merge stamped the new unit
 with an *inhibit-split* flag — and the only line in the entire codebase that ever cleared it
@@ -323,7 +352,7 @@ oscillation ever returns. Boats are once more optional.*
 
 ---
 
-## 15. The .vcxproj of Lies — 47 cp
+## 16. The .vcxproj of Lies — 47 cp
 
 The Visual Studio project file confidently states `PlatformToolset: v142`. The actual
 compiler is the **Microsoft Visual C++ Toolkit 2003** (MSVC 7.1). The project file drives
