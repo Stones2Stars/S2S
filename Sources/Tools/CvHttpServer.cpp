@@ -950,6 +950,15 @@ namespace
 					kBonuses.push_back(picojson::value(std::string(GC.getBonusInfo((BonusTypes)b).getType())));
 			o["resources"] = picojson::value(kBonuses);
 
+			// city/player STATE flags the loadout needs for state-gated modifiers & conditions (owner 2026-06-19:
+			// "you are not modelling for power = on"). Power follows the golden-age pattern -- a modifier gated by a
+			// boolean toggle on top, not modelled at all today. (calc-emulator-spec §2a state booleans.)
+			picojson::value::object kState;
+			kState["isPowered"]   = picojson::value(pCity->isPower());
+			kState["isCapital"]   = picojson::value(pCity->isCapital());
+			kState["isGoldenAge"] = picojson::value(kPlayer.isGoldenAge());
+			o["state"] = picojson::value(kState);
+
 			picojson::value::array kPlots;
 			for (int pi = 0; pi < pCity->getNumCityPlots(); ++pi)
 			{
@@ -968,6 +977,7 @@ namespace
 				if (eR != NO_ROUTE) pl["route"] = picojson::value(std::string(GC.getRouteInfo(eR).getType()));
 				const BonusTypes eB = pPlot->getBonusType((TeamTypes)iTeam);
 				if (eB != NO_BONUS) pl["bonus"] = picojson::value(std::string(GC.getBonusInfo(eB).getType()));
+				if (pPlot->isRiver()) pl["river"] = picojson::value(true);
 				pl["yieldFood"]       = picojson::value((double)pPlot->getYield(YIELD_FOOD));
 				pl["yieldProduction"] = picojson::value((double)pPlot->getYield(YIELD_PRODUCTION));
 				pl["yieldCommerce"]   = picojson::value((double)pPlot->getYield(YIELD_COMMERCE));

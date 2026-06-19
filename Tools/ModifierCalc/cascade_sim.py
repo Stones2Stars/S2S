@@ -32,6 +32,9 @@ PREFIX_SET = (("TECH_", "techs"), ("CIVIC_", "civics"), ("BUILDING_", "buildings
 # parameterized plot predicates -> the vicinity set scanned (spec §8: default vicinity scope)
 PRED_PARAM = {"HAS_TERRAIN": "terrains", "HAS_FEATURE": "features", "HAS_IMPROVEMENT": "improvements",
               "HAS_BONUS": "bonuses", "HAS_ROUTE": "routes"}
+# state-boolean predicates -> the ctx flag they read (owner 2026-06-19: model power=on)
+STATE_PRED = {"HAS_POWER": "isPowered", "IS_POWERED": "isPowered", "IS_CAPITAL": "isCapital",
+              "IS_GOLDEN_AGE": "isGoldenAge", "IS_GOLDENAGE": "isGoldenAge", "HAS_RIVER": "river"}
 
 
 def building_index():
@@ -54,11 +57,17 @@ def build_context(d):
     # bonuses: prefer the city's AVAILABLE set (resources = vicinity + trade-connected); fall back to vicinity-only
     # (plot bonuses) for older dumps without the resources field.
     bonuses = set(d.get("resources", [])) or plot_set("bonus")
+    state = d.get("state", {})
     return {
         "techs": set(d.get("techs", [])),
         "civics": set(d.get("civics", [])),
         "buildings": set(d.get("buildings", [])),
         "bonuses": bonuses,
+        # state booleans (owner 2026-06-19: model power=on). HAS_RIVER is vicinity (any workable plot has a river).
+        "isPowered": bool(state.get("isPowered")),
+        "isCapital": bool(state.get("isCapital")),
+        "isGoldenAge": bool(state.get("isGoldenAge")),
+        "river": any(p.get("river") for p in plots),
         "terrains": plot_set("terrain"),
         "features": plot_set("feature"),
         "improvements": plot_set("improvement"),
@@ -82,11 +91,13 @@ def _eval_atom(atom, ctx, uneval):
             if t.startswith(pfx):
                 return t in ctx[key]
         uneval.add(t); return False                      # POPULATION / PROPERTY_/ RELIGION_/ CORPORATION_/ TRAIT_/...
-    # predicate object: {HAS_TERRAIN: X} etc.
+    # predicate object: {HAS_TERRAIN: X}, {HAS_POWER: true}, etc.
     for k, v in atom.items():
         if k in PRED_PARAM:
             return v in ctx[PRED_PARAM[k]]
-        uneval.add(k); return False                      # HAS_RIVER / IS_CAPITAL / IS_GOLDEN_AGE / ... no loadout data
+        if k in STATE_PRED:                              # state boolean: {HAS_POWER: true} -> require power on
+            return ctx[STATE_PRED[k]] == bool(v)
+        uneval.add(k); return False                      # still-unmodelled predicate (stateReligion / latitude / ...)
     return False
 
 
