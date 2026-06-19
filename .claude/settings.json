@@ -2,12 +2,24 @@
   "hooks": {
     "SessionStart": [
       {
-        "matcher": "compact|resume|clear",
+        "matcher": "startup|clear|resume|compact",
         "hooks": [
           {
             "type": "command",
-            "command": "pwsh -NoProfile -Command \"[Console]::OutputEncoding=[Text.Encoding]::UTF8; Get-Content -Raw -LiteralPath '.claude/post-compaction-reload.txt'\"",
+            "command": "pwsh -NoProfile -File \".claude/hooks/session-start.ps1\"",
             "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh -NoProfile -File \".claude/hooks/read-gate.ps1\"",
+            "timeout": 20
           }
         ]
       }

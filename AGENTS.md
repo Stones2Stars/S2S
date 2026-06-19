@@ -169,14 +169,50 @@ not findings to re-discover.
   `CLAUDE.md` is re-read on compaction, but its `@AGENTS.md` / `Sources/AGENTS.md` content and
   nested rules are NOT reliably re-injected), leaving an agent operating on a *poisoned* context that
   looks complete but has lost the rules — the failure mode behind the recurring `.vcxproj`-is-truth
-  mistake. Mitigation, committed in the repo: a `SessionStart` hook (matcher `compact|resume|clear`
-  in `.claude/settings.json`) that re-injects `.claude/post-compaction-reload.txt` — a short notice
-  that orders a re-read of AGENTS.md and restates the few absolute non-negotiables. It is the *digest*,
+  mistake. Mitigation, committed in the repo: a `SessionStart` hook (matcher `startup|clear|resume|compact`
+  in `.claude/settings.json`, via `.claude/hooks/session-start.ps1`) that re-injects
+  `.claude/post-compaction-reload.txt` — a short notice that orders a re-read of AGENTS.md and restates the
+  few absolute non-negotiables — AND lists the active read-gate docs (next bullet). It is the *digest*,
   not a second source of truth; AGENTS.md stays authoritative. The hook runs the digest through
   **PowerShell 7 (`pwsh`)**, which emits UTF-8 cleanly, so emoji/Unicode are fine — do NOT route it
   through legacy Windows PowerShell 5.1 (`powershell.exe`), which mangles non-ASCII on stdout. This is
   the harness-level twin of the in-file banners on the dead `.vcxproj`/`.sln`/`.filters`: put the
   antidote where compaction can't summarize it away.
+- **Read-gates — the doc-read before touching a subsystem is MECHANICALLY ENFORCED, not exhorted (owner
+  ruling 2026-06-19).** *Why it is load-bearing:* this codebase is a cataclysmic clown fiesta — a
+  tightly-coupled, decades-deep Civ4/BTS/C2C tangle we are wrangling back to sanity — and **skipping a
+  subsystem's docs has routinely screwed agentic sessions** (an assumption reconstructed from stale code
+  or a context summary, then built on, then a regression). Every prior mitigation was an *exhortation*
+  ("read the docs first" — in `CLAUDE.md`, here, `MEMORY.md`, the `docs/dev/README.md` banner, the reload
+  hook), and exhortation FAILED: it leaves the stop-condition ("have I read enough?") to the agent's
+  judgement, which is biased toward getting to the task. So the read is now a **gate**, removing that
+  judgement. Two parts, committed:
+  - **Session-start read-first:** the `SessionStart` hook (above) lists, at every open/clear/resume/compact,
+    the docs of every read-gate marked `sessionStart` — with the directive *your first action is to Read
+    each in full before responding* (the owner: "when I open Claude or `/clear`, the first thing I want to
+    see is you reading docs — you can do it before accepting input").
+  - **PreToolUse hard-deny:** `.claude/hooks/read-gate.ps1` (matcher `Edit|Write|MultiEdit`) parses the
+    session transcript for `Read` calls and **DENIES** any edit to a gated subsystem's `paths` until every
+    one of that gate's `docs` was Read this session (it lists exactly which are still unread). It catches
+    the real recurring failure — *never opening the doc* (comprehension can't be automated; "opened" can).
+    It **fails OPEN, loudly** on its own errors, so a hook bug never bricks editing but never fails silently.
+  - **Where it lives:** one JSON manifest per subsystem in `.claude/read-gates/` (`docs` + trigger `paths`);
+    both hooks scan that dir, so adding a subsystem is a new JSON, no hook edits (`.claude/read-gates/README.md`).
+    Seeded with **`cascade`** (the 8 `#428/#430` banner docs gating `Sources/Cascade/**` + `Assets/Data/**`);
+    extend to other doc'd subsystems (worker-AI, combat, …) as needed. The gate proves the docs were *opened*,
+    not understood — but "never opened them" is the failure that keeps happening, and that is fully gateable.
+  - **MINION EXCEPTION (owner ruling 2026-06-19): a spawned sub-agent only needs the context it OPERATES
+    UNDER, not the full manifest.** The gate targets the **orchestrator** — the agent with broad edit authority
+    over the subsystem, which must hold the whole design. A minion is spawned for a NARROW slice; the orchestrator
+    (which HAS read the docs) briefs it with exactly the docs/excerpts/facts that slice needs and owns its
+    correctness, so forcing the minion to re-read all N docs is wrong (it also defeats the point of delegating to
+    a cheap, scoped context — e.g. the read-only `data-reader`/`Explore` minions). So: the session-start
+    read-first directive is for the MAIN session, and a minion is **exempt from the full-manifest read** — it
+    reads only what it was given to operate under. *(Enforcement note: the PreToolUse hook keys on the session
+    transcript; project minions today are overwhelmingly read-only so they don't hit the `Edit` gate. If an
+    edit-capable minion on gated paths ever becomes real, either brief it to Read the one doc its slice needs, or
+    refine the hook to recognize sub-agent context — a verify-then-change follow-up, since the hook stdin's
+    sub-agent signal is unconfirmed.)*
 - **The real rule: `pwsh` == good, `powershell` == bad (owner ruling 2026-06-18).** `pwsh`
   (PowerShell 7) is the standard shell and the owner's primary shell; `powershell.exe` (Windows
   PowerShell 5.1) is the bad one — never invoke it, and never nest it inside a `pwsh` session. 5.1

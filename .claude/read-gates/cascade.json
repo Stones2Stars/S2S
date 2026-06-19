@@ -1,0 +1,19 @@
+{
+  "subsystem": "cascade",
+  "label": "#428/#430 data migration + cascade engine",
+  "sessionStart": true,
+  "docs": [
+    "docs/dev/plans/data-model-spec.md",
+    "docs/dev/plans/enabler-cascade-spec.md",
+    "docs/dev/plans/modifier-cascade-spec.md",
+    "docs/dev/plans/tally-cascade-spec.md",
+    "docs/dev/plans/event-spine-spec.md",
+    "docs/dev/plans/cascade-engine-430.md",
+    "docs/dev/plans/migration-renames.md",
+    "docs/dev/plans/migration-entity-ranking.md"
+  ],
+  "paths": [
+    "Sources/Cascade/**",
+    "Assets/Data/**"
+  ]
+}
