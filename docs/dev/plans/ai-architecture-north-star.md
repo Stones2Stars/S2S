@@ -87,7 +87,7 @@ banner above).
    the game by looping `AI_chooseProduction`; an input *set* is safe). Rebuild dirty on load; keep a
    bounded-staleness backstop; debug-verify (recompute == cache) during migration.
 5. **The inherited corpus is the asset — no rewrite.** S2S's value is the rules+content+AI corpus
-   (~100Ks of lines) inherited from C2C, not the engine. A Godot/Unity rebuild transfers none of it. In-place
+   (~100Ks of lines) inherited from C2C, not the engine. A from-scratch rewrite transfers none of it. In-place
    interface-bounded work gets the modernisation benefits *and* keeps a future port option open at no
    extra cost; it dominates both "stay messy" and "rewrite now." (Rewrite is only right if the goal
    changes to "a new game inspired by C2C" — a different project.)

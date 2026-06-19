@@ -41,8 +41,8 @@ with it. That single immovable fact freezes the whole stack:
   satisfies both; that's why it survives. Boost is downstream of the compiler + Python locks, not a free choice.
 
 **Bottom line:** "use newer Boost" and "use newer Python" are the same blocked move as "use a newer compiler" — all
-three are pinned by ABI compatibility with the un-rebuildable `.exe`. We only ever rebuild the DLL. (Replacing the
-`.exe` — a from-scratch engine — is a different, much larger dream, not a toolchain bump.)
+three are pinned by ABI compatibility with the un-rebuildable `.exe`. We only ever rebuild the DLL — the `.exe` is
+fixed, so the lock cannot be lifted in-place; it is a hard boundary on this codebase, not a toolchain bump.
 
 ## How they coexist (the rename trick)
 
