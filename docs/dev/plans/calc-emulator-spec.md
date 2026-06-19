@@ -97,6 +97,14 @@ Then compare to the LEGACY model on the same loadout. *"We simulate the simulati
   per-plot terrain/feature/improvement/route/bonus + yields). Synthetic: **fabricate a techlist by "simulating
   that techs were researched"** (and likewise civics/buildings/plotmaps) — arbitrary hypothetical states, not just
   the live game. The endpoint precomputes initial real loadouts for a few test cities to iterate on offline.
+- **Input SHAPE = presence DICTIONARIES toggled yes/no (owner 2026-06-19).** The loadout is per-class dicts
+  `{TYPE: bool}` — `techs` / `civics` / `traits` / `buildings` / `resources`(bonuses) / … — each entity
+  enabled/disabled with a simple yes/no, plus the `plots` list. **Toggling a flag IS a synthetic state** (enable a
+  tech ⇒ "simulate it researched"). **BOTH sides of the aisle consume the SAME dict and must each compute a valid
+  output:** the NEW (cascade) model reads each PRESENT entity's `Assets/Data` JSON deposits; the OLD (legacy) model
+  its contributions. For REAL states the legacy side is the live dump (already have it); building the legacy side
+  OFFLINE (from the pre-migration XML) is the bigger lift that unlocks **fully-synthetic** test cases + a **direct
+  XML-vs-JSON migration check** (same dict → both data sources → divergence = a parse/curation blindspot).
 - **BOTH cascades, not just the modifier.** A loadout drives the **modifier** cascade (the per-turn VALUES, vs
   legacy `getYieldRate100` & co.) AND — crucially for synthetic techlists — the **enabler** cascade: feeding "these
   techs are researched" exercises the CAN-GET frontier (what those techs unlock), which **validates the enabler AND
