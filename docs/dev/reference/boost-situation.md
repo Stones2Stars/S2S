@@ -97,6 +97,9 @@ VC7.1/Python-2.4 constraint. 1.55 was layered on (renamed, header-only) to get n
 
 ## What a future consolidation would require (scope, for when it's wanted — NOT now)
 
+> **Tracked: [Stones2Stars/S2S#442](https://github.com/Stones2Stars/S2S/issues/442)** — consolidate to a single Boost
+> (sever the Boost.Python 1.32 pin). Cleanup, not modernization; the VC7.1/Py2.4 lock below stays.
+
 - **The hard part:** produce a **Boost.Python for VC7.1 + Python 2.4 on a chosen single Boost version** (or sever the
   Boost.Python dependency entirely — e.g. a hand-rolled / different C++↔Python layer). Until that exists, 1.32 stays.
 - Port the ~425 `boost::` sites to the chosen version's API (9 years of Boost API drift between 1.32 and 1.55).
