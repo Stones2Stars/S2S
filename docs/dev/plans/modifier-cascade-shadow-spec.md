@@ -161,9 +161,18 @@ This must exist before any modifier shadow can run. Built **for the pilot channe
   to the `bNoTypeAction` set + an `evaluateGate` branch. Per-turn `[MODSHADOW]` line via `rjLogLine` from `CvGame::doTurn`
   (gated `gPlayerLogLevel` ≥1 headline / ≥2 per-divergence), beside `cascadePlacementShadow`/`cascadeDormancyShadow`.
   JSON triage = cap-250 divergence sample + UNCAPPED reason histogram (the `placementSweep` helper shape).
-- **Build increments (compile-clean each):** (1) parse → per-entity modifier-deposit store + `rjParseModifiers`; (2)
-  deposit-flow + `cascadeModifierEffective(family,scope,city)` + `cascadeModifierParityMode`; (3) shadow — `[MODSHADOW]`
-  doTurn line + `/diagnostic/modifierSweep` + decomposed diff vs `getYieldRate100`.
+- **Build increments (compile-clean each):** (1) parse → per-entity modifier-deposit store + `rjParseModifiers` ✅ DONE +
+  VERIFIED on real data (`[MODPARSE] BUILDING_ANCIENT_CUSTOMS 9 deposits, 0 pending` = exactly its food/production/commerce
+  flat entries incl. 4 conditional BONUS-vicinity `enabled` atoms, 0 skipped); (2) deposit-flow +
+  `cascadeModifierEffective(family,scope,ctx)` + `cascadeModifierParityMode`; (3) shadow + endpoints — `[MODSHADOW]` doTurn
+  line, the all-cities `/diagnostic/modifierSweep`, AND a **per-entity `/diagnostic/modifier?type=X&player=N&city=M` query**
+  mirroring the enabler's `canConstruct`-style gate endpoints (owner 2026-06-19): returns one entity's parsed deposits +
+  computed effective on demand via the mailbox snapshot — the on-demand verification surface (no per-turn-tee timing games),
+  decomposed-diff vs `getYieldRate100`.
+- **Verification reminder (owner 2026-06-19):** the game holds the `.log` FILES open → reading new file entries is
+  unreliable; use the **`/events` HTTP stream** (the per-turn tee) or the `/diagnostic/*` query endpoints. NB the per-turn
+  slice lines (`[READJSON]`/`[MODPARSE]`) burst at the TOP of `doTurn`, so a reader must be CONNECTED to `/events` BEFORE the
+  turn ticks (connect-then-end-turn) — which is the very friction the per-entity query endpoint removes.
 
 ### 3.2 Endpoint — `GET /diagnostic/modifierSweep?player=N`
 
