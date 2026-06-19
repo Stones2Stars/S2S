@@ -1140,6 +1140,22 @@ namespace
 				bl["healRate"]                   = picojson::value((double)pCity->getHealRate());
 				o["buildingLevel"] = picojson::value(bl);
 			}
+
+			// ---- CH property (legacy-value-calc-map §9.1): each PROPERTY_* CURRENT VALUE (reading). The per-turn
+			// DELTA is the CvPropertySolver (sources -> interactions -> propagators); propagators are SPATIAL (#429),
+			// so the offline reproduction (non-spatial sources+interactions) is a follow-up guard -- this is the state. ----
+			{
+				picojson::value::array pr;
+				const CvProperties* pProps = pCity->getProperties();
+				for (int p = 0; p < GC.getNumPropertyInfos(); ++p)
+				{
+					picojson::value::object e;
+					e["type"]  = picojson::value(std::string(GC.getPropertyInfo((PropertyTypes)p).getType()));
+					e["value"] = picojson::value((double)(pProps != NULL ? pProps->getValueByProperty((PropertyTypes)p) : 0));
+					pr.push_back(picojson::value(e));
+				}
+				o["properties"] = picojson::value(pr);
+			}
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 

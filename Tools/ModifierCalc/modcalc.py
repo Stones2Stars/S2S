@@ -303,6 +303,19 @@ def reproduce_greatpeople(d):
     return (ok, 1)
 
 
+def report_properties(d):
+    """Informational: each PROPERTY_* current value (the city-state reading; per-turn delta = CvPropertySolver, spatial #429)."""
+    pr = d.get("properties")
+    if pr is None:
+        return
+    nz = [p for p in pr if p["value"] != 0]
+    print("\nPROPERTIES (current values; per-turn delta = solver, reproduction is a follow-up):")
+    if not nz:
+        print("  (all zero)")
+    for p in nz:
+        print("  %-28s %d" % (p["type"], p["value"]))
+
+
 def _load_dump(args):
     if args.file:
         with open(args.file, "r") as fh:
@@ -365,6 +378,7 @@ def consume(args):
         r = fn(d)
         if r is not None:
             extra.append((nm, r[0], r[1]))
+    report_properties(d)
 
     n = len(rows)
     extra_ok = sum(o for _, o, _ in extra)
