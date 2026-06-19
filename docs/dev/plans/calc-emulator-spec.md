@@ -114,7 +114,12 @@ Then compare to the LEGACY model on the same loadout. *"We simulate the simulati
   2. **Parity-adjacency tuning + the new-calc DESIGN** (§0.2) — nail the flow/values offline before porting.
   3. **★ XML→JSON migration BLINDSPOT detection** — if the new model (reading the JSON) diverges from legacy in a
      way the formula choice doesn't explain, it points at a **deposit/edge legacy has that the migrated JSON LACKS**
-     (a parse/curation gap). The comparison doubles as a migration-completeness checker.
+     (a parse/curation gap). The comparison doubles as a migration-completeness checker. **DIVERGENCE TAXONOMY
+     (owner 2026-06-19) — distinguish two kinds:** (a) **BLINDSPOT** = JSON missing a deposit legacy has → a bug to
+     FIX; (b) **BY-DESIGN OMISSION** = a legacy mechanic the new cascade DELIBERATELY does not model → EXPECTED, the
+     offline recalc simply won't have it. **Win-for-losing and process (production→research) conversion are
+     by-design omissions** (the new model drops them); their legacy-vs-new diffs are correct, not blindspots. (Maps
+     to the care scale: blindspot = `Bug`, by-design omission = `Better`/accepted — modifier-shadow-spec §4.)
   4. **Clean enabler-cascade generation/validation** — synthetic techlists produce + check the availability frontier.
 - **Offline iteration (the workflow win):** pull/fabricate a loadout ONCE (`--save`), then iterate the model with
   `--file` — no game restarts. The live dump is the ground-truth snapshot; the model-tuning loop runs offline.

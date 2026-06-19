@@ -176,6 +176,11 @@ def reproduce_commerce(d):
     prod = int(d.get("prodRate", 0))
     disorder = bool(d.get("isDisorder", False))
     ok = 0
+    # BY-DESIGN OMISSION (owner 2026-06-19): a research-commerce divergence (~prod magnitude, research-only) comes from
+    # PROCESS research (production->research conversion) or the calculateResearchModifier family (tech-diffusion /
+    # welfare / win-for-losing). The NEW cascade model DELIBERATELY does NOT model these, so the offline recalc won't
+    # have the diff -- it's a designed omission, NOT a blindspot/bug. This guard reproduces LEGACY (which has them), so
+    # expect commerce N/4 (research off) on players running a process / those bonuses; the NEW-model side is clean.
     print("\nCOMMERCE (reproduce getCommerceRateAtSliderPercent):")
     for c in rows:
         if disorder:
