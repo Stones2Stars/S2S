@@ -1195,6 +1195,46 @@ namespace
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 
+		// PLAYER-INPUT (calc-emulator §11): EMPIRE/player-scope value calcs -- gold-per-turn + science-per-turn
+		// (reproducible from components), power/assets/demographics (readings). No type/city. (legacy-value-calc-map §11.1/11.2)
+		if (strcmp(szAction, "playerInput") == 0)
+		{
+			o["isAnarchy"] = picojson::value(kPlayer.isAnarchy());
+			picojson::value::object g;
+			g["goldRate"]          = picojson::value((double)kPlayer.calculateGoldRate());       // realized net
+			g["baseNetGold"]       = picojson::value((double)(int)kPlayer.calculateBaseNetGold());
+			g["commerceGold"]      = picojson::value((double)kPlayer.getCommerceRate(COMMERCE_GOLD));
+			g["goldPerTurnDeals"]  = picojson::value((double)kPlayer.getGoldPerTurn());
+			g["finalExpense"]      = picojson::value((double)(int)kPlayer.getFinalExpense());
+			g["preInflatedCosts"]  = picojson::value((double)(int)kPlayer.calculatePreInflatedCosts());
+			g["inflationMod10000"] = picojson::value((double)kPlayer.getInflationMod10000());
+			g["treasury"]          = picojson::value((double)(int)kPlayer.getGold());
+			g["totalMaintenance"]  = picojson::value((double)kPlayer.getTotalMaintenance());
+			o["gold"] = picojson::value(g);
+			picojson::value::object s;
+			const TechTypes eCur = kPlayer.getCurrentResearch();
+			s["currentResearch"]  = picojson::value((double)(int)eCur);
+			s["researchRate"]     = picojson::value((double)kPlayer.calculateResearchRate(eCur));
+			s["baseNetResearch"]  = picojson::value((double)(int)kPlayer.calculateBaseNetResearch(eCur));
+			s["commerceResearch"] = picojson::value((double)kPlayer.getCommerceRate(COMMERCE_RESEARCH));
+			s["baseResearchRate"] = picojson::value((double)GC.getDefineINT("BASE_RESEARCH_RATE"));
+			s["nationalTechMod"]  = picojson::value((double)(eCur != NO_TECH ? kPlayer.getNationalTechResearchModifier(eCur) : 0));
+			s["researchModifier"] = picojson::value((double)(eCur != NO_TECH ? kPlayer.calculateResearchModifier(eCur) : 0));
+			o["science"] = picojson::value(s);
+			picojson::value::object dm;
+			dm["power"]            = picojson::value((double)kPlayer.getPower());
+			dm["techPower"]        = picojson::value((double)kPlayer.getTechPower());
+			dm["unitPower"]        = picojson::value((double)kPlayer.getUnitPower());
+			dm["assets"]           = picojson::value((double)kPlayer.getAssets());
+			dm["totalPopulation"]  = picojson::value((double)kPlayer.getTotalPopulation());
+			dm["realPopulation"]   = picojson::value((double)(int)kPlayer.getRealPopulation());
+			dm["totalLand"]        = picojson::value((double)kPlayer.getTotalLand());
+			dm["totalLandScored"]  = picojson::value((double)kPlayer.getTotalLandScored());
+			dm["numMilitaryUnits"] = picojson::value((double)kPlayer.getNumMilitaryUnits());
+			o["demographics"] = picojson::value(dm);
+			return CvString(picojson::value(o).serialize().c_str());
+		}
+
 		const int iIdx = GC.getInfoTypeForString(szType, true);
 		if (iIdx < 0)
 		{
@@ -1552,6 +1592,7 @@ namespace
 				"\"/diagnostic/game?player=N\","
 				"\"/diagnostic/modifier?player=N&city=M\","
 				"\"/diagnostic/cityInput?player=N&city=M\","
+				"\"/diagnostic/playerInput?player=N\","
 				"\"/diagnostic/tally?type=BUILDING_X|UNIT_X&player=N\"],"
 				"\"note\":\"player defaults to the active player; evaluated against the current game state, "
 				"no construction performed; canConstruct also returns the cascade verdict + cap shadow; "
@@ -1593,7 +1634,8 @@ namespace
 			// modifier / cityInput dumps need none.
 			const bool bNoTypeAction = (strcmp(szAction, "placementSweep") == 0
 				|| strcmp(szAction, "dormancySweep") == 0 || strcmp(szAction, "game") == 0
-				|| strcmp(szAction, "modifier") == 0 || strcmp(szAction, "cityInput") == 0);
+				|| strcmp(szAction, "modifier") == 0 || strcmp(szAction, "cityInput") == 0
+				|| strcmp(szAction, "playerInput") == 0);
 			if (szType[0] == '\0' && !bNoTypeAction)
 			{
 				sendResponse(sock, "400 Bad Request", "application/json",

@@ -303,6 +303,41 @@ def reproduce_greatpeople(d):
     return (ok, 1)
 
 
+def reproduce_player_gold(d):
+    """Exact: finalExpense = anarchy?0 : preInflated × inflationMod/10000; baseNetGold = commerceGold + deals − finalExpense. (§11.1)"""
+    g = d.get("gold")
+    if not g:
+        return None
+    fe = 0 if d.get("isAnarchy", False) else g["preInflatedCosts"] * g["inflationMod10000"] // 10000
+    base = g["commerceGold"] + g["goldPerTurnDeals"] - fe
+    print("\nPLAYER GOLD (reproduce finalExpense + baseNetGold):")
+    ok = (1 if _check("finalExpense", fe, g["finalExpense"]) else 0)
+    ok += (1 if _check("baseNetGold", base, g["baseNetGold"]) else 0)
+    return (ok, 2)
+
+
+def reproduce_player_science(d):
+    """Exact: baseNetResearch = getModifiedIntValue(BASE + commerce(research), nationalTechMod + researchModifier). (§11.1)"""
+    s = d.get("science")
+    if not s:
+        return None
+    emu = getModifiedIntValue(s["baseResearchRate"] + s["commerceResearch"], s["nationalTechMod"] + s["researchModifier"])
+    print("\nPLAYER SCIENCE (reproduce calculateBaseNetResearch):")
+    ok = (1 if _check("baseNetResearch", emu, s["baseNetResearch"]) else 0)
+    return (ok, 1)
+
+
+def report_player_demographics(d):
+    dm = d.get("demographics")
+    if not dm:
+        return
+    print("\nPLAYER DEMOGRAPHICS (readings; power is AI-relevant):")
+    for k in ("power", "techPower", "unitPower", "assets", "totalPopulation", "realPopulation",
+              "totalLand", "totalLandScored", "numMilitaryUnits"):
+        if k in dm:
+            print("  %-22s %d" % (k, dm[k]))
+
+
 def report_properties(d):
     """Informational: each PROPERTY_* current value (the city-state reading; per-turn delta = CvPropertySolver, spatial #429)."""
     pr = d.get("properties")
@@ -335,59 +370,67 @@ def consume(args):
         return 1
     cap = int(d.get("cap", 99000000))
     rows = d.get("yields", [])
-    print("=== modcalc consume: %s (player %s, city %s), pop %s, %d buildings ==="
-          % (d.get("cityName", "?"), d.get("player", "?"), d.get("city", "?"),
-             d.get("population", "?"), len(d.get("buildings", []))))
+    is_player = ("yields" not in d) and ("gold" in d or "demographics" in d)
 
-    fid_ok = 0
-    print("\nFIDELITY -- emulator-legacy vs live getYieldRate100 (the DESTROY-pass credential):")
-    print("  family      base  spec   mod%   extra | emu-legacy   live-legacy |  result")
-    for y in rows:
-        emu = legacy_yield100(y["base"], y["specialist"], y["modifier"], y["extraYield"], cap)
-        live = y["legacy100"]
-        ok = (emu == live)
-        fid_ok += 1 if ok else 0
-        print("  %-10s %5d %5d %6d %7d | %10d  %10d |  %s"
-              % (y["family"], y["base"], y["specialist"], y["modifier"], y["extraYield"],
-                 emu, live, "OK" if ok else "*** MISMATCH ***"))
+    if is_player:
+        print("=== modcalc consume [playerInput]: player %s ===" % d.get("player", "?"))
+    else:
+        print("=== modcalc consume [cityInput]: %s (player %s, city %s), pop %s, %d buildings ==="
+              % (d.get("cityName", "?"), d.get("player", "?"), d.get("city", "?"),
+                 d.get("population", "?"), len(d.get("buildings", []))))
 
-    mir_ok = 0
-    print("\nCASCADE-FLOW MIRROR -- offline cascadeModifierApply[%s] vs the dumped engine cascade:" % args.flow)
-    print("  family      flat  pct  mult100 | emu-cascade  dumped | result")
-    for y in rows:
-        emu_c = cascade_apply(y["base"], y["cascadeFlat"], y["cascadePercent"], y["cascadeMult100"], args.flow)
-        dumped = y["cascade"]
-        ok = (emu_c == dumped)
-        mir_ok += 1 if ok else 0
-        print("  %-10s %5d %4d %7d | %10d  %6d | %s"
-              % (y["family"], y["cascadeFlat"], y["cascadePercent"], y["cascadeMult100"],
-                 emu_c, dumped, "OK" if ok else "*** MISMATCH ***"))
+    fid_ok = mir_ok = 0
+    if rows:
+        print("\nFIDELITY -- emulator-legacy vs live getYieldRate100 (the DESTROY-pass credential):")
+        print("  family      base  spec   mod%   extra | emu-legacy   live-legacy |  result")
+        for y in rows:
+            emu = legacy_yield100(y["base"], y["specialist"], y["modifier"], y["extraYield"], cap)
+            live = y["legacy100"]
+            ok = (emu == live)
+            fid_ok += 1 if ok else 0
+            print("  %-10s %5d %5d %6d %7d | %10d  %10d |  %s"
+                  % (y["family"], y["base"], y["specialist"], y["modifier"], y["extraYield"],
+                     emu, live, "OK" if ok else "*** MISMATCH ***"))
 
-    print("\nFORMULA DELTA -- legacy vs cascade. NB the pilot cascade deposits city-scope BUILDINGS only and is")
-    print("  x1, while legacy100 is x100 -- so they are NOT yet apples-to-apples (expected; the channel is")
-    print("  incomplete). This line is informational until the channel's sources are fully deposited:")
-    for y in rows:
-        print("  %-10s legacy100=%d  cascade=%d" % (y["family"], y["legacy100"], y["cascade"]))
+        print("\nCASCADE-FLOW MIRROR -- offline cascadeModifierApply[%s] vs the dumped engine cascade:" % args.flow)
+        print("  family      flat  pct  mult100 | emu-cascade  dumped | result")
+        for y in rows:
+            emu_c = cascade_apply(y["base"], y["cascadeFlat"], y["cascadePercent"], y["cascadeMult100"], args.flow)
+            dumped = y["cascade"]
+            ok = (emu_c == dumped)
+            mir_ok += 1 if ok else 0
+            print("  %-10s %5d %4d %7d | %10d  %6d | %s"
+                  % (y["family"], y["cascadeFlat"], y["cascadePercent"], y["cascadeMult100"],
+                     emu_c, dumped, "OK" if ok else "*** MISMATCH ***"))
 
-    # ---- additional channels: commerce/defense/maintenance/growth = exact guards; health/happiness = informational ----
+        print("\nFORMULA DELTA -- legacy vs cascade (informational; pilot cascade = city-scope buildings only, x1 vs x100):")
+        for y in rows:
+            print("  %-10s legacy100=%d  cascade=%d" % (y["family"], y["legacy100"], y["cascade"]))
+
+    # ---- channels: exact guards (city + player); health/happiness exact too; properties/demographics informational ----
     extra = []
     for fn, nm in ((reproduce_commerce, "commerce"), (reproduce_defense, "defense"),
                    (reproduce_maintenance, "maintenance"), (reproduce_growth, "growth"),
                    (reproduce_health, "health"), (reproduce_happiness, "happiness"),
-                   (reproduce_greatpeople, "greatPeople")):
+                   (reproduce_greatpeople, "greatPeople"),
+                   (reproduce_player_gold, "playerGold"), (reproduce_player_science, "playerScience")):
         r = fn(d)
         if r is not None:
             extra.append((nm, r[0], r[1]))
     report_properties(d)
+    report_player_demographics(d)
 
     n = len(rows)
     extra_ok = sum(o for _, o, _ in extra)
     extra_tot = sum(t for _, _, t in extra)
     chan_str = ", ".join("%s %d/%d" % (nm, o, t) for nm, o, t in extra) or "none"
-    allok = bool(n) and fid_ok == n and mir_ok == n and extra_ok == extra_tot
-    print("\nOVERALL: yields-fidelity %s (%d/%d) | cascade-mirror %s (%d/%d) | channels [%s]"
-          % ("PASS" if (n and fid_ok == n) else "FAIL", fid_ok, n,
-             "PASS" if (n and mir_ok == n) else "FAIL", mir_ok, n, chan_str))
+    if rows:
+        allok = fid_ok == n and mir_ok == n and extra_ok == extra_tot
+        print("\nOVERALL: yields-fidelity %s (%d/%d) | cascade-mirror %s (%d/%d) | channels [%s]"
+              % ("PASS" if fid_ok == n else "FAIL", fid_ok, n, "PASS" if mir_ok == n else "FAIL", mir_ok, n, chan_str))
+    else:
+        allok = extra_tot > 0 and extra_ok == extra_tot
+        print("\nOVERALL: channels [%s]" % chan_str)
     return 0 if allok else 1
 
 
