@@ -196,8 +196,11 @@ This must exist before any modifier shadow can run. Built **for the pilot channe
       calculation mapping is **required anyway for the DESTROY pass** — you cannot safely delete a legacy calc you have not
       fully mapped (map-before-delete, the Orwell bar applied to *calculations*). So this one artifact serves three masters:
       parity-adjacent TUNING, formula-flow PROTOTYPING, and the demolition MAP. `modcalc.py` is the **city-yields seed**;
-      the build is channel-by-channel in demolition order. **(Likely graduates to its own plan doc + a `Tools/` emulator
-      package once the approach is confirmed.)**
+      the build is channel-by-channel in demolition order. **GRADUATED 2026-06-19 to its own spec:
+      [`calc-emulator-spec.md`](calc-emulator-spec.md)** — it emulates BOTH calcs (maps the legacy one; is where the
+      NEW calc is designed/nailed offline before porting to the DLL), the two-comparison validation credential, the
+      channel build order, and the `/diagnostic/cityInput` next-build. Read it for the emulator workstream; this
+      section remains the origin ruling.
     - **It is also our de-facto TEST HARNESS (owner 2026-06-19).** A closed-EXE legacy C++ game can't carry real unit/
       integration tests; a real-data old-vs-new emulator is the closest equivalent we will ever get — so it is very worth
       having as the validation backbone, independent of the cascade. **Future upside:** the same engine powers a website

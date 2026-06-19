@@ -1,0 +1,187 @@
+# Calc emulator — spec (external old-vs-new value-calculation harness, #430)
+
+> **STATUS: spec / plan (owner 2026-06-19).** Graduated from
+> [`modifier-cascade-shadow-spec.md`](modifier-cascade-shadow-spec.md) §3.1a (the "TOOL TO BUILD" / "★ SCOPE
+> EXPANDED" rulings), promoted to its own doc per that section's directive and the owner's read that **the more of
+> the cascade we build, the more we will need this** — it is the long-lived integration/validation backbone, not a
+> one-shot calculator. The city-yields **SEED exists**: `Tools/ModifierCalc/modcalc.py`. This doc is the scope +
+> build order for growing it into the full emulator.
+>
+> **It emulates BOTH calcs (owner 2026-06-19): the legacy one (which exists) AND the new cascade one (which does
+> NOT fully exist yet).** That second half is the point of building it as a spec, not just a comparator — see §0/§1.
+>
+> Companions: [`modifier-cascade-spec.md`](modifier-cascade-spec.md) (§2 arithmetic, §9 demolition list — the calcs
+> this maps), [`modifier-cascade-shadow-spec.md`](modifier-cascade-shadow-spec.md) (the IN-GAME shadow — the live
+> twin; §4 care scale), [`cascade-engine-430.md`](cascade-engine-430.md) (§4 demolition map, the DESTROY pass),
+> [`../reference/http-server.md`](../reference/http-server.md) (the `/diagnostic/*` mailbox pattern the new endpoint copies).
+
+---
+
+## 0. Why this exists — four masters, load-bearing (owner 2026-06-19)
+
+Legacy's value arithmetic was **never deliberately designed** (it accreted, with *"modifiers flow top down"* the
+only intentional principle); the `/diagnostic/modifier` pilot surfaced this. The cascade is to be the **first
+deliberate design of the formula** — but **we do not have that new full calc yet.** Hence the emulator serves four
+masters at once, and it is worth building once, properly:
+
+1. **The DESTROY-pass MAP — map-before-delete, applied to CALCULATIONS (the Orwell bar for value calcs).** You
+   cannot safely delete a legacy calc you have not fully mapped. The §9 demolition list (modifier-spec) names the
+   legacy read-points the cascade deletes; an external emulation that reproduces each of those calcs **is** that map.
+2. **The BIRTHPLACE of the new calc — design it HERE FIRST, then port (owner 2026-06-19).** The new full cascade
+   calc (multiplier composition, the deliberate corrections, parity-adjacent values) **does not exist in the DLL
+   yet.** We **nail it in the emulator** — offline, in fast Python iteration, against real data — and **only then
+   port the validated formula into C++03.** Porting a formula that is already proven offline is **mechanical, not
+   exploratory**: the hard part (does this arithmetic produce sane, parity-adjacent numbers across real loadouts?)
+   is answered before a line of DLL code changes. This inverts the usual direction for the *new* side — for the
+   legacy side the engine leads and the emulator maps it; for the new side **the emulator leads and the DLL
+   follows** (§1).
+3. **The de-facto TEST HARNESS.** A closed-EXE legacy C++ game cannot carry real unit/integration tests; a
+   real-data old-vs-new emulator is the closest equivalent we will ever get — the validation backbone, independent
+   of the cascade (worth having regardless).
+4. **The TUNING sandbox.** Explore where/how-much legacy and the new calc diverge and tune toward **parity-ADJACENT**
+   (close enough that the played game stays recognizable — modifier-shadow-spec §3.1a), across real loadouts.
+
+**Future upside (owner 2026-06-19):** the same engine can later power a website *"simulate my city"* premium
+feature. Keep the formula core a clean, reusable library so that path stays open; do not build it now.
+
+---
+
+## 1. The core idea — a pure FORMULA COMPARATOR over TWO calcs
+
+**Same input vector → legacy combine vs new (cascade) combine → delta. The delta is PURELY formula-attributable.**
+Input parity is trivial: the inputs are just the raw contribution lists (base + the flat/percent/multiplier
+sources), **identical for both sides** — so any output difference isolates the *combination logic*, the only thing
+that differs. The tool does NOT simulate game state; it does arithmetic on input vectors. (modifier-shadow-spec
+§3.1a: *"SAME INPUT to both formulas → the delta is PURELY formula-attributable."*)
+
+The two calcs it emulates have **opposite authorities**:
+
+- **The LEGACY calc — the engine LEADS, the emulator MAPS it.** `getYieldRate100`-shape:
+  `(base + specialist) × (100 + Σpercent)/100 + Σflat` — specialist INSIDE the percent; building flats added OUTSIDE
+  (the `extraYield` term). The accidental-but-actual old formula; the emulator's job is to reproduce it faithfully
+  (the fidelity credential, §3a).
+- **The NEW (cascade) calc — the emulator LEADS, the DLL FOLLOWS.** It does not fully exist yet. The DLL has only
+  the swappable dispatch seed (`cascadeModifierApply`, `Sources/Cascade/CvCascadeModifier.cpp`) with two flows —
+  `CALCFLOW_LEGACY_FLAT_OUTSIDE` (current: `base × (100 + Σpercent)/100 + Σflat`, matches legacy flat-placement so
+  parity can reach zero) and `CALCFLOW_UNIFIED_FLAT_INSIDE` (deferred: `(base + Σflat) × (100 + Σpercent)/100 ×
+  Π(mult/100)`, needs a data rebalance). The **full** new calc (which flow, what multiplier composition, what
+  deliberate corrections, what values land parity-adjacent) is **designed and nailed in the emulator first**, then
+  ported into that dispatch point. Adding/prototyping a flow = a function + a registry entry, mirroring the DLL's
+  enum + `case` — but done HERE before there.
+
+Integer math throughout (matches the engine; no floats — OOS determinism, engine-430 §5), so a formula nailed in the
+emulator ports without float-vs-int surprises.
+
+---
+
+## 2. Two input sources — synthetic grid AND live game-dump
+
+| source | what | use |
+|---|---|---|
+| **Synthetic grid** (`modcalc sweep`, **exists**) | a coarse grid over base × Σflat × Σpercent × source-mix | explore divergence across the whole input space; prototype a new flow fast; find worst-case adjacency gaps |
+| **LIVE game-dump** (the locked loadout, owner 2026-06-19; **next build**) | a REAL city's full input vector pulled from a new endpoint, + that same city's live legacy & cascade outputs | validate the emulator against ground truth; tune against REAL loadouts ("all the fun things" — building/tech/civic/bonus sets), not just synthetic combos |
+
+The live-dump is what makes this more than a calculator: it feeds the emulator the actual contribution lists a
+running game produces, so the comparison is grounded in real data, and the emulator's legacy side can be checked
+against the engine's realized number (§3a). The synthetic grid is where the **new** calc is stress-tested fast (§0.2).
+
+---
+
+## 3. The validation credential — TWO comparisons, do not conflate them
+
+- **(a) FIDELITY — emulator-legacy vs LIVE-legacy (`getYieldRate100` & co.).** Does the emulator's *legacy* side
+  reproduce the engine's realized number for the same city? **This match is the DESTROY-pass CREDENTIAL** for that
+  channel — the proof the emulator faithfully maps the legacy calc. Until it matches, the emulator is unverified and
+  **licenses no deletion**. (The first runs WILL diverge on sources the emulator doesn't yet feed — each gap is a
+  cause-tagged "add this source" task, exactly the mapping work.)
+- **(b) FORMULA DELTA — emulator-legacy vs emulator-new.** Given identical inputs, how far does the new calc diverge
+  from legacy? This is the **parity-adjacent design + tuning** axis (the goal is close, not byte-identical —
+  modifier-shadow-spec §3.1a) and **the surface on which the new calc is actually designed** (§0.2). Divergences get
+  the **care scale** (Fine → Meltdown, modifier-shadow-spec §4). Once (b) lands where we want it, that new formula is
+  **ported into the DLL's `cascadeModifierApply`** — the offline-first → port step.
+
+(a) is fidelity of the *map*; (b) is the *design* of the new calc. (a) must reach zero per channel before that
+channel's legacy reads are demolished; (b) is expected to be nonzero (the deliberate redesign) and is catalogued +
+tuned, not forced to zero.
+
+---
+
+## 4. Build order — channel by channel, in DEMOLITION order
+
+Each channel: (1) implement the legacy combine (map it) + the new combine (design it); (2) feed both the live-dump
+inputs; (3) drive fidelity (a) to zero (the map credential); (4) design + tune the new calc on delta (b) under the
+care scale; (5) port the nailed new formula to the DLL; (6) only then is that channel's legacy §9 read-points
+eligible for the demolition (engine-430 §4). Mirrors modifier-shadow-spec §2.2 and the modifier-spec §9 list:
+
+| # | Channel | Legacy read-points it maps (verify each at build) | Notes |
+|---|---|---|---|
+| 1 | **City yields** (food/production/commerce) | `getYieldRate100` & the per-building yield reads | **the SEED** (`modcalc.py`); cleanest accumulators |
+| 2 | **Commerce split** (gold/research/culture/espionage) | `getCommerceRate*` / `getBaseCommerceRate*`, `getBaseCommerceRateFromBuilding100` | the second split-family axis |
+| 3 | **Health / happiness** (good/bad split) | `goodHealth`/`badHealth`/`happyLevel`/`unhappyLevel` accumulators | polarity signed-split |
+| 4 | **Defense** | `getDefenseModifier`/`getTotalDefense`/`getNaturalDefense` | clamp-in-family (a `min` member) |
+| 5 | **Maintenance / upkeep** | CvCity/CvPlayer maintenance + upkeep reads | cost-style combine (non-default arithmetic) |
+| 6 | **Unit-plane stats** | CvUnit `getExtra*` / combat-stat reads (the ~91-setter `changeExtra*` stack) | SELF-accumulator; largest surface, **last** |
+
+The apply-loops behind these (`processBuilding`/`processSpecialist`/`processBonus`/`processCorporation`,
+`setCivics`/`processTrait`, `processTech`) are the engine-430 §4 demolition targets the emulator is the map for.
+
+---
+
+## 5. The next concrete build — `GET /diagnostic/cityInput?player=N&city=M`
+
+The endpoint that produces the live-dump (§2). Copy the **mailbox snapshot-isolation** pattern verbatim
+(`Sources/Tools/CvHttpServer.cpp`: a `/diagnostic/<action>` route enqueues; the game thread's
+`serviceEvalMailbox`→`evaluateGate` renders — the server thread never touches game objects; http-server reference).
+Add `cityInput` to the `bNoTypeAction` set + an `evaluateGate` branch beside the existing `modifier` action.
+
+Dumps, for the requested city (else the capital), per channel (city-yields first):
+
+- the **input vector**: `base` (pre-modifier components — plot/trade/free/golden), present buildings / techs / civics
+  / bonuses / specialists / population, and each contribution's `flat` / `percent` decomposition;
+- the **live LEGACY output** (`getYieldRate100` & co. — the fidelity-(a) ground truth);
+- the **live CASCADE output** (`cascadeModifierApply` — what the engine's current seed flow computes).
+
+Then extend `Tools/ModifierCalc/` to **consume the dump**: reproduce the legacy formula offline and assert
+**emulator-legacy == live-legacy** (the §3a credential), and run the new formula on the same inputs to design/tune
+delta (b). The dump is the on-demand surface (no per-turn-tee timing games; the per-entity-query reasoning from
+modifier-shadow-spec §3.1a).
+
+---
+
+## 6. Home + structure
+
+- **`Tools/ModifierCalc/`** (mirrors the `Tools/ReadJson` offline-harness pattern). `modcalc.py` is the
+  **city-yields seed**; it grows into a small emulator package as channels land.
+- **A channel registry** so adding a channel is additive (a new module + a registry entry), not a rewrite — the
+  doc's "build to grow" intent in code form. Keep the formula core a clean, reusable library (the website-feature
+  path, §0; and the porting target — a clean offline formula is the easiest thing to port to C++03).
+- Pure Python, offline, no game state, no DLL link (like `modcalc.py` today). The DLL side it mirrors / ports into is
+  `Sources/Cascade/CvCascadeModifier.{h,cpp}`.
+
+---
+
+## 7. Relationship to the in-game shadow (complementary, not redundant)
+
+- **In-game shadow** (`/diagnostic/modifierSweep` + `[MODSHADOW]`, modifier-shadow-spec §3) measures **real game
+  state, turn over turn** — live divergence on actual cities, *after* a calc is in the DLL.
+- **This emulator** is the **offline FORMULA sandbox + the validated calc MAP + the design surface for the new calc
+  before it is in the DLL** — same input to both formulas, the demolition credential, parity-adjacent design/tuning,
+  flow prototyping.
+
+Two legs of the same validation: the emulator proves we *understand and faithfully map* the legacy formula AND that
+the *new* formula is sound, before it ships; the shadow then proves the ported calc behaves right *in the running
+game*. The `cityInput` endpoint feeds the emulator; the `modifierSweep` endpoint feeds the shadow.
+
+---
+
+## 8. Open / flagged
+
+- ⚑ Exact input-vector schema per channel (which base components + source lists to dump) — pinned per channel at its
+  build, starting with city-yields (§5).
+- ⚑ How much of the new calc can be designed purely offline vs needs dumped engine state (some sources — bonus/
+  civic/event/area/capital/player — are engine state, so they ride in the dump rather than being recomputed).
+- ⚑ The port step's exact contract: the emulator's nailed formula → the DLL `cascadeModifierApply` flow (enum value
+  + `case`). Keep the emulator's flow shape 1:1 with the DLL enum so the port is a transcription.
+- ⚑ Whether the emulator eventually consumes the migrated `Assets/Data` JSON directly for the contribution lists vs
+  taking them all from the live dump — lean: dump first (ground truth), JSON later if useful.
+- ⚑ The website "simulate my city" feature — future, out of scope; keep the core reusable so it stays open.

@@ -321,6 +321,12 @@ not findings to re-discover.
   `docs/dev/` notes, AGENTS.md — provided NOTHING else rides in the commit. Anything
   gameplay-affecting (C++ code, `Assets/XML` data, Python) keeps the careful path:
   branch + PR + playtest per the conventions above.
+  - **It is PERMISSIVE, not mandatory (owner clarification 2026-06-19): the allowance exists mostly to
+    avoid later MERGE CONFLICTS, so straight-to-`main` is a convenience for docs with no branch home —
+    not a rule that docs MUST go to main.** Docs that pertain to an in-flight branch's work (e.g. the
+    `#428/#430` cascade specs on `json-data-migration`) **belong with that work and commit on the
+    branch.** Use judgement: branch-coupled doc → its branch; cross-cutting/standalone doc → `main` (to
+    dodge the conflict).
 - **Verify the current branch immediately before every commit.** Run
   `git branch --show-current` (or `git status`) in the same command as the commit and
   confirm it is the branch you intend. The working copy is shared with the owner, who may
