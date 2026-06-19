@@ -327,6 +327,22 @@ def reproduce_player_science(d):
     return (ok, 1)
 
 
+def reproduce_unitbuild(d):
+    """Reproduce getProductionExperience (unit-build start-XP) from the free-XP buckets (primary combat type;
+    residual = sub-combat free-XP, rare). buildRate is a realized reading. (§11.4)"""
+    ub = d.get("unitBuild")
+    if not ub:
+        return None
+    emu = ub["freeExpCity"] + ub["freeExpPlayer"]
+    if ub["canAcquireExperience"]:
+        emu += (ub["specialistFreeExp"] + ub["unitCombatFreeExpCity"]
+                + ub["unitCombatFreeExpPlayer"] + ub["domainFreeExp"])
+    print("\nUNIT-BUILD %s (reproduce startXP; buildRate is a reading):" % ub.get("unit", "?"))
+    ok = 1 if _check("startXP", emu, ub["startXP"]) else 0
+    print("  buildRate (reading)      %d" % ub["buildRate"])
+    return (ok, 1)
+
+
 def report_player_demographics(d):
     dm = d.get("demographics")
     if not dm:
@@ -413,7 +429,8 @@ def consume(args):
                    (reproduce_maintenance, "maintenance"), (reproduce_growth, "growth"),
                    (reproduce_health, "health"), (reproduce_happiness, "happiness"),
                    (reproduce_greatpeople, "greatPeople"),
-                   (reproduce_player_gold, "playerGold"), (reproduce_player_science, "playerScience")):
+                   (reproduce_player_gold, "playerGold"), (reproduce_player_science, "playerScience"),
+                   (reproduce_unitbuild, "unitBuild")):
         r = fn(d)
         if r is not None:
             extra.append((nm, r[0], r[1]))

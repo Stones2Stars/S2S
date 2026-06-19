@@ -1156,6 +1156,31 @@ namespace
 				}
 				o["properties"] = picojson::value(pr);
 			}
+
+			// optional ?type=UNIT_X -> the unit-build start-XP + buildRate for that unit, per (city x unitType): the
+			// building->combat-class XP (legacy-value-calc-map §11.4). Folds the unit-plane's reproducible bits into
+			// cityInput (no per-unit-instance endpoint). startXP/buildRate are CvCity methods keyed by unit TYPE.
+			if (strncmp(szType, "UNIT_", 5) == 0)
+			{
+				const int iUnit = GC.getInfoTypeForString(szType, true);
+				if (iUnit >= 0)
+				{
+					const CvUnitInfo& kU = GC.getUnitInfo((UnitTypes)iUnit);
+					const UnitCombatTypes eUC = (UnitCombatTypes)kU.getUnitCombatType();
+					picojson::value::object ub;
+					ub["unit"]                    = picojson::value(std::string(szType));
+					ub["startXP"]                 = picojson::value((double)pCity->getProductionExperience((UnitTypes)iUnit)); // realized
+					ub["buildRate"]               = picojson::value((double)pCity->getProductionModifier((UnitTypes)iUnit));   // realized %
+					ub["canAcquireExperience"]    = picojson::value(kU.canAcquireExperience());
+					ub["freeExpCity"]             = picojson::value((double)pCity->getFreeExperience());
+					ub["freeExpPlayer"]           = picojson::value((double)kPlayer.getFreeExperience());
+					ub["specialistFreeExp"]       = picojson::value((double)pCity->getSpecialistFreeExperience());
+					ub["unitCombatFreeExpCity"]   = picojson::value((double)(eUC != NO_UNITCOMBAT ? pCity->getUnitCombatFreeExperience(eUC) : 0));
+					ub["unitCombatFreeExpPlayer"] = picojson::value((double)(eUC != NO_UNITCOMBAT ? kPlayer.getUnitCombatFreeExperience(eUC) : 0));
+					ub["domainFreeExp"]           = picojson::value((double)pCity->getDomainFreeExperience((DomainTypes)kU.getDomainType()));
+					o["unitBuild"] = picojson::value(ub);
+				}
+			}
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 
