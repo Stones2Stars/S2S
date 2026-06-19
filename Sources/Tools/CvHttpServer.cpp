@@ -941,6 +941,15 @@ namespace
 			}
 			o["civics"] = picojson::value(kCivics);
 
+			// resources = the city's AVAILABLE bonuses (vicinity + trade-connected; hasBonus). The loadout's plot
+			// list only carries vicinity bonuses, but bonus-gated deposits often activate via trade -- so the
+			// cascade calculator needs the full available set (calc-emulator-spec §2a). (CvBonusInfo.h incl. above.)
+			picojson::value::array kBonuses;
+			for (int b = 0; b < GC.getNumBonusInfos(); ++b)
+				if (pCity->hasBonus((BonusTypes)b))
+					kBonuses.push_back(picojson::value(std::string(GC.getBonusInfo((BonusTypes)b).getType())));
+			o["resources"] = picojson::value(kBonuses);
+
 			picojson::value::array kPlots;
 			for (int pi = 0; pi < pCity->getNumCityPlots(); ++pi)
 			{

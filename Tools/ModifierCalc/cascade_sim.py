@@ -51,11 +51,14 @@ def build_context(d):
     plots = d.get("plots", [])
     def plot_set(k):
         return set(p[k] for p in plots if p.get(k))
+    # bonuses: prefer the city's AVAILABLE set (resources = vicinity + trade-connected); fall back to vicinity-only
+    # (plot bonuses) for older dumps without the resources field.
+    bonuses = set(d.get("resources", [])) or plot_set("bonus")
     return {
         "techs": set(d.get("techs", [])),
         "civics": set(d.get("civics", [])),
         "buildings": set(d.get("buildings", [])),
-        "bonuses": plot_set("bonus"),
+        "bonuses": bonuses,
         "terrains": plot_set("terrain"),
         "features": plot_set("feature"),
         "improvements": plot_set("improvement"),
