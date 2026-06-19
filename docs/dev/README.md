@@ -50,6 +50,7 @@ This folder is split by intent:
 | [PlotSnapshot](reference/PlotSnapshot.md) | Plot-state snapshot schema + call-site conventions for logging |
 | [ai-logging-reference](reference/ai-logging-reference.md) | The structured/tagged AI decision logs as they exist today |
 | [http-server](reference/http-server.md) | `CvHttpServer` — the live observability/query layer: `127.0.0.1:7227` endpoints (`/units`/`/players`/`/cities`/`/events`), the `/events` SSE log-tee (#419), gating (`Autolog__HttpServer`/`Autolog__LogLevelStream`), snapshot isolation, and the planned `/tally` |
+| [legacy-value-calc-map](reference/legacy-value-calc-map.md) | How the legacy DLL computes every per-turn VALUE today (yields/commerce/health/happiness/defense/maintenance/unit-stats): the realized formula + per-source getters + x1/x100 & clamp gotchas per channel, PLUS the duplicate/redundant-computation (dedup) map. The #430 DESTROY-pass map + the `/diagnostic/cityInput` dump spec for [calc-emulator-spec](plans/calc-emulator-spec.md). |
 | [UnitAI_Selection](reference/UnitAI_Selection.md) | How the AI picks a unit's `UNITAI` and concrete unit type |
 | [UnitSelection_Mechanics](reference/UnitSelection_Mechanics.md) | The selection step itself: role → chosen `UnitTypes` |
 | [doProduction](reference/doProduction.md) | `CvCity::doProduction` — the per-turn city production step |
