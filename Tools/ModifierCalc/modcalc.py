@@ -25,6 +25,9 @@ Run:
 
 import argparse
 import itertools
+import json
+import sys
+import urllib.request
 
 
 # ----------------------------------------------------------------------------------------------
@@ -121,6 +124,91 @@ def sweep(args):
               % (base, spec, fs, ps, old, new, new - old, rp))
 
 
+# ----------------------------------------------------------------------------------------------
+# CONSUME a /diagnostic/cityInput dump -- the LIVE game-dump comparison (calc-emulator-spec.md §3/§5).
+# Reproduces getYieldRate100 EXACTLY from the dumped input vector (the §3a FIDELITY credential -- the proof
+# the emulator faithfully maps the legacy calc, which licenses the DESTROY pass) and mirrors the cascade
+# calc-flow offline. Engine formula (CvCity::getYieldRate100, verified):
+#   legacy100 = min(cap, max(100, (base + specialist) * modifier + 100 * extraYield)).
+# NB `modifier` is the FULL percent (100 + sum%); `extraYield` is the x1-TRUNCATED flat-outside term the
+# engine actually uses (sub-100 precision is lost before the x100) -- we consume it verbatim so we truncate
+# identically. This is the offline twin of the DLL; the same arithmetic, proven here before it ships.
+# ----------------------------------------------------------------------------------------------
+
+def legacy_yield100(base, specialist, modifier, extra_yield, cap):
+    """Reproduce CvCity::getYieldRate100 (x100) from the dumped input vector. Integer math, engine-exact."""
+    return min(cap, max(100, (base + specialist) * modifier + 100 * extra_yield))
+
+
+def cascade_apply(base, flat, percent, mult100, flow):
+    """Mirror Sources/Cascade cascadeModifierApply for the named flow (the offline twin of the DLL dispatch)."""
+    if flow == "legacy_outside":
+        # CALCFLOW_LEGACY_FLAT_OUTSIDE: base x (100+percent)/100 + flat (multiplier identity in parity mode)
+        return base * (100 + percent) // 100 + flat
+    # CALCFLOW_UNIFIED_FLAT_INSIDE: (base+flat) x (100+percent)/100 x mult/100 -- step-wise int div, engine-exact
+    return (base + flat) * (100 + percent) // 100 * mult100 // 100
+
+
+def _load_dump(args):
+    if args.file:
+        with open(args.file, "r") as fh:
+            return json.load(fh)
+    try:
+        with urllib.request.urlopen(args.url, timeout=5) as resp:
+            return json.loads(resp.read().decode("utf-8"))
+    except Exception as e:
+        return {"error": "fetch failed: %s -- is the game up with Autolog__HttpServer on, and the new DLL "
+                         "(with /diagnostic/cityInput) rebuilt+deployed?" % e}
+
+
+def consume(args):
+    d = _load_dump(args)
+    if "error" in d:
+        print("dump error: %s" % d["error"])
+        return 1
+    cap = int(d.get("cap", 99000000))
+    rows = d.get("yields", [])
+    print("=== modcalc consume: %s (player %s, city %s), pop %s, %d buildings ==="
+          % (d.get("cityName", "?"), d.get("player", "?"), d.get("city", "?"),
+             d.get("population", "?"), len(d.get("buildings", []))))
+
+    fid_ok = 0
+    print("\nFIDELITY -- emulator-legacy vs live getYieldRate100 (the DESTROY-pass credential):")
+    print("  family      base  spec   mod%   extra | emu-legacy   live-legacy |  result")
+    for y in rows:
+        emu = legacy_yield100(y["base"], y["specialist"], y["modifier"], y["extraYield"], cap)
+        live = y["legacy100"]
+        ok = (emu == live)
+        fid_ok += 1 if ok else 0
+        print("  %-10s %5d %5d %6d %7d | %10d  %10d |  %s"
+              % (y["family"], y["base"], y["specialist"], y["modifier"], y["extraYield"],
+                 emu, live, "OK" if ok else "*** MISMATCH ***"))
+
+    mir_ok = 0
+    print("\nCASCADE-FLOW MIRROR -- offline cascadeModifierApply[%s] vs the dumped engine cascade:" % args.flow)
+    print("  family      flat  pct  mult100 | emu-cascade  dumped | result")
+    for y in rows:
+        emu_c = cascade_apply(y["base"], y["cascadeFlat"], y["cascadePercent"], y["cascadeMult100"], args.flow)
+        dumped = y["cascade"]
+        ok = (emu_c == dumped)
+        mir_ok += 1 if ok else 0
+        print("  %-10s %5d %4d %7d | %10d  %6d | %s"
+              % (y["family"], y["cascadeFlat"], y["cascadePercent"], y["cascadeMult100"],
+                 emu_c, dumped, "OK" if ok else "*** MISMATCH ***"))
+
+    print("\nFORMULA DELTA -- legacy vs cascade. NB the pilot cascade deposits city-scope BUILDINGS only and is")
+    print("  x1, while legacy100 is x100 -- so they are NOT yet apples-to-apples (expected; the channel is")
+    print("  incomplete). This line is informational until the channel's sources are fully deposited:")
+    for y in rows:
+        print("  %-10s legacy100=%d  cascade=%d" % (y["family"], y["legacy100"], y["cascade"]))
+
+    n = len(rows)
+    print("\nOVERALL: FIDELITY %s (%d/%d)   |   cascade-mirror %s (%d/%d)"
+          % ("PASS" if (fid_ok == n and n) else "FAIL", fid_ok, n,
+             "PASS" if (mir_ok == n and n) else "FAIL", mir_ok, n))
+    return 0 if (n and fid_ok == n and mir_ok == n) else 1
+
+
 def main():
     p = argparse.ArgumentParser(description="modcalc -- #430 modifier old-vs-new formula calculator")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -139,8 +227,16 @@ def main():
     sw.add_argument("--top", type=int, default=15, help="how many worst rows to print")
     sw.set_defaults(func=sweep)
 
+    cs = sub.add_parser("consume", help="validate a /diagnostic/cityInput dump (the live game-dump comparison)")
+    cs.add_argument("--url", default="http://127.0.0.1:7227/diagnostic/cityInput?player=0",
+                    help="cityInput endpoint URL (default: player 0's capital)")
+    cs.add_argument("--file", default="", help="read the dump from a JSON file instead of fetching the URL")
+    cs.add_argument("--flow", choices=FLOWS.keys(), default="legacy_outside",
+                    help="which cascade calc-flow to mirror (default: the active legacy_outside)")
+    cs.set_defaults(func=consume)
+
     args = p.parse_args()
-    args.func(args)
+    sys.exit(args.func(args) or 0)
 
 
 if __name__ == "__main__":
