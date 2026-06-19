@@ -12,6 +12,93 @@ property-control subsystem were both first spotted as anomalous log volume).
 
 ---
 
+## 0. The logging STRUCTURE — three planes (owner ruling 2026-06-18)
+
+The logging system separates into three planes. The governing rule (owner): **the log LINES are
+valuable and STABLE — their tags/fields do not change; what evolves is WHERE they are SENT (the
+routing/sink).** Keep that split in mind when touching anything here. **Exception (owner 2026-06-18):
+this is not dogma — a line that doesn't make sense or doesn't fit the new structure is DROPPED and
+REDONE, not preserved out of inertia.** The default is "lines are stable, re-route them"; but the
+consolidation may legitimately retire or recast a line that no longer earns its place. **And the TAXONOMY
+itself is fair game (owner 2026-06-18): "go nuts and recategorize all."** The current tag families/subtags
+grew ad hoc — `[HAI]` was the very FIRST logging (pre-structure), and no real structure existed until `[PERF]`
+came along (itself ad hoc) — so the historical categorization is NOT sacred. During migration, rationalize the
+tag families, subtags, levels, and field names into a coherent scheme rather than faithfully porting the mess.
+
+1. **EMIT** — code produces one tagged, `key=value`, single-line record (the valuable content). Two
+   emit families today:
+   - **BBAI helpers** `log<Domain>AI(level, fmt, …)` (`BetterBTSAI.{h,cpp}`) — the per-domain AI lines
+     (`[WAI]`/`[CIT]`/`[UNT]`/…). Format the string at the call site, gated by a scope global.
+   - **Cascade / spine** — the `[SPINE/*]` lines from the event-spine logging consumer
+     (`CvEventSpine.cpp`), and the cascade observability lines (`[STATE/*]`, `[PLACEMENT]`,
+     `[DORMANCY]`, `[READJSON]`) emitted via `rjLogLine` (`CvCascadeReadJson.cpp`). See §6.
+2. **ROUTE / SINK** — where a line goes once emitted. Two destinations, and **every line should reach
+   both**:
+   - **File** — `<Domain>AI.log` (BBAI), `Cascade.log` (cascade + spine), `Performance.log` (`[PERF]`).
+     The deep on-disk forensic record.
+   - **Live `/events` SSE** — via the **one shared `streamLogTee(level, line)`** (`BetterBTSAI.{h,cpp}`),
+     gated by `gStreamLogLevel`. **This is the UNIFIED LIVE OBSERVABILITY SURFACE** — the render-from-API
+     / total-observability bar ([`../plans/cascade-mapping-inventory.md`](../plans/cascade-mapping-inventory.md) §A):
+     an out-of-process consumer parses the tag taxonomy below from `/events` without opening the game.
+     A line streams only if it ALSO passed its file gate → the stream is a subset of the files.
+     **⛔ The running game holds the `.log` files OPEN, so reading them LIVE is unreliable (buffered/unflushed tail =
+     stale/partial). `/events` is the live channel; the `.log` files are reliable only AFTER the game closes** (owner
+     2026-06-18 — this is a core motivation for `/events`). SSE has no replay: a capture only catches frames emitted
+     while connected, so capture ACROSS the moment of interest (e.g. an end-turn boundary for the `CvGame::doTurn` cameras).
+3. **GATE** — what suppresses a line: `gPlayerLogLevel`/`gTeamLogLevel`/`gCityLogLevel`/`gUnitLogLevel`
+   (BBAI + cascade observability; one BUG option `Autolog__LogLevelPlayerBBAI`), `gPerfLogLevel`
+   (`[PERF]`), `gStreamLogLevel` (the `/events` tee). `0` = off.
+
+**THE LEVEL SCALE = THE OBSERVABILITY RANKING (owner ruling 2026-06-18).** The log level IS the surveillance tier:
+setting the knob to N = operating the game at observability tier N. ONE scale, one meaning, named so the knob reads as
+what it does. The base is **0–4**; **5 (Meta) is a reserved extension point** wired only when 4 proves too coarse (keep
+the BUG option's max trivially bumpable). This is the canonical full table:
+
+| Level | Tier name | What is emitted | spine kind |
+|---|---|---|---|
+| **0** | **Oblivious** | nothing — logging off; you must watch the screen | — |
+| **1** | **Telescreen** | headlines only: decisions/missions committed, `[STATE/game]`, `[*/begin]`, `[SPINE/DOMAIN]` count deltas — *who/what/where* (the always-on passive watch) | DIAGNOSTIC |
+| **2** | **Informant** | + per-decision detail & the accumulation layer: scores, `[STATE/city]`/`[STATE/fin]`, `[CIT/danger]`, shadow divergence summaries — *someone reports the why* | DIAGNOSTIC |
+| **3** | **Big Brother** | + the full reconstructable picture: per-candidate, `[STATE/dip]` attitude matrix, full cascade shadows — *always watching everything; narrate the whole game without the screen.* **← the owner's normal play level** | DIAGNOSTIC |
+| **4** | **Thought Police** | + total per-step/per-iteration TRACE firehose (ContractBroker 10k+ lines/turn) — *read its mind.* Deep tracing only | TRACE |
+| **5** | **Meta** ("Facebook") | *(reserved)* beyond the Thought Police — doesn't just read its mind, it predicts and monetizes it: an ultra-trace beyond what a normal level-4 TRACE elides (per-evaluation dumps). Wired only on demand | TRACE |
+
+Levels are cumulative (N emits 1..N). **Placement rule:** if a line should be visible in normal play it is level ≤ 3;
+only genuine inner-loop tracing is 4. This maps onto the spine OOS firewall: **`DIAGNOSTIC` = levels 1–3, `TRACE` =
+levels 4–5** (and `DOMAIN` count events ride level 1 as the headline state-change signal). This scale is the base for
+the consolidated gate AND the reworked BUG option (one "Surveillance / log level" knob, max bumpable to 5/Meta).
+
+**This table is the SINGLE canonical definition of the scale.** The same named ranking is *applied* as an
+observability-MATURITY rating in [`../plans/cascade-mapping-inventory.md`](../plans/cascade-mapping-inventory.md) §D
+(one vocabulary, two uses: here = the **runtime knob**, how much you turn ON; there = how much we have **instrumented**,
+what tier is reconstructable). §D references this table and must not redefine it; the dated maturity self-assessment
+("we are at tier N") lives in §D, not here.
+
+**THE BUG-OPTIONS SCREEN IS PART OF THIS REWORK (owner 2026-06-18).** Once the consolidated structure is set, the
+in-game **BUG options → Autolog** screen is reworked to match it (one coherent set of knobs for the unified surface —
+not the current scatter of `Autolog__LogLevelPlayerBBAI` / `…Perf` / `…Stream`) and **everything is brought current**
+(options ↔ gates ↔ docs ↔ code aligned). Use the `add-bug-option` skill for the config/Python/text wiring. The
+consolidation is not "done" until the options screen reflects the new structure.
+
+> **TARGET STRUCTURE (the consolidation, in progress) — the event spine is the central routing hub.**
+> Per [`../plans/event-spine-spec.md`](../plans/event-spine-spec.md) §8/§9a, all log lines should flow
+> **line → spine → logging consumer → (file + `/events` tee)**, so there is ONE sink, ONE tee, ONE gate
+> path instead of each helper writing + teeing independently. The line CONTENT is unchanged (the stable-
+> lines rule); only the routing consolidates. `DOMAIN` events carry RAW payloads (the tally consumes them);
+> `DIAGNOSTIC`/`TRACE` are logging-only (never tallied, never gate).
+>
+> **RULINGS 2026-06-18 (R-1..R-6, `logging-surface-inventory.md`):** the spine event stays **RAW-payload-pure — NO
+> string-carrying shortcut (R-1=b)**; each BBAI helper's lines get a **raw-field catalog (Stage-0 prework) before** it
+> migrates onto the spine. **Per-domain `<Domain>AI.log` files stay** (R-2) as a consumer routing detail; the unified
+> surface is the spine + `/events`. **`OutputDebugString` is RETIRED and REPLACED by this logging system (R-5)** — every
+> production site converts to the unified logger (it fetches the same data); not `#ifdef`'d away. **`C2C.log` deleted
+> (R-4)**, **`logGameInfo` → `logInitInfo` + tag `[GAME/*]` → `[INIT/*]`, kept (caller-gated on any-logging-active, R-3).**
+> **Dead `logCB`/`logToFile` Python exports → DEFERRED with the separate Python-structure pass (R-6); left in place this
+> round.** Migration uses shadow discipline (old + new coexist, diff, cut over per domain; spine-spec §7); the tags below
+> are the wire spec for both families meanwhile.
+
+---
+
 ## 1. Enabling it
 
 Logs are gated by a verbosity level. Set it via the in-game **BUG options → Autolog**
@@ -46,19 +133,14 @@ Documents/My Games/Beyond The Sword/Logs/<Domain>AI.log
 
 ### Level mapping
 
-Levels are cumulative (a level-N setting emits levels 1..N). They mean the same thing in
-every subsystem:
+**The levels are the 0–5 surveillance scale defined canonically in §0 above** (Oblivious · Telescreen ·
+Informant · Big Brother · Thought Police · Meta). Cumulative: a level-N setting emits 1..N. The legacy
+subsystem vocabulary maps onto it: level 1 = headline (`begin`/`best`/`decision`/`mission`/`produced`),
+2 = per-decision (`score`/`order`/`act`/`push`/`danger`), 3 = per-candidate (`cand`/`tender/cand`/`skip`),
+4 = inner-loop trace (`assess` rejects, `postprocess`).
 
-| Level | Meaning | Typical tags |
-|---|---|---|
-| **1** | Headline: begin/end, baselines, the final decision/mission committed | `begin`, `best`, `decision`, `mission`, `produced` |
-| **2** | Per-decision: scores, per-option choices, dedup/skip summaries | `score`, `order`, `act`, `push`, `danger` |
-| **3** | Per-candidate trace: each candidate/flavour/factor considered | `cand`, `tender/cand`, detailed `skip` |
-| **4** | Inner-loop trace: per-unit / per-iteration spam (off by default) | `assess` rejects, `postprocess` |
-
-**Volume warning:** level 3 is verbose and level 4 is *very* verbose (ContractBroker can
-emit 10k+ lines/turn at level 4). For routine play use 1–2; use 3 when chasing a specific
-decision; use 4 only for a targeted dig.
+**Volume warning:** level 3 (Big Brother) is verbose and level 4 (Thought Police) is *very* verbose
+(ContractBroker can emit 10k+ lines/turn at 4). The owner plays at 3; use 4 only for a targeted dig.
 
 ---
 
@@ -82,7 +164,7 @@ path segments after the `/` are lowercase and may nest (`[XXX/group/detail]`).
 | Founding / settle | `[FND]` | `FoundAI.log` | player | `CvUnitAI::AI_found` |
 | Combat | `[COM]` | `CombatAI.log` | unit | `CvUnitAI`, `CvSelectionGroupAI` |
 | ContractBroker | `[CTB]` | `ContractBroker.log` | player | `CvContractBroker` |
-| Game session header | `[GAME]` | `GameInfo.log` | (ungated) | `CvGame::onFinalInitialized` |
+| Session init header | `[INIT]` | `GameInfo.log` | caller-gated (any logging active) | `CvGame::onFinalInitialized` (`logInitInfo`, ex-`logGameInfo`) |
 | Engine integrity | `[ENG]` | `Engine.log` | team | `CvPlot` (more as asserts are demoted) |
 | Turn timing | `[PERF]` | `Performance.log` | **`gPerfLogLevel`** (own knob) | `CvGame`, `CvPlayer`, `CvPlayerAI`, `CvCity`, `CvCityAI`, `CvPropertySolver` |
 

@@ -141,10 +141,12 @@ namespace
 	// Same contract as the snapshot: the server thread never touches game objects.
 	CRITICAL_SECTION g_eventLock;          // initialized alongside g_snapshotLock
 	std::vector<CvString> g_pendingEvents; // guarded by g_eventLock
-	// Backstop: drop new events beyond this. Sized for the #419 log stream's headline
-	// bursts (hundreds of level-1 lines in a heavy turn; frames ~150-250B => worst case
-	// a few hundred KB transient).
-	const size_t EVENT_QUEUE_CAP = 2048;
+	// Backstop: drop new events beyond this. BUMPED 2048 -> 65536 (owner 2026-06-18): the original small cap was sized
+	// against a memory worry that proved UNFOUNDED (32-bit footprint was a non-issue). At log level 3 a single turn floods
+	// ~100k frames (full BBAI firehose), overrunning the old cap and silently DROPPING frames -- making /events a LOSSY
+	// sample, not the complete live record the render-from-API/narrate-the-turn goal needs. 65536 frames x ~150-250B =>
+	// ~10-16MB worst-case transient, fine on the LAA process for playtesting; self-draining so it never sits full.
+	const size_t EVENT_QUEUE_CAP = 65536;
 	std::vector<SOCKET> g_sseClients;      // server thread only
 	const size_t SSE_CLIENT_CAP = 8;
 
@@ -711,6 +713,181 @@ namespace
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 
+		// PLACEMENT SWEEP (§14 H auto-placement shadow, B-i): per (auto-placed building x the player's cities),
+		// cascade-would-place vs the legacy maintainers' realized presence. The full per-cell dump (type=full)
+		// reconstructs the ENTIRE auto-placement picture from the API alone (the render-from-API / total-observability
+		// bar); default returns the divergence triage list (cap 250) + summary. Game thread; parsed-availability cached.
+		if (strcmp(szAction, "placementSweep") == 0)
+		{
+			const bool bFull = (strcmp(szType, "full") == 0);
+			std::vector<int> aRoster, aKind;
+			cascadeAutoPlacedRoster(aRoster, aKind);
+
+			// Parse each roster building's availability ONCE, reuse across cities.
+			std::vector<CvEntityAvailability> aAvail(aRoster.size());
+			std::vector<char> aParsed(aRoster.size(), 0);
+			for (size_t i = 0; i < aRoster.size(); ++i)
+			{
+				std::string sN;
+				aParsed[i] = cascadeReadJsonAvailability(GC.getBuildingInfo((BuildingTypes)aRoster[i]).getType(), aAvail[i], sN) ? 1 : 0;
+			}
+
+			int iCities = 0, iCells = 0, iAgree = 0, iDiv = 0, iNoJson = 0;
+			picojson::value::array kDiv;   // divergence triage list (cap 250)
+			picojson::value::array kCells; // full per-cell state (type=full only; cap 4000)
+			std::map<std::string, int> kHist; // UNCAPPED divergence histogram by "kind:reason" (engine-computed; the trust + completeness fix)
+			int iCityIter = 0;
+			for (CvCity* pCity = kPlayer.firstCity(&iCityIter); pCity != NULL; pCity = kPlayer.nextCity(&iCityIter))
+			{
+				++iCities;
+				CvCascadeContext kCtx(iPlayer, pCity->getID());
+				for (size_t i = 0; i < aRoster.size(); ++i)
+				{
+					const int b = aRoster[i];
+					if (!aParsed[i]) { ++iNoJson; continue; }
+					++iCells;
+					bool bC = false;
+					const char* szReason = cascadePlacementReason(b, aAvail[i], kCtx, iTeam, bC);
+					const bool bL = pCity->hasBuilding((BuildingTypes)b);
+					const char* szT = GC.getBuildingInfo((BuildingTypes)b).getType();
+					if (bC == bL) ++iAgree; else { ++iDiv; kHist[CvString::format("%d:%s", aKind[i], szReason).c_str()]++; }
+
+					if (bFull && kCells.size() < 4000)
+					{
+						picojson::value::object c;
+						c["city"] = picojson::value((double)pCity->getID());
+						c["type"] = picojson::value(std::string(szT));
+						c["kind"] = picojson::value((double)aKind[i]); // bit0 bAutoBuild, bit1 property-band
+						c["cascade"] = picojson::value(bC);
+						c["legacy"] = picojson::value(bL);
+						c["reason"] = picojson::value(std::string(szReason));
+						kCells.push_back(picojson::value(c));
+					}
+					if (bC != bL && kDiv.size() < 250)
+					{
+						picojson::value::object e;
+						e["city"] = picojson::value((double)pCity->getID());
+						e["type"] = picojson::value(std::string(szT));
+						e["kind"] = picojson::value((double)aKind[i]);
+						e["cascade"] = picojson::value(bC);
+						e["legacy"] = picojson::value(bL);
+						e["reason"] = picojson::value(std::string(szReason));
+						kDiv.push_back(picojson::value(e));
+					}
+				}
+			}
+			o["roster"] = picojson::value((double)aRoster.size());
+			o["cities"] = picojson::value((double)iCities);
+			o["cells"] = picojson::value((double)iCells);
+			o["noJson"] = picojson::value((double)iNoJson);
+			o["agree"] = picojson::value((double)iAgree);
+			o["diverge"] = picojson::value((double)iDiv);
+			picojson::value::object kHistO;
+			for (std::map<std::string,int>::const_iterator it = kHist.begin(); it != kHist.end(); ++it)
+				kHistO[it->first] = picojson::value((double)it->second);
+			o["reasonHistogram"] = picojson::value(kHistO); // UNCAPPED: every divergence counted (not just the 250 sample)
+			o["divergences"] = picojson::value(kDiv);
+			if (bFull) o["all"] = picojson::value(kCells);
+			return CvString(picojson::value(o).serialize().c_str());
+		}
+
+		// DORMANCY SWEEP (§14 H B-ii): for each BUILT building x the player's cities, cascade-active (requires.operate)
+		// vs legacy hasFullyActiveBuilding (resource/replacement disabling + religious limit). `type=full` adds the full
+		// per-cell `all[]`; default = divergence triage (cap 250) + summary. Game thread; parsed-availability cached.
+		if (strcmp(szAction, "dormancySweep") == 0)
+		{
+			const bool bFull = (strcmp(szType, "full") == 0);
+			const int iNum = GC.getNumBuildingInfos();
+			std::vector<CvEntityAvailability> aAvail(iNum);
+			std::vector<char> aState(iNum, 0); // 0 not tried, 1 parsed, 2 no JSON
+
+			int iCities = 0, iCells = 0, iAgree = 0, iDiv = 0;
+			picojson::value::array kDiv, kCells;
+			std::map<std::string, int> kHist; // UNCAPPED divergence histogram by "cascade|legacy" reason pair
+			int iCityIter = 0;
+			for (CvCity* pCity = kPlayer.firstCity(&iCityIter); pCity != NULL; pCity = kPlayer.nextCity(&iCityIter))
+			{
+				++iCities;
+				CvCascadeContext kCtx(iPlayer, pCity->getID());
+				for (int b = 0; b < iNum; ++b)
+				{
+					if (!pCity->hasBuilding((BuildingTypes)b)) continue;
+					if (aState[b] == 0)
+					{
+						std::string sN;
+						aState[b] = cascadeReadJsonAvailability(GC.getBuildingInfo((BuildingTypes)b).getType(), aAvail[b], sN) ? 1 : 2;
+					}
+					if (aState[b] != 1) continue;
+					++iCells;
+					bool bCA = false;
+					const char* szCascade = cascadeDormancyReason(aAvail[b], kCtx, bCA);
+					const bool bLA = pCity->hasFullyActiveBuilding((BuildingTypes)b);
+					const char* szLegacy = cascadeDormancyLegacyReason(pCity, b);
+					const char* szT = GC.getBuildingInfo((BuildingTypes)b).getType();
+					if (bCA == bLA) ++iAgree; else { ++iDiv; kHist[std::string("cascade=") + szCascade + "|legacy=" + szLegacy]++; }
+
+					if (bFull && kCells.size() < 4000)
+					{
+						picojson::value::object c;
+						c["city"] = picojson::value((double)pCity->getID());
+						c["type"] = picojson::value(std::string(szT));
+						c["cascadeActive"] = picojson::value(bCA);
+						c["legacyActive"] = picojson::value(bLA);
+						c["cascadeReason"] = picojson::value(std::string(szCascade));
+						c["legacyReason"] = picojson::value(std::string(szLegacy));
+						kCells.push_back(picojson::value(c));
+					}
+					if (bCA != bLA && kDiv.size() < 250)
+					{
+						picojson::value::object e;
+						e["city"] = picojson::value((double)pCity->getID());
+						e["type"] = picojson::value(std::string(szT));
+						e["cascadeActive"] = picojson::value(bCA);
+						e["legacyActive"] = picojson::value(bLA);
+						e["cascadeReason"] = picojson::value(std::string(szCascade));
+						e["legacyReason"] = picojson::value(std::string(szLegacy));
+						kDiv.push_back(picojson::value(e));
+					}
+				}
+			}
+			o["cities"] = picojson::value((double)iCities);
+			o["builtCells"] = picojson::value((double)iCells);
+			o["agree"] = picojson::value((double)iAgree);
+			o["diverge"] = picojson::value((double)iDiv);
+			picojson::value::object kHistO;
+			for (std::map<std::string,int>::const_iterator it = kHist.begin(); it != kHist.end(); ++it)
+				kHistO[it->first] = picojson::value((double)it->second);
+			o["reasonHistogram"] = picojson::value(kHistO); // UNCAPPED divergence histogram
+			o["divergences"] = picojson::value(kDiv);
+			if (bFull) o["all"] = picojson::value(kCells);
+			return CvString(picojson::value(o).serialize().c_str());
+		}
+
+		// GAME-STATE dump (§A victory-progress gap #1): end-detection + victory countdowns so an autoplay agent can tell
+		// the game is OVER and why -- without it the run has no terminal signal. No type needed. Game thread; const reads.
+		if (strcmp(szAction, "game") == 0)
+		{
+			CvGame& kG = GC.getGame(); // getGameTurn() is non-const
+			o["turn"] = picojson::value((double)kG.getGameTurn());
+			o["elapsedTurns"] = picojson::value((double)kG.getElapsedGameTurns());
+			o["maxTurns"] = picojson::value((double)kG.getMaxTurns());
+			o["gameState"] = picojson::value((double)(int)kG.getGameState()); // 0 ON, 1 OVER, 2 EXTENDED
+			o["gameOver"] = picojson::value(kG.getGameState() == GAMESTATE_OVER);
+			o["winnerTeam"] = picojson::value((double)(int)kG.getWinner());
+			o["victory"] = picojson::value((double)(int)kG.getVictory());
+			o["era"] = picojson::value((double)(int)kG.getCurrentEra());
+			// per-valid-victory countdown for the requested player's team (>=0 means in progress / triggered)
+			picojson::value::object kVic;
+			for (int v = 0; v < GC.getNumVictoryInfos(); ++v)
+			{
+				if (!kG.isVictoryValid((VictoryTypes)v)) continue;
+				const int iCd = GET_TEAM((TeamTypes)iTeam).getVictoryCountdown((VictoryTypes)v);
+				kVic[CvString::format("%d", v).c_str()] = picojson::value((double)iCd);
+			}
+			o["victoryCountdownThisTeam"] = picojson::value(kVic);
+			return CvString(picojson::value(o).serialize().c_str());
+		}
+
 		const int iIdx = GC.getInfoTypeForString(szType, true);
 		if (iIdx < 0)
 		{
@@ -845,6 +1022,21 @@ namespace
 				if (!bonuses.empty()) o["unitBonusPrereqs"] = picojson::value(bonuses);
 			}
 			sNotes = "legacy canTrain inputs (obsolete/prereq/forceUpgrade/superseding/plot/bonus)";
+		}
+		else if (strcmp(szAction, "tally") == 0)
+		{
+			// COUNT reconstruction (state-mapping gap #2): the cascade tally's count for this BUILDING_/UNIT_ at all three
+			// cross-city scopes + the legacy engine count, so empire/team/world totals are point-in-time readable.
+			const bool bUnit = (strncmp(szType, "UNIT_", 5) == 0);
+			const CountDomain eDom = bUnit ? COUNTDOMAIN_UNIT : COUNTDOMAIN_BUILDING;
+			CvCascadeContext kCtx(iPlayer, iCityId);
+			picojson::value::object t;
+			t["world"]  = picojson::value((double)cascadeTally().count(eDom, iIdx, COUNTSCOPE_WORLD,  kCtx.contextFor(COUNTSCOPE_WORLD)));
+			t["team"]   = picojson::value((double)cascadeTally().count(eDom, iIdx, COUNTSCOPE_TEAM,   kCtx.contextFor(COUNTSCOPE_TEAM)));
+			t["empire"] = picojson::value((double)cascadeTally().count(eDom, iIdx, COUNTSCOPE_EMPIRE, kCtx.contextFor(COUNTSCOPE_EMPIRE)));
+			o["domain"] = picojson::value(std::string(bUnit ? "unit" : "building"));
+			o["tally"] = picojson::value(t);
+			sNotes = "cascade tally counts at world/team/empire (this player's team/empire)";
 		}
 		else
 		{
@@ -1046,9 +1238,15 @@ namespace
 				"\"/diagnostic/canResearch?type=TECH_X&player=N\","
 				"\"/diagnostic/canDoCivics?type=CIVIC_X&player=N\","
 				"\"/diagnostic/canCreate?type=PROJECT_X&player=N\","
-				"\"/diagnostic/canMaintain?type=PROCESS_X&player=N\"],"
+				"\"/diagnostic/canMaintain?type=PROCESS_X&player=N\","
+				"\"/diagnostic/sweep?type=buildings|units&player=N\","
+				"\"/diagnostic/placementSweep?type=full&player=N\","
+				"\"/diagnostic/dormancySweep?type=full&player=N\","
+				"\"/diagnostic/game?player=N\","
+				"\"/diagnostic/tally?type=BUILDING_X|UNIT_X&player=N\"],"
 				"\"note\":\"player defaults to the active player; evaluated against the current game state, "
-				"no construction performed; canConstruct also returns the cascade verdict + cap shadow\"}\n"),
+				"no construction performed; canConstruct also returns the cascade verdict + cap shadow; "
+				"placementSweep is the auto-placement maintainer shadow (cascade-would-place vs legacy presence)\"}\n"),
 				snapshotTurn());
 		}
 		else if (strncmp(szTarget, "/diagnostic/", 12) == 0)
@@ -1082,7 +1280,10 @@ namespace
 				}
 				szTok = szNext;
 			}
-			if (szType[0] == '\0')
+			// type= is required for the per-type gate actions; the roster sweeps + the game-state dump need none.
+			const bool bNoTypeAction = (strcmp(szAction, "placementSweep") == 0
+				|| strcmp(szAction, "dormancySweep") == 0 || strcmp(szAction, "game") == 0);
+			if (szType[0] == '\0' && !bNoTypeAction)
 			{
 				sendResponse(sock, "400 Bad Request", "application/json",
 					CvString("{\"error\":\"missing required query param: type=PREFIX_NAME\"}\n"), snapshotTurn());

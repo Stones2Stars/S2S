@@ -13,6 +13,98 @@
 #include "CvSelectionGroup.h"
 #include "CvSelectionGroupAI.h"
 #include "CvUnitAI.h"
+#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route HAI lines through the event spine (pilot domain)
+
+// ---------------------------------------------------------------------------
+// #430 logging pilot: HAI -> the event spine. Each line is a constant PREFIX ([HAI/...] + constant labels) keyed by an
+// event id, plus variable name=value fields rendered by the spine's logging consumer. The domain SELF-REGISTERS its
+// prefix provider so the spine stays domain-agnostic (Clean-Architecture isolation; no spine file ever names HAI).
+// Shadow discipline: these emits run ALONGSIDE the existing logHunterAI calls (diff on /events, then cut the old).
+// ⚑ NAME FLAG (future cleanup, separate dragon): "HunterAI" is the per-player module for EVERY unit that roams to
+// attack/hunt (any aggressive UNITAI). It is NOT bound to UNITAI_HUNTER and NOT specific to the Hunter UNIT. In the
+// pluggable-per-UNITAI direction we're heading, the name wrongly implies a UNITAI_HUNTER-bound routine; it should be
+// renamed to reflect the actual "roaming-attacker behaviour" (the [HAI] tag travels with it -- trivially renamed here).
+namespace
+{
+	enum HaiEvent
+	{
+		HAI_BEGIN_HUNTER = 0,    // [HAI/begin] phase=hunterMove
+		HAI_BEGIN_AUTOHUNT,      // [HAI/begin] phase=autoHunt
+		HAI_SPIN,                // [HAI/spin] result=stuckEndTurn
+		HAI_ENGAGE_KILL,         // [HAI/engage] action=adjacentKill
+		HAI_END_HUNTER,          // [HAI/end] phase=hunterMove result=skip
+		HAI_END_AUTOHUNT,        // [HAI/end] phase=autoHunt result=skip
+		HAI_HEAL_SAFETY,         // [HAI/heal] action=safety
+		HAI_HEAL_HEAL,           // [HAI/heal] action=heal
+		HAI_HEAL_SAFETY3,        // [HAI/heal] action=safety3
+		HAI_ESCORT_MERGE,        // [HAI/escort] action=mergeEscort
+		HAI_ESCORT_ADVERTISE,    // [HAI/escort] action=advertiseEscort
+		HAI_SCRAP_REVERT_OWNED,  // [HAI/scrap] action=revertAI reason=owned (+owned)
+		HAI_SCRAP_REVERT_DEFICIT,// [HAI/scrap] action=revertAI reason=deficit (+deficitPct)
+		HAI_SCRAP_FINANCIAL,     // [HAI/scrap] action=scrap reason=financial (+has +needed)
+		HAI_SPREAD_REFRESH,      // [HAI/spread] action=refreshExplore
+		HAI_SPREAD_BORDERS,      // [HAI/spread] action=borders
+		HAI_SPREAD_PATROL,       // [HAI/spread] action=patrol
+		HAI_ENGAGE_SEAAREA,      // [HAI/engage] action=seaAreaAttack
+		HAI_ENGAGE_BLOCKADE,     // [HAI/engage] action=blockade
+		HAI_EXPLORE_GENERIC,     // [HAI/explore] action=exploreGeneric
+		HAI_EXPLORE_SEAKEEP,     // [HAI/explore] action=seaExploreKeep (+x +y = the kept-to coords)
+		HAI_EXPLORE_SEA          // [HAI/explore] action=seaExplore (+x +y = the to coords)
+	};
+	const char* hunterLinePrefix(int iEventId)
+	{
+		switch (iEventId)
+		{
+		case HAI_BEGIN_HUNTER:    return "[HAI/begin] phase=hunterMove";
+		case HAI_BEGIN_AUTOHUNT:  return "[HAI/begin] phase=autoHunt";
+		case HAI_SPIN:            return "[HAI/spin] result=stuckEndTurn";
+		case HAI_ENGAGE_KILL:     return "[HAI/engage] action=adjacentKill";
+		case HAI_END_HUNTER:      return "[HAI/end] phase=hunterMove result=skip";
+		case HAI_END_AUTOHUNT:    return "[HAI/end] phase=autoHunt result=skip";
+		case HAI_HEAL_SAFETY:     return "[HAI/heal] action=safety";
+		case HAI_HEAL_HEAL:       return "[HAI/heal] action=heal";
+		case HAI_HEAL_SAFETY3:    return "[HAI/heal] action=safety3";
+		case HAI_ESCORT_MERGE:    return "[HAI/escort] action=mergeEscort";
+		case HAI_ESCORT_ADVERTISE:return "[HAI/escort] action=advertiseEscort";
+		case HAI_SCRAP_REVERT_OWNED:   return "[HAI/scrap] action=revertAI reason=owned";
+		case HAI_SCRAP_REVERT_DEFICIT: return "[HAI/scrap] action=revertAI reason=deficit";
+		case HAI_SCRAP_FINANCIAL: return "[HAI/scrap] action=scrap reason=financial";
+		case HAI_SPREAD_REFRESH:  return "[HAI/spread] action=refreshExplore";
+		case HAI_SPREAD_BORDERS:  return "[HAI/spread] action=borders";
+		case HAI_SPREAD_PATROL:   return "[HAI/spread] action=patrol";
+		case HAI_ENGAGE_SEAAREA:  return "[HAI/engage] action=seaAreaAttack";
+		case HAI_ENGAGE_BLOCKADE: return "[HAI/engage] action=blockade";
+		case HAI_EXPLORE_GENERIC: return "[HAI/explore] action=exploreGeneric";
+		case HAI_EXPLORE_SEAKEEP: return "[HAI/explore] action=seaExploreKeep";
+		case HAI_EXPLORE_SEA:     return "[HAI/explore] action=seaExplore";
+		default:                  return NULL;
+		}
+	}
+	// HAI's LOCAL field tags (all plain ints). The resolver maps tag -> name; the spine never sees these.
+	enum HaiField { HF_owner = 0, HF_unit, HF_aitype, HF_automate, HF_withCmd, HF_x, HF_y, HF_stack, HF_owned, HF_deficitPct, HF_has, HF_needed };
+	const char* hunterFieldInfo(int iFieldTag, SpineFieldType* peType)
+	{
+		*peType = SFT_INT;
+		switch (iFieldTag)
+		{
+		case HF_owner:      return "owner";
+		case HF_unit:       return "unit";
+		case HF_aitype:     return "aitype";
+		case HF_automate:   return "automate";
+		case HF_withCmd:    return "withCmd";
+		case HF_x:          return "x";
+		case HF_y:          return "y";
+		case HF_stack:      return "stack";
+		case HF_owned:      return "owned";
+		case HF_deficitPct: return "deficitPct";
+		case HF_has:        return "has";
+		case HF_needed:     return "needed";
+		default:            return NULL;
+		}
+	}
+	struct HunterLogRegistrar { HunterLogRegistrar() { spineRegisterDomain(SD_HUNTER, &hunterLinePrefix, "HunterAI.log", &hunterFieldInfo); } };
+	HunterLogRegistrar s_hunterLogRegistrar; // static-init registration (g_domains is zero-init first; safe)
+}
 
 // ---------------------------------------------------------------------------
 // Lifecycle & claim ledger.
@@ -51,6 +143,8 @@ bool CvHunterAI::detectSpin(CvUnitAI* unit)
 		return false;
 	}
 	logHunterAI(1, "[HAI/spin] unit=%d stuck at (%d,%d) -> end turn", unit->getID(), unit->getX(), unit->getY());
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_SPIN, 1)
+		.addI(HF_unit, unit->getID()).addI(HF_x, unit->getX()).addI(HF_y, unit->getY()));
 	unit->finishMoves();
 	unit->getGroup()->pushMission(MISSION_SKIP);
 	return true;
@@ -101,6 +195,10 @@ bool CvHunterAI::hunterMove(CvUnitAI* unit, bool bWithCommander)
 
 	logHunterAI(1, "[HAI/begin] hunterMove owner=%d unit=%d aitype=%d automate=%d withCmd=%d at=(%d,%d) stack=%d",
 		unit->getOwner(), unit->getID(), unit->AI_getUnitAIType(), unit->getGroup()->getAutomateType(), (int)bWithCommander, unit->getX(), unit->getY(), unit->getGroup()->getNumUnits());
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_BEGIN_HUNTER, 1)
+		.addI(HF_owner, unit->getOwner()).addI(HF_unit, unit->getID()).addI(HF_aitype, unit->AI_getUnitAIType())
+		.addI(HF_automate, unit->getGroup()->getAutomateType()).addI(HF_withCmd, (int)bWithCommander)
+		.addI(HF_x, unit->getX()).addI(HF_y, unit->getY()).addI(HF_stack, unit->getGroup()->getNumUnits()));
 
 	if (detectSpin(unit))
 	{
@@ -149,6 +247,7 @@ bool CvHunterAI::hunterMove(CvUnitAI* unit, bool bWithCommander)
 			if (unit->AI_safety())
 			{
 				logHunterAI(2, "[HAI/heal] unit=%d action=safety", unit->getID());
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_HEAL_SAFETY, 2).addI(HF_unit, unit->getID()));
 				return true;
 			}
 		}
@@ -158,6 +257,7 @@ bool CvHunterAI::hunterMove(CvUnitAI* unit, bool bWithCommander)
 		{
 			OutputDebugString(CvString::format("	...healing at (%d,%d)\n", unit->getX(), unit->getY()).c_str());
 			logHunterAI(2, "[HAI/heal] unit=%d action=heal", unit->getID());
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_HEAL_HEAL, 2).addI(HF_unit, unit->getID()));
 			return true;
 		}
 
@@ -167,6 +267,7 @@ bool CvHunterAI::hunterMove(CvUnitAI* unit, bool bWithCommander)
 			if (unit->AI_safety(3))
 			{
 				logHunterAI(2, "[HAI/heal] unit=%d action=safety3", unit->getID());
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_HEAL_SAFETY3, 2).addI(HF_unit, unit->getID()));
 				return true;
 			}
 		}
@@ -189,6 +290,7 @@ bool CvHunterAI::hunterMove(CvUnitAI* unit, bool bWithCommander)
 		{
 			//return;
 			logHunterAI(2, "[HAI/escort] unit=%d merge with hunter escort", unit->getID());
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_ESCORT_MERGE, 2).addI(HF_unit, unit->getID()));
 
 			//if Hunter if not the group Head, trick to obtain it
 			if (unit->getGroup()->getNumUnits() == 2)
@@ -238,6 +340,7 @@ bool CvHunterAI::hunterMove(CvUnitAI* unit, bool bWithCommander)
 	if (unit->AI_huntRange(1, iMinimumOdds, false, 0, /*bRawOdds*/true))
 	{
 		logHunterAI(1, "[HAI/engage] unit=%d adjacent kill", unit->getID());
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_ENGAGE_KILL, 1).addI(HF_unit, unit->getID()));
 		return true;
 	}
 
@@ -254,6 +357,7 @@ bool CvHunterAI::hunterMove(CvUnitAI* unit, bool bWithCommander)
 		if (iOwnedHunters > 5)
 		{
 			logHunterAI(2, "[HAI/scrap] unit=%d revert AI (owned=%d)", unit->getID(), iOwnedHunters);
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_SCRAP_REVERT_OWNED, 2).addI(HF_unit, unit->getID()).addI(HF_owned, iOwnedHunters));
 			unit->AI_setUnitAIType(unit->getUnitInfo().getDefaultUnitAIType());
 			return true;
 		}
@@ -265,6 +369,7 @@ bool CvHunterAI::hunterMove(CvUnitAI* unit, bool bWithCommander)
 			if (iHunterDeficitPercent <= 80)
 			{
 				logHunterAI(2, "[HAI/scrap] unit=%d revert AI (deficit=%d%%)", unit->getID(), iHunterDeficitPercent);
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_SCRAP_REVERT_DEFICIT, 2).addI(HF_unit, unit->getID()).addI(HF_deficitPct, iHunterDeficitPercent));
 				unit->AI_setUnitAIType(unit->getUnitInfo().getDefaultUnitAIType());
 				return true;
 			}
@@ -297,6 +402,7 @@ bool CvHunterAI::hunterMove(CvUnitAI* unit, bool bWithCommander)
 			);
 
 			logHunterAI(2, "[HAI/escort] unit=%d advertise hunter-escort work", unit->getID());
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_ESCORT_ADVERTISE, 2).addI(HF_unit, unit->getID()));
 			// Limited operations gravitating close to borders while waiting.
 			if (unit->exposedToDanger(unit->plot(), 90))
 			{
@@ -395,6 +501,7 @@ bool CvHunterAI::hunterMove(CvUnitAI* unit, bool bWithCommander)
 		if (iHasHunters > iNeededHunters)
 		{
 			logHunterAI(2, "[HAI/scrap] unit=%d scrap (has=%d needed=%d financial)", unit->getID(), iHasHunters, iNeededHunters);
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_SCRAP_FINANCIAL, 2).addI(HF_unit, unit->getID()).addI(HF_has, iHasHunters).addI(HF_needed, iNeededHunters));
 			unit->scrap();
 			return true;
 		}
@@ -403,18 +510,21 @@ bool CvHunterAI::hunterMove(CvUnitAI* unit, bool bWithCommander)
 	if (unit->AI_refreshExploreRange(3, true, /*bAvoidRivalTerritory*/ true))
 	{
 		logHunterAI(2, "[HAI/spread] unit=%d action=refreshExplore", unit->getID());
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_SPREAD_REFRESH, 2).addI(HF_unit, unit->getID()));
 		return true;
 	}
 
 	if (unit->AI_moveToBorders())
 	{
 		logHunterAI(2, "[HAI/spread] unit=%d action=borders", unit->getID());
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_SPREAD_BORDERS, 2).addI(HF_unit, unit->getID()));
 		return true;
 	}
 
 	if (unit->AI_patrol())
 	{
 		logHunterAI(2, "[HAI/spread] unit=%d action=patrol", unit->getID());
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_SPREAD_PATROL, 2).addI(HF_unit, unit->getID()));
 		return true;
 	}
 
@@ -430,6 +540,7 @@ bool CvHunterAI::hunterMove(CvUnitAI* unit, bool bWithCommander)
 
 	unit->getGroup()->pushMission(MISSION_SKIP);
 	logHunterAI(1, "[HAI/end] hunterMove unit=%d result=skip", unit->getID());
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_END_HUNTER, 1).addI(HF_unit, unit->getID()));
 	return true;
 }
 
@@ -447,6 +558,10 @@ bool CvHunterAI::autoHuntMove(CvUnitAI* unit)
 
 	logHunterAI(1, "[HAI/begin] autoHuntMove owner=%d unit=%d aitype=%d automate=%d at=(%d,%d) stack=%d",
 		unit->getOwner(), unit->getID(), unit->AI_getUnitAIType(), unit->getGroup()->getAutomateType(), unit->getX(), unit->getY(), unit->getGroup()->getNumUnits());
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_BEGIN_AUTOHUNT, 1)
+		.addI(HF_owner, unit->getOwner()).addI(HF_unit, unit->getID()).addI(HF_aitype, unit->AI_getUnitAIType())
+		.addI(HF_automate, unit->getGroup()->getAutomateType())
+		.addI(HF_x, unit->getX()).addI(HF_y, unit->getY()).addI(HF_stack, unit->getGroup()->getNumUnits()));
 
 	if (detectSpin(unit))
 	{
@@ -464,16 +579,19 @@ bool CvHunterAI::autoHuntMove(CvUnitAI* unit)
 		if (unit->exposedToDanger(unit->plot(), 75) && unit->AI_safety())
 		{
 			logHunterAI(2, "[HAI/heal] unit=%d action=safety", unit->getID());
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_HEAL_SAFETY, 2).addI(HF_unit, unit->getID()));
 			return true;
 		}
 		if (unit->AI_heal())
 		{
 			logHunterAI(2, "[HAI/heal] unit=%d action=heal", unit->getID());
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_HEAL_HEAL, 2).addI(HF_unit, unit->getID()));
 			return true;
 		}
 		if (unit->getGroup()->getWorstDamagePercent() > 25 && unit->AI_safety(3))
 		{
 			logHunterAI(2, "[HAI/heal] unit=%d action=safety3", unit->getID());
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_HEAL_SAFETY3, 2).addI(HF_unit, unit->getID()));
 			return true;
 		}
 	}
@@ -487,6 +605,7 @@ bool CvHunterAI::autoHuntMove(CvUnitAI* unit)
 	if (unit->AI_huntRange(1, iMinimumOdds, false, 0, /*bRawOdds*/true))
 	{
 		logHunterAI(1, "[HAI/engage] unit=%d adjacent kill", unit->getID());
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_ENGAGE_KILL, 1).addI(HF_unit, unit->getID()));
 		return true;
 	}
 
@@ -513,11 +632,13 @@ bool CvHunterAI::autoHuntMove(CvUnitAI* unit)
 		if (unit->AI_seaAreaAttack())
 		{
 			logHunterAI(1, "[HAI/engage] unit=%d action=seaAreaAttack", unit->getID());
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_ENGAGE_SEAAREA, 1).addI(HF_unit, unit->getID()));
 			return true;
 		}
 		if (unit->AI_blockade())
 		{
 			logHunterAI(1, "[HAI/engage] unit=%d action=blockade", unit->getID());
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_ENGAGE_BLOCKADE, 1).addI(HF_unit, unit->getID()));
 			return true;
 		}
 		// Nothing in reach to engage. Ships have the movement to go looking, so explore for new
@@ -531,6 +652,7 @@ bool CvHunterAI::autoHuntMove(CvUnitAI* unit)
 		if (unit->AI_explore())
 		{
 			logHunterAI(2, "[HAI/explore] unit=%d action=exploreGeneric", unit->getID());
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_EXPLORE_GENERIC, 2).addI(HF_unit, unit->getID()));
 			return true;
 		}
 	}
@@ -539,12 +661,14 @@ bool CvHunterAI::autoHuntMove(CvUnitAI* unit)
 	if (unit->AI_moveToBorders())
 	{
 		logHunterAI(2, "[HAI/spread] unit=%d action=borders", unit->getID());
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_SPREAD_BORDERS, 2).addI(HF_unit, unit->getID()));
 		return true;
 	}
 
 	if (unit->AI_patrol())
 	{
 		logHunterAI(2, "[HAI/spread] unit=%d action=patrol", unit->getID());
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_SPREAD_PATROL, 2).addI(HF_unit, unit->getID()));
 		return true;
 	}
 
@@ -560,6 +684,7 @@ bool CvHunterAI::autoHuntMove(CvUnitAI* unit)
 
 	unit->getGroup()->pushMission(MISSION_SKIP);
 	logHunterAI(1, "[HAI/end] autoHuntMove unit=%d result=skip", unit->getID());
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_END_AUTOHUNT, 1).addI(HF_unit, unit->getID()));
 	return true;
 }
 
@@ -609,6 +734,7 @@ bool CvHunterAI::seaExplore(CvUnitAI* unit)
 			{
 				tryClaim(GC.getMap().plotNum(pPrev->getX(), pPrev->getY()), unit->getID());
 				logHunterAI(2, "[HAI/explore] unit=%d action=seaExploreKeep to=(%d,%d)", unit->getID(), pPrev->getX(), pPrev->getY());
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_EXPLORE_SEAKEEP, 2).addI(HF_unit, unit->getID()).addI(HF_x, pPrev->getX()).addI(HF_y, pPrev->getY()));
 				unit->getGroup()->pushMission(MISSION_MOVE_TO, pPrev->getX(), pPrev->getY(),
 					MOVE_NO_ENEMY_TERRITORY | MOVE_AVOID_ENEMY_UNITS, false, false, MISSIONAI_EXPLORE, pPrev);
 				return true;
@@ -681,6 +807,7 @@ bool CvHunterAI::seaExplore(CvUnitAI* unit)
 	CvPlot* pBestPlot = GC.getMap().plotByIndex(iBestPlotIdx);
 	tryClaim(iBestPlotIdx, unit->getID());
 	logHunterAI(1, "[HAI/explore] unit=%d action=seaExplore to=(%d,%d)", unit->getID(), pBestPlot->getX(), pBestPlot->getY());
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_EXPLORE_SEA, 1).addI(HF_unit, unit->getID()).addI(HF_x, pBestPlot->getX()).addI(HF_y, pBestPlot->getY()));
 	unit->getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX(), pBestPlot->getY(),
 		MOVE_NO_ENEMY_TERRITORY | MOVE_AVOID_ENEMY_UNITS, false, false, MISSIONAI_EXPLORE, pBestPlot);
 	return true;

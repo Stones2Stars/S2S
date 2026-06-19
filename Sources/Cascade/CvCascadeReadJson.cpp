@@ -19,6 +19,9 @@
 #include "CvCity.h"
 #include "CvInfos.h"         // GC.getTechInfo (type strings for the obsoletion scan)
 #include "CvBuildingInfo.h"
+#include "Repos/BuildingsRepo.h"  // autoBuildings() -- the bAutoBuild loop's roster (auto-placement shadow B-i)
+#include "Infos/CvPropertyInfo.h" // getPropertyBuildings() -- checkPropertyBuildings' band roster (auto-placement shadow B-i)
+#include "CvProperties.h"         // PropertyBuilding (the band struct)
 #include "BetterBTSAI.h"     // gPlayerLogLevel, streamLogTee
 #include <fstream>
 #include <sstream>
@@ -62,6 +65,7 @@ namespace
 		if (rjHasPrefix(s, "RELIGION_"))    { eOut = ATOMDOMAIN_RELIGION;    return true; }
 		if (rjHasPrefix(s, "CORPORATION_")) { eOut = ATOMDOMAIN_CORPORATION; return true; }
 		if (rjHasPrefix(s, "HERITAGE_"))    { eOut = ATOMDOMAIN_HERITAGE;    return true; }
+		if (rjHasPrefix(s, "PROPERTY_"))    { eOut = ATOMDOMAIN_PROPERTY;    return true; }
 		return false;
 	}
 
@@ -150,7 +154,10 @@ namespace
 		it = o.find("connection");
 		if (it != o.end() && it->second.is<std::string>()) rjConn(it->second.get<std::string>(), eConn);
 
-		int iMin = 1, iMax = -1;
+		// iMin default 1 = "presence" for count atoms; a PROPERTY band has no presence semantics, so a max-only band
+		// (e.g. disease <= 50) defaults to NO lower bound rather than >=1.
+		int iMin = (eDomain == ATOMDOMAIN_PROPERTY) ? -2000000000 : 1;
+		int iMax = -1;
 		it = o.find("min"); if (it != o.end() && it->second.is<double>()) iMin = (int)it->second.get<double>();
 		it = o.find("max"); if (it != o.end() && it->second.is<double>()) iMax = (int)it->second.get<double>();
 
@@ -417,6 +424,8 @@ bool cascadeReadJsonAvailability(const char* szTypeKey, CvEntityAvailability& kO
 		if (itSp != oId.end() && itSp->second.is<bool>()) kOut.spawnOnly = itSp->second.get<bool>();
 		picojson::object::const_iterator itNc = oId.find("notConstructible");
 		if (itNc != oId.end() && itNc->second.is<bool>()) kOut.notConstructible = itNc->second.get<bool>();
+		picojson::object::const_iterator itAb = oId.find("autoBuild");
+		if (itAb != oId.end() && itAb->second.is<bool>()) kOut.autoBuild = itAb->second.get<bool>();
 	}
 
 	std::ostringstream ss;
@@ -847,4 +856,240 @@ void cascadeReadJsonSlice()
 
 	rjRunOne("BUILDING_ABU_SIMBEL", iCtx);          // allowed:{world:1} + disabled:IS_CAPITAL + any:[HAS_TERRAIN(PEAK)]
 	rjRunOne("BUILDING_ACUPUNCTURISTS_SHOP", iCtx); // requires.build.all: BUILDING_C_L_ASIAN @ city
+}
+
+// ===================== §14 H AUTO-PLACEMENT SHADOW (B-i) =====================
+
+void cascadeAutoPlacedRoster(std::vector<int>& outBuildings, std::vector<int>& outKind)
+{
+	outBuildings.clear();
+	outKind.clear();
+	const int iNum = GC.getNumBuildingInfos();
+	std::vector<int> aKind(iNum, 0); // per-building bitmask: bit0 (1) = bAutoBuild loop, bit1 (2) = property-band
+
+	// (1) the per-turn bAutoBuild loop (CvCity::doAutobuild, BuildingsRepo::autoBuildings)
+	const std::vector<BuildingTypes>& aAuto = BuildingsRepo::get().autoBuildings();
+	for (size_t i = 0; i < aAuto.size(); ++i)
+	{
+		const int b = (int)aAuto[i];
+		if (b >= 0 && b < iNum) aKind[b] |= 1;
+	}
+	// (2) the per-turn property-band system (CvCity::checkPropertyBuildings; each property's PropertyBuildings)
+	for (int iP = 0; iP < GC.getNumPropertyInfos(); ++iP)
+	{
+		const std::vector<PropertyBuilding>& aPB = GC.getPropertyInfo((PropertyTypes)iP).getPropertyBuildings();
+		for (size_t i = 0; i < aPB.size(); ++i)
+		{
+			const int b = (int)aPB[i].eBuilding;
+			if (b >= 0 && b < iNum) aKind[b] |= 2;
+		}
+	}
+	for (int b = 0; b < iNum; ++b)
+	{
+		if (aKind[b] != 0) { outBuildings.push_back(b); outKind.push_back(aKind[b]); }
+	}
+}
+
+const char* cascadePlacementReason(int iBuilding, const CvEntityAvailability& kA,
+	const CvCascadeContext& kCtx, int iTeam, bool& bCascadeWouldPlace)
+{
+	bCascadeWouldPlace = false;
+	if (!kA.autoBuild) return "noMarker"; // no cascade auto-placement marker (un-migrated, e.g. property-band building)
+	if (cascadeIsObsoleteForTeam(COUNTDOMAIN_BUILDING, iBuilding, iTeam)) return "obsolete";
+	if (cascadeIsReplacedInCity(iBuilding, kCtx)) return "replaced";
+	if (!cascadeBuildingGroupAllows(iBuilding, kCtx)) return "groupCap";
+	if (!cascadeEvalCondition(kA.requiresBuild, kCtx)) return "requiresBuild";
+	if (!cascadeEvalCondition(kA.requiresOperate, kCtx)) return "requiresOperate";
+	if (!cascadeWithinAllowed(COUNTDOMAIN_BUILDING, iBuilding, kA.allowedScope, kA.allowedCap, kCtx)) return "allowedCap";
+	bCascadeWouldPlace = true;
+	return "place";
+}
+
+void cascadePlacementShadow()
+{
+	if (gPlayerLogLevel < 1) return;
+
+	int iCtx = (int)GC.getGame().getActivePlayer();
+	if (iCtx < 0 || iCtx >= MAX_PLAYERS || !GET_PLAYER((PlayerTypes)iCtx).isAlive())
+	{
+		iCtx = -1;
+		for (int p = 0; p < MAX_PLAYERS; ++p)
+		{
+			if (GET_PLAYER((PlayerTypes)p).isAlive()) { iCtx = p; break; }
+		}
+	}
+	if (iCtx < 0) return;
+
+	CvPlayer& kP = GET_PLAYER((PlayerTypes)iCtx);
+	const int iTeam = (int)kP.getTeam();
+
+	std::vector<int> aRoster, aKind;
+	cascadeAutoPlacedRoster(aRoster, aKind);
+
+	// Parse each roster building's availability ONCE this turn (file IO), reuse across all the player's cities.
+	std::vector<CvEntityAvailability> aAvail(aRoster.size());
+	std::vector<char> aParsed(aRoster.size(), 0);
+	for (size_t i = 0; i < aRoster.size(); ++i)
+	{
+		std::string sN;
+		aParsed[i] = cascadeReadJsonAvailability(GC.getBuildingInfo((BuildingTypes)aRoster[i]).getType(), aAvail[i], sN) ? 1 : 0;
+	}
+
+	int iCities = 0, iCells = 0, iDiv = 0;
+	int iIter = 0;
+	for (CvCity* pCity = kP.firstCity(&iIter); pCity != NULL; pCity = kP.nextCity(&iIter))
+	{
+		++iCities;
+		CvCascadeContext kCtx(iCtx, pCity->getID());
+		for (size_t i = 0; i < aRoster.size(); ++i)
+		{
+			if (!aParsed[i]) continue;
+			++iCells;
+			const int b = aRoster[i];
+			bool bCascade = false;
+			const char* szReason = cascadePlacementReason(b, aAvail[i], kCtx, iTeam, bCascade);
+			const bool bLegacy = pCity->hasBuilding((BuildingTypes)b);
+			if (bCascade != bLegacy)
+			{
+				++iDiv;
+				if (gPlayerLogLevel >= 2)
+				{
+					rjLogLine(CvString::format("[PLACEMENT] DIVERGE p=%d city=%d %s kind=%d cascade=%d legacy=%d reason=%s",
+						iCtx, pCity->getID(), GC.getBuildingInfo((BuildingTypes)b).getType(),
+						aKind[i], bCascade ? 1 : 0, bLegacy ? 1 : 0, szReason));
+				}
+			}
+		}
+	}
+	rjLogLine(CvString::format("[PLACEMENT] p=%d roster=%d cities=%d cells=%d diverge=%d",
+		iCtx, (int)aRoster.size(), iCities, iCells, iDiv));
+}
+
+// ===================== §14 H DORMANCY SHADOW (B-ii) =====================
+
+const char* cascadeDormancyReason(const CvEntityAvailability& kAvail, const CvCascadeContext& kCtx, bool& bCascadeActive)
+{
+	// A built thing stays active only while requires.operate holds (cascadeOperational); empty operate == always active.
+	bCascadeActive = cascadeOperational(kAvail, kCtx);
+	return bCascadeActive ? "active" : "requiresOperate";
+}
+
+const char* cascadeDormancyLegacyReason(const CvCity* pCity, int iBuilding)
+{
+	if (pCity == NULL) return "noCity";
+	if (pCity->isReligiouslyLimitedBuilding((BuildingTypes)iBuilding)) return "religiousLimit";
+	if (pCity->isDisabledBuilding((short)iBuilding)) return "disabled"; // resource / replacement-suppression
+	return "active";
+}
+
+void cascadeDormancyShadow()
+{
+	if (gPlayerLogLevel < 1) return;
+
+	int iCtx = (int)GC.getGame().getActivePlayer();
+	if (iCtx < 0 || iCtx >= MAX_PLAYERS || !GET_PLAYER((PlayerTypes)iCtx).isAlive())
+	{
+		iCtx = -1;
+		for (int p = 0; p < MAX_PLAYERS; ++p)
+		{
+			if (GET_PLAYER((PlayerTypes)p).isAlive()) { iCtx = p; break; }
+		}
+	}
+	if (iCtx < 0) return;
+
+	CvPlayer& kP = GET_PLAYER((PlayerTypes)iCtx);
+	const int iNum = GC.getNumBuildingInfos();
+
+	// Lazily parse each building's availability ONCE (a building present in many cities is parsed once), reused across cities.
+	std::vector<CvEntityAvailability> aAvail(iNum);
+	std::vector<char> aState(iNum, 0); // 0 = not tried, 1 = parsed OK, 2 = no JSON
+
+	int iCities = 0, iCells = 0, iDiv = 0;
+	int iIter = 0;
+	for (CvCity* pCity = kP.firstCity(&iIter); pCity != NULL; pCity = kP.nextCity(&iIter))
+	{
+		++iCities;
+		CvCascadeContext kCtx(iCtx, pCity->getID());
+		for (int b = 0; b < iNum; ++b)
+		{
+			if (!pCity->hasBuilding((BuildingTypes)b)) continue; // dormancy is about BUILT things only
+			if (aState[b] == 0)
+			{
+				std::string sN;
+				aState[b] = cascadeReadJsonAvailability(GC.getBuildingInfo((BuildingTypes)b).getType(), aAvail[b], sN) ? 1 : 2;
+			}
+			if (aState[b] != 1) continue;
+			++iCells;
+			bool bCascadeActive = false;
+			const char* szCascade = cascadeDormancyReason(aAvail[b], kCtx, bCascadeActive);
+			const bool bLegacyActive = pCity->hasFullyActiveBuilding((BuildingTypes)b);
+			if (bCascadeActive != bLegacyActive)
+			{
+				++iDiv;
+				if (gPlayerLogLevel >= 2)
+				{
+					rjLogLine(CvString::format("[DORMANCY] DIVERGE p=%d city=%d %s cascadeActive=%d legacyActive=%d cascade=%s legacy=%s",
+						iCtx, pCity->getID(), GC.getBuildingInfo((BuildingTypes)b).getType(),
+						bCascadeActive ? 1 : 0, bLegacyActive ? 1 : 0, szCascade, cascadeDormancyLegacyReason(pCity, b)));
+				}
+			}
+		}
+	}
+	rjLogLine(CvString::format("[DORMANCY] p=%d cities=%d builtCells=%d diverge=%d", iCtx, iCities, iCells, iDiv));
+}
+
+// ===================== LIVE STATE EVENT FEED (the "cameras") =====================
+
+void cascadeStateLog()
+{
+	if (gPlayerLogLevel < 1) return;
+
+	// [STATE/game] -- the terminal/era signal so an autoplay run is narratable + end-detectable from the wire.
+	// (Namespaced [STATE/*] to avoid the legacy BBAI [GAME] (GameInfo.log session header) + [DIP] (DiploAI.log) tags.)
+	{
+		CvGame& kG = GC.getGame();
+		rjLogLine(CvString::format("[STATE/game] turn=%d state=%d era=%d winnerTeam=%d victory=%d maxTurns=%d",
+			kG.getGameTurn(), (int)kG.getGameState(), (int)kG.getCurrentEra(),
+			(int)kG.getWinner(), (int)kG.getVictory(), kG.getMaxTurns()));
+	}
+
+	// [STATE/fin] -- the expense side of every economy (the AI_isFinancialTrouble gate especially), per alive player.
+	for (int p = 0; p < MAX_PLAYERS; ++p)
+	{
+		const CvPlayer& kP = GET_PLAYER((PlayerTypes)p);
+		if (!kP.isAlive()) continue;
+		rjLogLine(CvString::format("[STATE/fin] p=%d gold=%.0f rate=%d maint=%d civic=%d units=%.0f strike=%d finTrouble=%d",
+			p, (double)kP.getGold(), kP.calculateGoldRate(), kP.getTotalMaintenance(), kP.getCivicUpkeep(),
+			(double)kP.getFinalUnitUpkeep(), kP.isStrike() ? 1 : 0, kP.AI_isFinancialTrouble() ? 1 : 0));
+	}
+
+	if (gPlayerLogLevel < 2) return;
+
+	// [STATE/dip] attitude matrix + [STATE/city] per-city accumulation layer -- the detailed feed (opt-in at level 2; can be large).
+	for (int p = 0; p < MAX_PLAYERS; ++p)
+	{
+		const CvPlayerAI& kP = GET_PLAYER((PlayerTypes)p); // CvPlayerAI for AI_getAttitudeVal
+		if (!kP.isAlive()) continue;
+
+		CvString sAtt = CvString::format("[STATE/dip] p=%d att=", p);
+		for (int q = 0; q < MAX_PLAYERS; ++q)
+		{
+			if (q == p) continue;
+			if (!GET_PLAYER((PlayerTypes)q).isAlive()) continue;
+			sAtt += CvString::format("%d:%d ", q, kP.AI_getAttitudeVal((PlayerTypes)q));
+		}
+		rjLogLine(sAtt);
+
+		int iIter = 0;
+		for (CvCity* c = kP.firstCity(&iIter); c != NULL; c = kP.nextCity(&iIter))
+		{
+			rjLogLine(CvString::format(
+				"[STATE/city] p=%d id=%d pop=%d happy=%d unhappy=%d angry=%d disorder=%d occ=%d occT=%d hurryT=%d conscT=%d defyT=%d happyT=%d wltkd=%d good=%d bad=%d food=%d foodDiff=%d grow=%d gpp=%d cultRate=%d rels=%d",
+				p, c->getID(), c->getPopulation(),
+				c->happyLevel(), c->unhappyLevel(), c->angryPopulation(), c->isDisorder() ? 1 : 0, c->isOccupation() ? 1 : 0,
+				c->getOccupationTimer(), c->getHurryAngerTimer(), c->getConscriptAngerTimer(), c->getDefyResolutionAngerTimer(), c->getHappinessTimer(),
+				c->isWeLoveTheKingDay() ? 1 : 0, c->goodHealth(), c->badHealth(), c->getFood(), c->foodDifference(), c->growthThreshold(),
+				c->getGreatPeopleProgress(), c->getCommerceRate(COMMERCE_CULTURE), c->getReligionCount()));
+		}
+	}
 }

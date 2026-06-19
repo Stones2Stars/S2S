@@ -14,6 +14,7 @@
 #include "CvTeamAI.h"
 #include "CvUnit.h"
 #include "CvImprovementInfo.h"
+#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route GRP/COM/UNT lines through the event spine (shadow)
 
 // Public Functions...
 
@@ -81,8 +82,69 @@ namespace {
 		{
 			logGroupAI(2, "[GRP/split] owner=%d group=%d separated=%d",
 				(int)eOwner, iGroupId, iSeparated);
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_GROUP, 0 /*GRP_SPLIT*/, 2)
+				.addI(0 /*GF_owner*/, (int)eOwner).addI(1 /*GF_group*/, iGroupId).addI(2 /*GF_separated*/, iSeparated));
 		}
 	}
+}
+
+// ---------------------------------------------------------------------------
+// #430 logging: [GRP] group & army -> event spine (CvSelectionGroupAI / CvArmy).
+// Shadow discipline: emits run ALONGSIDE the existing logGroupAI calls (diff on /events, then cut the old).
+// SD_COM and SD_UNIT are registered in CvUnitAI.cpp; only SD_GROUP is registered here.
+// The local integer values for UNT_MISSION_ID / COM_ODDS_ID must match the enums defined in CvUnitAI.cpp.
+namespace
+{
+	enum GrpEvent
+	{
+		GRP_SPLIT = 0,  // [GRP/split]
+		GRP_ARMY,       // [GRP/army]
+		GRP_LEADER      // [GRP/leader]
+	};
+	const char* grpLinePrefix(int iEventId)
+	{
+		switch (iEventId)
+		{
+		case GRP_SPLIT:  return "[GRP/split]";
+		case GRP_ARMY:   return "[GRP/army]";
+		case GRP_LEADER: return "[GRP/leader]";
+		default:         return NULL;
+		}
+	}
+	enum GrpField
+	{
+		GF_owner = 0, GF_group, GF_separated,
+		GF_army, GF_mission, GF_leaderUnit, GF_x, GF_y, GF_targetX, GF_targetY,
+		GF_leaderGroup
+	};
+	const char* grpFieldInfo(int iFieldTag, SpineFieldType* peType)
+	{
+		*peType = SFT_INT;
+		switch (iFieldTag)
+		{
+		case GF_owner:      return "owner";
+		case GF_group:      return "group";
+		case GF_separated:  return "separated";
+		case GF_army:       return "army";
+		case GF_mission:    return "mission";
+		case GF_leaderUnit: return "leaderUnit";
+		case GF_x:          return "x";
+		case GF_y:          return "y";
+		case GF_targetX:    return "targetX";
+		case GF_targetY:    return "targetY";
+		case GF_leaderGroup:return "leaderGroup";
+		default:            return NULL;
+		}
+	}
+	struct GrpLogRegistrar { GrpLogRegistrar() { spineRegisterDomain(SD_GROUP, &grpLinePrefix, "GroupAI.log", &grpFieldInfo); } };
+	GrpLogRegistrar s_grpLogRegistrar;
+
+	// Local aliases matching CvUnitAI.cpp anonymous-namespace integer values (file-local enums cannot cross TUs).
+	// SD_COMBAT / SD_UNIT are registered in CvUnitAI.cpp; these emit to those registered domains using the same ids.
+	enum { COM_ODDS_ID = 4 };                  // == COM_ODDS in CvUnitAI.cpp
+	enum { CF_OWNER=0, CF_UNIT=1, CF_TARGETX=2, CF_TARGETY=3, CF_GOODNESS=7, CF_LEADWIN=8, CF_WIN=9 };
+	enum { UNT_MISSION_ID = 8 };               // == UNT_MISSION in CvUnitAI.cpp
+	enum { UF_OWNER=0, UF_UNIT=1, UF_UNITAI=16, UF_MISSIONAI=17, UF_TARGETX=18, UF_TARGETY=19, UF_STACK=5 };
 }
 
 
@@ -648,6 +710,10 @@ int CvSelectionGroupAI::AI_attackOdds(const CvPlot* pPlot, bool bPotentialEnemy,
 	logCombatAI(3, "[COM/odds] owner=%d unit=%d target=(%d,%d) goodness=%d leadWin=%d win=%d",
 		(int)getOwner(), getHeadUnit() ? getHeadUnit()->getID() : -1,
 		pPlot ? pPlot->getX() : -1, pPlot ? pPlot->getY() : -1, iResult, iLeadAttackerWinOdds, bIsWin ? 1 : 0);
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_COMBAT, COM_ODDS_ID, 3)
+		.addI(CF_OWNER, (int)getOwner()).addI(CF_UNIT, getHeadUnit() ? getHeadUnit()->getID() : -1)
+		.addI(CF_TARGETX, pPlot ? pPlot->getX() : -1).addI(CF_TARGETY, pPlot ? pPlot->getY() : -1)
+		.addI(CF_GOODNESS, iResult).addI(CF_LEADWIN, iLeadAttackerWinOdds).addI(CF_WIN, bIsWin ? 1 : 0));
 
 	return iResult;
 }
@@ -1179,6 +1245,11 @@ void CvSelectionGroupAI::AI_setMissionAI(MissionAITypes eNewMissionAI, const CvP
 		logUnitAI(2, "[UNT/mission] owner=%d unit=%d unitAI=%d missionAI=%d -> target=(%d,%d) stack=%d",
 			(int)getOwner(), pHead ? pHead->getID() : -1, pHead ? (int)pHead->AI_getUnitAIType() : -1,
 			(int)eNewMissionAI, newPlot ? newPlot->getX() : -1, newPlot ? newPlot->getY() : -1, getNumUnits());
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_MISSION_ID, 2)
+			.addI(UF_OWNER, (int)getOwner()).addI(UF_UNIT, pHead ? pHead->getID() : -1)
+			.addI(UF_UNITAI, pHead ? (int)pHead->AI_getUnitAIType() : -1).addI(UF_MISSIONAI, (int)eNewMissionAI)
+			.addI(UF_TARGETX, newPlot ? newPlot->getX() : -1).addI(UF_TARGETY, newPlot ? newPlot->getY() : -1)
+			.addI(UF_STACK, getNumUnits()));
 	}
 
 	if (oldPlot && eOldMissionAI != NO_MISSIONAI)

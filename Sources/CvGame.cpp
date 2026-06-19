@@ -584,11 +584,11 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 	// doesn't route through onFinalInitialized.
 	writePlotSnapshot(bNewGame ? "start" : "load");
 
-	// [GAME/*] -- one-time session header so every other AI log can be read against
-	// the active game setup. Emitted whenever any AI logging level is enabled.
+	// [INIT/*] -- one-time session-initialization header so every other AI log can be read
+	// against the active game setup. Emitted whenever any AI logging level is enabled.
 	if (gPlayerLogLevel > 0 || gTeamLogLevel > 0 || gCityLogLevel > 0 || gUnitLogLevel > 0)
 	{
-		logGameInfo("[GAME/begin] %s turn=%d speed=%s handicap=%s startEra=%s map=%dx%d maxTurns=%d civsAlive=%d",
+		logInitInfo("[INIT/begin] %s turn=%d speed=%s handicap=%s startEra=%s map=%dx%d maxTurns=%d civsAlive=%d",
 			bNewGame ? "NEW_GAME" : "LOAD", getGameTurn(),
 			GC.getGameSpeedInfo(getGameSpeedType()).getType(),
 			GC.getHandicapInfo(getHandicapType()).getType(),
@@ -600,14 +600,14 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 		{
 			if (isOption((GameOptionTypes)iI))
 			{
-				logGameInfo("[GAME/option] %s", GC.getGameOptionInfo((GameOptionTypes)iI).getType());
+				logInitInfo("[INIT/option] %s", GC.getGameOptionInfo((GameOptionTypes)iI).getType());
 			}
 		}
 		for (int iI = 0; iI < GC.getNumVictoryInfos(); iI++)
 		{
 			if (isVictoryValid((VictoryTypes)iI))
 			{
-				logGameInfo("[GAME/victory] %s", GC.getVictoryInfo((VictoryTypes)iI).getType());
+				logInitInfo("[INIT/victory] %s", GC.getVictoryInfo((VictoryTypes)iI).getType());
 			}
 		}
 		for (int iI = 0; iI < MAX_PLAYERS; iI++)
@@ -615,7 +615,7 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 			const CvPlayer& kP = GET_PLAYER((PlayerTypes)iI);
 			if (kP.isAlive())
 			{
-				logGameInfo("[GAME/player] id=%d team=%d human=%d leader=%s civ=%s",
+				logInitInfo("[INIT/player] id=%d team=%d human=%d leader=%s civ=%s",
 					iI, (int)kP.getTeam(), kP.isHumanPlayer() ? 1 : 0,
 					GC.getLeaderHeadInfo(kP.getLeaderType()).getType(),
 					GC.getCivilizationInfo(kP.getCivilizationType()).getType());
@@ -5833,6 +5833,16 @@ void CvGame::doTurn()
 	// #430 option B -- the thin DLL-side readJson slice: parse two real building JSONs, run cascadeBuildable,
 	// shadow the `allowed` cap vs the engine + the live tally. Gated by gPlayerLogLevel. Sources/Cascade/CvCascadeReadJson.h
 	cascadeReadJsonSlice();
+	// #430 §14 H -- the AUTO-PLACEMENT shadow (B-i): the runtime twin of the buildability sweep. Per-turn, diff the
+	// cascade's would-place decision against the legacy maintainers' (bAutoBuild loop + property-band) realized
+	// presence, per city. [PLACEMENT] lines to Cascade.log + /events. Gated by gPlayerLogLevel.
+	cascadePlacementShadow();
+	// #430 §14 H -- the DORMANCY shadow (B-ii): per built building per city, diff cascade requires.operate (active/
+	// dormant) against legacy hasFullyActiveBuilding (resource/replacement/religious disabling). [DORMANCY] lines.
+	cascadeDormancyShadow();
+	// #430 observability -- the LIVE STATE FEED ("the cameras"): per-turn [STATE/game]/[STATE/fin]/[STATE/dip]/[STATE/city] lines so an autoplay
+	// session is fully narratable from /events + the logs (the total-observability bar). Gated by gPlayerLogLevel.
+	cascadeStateLog();
 
 	//	Turn-boundary accounting for the frame-driven span the doTurn tree does not cover:
 	//	turn.wall is the true wall-clock between consecutive turn boundaries (what a player's

@@ -17,6 +17,234 @@
 #include "CvTeamAI.h"
 #include "CvUnitAI.h"
 #include "Repos/BuildsRepo.h"
+#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [WAI] lines through the event spine (shadow)
+
+// ---------------------------------------------------------------------------
+// #430 logging: WAI -> event spine (CvWorkerAI). Each distinct log-line template is one event id whose prefix captures
+// the constant tag + constant labels; variable name=value pairs are fields rendered by the spine's logging consumer.
+// Self-registers via a static-init registrar so the spine stays domain-agnostic (Clean-Architecture isolation; no spine
+// file ever names WAI). Shadow discipline: these emits run ALONGSIDE the existing logBuildEvaluation calls (diff on
+// /events, then cut the old path). Lines with TYPED INDEX names (bonus/build/improvement getType()) now
+// carry those indices as SFT_BONUS / SFT_IMPROVEMENT / SFT_INT(BuildTypes) fields -- the renderer resolves them.
+// Lines with RUNTIME INSTANCE names (pCity->getName()) remain on the legacy path only (not type-resolvable).
+namespace
+{
+	// ---- event ids (one per distinct line template) ----
+	enum WaiEvent
+	{
+		// improveBonus outer bookkeeping
+		WAI_BEGIN                         =  0, // [WAI/begin] (constant labels none)
+		WAI_PLOTSET_EMPTY                 =  1, // [WAI/plotset-empty]
+		// [WAI/plot/skip] cached variants (reason constant per id)
+		WAI_PLOT_SKIP_CACHED_OWNERSHIP    =  2, // [WAI/plot/skip] reason=ownership cached=1
+		WAI_PLOT_SKIP_CACHED_PLOTINVALID  =  3, // [WAI/plot/skip] reason=plotInvalid cached=1
+		WAI_PLOT_SKIP_CACHED_AREAMISMATCH =  4, // [WAI/plot/skip] reason=areaMismatch cached=1
+		WAI_PLOT_SKIP_CACHED_NOBONUS      =  5, // [WAI/plot/skip] reason=noBonus cached=1
+		WAI_PLOT_SKIP_CACHED_NOTCLOSE     =  6, // [WAI/plot/skip] reason=notCloseEnough cached=1
+		// [WAI/plot/skip] live variants
+		WAI_PLOT_SKIP_OWNERSHIP           =  7, // [WAI/plot/skip] reason=ownership
+		WAI_PLOT_SKIP_PLOTINVALID         =  8, // [WAI/plot/skip] reason=plotInvalid
+		WAI_PLOT_SKIP_AREAMISMATCH        =  9, // [WAI/plot/skip] reason=areaMismatch
+		WAI_PLOT_SKIP_NOBONUS             = 10, // [WAI/plot/skip] reason=noBonus
+		WAI_PLOT_SKIP_NOTCLOSEENOUGH      = 11, // [WAI/plot/skip] reason=notCloseEnough
+		WAI_PLOT_SKIP_INACCESSIBLE        = 12, // [WAI/plot/skip] reason=inaccessible
+		WAI_PLOT_SKIP_VISIBLEENEMY        = 13, // [WAI/plot/skip] reason=visibleEnemy
+		WAI_PLOT_SKIP_NOPATH              = 14, // [WAI/plot/skip] reason=noPath
+		// dedup
+		WAI_DEDUP_MAXWORKERS              = 15, // [WAI/dedup] reason=maxWorkers
+		WAI_DEDUP_BUILDTIMEVSPATH         = 16, // [WAI/dedup] reason=buildTimeVsPath
+		// mission / end (improveBonus)
+		WAI_END_NOTARGET                  = 17, // [WAI/end] result=noTarget
+		WAI_MISSION_ROUTE                 = 18, // [WAI/mission] build=ROUTE mission=connectPlot
+		WAI_END_ROUTE                     = 19, // [WAI/end] result=route
+		WAI_END_FALLTHROUGH               = 20, // [WAI/end] result=fallthrough
+		// improveCity
+		WAI_CITY_PLOT_SKIP_SAFEAUTOMATION = 21, // [WAI/city/plot/skip] reason=safeAutomation
+		WAI_CITY_DEDUP                    = 22, // [WAI/city/dedup]
+		// build/cand (per-candidate inner-loop)
+		WAI_BUILD_CAND                    = 23, // [WAI/build/cand]
+		// plot/close (close-enough check for non-owned plots)
+		WAI_PLOT_CLOSE                    = 24, // [WAI/plot/close]
+		// build/hit (cache hit in the inner build pick)
+		WAI_BUILD_HIT                     = 25, // [WAI/build/hit]
+		// build/winner (inner-loop final pick)
+		WAI_BUILD_WINNER                  = 26, // [WAI/build/winner] (qualified > 0)
+		WAI_BUILD_WINNER_NOBUILD          = 27, // [WAI/build/winner] bonus -> NO_BUILD
+		// score (per-plot scoring)
+		WAI_SCORE                         = 28, // [WAI/score]
+		// best (new best plot)
+		WAI_BEST_IMPROVE                  = 29, // [WAI/best] mode=improve
+		WAI_BEST_CONNECT                  = 30, // [WAI/best] mode=connect
+		// mission / end (pushBuildMission variants)
+		WAI_MISSION_BUILD                 = 31, // [WAI/mission] (not substituted)
+		WAI_MISSION_BUILD_SUBST           = 32, // [WAI/mission] (substituted)
+		WAI_END_BUILD_ATPLOT              = 33, // [WAI/end] result=build (atPlot, not substituted)
+		WAI_END_BUILD_ATPLOT_SUBST        = 34, // [WAI/end] result=build (atPlot, substituted)
+		WAI_END_BUILD                     = 35, // [WAI/end] result=build (not substituted)
+		WAI_END_BUILD_SUBST               = 36, // [WAI/end] result=build (substituted)
+		// city eval/hit, eval/new
+		WAI_CITY_EVAL_HIT                 = 37, // [WAI/city/eval/hit]
+		WAI_CITY_EVAL_NEW                 = 38, // [WAI/city/eval/new]
+		// city/plot/skip: enemyUnit + noPath
+		WAI_CITY_PLOT_SKIP_ENEMY          = 39, // [WAI/city/plot/skip] reason=enemyUnit
+		WAI_CITY_PLOT_SKIP_NOPATH         = 40, // [WAI/city/plot/skip] reason=noPath
+		// city/score, city/best
+		WAI_CITY_SCORE                    = 41, // [WAI/city/score]
+		WAI_CITY_BEST                     = 42, // [WAI/city/best]
+	};
+
+	const char* workerLinePrefix(int iEventId)
+	{
+		switch (iEventId)
+		{
+		case WAI_BEGIN:                         return "[WAI/begin]";
+		case WAI_PLOTSET_EMPTY:                 return "[WAI/plotset-empty]";
+		case WAI_PLOT_SKIP_CACHED_OWNERSHIP:    return "[WAI/plot/skip] reason=ownership cached=1";
+		case WAI_PLOT_SKIP_CACHED_PLOTINVALID:  return "[WAI/plot/skip] reason=plotInvalid cached=1";
+		case WAI_PLOT_SKIP_CACHED_AREAMISMATCH: return "[WAI/plot/skip] reason=areaMismatch cached=1";
+		case WAI_PLOT_SKIP_CACHED_NOBONUS:      return "[WAI/plot/skip] reason=noBonus cached=1";
+		case WAI_PLOT_SKIP_CACHED_NOTCLOSE:     return "[WAI/plot/skip] reason=notCloseEnough cached=1";
+		case WAI_PLOT_SKIP_OWNERSHIP:           return "[WAI/plot/skip] reason=ownership";
+		case WAI_PLOT_SKIP_PLOTINVALID:         return "[WAI/plot/skip] reason=plotInvalid";
+		case WAI_PLOT_SKIP_AREAMISMATCH:        return "[WAI/plot/skip] reason=areaMismatch";
+		case WAI_PLOT_SKIP_NOBONUS:             return "[WAI/plot/skip] reason=noBonus";
+		case WAI_PLOT_SKIP_NOTCLOSEENOUGH:      return "[WAI/plot/skip] reason=notCloseEnough";
+		case WAI_PLOT_SKIP_INACCESSIBLE:        return "[WAI/plot/skip] reason=inaccessible";
+		case WAI_PLOT_SKIP_VISIBLEENEMY:        return "[WAI/plot/skip] reason=visibleEnemy";
+		case WAI_PLOT_SKIP_NOPATH:              return "[WAI/plot/skip] reason=noPath";
+		case WAI_DEDUP_MAXWORKERS:              return "[WAI/dedup] reason=maxWorkers";
+		case WAI_DEDUP_BUILDTIMEVSPATH:         return "[WAI/dedup] reason=buildTimeVsPath";
+		case WAI_END_NOTARGET:                  return "[WAI/end] result=noTarget";
+		case WAI_MISSION_ROUTE:                 return "[WAI/mission] build=ROUTE mission=connectPlot";
+		case WAI_END_ROUTE:                     return "[WAI/end] result=route";
+		case WAI_END_FALLTHROUGH:               return "[WAI/end] result=fallthrough";
+		case WAI_CITY_PLOT_SKIP_SAFEAUTOMATION: return "[WAI/city/plot/skip] reason=safeAutomation";
+		case WAI_CITY_DEDUP:                    return "[WAI/city/dedup]";
+		case WAI_BUILD_CAND:                    return "[WAI/build/cand]";
+		case WAI_PLOT_CLOSE:                    return "[WAI/plot/close]";
+		case WAI_BUILD_HIT:                     return "[WAI/build/hit]";
+		case WAI_BUILD_WINNER:                  return "[WAI/build/winner]";
+		case WAI_BUILD_WINNER_NOBUILD:          return "[WAI/build/winner]";
+		case WAI_SCORE:                         return "[WAI/score]";
+		case WAI_BEST_IMPROVE:                  return "[WAI/best] mode=improve";
+		case WAI_BEST_CONNECT:                  return "[WAI/best] mode=connect";
+		case WAI_MISSION_BUILD:                 return "[WAI/mission]";
+		case WAI_MISSION_BUILD_SUBST:           return "[WAI/mission] substituted=1";
+		case WAI_END_BUILD_ATPLOT:              return "[WAI/end] result=build at=atPlot";
+		case WAI_END_BUILD_ATPLOT_SUBST:        return "[WAI/end] result=build at=atPlot substituted=1";
+		case WAI_END_BUILD:                     return "[WAI/end] result=build";
+		case WAI_END_BUILD_SUBST:               return "[WAI/end] result=build substituted=1";
+		case WAI_CITY_EVAL_HIT:                 return "[WAI/city/eval/hit]";
+		case WAI_CITY_EVAL_NEW:                 return "[WAI/city/eval/new]";
+		case WAI_CITY_PLOT_SKIP_ENEMY:          return "[WAI/city/plot/skip] reason=enemyUnit";
+		case WAI_CITY_PLOT_SKIP_NOPATH:         return "[WAI/city/plot/skip] reason=noPath";
+		case WAI_CITY_SCORE:                    return "[WAI/city/score]";
+		case WAI_CITY_BEST:                     return "[WAI/city/best]";
+		default:                                return NULL;
+		}
+	}
+
+	// WAI's LOCAL field tags (all plain ints unless noted).
+	enum WaiField
+	{
+		WF_owner        =  0,
+		WF_unit         =  1,
+		WF_x            =  2,
+		WF_y            =  3,
+		WF_allowedTurns =  4,
+		WF_searchRange  =  5,
+		WF_canRoute     =  6,
+		WF_owner_skip   =  7,  // alias: "owner" on plot/skip ownership line (distinct tag for clarity)
+		WF_others       =  8,
+		WF_max          =  9,
+		WF_value        = 10,
+		// type-index fields added for name-string recovery (#430)
+		WF_bonus        = 11,  // BonusTypes      -> SFT_BONUS
+		WF_build        = 12,  // BuildTypes      -> SFT_INT  (no SFT_BUILD in spine)
+		WF_impr         = 13,  // ImprovementTypes-> SFT_IMPROVEMENT
+		WF_chosen_build = 14,  // BuildTypes (chosen before AI_betterPlotBuild) -> SFT_INT
+		WF_actual_build = 15,  // BuildTypes (after  AI_betterPlotBuild) -> SFT_INT
+		// plain numeric fields added for the new emits
+		WF_yield        = 16,
+		WF_time         = 17,
+		WF_timeScore    = 18,
+		WF_closeEnough  = 19,
+		WF_qualified    = 20,
+		WF_base         = 21,
+		WF_def          = 22,
+		WF_counter      = 23,
+		WF_aiObj        = 24,
+		WF_noTrade      = 25,
+		WF_total        = 26,
+		WF_path         = 27,
+		WF_cityRad      = 28,
+		WF_atPlot       = 29,
+		WF_ok           = 30,
+		WF_canBuild     = 31,
+		WF_goldShort    = 32,
+		WF_scored       = 33,
+		WF_border       = 34,
+		WF_dist         = 35,
+		WF_adjOwn       = 36,
+		WF_adjForeign   = 37,
+		WF_adjWater     = 38,
+		WF_adjPeak      = 39,
+		WF_culture      = 40,  // 1 = culture-extending branch (BuildsRepo::cultureBuilds()), 0 = in-radius branch
+	};
+
+	const char* workerFieldInfo(int iFieldTag, SpineFieldType* peType)
+	{
+		*peType = SFT_INT;
+		switch (iFieldTag)
+		{
+		case WF_owner:        return "owner";
+		case WF_unit:         return "unit";
+		case WF_x:            return "x";
+		case WF_y:            return "y";
+		case WF_allowedTurns: return "allowedTurns";
+		case WF_searchRange:  return "searchRange";
+		case WF_canRoute:     return "canRoute";
+		case WF_owner_skip:   return "owner";
+		case WF_others:       return "others";
+		case WF_max:          return "max";
+		case WF_value:        return "value";
+		case WF_bonus:        *peType = SFT_BONUS;       return "bonus";
+		case WF_build:        return "build";      // BuildTypes; SFT_INT (no SFT_BUILD in spine)
+		case WF_impr:         *peType = SFT_IMPROVEMENT; return "impr";
+		case WF_chosen_build: return "chosen";
+		case WF_actual_build: return "actual";
+		case WF_yield:        return "yield";
+		case WF_time:         return "time";
+		case WF_timeScore:    return "timeScore";
+		case WF_closeEnough:  return "closeEnough";
+		case WF_qualified:    return "qualified";
+		case WF_base:         return "base";
+		case WF_def:          return "def";
+		case WF_counter:      return "counter";
+		case WF_aiObj:        return "aiObj";
+		case WF_noTrade:      return "noTrade";
+		case WF_total:        return "total";
+		case WF_path:         return "path";
+		case WF_cityRad:      return "cityRad";
+		case WF_atPlot:       return "atPlot";
+		case WF_ok:           return "ok";
+		case WF_canBuild:     return "canBuild";
+		case WF_goldShort:    return "goldShort";
+		case WF_scored:       return "scored";
+		case WF_border:       return "border";
+		case WF_dist:         return "dist";
+		case WF_adjOwn:       return "adjOwn";
+		case WF_adjForeign:   return "adjForeign";
+		case WF_adjWater:     return "adjWater";
+		case WF_adjPeak:      return "adjPeak";
+		case WF_culture:      return "culture";
+		default:              return NULL;
+		}
+	}
+
+	struct WorkerLogRegistrar { WorkerLogRegistrar() { spineRegisterDomain(SD_WORKER, &workerLinePrefix, "BuildEvaluation.log", &workerFieldInfo); } };
+	WorkerLogRegistrar s_workerLogRegistrar; // static-init registration (g_domains is zero-init first; safe)
+} // namespace (WAI spine block)
 
 // ---------------------------------------------------------------------------
 // WorkerScoringWeights -- legacy defaults preserved.
@@ -264,6 +492,9 @@ bool considerCandidate(const CandidateContext& ctx,
 			kBuild.getType(), kImpr.getType(),
 			bCultureBranch ? " (culture)" : "",
 			iYieldSum, kBuild.getTime(), iTimeScore);
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_BUILD_CAND, 3)
+			.addI(WF_build, (int)eBuild).addI(WF_impr, (int)eImpr).addI(WF_culture, bCultureBranch ? 1 : 0)
+			.addI(WF_yield, iYieldSum).addI(WF_time, kBuild.getTime()).addI(WF_timeScore, iTimeScore));
 	}
 
 	// Primary: improvement yield change on this plot. Tiebreaker: time score (faster wins).
@@ -338,6 +569,10 @@ bool CvWorkerAI::pushBuildMission(CvUnitAI* unit, CvPlot* pBestPlot, BuildTypes 
 				GC.getBuildInfo(eChosenBuild).getType(),
 				GC.getBuildInfo(eBestBuild).getType(),
 				missionName, iBestValue);
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_MISSION_BUILD_SUBST, 2)
+				.addI(WF_x, pBestPlot->getX()).addI(WF_y, pBestPlot->getY())
+				.addI(WF_chosen_build, (int)eChosenBuild).addI(WF_actual_build, (int)eBestBuild)
+				.addI(WF_value, iBestValue));
 		}
 		else
 		{
@@ -346,6 +581,9 @@ bool CvWorkerAI::pushBuildMission(CvUnitAI* unit, CvPlot* pBestPlot, BuildTypes 
 				pBestPlot->getX(), pBestPlot->getY(),
 				GC.getBuildInfo(eBestBuild).getType(),
 				missionName, iBestValue);
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_MISSION_BUILD, 2)
+				.addI(WF_x, pBestPlot->getX()).addI(WF_y, pBestPlot->getY())
+				.addI(WF_build, (int)eBestBuild).addI(WF_value, iBestValue));
 		}
 	}
 
@@ -366,12 +604,21 @@ bool CvWorkerAI::pushBuildMission(CvUnitAI* unit, CvPlot* pBestPlot, BuildTypes 
 					section, unit->getID(), pBestPlot->getX(), pBestPlot->getY(),
 					GC.getBuildInfo(eChosenBuild).getType(),
 					GC.getBuildInfo(eBestBuild).getType(), iBestValue);
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_END_BUILD_ATPLOT_SUBST, 1)
+					.addI(WF_unit, unit->getID())
+					.addI(WF_x, pBestPlot->getX()).addI(WF_y, pBestPlot->getY())
+					.addI(WF_chosen_build, (int)eChosenBuild).addI(WF_actual_build, (int)eBestBuild)
+					.addI(WF_value, iBestValue));
 			}
 			else
 			{
 				logBuildEvaluation(1, "[%s/end] unit=%d result=build at=(%d,%d) build=%s value=%d (atPlot)",
 					section, unit->getID(), pBestPlot->getX(), pBestPlot->getY(),
 					GC.getBuildInfo(eBestBuild).getType(), iBestValue);
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_END_BUILD_ATPLOT, 1)
+					.addI(WF_unit, unit->getID())
+					.addI(WF_x, pBestPlot->getX()).addI(WF_y, pBestPlot->getY())
+					.addI(WF_build, (int)eBestBuild).addI(WF_value, iBestValue));
 			}
 		}
 		return true;
@@ -404,12 +651,21 @@ bool CvWorkerAI::pushBuildMission(CvUnitAI* unit, CvPlot* pBestPlot, BuildTypes 
 					section, unit->getID(), pBestPlot->getX(), pBestPlot->getY(),
 					GC.getBuildInfo(eChosenBuild).getType(),
 					GC.getBuildInfo(eBestBuild).getType(), iBestValue);
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_END_BUILD_SUBST, 1)
+					.addI(WF_unit, unit->getID())
+					.addI(WF_x, pBestPlot->getX()).addI(WF_y, pBestPlot->getY())
+					.addI(WF_chosen_build, (int)eChosenBuild).addI(WF_actual_build, (int)eBestBuild)
+					.addI(WF_value, iBestValue));
 			}
 			else
 			{
 				logBuildEvaluation(1, "[%s/end] unit=%d result=build at=(%d,%d) build=%s value=%d",
 					section, unit->getID(), pBestPlot->getX(), pBestPlot->getY(),
 					GC.getBuildInfo(eBestBuild).getType(), iBestValue);
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_END_BUILD, 1)
+					.addI(WF_unit, unit->getID())
+					.addI(WF_x, pBestPlot->getX()).addI(WF_y, pBestPlot->getY())
+					.addI(WF_build, (int)eBestBuild).addI(WF_value, iBestValue));
 			}
 		}
 		return true;
@@ -478,6 +734,11 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 			(int)ePlayer, unit->getID(), unit->getX(), unit->getY(),
 			allowedMovementTurns, iSearchRange, bCanRoute ? 1 : 0);
 	}
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_BEGIN, 1)
+		.addI(WF_owner, (int)ePlayer).addI(WF_unit, unit->getID())
+		.addI(WF_x, unit->getX()).addI(WF_y, unit->getY())
+		.addI(WF_allowedTurns, allowedMovementTurns).addI(WF_searchRange, iSearchRange)
+		.addI(WF_canRoute, bCanRoute ? 1 : 0));
 
 	// Populate plotSet upfront and iterate directly. The legacy code scanned
 	// numPlots() and lazy-populated the set on first match, paying for the
@@ -489,6 +750,8 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 	if (plotSet.begin() == plotSet.end() && gPlayerLogLevel >= 1)
 	{
 		logBuildEvaluation(1, "[WAI/plotset-empty] no reachable plots for unit=%d", unit->getID());
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOTSET_EMPTY, 1)
+			.addI(WF_unit, unit->getID()));
 	}
 
 	// =======================================================================
@@ -515,6 +778,20 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 				logBuildEvaluation(3, "[WAI/plot/skip] at=(%d,%d) reason=%s (cached)",
 					pLoopPlot->getX(), pLoopPlot->getY(),
 					outerRejectReasonName(eCachedReject));
+			{
+				int iCachedEvId;
+				switch (eCachedReject)
+				{
+				case REJECT_OWNERSHIP:        iCachedEvId = WAI_PLOT_SKIP_CACHED_OWNERSHIP;    break;
+				case REJECT_PLOT_INVALID:     iCachedEvId = WAI_PLOT_SKIP_CACHED_PLOTINVALID;  break;
+				case REJECT_AREA_MISMATCH:    iCachedEvId = WAI_PLOT_SKIP_CACHED_AREAMISMATCH; break;
+				case REJECT_NO_BONUS:         iCachedEvId = WAI_PLOT_SKIP_CACHED_NOBONUS;      break;
+				case REJECT_NOT_CLOSE_ENOUGH: iCachedEvId = WAI_PLOT_SKIP_CACHED_NOTCLOSE;     break;
+				default:                      iCachedEvId = WAI_PLOT_SKIP_CACHED_OWNERSHIP;    break;
+				}
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, iCachedEvId, 3)
+					.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY()));
+			}
 			continue;
 		}
 
@@ -529,6 +806,9 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 			if (gPlayerLogLevel >= 2)
 				logBuildEvaluation(2, "[WAI/plot/skip] at=(%d,%d) reason=ownership owner=%d",
 					pLoopPlot->getX(), pLoopPlot->getY(), (int)ePlotOwner);
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOT_SKIP_OWNERSHIP, 2)
+				.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY())
+				.addI(WF_owner_skip, (int)ePlotOwner));
 			continue;
 		}
 		if (!unit->AI_plotValid(pLoopPlot))
@@ -537,6 +817,8 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 			if (gPlayerLogLevel >= 2)
 				logBuildEvaluation(2, "[WAI/plot/skip] at=(%d,%d) reason=plotInvalid",
 					pLoopPlot->getX(), pLoopPlot->getY());
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOT_SKIP_PLOTINVALID, 2)
+				.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY()));
 			continue;
 		}
 		const bool bSameArea = (pLoopPlot->area() == unit->area())
@@ -547,6 +829,8 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 			if (gPlayerLogLevel >= 2)
 				logBuildEvaluation(2, "[WAI/plot/skip] at=(%d,%d) reason=areaMismatch",
 					pLoopPlot->getX(), pLoopPlot->getY());
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOT_SKIP_AREAMISMATCH, 2)
+				.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY()));
 			continue;
 		}
 
@@ -560,6 +844,8 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 			if (gPlayerLogLevel >= 3)
 				logBuildEvaluation(3, "[WAI/plot/skip] at=(%d,%d) reason=noBonus",
 					pLoopPlot->getX(), pLoopPlot->getY());
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOT_SKIP_NOBONUS, 3)
+				.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY()));
 			continue;
 		}
 
@@ -587,9 +873,14 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 			}
 
 			if (gPlayerLogLevel >= 3)
+			{
 				logBuildEvaluation(3, "[WAI/plot/close] at=(%d,%d) bonus=%s closeEnough=%d",
 					pLoopPlot->getX(), pLoopPlot->getY(),
 					GC.getBonusInfo(eNonObsoleteBonus).getType(), bCloseEnough ? 1 : 0);
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOT_CLOSE, 3)
+					.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY())
+					.addI(WF_bonus, (int)eNonObsoleteBonus).addI(WF_closeEnough, bCloseEnough ? 1 : 0));
+			}
 		}
 
 		if (!bCloseEnough)
@@ -598,6 +889,8 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 			if (gPlayerLogLevel >= 2)
 				logBuildEvaluation(2, "[WAI/plot/skip] at=(%d,%d) reason=notCloseEnough",
 					pLoopPlot->getX(), pLoopPlot->getY());
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOT_SKIP_NOTCLOSEENOUGH, 2)
+				.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY()));
 			continue;
 		}
 
@@ -626,6 +919,9 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 				logBuildEvaluation(2, "[WAI/plot/skip] at=(%d,%d) reason=%s",
 					pLoopPlot->getX(), pLoopPlot->getY(),
 					!bAccessible ? "inaccessible" : "visibleEnemy");
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER,
+				!bAccessible ? WAI_PLOT_SKIP_INACCESSIBLE : WAI_PLOT_SKIP_VISIBLEENEMY, 2)
+				.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY()));
 			continue;
 		}
 
@@ -686,11 +982,19 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 				bFromCache      = true;
 
 				if (gPlayerLogLevel >= 2)
+				{
 					logBuildEvaluation(2, "[WAI/build/hit] at=(%d,%d) bonus=%s -> %s qualified=%d yield=%d",
 						pLoopPlot->getX(), pLoopPlot->getY(),
 						GC.getBonusInfo(eNonObsoleteBonus).getType(),
 						eBestTempBuild == NO_BUILD ? "NO_BUILD" : GC.getBuildInfo(eBestTempBuild).getType(),
 						best.qualified, best.qualified ? best.yieldScore : 0);
+					eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_BUILD_HIT, 2)
+						.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY())
+						.addI(WF_bonus, (int)eNonObsoleteBonus)
+						.addI(WF_build, (int)eBestTempBuild)  // NO_BUILD (-1) when no winner
+						.addI(WF_qualified, best.qualified)
+						.addI(WF_yield, best.qualified ? best.yieldScore : 0));
+				}
 			}
 			else
 			{
@@ -758,12 +1062,21 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 						GC.getBonusInfo(eNonObsoleteBonus).getType(),
 						eBestTempBuild == NO_BUILD ? "NO_BUILD" : GC.getBuildInfo(eBestTempBuild).getType(),
 						best.qualified, best.yieldScore, best.timeScore);
+					eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_BUILD_WINNER, 2)
+						.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY())
+						.addI(WF_bonus, (int)eNonObsoleteBonus)
+						.addI(WF_build, (int)eBestTempBuild)
+						.addI(WF_qualified, best.qualified)
+						.addI(WF_yield, best.yieldScore).addI(WF_timeScore, best.timeScore));
 				}
 				else if (gPlayerLogLevel >= 3)
 				{
 					logBuildEvaluation(3, "[WAI/build/winner] at=(%d,%d) bonus=%s -> NO_BUILD",
 						pLoopPlot->getX(), pLoopPlot->getY(),
 						GC.getBonusInfo(eNonObsoleteBonus).getType());
+					eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_BUILD_WINNER_NOBUILD, 3)
+						.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY())
+						.addI(WF_bonus, (int)eNonObsoleteBonus));
 				}
 			}
 
@@ -810,6 +1123,8 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 			if (gPlayerLogLevel >= 3)
 				logBuildEvaluation(3, "[WAI/plot/skip] at=(%d,%d) reason=noPath",
 					pLoopPlot->getX(), pLoopPlot->getY());
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOT_SKIP_NOPATH, 3)
+				.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY()));
 			continue;
 		}
 
@@ -936,6 +1251,16 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 				iValue, iPathTurns, iMaxWorkers, iOtherBuilders,
 				bCityRadius ? 1 : 0, bAtPlot ? 1 : 0,
 				bDedupOK && bBuildtimeOK ? 1 : 0);
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_SCORE, 2)
+				.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY())
+				.addI(WF_bonus, (int)eNonObsoleteBonus)
+				.addI(WF_base, iValueInitial).addI(WF_yield, iValueYields)
+				.addI(WF_def, iValueDefense).addI(WF_counter, iValueCounter)
+				.addI(WF_aiObj, iAiObjective).addI(WF_noTrade, bNoTradeable ? 1 : 0)
+				.addI(WF_total, iValue).addI(WF_path, iPathTurns)
+				.addI(WF_max, iMaxWorkers).addI(WF_others, iOtherBuilders)
+				.addI(WF_cityRad, bCityRadius ? 1 : 0).addI(WF_atPlot, bAtPlot ? 1 : 0)
+				.addI(WF_ok, (bDedupOK && bBuildtimeOK) ? 1 : 0));
 		}
 
 		if (!bDedupOK || !bBuildtimeOK)
@@ -945,6 +1270,10 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 					pLoopPlot->getX(), pLoopPlot->getY(),
 					!bDedupOK ? "maxWorkers" : "buildTimeVsPath",
 					iOtherBuilders, iMaxWorkers);
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER,
+				!bDedupOK ? WAI_DEDUP_MAXWORKERS : WAI_DEDUP_BUILDTIMEVSPATH, 2)
+				.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY())
+				.addI(WF_others, iOtherBuilders).addI(WF_max, iMaxWorkers));
 			continue;
 		}
 
@@ -964,10 +1293,16 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 				bBestBuildIsRoute = false;
 
 				if (gPlayerLogLevel >= 1)
+				{
 					logBuildEvaluation(1, "[WAI/best] at=(%d,%d) bonus=%s build=%s value=%d (improve)",
 						pLoopPlot->getX(), pLoopPlot->getY(),
 						GC.getBonusInfo(eNonObsoleteBonus).getType(),
 						GC.getBuildInfo(eBestBuild).getType(), iValue);
+					eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_BEST_IMPROVE, 1)
+						.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY())
+						.addI(WF_bonus, (int)eNonObsoleteBonus)
+						.addI(WF_build, (int)eBestBuild).addI(WF_value, iValue));
+				}
 			}
 		}
 		else if (bCanRoute && !bIsConnected)
@@ -989,9 +1324,14 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 					bBestBuildIsRoute = true;
 
 					if (gPlayerLogLevel >= 1)
+					{
 						logBuildEvaluation(1, "[WAI/best] at=(%d,%d) bonus=%s build=ROUTE value=%d (connect)",
 							pLoopPlot->getX(), pLoopPlot->getY(),
 							GC.getBonusInfo(eNonObsoleteBonus).getType(), iValue);
+						eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_BEST_CONNECT, 1)
+							.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY())
+							.addI(WF_bonus, (int)eNonObsoleteBonus).addI(WF_value, iValue));
+					}
 				}
 			}
 		}
@@ -1004,6 +1344,8 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 	{
 		if (gPlayerLogLevel >= 1)
 			logBuildEvaluation(1, "[WAI/end] unit=%d result=noTarget", unit->getID());
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_END_NOTARGET, 1)
+			.addI(WF_unit, unit->getID()));
 		return false;
 	}
 
@@ -1042,12 +1384,19 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 		if (gPlayerLogLevel >= 2)
 			logBuildEvaluation(2, "[WAI/mission] at=(%d,%d) build=ROUTE mission=connectPlot value=%d",
 				pBestPlot->getX(), pBestPlot->getY(), iBestValue);
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_MISSION_ROUTE, 2)
+			.addI(WF_x, pBestPlot->getX()).addI(WF_y, pBestPlot->getY())
+			.addI(WF_value, iBestValue));
 
 		if (unit->AI_connectPlot(pBestPlot))
 		{
 			if (gPlayerLogLevel >= 1)
 				logBuildEvaluation(1, "[WAI/end] unit=%d result=route at=(%d,%d) value=%d",
 					unit->getID(), pBestPlot->getX(), pBestPlot->getY(), iBestValue);
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_END_ROUTE, 1)
+				.addI(WF_unit, unit->getID())
+				.addI(WF_x, pBestPlot->getX()).addI(WF_y, pBestPlot->getY())
+				.addI(WF_value, iBestValue));
 			return true;
 		}
 	}
@@ -1058,6 +1407,8 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 
 	if (gPlayerLogLevel >= 1)
 		logBuildEvaluation(1, "[WAI/end] unit=%d result=fallthrough", unit->getID());
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_END_FALLTHROUGH, 1)
+		.addI(WF_unit, unit->getID()));
 	return false;
 }
 
@@ -1143,6 +1494,8 @@ bool CvWorkerAI::improveCity(CvUnitAI* unit, CvCity* pCity)
 				if (gPlayerLogLevel >= 3)
 					logBuildEvaluation(3, "[WAI/city/plot/skip] at=(%d,%d) reason=safeAutomation",
 						pLoopPlot->getX(), pLoopPlot->getY());
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_PLOT_SKIP_SAFEAUTOMATION, 3)
+					.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY()));
 				continue;
 			}
 		}
@@ -1165,11 +1518,18 @@ bool CvWorkerAI::improveCity(CvUnitAI* unit, CvCity* pCity)
 			bFromCache = true;
 
 			if (gPlayerLogLevel >= 2)
+			{
 				logBuildEvaluation(2, "[WAI/city/eval/hit] at=(%d,%d) build=%s value=%d canBuild=%d goldShort=%d",
 					pLoopPlot->getX(), pLoopPlot->getY(),
 					eBuild == NO_BUILD ? "NO_BUILD" : GC.getBuildInfo(eBuild).getType(),
 					iValue, bCanBuild ? 1 : 0,
 					(eBuild != NO_BUILD && std::max<int64_t>(0, kOwner.getGold()) < kOwner.getBuildCost(pLoopPlot, eBuild)) ? 1 : 0);
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_EVAL_HIT, 2)
+					.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY())
+					.addI(WF_build, (int)eBuild)
+					.addI(WF_value, iValue).addI(WF_canBuild, bCanBuild ? 1 : 0)
+					.addI(WF_goldShort, (eBuild != NO_BUILD && std::max<int64_t>(0, kOwner.getGold()) < kOwner.getBuildCost(pLoopPlot, eBuild)) ? 1 : 0));
+			}
 		}
 		else
 		{
@@ -1186,11 +1546,18 @@ bool CvWorkerAI::improveCity(CvUnitAI* unit, CvCity* pCity)
 			recordCity(iPlotIdx, eUnitType, eval);
 
 			if (gPlayerLogLevel >= 2)
+			{
 				logBuildEvaluation(2, "[WAI/city/eval/new] at=(%d,%d) build=%s value=%d canBuild=%d goldShort=%d",
 					pLoopPlot->getX(), pLoopPlot->getY(),
 					eBuild == NO_BUILD ? "NO_BUILD" : GC.getBuildInfo(eBuild).getType(),
 					iValue, bCanBuild ? 1 : 0,
 					(eBuild != NO_BUILD && std::max<int64_t>(0, kOwner.getGold()) < kOwner.getBuildCost(pLoopPlot, eBuild)) ? 1 : 0);
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_EVAL_NEW, 2)
+					.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY())
+					.addI(WF_build, (int)eBuild)
+					.addI(WF_value, iValue).addI(WF_canBuild, bCanBuild ? 1 : 0)
+					.addI(WF_goldShort, (eBuild != NO_BUILD && std::max<int64_t>(0, kOwner.getGold()) < kOwner.getBuildCost(pLoopPlot, eBuild)) ? 1 : 0));
+			}
 		}
 		(void)bFromCache;
 
@@ -1202,12 +1569,20 @@ bool CvWorkerAI::improveCity(CvUnitAI* unit, CvCity* pCity)
 		{
 			iEnemyBlocked++;
 			if (gPlayerLogLevel >= 2)
+			{
 				logBuildEvaluation(2, "[WAI/city/plot/skip] at=(%d,%d) reason=enemyUnit build=%s owner=%d border=%d dist=%d",
 					pLoopPlot->getX(), pLoopPlot->getY(),
 					GC.getBuildInfo(eBuild).getType(),
 					(int)pLoopPlot->getOwner(),
 					pLoopPlot->isBorder(true) ? 1 : 0,
 					plotDistance(unit->getX(), unit->getY(), pLoopPlot->getX(), pLoopPlot->getY()));
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_PLOT_SKIP_ENEMY, 2)
+					.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY())
+					.addI(WF_build, (int)eBuild)
+					.addI(WF_owner_skip, (int)pLoopPlot->getOwner())
+					.addI(WF_border, pLoopPlot->isBorder(true) ? 1 : 0)
+					.addI(WF_dist, plotDistance(unit->getX(), unit->getY(), pLoopPlot->getX(), pLoopPlot->getY())));
+			}
 			continue;
 		}
 		// Skip the expensive pathfind if this worker already found this tile unreachable
@@ -1249,6 +1624,14 @@ bool CvWorkerAI::improveCity(CvUnitAI* unit, CvCity* pCity)
 					plotDistance(unit->getX(), unit->getY(), pLoopPlot->getX(), pLoopPlot->getY()),
 					pLoopPlot->isVisibleEnemyUnit(unit) ? 1 : 0,
 					iAdjOwn, iAdjForeign, iAdjWater, iAdjPeak);
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_PLOT_SKIP_NOPATH, 2)
+					.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY())
+					.addI(WF_build, (int)eBuild)
+					.addI(WF_owner_skip, (int)pLoopPlot->getOwner())
+					.addI(WF_border, bBorderPlot ? 1 : 0)
+					.addI(WF_dist, plotDistance(unit->getX(), unit->getY(), pLoopPlot->getX(), pLoopPlot->getY()))
+					.addI(WF_adjOwn, iAdjOwn).addI(WF_adjForeign, iAdjForeign)
+					.addI(WF_adjWater, iAdjWater).addI(WF_adjPeak, iAdjPeak));
 			}
 			continue;
 		}
@@ -1283,17 +1666,29 @@ bool CvWorkerAI::improveCity(CvUnitAI* unit, CvCity* pCity)
 		iScored /= (1 + iPathTurns);
 
 		if (gPlayerLogLevel >= 2)
+		{
 			logBuildEvaluation(2, "[WAI/city/score] at=(%d,%d) build=%s base=%d path=%d atPlot=%d maxW=%d others=%d scored=%d ok=%d",
 				pLoopPlot->getX(), pLoopPlot->getY(),
 				GC.getBuildInfo(eBuild).getType(),
 				iValue, iPathTurns, bAtPlot ? 1 : 0, iMaxWorkers, iOtherBuilders,
 				iScored, bDedupOK ? 1 : 0);
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_SCORE, 2)
+				.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY())
+				.addI(WF_build, (int)eBuild)
+				.addI(WF_base, iValue).addI(WF_path, iPathTurns)
+				.addI(WF_atPlot, bAtPlot ? 1 : 0).addI(WF_max, iMaxWorkers)
+				.addI(WF_others, iOtherBuilders).addI(WF_scored, iScored)
+				.addI(WF_ok, bDedupOK ? 1 : 0));
+		}
 
 		if (!bDedupOK)
 		{
 			if (gPlayerLogLevel >= 2)
 				logBuildEvaluation(2, "[WAI/city/dedup] at=(%d,%d) skip others=%d max=%d",
 					pLoopPlot->getX(), pLoopPlot->getY(), iOtherBuilders, iMaxWorkers);
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_DEDUP, 2)
+				.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY())
+				.addI(WF_others, iOtherBuilders).addI(WF_max, iMaxWorkers));
 			continue;
 		}
 
@@ -1305,9 +1700,14 @@ bool CvWorkerAI::improveCity(CvUnitAI* unit, CvCity* pCity)
 			eBestBuild     = eBuild;
 
 			if (gPlayerLogLevel >= 1)
+			{
 				logBuildEvaluation(1, "[WAI/city/best] at=(%d,%d) build=%s value=%d",
 					pLoopPlot->getX(), pLoopPlot->getY(),
 					GC.getBuildInfo(eBestBuild).getType(), iScored);
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_BEST, 1)
+					.addI(WF_x, pLoopPlot->getX()).addI(WF_y, pLoopPlot->getY())
+					.addI(WF_build, (int)eBestBuild).addI(WF_value, iScored));
+			}
 		}
 	}
 

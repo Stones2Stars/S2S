@@ -33,10 +33,77 @@ enum EventKind
 	NUM_EVENT_KINDS
 };
 
-//	A cascade event: KIND (firewall axis) + a RAW, self-describing payload (NEVER a formatted string -- formatting is
-//	the gated logging consumer's job). Payload shape is PROVISIONAL (event-spine-spec section 3/9, flagged): eventId =
-//	WHAT happened (a per-subsystem id), iType = the primary data Type index involved (-1 if none), iA/iB/iC = raw
-//	slots (e.g. the building-count event carries iType=building, iA=new count, iB=delta, iC=player).
+//	======================= the RAW field payload (event-spine-spec section 3, RESOLVED 2026-06-18) =======================
+//	A logging-only (DIAGNOSTIC/TRACE) event carries its line as RAW FIELDS, never a formatted string -- the gated logging
+//	consumer renders them. Chosen shape (from the Stage-0 field catalog, logging-field-catalog.md): a generic typed-slot
+//	array (median 5-6 fields, <=16 operational). The line = a constant PREFIX (the [TAG] + any constant text, keyed by
+//	iDomainTag+iEventId) followed by each field rendered "name=value" -- so constant labels live in the prefix, only the
+//	VARIABLE numeric fields are slots (no string fields, no per-line format registry; lines that don't fit pure
+//	[TAG] key=value get redone during migration -- owner "drop/redo" ruling). PERF is the exception (its own struct, later).
+
+//	How a field slot's int payload renders. The TAG implies the type (one table), so the slot stays 8 bytes -- the int
+//	payload is reinterpreted per the type (typeIndex kinds resolve to a name via GC.getXInfo in the consumer).
+enum SpineFieldType
+{
+	SFT_INT = 0, SFT_FLOAT, SFT_BOOL,
+	// typeIndex kinds: the int is a Types index, rendered to its type string via GC.getXInfo (resolution in the consumer).
+	// This is how a former "%s = GC.getXInfo(i).getType()" line becomes a clean raw field (the index travels, not the string).
+	SFT_BUILDING, SFT_UNIT, SFT_TECH, SFT_PLAYER,
+	SFT_BONUS, SFT_IMPROVEMENT, SFT_PROMOTION, SFT_RELIGION, SFT_CORPORATION, SFT_FEATURE, SFT_TERRAIN, SFT_CIVIC, SFT_PROJECT, SFT_SPECIALIST
+};
+
+//	Field identities are DOMAIN-LOCAL (owner 2026-06-18): each migrated domain defines its OWN field-tag enum + a
+//	resolver mapping tag -> (name, type), registered with the spine (below). The spine holds NO global field registry --
+//	this isolates each domain (Clean-Architecture), kills the fragile central enum-plus-two-parallel-tables sync, and lets
+//	domains migrate in PARALLEL with zero shared edits. (Constant labels like "action=safety" are NOT fields -- they live
+//	in the event prefix.) A field slot's `eTag` is interpreted only together with the event's `iDomainTag`.
+struct CvCascadeEventField
+{
+	int eTag; // a DOMAIN-LOCAL field tag (resolved to name+type by the domain's registered SpineFieldInfoFn)
+	union { int i; float f; } v;
+};
+
+//	Domain discriminator -- selects the [TAG] family and (with iEventId) the constant line prefix. Grows per migrated domain.
+enum SpineDomainTag
+{
+	SD_NONE = 0,
+	SD_HUNTER,     // [HAI] roaming-attacker AI (CvHunterAI) -- the pilot
+	SD_WAR,        // [WAR] team-war (CvTeamAI)
+	// Pre-allocated so each domain migrates with ZERO shared-file edits (parallel-safe); a domain is "live" once it
+	// self-registers (spineRegisterDomain) in its own .cpp. Unregistered tags simply never emit.
+	SD_WORKER,     // [WAI] worker build evaluation (CvWorkerAI)
+	SD_CITY,       // [CIT] city production (CvCityAI / CvCity)
+	SD_UNIT,       // [UNT] unit AI dispatch (CvUnitAI / CvSelectionGroupAI)
+	SD_COMBAT,     // [COM] combat (CvUnitAI / CvSelectionGroupAI)
+	SD_GROUP,      // [GRP] group & army (CvSelectionGroupAI / CvArmy)
+	SD_FOUND,      // [FND] founding/settle (CvUnitAI::AI_found)
+	SD_DECISION,   // [DAI] flavour decisions (CvDecisionAI)
+	SD_DIPLO,      // [DIP] diplomacy/deals (CvPlayerAI / CvDeal)
+	SD_ESPIONAGE,  // [ESP] espionage (CvPlayerAI)
+	SD_CONTRACT,   // [CTB] contract broker (CvContractBroker)
+	SD_ENGINE,     // [ENG] engine integrity (CvPlot)
+	NUM_SPINE_DOMAINS
+};
+
+//	A domain supplies its eventId -> constant line-prefix mapping through this contract, registered at startup -- so the
+//	spine stays domain-AGNOSTIC (it never names a domain; the domain self-registers, Clean-Architecture isolation). The
+//	prefix is the [TAG] + any constant labels (e.g. "[HAI/begin] phase=hunterMove"); variable fields follow as name=value.
+typedef const char* (*SpineLinePrefixFn)(int iEventId);
+// A domain resolves one of its LOCAL field tags to a name + render-type: returns the field name (NULL if the tag is
+// unknown) and sets *peType. The renderer calls this per field slot, so field name/type knowledge lives in the domain,
+// never in the spine. C++03 free-function pointer (no captures); SFT_INT is a safe default for an unknown tag.
+typedef const char* (*SpineFieldInfoFn)(int iFieldTag, SpineFieldType* peType);
+// A domain self-registers (at startup) its prefix provider, its destination .log file, AND its field-info resolver --
+// so the spine stays fully domain-agnostic AND per-domain files are kept (R-2). szLogFile NULL => Cascade.log;
+// fieldFn NULL => fields render as "fN=value" by index (a safe fallback). (e.g. [HAI] -> "HunterAI.log".)
+void spineRegisterDomain(int iDomainTag, SpineLinePrefixFn prefixFn, const char* szLogFile, SpineFieldInfoFn fieldFn);
+
+//	The cap on slots per event -- 16 covers every operational AI line (97th pct; widest operational = [WAI/score] @ 16).
+static const int SPINE_MAX_FIELDS = 16;
+
+//	A cascade event: KIND (firewall axis) + a RAW, self-describing payload (NEVER a formatted string). Two payload modes,
+//	both raw: DOMAIN count events use iType + iA/iB/iC (the tally reads these); logging events (DIAGNOSTIC/TRACE) use
+//	iDomainTag + iEventId (-> the constant line prefix) + aFields[iFieldCount] (the variable "name=value" fields).
 struct CvCascadeEvent
 {
 	EventKind eKind;
@@ -46,9 +113,39 @@ struct CvCascadeEvent
 	int iB;
 	int iC;
 
+	int iDomainTag;   // SpineDomainTag -- the line's [TAG] family (logging events); SD_NONE for the legacy count path
+	int iLevel;       // the surveillance level this line emits at (1 Telescreen .. 4 Thought Police); consumer gates on it
+	int iFieldCount;  // number of valid aFields (0 = a legacy count event, uses iType/iA/iB/iC)
+	CvCascadeEventField aFields[SPINE_MAX_FIELDS];
+
+	// Legacy DOMAIN-count constructor (iFieldCount stays 0; aFields unused).
 	CvCascadeEvent(EventKind eKind_, int iEventId_, int iType_ = -1, int iA_ = 0, int iB_ = 0, int iC_ = 0)
-		: eKind(eKind_), iEventId(iEventId_), iType(iType_), iA(iA_), iB(iB_), iC(iC_) {}
+		: eKind(eKind_), iEventId(iEventId_), iType(iType_), iA(iA_), iB(iB_), iC(iC_)
+		, iDomainTag(SD_NONE), iLevel(1), iFieldCount(0) {}
+
+	// Logging-event constructor (DIAGNOSTIC/TRACE): domain + event id + the level it emits at, then add fields. The
+	// domain param is the SpineDomainTag ENUM (not int) -- this disambiguates from the legacy int-eventId ctor above.
+	CvCascadeEvent(EventKind eKind_, SpineDomainTag eDomainTag_, int iEventId_, int iLevel_)
+		: eKind(eKind_), iEventId(iEventId_), iType(-1), iA(0), iB(0), iC(0)
+		, iDomainTag((int)eDomainTag_), iLevel(iLevel_), iFieldCount(0) {}
+
+	// Append a raw field by its DOMAIN-LOCAL tag (int or typeIndex). No-op past the cap (a backstop; lines <=16 by the catalog).
+	CvCascadeEvent& addI(int iFieldTag, int iValue)
+	{
+		if (iFieldCount < SPINE_MAX_FIELDS) { aFields[iFieldCount].eTag = iFieldTag; aFields[iFieldCount].v.i = iValue; ++iFieldCount; }
+		return *this;
+	}
+	CvCascadeEvent& addF(int iFieldTag, float fValue)
+	{
+		if (iFieldCount < SPINE_MAX_FIELDS) { aFields[iFieldCount].eTag = iFieldTag; aFields[iFieldCount].v.f = fValue; ++iFieldCount; }
+		return *this;
+	}
 };
+
+//	Render a logging event's RAW fields into szBuf as "<prefix> name=value name=value ..." (the consumer's job).
+//	prefix from the domain's registered prefix provider; field names/types from the domain's registered SpineFieldInfoFn. Declared here,
+//	defined in the .cpp beside the logging consumer.
+void cascadeRenderEventLine(char* szBuf, int iBufSize, const CvCascadeEvent& kEvent);
 
 //	Real (non-test) DOMAIN event ids -- WHAT changed in synced game state. Distinct namespace from the temporary
 //	DIAGNOSTIC ids in CvCascadeSelfTest (the KIND prefix in the log disambiguates). This is the production side: real

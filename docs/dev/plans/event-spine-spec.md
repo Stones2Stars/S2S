@@ -56,8 +56,17 @@ Event = { KIND, type, <raw payload fields> }
   costly part of logging is resolving indices to text + composing the line; keeping the payload raw defers all of
   that to the consumer. Both consumers take what they need from the same raw payload (the tally reads the count
   key; logging renders the fields).
-- ⚑ Exact payload representation (a small self-describing field set vs a tagged union vs per-kind structs) pins at
-  implementation — the rule is only: **raw, self-describing, no strings.**
+- ✅ **RESOLVED 2026-06-18 (owner) — payload = a TYPED-FIELD ARRAY with PER-DOMAIN field resolution (as built).** From
+  the Stage-0 field catalog (`../reference/logging-field-catalog.md`: 242 templates, median 5–6 fields, 85% ≤9, ≤16
+  operational): `CvCascadeEvent` carries `CvCascadeEventField aFields[16]` (each slot `{int eTag; union{int i; float f;}}`,
+  ~128 B) + an `int iDomainTag` + an `int iLevel`. **The slot's `eTag` is a DOMAIN-LOCAL field tag** — there is NO global
+  field enum/registry; each domain registers (via `spineRegisterDomain`) its own prefix provider, `.log` file, AND a
+  `SpineFieldInfoFn` that resolves its local tag → (name, `SpineFieldType`). The generic logging consumer renders
+  `prefix + name=value …`; typeIndex `SpineFieldType` kinds (`SFT_BUILDING`/`UNIT`/`BONUS`/…) resolve the index to a type
+  name. Raw (no strings: wide instance names → entity IDs; type names → the index + `SFT_<kind>`). This per-domain
+  isolation (vs a global typed-tag enum) was the proper-once choice: zero shared edits per domain ⇒ parallel-safe + no
+  3-way-sync debt. **`[PERF]` exception → its own `CvPerfEvent` struct** (later). Genuinely caller-composed/instance-name
+  strings (CTB) stay on the legacy shadow path — they don't fit the raw rule.
 
 ## 4. NO verbose `if(loglevel)` gates (owner 2026-06-17) — and why they vanish
 
@@ -116,6 +125,37 @@ machinery (it + `CvScopedAccumulator` are the substrate). Then:
    tee). Proof emit in `CvGame::doTurn`. Compiles + links (Assert).
 2. **tally** — first authoritative consumer; domain events → counts; shadow-diff vs `m_pai*Count`.
 3. **logging** consumer — broad/gated; reproduces channel fields + counts; shadow-diff vs the old lines.
+   - **PROGRESS 2026-06-18 — the RAW-FIELD logging contract + the HAI pilot are IN (Assert-clean, shadow):**
+     `CvCascadeEvent` gained the raw-field payload (`CvCascadeEventField aFields[16]` + `addI`/`addF`), a per-line
+     `iLevel` (the consumer gates on the 0–5 surveillance scale), and a **per-domain prefix-provider registry**
+     (`spineRegisterDomain`/`SpineLinePrefixFn`/`SpineFieldInfoFn` — domains self-register their `[TAG]` prefixes,
+     `.log` file, and field-tag resolver, so the spine stays domain-agnostic). The logging consumer renders field events
+     as `[PREFIX] name=value …` via `cascadeRenderEventLine` + the domain's registered field resolver. **Per-domain FILE
+     routing DONE (R-2):** the registered `.log` file routes each domain's field lines (e.g. `[HAI]` → `HunterAI.log`).
+   - **`[HAI]` FULLY MIGRATED (Assert-clean, shadow):** all ~24 line templates / 28 sites in `CvHunterAI.cpp` emit through
+     the spine ALONGSIDE the legacy `logHunterAI`, level-tagged (1–2), routing to `HunterAI.log`. HAI self-registers its
+     `[HAI/...]` prefixes (the spine never names HAI). Free-text lines were recast to clean `[TAG] key=value`
+     (e.g. "merge with hunter escort" → `action=mergeEscort`) per the recategorize-freely ruling.
+   - **Next:** verify the shadow live (`/events` diff old vs new `[HAI]`), then **CUT** the legacy `logHunterAI` calls
+     (and retire `logHunterAI` + its file plumbing); then roll the other domains (CTB last) per
+     `../reference/logging-surface-inventory.md`. NB the `[HAI]`/`HunterAI` name-collision rename is a flagged separate dragon.
+   - **BULK MIGRATION 2026-06-18 (parallel fan-out, Assert-clean):** the contract was refined to **per-domain field
+     resolvers** (each domain registers its own field name/type table → the spine holds NO global field registry →
+     fully isolated + parallel-safe; killed the 3-way-sync debt) and HAI+WAR re-pointed. Then 7 agents shadow-wired the
+     remaining domains: **`[WAI]` `[CIT]` `[UNT]`+`[COM]`+`[GRP]`+`[FND]` `[DAI]` `[DIP]`+`[ESP]` `[CTB]` `[ENG]` —
+     110 sites, ~133 event ids, routing to their own `<Domain>AI.log`.** Multi-file `[CIT]` needed a shared tag-enum
+     header (`CvCityLogTags.h`) to dodge the unity-batch enum-redefinition (the one compile fix); all other domain enums
+     are single-file. **~52 lines left on legacy** (runtime name/desc strings — the raw-field model has no string slot).
+   - **NAME-RECOVERY pass DONE 2026-06-18 (Assert-clean):** the renderer gained the full typeIndex set (`SFT_BONUS`/
+     `IMPROVEMENT`/`PROMOTION`/`RELIGION`/`CORPORATION`/`FEATURE`/`TERRAIN`/`CIVIC`/`PROJECT`/`SPECIALIST`), so a former
+     `"=%s", GC.getXInfo(eX).getType()` line now travels as the int index + `SFT_<X>` and the consumer prints the name.
+     **21 lines recovered** (WAI near-fully covered: 20 event ids / 28 field tags; CTB `CF_unitType`→`SFT_UNIT`).
+   - **31 lines GENUINELY unrecoverable (architectural, not gaps to chase):** ~25 are runtime INSTANCE display names
+     (`pCity->getName()`, unit `getDescription()`) — not type-resolvable; would need to carry the entity ID + resolve at
+     display time. ~6 are caller-composed strings (`szDecision`/`szReason`/`szWorkCriteria`/mission literals) — would need
+     enum-ification (a separate spine-design decision). 3 CTB lines want a `SFT_UNITAI` (addable if wanted).
+   - **Remaining threads:** `[DAI]` civ/flavor wide-strings (nominal); the 3 `SFT_UNITAI` CTB lines; per-domain legacy
+     CUT after `/events` verification; and the Autolog BUG-option rework to the 0–5 Surveillance knob.
 4. **grants** — fires provisions on its kinds.
 5. **modifier**, then **enabler** (read the tally) — per `cascade-engine-430.md`.
 
@@ -127,7 +167,8 @@ and consumers publish to it. (Full endpoint/gating/architecture reference:
 
 - **Assessed: it needs NO redesign.** It already has the right architecture for this role — publish-and-serve with
   **snapshot isolation** (the server thread never touches game objects), a **bounded** event queue
-  (`EVENT_QUEUE_CAP = 2048`, ~few-hundred-KB transient, and it **drains even with no client** so it can't bloat),
+  (`EVENT_QUEUE_CAP = 65536` since 2026-06-18, bumped from 2048 so level-3 `/events` isn't lossy; ~10-16MB worst-case
+  transient on the LAA process, and it **drains even with no client** so it can't bloat),
   the `/events` SSE stream, and the **#419 live-log mechanism** (raw gated log lines teed onto `/events` for
   out-of-process parsing — "the counter-strike way"). The owner's original cost worry (CPU/MAF/bloat) proved
   unfounded; it's already 32-bit-safe. So we **extend + formalize**, not rebuild.

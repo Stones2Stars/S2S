@@ -51,6 +51,14 @@ and `grants` — they are not separate shapes (modifier-spec §1.4).
   engine indices via the shared type registry (`getInfoTypeForString`).
 - **Catch-all tokens** — engine concepts that aren't data Types: `TURN`, `POPULATION`, `MILITARY`, `CITY`, `TEAM`,
   `UNIT_LEVEL`, `AREA_SIZE`, … A code-side registry (extensible, engine-resolved) — uniform vocabulary, not info special-cases.
+- **`PROPERTY_X` BAND atom** (`{type:PROPERTY_CRIME, scope:city, min, max}`) — a count atom whose "count" is the context
+  city's current value for that property (`CvProperties::getValueByProperty`), gated by the `min`/`max` band. It UNIFIES
+  legacy's two property gates — the `CvPropertyInfo` `PropertyBuilding` band (`iMinValue`/`iMaxValue`, drives the per-turn
+  `checkPropertyBuildings` add/remove) **and** the building's own `PrereqMinProperties`/`PrereqMaxProperties` (the
+  `propertyThreshold` canConstruct gate, *"min and max in 2 separate steps"*, owner 2026-06-18) — into ONE declared atom.
+  Its home is `requires.operate` (a property-effect building goes dormant/active as the value enters/leaves the band; the
+  §3 PropertyEffect "reverse enabler"). Unlike a presence atom, an absent `min` means **no lower bound** (a max-only band),
+  not `≥1`. Parsed by readJson (`ATOMDOMAIN_PROPERTY`), 2026-06-18.
 - **`SELF`** — the owning entity's OWN type, resolved per-entity at evaluation. Its live use is the `per` count-scaler
   (`per:{type:SELF,scope:world}` = count of own type at scope, §2.6). **⚠ SUPERSEDED (2026-06-17): SELF no longer appears in
   `requires`.** The old `requires.build.noneOf:[{type:SELF,scope:world}]` global-uniqueness idiom (world-wonder /
@@ -250,7 +258,10 @@ other):
   `enables.buildings` edge + the placement marker; the source-side reverse view (tech → the buildings it auto-places) is
   **derived at load** (forward-authored on the natural end, reverse materialized on load, §6.2). The legacy
   `bAutoBuild`→`identity.autoBuild` migration already gives the data shape; the auto-placement engine itself is **#430
-  placement work, NOT built during the gate fix.**
+  placement work, NOT built during the gate fix.** (Update 2026-06-18: `identity.autoBuild` is now **parsed** into
+  `CvEntityAvailability.autoBuild` and consumed by the §14 H AUTO-PLACEMENT SHADOW — `placementSweep` / `[PLACEMENT]`,
+  cascade-mapping-inventory §B-i — which maps the per-turn maintainers before deletion. The shadow reads the marker; the
+  real placement ENGINE is still later #430 work.)
 
 - **`grants` — the OTHER placement behavior (§4.4):** an explicit source hands out a building one-shot / event-driven.
   `autoBuild` = self-driven by the building's own condition; `grants` = a specific source places it.

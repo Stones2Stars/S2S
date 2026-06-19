@@ -134,6 +134,26 @@ not findings to re-discover.
   guard sites: `CvPlot.cpp` `setPlotType` graphics block, `setLayoutDirty`,
   `shouldHaveGraphics`; `CvMap::setupGraphical`.
 
+### Cascade observability — the total-observability ("Orwell") bar (#428/#430)
+
+- **The events + logging + diagnostics must make the running game FULLY surveilled (owner ruling 2026-06-18).** The
+  bar: *map an accurate game state purely from the endpoints + `/events` + the gated logs — open the game, but never
+  look at the SCREEN.* This is **non-negotiable and load-bearing**, not polish: it is the ONLY way to reliably REBUILD
+  the state logic on the cascade + tally — you cannot safely delete a maintainer you cannot fully observe
+  (map-before-delete). Every state behaviour (enabler-spec §14 H) gets a SHADOW that diffs the cascade's verdict
+  against the live engine, turn over turn, until clean — *then* the legacy mechanism is deleted. Full ruling +
+  rationale: `docs/dev/plans/cascade-mapping-inventory.md` §A. Live surface: `docs/dev/reference/http-server.md`
+  (`/diagnostic/*` shadows incl. `sweep`/`placementSweep`; `[READJSON]`/`[PLACEMENT]` per-turn log lines).
+- **Delegate DATA-READING to the cheap `data-reader` sub-agent — never pull raw endpoint/log dumps into an expensive
+  context (owner ruling 2026-06-18).** Reading the live surface at scale (a `placementSweep`/`sweep` dump is tens of KB;
+  logs are larger) *"will nuke credits"* if the Opus/Sonnet orchestrator ingests the raw bytes. Use the read-only
+  **`.claude/agents/data-reader.md`** (Haiku; Bash/Read/Grep only) to curl/grep, parse, AGGREGATE, and report back a
+  COMPACT distilled summary (histograms, divergence cause-tags, anomalies) — the big tokens burn on Haiku, the
+  orchestrator consumes a few lines. Always prefer it over reading endpoint/log output directly. **Fallback (owner
+  2026-06-18): the reader must fail HONESTLY** (distinguish "surface DOWN" from "reader-error", never fabricate a
+  clean summary); when it reports DOWN or returns junk, the orchestrator confirms with ONE cheap smoke-curl
+  (`curl -s http://127.0.0.1:7227/` → `hello world`) before acting — an 11-byte check, not a data re-pull.
+
 ## Conventions
 
 - **Run the post-compaction reload hook — RECOMMENDED to mitigate context poisoning (owner ruling
@@ -204,6 +224,46 @@ not findings to re-discover.
   assume a small edit has ripples until you've checked. Do not skip this because a change
   "looks trivial" — that assumption has repeatedly produced regressions and contradicted
   documented design.
+- **Build the proper structure ONCE — no transitional tech debt (owner ruling 2026-06-18).** The owner
+  *hates technical debt with a passion* and would rather get a structure in **properly the first time** than
+  rework it 2-3 times because a piece "isn't ready yet." So **reject transitional shims** that exist only to
+  defer the real design (this is exactly why R-1 chose the full raw-field catalog over a string-carrying
+  spine event — the shim would have been debt). When the right design needs prerequisite work, do the
+  prerequisite (e.g. the field catalog) and build the real thing — don't ship a placeholder you'll tear out.
+  **Corollary — ISOLATE COMPONENTS:** prefer clean, interface-bounded components with isolated surfaces
+  (the spine / its consumers / the tally; a system's data block + its predicate query-surface) so each can be
+  built and reasoned about once, properly, without entangling the next. (This sharpens, not contradicts,
+  "minimal local changes": minimal = don't sprawl the edit; proper-once = don't ship debt. Shadow discipline
+  — old+new coexist, diff, cut — is *verification* of the proper structure, not building-then-reworking it.)
+- **ARCHITECTURAL NORTH-STAR — CLEAN ARCHITECTURE + interface-based contracts (owner is a .NET dev at core,
+  2026-06-18).** The owner thinks in **Clean Architecture**: dependency inversion (depend on interfaces/contracts,
+  not concretions), isolated layers with explicit boundaries, and a **functionality-based implementation approach**
+  (compose behaviour via small contracts rather than deep inheritance hierarchies). This is the design compass for
+  *all* structural work here. Concretely: program to interfaces (`IEventConsumer` is the model — the spine, tally,
+  grants, logging are pluggable behind it); keep dependencies pointing inward at stable contracts; favour composition
+  over the inherited Civ4 god-classes. It is the through-line behind the standing goals — dissolving
+  `CvCityAI`/`CvUnitAI` into interface-bounded composition (the "shrink AI inherited classes" standing goal), the
+  cascade's consumer/contract surfaces, and the dream of a pluggable external AI backend. It is also why the owner
+  **immediately reframed the two trait systems** (the simple traits + the complex/Thunderbrd traits) into isolated
+  systems the moment the entanglement showed — each system gets its own data block + predicate query-surface
+  (enabler-spec §3 predicate-alignment pass), rather than leaking into each other. **The payoff of that isolation:
+  once both implement the ONE trait contract, the composition root selects by a single option check — `if(complexTraits)`
+  inject the complex impl into the game object, else vanilla — and the game object depends only on the contract, never
+  knowing which it got.** We **cannot DI it for real** (no DI container in C++03/VC7.1; the EXE binds concrete classes), so
+  it is **"poor-man's DI": a literal `if`/`switch` gate at the composition root** picks the concrete and assigns it to the
+  contract pointer. The decoupling is fully real (the consumer depends only on the interface); only the *wiring* is manual
+  instead of container-resolved. (Dovetails with the §5a game-option override-by-design swaps.) C++03/VC7.1 constrains the *syntax*
+  (virtual interfaces, no lambdas/template gymnastics) but **not** the architecture — the contracts-and-boundaries
+  discipline holds regardless of the dated compiler. (See also the design-style preference in assistant memory.)
+  - **The concrete C++03 SHAPE of "interface contracts" here:** an *interface* = an abstract base class with only
+    pure-virtuals + a virtual dtor and **NO data members** (`IEventConsumer` is the model). **Multiple inheritance is
+    the `implements IA, IB` mechanism** — one concrete class can satisfy several role-contracts via MI — but it's the
+    *implements* axis, **NOT** a DI substitute (you still inject by holding a base pointer assigned at the `if`/`switch`
+    composition root). Two guardrails: **(1) MI only of stateless pure-virtual interface bases** (MI of stateful
+    concretes invites the diamond/layout/`virtual`-base mess); **(2) graft interfaces onto the DLL-internal derived
+    classes (`CvCityAI`/`CvUnitAI`/…), NEVER widen an EXE-bound base** (`CvCity`/`CvUnit` — the closed `.exe` binds their
+    vtable/layout; adding bases there risks the ABI). The derived side is the safe lane and the lever for the
+    shrink-the-god-classes goal.
 - **Only automatically branch / commit / PR when the work is tied to an active GitHub
   issue.** For anything else (experiments, behaviour tuning, undocumented fixes we are
   still iterating on), **edit the working tree only** — do not commit, create or switch
@@ -253,6 +313,9 @@ not findings to re-discover.
   on mature saves (filter, already filed): `CvContractBroker::makeContract` NULL pJoinUnit
   (#336), `AI_formArmies` army-ID format (#364), unit stuck-in-loop short-circuit (#189 family).
 - Prefer minimal, local changes in large core files.
+- **Import Info headers DIRECTLY; do not lean on the `CvInfos.h` umbrella (owner 2026-06-18).** `CvInfos.h` is only an
+  umbrella aggregator and should be RETIRED — new/edited code includes the specific `CvXInfo.h` (or `Infos/CvXInfo.h`)
+  it needs directly. (Flagged future cleanup: migrate existing `#include "CvInfos.h"` sites to direct imports + retire the file.)
 - Preserve save compatibility by default; for intentional breaks, coordinate and
   mark with `@SAVEBREAK`. See `Notes for the next breaking of save game compatability cycle.txt`.
 - If C++ changes touch XML/Python interfaces, run the XML + callback validators.

@@ -33,6 +33,9 @@ enum AtomDomain
 	ATOMDOMAIN_POPULATION, // catch-all token: the context city's population
 	ATOMDOMAIN_CITYCOUNT,  // catch-all token: number of cities (empire/team)
 	ATOMDOMAIN_AREASIZE,   // catch-all token AREA_SIZE: the context city's LANDMASS tile count (area()->getNumTiles())
+	ATOMDOMAIN_PROPERTY,   // PROPERTY_X: the context city's value for that property (crime/disease/...) -- a min/max BAND.
+	                       // Unifies legacy's TWO band gates (CvPropertyInfo PropertyBuilding [iMin,iMax] that drives
+	                       // checkPropertyBuildings + the building's own PrereqMin/MaxProperties) into one declared atom.
 	NUM_ATOM_DOMAINS
 };
 

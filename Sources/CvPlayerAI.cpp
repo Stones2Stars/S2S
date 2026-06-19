@@ -34,6 +34,120 @@
 #include "BetterBTSAI.h"
 #include "FAStarNode.h"
 #include "CvArmy.h"
+#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [DIP]/[ESP] through the event spine (shadow)
+
+// #430 logging: [DIP] diplomacy/deals + [ESP] espionage -> event spine (CvPlayerAI). Both domains self-register their
+// prefix providers so the spine stays domain-agnostic. Shadow discipline: emits run ALONGSIDE the legacy logDiploAI /
+// logEspionageAI calls (diff on /events, then cut). Runtime-string verdict=%s fields (only "ACCEPT"/"reject") are split
+// into distinct event ids per value so the constant lands in the prefix, not a string field (raw-field model has no
+// string slots). Lines whose %s is runtime and cannot be enumerated are left on the legacy path only (none here).
+namespace
+{
+	// -------------------------------------------------------------------------
+	// [DIP] diplomacy / deals
+	// -------------------------------------------------------------------------
+	enum DipEvent
+	{
+		DIP_CAND = 0,                 // [DIP/cand]
+		DIP_DEALVAL,                  // [DIP/dealval]
+		DIP_BEGIN,                    // [DIP/begin]
+		DIP_DECISION_REJECT_DENIAL,   // [DIP/decision] verdict=reject reason=denial
+		DIP_SCORE,                    // [DIP/score]
+		DIP_DECISION_ACCEPT_GRANT,    // [DIP/decision] verdict=ACCEPT reason=grant
+		DIP_DECISION_REJECT_GRANT,    // [DIP/decision] verdict=reject reason=grant
+		DIP_DECISION_ACCEPT_RENEW,    // [DIP/decision] verdict=ACCEPT reason=renew
+		DIP_DECISION_REJECT_RENEW,    // [DIP/decision] verdict=reject reason=renew
+		DIP_DECISION_ACCEPT,          // [DIP/decision] verdict=ACCEPT
+		DIP_DECISION_REJECT,          // [DIP/decision] verdict=reject
+		DIP_TRADE                     // [DIP/trade] (CvDeal.cpp emits this id too)
+	};
+	const char* diploLinePrefix(int iEventId)
+	{
+		switch (iEventId)
+		{
+		case DIP_CAND:                  return "[DIP/cand]";
+		case DIP_DEALVAL:               return "[DIP/dealval]";
+		case DIP_BEGIN:                 return "[DIP/begin]";
+		case DIP_DECISION_REJECT_DENIAL:return "[DIP/decision] verdict=reject reason=denial";
+		case DIP_SCORE:                 return "[DIP/score]";
+		case DIP_DECISION_ACCEPT_GRANT: return "[DIP/decision] verdict=ACCEPT reason=grant";
+		case DIP_DECISION_REJECT_GRANT: return "[DIP/decision] verdict=reject reason=grant";
+		case DIP_DECISION_ACCEPT_RENEW: return "[DIP/decision] verdict=ACCEPT reason=renew";
+		case DIP_DECISION_REJECT_RENEW: return "[DIP/decision] verdict=reject reason=renew";
+		case DIP_DECISION_ACCEPT:       return "[DIP/decision] verdict=ACCEPT";
+		case DIP_DECISION_REJECT:       return "[DIP/decision] verdict=reject";
+		case DIP_TRADE:                 return "[DIP/trade]";
+		default:                        return NULL;
+		}
+	}
+	enum DipField
+	{
+		DF_player = 0, DF_from, DF_item, DF_data, DF_value,
+		DF_items, DF_total, DF_atWar,
+		DF_with, DF_give, DF_get, DF_iChange,
+		DF_ourValue, DF_theirValue, DF_threshold,
+		DF_to
+	};
+	const char* diploFieldInfo(int iFieldTag, SpineFieldType* peType)
+	{
+		*peType = SFT_INT;
+		switch (iFieldTag)
+		{
+		case DF_player:     return "player";
+		case DF_from:       return "from";
+		case DF_item:       return "item";
+		case DF_data:       return "data";
+		case DF_value:      return "value";
+		case DF_items:      return "items";
+		case DF_total:      return "total";
+		case DF_atWar:      return "atWar";
+		case DF_with:       return "with";
+		case DF_give:       return "give";
+		case DF_get:        return "get";
+		case DF_iChange:    return "iChange";
+		case DF_ourValue:   return "ourValue";
+		case DF_theirValue: return "theirValue";
+		case DF_threshold:  return "threshold";
+		case DF_to:         return "to";
+		default:            return NULL;
+		}
+	}
+	struct DiploLogRegistrar { DiploLogRegistrar() { spineRegisterDomain(SD_DIPLO, &diploLinePrefix, "DiploAI.log", &diploFieldInfo); } };
+	DiploLogRegistrar s_diploLogRegistrar;
+
+	// -------------------------------------------------------------------------
+	// [ESP] espionage
+	// -------------------------------------------------------------------------
+	enum EspEvent
+	{
+		ESP_BEST = 0   // [ESP/best]
+	};
+	const char* espionageLinePrefix(int iEventId)
+	{
+		switch (iEventId)
+		{
+		case ESP_BEST: return "[ESP/best]";
+		default:       return NULL;
+		}
+	}
+	enum EspField { EF_player = 0, EF_spyX, EF_spyY, EF_mission, EF_target, EF_value };
+	const char* espionageFieldInfo(int iFieldTag, SpineFieldType* peType)
+	{
+		*peType = SFT_INT;
+		switch (iFieldTag)
+		{
+		case EF_player:  return "player";
+		case EF_spyX:    return "spyX";
+		case EF_spyY:    return "spyY";
+		case EF_mission: return "mission";
+		case EF_target:  return "target";
+		case EF_value:   return "value";
+		default:         return NULL;
+		}
+	}
+	struct EspionageLogRegistrar { EspionageLogRegistrar() { spineRegisterDomain(SD_ESPIONAGE, &espionageLinePrefix, "EspionageAI.log", &espionageFieldInfo); } };
+	EspionageLogRegistrar s_espionageLogRegistrar;
+}
 
 // Plot danger cache
 //#define DANGER_RANGE						(4)
@@ -7908,9 +8022,17 @@ int CvPlayerAI::AI_dealVal(PlayerTypes ePlayer, const CLinkList<TradeData>* pLis
 		}
 		logDiploAI(3, "[DIP/cand] player=%d from=%d item=%d data=%d value=%d",
 			getID(), (int)ePlayer, (int)pNode->m_data.m_eItemType, pNode->m_data.m_iData, iValue - iItemBefore);
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_CAND, 3)
+			.addI(DF_player, (int)getID()).addI(DF_from, (int)ePlayer)
+			.addI(DF_item, (int)pNode->m_data.m_eItemType).addI(DF_data, pNode->m_data.m_iData)
+			.addI(DF_value, iValue - iItemBefore));
 	}
 	logDiploAI(2, "[DIP/dealval] player=%d from=%d items=%d total=%d atWar=%d",
 		getID(), (int)ePlayer, pList->getLength(), iValue, bAtWar ? 1 : 0);
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_DEALVAL, 2)
+		.addI(DF_player, (int)getID()).addI(DF_from, (int)ePlayer)
+		.addI(DF_items, pList->getLength()).addI(DF_total, iValue)
+		.addI(DF_atWar, bAtWar ? 1 : 0));
 	return iValue;
 }
 
@@ -7948,6 +8070,10 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 
 	logDiploAI(1, "[DIP/begin] player=%d with=%d give=%d get=%d iChange=%d",
 		getID(), (int)ePlayer, pOurList->getLength(), pTheirList->getLength(), iChange);
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_BEGIN, 1)
+		.addI(DF_player, (int)getID()).addI(DF_with, (int)ePlayer)
+		.addI(DF_give, pOurList->getLength()).addI(DF_get, pTheirList->getLength())
+		.addI(DF_iChange, iChange));
 
 	if (AI_goldDeal(pTheirList) && AI_goldDeal(pOurList))
 	{
@@ -7963,6 +8089,9 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 			{
 				logDiploAI(1, "[DIP/decision] player=%d with=%d verdict=reject reason=denial item=%d",
 					getID(), (int)ePlayer, (int)pNode->m_data.m_eItemType);
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_DECISION_REJECT_DENIAL, 1)
+					.addI(DF_player, (int)getID()).addI(DF_with, (int)ePlayer)
+					.addI(DF_item, (int)pNode->m_data.m_eItemType));
 				return false;
 			}
 		}
@@ -8021,6 +8150,9 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 
 	logDiploAI(2, "[DIP/score] player=%d with=%d ourValue=%d theirValue=%d",
 		getID(), (int)ePlayer, iOurValue, iTheirValue);
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_SCORE, 2)
+		.addI(DF_player, (int)getID()).addI(DF_with, (int)ePlayer)
+		.addI(DF_ourValue, iOurValue).addI(DF_theirValue, iTheirValue));
 
 	for (pNode = pOurList->head(); pNode; pNode = pOurList->next(pNode))
 	{
@@ -8077,6 +8209,10 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 		const bool bAcceptGrant = iOurValue < iThreshold;
 		logDiploAI(1, "[DIP/decision] player=%d with=%d verdict=%s reason=grant ourValue=%d threshold=%d",
 			getID(), (int)ePlayer, bAcceptGrant ? "ACCEPT" : "reject", iOurValue, iThreshold);
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO,
+				bAcceptGrant ? DIP_DECISION_ACCEPT_GRANT : DIP_DECISION_REJECT_GRANT, 1)
+			.addI(DF_player, (int)getID()).addI(DF_with, (int)ePlayer)
+			.addI(DF_ourValue, iOurValue).addI(DF_threshold, iThreshold));
 		return bAcceptGrant;
 	}
 
@@ -8085,11 +8221,19 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 		const bool bAcceptRenew = iTheirValue * 110 >= iOurValue * 100;
 		logDiploAI(1, "[DIP/decision] player=%d with=%d verdict=%s ourValue=%d theirValue=%d iChange<0",
 			getID(), (int)ePlayer, bAcceptRenew ? "ACCEPT" : "reject", iOurValue, iTheirValue);
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO,
+				bAcceptRenew ? DIP_DECISION_ACCEPT_RENEW : DIP_DECISION_REJECT_RENEW, 1)
+			.addI(DF_player, (int)getID()).addI(DF_with, (int)ePlayer)
+			.addI(DF_ourValue, iOurValue).addI(DF_theirValue, iTheirValue));
 		return bAcceptRenew;
 	}
 	const bool bAccept = iTheirValue >= iOurValue;
 	logDiploAI(1, "[DIP/decision] player=%d with=%d verdict=%s ourValue=%d theirValue=%d",
 		getID(), (int)ePlayer, bAccept ? "ACCEPT" : "reject", iOurValue, iTheirValue);
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO,
+			bAccept ? DIP_DECISION_ACCEPT : DIP_DECISION_REJECT, 1)
+		.addI(DF_player, (int)getID()).addI(DF_with, (int)ePlayer)
+		.addI(DF_ourValue, iOurValue).addI(DF_theirValue, iTheirValue));
 	return bAccept;
 }
 
@@ -15495,6 +15639,13 @@ EspionageMissionTypes CvPlayerAI::AI_bestPlotEspionage(CvPlot* pSpyPlot, PlayerT
 	logEspionageAI(1, "[ESP/best] player=%d spyAt=(%d,%d) mission=%d target=%d value=%d",
 		getID(), pSpyPlot ? pSpyPlot->getX() : -1, pSpyPlot ? pSpyPlot->getY() : -1,
 		(int)eBestMission, (eBestMission != NO_ESPIONAGEMISSION ? (int)eTargetPlayer : -1), iBestValue);
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_ESPIONAGE, ESP_BEST, 1)
+		.addI(EF_player, (int)getID())
+		.addI(EF_spyX, pSpyPlot ? pSpyPlot->getX() : -1)
+		.addI(EF_spyY, pSpyPlot ? pSpyPlot->getY() : -1)
+		.addI(EF_mission, (int)eBestMission)
+		.addI(EF_target, eBestMission != NO_ESPIONAGEMISSION ? (int)eTargetPlayer : -1)
+		.addI(EF_value, iBestValue));
 
 	return eBestMission;
 }

@@ -10,6 +10,18 @@
 #include "CvGlobals.h"        // GC -- resolve raw Type indices to readable names in the (gated) consumer
 #include "CvBuildingInfo.h"
 #include "CvUnitInfo.h"
+// typeIndex name-resolution in the consumer: the Info headers for each SFT_ kind (so GC.getXInfo(i).getType() compiles).
+// Imported DIRECTLY (no CvInfos.h umbrella -- owner 2026-06-18: that umbrella should be retired, import directly).
+#include "CvBonusInfo.h"
+#include "CvImprovementInfo.h"
+#include "Infos/CvPromotionInfo.h"
+#include "Infos/CvReligionInfo.h"
+#include "Infos/CvCorporationInfo.h"
+#include "Infos/CvFeatureInfo.h"
+#include "Infos/CvTerrainInfo.h"
+#include "Infos/CvCivicInfo.h"
+#include "Infos/CvProjectInfo.h"
+#include "Infos/CvSpecialistInfo.h"
 #include "CvCascadeTally.h"   // register + seed the tally (the first selective DOMAIN consumer)
 
 // ===================== the spine =====================
@@ -62,6 +74,132 @@ static const char* cascadeKindName(EventKind eKind)
 	}
 }
 
+// ===================== RAW field rendering (the logging consumer's formatter) =====================
+// Field name/type knowledge lives PER DOMAIN (each domain registers a SpineFieldInfoFn) -- the spine holds no global
+// field registry. (Constant labels stay in the event prefix, never here.)
+
+// Per-domain registry -- a domain self-registers its prefix provider, destination file, AND field-info resolver
+// (the spine never names a domain).
+struct SpineDomainReg { SpineLinePrefixFn prefixFn; const char* szLogFile; SpineFieldInfoFn fieldFn; };
+static SpineDomainReg g_domains[NUM_SPINE_DOMAINS] = { { 0, 0, 0 } };
+
+void spineRegisterDomain(int iDomainTag, SpineLinePrefixFn prefixFn, const char* szLogFile, SpineFieldInfoFn fieldFn)
+{
+	if (iDomainTag >= 0 && iDomainTag < NUM_SPINE_DOMAINS)
+	{
+		g_domains[iDomainTag].prefixFn = prefixFn;
+		g_domains[iDomainTag].szLogFile = szLogFile;
+		g_domains[iDomainTag].fieldFn = fieldFn;
+	}
+}
+
+// The constant line PREFIX for (domain, eventId): ask the domain's registered provider; until a domain registers, fall
+// back to "[domain=<n>] evt=<id>" so a stray field event is still readable, never crashes.
+static const char* spineLinePrefix(int iDomainTag, int iEventId, char* szTmp, int iTmpSize)
+{
+	if (iDomainTag >= 0 && iDomainTag < NUM_SPINE_DOMAINS && g_domains[iDomainTag].prefixFn != NULL)
+	{
+		const char* sz = g_domains[iDomainTag].prefixFn(iEventId);
+		if (sz != NULL) return sz;
+	}
+	_snprintf(szTmp, iTmpSize, "[domain=%d] evt=%d", iDomainTag, iEventId);
+	szTmp[iTmpSize - 1] = '\0';
+	return szTmp;
+}
+
+// The destination .log file for a domain's field lines (R-2: per-domain files). Unregistered / NULL => Cascade.log.
+static const char* spineDomainFile(int iDomainTag)
+{
+	if (iDomainTag >= 0 && iDomainTag < NUM_SPINE_DOMAINS && g_domains[iDomainTag].szLogFile != NULL)
+	{
+		return g_domains[iDomainTag].szLogFile;
+	}
+	return "Cascade.log";
+}
+
+void cascadeRenderEventLine(char* szBuf, int iBufSize, const CvCascadeEvent& kEvent)
+{
+	char szPre[48];
+	int n = _snprintf(szBuf, iBufSize, "%s", spineLinePrefix(kEvent.iDomainTag, kEvent.iEventId, szPre, sizeof(szPre)));
+	if (n < 0 || n >= iBufSize) { szBuf[iBufSize - 1] = '\0'; return; }
+	// Resolve each field's name + type via the domain's registered field-info resolver (per-domain isolation).
+	SpineFieldInfoFn fieldFn = (kEvent.iDomainTag >= 0 && kEvent.iDomainTag < NUM_SPINE_DOMAINS)
+		? g_domains[kEvent.iDomainTag].fieldFn : NULL;
+	for (int k = 0; k < kEvent.iFieldCount && n < iBufSize - 1; ++k)
+	{
+		const CvCascadeEventField& fld = kEvent.aFields[k];
+		SpineFieldType eType = SFT_INT;
+		const char* szName = (fieldFn != NULL) ? fieldFn(fld.eTag, &eType) : NULL;
+		char szIdx[12];
+		if (szName == NULL) { _snprintf(szIdx, sizeof(szIdx), "f%d", fld.eTag); szIdx[sizeof(szIdx)-1] = '\0'; szName = szIdx; eType = SFT_INT; } // fallback: fN=value
+		int m = 0;
+		switch (eType)
+		{
+		case SFT_FLOAT:
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%g", szName, fld.v.f);
+			break;
+		case SFT_BUILDING:
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
+				(fld.v.i >= 0 && fld.v.i < GC.getNumBuildingInfos()) ? GC.getBuildingInfo((BuildingTypes)fld.v.i).getType() : "?");
+			break;
+		case SFT_UNIT:
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
+				(fld.v.i >= 0 && fld.v.i < GC.getNumUnitInfos()) ? GC.getUnitInfo((UnitTypes)fld.v.i).getType() : "?");
+			break;
+		case SFT_TECH:
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
+				(fld.v.i >= 0 && fld.v.i < GC.getNumTechInfos()) ? GC.getTechInfo((TechTypes)fld.v.i).getType() : "?");
+			break;
+		case SFT_BONUS:
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
+				(fld.v.i >= 0 && fld.v.i < GC.getNumBonusInfos()) ? GC.getBonusInfo((BonusTypes)fld.v.i).getType() : "?");
+			break;
+		case SFT_IMPROVEMENT:
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
+				(fld.v.i >= 0 && fld.v.i < GC.getNumImprovementInfos()) ? GC.getImprovementInfo((ImprovementTypes)fld.v.i).getType() : "?");
+			break;
+		case SFT_PROMOTION:
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
+				(fld.v.i >= 0 && fld.v.i < GC.getNumPromotionInfos()) ? GC.getPromotionInfo((PromotionTypes)fld.v.i).getType() : "?");
+			break;
+		case SFT_RELIGION:
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
+				(fld.v.i >= 0 && fld.v.i < GC.getNumReligionInfos()) ? GC.getReligionInfo((ReligionTypes)fld.v.i).getType() : "?");
+			break;
+		case SFT_CORPORATION:
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
+				(fld.v.i >= 0 && fld.v.i < GC.getNumCorporationInfos()) ? GC.getCorporationInfo((CorporationTypes)fld.v.i).getType() : "?");
+			break;
+		case SFT_FEATURE:
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
+				(fld.v.i >= 0 && fld.v.i < GC.getNumFeatureInfos()) ? GC.getFeatureInfo((FeatureTypes)fld.v.i).getType() : "?");
+			break;
+		case SFT_TERRAIN:
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
+				(fld.v.i >= 0 && fld.v.i < GC.getNumTerrainInfos()) ? GC.getTerrainInfo((TerrainTypes)fld.v.i).getType() : "?");
+			break;
+		case SFT_CIVIC:
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
+				(fld.v.i >= 0 && fld.v.i < GC.getNumCivicInfos()) ? GC.getCivicInfo((CivicTypes)fld.v.i).getType() : "?");
+			break;
+		case SFT_PROJECT:
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
+				(fld.v.i >= 0 && fld.v.i < GC.getNumProjectInfos()) ? GC.getProjectInfo((ProjectTypes)fld.v.i).getType() : "?");
+			break;
+		case SFT_SPECIALIST:
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
+				(fld.v.i >= 0 && fld.v.i < GC.getNumSpecialistInfos()) ? GC.getSpecialistInfo((SpecialistTypes)fld.v.i).getType() : "?");
+			break;
+		default: // SFT_INT / SFT_BOOL / SFT_PLAYER -> the raw int
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%d", szName, fld.v.i);
+			break;
+		}
+		if (m <= 0) break;
+		n += m;
+	}
+	szBuf[iBufSize - 1] = '\0';
+}
+
 class CvCascadeLogConsumer : public IEventConsumer
 {
 public:
@@ -80,7 +218,18 @@ public:
 		// Raw payload -> text HERE (gated), which is the whole point of the raw-payload design: resolve known
 		// data-Type indices to readable names so a reader sees BUILDING_FORGE, not "type=1613". Unknown/other
 		// events (e.g. the temporary self-test, whose iType is a playerId) fall back to the raw fields.
-		char szBuf[256];
+		char szBuf[512];
+		// RAW-FIELD logging event (DIAGNOSTIC/TRACE with fields): render via the generic field formatter -> the
+		// migrated [TAG] key=value line. This is the consolidation target path (event-spine-spec section 3). Gated by
+		// the event's own surveillance LEVEL (1 Telescreen .. 4 Thought Police), so per-line levels are respected.
+		if (kEvent.iFieldCount > 0)
+		{
+			if (gPlayerLogLevel < kEvent.iLevel) return;
+			cascadeRenderEventLine(szBuf, sizeof(szBuf), kEvent);
+			gDLL->logMsg(spineDomainFile(kEvent.iDomainTag), szBuf); // R-2: per-domain file ([HAI] -> HunterAI.log)
+			streamLogTee(1, szBuf);
+			return;
+		}
 		if (kEvent.eKind == EVENTKIND_DOMAIN && kEvent.iEventId == CASCADE_EVT_BUILDING_COUNT
 			&& kEvent.iType >= 0 && kEvent.iType < GC.getNumBuildingInfos())
 		{

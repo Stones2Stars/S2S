@@ -16,6 +16,23 @@
 #include "CvPlayerAI.h"
 #include "CvPlot.h"
 #include "CvTeamAI.h"
+#include "Cascade/CvEventSpine.h" // #430 logging consolidation: shadow-emit [DIP/trade] through the event spine
+
+// #430 logging: CvDeal.cpp emits [DIP/trade] lines on the SD_DIPLO domain, which is registered and owns its prefix
+// table in CvPlayerAI.cpp. CvDeal.cpp only EMITS -- it must NOT re-register. DIP_TRADE_ID must match the DIP_TRADE
+// enum value defined in CvPlayerAI.cpp's anonymous namespace (11 = 12th entry, zero-based). Shadow discipline: the
+// legacy logDiploAI call is left intact; the spine emit runs alongside it.
+namespace
+{
+	// Mirror of DIP_TRADE from CvPlayerAI.cpp (must stay in sync if the DipEvent enum grows).
+	const int DIP_TRADE_ID = 11; // DIP_TRADE is the 12th DipEvent (0-based) in CvPlayerAI.cpp
+
+	// Field tags mirror DF_from/DF_to/DF_item/DF_data from CvPlayerAI.cpp's DipField enum.
+	const int DF_from_id = 1;  // DF_from  = 1
+	const int DF_to_id   = 15; // DF_to    = 15
+	const int DF_item_id = 2;  // DF_item  = 2
+	const int DF_data_id = 3;  // DF_data  = 3
+}
 
 // Public Functions...
 
@@ -782,6 +799,9 @@ bool CvDeal::startTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eT
 	// trace; pairs with the [DIP/cand]/[DIP/decision] valuation in CvPlayerAI).
 	logDiploAI(2, "[DIP/trade] from=%d to=%d item=%d data=%d",
 		(int)eFromPlayer, (int)eToPlayer, (int)trade.m_eItemType, trade.m_iData);
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_TRADE_ID, 2)
+		.addI(DF_from_id, (int)eFromPlayer).addI(DF_to_id, (int)eToPlayer)
+		.addI(DF_item_id, (int)trade.m_eItemType).addI(DF_data_id, trade.m_iData));
 
 	switch (trade.m_eItemType)
 	{

@@ -36,6 +36,42 @@
 #include "CvDLLUtilityIFaceBase.h"
 #include "Repos/BuildsRepo.h"
 #include "FAStarNode.h"
+#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [ENG] lines through the event spine (shadow)
+
+// #430 logging: [ENG] engine-integrity -> event spine (CvPlot). Self-registers its prefix provider + Engine.log file;
+// the spine stays domain-agnostic (never names ENG). Shadow discipline: emits run ALONGSIDE the legacy logEngine calls.
+namespace
+{
+	enum EngEvent
+	{
+		ENG_VISCAP = 0  // [ENG/viscap] result=negVisCappedToZero
+	};
+	const char* engineLinePrefix(int iEventId)
+	{
+		switch (iEventId)
+		{
+		case ENG_VISCAP: return "[ENG/viscap] result=negVisCappedToZero";
+		default:         return NULL;
+		}
+	}
+	// ENG's LOCAL field tags (all plain ints).
+	enum EngField { EF_team = 0, EF_x, EF_y, EF_count, EF_change };
+	const char* engineFieldInfo(int iFieldTag, SpineFieldType* peType)
+	{
+		*peType = SFT_INT;
+		switch (iFieldTag)
+		{
+		case EF_team:   return "team";
+		case EF_x:      return "x";
+		case EF_y:      return "y";
+		case EF_count:  return "count";
+		case EF_change: return "change";
+		default:        return NULL;
+		}
+	}
+	struct EngineLogRegistrar { EngineLogRegistrar() { spineRegisterDomain(SD_ENGINE, &engineLinePrefix, "Engine.log", &engineFieldInfo); } };
+	EngineLogRegistrar s_engineLogRegistrar; // static-init registration; safe (g_domains zero-init first)
+}
 
 #define STANDARD_MINIMAP_ALPHA		(0.6f)
 
@@ -9141,6 +9177,12 @@ void CvPlot::changeVisibilityCount(TeamTypes eTeam, int iChange, InvisibleTypes 
 			{
 				logEngine(2, "[ENG/viscap] team=%d plot=(%d,%d) count=%d change=%d - negative visibility count capped to 0",
 					eTeam, getX(), getY(), m_aiVisibilityCount[eTeam], iChange);
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_ENGINE, ENG_VISCAP, 2)
+					.addI(EF_team,   (int)eTeam)
+					.addI(EF_x,      getX())
+					.addI(EF_y,      getY())
+					.addI(EF_count,  m_aiVisibilityCount[eTeam])
+					.addI(EF_change, iChange));
 				m_aiVisibilityCount[eTeam] = 0;
 			}
 		}

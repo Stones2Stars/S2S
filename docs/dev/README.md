@@ -76,6 +76,7 @@ first — see the banner at the top of this file.)
 | [tally-cascade-spec](plans/tally-cascade-spec.md) | The additive count machine: presence/counts at any scope, the report + roll-up, the `requires`/`allowed`/`per` readers, and save handling (§9 — rebuilt on load, serializes nothing). |
 | [event-spine-spec](plans/event-spine-spec.md) | The #430 front-door event dispatch: `emit(KIND,…)`, the DOMAIN/DIAGNOSTIC/TRACE OOS firewall, raw payloads, consumers (logging / tally / grants). Slice-1 built in `Sources/Cascade/`. |
 | [cascade-engine-430](plans/cascade-engine-430.md) | The #430 engine implementation plan: substrate → tally → modifier → enabler; build order, the `readJson` consume path, shadow discipline. |
+| [modifier-cascade-shadow-spec](plans/modifier-cascade-shadow-spec.md) | The modifier cascade's BUILD + SHADOW-TEST plan (proposed 2026-06-19): parity-first scaffold → catalogue, the city-yields pilot, `/diagnostic/modifierSweep` + `[MODSHADOW]`, and the Fine→Meltdown CARE SCALE. The modifier engine is unbuilt beyond the combine primitive. |
 | [building-cascade-conversion](plans/building-cascade-conversion.md) | The #428 building → cascade/JSON conversion plan + **THE MODEL** (locked 2026-06-14) the whole migration builds on. |
 | [migration-renames](plans/migration-renames.md) | The canonical old→new RENAME REGISTRY — every Info's fields mapped to the new shape. |
 | [migration-entity-ranking](plans/migration-entity-ranking.md) | The serial entity-conversion ranking + cross-cutting migration rules (one info at a time, verify-before-commit). |
@@ -94,6 +95,7 @@ first — see the banner at the top of this file.)
 | [ai-logging-rollout](plans/ai-logging-rollout.md) | Plan to roll the tagged-logging structure across the AI codebase |
 | [sea-ai-rework](plans/sea-ai-rework.md) | Naval AI weaknesses, the attack-sea cascade, and the logging driving the rework |
 | [dead-code-xml-pass](plans/dead-code-xml-pass.md) | Tiered dead-code / dead-XML removal plan (feeds the clean-XML data model) |
+| [sources-structural-cleanup](plans/sources-structural-cleanup.md) | The `Sources/` structural-cleanup campaign (proposed 2026-06-19): logging-tag collision-proofing → folder structure + `.vcxproj` alignment → `CvInfos.h` removal + include hygiene. The load-bearing ordering (collision-proof BEFORE the batch-reshuffling include/move work). |
 | [unified-civilopedia](plans/unified-civilopedia.md) | Game-side of the unified Civilopedia: clean single-source content (XML/GameText/NewConceptInfo) + declarative loading. The website/converter is the separate `s2swebsite` project. |
 | [gamespeed-simplification](plans/gamespeed-simplification.md) | `CvGameSpeedInfo`: Percents→named fields, GameTurnInfos collapse, derived calendar table (#196) |
 | [fight-or-flight](plans/fight-or-flight.md) | `FIGHT_OR_FLIGHT` design capture (removal + plugin reimplementation) |

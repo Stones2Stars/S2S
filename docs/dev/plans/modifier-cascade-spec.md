@@ -9,6 +9,11 @@
 > The old field → new-modifier mapping is in `modifier-cascade-mapping.json` (this dir). **⚠ that file still
 > renders the pre-alignment `when`/`perCountOf`/`count`-leaf shapes — re-point it to the LOCKED
 > `enabled`/`disabled` + `per:{type,scope}` shapes (this doc) before it feeds a curator.**
+>
+> **BUILD + SHADOW-TEST PLAN → [`modifier-cascade-shadow-spec.md`](modifier-cascade-shadow-spec.md) (2026-06-19).** This
+> spec is the DATA structure; the modifier *engine* is unbuilt beyond the combine primitive (`CvModifierSlot`) and has
+> never been tested. The shadow-spec is how it gets built + verified the way the enabler cascade was: parity-first
+> scaffold, the city-yields pilot, `/diagnostic/modifierSweep`, and the Fine→Meltdown care scale.
 
 ---
 

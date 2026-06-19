@@ -60,7 +60,9 @@ tooling can tell playtests apart and detect a reload / new game mid-session.
 `text/event-stream`; the response **never ends** (the socket joins the broadcast list). At most
 **8 concurrent streams** (`SSE_CLIENT_CAP`; a 9th gets `503`). Frames are pre-rendered on the game
 thread (`publishEvent`, `CvHttpServer.cpp:795`) and drained/broadcast by the server thread, so it too
-never touches game objects. The pending-frame queue is bounded (`EVENT_QUEUE_CAP` = **2048**; excess
+never touches game objects. The pending-frame queue is bounded (`EVENT_QUEUE_CAP` = **65536**, bumped from 2048 on
+2026-06-18 — at log level 3 a turn floods ~100k frames and the old cap silently DROPPED them, making `/events` a lossy
+sample; the original small cap guarded a 32-bit memory worry that proved unfounded, so it was raised for playtesting; excess
 frames are dropped — a backstop, sized for the log stream's headline bursts) and **self-draining even
 with no client connected**, so it can't bloat.
 
@@ -136,12 +138,57 @@ cascade equivalent, returning both so divergences surface as triage items.
   divergences[cap 250]}`; each building divergence carries `{type, cascade, legacy, reason, cascadeReason}` so a sweep
   cause-tags every divergence in one call. (Buildings only for the reasons; the eval-mailbox window means the FIRST
   call may return empty — retry.)
+- **`GET /diagnostic/placementSweep?player=N`** — the **§14 H AUTO-PLACEMENT maintainer shadow (B-i)**: the RUNTIME twin
+  of `sweep` (which only tests `!hasBuilding` buildability, so it never exercises the per-turn maintainers that mutate the
+  building set). For each AUTO-PLACED building × the player's cities, it compares the cascade's *would-place* decision
+  against the legacy maintainers' *realized presence* (`hasBuilding`). Returns `{roster, cities, cells, agree, diverge,
+  divergences[cap 250]}`; each cell carries `{city, type, kind, cascade, legacy, reason}`. `kind` is a bitmask: **1** =
+  bAutoBuild loop target (`BuildingsRepo::autoBuildings`), **2** = property-band target (`checkPropertyBuildings`). `reason`
+  ∈ `place`/`noMarker`/`requiresBuild`/`requiresOperate`/`allowedCap`/`obsolete`/`replaced`/`groupCap`. **`?type=full`** adds
+  the complete per-cell `all[]` array (cap 4000) → the **total-observability view** (reconstruct the ENTIRE auto-placement
+  state from the API alone — the render-from-API bar, [`../plans/cascade-mapping-inventory.md`](../plans/cascade-mapping-inventory.md) §A).
+  The two auto-placement maintainers stay un-deletable until this shadow runs clean (map-before-delete). Property-effect
+  buildings currently report `reason=noMarker` (JSON not yet `autoBuild`-flagged + banded) — expected; the shadow drives that curation.
+- **`GET /diagnostic/dormancySweep?player=N`** — the **§14 H DORMANCY shadow (B-ii)**: for each BUILT building × the
+  player's cities, compares cascade-active (`requires.operate` holds, `cascadeOperational`) vs legacy `hasFullyActiveBuilding`
+  (= `!isDisabledBuilding && !isReligiouslyLimitedBuilding && hasBuilding` — the three legacy dormancy mechanisms: resource
+  disabling, replacement suppression, religious limit). Returns `{cities, builtCells, agree, diverge, divergences[cap 250]
+  {city, type, cascadeActive, legacyActive, cascadeReason, legacyReason}}`; `cascadeReason` ∈ `active`/`requiresOperate`,
+  `legacyReason` ∈ `active`/`disabled`/`religiousLimit`. `?type=full` adds the per-cell `all[]` (cap 4000). Expected today:
+  buildings whose bonus prereqs still sit in `requires.build` (not `operate`) show cascade-active while legacy is `disabled`
+  — the **B5 build-vs-operate curation driver** (move continuous resource prereqs to `requires.operate`).
+  - Both sweeps now also return **`reasonHistogram`** — an UNCAPPED, engine-computed count of every divergence by reason
+    (placement: `"kind:reason"`; dormancy: `"cascade=…|legacy=…"`). This fixes the 250-cap blind spot AND the dubious-data
+    risk: the *engine* counts, so a cheap reader relays trustworthy totals instead of re-deriving a fallible histogram.
+- **`GET /diagnostic/game?player=N`** — the game-state / end-detection dump (no `type` needed): `{turn, elapsedTurns,
+  maxTurns, gameState (0 ON/1 OVER/2 EXTENDED), gameOver, winnerTeam, victory, era, victoryCountdownThisTeam{victoryIdx:countdown}}`.
+  Closes the autoplay gap "an agent can't tell the game ended" (state-mapping gap #1).
+- **`GET /diagnostic/tally?type=BUILDING_X|UNIT_X&player=N`** — the cascade tally's count for the entity at `world`/`team`/
+  `empire` scope, so empire/team/world totals are point-in-time readable (state-mapping gap #2 — there is no `/tally` snapshot yet).
 - **Evaluated on the game thread, never the server thread** (the hard constraint): the request is parked in a
   single-slot mailbox that `publishIfDue` services on its next frame tick (so the answer is a consistent
   game-state read; "5s-stale is sufficient"). A second concurrent request gets `503`; a non-ticking (paused with
   no `update`) game thread eventually self-heals. GET-only — no mutation, so no construction is performed.
 - The doTurn harness `cascadeReadJsonSlice` (gated by `gPlayerLogLevel`) logs the same shadow for two sample
   buildings every turn as `[READJSON]` lines (Cascade.log + `/events`); the endpoints are the on-demand spot-check.
+- The doTurn harness `cascadePlacementShadow` (gated by `gPlayerLogLevel`) is the per-turn twin of `placementSweep`:
+  every turn it diffs the cascade's would-place vs the maintainers' presence across the active player's cities ×
+  the auto-placed roster, emitting `[PLACEMENT]` lines (Cascade.log + `/events`) — headline counts at `≥1`,
+  `[PLACEMENT] DIVERGE … reason=…` per-divergence at `≥2`. The on-demand `placementSweep` is the full-state snapshot.
+- The doTurn harness `cascadeDormancyShadow` is the per-turn twin of `dormancySweep`: per built building per city it
+  diffs cascade-active vs legacy `hasFullyActiveBuilding`, emitting `[DORMANCY]` lines (headline at `≥1`,
+  `[DORMANCY] DIVERGE …` at `≥2`).
+- **The LIVE STATE FEED — `cascadeStateLog` ("the cameras", `gPlayerLogLevel`-gated):** per turn it streams the broad game
+  state so an autoplay run is fully narratable from `/events` alone — **`[STATE/game]`** (turn/state/era/winner/victory, `≥1`),
+  **`[STATE/fin]`** per player (gold/rate/maint/civic/unit-upkeep/strike/financialTrouble, `≥1`), **`[STATE/dip]`** per player
+  (`AI_getAttitudeVal` to each other player, `≥2`), **`[STATE/city]`** per city (happy/unhappy/angry/disorder/occupation + the
+  five anger timers / WLTKD / good+bad health / food + foodDiff + growthThreshold / GPP / culture rate / religion count, `≥2`).
+  Together these lift the whole-game observability off Tier 0-1 toward Tier 2 (see `observability/README.md`).
+
+> **The render-from-API / total-observability ("Orwell") bar (owner ruling 2026-06-18).** This whole layer exists so an
+> agent can reconstruct the live game state purely from these endpoints + `/events` + the gated logs — *we open the game
+> but never look at the screen*. It is the verification substrate that lets us safely DELETE and replace state logic with
+> the cascade + tally (map-before-delete). Full statement: [`../plans/cascade-mapping-inventory.md`](../plans/cascade-mapping-inventory.md) §A.
 
 ## Architecture & safety
 - **Snapshot isolation.** The game thread snapshots queryable state into a refcounted immutable

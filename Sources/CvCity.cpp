@@ -28,6 +28,8 @@
 #include "CvUnitSelectionCriteria.h"
 #include "CvViewport.h"
 #include "CvDLLInterfaceIFaceBase.h"
+#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [CIT] through the spine (shadow, CvCity side)
+#include "CvCityLogTags.h" // [CIT] tag enums (shared with CvCityAI.cpp -- defined once, see header)
 #include "CvDLLUtilityIFaceBase.h"
 #include "CvTraitInfo.h"
 #include "Repos/BuildingsRepo.h"
@@ -39,6 +41,9 @@
 //Disable this passed in initialization list warning, as it is only stored in the constructor of CvBuildingList and not used
 #pragma warning( disable : 4355 )
 
+// #430 logging: [CIT] city-production -> event spine (CvCity side). The CitEvent/CitField tag enums live in
+// CvCityLogTags.h (shared with CvCityAI.cpp, defined once -- they're in the same unity batch). Registration lives in
+// CvCityAI.cpp; this side just emits.
 
 CvCity::CvCity()
 	: m_GameObject(this),
@@ -1244,6 +1249,11 @@ void CvCity::doTurn()
 			logCityAI(1, "[CIT/proplevel] turn=%d city=%S owner=%d prop=%s val=%d change=%d",
 				iTurn, getName().GetCString(), (int)getOwner(), GC.getPropertyInfo(eProp).getType(),
 				pProps->getValueByProperty(eProp), pProps->getChangeByProperty(eProp));
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PROPLEVEL, 1)
+				.addI(CF_turn, iTurn).addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
+				.addI(CF_prop, (int)eProp)
+				.addI(CF_val, pProps->getValueByProperty(eProp))
+				.addI(CF_change, pProps->getChangeByProperty(eProp)));
 		}
 	}
 
@@ -15553,6 +15563,9 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 					// same dog/guard/healer; alreadyQueued shows how deep the pile already is.
 					logCityAI(2, "[CIT/push/reject] city=%S owner=%d UNIT %S alreadyQueued=%d reason=spamGuard",
 						getName().GetCString(), (int)getOwner(), GC.getUnitInfo(unitType).getDescription(), alreadyQueued);
+					eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PUSH_REJECT_UNIT, 2)
+						.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
+						.addI(CF_unitType, (int)unitType).addI(CF_alreadyQueued, alreadyQueued));
 					return;
 				}
 
@@ -15586,6 +15599,9 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 					// [CIT/push/reject] -- duplicate-building guard blocked re-queuing this building.
 					logCityAI(2, "[CIT/push/reject] city=%S owner=%d BUILDING %S alreadyQueued=%d reason=dupGuard",
 						getName().GetCString(), (int)getOwner(), GC.getBuildingInfo(buildingType).getDescription(), alreadyQueued);
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PUSH_REJECT_BUILDING, 2)
+					.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
+					.addI(CF_building, (int)buildingType).addI(CF_alreadyQueued, alreadyQueued));
 					return;
 				}
 
@@ -15661,6 +15677,23 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 		}
 		logCityAI(2, "[CIT/push] city=%S owner=%d %s %S append=%d force=%d",
 			getName().GetCString(), (int)getOwner(), szKind, szName, bAppend ? 1 : 0, bForce ? 1 : 0);
+	}
+	{
+		// [CIT/push] spine shadow -- event id per order kind; szName is a runtime wide string (legacy only).
+		int iCitPushEvent = CIT_PUSH_OTHER;
+		switch (eOrder)
+		{
+		case ORDER_TRAIN:     iCitPushEvent = CIT_PUSH_UNIT;     break;
+		case ORDER_CONSTRUCT: iCitPushEvent = CIT_PUSH_BUILDING;  break;
+		case ORDER_CREATE:    iCitPushEvent = CIT_PUSH_PROJECT;   break;
+		case ORDER_MAINTAIN:  iCitPushEvent = CIT_PUSH_PROCESS;   break;
+		case ORDER_LIST:      iCitPushEvent = CIT_PUSH_LIST;      break;
+		default: break;
+		}
+		CvCascadeEvent ePushEv(EVENTKIND_DIAGNOSTIC, SD_CITY, iCitPushEvent, 2);
+		ePushEv.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
+			.addI(CF_append, bAppend ? 1 : 0).addI(CF_force, bForce ? 1 : 0);
+		eventSpine().emit(ePushEv);
 	}
 
 	if (m_orderQueue.empty() && bIsHuman)
@@ -15770,6 +15803,44 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 		logCityAI(1, "[CIT/cancel] city=%S owner=%d %s %S progressLost=%d willChoose=%d",
 			getName().GetCString(), (int)getOwner(), szKind, szName, iProgressLost, bChoose ? 1 : 0);
 	}
+	if (!bFinish)
+	{
+		// [CIT/cancel] spine shadow -- event id per order kind; szName runtime wide string (legacy only).
+		int iCancelEvent = CIT_CANCEL_OTHER;
+		int iTypeArg = -1;
+		int iProgressLost = 0;
+		switch (order.eOrderType)
+		{
+		case ORDER_TRAIN:
+			iCancelEvent = CIT_CANCEL_UNIT;
+			iTypeArg = (int)order.getUnitType();
+			iProgressLost = getProgressOnUnit(order.getUnitType());
+			break;
+		case ORDER_CONSTRUCT:
+			iCancelEvent = CIT_CANCEL_BUILDING;
+			iTypeArg = (int)order.getBuildingType();
+			iProgressLost = getProgressOnBuilding(order.getBuildingType());
+			break;
+		case ORDER_CREATE:
+			iCancelEvent = CIT_CANCEL_PROJECT;
+			iTypeArg = (int)order.getProjectType();
+			break;
+		default: break;
+		}
+		CvCascadeEvent eCancelEv(EVENTKIND_DIAGNOSTIC, SD_CITY, iCancelEvent, 1);
+		eCancelEv.addI(CF_city, getID()).addI(CF_owner, (int)getOwner());
+		if (iTypeArg >= 0)
+		{
+			if (iCancelEvent == CIT_CANCEL_UNIT)
+				eCancelEv.addI(CF_unitType, iTypeArg);
+			else if (iCancelEvent == CIT_CANCEL_BUILDING)
+				eCancelEv.addI(CF_building, iTypeArg);
+			else
+				eCancelEv.addI(CF_project, iTypeArg);
+		}
+		eCancelEv.addI(CF_progressLost, iProgressLost).addI(CF_willChoose, bChoose ? 1 : 0);
+		eventSpine().emit(eCancelEv);
+	}
 
 	if (bFinish && order.bSave)
 	{
@@ -15837,6 +15908,12 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 					getName().GetCString(), (int)getOwner(), GC.getUnitInfo(eTrainUnit).getDescription(),
 					(int)eTrainAIUnit, owner.getUnitCount(eTrainUnit), owner.AI_getNumAIUnits(eTrainAIUnit),
 					iOverflow, m_iLostProductionModified);
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PRODUCED_UNIT, 1)
+					.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
+					.addI(CF_unitType, (int)eTrainUnit).addI(CF_unitAI, (int)eTrainAIUnit)
+					.addI(CF_ownerHas, owner.getUnitCount(eTrainUnit))
+					.addI(CF_aiRoleHas, owner.AI_getNumAIUnits(eTrainAIUnit))
+					.addI(CF_overflow, iOverflow).addI(CF_lost, m_iLostProductionModified));
 
 				addProductionExperience(pUnit);
 
@@ -15980,6 +16057,10 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 				logCityAI(1, "[CIT/produced] city=%S owner=%d BUILDING %S overflow=%d lost=%d",
 					getName().GetCString(), (int)getOwner(), GC.getBuildingInfo(eConstructBuilding).getDescription(),
 					iOverflow, m_iLostProductionModified);
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PRODUCED_BUILDING, 1)
+					.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
+					.addI(CF_building, (int)eConstructBuilding)
+					.addI(CF_overflow, iOverflow).addI(CF_lost, m_iLostProductionModified));
 
 				CvEventReporter::getInstance().buildingBuilt(this, eConstructBuilding);
 			}
@@ -16021,6 +16102,9 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 				// [CIT/produced] -- project completion (wonder/spaceship part/etc.).
 				logCityAI(1, "[CIT/produced] city=%S owner=%d PROJECT %S",
 					getName().GetCString(), (int)getOwner(), GC.getProjectInfo(eCreateProject).getDescription());
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PRODUCED_PROJECT, 1)
+					.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
+					.addI(CF_project, (int)eCreateProject));
 
 				// Event reported to Python before the project is built, so that we can show the movie before awarding free techs, for example
 				CvEventReporter::getInstance().projectBuilt(this, eCreateProject);
@@ -16570,6 +16654,8 @@ void CvCity::doProduction(bool bAllowNoProduction)
 			{
 				logCityAI(1, "[CIT/spin] city=%S owner=%d reason=produceLoopCap",
 					getName().GetCString(), (int)getOwner());
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_SPIN_LOOP_CAP, 1)
+					.addI(CF_city, getID()).addI(CF_owner, (int)getOwner()));
 				break;
 			}
 			popOrder(0, true, true);
@@ -16589,6 +16675,8 @@ void CvCity::doProduction(bool bAllowNoProduction)
 					AI_setChooseProductionDirty(true);
 					logCityAI(1, "[CIT/spin] city=%S owner=%d reason=noProductionChosen",
 						getName().GetCString(), (int)getOwner());
+					eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_SPIN_NO_PROD, 1)
+						.addI(CF_city, getID()).addI(CF_owner, (int)getOwner()));
 					break;
 				}
 			}
@@ -16618,6 +16706,9 @@ void CvCity::doProduction(bool bAllowNoProduction)
 			// overflow, or mis-sequenced builds). Pairs with [CIT/produced] lost=.
 			logCityAI(1, "[CIT/waste] city=%S owner=%d lostProd=%d -> gold=%d",
 				getName().GetCString(), (int)getOwner(), m_iLostProductionModified, m_iGoldFromLostProduction);
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_WASTE, 1)
+				.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
+				.addI(CF_lostProd, m_iLostProductionModified).addI(CF_gold, m_iGoldFromLostProduction));
 
 			CvWString szBuffer = gDLL->getText("TXT_KEY_MISC_LOST_PROD_CONVERTED", getNameKey(), m_iLostProductionModified, m_iGoldFromLostProduction);
 			AddDLLMessage(getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_WONDERGOLD", MESSAGE_TYPE_MINOR_EVENT, GC.getCommerceInfo(COMMERCE_GOLD).getButton(), GC.getCOLOR_RED(), getX(), getY(), true, true);

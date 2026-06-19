@@ -20,6 +20,7 @@
 #include "CvTeamAI.h"     // GET_TEAM
 #include "CvCity.h"
 #include "CvPlot.h"
+#include "CvProperties.h" // getValueByProperty (the PROPERTY band atom)
 
 namespace
 {
@@ -151,6 +152,12 @@ int cascadeAtomCount(const CvCountAtom& a, const CvCascadeContext& kCtx)
 	{
 		const CvCity* c = ccCtxCity(kCtx);
 		return (c != NULL && c->area() != NULL) ? c->area()->getNumTiles() : 0;
+	}
+
+	case ATOMDOMAIN_PROPERTY: // the context city's current value for property iType (the band's count; min/max gate it)
+	{
+		const CvCity* c = ccCtxCity(kCtx);
+		return (c != NULL) ? c->getPropertiesConst()->getValueByProperty((PropertyTypes)a.iType) : 0;
 	}
 
 	default:

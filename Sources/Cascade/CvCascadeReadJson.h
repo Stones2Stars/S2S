@@ -61,4 +61,57 @@ bool cascadeUnitTrainable(int iUnit, const CvCascadeContext& kCtx);
 // the legacy canConstruct, stream [READJSON] lines to Cascade.log + /events. Gated by gPlayerLogLevel.
 void cascadeReadJsonSlice();
 
+// ===================== §14 H AUTO-PLACEMENT SHADOW (B-i) =====================
+// The RUNTIME twin of the buildability sweep: the sweep only tests !hasBuilding buildability, so it never exercises
+// the per-turn state maintainers that MUTATE the building set (changeHasBuilding). B-i is the riskiest cluster --
+// auto-placement -- driven by TWO legacy maintainers in CvCity::doAutobuild: the bAutoBuild loop (BuildingsRepo::
+// autoBuildings) and the property-band system (checkPropertyBuildings, CvPropertyInfo PropertyBuildings). The shadow
+// compares, per city, the cascade's would-place decision against the maintainers' realized presence -- so the
+// maintainers can be DELETED at the hard switch only once the cascade replicates them (map-before-delete, §14 H).
+
+// Fill outBuildings with the AUTO-PLACED building roster (the two maintainers' targets, deduped), and outKind with a
+// parallel bitmask per entry: bit0 (1) = legacy bAutoBuild loop target, bit1 (2) = property-band target. Game thread.
+void cascadeAutoPlacedRoster(std::vector<int>& outBuildings, std::vector<int>& outKind);
+
+// For one (auto-placed building, context city): would the CASCADE auto-place it here? (autoBuild marker + requires
+// build/operate + allowed cap + not obsolete/replaced + group-allowed.) Sets bCascadeWouldPlace and returns the
+// reason token for divergence triage: "place" / "noMarker" / "requiresBuild" / "requiresOperate" / "allowedCap" /
+// "obsolete" / "replaced" / "groupCap". The legacy side (presence) is hasBuilding -- the caller reads it. Game thread.
+const char* cascadePlacementReason(int iBuilding, const CvEntityAvailability& kAvail,
+	const CvCascadeContext& kCtx, int iTeam, bool& bCascadeWouldPlace);
+
+// Per-turn placement shadow (the cascadeReadJsonSlice twin for B-i): for the active player's cities x the auto-placed
+// roster, emit [PLACEMENT] lines where cascade-would-place diverges from legacy presence. Gated by gPlayerLogLevel
+// (>=1 headline counts, >=2 per-divergence). Streams to Cascade.log + /events.
+void cascadePlacementShadow();
+
+// ===================== §14 H DORMANCY SHADOW (B-ii) =====================
+// The sweep's #1-recommended next shadow (state-mapping-2026-06-18.md): a BUILT building can be present-but-INACTIVE.
+// Legacy folds three mechanisms into `isActiveBuilding` (= !isDisabledBuilding && hasBuilding -- resource-disabling +
+// replacement-suppression via setDisabledBuilding) and `hasFullyActiveBuilding` (adds !isReligiouslyLimitedBuilding --
+// religious dormancy). The cascade end-state is `requires.operate` dormancy (cascadeOperational). This shadow diffs,
+// per BUILT building per city, cascade-active vs legacy-active -- the runtime twin for B-ii (cascade-mapping §B-ii).
+
+// For one BUILT building in the context city: is it ACTIVE under the cascade (requires.operate holds)? Sets
+// bCascadeActive and returns the reason token ("active" / "requiresOperate"). Game thread.
+const char* cascadeDormancyReason(const CvEntityAvailability& kAvail, const CvCascadeContext& kCtx, bool& bCascadeActive);
+
+// Why is the building legacy-DORMANT in this city: "religiousLimit" (isReligiouslyLimitedBuilding) / "disabled"
+// (isDisabledBuilding -- resource/replacement) / "active" (fully active). The legacy-side cause-tag. Game thread.
+const char* cascadeDormancyLegacyReason(const CvCity* pCity, int iBuilding);
+
+// Per-turn dormancy shadow (the placement-shadow twin for B-ii): for the active player's cities x the buildings they
+// HAVE, emit [DORMANCY] lines where cascade-active (requires.operate) diverges from legacy hasFullyActiveBuilding.
+// Gated by gPlayerLogLevel (>=1 headline, >=2 per-divergence). Streams to Cascade.log + /events.
+void cascadeDormancyShadow();
+
+// ===================== LIVE STATE EVENT FEED (the "cameras") =====================
+// Per-turn gated emitter streaming the broad game state to Cascade.log + /events so an autoplay session is fully
+// narratable from the wire (the total-observability bar; state-mapping-2026-06-18.md gaps). Lines:
+//   [STATE/game]  turn/state/era/winner/victory     -- end-detection (gap #1)             (gPlayerLogLevel >= 1)
+//   [STATE/fin]   per player: gold/rate/maint/upkeep/strike/financialTrouble  (gap #3)    (>= 1)
+//   [STATE/dip]  per player: AI_getAttitudeVal to each other player      (gap #5)          (>= 2)
+//   [STATE/city] per city: happy/health/anger/timers/disorder/food-bar/GPP/culture (gap #2) (>= 2)
+void cascadeStateLog();
+
 #endif // CV_CASCADE_READ_JSON_H

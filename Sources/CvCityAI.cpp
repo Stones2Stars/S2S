@@ -33,7 +33,120 @@
 #include "PlotInfo.h"
 #include "CvValueService.h"
 #include "CvWorkerAI.h"
+#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [CIT] through the event spine (shadow)
+#include "CvCityLogTags.h" // [CIT] tag enums (shared with CvCity.cpp -- defined once, see header)
 
+// #430 logging: [CIT] city-production -> event spine (CvCityAI + CvCity). Self-registers prefixes + CityAI.log;
+// the spine never names CIT. Shadow: emits run ALONGSIDE existing logCityAI calls (diff on /events, then cut).
+// Constant labels recategorized to clean key=value per the recategorize-freely ruling.
+// CIT registration lives here (CvCityAI.cpp); CvCity.cpp shares the domain tag + enum values via its own local copy.
+namespace
+{
+	// CitEvent + CitField are defined in CvCityLogTags.h (shared with CvCity.cpp; see header for why).
+	const char* citLinePrefix(int iEventId)
+	{
+		switch (iEventId)
+		{
+		case CIT_GARRCONS:            return "[CIT/garrcons]";
+		case CIT_BEGIN:               return "[CIT/begin]";
+		case CIT_STRANDED:            return "[CIT/stranded]";
+		case CIT_STRANDED_TRY:        return "[CIT/stranded/try]";
+		case CIT_STRANDED_DECLINED:   return "[CIT/stranded/declined]";
+		case CIT_DANGER:              return "[CIT/danger]";
+		case CIT_ORDER_CONSTRUCT:     return "[CIT/order] action=construct";
+		case CIT_ORDER_PROJECT:       return "[CIT/order] action=createProject";
+		case CIT_ORDER_PROCESS:       return "[CIT/order] action=maintainProcess";
+		case CIT_PROP:                return "[CIT/prop]";
+		case CIT_PROPLEVEL:           return "[CIT/proplevel]";
+		case CIT_PUSH_REJECT_UNIT:    return "[CIT/push/reject] kind=unit reason=spamGuard";
+		case CIT_PUSH_REJECT_BUILDING:return "[CIT/push/reject] kind=building reason=dupGuard";
+		case CIT_PUSH_UNIT:           return "[CIT/push] kind=unit";
+		case CIT_PUSH_BUILDING:       return "[CIT/push] kind=building";
+		case CIT_PUSH_PROJECT:        return "[CIT/push] kind=project";
+		case CIT_PUSH_PROCESS:        return "[CIT/push] kind=process";
+		case CIT_PUSH_LIST:           return "[CIT/push] kind=list";
+		case CIT_PUSH_OTHER:          return "[CIT/push] kind=other";
+		case CIT_CANCEL_UNIT:         return "[CIT/cancel] kind=unit";
+		case CIT_CANCEL_BUILDING:     return "[CIT/cancel] kind=building";
+		case CIT_CANCEL_PROJECT:      return "[CIT/cancel] kind=project";
+		case CIT_CANCEL_OTHER:        return "[CIT/cancel] kind=other";
+		case CIT_PRODUCED_UNIT:       return "[CIT/produced] kind=unit";
+		case CIT_PRODUCED_BUILDING:   return "[CIT/produced] kind=building";
+		case CIT_PRODUCED_PROJECT:    return "[CIT/produced] kind=project";
+		case CIT_SPIN_LOOP_CAP:       return "[CIT/spin] reason=produceLoopCap";
+		case CIT_SPIN_NO_PROD:        return "[CIT/spin] reason=noProductionChosen";
+		case CIT_WASTE:               return "[CIT/waste]";
+		default:                      return NULL;
+		}
+	}
+	const char* citFieldInfo(int iFieldTag, SpineFieldType* peType)
+	{
+		*peType = SFT_INT;
+		switch (iFieldTag)
+		{
+		case CF_city:         return "city";
+		case CF_owner:        return "owner";
+		case CF_turn:         return "turn";
+		case CF_prop:         return "prop";
+		case CF_val:          return "val";
+		case CF_change:       return "change";
+		case CF_merges:       return "merges";
+		case CF_strLeft:      return "strLeft";
+		case CF_need:         return "need";
+		case CF_pop:          return "pop";
+		case CF_danger:       return "danger";
+		case CF_dangerVal:    return "dangerVal";
+		case CF_finTrouble:   return "finTrouble";
+		case CF_critGold:     return "critGold";
+		case CF_foodProd:     return "foodProd";
+		case CF_wHave:        return "wHave";
+		case CF_wNeed:        return "wNeed";
+		case CF_areaHave:     return "areaHave";
+		case CF_areaNeed:     return "areaNeed";
+		case CF_inhibit:      return "inhibit";
+		case CF_turtle:       return "turtle";
+		case CF_bestBuildVal: return "bestBuildVal";
+		case CF_minAtk:       return "minAtk";
+		case CF_defShortfall: return "defShortfall";
+		case CF_sqrtCities:   return "sqrtCities";
+		case CF_ownedAtk:     return "ownedAtk";
+		case CF_ownedAtkRaw:  return "ownedAtkRaw";
+		case CF_fire:         return "fire";
+		case CF_pct:          return "pct";
+		case CF_eval:         return "eval";
+		case CF_check:        return "check";
+		case CF_proj:         return "proj";
+		case CF_getting:      return "getting";
+		case CF_good:         return "good";
+		case CF_maxed:        return "maxed";
+		case CF_propPct:      return "propPct";
+		case CF_unitType:     *peType = SFT_UNIT;     return "unitType";
+		case CF_unitAI:       return "unitAI";
+		case CF_building:     *peType = SFT_BUILDING;  return "building";
+		case CF_score:        return "score";
+		case CF_rank:         return "rank";
+		case CF_count:        return "count";
+		case CF_focus:        return "focus";
+		case CF_project:      return "project";
+		case CF_process:      return "process";
+		case CF_commerce:     return "commerce";
+		case CF_alreadyQueued:return "alreadyQueued";
+		case CF_append:       return "append";
+		case CF_force:        return "force";
+		case CF_progressLost: return "progressLost";
+		case CF_willChoose:   return "willChoose";
+		case CF_overflow:     return "overflow";
+		case CF_lost:         return "lost";
+		case CF_ownerHas:     return "ownerHas";
+		case CF_aiRoleHas:    return "aiRoleHas";
+		case CF_lostProd:     return "lostProd";
+		case CF_gold:         return "gold";
+		default:              return NULL;
+		}
+	}
+	struct CitLogRegistrar { CitLogRegistrar() { spineRegisterDomain(SD_CITY, &citLinePrefix, "CityAI.log", &citFieldInfo); } };
+	CitLogRegistrar s_citLogRegistrar; // static-init registration
+}
 
 //	KOSHLING MOD - calculate all possible building focuses at once
 //	to avoid multiple looping - need to know how many options there
@@ -499,6 +612,9 @@ void CvCityAI::AI_doGarrisonConsolidation()
 		// the strength position left (each merge also logs centrally as [UNT/merge]).
 		logCityAI(1, "[CIT/garrcons] city=%S owner=%d merges=%d strLeft=%d need=%d",
 			getName().GetCString(), (int)getOwner(), iMerges, iHave100 / 100, AI_neededDefenseStrength());
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_GARRCONS, 1)
+			.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
+			.addI(CF_merges, iMerges).addI(CF_strLeft, iHave100 / 100).addI(CF_need, AI_neededDefenseStrength()));
 	}
 }
 
@@ -966,6 +1082,11 @@ void CvCityAI::AI_chooseProduction()
 	logCityAI(1, "[CIT/begin] city=%S owner=%d pop=%d danger=%d dangerVal=%d finTrouble=%d critGold=%d foodProd=%d",
 		getName().GetCString(), (int)eOwner, getPopulation(), bDanger ? 1 : 0, iDangerValue,
 		bFinancialTrouble ? 1 : 0, bCriticalGold ? 1 : 0, bWasFoodProduction ? 1 : 0);
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_BEGIN, 1)
+		.addI(CF_city, getID()).addI(CF_owner, (int)eOwner)
+		.addI(CF_pop, getPopulation()).addI(CF_danger, bDanger ? 1 : 0).addI(CF_dangerVal, iDangerValue)
+		.addI(CF_finTrouble, bFinancialTrouble ? 1 : 0).addI(CF_critGold, bCriticalGold ? 1 : 0)
+		.addI(CF_foodProd, bWasFoodProduction ? 1 : 0));
 
 	//# 0 : If their is a alredy a production in City, Conditions to keep them (
 	// 1. nearly done buildings
@@ -1105,10 +1226,17 @@ void CvCityAI::AI_chooseProduction()
 	// see why local-worker production does or doesn't trigger (area satisfied? danger? etc.).
 	if (getNumWorkers() == 0 && AI_getWorkersNeeded() > 0)
 	{
+		const int iBestBuildVal = AI_totalBestBuildValue(pArea);
 		logCityAI(1, "[CIT/stranded] city=%S owner=%d wHave=%d wNeed=%d areaHave=%d areaNeed=%d danger=%d inhibit=%d turtle=%d bestBuildVal=%d",
 			getName().GetCString(), (int)getOwner(), getNumWorkers(), AI_getWorkersNeeded(),
 			iWorkersInArea, iNeededWorkersInArea, iDangerValue, bInhibitUnits ? 1 : 0,
-			bStrategyTurtle ? 1 : 0, AI_totalBestBuildValue(pArea));
+			bStrategyTurtle ? 1 : 0, iBestBuildVal);
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_STRANDED, 1)
+			.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
+			.addI(CF_wHave, getNumWorkers()).addI(CF_wNeed, AI_getWorkersNeeded())
+			.addI(CF_areaHave, iWorkersInArea).addI(CF_areaNeed, iNeededWorkersInArea)
+			.addI(CF_danger, iDangerValue).addI(CF_inhibit, bInhibitUnits ? 1 : 0)
+			.addI(CF_turtle, bStrategyTurtle ? 1 : 0).addI(CF_bestBuildVal, iBestBuildVal));
 	}
 
 	const int iSpreadUnitThreshold = (
@@ -2020,6 +2148,9 @@ void CvCityAI::AI_chooseProduction()
 		m_iLastStrandedWorkerTurn = GC.getGame().getGameTurn();
 		logCityAI(1, "[CIT/stranded/try] city=%S owner=%d wNeed=%d areaHave=%d areaNeed=%d",
 			getName().GetCString(), (int)getOwner(), iWorkersNeeded, iWorkersInArea, iNeededWorkersInArea);
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_STRANDED_TRY, 1)
+			.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
+			.addI(CF_wNeed, iWorkersNeeded).addI(CF_areaHave, iWorkersInArea).addI(CF_areaNeed, iNeededWorkersInArea));
 		// Build the worker LOCALLY (AI_chooseUnitImmediate), NOT via AI_chooseUnit -- the latter
 		// puts the request out to the player-wide ContractBroker tender, which fulfils it from
 		// the cheapest/closest builder (often a far city across the border that can't reach here).
@@ -2029,6 +2160,8 @@ void CvCityAI::AI_chooseProduction()
 			return;
 		}
 		logCityAI(1, "[CIT/stranded/declined] city=%S cannot build any worker unit locally", getName().GetCString());
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_STRANDED_DECLINED, 1)
+			.addI(CF_city, getID()).addI(CF_owner, (int)getOwner()));
 		bChooseWorker = true;
 	}
 
@@ -2330,10 +2463,17 @@ void CvCityAI::AI_chooseProduction()
 		// a PER-CITY need; if ownedAtk stays stuck below need while many cities keep firing,
 		// the trained units are being reassigned out of UNITAI_ATTACK (the role count never
 		// catches up) -> perpetual cheap-military spam.
+		const int iOwnedAtkRaw = player.AI_totalAreaUnitAIs(pArea, UNITAI_ATTACK);
 		logCityAI(2, "[CIT/danger] city=%S owner=%d minAtk=%d defShortfall=%d sqrtCities=%d need=%d ownedAtk=%d ownedAtkRaw=%d fire=%d",
 			getName().GetCString(), (int)eOwner, iNbMinimalAttackers, iDefShortfall, iSqrtCities,
-			iAttackNeeded, iOwnedAttackers, player.AI_totalAreaUnitAIs(pArea, UNITAI_ATTACK),
+			iAttackNeeded, iOwnedAttackers, iOwnedAtkRaw,
 			(iOwnedAttackers < iAttackNeeded) ? 1 : 0);
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_DANGER, 2)
+			.addI(CF_city, getID()).addI(CF_owner, (int)eOwner)
+			.addI(CF_minAtk, iNbMinimalAttackers).addI(CF_defShortfall, iDefShortfall)
+			.addI(CF_sqrtCities, iSqrtCities).addI(CF_need, iAttackNeeded)
+			.addI(CF_ownedAtk, iOwnedAttackers).addI(CF_ownedAtkRaw, iOwnedAtkRaw)
+			.addI(CF_fire, (iOwnedAttackers < iAttackNeeded) ? 1 : 0));
 
 		if (iOwnedAttackers < iAttackNeeded
 		&& AI_chooseUnitImmediate("minimal attack (danger)", UNITAI_ATTACK))
@@ -9120,6 +9260,12 @@ bool CvCityAI::AI_chooseBuilding(int iFocusFlags, int iMaxTurns, int iMinThresho
 			logCityAI(1, "[CIT/order] city=%S CONSTRUCT %S score=%I64d rank=%d/%d focus=0x%x",
 				getName().GetCString(), GC.getBuildingInfo(eBestBuilding).getDescription(),
 				bestBuildings[i].score, (int)i, (int)bestBuildings.size(), iFocusFlags);
+			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ORDER_CONSTRUCT, 1)
+				.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
+				.addI(CF_building, (int)eBestBuilding)
+				.addI(CF_score, (int)bestBuildings[i].score)
+				.addI(CF_rank, (int)i).addI(CF_count, (int)bestBuildings.size())
+				.addI(CF_focus, iFocusFlags));
 			pushOrder(ORDER_CONSTRUCT, eBestBuilding, -1, false, false, true); //not insert, append to queue
 			nbBuildings += 1;
 			enqueuedBuilding = true;
@@ -9166,6 +9312,9 @@ bool CvCityAI::AI_chooseProject()
 		// [CIT/order] -- city commits to a project (e.g. wonder/spaceship part).
 		logCityAI(1, "[CIT/order] city=%S CREATE_PROJECT %S",
 			getName().GetCString(), GC.getProjectInfo(eBestProject).getDescription());
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ORDER_PROJECT, 1)
+			.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
+			.addI(CF_project, (int)eBestProject));
 		pushOrder(ORDER_CREATE, eBestProject, -1, false, false, true);
 		
 		return true;
@@ -9193,6 +9342,9 @@ bool CvCityAI::AI_chooseProcess(CommerceTypes eCommerceType, int64_t* commerceWe
 		// [CIT/order] -- city falls back to running a process (gold/research/culture/...).
 		logCityAI(1, "[CIT/order] city=%S MAINTAIN_PROCESS %S commerce=%d",
 			getName().GetCString(), GC.getProcessInfo(eBestProcess).getDescription(), (int)eCommerceType);
+		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ORDER_PROCESS, 1)
+			.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
+			.addI(CF_process, (int)eBestProcess).addI(CF_commerce, (int)eCommerceType));
 		pushOrder(ORDER_MAINTAIN, eBestProcess, -1, false, false, !bforce);
 
 		return true;
@@ -14858,6 +15010,16 @@ bool CvCityAI::AI_choosePropertyControlBuildingAndUnit(int iTriggerPercentOfProp
 					isGettingBetter ? 1 : 0, isGoodEnough ? 1 : 0, ismaxPropUnitsReached ? 1 : 0,
 					(iPropControlInArea * 100 / (iUnitsInArea + 1)),
 					(iEval > iCheck && !isGettingBetter && !isGoodEnough && !ismaxPropUnitsReached) ? 1 : 0);
+				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PROP, 2)
+					.addI(CF_city, getID()).addI(CF_owner, (int)eOwner)
+					.addI(CF_prop, (int)eProperty)
+					.addI(CF_val, iCurrentValue).addI(CF_change, iCurrentChange).addI(CF_pct, iCurrentPercent)
+					.addI(CF_eval, iEval).addI(CF_check, iCheck)
+					.addI(CF_proj, iCurrentValue + iCurrentChange * 10)
+					.addI(CF_getting, isGettingBetter ? 1 : 0).addI(CF_good, isGoodEnough ? 1 : 0)
+					.addI(CF_maxed, ismaxPropUnitsReached ? 1 : 0)
+					.addI(CF_propPct, iPropControlInArea * 100 / (iUnitsInArea + 1))
+					.addI(CF_fire, (iEval > iCheck && !isGettingBetter && !isGoodEnough && !ismaxPropUnitsReached) ? 1 : 0));
 
 				if (iEval > iCheck && !isGettingBetter && !isGoodEnough && !ismaxPropUnitsReached)
 				{

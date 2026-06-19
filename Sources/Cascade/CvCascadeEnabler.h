@@ -23,8 +23,11 @@ struct CvEntityAvailability
 	bool               notConstructible; // identity.notConstructible (building twin of spawnOnly): legacy getProductionCost()==-1
 	                                      // -> the player never constructs it via the production queue (it is autobuilt / property-
 	                                      // spawned / outcome-granted / GP-or-event placed / a doctrine toggle) -> never offered.
+	bool               autoBuild;         // identity.autoBuild (data-model §4.2b): PLACEMENT marker -- the engine auto-places this
+	                                      // in every city where its `requires` holds, instead of offering it in the queue. Subset of
+	                                      // notConstructible. Used by the §14 H auto-placement shadow (B-i), NOT the buildability gate.
 
-	CvEntityAvailability() : allowedScope(COUNTSCOPE_WORLD), allowedCap(-1), spawnOnly(false), notConstructible(false) {}
+	CvEntityAvailability() : allowedScope(COUNTSCOPE_WORLD), allowedCap(-1), spawnOnly(false), notConstructible(false), autoBuild(false) {}
 };
 
 // Build-time gate: requires.build AND requires.operate must hold, AND the SELF count must be under the allowed

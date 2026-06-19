@@ -1064,6 +1064,22 @@ its OWN behaviour shadow — *does the cascade's active/dormant/placement state 
 before that maintainer is deleted. "Do it properly" (owner) = build those maintainer shadows, not just trust the buildability
 sweep. (This is the runtime twin of the buildability sweep, and the honest scope of "map every current behaviour.")
 
+> **PROGRESS 2026-06-18 — the AUTO-PLACEMENT shadow (B-i) is BUILT** (the riskiest cluster: the two maintainers that
+> mutate the building set via `changeHasBuilding`). `GET /diagnostic/placementSweep` (snapshot, `?type=full` = total-state)
+> + per-turn `[PLACEMENT]` lines diff the cascade's would-place against the maintainers' realized presence, per city,
+> cause-tagged (`kind` 1=bAutoBuild loop, 2=property-band; `reason` ∈ place/noMarker/requires*/allowedCap/obsolete/replaced/
+> groupCap). Mechanism added: `identity.autoBuild` parsing + the `PROPERTY_X` band atom (`requires.operate`, §3). The two
+> maintainers stay un-deletable until the shadow runs clean. See `cascade-mapping-inventory.md §B-i` + `http-server.md`.
+> This serves the **total-observability bar** (mapping-inventory §A).
+
+> **PROGRESS 2026-06-18 — the DORMANCY shadow (B-ii) is BUILT too.** `GET /diagnostic/dormancySweep` + per-turn
+> `[DORMANCY]` diff cascade `requires.operate` (`cascadeOperational`) vs legacy `hasFullyActiveBuilding` per built building
+> per city — one comparison covering all three legacy dormancy mechanisms (`legacyReason`: `disabled`=resource/replacement
+> via `isDisabledBuilding`, `religiousLimit`, `active`). B1 (religious) MATCH-verified; B5 (resource) now shadowed (expect
+> cascade-active/legacy-`disabled` where bonus prereqs still sit in `requires.build` — the build→operate curation driver).
+> Remaining: B-iii group-gate shadow + the §A opaque systems (the multi-agent state-mapping sweep, `state-mapping-2026-06-18.md`,
+> confirmed the prior inventory was shallow — ~15-20% observable). Two of the §14 H maintainer clusters now have runtime twins.
+
 ---
 
 *Status: model GROUNDED and design-complete (v0.3 — HAS → CAN GET → HAS THE MEANS TO; `enables` family =
