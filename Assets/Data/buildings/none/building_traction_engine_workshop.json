@@ -50,7 +50,13 @@
  },
  "production": {
   "city": {
-   "flat": 6
+   "flat": 6,
+   "percent": [
+    {
+     "value": 10,
+     "enabled": "HAS_POWER"
+    }
+   ]
   }
  },
  "commerce": {

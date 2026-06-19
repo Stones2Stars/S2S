@@ -44,6 +44,16 @@
    ]
   }
  },
+ "production": {
+  "city": {
+   "percent": [
+    {
+     "value": 20,
+     "enabled": "HAS_POWER"
+    }
+   ]
+  }
+ },
  "commerce": {
   "city": {
    "flat": 10

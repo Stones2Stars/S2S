@@ -52,14 +52,20 @@
    "flat": [
     45,
     {
-     "value": 1500,
+     "value": 15,
      "enabled": {
       "type": "TECH_ENTROPY_REVERSAL",
       "scope": "team"
      }
     }
    ],
-   "percent": 100
+   "percent": [
+    100,
+    {
+     "value": 25,
+     "enabled": "HAS_POWER"
+    }
+   ]
   }
  },
  "gold": {

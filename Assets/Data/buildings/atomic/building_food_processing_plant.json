@@ -28,6 +28,16 @@
    ]
   }
  },
+ "food": {
+  "city": {
+   "percent": [
+    {
+     "value": 25,
+     "enabled": "HAS_POWER"
+    }
+   ]
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100

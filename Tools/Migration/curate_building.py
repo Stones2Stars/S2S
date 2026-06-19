@@ -257,7 +257,6 @@ COND_KEYED = {
     "VicinityBonusYieldChanges":   (None, "city", engine.YIELDS, "flat", "vicinityBonus"),
     "BuildingHappinessChanges":    ("happiness", "city", None, "flat", "building"),
     "GlobalBuildingCostModifiers": ("costs", "empire", None, "percent", "building"),
-    "PowerYieldModifiers":         (None, "city", engine.YIELDS, "percent", "power"),
 }
 # TARGET-keyed deposits (the effect lands ON the keyed entity): tag -> (family|None, scope, targetType|None, valuekeys|None, unit).
 # targetType None => key DIRECTLY under scope (religion influence). family None + valuekeys => split member is family.
@@ -395,6 +394,14 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables, obsolete
                     _inject_keyed(fams, member, scope, ttype, ref, unit, v)
             else:
                 _inject_keyed(fams, family, scope, ttype, ref, unit, val)
+    # --- PowerYieldModifiers: a DIRECT per-yield array (<iYield>..</iYield>), NOT entity-keyed -> emit each yield as a
+    # city-scope `percent` deposit gated `enabled: HAS_POWER` (legacy getPowerYieldRateModifier, summed only when
+    # isPower(), CvCity.cpp:11228). Was mis-classified in COND_KEYED (which expects a key-tag) -> silently dropped. ---
+    pym = rec.find("PowerYieldModifiers")
+    if pym is not None:
+        for member, v in engine.named_array(pym, engine.YIELDS).items():
+            if v:
+                _inject_cond(fams, member, "city", "percent", v, "HAS_POWER")
     # --- StateReligionCommerces: per-commerce, gated on the building's religion being the state religion ---
     src = rec.find("StateReligionCommerces")
     if src is not None:

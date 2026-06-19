@@ -46,6 +46,16 @@
    ]
   }
  },
+ "food": {
+  "city": {
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "HAS_POWER"
+    }
+   ]
+  }
+ },
  "production": {
   "city": {
    "percent": [

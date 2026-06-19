@@ -32,7 +32,13 @@
  },
  "production": {
   "city": {
-   "percent": 20
+   "percent": [
+    20,
+    {
+     "value": 40,
+     "enabled": "HAS_POWER"
+    }
+   ]
   }
  },
  "buildRate": {

@@ -1,20 +1,17 @@
 #!/usr/bin/env python3
-"""cascade_sim -- offline cascade SIMULATOR prototype (calc-emulator-spec.md §2a).
+"""cascade_sim -- offline cascade SIMULATOR prototype (calc-emulator-spec.md §2a; cascade-fixed-point.md).
 
-Feeds the NEW cascade model a real loadout and computes per-turn values OFFLINE, reading the migrated Assets/Data
-JSON deposits + evaluating their conditions -- the Python prototype of the in-game cascade engine ("simulate the
-simulation"). Condition evaluator ported from the SPEC contract (data-model-spec + enabler-cascade-spec §8), not
-reconstructed from code.
+Feeds the NEW cascade model a real loadout and computes per-turn city YIELDS OFFLINE in INTEGER FIXED-POINT (x100,
+"2 decimals" -- cascade-fixed-point.md), reading the migrated (human-readable) Assets/Data JSON deposits, IMPORTING
+them to x100, evaluating their conditions, and comparing the full output to LEGACY getYieldRate100. The Python
+prototype of the in-game cascade engine ("simulate the simulation"), proven here before porting to the DLL.
 
-Increment 2: the YIELD channel from BUILDINGS, city-scope, WITH condition evaluation. Each building's
-`food/production/commerce . city . {flat,percent}` deposit (scalar | {value,enabled?/disabled?} | array) is
-evaluated against the loadout's presence context (techs/civics/buildings + plot-derived vicinity bonus/terrain/
-feature/improvement/route). Active deposits are summed and compared to the dump's DLL-cascade (cascadeFlat/
-cascadePercent). Atoms we cannot resolve offline yet (river, state flags isCapital/isGoldenAge, empire-tally
-counts, religions/corps/traits) are TRACKED and the gated deposit is treated as OFF (conservative) -- the report
-lists them so we know what loadout data to add next ("start somewhere, find more").
+Sources modelled (calc-emulator-spec §2a): BUILDINGS (city + empire + area scope, dormancy-gated via requires.operate)
++ CIVICS (empire scope -- incl. negative modifiers). Conditions gated via the spec evaluator (data-model + enabler §8).
+The base (plot/trade/free/golden + specialist) rides in from the dump (the legacy pre-modifier base).
 
-Run:  python cascade_sim.py --file samples/london.json
+Run:  python cascade_sim.py --file samples/m_p0.json          # one city, detailed
+      python cascade_sim.py --glob "samples/m_*.json"          # sweep many cities, aggregate parity
 """
 import argparse
 import glob
@@ -23,18 +20,29 @@ import os
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 BUILDINGS_DIR = os.path.join(REPO, "Assets", "Data", "buildings")
+CIVICS_DIR = os.path.join(REPO, "Assets", "Data", "civics")
+TRAITS_DIR = os.path.join(REPO, "Assets", "Data", "traits")
 YIELDS = ("food", "production", "commerce")
 
 # type-prefix -> the loadout presence set it checks (spec: prefix discriminates atom type)
 PREFIX_SET = (("TECH_", "techs"), ("CIVIC_", "civics"), ("BUILDING_", "buildings"),
               ("BONUS_", "bonuses"), ("TERRAIN_", "terrains"), ("FEATURE_", "features"),
               ("IMPROVEMENT_", "improvements"), ("ROUTE_", "routes"))
-# parameterized plot predicates -> the vicinity set scanned (spec §8: default vicinity scope)
 PRED_PARAM = {"HAS_TERRAIN": "terrains", "HAS_FEATURE": "features", "HAS_IMPROVEMENT": "improvements",
               "HAS_BONUS": "bonuses", "HAS_ROUTE": "routes"}
-# state-boolean predicates -> the ctx flag they read (owner 2026-06-19: model power=on)
 STATE_PRED = {"HAS_POWER": "isPowered", "IS_POWERED": "isPowered", "IS_CAPITAL": "isCapital",
               "IS_GOLDEN_AGE": "isGoldenAge", "IS_GOLDENAGE": "isGoldenAge", "HAS_RIVER": "river"}
+
+_JSON_CACHE = {}
+
+
+def _load(path):
+    j = _JSON_CACHE.get(path)
+    if j is None:
+        with open(path, encoding="utf-8") as fh:
+            j = json.load(fh)
+        _JSON_CACHE[path] = j
+    return j
 
 
 def building_index():
@@ -44,26 +52,45 @@ def building_index():
     return idx
 
 
+def civic_index():
+    idx = {}
+    for p in glob.glob(os.path.join(CIVICS_DIR, "**", "civic_*.json"), recursive=True):
+        idx[os.path.basename(p).lower()] = p
+    return idx
+
+
 def type_to_filename(btype):
     return "building_" + btype[len("BUILDING_"):].lower() + ".json"
 
 
+def civic_to_filename(ct):
+    return "civic_" + ct[len("CIVIC_"):].lower() + ".json"
+
+
+def trait_index():
+    idx = {}
+    for p in glob.glob(os.path.join(TRAITS_DIR, "**", "trait_*.json"), recursive=True):
+        idx[os.path.basename(p).lower()] = p
+    return idx
+
+
+def trait_to_filename(tt):
+    return "trait_" + tt[len("TRAIT_"):].lower() + ".json"
+
+
 def build_context(d):
-    """Presence context from the loadout. Vicinity sets are derived from the plot list (spec §8: a bonus/terrain/
-    feature/improvement is 'in vicinity' if any workable plot has it)."""
+    """Presence context from the loadout. Vicinity sets derived from the plot list (spec §8)."""
     plots = d.get("plots", [])
     def plot_set(k):
         return set(p[k] for p in plots if p.get(k))
-    # bonuses: prefer the city's AVAILABLE set (resources = vicinity + trade-connected); fall back to vicinity-only
-    # (plot bonuses) for older dumps without the resources field.
     bonuses = set(d.get("resources", [])) or plot_set("bonus")
-    state = d.get("state", {})
+    state = d.get("state", {}) or {}
     return {
         "techs": set(d.get("techs", [])),
         "civics": set(d.get("civics", [])),
         "buildings": set(d.get("buildings", [])),
         "bonuses": bonuses,
-        # state booleans (owner 2026-06-19: model power=on). HAS_RIVER is vicinity (any workable plot has a river).
+        "bonusesVicinity": plot_set("bonus"),  # bonuses on the city's workable plots (vicinity) -- for connection:vicinity
         "isPowered": bool(state.get("isPowered")),
         "isCapital": bool(state.get("isCapital")),
         "isGoldenAge": bool(state.get("isGoldenAge")),
@@ -75,34 +102,35 @@ def build_context(d):
     }
 
 
+# ---------------- the condition evaluator (spec contract: data-model + enabler §8) ----------------
+
 def _eval_atom(atom, ctx, uneval):
-    """Three-valued in spirit but returns bool; an atom we cannot resolve offline is recorded in `uneval` and
-    treated as False (conservative -- the gated deposit turns OFF, so we under-count rather than fabricate)."""
-    if isinstance(atom, str):           # bare predicate -> {PRED: true}
+    if isinstance(atom, str):
         atom = {atom: True}
     if not isinstance(atom, dict):
         uneval.add("?malformed"); return False
-    # presence / count atom with an explicit type
     if "type" in atom:
         t = atom["type"]
-        if atom.get("min", 1) > 1 or "max" in atom:     # a real COUNT (empire tally) -- not resolvable offline
+        if atom.get("min", 1) > 1 or "max" in atom:
             uneval.add(t + " #count"); return False
+        # connection:vicinity -> the bonus must be in the city's WORKABLE radius (legacy hasVicinityBonus), NOT just
+        # trade-available. cascade_sim previously fired vicinity deposits for any available bonus -> commerce over-count.
+        if t.startswith("BONUS_") and atom.get("connection") == "vicinity":
+            return t in ctx["bonusesVicinity"]
         for pfx, key in PREFIX_SET:
             if t.startswith(pfx):
                 return t in ctx[key]
-        uneval.add(t); return False                      # POPULATION / PROPERTY_/ RELIGION_/ CORPORATION_/ TRAIT_/...
-    # predicate object: {HAS_TERRAIN: X}, {HAS_POWER: true}, etc.
+        uneval.add(t); return False
     for k, v in atom.items():
         if k in PRED_PARAM:
             return v in ctx[PRED_PARAM[k]]
-        if k in STATE_PRED:                              # state boolean: {HAS_POWER: true} -> require power on
+        if k in STATE_PRED:
             return ctx[STATE_PRED[k]] == bool(v)
-        uneval.add(k); return False                      # still-unmodelled predicate (stateReligion / latitude / ...)
+        uneval.add(k); return False
     return False
 
 
 def eval_condition(cond, ctx, uneval):
-    """all (AND) / any (OR-of-AND-groups) / noneOf (NOT-any) / single atom. (spec contract §2/§6)"""
     if isinstance(cond, str):
         return _eval_atom(cond, ctx, uneval)
     if isinstance(cond, dict) and ("all" in cond or "any" in cond or "noneOf" in cond):
@@ -118,7 +146,6 @@ def eval_condition(cond, ctx, uneval):
 
 
 def _deposit_active(item, ctx, uneval):
-    """active = (enabled missing OR true) AND NOT (disabled present AND true). (spec §6)"""
     en, dis = item.get("enabled"), item.get("disabled")
     ok = True if en is None else eval_condition(en, ctx, uneval)
     if ok and dis is not None:
@@ -126,81 +153,184 @@ def _deposit_active(item, ctx, uneval):
     return ok
 
 
+# ---------------- the IMPORT (human -> x100) + fixed-point summation ----------------
+
+def to_fixed(human):
+    """readJson's sole job (cascade-fixed-point §0/§1.1): human JSON number -> integer x100. 7->700, 0.1->10, 25->2500."""
+    return int(round(human * 100))
+
+
 def sum_unit(unit_obj, ctx, uneval, cond_seen):
-    """Sum a city.flat or city.percent slot: scalar | {value,enabled?/disabled?} | array-of-those. Active only."""
-    total = 0
+    """Sum a flat or percent slot IN x100 (import-converted): scalar | {value,enabled?/disabled?} | array. Active only."""
+    total100 = 0
     for it in (unit_obj if isinstance(unit_obj, list) else [unit_obj]):
         if isinstance(it, (int, float)):
-            total += int(it)
+            total100 += to_fixed(it)
         elif isinstance(it, dict) and "value" in it:
             if "enabled" in it or "disabled" in it:
                 cond_seen[0] += 1
                 if not _deposit_active(it, ctx, uneval):
                     continue
-            total += int(it["value"])
-    return total
+            total100 += to_fixed(it["value"])
+    return total100
+
+
+def _entity_deposits(ej, family, scopes, ctx, uneval, cond_seen, acc):
+    """Add an entity's <family>.<scope>.{flat,percent} over `scopes` into acc (x100). Sub-scopes (tradeRoute/
+    improvements/specialists/perPopulation) are NOT summed here -- later sub-passes."""
+    fam = ej.get(family)
+    if not isinstance(fam, dict):
+        return
+    for sc in scopes:
+        blk = fam.get(sc)
+        if not isinstance(blk, dict):
+            continue
+        for unit in ("flat", "percent"):
+            if blk.get(unit) is not None:
+                acc[unit] += sum_unit(blk[unit], ctx, uneval, cond_seen)
+    # empire.capital sub-scope: a capital-ONLY modifier (legacy getCapitalYieldRateModifier from civics/traits,
+    # implicit IS_CAPITAL) -- summed only when the city is the capital.
+    if ctx.get("isCapital") and "empire" in scopes:
+        emp = fam.get("empire")
+        cap = emp.get("capital") if isinstance(emp, dict) else None
+        if isinstance(cap, dict):
+            for unit in ("flat", "percent"):
+                if cap.get(unit) is not None:
+                    acc[unit] += sum_unit(cap[unit], ctx, uneval, cond_seen)
+
+
+def _building_active(bj, ctx, uneval):
+    """DORMANCY (enabler §3): a present building is ACTIVE iff its requires.operate holds (empty = always active).
+    The cascade equivalent of legacy hasFullyActiveBuilding -- a dormant building deposits NOTHING."""
+    req = bj.get("requires")
+    if not isinstance(req, dict):
+        return True
+    op = req.get("operate")
+    return True if op is None else eval_condition(op, ctx, uneval)
 
 
 def simulate_yields(d):
-    idx = building_index()
+    bidx = building_index()
+    cidx = civic_index()
+    tidx = trait_index()
     ctx = build_context(d)
     uneval = set()
     cond_seen = [0]
     sim = {y: {"flat": 0, "percent": 0} for y in YIELDS}
     missing = 0
-    for bt in d.get("buildings", []):
-        path = idx.get(type_to_filename(bt))
+    dormant = len(d.get("dormantBuildings", []))
+    # BUILDINGS: ACTIVE only (the dump's `buildings` = hasFullyActiveBuilding). VERIFIED 2026-06-19 (legacy code
+    # trace, 4-agent grounding): legacy removes a DORMANT building's yield MODIFIER and FLAT via processBuilding(-1)
+    # (resource-disabled via setDisabledBuilding + religiously-limited via setReligiouslyLimitedBuilding), so
+    # getBuildingYieldModifier/m_buildingExtraYield100 reflect ACTIVE buildings only. The earlier all-present approach
+    # over-counted dormant modifiers, which MASKED the un-wired bonus/power/trait modifiers (owner was right that
+    # "something else was at play").
+    present = list(d.get("buildings", []))
+    for bt in present:
+        path = bidx.get(type_to_filename(bt))
         if path is None:
             missing += 1
             continue
-        with open(path) as fh:
-            bj = json.load(fh)
+        bj = _load(path)
         for y in YIELDS:
-            fam = bj.get(y)
-            if not isinstance(fam, dict):
-                continue
-            city = fam.get("city")
-            if not isinstance(city, dict):
-                continue
-            for unit in ("flat", "percent"):
-                if city.get(unit) is not None:
-                    sim[y][unit] += sum_unit(city[unit], ctx, uneval, cond_seen)
-    return sim, missing, uneval, cond_seen[0], ctx
+            _entity_deposits(bj, y, ("city", "empire", "area"), ctx, uneval, cond_seen, sim[y])
+    # CIVICS: empire-scope yield modifiers (incl. NEGATIVE -- the commerce-reducing civics) roll down to the city.
+    for ct in d.get("civics", []):
+        path = cidx.get(civic_to_filename(ct))
+        if path is None:
+            continue
+        cj = _load(path)
+        for y in YIELDS:
+            _entity_deposits(cj, y, ("empire",), ctx, uneval, cond_seen, sim[y])
+    # TRAITS: empire-scope yield modifiers (+ empire.capital sub-scope) -- legacy CvPlayer yield modifier = civics +
+    # TRAITS. cascade_sim previously never summed traits -> the missing trait/capital percent (4-agent grounding).
+    for tt in d.get("traits", []):
+        path = tidx.get(trait_to_filename(tt))
+        if path is None:
+            continue
+        tj = _load(path)
+        for y in YIELDS:
+            _entity_deposits(tj, y, ("empire",), ctx, uneval, cond_seen, sim[y])
+    return sim, missing, uneval, cond_seen[0], ctx, dormant
 
 
-def main():
-    ap = argparse.ArgumentParser(description="cascade_sim -- offline cascade simulator (yields, buildings, w/ conditions)")
-    ap.add_argument("--file", required=True, help="cityInput dump fixture (loadout + yields)")
-    args = ap.parse_args()
-    with open(args.file) as fh:
-        d = json.load(fh)
-    sim, missing, uneval, cond_seen, ctx = simulate_yields(d)
+def evaluate(d):
+    """Per-family cascade-vs-legacy rows + diagnostics. cascade eff100 = base100 x (10000+Spct100)/10000 + Sflat100."""
+    sim, missing, uneval, cond_seen, ctx, dormant = simulate_yields(d)
     dumped = {y["family"]: y for y in d.get("yields", [])}
-
-    print("=== cascade_sim [%s]: Python cascade (buildings, city-scope yields, CONDITIONS EVALUATED) vs DLL-cascade ==="
-          % d.get("cityName", "?"))
-    print("  context: techs %d, civics %d, buildings %d | vicinity bonuses %d terrains %d features %d improvements %d"
-          % (len(ctx["techs"]), len(ctx["civics"]), len(ctx["buildings"]),
-             len(ctx["bonuses"]), len(ctx["terrains"]), len(ctx["features"]), len(ctx["improvements"])))
-    print("  family      py-flat  dll-flat | py-pct  dll-pct | py==DLL?")
-    allok = True
+    rows = {}
     for y in YIELDS:
         s = sim[y]
         dy = dumped.get(y, {})
-        dflat, dpct = dy.get("cascadeFlat", 0), dy.get("cascadePercent", 0)
-        match = (s["flat"] == dflat and s["percent"] == dpct)
-        allok = allok and match
-        print("  %-10s %8d %8d | %6d %7d | %s" % (y, s["flat"], dflat, s["percent"], dpct, "OK" if match else "DIFF"))
-    if missing:
-        print("  [%d present buildings had no JSON file -- naming/module gap]" % missing)
-    print("\n  %d conditional deposits evaluated. %d atom kind(s) UNEVALUABLE offline (gated deposits treated OFF):"
-          % (cond_seen, len(uneval)))
-    if uneval:
-        for a in sorted(uneval)[:40]:
-            print("    - %s" % a)
-        print("  -> these are the loadout-data gaps to close next (river/state flags/empire-tally/religion/corp/trait/...).")
-    print("\n  %s" % ("ALL MATCH -- the evaluable conditions reproduce the DLL-cascade." if allok else
-                       "DIFF remains -> attributable to the unevaluable atoms above (under-count) + non-building/empire sources."))
+        base, spec, legacy100 = dy.get("base", 0), dy.get("specialist", 0), dy.get("legacy100", 0)
+        base100 = (base + spec) * 100
+        casc100 = base100 * (10000 + s["percent"]) // 10000 + s["flat"]
+        gap = casc100 - legacy100
+        gpct = (100.0 * gap / legacy100) if legacy100 else 0.0
+        rows[y] = dict(base=base, spec=spec, pct=s["percent"], flat=s["flat"],
+                       casc=casc100, legacy=legacy100, gap=gap, gpct=gpct)
+    info = dict(missing=missing, uneval=uneval, cond_seen=cond_seen, dormant=dormant,
+                name=d.get("cityName", "?"), player=d.get("player"), pop=d.get("population"),
+                nbuild=len(d.get("buildings", [])))
+    return rows, info
+
+
+def _print_one(d):
+    rows, info = evaluate(d)
+    print("=== cascade_sim [%s p%s pop%s]: NEW cascade (x100, buildings+civics, dormancy-gated) vs LEGACY ==="
+          % (info["name"], info["player"], info["pop"]))
+    print("  family     base spec |   pct100    flat100 | cascade100   legacy100 |     gap    gap%")
+    for y in YIELDS:
+        r = rows[y]
+        print("  %-10s %4d %4d | %8d %10d | %10d %11d | %+8d  %+.1f%%"
+              % (y, r["base"], r["spec"], r["pct"], r["flat"], r["casc"], r["legacy"], r["gap"], r["gpct"]))
+    print("  buildings %d (%d dormant, %d no-JSON) | %d conditional deposits | %d unevaluable atom kinds"
+          % (info["nbuild"], info["dormant"], info["missing"], info["cond_seen"], len(info["uneval"])))
+    if info["uneval"]:
+        print("    unevaluable: " + ", ".join(sorted(info["uneval"])[:25]))
+
+
+def _sweep(paths, tol):
+    print("=== cascade_sim SWEEP: %d cities, parity vs legacy (adjacent = within +/-%.0f%%) ===" % (len(paths), tol))
+    print("  city                 p  pop |   food%    prod%    comm%  | dorm | worst")
+    agg = {y: [] for y in YIELDS}
+    nadj = {y: 0 for y in YIELDS}
+    for p in sorted(paths):
+        d = _load(p)
+        if not d.get("yields"):
+            continue
+        rows, info = evaluate(d)
+        worst = max(abs(rows[y]["gpct"]) for y in YIELDS)
+        for y in YIELDS:
+            agg[y].append(rows[y]["gpct"])
+            if abs(rows[y]["gpct"]) <= tol:
+                nadj[y] += 1
+        print("  %-20s %2s %4s | %+7.1f %+8.1f %+8.1f | %4d | %+.1f%%"
+              % (info["name"][:20], info["player"], info["pop"],
+                 rows["food"]["gpct"], rows["production"]["gpct"], rows["commerce"]["gpct"],
+                 info["dormant"], worst))
+    n = len(agg["food"])
+    print("\n  AGGREGATE over %d cities (adjacent = within +/-%.0f%%):" % (n, tol))
+    for y in YIELDS:
+        v = agg[y]
+        mean_abs = sum(abs(x) for x in v) / max(1, len(v))
+        print("    %-10s  parity-adjacent %d/%d  | mean|gap| %.1f%%  | worst %+.1f%%"
+              % (y, nadj[y], n, mean_abs, max(v, key=abs) if v else 0.0))
+
+
+def main():
+    ap = argparse.ArgumentParser(description="cascade_sim -- offline cascade simulator (yields; buildings+civics; x100)")
+    ap.add_argument("--file", help="one cityInput dump fixture (detailed)")
+    ap.add_argument("--glob", help="glob of fixtures to SWEEP + aggregate, e.g. 'samples/m_*.json'")
+    ap.add_argument("--tol", type=float, default=10.0, help="parity-adjacency tolerance, +/- percent")
+    args = ap.parse_args()
+    if args.glob:
+        paths = glob.glob(os.path.join(os.path.dirname(__file__), args.glob)) or glob.glob(args.glob)
+        _sweep(paths, args.tol)
+    elif args.file:
+        _print_one(_load(args.file))
+    else:
+        ap.error("pass --file or --glob")
 
 
 if __name__ == "__main__":

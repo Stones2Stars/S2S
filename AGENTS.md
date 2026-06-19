@@ -147,6 +147,18 @@ not findings to re-discover.
   guard sites: `CvPlot.cpp` `setPlotType` graphics block, `setLayoutDirty`,
   `shouldHaveGraphics`; `CvMap::setupGraphical`.
 
+### ⛔ THE NO-GUESSING RULE — map everything, always (owner ruling 2026-06-19, HARD RULE)
+
+**On the #428/#430 rework we do NOT guess. We MAP. Every claim about a value/divergence is grounded in the
+total-observability surface — that is exactly what the Orwellian level of surveillance is FOR.** *"We do not guess,
+we do not faff about, we map all the things, all the time."* Operationally, when a cascade value diverges from legacy:
+do NOT hypothesise a cause and try a fix — instead EMIT the full legacy decomposition (every component/source of that
+calc) via the dump (`/diagnostic/cityInput` etc.), and map the cascade's value by the SAME components, so the
+divergence is attributed to a NAMED source with numbers, not a guess. If the data to attribute it isn't being
+emitted, the FIRST step is to emit it (extend the dump), not to guess. The half-guessing back-and-forth (try a fix,
+re-sweep, try another) is the anti-pattern this rule kills: build the complete map once, then every fix is grounded.
+(This is the modifier-channel application of the map-before-delete / total-observability bar below.)
+
 ### Cascade observability — the total-observability ("Orwell") bar (#428/#430)
 
 - **⛔ The running game holds its `.log` files OPEN — NEVER try to live-read them (owner ruling 2026-06-19; this trips

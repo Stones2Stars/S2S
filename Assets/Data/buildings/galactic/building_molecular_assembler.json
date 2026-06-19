@@ -50,10 +50,16 @@
  },
  "production": {
   "city": {
-   "percent": 40,
+   "percent": [
+    40,
+    {
+     "value": 25,
+     "enabled": "HAS_POWER"
+    }
+   ],
    "flat": [
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_PICOTECHNOLOGY",
       "scope": "team"

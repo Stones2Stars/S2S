@@ -56,7 +56,13 @@
  },
  "production": {
   "city": {
-   "percent": 25
+   "percent": [
+    25,
+    {
+     "value": 40,
+     "enabled": "HAS_POWER"
+    }
+   ]
   }
  },
  "health": {
