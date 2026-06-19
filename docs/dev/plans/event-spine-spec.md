@@ -65,8 +65,16 @@ Event = { KIND, type, <raw payload fields> }
   `prefix + name=value …`; typeIndex `SpineFieldType` kinds (`SFT_BUILDING`/`UNIT`/`BONUS`/…) resolve the index to a type
   name. Raw (no strings: wide instance names → entity IDs; type names → the index + `SFT_<kind>`). This per-domain
   isolation (vs a global typed-tag enum) was the proper-once choice: zero shared edits per domain ⇒ parallel-safe + no
-  3-way-sync debt. **`[PERF]` exception → its own `CvPerfEvent` struct** (later). Genuinely caller-composed/instance-name
-  strings (CTB) stay on the legacy shadow path — they don't fit the raw rule.
+  3-way-sync debt. **`[PERF]` exception → its own `CvPerfEvent` struct** (later).
+- **CLARIFIED 2026-06-19 (owner) — the rule is "the call site never COMPOSES the payload," not "no strings."** "Raw / no
+  strings" above is an imprecise shorthand. The actual invariant: **the line is composed in the CONSUMER, one place, one
+  gate** — the call site only hands over *ingredients*. So **passing an existing string POINTER** (`const char*`/`const
+  wchar_t*` to a literal or a `szReason` already built for other logic) is allowed — it's an ingredient, not call-site
+  composition, and it's pointer-cheap + lifetime-safe (synchronous game-thread render). What stays banned is the call site
+  **building** the final line (`CvString::format(...)` per site). Consequence: instance-name strings travel as an **entity
+  id** (consumer renders `name(id)`, the additive win — e.g. `SFT_PLAYER`, done); genuinely free-text strings can travel
+  via a string-pointer field (`addStr`/`SFT_STR`, a build item) — so the CTB/free-text lines do NOT have to stay on legacy.
+  Full ruling: §8 (the unrecoverable-lines thread).
 
 ## 4. NO verbose `if(loglevel)` gates (owner 2026-06-17) — and why they vanish
 
@@ -166,22 +174,40 @@ machinery (it + `CvScopedAccumulator` are the substrate). Then:
      - **IDs are stable across save/load (verified):** `m_iID` is serialized by the name-tagged wrapper for `CvUnit`
        (`CvUnit.cpp` `WRAPPER_READ/WRITE "CvUnit" m_iID`) AND `CvCity` (`CvCity.cpp` ditto) — so keying on the raw id is
        valid even across a reload.
-     - **NAME-CHANGE event — REQUIRED for the full Orwell bar (owner 2026-06-19, upgraded from "fallback").** A rename
-       (city/unit/player/civ) IS an observable STATE CHANGE: an out-of-process consumer (GameTracker / an agent) that maps
-       the game purely from `/events` + logs must SEE it to keep its id→name table accurate. So a **`DOMAIN` name-change
-       event (`entity-kind, id → newName`)** is emitted on the set-name paths (`CvCity::setName`, unit name, player/civ
-       rename) — part of the total-observability surface, not a contingency. (It is the event-sourced complement to the
-       inline `name(id)`: inline gives the name at each line; the name-change event lets a consumer rebuild the mapping and
-       resolve any historical id even after a rename.) **Build item** — not yet implemented.
-       - **Doubles as a bug lever (owner 2026-06-19):** building this likely helps resolve a year-long bug — *empire names
-         not updating when a civic changes* (with that game option on, dynamic civ names should refresh on civic switch and
-         don't). Instrumenting the set-name path with the name-change event surfaces whether the refresh fires at all, so the
-         observability work and the bug hunt share the same hook.
+     - **NAME-CHANGE event — REQUIRED for the full Orwell bar (owner 2026-06-19, upgraded from "fallback"). IMPLEMENTED
+       2026-06-19 (Assert-clean).** A rename (city/unit/player/civ) IS an observable STATE CHANGE: an out-of-process consumer
+       (GameTracker / an agent) that maps the game purely from `/events` + logs must SEE it to keep its id→name table
+       accurate. So a **`DOMAIN` event `CASCADE_EVT_NAME_CHANGE`** (`iType=NameChangeKind, iA=owner, iB=entity id`) is emitted
+       from the four set-name choke points — `CvPlayer::setName` (`kind=player`), **`CvPlayer::setCivName` (`kind=civ` — the
+       empire name)**, `CvCity::setName` (`kind=city`), `CvUnit::setName` (`kind=unit`) — via the `cascadeEmitNameChange()`
+       helper. **String-free payload:** the logging consumer resolves the NEW name LIVE on the game thread (exact) and renders
+       `[SPINE/DOMAIN] nameChange kind=… player=… id=… name=…` to `Cascade.log` + `/events`; the tally ignores it (switch
+       default). It is the event-sourced complement to the inline `name(id)`: inline gives the name at each line; this lets a
+       consumer rebuild the mapping and resolve any historical id even after a rename.
+       - **Doubles as a bug lever (owner 2026-06-19):** likely helps resolve a year-long bug — *empire names not updating when
+         a civic changes* (with that game option on, dynamic civ names should refresh on civic switch and don't). The
+         `kind=civ` emit fires from `setCivName`, so a civic switch that SHOULD rename the empire but emits no `kind=civ` line
+         pinpoints whether the refresh fires at all — the observability work and the bug hunt share one hook.
      - **Refinement:** a unit's *default* `getDescription()` IS its type name, already carried cleanly via the `SFT_UNIT`
        type-index — so only *custom-named* units and *player/city* names need the id-resolve path.
-   - **Still genuinely open (~6 lines):** caller-composed free text (`szDecision`/`szReason`/`szWorkCriteria`/mission
-     literals) — needs **enum-ification** (a separate spine-design decision, still owner-pending). Plus 3 CTB lines that
-     just want a `SFT_UNITAI` render-type tag (trivially addable).
+   - **The real rule is WHERE THE PAYLOAD IS COMPOSED — in the CONSUMER, not the call site (owner 2026-06-19 — the true
+     rationale behind §3/R-1; "no strings" was an imprecise shorthand).** The old way built the final line *at every call
+     site*, which forced (1) an `if`-gate at each site, (2) an eager full-payload build before knowing if it would even be
+     logged, and (3) the format logic DUPLICATED across every individual call — so you had to *pray each site stayed
+     consistent* (N copies of the truth, easy to drift). The spine moves composition to ONE place: the call site hands over
+     **ingredients** (raw ids, or a pointer to an already-existing string); the **consumer composes the line** — one gate,
+     one format, structural consistency. So **passing an EXISTING string is fine** — a `const char*`/`const wchar_t*` POINTER
+     (a literal, a `szReason` already built for other logic, a member name) is a pointer store (no concat, no alloc), and the
+     call site is still just handing an ingredient to the consumer, NOT composing the payload. Lifetime is safe because the
+     consumer renders SYNCHRONOUSLY on the game thread (the pointer is valid at render; `/events` only sees the finished
+     string). The ONLY thing still rejected: the call site composing the final line itself — a pre-FORMATTED full log line
+     (R-1's Option 2, "like it used to be").
+   - **So the ~6 free-text lines NO LONGER need enum-ification (owner 2026-06-19):** add a string-pointer field (`addStr` +
+     an `SFT_STR` render case) and the call site passes the existing `szDecision`/`szReason`/`szWorkCriteria` directly; the
+     consumer assembles the `[TAG] key=value` line. (Use this only for genuinely free-text data that has no id/type to
+     resolve — type/instance data still travels as a raw id so the consumer can render `name(id)`, the additive win.)
+     **Build item** — the `addStr`/`SFT_STR` capability is not yet implemented. Plus 3 CTB lines that just want a `SFT_UNITAI`
+     render-type tag (trivially addable).
    - **Cleanup is MIGRATE-not-blanket-delete (owner 2026-06-19):** during the R-4/R-5 firehose cleanup, genuinely-valuable
      lines are MIGRATED to their correct home (agent judgment — *the agent is the primary log reader during the shadow
      passes*), not deleted. First instance: the `AI_doDiplo` war-ally-purchasing reasoning (ex-`C2C.log`) → `[DIP/warally]`.

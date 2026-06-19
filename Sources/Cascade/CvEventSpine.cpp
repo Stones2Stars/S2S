@@ -250,6 +250,26 @@ public:
 			sprintf(szBuf, "[SPINE/DOMAIN] unitCount %s player=%d count=%d delta=%+d",
 				GC.getUnitInfo((UnitTypes)kEvent.iType).getType(), kEvent.iC, kEvent.iA, kEvent.iB);
 		}
+		else if (kEvent.eKind == EVENTKIND_DOMAIN && kEvent.iEventId == CASCADE_EVT_NAME_CHANGE)
+		{
+			// iType = NameChangeKind, iA = owner player, iB = entity id. Resolve the NEW name LIVE (synchronous on the game
+			// thread -> exact + off-thread-safe). CvWString holds it so getName()-by-value can't dangle through the sprintf.
+			const PlayerTypes eOwner = (PlayerTypes)kEvent.iA;
+			const char* szKind = "?";
+			CvWString szName = L"?";
+			if (eOwner >= 0 && eOwner < MAX_PLAYERS)
+			{
+				const CvPlayer& kP = GET_PLAYER(eOwner);
+				switch (kEvent.iType)
+				{
+				case NAMECHANGE_PLAYER: szKind = "player"; szName = kP.getName(); break;
+				case NAMECHANGE_CIV:    szKind = "civ";    szName = kP.getCivilizationShortDescription(); break;
+				case NAMECHANGE_CITY:   szKind = "city";   { const CvCity* pCity = kP.getCity(kEvent.iB); if (pCity != NULL) szName = pCity->getName(); } break;
+				case NAMECHANGE_UNIT:   szKind = "unit";   { const CvUnit* pUnit = kP.getUnit(kEvent.iB); if (pUnit != NULL) szName = pUnit->getName(); } break;
+				}
+			}
+			sprintf(szBuf, "[SPINE/DOMAIN] nameChange kind=%s player=%d id=%d name=%S", szKind, kEvent.iA, kEvent.iB, szName.GetCString());
+		}
 		else
 		{
 			sprintf(szBuf, "[SPINE/%s] eventId=%d type=%d a=%d b=%d c=%d",
@@ -277,4 +297,11 @@ void cascadeRegisterConsumers()
 	// loaded objects, §9) happens at CvGame::onFinalInitialized on EVERY load/new-game -- NOT here -- so a stale
 	// tally can't gate before the first end-of-turn, and a 2nd in-session load reseeds. DOMAIN events maintain it.
 	eventSpine().registerConsumer(&cascadeTally());
+}
+
+void cascadeEmitNameChange(int iKind, int iOwner, int iEntityId)
+{
+	// DOMAIN kind: a rename is synced state an observer must track (Orwell bar). The tally IGNORES it (its switch default
+	// returns; iC = 0 keeps the player-slot guard happy); the logging consumer renders it, resolving the NEW name live.
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DOMAIN, CASCADE_EVT_NAME_CHANGE, iKind, iOwner, iEntityId, 0));
 }

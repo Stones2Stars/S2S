@@ -13221,6 +13221,7 @@ void CvCity::setName(const wchar_t* szNewValue, bool bFound)
 		if (GET_PLAYER(getOwner()).isCityNameValid(szName, false))
 		{
 			m_szName = szName;
+			cascadeEmitNameChange(NAMECHANGE_CITY, getOwner(), getID());
 
 			setInfoDirty(true);
 

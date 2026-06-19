@@ -5,6 +5,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "AI/BetterBTSAI.h"
+#include "CvEventSpine.h" // #430: name-change DOMAIN event on setName (Cascade/ is on /I)
 #include "CvArea.h"
 #include "CvBuildingInfo.h"
 #include "CvCity.h"
@@ -17183,6 +17184,7 @@ void CvUnit::setName(CvWString szNewValue)
 	gDLL->stripSpecialCharacters(szNewValue);
 
 	m_szName = szNewValue;
+	cascadeEmitNameChange(NAMECHANGE_UNIT, getOwner(), getID());
 
 	if (IsSelected())
 	{

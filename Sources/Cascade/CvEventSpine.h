@@ -153,8 +153,25 @@ void cascadeRenderEventLine(char* szBuf, int iBufSize, const CvCascadeEvent& kEv
 enum CascadeDomainEvent
 {
 	CASCADE_EVT_BUILDING_COUNT = 1,  // iType = BuildingTypes, iA = new empire count, iB = delta, iC = PlayerTypes -- a counted-domain event
-	CASCADE_EVT_UNIT_COUNT     = 2   // iType = UnitTypes,     iA = new empire count, iB = delta, iC = PlayerTypes
+	CASCADE_EVT_UNIT_COUNT     = 2,  // iType = UnitTypes,     iA = new empire count, iB = delta, iC = PlayerTypes
+	CASCADE_EVT_NAME_CHANGE    = 3   // iType = NameChangeKind, iA = owner player, iB = entity id (= owner for PLAYER/CIV), iC = 0
 };
+
+//	Which entity's display name changed (the iType of a CASCADE_EVT_NAME_CHANGE event). The logging consumer resolves the
+//	NEW name LIVE (synchronous game-thread render -> exact), so the payload stays string-free; an out-of-process consumer
+//	(GameTracker / an agent) rebuilds its id->name table from the emitted lines -- REQUIRED for the total-observability
+//	("Orwell") bar (event-spine-spec.md section 8). CIV = the empire name (the civic-name-on-civic-change bug lever).
+enum NameChangeKind
+{
+	NAMECHANGE_PLAYER = 0,   // leader/player name (CvPlayer::getName)
+	NAMECHANGE_CIV,          // empire / civ short name (CvPlayer::getCivilizationShortDescription)
+	NAMECHANGE_CITY,         // city name (CvCity::getName)
+	NAMECHANGE_UNIT          // unit name (CvUnit::getName)
+};
+
+//	Emit a name-change DOMAIN event. Call AFTER the name field is updated (the consumer resolves the NEW name live).
+//	iOwner = owning player; iEntityId = city/unit id (pass iOwner for PLAYER/CIV). String-free payload by design.
+void cascadeEmitNameChange(int iKind, int iOwner, int iEntityId);
 
 //	A consumer of spine events (tally / grants / logging). C++03 virtual interface -- the consumer's state lives in the
 //	consumer (no captures, no Boost). wantedKinds() returns a bitmask of (1 << EventKind); the spine uses it to skip

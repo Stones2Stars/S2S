@@ -3348,6 +3348,7 @@ void CvPlayer::setName(std::wstring szNewValue)
 	if (isCityNameValid(CvWString(szNewValue), false))
 	{
 		m_szName = szNewValue;
+		cascadeEmitNameChange(NAMECHANGE_PLAYER, getID(), getID());
 		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
 		gDLL->getInterfaceIFace()->setDirty(Foreign_Screen_DIRTY_BIT, true);
 		gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
@@ -3416,6 +3417,7 @@ void CvPlayer::setCivName(std::wstring szNewDesc, std::wstring szNewShort, std::
 	m_szCivDesc = szNewDesc;
 	m_szCivShort = szNewShort;
 	m_szCivAdj = szNewAdj;
+	cascadeEmitNameChange(NAMECHANGE_CIV, getID(), getID());
 	gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
 	gDLL->getInterfaceIFace()->setDirty(Foreign_Screen_DIRTY_BIT, true);
 	gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
