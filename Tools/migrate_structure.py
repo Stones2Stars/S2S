@@ -1,19 +1,39 @@
 #!/usr/bin/env python3
 """S2S Sources/ structural-cleanup migration (2026-06-19).
 
-Phase A (this script, --dry default): compute the file -> bucket -> target-folder map from the
-legacy .vcxproj.filters classification, re-bucketed under the new broad top-level. Reports counts
-+ unmapped + new files. Writes Tools/movemap.tsv. Moves nothing unless --apply.
+DRY (default): compute the file->bucket map from the legacy .vcxproj.filters classification,
+re-bucketed under the new broad flat top-level. Reports counts; writes Tools/movemap.tsv.
 
-Buckets (broad, fine-tune later): Engine / AI / Infos / Cascade / Repos / Infrastructure / Tools /
-UI / Python / Defines, plus (root) for PCH + global glue. See docs/dev/plans/sources-structural-cleanup.md.
+--apply: (1) os.rename each loose file into its bucket folder; (2) rewrite #include "..." that
+target a NEW BUCKET-folder header -> path-qualified "Bucket/Name.h" (cross-folder) or bare
+(same folder, MSVC same-dir rule). Includes to Infos/Cascade/Repos/Utils/root-glue and
+system/<...> includes are LEFT ALONE (resolved via the existing /I: include,$SOURCE_DIR$,Infos,Cascade).
+PCH glue stays at root. No fbuild /I change needed.
+
+Buckets: Engine / AI / Infos / Cascade / Repos / Infrastructure / Tools / UI / Python / Defines + (root).
+Plan: docs/dev/plans/sources-structural-cleanup.md.
 """
 import re, os, glob, sys
 
-SRC = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # repo root
+SRC = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # repo root
 SRCDIR = os.path.join(SRC, "Sources")
 FILTERS = os.path.join(SRCDIR, "C2C (VS2019).vcxproj.filters")
-BS = chr(92)  # backslash, kept out of literals to dodge escaping hell
+BS = chr(92)
+
+# Bucket folders whose includes must be PATH-QUALIFIED (not on /I). The shared layers
+# (Infos/Cascade/Repos/Utils) and root are reachable via /I or same-dir, so leave those includes alone.
+BUCKET_FOLDERS = {"Engine", "AI", "Infrastructure", "Tools", "UI", "Python", "Defines"}
+LEAVE_FOLDERS  = {"Infos", "Cascade", "Repos", "Utils", "(root)"}
+
+ROOT_GLUE = {"CvGameCoreDLL.cpp","CvGameCoreDLL.h","CvGameCoreDLLDefNew.h","CvGameCoreDLLUndefNew.h",
+             "resource.h","_precompile.cpp","GlobalDefines.h","AI_Defines.h"}
+OVERRIDES = {
+    "CvArmy.h":"Engine", "CvArmy.cpp":"Engine",
+    "CvUnitSelectionCriteria.cpp":"Engine", "CvUnitSelectionCriteria.h":"Engine",
+    "CvOverlord.h":"Engine", "ConstructRequirement.h":"Engine",
+    "Win32.cpp":"Tools", "Win32.h":"Tools",
+    "CvCityLogTags.h":"AI",
+}
 
 def load_filter_map():
     txt = open(FILTERS, encoding="utf-8", errors="replace").read()
@@ -22,22 +42,8 @@ def load_filter_map():
     for m in pat.finditer(txt):
         inc = m.group(1); body = m.group(2) or ""
         fm = re.search(r"<Filter>([^<]*)</Filter>", body)
-        filt = (fm.group(1) if fm else "").replace(BS, "/")   # normalize to forward slash
-        fmap[os.path.basename(inc)] = filt
+        fmap[os.path.basename(inc)] = (fm.group(1) if fm else "").replace(BS, "/")
     return fmap
-
-ROOT_GLUE = {"CvGameCoreDLL.cpp","CvGameCoreDLL.h","CvGameCoreDLLDefNew.h","CvGameCoreDLLUndefNew.h",
-             "resource.h","_precompile.cpp","GlobalDefines.h","AI_Defines.h"}
-
-# Explicit homes for files the legacy .filters left unclassified (or in a default filter).
-OVERRIDES = {
-    "CvArmy.h":"Engine", "CvArmy.cpp":"Engine",
-    "CvUnitSelectionCriteria.cpp":"Engine", "CvUnitSelectionCriteria.h":"Engine",
-    "CvOverlord.h":"Engine",
-    "ConstructRequirement.h":"Engine",
-    "Win32.cpp":"Tools", "Win32.h":"Tools",
-    "CvCityLogTags.h":"AI",   # [CIT] logging tags (collision-proofed in Phase 2)
-}
 
 def bucket(name, filt):
     if name in OVERRIDES: return OVERRIDES[name]
@@ -54,36 +60,88 @@ def bucket(name, filt):
     if "Base" in filt: return "Engine"
     return "UNMAPPED:" + (filt or "<none>")
 
-def main():
+def loose_map():
+    """basename -> bucket, for the loose root files, with .cpp/.h pairing."""
     fmap = load_filter_map()
     disk = sorted(set(os.path.basename(p) for p in
                       glob.glob(os.path.join(SRCDIR,"*.cpp")) + glob.glob(os.path.join(SRCDIR,"*.h"))))
     raw = {f: bucket(f, fmap.get(f, "")) for f in disk}
-    # .cpp/.h pairing: a stem's two files share one bucket; prefer the non-default/non-unmapped one.
-    def is_weak(b): return b.startswith("UNMAPPED") or b == "(root)"
+    def weak(b): return b.startswith("UNMAPPED") or b == "(root)"
     for f in list(raw):
         stem, ext = os.path.splitext(f)
-        if ext not in (".cpp", ".h"): continue
-        other = stem + (".h" if ext == ".cpp" else ".cpp")
-        if other in raw and raw[f] != raw[other]:
-            a, b = raw[f], raw[other]
-            if is_weak(a) and not is_weak(b): raw[f] = b
-            elif is_weak(b) and not is_weak(a): raw[other] = a
-    rows = [(f, raw[f], fmap.get(f, "")) for f in disk]
+        if ext not in (".cpp",".h"): continue
+        other = stem + (".h" if ext==".cpp" else ".cpp")
+        if other in raw and raw[f]!=raw[other]:
+            a,b = raw[f],raw[other]
+            if weak(a) and not weak(b): raw[f]=b
+            elif weak(b) and not weak(a): raw[other]=a
+    return raw
+
+def folder_of_bucket(b):
+    return "" if b == "(root)" else b
+
+def all_file_folders(lm):
+    """basename -> folder (relative to Sources/, '' for root), for ALL project files post-move."""
+    ff = {}
+    for f, b in lm.items():
+        ff[f] = folder_of_bucket(b)
+    for sub in ("Infos","Cascade","Repos","Utils"):
+        for p in glob.glob(os.path.join(SRCDIR, sub, "*.cpp")) + glob.glob(os.path.join(SRCDIR, sub, "*.h")):
+            ff[os.path.basename(p)] = sub
+    return ff
+
+def report(lm):
     from collections import Counter
-    c = Counter(b for _, b, _ in rows)
-    print("=== on-disk loose files:", len(disk), "===")
-    for k, v in sorted(c.items(), key=lambda x: -x[1]):
-        print(f"{v:4d}  {k}")
-    print("\n=== files NOT in .filters (new/unassigned) ===")
-    for f, b, _ in rows:
-        if f not in fmap: print(f"  {f} -> {b}")
-    print("\n=== UNMAPPED (need a rule) ===")
-    for f, b, filt in rows:
-        if b.startswith("UNMAPPED"): print(f"  {f}  [{filt}]")
-    out = os.path.join(SRC, "Tools", "movemap.tsv")
-    open(out, "w").write("\n".join(f"{f}\t{b}" for f, b, _ in rows) + "\n")
-    print("\nwrote", out)
+    c = Counter(lm.values())
+    print("=== on-disk loose files:", len(lm), "===")
+    for k,v in sorted(c.items(), key=lambda x:-x[1]): print(f"{v:4d}  {k}")
+    bad = [f for f,b in lm.items() if b.startswith("UNMAPPED")]
+    print("UNMAPPED:", bad if bad else "none")
+    open(os.path.join(SRC,"Tools","movemap.tsv"),"w").write("\n".join(f"{f}\t{b}" for f,b in sorted(lm.items()))+"\n")
+
+INC_RE = re.compile(r'(#\s*include\s*")([^"]+)(")')
+
+def rewrite_includes(path, myfolder, ff):
+    txt = open(path, encoding="utf-8", errors="replace").read()
+    changed = [0]
+    def repl(m):
+        inc = m.group(2); base = os.path.basename(inc)
+        folder = ff.get(base)
+        if folder is None: return m.group(0)               # external/system/unknown -> leave
+        if folder not in BUCKET_FOLDERS: return m.group(0)  # shared layer / root glue -> leave
+        new = base if folder == myfolder else f"{folder}/{base}"
+        if new != inc: changed[0]+=1
+        return m.group(1)+new+m.group(3)
+    txt = INC_RE.sub(repl, txt)
+    if changed[0]:
+        open(path,"w",encoding="utf-8",newline="").write(txt)
+    return changed[0]
+
+def apply():
+    lm = loose_map()
+    report(lm)
+    if any(b.startswith("UNMAPPED") for b in lm.values()):
+        print("ABORT: unmapped files remain"); sys.exit(1)
+    ff = all_file_folders(lm)
+    # 1) move loose files into bucket folders
+    moved = 0
+    for f, b in lm.items():
+        if b == "(root)": continue
+        dest_dir = os.path.join(SRCDIR, b)
+        os.makedirs(dest_dir, exist_ok=True)
+        src = os.path.join(SRCDIR, f); dst = os.path.join(dest_dir, f)
+        if os.path.exists(src):
+            os.replace(src, dst); moved += 1
+    print(f"\nmoved {moved} files")
+    # 2) rewrite bucket-targeting includes in ALL project files (at their post-move paths)
+    total = 0; touched = 0
+    for base, folder in ff.items():
+        path = os.path.join(SRCDIR, folder, base) if folder else os.path.join(SRCDIR, base)
+        if not os.path.exists(path): continue
+        n = rewrite_includes(path, folder, ff)
+        if n: touched += 1; total += n
+    print(f"rewrote {total} includes across {touched} files")
 
 if __name__ == "__main__":
-    main()
+    if "--apply" in sys.argv: apply()
+    else: report(loose_map())

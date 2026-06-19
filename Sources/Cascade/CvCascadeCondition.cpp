@@ -12,15 +12,15 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvCascadeCondition.h"
-#include "CvGlobals.h"
-#include "CvMap.h"
+#include "Defines/CvGlobals.h"
+#include "Engine/CvMap.h"
 #include "CvInfos.h"      // CvWorldInfo::getOceanMinAreaSize
 #include "CvBuildingInfo.h" // getSpecialBuilding (special-building-group waiver on a prereq building)
-#include "CvPlayerAI.h"   // GET_PLAYER
-#include "CvTeamAI.h"     // GET_TEAM
-#include "CvCity.h"
-#include "CvPlot.h"
-#include "CvProperties.h" // getValueByProperty (the PROPERTY band atom)
+#include "AI/CvPlayerAI.h"   // GET_PLAYER
+#include "AI/CvTeamAI.h"     // GET_TEAM
+#include "Engine/CvCity.h"
+#include "Engine/CvPlot.h"
+#include "Engine/CvProperties.h" // getValueByProperty (the PROPERTY band atom)
 
 namespace
 {

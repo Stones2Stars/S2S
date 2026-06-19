@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------------------------
 #include "CvGameCoreDLL.h"
 #include "BuildsRepo.h"
-#include "CvGlobals.h"
+#include "Defines/CvGlobals.h"
 #include "CvImprovementInfo.h"
 #include "CvInfos.h"
 

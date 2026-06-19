@@ -157,7 +157,7 @@ namespace python = boost::python;
 
 #define DllExport   __declspec( dllexport )
 
-#include "NiPoint.h"
+#include "Infrastructure/NiPoint.h"
 
 //
 // Basic types
@@ -312,53 +312,53 @@ const std::string getModDir();
 //
 // Polyfills
 //
-#include "nullptr_t.h"
-#include "EnumFlags.h"
-#include "hash.h"
+#include "Defines/nullptr_t.h"
+#include "Infrastructure/EnumFlags.h"
+#include "Tools/hash.h"
 
 //
 // Our code
 //
-#include "logging.h"
-#include "enum_iterator.h"
-#include "algorithm2.h"
-#include "scoring.h"
-#include "FAssert.h"
-#include "Stopwatch.h"
+#include "Tools/logging.h"
+#include "Infrastructure/enum_iterator.h"
+#include "Tools/algorithm2.h"
+#include "Tools/scoring.h"
+#include "Tools/FAssert.h"
+#include "Tools/Stopwatch.h"
 #include "CvGameCoreDLLDefNew.h"
 #include "CvGameCoreDLLUnDefNew.h"
-#include "FDataStreamBase.h"
-#include "FFreeListArrayBase.h"
-#include "FFreeListTrashArray.h"
-#include "FFreeListArray.h"
-#include "FAStarNode.h"
+#include "Infrastructure/FDataStreamBase.h"
+#include "Infrastructure/FFreeListArrayBase.h"
+#include "Infrastructure/FFreeListTrashArray.h"
+#include "Infrastructure/FFreeListArray.h"
+#include "Infrastructure/FAStarNode.h"
 
-#include "CvEnums.h"
-#include "CvStructs.h"
+#include "Defines/CvEnums.h"
+#include "Defines/CvStructs.h"
 
-#include "CvDLLUtilityIFaceBase.h"
-//#include "CvDLLEngineIFaceBase.h"
-#include "CvDLLPythonIFaceBase.h"
-//#include "CvDLLInterfaceIFaceBase.h"
+#include "Infrastructure/CvDLLUtilityIFaceBase.h"
+//#include "Infrastructure/CvDLLEngineIFaceBase.h"
+#include "Infrastructure/CvDLLPythonIFaceBase.h"
+//#include "Infrastructure/CvDLLInterfaceIFaceBase.h"
 
-#include "BetterBTSAI.h"
-#include "CvGameCoreUtils.h"
-#include "CvBugOptions.h"
+#include "AI/BetterBTSAI.h"
+#include "Engine/CvGameCoreUtils.h"
+#include "Infrastructure/CvBugOptions.h"
 //#include "CvInfos.h"
 //#include "CvInfoWater.h"
-#include "CvViewport.h"
-#include "FProfiler.h"
+#include "UI/CvViewport.h"
+#include "Tools/FProfiler.h"
 
-#include "SCvDebug.h"
-#include "SCvInternalGlobals.h"
+#include "Tools/SCvDebug.h"
+#include "Defines/SCvInternalGlobals.h"
 
-#include "CyDeal.h"
-#include "CyMap.h"
-#include "CyArea.h"
-#include "CyCity.h"
-#include "CyUnit.h"
-#include "CySelectionGroup.h"
-#include "CyPlot.h"
+#include "Python/CyDeal.h"
+#include "Python/CyMap.h"
+#include "Python/CyArea.h"
+#include "Python/CyCity.h"
+#include "Python/CyUnit.h"
+#include "Python/CySelectionGroup.h"
+#include "Python/CyPlot.h"
 
 #ifdef FINAL_RELEASE
 // Undefine OutputDebugString in final release builds

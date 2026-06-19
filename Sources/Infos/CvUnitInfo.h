@@ -4,7 +4,7 @@
 #define CV_UNIT_INFO_H
 
 #include "CvInfoBase.h"
-#include "ConstructRequirement.h"
+#include "Engine/ConstructRequirement.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //

@@ -1,15 +1,15 @@
 #include "CvGameCoreDLL.h"
-#include "FProfiler.h"
+#include "Tools/FProfiler.h"
 
-#include "CvArtFileMgr.h"
+#include "UI/CvArtFileMgr.h"
 #include "CvBonusInfo.h"
-#include "CvDefines.h"
+#include "Defines/CvDefines.h"
 #include "CvImprovementInfo.h"
 #include "CvInfoUtil.h"
-#include "CvXMLLoadUtility.h"
-#include "CheckSum.h"
-#include "CvGlobals.h"
-#include "CvGameAI.h"
+#include "Infrastructure/CvXMLLoadUtility.h"
+#include "Tools/CheckSum.h"
+#include "Defines/CvGlobals.h"
+#include "AI/CvGameAI.h"
 
 CvBonusInfo::CvBonusInfo() :
 	// Only non-declarative fields here; everything else defaults via initDataMembers().

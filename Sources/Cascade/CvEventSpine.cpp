@@ -5,9 +5,9 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvEventSpine.h"
-#include "BetterBTSAI.h"   // gPlayerLogLevel (reused as the slice-1 gate; dedicated gate/BUG option + the live
+#include "AI/BetterBTSAI.h"   // gPlayerLogLevel (reused as the slice-1 gate; dedicated gate/BUG option + the live
                            // CvHttpServer feed come next)
-#include "CvGlobals.h"        // GC -- resolve raw Type indices to readable names in the (gated) consumer
+#include "Defines/CvGlobals.h"        // GC -- resolve raw Type indices to readable names in the (gated) consumer
 #include "CvBuildingInfo.h"
 #include "CvUnitInfo.h"
 // typeIndex name-resolution in the consumer: the Info headers for each SFT_ kind (so GC.getXInfo(i).getType() compiles).

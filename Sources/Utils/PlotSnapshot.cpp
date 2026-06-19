@@ -23,14 +23,16 @@
 #include "CvGameCoreDLL.h"
 #include "Utils/PlotSnapshot.h"
 
-#include "CvArea.h"
-#include "CvCity.h"
-#include "CvGameAI.h"
-#include "CvGlobals.h"
+#include "Engine/CvArea.h"
+#include "Engine/CvCity.h"
+#include "AI/CvGameAI.h"
+#include "Defines/CvGlobals.h"
 #include "CvInfos.h"
-#include "CvMap.h"
-#include "CvPlot.h"
-#include "CvUnit.h"
+#include "CvBonusInfo.h"        // umbrella CvInfos.h omits these two; needed for GC.getBonusInfo/getImprovementInfo
+#include "CvImprovementInfo.h"
+#include "Engine/CvMap.h"
+#include "Engine/CvPlot.h"
+#include "Engine/CvUnit.h"
 
 #include <cstdio>   // remove()
 #include <cstdlib>  // getenv()

@@ -11,18 +11,18 @@
 #include "CvCascadeReadJson.h"
 #include "CvCascadeCondition.h"
 #include "CvCascadeTally.h"
-#include "CvGlobals.h"
-#include "CvInitCore.h"
-#include "CvGameAI.h"
-#include "CvPlayerAI.h"
-#include "CvTeamAI.h"        // GET_TEAM / isHasTech (obsoletion index)
-#include "CvCity.h"
+#include "Defines/CvGlobals.h"
+#include "Infrastructure/CvInitCore.h"
+#include "AI/CvGameAI.h"
+#include "AI/CvPlayerAI.h"
+#include "AI/CvTeamAI.h"        // GET_TEAM / isHasTech (obsoletion index)
+#include "Engine/CvCity.h"
 #include "CvInfos.h"         // GC.getTechInfo (type strings for the obsoletion scan)
 #include "CvBuildingInfo.h"
 #include "Repos/BuildingsRepo.h"  // autoBuildings() -- the bAutoBuild loop's roster (auto-placement shadow B-i)
 #include "Infos/CvPropertyInfo.h" // getPropertyBuildings() -- checkPropertyBuildings' band roster (auto-placement shadow B-i)
-#include "CvProperties.h"         // PropertyBuilding (the band struct)
-#include "BetterBTSAI.h"     // gPlayerLogLevel, streamLogTee
+#include "Engine/CvProperties.h"         // PropertyBuilding (the band struct)
+#include "AI/BetterBTSAI.h"     // gPlayerLogLevel, streamLogTee
 #include <fstream>
 #include <sstream>
 #include <cctype>

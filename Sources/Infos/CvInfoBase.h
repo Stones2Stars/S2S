@@ -10,19 +10,19 @@
 #ifndef CV_INFOBASE_H
 #define CV_INFOBASE_H
 
-#include "FProfiler.h"
+#include "Tools/FProfiler.h"
 
-#include "CvProperties.h"
-#include "CvPropertySource.h"
-#include "CvPropertyInteraction.h"
-#include "CvPropertyPropagator.h"
-#include "CvPropertyManipulators.h"
-#include "CvOutcomeList.h"
-#include "CvOutcomeMission.h"
-#include "CvDate.h"
-#include "BoolExpr.h"
-//#include "IntExpr.h"
-#include "IDValueMap.h"
+#include "Engine/CvProperties.h"
+#include "Engine/CvPropertySource.h"
+#include "Engine/CvPropertyInteraction.h"
+#include "Engine/CvPropertyPropagator.h"
+#include "Engine/CvPropertyManipulators.h"
+#include "UI/CvOutcomeList.h"
+#include "Engine/CvOutcomeMission.h"
+#include "Engine/CvDate.h"
+#include "Infrastructure/BoolExpr.h"
+//#include "Infrastructure/IntExpr.h"
+#include "Infrastructure/IDValueMap.h"
 #include <boost/python/list.hpp>
 
 extern bool shouldHaveType;

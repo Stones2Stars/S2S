@@ -4,9 +4,9 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvCascadeTally.h"
-#include "CvGlobals.h"      // GC
-#include "CvGame.h"         // getUnitCreatedCount (the historic created counter for the UNIT world-cap)
-#include "CvPlayerAI.h"     // GET_PLAYER / getBuildingCount / getUnitCount / getTeam
+#include "Defines/CvGlobals.h"      // GC
+#include "Engine/CvGame.h"         // getUnitCreatedCount (the historic created counter for the UNIT world-cap)
+#include "AI/CvPlayerAI.h"     // GET_PLAYER / getBuildingCount / getUnitCount / getTeam
 
 // DIAGNOSTIC shadow-result ids (unsynced; logging-only -- never gate). One per domain so the log is unambiguous.
 enum

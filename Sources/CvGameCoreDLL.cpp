@@ -1,5 +1,5 @@
 #include "CvGameCoreDLL.h"
-#include "CvGlobals.h"
+#include "Defines/CvGlobals.h"
 #include <psapi.h>
 
 #ifdef USE_INTERNAL_PROFILER

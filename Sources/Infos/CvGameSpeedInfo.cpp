@@ -2,11 +2,11 @@
 //  FILE:    CvGameSpeedInfo.cpp
 //------------------------------------------------------------------------------------------------
 #include "CvGameCoreDLL.h"
-#include "CvGameAI.h"
-#include "CvGlobals.h"
+#include "AI/CvGameAI.h"
+#include "Defines/CvGlobals.h"
 #include "CvInfos.h"
 #include "CvInfoUtil.h"
-#include "CvXMLLoadUtility.h"
+#include "Infrastructure/CvXMLLoadUtility.h"
 #include "CvEraInfo.h"
 #include "CvGameSpeedInfo.h"
 

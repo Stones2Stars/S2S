@@ -4,7 +4,7 @@
 #include "CvGameCoreDLL.h"
 #include "BuildingsRepo.h"
 #include "CvBuildingInfo.h"
-#include "CvGlobals.h"
+#include "Defines/CvGlobals.h"
 
 BuildingsRepo& BuildingsRepo::get()
 {

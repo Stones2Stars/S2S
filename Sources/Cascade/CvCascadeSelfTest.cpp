@@ -10,12 +10,12 @@
 #include "CvEventSpine.h"
 #include "CvScopedAccumulator.h"
 #include "CvCascadeTally.h"
-#include "BetterBTSAI.h"   // gPlayerLogLevel
-#include "CvGlobals.h"
-#include "CvGameAI.h"
-#include "CvPlayerAI.h"
-#include "CvCity.h"
-#include "CvUnit.h"
+#include "AI/BetterBTSAI.h"   // gPlayerLogLevel
+#include "Defines/CvGlobals.h"
+#include "AI/CvGameAI.h"
+#include "AI/CvPlayerAI.h"
+#include "Engine/CvCity.h"
+#include "Engine/CvUnit.h"
 
 // Temporary test-event ids (all DIAGNOSTIC -- unsynced, logging-only; never gate).
 enum
