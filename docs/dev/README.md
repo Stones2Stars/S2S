@@ -60,6 +60,7 @@ This folder is split by intent:
 | [handicaps](reference/handicaps.md) | The difficulty system: per-player vs game handicap, the human-field/AI-field split, a per-field "what each value does" reference (+ #423 cascade-migration fit), and what setting a non-Noble AI actually changes |
 | [unitcombat](reference/unitcombat.md) | What `UnitCombatType` is: a core Civ4 combat-class axis (promotion-gating, vs-class bonuses, AI) that C2C grew into a 636-entry, many-to-many, ~150-field "innate-promotion tag" class mirroring `CvPromotionInfo`; + its #428 migration fit |
 | [save-load-format](reference/save-load-format.md) | How saves work: the name-keyed `CvTaggedSaveFormatWrapper`, soft-vs-hard change rules, and the derived-state-serializes-nothing lever (the tally rebuilds on load). *Recovered 2026-06-17; branch-only until the cascade save handling finalizes.* |
+| [boost-situation](reference/boost-situation.md) | Why the DLL links TWO Boosts at once (1.32 `boost::` + namespace-renamed 1.55 `boost155::`/`foreach_`), why Boost.Python 1.32 blocks removing 1.32, and why the closed `.exe` freezes the compiler + Python 2.4 + Boost. Awareness, not a consolidation plan. |
 
 ## Plans — work in flight
 

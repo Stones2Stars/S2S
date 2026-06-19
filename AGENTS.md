@@ -26,7 +26,8 @@ architecture rules that apply to DLL source.
 > caused a wrong conclusion (its `PlatformToolset` says `v142`, which is FALSE — see the toolchain note below). When unsure, read `fbuild.bff`.
 >
 > **Actual toolchain (from `fbuild.bff`):** the vendored **Microsoft Visual C++ Toolkit 2003 = MSVC 7.1 (VC2003)** compiler/linker
-> (`Build/deps/...`), **Python 2.4**, **Boost 1.32 / 1.55**. So the DLL is genuinely **C++03, 32-bit/x86** — *no* `std::thread`, *no* OpenMP,
+> (`Build/deps/...`), **Python 2.4**, **Boost 1.32 / 1.55** (why BOTH Boosts coexist + why the whole stack is frozen by the
+> closed `.exe`: [`docs/dev/reference/boost-situation.md`](docs/dev/reference/boost-situation.md)). So the DLL is genuinely **C++03, 32-bit/x86** — *no* `std::thread`, *no* OpenMP,
 > *no* C++11+. This is a hard compiler limit (the toolchain is locked to stay ABI/STL-compatible with the closed VC7.1 game `.exe`), **not**
 > a style convention. In-process threading means raw Win32 only. Do not modernize or replace the build chain/toolchain.
 
