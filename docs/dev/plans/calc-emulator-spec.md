@@ -120,6 +120,31 @@ Then compare to the LEGACY model on the same loadout. *"We simulate the simulati
   its contributions. For REAL states the legacy side is the live dump (already have it); building the legacy side
   OFFLINE (from the pre-migration XML) is the bigger lift that unlocks **fully-synthetic** test cases + a **direct
   XML-vs-JSON migration check** (same dict → both data sources → divergence = a parse/curation blindspot).
+- **LIVE DATA IS NOT REQUIRED (owner 2026-06-19).** Because we model the per-turn CONTRIBUTION from a ZERO
+  accumulator (§1), the calculator is **self-contained**: a loadout (presence dicts, SYNTHETIC or real) + the JSON
+  deposits is all it needs. Live dumps are for *validating* the legacy reproduction and for *convenient* real
+  loadouts — **not a dependency.** The new calc + the parity sweeps run **fully offline on fabricated loadouts**.
+  **Still worth keeping real data as a SAMPLE SOURCE (owner 2026-06-19):** the saved fixtures (`samples/*.json`)
+  give realistic loadouts + base values to model synthetic states *from* (more representative than hand-rolled).
+- **PLOT data = the BASE YIELD (owner 2026-06-19).** The per-plot yields in the loadout are the **base yield at that
+  point in time** — the base-value input the modifiers apply to (the "100's" of the acceptance bar, §3). **Plots
+  supply the BASE; buildings/civics/techs supply the MODIFIERS**, and the calc applies the latter to the former.
+  Real plot data therefore lets us model **realistic base inputs** (actual base-yield distributions) rather than the
+  toy "100 of each" — better-grounded parity sweeps.
+- **YIELD BASE — the source enumeration, VERIFIED against the code (owner 2026-06-19 + trust-but-verify).** The
+  owner's recollection was *trade routes, plots, buildings, specialists* — the four MAJORS — but flagged "unless I
+  forgot something." Verified against `CvCity::getYieldRate100` (CvCity.cpp:11252), `getBaseYieldRate` (:22908),
+  `getExtraYield100` (:11326): the calculator just defines **"how much did I get from each"**, but there are
+  **SEVEN buckets, not four**:
+  `getYieldRate100 = (getBaseYieldRate + getSpecialistYieldTotal) × modifier + 100 × getExtraYield`, where
+  - **MODIFIED** (`getBaseYieldRate`) = **plots** (`getPlotYield`) + **trade routes** (`getTradeYield`) + **free
+    city yield** (`player.getFreeCityYield`, player-level); plus **specialists** (`getSpecialistYieldTotal`, also
+    modified — #317);
+  - **UNMODIFIED** (`getExtraYield`) = **building flat yields** (`getBuildingExtraYield100`) + **corporations +
+    per-building yield-changes** (`m_aiExtraYield`) + **per-pop yields** (`getBaseYieldPerPopRate × pop`).
+  So the THREE the owner forgot: **free city yield, corporations, per-pop yields**. Structurally the base/specialist
+  sources receive the % while the building-flat/corp/per-pop "extra" bucket is added flat (the legacy flat-OUTSIDE,
+  §1). "How much from each" stands as the model — the buckets are just seven, and the calculator must feed all of them.
 - **BOTH cascades, not just the modifier.** A loadout drives the **modifier** cascade (the per-turn VALUES, vs
   legacy `getYieldRate100` & co.) AND — crucially for synthetic techlists — the **enabler** cascade: feeding "these
   techs are researched" exercises the CAN-GET frontier (what those techs unlock), which **validates the enabler AND
