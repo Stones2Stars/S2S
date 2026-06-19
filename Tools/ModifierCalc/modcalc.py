@@ -240,42 +240,67 @@ def reproduce_growth(d):
     return (ok, 1)
 
 
-def _split_sum(components, positive):
-    return sum((max(0, v) if positive else min(0, v)) for v in components)
+def _div100(v):
+    """C++ integer division by 100 (truncate toward zero) -- matches the engine's `x / 100`."""
+    return v // 100 if v >= 0 else -((-v) // 100)
 
 
 def reproduce_health(d):
-    """Informational residual report: goodHealth=Σmax(0,·); badHealth=unhealthyPop−Σmin(0,·)−espionage (city buckets only)."""
+    """Exact: goodHealth = Σ max(0,·); badHealth = unhealthyPop − Σ min(0,·) − max(0,espionage). (legacy-value-calc-map §3)"""
     h = d.get("health")
     if not h:
-        return
-    comps = [h["freshWaterGoodHealth"], h["featureGoodHealth"], h["featureBadHealth"],
-             h["bonusGoodHealth"], h["bonusBadHealth"], h["totalGoodBuildingHealth"], h["totalBadBuildingHealth"],
-             h["extraHealth"], h["improvementGoodHealth"] // 100, h["improvementBadHealth"] // 100,
-             h["specialistGoodHealth"] // 100, h["specialistBadHealth"] // 100,
-             h["corporationHealth"], h["extraTechHealth"]]
-    emu_good = _split_sum(comps, True)
-    emu_bad = h["unhealthyPopulation"] - _split_sum(comps, False) - max(0, h["espionageHealthCounter"])
-    print("\nHEALTH (city-bucket reproduction; residual = omitted player/handicap/civic buckets):")
-    print("  goodHealth  emu=%d live=%d residual=%d" % (emu_good, h["goodHealth"], h["goodHealth"] - emu_good))
-    print("  badHealth   emu=%d live=%d residual=%d" % (emu_bad, h["badHealth"], h["badHealth"] - emu_bad))
+        return None
+    good_only = [h["freshWaterGoodHealth"], h["featureGoodHealth"], h["bonusGoodHealth"],
+                 h["totalGoodBuildingHealth"], _div100(h["improvementGoodHealth"]), _div100(h["specialistGoodHealth"])]
+    bad_only = [h["featureBadHealth"], h["bonusBadHealth"], h["totalBadBuildingHealth"],
+                _div100(h["improvementBadHealth"]), _div100(h["specialistBadHealth"])]
+    signed = [h["extraHealth"], h.get("handicapHealth", 0), h["corporationHealth"], h["extraTechHealth"],
+              h.get("playerExtraHealth", 0), h.get("playerCivicHealth", 0), h.get("playerCivilizationHealth", 0),
+              h.get("playerWorldHealth", 0), h.get("playerProjectHealth", 0)]
+    emu_good = sum(max(0, v) for v in good_only) + sum(max(0, v) for v in signed)
+    emu_bad = h["unhealthyPopulation"] - (sum(min(0, v) for v in bad_only) + sum(min(0, v) for v in signed)) - max(0, h["espionageHealthCounter"])
+    print("\nHEALTH (reproduce goodHealth / badHealth):")
+    ok = (1 if _check("goodHealth", emu_good, h["goodHealth"]) else 0)
+    ok += (1 if _check("badHealth", emu_bad, h["badHealth"]) else 0)
+    return (ok, 2)
 
 
 def reproduce_happiness(d):
-    """Informational: partial happyLevel + the anger-percent sum (residual = omitted player/area/civic buckets)."""
+    """Exact happyLevel (Σ max(0,·) + temp); unhappyLevel informational (foreign/tax/city-limit terms are its own pass)."""
     hp = d.get("happiness")
     if not hp:
-        return
+        return None
+    good_terms = [
+        hp.get("revSuccessHappiness", 0), hp["largestCityHappiness"], hp["militaryHappiness"],
+        hp["stateReligionHappiness"], hp["buildingGoodHappiness"], hp.get("extraBuildingGoodHappiness", 0),
+        hp["featureGoodHappiness"], hp["bonusGoodHappiness"], hp["religionGoodHappiness"], hp["commerceHappiness"],
+        hp.get("areaBuildingHappiness", 0), hp.get("playerBuildingHappiness", 0),
+        hp["extraHappiness"] + hp.get("playerExtraHappiness", 0),   # summed THEN max(0,·)
+        hp.get("handicapHappy", 0), hp.get("vassalHappiness", 0), hp.get("civicHappiness", 0),
+        _div100(hp["specialistHappiness"]), hp.get("playerWorldHappiness", 0), hp.get("playerProjectHappiness", 0),
+        hp.get("corporationHappiness", 0), hp.get("extraTechHappiness", 0),
+    ]
+    emu = sum(max(0, v) for v in good_terms)
+    if hp.get("happinessTimer", 0) > 0:
+        emu += hp.get("tempHappy", 0)
+    emu = max(0, emu)
+    print("\nHAPPINESS (reproduce happyLevel; unhappyLevel informational):")
+    ok = (1 if _check("happyLevel", emu, hp["happyLevel"]) else 0)
     anger = (hp["overcrowdingAnger"] + hp["noMilitaryAnger"] + hp["cultureAnger"] + hp["religionAnger"]
              + hp["hurryAnger"] + hp["conscriptAnger"] + hp["warWearinessAnger"] + hp["revIndexAnger"])
-    good = [hp["buildingGoodHappiness"], hp["bonusGoodHappiness"], hp["featureGoodHappiness"],
-            hp["religionGoodHappiness"], max(0, hp["militaryHappiness"]), max(0, hp["commerceHappiness"]),
-            max(0, hp["stateReligionHappiness"]), max(0, hp["largestCityHappiness"]),
-            hp["specialistHappiness"] // 100, max(0, hp["extraHappiness"])]
-    emu_happy = sum(max(0, x) for x in good)
-    print("\nHAPPINESS (partial; residual = omitted player/area/civic/tech buckets):")
-    print("  happyLevel   emu(partial)=%d live=%d" % (emu_happy, hp["happyLevel"]))
-    print("  unhappyLevel live=%d  angerPct-sum=%d (x pop / %d)" % (hp["unhappyLevel"], anger, hp["percentAngerDivisor"]))
+    print("  unhappyLevel live=%d  angerPct-sum=%d (x pop / %d)  [informational]" % (hp["unhappyLevel"], anger, hp["percentAngerDivisor"]))
+    return (ok, 1)
+
+
+def reproduce_greatpeople(d):
+    """Exact: getGreatPeopleRate = base × totalModifier / 100 (disorder -> 0). (legacy-value-calc-map §9.5)"""
+    gp = d.get("greatPeople")
+    if not gp:
+        return None
+    emu = 0 if d.get("isDisorder", False) else gp["baseGreatPeopleRate"] * gp["totalGPRateModifier"] // 100
+    print("\nGREAT PEOPLE (reproduce getGreatPeopleRate):")
+    ok = (1 if _check("greatPeopleRate", emu, gp["greatPeopleRate"]) else 0)
+    return (ok, 1)
 
 
 def _load_dump(args):
@@ -334,12 +359,12 @@ def consume(args):
     # ---- additional channels: commerce/defense/maintenance/growth = exact guards; health/happiness = informational ----
     extra = []
     for fn, nm in ((reproduce_commerce, "commerce"), (reproduce_defense, "defense"),
-                   (reproduce_maintenance, "maintenance"), (reproduce_growth, "growth")):
+                   (reproduce_maintenance, "maintenance"), (reproduce_growth, "growth"),
+                   (reproduce_health, "health"), (reproduce_happiness, "happiness"),
+                   (reproduce_greatpeople, "greatPeople")):
         r = fn(d)
         if r is not None:
             extra.append((nm, r[0], r[1]))
-    reproduce_health(d)
-    reproduce_happiness(d)
 
     n = len(rows)
     extra_ok = sum(o for _, o, _ in extra)

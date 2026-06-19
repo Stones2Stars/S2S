@@ -1046,6 +1046,13 @@ namespace
 				h["extraTechHealth"]         = picojson::value((double)pCity->getExtraTechHealthTotal());
 				h["espionageHealthCounter"]  = picojson::value((double)pCity->getEspionageHealthCounter());
 				h["unhealthyPopulation"]     = picojson::value((double)pCity->unhealthyPopulation());
+				// omitted-bucket sources (signed; the goodHealth/badHealth residual closers):
+				h["handicapHealth"]          = picojson::value((double)GC.getHandicapInfo(pCity->getHandicapType()).getHealthBonus());
+				h["playerExtraHealth"]       = picojson::value((double)kPlayer.getExtraHealth());
+				h["playerCivicHealth"]       = picojson::value((double)kPlayer.getCivicHealth());
+				h["playerCivilizationHealth"]= picojson::value((double)kPlayer.getCivilizationHealth());
+				h["playerWorldHealth"]       = picojson::value((double)kPlayer.getWorldHealth());
+				h["playerProjectHealth"]     = picojson::value((double)kPlayer.getProjectHealth());
 				o["health"] = picojson::value(h);
 			}
 
@@ -1080,7 +1087,58 @@ namespace
 				hp["warWearinessAnger"]     = picojson::value((double)pCity->getWarWearinessPercentAnger());
 				hp["revIndexAnger"]         = picojson::value((double)pCity->getRevIndexPercentAnger());
 				hp["percentAngerDivisor"]   = picojson::value((double)GC.getPERCENT_ANGER_DIVISOR());
+				// omitted good-side buckets (the happyLevel residual closers; each max(0,·) in the engine):
+				hp["revSuccessHappiness"]       = picojson::value((double)pCity->getRevSuccessHappiness());
+				hp["extraBuildingGoodHappiness"]= picojson::value((double)pCity->getExtraBuildingGoodHappiness());
+				hp["extraBuildingBadHappiness"] = picojson::value((double)pCity->getExtraBuildingBadHappiness());
+				hp["areaBuildingHappiness"]     = picojson::value((double)(pCity->area() != NULL ? pCity->area()->getBuildingHappiness(pCity->getOwner()) : 0));
+				hp["playerBuildingHappiness"]   = picojson::value((double)kPlayer.getBuildingHappiness());
+				hp["playerExtraHappiness"]      = picojson::value((double)kPlayer.getExtraHappiness());
+				hp["handicapHappy"]             = picojson::value((double)GC.getHandicapInfo(pCity->getHandicapType()).getHappyBonus());
+				hp["vassalHappiness"]           = picojson::value((double)pCity->getVassalHappiness());
+				hp["civicHappiness"]            = picojson::value((double)pCity->getCivicHappiness());
+				hp["playerWorldHappiness"]      = picojson::value((double)kPlayer.getWorldHappiness());
+				hp["playerProjectHappiness"]    = picojson::value((double)kPlayer.getProjectHappiness());
+				hp["corporationHappiness"]      = picojson::value((double)pCity->calculateCorporationHappiness());
+				hp["extraTechHappiness"]        = picojson::value((double)pCity->getExtraTechHappinessTotal());
+				hp["happinessTimer"]            = picojson::value((double)pCity->getHappinessTimer());
+				hp["tempHappy"]                 = picojson::value((double)GC.getTEMP_HAPPY());
 				o["happiness"] = picojson::value(hp);
+			}
+
+			// ---- CH greatPeople (legacy-value-calc-map §9.5): base x modifier/100 (disorder -> 0) ----
+			{
+				picojson::value::object gp;
+				gp["greatPeopleRate"]     = picojson::value((double)pCity->getGreatPeopleRate()); // realized
+				gp["baseGreatPeopleRate"] = picojson::value((double)pCity->getBaseGreatPeopleRate());
+				gp["totalGPRateModifier"] = picojson::value((double)pCity->getTotalGreatPeopleRateModifier());
+				gp["greatPeopleProgress"] = picojson::value((double)pCity->getGreatPeopleProgress());
+				gp["threshold"]           = picojson::value((double)kPlayer.greatPeopleThresholdNonMilitary());
+				o["greatPeople"] = picojson::value(gp);
+			}
+
+			// ---- CH tradeRoutes (legacy-value-calc-map §9.5): count + realized trade yields (per-partner profit not reproduced offline) ----
+			{
+				picojson::value::object tr;
+				tr["tradeRoutes"]          = picojson::value((double)pCity->getTradeRoutes());
+				tr["maxTradeRoutes"]       = picojson::value((double)pCity->getMaxTradeRoutes());
+				tr["tradeYieldFood"]       = picojson::value((double)pCity->getTradeYield(YIELD_FOOD));
+				tr["tradeYieldProduction"] = picojson::value((double)pCity->getTradeYield(YIELD_PRODUCTION));
+				tr["tradeYieldCommerce"]   = picojson::value((double)pCity->getTradeYield(YIELD_COMMERCE));
+				o["tradeRoutes"] = picojson::value(tr);
+			}
+
+			// ---- CH building-level city families (legacy-value-calc-map §10.3): standing modifier values (reading) ----
+			{
+				picojson::value::object bl;
+				bl["localCaptureProbability"]    = picojson::value((double)pCity->getExtraLocalCaptureProbabilityModifier());
+				bl["localCaptureResistance"]     = picojson::value((double)pCity->getExtraLocalCaptureResistanceModifier());
+				bl["nationalCaptureProbability"] = picojson::value((double)kPlayer.getExtraNationalCaptureProbabilityModifier());
+				bl["nationalCaptureResistance"]  = picojson::value((double)kPlayer.getExtraNationalCaptureResistanceModifier());
+				bl["occupationTimer"]            = picojson::value((double)pCity->getOccupationTimer());
+				bl["espionageDefenseModifier"]   = picojson::value((double)pCity->getEspionageDefenseModifier());
+				bl["healRate"]                   = picojson::value((double)pCity->getHealRate());
+				o["buildingLevel"] = picojson::value(bl);
 			}
 			return CvString(picojson::value(o).serialize().c_str());
 		}
