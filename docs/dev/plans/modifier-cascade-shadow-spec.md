@@ -155,6 +155,38 @@ This must exist before any modifier shadow can run. Built **for the pilot channe
   (writes `m_buildingExtraYield100`/`m_buildingYieldMod`/…). **Parity is driven to zero by ADDING deposit sources until
   cascade `effective(getBaseYieldRate)` matches `getYieldRate100`** — the first run WILL diverge on sources not yet
   deposited (bonus/civic/event/area/capital/player), each cause-tagged; that is the parity work, not a day-one expectation.
+- **CALCULATION-FLOW DECISION (owner 2026-06-19) — the deepest finding of the pilot so far.** The `/diagnostic/modifier`
+  endpoint (increment 2) immediately surfaced that **legacy's actual value arithmetic was never deliberately DESIGNED** —
+  it accreted, with *"modifiers flow top down"* as the only intentional principle. Measuring it revealed a structural
+  divergence: **legacy adds building FLAT yields OUTSIDE the percent modifier** (`getYieldRate100 = (base+specialist)×
+  yieldModifier + 100×extraYield`, building flats in `extraYield`), whereas the spec's unified `CvModifierSlot` model folds
+  flat INSIDE (`(base+Σflat)×(100+Σpercent)`). Rulings:
+  - **The cascade is the FIRST deliberate design of the calc formula.** This reframes the modifier rework: we are now
+    *choosing* the arithmetic, not inheriting an accident.
+  - **CURRENT flow = `CALCFLOW_LEGACY_FLAT_OUTSIDE`** (flat added after the percent, matching legacy). Chosen because the
+    unified flat-inside model would multiply every building flat by the city's yield % → a **gigantic data rebalance**;
+    legacy-placement lets **parity reach zero** and keeps the existing data values valid. Picking it now does NOT foreclose
+    the unified model later (it'd just need the rebalance + a flow switch at that time).
+  - **The calc flow is a SINGLE SWAPPABLE dispatch point** (owner: "easily modify the calculation flow later"):
+    `ModifierCalcFlow` enum + `cascadeModifierApply` (the C++03 poor-man's-strategy if/switch). Add/change a flow = add an
+    enum value + a case; nothing else in the engine changes. `cascadeModifierCalcFlow` (build-time const) selects the active
+    one; both the shadow and the endpoint compute via `cascadeModifierApply`.
+  - **GOAL = "PARITY-ADJACENT", not parity-exact (owner 2026-06-19).** Since the formula is being deliberately redesigned,
+    the END-STATE target is new values CLOSE to old (same ballpark) so the played game stays recognizable (the
+    "preserve how the game works" guardrail) — NOT byte-identical. Parity-ZERO stays the *wiring* proof (parity mode,
+    R-M1); parity-ADJACENT is the *capability* end-state. (The magnitude gap the pilot already shows — e.g. food
+    `flat≈5250` over-shooting legacy — is the tuning work toward adjacency: reconcile which sources/conditionals each side
+    counts, per-source, via increment 3's decomposed shadow.)
+  - **TOOL TO BUILD — an external old-vs-new formula CALCULATOR (owner 2026-06-19).** A standalone (offline, non-DLL) tool
+    that implements BOTH the legacy formula (`(base+specialist)×yieldModifier + extraYield`) and the cascade calc-flows,
+    and sweeps a LARGE combination space (base × Σflat × Σpercent × source mix) computing both + their delta — so we can
+    explore where/how-much they diverge and tune toward parity-adjacency FAST, and prototype new calc-flows before wiring
+    them into the DLL. Complements the in-game shadow (which measures real game state); this is the formula SANDBOX.
+    Likely home: `Tools/` (mirrors the `Tools/ReadJson` offline-harness pattern). **Build item — not started.**
+    - **SAME INPUT to both formulas → the delta is PURELY formula-attributable (owner 2026-06-19).** Input parity is
+      straightforward: the inputs are just the raw contribution lists (base + the flat/percent sources), identical for
+      both sides. So the calculator is a pure FORMULA COMPARATOR (same input vector → legacy combine vs cascade combine →
+      delta), NOT a game-state simulator — it isolates the combination logic, which is the only thing that differs.
 - **Harness pattern (copy verbatim, `Sources/Tools/CvHttpServer.cpp`):** the `/diagnostic/<action>` route → the
   **mailbox snapshot-isolation** (`evalRequestBlocking` on the server thread enqueues; the game thread's
   `serviceEvalMailbox`→`evaluateGate` renders the answer — server thread NEVER touches game objects). Add `modifierSweep`

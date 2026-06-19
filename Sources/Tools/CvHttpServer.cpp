@@ -923,7 +923,7 @@ namespace
 				e["flat"]      = picojson::value((double)slot.iFlat);
 				e["percent"]   = picojson::value((double)slot.iPercent);
 				e["mult100"]   = picojson::value((double)slot.iMultiplierX100);
-				e["cascade"]   = picojson::value((double)slot.effective(iBase));
+				e["cascade"]   = picojson::value((double)cascadeModifierApply(slot, iBase)); // active calc-flow (legacy-flat-outside)
 				e["legacy100"] = picojson::value((double)pCity->getYieldRate100((YieldTypes)aFam[f]));
 				kFam.push_back(picojson::value(e));
 			}

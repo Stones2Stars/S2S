@@ -33,6 +33,24 @@ int CvModifierSlot::effective(int iBase) const
 // Parity-first scaffold (R-M1): additive-only until the deposit-flow is proven against legacy.
 const bool cascadeModifierParityMode = true;
 
+// The active calculation flow (owner 2026-06-19): legacy-flat-outside now (parity can reach zero; data balanced for it).
+// SWAP the model later by changing this one const (and adding a case below) -- the engine doesn't change elsewhere.
+const ModifierCalcFlow cascadeModifierCalcFlow = CALCFLOW_LEGACY_FLAT_OUTSIDE;
+
+int cascadeModifierApply(const CvModifierSlot& slot, int iBase)
+{
+	switch (cascadeModifierCalcFlow)
+	{
+	case CALCFLOW_LEGACY_FLAT_OUTSIDE:
+		// building flat added OUTSIDE the percent -- matches legacy `(base)×modifier + extraYield`. Multiplier is identity
+		// here (parity is additive-only); it composes only in the unified flow.
+		return iBase * (100 + slot.iPercent) / 100 + slot.iFlat;
+	case CALCFLOW_UNIFIED_FLAT_INSIDE:
+	default:
+		return slot.effective(iBase); // (base+Σflat)×(100+Σpercent)/100×Π(mult/100) -- the spec's unified model
+	}
+}
+
 namespace
 {
 	// Lazy per-building-type modifier cache: parse each building's JSON ONCE, reuse. Game-thread only (no locking).
@@ -97,5 +115,5 @@ int cascadeModifierEffective(int iFamily, int iScope, const CvCascadeContext& kC
 
 	CvModifierSlot slot;
 	cascadeModifierCitySlot(iFamily, kCtx, slot);
-	return slot.effective(pCity->getBaseYieldRate((YieldTypes)iFamily));
+	return cascadeModifierApply(slot, pCity->getBaseYieldRate((YieldTypes)iFamily));
 }

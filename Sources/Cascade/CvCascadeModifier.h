@@ -103,8 +103,31 @@ extern const bool cascadeModifierParityMode;
 // for the pilot. PILOT scope; widens to plot (the plot self-reports, owner 2026-06-19) + other scopes/families later.
 void cascadeModifierCitySlot(int iFamily, const CvCascadeContext& kCtx, CvModifierSlot& slotOut);
 
-// The effective city-scope value for (family, ctx): slot.effective(getBaseYieldRate). PILOT scope = MODSCOPE_CITY (other
-// scopes return 0 for now). The single read the shadow + the per-entity endpoint compare against legacy getYieldRate100.
+// The CALCULATION FLOW -- HOW a built slot folds into a base. Kept as ONE named dispatch point so the flow is EASILY
+// MODIFIED / SWAPPED later (owner 2026-06-19): add or change a flow = add an enum value + a case in cascadeModifierApply;
+// nothing else in the engine changes. (C++03 poor-man's strategy -- the if/switch composition root AGENTS.md prescribes,
+// not a virtual hierarchy.) The flow is a deliberate MODEL decision the shadow surfaced (legacy's actual arithmetic was
+// not fully known until measured -- owner 2026-06-19).
+enum ModifierCalcFlow
+{
+	CALCFLOW_LEGACY_FLAT_OUTSIDE = 0, // base × (100+Σpercent)/100 + Σflat -- MATCHES LEGACY (building flat added AFTER the
+	                                  // modifier: `(base)×modifier + extraYield`). The CURRENT flow: parity can reach zero,
+	                                  // and the data values are balanced for it. (owner 2026-06-19)
+	CALCFLOW_UNIFIED_FLAT_INSIDE,     // (base+Σflat) × (100+Σpercent)/100 × Π(mult/100) -- the spec's unified model
+	                                  // (slot.effective). Multiplies every building flat by the city's yield % -> carries a
+	                                  // full DATA REBALANCE, so DEFERRED; choosing legacy-flat now does NOT foreclose it.
+	NUM_MODIFIER_CALC_FLOWS
+};
+
+// The ACTIVE calculation flow (build-time const for now; promote to a runtime/BUG switch if live swapping is wanted).
+extern const ModifierCalcFlow cascadeModifierCalcFlow;
+
+// Apply a built slot to a base via the active calculation flow (the single dispatch point above). Both the shadow and the
+// per-entity endpoint compare THIS against legacy getYieldRate100.
+int cascadeModifierApply(const CvModifierSlot& slot, int iBase);
+
+// The effective city-scope value for (family, ctx): cascadeModifierApply(citySlot, getBaseYieldRate). PILOT scope =
+// MODSCOPE_CITY (other scopes return 0 for now). The single read the shadow + the per-entity endpoint use.
 int cascadeModifierEffective(int iFamily, int iScope, const CvCascadeContext& kCtx);
 
 #endif // CV_CASCADE_MODIFIER_H
