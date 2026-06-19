@@ -93,6 +93,35 @@ cross-checked by READING the static C++/Python consumer + XML, not by running th
 the older `building-cascade-conversion.md` "data-phase shapes need only be reasonable + faithful, NOT perfect"
 language, which predated the structure lock — adherence is now strict.
 
+**Module inclusion verdicts (owner 2026-06-15) — which `Assets/Modules` migrate is CASE BY CASE, NOT a
+folder-name heuristic.** `store.py` bakes in module content, but the authority for what the game actually
+loads is `Assets/Modules/MLF_CIV4ModularLoadingControls.xml` — consult it per module. Resolved verdicts
+(`store.EXCLUDED_MODULE_SUBPATHS = ["/modules/zwip/", "/modules/bad_karma/", "/modules/p2k_multimaps_test/"]`):
+- **INCLUDE:** Cultures, Pepper2000, Thunderbrd (its loaded `Traits` sub), Alt_Timelines, NotSoGood.
+- **EXCLUDE — zWIP:** work-in-progress, not loaded in real games; had smuggled in `PROPERTY_FRUIT/HUNT/
+  MATERIAL/LORE` + `BONUSCLASS_EXTINCTION`.
+- **EXCLUDE — Bad_Karma:** top-level `bLoad=1` but ALL content subs `bLoad=0`, so nothing loads.
+- **EXCLUDE — P2K_Multimaps_Test:** `bLoad=0`; its 92 "space" units are a 100% duplicate of Pepper2000's
+  (already loaded), zero P2K-unique — excluding the dead duplicate is fidelity-correct (net roster change zero).
+
+Why it matters: modules add huge volumes to the heavy entities (BuildingInfo ~1567 module-added, UnitInfo
+~1031) — migrating WIP/disabled module content commits dead experimental data. Re-check before each heavy pass.
+
+**Old JSON is NOT a baseline (owner ruling 2026-06-15).** The committed `Assets/Data/*.json` predate the
+locked v3/v0.3 model (and even post-lock ones can carry curator bugs); they were first-attempt drafts that
+failed before the structure was set. "Matches the old file" proves nothing about correctness — validate by
+structural adherence to the locked shapes + ZERO invention + reading the live C++/Python consumer, NEVER by
+diffing against the old/committed JSON. Overwriting an old committed JSON to the correct v3 form is expected,
+not a regression. ("Byte-identical to committed" keeps ONE narrow use: a safety check that a SHARED-code edit
+didn't accidentally touch *other* entities — never a correctness signal.)
+
+**Resume discipline — ascertain, don't appease (owner 2026-06-15).** When reversing a position on resume,
+root the reversal in documented facts (the locked specs / owner rulings — look them up; they're almost always
+already written down), NEVER to placate the owner. A fact-driven reversal is correct; reversing to appease,
+or oscillating a value to please, is the error. Establish what is actually true FIRST, present the finding
+with its source, then WAIT. (This is why the full-docs read above is mandatory — reconstructing the model
+from memory or from how the C++ reads things is what produced the appeasing flip-flops.)
+
 ---
 
 ## Why this order (the reasons) — owner-approved 2026-06-15

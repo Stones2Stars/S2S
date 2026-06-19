@@ -326,6 +326,19 @@ not findings to re-discover.
   it needs directly. (Flagged future cleanup: migrate existing `#include "CvInfos.h"` sites to direct imports + retire the file.)
 - Preserve save compatibility by default; for intentional breaks, coordinate and
   mark with `@SAVEBREAK`. See `Notes for the next breaking of save game compatability cycle.txt`.
+- **FRONT-LOAD save-breaking reworks NOW (owner ruling 2026-06-17).** S2S is its own project
+  (forked from C2C to rework freely — inherited C2C *conventions* are not constraints, only the
+  closed Firaxis EXE binds). The playerbase is very small today, so the cost of breaking saves is
+  at its lowest and only rises — break saves now if ever, while the window is open. (C2C→S2S save
+  compat is already broken and an explicit NON-GOAL; never constrain a design to keep it.)
+- **Keep quirky/intermediate commits — do NOT push to squash them (owner taste).** The owner
+  deliberately leaves oddly-named or intermediate commits (e.g. a `temp: rename Docs -> banana`
+  step of a case-rename dance) in history "as a protest." Mention squashing exists at most once;
+  default to preserving history as-is.
+- **PG-13 public quotes (owner ruling 2026-06-12).** When quoting the owner in public artifacts
+  (GitHub issues, PR bodies, commit messages, repo docs), keep the colorful voice but drop the
+  profanity (the "a lot of f***ing about" → "a great deal of faffing about" treatment).
+  Colorful-but-clean ("this has been nuts") is fine; the rulings the quotes carry are still wanted.
 - If C++ changes touch XML/Python interfaces, run the XML + callback validators.
 - Do not modernize or replace the build chain/toolchain.
 

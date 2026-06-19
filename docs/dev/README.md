@@ -61,6 +61,7 @@ This folder is split by intent:
 | [unitcombat](reference/unitcombat.md) | What `UnitCombatType` is: a core Civ4 combat-class axis (promotion-gating, vs-class bonuses, AI) that C2C grew into a 636-entry, many-to-many, ~150-field "innate-promotion tag" class mirroring `CvPromotionInfo`; + its #428 migration fit |
 | [save-load-format](reference/save-load-format.md) | How saves work: the name-keyed `CvTaggedSaveFormatWrapper`, soft-vs-hard change rules, and the derived-state-serializes-nothing lever (the tally rebuilds on load). *Recovered 2026-06-17; branch-only until the cascade save handling finalizes.* |
 | [boost-situation](reference/boost-situation.md) | Why the DLL links TWO Boosts at once (1.32 `boost::` + namespace-renamed 1.55 `boost155::`/`foreach_`), why Boost.Python 1.32 blocks removing 1.32, and why the closed `.exe` freezes the compiler + Python 2.4 + Boost. Awareness, not a consolidation plan. |
+| [external-tools-and-workflows](reference/external-tools-and-workflows.md) | Out-of-tree tooling + side-channel workflows: offline minidump crash analysis (x86 `cdb`), the harmless load-after-load `onFinalInitialized` crash, and the sibling repos (FpkBuilder, GameTracker). |
 
 ## Plans — work in flight
 
