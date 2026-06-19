@@ -326,7 +326,10 @@ not findings to re-discover.
     not a rule that docs MUST go to main.** Docs that pertain to an in-flight branch's work (e.g. the
     `#428/#430` cascade specs on `json-data-migration`) **belong with that work and commit on the
     branch.** Use judgement: branch-coupled doc → its branch; cross-cutting/standalone doc → `main` (to
-    dodge the conflict).
+    dodge the conflict). **The canonical "→ `main`" docs are the INDEXES** (owner 2026-06-19:
+    `docs/indexes/DESPAIR_INDEX.*`, `REALISM_INDEX.*`, the COMPLEXITY catalog) — they pertain to no single
+    branch, so straight-to-`main` is exactly right for them. A cascade spec on `json-data-migration` is the
+    opposite case: branch-coupled, stays on the branch.
 - **Verify the current branch immediately before every commit.** Run
   `git branch --show-current` (or `git status`) in the same command as the commit and
   confirm it is the branch you intend. The working copy is shared with the owner, who may
