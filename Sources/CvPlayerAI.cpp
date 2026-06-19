@@ -82,33 +82,33 @@ namespace
 	}
 	enum DipField
 	{
-		DF_player = 0, DF_from, DF_item, DF_data, DF_value,
-		DF_items, DF_total, DF_atWar,
-		DF_with, DF_give, DF_get, DF_iChange,
-		DF_ourValue, DF_theirValue, DF_threshold,
-		DF_to
+		DIPF_player = 0, DIPF_from, DIPF_item, DIPF_data, DIPF_value,
+		DIPF_items, DIPF_total, DIPF_atWar,
+		DIPF_with, DIPF_give, DIPF_get, DIPF_iChange,
+		DIPF_ourValue, DIPF_theirValue, DIPF_threshold,
+		DIPF_to
 	};
 	const char* diploFieldInfo(int iFieldTag, SpineFieldType* peType)
 	{
 		*peType = SFT_INT;
 		switch (iFieldTag)
 		{
-		case DF_player:     return "player";
-		case DF_from:       return "from";
-		case DF_item:       return "item";
-		case DF_data:       return "data";
-		case DF_value:      return "value";
-		case DF_items:      return "items";
-		case DF_total:      return "total";
-		case DF_atWar:      return "atWar";
-		case DF_with:       return "with";
-		case DF_give:       return "give";
-		case DF_get:        return "get";
-		case DF_iChange:    return "iChange";
-		case DF_ourValue:   return "ourValue";
-		case DF_theirValue: return "theirValue";
-		case DF_threshold:  return "threshold";
-		case DF_to:         return "to";
+		case DIPF_player:     return "player";
+		case DIPF_from:       return "from";
+		case DIPF_item:       return "item";
+		case DIPF_data:       return "data";
+		case DIPF_value:      return "value";
+		case DIPF_items:      return "items";
+		case DIPF_total:      return "total";
+		case DIPF_atWar:      return "atWar";
+		case DIPF_with:       return "with";
+		case DIPF_give:       return "give";
+		case DIPF_get:        return "get";
+		case DIPF_iChange:    return "iChange";
+		case DIPF_ourValue:   return "ourValue";
+		case DIPF_theirValue: return "theirValue";
+		case DIPF_threshold:  return "threshold";
+		case DIPF_to:         return "to";
 		default:            return NULL;
 		}
 	}
@@ -130,18 +130,18 @@ namespace
 		default:       return NULL;
 		}
 	}
-	enum EspField { EF_player = 0, EF_spyX, EF_spyY, EF_mission, EF_target, EF_value };
+	enum EspField { ESPF_player = 0, ESPF_spyX, ESPF_spyY, ESPF_mission, ESPF_target, ESPF_value };
 	const char* espionageFieldInfo(int iFieldTag, SpineFieldType* peType)
 	{
 		*peType = SFT_INT;
 		switch (iFieldTag)
 		{
-		case EF_player:  return "player";
-		case EF_spyX:    return "spyX";
-		case EF_spyY:    return "spyY";
-		case EF_mission: return "mission";
-		case EF_target:  return "target";
-		case EF_value:   return "value";
+		case ESPF_player:  return "player";
+		case ESPF_spyX:    return "spyX";
+		case ESPF_spyY:    return "spyY";
+		case ESPF_mission: return "mission";
+		case ESPF_target:  return "target";
+		case ESPF_value:   return "value";
 		default:         return NULL;
 		}
 	}
@@ -8023,16 +8023,16 @@ int CvPlayerAI::AI_dealVal(PlayerTypes ePlayer, const CLinkList<TradeData>* pLis
 		logDiploAI(3, "[DIP/cand] player=%d from=%d item=%d data=%d value=%d",
 			getID(), (int)ePlayer, (int)pNode->m_data.m_eItemType, pNode->m_data.m_iData, iValue - iItemBefore);
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_CAND, 3)
-			.addI(DF_player, (int)getID()).addI(DF_from, (int)ePlayer)
-			.addI(DF_item, (int)pNode->m_data.m_eItemType).addI(DF_data, pNode->m_data.m_iData)
-			.addI(DF_value, iValue - iItemBefore));
+			.addI(DIPF_player, (int)getID()).addI(DIPF_from, (int)ePlayer)
+			.addI(DIPF_item, (int)pNode->m_data.m_eItemType).addI(DIPF_data, pNode->m_data.m_iData)
+			.addI(DIPF_value, iValue - iItemBefore));
 	}
 	logDiploAI(2, "[DIP/dealval] player=%d from=%d items=%d total=%d atWar=%d",
 		getID(), (int)ePlayer, pList->getLength(), iValue, bAtWar ? 1 : 0);
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_DEALVAL, 2)
-		.addI(DF_player, (int)getID()).addI(DF_from, (int)ePlayer)
-		.addI(DF_items, pList->getLength()).addI(DF_total, iValue)
-		.addI(DF_atWar, bAtWar ? 1 : 0));
+		.addI(DIPF_player, (int)getID()).addI(DIPF_from, (int)ePlayer)
+		.addI(DIPF_items, pList->getLength()).addI(DIPF_total, iValue)
+		.addI(DIPF_atWar, bAtWar ? 1 : 0));
 	return iValue;
 }
 
@@ -8071,9 +8071,9 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 	logDiploAI(1, "[DIP/begin] player=%d with=%d give=%d get=%d iChange=%d",
 		getID(), (int)ePlayer, pOurList->getLength(), pTheirList->getLength(), iChange);
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_BEGIN, 1)
-		.addI(DF_player, (int)getID()).addI(DF_with, (int)ePlayer)
-		.addI(DF_give, pOurList->getLength()).addI(DF_get, pTheirList->getLength())
-		.addI(DF_iChange, iChange));
+		.addI(DIPF_player, (int)getID()).addI(DIPF_with, (int)ePlayer)
+		.addI(DIPF_give, pOurList->getLength()).addI(DIPF_get, pTheirList->getLength())
+		.addI(DIPF_iChange, iChange));
 
 	if (AI_goldDeal(pTheirList) && AI_goldDeal(pOurList))
 	{
@@ -8090,8 +8090,8 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 				logDiploAI(1, "[DIP/decision] player=%d with=%d verdict=reject reason=denial item=%d",
 					getID(), (int)ePlayer, (int)pNode->m_data.m_eItemType);
 				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_DECISION_REJECT_DENIAL, 1)
-					.addI(DF_player, (int)getID()).addI(DF_with, (int)ePlayer)
-					.addI(DF_item, (int)pNode->m_data.m_eItemType));
+					.addI(DIPF_player, (int)getID()).addI(DIPF_with, (int)ePlayer)
+					.addI(DIPF_item, (int)pNode->m_data.m_eItemType));
 				return false;
 			}
 		}
@@ -8151,8 +8151,8 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 	logDiploAI(2, "[DIP/score] player=%d with=%d ourValue=%d theirValue=%d",
 		getID(), (int)ePlayer, iOurValue, iTheirValue);
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_SCORE, 2)
-		.addI(DF_player, (int)getID()).addI(DF_with, (int)ePlayer)
-		.addI(DF_ourValue, iOurValue).addI(DF_theirValue, iTheirValue));
+		.addI(DIPF_player, (int)getID()).addI(DIPF_with, (int)ePlayer)
+		.addI(DIPF_ourValue, iOurValue).addI(DIPF_theirValue, iTheirValue));
 
 	for (pNode = pOurList->head(); pNode; pNode = pOurList->next(pNode))
 	{
@@ -8211,8 +8211,8 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 			getID(), (int)ePlayer, bAcceptGrant ? "ACCEPT" : "reject", iOurValue, iThreshold);
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO,
 				bAcceptGrant ? DIP_DECISION_ACCEPT_GRANT : DIP_DECISION_REJECT_GRANT, 1)
-			.addI(DF_player, (int)getID()).addI(DF_with, (int)ePlayer)
-			.addI(DF_ourValue, iOurValue).addI(DF_threshold, iThreshold));
+			.addI(DIPF_player, (int)getID()).addI(DIPF_with, (int)ePlayer)
+			.addI(DIPF_ourValue, iOurValue).addI(DIPF_threshold, iThreshold));
 		return bAcceptGrant;
 	}
 
@@ -8223,8 +8223,8 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 			getID(), (int)ePlayer, bAcceptRenew ? "ACCEPT" : "reject", iOurValue, iTheirValue);
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO,
 				bAcceptRenew ? DIP_DECISION_ACCEPT_RENEW : DIP_DECISION_REJECT_RENEW, 1)
-			.addI(DF_player, (int)getID()).addI(DF_with, (int)ePlayer)
-			.addI(DF_ourValue, iOurValue).addI(DF_theirValue, iTheirValue));
+			.addI(DIPF_player, (int)getID()).addI(DIPF_with, (int)ePlayer)
+			.addI(DIPF_ourValue, iOurValue).addI(DIPF_theirValue, iTheirValue));
 		return bAcceptRenew;
 	}
 	const bool bAccept = iTheirValue >= iOurValue;
@@ -8232,8 +8232,8 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 		getID(), (int)ePlayer, bAccept ? "ACCEPT" : "reject", iOurValue, iTheirValue);
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO,
 			bAccept ? DIP_DECISION_ACCEPT : DIP_DECISION_REJECT, 1)
-		.addI(DF_player, (int)getID()).addI(DF_with, (int)ePlayer)
-		.addI(DF_ourValue, iOurValue).addI(DF_theirValue, iTheirValue));
+		.addI(DIPF_player, (int)getID()).addI(DIPF_with, (int)ePlayer)
+		.addI(DIPF_ourValue, iOurValue).addI(DIPF_theirValue, iTheirValue));
 	return bAccept;
 }
 
@@ -15640,12 +15640,12 @@ EspionageMissionTypes CvPlayerAI::AI_bestPlotEspionage(CvPlot* pSpyPlot, PlayerT
 		getID(), pSpyPlot ? pSpyPlot->getX() : -1, pSpyPlot ? pSpyPlot->getY() : -1,
 		(int)eBestMission, (eBestMission != NO_ESPIONAGEMISSION ? (int)eTargetPlayer : -1), iBestValue);
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_ESPIONAGE, ESP_BEST, 1)
-		.addI(EF_player, (int)getID())
-		.addI(EF_spyX, pSpyPlot ? pSpyPlot->getX() : -1)
-		.addI(EF_spyY, pSpyPlot ? pSpyPlot->getY() : -1)
-		.addI(EF_mission, (int)eBestMission)
-		.addI(EF_target, eBestMission != NO_ESPIONAGEMISSION ? (int)eTargetPlayer : -1)
-		.addI(EF_value, iBestValue));
+		.addI(ESPF_player, (int)getID())
+		.addI(ESPF_spyX, pSpyPlot ? pSpyPlot->getX() : -1)
+		.addI(ESPF_spyY, pSpyPlot ? pSpyPlot->getY() : -1)
+		.addI(ESPF_mission, (int)eBestMission)
+		.addI(ESPF_target, eBestMission != NO_ESPIONAGEMISSION ? (int)eTargetPlayer : -1)
+		.addI(ESPF_value, iBestValue));
 
 	return eBestMission;
 }

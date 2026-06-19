@@ -169,66 +169,66 @@ namespace
 	// CTB's LOCAL field tags (all plain ints unless noted).
 	enum CtbField
 	{
-		CF_unit = 0,
-		CF_workRequest,
-		CF_contractedUnits,
-		CF_advertisingTenders,
-		CF_advertisingUnits,
-		CF_workRequests,
-		CF_employedUnitsBefore,
-		CF_fulfilledContracts,
-		CF_workRequestsRemaining,
-		CF_priority,
-		CF_atX,
-		CF_atY,
-		CF_aiType,
-		CF_unitType,
-		CF_minPriority,
-		CF_worker,
-		CF_healer,
-		CF_offValue,
-		CF_defValue,
-		CF_contractedWorkRequest,
-		CF_employedUnits,
-		CF_unitsRemainingInWorklist,
-		CF_existingWorkRequest,
-		CF_index,
-		CF_flags,
-		CF_requiredStrx100,
-		CF_maxPath,
-		CF_join,
-		CF_group,
-		CF_groupStr,
-		CF_requiredStr,
-		CF_priorityBefore,
-		CF_atCityOnly,
-		CF_plotX,
-		CF_plotY,
-		CF_outstandingRequests,
-		CF_tenderIdx,
-		CF_city,
-		CF_cityMinPriority,
-		CF_reqPriority,
-		CF_allocKey,
-		CF_allocCount,
-		CF_total,
-		CF_unitsEmployed,
-		CF_unitsWithoutWork,
-		CF_contractsSatisfied,
-		CF_joinUnit,
-		CF_unitStr,
-		CF_providedStr,
-		CF_remainingStr,
-		CF_newPriority,
-		CF_iValue,
-		CF_pathTurns,
-		CF_currentBest,
-		CF_bestValue,
-		CF_targetX,
-		CF_targetY,
-		CF_maxPathTurns,
-		CF_thisPlotOnly,
-		CF_advertiserCount
+		CTBF_unit = 0,
+		CTBF_workRequest,
+		CTBF_contractedUnits,
+		CTBF_advertisingTenders,
+		CTBF_advertisingUnits,
+		CTBF_workRequests,
+		CTBF_employedUnitsBefore,
+		CTBF_fulfilledContracts,
+		CTBF_workRequestsRemaining,
+		CTBF_priority,
+		CTBF_atX,
+		CTBF_atY,
+		CTBF_aiType,
+		CTBF_unitType,
+		CTBF_minPriority,
+		CTBF_worker,
+		CTBF_healer,
+		CTBF_offValue,
+		CTBF_defValue,
+		CTBF_contractedWorkRequest,
+		CTBF_employedUnits,
+		CTBF_unitsRemainingInWorklist,
+		CTBF_existingWorkRequest,
+		CTBF_index,
+		CTBF_flags,
+		CTBF_requiredStrx100,
+		CTBF_maxPath,
+		CTBF_join,
+		CTBF_group,
+		CTBF_groupStr,
+		CTBF_requiredStr,
+		CTBF_priorityBefore,
+		CTBF_atCityOnly,
+		CTBF_plotX,
+		CTBF_plotY,
+		CTBF_outstandingRequests,
+		CTBF_tenderIdx,
+		CTBF_city,
+		CTBF_cityMinPriority,
+		CTBF_reqPriority,
+		CTBF_allocKey,
+		CTBF_allocCount,
+		CTBF_total,
+		CTBF_unitsEmployed,
+		CTBF_unitsWithoutWork,
+		CTBF_contractsSatisfied,
+		CTBF_joinUnit,
+		CTBF_unitStr,
+		CTBF_providedStr,
+		CTBF_remainingStr,
+		CTBF_newPriority,
+		CTBF_iValue,
+		CTBF_pathTurns,
+		CTBF_currentBest,
+		CTBF_bestValue,
+		CTBF_targetX,
+		CTBF_targetY,
+		CTBF_maxPathTurns,
+		CTBF_thisPlotOnly,
+		CTBF_advertiserCount
 	};
 
 	const char* contractFieldInfo(int iFieldTag, SpineFieldType* peType)
@@ -236,66 +236,66 @@ namespace
 		*peType = SFT_INT;
 		switch (iFieldTag)
 		{
-		case CF_unit:                   return "unit";
-		case CF_workRequest:            return "workRequest";
-		case CF_contractedUnits:        return "contractedUnits";
-		case CF_advertisingTenders:     return "advertisingTenders";
-		case CF_advertisingUnits:       return "advertisingUnits";
-		case CF_workRequests:           return "workRequests";
-		case CF_employedUnitsBefore:    return "employedUnitsBefore";
-		case CF_fulfilledContracts:     return "fulfilledContracts";
-		case CF_workRequestsRemaining:  return "workRequestsRemaining";
-		case CF_priority:               return "priority";
-		case CF_atX:                    return "atX";
-		case CF_atY:                    return "atY";
-		case CF_aiType:                 return "aiType";
-		case CF_unitType:               *peType = SFT_UNIT; return "unitType";
-		case CF_minPriority:            return "minPriority";
-		case CF_worker:                 return "worker";
-		case CF_healer:                 return "healer";
-		case CF_offValue:               return "offValue";
-		case CF_defValue:               return "defValue";
-		case CF_contractedWorkRequest:  return "contractedWorkRequest";
-		case CF_employedUnits:          return "employedUnits";
-		case CF_unitsRemainingInWorklist:return "unitsRemainingInWorklist";
-		case CF_existingWorkRequest:    return "existingWorkRequest";
-		case CF_index:                  return "index";
-		case CF_flags:                  return "flags";
-		case CF_requiredStrx100:        return "requiredStrx100";
-		case CF_maxPath:                return "maxPath";
-		case CF_join:                   return "join";
-		case CF_group:                  return "group";
-		case CF_groupStr:               return "groupStr";
-		case CF_requiredStr:            return "requiredStr";
-		case CF_priorityBefore:         return "priorityBefore";
-		case CF_atCityOnly:             return "atCityOnly";
-		case CF_plotX:                  return "plotX";
-		case CF_plotY:                  return "plotY";
-		case CF_outstandingRequests:    return "outstandingRequests";
-		case CF_tenderIdx:              return "tenderIdx";
-		case CF_city:                   return "city";
-		case CF_cityMinPriority:        return "cityMinPriority";
-		case CF_reqPriority:            return "reqPriority";
-		case CF_allocKey:               return "allocKey";
-		case CF_allocCount:             return "allocCount";
-		case CF_total:                  return "total";
-		case CF_unitsEmployed:          return "unitsEmployed";
-		case CF_unitsWithoutWork:       return "unitsWithoutWork";
-		case CF_contractsSatisfied:     return "contractsSatisfied";
-		case CF_joinUnit:               return "joinUnit";
-		case CF_unitStr:                return "unitStr";
-		case CF_providedStr:            return "providedStr";
-		case CF_remainingStr:           return "remainingStr";
-		case CF_newPriority:            return "newPriority";
-		case CF_iValue:                 return "iValue";
-		case CF_pathTurns:              return "pathTurns";
-		case CF_currentBest:            return "currentBest";
-		case CF_bestValue:              return "bestValue";
-		case CF_targetX:                return "targetX";
-		case CF_targetY:                return "targetY";
-		case CF_maxPathTurns:           return "maxPathTurns";
-		case CF_thisPlotOnly:           return "thisPlotOnly";
-		case CF_advertiserCount:        return "advertiserCount";
+		case CTBF_unit:                   return "unit";
+		case CTBF_workRequest:            return "workRequest";
+		case CTBF_contractedUnits:        return "contractedUnits";
+		case CTBF_advertisingTenders:     return "advertisingTenders";
+		case CTBF_advertisingUnits:       return "advertisingUnits";
+		case CTBF_workRequests:           return "workRequests";
+		case CTBF_employedUnitsBefore:    return "employedUnitsBefore";
+		case CTBF_fulfilledContracts:     return "fulfilledContracts";
+		case CTBF_workRequestsRemaining:  return "workRequestsRemaining";
+		case CTBF_priority:               return "priority";
+		case CTBF_atX:                    return "atX";
+		case CTBF_atY:                    return "atY";
+		case CTBF_aiType:                 return "aiType";
+		case CTBF_unitType:               *peType = SFT_UNIT; return "unitType";
+		case CTBF_minPriority:            return "minPriority";
+		case CTBF_worker:                 return "worker";
+		case CTBF_healer:                 return "healer";
+		case CTBF_offValue:               return "offValue";
+		case CTBF_defValue:               return "defValue";
+		case CTBF_contractedWorkRequest:  return "contractedWorkRequest";
+		case CTBF_employedUnits:          return "employedUnits";
+		case CTBF_unitsRemainingInWorklist:return "unitsRemainingInWorklist";
+		case CTBF_existingWorkRequest:    return "existingWorkRequest";
+		case CTBF_index:                  return "index";
+		case CTBF_flags:                  return "flags";
+		case CTBF_requiredStrx100:        return "requiredStrx100";
+		case CTBF_maxPath:                return "maxPath";
+		case CTBF_join:                   return "join";
+		case CTBF_group:                  return "group";
+		case CTBF_groupStr:               return "groupStr";
+		case CTBF_requiredStr:            return "requiredStr";
+		case CTBF_priorityBefore:         return "priorityBefore";
+		case CTBF_atCityOnly:             return "atCityOnly";
+		case CTBF_plotX:                  return "plotX";
+		case CTBF_plotY:                  return "plotY";
+		case CTBF_outstandingRequests:    return "outstandingRequests";
+		case CTBF_tenderIdx:              return "tenderIdx";
+		case CTBF_city:                   return "city";
+		case CTBF_cityMinPriority:        return "cityMinPriority";
+		case CTBF_reqPriority:            return "reqPriority";
+		case CTBF_allocKey:               return "allocKey";
+		case CTBF_allocCount:             return "allocCount";
+		case CTBF_total:                  return "total";
+		case CTBF_unitsEmployed:          return "unitsEmployed";
+		case CTBF_unitsWithoutWork:       return "unitsWithoutWork";
+		case CTBF_contractsSatisfied:     return "contractsSatisfied";
+		case CTBF_joinUnit:               return "joinUnit";
+		case CTBF_unitStr:                return "unitStr";
+		case CTBF_providedStr:            return "providedStr";
+		case CTBF_remainingStr:           return "remainingStr";
+		case CTBF_newPriority:            return "newPriority";
+		case CTBF_iValue:                 return "iValue";
+		case CTBF_pathTurns:              return "pathTurns";
+		case CTBF_currentBest:            return "currentBest";
+		case CTBF_bestValue:              return "bestValue";
+		case CTBF_targetX:                return "targetX";
+		case CTBF_targetY:                return "targetY";
+		case CTBF_maxPathTurns:           return "maxPathTurns";
+		case CTBF_thisPlotOnly:           return "thisPlotOnly";
+		case CTBF_advertiserCount:        return "advertiserCount";
 		default:                        return NULL;
 		}
 	}
@@ -358,25 +358,25 @@ void CvContractBroker::cleanup()
 		m_advertisingTenders.size(),
 		m_advertisingUnits.size());
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_TURN_CLEANUP, 1)
-		.addI(CF_contractedUnits, (int)m_contractedUnits.size())
-		.addI(CF_advertisingTenders, (int)m_advertisingTenders.size())
-		.addI(CF_advertisingUnits, (int)m_advertisingUnits.size()));
+		.addI(CTBF_contractedUnits, (int)m_contractedUnits.size())
+		.addI(CTBF_advertisingTenders, (int)m_advertisingTenders.size())
+		.addI(CTBF_advertisingUnits, (int)m_advertisingUnits.size()));
 
 	log(1, "[CTB/turn] workRequests=%d", m_workRequests.size());
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_TURN_WORKREQUESTS, 1)
-		.addI(CF_workRequests, (int)m_workRequests.size()));
+		.addI(CTBF_workRequests, (int)m_workRequests.size()));
 
 	log(1, "[CTB/turn] tendersPostedLastTurn=%d", m_advertisingTenders.size());
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_TURN_TENDERS_LAST, 1)
-		.addI(CF_advertisingTenders, (int)m_advertisingTenders.size()));
+		.addI(CTBF_advertisingTenders, (int)m_advertisingTenders.size()));
 
 
 	log(2, "[CTB/turn] clearing contractedUnits=%d advertisingTenders=%d resetting employedUnits (was %d) to 0",
 		m_contractedUnits.size(), m_advertisingTenders.size(), m_iEmployedUnits);
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_TURN_CLEARING, 2)
-		.addI(CF_contractedUnits, (int)m_contractedUnits.size())
-		.addI(CF_advertisingTenders, (int)m_advertisingTenders.size())
-		.addI(CF_employedUnitsBefore, m_iEmployedUnits));
+		.addI(CTBF_contractedUnits, (int)m_contractedUnits.size())
+		.addI(CTBF_advertisingTenders, (int)m_advertisingTenders.size())
+		.addI(CTBF_employedUnitsBefore, m_iEmployedUnits));
 
 	m_contractedUnits.clear();
 	m_advertisingTenders.clear();
@@ -390,11 +390,11 @@ void CvContractBroker::cleanup()
 			log(2, "[CTB/fulfilled] erasing fulfilled workRequest=%d priority=%d at=(%d,%d) aiType=%d (cleanup)",
 				wr->iWorkRequestId, wr->iPriority, wr->iAtX, wr->iAtY, (int)wr->eAIType);
 			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_FULFILLED_CLEANUP, 2)
-				.addI(CF_workRequest, wr->iWorkRequestId)
-				.addI(CF_priority, wr->iPriority)
-				.addI(CF_atX, wr->iAtX)
-				.addI(CF_atY, wr->iAtY)
-				.addI(CF_aiType, (int)wr->eAIType));
+				.addI(CTBF_workRequest, wr->iWorkRequestId)
+				.addI(CTBF_priority, wr->iPriority)
+				.addI(CTBF_atX, wr->iAtX)
+				.addI(CTBF_atY, wr->iAtY)
+				.addI(CTBF_aiType, (int)wr->eAIType));
 
 			m_workRequests.erase(wr);
 			fulfilledContracts++;
@@ -403,8 +403,8 @@ void CvContractBroker::cleanup()
 	}
 	log(1, "[CTB/turn] fulfilledContractsLastTurn=%d workRequestsRemaining=%d", fulfilledContracts, m_workRequests.size());
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_TURN_FULFILLED_SUMMARY, 1)
-		.addI(CF_fulfilledContracts, fulfilledContracts)
-		.addI(CF_workRequestsRemaining, (int)m_workRequests.size()));
+		.addI(CTBF_fulfilledContracts, fulfilledContracts)
+		.addI(CTBF_workRequestsRemaining, (int)m_workRequests.size()));
 
 
 }
@@ -437,7 +437,7 @@ bool CvContractBroker::alreadyLookingForWork(const CvUnit* pUnit)
 				m_advertisingUnits.size()
 			);
 			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_AVAIL_DUP_WORKLIST, 1)
-				.addI(CF_unitsRemainingInWorklist, (int)m_advertisingUnits.size()));
+				.addI(CTBF_unitsRemainingInWorklist, (int)m_advertisingUnits.size()));
 			return true;
 		}
 	}
@@ -456,10 +456,10 @@ void CvContractBroker::lookingForWork(const CvUnit* pUnit, int iMinPriority)
 	// [CTB/avail] -- a unit advertises itself to the broker as available for work.
 	log(2, "[CTB/avail] unit=%d type=%d aiType=%d minPriority=%d", pUnit->getID(), (int)pUnit->getUnitType(), (int)pUnit->AI_getUnitAIType(), iMinPriority);
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_AVAIL_UNIT, 2)
-		.addI(CF_unit, pUnit->getID())
-		.addI(CF_unitType, (int)pUnit->getUnitType())
-		.addI(CF_aiType, (int)pUnit->AI_getUnitAIType())
-		.addI(CF_minPriority, iMinPriority));
+		.addI(CTBF_unit, pUnit->getID())
+		.addI(CTBF_unitType, (int)pUnit->getUnitType())
+		.addI(CTBF_aiType, (int)pUnit->AI_getUnitAIType())
+		.addI(CTBF_minPriority, iMinPriority));
 
 	advertisingUnit	unitDetails;
 	unitDetails.eUnitType = pUnit->getUnitType();
@@ -519,19 +519,19 @@ void CvContractBroker::lookingForWork(const CvUnit* pUnit, int iMinPriority)
 	unitDetails.iDefensiveValue,
 	unitDetails.iMinPriority);
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_AVAIL_DETAIL, 2)
-		.addI(CF_unit, unitDetails.iUnitId)
-		.addI(CF_worker, unitDetails.bIsWorker ? 1 : 0)
-		.addI(CF_healer, unitDetails.bIsHealer ? 1 : 0)
-		.addI(CF_offValue, unitDetails.iOffensiveValue)
-		.addI(CF_defValue, unitDetails.iDefensiveValue)
-		.addI(CF_minPriority, unitDetails.iMinPriority));
+		.addI(CTBF_unit, unitDetails.iUnitId)
+		.addI(CTBF_worker, unitDetails.bIsWorker ? 1 : 0)
+		.addI(CTBF_healer, unitDetails.bIsHealer ? 1 : 0)
+		.addI(CTBF_offValue, unitDetails.iOffensiveValue)
+		.addI(CTBF_defValue, unitDetails.iDefensiveValue)
+		.addI(CTBF_minPriority, unitDetails.iMinPriority));
 
 	log(1,
 	"[CTB/avail] unitsRemainingInWorklist=%d",
 	m_advertisingUnits.size()
 	);
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_AVAIL_WORKLIST, 1)
-		.addI(CF_unitsRemainingInWorklist, (int)m_advertisingUnits.size()));
+		.addI(CTBF_unitsRemainingInWorklist, (int)m_advertisingUnits.size()));
 
 }
 
@@ -561,7 +561,7 @@ void CvContractBroker::removeUnit(const int iUnitId)
 
 	log(1, "[CTB/remove] unit=%d removed from worklist", iUnitId);
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_REMOVE_BY_ID, 1)
-		.addI(CF_unit, iUnitId));
+		.addI(CTBF_unit, iUnitId));
 }
 
 
@@ -584,8 +584,8 @@ void CvContractBroker::advertiseWork(int iPriority, unitCapabilities eUnitFlags,
 			log(2, "[CTB/work] join request for unit=%d ignored - already an outstanding request (workRequest=%d) for that unit",
 				pJoinUnit->getID(), wr->iWorkRequestId);
 			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_WORK_JOIN_DUPE, 2)
-				.addI(CF_unit, pJoinUnit->getID())
-				.addI(CF_existingWorkRequest, wr->iWorkRequestId));
+				.addI(CTBF_unit, pJoinUnit->getID())
+				.addI(CTBF_existingWorkRequest, wr->iWorkRequestId));
 			return;
 		}
 	}
@@ -641,10 +641,10 @@ void CvContractBroker::advertiseWork(int iPriority, unitCapabilities eUnitFlags,
 					log(2, "[CTB/work/intransit] request at=(%d,%d) aiType=%d fully handled by in-transit group=%d (no strength requirement) - not adding",
 						iAtX, iAtY, (int)eAIType, pLoopSelectionGroup->getID());
 					eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_INTRANSIT_FULLNOSTR, 2)
-						.addI(CF_atX, iAtX)
-						.addI(CF_atY, iAtY)
-						.addI(CF_aiType, (int)eAIType)
-						.addI(CF_group, pLoopSelectionGroup->getID()));
+						.addI(CTBF_atX, iAtX)
+						.addI(CTBF_atY, iAtY)
+						.addI(CTBF_aiType, (int)eAIType)
+						.addI(CTBF_group, pLoopSelectionGroup->getID()));
 					return;
 				}
 				const int iMissionGroupStrengthTimes100 = pLoopSelectionGroup->AI_getGenericValueTimes100(unitCapabilities2UnitValueFlags(eUnitFlags));
@@ -654,25 +654,25 @@ void CvContractBroker::advertiseWork(int iPriority, unitCapabilities eUnitFlags,
 					log(2, "[CTB/work/intransit] request at=(%d,%d) aiType=%d fully covered by in-transit group=%d (groupStr=%d >= requiredStr=%d) - not adding",
 						iAtX, iAtY, (int)eAIType, pLoopSelectionGroup->getID(), iMissionGroupStrengthTimes100, iUnitStrengthTimes100);
 					eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_INTRANSIT_FULLCOVERED, 2)
-						.addI(CF_atX, iAtX)
-						.addI(CF_atY, iAtY)
-						.addI(CF_aiType, (int)eAIType)
-						.addI(CF_group, pLoopSelectionGroup->getID())
-						.addI(CF_groupStr, iMissionGroupStrengthTimes100)
-						.addI(CF_requiredStr, iUnitStrengthTimes100));
+						.addI(CTBF_atX, iAtX)
+						.addI(CTBF_atY, iAtY)
+						.addI(CTBF_aiType, (int)eAIType)
+						.addI(CTBF_group, pLoopSelectionGroup->getID())
+						.addI(CTBF_groupStr, iMissionGroupStrengthTimes100)
+						.addI(CTBF_requiredStr, iUnitStrengthTimes100));
 					return;
 				}
 				//	It's partially fulfilled so lower the priority of the remainder
 				log(2, "[CTB/work/intransit] request at=(%d,%d) aiType=%d partially covered by in-transit group=%d (groupStr=%d < requiredStr=%d) - lowering priority %d and reducing remaining strength",
 					iAtX, iAtY, (int)eAIType, pLoopSelectionGroup->getID(), iMissionGroupStrengthTimes100, iUnitStrengthTimes100, iPriority);
 				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_INTRANSIT_PARTIAL, 2)
-					.addI(CF_atX, iAtX)
-					.addI(CF_atY, iAtY)
-					.addI(CF_aiType, (int)eAIType)
-					.addI(CF_group, pLoopSelectionGroup->getID())
-					.addI(CF_groupStr, iMissionGroupStrengthTimes100)
-					.addI(CF_requiredStr, iUnitStrengthTimes100)
-					.addI(CF_priorityBefore, iPriority));
+					.addI(CTBF_atX, iAtX)
+					.addI(CTBF_atY, iAtY)
+					.addI(CTBF_aiType, (int)eAIType)
+					.addI(CTBF_group, pLoopSelectionGroup->getID())
+					.addI(CTBF_groupStr, iMissionGroupStrengthTimes100)
+					.addI(CTBF_requiredStr, iUnitStrengthTimes100)
+					.addI(CTBF_priorityBefore, iPriority));
 				iPriority = lowerPartiallyFulfilledRequestPriority(iPriority, iUnitStrengthTimes100, iMissionGroupStrengthTimes100);
 				iUnitStrengthTimes100 -= iMissionGroupStrengthTimes100;
 			}
@@ -698,15 +698,15 @@ void CvContractBroker::advertiseWork(int iPriority, unitCapabilities eUnitFlags,
 		newRequest.iWorkRequestId, iPriority, iAtX, iAtY, (int)eAIType, (int)eUnitFlags,
 		iUnitStrengthTimes100, iMaxPath, pJoinUnit ? pJoinUnit->getID() : -1);
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_WORK_ADDED, 1)
-		.addI(CF_index, newRequest.iWorkRequestId)
-		.addI(CF_priority, iPriority)
-		.addI(CF_atX, iAtX)
-		.addI(CF_atY, iAtY)
-		.addI(CF_aiType, (int)eAIType)
-		.addI(CF_flags, (int)eUnitFlags)
-		.addI(CF_requiredStrx100, iUnitStrengthTimes100)
-		.addI(CF_maxPath, iMaxPath)
-		.addI(CF_join, pJoinUnit ? pJoinUnit->getID() : -1));
+		.addI(CTBF_index, newRequest.iWorkRequestId)
+		.addI(CTBF_priority, iPriority)
+		.addI(CTBF_atX, iAtX)
+		.addI(CTBF_atY, iAtY)
+		.addI(CTBF_aiType, (int)eAIType)
+		.addI(CTBF_flags, (int)eUnitFlags)
+		.addI(CTBF_requiredStrx100, iUnitStrengthTimes100)
+		.addI(CTBF_maxPath, iMaxPath)
+		.addI(CTBF_join, pJoinUnit ? pJoinUnit->getID() : -1));
 
 	if (pJoinUnit == NULL)
 	{
@@ -801,11 +801,11 @@ int CvContractBroker::numRequestsOutstanding(UnitAITypes eUnitAI, bool bAtCityOn
 		(int)eUnitAI, bAtCityOnly ? 1 : 0,
 		pPlot ? pPlot->getX() : -1, pPlot ? pPlot->getY() : -1, iCount);
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_OUTSTANDING, 3)
-		.addI(CF_aiType, (int)eUnitAI)
-		.addI(CF_atCityOnly, bAtCityOnly ? 1 : 0)
-		.addI(CF_plotX, pPlot ? pPlot->getX() : -1)
-		.addI(CF_plotY, pPlot ? pPlot->getY() : -1)
-		.addI(CF_outstandingRequests, iCount));
+		.addI(CTBF_aiType, (int)eUnitAI)
+		.addI(CTBF_atCityOnly, bAtCityOnly ? 1 : 0)
+		.addI(CTBF_plotX, pPlot ? pPlot->getX() : -1)
+		.addI(CTBF_plotY, pPlot ? pPlot->getY() : -1)
+		.addI(CTBF_outstandingRequests, iCount));
 
 	return iCount;
 }
@@ -1064,11 +1064,11 @@ void CvContractBroker::finalizeTenderContracts()
 							log(3, "[CTB/tender/alloc] workRequest=%d allocKey=%d incremented to %d (already-building)",
 								m_workRequests[iI].iWorkRequestId, iTenderAllocationKey, tenderAllocations[iTenderAllocationKey]);
 							eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_FULFILLED_ALREADY_BUILT, 2)
-								.addI(CF_workRequest, m_workRequests[iI].iWorkRequestId));
+								.addI(CTBF_workRequest, m_workRequests[iI].iWorkRequestId));
 							eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_TENDER_ALLOC_ALREADY, 3)
-								.addI(CF_workRequest, m_workRequests[iI].iWorkRequestId)
-								.addI(CF_allocKey, iTenderAllocationKey)
-								.addI(CF_allocCount, tenderAllocations[iTenderAllocationKey]));
+								.addI(CTBF_workRequest, m_workRequests[iI].iWorkRequestId)
+								.addI(CTBF_allocKey, iTenderAllocationKey)
+								.addI(CTBF_allocCount, tenderAllocations[iTenderAllocationKey]));
 							break;
 						}
 					}
@@ -1090,11 +1090,11 @@ void CvContractBroker::finalizeTenderContracts()
 						m_workRequests[iI].iWorkRequestId, iJ, m_advertisingTenders[iJ].iCityId,
 						m_advertisingTenders[iJ].iMinPriority, m_workRequests[iI].iPriority);
 					eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_TENDER_CAND_PRIORITY, 4)
-						.addI(CF_workRequest, m_workRequests[iI].iWorkRequestId)
-						.addI(CF_tenderIdx, (int)iJ)
-						.addI(CF_city, m_advertisingTenders[iJ].iCityId)
-						.addI(CF_cityMinPriority, m_advertisingTenders[iJ].iMinPriority)
-						.addI(CF_reqPriority, m_workRequests[iI].iPriority));
+						.addI(CTBF_workRequest, m_workRequests[iI].iWorkRequestId)
+						.addI(CTBF_tenderIdx, (int)iJ)
+						.addI(CTBF_city, m_advertisingTenders[iJ].iCityId)
+						.addI(CTBF_cityMinPriority, m_advertisingTenders[iJ].iMinPriority)
+						.addI(CTBF_reqPriority, m_workRequests[iI].iPriority));
 				}
 			}
 
@@ -1129,13 +1129,13 @@ void CvContractBroker::finalizeTenderContracts()
 
 				log(2, "[CTB/fulfilled] workRequest=%d marked fulfilled - tender won, city will build the unit", m_workRequests[iI].iWorkRequestId);
 				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_FULFILLED_TENDER_WON, 2)
-					.addI(CF_workRequest, m_workRequests[iI].iWorkRequestId));
+					.addI(CTBF_workRequest, m_workRequests[iI].iWorkRequestId));
 				log(3, "[CTB/tender/alloc] workRequest=%d allocKey=%d incremented to %d (tender won)",
 					m_workRequests[iI].iWorkRequestId, iBestCityTenderKey, tenderAllocations[iBestCityTenderKey]);
 				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_TENDER_ALLOC_WON, 3)
-					.addI(CF_workRequest, m_workRequests[iI].iWorkRequestId)
-					.addI(CF_allocKey, iBestCityTenderKey)
-					.addI(CF_allocCount, tenderAllocations[iBestCityTenderKey]));
+					.addI(CTBF_workRequest, m_workRequests[iI].iWorkRequestId)
+					.addI(CTBF_allocKey, iBestCityTenderKey)
+					.addI(CTBF_allocCount, tenderAllocations[iBestCityTenderKey]));
 
 				// Queue up the build. Add to queue head if the current build is not a unit,
 				//	implies a local build below the priority of work the city tendered for.
@@ -1181,10 +1181,10 @@ void CvContractBroker::finalizeTenderContracts()
 
 		log(1, "[CTB/finalize] contractsSatisfied=%d/%d unitsEmployed=%d unitsWithoutWork=%d", iSatisfiedContracts, m_workRequests.size(), m_iEmployedUnits, m_advertisingUnits.size());
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_FINALIZE, 1)
-			.addI(CF_contractsSatisfied, iSatisfiedContracts)
-			.addI(CF_total, (int)m_workRequests.size())
-			.addI(CF_unitsEmployed, m_iEmployedUnits)
-			.addI(CF_unitsWithoutWork, (int)m_advertisingUnits.size()));
+			.addI(CTBF_contractsSatisfied, iSatisfiedContracts)
+			.addI(CTBF_total, (int)m_workRequests.size())
+			.addI(CTBF_unitsEmployed, m_iEmployedUnits)
+			.addI(CTBF_unitsWithoutWork, (int)m_advertisingUnits.size()));
 	}
 }
 
@@ -1212,13 +1212,13 @@ bool CvContractBroker::makeContract(CvUnit* pUnit, int& iAtX, int& iAtY, CvUnit*
 					log(1, "[CTB/match/abandon] workRequest=%d (join unit=%d) no longer joinable, marking fulfilled",
 						m_workRequests[iI].iWorkRequestId, m_workRequests[iI].iUnitId);
 					eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_MATCH_ABANDON, 1)
-						.addI(CF_workRequest, m_workRequests[iI].iWorkRequestId)
-						.addI(CF_joinUnit, m_workRequests[iI].iUnitId));
+						.addI(CTBF_workRequest, m_workRequests[iI].iWorkRequestId)
+						.addI(CTBF_joinUnit, m_workRequests[iI].iUnitId));
 					log(2, "[CTB/fulfilled] workRequest=%d marked fulfilled - join target unit=%d gone or no longer group head (abandoned)",
 						m_workRequests[iI].iWorkRequestId, m_workRequests[iI].iUnitId);
 					eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_FULFILLED_ABANDONED, 2)
-						.addI(CF_workRequest, m_workRequests[iI].iWorkRequestId)
-						.addI(CF_joinUnit, m_workRequests[iI].iUnitId));
+						.addI(CTBF_workRequest, m_workRequests[iI].iWorkRequestId)
+						.addI(CTBF_joinUnit, m_workRequests[iI].iUnitId));
 					m_workRequests[iI].bFulfilled = true;
 					continue;
 				}
@@ -1241,8 +1241,8 @@ bool CvContractBroker::makeContract(CvUnit* pUnit, int& iAtX, int& iAtY, CvUnit*
 
 						log(3, "[CTB/match] unit=%d assigned to workRequest=%d (contracted)", suitableUnit->iUnitId, m_workRequests[iI].iWorkRequestId);
 						eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_MATCH_ASSIGNED, 3)
-							.addI(CF_unit, suitableUnit->iUnitId)
-							.addI(CF_workRequest, m_workRequests[iI].iWorkRequestId));
+							.addI(CTBF_unit, suitableUnit->iUnitId)
+							.addI(CTBF_workRequest, m_workRequests[iI].iWorkRequestId));
 
 						const int iUnitStrengthTimes100 = std::max(1, unitX->AI_genericUnitValueTimes100(unitCapabilities2UnitValueFlags(m_workRequests[iI].eUnitFlags)));
 						if (m_workRequests[iI].iRequiredStrengthTimes100 == -1 || iUnitStrengthTimes100 >= m_workRequests[iI].iRequiredStrengthTimes100)
@@ -1252,14 +1252,14 @@ bool CvContractBroker::makeContract(CvUnit* pUnit, int& iAtX, int& iAtY, CvUnit*
 
 							log(1, "[CTB/match] workRequest=%d satisfied by unit=%d (strength %d >= required %d)", m_workRequests[iI].iWorkRequestId, suitableUnit->iUnitId, iUnitStrengthTimes100, m_workRequests[iI].iRequiredStrengthTimes100);
 							eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_MATCH_SATISFIED, 1)
-								.addI(CF_workRequest, m_workRequests[iI].iWorkRequestId)
-								.addI(CF_unit, suitableUnit->iUnitId)
-								.addI(CF_unitStr, iUnitStrengthTimes100)
-								.addI(CF_requiredStr, m_workRequests[iI].iRequiredStrengthTimes100));
+								.addI(CTBF_workRequest, m_workRequests[iI].iWorkRequestId)
+								.addI(CTBF_unit, suitableUnit->iUnitId)
+								.addI(CTBF_unitStr, iUnitStrengthTimes100)
+								.addI(CTBF_requiredStr, m_workRequests[iI].iRequiredStrengthTimes100));
 							log(2, "[CTB/fulfilled] workRequest=%d marked fulfilled - unit=%d fully satisfies it", m_workRequests[iI].iWorkRequestId, suitableUnit->iUnitId);
 							eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_FULFILLED_UNIT_SATISFIES, 2)
-								.addI(CF_workRequest, m_workRequests[iI].iWorkRequestId)
-								.addI(CF_unit, suitableUnit->iUnitId));
+								.addI(CTBF_workRequest, m_workRequests[iI].iWorkRequestId)
+								.addI(CTBF_unit, suitableUnit->iUnitId));
 							OutputDebugString(CvString::format("work request %d satisfied by unit %d\n", m_workRequests[iI].iWorkRequestId, suitableUnit->iUnitId).c_str());
 						}
 						else
@@ -1282,11 +1282,11 @@ bool CvContractBroker::makeContract(CvUnit* pUnit, int& iAtX, int& iAtY, CvUnit*
 								m_workRequests[iI].iWorkRequestId, suitableUnit->iUnitId,
 								iUnitStrengthTimes100, m_workRequests[iI].iRequiredStrengthTimes100, m_workRequests[iI].iPriority);
 							eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_MATCH_PARTIAL, 1)
-								.addI(CF_workRequest, m_workRequests[iI].iWorkRequestId)
-								.addI(CF_unit, suitableUnit->iUnitId)
-								.addI(CF_providedStr, iUnitStrengthTimes100)
-								.addI(CF_remainingStr, m_workRequests[iI].iRequiredStrengthTimes100)
-								.addI(CF_newPriority, m_workRequests[iI].iPriority));
+								.addI(CTBF_workRequest, m_workRequests[iI].iWorkRequestId)
+								.addI(CTBF_unit, suitableUnit->iUnitId)
+								.addI(CTBF_providedStr, iUnitStrengthTimes100)
+								.addI(CTBF_remainingStr, m_workRequests[iI].iRequiredStrengthTimes100)
+								.addI(CTBF_newPriority, m_workRequests[iI].iPriority));
 
 							OutputDebugString(CvString::format("work request %d partially satisfied by unit %d\n", m_workRequests[iI].iWorkRequestId, suitableUnit->iUnitId).c_str());
 						}
@@ -1324,8 +1324,8 @@ bool CvContractBroker::makeContract(CvUnit* pUnit, int& iAtX, int& iAtY, CvUnit*
 					log(1, "[CTB/contract/lost] unit=%d contracted workRequest=%d no longer exists, releasing",
 						pUnit->getID(), iWorkRequest);
 					eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_CONTRACT_LOST, 1)
-						.addI(CF_unit, pUnit->getID())
-						.addI(CF_workRequest, iWorkRequest));
+						.addI(CTBF_unit, pUnit->getID())
+						.addI(CTBF_workRequest, iWorkRequest));
 					m_advertisingUnits[iI].iContractedWorkRequest = -1;
 					return false;
 				}
@@ -1342,24 +1342,24 @@ bool CvContractBroker::makeContract(CvUnit* pUnit, int& iAtX, int& iAtY, CvUnit*
 					pUnit->getID(), iAtX, iAtY, contractedRequest->iPriority, (int)contractedRequest->eAIType,
 					pJoinUnit ? pJoinUnit->getID() : -1, iWorkRequest);
 				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_CONTRACT_DISPATCHED, 1)
-					.addI(CF_unit, pUnit->getID())
-					.addI(CF_atX, iAtX)
-					.addI(CF_atY, iAtY)
-					.addI(CF_priority, contractedRequest->iPriority)
-					.addI(CF_aiType, (int)contractedRequest->eAIType)
-					.addI(CF_joinUnit, pJoinUnit ? pJoinUnit->getID() : -1)
-					.addI(CF_workRequest, iWorkRequest));
+					.addI(CTBF_unit, pUnit->getID())
+					.addI(CTBF_atX, iAtX)
+					.addI(CTBF_atY, iAtY)
+					.addI(CTBF_priority, contractedRequest->iPriority)
+					.addI(CTBF_aiType, (int)contractedRequest->eAIType)
+					.addI(CTBF_joinUnit, pJoinUnit ? pJoinUnit->getID() : -1)
+					.addI(CTBF_workRequest, iWorkRequest));
 				return true;
 			}
 			log(4, "[CTB/contract] unit=%d has no contracted work this pass (no match found)", pUnit->getID());
 			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_CONTRACT_NOMATCH, 4)
-				.addI(CF_unit, pUnit->getID()));
+				.addI(CTBF_unit, pUnit->getID()));
 			return false;
 		}
 	}
 	log(4, "[CTB/contract] unit=%d not present in advertising list (no contract)", pUnit->getID());
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_CONTRACT_NOTLISTED, 4)
-		.addI(CF_unit, pUnit->getID()));
+		.addI(CTBF_unit, pUnit->getID()));
 	return false;
 }
 
@@ -1415,8 +1415,8 @@ advertisingUnit* CvContractBroker::findBestUnit(const workRequest& request, bool
 					unitX == NULL ? "unit gone" : "wrong unitAI type");
 				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT,
 						unitX == NULL ? CTB_ASSESS_REJECT_GONE : CTB_ASSESS_REJECT_WRONGAI, 4)
-					.addI(CF_unit, unitInfo.iUnitId)
-					.addI(CF_workRequest, request.iWorkRequestId));
+					.addI(CTBF_unit, unitInfo.iUnitId)
+					.addI(CTBF_workRequest, request.iWorkRequestId));
 				continue;
 			}
 
@@ -1489,10 +1489,10 @@ advertisingUnit* CvContractBroker::findBestUnit(const workRequest& request, bool
 							log(3, "[CTB/assess] unit=%d is new best for workRequest=%d iValue=%d pathTurns=%d",
 								unitInfo.iUnitId, request.iWorkRequestId, iValue, iPathTurns);
 						eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_ASSESS_NEWBEST, 3)
-							.addI(CF_unit, unitInfo.iUnitId)
-							.addI(CF_workRequest, request.iWorkRequestId)
-							.addI(CF_iValue, iValue)
-							.addI(CF_pathTurns, iPathTurns));
+							.addI(CTBF_unit, unitInfo.iUnitId)
+							.addI(CTBF_workRequest, request.iWorkRequestId)
+							.addI(CTBF_iValue, iValue)
+							.addI(CTBF_pathTurns, iPathTurns));
 						}
 					}
 					else
@@ -1500,21 +1500,21 @@ advertisingUnit* CvContractBroker::findBestUnit(const workRequest& request, bool
 						log(4, "[CTB/assess] unit=%d rejected for workRequest=%d (no path to (%d,%d) within maxPathTurns=%d, thisPlotOnly=%d)",
 							unitInfo.iUnitId, request.iWorkRequestId, pTargetPlot->getX(), pTargetPlot->getY(), iMaxPathTurns, bThisPlotOnly ? 1 : 0);
 						eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_ASSESS_NOPATH, 4)
-							.addI(CF_unit, unitInfo.iUnitId)
-							.addI(CF_workRequest, request.iWorkRequestId)
-							.addI(CF_targetX, pTargetPlot->getX())
-							.addI(CF_targetY, pTargetPlot->getY())
-							.addI(CF_maxPathTurns, iMaxPathTurns)
-							.addI(CF_thisPlotOnly, bThisPlotOnly ? 1 : 0));
+							.addI(CTBF_unit, unitInfo.iUnitId)
+							.addI(CTBF_workRequest, request.iWorkRequestId)
+							.addI(CTBF_targetX, pTargetPlot->getX())
+							.addI(CTBF_targetY, pTargetPlot->getY())
+							.addI(CTBF_maxPathTurns, iMaxPathTurns)
+							.addI(CTBF_thisPlotOnly, bThisPlotOnly ? 1 : 0));
 					}
 				}
 				OutputDebugString(CvString::format("Assessed unit %d suitability for work request %d (iValue = %d)\n", unitInfo.iUnitId, request.iWorkRequestId, iValue).c_str());
 				log(4, "[CTB/assess] unit=%d suitability for workRequest=%d iValue=%d (currentBest=%d)", unitInfo.iUnitId, request.iWorkRequestId, iValue, iBestValue);
 				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_ASSESS_SUITABILITY, 4)
-					.addI(CF_unit, unitInfo.iUnitId)
-					.addI(CF_workRequest, request.iWorkRequestId)
-					.addI(CF_iValue, iValue)
-					.addI(CF_currentBest, iBestValue));
+					.addI(CTBF_unit, unitInfo.iUnitId)
+					.addI(CTBF_workRequest, request.iWorkRequestId)
+					.addI(CTBF_iValue, iValue)
+					.addI(CTBF_currentBest, iBestValue));
 			}
 			else if (gPlayerLogLevel >= 4)
 			{
@@ -1524,8 +1524,8 @@ advertisingUnit* CvContractBroker::findBestUnit(const workRequest& request, bool
 					bFailsCriteria ? "fails selection criteria" : "unit minPriority above request priority");
 				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT,
 						bFailsCriteria ? CTB_ASSESS_REJECT_CRITERIA : CTB_ASSESS_REJECT_PRIORITY, 4)
-					.addI(CF_unit, unitInfo.iUnitId)
-					.addI(CF_workRequest, request.iWorkRequestId));
+					.addI(CTBF_unit, unitInfo.iUnitId)
+					.addI(CTBF_workRequest, request.iWorkRequestId));
 			}
 		}
 	}
@@ -1535,17 +1535,17 @@ advertisingUnit* CvContractBroker::findBestUnit(const workRequest& request, bool
 		log(1, "[CTB/assess] unit=%d chosen for workRequest=%d index=%d bestValue=%d",
 			m_advertisingUnits[iBestUnitIndex].iUnitId, request.iWorkRequestId, iBestUnitIndex, iBestValue);
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_ASSESS_CHOSEN, 1)
-			.addI(CF_unit, m_advertisingUnits[iBestUnitIndex].iUnitId)
-			.addI(CF_workRequest, request.iWorkRequestId)
-			.addI(CF_index, iBestUnitIndex)
-			.addI(CF_bestValue, iBestValue));
+			.addI(CTBF_unit, m_advertisingUnits[iBestUnitIndex].iUnitId)
+			.addI(CTBF_workRequest, request.iWorkRequestId)
+			.addI(CTBF_index, iBestUnitIndex)
+			.addI(CTBF_bestValue, iBestValue));
 		return &m_advertisingUnits[iBestUnitIndex];
 	}
 
 	log(4, "[CTB/assess] no suitable unit found for workRequest=%d among %d advertisers", request.iWorkRequestId, m_advertisingUnits.size());
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_ASSESS_NONE, 4)
-		.addI(CF_workRequest, request.iWorkRequestId)
-		.addI(CF_advertiserCount, (int)m_advertisingUnits.size()));
+		.addI(CTBF_workRequest, request.iWorkRequestId)
+		.addI(CTBF_advertiserCount, (int)m_advertisingUnits.size()));
 	return NULL;
 }
 
@@ -1598,10 +1598,10 @@ void CvContractBroker::internalRemoveUnit(const int unitId)
 			log(2, "[CTB/remove] unit=%d removed from worklist (contractedWorkRequest=%d) -> employedUnits=%d unitsRemainingInWorklist=%d",
 				unitId, iContracted, m_iEmployedUnits, m_advertisingUnits.size());
 			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_REMOVE_INTERNAL, 2)
-				.addI(CF_unit, unitId)
-				.addI(CF_contractedWorkRequest, iContracted)
-				.addI(CF_employedUnits, m_iEmployedUnits)
-				.addI(CF_unitsRemainingInWorklist, (int)m_advertisingUnits.size()));
+				.addI(CTBF_unit, unitId)
+				.addI(CTBF_contractedWorkRequest, iContracted)
+				.addI(CTBF_employedUnits, m_iEmployedUnits)
+				.addI(CTBF_unitsRemainingInWorklist, (int)m_advertisingUnits.size()));
 			break;
 		}
 	}
@@ -1615,7 +1615,7 @@ void CvContractBroker::postProcessUnitsLookingForWork()
 
 	log(2, "[CTB/postprocess] processing contracts for %d advertising unit(s)", m_advertisingUnits.size());
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_POSTPROCESS_BEGIN, 2)
-		.addI(CF_advertisingUnits, (int)m_advertisingUnits.size()));
+		.addI(CTBF_advertisingUnits, (int)m_advertisingUnits.size()));
 
 	for (int iI = 0; iI < (int)m_advertisingUnits.size(); iI++)
 	{
@@ -1626,15 +1626,15 @@ void CvContractBroker::postProcessUnitsLookingForWork()
 			log(4, "[CTB/postprocess] unit=%d contractedWorkRequest=%d -> processContracts()",
 				m_advertisingUnits[iI].iUnitId, m_advertisingUnits[iI].iContractedWorkRequest);
 			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_POSTPROCESS_UNIT, 4)
-				.addI(CF_unit, m_advertisingUnits[iI].iUnitId)
-				.addI(CF_contractedWorkRequest, m_advertisingUnits[iI].iContractedWorkRequest));
+				.addI(CTBF_unit, m_advertisingUnits[iI].iUnitId)
+				.addI(CTBF_contractedWorkRequest, m_advertisingUnits[iI].iContractedWorkRequest));
 			unitX->getGroup()->getHeadUnit()->processContracts();
 		}
 		else
 		{
 			log(4, "[CTB/postprocess] unit=%d no longer exists, skipping", m_advertisingUnits[iI].iUnitId);
 			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_POSTPROCESS_GONE, 4)
-				.addI(CF_unit, m_advertisingUnits[iI].iUnitId));
+				.addI(CTBF_unit, m_advertisingUnits[iI].iUnitId));
 		}
 	}
 }

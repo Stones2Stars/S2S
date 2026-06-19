@@ -83,7 +83,7 @@ namespace {
 			logGroupAI(2, "[GRP/split] owner=%d group=%d separated=%d",
 				(int)eOwner, iGroupId, iSeparated);
 			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_GROUP, 0 /*GRP_SPLIT*/, 2)
-				.addI(0 /*GF_owner*/, (int)eOwner).addI(1 /*GF_group*/, iGroupId).addI(2 /*GF_separated*/, iSeparated));
+				.addI(0 /*GRPF_owner*/, (int)eOwner).addI(1 /*GRPF_group*/, iGroupId).addI(2 /*GRPF_separated*/, iSeparated));
 		}
 	}
 }
@@ -113,26 +113,26 @@ namespace
 	}
 	enum GrpField
 	{
-		GF_owner = 0, GF_group, GF_separated,
-		GF_army, GF_mission, GF_leaderUnit, GF_x, GF_y, GF_targetX, GF_targetY,
-		GF_leaderGroup
+		GRPF_owner = 0, GRPF_group, GRPF_separated,
+		GRPF_army, GRPF_mission, GRPF_leaderUnit, GRPF_x, GRPF_y, GRPF_targetX, GRPF_targetY,
+		GRPF_leaderGroup
 	};
 	const char* grpFieldInfo(int iFieldTag, SpineFieldType* peType)
 	{
 		*peType = SFT_INT;
 		switch (iFieldTag)
 		{
-		case GF_owner:      return "owner";
-		case GF_group:      return "group";
-		case GF_separated:  return "separated";
-		case GF_army:       return "army";
-		case GF_mission:    return "mission";
-		case GF_leaderUnit: return "leaderUnit";
-		case GF_x:          return "x";
-		case GF_y:          return "y";
-		case GF_targetX:    return "targetX";
-		case GF_targetY:    return "targetY";
-		case GF_leaderGroup:return "leaderGroup";
+		case GRPF_owner:      return "owner";
+		case GRPF_group:      return "group";
+		case GRPF_separated:  return "separated";
+		case GRPF_army:       return "army";
+		case GRPF_mission:    return "mission";
+		case GRPF_leaderUnit: return "leaderUnit";
+		case GRPF_x:          return "x";
+		case GRPF_y:          return "y";
+		case GRPF_targetX:    return "targetX";
+		case GRPF_targetY:    return "targetY";
+		case GRPF_leaderGroup:return "leaderGroup";
 		default:            return NULL;
 		}
 	}
@@ -142,9 +142,9 @@ namespace
 	// Local aliases matching CvUnitAI.cpp anonymous-namespace integer values (file-local enums cannot cross TUs).
 	// SD_COMBAT / SD_UNIT are registered in CvUnitAI.cpp; these emit to those registered domains using the same ids.
 	enum { COM_ODDS_ID = 4 };                  // == COM_ODDS in CvUnitAI.cpp
-	enum { CF_OWNER=0, CF_UNIT=1, CF_TARGETX=2, CF_TARGETY=3, CF_GOODNESS=7, CF_LEADWIN=8, CF_WIN=9 };
+	enum { COMF_OWNER=0, COMF_UNIT=1, COMF_TARGETX=2, COMF_TARGETY=3, COMF_GOODNESS=7, COMF_LEADWIN=8, COMF_WIN=9 };
 	enum { UNT_MISSION_ID = 8 };               // == UNT_MISSION in CvUnitAI.cpp
-	enum { UF_OWNER=0, UF_UNIT=1, UF_UNITAI=16, UF_MISSIONAI=17, UF_TARGETX=18, UF_TARGETY=19, UF_STACK=5 };
+	enum { UNTF_OWNER=0, UNTF_UNIT=1, UNTF_UNITAI=16, UNTF_MISSIONAI=17, UNTF_TARGETX=18, UNTF_TARGETY=19, UNTF_STACK=5 };
 }
 
 
@@ -711,9 +711,9 @@ int CvSelectionGroupAI::AI_attackOdds(const CvPlot* pPlot, bool bPotentialEnemy,
 		(int)getOwner(), getHeadUnit() ? getHeadUnit()->getID() : -1,
 		pPlot ? pPlot->getX() : -1, pPlot ? pPlot->getY() : -1, iResult, iLeadAttackerWinOdds, bIsWin ? 1 : 0);
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_COMBAT, COM_ODDS_ID, 3)
-		.addI(CF_OWNER, (int)getOwner()).addI(CF_UNIT, getHeadUnit() ? getHeadUnit()->getID() : -1)
-		.addI(CF_TARGETX, pPlot ? pPlot->getX() : -1).addI(CF_TARGETY, pPlot ? pPlot->getY() : -1)
-		.addI(CF_GOODNESS, iResult).addI(CF_LEADWIN, iLeadAttackerWinOdds).addI(CF_WIN, bIsWin ? 1 : 0));
+		.addI(COMF_OWNER, (int)getOwner()).addI(COMF_UNIT, getHeadUnit() ? getHeadUnit()->getID() : -1)
+		.addI(COMF_TARGETX, pPlot ? pPlot->getX() : -1).addI(COMF_TARGETY, pPlot ? pPlot->getY() : -1)
+		.addI(COMF_GOODNESS, iResult).addI(COMF_LEADWIN, iLeadAttackerWinOdds).addI(COMF_WIN, bIsWin ? 1 : 0));
 
 	return iResult;
 }
@@ -1246,10 +1246,10 @@ void CvSelectionGroupAI::AI_setMissionAI(MissionAITypes eNewMissionAI, const CvP
 			(int)getOwner(), pHead ? pHead->getID() : -1, pHead ? (int)pHead->AI_getUnitAIType() : -1,
 			(int)eNewMissionAI, newPlot ? newPlot->getX() : -1, newPlot ? newPlot->getY() : -1, getNumUnits());
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_MISSION_ID, 2)
-			.addI(UF_OWNER, (int)getOwner()).addI(UF_UNIT, pHead ? pHead->getID() : -1)
-			.addI(UF_UNITAI, pHead ? (int)pHead->AI_getUnitAIType() : -1).addI(UF_MISSIONAI, (int)eNewMissionAI)
-			.addI(UF_TARGETX, newPlot ? newPlot->getX() : -1).addI(UF_TARGETY, newPlot ? newPlot->getY() : -1)
-			.addI(UF_STACK, getNumUnits()));
+			.addI(UNTF_OWNER, (int)getOwner()).addI(UNTF_UNIT, pHead ? pHead->getID() : -1)
+			.addI(UNTF_UNITAI, pHead ? (int)pHead->AI_getUnitAIType() : -1).addI(UNTF_MISSIONAI, (int)eNewMissionAI)
+			.addI(UNTF_TARGETX, newPlot ? newPlot->getX() : -1).addI(UNTF_TARGETY, newPlot ? newPlot->getY() : -1)
+			.addI(UNTF_STACK, getNumUnits()));
 	}
 
 	if (oldPlot && eOldMissionAI != NO_MISSIONAI)

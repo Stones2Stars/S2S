@@ -27,11 +27,11 @@ namespace
 	// Mirror of DIP_TRADE from CvPlayerAI.cpp (must stay in sync if the DipEvent enum grows).
 	const int DIP_TRADE_ID = 11; // DIP_TRADE is the 12th DipEvent (0-based) in CvPlayerAI.cpp
 
-	// Field tags mirror DF_from/DF_to/DF_item/DF_data from CvPlayerAI.cpp's DipField enum.
-	const int DF_from_id = 1;  // DF_from  = 1
-	const int DF_to_id   = 15; // DF_to    = 15
-	const int DF_item_id = 2;  // DF_item  = 2
-	const int DF_data_id = 3;  // DF_data  = 3
+	// Field tags mirror DIPF_from/DIPF_to/DIPF_item/DIPF_data from CvPlayerAI.cpp's DipField enum.
+	const int DIPF_from_id = 1;  // DIPF_from  = 1
+	const int DIPF_to_id   = 15; // DIPF_to    = 15
+	const int DIPF_item_id = 2;  // DIPF_item  = 2
+	const int DIPF_data_id = 3;  // DIPF_data  = 3
 }
 
 // Public Functions...
@@ -800,8 +800,8 @@ bool CvDeal::startTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eT
 	logDiploAI(2, "[DIP/trade] from=%d to=%d item=%d data=%d",
 		(int)eFromPlayer, (int)eToPlayer, (int)trade.m_eItemType, trade.m_iData);
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_TRADE_ID, 2)
-		.addI(DF_from_id, (int)eFromPlayer).addI(DF_to_id, (int)eToPlayer)
-		.addI(DF_item_id, (int)trade.m_eItemType).addI(DF_data_id, trade.m_iData));
+		.addI(DIPF_from_id, (int)eFromPlayer).addI(DIPF_to_id, (int)eToPlayer)
+		.addI(DIPF_item_id, (int)trade.m_eItemType).addI(DIPF_data_id, trade.m_iData));
 
 	switch (trade.m_eItemType)
 	{

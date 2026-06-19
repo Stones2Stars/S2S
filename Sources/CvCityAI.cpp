@@ -84,63 +84,63 @@ namespace
 		*peType = SFT_INT;
 		switch (iFieldTag)
 		{
-		case CF_city:         return "city";
-		case CF_owner:        return "owner";
-		case CF_turn:         return "turn";
-		case CF_prop:         return "prop";
-		case CF_val:          return "val";
-		case CF_change:       return "change";
-		case CF_merges:       return "merges";
-		case CF_strLeft:      return "strLeft";
-		case CF_need:         return "need";
-		case CF_pop:          return "pop";
-		case CF_danger:       return "danger";
-		case CF_dangerVal:    return "dangerVal";
-		case CF_finTrouble:   return "finTrouble";
-		case CF_critGold:     return "critGold";
-		case CF_foodProd:     return "foodProd";
-		case CF_wHave:        return "wHave";
-		case CF_wNeed:        return "wNeed";
-		case CF_areaHave:     return "areaHave";
-		case CF_areaNeed:     return "areaNeed";
-		case CF_inhibit:      return "inhibit";
-		case CF_turtle:       return "turtle";
-		case CF_bestBuildVal: return "bestBuildVal";
-		case CF_minAtk:       return "minAtk";
-		case CF_defShortfall: return "defShortfall";
-		case CF_sqrtCities:   return "sqrtCities";
-		case CF_ownedAtk:     return "ownedAtk";
-		case CF_ownedAtkRaw:  return "ownedAtkRaw";
-		case CF_fire:         return "fire";
-		case CF_pct:          return "pct";
-		case CF_eval:         return "eval";
-		case CF_check:        return "check";
-		case CF_proj:         return "proj";
-		case CF_getting:      return "getting";
-		case CF_good:         return "good";
-		case CF_maxed:        return "maxed";
-		case CF_propPct:      return "propPct";
-		case CF_unitType:     *peType = SFT_UNIT;     return "unitType";
-		case CF_unitAI:       return "unitAI";
-		case CF_building:     *peType = SFT_BUILDING;  return "building";
-		case CF_score:        return "score";
-		case CF_rank:         return "rank";
-		case CF_count:        return "count";
-		case CF_focus:        return "focus";
-		case CF_project:      return "project";
-		case CF_process:      return "process";
-		case CF_commerce:     return "commerce";
-		case CF_alreadyQueued:return "alreadyQueued";
-		case CF_append:       return "append";
-		case CF_force:        return "force";
-		case CF_progressLost: return "progressLost";
-		case CF_willChoose:   return "willChoose";
-		case CF_overflow:     return "overflow";
-		case CF_lost:         return "lost";
-		case CF_ownerHas:     return "ownerHas";
-		case CF_aiRoleHas:    return "aiRoleHas";
-		case CF_lostProd:     return "lostProd";
-		case CF_gold:         return "gold";
+		case CITF_city:         return "city";
+		case CITF_owner:        return "owner";
+		case CITF_turn:         return "turn";
+		case CITF_prop:         return "prop";
+		case CITF_val:          return "val";
+		case CITF_change:       return "change";
+		case CITF_merges:       return "merges";
+		case CITF_strLeft:      return "strLeft";
+		case CITF_need:         return "need";
+		case CITF_pop:          return "pop";
+		case CITF_danger:       return "danger";
+		case CITF_dangerVal:    return "dangerVal";
+		case CITF_finTrouble:   return "finTrouble";
+		case CITF_critGold:     return "critGold";
+		case CITF_foodProd:     return "foodProd";
+		case CITF_wHave:        return "wHave";
+		case CITF_wNeed:        return "wNeed";
+		case CITF_areaHave:     return "areaHave";
+		case CITF_areaNeed:     return "areaNeed";
+		case CITF_inhibit:      return "inhibit";
+		case CITF_turtle:       return "turtle";
+		case CITF_bestBuildVal: return "bestBuildVal";
+		case CITF_minAtk:       return "minAtk";
+		case CITF_defShortfall: return "defShortfall";
+		case CITF_sqrtCities:   return "sqrtCities";
+		case CITF_ownedAtk:     return "ownedAtk";
+		case CITF_ownedAtkRaw:  return "ownedAtkRaw";
+		case CITF_fire:         return "fire";
+		case CITF_pct:          return "pct";
+		case CITF_eval:         return "eval";
+		case CITF_check:        return "check";
+		case CITF_proj:         return "proj";
+		case CITF_getting:      return "getting";
+		case CITF_good:         return "good";
+		case CITF_maxed:        return "maxed";
+		case CITF_propPct:      return "propPct";
+		case CITF_unitType:     *peType = SFT_UNIT;     return "unitType";
+		case CITF_unitAI:       return "unitAI";
+		case CITF_building:     *peType = SFT_BUILDING;  return "building";
+		case CITF_score:        return "score";
+		case CITF_rank:         return "rank";
+		case CITF_count:        return "count";
+		case CITF_focus:        return "focus";
+		case CITF_project:      return "project";
+		case CITF_process:      return "process";
+		case CITF_commerce:     return "commerce";
+		case CITF_alreadyQueued:return "alreadyQueued";
+		case CITF_append:       return "append";
+		case CITF_force:        return "force";
+		case CITF_progressLost: return "progressLost";
+		case CITF_willChoose:   return "willChoose";
+		case CITF_overflow:     return "overflow";
+		case CITF_lost:         return "lost";
+		case CITF_ownerHas:     return "ownerHas";
+		case CITF_aiRoleHas:    return "aiRoleHas";
+		case CITF_lostProd:     return "lostProd";
+		case CITF_gold:         return "gold";
 		default:              return NULL;
 		}
 	}
@@ -613,8 +613,8 @@ void CvCityAI::AI_doGarrisonConsolidation()
 		logCityAI(1, "[CIT/garrcons] city=%S owner=%d merges=%d strLeft=%d need=%d",
 			getName().GetCString(), (int)getOwner(), iMerges, iHave100 / 100, AI_neededDefenseStrength());
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_GARRCONS, 1)
-			.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
-			.addI(CF_merges, iMerges).addI(CF_strLeft, iHave100 / 100).addI(CF_need, AI_neededDefenseStrength()));
+			.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
+			.addI(CITF_merges, iMerges).addI(CITF_strLeft, iHave100 / 100).addI(CITF_need, AI_neededDefenseStrength()));
 	}
 }
 
@@ -1083,10 +1083,10 @@ void CvCityAI::AI_chooseProduction()
 		getName().GetCString(), (int)eOwner, getPopulation(), bDanger ? 1 : 0, iDangerValue,
 		bFinancialTrouble ? 1 : 0, bCriticalGold ? 1 : 0, bWasFoodProduction ? 1 : 0);
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_BEGIN, 1)
-		.addI(CF_city, getID()).addI(CF_owner, (int)eOwner)
-		.addI(CF_pop, getPopulation()).addI(CF_danger, bDanger ? 1 : 0).addI(CF_dangerVal, iDangerValue)
-		.addI(CF_finTrouble, bFinancialTrouble ? 1 : 0).addI(CF_critGold, bCriticalGold ? 1 : 0)
-		.addI(CF_foodProd, bWasFoodProduction ? 1 : 0));
+		.addI(CITF_city, getID()).addI(CITF_owner, (int)eOwner)
+		.addI(CITF_pop, getPopulation()).addI(CITF_danger, bDanger ? 1 : 0).addI(CITF_dangerVal, iDangerValue)
+		.addI(CITF_finTrouble, bFinancialTrouble ? 1 : 0).addI(CITF_critGold, bCriticalGold ? 1 : 0)
+		.addI(CITF_foodProd, bWasFoodProduction ? 1 : 0));
 
 	//# 0 : If their is a alredy a production in City, Conditions to keep them (
 	// 1. nearly done buildings
@@ -1232,11 +1232,11 @@ void CvCityAI::AI_chooseProduction()
 			iWorkersInArea, iNeededWorkersInArea, iDangerValue, bInhibitUnits ? 1 : 0,
 			bStrategyTurtle ? 1 : 0, iBestBuildVal);
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_STRANDED, 1)
-			.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
-			.addI(CF_wHave, getNumWorkers()).addI(CF_wNeed, AI_getWorkersNeeded())
-			.addI(CF_areaHave, iWorkersInArea).addI(CF_areaNeed, iNeededWorkersInArea)
-			.addI(CF_danger, iDangerValue).addI(CF_inhibit, bInhibitUnits ? 1 : 0)
-			.addI(CF_turtle, bStrategyTurtle ? 1 : 0).addI(CF_bestBuildVal, iBestBuildVal));
+			.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
+			.addI(CITF_wHave, getNumWorkers()).addI(CITF_wNeed, AI_getWorkersNeeded())
+			.addI(CITF_areaHave, iWorkersInArea).addI(CITF_areaNeed, iNeededWorkersInArea)
+			.addI(CITF_danger, iDangerValue).addI(CITF_inhibit, bInhibitUnits ? 1 : 0)
+			.addI(CITF_turtle, bStrategyTurtle ? 1 : 0).addI(CITF_bestBuildVal, iBestBuildVal));
 	}
 
 	const int iSpreadUnitThreshold = (
@@ -2149,8 +2149,8 @@ void CvCityAI::AI_chooseProduction()
 		logCityAI(1, "[CIT/stranded/try] city=%S owner=%d wNeed=%d areaHave=%d areaNeed=%d",
 			getName().GetCString(), (int)getOwner(), iWorkersNeeded, iWorkersInArea, iNeededWorkersInArea);
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_STRANDED_TRY, 1)
-			.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
-			.addI(CF_wNeed, iWorkersNeeded).addI(CF_areaHave, iWorkersInArea).addI(CF_areaNeed, iNeededWorkersInArea));
+			.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
+			.addI(CITF_wNeed, iWorkersNeeded).addI(CITF_areaHave, iWorkersInArea).addI(CITF_areaNeed, iNeededWorkersInArea));
 		// Build the worker LOCALLY (AI_chooseUnitImmediate), NOT via AI_chooseUnit -- the latter
 		// puts the request out to the player-wide ContractBroker tender, which fulfils it from
 		// the cheapest/closest builder (often a far city across the border that can't reach here).
@@ -2161,7 +2161,7 @@ void CvCityAI::AI_chooseProduction()
 		}
 		logCityAI(1, "[CIT/stranded/declined] city=%S cannot build any worker unit locally", getName().GetCString());
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_STRANDED_DECLINED, 1)
-			.addI(CF_city, getID()).addI(CF_owner, (int)getOwner()));
+			.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner()));
 		bChooseWorker = true;
 	}
 
@@ -2469,11 +2469,11 @@ void CvCityAI::AI_chooseProduction()
 			iAttackNeeded, iOwnedAttackers, iOwnedAtkRaw,
 			(iOwnedAttackers < iAttackNeeded) ? 1 : 0);
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_DANGER, 2)
-			.addI(CF_city, getID()).addI(CF_owner, (int)eOwner)
-			.addI(CF_minAtk, iNbMinimalAttackers).addI(CF_defShortfall, iDefShortfall)
-			.addI(CF_sqrtCities, iSqrtCities).addI(CF_need, iAttackNeeded)
-			.addI(CF_ownedAtk, iOwnedAttackers).addI(CF_ownedAtkRaw, iOwnedAtkRaw)
-			.addI(CF_fire, (iOwnedAttackers < iAttackNeeded) ? 1 : 0));
+			.addI(CITF_city, getID()).addI(CITF_owner, (int)eOwner)
+			.addI(CITF_minAtk, iNbMinimalAttackers).addI(CITF_defShortfall, iDefShortfall)
+			.addI(CITF_sqrtCities, iSqrtCities).addI(CITF_need, iAttackNeeded)
+			.addI(CITF_ownedAtk, iOwnedAttackers).addI(CITF_ownedAtkRaw, iOwnedAtkRaw)
+			.addI(CITF_fire, (iOwnedAttackers < iAttackNeeded) ? 1 : 0));
 
 		if (iOwnedAttackers < iAttackNeeded
 		&& AI_chooseUnitImmediate("minimal attack (danger)", UNITAI_ATTACK))
@@ -9261,11 +9261,11 @@ bool CvCityAI::AI_chooseBuilding(int iFocusFlags, int iMaxTurns, int iMinThresho
 				getName().GetCString(), GC.getBuildingInfo(eBestBuilding).getDescription(),
 				bestBuildings[i].score, (int)i, (int)bestBuildings.size(), iFocusFlags);
 			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ORDER_CONSTRUCT, 1)
-				.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
-				.addI(CF_building, (int)eBestBuilding)
-				.addI(CF_score, (int)bestBuildings[i].score)
-				.addI(CF_rank, (int)i).addI(CF_count, (int)bestBuildings.size())
-				.addI(CF_focus, iFocusFlags));
+				.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
+				.addI(CITF_building, (int)eBestBuilding)
+				.addI(CITF_score, (int)bestBuildings[i].score)
+				.addI(CITF_rank, (int)i).addI(CITF_count, (int)bestBuildings.size())
+				.addI(CITF_focus, iFocusFlags));
 			pushOrder(ORDER_CONSTRUCT, eBestBuilding, -1, false, false, true); //not insert, append to queue
 			nbBuildings += 1;
 			enqueuedBuilding = true;
@@ -9313,8 +9313,8 @@ bool CvCityAI::AI_chooseProject()
 		logCityAI(1, "[CIT/order] city=%S CREATE_PROJECT %S",
 			getName().GetCString(), GC.getProjectInfo(eBestProject).getDescription());
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ORDER_PROJECT, 1)
-			.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
-			.addI(CF_project, (int)eBestProject));
+			.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
+			.addI(CITF_project, (int)eBestProject));
 		pushOrder(ORDER_CREATE, eBestProject, -1, false, false, true);
 		
 		return true;
@@ -9343,8 +9343,8 @@ bool CvCityAI::AI_chooseProcess(CommerceTypes eCommerceType, int64_t* commerceWe
 		logCityAI(1, "[CIT/order] city=%S MAINTAIN_PROCESS %S commerce=%d",
 			getName().GetCString(), GC.getProcessInfo(eBestProcess).getDescription(), (int)eCommerceType);
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ORDER_PROCESS, 1)
-			.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
-			.addI(CF_process, (int)eBestProcess).addI(CF_commerce, (int)eCommerceType));
+			.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
+			.addI(CITF_process, (int)eBestProcess).addI(CITF_commerce, (int)eCommerceType));
 		pushOrder(ORDER_MAINTAIN, eBestProcess, -1, false, false, !bforce);
 
 		return true;
@@ -15011,15 +15011,15 @@ bool CvCityAI::AI_choosePropertyControlBuildingAndUnit(int iTriggerPercentOfProp
 					(iPropControlInArea * 100 / (iUnitsInArea + 1)),
 					(iEval > iCheck && !isGettingBetter && !isGoodEnough && !ismaxPropUnitsReached) ? 1 : 0);
 				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PROP, 2)
-					.addI(CF_city, getID()).addI(CF_owner, (int)eOwner)
-					.addI(CF_prop, (int)eProperty)
-					.addI(CF_val, iCurrentValue).addI(CF_change, iCurrentChange).addI(CF_pct, iCurrentPercent)
-					.addI(CF_eval, iEval).addI(CF_check, iCheck)
-					.addI(CF_proj, iCurrentValue + iCurrentChange * 10)
-					.addI(CF_getting, isGettingBetter ? 1 : 0).addI(CF_good, isGoodEnough ? 1 : 0)
-					.addI(CF_maxed, ismaxPropUnitsReached ? 1 : 0)
-					.addI(CF_propPct, iPropControlInArea * 100 / (iUnitsInArea + 1))
-					.addI(CF_fire, (iEval > iCheck && !isGettingBetter && !isGoodEnough && !ismaxPropUnitsReached) ? 1 : 0));
+					.addI(CITF_city, getID()).addI(CITF_owner, (int)eOwner)
+					.addI(CITF_prop, (int)eProperty)
+					.addI(CITF_val, iCurrentValue).addI(CITF_change, iCurrentChange).addI(CITF_pct, iCurrentPercent)
+					.addI(CITF_eval, iEval).addI(CITF_check, iCheck)
+					.addI(CITF_proj, iCurrentValue + iCurrentChange * 10)
+					.addI(CITF_getting, isGettingBetter ? 1 : 0).addI(CITF_good, isGoodEnough ? 1 : 0)
+					.addI(CITF_maxed, ismaxPropUnitsReached ? 1 : 0)
+					.addI(CITF_propPct, iPropControlInArea * 100 / (iUnitsInArea + 1))
+					.addI(CITF_fire, (iEval > iCheck && !isGettingBetter && !isGoodEnough && !ismaxPropUnitsReached) ? 1 : 0));
 
 				if (iEval > iCheck && !isGettingBetter && !isGoodEnough && !ismaxPropUnitsReached)
 				{

@@ -46,20 +46,20 @@ enum CitEvent
 // CIT LOCAL field tags. city/owner are ints (city ID / PlayerTypes); prop is a PropertyTypes index (rendered as int).
 enum CitField
 {
-	CF_city = 0, CF_owner, CF_turn, CF_prop,
-	CF_val, CF_change, CF_merges, CF_strLeft, CF_need,
-	CF_pop, CF_danger, CF_dangerVal, CF_finTrouble, CF_critGold, CF_foodProd,
-	CF_wHave, CF_wNeed, CF_areaHave, CF_areaNeed, CF_inhibit, CF_turtle, CF_bestBuildVal,
-	CF_minAtk, CF_defShortfall, CF_sqrtCities, CF_ownedAtk, CF_ownedAtkRaw, CF_fire,
-	CF_pct, CF_eval, CF_check, CF_proj, CF_getting, CF_good, CF_maxed, CF_propPct,
-	CF_unitType, CF_unitAI,
-	CF_building,
-	CF_score, CF_rank, CF_count, CF_focus,
-	CF_project, CF_process, CF_commerce,
-	CF_alreadyQueued, CF_append, CF_force,
-	CF_progressLost, CF_willChoose,
-	CF_overflow, CF_lost, CF_ownerHas, CF_aiRoleHas,
-	CF_lostProd, CF_gold
+	CITF_city = 0, CITF_owner, CITF_turn, CITF_prop,
+	CITF_val, CITF_change, CITF_merges, CITF_strLeft, CITF_need,
+	CITF_pop, CITF_danger, CITF_dangerVal, CITF_finTrouble, CITF_critGold, CITF_foodProd,
+	CITF_wHave, CITF_wNeed, CITF_areaHave, CITF_areaNeed, CITF_inhibit, CITF_turtle, CITF_bestBuildVal,
+	CITF_minAtk, CITF_defShortfall, CITF_sqrtCities, CITF_ownedAtk, CITF_ownedAtkRaw, CITF_fire,
+	CITF_pct, CITF_eval, CITF_check, CITF_proj, CITF_getting, CITF_good, CITF_maxed, CITF_propPct,
+	CITF_unitType, CITF_unitAI,
+	CITF_building,
+	CITF_score, CITF_rank, CITF_count, CITF_focus,
+	CITF_project, CITF_process, CITF_commerce,
+	CITF_alreadyQueued, CITF_append, CITF_force,
+	CITF_progressLost, CITF_willChoose,
+	CITF_overflow, CITF_lost, CITF_ownerHas, CITF_aiRoleHas,
+	CITF_lostProd, CITF_gold
 };
 
 #endif // CV_CITY_LOG_TAGS_H

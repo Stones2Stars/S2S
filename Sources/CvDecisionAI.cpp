@@ -34,16 +34,16 @@ namespace
 	}
 	// DAI's LOCAL field tags (plain ints). Fields listed here are those a future wiring would add once the
 	// runtime strings are resolved (either dropped, or split into per-value event ids).
-	enum DaiField { DF_player = 0, DF_turn, DF_era, DF_value };
+	enum DaiField { DAIF_player = 0, DAIF_turn, DAIF_era, DAIF_value };
 	const char* daiFieldInfo(int iFieldTag, SpineFieldType* peType)
 	{
 		*peType = SFT_INT;
 		switch (iFieldTag)
 		{
-		case DF_player: return "player";
-		case DF_turn:   return "turn";
-		case DF_era:    return "era";
-		case DF_value:  return "value";
+		case DAIF_player: return "player";
+		case DAIF_turn:   return "turn";
+		case DAIF_era:    return "era";
+		case DAIF_value:  return "value";
 		default:        return NULL;
 		}
 	}

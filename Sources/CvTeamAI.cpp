@@ -37,26 +37,26 @@ namespace
 		}
 	}
 	// WAR's LOCAL field tags (all plain ints).
-	enum WarField { WF_team = 0, WF_turn, WF_enemyPowerPct, WF_fundedPct, WF_safePct, WF_atWar, WF_warPlans,
-		WF_area, WF_postureFrom, WF_postureTo, WF_vsTeam, WF_planFrom, WF_planTo };
+	enum WarField { WARF_team = 0, WARF_turn, WARF_enemyPowerPct, WARF_fundedPct, WARF_safePct, WARF_atWar, WARF_warPlans,
+		WARF_area, WARF_postureFrom, WARF_postureTo, WARF_vsTeam, WARF_planFrom, WARF_planTo };
 	const char* warFieldInfo(int iFieldTag, SpineFieldType* peType)
 	{
 		*peType = SFT_INT;
 		switch (iFieldTag)
 		{
-		case WF_team:          return "team";
-		case WF_turn:          return "turn";
-		case WF_enemyPowerPct: return "enemyPowerPct";
-		case WF_fundedPct:     return "fundedPct";
-		case WF_safePct:       return "safePct";
-		case WF_atWar:         return "atWar";
-		case WF_warPlans:      return "warPlans";
-		case WF_area:          return "area";
-		case WF_postureFrom:   return "postureFrom";
-		case WF_postureTo:     return "postureTo";
-		case WF_vsTeam:        return "vsTeam";
-		case WF_planFrom:      return "planFrom";
-		case WF_planTo:        return "planTo";
+		case WARF_team:          return "team";
+		case WARF_turn:          return "turn";
+		case WARF_enemyPowerPct: return "enemyPowerPct";
+		case WARF_fundedPct:     return "fundedPct";
+		case WARF_safePct:       return "safePct";
+		case WARF_atWar:         return "atWar";
+		case WARF_warPlans:      return "warPlans";
+		case WARF_area:          return "area";
+		case WARF_postureFrom:   return "postureFrom";
+		case WARF_postureTo:     return "postureTo";
+		case WARF_vsTeam:        return "vsTeam";
+		case WARF_planFrom:      return "planFrom";
+		case WARF_planTo:        return "planTo";
 		default:               return NULL;
 		}
 	}
@@ -288,8 +288,8 @@ void CvTeamAI::AI_updateAreaStragies(const bool bTargets)
 			logWarAI(1, "[WAR/area] team=%d area=%d posture %d -> %d",
 				(int)getID(), pLoopArea->getID(), (int)eOldAreaAI, (int)eNewAreaAI);
 			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WAR, WAR_AREA, 1)
-				.addI(WF_team, (int)getID()).addI(WF_area, pLoopArea->getID())
-				.addI(WF_postureFrom, (int)eOldAreaAI).addI(WF_postureTo, (int)eNewAreaAI));
+				.addI(WARF_team, (int)getID()).addI(WARF_area, pLoopArea->getID())
+				.addI(WARF_postureFrom, (int)eOldAreaAI).addI(WARF_postureTo, (int)eNewAreaAI));
 		}
 	}
 
@@ -3350,8 +3350,8 @@ void CvTeamAI::AI_setWarPlan(TeamTypes eIndex, WarPlanTypes eNewValue, bool bWar
 		logWarAI(1, "[WAR/warplan] team=%d vs team=%d plan %d -> %d (atWar=%d)",
 			(int)getID(), (int)eIndex, (int)AI_getWarPlan(eIndex), (int)eNewValue, isAtWar(eIndex) ? 1 : 0);
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WAR, WAR_WARPLAN, 1)
-			.addI(WF_team, (int)getID()).addI(WF_vsTeam, (int)eIndex)
-			.addI(WF_planFrom, (int)AI_getWarPlan(eIndex)).addI(WF_planTo, (int)eNewValue).addI(WF_atWar, isAtWar(eIndex) ? 1 : 0));
+			.addI(WARF_team, (int)getID()).addI(WARF_vsTeam, (int)eIndex)
+			.addI(WARF_planFrom, (int)AI_getWarPlan(eIndex)).addI(WARF_planTo, (int)eNewValue).addI(WARF_atWar, isAtWar(eIndex) ? 1 : 0));
 
 		m_aeWarPlan[eIndex] = eNewValue;
 
@@ -3998,9 +3998,9 @@ void CvTeamAI::AI_doWar()
 		(int)getID(), GC.getGame().getGameTurn(), iEnemyPowerPercent, (int)iFundedPercent, iSafePercent,
 		getAtWarCount(true), getAnyWarPlanCount(true));
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WAR, WAR_BEGIN, 1)
-		.addI(WF_team, (int)getID()).addI(WF_turn, GC.getGame().getGameTurn())
-		.addI(WF_enemyPowerPct, iEnemyPowerPercent).addI(WF_fundedPct, (int)iFundedPercent).addI(WF_safePct, iSafePercent)
-		.addI(WF_atWar, getAtWarCount(true)).addI(WF_warPlans, getAnyWarPlanCount(true)));
+		.addI(WARF_team, (int)getID()).addI(WARF_turn, GC.getGame().getGameTurn())
+		.addI(WARF_enemyPowerPct, iEnemyPowerPercent).addI(WARF_fundedPct, (int)iFundedPercent).addI(WARF_safePct, iSafePercent)
+		.addI(WARF_atWar, getAtWarCount(true)).addI(WARF_warPlans, getAnyWarPlanCount(true)));
 
 	for (int iI = 0; iI < MAX_PC_TEAMS; iI++)
 	{

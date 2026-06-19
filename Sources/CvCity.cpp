@@ -1250,10 +1250,10 @@ void CvCity::doTurn()
 				iTurn, getName().GetCString(), (int)getOwner(), GC.getPropertyInfo(eProp).getType(),
 				pProps->getValueByProperty(eProp), pProps->getChangeByProperty(eProp));
 			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PROPLEVEL, 1)
-				.addI(CF_turn, iTurn).addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
-				.addI(CF_prop, (int)eProp)
-				.addI(CF_val, pProps->getValueByProperty(eProp))
-				.addI(CF_change, pProps->getChangeByProperty(eProp)));
+				.addI(CITF_turn, iTurn).addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
+				.addI(CITF_prop, (int)eProp)
+				.addI(CITF_val, pProps->getValueByProperty(eProp))
+				.addI(CITF_change, pProps->getChangeByProperty(eProp)));
 		}
 	}
 
@@ -15564,8 +15564,8 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 					logCityAI(2, "[CIT/push/reject] city=%S owner=%d UNIT %S alreadyQueued=%d reason=spamGuard",
 						getName().GetCString(), (int)getOwner(), GC.getUnitInfo(unitType).getDescription(), alreadyQueued);
 					eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PUSH_REJECT_UNIT, 2)
-						.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
-						.addI(CF_unitType, (int)unitType).addI(CF_alreadyQueued, alreadyQueued));
+						.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
+						.addI(CITF_unitType, (int)unitType).addI(CITF_alreadyQueued, alreadyQueued));
 					return;
 				}
 
@@ -15600,8 +15600,8 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 					logCityAI(2, "[CIT/push/reject] city=%S owner=%d BUILDING %S alreadyQueued=%d reason=dupGuard",
 						getName().GetCString(), (int)getOwner(), GC.getBuildingInfo(buildingType).getDescription(), alreadyQueued);
 				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PUSH_REJECT_BUILDING, 2)
-					.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
-					.addI(CF_building, (int)buildingType).addI(CF_alreadyQueued, alreadyQueued));
+					.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
+					.addI(CITF_building, (int)buildingType).addI(CITF_alreadyQueued, alreadyQueued));
 					return;
 				}
 
@@ -15691,8 +15691,8 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 		default: break;
 		}
 		CvCascadeEvent ePushEv(EVENTKIND_DIAGNOSTIC, SD_CITY, iCitPushEvent, 2);
-		ePushEv.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
-			.addI(CF_append, bAppend ? 1 : 0).addI(CF_force, bForce ? 1 : 0);
+		ePushEv.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
+			.addI(CITF_append, bAppend ? 1 : 0).addI(CITF_force, bForce ? 1 : 0);
 		eventSpine().emit(ePushEv);
 	}
 
@@ -15828,17 +15828,17 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 		default: break;
 		}
 		CvCascadeEvent eCancelEv(EVENTKIND_DIAGNOSTIC, SD_CITY, iCancelEvent, 1);
-		eCancelEv.addI(CF_city, getID()).addI(CF_owner, (int)getOwner());
+		eCancelEv.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner());
 		if (iTypeArg >= 0)
 		{
 			if (iCancelEvent == CIT_CANCEL_UNIT)
-				eCancelEv.addI(CF_unitType, iTypeArg);
+				eCancelEv.addI(CITF_unitType, iTypeArg);
 			else if (iCancelEvent == CIT_CANCEL_BUILDING)
-				eCancelEv.addI(CF_building, iTypeArg);
+				eCancelEv.addI(CITF_building, iTypeArg);
 			else
-				eCancelEv.addI(CF_project, iTypeArg);
+				eCancelEv.addI(CITF_project, iTypeArg);
 		}
-		eCancelEv.addI(CF_progressLost, iProgressLost).addI(CF_willChoose, bChoose ? 1 : 0);
+		eCancelEv.addI(CITF_progressLost, iProgressLost).addI(CITF_willChoose, bChoose ? 1 : 0);
 		eventSpine().emit(eCancelEv);
 	}
 
@@ -15909,11 +15909,11 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 					(int)eTrainAIUnit, owner.getUnitCount(eTrainUnit), owner.AI_getNumAIUnits(eTrainAIUnit),
 					iOverflow, m_iLostProductionModified);
 				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PRODUCED_UNIT, 1)
-					.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
-					.addI(CF_unitType, (int)eTrainUnit).addI(CF_unitAI, (int)eTrainAIUnit)
-					.addI(CF_ownerHas, owner.getUnitCount(eTrainUnit))
-					.addI(CF_aiRoleHas, owner.AI_getNumAIUnits(eTrainAIUnit))
-					.addI(CF_overflow, iOverflow).addI(CF_lost, m_iLostProductionModified));
+					.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
+					.addI(CITF_unitType, (int)eTrainUnit).addI(CITF_unitAI, (int)eTrainAIUnit)
+					.addI(CITF_ownerHas, owner.getUnitCount(eTrainUnit))
+					.addI(CITF_aiRoleHas, owner.AI_getNumAIUnits(eTrainAIUnit))
+					.addI(CITF_overflow, iOverflow).addI(CITF_lost, m_iLostProductionModified));
 
 				addProductionExperience(pUnit);
 
@@ -16058,9 +16058,9 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 					getName().GetCString(), (int)getOwner(), GC.getBuildingInfo(eConstructBuilding).getDescription(),
 					iOverflow, m_iLostProductionModified);
 				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PRODUCED_BUILDING, 1)
-					.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
-					.addI(CF_building, (int)eConstructBuilding)
-					.addI(CF_overflow, iOverflow).addI(CF_lost, m_iLostProductionModified));
+					.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
+					.addI(CITF_building, (int)eConstructBuilding)
+					.addI(CITF_overflow, iOverflow).addI(CITF_lost, m_iLostProductionModified));
 
 				CvEventReporter::getInstance().buildingBuilt(this, eConstructBuilding);
 			}
@@ -16103,8 +16103,8 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 				logCityAI(1, "[CIT/produced] city=%S owner=%d PROJECT %S",
 					getName().GetCString(), (int)getOwner(), GC.getProjectInfo(eCreateProject).getDescription());
 				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PRODUCED_PROJECT, 1)
-					.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
-					.addI(CF_project, (int)eCreateProject));
+					.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
+					.addI(CITF_project, (int)eCreateProject));
 
 				// Event reported to Python before the project is built, so that we can show the movie before awarding free techs, for example
 				CvEventReporter::getInstance().projectBuilt(this, eCreateProject);
@@ -16655,7 +16655,7 @@ void CvCity::doProduction(bool bAllowNoProduction)
 				logCityAI(1, "[CIT/spin] city=%S owner=%d reason=produceLoopCap",
 					getName().GetCString(), (int)getOwner());
 				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_SPIN_LOOP_CAP, 1)
-					.addI(CF_city, getID()).addI(CF_owner, (int)getOwner()));
+					.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner()));
 				break;
 			}
 			popOrder(0, true, true);
@@ -16676,7 +16676,7 @@ void CvCity::doProduction(bool bAllowNoProduction)
 					logCityAI(1, "[CIT/spin] city=%S owner=%d reason=noProductionChosen",
 						getName().GetCString(), (int)getOwner());
 					eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_SPIN_NO_PROD, 1)
-						.addI(CF_city, getID()).addI(CF_owner, (int)getOwner()));
+						.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner()));
 					break;
 				}
 			}
@@ -16707,8 +16707,8 @@ void CvCity::doProduction(bool bAllowNoProduction)
 			logCityAI(1, "[CIT/waste] city=%S owner=%d lostProd=%d -> gold=%d",
 				getName().GetCString(), (int)getOwner(), m_iLostProductionModified, m_iGoldFromLostProduction);
 			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_WASTE, 1)
-				.addI(CF_city, getID()).addI(CF_owner, (int)getOwner())
-				.addI(CF_lostProd, m_iLostProductionModified).addI(CF_gold, m_iGoldFromLostProduction));
+				.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
+				.addI(CITF_lostProd, m_iLostProductionModified).addI(CITF_gold, m_iGoldFromLostProduction));
 
 			CvWString szBuffer = gDLL->getText("TXT_KEY_MISC_LOST_PROD_CONVERTED", getNameKey(), m_iLostProductionModified, m_iGoldFromLostProduction);
 			AddDLLMessage(getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_WONDERGOLD", MESSAGE_TYPE_MINOR_EVENT, GC.getCommerceInfo(COMMERCE_GOLD).getButton(), GC.getCOLOR_RED(), getX(), getY(), true, true);

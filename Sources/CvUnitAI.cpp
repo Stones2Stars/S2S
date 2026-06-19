@@ -73,38 +73,38 @@ namespace
 	}
 	enum UntField
 	{
-		UF_owner = 0, UF_unit, UF_type, UF_x, UF_y, UF_stack,
-		UF_roleFrom, UF_roleTo,
-		UF_cityX, UF_cityY, UF_dist, UF_pack, UF_reach,
-		UF_singleStr, UF_defStr,
-		UF_city,
-		UF_unitAI, UF_missionAI, UF_targetX, UF_targetY
+		UNTF_owner = 0, UNTF_unit, UNTF_type, UNTF_x, UNTF_y, UNTF_stack,
+		UNTF_roleFrom, UNTF_roleTo,
+		UNTF_cityX, UNTF_cityY, UNTF_dist, UNTF_pack, UNTF_reach,
+		UNTF_singleStr, UNTF_defStr,
+		UNTF_city,
+		UNTF_unitAI, UNTF_missionAI, UNTF_targetX, UNTF_targetY
 	};
 	const char* untFieldInfo(int iFieldTag, SpineFieldType* peType)
 	{
 		*peType = SFT_INT;
 		switch (iFieldTag)
 		{
-		case UF_owner:    return "owner";
-		case UF_unit:     return "unit";
-		case UF_type:     return "type";
-		case UF_x:        return "x";
-		case UF_y:        return "y";
-		case UF_stack:    return "stack";
-		case UF_roleFrom: return "roleFrom";
-		case UF_roleTo:   return "roleTo";
-		case UF_cityX:    return "cityX";
-		case UF_cityY:    return "cityY";
-		case UF_dist:     return "dist";
-		case UF_pack:     return "pack";
-		case UF_reach:    return "reach";
-		case UF_singleStr:return "singleStr";
-		case UF_defStr:   return "defStr";
-		case UF_city:     return "city";
-		case UF_unitAI:   return "unitAI";
-		case UF_missionAI:return "missionAI";
-		case UF_targetX:  return "targetX";
-		case UF_targetY:  return "targetY";
+		case UNTF_owner:    return "owner";
+		case UNTF_unit:     return "unit";
+		case UNTF_type:     return "type";
+		case UNTF_x:        return "x";
+		case UNTF_y:        return "y";
+		case UNTF_stack:    return "stack";
+		case UNTF_roleFrom: return "roleFrom";
+		case UNTF_roleTo:   return "roleTo";
+		case UNTF_cityX:    return "cityX";
+		case UNTF_cityY:    return "cityY";
+		case UNTF_dist:     return "dist";
+		case UNTF_pack:     return "pack";
+		case UNTF_reach:    return "reach";
+		case UNTF_singleStr:return "singleStr";
+		case UNTF_defStr:   return "defStr";
+		case UNTF_city:     return "city";
+		case UNTF_unitAI:   return "unitAI";
+		case UNTF_missionAI:return "missionAI";
+		case UNTF_targetX:  return "targetX";
+		case UNTF_targetY:  return "targetY";
 		default:          return NULL;
 		}
 	}
@@ -136,26 +136,26 @@ namespace
 	}
 	enum ComField
 	{
-		CF_owner = 0, CF_unit, CF_targetX, CF_targetY,
-		CF_odds, CF_base,
-		CF_final,
-		CF_goodness, CF_leadWin, CF_win
+		COMF_owner = 0, COMF_unit, COMF_targetX, COMF_targetY,
+		COMF_odds, COMF_base,
+		COMF_final,
+		COMF_goodness, COMF_leadWin, COMF_win
 	};
 	const char* comFieldInfo(int iFieldTag, SpineFieldType* peType)
 	{
 		*peType = SFT_INT;
 		switch (iFieldTag)
 		{
-		case CF_owner:   return "owner";
-		case CF_unit:    return "unit";
-		case CF_targetX: return "targetX";
-		case CF_targetY: return "targetY";
-		case CF_odds:    return "odds";
-		case CF_base:    return "base";
-		case CF_final:   return "final";
-		case CF_goodness:return "goodness";
-		case CF_leadWin: return "leadWin";
-		case CF_win:     return "win";
+		case COMF_owner:   return "owner";
+		case COMF_unit:    return "unit";
+		case COMF_targetX: return "targetX";
+		case COMF_targetY: return "targetY";
+		case COMF_odds:    return "odds";
+		case COMF_base:    return "base";
+		case COMF_final:   return "final";
+		case COMF_goodness:return "goodness";
+		case COMF_leadWin: return "leadWin";
+		case COMF_win:     return "win";
 		default:         return NULL;
 		}
 	}
@@ -181,19 +181,19 @@ namespace
 	}
 	enum FndField
 	{
-		FF_owner = 0, FF_unit, FF_siteX, FF_siteY, FF_value, FF_candidateSites
+		FNDF_owner = 0, FNDF_unit, FNDF_siteX, FNDF_siteY, FNDF_value, FNDF_candidateSites
 	};
 	const char* fndFieldInfo(int iFieldTag, SpineFieldType* peType)
 	{
 		*peType = SFT_INT;
 		switch (iFieldTag)
 		{
-		case FF_owner:          return "owner";
-		case FF_unit:           return "unit";
-		case FF_siteX:          return "siteX";
-		case FF_siteY:          return "siteY";
-		case FF_value:          return "value";
-		case FF_candidateSites: return "candidateSites";
+		case FNDF_owner:          return "owner";
+		case FNDF_unit:           return "unit";
+		case FNDF_siteX:          return "siteX";
+		case FNDF_siteY:          return "siteY";
+		case FNDF_value:          return "value";
+		case FNDF_candidateSites: return "candidateSites";
 		default:                return NULL;
 		}
 	}
@@ -670,8 +670,8 @@ void CvUnitAI::doUnitAIMove()
 	logUnitAI(2, "[UNT/move] owner=%d unit=%d type=%d at=(%d,%d) stack=%d",
 		(int)getOwner(), getID(), (int)AI_getUnitAIType(), getX(), getY(), getGroup()->getNumUnits());
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_MOVE, 2)
-		.addI(UF_owner, (int)getOwner()).addI(UF_unit, getID()).addI(UF_type, (int)AI_getUnitAIType())
-		.addI(UF_x, getX()).addI(UF_y, getY()).addI(UF_stack, getGroup()->getNumUnits()));
+		.addI(UNTF_owner, (int)getOwner()).addI(UNTF_unit, getID()).addI(UNTF_type, (int)AI_getUnitAIType())
+		.addI(UNTF_x, getX()).addI(UNTF_y, getY()).addI(UNTF_stack, getGroup()->getNumUnits()));
 
 	switch (AI_getUnitAIType())
 	{
@@ -1716,8 +1716,8 @@ void CvUnitAI::AI_setUnitAIType(UnitAITypes eNewValue)
 		logUnitAI(1, "[UNT/role] owner=%d unit=%d UNITAI %d -> %d",
 			(int)getOwner(), getID(), (int)AI_getUnitAIType(), (int)eNewValue);
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_ROLE, 1)
-			.addI(UF_owner, (int)getOwner()).addI(UF_unit, getID())
-			.addI(UF_roleFrom, (int)AI_getUnitAIType()).addI(UF_roleTo, (int)eNewValue));
+			.addI(UNTF_owner, (int)getOwner()).addI(UNTF_unit, getID())
+			.addI(UNTF_roleFrom, (int)AI_getUnitAIType()).addI(UNTF_roleTo, (int)eNewValue));
 
 		const int iEffCount = SMeffectiveCountTimes100();
 
@@ -2651,9 +2651,9 @@ void CvUnitAI::AI_barbAttackMove()
 				logUnitAI(2, "[UNT/horde] owner=%d unit=%d city=(%d,%d) dist=%d pack=%d reach=%d",
 					(int)getOwner(), getID(), pHordeTarget->getX(), pHordeTarget->getY(), iBestDistance, iPack, iReach);
 				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_HORDE_CITY, 2)
-					.addI(UF_owner, (int)getOwner()).addI(UF_unit, getID())
-					.addI(UF_cityX, pHordeTarget->getX()).addI(UF_cityY, pHordeTarget->getY())
-					.addI(UF_dist, iBestDistance).addI(UF_pack, iPack).addI(UF_reach, iReach));
+					.addI(UNTF_owner, (int)getOwner()).addI(UNTF_unit, getID())
+					.addI(UNTF_cityX, pHordeTarget->getX()).addI(UNTF_cityY, pHordeTarget->getY())
+					.addI(UNTF_dist, iBestDistance).addI(UNTF_pack, iPack).addI(UNTF_reach, iReach));
 
 				if (iBestDistance <= 1)
 				{
@@ -2683,8 +2683,8 @@ void CvUnitAI::AI_barbAttackMove()
 				logUnitAI(2, "[UNT/horde] owner=%d unit=%d fieldPack at=(%d,%d)",
 					(int)getOwner(), getID(), getX(), getY());
 				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_HORDE_FIELDPACK, 2)
-					.addI(UF_owner, (int)getOwner()).addI(UF_unit, getID())
-					.addI(UF_x, getX()).addI(UF_y, getY()));
+					.addI(UNTF_owner, (int)getOwner()).addI(UNTF_unit, getID())
+					.addI(UNTF_x, getX()).addI(UNTF_y, getY()));
 				return;
 			}
 			if (AI_huntRange(iBaseRange, iOddsFloor, false))
@@ -2692,8 +2692,8 @@ void CvUnitAI::AI_barbAttackMove()
 				logUnitAI(2, "[UNT/horde] owner=%d unit=%d fieldMarch at=(%d,%d)",
 					(int)getOwner(), getID(), getX(), getY());
 				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_HORDE_FIELDMARCH, 2)
-					.addI(UF_owner, (int)getOwner()).addI(UF_unit, getID())
-					.addI(UF_x, getX()).addI(UF_y, getY()));
+					.addI(UNTF_owner, (int)getOwner()).addI(UNTF_unit, getID())
+					.addI(UNTF_x, getX()).addI(UNTF_y, getY()));
 				return;
 			}
 		}
@@ -3371,9 +3371,9 @@ bool CvUnitAI::AI_smMergeToBreachCity(const CvCity* pTargetCity)
 			(int)getOwner(), pBase->getID(), (int)pBase->getUnitType(),
 			pTargetCity->getX(), pTargetCity->getY(), iSingleStr, iDefenderStr);
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_MERGE2BREACH, 1)
-			.addI(UF_owner, (int)getOwner()).addI(UF_unit, pBase->getID()).addI(UF_type, (int)pBase->getUnitType())
-			.addI(UF_targetX, pTargetCity->getX()).addI(UF_targetY, pTargetCity->getY())
-			.addI(UF_singleStr, iSingleStr).addI(UF_defStr, iDefenderStr));
+			.addI(UNTF_owner, (int)getOwner()).addI(UNTF_unit, pBase->getID()).addI(UNTF_type, (int)pBase->getUnitType())
+			.addI(UNTF_targetX, pTargetCity->getX()).addI(UNTF_targetY, pTargetCity->getY())
+			.addI(UNTF_singleStr, iSingleStr).addI(UNTF_defStr, iDefenderStr));
 
 		CvUnit::mergeUnits(apTriple[0], apTriple[1], apTriple[2], apTriple[0]->getGroup());
 		return true; // 'this' may be merged away -- callers return immediately.
@@ -18189,9 +18189,9 @@ bool CvUnitAI::AI_cityAttack(int iRange, int iOddsThreshold, bool bFollow)
 		logCombatAI(2, "[COM/decision] owner=%d unit=%d routine=cityAttack target=(%d,%d) odds=%d base=%d action=attack",
 			(int)getOwner(), getID(), pBestPlot->getX(), pBestPlot->getY(), iBestValue, iOddsThreshold);
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_COMBAT, COM_DECISION_CITYATTACK, 2)
-			.addI(CF_owner, (int)getOwner()).addI(CF_unit, getID())
-			.addI(CF_targetX, pBestPlot->getX()).addI(CF_targetY, pBestPlot->getY())
-			.addI(CF_odds, iBestValue).addI(CF_base, iOddsThreshold));
+			.addI(COMF_owner, (int)getOwner()).addI(COMF_unit, getID())
+			.addI(COMF_targetX, pBestPlot->getX()).addI(COMF_targetY, pBestPlot->getY())
+			.addI(COMF_odds, iBestValue).addI(COMF_base, iOddsThreshold));
 		AI_logAct("cityAttack", "attack", pBestPlot);
 		bool iAttackResult = getGroup()->pushMissionInternal(MISSION_MOVE_TO, pBestPlot->getX(), pBestPlot->getY(), ((bFollow) ? MOVE_DIRECT_ATTACK : 0));
 
@@ -18396,9 +18396,9 @@ bool CvUnitAI::AI_anyAttack(int iRange, int iOddsThreshold, int iMinStack, bool 
 		logCombatAI(2, "[COM/decision] owner=%d unit=%d routine=anyAttack target=(%d,%d) odds=%d base=%d action=attack",
 			(int)getOwner(), getID(), pBestPlot->getX(), pBestPlot->getY(), iBestValue, iOddsThreshold);
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_COMBAT, COM_DECISION_ANYATTACK, 2)
-			.addI(CF_owner, (int)getOwner()).addI(CF_unit, getID())
-			.addI(CF_targetX, pBestPlot->getX()).addI(CF_targetY, pBestPlot->getY())
-			.addI(CF_odds, iBestValue).addI(CF_base, iOddsThreshold));
+			.addI(COMF_owner, (int)getOwner()).addI(COMF_unit, getID())
+			.addI(COMF_targetX, pBestPlot->getX()).addI(COMF_targetY, pBestPlot->getY())
+			.addI(COMF_odds, iBestValue).addI(COMF_base, iOddsThreshold));
 		AI_logAct("anyAttack", "attack", pBestPlot);
 		return getGroup()->pushMissionInternal(MISSION_MOVE_TO, pBestPlot->getX(), pBestPlot->getY(), ((bFollow) ? MOVE_DIRECT_ATTACK : 0));
 	}
@@ -18536,9 +18536,9 @@ bool CvUnitAI::AI_leaveAttack(int iRange, int iOddsThreshold, int iStrengthThres
 			logCombatAI(2, "[COM/decision] owner=%d unit=%d routine=leaveAttack target=(%d,%d) odds=%d base=%d action=attack",
 				(int)getOwner(), getID(), pBestPlot->getX(), pBestPlot->getY(), iBestValue, iOddsThreshold);
 			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_COMBAT, COM_DECISION_LEAVEATTACK, 2)
-				.addI(CF_owner, (int)getOwner()).addI(CF_unit, getID())
-				.addI(CF_targetX, pBestPlot->getX()).addI(CF_targetY, pBestPlot->getY())
-				.addI(CF_odds, iBestValue).addI(CF_base, iOddsThreshold));
+				.addI(COMF_owner, (int)getOwner()).addI(COMF_unit, getID())
+				.addI(COMF_targetX, pBestPlot->getX()).addI(COMF_targetY, pBestPlot->getY())
+				.addI(COMF_odds, iBestValue).addI(COMF_base, iOddsThreshold));
 			AI_logAct("leaveAttack", "attack", pBestPlot);
 			return getGroup()->pushMissionInternal(MISSION_MOVE_TO, pBestPlot->getX(), pBestPlot->getY(), 0);
 		}
@@ -19491,10 +19491,10 @@ bool CvUnitAI::AI_found()
 			GET_PLAYER(getOwner()).AI_getNumCitySites(), atPlot(pBestPlot) ? "FOUND" : "moveto");
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_FOUND,
 				atPlot(pBestPlot) ? FND_SITE_FOUND : FND_SITE_MOVETO, 1)
-			.addI(FF_owner, (int)getOwner()).addI(FF_unit, getID())
-			.addI(FF_siteX, pBestPlot->getX()).addI(FF_siteY, pBestPlot->getY())
-			.addI(FF_value, iBestFoundValue)
-			.addI(FF_candidateSites, GET_PLAYER(getOwner()).AI_getNumCitySites()));
+			.addI(FNDF_owner, (int)getOwner()).addI(FNDF_unit, getID())
+			.addI(FNDF_siteX, pBestPlot->getX()).addI(FNDF_siteY, pBestPlot->getY())
+			.addI(FNDF_value, iBestFoundValue)
+			.addI(FNDF_candidateSites, GET_PLAYER(getOwner()).AI_getNumCitySites()));
 
 		if (atPlot(pBestPlot))
 		{
@@ -25463,9 +25463,9 @@ int CvUnitAI::AI_finalOddsThreshold(const CvPlot* pPlot, int iOddsThreshold) con
 		(int)getOwner(), getID(), pPlot ? pPlot->getX() : -1, pPlot ? pPlot->getY() : -1,
 		iOddsThreshold, range(iFinalOddsThreshold, 0, 100));
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_COMBAT, COM_THRESHOLD, 3)
-		.addI(CF_owner, (int)getOwner()).addI(CF_unit, getID())
-		.addI(CF_targetX, pPlot ? pPlot->getX() : -1).addI(CF_targetY, pPlot ? pPlot->getY() : -1)
-		.addI(CF_base, iOddsThreshold).addI(CF_final, range(iFinalOddsThreshold, 0, 100)));
+		.addI(COMF_owner, (int)getOwner()).addI(COMF_unit, getID())
+		.addI(COMF_targetX, pPlot ? pPlot->getX() : -1).addI(COMF_targetY, pPlot ? pPlot->getY() : -1)
+		.addI(COMF_base, iOddsThreshold).addI(COMF_final, range(iFinalOddsThreshold, 0, 100)));
 
 	return range(iFinalOddsThreshold, 0, 100);
 }
@@ -28686,8 +28686,8 @@ void CvUnitAI::AI_setAsGarrison(const CvCity* pCity)
 			iGarrisonCity == -1 ? m_iGarrisonCity : iGarrisonCity);
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT,
 				iGarrisonCity == -1 ? UNT_GARRISON_LEAVE : UNT_GARRISON_JOIN, 2)
-			.addI(UF_owner, (int)getOwner()).addI(UF_unit, getID()).addI(UF_type, (int)AI_getUnitAIType())
-			.addI(UF_city, iGarrisonCity == -1 ? m_iGarrisonCity : iGarrisonCity));
+			.addI(UNTF_owner, (int)getOwner()).addI(UNTF_unit, getID()).addI(UNTF_type, (int)AI_getUnitAIType())
+			.addI(UNTF_city, iGarrisonCity == -1 ? m_iGarrisonCity : iGarrisonCity));
 
 		m_iGarrisonCity = iGarrisonCity;
 	}

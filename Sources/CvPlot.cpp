@@ -55,17 +55,17 @@ namespace
 		}
 	}
 	// ENG's LOCAL field tags (all plain ints).
-	enum EngField { EF_team = 0, EF_x, EF_y, EF_count, EF_change };
+	enum EngField { ENGF_team = 0, ENGF_x, ENGF_y, ENGF_count, ENGF_change };
 	const char* engineFieldInfo(int iFieldTag, SpineFieldType* peType)
 	{
 		*peType = SFT_INT;
 		switch (iFieldTag)
 		{
-		case EF_team:   return "team";
-		case EF_x:      return "x";
-		case EF_y:      return "y";
-		case EF_count:  return "count";
-		case EF_change: return "change";
+		case ENGF_team:   return "team";
+		case ENGF_x:      return "x";
+		case ENGF_y:      return "y";
+		case ENGF_count:  return "count";
+		case ENGF_change: return "change";
 		default:        return NULL;
 		}
 	}
@@ -9178,11 +9178,11 @@ void CvPlot::changeVisibilityCount(TeamTypes eTeam, int iChange, InvisibleTypes 
 				logEngine(2, "[ENG/viscap] team=%d plot=(%d,%d) count=%d change=%d - negative visibility count capped to 0",
 					eTeam, getX(), getY(), m_aiVisibilityCount[eTeam], iChange);
 				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_ENGINE, ENG_VISCAP, 2)
-					.addI(EF_team,   (int)eTeam)
-					.addI(EF_x,      getX())
-					.addI(EF_y,      getY())
-					.addI(EF_count,  m_aiVisibilityCount[eTeam])
-					.addI(EF_change, iChange));
+					.addI(ENGF_team,   (int)eTeam)
+					.addI(ENGF_x,      getX())
+					.addI(ENGF_y,      getY())
+					.addI(ENGF_count,  m_aiVisibilityCount[eTeam])
+					.addI(ENGF_change, iChange));
 				m_aiVisibilityCount[eTeam] = 0;
 			}
 		}
