@@ -2,14 +2,6 @@
  "type": "BUILDING_EDUCATION_ACUMEN",
  "description": "TXT_KEY_BUILDING_EDUCATION_ACUMEN",
  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_EDUCATION_BRILLIANT",
-   "BUILDING_EDUCATION_CULTIVATED",
-   "BUILDING_EDUCATION_INTUITIVE",
-   "BUILDING_EDUCATION_KNOWLEDGEABLE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -30,65 +22,55 @@
  },
  "production": {
   "city": {
-   "percent": 25
+   "percent": 5
   }
  },
  "commerce": {
   "city": {
-   "percent": 25
+   "percent": 5
   }
  },
  "research": {
   "city": {
-   "flat": 9,
-   "percent": 25
-  }
- },
- "freeSpecialists": {
-  "city": {
-   "flat": 2
+   "flat": 3,
+   "percent": 5
   }
  },
  "greatPeopleRate": {
   "city": {
-   "percent": 25
-  }
- },
- "greatGeneralRate": {
-  "city": {
-   "percent": 2
+   "percent": 9
   }
  },
  "warWeariness": {
   "city": {
-   "percent": 10
+   "percent": 4
   }
  },
  "tradeRoutes": {
   "city": {
    "modifier": {
-    "percent": 15
+    "percent": 5
    }
   }
  },
  "populationGrowthRate": {
   "city": {
-   "percent": 50
+   "percent": 10
   }
  },
  "PROPERTY_FLAMMABILITY": {
   "city": {
-   "flat": -9
+   "flat": -3
   }
  },
  "PROPERTY_CRIME": {
   "city": {
-   "flat": -15
+   "flat": -5
   }
  },
  "PROPERTY_DISEASE": {
   "city": {
-   "flat": -15
+   "flat": -5
   }
  },
  "world": {

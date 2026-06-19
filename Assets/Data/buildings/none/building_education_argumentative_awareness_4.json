@@ -2,13 +2,6 @@
  "type": "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_4",
  "description": "TXT_KEY_BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_4",
  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_1",
-   "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_2",
-   "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_3"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -29,7 +22,7 @@
  },
  "anarchy": {
   "city": {
-   "percent": 20
+   "percent": 5
   }
  },
  "world": {

@@ -275,6 +275,23 @@ resource/bonus**. Authored on the target, scope-tagged per clause:
       UI's SEPARATE property-effect list** (which already exists), so the **NORMAL building listing stays exactly as it is
       today**. This is the deferred `PropertyEffect` direction (do NOT build now); the `notConstructible` gate is the correct
       interim while these remain `BUILDING_*`. (data-model-spec §4.2b.)
+    - **⛔ PSEUDOBUILDINGS MUST NOT `replace` EACH OTHER — they stack CUMULATIVELY on the threshold→∞ band (owner ruling
+      2026-06-19).** A property-effect band is enabled when its threshold is met and goes dormant below it; every band whose
+      threshold is met stays ACTIVE (cumulative), never superseding a lower band. So a pseudobuilding's lifecycle is
+      enable / obsolete / active / dormant — **`replace` is the wrong mechanism between bands.** Crime / disease / tourism /
+      air+water pollution already follow this (0 inter-band `replaces`). **Education was the lone outlier** — its author
+      built a parallel succession system (4 ladders × 13 bands chained by `ReplacementBuildings`, each carrying the FULL
+      per-band value). It is **pulled in line** (curator `apply_property_bands`, `Tools/Migration/curate_building.py`): the
+      pseudo→pseudo `replaces` are stripped and each ladder band is re-authored as its INCREMENTAL delta
+      (`full[rank] − full[rank−1]`), so the cumulative active bands reproduce the top band's intended total ("nerf each
+      building for UX — you see every level achieved, the sum is unchanged"). **A pseudo→pseudo `replace` is DROPPED;
+      a pseudo→REAL `replace` becomes a reversible `disables`** (owner 2026-06-19) — *replace means REMOVE*, and an
+      effect must be able to turn a building OFF "without nuking it from orbit." So `BUILDING_POLLUTION_BLACKENED_SKIES`
+      now **`disables`** the 24 telescope/observatory buildings (they go **dormant** while the skies are blackened and
+      **reactivate** when the air clears — never destroyed/rebuilt). This is the **reversible effect-disable** flavor of
+      `disables` (§5). A normal building may likewise `disables` a band (a rat-catcher disabling the disease pest band).
+      When building GROUPS become first-class (data-model §7), a band can disable a building-*group* instead of
+      enumerating each member (owner 2026-06-19). Full record + validation: `../plans/modifier-cascade-known-discrepancies.md` §A.1.
   - **`BaseEffect` hierarchy — a SEPARATE, LATER issue; do NOT touch during the migration (owner, 2026-06-15).** The
     `BUILDING_EFFECT_*` pseudobuildings **work fine as-is for now** — the cascade just treats them as buildings, so
     leave them alone. The future improvement is ORGANIZATIONAL: `PropertyEffect`, `BuildingEffect`, and the other
@@ -484,6 +501,21 @@ silently resumes. That destruction (not a pause) is exactly why `disables` is it
 DORMANCY still exists — but it is a different mechanism: the `requires`-negative** (`disableIfAny`/`disableIfAll`,
 target-side, §3), used for pseudobuildings (education/crime/tourism) that switch off/on as a condition holds. So:
 **ban = `disables` = destroyed; condition-dormancy = `requires`-negative = parked-and-resumes.**
+
+- **⚠ REFINEMENT — the REVERSIBLE EFFECT-DISABLE: a source-side `disables` that induces DORMANCY, not destruction
+  (owner ruling 2026-06-19).** The destruction framing above is the LAW/DOCTRINE flavor (a moral ban genuinely tears
+  the thing down). The owner adds a second intent: *"we need the ability for an effect (what pseudobuildings are
+  today) to disable a building, without nuking it from orbit"* — an EFFECT source (a property-effect pseudobuilding)
+  must be able to `disables` a target so the target goes **DORMANT** (parked, reactivates when the disabler clears),
+  **never destroyed/rebuilt**. Worked case: `BUILDING_POLLUTION_BLACKENED_SKIES` `disables` the telescope/observatory
+  buildings — *"an observatory should become dormant from it, not get nuked from orbit"* — and they come back when the
+  air clears. So `disables` carries TWO fates by source intent: **law-ban → destroyed (rebuild on repeal)**;
+  **effect-disable → dormant (auto-resumes)**. This is the source-side counterpart of the target-side
+  `requires`-negative dormancy (§3): same reversible *outcome*, authored on the SOURCE (the effect owns "what I
+  suppress") rather than inverted onto each target. *(Exact mechanism — whether the engine routes an effect-`disables`
+  through the same dormancy path as the `requires`-negative, and how a source declares the dormant-vs-destructive
+  intent — pins at #430; `disables` is unparsed today. It models cleaner once building GROUPS land (data-model §7): a
+  band disables a building-group, not an enumerated list.)*
 
 **INSTANCE FATE — how a target loses availability decides what happens to existing instances (owner, 2026-06-15).
 TABLE OWNER-ACCEPTED / LOCKED 2026-06-15 (final yes given — the destroyed-vs-dormant split below is settled):**

@@ -2,11 +2,6 @@
  "type": "BUILDING_EDUCATION_FOOLISH",
  "description": "TXT_KEY_BUILDING_EDUCATION_FOOLISH",
  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_EDUCATION_UNAWARE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -27,18 +22,18 @@
  },
  "production": {
   "city": {
-   "percent": -10
+   "percent": -5
   }
  },
  "commerce": {
   "city": {
-   "percent": -10
+   "percent": -5
   }
  },
  "research": {
   "city": {
-   "flat": -2,
-   "percent": -10
+   "flat": -1,
+   "percent": -5
   }
  },
  "freeSpecialists": {
@@ -48,7 +43,7 @@
  },
  "greatPeopleRate": {
   "city": {
-   "percent": -4
+   "percent": -3
   }
  },
  "greatGeneralRate": {
@@ -58,34 +53,34 @@
  },
  "warWeariness": {
   "city": {
-   "percent": -2
+   "percent": -1
   }
  },
  "tradeRoutes": {
   "city": {
    "modifier": {
-    "percent": -3
+    "percent": -2
    }
   }
  },
  "populationGrowthRate": {
   "city": {
-   "percent": -20
+   "percent": -10
   }
  },
  "PROPERTY_FLAMMABILITY": {
   "city": {
-   "flat": 2
+   "flat": 1
   }
  },
  "PROPERTY_CRIME": {
   "city": {
-   "flat": 3
+   "flat": 2
   }
  },
  "PROPERTY_DISEASE": {
   "city": {
-   "flat": 3
+   "flat": 2
   }
  },
  "world": {

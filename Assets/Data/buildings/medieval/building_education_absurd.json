@@ -2,13 +2,6 @@
  "type": "BUILDING_EDUCATION_ABSURD",
  "description": "TXT_KEY_BUILDING_EDUCATION_ABSURD",
  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_EDUCATION_FOOLISH",
-   "BUILDING_EDUCATION_SENSELESS",
-   "BUILDING_EDUCATION_UNAWARE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -29,65 +22,65 @@
  },
  "production": {
   "city": {
-   "percent": -20
+   "percent": -5
   }
  },
  "commerce": {
   "city": {
-   "percent": -20
+   "percent": -5
   }
  },
  "research": {
   "city": {
-   "flat": -6,
-   "percent": -20
+   "flat": -2,
+   "percent": -5
   }
  },
  "freeSpecialists": {
   "city": {
-   "flat": -2
+   "flat": -1
   }
  },
  "greatPeopleRate": {
   "city": {
-   "percent": -16
+   "percent": -7
   }
  },
  "greatGeneralRate": {
   "city": {
-   "percent": -2
+   "percent": -1
   }
  },
  "warWeariness": {
   "city": {
-   "percent": -6
+   "percent": -2
   }
  },
  "tradeRoutes": {
   "city": {
    "modifier": {
-    "percent": -10
+    "percent": -4
    }
   }
  },
  "populationGrowthRate": {
   "city": {
-   "percent": -40
+   "percent": -10
   }
  },
  "PROPERTY_FLAMMABILITY": {
   "city": {
-   "flat": 6
+   "flat": 2
   }
  },
  "PROPERTY_CRIME": {
   "city": {
-   "flat": 10
+   "flat": 4
   }
  },
  "PROPERTY_DISEASE": {
   "city": {
-   "flat": 10
+   "flat": 4
   }
  },
  "world": {

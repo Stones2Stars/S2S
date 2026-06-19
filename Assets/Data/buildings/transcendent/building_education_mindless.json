@@ -2,22 +2,6 @@
  "type": "BUILDING_EDUCATION_MINDLESS",
  "description": "TXT_KEY_BUILDING_EDUCATION_MINDLESS",
  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_EDUCATION_ABSURD",
-   "BUILDING_EDUCATION_BEWILDERED",
-   "BUILDING_EDUCATION_DIMWITTED",
-   "BUILDING_EDUCATION_FARCICAL",
-   "BUILDING_EDUCATION_FOOLISH",
-   "BUILDING_EDUCATION_IDIOCRACY",
-   "BUILDING_EDUCATION_IGNORANCE",
-   "BUILDING_EDUCATION_MORONIC",
-   "BUILDING_EDUCATION_PREPOSTEROUS",
-   "BUILDING_EDUCATION_RIDICULOUS",
-   "BUILDING_EDUCATION_SENSELESS",
-   "BUILDING_EDUCATION_UNAWARE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -38,65 +22,55 @@
  },
  "production": {
   "city": {
-   "percent": -65
+   "percent": -5
   }
  },
  "commerce": {
   "city": {
-   "percent": -65
+   "percent": -5
   }
  },
  "research": {
   "city": {
-   "flat": -49,
-   "percent": -65
-  }
- },
- "freeSpecialists": {
-  "city": {
-   "flat": -6
+   "flat": -7,
+   "percent": -5
   }
  },
  "greatPeopleRate": {
   "city": {
-   "percent": -176
-  }
- },
- "greatGeneralRate": {
-  "city": {
-   "percent": -6
+   "percent": -30
   }
  },
  "warWeariness": {
   "city": {
-   "percent": -97
+   "percent": -20
   }
  },
  "tradeRoutes": {
   "city": {
    "modifier": {
-    "percent": -91
+    "percent": -13
    }
   }
  },
  "populationGrowthRate": {
   "city": {
-   "percent": -130
+   "percent": -10
   }
  },
  "PROPERTY_FLAMMABILITY": {
   "city": {
-   "flat": 49
+   "flat": 7
   }
  },
  "PROPERTY_CRIME": {
   "city": {
-   "flat": 91
+   "flat": 13
   }
  },
  "PROPERTY_DISEASE": {
   "city": {
-   "flat": 91
+   "flat": 13
   }
  },
  "world": {

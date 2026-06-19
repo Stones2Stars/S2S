@@ -29,6 +29,7 @@ one-shot grants/pulses land in PASS 2 (they show as UNHANDLED in the coverage re
 import argparse
 import json
 import os
+import xml.etree.ElementTree as ET
 from collections import OrderedDict
 
 import engine
@@ -285,6 +286,23 @@ TARGET_KEYED = {
 _KEY_TAGS = ("PrereqTech", "TechType", "BuildingType", "BonusType", "ImprovementType", "TerrainType",
              "SpecialistType", "ReligionType", "UnitType", "UnitCombatType", "DomainType", "PlotType")
 
+# PER-100 legacy fields -- the curator's ONE-TIME de-scale to HUMAN-READABLE numbers (docs/dev/reference/
+# cascade-fixed-point.md §0.1/§2). These XML fields are stored x100 (their C++ accessor is `get...100()`; the value
+# flows straight into the x100 `m_buildingExtraYield100` bucket, CvCity.cpp:4951 -- verified from the math, not the
+# field name alone). The JSON layer must be human ("+7", not 700); the human->x100 conversion is readJson's sole job.
+# After this single XML->JSON conversion no per-100/normal mix survives anywhere downstream (owner 2026-06-19).
+PER100_TAGS = frozenset(("TechYieldChanges", "TechCommerceChanges"))
+
+
+def _descale100(v):
+    """x100 legacy value -> human-readable: int when divisible by 100 (700 -> 7), else a 2-decimal float (150 -> 1.5).
+    Recurses into the split/member dict ({food: 700, production: 100} -> {food: 7, production: 1})."""
+    if isinstance(v, dict):
+        return OrderedDict((k, _descale100(x)) for k, x in v.items())
+    if isinstance(v, int):
+        return v // 100 if v % 100 == 0 else round(v / 100.0, 2)
+    return v
+
 
 def _keyed(node, valuekeys):
     """[(ref, value), ...] for a C2C keyed/paired container. ref = the first known key-tag child; value = a
@@ -358,6 +376,8 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables, obsolete
         if node is None:
             continue
         for ref, val in _keyed(node, vkeys):
+            if tag in PER100_TAGS:                       # one-time de-scale x100 -> human (cascade-fixed-point.md §2)
+                val = _descale100(val)
             enabled = _enabled(kind, ref, scope)
             if isinstance(val, dict):                    # split: member IS the family
                 for member, v in val.items():
@@ -986,6 +1006,178 @@ HANDLED = (set(SCALAR_FAMILIES) | set(YIELD_FAMILIES) | set(CAP_IDENTITY) | set(
            | {"Type", "Flavors", "iAIWeight"})
 
 
+# ============================ PROPERTY-BAND REALIGNMENT (owner 2026-06-19) ============================
+# Pull the EDUCATION band system back in line with how every OTHER property's bands work.
+#
+# Property-effect "pseudobuildings" (the BuildingType under each PROPERTY's <PropertyBuildings>) are placed/removed
+# by the property-band system (checkPropertyBuildings) on a THRESHOLD->infinity band (data-model §2.1, enabler-spec
+# §3). Owner ruling: pseudobuildings must NOT `replace` EACH OTHER -- they enable/obsolete + go active/dormant on the
+# band, CUMULATIVELY (every band whose threshold is met stays active). Crime/disease/tourism/pollution already do this
+# (0 replaces). EDUCATION is the outlier: its author built a parallel system -- 4 ladders (positive/negative era,
+# argumentative-awareness, blissful-ignorance), each a succession chain (legacy ReplacementBuildings) carrying the
+# FULL per-band value. Two fixes pull it in line:
+#   (1) STRIP pseudo->pseudo `replaces` (they shouldn't replace each other). A pseudo->REAL replace STAYS -- e.g.
+#       BLACKENED_SKIES (air-pollution band) supersedes the telescope/observatory buildings; that is a real edge.
+#   (2) With no replace the ladder bands now STACK cumulatively, so re-author each as its INCREMENTAL delta
+#       (full[rank] - full[rank-1]); summing the active cumulative bands reproduces the top band's intended total
+#       ('nerf each building for UX' -- you see every level achieved, the sum is unchanged).
+# The threshold->infinity active/dormant GATING (a requires.operate PROPERTY-in-band atom) is NOT added here -- crime
+# bands carry none either; that is the deferred PropertyEffect/engine concern. We only align education to the existing
+# (crime) data shape: no pseudo->pseudo replace + cumulative incremental values.
+
+PROPERTY_INFOS_XML = os.path.join(REPO, "Assets", "XML", "GameInfo", "CIV4PropertyInfos.xml")
+# top-level reserved (non-family) keys -- everything else on a band object is a modifier family to increment.
+RESERVED_NONFAMILY = {"type", "description", "civilopedia", "help", "enables", "obsoletes", "replaces", "requires",
+                      "allowed", "grants", "cost", "ai", "loadPrune", "ui", "world", "sound", "identity"}
+
+
+def property_band_buildings():
+    """The set of BuildingType in any PROPERTY's <PropertyBuildings> -- the property-effect pseudobuildings."""
+    pseudo = set()
+    root = ET.parse(PROPERTY_INFOS_XML).getroot()
+    for node in root.iter():
+        if node.tag.split("}")[-1] != "PropertyBuilding":
+            continue
+        for ch in node:
+            if ch.tag.split("}")[-1] == "BuildingType" and ch.text:
+                pseudo.add(ch.text.strip())
+    return pseudo
+
+
+def _band_families(obj):
+    return [k for k in obj if k not in RESERVED_NONFAMILY]
+
+
+def _has_complex_family(obj):
+    """True if any family leaf is a list or a conditional ({value/enabled/disabled}) -- the plain numeric increment
+    subtraction below would be unsafe, so we SKIP (keep full values) and warn rather than corrupt silently."""
+    def walk(n):
+        if isinstance(n, list):
+            return True
+        if isinstance(n, dict):
+            if "value" in n or "enabled" in n or "disabled" in n:
+                return True
+            return any(walk(v) for v in n.values())
+        return False
+    return any(walk(obj[f]) for f in _band_families(obj))
+
+
+def _sub_leaves(a, b):
+    """a - b over matching numeric leaves (b-missing leaf = 0); structure follows `a`. Non-numeric left as-is."""
+    if isinstance(a, dict):
+        out = OrderedDict()
+        for k, v in a.items():
+            out[k] = _sub_leaves(v, b.get(k) if isinstance(b, dict) else None)
+        return out
+    if isinstance(a, bool):
+        return a
+    if isinstance(a, int):
+        return a - (b if isinstance(b, int) and not isinstance(b, bool) else 0)
+    if isinstance(a, float):
+        r = a - (b if isinstance(b, (int, float)) and not isinstance(b, bool) else 0)
+        return int(r) if float(r).is_integer() else round(r, 2)
+    return a
+
+
+def _prune_zero(n):
+    """Drop numeric-zero leaves (a +0 deposit is a no-op, like an absent one) + the emptied parents. -> None if empty."""
+    if isinstance(n, bool):
+        return n
+    if isinstance(n, dict):
+        out = OrderedDict()
+        for k, v in n.items():
+            pv = _prune_zero(v)
+            if pv is not None:
+                out[k] = pv
+        return out or None
+    if isinstance(n, (int, float)):
+        return None if n == 0 else n
+    return n
+
+
+def _with_disables(obj, disables):
+    """Return obj with a `disables` section inserted in the Availability slot (after enables/obsoletes/replaces,
+    before requires/families). Used when a pseudo->REAL `replace` is converted to a reversible disable."""
+    LEADING = ("type", "description", "civilopedia", "help", "enables", "obsoletes", "replaces")
+    out = OrderedDict()
+    done = False
+    for k, v in obj.items():
+        if not done and k not in LEADING:
+            out["disables"] = disables
+            done = True
+        out[k] = v
+    if not done:
+        out["disables"] = disables
+    return out
+
+
+def apply_property_bands(results, pseudo):
+    """(1) increment-convert each replace-defined EDUCATION-style ladder; (2) pseudobuildings must NEVER `replace`
+    (replace = REMOVE): drop pseudo->pseudo replaces (bands stack), convert a pseudo->REAL replace to a reversible
+    `disables` (the effect DISABLES the building into DORMANCY -- it reactivates when the disabler clears -- not
+    'nuked from orbit', owner 2026-06-19). Returns (n_ladders, n_incremented, n_stripped, n_disabled). Mutates results."""
+    # union-find over pseudo->pseudo `replaces` edges -> ladder components; `intra` = each band's pseudo predecessors.
+    parent, intra = {}, {}
+
+    def find(x):
+        parent.setdefault(x, x)
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    for b in pseudo:
+        obj = results.get(b)
+        if not obj:
+            continue
+        ps = set(x for x in obj.get("replaces", {}).get("buildings", []) if x in pseudo)
+        if ps:
+            intra[b] = ps
+            for t in ps:
+                parent[find(b)] = find(t)
+    comps = {}
+    for b in set(intra) | set(t for s in intra.values() for t in s):
+        comps.setdefault(find(b), set()).add(b)
+
+    n_inc = 0
+    for members in comps.values():
+        ranked = sorted(members, key=lambda b: len(intra.get(b, ())))
+        if [len(intra.get(b, ())) for b in ranked] != list(range(len(ranked))):
+            print("  [BANDS] WARN non-contiguous ranks -> skipping ladder: %s" % sorted(members))
+            continue
+        if any(_has_complex_family(results[b]) for b in ranked):
+            print("  [BANDS] WARN conditional/array family -> skipping ladder: %s" % sorted(members))
+            continue
+        full = {b: OrderedDict((f, results[b][f]) for f in _band_families(results[b])) for b in ranked}
+        for i in range(1, len(ranked)):
+            b, p = ranked[i], ranked[i - 1]
+            for f in _band_families(results[b]):
+                inc = _prune_zero(_sub_leaves(full[b][f], full[p].get(f)))
+                if inc is None:
+                    del results[b][f]
+                else:
+                    results[b][f] = inc
+            n_inc += 1
+
+    # pseudobuildings must NEVER `replace` (replace = REMOVE). Drop pseudo->pseudo replaces (the bands STACK); convert
+    # a pseudo->REAL replace to a reversible `disables` -- the effect DISABLES the building into DORMANCY (it
+    # reactivates when the disabler clears), it is NOT 'nuked from orbit' (owner 2026-06-19; BLACKENED_SKIES disables,
+    # not removes, the telescopes/observatories). enabler-spec §5 (reversible effect-disable). When building GROUPS
+    # land (data-model §7) a band can disable a building-GROUP instead of enumerating each member (owner 2026-06-19).
+    stripped, disabled = 0, 0
+    for b in pseudo:
+        obj = results.get(b)
+        if not obj or "replaces" not in obj:
+            continue
+        real = [x for x in obj["replaces"].get("buildings", []) if x not in pseudo]
+        obj.pop("replaces", None)
+        stripped += 1
+        if real:
+            results[b] = _with_disables(obj, OrderedDict([("buildings", real)]))
+            disabled += 1
+    return len(comps), n_inc, stripped, disabled
+
+
 def build_era(store):
     """tech Type -> era short name (from the tech XML <Era>)."""
     cache = {}
@@ -1014,6 +1206,13 @@ def main():
     # SpecialBuilding #31 rides this pass (the per-player-capped GROUP).
     sb_results = OrderedDict((typ, curate_special(typ, rec, store))
                              for typ, rec in store.table("SpecialBuildingInfo").items())
+
+    # PROPERTY-BAND realignment (owner 2026-06-19): strip pseudo->pseudo `replaces` + increment-convert the
+    # education ladders so they stack cumulatively like every other property's bands.
+    pseudo = property_band_buildings()
+    n_lad, n_inc, n_strip, n_dis = apply_property_bands(results, pseudo)
+    print("PROPERTY BANDS: %d pseudobuildings | %d ladders increment-converted (%d member bands) | %d had `replaces` removed (pseudo never replaces) | %d pseudo->REAL replace -> reversible `disables`"
+          % (len(pseudo), n_lad, n_inc, n_strip, n_dis))
 
     from collections import Counter
     leftover = Counter()

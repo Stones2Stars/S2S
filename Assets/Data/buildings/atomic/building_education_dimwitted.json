@@ -2,16 +2,6 @@
  "type": "BUILDING_EDUCATION_DIMWITTED",
  "description": "TXT_KEY_BUILDING_EDUCATION_DIMWITTED",
  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_EDUCATION_ABSURD",
-   "BUILDING_EDUCATION_FARCICAL",
-   "BUILDING_EDUCATION_FOOLISH",
-   "BUILDING_EDUCATION_MORONIC",
-   "BUILDING_EDUCATION_SENSELESS",
-   "BUILDING_EDUCATION_UNAWARE"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -32,65 +22,55 @@
  },
  "production": {
   "city": {
-   "percent": -35
+   "percent": -5
   }
  },
  "commerce": {
   "city": {
-   "percent": -35
+   "percent": -5
   }
  },
  "research": {
   "city": {
-   "flat": -16,
-   "percent": -35
-  }
- },
- "freeSpecialists": {
-  "city": {
-   "flat": -3
+   "flat": -4,
+   "percent": -5
   }
  },
  "greatPeopleRate": {
   "city": {
-   "percent": -49
-  }
- },
- "greatGeneralRate": {
-  "city": {
-   "percent": -3
+   "percent": -13
   }
  },
  "warWeariness": {
   "city": {
-   "percent": -23
+   "percent": -7
   }
  },
  "tradeRoutes": {
   "city": {
    "modifier": {
-    "percent": -28
+    "percent": -7
    }
   }
  },
  "populationGrowthRate": {
   "city": {
-   "percent": -70
+   "percent": -10
   }
  },
  "PROPERTY_FLAMMABILITY": {
   "city": {
-   "flat": 16
+   "flat": 4
   }
  },
  "PROPERTY_CRIME": {
   "city": {
-   "flat": 28
+   "flat": 7
   }
  },
  "PROPERTY_DISEASE": {
   "city": {
-   "flat": 28
+   "flat": 7
   }
  },
  "world": {

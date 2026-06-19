@@ -2,16 +2,6 @@
  "type": "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_7",
  "description": "TXT_KEY_BUILDING_EDUCATION_BLISSFUL_IGNORANCE_7",
  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
- "replaces": {
-  "buildings": [
-   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_1",
-   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_2",
-   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_3",
-   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_4",
-   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_5",
-   "BUILDING_EDUCATION_BLISSFUL_IGNORANCE_6"
-  ]
- },
  "requires": {
   "build": {
    "all": [
@@ -32,7 +22,7 @@
  },
  "anarchy": {
   "city": {
-   "percent": -35
+   "percent": -5
   }
  },
  "world": {
