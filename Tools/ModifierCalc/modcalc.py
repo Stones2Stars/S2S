@@ -373,10 +373,16 @@ def _load_dump(args):
             return json.load(fh)
     try:
         with urllib.request.urlopen(args.url, timeout=5) as resp:
-            return json.loads(resp.read().decode("utf-8"))
+            raw = resp.read().decode("utf-8")
     except Exception as e:
         return {"error": "fetch failed: %s -- is the game up with Autolog__HttpServer on, and the new DLL "
-                         "(with /diagnostic/cityInput) rebuilt+deployed?" % e}
+                         "(with the endpoint) rebuilt+deployed?" % e}
+    save = getattr(args, "save", "")
+    if save:
+        with open(save, "w") as fh:
+            fh.write(raw)
+        print("[saved dump -> %s  (re-run offline with --file %s, no game restart)]" % (save, save))
+    return json.loads(raw)
 
 
 def consume(args):
@@ -451,6 +457,38 @@ def consume(args):
     return 0 if allok else 1
 
 
+def align(args):
+    """MODEL ALIGNMENT (owner 2026-06-19): feed a REAL cityInput dump's yield inputs through BOTH candidate cascade
+    flows on the SAME inputs and quantify the divergence vs legacy -- the parity-adjacency exploration. Yields are
+    where the flat-inside-vs-outside combine choice lives; commerce/etc. have their own flows (extend as needed)."""
+    d = _load_dump(args)
+    if "error" in d:
+        print("dump error: %s" % d["error"])
+        return 1
+    rows = d.get("yields", [])
+    if not rows:
+        print("no yields in dump (point --url/--file at a cityInput dump)")
+        return 1
+    cap = int(d.get("cap", 99000000))
+    print("=== modcalc align [%s]: legacy vs cascade calc-flows on REAL inputs (x100) ===" % d.get("cityName", "?"))
+    print("  family      base  spec  mod%  extra | flat-OUTSIDE(=legacy)  flat-INSIDE(unified) |   delta    delta%")
+    worst = 0.0
+    for y in rows:
+        base, spec, modr, extra = y["base"], y["specialist"], y["modifier"], y["extraYield"]
+        outside = legacy_yield100(base, spec, modr, extra, cap)                 # building flats OUTSIDE the % (= legacy)
+        inside = min(cap, max(100, (base + spec + extra) * modr))               # building flats folded INSIDE the %
+        delta = inside - outside
+        pct = (100.0 * delta / outside) if outside else 0.0
+        worst = max(worst, abs(pct))
+        print("  %-10s %5d %5d %5d %6d | %19d  %18d | %+8d  %+.1f%%"
+              % (y["family"], base, spec, modr, extra, outside, inside, delta, pct))
+    print("\n  delta = extra x (mod-100): the UNIFIED 'flat-inside' model multiplies building flats by the city's")
+    print("  yield %% -> overshoot (worst here %+.1f%%). flat-OUTSIDE == legacy (parity-zero, current DLL flow)." % worst)
+    print("  ALIGNMENT CHOICE: keep flat-outside (parity-zero, data unchanged) vs unified (cleaner model, needs a")
+    print("  data rebalance to bring flats back down). This is the parity-adjacency tradeoff (calc-emulator-spec §0).")
+    return 0
+
+
 def main():
     p = argparse.ArgumentParser(description="modcalc -- #430 modifier old-vs-new formula calculator")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -475,7 +513,15 @@ def main():
     cs.add_argument("--file", default="", help="read the dump from a JSON file instead of fetching the URL")
     cs.add_argument("--flow", choices=FLOWS.keys(), default="legacy_outside",
                     help="which cascade calc-flow to mirror (default: the active legacy_outside)")
+    cs.add_argument("--save", default="", help="also write the fetched dump to this file (for offline replay)")
     cs.set_defaults(func=consume)
+
+    al = sub.add_parser("align", help="model alignment: real cityInput yields through both cascade flows vs legacy")
+    al.add_argument("--url", default="http://127.0.0.1:7227/diagnostic/cityInput?player=0",
+                    help="cityInput endpoint URL (default: player 0's capital)")
+    al.add_argument("--file", default="", help="read the dump from a JSON file instead of fetching (offline replay)")
+    al.add_argument("--save", default="", help="also write the fetched dump to this file (for offline replay)")
+    al.set_defaults(func=align)
 
     args = p.parse_args()
     sys.exit(args.func(args) or 0)

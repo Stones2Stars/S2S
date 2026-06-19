@@ -2,6 +2,7 @@
 #include "CvHttpServer.h"
 #include "CvBuildingInfo.h"
 #include "CvBonusInfo.h" // bonus-name resolution in the /diagnostic/whyNot trace
+#include "CvImprovementInfo.h" // cityInput loadout: worked-plot improvement type
 #include "Engine/CvCity.h"
 #include "Engine/CvPlot.h" // pCity->plot()->canTrain in the /diagnostic/whyNot trace
 #include "AI/CvGameAI.h"
@@ -921,6 +922,49 @@ namespace
 					kBldgs.push_back(picojson::value(std::string(GC.getBuildingInfo((BuildingTypes)b).getType())));
 			}
 			o["buildings"] = picojson::value(kBldgs);
+
+			// LOADOUT (owner 2026-06-19): the raw entity list the cascade calculator is fed -- techs/civics/buildings/plots.
+			// (buildings above.) The calculator reads these + the Assets/Data JSON deposits and applies the cascade model,
+			// then compares to legacy. techs = team-known; civics = player current; plots = the city's workable substrate.
+			picojson::value::array kTechs;
+			for (int t = 0; t < GC.getNumTechInfos(); ++t)
+				if (GET_TEAM((TeamTypes)iTeam).isHasTech((TechTypes)t))
+					kTechs.push_back(picojson::value(std::string(GC.getTechInfo((TechTypes)t).getType())));
+			o["techs"] = picojson::value(kTechs);
+
+			picojson::value::array kCivics;
+			for (int co = 0; co < GC.getNumCivicOptionInfos(); ++co)
+			{
+				const CivicTypes eCivic = kPlayer.getCivics((CivicOptionTypes)co);
+				if (eCivic != NO_CIVIC)
+					kCivics.push_back(picojson::value(std::string(GC.getCivicInfo(eCivic).getType())));
+			}
+			o["civics"] = picojson::value(kCivics);
+
+			picojson::value::array kPlots;
+			for (int pi = 0; pi < pCity->getNumCityPlots(); ++pi)
+			{
+				const CvPlot* pPlot = pCity->getCityIndexPlot(pi);
+				if (pPlot == NULL) continue;
+				picojson::value::object pl;
+				pl["i"]      = picojson::value((double)pi);
+				pl["worked"] = picojson::value(pCity->isWorkingPlot(pi));
+				const TerrainTypes eT = pPlot->getTerrainType();
+				if (eT != NO_TERRAIN) pl["terrain"] = picojson::value(std::string(GC.getTerrainInfo(eT).getType()));
+				const FeatureTypes eF = pPlot->getFeatureType();
+				if (eF != NO_FEATURE) pl["feature"] = picojson::value(std::string(GC.getFeatureInfo(eF).getType()));
+				const ImprovementTypes eI = pPlot->getImprovementType();
+				if (eI != NO_IMPROVEMENT) pl["improvement"] = picojson::value(std::string(GC.getImprovementInfo(eI).getType()));
+				const RouteTypes eR = pPlot->getRouteType();
+				if (eR != NO_ROUTE) pl["route"] = picojson::value(std::string(GC.getRouteInfo(eR).getType()));
+				const BonusTypes eB = pPlot->getBonusType((TeamTypes)iTeam);
+				if (eB != NO_BONUS) pl["bonus"] = picojson::value(std::string(GC.getBonusInfo(eB).getType()));
+				pl["yieldFood"]       = picojson::value((double)pPlot->getYield(YIELD_FOOD));
+				pl["yieldProduction"] = picojson::value((double)pPlot->getYield(YIELD_PRODUCTION));
+				pl["yieldCommerce"]   = picojson::value((double)pPlot->getYield(YIELD_COMMERCE));
+				kPlots.push_back(picojson::value(pl));
+			}
+			o["plots"] = picojson::value(kPlots);
 
 			CvCascadeContext kCtx(iPlayer, iCityId);
 			const int aFam[3] = { YIELD_FOOD, YIELD_PRODUCTION, YIELD_COMMERCE };
