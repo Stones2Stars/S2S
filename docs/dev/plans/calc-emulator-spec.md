@@ -85,6 +85,37 @@ The live-dump is what makes this more than a calculator: it feeds the emulator t
 running game produces, so the comparison is grounded in real data, and the emulator's legacy side can be checked
 against the engine's realized number (§3a). The synthetic grid is where the **new** calc is stress-tested fast (§0.2).
 
+## 2a. THE LOADOUT-FED CASCADE SIMULATOR — the full shape (owner 2026-06-19)
+
+The emulator's endgame is bigger than a formula comparator: **feed the calculator a LOADOUT — a list of techs,
+civics, buildings, and plots — and have it COMPUTE THE NEW CASCADE MODEL ITSELF** (reading the migrated `Assets/Data`
+JSON deposits + applying the deposit-flow/combine), since we already know how the model is supposed to behave.
+Then compare to the LEGACY model on the same loadout. *"We simulate the simulation"* — this Python model is the
+**prototype of the in-game cascade engine** we port back later (§0.2), so building it is required anyway.
+
+- **Loadout source — REAL or SYNTHETIC.** Real: the `cityInput` LOADOUT dump (techs/civics/buildings/plots +
+  per-plot terrain/feature/improvement/route/bonus + yields). Synthetic: **fabricate a techlist by "simulating
+  that techs were researched"** (and likewise civics/buildings/plotmaps) — arbitrary hypothetical states, not just
+  the live game. The endpoint precomputes initial real loadouts for a few test cities to iterate on offline.
+- **BOTH cascades, not just the modifier.** A loadout drives the **modifier** cascade (the per-turn VALUES, vs
+  legacy `getYieldRate100` & co.) AND — crucially for synthetic techlists — the **enabler** cascade: feeding "these
+  techs are researched" exercises the CAN-GET frontier (what those techs unlock), which **validates the enabler AND
+  generates a clean enabler cascade** (vs legacy `canConstruct`/`canTrain`).
+- **FOUR payoffs from one comparison (loadout → new model + old model):**
+  1. **Test cases** — a loadout + its legacy outputs is a reusable test fixture (saved, iterated offline).
+  2. **Parity-adjacency tuning + the new-calc DESIGN** (§0.2) — nail the flow/values offline before porting.
+  3. **★ XML→JSON migration BLINDSPOT detection** — if the new model (reading the JSON) diverges from legacy in a
+     way the formula choice doesn't explain, it points at a **deposit/edge legacy has that the migrated JSON LACKS**
+     (a parse/curation gap). The comparison doubles as a migration-completeness checker.
+  4. **Clean enabler-cascade generation/validation** — synthetic techlists produce + check the availability frontier.
+- **Offline iteration (the workflow win):** pull/fabricate a loadout ONCE (`--save`), then iterate the model with
+  `--file` — no game restarts. The live dump is the ground-truth snapshot; the model-tuning loop runs offline.
+
+**Build path:** (1) the `cityInput` LOADOUT dump — DONE (techs/civics/buildings/plots). (2) Pull a few real loadout
+fixtures. (3) Build the Python cascade simulator: read loadout + per-entity `Assets/Data` JSON deposits → apply the
+deposit-flow + combine → the new-model output. (4) Compare to legacy (dump) → test cases + parity + blindspots.
+(5) Extend to synthetic loadouts + the enabler frontier.
+
 ---
 
 ## 3. The validation credential — TWO comparisons, do not conflate them
