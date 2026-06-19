@@ -131,20 +131,28 @@ Then compare to the LEGACY model on the same loadout. *"We simulate the simulati
   supply the BASE; buildings/civics/techs supply the MODIFIERS**, and the calc applies the latter to the former.
   Real plot data therefore lets us model **realistic base inputs** (actual base-yield distributions) rather than the
   toy "100 of each" — better-grounded parity sweeps.
-- **YIELD BASE — the source enumeration, VERIFIED against the code (owner 2026-06-19 + trust-but-verify).** The
-  owner's recollection was *trade routes, plots, buildings, specialists* — the four MAJORS — but flagged "unless I
-  forgot something." Verified against `CvCity::getYieldRate100` (CvCity.cpp:11252), `getBaseYieldRate` (:22908),
-  `getExtraYield100` (:11326): the calculator just defines **"how much did I get from each"**, but there are
-  **SEVEN buckets, not four**:
-  `getYieldRate100 = (getBaseYieldRate + getSpecialistYieldTotal) × modifier + 100 × getExtraYield`, where
-  - **MODIFIED** (`getBaseYieldRate`) = **plots** (`getPlotYield`) + **trade routes** (`getTradeYield`) + **free
-    city yield** (`player.getFreeCityYield`, player-level); plus **specialists** (`getSpecialistYieldTotal`, also
-    modified — #317);
-  - **UNMODIFIED** (`getExtraYield`) = **building flat yields** (`getBuildingExtraYield100`) + **corporations +
-    per-building yield-changes** (`m_aiExtraYield`) + **per-pop yields** (`getBaseYieldPerPopRate × pop`).
-  So the THREE the owner forgot: **free city yield, corporations, per-pop yields**. Structurally the base/specialist
-  sources receive the % while the building-flat/corp/per-pop "extra" bucket is added flat (the legacy flat-OUTSIDE,
-  §1). "How much from each" stands as the model — the buckets are just seven, and the calculator must feed all of them.
+- **YIELD BASE — the source enumeration, fully TRACED & VERIFIED (owner 2026-06-19 + a full code trace).** The
+  owner's recollection was *trade routes / plots / buildings / specialists* (the majors) with "unless I forgot
+  something" — and the trace of `getYieldRate100` → every leaf (CvCity.cpp:11246 / `getBaseYieldRate` :22906 /
+  `getExtraYield100` :11326; `CvPlot::calculateYield` :8320) confirms it's broader. "How much from each" stands as
+  the model; the verified buckets are:
+  `getYieldRate100 = (getBaseYieldRate + getSpecialistYieldTotal) × modifier + 100 × getExtraYield`
+  - **MODIFIED (receives the %):**
+    - **plots** (`getPlotYield`) — itself a deep tree: terrain base + bonus + feature/river + IMPROVEMENT
+      (base / riverside / irrigated / route / tech / civic / bonus-synergy / player / team) + route + city-site +
+      player-terrain + sea-plot + landmark + thresholds + plot-golden-age;
+    - **trade routes** (`getTradeYield`);
+    - **free city yield** + **GOLDEN-AGE yield** (both player-level; trait-driven GA) — `getBaseYieldRate` = plot +
+      trade + freeCity + **goldenAge** (the trace found this 4th term I'd missed);
+    - **specialists** (`getSpecialistYieldTotal`, modified like tiles — #317);
+    - the **modifier** itself = bonus + building + event(city+player) + power + area + capital.
+  - **UNMODIFIED (flat, ×100):** **building flat yields** + **tech-dependent building yields** (distinct) +
+    **building per-pop yields** + **per-building yield-changes** + **corporations**.
+  - **★ CORPORATIONS — EXCLUDED from the cascade model BY DESIGN (owner 2026-06-19): "a demon we do not want to
+    add."** Model them as a **flat additive on top, cleanly, LATER** — never part of the modifier cascade. The trace
+    confirms corp yield sits in the UNMODIFIED bucket today, which is exactly right: **modifiers must NOT buff corp
+    yield** — doing so would make corporations "beyond turbobroken." So corp stays a deferred flat post-add, out of
+    scope for the per-turn modifier model.
 - **BOTH cascades, not just the modifier.** A loadout drives the **modifier** cascade (the per-turn VALUES, vs
   legacy `getYieldRate100` & co.) AND — crucially for synthetic techlists — the **enabler** cascade: feeding "these
   techs are researched" exercises the CAN-GET frontier (what those techs unlock), which **validates the enabler AND
