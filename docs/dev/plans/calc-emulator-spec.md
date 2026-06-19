@@ -120,6 +120,12 @@ Then compare to the LEGACY model on the same loadout. *"We simulate the simulati
      offline recalc simply won't have it. **Win-for-losing and process (production→research) conversion are
      by-design omissions** (the new model drops them); their legacy-vs-new diffs are correct, not blindspots. (Maps
      to the care scale: blindspot = `Bug`, by-design omission = `Better`/accepted — modifier-shadow-spec §4.)
+     **SCOPE — the PER-TURN SNAPSHOT at various states (owner 2026-06-19).** What we model: research/gold/culture
+     **per turn** + the host of **city-specific per-turn calcs & effects** — the per-turn snapshot of a given state
+     (loadout). What we DON'T: cross-turn, time-evolving meta. Win-for-losing / tech-diffusion are exactly that —
+     FINAL-VALUE meta-modifiers applied downstream on the finished total, only measurable by standing up a full
+     multi-player playset and watching research diverge over many turns, and roughly invariant anyway. The cascade
+     computes the per-turn base; those meta-adjustments ride on top unchanged, so emulating them buys nothing.
   4. **Clean enabler-cascade generation/validation** — synthetic techlists produce + check the availability frontier.
 - **Offline iteration (the workflow win):** pull/fabricate a loadout ONCE (`--save`), then iterate the model with
   `--file` — no game restarts. The live dump is the ground-truth snapshot; the model-tuning loop runs offline.
