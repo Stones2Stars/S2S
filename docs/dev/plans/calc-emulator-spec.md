@@ -154,6 +154,22 @@ deposit-flow + combine → the new-model output. (4) Compare to legacy (dump) �
 channel's legacy reads are demolished; (b) is expected to be nonzero (the deliberate redesign) and is catalogued +
 tuned, not forced to zero.
 
+**ACCEPTANCE BAR, concretely (owner 2026-06-19).** Hold the BASE values fixed — e.g. **100 food / 100 production /
+100 commerce, which are BASE INPUTS, not outputs** — feed BOTH calcs the same loadout, let each apply its modifier
+model, and the **MODIFIED OUTPUTS should land near-parity** (parity-ADJACENT, not byte-identical). The bar must hold
+**swept across DIFFERENT SETS of techs / buildings / improvements / civics / …** (toggle the presence dicts, §2a) —
+parity across loadout *states*, not just one city. So the simulator's end metric is **modified-output parity vs
+legacy across loadouts**, NOT a byte-match of the intermediate cascade aggregates (that was only the JSON-reading
+sanity check). This is what "the modifier calculator is relatively close in parity to the old one" means in practice.
+
+**PROPERTIES — model the building→±RATE contribution (owner 2026-06-19).** For properties (disease / education /
+crime / tourism / pollution / …) what the emulator models is **how adding or removing a building changes that
+property's +/- RATE** — i.e. the sum of present-buildings' `PROPERTY_*` rate deposits (buildings carry them at JSON
+top level, e.g. `building_forge` → `PROPERTY_AIR_POLLUTION` / `PROPERTY_FLAMMABILITY`). Toggling a building in the
+loadout add/removes its contribution; that rate delta is the parity target. The ABSOLUTE property value (the
+stateful accumulator + spatial propagation) is the #429 solver's job, **not** the emulator's — same per-turn-snapshot
+scope: we model the rate contributions, not the cross-turn accumulation.
+
 ---
 
 ## 4. Build order — channel by channel, in DEMOLITION order
