@@ -40,6 +40,26 @@ by every `.cpp` that emits that domain. Result: zero global/unnamed-namespace po
 unity batching, greppable, and isolated per domain (the "isolate components" principle). This is also where the eventual
 per-domain headers belong in the new folder structure (§1C).
 
+**FULL COLLISION MAP (verified 2026-06-19) — bigger than first thought; this is the Phase-2 work list.**
+Every domain uses a short 2-letter `XXF_` field prefix; several already clash, and multi-file domains *mirror* their
+anon-namespace enums across two files (self-collision if co-batched — the reason `CvCityLogTags.h` is a shared header):
+
+| Prefix | Domains sharing it (FILES) | Fix |
+|---|---|---|
+| `CF_` | **CitField** (CvCityLogTags.h, shared) + **ComField** (CvUnitAI) + **CtbField** (CvContractBroker) — 3-way | CIT→`CITF_`, COM→`COMF_`, CTB→`CTBF_` |
+| `DF_` | **DipField** (CvPlayerAI + CvDeal mirror) + **DaiField** (CvDecisionAI) | DIP→`DIPF_`, DAI→`DAIF_` |
+| `EF_` | **EspField** (CvPlayerAI) + **EngField** (CvPlot) | ESP→`ESPF_`, ENG→`ENGF_` |
+| `WF_` | **WaiField** (CvWorkerAI) + **WarField** (CvTeamAI) | WAI→`WAIF_`, WAR→`WARF_` |
+| `UF_` | **UntField** (CvUnitAI def + CvSelectionGroupAI mirror) | UNT→`UNTF_` + **shared header** (define once) |
+| `GF_` | **GrpField** (CvSelectionGroupAI def + CvArmy mirror) | GRP→`GRPF_` + **shared header** |
+| `HF_`/`FF_` | HaiField (CvHunterAI), FndField (CvUnitAI) — currently unique | rename to `HAIF_`/`FNDF_` for uniform scheme |
+
+**Phase-2 task = per-domain shared tag headers (define each Event+Field enum ONCE) + the uniform `<DOMAIN>F_` prefix
+rename**, for ~13 domains. Per-file, word-boundary renames are safe (each file's prefixes are distinct; `\bUF_` does
+not match `PUF_`). The multi-file domains (CIT done; COM/UNT/GRP/DIP) need the shared-header treatment so the enum
+isn't mirrored. **This MUST land before the §1C move** (the move reshuffles unity batches and would otherwise activate
+these). `Tools/migrate_structure.py` holds the validated file→bucket move map for §1C (run after Phase 2).
+
 ### 1B. `CvInfos.h` umbrella removal + include hygiene (valid + needed)
 
 - Retire the `CvInfos.h` aggregator; every site includes the specific `CvXInfo.h` / `Infos/CvXInfo.h` it actually uses.
