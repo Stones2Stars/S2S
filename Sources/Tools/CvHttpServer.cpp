@@ -888,10 +888,67 @@ namespace
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 
-		const int iIdx = GC.getInfoTypeForString(szType, true);
-		if (iIdx < 0)
+		// ============================ NO-TYPE, CITY-RELATIVE DUMP ACTIONS ============================
+		// These take no `type=` (they are city-relative, like `game`), so they MUST sit BEFORE the type-guard
+		// below -- `getInfoTypeForString("")` returns -1, so a no-type action placed after the guard can never be
+		// reached (it errors "type not loaded"). `modifier` was previously below the guard, making it unreachable
+		// without a dummy type despite its doc + bNoTypeAction listing -- relocated here 2026-06-19.
+
+		// CITY-INPUT (owner 2026-06-19; calc-emulator-spec.md §5) -- the LIVE game-dump that feeds the external calc
+		// emulator: a real city's full city-yields INPUT VECTOR + the live LEGACY and CASCADE outputs, so the offline
+		// emulator can (a) reproduce getYieldRate100 EXACTLY from these terms -- the fidelity credential that licenses
+		// the DESTROY pass -- and (b) design/tune the new calc on the same inputs. Legacy formula (CvCity::getYieldRate100,
+		// verified): min(cap, max(100, (base + specialist) * modifier + 100 * extraYield)). NB `extraYield` is the
+		// x1-TRUNCATED flat-outside term the formula actually uses (sub-100 precision is lost before the x100), so the
+		// emulator must truncate likewise to match. Pilot channel = city yields; widens per the spec §4 channel order.
+		if (strcmp(szAction, "cityInput") == 0)
 		{
-			o["error"] = picojson::value(std::string("type not loaded this game"));
+			o["city"] = picojson::value((double)iCityId);
+			if (pCity == NULL)
+			{
+				o["error"] = picojson::value(std::string("no city"));
+				return CvString(picojson::value(o).serialize().c_str());
+			}
+			o["cityName"] = picojson::value(std::string(narrowToAscii(pCity->getName()).GetCString()));
+			o["population"] = picojson::value((double)pCity->getPopulation());
+			o["cap"] = picojson::value((double)CITY_MAX_YIELD_RATE); // the getYieldRate100 clamp ceiling
+
+			// the present-building loadout (the pilot's cascade deposit source -- city-scope buildings)
+			picojson::value::array kBldgs;
+			for (int b = 0; b < GC.getNumBuildingInfos(); ++b)
+			{
+				if (pCity->hasBuilding((BuildingTypes)b))
+					kBldgs.push_back(picojson::value(std::string(GC.getBuildingInfo((BuildingTypes)b).getType())));
+			}
+			o["buildings"] = picojson::value(kBldgs);
+
+			CvCascadeContext kCtx(iPlayer, iCityId);
+			const int aFam[3] = { YIELD_FOOD, YIELD_PRODUCTION, YIELD_COMMERCE };
+			const char* aFamName[3] = { "food", "production", "commerce" };
+			picojson::value::array kYields;
+			for (int f = 0; f < 3; ++f)
+			{
+				const YieldTypes eY = (YieldTypes)aFam[f];
+				CvModifierSlot slot;
+				cascadeModifierCitySlot(aFam[f], kCtx, slot);
+				const int iBase = pCity->getBaseYieldRate(eY);
+				picojson::value::object e;
+				e["family"]        = picojson::value(std::string(aFamName[f]));
+				// LEGACY input vector (the emulator reproduces getYieldRate100 from exactly these):
+				e["base"]          = picojson::value((double)iBase);
+				e["specialist"]    = picojson::value((double)pCity->getSpecialistYieldTotal(eY));
+				e["modifier"]      = picojson::value((double)pCity->getBaseYieldRateModifier(eY)); // full % == 100 + sum%
+				e["extraYield"]    = picojson::value((double)pCity->getExtraYield(eY));    // x1 TRUNCATED -- the term the formula uses
+				e["extraYield100"] = picojson::value((double)pCity->getExtraYield100(eY)); // untruncated, for decompose
+				e["legacy100"]     = picojson::value((double)pCity->getYieldRate100(eY));  // ground truth (x100)
+				// CASCADE seed (the current calc-flow, cascadeModifierApply):
+				e["cascadeFlat"]    = picojson::value((double)slot.iFlat);
+				e["cascadePercent"] = picojson::value((double)slot.iPercent);
+				e["cascadeMult100"] = picojson::value((double)slot.iMultiplierX100);
+				e["cascade"]        = picojson::value((double)cascadeModifierApply(slot, iBase));
+				kYields.push_back(picojson::value(e));
+			}
+			o["yields"] = picojson::value(kYields);
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 
@@ -928,6 +985,13 @@ namespace
 				kFam.push_back(picojson::value(e));
 			}
 			o["families"] = picojson::value(kFam);
+			return CvString(picojson::value(o).serialize().c_str());
+		}
+
+		const int iIdx = GC.getInfoTypeForString(szType, true);
+		if (iIdx < 0)
+		{
+			o["error"] = picojson::value(std::string("type not loaded this game"));
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 
@@ -1280,6 +1344,7 @@ namespace
 				"\"/diagnostic/dormancySweep?type=full&player=N\","
 				"\"/diagnostic/game?player=N\","
 				"\"/diagnostic/modifier?player=N&city=M\","
+				"\"/diagnostic/cityInput?player=N&city=M\","
 				"\"/diagnostic/tally?type=BUILDING_X|UNIT_X&player=N\"],"
 				"\"note\":\"player defaults to the active player; evaluated against the current game state, "
 				"no construction performed; canConstruct also returns the cascade verdict + cap shadow; "
@@ -1318,10 +1383,10 @@ namespace
 				szTok = szNext;
 			}
 			// type= is required for the per-type gate actions; the roster sweeps + the game-state dump + the per-city
-			// modifier query need none.
+			// modifier / cityInput dumps need none.
 			const bool bNoTypeAction = (strcmp(szAction, "placementSweep") == 0
 				|| strcmp(szAction, "dormancySweep") == 0 || strcmp(szAction, "game") == 0
-				|| strcmp(szAction, "modifier") == 0);
+				|| strcmp(szAction, "modifier") == 0 || strcmp(szAction, "cityInput") == 0);
 			if (szType[0] == '\0' && !bNoTypeAction)
 			{
 				sendResponse(sock, "400 Bad Request", "application/json",
