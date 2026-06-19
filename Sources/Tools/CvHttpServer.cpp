@@ -949,6 +949,139 @@ namespace
 				kYields.push_back(picojson::value(e));
 			}
 			o["yields"] = picojson::value(kYields);
+
+			// ---- CH.2 COMMERCE split (legacy-value-calc-map §2; reproduce getCommerceRateAtSliderPercent) ----
+			// City-level inputs (shared by all four commerces) + the clamp consts the emulator needs:
+			o["yieldCommerce100"] = picojson::value((double)pCity->getYieldRate100(YIELD_COMMERCE));
+			o["prodRate"]         = picojson::value((double)pCity->getYieldRate(YIELD_PRODUCTION)); // x1, for prod->commerce
+			o["isDisorder"]       = picojson::value(pCity->isDisorder());                           // disorder => all commerce 0
+			o["maxYield100"]      = picojson::value((double)CITY_MAX_YIELD_RATE100);                // pre-modifier clamp
+			o["minTolFalseAccum"] = picojson::value((double)MIN_TOL_FALSE_ACCUMULATE);              // very-negative -> cap sentinel
+			const int aCom[4] = { COMMERCE_GOLD, COMMERCE_RESEARCH, COMMERCE_CULTURE, COMMERCE_ESPIONAGE };
+			const char* aComName[4] = { "gold", "research", "culture", "espionage" };
+			picojson::value::array kCommerce;
+			for (int c = 0; c < 4; ++c)
+			{
+				const CommerceTypes eC = (CommerceTypes)aCom[c];
+				picojson::value::object e;
+				e["family"]         = picojson::value(std::string(aComName[c]));
+				e["slider"]         = picojson::value((double)kPlayer.getCommercePercent(eC));       // player slider %
+				e["baseExtra100"]   = picojson::value((double)pCity->getBaseCommerceRateExtra(eC));  // x100 base extras
+				e["totalModifier"]  = picojson::value((double)pCity->getTotalCommerceRateModifier(eC)); // base 100
+				e["prodToCommerce"] = picojson::value((double)pCity->getProductionToCommerceModifier(eC));
+				e["realized100"]    = picojson::value((double)pCity->getCommerceRateTimes100(eC));   // ground truth (x100)
+				kCommerce.push_back(picojson::value(e));
+			}
+			o["commerce"] = picojson::value(kCommerce);
+
+			// ---- CH.4 DEFENSE (legacy-value-calc-map §4): max(building,natural)+playerMod+bonus, then damage-decay floored at extraMin ----
+			{
+				picojson::value::object d;
+				d["totalDefense"]              = picojson::value((double)pCity->getTotalDefense(false));
+				d["defenseModifier"]           = picojson::value((double)pCity->getDefenseModifier(false)); // realized
+				d["buildingDefense"]           = picojson::value((double)pCity->getBuildingDefense());
+				d["naturalDefense"]            = picojson::value((double)pCity->getNaturalDefense());
+				d["playerCityDefenseModifier"] = picojson::value((double)kPlayer.getCityDefenseModifier());
+				d["bonusDefense"]              = picojson::value((double)pCity->calculateBonusDefense());
+				d["defenseDamage"]             = picojson::value((double)pCity->getDefenseDamage());
+				d["maxDefenseDamage"]          = picojson::value((double)GC.getMAX_CITY_DEFENSE_DAMAGE());
+				d["extraMinDefense"]           = picojson::value((double)pCity->getExtraMinDefense());
+				d["isOccupation"]              = picojson::value(pCity->isOccupation());
+				o["defense"] = picojson::value(d);
+			}
+
+			// ---- CH.5 MAINTENANCE + UPKEEP (legacy-value-calc-map §5): era baseline + getModifiedIntValue(baseComponents, effectiveModifier) ----
+			{
+				picojson::value::object m;
+				m["maintenanceTimes100"] = picojson::value((double)pCity->getMaintenanceTimes100()); // realized x100
+				m["eraInitialPercent"]   = picojson::value((double)GC.getEraInfo(kPlayer.getCurrentEra()).getInitialCityMaintenancePercent());
+				m["baseMaint100"]        = picojson::value((double)pCity->calculateBaseMaintenanceTimes100());
+				m["buildingMaint100"]    = picojson::value((double)pCity->calculateBuildingMaintenanceTimes100());
+				m["distanceMaint100"]    = picojson::value((double)pCity->calculateDistanceMaintenanceTimes100());
+				m["numCitiesMaint100"]   = picojson::value((double)pCity->calculateNumCitiesMaintenanceTimes100());
+				m["colonyMaint100"]      = picojson::value((double)pCity->calculateColonyMaintenanceTimes100());
+				m["corporationMaint100"] = picojson::value((double)pCity->calculateCorporationMaintenanceTimes100());
+				m["effectiveModifier"]   = picojson::value((double)pCity->getEffectiveMaintenanceModifier());
+				m["isWeLoveTheKingDay"]  = picojson::value(pCity->isWeLoveTheKingDay());
+				o["maintenance"] = picojson::value(m);
+				o["civicUpkeep"]     = picojson::value((double)kPlayer.getCivicUpkeep(false));            // player upkeep (x1)
+				o["finalUnitUpkeep"] = picojson::value((double)(int)kPlayer.getFinalUnitUpkeep());        // player unit upkeep (x1)
+			}
+
+			// ---- CH.6 GROWTH + foodKept (legacy-value-calc-map §9.3) ----
+			{
+				picojson::value::object g;
+				g["foodProduced"]          = picojson::value((double)pCity->getYieldRate(YIELD_FOOD));
+				g["foodConsumption"]       = picojson::value((double)pCity->foodConsumption());
+				g["foodDifference"]        = picojson::value((double)pCity->foodDifference());   // realized
+				g["food"]                  = picojson::value((double)pCity->getFood());
+				g["growthThreshold"]       = picojson::value((double)pCity->growthThreshold());  // realized
+				g["playerGrowthThreshold"] = picojson::value((double)kPlayer.getGrowthThreshold(pCity->getPopulation()));
+				g["popGrowthRatePct"]      = picojson::value((double)(pCity->getPopulationgrowthratepercentage() + kPlayer.getPopulationgrowthratepercentage()));
+				g["foodKeptPercent"]       = picojson::value((double)pCity->getFoodKeptPercent());
+				g["foodKept"]              = picojson::value((double)pCity->getFoodKept());
+				g["isHominid"]             = picojson::value(pCity->isHominid());
+				o["growth"] = picojson::value(g);
+			}
+
+			// ---- CH.3a HEALTH (legacy-value-calc-map §3): good/bad signed-split (emulator splits each via max/min 0) ----
+			{
+				picojson::value::object h;
+				h["goodHealth"]              = picojson::value((double)pCity->goodHealth());   // realized
+				h["badHealth"]               = picojson::value((double)pCity->badHealth());    // realized
+				h["healthRate"]              = picojson::value((double)pCity->healthRate());
+				h["freshWaterGoodHealth"]    = picojson::value((double)pCity->getFreshWaterGoodHealth());
+				h["featureGoodHealth"]       = picojson::value((double)pCity->getFeatureGoodHealth());
+				h["featureBadHealth"]        = picojson::value((double)pCity->getFeatureBadHealth());
+				h["bonusGoodHealth"]         = picojson::value((double)pCity->getBonusGoodHealth());
+				h["bonusBadHealth"]          = picojson::value((double)pCity->getBonusBadHealth());
+				h["totalGoodBuildingHealth"] = picojson::value((double)pCity->totalGoodBuildingHealth());
+				h["totalBadBuildingHealth"]  = picojson::value((double)pCity->totalBadBuildingHealth());
+				h["extraHealth"]             = picojson::value((double)pCity->getExtraHealth());
+				h["improvementGoodHealth"]   = picojson::value((double)pCity->getImprovementGoodHealth());
+				h["improvementBadHealth"]    = picojson::value((double)pCity->getImprovementBadHealth());
+				h["specialistGoodHealth"]    = picojson::value((double)pCity->getSpecialistGoodHealth());
+				h["specialistBadHealth"]     = picojson::value((double)pCity->getSpecialistBadHealth());
+				h["corporationHealth"]       = picojson::value((double)pCity->calculateCorporationHealth());
+				h["extraTechHealth"]         = picojson::value((double)pCity->getExtraTechHealthTotal());
+				h["espionageHealthCounter"]  = picojson::value((double)pCity->getEspionageHealthCounter());
+				h["unhealthyPopulation"]     = picojson::value((double)pCity->unhealthyPopulation());
+				o["health"] = picojson::value(h);
+			}
+
+			// ---- CH.3b HAPPINESS (legacy-value-calc-map §3): good/bad + percent-anger × pop / divisor ----
+			{
+				picojson::value::object hp;
+				hp["happyLevel"]            = picojson::value((double)pCity->happyLevel());   // realized
+				hp["unhappyLevel"]          = picojson::value((double)pCity->unhappyLevel()); // realized
+				hp["angryPopulation"]       = picojson::value((double)pCity->angryPopulation());
+				hp["buildingGoodHappiness"] = picojson::value((double)pCity->getBuildingGoodHappiness());
+				hp["buildingBadHappiness"]  = picojson::value((double)pCity->getBuildingBadHappiness());
+				hp["bonusGoodHappiness"]    = picojson::value((double)pCity->getBonusGoodHappiness());
+				hp["bonusBadHappiness"]     = picojson::value((double)pCity->getBonusBadHappiness());
+				hp["featureGoodHappiness"]  = picojson::value((double)pCity->getFeatureGoodHappiness());
+				hp["featureBadHappiness"]   = picojson::value((double)pCity->getFeatureBadHappiness());
+				hp["religionGoodHappiness"] = picojson::value((double)pCity->getReligionGoodHappiness());
+				hp["religionBadHappiness"]  = picojson::value((double)pCity->getReligionBadHappiness());
+				hp["militaryHappiness"]     = picojson::value((double)pCity->getMilitaryHappiness());
+				hp["commerceHappiness"]     = picojson::value((double)pCity->getCommerceHappiness());
+				hp["stateReligionHappiness"]= picojson::value((double)pCity->getCurrentStateReligionHappiness());
+				hp["specialistHappiness"]   = picojson::value((double)pCity->getSpecialistHappiness());
+				hp["specialistUnhappiness"] = picojson::value((double)pCity->getSpecialistUnhappiness());
+				hp["largestCityHappiness"]  = picojson::value((double)pCity->getLargestCityHappiness());
+				hp["extraHappiness"]        = picojson::value((double)pCity->getExtraHappiness());
+				// anger-percent sources (sum × pop / PERCENT_ANGER_DIVISOR):
+				hp["overcrowdingAnger"]     = picojson::value((double)pCity->getOvercrowdingPercentAnger());
+				hp["noMilitaryAnger"]       = picojson::value((double)pCity->getNoMilitaryPercentAnger());
+				hp["cultureAnger"]          = picojson::value((double)pCity->getCulturePercentAnger());
+				hp["religionAnger"]         = picojson::value((double)pCity->getReligionPercentAnger());
+				hp["hurryAnger"]            = picojson::value((double)pCity->getHurryPercentAnger());
+				hp["conscriptAnger"]        = picojson::value((double)pCity->getConscriptPercentAnger());
+				hp["warWearinessAnger"]     = picojson::value((double)pCity->getWarWearinessPercentAnger());
+				hp["revIndexAnger"]         = picojson::value((double)pCity->getRevIndexPercentAnger());
+				hp["percentAngerDivisor"]   = picojson::value((double)GC.getPERCENT_ANGER_DIVISOR());
+				o["happiness"] = picojson::value(hp);
+			}
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 

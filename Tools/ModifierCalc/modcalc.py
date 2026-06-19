@@ -149,6 +149,135 @@ def cascade_apply(base, flat, percent, mult100, flow):
     return (base + flat) * (100 + percent) // 100 * mult100 // 100
 
 
+def getModifiedIntValue(v, mod):
+    """The engine's cost-asymmetric combiner (CvGameCoreDLL.cpp:689)."""
+    if mod > 0:
+        return v * (100 + mod) // 100
+    if mod < 0:
+        return v * 100 // (100 - mod)
+    return v
+
+
+def _check(label, emu, live):
+    ok = (emu == live)
+    print("  %-24s emu=%-12d live=%-12d %s" % (label, emu, live, "OK" if ok else "*** MISMATCH ***"))
+    return ok
+
+
+def reproduce_commerce(d):
+    """Reproduce getCommerceRateAtSliderPercent per commerce (legacy-value-calc-map §2). -> (ok, total) or None."""
+    rows = d.get("commerce")
+    if not rows:
+        return None
+    cap = int(d.get("cap", 99000000))
+    maxY = int(d.get("maxYield100", 1900000000))
+    minTol = int(d.get("minTolFalseAccum", -9999))
+    yc = int(d.get("yieldCommerce100", 0))
+    prod = int(d.get("prodRate", 0))
+    disorder = bool(d.get("isDisorder", False))
+    ok = 0
+    print("\nCOMMERCE (reproduce getCommerceRateAtSliderPercent):")
+    for c in rows:
+        if disorder:
+            emu = 0
+        else:
+            iRate = min(maxY, yc)
+            iRate = iRate * c["slider"] // 100 + min(maxY, c["baseExtra100"])
+            if iRate < cap:
+                mod = c["totalModifier"]
+                iRate = (iRate * mod // 100) if iRate > 0 else (iRate * 100 // mod)
+                iRate += prod * c["prodToCommerce"]
+            if iRate < 0 and c["family"] in ("culture", "research"):
+                emu = 0
+            elif iRate < minTol:
+                emu = cap
+            else:
+                emu = min(cap, iRate)
+        ok += 1 if _check(c["family"], emu, c["realized100"]) else 0
+    return (ok, len(rows))
+
+
+def reproduce_defense(d):
+    df = d.get("defense")
+    if not df:
+        return None
+    total = max(df["buildingDefense"], df["naturalDefense"]) + df["playerCityDefenseModifier"] + df["bonusDefense"]
+    if df["isOccupation"]:
+        mod = 0
+    else:
+        maxd = df["maxDefenseDamage"]
+        mod = max(df["extraMinDefense"], total * (maxd - df["defenseDamage"]) // maxd)
+    print("\nDEFENSE (reproduce getTotalDefense + getDefenseModifier):")
+    ok = (1 if _check("totalDefense", total, df["totalDefense"]) else 0)
+    ok += (1 if _check("defenseModifier", mod, df["defenseModifier"]) else 0)
+    return (ok, 2)
+
+
+def reproduce_maintenance(d):
+    m = d.get("maintenance")
+    if not m:
+        return None
+    pop = int(d.get("population", 0))
+    if (not d.get("isDisorder", False)) and (not m["isWeLoveTheKingDay"]) and pop > 0:
+        emu = m["eraInitialPercent"] + getModifiedIntValue(m["baseMaint100"], m["effectiveModifier"])
+    else:
+        emu = m["eraInitialPercent"]
+    print("\nMAINTENANCE (reproduce getMaintenanceTimes100):")
+    ok = (1 if _check("maintenanceTimes100", emu, m["maintenanceTimes100"]) else 0)
+    return (ok, 1)
+
+
+def reproduce_growth(d):
+    g = d.get("growth")
+    if not g:
+        return None
+    thr = getModifiedIntValue(g["playerGrowthThreshold"], g["popGrowthRatePct"])
+    thr = max(1, thr // 2) if g["isHominid"] else max(1, thr)
+    print("\nGROWTH (reproduce growthThreshold):")
+    ok = (1 if _check("growthThreshold", thr, g["growthThreshold"]) else 0)
+    # foodDifference raw (engine adds disorder/foodProduction/pop1 clamps) -- informational
+    _check("foodDifference(raw)", g["foodProduced"] - g["foodConsumption"], g["foodDifference"])
+    return (ok, 1)
+
+
+def _split_sum(components, positive):
+    return sum((max(0, v) if positive else min(0, v)) for v in components)
+
+
+def reproduce_health(d):
+    """Informational residual report: goodHealth=Σmax(0,·); badHealth=unhealthyPop−Σmin(0,·)−espionage (city buckets only)."""
+    h = d.get("health")
+    if not h:
+        return
+    comps = [h["freshWaterGoodHealth"], h["featureGoodHealth"], h["featureBadHealth"],
+             h["bonusGoodHealth"], h["bonusBadHealth"], h["totalGoodBuildingHealth"], h["totalBadBuildingHealth"],
+             h["extraHealth"], h["improvementGoodHealth"] // 100, h["improvementBadHealth"] // 100,
+             h["specialistGoodHealth"] // 100, h["specialistBadHealth"] // 100,
+             h["corporationHealth"], h["extraTechHealth"]]
+    emu_good = _split_sum(comps, True)
+    emu_bad = h["unhealthyPopulation"] - _split_sum(comps, False) - max(0, h["espionageHealthCounter"])
+    print("\nHEALTH (city-bucket reproduction; residual = omitted player/handicap/civic buckets):")
+    print("  goodHealth  emu=%d live=%d residual=%d" % (emu_good, h["goodHealth"], h["goodHealth"] - emu_good))
+    print("  badHealth   emu=%d live=%d residual=%d" % (emu_bad, h["badHealth"], h["badHealth"] - emu_bad))
+
+
+def reproduce_happiness(d):
+    """Informational: partial happyLevel + the anger-percent sum (residual = omitted player/area/civic buckets)."""
+    hp = d.get("happiness")
+    if not hp:
+        return
+    anger = (hp["overcrowdingAnger"] + hp["noMilitaryAnger"] + hp["cultureAnger"] + hp["religionAnger"]
+             + hp["hurryAnger"] + hp["conscriptAnger"] + hp["warWearinessAnger"] + hp["revIndexAnger"])
+    good = [hp["buildingGoodHappiness"], hp["bonusGoodHappiness"], hp["featureGoodHappiness"],
+            hp["religionGoodHappiness"], max(0, hp["militaryHappiness"]), max(0, hp["commerceHappiness"]),
+            max(0, hp["stateReligionHappiness"]), max(0, hp["largestCityHappiness"]),
+            hp["specialistHappiness"] // 100, max(0, hp["extraHappiness"])]
+    emu_happy = sum(max(0, x) for x in good)
+    print("\nHAPPINESS (partial; residual = omitted player/area/civic/tech buckets):")
+    print("  happyLevel   emu(partial)=%d live=%d" % (emu_happy, hp["happyLevel"]))
+    print("  unhappyLevel live=%d  angerPct-sum=%d (x pop / %d)" % (hp["unhappyLevel"], anger, hp["percentAngerDivisor"]))
+
+
 def _load_dump(args):
     if args.file:
         with open(args.file, "r") as fh:
@@ -202,11 +331,25 @@ def consume(args):
     for y in rows:
         print("  %-10s legacy100=%d  cascade=%d" % (y["family"], y["legacy100"], y["cascade"]))
 
+    # ---- additional channels: commerce/defense/maintenance/growth = exact guards; health/happiness = informational ----
+    extra = []
+    for fn, nm in ((reproduce_commerce, "commerce"), (reproduce_defense, "defense"),
+                   (reproduce_maintenance, "maintenance"), (reproduce_growth, "growth")):
+        r = fn(d)
+        if r is not None:
+            extra.append((nm, r[0], r[1]))
+    reproduce_health(d)
+    reproduce_happiness(d)
+
     n = len(rows)
-    print("\nOVERALL: FIDELITY %s (%d/%d)   |   cascade-mirror %s (%d/%d)"
-          % ("PASS" if (fid_ok == n and n) else "FAIL", fid_ok, n,
-             "PASS" if (mir_ok == n and n) else "FAIL", mir_ok, n))
-    return 0 if (n and fid_ok == n and mir_ok == n) else 1
+    extra_ok = sum(o for _, o, _ in extra)
+    extra_tot = sum(t for _, _, t in extra)
+    chan_str = ", ".join("%s %d/%d" % (nm, o, t) for nm, o, t in extra) or "none"
+    allok = bool(n) and fid_ok == n and mir_ok == n and extra_ok == extra_tot
+    print("\nOVERALL: yields-fidelity %s (%d/%d) | cascade-mirror %s (%d/%d) | channels [%s]"
+          % ("PASS" if (n and fid_ok == n) else "FAIL", fid_ok, n,
+             "PASS" if (n and mir_ok == n) else "FAIL", mir_ok, n, chan_str))
+    return 0 if allok else 1
 
 
 def main():
