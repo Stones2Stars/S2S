@@ -142,8 +142,15 @@ Then compare to the LEGACY model on the same loadout. *"We simulate the simulati
       (base / riverside / irrigated / route / tech / civic / bonus-synergy / player / team) + route + city-site +
       player-terrain + sea-plot + landmark + thresholds + plot-golden-age;
     - **trade routes** (`getTradeYield`);
-    - **free city yield** + **GOLDEN-AGE yield** (both player-level; trait-driven GA) — `getBaseYieldRate` = plot +
-      trade + freeCity + **goldenAge** (the trace found this 4th term I'd missed);
+    - **free city yield** + a **city-level GOLDEN-AGE yield** term (player/trait-level, GA-gated) —
+      `getBaseYieldRate` = plot + trade + freeCity + `(isGoldenAge() ? getGoldenAgeYield : 0)` (CvCity.cpp:22910).
+      **NB this is DISTINCT from the per-plot golden-age +1** (`CvPlot::calculateYield` :8403, already in the plot
+      tree above): there are **TWO golden-age yield paths** — the per-plot bonus (the "+1 on all plots" recollection,
+      correct) flowing through `getPlotYield`, AND this separate city/trait term — both fire only during a golden age.
+      **NEW-MODEL DESIGN (owner 2026-06-19): collapse both legacy paths into ONE clean form — an EMPIRE-LEVEL modifier
+      gated by an `isGoldenAge` BOOLEAN toggle on top.** The cascade represents golden-age yield as a single
+      empire-scope deposit enabled by the golden-age state flag (just another loadout boolean, §2a), not two
+      inline-gated legacy paths — a deliberate clean-up (a `Better`), and a clean fit for the presence/toggle model;
     - **specialists** (`getSpecialistYieldTotal`, modified like tiles — #317);
     - the **modifier** itself = bonus + building + event(city+player) + power + area + capital.
   - **UNMODIFIED (flat, ×100):** **building flat yields** + **tech-dependent building yields** (distinct) +
