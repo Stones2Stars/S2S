@@ -53,7 +53,8 @@ namespace
 		UNT_MERGE2BREACH,    // [UNT/merge2breach]
 		UNT_GARRISON_JOIN,   // [UNT/garrison] action=join
 		UNT_GARRISON_LEAVE,  // [UNT/garrison] action=leave
-		UNT_MISSION          // [UNT/mission]
+		UNT_MISSION,         // [UNT/mission]
+		UNT_ACT              // [UNT/act] -- instrumented commit point; decision/reason are SFT_STR free-text (existing literals)
 	};
 	const char* untLinePrefix(int iEventId)
 	{
@@ -68,6 +69,7 @@ namespace
 		case UNT_GARRISON_JOIN:  return "[UNT/garrison] action=join";
 		case UNT_GARRISON_LEAVE: return "[UNT/garrison] action=leave";
 		case UNT_MISSION:        return "[UNT/mission]";
+		case UNT_ACT:            return "[UNT/act]";
 		default:                 return NULL;
 		}
 	}
@@ -78,7 +80,8 @@ namespace
 		UNTF_cityX, UNTF_cityY, UNTF_dist, UNTF_pack, UNTF_reach,
 		UNTF_singleStr, UNTF_defStr,
 		UNTF_city,
-		UNTF_unitAI, UNTF_missionAI, UNTF_targetX, UNTF_targetY
+		UNTF_unitAI, UNTF_missionAI, UNTF_targetX, UNTF_targetY,
+		UNTF_decision, UNTF_reason
 	};
 	const char* untFieldInfo(int iFieldTag, SpineFieldType* peType)
 	{
@@ -105,6 +108,8 @@ namespace
 		case UNTF_missionAI:return "missionAI";
 		case UNTF_targetX:  return "targetX";
 		case UNTF_targetY:  return "targetY";
+		case UNTF_decision: *peType = SFT_STR; return "decision";
+		case UNTF_reason:   *peType = SFT_STR; return "reason";
 		default:          return NULL;
 		}
 	}
@@ -645,6 +650,12 @@ void CvUnitAI::AI_logAct(const char* szDecision, const char* szReason, const CvP
 	logUnitAI(2, "[UNT/act] owner=%d unit=%d type=%d decision=%s reason=%s target=(%d,%d)",
 		(int)getOwner(), getID(), (int)AI_getUnitAIType(), szDecision, szReason ? szReason : "-",
 		pTarget ? pTarget->getX() : getX(), pTarget ? pTarget->getY() : getY());
+	// Spine (shadow alongside legacy): decision/reason ride as SFT_STR -- the call site passes the EXISTING string
+	// pointers (caller literals), no concat; the consumer composes the line (owner 2026-06-19, event-spine-spec section 3).
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_ACT, 2)
+		.addI(UNTF_owner, (int)getOwner()).addI(UNTF_unit, getID()).addI(UNTF_type, (int)AI_getUnitAIType())
+		.addStr(UNTF_decision, szDecision).addStr(UNTF_reason, szReason ? szReason : "-")
+		.addI(UNTF_targetX, pTarget ? pTarget->getX() : getX()).addI(UNTF_targetY, pTarget ? pTarget->getY() : getY()));
 }
 
 void CvUnitAI::doUnitAIMove()

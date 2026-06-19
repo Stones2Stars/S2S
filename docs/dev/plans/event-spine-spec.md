@@ -202,12 +202,15 @@ machinery (it + `CvScopedAccumulator` are the substrate). Then:
      consumer renders SYNCHRONOUSLY on the game thread (the pointer is valid at render; `/events` only sees the finished
      string). The ONLY thing still rejected: the call site composing the final line itself — a pre-FORMATTED full log line
      (R-1's Option 2, "like it used to be").
-   - **So the ~6 free-text lines NO LONGER need enum-ification (owner 2026-06-19):** add a string-pointer field (`addStr` +
-     an `SFT_STR` render case) and the call site passes the existing `szDecision`/`szReason`/`szWorkCriteria` directly; the
-     consumer assembles the `[TAG] key=value` line. (Use this only for genuinely free-text data that has no id/type to
-     resolve — type/instance data still travels as a raw id so the consumer can render `name(id)`, the additive win.)
-     **Build item** — the `addStr`/`SFT_STR` capability is not yet implemented. Plus 3 CTB lines that just want a `SFT_UNITAI`
-     render-type tag (trivially addable).
+   - **So the ~6 free-text lines NO LONGER need enum-ification (owner 2026-06-19). CAPABILITY IMPLEMENTED + DEMONSTRATED
+     2026-06-19 (Assert-clean).** `CvCascadeEvent` gained `addStr`/`addWStr` (the field union carries a `const char*`/`const
+     wchar_t*` POINTER — POD, 8B on x86) + `SFT_STR`/`SFT_WSTR` render cases (null-guarded `%s`/`%S`). The call site passes
+     the existing `szDecision`/`szReason`/… pointer; the consumer assembles the `[TAG] key=value` line. **First user:
+     `CvUnitAI::AI_logAct` → `[UNT/act]`** (was legacy-only precisely because of its free-text `decision`/`reason`; now
+     shadow-emits via the spine with `decision`/`reason` as `SFT_STR`). (Use string fields ONLY for genuinely free-text data
+     with no id/type to resolve — type/instance data still travels as a raw id so the consumer renders `name(id)`, the
+     additive win.) Remaining free-text lines (CTB `szWorkCriteria`/`szCriteriaDescription`, DAI) migrate the same way when
+     their domains are swept. Plus 3 CTB lines that just want a `SFT_UNITAI` render-type tag (trivially addable).
    - **Cleanup is MIGRATE-not-blanket-delete (owner 2026-06-19):** during the R-4/R-5 firehose cleanup, genuinely-valuable
      lines are MIGRATED to their correct home (agent judgment — *the agent is the primary log reader during the shadow
      passes*), not deleted. First instance: the `AI_doDiplo` war-ally-purchasing reasoning (ex-`C2C.log`) → `[DIP/warally]`.

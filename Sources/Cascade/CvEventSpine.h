@@ -46,6 +46,12 @@ enum EventKind
 enum SpineFieldType
 {
 	SFT_INT = 0, SFT_FLOAT, SFT_BOOL,
+	// String POINTER kinds: the field carries a POINTER to an EXISTING string (no copy, no call-site concat) -- the
+	// consumer renders it. For genuinely free-text data (a szReason already built for other logic) that has no id/type to
+	// resolve. NOT call-site composition (owner 2026-06-19, event-spine-spec section 3): the line is still assembled in the
+	// consumer; the call site just hands over the pointer. Lifetime: the pointee must outlive the SYNCHRONOUS emit (render
+	// happens then, on the game thread) -- a literal, a member, or a still-in-scope local. SFT_STR = narrow, SFT_WSTR = wide.
+	SFT_STR, SFT_WSTR,
 	// typeIndex kinds: the int is a Types index, rendered to its type string via GC.getXInfo (resolution in the consumer).
 	// This is how a former "%s = GC.getXInfo(i).getType()" line becomes a clean raw field (the index travels, not the string).
 	SFT_BUILDING, SFT_UNIT, SFT_TECH, SFT_PLAYER,
@@ -60,7 +66,7 @@ enum SpineFieldType
 struct CvCascadeEventField
 {
 	int eTag; // a DOMAIN-LOCAL field tag (resolved to name+type by the domain's registered SpineFieldInfoFn)
-	union { int i; float f; } v;
+	union { int i; float f; const char* s; const wchar_t* w; } v; // pointers are 4B on x86 -> the slot stays POD/8B
 };
 
 //	Domain discriminator -- selects the [TAG] family and (with iEventId) the constant line prefix. Grows per migrated domain.
@@ -138,6 +144,18 @@ struct CvCascadeEvent
 	CvCascadeEvent& addF(int iFieldTag, float fValue)
 	{
 		if (iFieldCount < SPINE_MAX_FIELDS) { aFields[iFieldCount].eTag = iFieldTag; aFields[iFieldCount].v.f = fValue; ++iFieldCount; }
+		return *this;
+	}
+	// Carry a POINTER to an EXISTING string (no copy, no concat). The pointee must outlive the synchronous emit (the
+	// consumer renders then). The domain's field resolver must return SFT_STR / SFT_WSTR for this tag. See SpineFieldType.
+	CvCascadeEvent& addStr(int iFieldTag, const char* szValue)
+	{
+		if (iFieldCount < SPINE_MAX_FIELDS) { aFields[iFieldCount].eTag = iFieldTag; aFields[iFieldCount].v.s = szValue; ++iFieldCount; }
+		return *this;
+	}
+	CvCascadeEvent& addWStr(int iFieldTag, const wchar_t* szValue)
+	{
+		if (iFieldCount < SPINE_MAX_FIELDS) { aFields[iFieldCount].eTag = iFieldTag; aFields[iFieldCount].v.w = szValue; ++iFieldCount; }
 		return *this;
 	}
 };

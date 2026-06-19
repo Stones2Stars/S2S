@@ -198,6 +198,12 @@ void cascadeRenderEventLine(char* szBuf, int iBufSize, const CvCascadeEvent& kEv
 			m = _snprintf(szBuf + n, iBufSize - n, " %s=%S(%d)", szName,
 				(fld.v.i >= 0 && fld.v.i < MAX_PLAYERS) ? GET_PLAYER((PlayerTypes)fld.v.i).getName() : L"?", fld.v.i);
 			break;
+		case SFT_STR:  // borrowed narrow string pointer (no copy); valid because render is synchronous at emit
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName, (fld.v.s != NULL) ? fld.v.s : "?");
+			break;
+		case SFT_WSTR: // borrowed wide string pointer (no copy)
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%S", szName, (fld.v.w != NULL) ? fld.v.w : L"?");
+			break;
 		default: // SFT_INT / SFT_BOOL -> the raw int
 			m = _snprintf(szBuf + n, iBufSize - n, " %s=%d", szName, fld.v.i);
 			break;
