@@ -5840,6 +5840,10 @@ void CvGame::doTurn()
 	// #430 §14 H -- the DORMANCY shadow (B-ii): per built building per city, diff cascade requires.operate (active/
 	// dormant) against legacy hasFullyActiveBuilding (resource/replacement/religious disabling). [DORMANCY] lines.
 	cascadeDormancyShadow();
+	// #430 modifier pilot (increment 3) -- the MAGNITUDE shadow: per alive player x city x yield channel, diff the
+	// cascade effective against legacy getYieldRate100, cause-tagged + care-graded. [MODSHADOW] lines. Gated by
+	// gPlayerLogLevel. modifier-cascade-shadow-spec.md §3.3.
+	cascadeModifierShadow();
 	// #430 observability -- the LIVE STATE FEED ("the cameras"): per-turn [STATE/game]/[STATE/fin]/[STATE/dip]/[STATE/city] lines so an autoplay
 	// session is fully narratable from /events + the logs (the total-observability bar). Gated by gPlayerLogLevel.
 	cascadeStateLog();

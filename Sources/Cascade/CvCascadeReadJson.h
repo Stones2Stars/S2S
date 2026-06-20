@@ -112,6 +112,14 @@ const char* cascadeDormancyLegacyReason(const CvCity* pCity, int iBuilding);
 // Gated by gPlayerLogLevel (>=1 headline, >=2 per-divergence). Streams to Cascade.log + /events.
 void cascadeDormancyShadow();
 
+// ===================== §430 MODIFIER SHADOW (the magnitude twin of placement/dormancy) =====================
+// Per-turn modifier shadow (modifier-cascade-shadow-spec §3.3): for EVERY alive player (human AND AI -- an AI sweep is
+// a purer cascade-vs-engine compare, §3.5) x their cities x the PILOT yield channels (food/production/commerce), diff
+// the cascade effective (cascadeModifierApply over the city-scope deposits) against legacy getYieldRate100, cause-tagged
+// + care-graded (Fine..Meltdown). [MODSHADOW] lines: >=1 per-player headline (per-channel divergence counts + worst
+// care this turn), >=2 per-divergence. Gated by gPlayerLogLevel. Streams to Cascade.log + /events.
+void cascadeModifierShadow();
+
 // ===================== LIVE STATE EVENT FEED (the "cameras") =====================
 // Per-turn gated emitter streaming the broad game state to Cascade.log + /events so an autoplay session is fully
 // narratable from the wire (the total-observability bar; state-mapping-2026-06-18.md gaps). Lines:

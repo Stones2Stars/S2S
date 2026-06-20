@@ -5,6 +5,8 @@
 #include <vector>
 #include "CvCascadeCondition.h" // CvCascadeCondition -- the per-deposit enabled/disabled gate (reused verbatim)
 
+class CvCity; // cascadeModifierCityBase takes a const CvCity* (pointer param -- forward-decl, no include)
+
 //
 //	CvCascadeModifier -- the MAGNITUDE machine's combine core (modifier-cascade-spec.md). The tally sums COUNTS and
 //	rolls UP the scope spine; the modifier sums MAGNITUDES and flows DOWN it. This is the per-target accumulation
@@ -98,10 +100,17 @@ struct CvEntityModifiers
 // is the framework hook.) Promote to a BUG option only if live toggling is wanted.
 extern const bool cascadeModifierParityMode;
 
-// Build a city's modifier slot for one family at MODSCOPE_CITY: deposit each PRESENT building's city-scope flat/percent
-// whose `enabled` holds and `disabled` doesn't (re-evaluated against kCtx -- the dormancy model). iFamily is a YieldTypes
-// for the pilot. PILOT scope; widens to plot (the plot self-reports, owner 2026-06-19) + other scopes/families later.
+// Build a city's modifier slot for one family at MODSCOPE_CITY: fold the city's PRESENT BUILDINGS' city-scope deposits +
+// the player's active CIVICS' empire-scope deposits (empire = the player = all cities -- the empire->city roll-down),
+// each whose `enabled` holds and `disabled` doesn't (re-evaluated against kCtx -- the dormancy model). iFamily is a
+// YieldTypes for the pilot. PILOT; widens to plot + trait/tech/building-empire sources + other families later.
 void cascadeModifierCitySlot(int iFamily, const CvCascadeContext& kCtx, CvModifierSlot& slotOut);
+
+// The pre-modifier BASE the cascade applies the city slot to: legacy getYieldRate100 multiplies (getBaseYieldRate +
+// getSpecialistYieldTotal) by the modifier (CvCity.cpp:11253 -- specialist yield gets the city modifier like worked
+// tiles), so the cascade base matches that pair. Shadow stand-in (the eventual model computes specialist output from
+// MODSCOPE_SPECIALIST deposits). ONE definition -- the shadow + both endpoints use it so the base can't drift.
+int cascadeModifierCityBase(const CvCity* pCity, int iFamily);
 
 // The CALCULATION FLOW -- HOW a built slot folds into a base. Kept as ONE named dispatch point so the flow is EASILY
 // MODIFIED / SWAPPED later (owner 2026-06-19): add or change a flow = add an enum value + a case in cascadeModifierApply;
@@ -129,5 +138,31 @@ int cascadeModifierApply(const CvModifierSlot& slot, int iBase);
 // The effective city-scope value for (family, ctx): cascadeModifierApply(citySlot, getBaseYieldRate). PILOT scope =
 // MODSCOPE_CITY (other scopes return 0 for now). The single read the shadow + the per-entity endpoint use.
 int cascadeModifierEffective(int iFamily, int iScope, const CvCascadeContext& kCtx);
+
+// ===================== the SHADOW classifier (cause-tag + care level) =====================
+
+// The CARE SCALE -- Fine -> Meltdown (modifier-cascade-shadow-spec §4). ONE WORD each, chosen so the name ALONE
+// conveys severity + the implied action to an agent reading it cold (no table lookup): Fine->ignore, Rounding->accept,
+// Better->accept-as-a-win, Weird->investigate/ask, Bug->fix, Meltdown->stop-everything. The shadow auto-SUGGESTS a
+// provisional rung from the cause-tag; the OWNER's verdict sets the final one (R-M3). Six rungs (0..5).
+enum ModifierCareLevel
+{
+	CARE_FINE = 0,  // exact parity, or a diff blessed identical-enough -- ignore
+	CARE_ROUNDING,  // cosmetic int-rounding / off-by-one within tolerance -- accept, note
+	CARE_BETTER,    // deliberate correction (multiplier composition etc.) -- accept as a WIN, document
+	CARE_WEIRD,     // unexplained divergence, cause not yet found -- investigate -> ASK the owner
+	CARE_BUG,       // confirmed wiring bug (deposit missing / extra / mis-scoped) -- must-fix before cutover
+	CARE_MELTDOWN,  // systemic -- whole channel garbage / overflow -- stop-the-line; DESPAIR_INDEX candidate
+	NUM_MODIFIER_CARE_LEVELS
+};
+
+// The care rung's one-word name ("Fine".."Meltdown"). Out-of-range -> "?".
+const char* cascadeModifierCareName(int iCare);
+
+// Classify a city-yield divergence into a CAUSE-TAG (§3.4) + provisional CARE level (§4). ONE definition, used by
+// BOTH /diagnostic/modifierSweep and the per-turn [MODSHADOW] line so they can't drift. iCascade / iLegacy are the
+// realized per-turn yields in the SAME (x1) scale; slot carries the flat/percent/mult decomposition for localizing.
+// Provisional only -- the owner confirms/overrides (R-M3). Returns the cause-tag string; writes the care into iCareOut.
+const char* cascadeModifierClassify(int iCascade, int iLegacy, const CvModifierSlot& slot, int& iCareOut);
 
 #endif // CV_CASCADE_MODIFIER_H

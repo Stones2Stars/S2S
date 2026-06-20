@@ -474,9 +474,15 @@ via `enabled`):
 - **`range` = one family (radius).** A unit-scope single value: *how far a ranged attack reaches*. It **defines
   "ranged-ness" unambiguously** (siege = `range:1`, true ranged = `2+`) and **deletes the engine's siege-vs-ranged
   special case** — every unit carries a `range`; the value decides reach. (Air/bombard reach are the same radius
-  concept; per-kind runtime nuance like air round-trip stays in the resolver, not the data.) The unification is
-  honest because **the ground ranged-attack mission appears to run the same strike code as air** (owner 2026-06-20,
-  trust-but-verify vs `airStrike`).
+  concept; per-kind runtime nuance like air round-trip stays in the resolver, not the data.) **The unification is
+  CONFIRMED honest (verified 2026-06-20 vs `CvUnit::airStrike`/`rangeStrike`, `Sources/Engine/CvUnit.cpp`).** Ground
+  ranged (`rangeStrike`/`canRangeStrikeAt`) and air (`airStrike`) are parallel functions, not one — but they share
+  every load-bearing piece: both derive **reach from `airRange()`** (so ground "ranged-ness" *is* `iAirRange > 0` +
+  `airBaseCombatStr() > 0`), both select the target via `airStrikeTarget`, cap at `airCombatLimit`, run
+  `collateralCombat`, take no counterattack, and apply damage with the identical `max(dmg, min(dmg+X, limit))` shape.
+  The **only** divergence is the damage-magnitude function (`airCombatDamage` vs `rangeCombatDamage`) — exactly the
+  resolver-side per-kind nuance the model keeps OUT of the data. So one `range` family over `airRange()` is faithful;
+  the converter's `iAirRange → range` is the right lever, and siege just needs `iAirRange` set on the ground unit.
   - **CONVERTER STATUS (landed 2026-06-20): air-only.** `curate_unit` lifts `iAirRange → range` (top-level family,
     human tile value, `unit` scope; the ×100 is the engine's parse job, data≠runtime) — 53 air units. `iAirRangeChange`
     is a *change* field → a promotion-side `range` modifier (standard shape, `curate_promotion`), not a unit base.
@@ -503,15 +509,35 @@ family, so the converter just rescales legacy numbers and lets the standard modi
   consistent), then **terrain/feature costs are normalized to the chosen base afterward** so non-route distances match legacy.
 - every *change* (promotion move/range bonus, etc.) is the **standard modifier shape** over that base — a normal
   `movement`/`range` flat/percent deposit, `enabled` as usual — **no bespoke path**.
-- **`moveCost` combine (VERIFIED vs `CvPlot::movementCost` 2026-06-20, not guessed):** the terrain path is **ADDITIVE**
-  (terrain + feature + hills sum, ×100) with unit **promotion discounts** as additive −cost. A **ROUTE is an OVERRIDE
-  via `min`, NOT a divider or a terrain-subtraction** — when both plots are routed the cost becomes
-  `min(MOVE_DENOMINATOR, min(routeCost, flatCost))`, where `routeCost = route.getMovementCost() + Σ getTechMovementChange`
-  (additive among routes) — i.e. the route REPLACES the terrain path with its own (cheaper) cost. So routes enter
-  `moveCost` as a **`min`-combine override branch**; per-tech route changes are **additive into that route cost**.
-  (The "divider" intuition comes from the UI showing the *speed* as `MOVE_DENOMINATOR / moves`; the underlying *cost*
-  math is additive + `min`.) **Floored** at the minimum.
-- today **only airplanes carry `range` modifiers** — every other unit is base-only.
+- **`moveCost` combine (RE-VERIFIED line-by-line vs `CvPlot::movementCost`, `Sources/Engine/CvPlot.cpp::movementCost`,
+  2026-06-20 — supersedes the looser earlier note; the **full decomposition** is now dumped + cross-checked live by
+  [`/diagnostic/movementSweep`](../observability/http-server.md), so every claim here is a NAMED component with numbers,
+  not a guess). `MOVE_DENOMINATOR = 100` (verified, `GlobalDefines.xml`). The function is a branch tree, NOT one sum:
+  - **Early returns:** a `flatMovementCost()` or `DOMAIN_AIR` unit costs exactly `MOVE_DENOMINATOR` (the *only* branch
+    skipping the trailing `max(1)`); an unrevealed-to-a-human or invalid-domain-for-location plot costs `maxMoves()`;
+    invalid-domain-for-action costs `MOVE_DENOMINATOR`.
+  - **ROUTE OVERRIDE branch** (both plots routed AND (no river-crossing OR bridge-building tech)):
+    `cost = min(MOVE_DENOMINATOR, min(routeCost, routeFlatCost))` — a TWO-term min, not one. `routeCost =
+    route.getMovementCost() + team.getRouteChange(route)` (taking the **max** of from/to when they differ);
+    `routeFlatCost = max(fromFlat, toFlat) × baseMoves`. **The per-tech route delta is `CvTeam::getRouteChange`, NOT
+    "Σ getTechMovementChange"** (correction). The route REPLACES the terrain path with its own cheaper cost.
+  - **REGULAR (terrain) branch** — ADDITIVE pre-denominator stack: `terrain + feature + HILLS_EXTRA_MOVEMENT(hills) +
+    RIVER_EXTRA_MOVEMENT(river-crossing) + PEAK_EXTRA_MOVEMENT(peak ∧ ¬moveFastPeaks) + 3(peak, unconditional)`; then
+    `max(1, sum − getExtraMoveDiscount())` (the unit −cost discount); then `× MOVE_DENOMINATOR`; then a **double-move
+    divisor** — `/4` for feature/hills double-move, `/2` for terrain double-move; then **floored at `max(90, …)`**.
+  - **⚠ Two facts the model previously omitted, both load-bearing for the converter:** (1) the regular-branch floor is
+    **90, NOT `MOVE_DENOMINATOR`/clamp-to-0** — 0.9 of a move is the cheapest a *terrain* tile can cost (distinct from
+    the unit-side always-move-one resolver clamp above, which zeroes *remaining points* after a step — do not conflate
+    the two clamps); (2) **double-move** (`isFeatureDoubleMove`/`isTerrainDoubleMove`/`isHillsDoubleMove`,
+    promotion-driven) halves/quarters the terrain cost — a real `moveCost` modifier the converter must carry.
+  (The "divider" intuition comes from the UI showing *speed* as `MOVE_DENOMINATOR / moves`; the underlying *cost* math
+  is the branch tree above.) [`legacy-value-calc-map.md` §10.1](legacy-value-calc-map.md) carries the same
+  decomposition (independently verified) — they agree.
+- today **only airplanes carry `range` modifiers** — every other unit is base-only. `CvUnit::airRange()` sums **four**
+  contributors, not two: `UnitInfo.getAirRange() + getExtraAirRange() + team.getExtraMoves(DOMAIN_AIR) +
+  national{Missile|Flight}RangeChange` (the missile-vs-flight national split by special-unit type). The air-only
+  converter today lifts the unit base (`iAirRange`) + the promotion *change* (`iAirRangeChange`); the **team-extra and
+  national contributions are additional modifier sources still to map** (verified 2026-06-20).
 
 Both are the **unit-plane + plot-cost subsystem** (the large, later surface): curators classify movement/range
 fields *into* these homes, built when that subsystem lands — never special-cased to identity meanwhile.
@@ -524,6 +550,66 @@ never by hunting specific in-game unit cases by hand. That observe-then-shadow s
 ([DEC-map-before-delete](../../architecture/decisions.md#dec-map-before-delete),
 [DEC-obs-scale](../../architecture/decisions.md#dec-obs-scale)); skipping it is exactly the "cast iron" case-by-case
 slog it avoids.
+
+**STATUS — the OBSERVE surface is BUILT (2026-06-20).** Phase-3 step-1/2 landed: per-unit effective movement points +
+`range` are on **`/units`** (`baseMoves`/`maxMoves`/`movesLeft`/`moveDiscount`/`range`/`domain`), and the systematic
+per-`(unit, edge)` `moveCost` decomposition (every component above + the engine's own `movementCost()` as the
+authority, with a per-edge self-check) is the new **`/diagnostic/movementSweep?type=full&player=N`** endpoint —
+the magnitude analogue of `/diagnostic/modifierSweep`, in `Sources/Tools/CvHttpServer.cpp`
+([http-server.md](../observability/http-server.md)). The decomposition is self-validated against the engine's own
+`movementCost()` per edge: **`edgeMismatchHuman == 0`** (verified live 2026-06-20, 2248 human edges) proves the mirror
+is faithful.
+
+> **⚠ MAPPED ENGINE QUIRK — the non-human `movementCost` result-cache collides (verified 2026-06-20, via the new
+> sweep + `CvUnit::m_movementCharacteristicsHash`).** `CvPlot::movementCost` caches its result **only for non-human
+> units**, keyed by `m_movementCharacteristicsHash` — and that hash folds in only the base-unit zobrist + promotions/
+> unitcombats flagged `changesMoveThroughPlots()`, **NOT `getExtraMoveDiscount` nor `baseMoves`**. So AI units differing
+> only in move-discount/base-moves share a cache entry and return **each other's** `moveCost` (observed: three
+> `UNIT_BTR80` with `baseMoves` 4/3/4 and discount 2 vs 1 all returned the same cached cost). The sweep surfaces this
+> as a small `edgeMismatchNonHuman` (the AI-cached `engineCost` ≠ the fresh formula `cost`). **Consequence for phase-3
+> step-3/4:** the movement shadow MUST diff the cascade against the **FRESH** cost (the decomposition / human path),
+> never the AI-cached `engineCost`, or it will chase phantom cache-collision divergences. (A *pre-existing* legacy
+> imperfection the observe surface exposed — exactly its job; not a converter or emitter bug.)
+
+**Model VALIDATED against the live distribution (2026-06-20, via the sweep across a human + 2 AI players, ~29k
+edges).** The observed `moveCost` landscape is exactly what the formula predicts: a discrete ×100-anchored set —
+`100` (terrain=1 single move), `200/300/400` (terrain 2/3/4), the `90` floor, and sub-100 route values
+(`12/16/24/32/36/40` = route-type cost + tech changes) — with no surprise magnitudes. Notable for the converter:
+**route-branch edges DOMINATE (~73%)** (so the route `min`-override is the hot path, not an edge case); **the unit
+−cost discount affects ~40% of edges** (discount 1–2 — a major factor, not rare); double-move is marginal
+(~1.6% `/2`, ~0.01% `/4`); range is air-only (~1.8% of units: fighters, range 5/11/12). Real road costs are 24–40,
+NOT a uniform `base/3≈33` — the model's "base/3" is an approximation; the converter normalizes the actual
+route-type values.
+
+**STATUS — the CASCADE RESOLVER + SHADOW are BUILT (cut 1, 2026-06-20, Assert-clean).** Phase-3 step-4 landed the
+plot-substrate channel: `Sources/Cascade/CvCascadeMovement.{h,cpp}` is a `moveCost` **resolver** that reproduces
+the `CvPlot::movementCost` branch tree but sources the **terrain/feature/route** cost from the migrated JSON
+(`identity.movementCost` + route `identity.flatMovementCost`), and `/diagnostic/movementSweep` now carries the
+**cascade-vs-legacy diff column** (`cascadeCost`/`cascadeDelta`/`cascadeCause`/`cascadeCare` per edge + the
+`cascadeDiverge` count, cause/care histograms, and `cascadeSubstrate` parse stats). The shadow diffs the cascade
+against the **FRESH** legacy `iFinal` (the `cost` field), never the AI-cached `engineCost` (the cache-collision
+quirk above). **Cut-1 scope:** the resolver reads the **unit-side** aggregate (baseMoves, moveDiscount, the
+double-move/ignore/flat predicates) and the hills/river/peak/denominator globals from the engine/GC — those are
+the unit-plane MODIFIER FAMILY (the self-accumulator, "largest surface, last") and the Tier-G config globals,
+neither migrated yet — so a divergence **localises to the terrain/feature/route migration** (exactly the deletable
+plot-substrate reads). The route per-tech delta (`CvTeam::getRouteChange`) likewise stays engine-read (a
+tech-`enabled` `moveCost` modifier, not yet migrated).
+
+**STATUS — the UNIT-PLANE movement/range shadow is BUILT (cut 2, 2026-06-20, Assert-clean).** The unit-side
+credit/discount/range/caps are the modifier-family slice; `cascadeUnitMoveAgg` (in `CvCascadeMovement`)
+reconstructs the engine's `m_iExtra*` stack from the migrated JSON — summing the unit **type** + each **promotion**
++ each **unitcombat** the live unit has (`movement.unit.{moves,moveDiscount}`, `range.unit`/`air.unit.range`, the
+`capabilities`; double-move is TYPE-KEYED). `/diagnostic/movementSweep` per-unit now carries the **shadow**
+(`cascadeMovesMigrated`/`engineMovesMigrated`/`cascadeMovesDelta`, the discount + range twins, the cap bools) vs the
+engine's **migrated** parts (`UnitInfo` + own `getExtra*`), plus the summary `cascadeUnitDiverge` + cause/care
+histograms + `cascadeUnitData` parse stats — AND the **META** rung `cascadeSources[]` (each contributing
+type/promotion/unitcombat's exact contribution: which promo gave +1 move, which unitcombat the keyed double-move).
+The team/national scopes + the commander/commodore cross-edge (`getExtraMoves` folds them) + the flying-runtime
+`canFliesToMove()` OR are engine-only (NOT migrated) and deliberately excluded from the migrated diff — a
+commander unit is cause-tagged `commanderCrossEdge` (care Weird, expected), so a real `moves`/`moveDiscount`/`range`
+divergence isolates the unit-plane data migration. **Remaining unit-side data to migrate** (the shadow's expected
+residue): `team.getExtraMoves(domain)` (team-scope), the four-term `airRange` team/national contributions, and the
+route `CvTeam::getRouteChange` tech delta — each a separate modifier-source migration.
 
 ### 6.7 Specialist COUNTS — two independent additive families (owner 2026-06-20)
 

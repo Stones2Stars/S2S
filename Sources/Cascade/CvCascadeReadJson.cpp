@@ -1157,6 +1157,60 @@ void cascadeDormancyShadow()
 	rjLogLine(CvString::format("[DORMANCY] p=%d cities=%d builtCells=%d diverge=%d", iCtx, iCities, iCells, iDiv));
 }
 
+// ===================== §430 MODIFIER SHADOW (the magnitude twin of placement/dormancy) =====================
+
+void cascadeModifierShadow()
+{
+	if (gPlayerLogLevel < 1) return;
+
+	const int aFam[3] = { YIELD_FOOD, YIELD_PRODUCTION, YIELD_COMMERCE };
+	const char* aFamName[3] = { "food", "production", "commerce" };
+
+	// Per-player, every alive player (human AND AI -- §3.5; same per-alive-player cadence as [STATE/fin]).
+	for (int p = 0; p < MAX_PLAYERS; ++p)
+	{
+		CvPlayer& kP = GET_PLAYER((PlayerTypes)p);
+		if (!kP.isAlive()) continue;
+
+		int iCities = 0, iCells = 0, iDiv = 0, iWorstCare = 0;
+		int aChDiv[3] = { 0, 0, 0 };
+		int iIter = 0;
+		for (CvCity* pCity = kP.firstCity(&iIter); pCity != NULL; pCity = kP.nextCity(&iIter))
+		{
+			++iCities;
+			CvCascadeContext kCtx(p, pCity->getID());
+			for (int f = 0; f < 3; ++f)
+			{
+				++iCells;
+				CvModifierSlot slot;
+				cascadeModifierCitySlot(aFam[f], kCtx, slot);
+				const int iBase = cascadeModifierCityBase(pCity, aFam[f]);            // base + specialist (legacy parity)
+				const int iCascade = cascadeModifierApply(slot, iBase);              // x1 realized (active calc-flow)
+				const int iLegacy = pCity->getYieldRate100((YieldTypes)aFam[f]) / 100; // x1 realized (legacy display)
+				int iCare = 0;
+				const char* szCause = cascadeModifierClassify(iCascade, iLegacy, slot, iCare);
+				if (iCare > iWorstCare) iWorstCare = iCare;
+				if (iCascade != iLegacy)
+				{
+					++iDiv;
+					++aChDiv[f];
+					if (gPlayerLogLevel >= 2)
+					{
+						rjLogLine(CvString::format(
+							"[MODSHADOW] DIVERGE p=%d city=%d ch=%s cascade=%d legacy=%d delta=%d flat=%d pct=%d mult=%d cause=%s care=%d/%s",
+							p, pCity->getID(), aFamName[f], iCascade, iLegacy, iCascade - iLegacy,
+							slot.iFlat, slot.iPercent, slot.iMultiplierX100, szCause, iCare, cascadeModifierCareName(iCare)));
+					}
+				}
+			}
+		}
+		rjLogLine(CvString::format(
+			"[MODSHADOW] p=%d cities=%d cells=%d diverge=%d food=%d prod=%d comm=%d worstCare=%d/%s parity=%d",
+			p, iCities, iCells, iDiv, aChDiv[0], aChDiv[1], aChDiv[2],
+			iWorstCare, cascadeModifierCareName(iWorstCare), cascadeModifierParityMode ? 1 : 0));
+	}
+}
+
 // ===================== LIVE STATE EVENT FEED (the "cameras") =====================
 
 void cascadeStateLog()

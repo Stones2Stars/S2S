@@ -49,11 +49,31 @@
 - **NEXT PHASE — movement/range OBSERVABILITY → shadow → engine code** (start-fresh, per owner 2026-06-20): the
   movement/range model is data-landed but **unconsumed**; before the engine builds the `movement`/`moveCost`/`range`
   consumption, the legacy must be made fully observable (per [`modifier.md` §6.6 "observe-then-shadow"](../reference/cascade/modifier.md)):
-  (1) **map** the existing observability surface (`../reference/observability/` — `plotsnapshot`, `path-generator`,
-  `unit-upkeep-supply`, `http-server`) for what unit movement/range + plot `moveCost` it already exposes; (2) **add the
-  emitters** for the gaps (per-unit effective movement points + `range`, per-plot `moveCost` decomposition); (3) build the
-  **movement/range shadow** (analogue of `/diagnostic/modifierSweep`); (4) then build + tune the engine consumption.
-  One open trust-but-verify: the ground ranged-attack mission vs `airStrike` (shared code → honest unified `range`).
+  (1) ✅ **map** the existing observability surface — DONE (the gap: `/units` carried no movement/range; no `moveCost`
+  decomposition anywhere; the map-vs-code pass corrected `modifier.md` §6.6 — floor is **90** not the denominator,
+  double-move `/2|/4`, the `routeFlatCost` second `min` term, peak/river/flat abilities, the four-term `airRange`);
+  (2) ✅ **add the emitters** — DONE: per-unit `baseMoves`/`maxMoves`/`movesLeft`/`moveDiscount`/`range`/`domain` on
+  `/units`, and `/diagnostic/movementSweep?type=full&player=N` (the per-`(unit, edge)` `moveCost` decomposition
+  cross-checked against the engine's own `movementCost()`, `edgeMismatch` self-check) — `Sources/Tools/CvHttpServer.cpp`,
+  Assert-clean; (3) ✅ **movement RESOLVER + shadow — DONE (cut 1, 2026-06-20, Assert-clean):**
+  `Sources/Cascade/CvCascadeMovement.{h,cpp}` reproduces the `CvPlot::movementCost` branch tree sourcing the
+  **terrain/feature/route** cost from the migrated JSON, and `/diagnostic/movementSweep` carries the
+  cascade-vs-legacy diff column (`cascadeCost`/`cascadeDelta`/`cascadeCause`/`cascadeCare` + histograms +
+  `cascadeSubstrate` parse stats), diffed against the FRESH legacy `iFinal` not the AI-cached `engineCost`. Cut-1
+  = the **plot-substrate channel**: the unit-side aggregate + hills/river/peak/denom globals + the route per-tech
+  delta stay engine-read (the unit-plane modifier family + Tier-G config, not migrated yet), so a divergence
+  localises to the terrain/feature/route migration. See [`modifier.md` §6.6](../reference/cascade/modifier.md).
+  (4) ✅ **unit-plane movement/range shadow — DONE (cut 2, 2026-06-20, Assert-clean):** `cascadeUnitMoveAgg`
+  reconstructs the engine `m_iExtra*` stack from the migrated JSON (unit type + held promotions + unitcombats), and
+  `/diagnostic/movementSweep` per-unit carries the migrated-parts shadow (`cascadeMovesDelta`/`cascadeDiscountDelta`/
+  `cascadeRangeDelta` + cap bools) + `cascadeUnitDiverge`/cause/care histograms + the **META** `cascadeSources[]`
+  per-source attribution (reconstruct WHY each unit moves as it does, from the wire). Team/national/commander/flying
+  residue is engine-only, excluded (commander units tag `commanderCrossEdge`). See [`modifier.md` §6.6](../reference/cascade/modifier.md).
+  **Remaining unit-side DATA to migrate** (shadow residue, separate modifier-sources): `team.getExtraMoves`,
+  the `airRange` team/national terms, the route `getRouteChange` tech delta. The carried
+  trust-but-verify is **RESOLVED** (2026-06-20): ground
+  `rangeStrike` and `airStrike` both derive reach from `airRange()` and share target/limit/collateral/damage-shape —
+  the unified `range` family is honest ([`modifier.md` §6.6](../reference/cascade/modifier.md)).
 
 ---
 
@@ -94,9 +114,31 @@ metric — the cascade is *expected* to correct latent legacy bugs ([DEC-parity-
 
 Source: `migration-entity-ranking.md`. The order is a **topological sort**: config/sources first, the
 most-targeted "monsters" last, so every edge a target consumes is already authored on its source (the
-edge is authored **once**, on the source/conditioner). **Conversion is strictly serial — one entity at a time,
-each verified against its live C++/Python consumer before the next** (owner ruling; the abandoned mass-migration
-detour outran verification). The curators live in `Tools/Migration/`; the data lands in `Assets/Data/**`.
+edge is authored **once**, on the source/conditioner). The curators live in `Tools/Migration/`; the data lands
+in `Assets/Data/**`.
+
+> **⛔ BUILD-WHOLESALE, VALIDATE-AFTER (owner ruling 2026-06-20 — SUPERSEDES the earlier "strictly serial, verify
+> each before the next").** The end goal is the WHOLE migration + the WHOLE shadow assembled so parity can be
+> validated as one pass. The owner's order: **build it all → validate + bugfix individual components in the
+> assembled shadow → owner signs off on shadow parity → cut the shadow to `main` → tear down legacy.** "Stopping
+> for small individual things [piecemeal verification, per-piece confirmations] when you can implement it more
+> wholesale for a later verification pass is pointless." So: build entities/curators/consumption wholesale to the
+> locked model, DON'T pause to live-verify each piece, and DON'T ask for per-piece sign-off — **signing off
+> individual shadow pieces to move to the next is the owner's HUMAN process, done later, against the assembled
+> shadow.** Individual bugs in parts of the shadow are expected and fixed in the validate-after pass; they do not
+> block building the rest. (The earlier serial-verify ruling addressed a past mass-migration that outran
+> verification; the owner now explicitly accepts wholesale build + deferred validation for the finish-line push.)
+
+> **moveCost is a RESOLVER SUBSYSTEM, not a modifier family (owner ruling 2026-06-20).** The plot-side move cost
+> (terrain/feature/route base) is **intrinsic plot-substrate data read per-(unit,edge) by a movement resolver**,
+> NOT a deposit that accumulates down the scope spine — because `moveCost` is computed per edge with a route
+> `min`-override, double-move `/2`–`/4`, and a floor, none of which fit the "deposit DOWN → O(1) summed read"
+> model (the `curate_route.py` instinct was right; the §7 vision-LOS-resolver is the precedent). So: base
+> `moveCost` stays intrinsic on terrain/feature/route; only the cascading DELTAS (tech route changes, promotion
+> move-discount/credit) are real modifier families; the resolver computes
+> `terrain+feature+hills+route-min+discount+double-move+floor`. This refines [`modifier.md` §6.6](../reference/cascade/modifier.md)'s
+> "movement is a family" phrasing (the unit-side `movement` CREDIT can stay a family; the plot-side `moveCost`
+> DEBIT is resolver-side).
 
 **Status legend:** ✅ curated · ◐ heavy/partial · ☐ not yet curated · ⏸ deferred to a later system rework.
 
@@ -104,7 +146,7 @@ detour outran verification). The curators live in `Tools/Migration/`; the data l
 |---|---|---|
 | **A — config / global axes** | GameSpeed, Handicap, Era, Process, Victory, Vote, CultureLevel, Hurry, BonusClass, CivicOption, Civilization | ✅ all curated · **Property** ☐ (defines the `PROPERTY_*` channels; diffusion → #429) |
 | **B — top-of-cascade sources** | **Tech** (the spine root), Civic, Religion, Corporation, Trait | ✅ all curated |
-| **C — resources / map substrate** | Bonus ✅, Route ✅, **Terrain** ☐ (heavy), **Feature** ☐ (heavy), **Improvement** ☐ (heavy), Build ✅ | ◐ 3 heavy plot-leaves remain |
+| **C — resources / map substrate** | Bonus ✅, Route ✅, **Terrain** ✅ (2026-06-20), **Feature** ✅ (2026-06-20), **Improvement** ☐ (heavy), Build ✅ | ◐ Improvement remains (Terrain/Feature curated to the resolver-subsystem `moveCost` model) |
 | **D — producers / unit-plane sources** | Specialist, Heritage, Project, PromotionLine, Promotion, UnitCombat, LeaderHead | ✅ all curated |
 | **E — the monsters** | SpecialBuilding ✅, **Building** ✅ (5202 records), SpecialUnit ✅, **Unit** ✅ (2073 records) | ✅ all curated |
 
