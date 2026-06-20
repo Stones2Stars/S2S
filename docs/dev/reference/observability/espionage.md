@@ -1,343 +1,217 @@
-> DRAFT observability map (2026-06-18 by parent agent) — all claims cited from code;
-> verify against the named file:line before relying on any specific detail.
+# Observability — Espionage — what's on the wire for the EP economy & missions
 
-# Observability map — Espionage economy & missions
+> **Status:** reference   ·   **Verified against:** 2026-06-20 (function sites confirmed in `Sources/Engine/CvPlayer.cpp`, `Sources/Engine/CvTeam.cpp`, `Sources/AI/CvPlayerAI.cpp`; line numbers drift)
+> **Grounding:** live `Sources/Engine/CvPlayer.cpp` (`doEspionagePoints`, `doEspionageOneOffPoints`, `getEspionageSpending`, `getEspionageMissionCost`/`Modifier`, `doEspionageMission`), `Sources/Engine/CvTeam.cpp` (counterespionage timers), `Sources/Engine/CvCity.cpp` (effect counters, `getEspionageDefenseModifier`), `Sources/AI/CvPlayerAI.cpp` (`AI_updateCommercePercent`, `AI_bestPlotEspionage`, `[ESP/best]`), `Sources/Tools/CvHttpServer.cpp` (`/players`, `/cities`). Carried over from the old draft map; function sites re-confirmed, paths re-grounded to the reorganized `Sources/` tree.
+> Espionage is **Tier 0 (Oblivious)** today: no espionage-specific state appears in any HTTP endpoint. The one AI log tag (`[ESP/best]`) covers only the mission-selection commit — not EP income, weight allocation, counterespionage, or city-level effect timers. The full EP economy is invisible from outside the screen. This map walks EP income → per-team allocation → mission cost/execution → counterespionage → city effects → AI selection, names what's dark, and proposes the snapshot fields / log tags / diagnostic endpoint to climb to Tier 4.
 
-**System scope:** EP accrual, per-team allocation, mission cost/execution, counterespionage
-timers, city-level espionage effects, and the AI's mission-selection logic.
+The observability scale (0–5) and the three canonical hook shapes are defined once in
+[`README.md`](README.md) ([DEC-obs-scale], [DEC-obs-hook-shapes]); the live surface and the rules for
+reading it (logs held open mid-session, use `/events` + `/diagnostic`) live in
+[`http-server.md`](http-server.md). This doc does not restate them.
 
-**Observability tier: 0 — Oblivious.** No espionage-specific state appears in any
-HTTP endpoint (`/players`, `/cities`, `/units`, `/diagnostic`). The one AI log tag
-(`[ESP/best]`) exists but only covers the mission-selection commit; it does not cover
-EP income, weight allocation, counterespionage, or city-level effect timers. The full
-espionage economy is invisible from outside the screen.
+> Line numbers below are anchors at time of writing and **drift** — confirm the named function, not the
+> integer.
 
 ---
 
 ## 1. How it actually works
 
-### 1-A. EP income: per-turn accrual
+### 1a. EP income — per-turn accrual
 
-`CvPlayer::doTurn` calls `doEspionagePoints()` (CvPlayer.cpp:3813), which
-calls `doEspionageOneOffPoints(getCommerceRate(COMMERCE_ESPIONAGE))`
-(CvPlayer.cpp:15580-15583). `getCommerceRate(COMMERCE_ESPIONAGE)` is the
-player's total EP rate from the commerce slider and city outputs — it is the
-same rate that appears as the espionage slider value in the UI.
+`CvPlayer::doTurn` calls `doEspionagePoints()` (CvPlayer.cpp:3813), which calls
+`doEspionageOneOffPoints(getCommerceRate(COMMERCE_ESPIONAGE))` (CvPlayer.cpp:15580).
+`getCommerceRate(COMMERCE_ESPIONAGE)` is the player's total EP rate from the commerce slider and city
+outputs — the same value as the espionage slider in the UI.
 
-`doEspionageOneOffPoints(iChange)` (CvPlayer.cpp:15555-15578):
-1. Increments `CvTeam::m_iEspionagePointsEver` by `iChange`
-   (CvPlayer.cpp:15561 → CvTeam::changeEspionagePointsEver).
-2. Divides the EP into per-target-team buckets using `getEspionageSpending`
-   (CvPlayer.cpp:15569) and calls
-   `CvTeam::changeEspionagePointsAgainstTeam` (CvPlayer.cpp:15573).
-   Points only go against teams the player has already met.
+`doEspionageOneOffPoints(iChange)` (CvPlayer.cpp:15555):
+1. Increments `CvTeam::m_iEspionagePointsEver` by `iChange` (`changeEspionagePointsEver`).
+2. Splits the EP into per-target-team buckets via `getEspionageSpending` (CvPlayer.cpp:15569) and calls
+   `CvTeam::changeEspionagePointsAgainstTeam` — points only go against already-met teams.
 
-The espionage commerce rate is gated: if no teams have been met, the
-COMMERCE_ESPIONAGE slider is forced off (CvPlayer.cpp:13200 —
-`COMMERCE_ESPIONAGE && 0 == GET_TEAM(getTeam()).getHasMetCivCount(true)`).
+The espionage commerce rate is gated off if no teams have been met
+(`COMMERCE_ESPIONAGE && 0 == GET_TEAM().getHasMetCivCount(true)`, CvPlayer.cpp:13200).
 
-### 1-B. EP allocation: per-target-team weights
+### 1b. EP allocation — per-target-team weights
 
-The weight split is controlled by `m_aiEspionageSpendingWeightAgainstTeam[]`
-(CvPlayer.h:1985), one integer per team, range 0-99 (clamped in
-`setEspionageSpendingWeightAgainstTeam` at CvPlayer.cpp:16772).
+The split is controlled by `m_aiEspionageSpendingWeightAgainstTeam[]` (CvPlayer.h), one int per team, range
+0–99 (clamped in `setEspionageSpendingWeightAgainstTeam`).
 
-`getEspionageSpending(TeamTypes eAgainstTeam, int iTotal)` (CvPlayer.cpp:15585):
-- Sums all weights for met, alive, non-self teams → `iTotalWeight`.
-- Proportionally assigns `(iTotalPoints * weight[i]) / iTotalWeight` to each.
-- Remainder points go to the team(s) with the highest weight, round-robin.
-- If all weights are 0, all remainder points go to all tied-best teams.
+`getEspionageSpending(eAgainstTeam, iTotal)` (CvPlayer.cpp:15585): sums weights for met/alive/non-self teams
+→ `iTotalWeight`; assigns `(iTotalPoints * weight[i]) / iTotalWeight` proportionally; remainder goes to the
+highest-weight team(s) round-robin (all tied-best if all weights are 0).
 
-**AI weight-setting** (`AI_updateCommercePercent`, CvPlayerAI.cpp ~16534-16823):
-- Runs in `AI_doTurnPost` each turn.
-- Resets all weights to 0 (CvPlayerAI.cpp:16537-16540).
-- For each met, alive team: computes `piWeight[team]` and `piTarget[team]`
-  from attitude, war status, their EP-ever vs our EP-ever, desired mission costs,
-  and spy-memory (`MEMORY_SPY_CAUGHT`) (CvPlayerAI.cpp:16680-16773).
-- Sets `COMMERCE_ESPIONAGE` percent by incrementing research percent down and
-  espionage percent up until `getCommerceRate(COMMERCE_ESPIONAGE) >= iEspionageTargetRate`
-  or the percent cap (`iMaxEspionage`, typically 5-15%) is hit
-  (CvPlayerAI.cpp:16807-16822).
-- Not logged.
+**AI weight-setting** — the espionage block of `AI_updateCommercePercent` (CvPlayerAI.cpp, ~16534–16823),
+run in `AI_doTurnPost`: resets all weights to 0; for each met/alive team computes a weight + target from
+attitude, war status, their-EP-ever vs our-EP-ever, desired mission costs, and `MEMORY_SPY_CAUGHT`; then
+raises the `COMMERCE_ESPIONAGE` percent (lowering research) until
+`getCommerceRate(COMMERCE_ESPIONAGE) >= iEspionageTargetRate` or the `iMaxEspionage` cap. **Not logged.**
 
-### 1-C. Accumulated EP per team-pair
+### 1c. Accumulated EP per team-pair
 
-Stored in `CvTeam::m_aiEspionagePointsAgainstTeam[]` (CvTeam.h:583), one
-per target team. Incremented by `doEspionageOneOffPoints`, decremented by
-`doEspionageMission` on a successful mission (CvPlayer.cpp:16707).
+`CvTeam::m_aiEspionagePointsAgainstTeam[]` (CvTeam.h), one per target team — incremented by
+`doEspionageOneOffPoints`, decremented by `doEspionageMission` on success (CvPlayer.cpp:16707). The global
+`m_iEspionagePointsEver` (CvTeam.h) records the team's lifetime EP, feeding the "my EP-ever vs their EP-ever"
+cost factor (§1d). It is also recorded in `m_mapEspionageHistory` keyed by turn (CvPlayer.cpp:3970) — a
+dormant Python/SDK hook, not exposed.
 
-A second global accumulator `m_iEspionagePointsEver` (CvTeam.h:545) records
-the total EP a team has ever produced; this feeds the mission cost modifier
-"my EP-ever vs their EP-ever" formula
-(CvPlayer.cpp:16256-16265). It is also recorded in the player history map
-`m_mapEspionageHistory` keyed by turn (CvPlayer.cpp:3970), but this map is
-not exposed anywhere.
+### 1d. Mission cost
 
-### 1-D. Mission cost calculation
+`getEspionageMissionCost` (CvPlayer.cpp:15758) = `baseCost × costModifier / 100 × numTeamMembers`.
+`getEspionageMissionBaseCost` (CvPlayer.cpp:15780) picks one of ~17 mission-type branches.
+`getEspionageMissionCostModifier` (CvPlayer.cpp:16167) is a multiplicative chain: city pop, trade route,
+shared religion / holy city, city culture ratio, target's `getEspionageDefenseModifier`, distance from
+capital, spy fortify bonus, the **EP-ever ratio**
+(`ESPIONAGE_SPENDING_MULTIPLIER × (2×theirEver + ourEver) / (theirEver + 2×ourEver)`, CvPlayer.cpp:16256),
+the target team's counterespionage mod against us (CvPlayer.cpp:16269), embassy discount, and Free-Trade
+discount.
 
-`getEspionageMissionCost` (CvPlayer.cpp:15758) is the full cost:
-```
-baseCost × costModifier / 100 × numTeamMembers
-```
-`getEspionageMissionBaseCost` (CvPlayer.cpp:15780) selects one of ~17
-mission-type branches to compute the base (treasury fraction, tech cost,
-production progress, city pop, etc.).
+### 1e. Mission execution
 
-`getEspionageMissionCostModifier` (CvPlayer.cpp:16167) is a multiplicative
-chain of factors (all cite CvPlayer.cpp:16167-16296):
-- City population: `+ESPIONAGE_CITY_POP_EACH_MOD per pop` above 1
-- Trade route: `+ESPIONAGE_CITY_TRADE_ROUTE_MOD`
-- Shared religion: `+ESPIONAGE_CITY_RELIGION_STATE_MOD` / `+ESPIONAGE_CITY_HOLY_CITY_MOD`
-- City culture ratio: reduces cost the more of your culture is in the city
-- Target city's `getEspionageDefenseModifier` (building-driven; CvCity.cpp:14238)
-- Distance from your capital to the target plot
-- Spy fortify bonus: reduces cost by `ESPIONAGE_EACH_TURN_UNIT_COST_DECREASE` per fortify turn (up to 5)
-- **EP-ever ratio:** `ESPIONAGE_SPENDING_MULTIPLIER × (2×their_ever + our_ever) / (their_ever + 2×our_ever)` — if they have more EP-ever, missions against them are cheaper (CvPlayer.cpp:16256-16265)
-- Target team's counterespionage mod against our team (CvPlayer.cpp:16269-16273)
-- Embassy discount (CvPlayer.cpp:16277-16280)
-- Free Trade Agreement discount (CvPlayer.cpp:16282-16286)
+`doEspionageMission` (CvPlayer.cpp:16299) executes one pass. On success (`bSomethingHappened`): deducts
+`iMissionCost` from `m_aiEspionagePointsAgainstTeam[targetTeam]` (CvPlayer.cpp:16707). Effects: building /
+project demolition, culture insertion, city poison/unhappy/revolt counters, civic/religion switch, anarchy,
+research sabotage, counterespionage, nuclear bomb. **None emit any log line or event** — only side-effects
+(gold in `/players`, building count in `/cities`) leak, with the causal link invisible.
 
-### 1-E. Mission execution
-
-`doEspionageMission` (CvPlayer.cpp:16299-16759) executes in one pass per call.
-On success (`bSomethingHappened`): deducts `iMissionCost` from
-`CvTeam::m_aiEspionagePointsAgainstTeam[targetTeam]` (CvPlayer.cpp:16707).
-Effects include: building demolition, project demolition, culture insertion,
-city poison/unhappy/revolt counters, civic/religion switch, anarchy counter,
-research sabotage, counterespionage mission, nuclear bomb. None of these emit
-any log line or event to the observable surface.
-
-### 1-F. Counterespionage state
+### 1f. Counterespionage state
 
 On a counterespionage mission (`kMission.getCounterespionageMod() > 0`):
-- `CvTeam::changeCounterespionageTurnsLeftAgainstTeam(targetTeam, iTurns)` (CvTeam.h:441)
-- `CvTeam::changeCounterespionageModAgainstTeam(targetTeam, mod)` (CvTeam.h:445)
-  where mod = `kMission.getCounterespionageMod() + 5 × spy.currInterceptionProbability()` (CvPlayer.cpp:16689)
-- The timer counts down by 1 per turn in `CvTeam::doTurn` (CvTeam.cpp:1061-1068);
-  when it hits 0, `setCounterespionageModAgainstTeam(team, 0)` clears it.
-- The active counterespionage mod is applied as a multiplicative cost increase
-  to missions against the team that set it (CvPlayer.cpp:16269-16273).
+`CvTeam::changeCounterespionageTurnsLeftAgainstTeam(targetTeam, iTurns)` and
+`changeCounterespionageModAgainstTeam(targetTeam, mod)`, where
+`mod = kMission.getCounterespionageMod() + 5 × spy.currInterceptionProbability()` (CvPlayer.cpp:16689). The
+timer counts down 1/turn in `CvTeam::doTurn` (CvTeam.cpp:1061); at 0 it clears
+(`setCounterespionageModAgainstTeam(team, 0)`). The active mod multiplies mission cost against the team that
+set it.
 
-### 1-G. City-level espionage effect timers
+### 1g. City-level effect timers
 
-Four per-city effect timers, all counting-down each `CvCity::doTurn`:
+Four per-city timers, all counting down each `CvCity::doTurn`:
 
-| Timer | Getter (CvCity.h) | Effect | Decremented at |
+| Timer | Getter | Effect | Decremented at |
 |---|---|---|---|
-| `m_iEspionageHealthCounter` | `getEspionageHealthCounter()` (CvCity.cpp:7994) | unhealthy by counter (CvCity.cpp:5855) | CvCity.cpp:1409-1412 |
-| `m_iEspionageHappinessCounter` | `getEspionageHappinessCounter()` (CvCity.cpp:8007) | unhappy by counter (CvCity.cpp:5639) | CvCity.cpp:1414-1417 |
-| `m_iDisabledPowerTimer` | `getDisabledPowerTimer()` (CvCity.h:1299) | power disabled | (doTurn) |
-| `m_iWarWearinessTimer` | `getWarWearinessTimer()` (CvCity.h:1303) | war weariness | (doTurn) |
+| `m_iEspionageHealthCounter` | `getEspionageHealthCounter()` | unhealthy by counter | CvCity.cpp:1409 |
+| `m_iEspionageHappinessCounter` | `getEspionageHappinessCounter()` | unhappy by counter | CvCity.cpp:1414 |
+| `m_iDisabledPowerTimer` | `getDisabledPowerTimer()` | power disabled | (doTurn) |
+| `m_iWarWearinessTimer` | `getWarWearinessTimer()` | war weariness | (doTurn) |
 
-None of these are in the HTTP snapshot.
+None are in the HTTP snapshot. (The happiness/health counters also feed the happiness/health ledgers —
+see [`health-happiness.md`](health-happiness.md).)
 
-### 1-H. City espionage defense modifier
+### 1h. City espionage defense modifier
 
-`getEspionageDefenseModifier()` (CvCity.cpp:14238) is a building-driven
-per-city modifier that increases mission costs against that city (fed into
-`getEspionageMissionCostModifier` at CvPlayer.cpp:16218). Not exposed.
+`getEspionageDefenseModifier()` (CvCity.cpp:14238) — building-driven per-city modifier that raises mission
+cost against that city (fed into `getEspionageMissionCostModifier`). Not exposed.
 
-### 1-I. AI mission selection
+### 1i. AI mission selection
 
-`CvPlayerAI::AI_bestPlotEspionage` (CvPlayerAI.cpp:15147) is the AI's spy
-decision function. It iterates spy plots, enumerates all mission types, scores
-each via `AI_espionageVal` (CvPlayerAI.cpp:15504), and returns the
-highest-value mission. The decision is driven by: attitude weight, war plan,
-EP balance, city property values (buildings, production progress, culture,
-treasury), and mission cost.
+`CvPlayerAI::AI_bestPlotEspionage` (CvPlayerAI.cpp:15147) iterates spy plots, enumerates all mission types,
+scores each via `AI_espionageVal` (CvPlayerAI.cpp:15504), and returns the highest. Driven by attitude
+weight, war plan, EP balance, city property values, and mission cost.
 
-The **one** log line in the entire espionage system:
+The **one** log line in the entire espionage system, emitted at level 1 after `AI_bestPlotEspionage`
+(CvPlayerAI.cpp:15495), gated by `gPlayerLogLevel`, teed to `/events`:
+
 ```
 [ESP/best] player=%d spyAt=(%d,%d) mission=%d target=%d value=%d
 ```
-emitted at level 1 after AI_bestPlotEspionage concludes (CvPlayerAI.cpp:15495).
-This log is gated by `gPlayerLogLevel` (not a separate gate; shares the
-single BUG "Player BBAI log level" knob). The winning mission is logged
-but: the integer enum for `mission` requires lookup against
-`EspionageMissionInfo` XML to decode; `target` is a raw `PlayerTypes` int;
-`value` is the raw heuristic score.
+
+`mission` is a raw `EspionageMissionInfo` enum int (needs XML lookup to decode); `target` is a raw
+`PlayerTypes`; `value` is the raw heuristic score.
 
 ---
 
-## 2. Current observability — tier 0 (Oblivious)
+## 2. What's on the wire today — **Tier 0 (Oblivious)**
 
-**HTTP endpoints — what exists:**
+### What exists
 
 | Endpoint | Espionage-relevant fields |
 |---|---|
 | `/players` | `gold`, `goldRate`, `scienceRate` — none of the espionage-specific fields |
 | `/cities` | `crime`, `education`, `disease` — **none** of the espionage effect timers |
-| `/units` | spy unit position, type (`UNIT_SPY` etc.), `missionAI` — adequate for spy location |
-| `/diagnostic` | no espionage-specific diagnostic endpoints |
+| `/units` | spy position, `type` (`UNIT_SPY` etc.), `missionAI` — adequate for spy location only |
+| `/diagnostic` | no espionage-specific endpoints |
 
-**Confirmed absent from `/players` snapshot** (CvHttpServer.cpp:61-81,
-rendered at CvHttpServer.cpp:285-304):
-- `espionageRate` (the COMMERCE_ESPIONAGE rate, `getCommerceRate(COMMERCE_ESPIONAGE)`)
-- `espionagePercent` (the slider %, `getCommercePercent(COMMERCE_ESPIONAGE)`)
-- per-team EP balance (`getEspionagePointsAgainstTeam`, one per known team)
-- per-team EP spending weight (`getEspionageSpendingWeightAgainstTeam`)
-- `espionagePointsEver` (the lifetime EP accumulator `m_iEspionagePointsEver`)
-- per-team counterespionage turns left + mod
+**Confirmed absent from `/players`** (player snapshot walk in `CvHttpServer.cpp`): `espionageRate`
+(`getCommerceRate(COMMERCE_ESPIONAGE)`), `espionagePercent` (`getCommercePercent(COMMERCE_ESPIONAGE)`),
+per-team EP balance (`getEspionagePointsAgainstTeam`), per-team weight
+(`getEspionageSpendingWeightAgainstTeam`), `espionagePointsEver`, per-team counterespionage turns + mod.
 
-**Confirmed absent from `/cities` snapshot** (CvHttpServer.cpp:83-104,
-rendered at CvHttpServer.cpp:339-357):
-- `espionageHealthCounter` — the poison-water turns remaining
-- `espionageHappinessCounter` — the unhappy turns remaining
-- `espionageDefenseModifier` — the building-driven defense mod
-- `disabledPowerTimer`
-- `warWearinessTimer`
+**Confirmed absent from `/cities`** (city snapshot walk): `espionageHealthCounter`,
+`espionageHappinessCounter`, `espionageDefenseModifier`, `disabledPowerTimer`, `warWearinessTimer`.
 
-**Log coverage:**
-
-| Log tag | Gate | What it covers |
-|---|---|---|
-| `[ESP/best]` level 1 | `gPlayerLogLevel >= 1` (the single BUG knob) | Winning mission + raw score per spy eval. Raw int enum for mission type — requires XML table to decode. Streamed to `/events` via `streamLogTee`. |
-| (nothing) | — | EP income per turn, EP allocation to teams, AI weight decisions, counterespionage mission effects, city espionage effect countdowns, mission execution, EP deduction |
-
-**Summary:** The espionage economy is essentially invisible from outside. You
-can see spy unit positions and infer they exist at a location. You cannot see:
-- How much EP any player is accumulating per turn
-- How much EP is allocated against each team
-- Whether a city is under a poison/unhappy/revolt/power-disable effect
-- How effective counterespionage is (the modifier and turns-remaining)
-- Why the AI chose (or skipped) an espionage mission beyond the bare winning enum
+**Log coverage:** only `[ESP/best]` (level 1, `gPlayerLogLevel`) — the winning mission + raw score per spy
+eval. EP income per turn, EP allocation to teams, AI weight decisions, counterespionage effects, city
+effect countdowns, and mission execution/EP deduction are all untagged.
 
 ---
 
-## 3. The gap — what cannot be reconstructed from outside today
+## 3. The gap
 
-### Critical gaps (required for render-from-API / Thought Police bar)
-
-1. **Per-player EP rate** — `getCommerceRate(COMMERCE_ESPIONAGE)` per player, the per-turn EP income. Not in `/players`. Without it you cannot verify or predict EP accumulation.
-
-2. **Per-player, per-team EP balance** — `getEspionagePointsAgainstTeam(team)` for every team pair. The direct currency for whether any mission can fire. Not exposed.
-
-3. **Per-player espionage commerce percent** — the slider value `getCommercePercent(COMMERCE_ESPIONAGE)`. Needed to explain the EP rate and the AI's trade-off against research.
-
-4. **Per-team EP spending weights** — `getEspionageSpendingWeightAgainstTeam(team)` per met team. Required to understand how EP is being directed (especially for AI players where this is the primary observable of intent).
-
-5. **EP-ever (team lifetime)** — `getEspionagePointsEver()`. This is one input to mission cost scaling; without it the cost formula cannot be reconstructed.
-
-6. **Counterespionage state** — per-team pair: `getCounterespionageTurnsLeftAgainstTeam` + `getCounterespionageModAgainstTeam`. Active counterespionage silently inflates all enemy mission costs; if you cannot see it you cannot explain why missions are cheaper or more expensive.
-
-7. **City espionage effect timers** — `espionageHealthCounter`, `espionageHappinessCounter`, `disabledPowerTimer`, `warWearinessTimer` per city. These are the visible outcomes of successful missions; without them you cannot tell whether a city's poor health/happiness has an espionage cause.
-
-8. **City espionage defense modifier** — `getEspionageDefenseModifier()` per city. Needed to reconstruct mission cost against a specific city.
-
-9. **Mission execution events** — `doEspionageMission` fires with zero log/event output. A successful mission (gold stolen, building destroyed, tech stolen, etc.) leaves no trace in the observable surface except for its side-effects on other endpoints (gold level in `/players`, building count in `/cities`, research in `/players`). The causal link is invisible.
-
-10. **AI weight-setting decisions** — The entire `AI_updateCommercePercent` espionage block (how weights are chosen, why the target rate was set, attitude inputs) has no logging.
+An agent watching the endpoints + logs today can see spy unit positions and infer they exist somewhere. It
+**cannot** see: how much EP any player accrues per turn; how much EP is allocated against each team; whether
+a city is under a poison/unhappy/revolt/power-disable effect; how effective counterespionage is (mod +
+turns); or why the AI chose/skipped a mission beyond the bare winning enum. A successful mission (gold
+stolen, building destroyed, tech stolen) leaves no trace except its side-effects on other endpoints, with
+the causal link invisible. This blocks reconstructing the EP economy and shadowing any cascade that would
+represent espionage state ([DEC-map-before-delete]).
 
 ---
 
-## 4. Proposed hooks — concrete additions to reach Tier 4 (Thought Police)
+## 4. Proposed hooks — climbing from Tier 0 to Tier 4
 
-All follow the existing pattern: gated by `gPlayerLogLevel` (player-scope log
-domain), added to the `[ESP]` tag family in `EspionageAI.log` + streamed via
-`streamLogTee`, plus snapshot fields in the `/players` and `/cities` endpoints.
+All hooks follow the three canonical hook shapes — see [DEC-obs-hook-shapes].
 
-### 4-A. Endpoint additions (snapshot-level; Tier 1→4)
+### 4a. Endpoint additions (snapshot-level; Tier 0 → 4)
 
-**`/players` additions** (add to `PlayerSnap` struct, CvHttpServer.cpp:61, populated
-in the snapshot builder at CvHttpServer.cpp:1524):
+**`/players`** (add to `PlayerSnap` + the player snapshot walk):
 
 ```jsonc
-// per player — existing fields omitted
-"espionageRate":  <int>,   // getCommerceRate(COMMERCE_ESPIONAGE)
-"espionagePercent": <int>, // getCommercePercent(COMMERCE_ESPIONAGE)
-"espionageEver":  <int>,   // GET_TEAM(t).getEspionagePointsEver()
-// per-team arrays (one entry per MAX_PC_TEAMS index):
-"espionageAgainst": [<int>, ...],      // getEspionagePointsAgainstTeam(i) for i=0..MAX_PC_TEAMS-1
-"espionageWeights": [<int>, ...],      // getEspionageSpendingWeightAgainstTeam(i)
-"counterespTurns":  [<int>, ...],      // GET_TEAM(t).getCounterespionageTurnsLeftAgainstTeam(i)
-"counterespMod":    [<int>, ...]       // GET_TEAM(t).getCounterespionageModAgainstTeam(i)
+"espionageRate":    <int>,        // getCommerceRate(COMMERCE_ESPIONAGE)
+"espionagePercent": <int>,        // getCommercePercent(COMMERCE_ESPIONAGE)
+"espionageEver":    <int>,        // GET_TEAM(t).getEspionagePointsEver()
+"espionageAgainst": [<int>, ...], // getEspionagePointsAgainstTeam(i), i=0..MAX_PC_TEAMS-1
+"espionageWeights": [<int>, ...], // getEspionageSpendingWeightAgainstTeam(i)
+"counterespTurns":  [<int>, ...], // getCounterespionageTurnsLeftAgainstTeam(i)
+"counterespMod":    [<int>, ...]  // getCounterespionageModAgainstTeam(i)
 ```
 
-Note on the per-team arrays: the arrays are indexed by raw `TeamTypes` enum
-values (0..MAX_PC_TEAMS-1), matching the team `id` field in the `/players`
-response — consumers join by `team` id. Sparse encoding (object keyed by
-non-zero team ids) is an alternative if array size is a concern.
+Per-team arrays are indexed by raw `TeamTypes` (0..MAX_PC_TEAMS-1), matching the `team` id in `/players` —
+consumers join by team id. (Sparse object keyed by non-zero team ids is an alternative if size matters.)
 
-**`/cities` additions** (add to `CitySnap` struct, CvHttpServer.cpp:83):
+**`/cities`** (add to `CitySnap`):
 
 ```jsonc
-"espHealthCounter":    <int>,  // getEspionageHealthCounter()
-"espHappyCounter":     <int>,  // getEspionageHappinessCounter()
-"espDefenseModifier":  <int>,  // getEspionageDefenseModifier()
-"disabledPowerTimer":  <int>,  // getDisabledPowerTimer()
-"warWearinessTimer":   <int>   // getWarWearinessTimer()
+"espHealthCounter":   <int>,  // getEspionageHealthCounter()
+"espHappyCounter":    <int>,  // getEspionageHappinessCounter()
+"espDefenseModifier": <int>,  // getEspionageDefenseModifier()
+"disabledPowerTimer": <int>,  // getDisabledPowerTimer()
+"warWearinessTimer":  <int>   // getWarWearinessTimer()
 ```
 
-### 4-B. Log additions (per-turn stream; Tier 3)
+### 4b. Log additions (per-turn stream; Tier 3)
 
-**`[ESP/turn]` — per-player EP income summary (level 1)**
+New `logEspionageAI` helper, `[ESP]` tags, gated `gPlayerLogLevel` (zero cost when off):
 
-Emit once per player per turn from `doEspionagePoints()` (CvPlayer.cpp:15580):
+| Tag | Level | Site | Line |
+|---|---|---|---|
+| `[ESP/turn]` | 1 | `doEspionagePoints` (CvPlayer.cpp:15580) | `player= rate= epEver=` |
+| `[ESP/alloc]` | 2 | `doEspionageOneOffPoints` (CvPlayer.cpp:15555) per team | `player= targetTeam= allocated= total= weight=` |
+| `[ESP/weight]` | 1 | end of the espionage block in `AI_updateCommercePercent` | `player= espPct= epRate= targetRate= w0=N w1=N ... (one per met team)` |
+| `[ESP/mission]` | 1 | `doEspionageMission` return (CvPlayer.cpp:16299) | `player= target= mission=<XMLkey> cost= happened= epBefore= epAfter=` |
+| `[ESP/counterspy]` | 2 | `CvTeam::doTurn` when a timer hits 0 (CvTeam.cpp:1066) | `team= vs= modCleared=` |
 
-```
-[ESP/turn] player=%d rate=%d epEver=%d
-```
+The `mission` key is the XML string (not the raw enum int) so `[ESP/mission]` lines are self-describing.
 
-Fields: player id, this turn's EP income, team's EP-ever after accrual.
+### 4c. Tag registration
 
-**`[ESP/alloc]` — per-target-team allocation (level 2)**
+Register `[ESP]` in the AI-logging tag registry (covering existing `[ESP/best]` plus the new tags) and
+update the `logEspionageAI` doc-comment.
 
-Emit from `doEspionageOneOffPoints` (CvPlayer.cpp:15555) for each team that
-receives points:
+### 4d. `/diagnostic/espionage?player=N&targetTeam=T` (Tier 4)
 
-```
-[ESP/alloc] player=%d targetTeam=%d allocated=%d total=%d weight=%d
-```
-
-Fields: player id, target team id, points allocated this turn, new accumulated
-balance, spending weight.
-
-**`[ESP/weight]` — AI weight decision summary (level 1)**
-
-Emit at the end of the espionage block in `AI_updateCommercePercent`
-(CvPlayerAI.cpp ~16773), after all weights are set:
-
-```
-[ESP/weight] player=%d espPct=%d epRate=%d targetRate=%d <w0=N w1=N w2=N ...> (one w per met team)
-```
-
-Fields: player id, new COMMERCE_ESPIONAGE percent, resulting EP rate, computed
-target rate, and weight per met-alive-non-self team id.
-
-**`[ESP/mission]` — mission execution outcome (level 1)**
-
-Emit from `doEspionageMission` (CvPlayer.cpp:16299) on return:
-
-```
-[ESP/mission] player=%d target=%d mission=%s cost=%d happened=%d epBefore=%d epAfter=%d
-```
-
-Fields: player id, target player id, mission XML key (string), cost deducted,
-whether `bSomethingHappened`, EP balance before and after deduction. The mission
-key (not the raw enum int) makes log lines self-describing without XML lookup.
-
-**`[ESP/counterspy]` — counterespionage timer tick (level 2)**
-
-Emit from `CvTeam::doTurn` when a counterespionage timer decrements to 0
-(CvTeam.cpp:1066-1068):
-
-```
-[ESP/counterspy] team=%d vs=%d modCleared=%d
-```
-
-Fields: owning team id, target team id, the mod value that was cleared.
-
-### 4-C. Tag registration
-
-Add `[ESP]` subsystem detail to `ai-logging-reference.md` §2 registry and §3
-tag-detail section, covering `[ESP/best]` (already exists), plus the new
-`[ESP/turn]`, `[ESP/alloc]`, `[ESP/weight]`, `[ESP/mission]`, `[ESP/counterspy]`.
-Update the doc-comment in `BetterBTSAI.cpp` beside `logEspionageAI`.
-
-### 4-D. Diagnostic endpoint (optional; Tier 4)
-
-`GET /diagnostic/espionage?player=N&targetTeam=T` — on-demand point-in-time
-snapshot of the full espionage state for player N against team T:
+The espionage analogue of `/diagnostic/canConstruct` — a mailbox-serviced point-in-time snapshot of the
+full state for player N against team T (a single "what is the full state" answer when the turn stream is too
+noisy or wasn't running):
 
 ```json
 {
@@ -348,33 +222,63 @@ snapshot of the full espionage state for player N against team T:
 }
 ```
 
-This is the espionage-economy analogue of `/diagnostic/canConstruct`: a
-single-query "what is the full state" answer, useful when the turn-by-turn
-stream is too noisy or wasn't running.
+---
+
+## 5. Cost & priority
+
+| Hook | Tier gain | Effort | Rationale |
+|---|---|---|---|
+| `/players` + `/cities` fields (§4a) | 0→4 (snapshot) | struct + walk reads; per-team arrays bounded by `MAX_PC_TEAMS` (~18), a few hundred bytes/player | The whole EP economy becomes readable for ALL players |
+| `[ESP/turn]`/`[ESP/mission]`/`[ESP/weight]` (§4b L1) | →3 | gated, zero cost off | Live EP income + mission outcomes + AI intent on `/events` |
+| `[ESP/alloc]`/`[ESP/counterspy]` (§4b L2) | 3 | gated | Per-team allocation + counterespionage expiry |
+| `/diagnostic/espionage` (§4d) | 4 | mailbox slot (`canConstruct`/`sweep` pattern) | On-demand full state for cascade shadow |
 
 ---
 
-## 5. Cost and risk notes
+## 6. Scope not covered here
 
-- The snapshot additions (§4-A) are trivial: struct additions + snapshot-builder
-  reads. No game-logic mutation. The per-team arrays are bounded by `MAX_PC_TEAMS`
-  (a compile-time constant, typically 18); at worst a few hundred bytes per player
-  in the snapshot. Safe.
-- The log additions (§4-B) are equally cheap: all gated by `gPlayerLogLevel`;
-  zero cost when off. The existing `doEspionagePoints` + `AI_updateCommercePercent`
-  call sites are the right insertion points.
-- The diagnostic endpoint (§4-D) requires a mailbox slot extension (the current
-  `g_evalAction` is 40 bytes — fine, "espionage" fits). Pattern already established
-  by `canConstruct` / `sweep` / `placementSweep`.
+- Passive missions (`isPassive()`, `isSeeDemographics()`, `isSeeResearch()`) reveal info to the spy's owner
+  but don't change game state — no observability gap.
+- `m_mapEspionageHistory` (CvPlayer.cpp:3970) — a dormant Python/SDK history hook, not read by the C++
+  surface; not a gap.
+- `hasStolenVisibilityTimer` / `StolenVisibilityTimer` (CvTeam) — a passive visibility-steal mechanic
+  decremented alongside counterespionage in `CvTeam::doTurn`; out of scope here but similarly unobservable.
 
 ---
 
-## 6. Scope not covered here (out-of-band espionage effects)
+## 7. Code cross-reference
 
-- Passive missions (`isPassive()`, `isSeeDemographics()`, `isSeeResearch()`) reveal
-  info to the spy's owner but don't change game state — no observability gap.
-- The `m_mapEspionageHistory` per-turn record (CvPlayer.cpp:3970) is a Python/SDK
-  history hook, not read by anything in the C++ surface — not a gap, just dormant.
-- `hasStolenVisibilityTimer` / `StolenVisibilityTimer` (CvTeam) — a pre-existing
-  passive visibility steal mechanic; decremented alongside counterespionage in
-  `CvTeam::doTurn`. Out of scope here but similarly unobservable.
+> Paths re-grounded to the reorganized `Sources/` tree (`Cv*` engine → `Sources/Engine/`, `Cv*AI` →
+> `Sources/AI/`, `CvHttpServer` → `Sources/Tools/`). Line numbers drift — confirm the function.
+
+| Claim | Source |
+|---|---|
+| `doEspionagePoints` / `doEspionageOneOffPoints` | `Sources/Engine/CvPlayer.cpp:3813 / 15555` |
+| `getEspionageSpending` (allocation) | `Sources/Engine/CvPlayer.cpp:15585` |
+| `getEspionageMissionCost` / `...BaseCost` / `...CostModifier` | `Sources/Engine/CvPlayer.cpp:15758 / 15780 / 16167` |
+| `doEspionageMission` (execution + EP deduct) | `Sources/Engine/CvPlayer.cpp:16299, 16707` |
+| EP-ever cost ratio | `Sources/Engine/CvPlayer.cpp:16256` |
+| counterespionage timer countdown | `Sources/Engine/CvTeam.cpp:1061` |
+| city effect-timer countdown | `Sources/Engine/CvCity.cpp:1409–1417` |
+| `getEspionageDefenseModifier` | `Sources/Engine/CvCity.cpp:14238` |
+| `AI_updateCommercePercent` (espionage weight block) | `Sources/AI/CvPlayerAI.cpp:~16534–16823` |
+| `AI_bestPlotEspionage` / `AI_espionageVal` / `[ESP/best]` | `Sources/AI/CvPlayerAI.cpp:15147 / 15504 / 15495` |
+| `PlayerSnap` / `CitySnap` (add fields here) | `Sources/Tools/CvHttpServer.cpp` |
+
+---
+
+## See also
+- [`README.md`](README.md) — the observability scaffold: the 0–5 scale ([DEC-obs-scale]), the Orwell bar,
+  and the three canonical hook shapes ([DEC-obs-hook-shapes]) this map's hooks instantiate.
+- [`http-server.md`](http-server.md) — the live surface (`/players`, `/cities`, `/diagnostic`) these hooks
+  extend, and the live-read rules (logs held open mid-session).
+- [`health-happiness.md`](health-happiness.md) — the espionage happiness/health counters and
+  `warWearinessTimer` feed the happiness/health ledgers mapped there.
+- [`../../explanation/cascade-architecture.md`](../../explanation/cascade-architecture.md) — why total
+  observability is load-bearing: the EP economy cannot be shadowed/cut until it is on the wire
+  ([DEC-map-before-delete]).
+- [`../../README.md`](../../README.md) — the comprehension map / overview-of-overviews.
+
+[DEC-obs-scale]: ../../architecture/decisions.md#dec-obs-scale
+[DEC-obs-hook-shapes]: ../../architecture/decisions.md#dec-obs-hook-shapes
+[DEC-map-before-delete]: ../../architecture/decisions.md#dec-map-before-delete

@@ -27,7 +27,7 @@ architecture rules that apply to DLL source.
 >
 > **Actual toolchain (from `fbuild.bff`):** the vendored **Microsoft Visual C++ Toolkit 2003 = MSVC 7.1 (VC2003)** compiler/linker
 > (`Build/deps/...`), **Python 2.4**, **Boost 1.32 / 1.55** (why BOTH Boosts coexist + why the whole stack is frozen by the
-> closed `.exe`: [`docs/dev/reference/boost-situation.md`](docs/dev/reference/boost-situation.md)). So the DLL is genuinely **C++03, 32-bit/x86** — *no* `std::thread`, *no* OpenMP,
+> closed `.exe`: [`docs/dev/reference/engine/boost-situation.md`](docs/dev/reference/engine/boost-situation.md)). So the DLL is genuinely **C++03, 32-bit/x86** — *no* `std::thread`, *no* OpenMP,
 > *no* C++11+. This is a hard compiler limit (the toolchain is locked to stay ABI/STL-compatible with the closed VC7.1 game `.exe`), **not**
 > a style convention. In-process threading means raw Win32 only. Do not modernize or replace the build chain/toolchain.
 
@@ -112,7 +112,8 @@ not findings to re-discover.
   NEVER retype a unit (the historic unconditional retype in `AI_guardCity` corrupted the
   demand picture — owner ruling: overdefended > underdefended, join eagerly/release
   reluctantly via `GARRISON_RELEASE_MARGIN_PERCENT`). Details:
-  `docs/dev/reference/CvUnitAI.md` (garrison-tiers section).
+  `Sources/AI/CvUnitAI.cpp` (garrison-tiers; the dedicated `CvUnitAI.md` reference doc was retired in the
+  docs rebuild — read the behaviour from the source).
 
 ### Unit AI fallback terminals
 
@@ -179,7 +180,8 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
   the state logic on the cascade + tally — you cannot safely delete a maintainer you cannot fully observe
   (map-before-delete). Every state behaviour (enabler-spec §14 H) gets a SHADOW that diffs the cascade's verdict
   against the live engine, turn over turn, until clean — *then* the legacy mechanism is deleted. Full ruling +
-  rationale: `docs/dev/plans/cascade-mapping-inventory.md` §A. Live surface: `docs/dev/reference/http-server.md`
+  rationale: `docs/dev/reference/cascade/shadow.md` §1 + `docs/dev/explanation/cascade-architecture.md` §7.
+  Live surface: `docs/dev/reference/observability/http-server.md`
   (`/diagnostic/*` shadows incl. `sweep`/`placementSweep`; `[READJSON]`/`[PLACEMENT]` per-turn log lines).
 - **Delegate DATA-READING to the cheap `data-reader` sub-agent — never pull raw endpoint/log dumps into an expensive
   context (owner ruling 2026-06-18).** Reading the live surface at scale (a `placementSweep`/`sweep` dump is tens of KB;
@@ -220,16 +222,32 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
     the docs of every read-gate marked `sessionStart` — with the directive *your first action is to Read
     each in full before responding* (the owner: "when I open Claude or `/clear`, the first thing I want to
     see is you reading docs — you can do it before accepting input").
-  - **PreToolUse hard-deny:** `.claude/hooks/read-gate.ps1` (matcher `Edit|Write|MultiEdit`) parses the
-    session transcript for `Read` calls and **DENIES** any edit to a gated subsystem's `paths` until every
-    one of that gate's `docs` was Read this session (it lists exactly which are still unread). It catches
-    the real recurring failure — *never opening the doc* (comprehension can't be automated; "opened" can).
-    It **fails OPEN, loudly** on its own errors, so a hook bug never bricks editing but never fails silently.
-  - **Where it lives:** one JSON manifest per subsystem in `.claude/read-gates/` (`docs` + trigger `paths`);
-    both hooks scan that dir, so adding a subsystem is a new JSON, no hook edits (`.claude/read-gates/README.md`).
-    Seeded with **`cascade`** (the 8 `#428/#430` banner docs gating `Sources/Cascade/**` + `Assets/Data/**`);
-    extend to other doc'd subsystems (worker-AI, combat, …) as needed. The gate proves the docs were *opened*,
-    not understood — but "never opened them" is the failure that keeps happening, and that is fully gateable.
+  - **PreToolUse hard-deny — ALL THREE touch-vectors gated (matcher `Edit|Write|MultiEdit|NotebookEdit|Task|Agent|Bash`;
+    owner ruling 2026-06-19 "close every loophole"):** `.claude/hooks/read-gate.ps1` parses the session transcript for
+    `Read` calls and **DENIES** until every gated doc was Read this session — across **(1) EDIT tools** to a gated
+    path, **(2) SUBAGENT launch** (`Task`/`Agent` — no dodging the gate by handing the gated edit to a minion), and
+    **(3) write-ish BASH** (a curator `--write`, or `>`/`tee`/`sed -i`/`cp`/`mv`/`rm`/`git checkout` into a gated path
+    — the curator-regen pipeline writes `Assets/Data` via a shell subprocess, which would otherwise bypass the edit
+    gate entirely). Read-only Bash passes. It catches the real recurring failure — *never opening the doc*
+    (comprehension can't be automated; "opened" can). It **fails OPEN, loudly** on its own errors. The way past the
+    gate is to **read the docs** — never to route around it. (Residuals trust-accepted: skim-`Read`, exotic
+    in-language file writes, and `.claude/` self-editing; `.claude/read-gates/README.md`.)
+  - **Where it lives:** one JSON manifest per subsystem in `.claude/read-gates/` (`docs`/`docsDirs` + trigger
+    `paths`); both hooks scan that dir, so adding a subsystem is a new JSON, no hook edits (`.claude/read-gates/README.md`).
+    The gate proves the docs were *opened*, not understood — but "never opened them" is the failure that keeps
+    happening, and that is fully gateable.
+  - **⛔ ALL DOCS, EVERY SESSION — until the OWNER declares the codebase under control (owner ruling 2026-06-19).**
+    *"I do not want per-issue select read list of docs. I want ALL the docs loaded into context, every time, until
+    such a time this codebase is under control — we do NOT need to be stingy on context."* A hand-curated `docs`
+    list DRIFTS (docs get added, the list doesn't → the gate goes green while the doc you need was never listed —
+    the recurring failure itself). So the gate now uses **`docsDirs` ENUMERATION** (`docs/dev/plans` +
+    `docs/dev/reference`, ~109 docs, recursive), complete by construction and self-maintaining. Selectivity right
+    now is *contributing to the problem, not solving it*; the owner — not the agent — *"will clearly and
+    unambiguously state when the codebase is under control,"* and only then does this relax. **Reading means
+    READING:** noting ≠ reading, skimming ≠ reading, grepping-instead-of-Read ≠ reading, deferring ≠ reading —
+    Read each gated doc IN FULL (all pages of a truncated large doc), never a partial/Grep substitute. **The ONLY
+    exception is a MINION** (below): a spawned sub-agent is given a clear, scoped instruction set and does NOT read
+    everything — the orchestrator (which has) briefs it with exactly the slice it needs.
   - **MINION EXCEPTION (owner ruling 2026-06-19): a spawned sub-agent only needs the context it OPERATES
     UNDER, not the full manifest.** The gate targets the **orchestrator** — the agent with broad edit authority
     over the subsystem, which must hold the whole design. A minion is spawned for a NARROW slice; the orchestrator
@@ -308,6 +326,21 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
   built and reasoned about once, properly, without entangling the next. (This sharpens, not contradicts,
   "minimal local changes": minimal = don't sprawl the edit; proper-once = don't ship debt. Shadow discipline
   — old+new coexist, diff, cut — is *verification* of the proper structure, not building-then-reworking it.)
+- **Surface sprawl early; don't make the owner restate; optimise for EFFICIENCY (owner rulings 2026-06-20).**
+  Two linked frustrations to design against. **(1) The partial-fix spiral.** The docs mess that forced the
+  full rebuild accreted because *one partial fix was piled on another instead of a defined structure being
+  followed.* When a change starts to sprawl — many small fixes piling up, or you are patching pieces of
+  something whose **target STRUCTURE is undefined** — STOP and TELL the owner there's a risk of it getting out
+  of hand, rather than agent-overcompensating with more partial fixes. The owner is *aware* of agentic
+  limitations but must be **told** when the structure is undefined or the change is ballooning, so the call
+  can be made to define the structure and do ONE proper cleanup. **(2) Restating / inefficiency.** The owner
+  is **not omnipotent and does not want to be treated as such** (trust-but-verify their words like any other),
+  but gets frustrated by inefficiency and **having to restate the same thing repeatedly** — so capture a
+  ruling durably the first time it is given ([DEC-WF-rulings-to-repo](docs/dev/architecture/decisions.md#dec-wf-rulings-to-repo)
+  + the [decisions ledger](docs/dev/architecture/decisions.md)) and do the proper cleanup once instead of
+  churning. The owner makes the structure call; your job is to surface the risk and the options efficiently
+  and not re-litigate settled ones. Conduct-level twin of [DEC-proper-once](docs/dev/architecture/decisions.md#dec-proper-once).
+  → [DEC-WF-surface-sprawl](docs/dev/architecture/decisions.md#dec-wf-surface-sprawl).
 - **ARCHITECTURAL NORTH-STAR — CLEAN ARCHITECTURE + interface-based contracts (owner is a .NET dev at core,
   2026-06-18).** The owner thinks in **Clean Architecture**: dependency inversion (depend on interfaces/contracts,
   not concretions), isolated layers with explicit boundaries, and a **functionality-based implementation approach**
@@ -394,7 +427,15 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
   `Xml_MissingTypes.log`, no new `Asserts.log` entries. Known pre-existing assert families
   on mature saves (filter, already filed): `CvContractBroker::makeContract` NULL pJoinUnit
   (#336), `AI_formArmies` army-ID format (#364), unit stuck-in-loop short-circuit (#189 family).
-- Prefer minimal, local changes in large core files.
+- **"Minimal, local changes" bounds the SIZE of an edit, NOT the SCOPE of the work (owner clarification
+  2026-06-20).** A *targeted* fix or feature touch inside a large, tightly-coupled legacy core file stays
+  minimal and local — don't sprawl it or gratuitously refactor around it, because ripples bite (the
+  no-one-liner rule). But this is **not** a brake on deliberate structural rework: the #428/#430 cascade,
+  the docs rebuild, and dissolving the `Cv*AI` god-classes are **large by design** and never subordinate to
+  "minimal" — they answer to [DEC-proper-once](docs/dev/architecture/decisions.md#dec-proper-once). Same
+  instinct, not opposites: don't make an edit bigger or riskier than its goal needs; when the goal *is* the
+  structure, build it whole and right the first time. (The same clarification applies to the identical line
+  in `Sources/AGENTS.md`.)
 - **Import Info headers DIRECTLY; do not lean on the `CvInfos.h` umbrella (owner 2026-06-18).** `CvInfos.h` is only an
   umbrella aggregator and should be RETIRED — new/edited code includes the specific `CvXInfo.h` (or `Infos/CvXInfo.h`)
   it needs directly. (Flagged future cleanup: migrate existing `#include "CvInfos.h"` sites to direct imports + retire the file.)
@@ -431,7 +472,8 @@ All documentation lives under **`docs/`**, split by audience (map: [`docs/README
 
 - How existing code behaves → `docs/dev/reference/`.
 - A change or initiative you intend to make (plan, scope, rollout, removal) → `docs/dev/plans/`.
-- A superseded dev doc → move it to `docs/dev/archive/` (don't delete history; get it out of the live set).
+- A superseded/killed dev idea → record it in `docs/dev/architecture/superseded-ideas.md` (what it was, why
+  it's dead, what replaced it) so it isn't revived; don't carry the stale copy in the live set.
 - Cross-cutting, must-not-rediscover facts → "Key Subsystem Knowledge" above (or the nearest `AGENTS.md`).
 - Player-facing rules, manuals, FAQs → `docs/players/`. How to author data / mods → `docs/modders/`.
 - A newly-found bug of exceptional absurdity may *additionally* earn an entry in
@@ -473,6 +515,20 @@ Conventions; subsystem/design rulings → the relevant `docs/dev/` page. A rulin
 exists only in one developer's local memory is invisible to every other contributor and
 agent, and has repeatedly had to be re-requested — treat "saved to memory only" as an
 unfinished task.
+
+**The discoverability half of that rule: the DECISIONS LEDGER ([`docs/dev/architecture/decisions.md`](docs/dev/architecture/decisions.md))
+(owner ruling 2026-06-19).** Cross-cutting rulings kept getting re-stated doc-after-doc because of a
+self-reinforcing loop: the capture-immediately rule above is correct → but compaction wipes an agent's memory
+that it ever read the ruling → and there was no discoverable canonical home, so "is this already recorded?" was
+unanswerable → so the agent re-added it defensively → and each re-add made the next agent's existence-check
+harder (now in N places with wording drift, none authoritative) → re-add again, *ad infinitum*. The ledger
+breaks the loop: it is an **INDEX, not a re-statement** — one stable ID per ruling (`DEC-<slug>`), a one-line
+summary, and a pointer to the authoritative home. **Operational rules:** (1) **before adding any cross-cutting
+ruling anywhere, grep the ledger's ID table first** — that one-grep existence check is the whole point; (2)
+capture a cross-cutting ruling by adding/seeing its line in the ledger and recording the full text in its home
+(this file's Conventions, or the relevant `docs/dev/` page), **never** by restating it in a second doc; (3) a
+doc that needs to invoke a ledgered ruling **links `[DEC-id]`**, it does not re-articulate it. The ledger does
+not replace this HARD RULE — it makes it cheap to obey and impossible to not-know-about.
 
 ## Project Skills
 

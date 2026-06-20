@@ -1,144 +1,137 @@
-# Developer documentation
+# S2S developer docs — start here (the comprehension map)
 
-> ## ⛔ RESUMING AFTER A CONTEXT COMPACTION? RE-READ EVERYTHING FIRST.
+> **Read this first, in full.** It is the map: what S2S is, the things that will bite you if you assume,
+> the architecture, where every subsystem's doc lives and how they relate, and — by task — the order to
+> read them in. An agent who reads this and the docs it points to ends up with the **complete, correct**
+> model of the codebase.
 >
-> If your context was just compacted/summarized mid-session, **STOP — do not touch code or make decisions from the
-> summary alone.** Compaction has poisoned context before. Before any further work on the **#428/#430 cascade**,
-> re-read the full set in `docs/dev/plans/`: `data-model-spec.md`, `enabler-cascade-spec.md`, `modifier-cascade-spec.md`,
-> `tally-cascade-spec.md`, `event-spine-spec.md`, `cascade-engine-430.md`, `migration-renames.md`,
-> `migration-entity-ranking.md` — plus the live code in `Sources/Cascade/`. Look concepts UP; never reconstruct them
-> from the summary or from how the C++ currently reads (the C++ is reworked to fit the data, not ground truth). A
-> stale spec line loses to a later owner ruling. (Owner 2026-06-17 — this re-read gate is being deliberately tested.)
+> **THE MISSION (owner, 2026-06-19).** Nobody should ever have to ask an agent *"have you read this?"*
+> before a change. Complete understanding should **just happen** from reading the docs — unbidden, by
+> default. Policing context is an inefficiency this doc set exists to abolish. So reading and understanding
+> must become the *same act*: every doc is grounded (no assumption to trip on — [`_meta/CONVENTIONS.md`](_meta/CONVENTIONS.md)),
+> consolidated (one home per concept, not spread thin), and mapped (this file is the reading path). The
+> read-gate forces the read; these docs are what make a forced read *deliver* the full model. When that bar
+> is met, the question never needs asking.
+>
+> **Status:** `docs2/` is the rebuilt, grounded doc set (see [`_meta/CONVENTIONS.md`](_meta/CONVENTIONS.md)
+> for the standard every doc here is held to). It is **under construction** — the migration of each
+> subsystem from the old `docs/dev/` set is tracked in [`_meta/build-plan.md`](_meta/build-plan.md). Where
+> a doc is not yet rebuilt, the build plan says so and points at the old source.
 
-Notes for people working on the **DLL and engine** (C++/Python internals).
-Player- and end-user-facing documentation lives separately in the top-level
-[`docs/`](../../docs/) folder — keep the two apart.
+---
 
-This folder is split by intent:
+## 0. How this codebase bites — the NON-NEGOTIABLES
 
-- **[`reference/`](reference/)** — *how the code works today.* Durable
-  architecture notes tied to specific classes/systems. Update these when the
-  behaviour they describe changes.
-- **[`plans/`](plans/)** — *forward-looking work.* Refactor scopes, rollouts,
-  removal maps, design captures, and standing initiatives. These describe
-  intended or in-progress change, not the current state.
+These are not style preferences. Each one has drawn blood. Internalise them before touching anything.
+(Authoritative source: the root [`AGENTS.md`](../../AGENTS.md); this is the index, that is the law.)
 
-> Line numbers in these notes are anchors at time of writing; they drift. Treat
-> them as "around line N" and confirm against the named function.
+- **The toolchain is FROZEN and ancient, on purpose.** The DLL compiles with the vendored **MSVC 7.1
+  (Visual C++ Toolkit 2003)**, **C++03 only**, **32-bit/x86**, **Python 2.4**, **Boost 1.32 + 1.55**, raw
+  Win32 (no `std::thread`, no OpenMP, no C++11+). This is a hard ABI/STL lock to stay compatible with the
+  closed Firaxis `.exe` — **not** a convention you may modernise. → grounding: `Sources/fbuild.bff`,
+  [`reference/engine/build-and-toolchain.md`] · [`reference/engine/boost-situation.md`].
+- **⛔ The `.vcxproj` / `.sln` / `.filters` are DEAD for build facts.** They are stale IDE artifacts and
+  lie (their `PlatformToolset` says `v142` — FALSE). **Every build fact comes from FastBuild only**
+  (`Sources/fbuild.bff` + `Tools/_Build.ps1`). Never read a `.vcxproj` to learn the compiler, defines,
+  includes, or standard.
+- **Graphics mutation pre-init crashes.** Any plot-graphics change must be guarded by
+  `GC.IsGraphicsInitialized()` — during a NEW game, world-gen runs before the render engine exists. The
+  classic "crashes with paging off, fine with it on" signature = a graphics path running pre-init.
+- **Save format is name-keyed → removing a serialized member is SOFT, not a break.** Only four cases are
+  genuinely HARD. Derived/accumulator state serializes nothing (recomputed on load). Intentional breaks →
+  `@SAVEBREAK`. → [DEC-save-remove-is-soft](architecture/decisions.md#dec-save-remove-is-soft).
+- **OOS / lockstep determinism: integer math only, synced Soren RNG, no float ever.** Civ4 MP is
+  deterministic lockstep; CPU-dependent float math desyncs. The cascade's fixed-point (×100) exists for
+  this. → [DEC-fixedpoint-x100](architecture/decisions.md#dec-fixedpoint-x100).
+- **Nothing is "just a one-liner."** Tightly-coupled BTS/C2C wiring with non-obvious cross-cutting
+  ripples. Read the subsystem's doc, trace every caller/consumer, before you touch it. The read is
+  mechanically gated for exactly this reason → [DEC-WF-read-gate](architecture/decisions.md#dec-wf-read-gate).
+- **Shell:** `pwsh` good, `powershell.exe` (5.1) bad; Git Bash fine. **Git:** edit the working tree only
+  unless the work is tied to an active issue; never switch branches mid-build (the owner builds from the
+  working tree) → [DEC-WF-no-commit-unmandated](architecture/decisions.md#dec-wf-no-commit-unmandated).
 
-## Reference — how it works
+## 1. What S2S is (architecture at a glance)
 
-| Doc | Subject |
-|---|---|
-| [CvGlobals](reference/CvGlobals.md) | Master singleton (`GC`): info arrays, engine interfaces, services |
-| [CvMap](reference/CvMap.md) | Map grid, areas, plot groups, viewport, multi-map support |
-| [CvPlot](reference/CvPlot.md) | Individual tile: terrain, units, properties, path cache |
-| [CvGameAI](reference/CvGameAI.md) | Global AI helpers; normalised combat value; dirty-work propagation |
-| [CvPlayerAI](reference/CvPlayerAI.md) | Per-player AI: research, diplomacy, military, danger caching |
-| [CvCityAI](reference/CvCityAI.md) | City management: citizen assignment, production, building scoring |
-| [CvUnitAI](reference/CvUnitAI.md) | Unit behaviour: missions, combat, contracts, promotion, upgrade |
-| [CvTeamAI](reference/CvTeamAI.md) | Team strategy: war planning, diplomacy, area classification |
-| [CvSelectionGroupAI](reference/CvSelectionGroupAI.md) | Group coordination: attacks, garrison, mission state |
-| [CvWorkerAI](reference/CvWorkerAI.md) | Per-player worker cache + build-claim ledger |
-| [CvArmy](reference/CvArmy.md) | Multi-stack coordinated assault groups |
-| [CvContractBroker](reference/CvContractBroker.md) | Publish/subscribe unit-need dispatch between cities and units |
-| [CvPathGenerator / CvPath](reference/CvPathGenerator.md) | Pluggable A\* pathfinder with per-unit cost/validity callbacks |
-| [pathfinding](reference/pathfinding.md) | Engine FAStar finders (step/route/area/plot-group), the callback contract, team-restricted distance |
-| [CvOutcome](reference/CvOutcome.md) | Probabilistic mission results defined in XML |
-| [CvProperties](reference/CvProperties.md) | Generic extensible property container (crime, pollution, …) |
-| [CvPropertySolver](reference/CvPropertySolver.md) | Per-turn solver for the property simulation system |
-| [PlotSnapshot](reference/PlotSnapshot.md) | Plot-state snapshot schema + call-site conventions for logging |
-| [ai-logging-reference](reference/ai-logging-reference.md) | The structured/tagged AI decision logs as they exist today |
-| [http-server](reference/http-server.md) | `CvHttpServer` — the live observability/query layer: `127.0.0.1:7227` endpoints (`/units`/`/players`/`/cities`/`/events`), the `/events` SSE log-tee (#419), gating (`Autolog__HttpServer`/`Autolog__LogLevelStream`), snapshot isolation, and the planned `/tally` |
-| [legacy-value-calc-map](reference/legacy-value-calc-map.md) | How the legacy DLL computes every per-turn VALUE today (yields/commerce/health/happiness/defense/maintenance/unit-stats): the realized formula + per-source getters + x1/x100 & clamp gotchas per channel, PLUS the duplicate/redundant-computation (dedup) map. The #430 DESTROY-pass map + the `/diagnostic/cityInput` dump spec for [calc-emulator-spec](plans/calc-emulator-spec.md). |
-| [UnitAI_Selection](reference/UnitAI_Selection.md) | How the AI picks a unit's `UNITAI` and concrete unit type |
-| [UnitSelection_Mechanics](reference/UnitSelection_Mechanics.md) | The selection step itself: role → chosen `UnitTypes` |
-| [doProduction](reference/doProduction.md) | `CvCity::doProduction` — the per-turn city production step |
-| [constructibility-and-prerequisites](reference/constructibility-and-prerequisites.md) | The unified `ConstructRequirement` model, the static enabler reverse-index (CABV turn-time), and help-text rendering |
-| [declarative-info-loading](reference/declarative-info-loading.md) | `CvInfoUtil` / `getDataMembers` — how `Cv*Info` classes load from XML, the wrapper catalog, and the byte-identical migration recipe (#196) |
-| [calendar-and-gamespeed](reference/calendar-and-gamespeed.md) | Era-driven turn counts & calendar (`CvEraInfo` pacing fields, `CvGameSpeedInfo` derived accessors, `CvDate` interpolation, Adapt channels) |
-| [MapScript_Process](reference/MapScript_Process.md) | End-to-end lifecycle of a C2C mapscript (`C2C_World`) |
-| [handicaps](reference/handicaps.md) | The difficulty system: per-player vs game handicap, the human-field/AI-field split, a per-field "what each value does" reference (+ #423 cascade-migration fit), and what setting a non-Noble AI actually changes |
-| [unitcombat](reference/unitcombat.md) | What `UnitCombatType` is: a core Civ4 combat-class axis (promotion-gating, vs-class bonuses, AI) that C2C grew into a 636-entry, many-to-many, ~150-field "innate-promotion tag" class mirroring `CvPromotionInfo`; + its #428 migration fit |
-| [save-load-format](reference/save-load-format.md) | How saves work: the name-keyed `CvTaggedSaveFormatWrapper`, soft-vs-hard change rules, and the derived-state-serializes-nothing lever (the tally rebuilds on load). *Recovered 2026-06-17; branch-only until the cascade save handling finalizes.* |
-| [boost-situation](reference/boost-situation.md) | Why the DLL links TWO Boosts at once (1.32 `boost::` + namespace-renamed 1.55 `boost155::`/`foreach_`), why Boost.Python 1.32 blocks removing 1.32, and why the closed `.exe` freezes the compiler + Python 2.4 + Boost. Awareness, not a consolidation plan. |
-| [external-tools-and-workflows](reference/external-tools-and-workflows.md) | Out-of-tree tooling + side-channel workflows: offline minidump crash analysis (x86 `cdb`), the harmless load-after-load `onFinalInitialized` crash, and the sibling repos (FpkBuilder, GameTracker). |
+**Stones2Stars (S2S)** is a Civ4 / Beyond-the-Sword / Caveman2Cosmos (C2C) mod, forked from C2C to rework
+freely. The compiled artifact is **`CvGameCoreDLL.dll`** (the C++ engine + AI, `Cv*` engine classes /
+`Cy*` Python wrappers), paired with **`Assets/XML`** data and **`Assets/Python`** callbacks. C2C→S2S save
+compat is an explicit non-goal; only the closed Firaxis EXE binds.
 
-## Plans — work in flight
+**The dominant in-flight work is the #428/#430 cascade rework** — the reason most of these docs exist:
 
-### #428 / #430 — data migration + cascade engine (this branch's core work)
+- **The problem it solves:** decades of ad-hoc BTS/C2C "maintainer" machinery (~7–8k lines) that pushes
+  building/unit effects around imperatively, opaquely, and bugs included.
+- **The replacement:** three **top-down machines** behind interface contracts —
+  **enabler** ("can I?" — generate-then-gate), **modifier** ("how much?" — magnitudes deposit DOWN), and
+  **tally** ("how many?" — counts roll UP) — fed by an **event spine**.
+- **The data move:** game data migrates **XML → JSON** (`Assets/Data/**`) via **offline Python curators**
+  (`Tools/Migration/`). Values are human-readable in JSON; the ×100 fixed-point conversion lives in
+  **one** place (`readJson`). → [DEC-fixedpoint-x100](architecture/decisions.md#dec-fixedpoint-x100),
+  [DEC-curator-owns-descale](architecture/decisions.md#dec-curator-owns-descale).
+- **How it's proven safe:** you cannot delete a maintainer you cannot fully observe, so every behaviour
+  gets a **shadow** that diffs the cascade against the live engine until clean, *then* the legacy is cut →
+  [DEC-map-before-delete](architecture/decisions.md#dec-map-before-delete). The verification surface is the
+  **observability / "Orwell" bar**: reconstruct game state from HTTP endpoints + `/events` + gated logs,
+  **never the screen** → [DEC-obs-scale](architecture/decisions.md#dec-obs-scale).
 
-The locked / in-flight specs the whole migration builds on. (Resuming after a context compaction? Re-read these
-first — see the banner at the top of this file.)
+**Architectural north star (the owner is a Clean-Architecture .NET dev at core):** depend on interfaces,
+not concretions; isolate layers; compose behaviour via small contracts, not the inherited Civ4
+god-classes. C++03 has no DI container, so wiring is **"poor-man's DI"** — an `if`/`switch` at a
+composition root assigns a concrete to a contract pointer. Graft interfaces onto the DLL-internal derived
+classes (`CvCityAI`/`CvUnitAI`/…), **never** widen an EXE-bound base (`CvCity`/`CvUnit`) →
+[DEC-interface-contracts](architecture/decisions.md#dec-interface-contracts).
 
-| Doc | Subject |
-|---|---|
-| [data-model-spec](plans/data-model-spec.md) | The canonical object & vocabulary reference (consolidated): reserved sections + modifier families, the shared atom / condition / predicate vocabulary, scopes, the one entry shape. The #430 prototype interface + modder-docs foundation. |
-| [enabler-cascade-spec](plans/enabler-cascade-spec.md) | Availability (v0.3 baseline): HAS → CAN GET → HAS THE MEANS TO; the `enables` family (constructive/destructive) + reversible `requires` means + the `allowed` cap; greying; the empire/team-building tier (§5). |
-| [modifier-cascade-spec](plans/modifier-cascade-spec.md) | Magnitude (v3, LOCKED): the standardized object/vocabulary, split families, `enabled`/`disabled` + `per` count-scaling, keep-on-source / deliveryguy (§6/§6.1), the demolition list (§9). |
-| [tally-cascade-spec](plans/tally-cascade-spec.md) | The additive count machine: presence/counts at any scope, the report + roll-up, the `requires`/`allowed`/`per` readers, and save handling (§9 — rebuilt on load, serializes nothing). |
-| [event-spine-spec](plans/event-spine-spec.md) | The #430 front-door event dispatch: `emit(KIND,…)`, the DOMAIN/DIAGNOSTIC/TRACE OOS firewall, raw payloads, consumers (logging / tally / grants). Slice-1 built in `Sources/Cascade/`. |
-| [cascade-engine-430](plans/cascade-engine-430.md) | The #430 engine implementation plan: substrate → tally → modifier → enabler; build order, the `readJson` consume path, shadow discipline. |
-| [modifier-cascade-shadow-spec](plans/modifier-cascade-shadow-spec.md) | The modifier cascade's BUILD + SHADOW-TEST plan (proposed 2026-06-19): parity-first scaffold → catalogue, the city-yields pilot, `/diagnostic/modifierSweep` + `[MODSHADOW]`, and the Fine→Meltdown CARE SCALE. The modifier engine is unbuilt beyond the combine primitive. |
-| [calc-emulator-spec](plans/calc-emulator-spec.md) | The external old-vs-new value-calculation harness (#430; graduated 2026-06-19 from the shadow-spec §3.1a): a pure formula comparator that emulates BOTH calcs — maps the legacy one (fidelity vs live `getYieldRate100`) AND is where the NEW cascade calc is designed/nailed offline before porting to the DLL. Fed by a live game-dump (`/diagnostic/cityInput`). The DESTROY-pass MAP + the de-facto test backbone. `Tools/ModifierCalc/modcalc.py` is the city-yields seed. |
-| [building-cascade-conversion](plans/building-cascade-conversion.md) | The #428 building → cascade/JSON conversion plan + **THE MODEL** (locked 2026-06-14) the whole migration builds on. |
-| [migration-renames](plans/migration-renames.md) | The canonical old→new RENAME REGISTRY — every Info's fields mapped to the new shape. |
-| [migration-entity-ranking](plans/migration-entity-ranking.md) | The serial entity-conversion ranking + cross-cutting migration rules (one info at a time, verify-before-commit). |
+## 2. The domain map — what's documented, and how it relates
 
-### Other plans
+| Domain | Lives in | What it covers | Start at |
+|---|---|---|---|
+| **Architecture — the guiding core** *(read before any structural change)* | `architecture/` | the **north-star** (the two-sided engine; the landed core data-structures — cascaders, tally, Orwellian logging) + the landed **design patterns** (faking-DI, composability) + the **decisions** ledger | [`architecture/README.md`](architecture/README.md) |
+| **Cascade & info-handling** *(the current work)* | `reference/cascade/`, `explanation/` | the 3 machines + spine + tally; readJson; the fixed-point **scale registry**; constructibility/prereqs | `explanation/cascade-architecture.md` |
+| **Data model & migration** | `reference/cascade/`, `json-migration/` | the JSON shape; the curators; XML→JSON entity migration; rename registry | `reference/cascade/data-model.md` |
+| **Observability** *(the verification surface)* | `reference/observability/` | the surveillance maps per game-system; PlotSnapshot; the HTTP server; the logging surface | [`reference/observability/README.md`](reference/observability/README.md) |
+| **Engine core state** | `reference/engine/` | the info/state classes the rework touches (`CvCity`/`CvPlayer`/`CvPlot`/…); save format; properties | `reference/engine/README.md` |
+| **Cross-cutting decisions** | [`decisions.md`](architecture/decisions.md) | every binding ruling, ID'd, with its authoritative home | [`decisions.md`](architecture/decisions.md) |
+| **Plans / roadmap** | `plans/` | in-flight scope, status, removal maps, dead-code passes | `plans/README.md` |
 
-| Doc | Subject |
-|---|---|
-| [ai-architecture-north-star](plans/ai-architecture-north-star.md) | The coherence frame for the AI/data rework: goal, hard constraints, module taxonomy, roadmap |
-| [ai-vs-human-benchmarking](plans/ai-vs-human-benchmarking.md) | Live playthrough observation: does the AI run ahead of or lag the player; competence-not-handicaps principle |
-| [codebase-bug-hunt](plans/codebase-bug-hunt.md) | Standing C++/Python bug-sweep initiative + GitHub issue convention |
-| [combat-simplification-scope](plans/combat-simplification-scope.md) | Consolidated scope of the combat-system simplification |
-| [combat-model-sketch](plans/combat-model-sketch.md) | `CvCombatModel` engine API sketch (for review) |
-| [combat-odds-baseline](plans/combat-odds-baseline.md) | Pre-refactor combat-odds baseline (Phase 0 regression reference) |
-| [combat-phase3b-plan](plans/combat-phase3b-plan.md) | Route the AI's win-% through the binomial engine |
-| [ai-logging-rollout](plans/ai-logging-rollout.md) | Plan to roll the tagged-logging structure across the AI codebase |
-| [sea-ai-rework](plans/sea-ai-rework.md) | Naval AI weaknesses, the attack-sea cascade, and the logging driving the rework |
-| [dead-code-xml-pass](plans/dead-code-xml-pass.md) | Tiered dead-code / dead-XML removal plan (feeds the clean-XML data model) |
-| [sources-structural-cleanup](plans/sources-structural-cleanup.md) | The `Sources/` structural-cleanup campaign (proposed 2026-06-19): logging-tag collision-proofing → folder structure + `.vcxproj` alignment → `CvInfos.h` removal + include hygiene. The load-bearing ordering (collision-proof BEFORE the batch-reshuffling include/move work). |
-| [unified-civilopedia](plans/unified-civilopedia.md) | Game-side of the unified Civilopedia: clean single-source content (XML/GameText/NewConceptInfo) + declarative loading. The website/converter is the separate `s2swebsite` project. |
-| [gamespeed-simplification](plans/gamespeed-simplification.md) | `CvGameSpeedInfo`: Percents→named fields, GameTurnInfos collapse, derived calendar table (#196) |
-| [fight-or-flight](plans/fight-or-flight.md) | `FIGHT_OR_FLIGHT` design capture (removal + plugin reimplementation) |
-| [surround-destroy-removal-map](plans/surround-destroy-removal-map.md) | `SURROUND_DESTROY` removal map (deferred) |
-| [specialist-rebalance](plans/specialist-rebalance.md) | Why specialists are weak + the lever plan: yield-modifier parity (done), GPP rebalance, city-amplifier mechanics (#317) |
-| [derived-data-repository](plans/derived-data-repository.md) | Change-driven derived-data repository on the base objects (+ the `/units` HTTP endpoint) |
-| [turn-time-optimization](plans/turn-time-optimization.md) | Turn-time hotspot tracking and the remaining levers |
-| [unit-ai-valuation](plans/unit-ai-valuation.md) | Living report on unit-AI valuation bugs (hunter/dog persistence, tech-value fall-through, …) |
-| [size-matters-ai](plans/size-matters-ai.md) | SM-literate AI (#395): strength-weighted force accounting, garrison consolidation, need-driven merges |
-| [subdued-animal-ai](plans/subdued-animal-ai.md) | AI handling of subdued animals: resource-building spread, butchering valuation |
-| [improvement-category-yields](plans/improvement-category-yields.md) | Building→improvement yield lever: Category-group replacement for per-improvement tags |
-| [worker-stranded-tiles-reachability](plans/worker-stranded-tiles-reachability.md) | AI border tiles unimproved because unreachable by land; reachability + efficiency fix |
-| [unified-prerequisites-and-constructibility](plans/unified-prerequisites-and-constructibility.md) | Unify the ~38 `Prereq*` families into the introspectable requirement model (#195) |
-| [multimap-zone-rework](plans/multimap-zone-rework.md) | One-map viewport-region approach to multi-zone play (vs separate-CvMap switching) |
-| [cross-entity-inversion-blueprint](plans/cross-entity-inversion-blueprint.md) | #428 cross-entity reference catalog (245 refs, consumer-site-verified). *Recovered 2026-06-17; inversion verdicts superseded by keep-on-source/deliveryguy (modifier-spec §6/§6.1) — kept for the catalog, not the verdicts.* |
-| [cascade-modifier-inventory](plans/cascade-modifier-inventory.md) | Coverage checklist: every flat/percent modifier + its scopes + source accessors. *Recovered 2026-06-17; map rows to modifier families (modifier-spec §1), not the old `CASCADEFLAT_/CASCADEMOD_` bundle.* |
-| [team-buildings](plans/team-buildings.md) | Empire/team-scope "buildings" as the per-city-autobuild replacement (#421). *Recovered 2026-06-17; concept current, the `CvCascadingModifierBundle` implementation superseded — see enabler-spec §5.* |
-| [global-warming-mod](plans/global-warming-mod.md) | Global Warming mod scrapped — vestiges to remove (#436) + a concept worth revisiting. |
+**The AI domain (out of *active* scope — kept, partitioned).** It is orthogonal to the info-handling
+rework, so an agent on the cascade work is not routed through it — but the two halves are treated
+differently (owner ruling 2026-06-19, *"ideas that have not been killed should be kept"*):
+- **AI-behaviour REFERENCE docs** (how `CvCityAI`/`CvUnitAI`/worker/contract-broker *decide today*) are
+  **retired** — they're read straight from `Cv*AI.cpp`, drift fast, and referenced already-fixed code.
+  Rebuilt from code, grounded, when a task needs them; not carried as stale copies.
+- **AI-DESIGN plans** (the AI north-star, the future reworks) are **kept**, in `plans/ai/` — forward intent
+  is not reconstructible from code, so being merely out-of-scope is never a reason to drop it.
 
-## Where docs go
+See `_meta/build-plan.md` §2a / §2a-bis for the exact split.
 
-- A note about **how existing code behaves** → `reference/`.
-- A note about **a change you intend to make** (plan, scope, rollout, removal) → `plans/`.
-- **Player-facing** rules, manuals, FAQs, key bindings → top-level [`docs/`](../../docs/).
+## 3. Reading orders — by what you're about to do
 
-## The repo is the single source of truth — mirror knowledge here
+> Each list is the *minimum* to hold the relevant design before touching it. The non-negotiables (§0) are
+> assumed read every time.
 
-**Durable project knowledge must live in this repository, not in any one
-developer's (or AI assistant's) private/local notes.** If a finding, decision,
-plan, taxonomy, or "hard-won fact" is worth remembering, it belongs in a committed
-file so everyone — every contributor and every agent — sees the same thing.
+- **Make any structural change (new component, refactor, dissolve a god-class):**
+  [`architecture/north-star.md`](architecture/north-star.md) — the grain of the wood; build with it, not
+  against it.
+- **Understand the cascade rework (general):** `explanation/cascade-architecture.md` →
+  `reference/cascade/data-model.md` → the three machine specs → skim [`decisions.md`](architecture/decisions.md).
+- **Touch the modifier machine / a value calc:** `reference/cascade/fixed-point-and-scales.md` (the
+  **scale registry** — read it before any value work) → the modifier spec → `legacy-value-calc-map` →
+  the relevant `reference/observability/` map for the system you're changing.
+- **Migrate an entity XML→JSON (a curator pass):** `reference/cascade/data-model.md` →
+  `reference/cascade/fixed-point-and-scales.md` → [`json-migration/`](json-migration/README.md) (the entity-ranking
+  + the [rename registry](json-migration/migration-renames.md)) → the `Tools/Migration/` README.
+- **Add observability for a system:** [`reference/observability/README.md`](reference/observability/README.md)
+  (the scale + the three canonical hook shapes) → that system's map → the HTTP-server + logging-surface
+  reference.
+- **Change save/serialization:** `reference/engine/save-load-format.md` →
+  [DEC-save-remove-is-soft](architecture/decisions.md#dec-save-remove-is-soft) →
+  [DEC-tally-serializes-nothing](architecture/decisions.md#dec-tally-serializes-nothing).
 
-- Learned how something works, or why? → add/update a `reference/` doc.
-- Started or scoped an initiative, or captured a design decision? → a `plans/` doc.
-- Cross-cutting, must-not-rediscover facts → the relevant `AGENTS.md`
-  ("Key Subsystem Knowledge").
-- Player-facing rules → top-level [`docs/`](../../docs/).
+## 4. The promise this doc set makes
 
-Local assistant memory (e.g. a tool's per-developer memory store) is a personal
-*index/cache* only — it is **not** a substitute for the in-repo copy, and the
-in-repo copy is authoritative. When you record something locally, mirror the
-shareable part here in the same change. Keep these docs current as the code moves.
+Every behavioural claim here is **cited to live code and verified when written** — never reconstructed
+from memory or another doc. Citations carry `file:line`; line numbers drift, so confirm the *function*,
+not the integer. Where something is unverified, it says so. Cross-cutting rulings live once in the ledger
+and are linked, never restated. This is enforced by [`_meta/CONVENTIONS.md`](_meta/CONVENTIONS.md) — the
+standard that keeps the rebuild from rotting back into the thing it replaced. If a doc bites you, the
+doc — not your assumption — is the bug; fix it in the same change.

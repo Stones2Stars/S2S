@@ -1,328 +1,199 @@
-# Observability map — Heritage acquisition & Score
+# Observability — heritage acquisition & player score
 
-> DRAFT observability map (2026-06-18, parent: cascade-mapping-inventory.md) — all claims cited
-> from live code; verify before relying. Line numbers are anchors at time of writing; they drift.
+> **Status:** reference (per-system observability map) · **Verified against:** old map (2026-06-18) re-grounded to the reorganized source tree, 2026-06-20
+> **Grounding:** `Sources/Engine/CvPlayer.cpp`, `Sources/Engine/CvCity.cpp`, `Sources/Engine/CvUnit.cpp`, `Sources/Engine/CvGame.cpp`,
+> `Sources/Engine/CvSelectionGroup.cpp`, `Sources/AI/CvPlayerAI.cpp`, `Sources/AI/CvUnitAI.cpp`, `Sources/Infos/CvHeritageInfo.h`,
+> `Sources/Cascade/CvCascadeCondition.{h,cpp}`, `Sources/Tools/CvHttpServer.cpp`, `Assets/Python/.../CvGameUtils.py`. Citations carried from the old map; the
+> `Sources/` prefixes are re-grounded (`Cv*` → `Sources/Engine/`, `Cv*AI` → `Sources/AI/`, `CvHeritageInfo`/Info headers → `Sources/Infos/`, `CvCascade*` →
+> `Sources/Cascade/`, `CvHttpServer` → `Sources/Tools/`) but the **line numbers were NOT re-verified** against the reorganized tree — treat each as "the named
+> function, around this line" and confirm the function, not the integer.
+> One-paragraph orientation: this maps heritage (a permanent player-level flag that gates buildings/units and boosts era-tiered commerce) and the player score
+> system (a Python-computed weighted sum) — and why the heritage set, its acquisition event, and the score component breakdown are all opaque from outside. Read
+> the scaffold [`README.md`](README.md) (the 0–5 scale, the Orwell bar, the three hook shapes) and [`http-server.md`](http-server.md) (the live surface +
+> live-read rules) first; this doc does not restate them.
+
+**Tier today: 1 (Telescreen) for heritage; 2 (Informant) for score.** Heritage acquisition is invisible — no endpoint lists a player's heritage set, no event
+fires on acquisition, and the unit is silently consumed. Score is exposed as a single composite number with no component breakdown.
 
 ---
 
-## 1. How it actually works
+## 1. How it works
 
-### 1a. Heritage system — data model
+### 1a. Heritage — data model
+Heritage (`HeritageTypes`) is a **player-level, empire-scoped, permanent flag** — once acquired it never leaves (no `setHeritage(eType, false)` outside
+save-load). The live set is `CvPlayer::m_myHeritage` (`std::vector<HeritageTypes>`), persisted as a name-keyed tagged block (`WRAPPER_WRITE_DECORATED …
+"numHeritage"`) at `Sources/Engine/CvPlayer.cpp:20424-20428` (verify).
 
-Heritage (`HeritageTypes`) is a **player-level, empire-scoped, permanent flag** — once acquired it
-never leaves (there is no `setHeritage(eType, false)` call outside save-load). The live set is
-`CvPlayer::m_myHeritage` (`std::vector<HeritageTypes>`), persisted as a name-keyed tagged block
-(`WRAPPER_WRITE_DECORATED … "numHeritage"`) at `CvPlayer.cpp:20424-20428`.
+`CvHeritageInfo` (`Sources/Infos/CvHeritageInfo.h`) defines each type:
+- `needLanguage()` — the player must have researched a tech with `isLanguage()==true` before any language-gated heritage (`Sources/Engine/CvPlayer.cpp:30923`, verify).
+- `getPrereqTech()` — the tech the **team** must already have (`Sources/Engine/CvPlayer.cpp:30928`, verify).
+- `getPrereqOrHeritage()` — one of these heritages must already be held (OR-list; empty = none) (`Sources/Engine/CvPlayer.cpp:30937-30950`, verify).
+- `getEraCommerceChanges100()` — a map `EraTypes → CommerceArray (×100)` applied by `processHeritage` as flat commerce boosts. Each era entry stacks; if the
+  current era ≥ the key, that entry's values apply. One heritage can give different/diminishing commerce as eras advance (`Sources/Engine/CvPlayer.cpp:30982-31001`,
+  verify). The effect is a flat `extraCommerce100` bump on the **player** (not per-city).
+- `getPropertyManipulators()` — optional property sources; VALUED by `AI_heritageValue` and processed on the capital in `heritagePropertiesValue`
+  (`Sources/AI/CvPlayerAI.cpp:33203`, verify). The valuation and the actual property effect have separate owners — verify the live property-source wiring if it matters for cascade.
 
-`CvHeritageInfo` (`Sources/CvHeritageInfo.h`) defines each heritage type:
-- `needLanguage()` — boolean prereq: the player must have researched a tech with `isLanguage()==true`
-  before any language-gated heritage can be acquired (`CvPlayer.cpp:30923`).
-- `getPrereqTech()` — the tech the **team** must already have (`CvPlayer.cpp:30928`).
-- `getPrereqOrHeritage()` — one of these heritages must already be held (OR-list; empty = none
-  required) (`CvPlayer.cpp:30937-30950`).
-- `getEraCommerceChanges100()` — a map of `EraTypes → CommerceArray (×100)` applied by
-  `processHeritage` as flat commerce boosts. Each era entry stacks: if the current era ≥ the key,
-  that entry's values are applied. A single heritage can therefore give different or diminishing
-  commerce as eras advance (`CvPlayer.cpp:30982-31001`). The actual effect: flat `extraCommerce100`
-  bumps on the **player** (not per-city).
-- `getPropertyManipulators()` — optional property sources (constant per-turn additions to a
-  property); evaluated by `AI_heritageValue` for the AI but also processed on the capital in
-  `heritagePropertiesValue` (`CvPlayerAI.cpp:33203`). Note: these manipulators are VALUED by the
-  AI but the actual property EFFECT is owned by what calls `processHeritage` — verify the live
-  property-source wiring if this matters for cascade.
+There are 113 heritage JSON files in `Assets/Data/heritages/` (folklore animals, primarily) plus an unrelated "UNESCO Heritage Site" building; the JSON
+heritage set and the XML Heritage tags are different data planes.
 
-There are 113 heritage JSON files in `Assets/Data/heritages/` (folklore animals, primarily) plus an
-unrelated "UNESCO Heritage Site" building; the JSON heritage set and the XML Heritage tags are
-different data planes.
+### 1b. Heritage — the acquisition path
+**Only one code path adds a heritage in normal play:** a unit with the heritage capability executes `MISSION_HERITAGE`.
+1. **AI path** — `CvUnitAI::AI_heritage()` (`Sources/AI/CvUnitAI.cpp:14929`, verify): evaluates heritable types the unit knows (`m_pUnitInfo->getHeritage(iI)`),
+   calls `player.canAddHeritage(eTypeX)`, scores each via `player.AI_heritageValue(eTypeX)` (`Sources/AI/CvPlayerAI.cpp:33256`, verify), picks the best target
+   city (weighted by travel time), pushes `MISSION_HERITAGE` or `MISSION_MOVE_TO … MISSIONAI_CONSTRUCT` en route. Called from ~14 UNITAI role handlers
+   (`Sources/AI/CvUnitAI.cpp:2106, 5824, 5902, 5990, 6282, 6391, 6471, 6508, 6653, 6709, 6733, 10753, 14498`, verify).
+2. **Mission execution** — `CvSelectionGroup::startMission` dispatches `MISSION_HERITAGE` to `pLoopUnit->addHeritage(eType)` (`Sources/Engine/CvSelectionGroup.cpp:1747-1754`, verify).
+3. **`CvUnit::addHeritage`** (`Sources/Engine/CvUnit.cpp:8909`, verify): guards `canAddHeritage(plot(), eType)` (friendly city plot, `Sources/Engine/CvUnit.cpp:8877-8906`,
+   verify); calls `GET_PLAYER(getOwner()).setHeritage(eType, true)`; fires `NotifyEntity(MISSION_HERITAGE)` if visible; then `kill(true, NO_PLAYER, true)` — the unit is **consumed**.
+4. **`CvPlayer::setHeritage`** (`Sources/Engine/CvPlayer.cpp:30956`, verify): appends to `m_myHeritage`, calls `processHeritage(eType, 1)`, then
+   `clearCanConstructCache(NO_BUILDING, true)` (heritage gates buildings/units, so the build-cache is invalidated).
+5. **`processHeritage`** (`Sources/Engine/CvPlayer.cpp:30982`, verify): applies the commerce boosts for all era entries whose era ≤ current era via `changeExtraCommerce100`.
 
-### 1b. Heritage acquisition — the trigger path
+**Heritage as a build/train prereq:** `canConstruct` checks `getPrereqOrHeritage()` on the building (`Sources/Engine/CvPlayer.cpp:6610-6624`, verify);
+`canTrain` checks `getPrereqAndHeritage()` and `getPrereqOrHeritage()` on the unit (`Sources/Engine/CvPlayer.cpp:6452-6474`, verify). Both are INSIDE the
+`!bTestVisible` block — invisible prereqs (the UI greys when not met).
 
-**Only one code path adds a heritage in normal play:** a unit with the heritage capability
-executes `MISSION_HERITAGE`.
+**Heritage as a cascade atom:** `ATOMDOMAIN_HERITAGE` is a defined atom in the cascade condition evaluator (`Sources/Cascade/CvCascadeCondition.h:32`,
+`Sources/Cascade/CvCascadeCondition.cpp:125`, verify); `evaluateAtom` calls `GET_PLAYER(p).hasHeritage((HeritageTypes)a.iType)`, so cascade `requires` can gate
+on heritage. For how the atom/enabler model works, see [`../../explanation/cascade-architecture.md`](../../explanation/cascade-architecture.md) — not re-explained here.
 
-1. **AI path** — `CvUnitAI::AI_heritage()` (`CvUnitAI.cpp:14929`): evaluates all heritable types
-   the unit knows (`m_pUnitInfo->getHeritage(iI)`), calls `player.canAddHeritage(eTypeX)`, scores
-   each via `player.AI_heritageValue(eTypeX)` (`CvPlayerAI.cpp:33256`), picks the best city to
-   target (weighted by travel time), pushes `MISSION_HERITAGE` or `MISSION_MOVE_TO … MISSIONAI_CONSTRUCT`
-   en-route. `AI_heritage()` is called from at least 14 different UNITAI role handlers
-   (`CvUnitAI.cpp:2106, 5824, 5902, 5990, 6282, 6391, 6471, 6508, 6653, 6709, 6733, 10753, 14498`).
+### 1c. Heritage — era-tiered commerce
+`getHeritageCommerceEraChange` (`Sources/Engine/CvPlayer.cpp:31003`, verify) is called from `CvPlayer::setCurrentEra` (`Sources/Engine/CvPlayer.cpp:12426`,
+verify) on era advance: it applies the delta between the new era's commerce total and the old era's, so heritages with declining commerce (e.g.
+`HERITAGE_FOLKLORE_AARDVARK`: +40 research in PREHISTORIC, then −10 each subsequent era) auto-adjust as eras tick. Triggered by era change, not per-turn accumulation.
 
-2. **Mission execution** — `CvSelectionGroup::startMission` dispatches `MISSION_HERITAGE` to
-   `pLoopUnit->addHeritage(eType)` (`CvSelectionGroup.cpp:1747-1754`).
+### 1d. Heritage — effect on score (indirect only)
+Heritage does NOT directly contribute to `calculateScore`. Score components:
+- Population (`getPopScore`) — via `changeTotalPopulation` (`Sources/Engine/CvPlayer.cpp:9282`, verify).
+- Land (`getLandScore`) — via `changeTotalLandScored` (`Sources/Engine/CvPlayer.cpp:9318`, verify).
+- Tech (`getTechScore`) — via `changeTechScore` at research (`Sources/Engine/CvPlayer.cpp:30892`, verify), where `getScoreValueOfTech(eTech) = 1 + GC.getTechInfo(eTech).getEra()` (`Sources/Engine/CvGameCoreUtils.cpp:225`, verify).
+- Wonders (`getWondersScore`) — via `changeWondersScore` at construction (`Sources/Engine/CvCity.cpp:5091`, verify), where `getWonderScore(eBuilding)` = 6 for limited wonders, 1 otherwise (`Sources/Engine/CvGameCoreUtils.cpp:230`, verify).
 
-3. **`CvUnit::addHeritage`** (`CvUnit.cpp:8909`):
-   - Guards: `canAddHeritage(plot(), eType)` (unit must be in a friendly city plot,
-     `CvUnit.cpp:8877-8906`).
-   - Calls `GET_PLAYER(getOwner()).setHeritage(eType, true)`.
-   - Fires `NotifyEntity(MISSION_HERITAGE)` if the plot is actively visible.
-   - Then `kill(true, NO_PLAYER, true)` — the unit is **consumed** on acquisition.
+Heritage affects score only **indirectly** through commerce (more research → faster techs → higher tech score; more culture → faster culture levels).
 
-4. **`CvPlayer::setHeritage`** (`CvPlayer.cpp:30956`):
-   - Appends to `m_myHeritage`, then calls `processHeritage(eType, 1)`.
-   - Calls `clearCanConstructCache(NO_BUILDING, true)` — heritage gates buildings/units so the
-     build-cache must be invalidated.
-
-5. **`processHeritage`** (`CvPlayer.cpp:30982`): applies the commerce boosts for all era entries
-   whose era index ≤ current era via `changeExtraCommerce100`.
-
-**Heritage as a building/unit prerequisite**: `canConstruct` checks `getPrereqOrHeritage()` on the
-building (`CvPlayer.cpp:6610-6624`); `canTrain` checks both `getPrereqAndHeritage()` and
-`getPrereqOrHeritage()` on the unit (`CvPlayer.cpp:6452-6474`). Both checks are INSIDE the
-`!bTestVisible` block — they are invisible prereqs (UI hides them when not met, per `bTestVisible`
-= false for the real gate, true for the greying-only pass).
-
-**Heritage as a cascade atom**: `ATOMDOMAIN_HERITAGE` is a defined atom in the cascade condition
-evaluator (`CvCascadeCondition.h:32`, `CvCascadeCondition.cpp:125`). `evaluateAtom` calls
-`GET_PLAYER(p).hasHeritage((HeritageTypes)a.iType)` — so cascade `requires` can gate on heritage
-already.
-
-### 1c. Heritage effects on commerce (era-tiered)
-
-The `getHeritageCommerceEraChange` method (`CvPlayer.cpp:31003`) is called from `CvPlayer::setCurrentEra`
-(`CvPlayer.cpp:12426`) when the player advances an era. At that point the delta between the new
-era's commerce total and the old era's is applied, so heritages that have declining research commerce
-(like `HERITAGE_FOLKLORE_AARDVARK`: +40 research in PREHISTORIC, then −10 each subsequent era)
-automatically adjust as eras tick. This adjustment is triggered by era change, not by per-turn
-accumulation.
-
-### 1d. Heritage effects on score
-
-Heritage does NOT directly contribute to `calculateScore`. Score components are:
-- Population (`getPopScore`) — incremented by `changeTotalPopulation` (`CvPlayer.cpp:9282`)
-- Land (`getLandScore`) — incremented by `changeTotalLandScored` (`CvPlayer.cpp:9318`)
-- Tech (`getTechScore`) — incremented by `changeTechScore` at tech research (`CvPlayer.cpp:30892`),
-  where `getScoreValueOfTech(eTech) = 1 + GC.getTechInfo(eTech).getEra()` (`CvGameCoreUtils.cpp:225`)
-- Wonders (`getWondersScore`) — incremented by `changeWondersScore` at building construction
-  (`CvCity.cpp:5091`), where `getWonderScore(eBuilding)` = 6 for limited wonders, 1 otherwise
-  (`CvGameCoreUtils.cpp:230`)
-
-Heritage indirectly affects score through commerce (more research = faster techs = higher tech score;
-more culture = faster culture levels).
-
-### 1e. Score computation — per-frame, not per-turn
-
-`CvGame::updateScore()` (`CvGame.cpp:2425`) is called inside `CvGame::update()` (`CvGame.cpp:2369`)
-— the **frame loop**, not `doTurn`. It re-computes all player scores whenever `m_bScoreDirty` is
-true. Score is dirty whenever any component changes (population, land, tech, wonders — each
-calls `GC.getGame().setScoreDirty(true)`).
-
-`updateScore` calls `calculateScore(false)` per player. `calculateScore` delegates to Python
-(`CvGameUtils.py:87`): it computes a weighted sum of four components, each normalized to the
-game's theoretical maximum:
-
+### 1e. Score — per-frame, not per-turn
+`CvGame::updateScore()` (`Sources/Engine/CvGame.cpp:2425`, verify) is called inside `CvGame::update()` (`Sources/Engine/CvGame.cpp:2369`, verify) — the
+**frame loop**, not `doTurn` — and re-computes all player scores when `m_bScoreDirty` is true (set by any component change). It calls `calculateScore(false)` per
+player, which delegates to Python (`CvGameUtils.py:87`, verify):
 ```python
 score = (SCORE_POPULATION_FACTOR * (popScore + free) / (free + maxPop))
-      + (SCORE_LAND_FACTOR     * (landScore + free) / (free + maxLand))
-      + (SCORE_TECH_FACTOR     * (techScore + free) / (free + maxTech))
-      + (SCORE_WONDER_FACTOR   * (wondersScore + free) / (free + maxWonders))
+      + (SCORE_LAND_FACTOR       * (landScore + free) / (free + maxLand))
+      + (SCORE_TECH_FACTOR       * (techScore + free) / (free + maxTech))
+      + (SCORE_WONDER_FACTOR     * (wondersScore + free) / (free + maxWonders))
 ```
-
-All factors are XML GlobalDefines. The vassal-population and vassal-land adjustments in `getPopScore`
-/ `getLandScore` are baked into the raw scores before Python sees them (`CvPlayer.cpp:11508-11530`,
-`11548-11570`).
-
-`updateScore` also calls `GET_PLAYER(eBestPlayer).updateScoreHistory(getGameTurn(), iBestScore)`
-(`CvGame.cpp:2473`) — which writes to `m_mapScoreHistory`, the per-turn score ledger.
-
-The `/players` endpoint reads `GC.getGame().getPlayerScore((PlayerTypes)iI)` (`CvHttpServer.cpp:1529`),
-which is the last-computed score stored by `setPlayerScore` in `updateScore`.
+All factors are XML GlobalDefines. Vassal-population/land adjustments are baked into the raw scores before Python sees them (`Sources/Engine/CvPlayer.cpp:11508-11530,
+11548-11570`, verify). `updateScore` also calls `updateScoreHistory(getGameTurn(), iBestScore)` (`Sources/Engine/CvGame.cpp:2473`, verify) → `m_mapScoreHistory`,
+the per-turn ledger. The `/players` endpoint reads `GC.getGame().getPlayerScore(...)` (`Sources/Tools/CvHttpServer.cpp:1529`, verify) — the last-computed value stored by `setPlayerScore`.
 
 ---
 
-## 2. Current observability
+## 2. What's on the wire today
 
-**Overall tier: 1 (Telescreen)** for heritage. **Tier 2 (Informant)** for score (the total is exposed
-but no component breakdown).
-
-### What IS observable today
+**Tier 1 (Telescreen) for heritage; Tier 2 (Informant) for score** (the total is exposed, no component breakdown).
 
 | Observable | Endpoint / log | Notes |
 |---|---|---|
-| Player total score | `GET /players` → `score` field | Recomputed each frame; ≤5s stale via snapshot |
-| Player era | `GET /players` → `era` | Context for score normalization (tech factor) |
-| Player tech count | `GET /players` → `techs` | Team-shared, not player-specific; component of tech score |
-| Player current research | `GET /players` → `research` | The tech being researched; not when it will complete |
-| Player pop, cities, units | `GET /players` | Raw inputs to pop-score; no score breakdown |
-| Heritage as build-gate reason | `GET /diagnostic/canConstruct?type=X&player=N` → `legacyReason: "heritage"` | Tells you heritage is why a building is blocked; does NOT enumerate which heritages the player has |
-| Unit with heritage mission in progress | `GET /units?playerNumber=N` → `missionAI=MISSIONAI_CONSTRUCT, activity=…` | The unit en route; missionAI is MISSIONAI_CONSTRUCT not a heritage-specific tag (see §1b step 1) |
+| Player total score | `/players` → `score` | Recomputed each frame; ≤5 s stale via snapshot |
+| Player era | `/players` → `era` | Context for score normalization (tech factor) |
+| Player tech count | `/players` → `techs` | Team-shared, not player-specific |
+| Player current research | `/players` → `research` | The tech being researched; not when it completes |
+| Player pop / cities / units | `/players` | Raw pop-score inputs; no score breakdown |
+| Heritage as build-gate reason | `/diagnostic/canConstruct?type=X&player=N` → `legacyReason:"heritage"` | Says heritage blocked the build; does NOT enumerate which heritages the player has |
+| Unit with heritage mission in progress | `/units?playerNumber=N` → `missionAI=MISSIONAI_CONSTRUCT` | The unit en route; `missionAI` is generic CONSTRUCT, not heritage-specific |
 
-### What is NOT observable today
+**Not observable — heritage:** the current set (`m_myHeritage` — no endpoint, so you can't know which heritages an AI holds); the acquisition event (no log/event
+in `setHeritage`/`addHeritage`); which heritage type is missing for a blocked build; the silent `extraCommerce100` bump and its era-transition adjustment;
+`m_bHasLanguage`; the `AI_heritageValue` valuation reasoning.
 
-**Heritage system:**
-
-| Gap | What is missing |
-|---|---|
-| The current heritage set | No endpoint lists `m_myHeritage`; you cannot know which heritages a player (esp. AI) holds |
-| Heritage acquisition event | No log line or event fires in `setHeritage` or `addHeritage`; acquisition is invisible until the next snapshot (and even then you can only infer it indirectly) |
-| Heritage prereq check detail | `legacyReason:"heritage"` tells you heritage gated the build; it does NOT say which heritage type is missing |
-| Commerce effect of heritages | The `extraCommerce100` bump is applied silently; the total is reflected in city commerce rates but the heritage contribution is unattributed |
-| Era-transition commerce adjustment | When a player advances an era, `getHeritageCommerceEraChange` adjusts commerce; no log or event marks this |
-| `m_bHasLanguage` flag | Whether the player has unlocked the language prerequisite for folklore heritages is unexposed |
-| AI heritage valuation | `AI_heritageValue` runs silently — no `[UNT]` or `[DAI]` line; you cannot see why the AI chose or skipped a heritage target |
-
-**Score system:**
-
-| Gap | What is missing |
-|---|---|
-| Score component breakdown | `/players` returns only `score` (the composite); `popScore`, `landScore`, `techScore`, `wondersScore` are all invisible |
-| Score history | `m_mapScoreHistory` (per-turn score ledger) is not exposed; you cannot reconstruct score trends without re-polling every turn |
-| Score dirty flag | You cannot tell from outside whether the score is stale or freshly recomputed |
-| Score normalization inputs | `getMaxPopulation`, `getMaxLand`, `getMaxTech`, `getMaxWonders`, `getInitPopulation`, etc. are game-global constants but unexposed; you cannot recompute the score components without them |
-| Wonder score per building | Which buildings contributed to `wondersScore` and when is not logged |
+**Not observable — score:** the component breakdown (`popScore`/`landScore`/`techScore`/`wondersScore` — only the composite ships); `m_mapScoreHistory`; the
+dirty flag; the normalization inputs (`getMaxPopulation`/`getMaxLand`/`getMaxTech`/`getMaxWonders`, etc. — needed to recompute components); which buildings contributed to `wondersScore`.
 
 ---
 
 ## 3. The gap
 
-**Heritage gap (critical for cascade):** Heritage is a `requires`-family gate in the cascade
-(`ATOMDOMAIN_HERITAGE` already wired), meaning the cascade evaluates whether a building/unit is
-unlocked by checking `hasHeritage`. If a heritage is acquired, the cascade must be notified so it
-can re-evaluate all buildings/units it gates. Currently:
-- No event fires on acquisition — the cascade has no signal to re-evaluate.
-- No endpoint exposes the current heritage set — a shadow (`/diagnostic/canConstruct`) can detect
-  a mismatch but cannot explain which heritage caused it without the set.
-- The unit consumption (`kill` on `addHeritage`) removes the unit from `/units` silently — an
-  agent watching the wire sees a unit disappear without knowing a heritage was gained.
+**Heritage (critical for cascade):** Heritage is a `requires`-family gate (`ATOMDOMAIN_HERITAGE` wired). On acquisition the cascade must re-evaluate every
+building/unit it gates, yet: no event fires on acquisition (the cascade has no re-eval signal); no endpoint exposes the set (a `/diagnostic/canConstruct` shadow
+can detect a mismatch but cannot say which heritage caused it); and the unit-consumption `kill` removes the unit from `/units` silently (an agent sees a unit
+vanish without knowing a heritage was gained).
 
-**Score gap (moderate):** Score is exposed as a single number. For the cascade's purpose the
-component breakdown matters: if we replace building-placement logic, we need to verify that the
-cascade's building set produces the same `wondersScore` and tech-acquisition rate as the legacy
-system. Without the component breakdown, a change in one component can mask a regression in
-another.
+**Score (moderate):** Score is a single number. For cascade verification the component breakdown matters — if building-placement logic is replaced, we must
+verify the cascade's building set yields the same `wondersScore` and tech-acquisition rate as the legacy system. Without the breakdown, a change in one
+component can mask a regression in another.
 
 ---
 
 ## 4. Proposed hooks
 
-All hooks follow the existing gating pattern: gated by `gPlayerLogLevel`, teed via `streamLogTee`
-so they appear on `/events` as `log` frames.
+All hooks are one of the three canonical shapes — see [DEC-obs-hook-shapes](../../architecture/decisions.md#dec-obs-hook-shapes).
 
-### Hook A — `[PLR/heritage]` acquisition event (level 1 headline)
-
-**Where:** `CvPlayer::setHeritage()` at `CvPlayer.cpp:30967` (inside the `if (bNewValue)` /
-`itr == m_myHeritage.end()` block, just after `m_myHeritage.push_back(eType)`), gated by
-`gPlayerLogLevel >= 1`.
-
-**What to emit:**
+### Hook A — `[PLR/heritage]` acquisition event (level 1)
+In `CvPlayer::setHeritage()` (`Sources/Engine/CvPlayer.cpp:30967`, verify, just after `m_myHeritage.push_back(eType)`), gated `gPlayerLogLevel >= 1`:
 ```
 [PLR/heritage] turn=N player=N heritage=HERITAGE_FOLKLORE_AARDVARK total=N
 ```
-Fields:
-- `heritage` — `GC.getHeritageInfo(eType).getType()` (the XML key).
-- `total` — `m_myHeritage.size()` after the push (cumulative count for the player).
+`heritage = GC.getHeritageInfo(eType).getType()`; `total = m_myHeritage.size()` after the push. The primary event hook — every acquisition visible on `/events` the turn it happens, for every player including AI.
 
-This is the primary event hook. It makes every heritage acquisition visible on `/events` the turn
-it happens, for every player including AI.
-
-### Hook B — `/players` endpoint: `heritages` array field
-
-**Where:** `PlayerSnap` struct (`CvHttpServer.cpp:61`) — add `std::vector<CvString> heritageKeys`.
-Snapshot builder (`CvHttpServer.cpp:1524`): iterate `kPlayer.getHeritage()`, push
-`GC.getHeritageInfo(eType).getType()` for each.
-
-**What to add to `/players` JSON output:**
+### Hook B — `/players` `heritages` array (highest priority)
+In `PlayerSnap` (`Sources/Tools/CvHttpServer.cpp:61`, verify) add `std::vector<CvString> heritageKeys`; in the snapshot builder
+(`Sources/Tools/CvHttpServer.cpp:1524`, verify) iterate `kPlayer.getHeritage()` pushing `GC.getHeritageInfo(eType).getType()`:
 ```json
 "heritages": ["HERITAGE_FOLKLORE_AARDVARK", "HERITAGE_FOLKLORE_BEAVER", ...]
 ```
+The snapshot twin of Hook A — reconstruct the full set for any player from one GET, and let the cascade shadow compare its derived buildable set against `canConstruct`.
 
-This is the snapshot twin of Hook A. It lets an agent reconstruct the full heritage set for any
-player (including AI) with a single GET, without depending on the log stream. It also lets the
-cascade shadow compare its derived "what buildings should this player be able to build" against
-the actual `canConstruct` result.
-
-### Hook C — `[PLR/heritage/value]` AI valuation trace (level 2)
-
-**Where:** `CvUnitAI::getBestHeritageValue()` (`CvUnitAI.cpp:14904`), at the point where
-`iValue = player.AI_heritageValue(eTypeX)` is computed, gated by `gUnitLogLevel >= 2`.
-
-**What to emit:**
+### Hook C — `[PLR/heritage/value]` AI valuation trace (level 2, forensic)
+In `CvUnitAI::getBestHeritageValue()` (`Sources/AI/CvUnitAI.cpp:14904`, verify) where `iValue = player.AI_heritageValue(eTypeX)`, gated `gUnitLogLevel >= 2`:
 ```
 [PLR/heritage/value] turn=N player=N unit=N heritage=HERITAGE_X value=N weighted=N city=<name> pathTurns=N
 ```
-Fields match the local variables: `iValue` (raw heritage value), `iWeightedValue` (distance-adjusted),
-`cityX->getName()` (target city), `iPathTurns`.
-
-This makes the AI's heritage targeting decision visible — currently the entire reasoning is silent.
+Makes the AI's heritage targeting visible — currently entirely silent.
 
 ### Hook D — `/players` score component breakdown
-
-**Where:** `PlayerSnap` struct (`CvHttpServer.cpp:61`) — add four int fields: `iPopScore`,
-`iLandScore`, `iTechScore`, `iWondersScore`. Snapshot builder: `kPlayer.getPopScore()`,
-`kPlayer.getLandScore()`, `kPlayer.getTechScore()`, `kPlayer.getWondersScore()`.
-
-**What to add to `/players` JSON output:**
+In `PlayerSnap` (`Sources/Tools/CvHttpServer.cpp:61`, verify) add `iPopScore`, `iLandScore`, `iTechScore`, `iWondersScore` from
+`getPopScore()`/`getLandScore()`/`getTechScore()`/`getWondersScore()`:
 ```json
-"popScore":     <int>,
-"landScore":    <int>,
-"techScore":    <int>,
-"wondersScore": <int>
+"popScore": <int>, "landScore": <int>, "techScore": <int>, "wondersScore": <int>
 ```
-
-These are the raw components before Python normalization. Combined with the existing `score` field
-they let an agent verify the formula and detect component-level regressions. Four small int reads
-in the snapshot loop.
+The raw components before normalization; combined with `score`, they let an agent verify the formula and detect component-level regressions. Four small int reads.
 
 ### Hook E — `[PLR/score]` per-turn score snapshot (level 1)
-
-**Where:** `CvGame::updateScore()` at `CvGame.cpp:2472-2473`, after `setPlayerScore`, gated by
-`gPlayerLogLevel >= 1`.
-
-**What to emit:**
+In `CvGame::updateScore()` after `setPlayerScore` (`Sources/Engine/CvGame.cpp:2472-2473`, verify), gated `gPlayerLogLevel >= 1`:
 ```
 [PLR/score] turn=N player=N score=N popScore=N landScore=N techScore=N wondersScore=N
 ```
+One line per alive player per score-update cycle. `updateScore` runs only when dirty, so volume is lower than per-turn city logs.
 
-One line per alive player per score-update cycle. Because `updateScore` runs only when dirty (not
-every frame), this is lower volume than per-turn city logs. It makes the score evolution visible on
-the `/events` stream without polling `/players`.
+### Hook F — `hasLanguage` + score normalization constants (smaller)
+Add `"hasLanguage": <bool>` (`kPlayer.isHasLanguage()`) to `/players` (needed to understand heritage prereq eligibility for AI players); expose the game-global
+normalization constants (`maxPopulation`/`maxLand`/`maxTech`/`maxWonders`) on a `/diagnostic/scoreConstants` endpoint (static after init — a one-shot query, not per-player).
 
-### Hook F — `/players` `hasLanguage` field and score normalization constants
-
-**Smaller additions:**
-
-- Add `"hasLanguage": <bool>` to `/players` — exposes `kPlayer.isHasLanguage()` (needed to
-  understand heritage prereq eligibility for AI players).
-- Expose the game-global score normalization constants (`maxPopulation`, `maxLand`, `maxTech`,
-  `maxWonders`) on a `GET /diagnostic/scoreConstants` endpoint or as additional fields on a
-  `GET /players` root object. These are static after game init so they need not be in the per-player
-  snapshot; a one-shot query is enough.
+**Priority:** **Highest** — B (`heritages` array; unblocks the cascade shadow for heritage-gated buildings) and A (acquisition event; the cascade re-eval
+signal, low volume). **High** — D (score component breakdown). **Medium** — E (per-turn score snapshot) and F (`hasLanguage` + constants). **Low** — C (forensic AI valuation trace).
 
 ---
 
-## 5. Priority ranking
+## 5. Cascade relevance (#428/#430)
 
-| Priority | Hook | Why |
-|---|---|---|
-| **Highest** | B — `/players` `heritages` array | Snapshot-queryable; exposes the full heritage set for any player; unblocks cascade shadow for heritage-gated buildings; critical gap for AI-player observability |
-| **Highest** | A — `[PLR/heritage]` acquisition event | Makes the acquisition visible on `/events`; needed for cascade re-evaluation signal; low volume (one line per rare acquisition) |
-| **High** | D — `/players` score component breakdown | Enables per-component regression detection; small cost; needed to verify cascade's effect on wonders/tech score |
-| **Medium** | E — `[PLR/score]` per-turn snapshot | Tracks score evolution on the log stream without polling; one line per dirty-update per player |
-| **Medium** | F — `hasLanguage` + score normalization constants | Completes the heritage prereq picture; score constants are small one-time data |
-| **Low** | C — `[PLR/heritage/value]` AI valuation trace | Forensic; level-2; useful for diagnosing AI heritage acquisition bugs but not needed for routine coverage |
+- **Heritage as a cascade prerequisite (`ATOMDOMAIN_HERITAGE`):** the cascade already gates `requires` on `hasHeritage(eType)`
+  (`Sources/Cascade/CvCascadeCondition.cpp:125`, verify). The gap is purely observability — without Hook B (the `heritages` array), a shadow can't explain why
+  a `canConstruct` call disagrees without reverse-engineering the set from `legacyReason:"heritage"`. The atom/enabler model itself is in
+  [`../../explanation/cascade-architecture.md`](../../explanation/cascade-architecture.md), not restated here.
+- **Acquisition as a re-eval signal:** `setHeritage` invalidates `clearCanConstructCache`; the cascade shadow (the `placementSweep` pattern) should re-trigger
+  on the same event. Hook A provides it.
+- **Score as a verification metric (not a cascade target):** no §14 H state maintainer removes score, but `wondersScore`/`techScore` are downstream effects of
+  what the cascade places. A clean cascade run should reproduce the legacy score trajectory; the component breakdown (Hook D) is the minimal substrate for that comparison.
+- **Heritage → commerce → score path:** heritage boosts empire-wide `extraCommerce100` → research → tech acquisition → `techScore`. This indirect path is
+  invisible today; Hook D exposes `techScore` directly, making the end-to-end effect measurable without tracing every modifier.
+- All hooks honour [DEC-map-before-delete](../../architecture/decisions.md#dec-map-before-delete): observe before any legacy maintainer is cut.
 
 ---
 
-## 6. Cascade relevance (#428/#430)
-
-**Heritage as a cascade prerequisite (`ATOMDOMAIN_HERITAGE`):** The cascade condition evaluator
-already has `ATOMDOMAIN_HERITAGE` wired (`CvCascadeCondition.cpp:125`). When a building or unit
-JSON declares a heritage prerequisite in `requires`, the cascade correctly gates on
-`hasHeritage(eType)`. The gap is observability: without Hook B (the `/players` `heritages` array),
-a shadow cannot explain WHY a `canConstruct` call disagrees with the cascade without reverse-
-engineering the heritage set from `legacyReason:"heritage"` alone.
-
-**Heritage acquisition event:** The cascade's shadow testing framework (the `placementSweep`
-pattern) depends on knowing when player state changes so it can re-evaluate. Heritage acquisition
-(`setHeritage`) invalidates `clearCanConstructCache` — the cascade shadow should likewise be re-
-triggered. Hook A provides the event signal.
-
-**Score as a cascade verification metric:** The score system is not itself a cascade target
-(no §14 H state maintainer removes it), but `wondersScore` and `techScore` are downstream effects
-of what buildings and techs the cascade places. A clean cascade run should produce the same score
-trajectory as the legacy system; the component breakdown (Hook D) is the minimal substrate for
-that comparison.
-
-**Heritage → commerce → score path:** Heritage boosts empire-wide `extraCommerce100`. Commerce
-feeds research rate → tech acquisition → `techScore`. This indirect path is currently invisible;
-Hook D exposes `techScore` directly, making the end-to-end effect measurable without tracing
-every commerce modifier.
+## See also
+- [`README.md`](README.md) — the observability scale, the Orwell bar, and the three hook shapes this map applies.
+- [`http-server.md`](http-server.md) — the live surface (`/players`, `/units`, `/diagnostic/*`) these hooks extend, and the live-read rules.
+- [`../../architecture/decisions.md`](../../architecture/decisions.md) — [DEC-obs-scale], [DEC-obs-hook-shapes], [DEC-map-before-delete].
+- [`../../explanation/cascade-architecture.md`](../../explanation/cascade-architecture.md) — the `ATOMDOMAIN_HERITAGE` atom / enabler model heritage gates plug into (the cascade design, not re-explained in this map).
+- [`golden-ages-era.md`](golden-ages-era.md) — heritage commerce era-deltas ride the same `setCurrentEra` era-advance path.
+- [`../../README.md`](../../README.md) — the comprehension map (overview-of-overviews).

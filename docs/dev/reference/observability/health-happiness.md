@@ -1,8 +1,16 @@
-# Observability map — Health & Happiness (S2S cities)
+# Observability — Health & Happiness — what's on the wire for a city's Civ4 ledgers
 
-> DRAFT observability map (2026-06-18 by parent cascade-mapping-inventory sweep) — every claim cited
-> from live code; verify before relying. File: `docs/dev/reference/observability/health-happiness.md`.
-> Scale reference: `docs/dev/plans/cascade-mapping-inventory.md` §D (0 Oblivious … 5 Thought Police).
+> **Status:** reference   ·   **Verified against:** 2026-06-20 (function sites confirmed in `Sources/Engine/CvCity.cpp`; line numbers drift)
+> **Grounding:** live `Sources/Engine/CvCity.cpp` (happy/unhappy/good/bad-health ledgers, anger timers, WLTK), `Sources/AI/CvCityAI.cpp` (downstream scoring), `Sources/Tools/CvHttpServer.cpp` (`/cities`, `/players`). Carried over from the old draft map; function sites re-confirmed, paths re-grounded to the reorganized `Sources/` tree.
+> The Civ4 `happyLevel`/`unhappyLevel`/`goodHealth`/`badHealth` ledger is **Tier 0** today — completely dark. The C2C property system (crime/disease/education) has Tier 1 coverage via `[CIT/proplevel]` + `/cities`, but net happiness, net health, WeLoveTheKingDay, every anger timer, the revolution index and player-level war weariness are computed live and emitted nowhere. This map walks the two ledgers and their downstream consequences, names what's dark, and proposes the snapshot fields / log tags to climb to Tier 3.
+
+The observability scale (0–5) and the three canonical hook shapes are defined once in
+[`README.md`](README.md) ([DEC-obs-scale], [DEC-obs-hook-shapes]); the live surface and the rules for
+reading it (logs held open mid-session, use `/events` + `/diagnostic`) live in
+[`http-server.md`](http-server.md). This doc does not restate them.
+
+> Line numbers below are anchors at time of writing and **drift** — confirm the named function, not the
+> integer. (The old draft's numbers were already ~10 lines stale when re-confirmed; the functions are stable.)
 
 ---
 
@@ -11,25 +19,25 @@
 ### 1a. Net happiness — `happyLevel()` minus `unhappyLevel()`
 
 `CvCity::happyLevel()` and `CvCity::unhappyLevel()` are the two poles of the happiness ledger
-(CvCity.cpp:5679 and CvCity.cpp:5596). The net is `happy - unhappy`; a negative net produces
-`angryPopulation()` (CvCity.cpp:5720), which has downstream effects on production, growth, and
+(CvCity.cpp:5689 and CvCity.cpp:5606). The net is `happy - unhappy`; a negative net produces
+`angryPopulation()` (CvCity.cpp:5730), which has downstream effects on production, growth, and
 `isWeLoveTheKingDay`.
 
-**`unhappyLevel(iExtra)` sources** (CvCity.cpp:5596–5676):
+**`unhappyLevel(iExtra)` sources** (CvCity.cpp:5606–):
 
 | Source | Accessor | Type |
 |---|---|---|
-| Overcrowding (always ≥0 for pop>0) | `getOvercrowdingPercentAnger(iExtra)` (CvCity.cpp:5341) | percent-anger |
-| No military units in city | `getNoMilitaryPercentAnger()` (CvCity.cpp:5351) | percent-anger |
-| Foreign culture on plot | `getCulturePercentAnger()` (CvCity.cpp:5361) — enemy culture × `CULTURE_PERCENT_ANGER` | percent-anger |
-| Enemy-state-religion cities at war | `getReligionPercentAnger()` (CvCity.cpp:5402) | percent-anger |
-| Hurry (rush-buy) anger | `getHurryPercentAnger(iExtra)` (CvCity.cpp:5438) — driven by `getHurryAngerTimer()` | percent-anger |
-| Conscript anger | `getConscriptPercentAnger(iExtra)` (CvCity.cpp:5448) — driven by `getConscriptAngerTimer()` | percent-anger |
-| Defy-resolution anger | `getDefyResolutionPercentAnger(iExtra)` (CvCity.cpp:5457) — `getDefyResolutionAngerTimer()` | percent-anger |
-| War weariness (player-level accumulated + city-local timer) | `getWarWearinessPercentAnger()` (CvCity.cpp:5467) — `GET_PLAYER().getWarWearinessPercentAnger()` × `getWarWearinessModifier()` × `(getWarWearinessTimer()+100)/100` | percent-anger |
-| Revolution request anger | `getRevRequestPercentAnger(iExtra)` (CvCity.cpp:5481) — `getRevRequestAngerTimer()` | percent-anger |
-| Revolution index anger | `getRevIndexPercentAnger()` (CvCity.cpp:5499) — fires when `getRevolutionIndex() > 325`; scaled by `getLocalRevIndex()` | percent-anger |
-| Civic percent-anger | `GET_PLAYER().getCivicPercentAnger(eCivic)` loop (CvCity.cpp:5618–5621) | percent-anger |
+| Overcrowding (always ≥0 for pop>0) | `getOvercrowdingPercentAnger(iExtra)` | percent-anger |
+| No military units in city | `getNoMilitaryPercentAnger()` | percent-anger |
+| Foreign culture on plot | `getCulturePercentAnger()` — enemy culture × `CULTURE_PERCENT_ANGER` | percent-anger |
+| Enemy-state-religion cities at war | `getReligionPercentAnger()` | percent-anger |
+| Hurry (rush-buy) anger | `getHurryPercentAnger(iExtra)` — driven by `getHurryAngerTimer()` | percent-anger |
+| Conscript anger | `getConscriptPercentAnger(iExtra)` — driven by `getConscriptAngerTimer()` | percent-anger |
+| Defy-resolution anger | `getDefyResolutionPercentAnger(iExtra)` — `getDefyResolutionAngerTimer()` | percent-anger |
+| War weariness (player-level + city timer) | `getWarWearinessPercentAnger()` — `GET_PLAYER().getWarWearinessPercentAnger()` × `getWarWearinessModifier()` × `(getWarWearinessTimer()+100)/100` | percent-anger |
+| Revolution request anger | `getRevRequestPercentAnger(iExtra)` — `getRevRequestAngerTimer()` | percent-anger |
+| Revolution index anger | `getRevIndexPercentAnger()` — fires when `getRevolutionIndex() > 325`; scaled by `getLocalRevIndex()` | percent-anger |
+| Civic percent-anger | `GET_PLAYER().getCivicPercentAnger(eCivic)` loop | percent-anger |
 | *(sum → iAngerPercent × (pop+iExtra) / PERCENT_ANGER_DIVISOR = iUnhappiness base)* | | |
 | LargestCity bonus (negative → unhappy) | `getLargestCityHappiness()` if negative | flat |
 | Military happiness (negative) | `getMilitaryHappiness()` if negative | flat |
@@ -45,27 +53,27 @@
 | Extra happiness (negative) | `getExtraHappiness() + GET_PLAYER().getExtraHappiness()` | flat |
 | Handicap happy bonus (negative) | `GC.getHandicapInfo().getHappyBonus()` | flat |
 | Vassal unhappiness | `getVassalUnhappiness()` | flat |
-| Espionage happiness counter | `getEspionageHappinessCounter()` (positive = unhappy side; CvCity.cpp:5639) | flat |
+| Espionage happiness counter | `getEspionageHappinessCounter()` (positive = unhappy side) | flat |
 | Civic happiness (negative) | `getCivicHappiness()` | flat |
 | Specialist unhappiness | `getSpecialistUnhappiness()/100` | flat |
 | World happiness (negative) | `GET_PLAYER().getWorldHappiness()` | flat |
 | Project happiness (negative) | `GET_PLAYER().getProjectHappiness()` | flat |
 | Tax rate unhappiness | `GET_PLAYER().calculateTaxRateUnhappiness()` | flat |
 | Corporation happiness (negative) | `calculateCorporationHappiness()` | flat |
-| Event anger | `getEventAnger()` (decays by 1 every `10 × speedPercent/100` turns; CvCity.cpp:21753) | flat |
+| Event anger | `getEventAnger()` (decays by 1 every `10 × speedPercent/100` turns) | flat |
 | Extra tech happiness total (negative) | `getExtraTechHappinessTotal()` | flat |
-| Foreign unhappy percent (culture-penalized) | `getForeignUnhappyPercent()` (CvCity.cpp:5649–5654) | flat |
+| Foreign unhappy percent (culture-penalized) | `getForeignUnhappyPercent()` | flat |
 | Landmark anger (MAP_PERSONALIZED only) | `getLandmarkAnger()` unless `isNoLandmarkAnger()` | flat |
 | City-over-limit (civic soft cap) | `getCityOverLimitUnhappy() × overLimitCities` | flat |
 
-Short-circuit bypass: `isNoUnhappiness()` (CvCity.cpp:5600) → entire function returns 0. Also `isCapital() && GET_PLAYER().isNoCapitalUnhappiness()`.
+Short-circuit bypass: `isNoUnhappiness()` → entire function returns 0. Also `isCapital() && GET_PLAYER().isNoCapitalUnhappiness()`.
 
-**`happyLevel()` sources** (CvCity.cpp:5679–5717):
+**`happyLevel()` sources** (CvCity.cpp:5689–):
 
 | Source | Accessor | Type |
 |---|---|---|
 | Revolution-success happiness | `getRevSuccessHappiness()` | flat |
-| LargestCity bonus (positive) | `getLargestCityHappiness()` (CvCity.cpp:5541) — fires if `findPopulationRank() <= worldTargetNumCities` | flat |
+| LargestCity bonus (positive) | `getLargestCityHappiness()` — fires if `findPopulationRank() <= worldTargetNumCities` | flat |
 | Military happiness (positive) | `getMilitaryHappiness()` | flat |
 | State religion happiness (positive) | `getCurrentStateReligionHappiness()` | flat |
 | Building good happiness | `getBuildingGoodHappiness()` | flat |
@@ -84,16 +92,15 @@ Short-circuit bypass: `isNoUnhappiness()` (CvCity.cpp:5600) → entire function 
 | World happiness (positive) | `GET_PLAYER().getWorldHappiness()` | flat |
 | Project happiness (positive) | `GET_PLAYER().getProjectHappiness()` | flat |
 | Corporation happiness (positive) | `calculateCorporationHappiness()` | flat |
-| Celebrity happiness | `getCelebrityHappiness()` (celebrity units on the city plot; CvCity.cpp:5589) | flat |
+| Celebrity happiness | `getCelebrityHappiness()` (celebrity units on the city plot) | flat |
 | Extra tech happiness total (positive) | `getExtraTechHappinessTotal()` | flat |
 | Landmark happiness (MAP_PERSONALIZED) | `GET_PLAYER().getLandmarkHappiness()` | flat |
-| Temp happy (happiness timer) | `getHappinessTimer() > 0 → GC.getTEMP_HAPPY()` (CvCity.cpp:5712) | temporary |
+| Temp happy (happiness timer) | `getHappinessTimer() > 0 → GC.getTEMP_HAPPY()` | temporary |
 
 ### 1b. Anger timers — per-turn countdown, set by game events
 
 Seven per-city integer counters that decay automatically each turn in `CvCity::doTurn`
-(CvCity.cpp:1374–1417). All are `-1` per turn; none "recharge" — they are set at event time
-and burn down:
+(CvCity.cpp:1374–1417). All are `-1` per turn; none "recharge" — set at event time and burn down:
 
 | Timer | Set by | Anger contribution |
 |---|---|---|
@@ -105,33 +112,32 @@ and burn down:
 | `getRevSuccessTimer()` | Successful revolution | `getRevSuccessHappiness()` |
 | `getLandmarkAngerTimer()` | Landmark events (MAP_PERSONALIZED) | `getLandmarkAnger()` |
 
-**War weariness city timer** (`getWarWearinessTimer()`, CvCity.cpp:21723): decays by 20/turn
-(CvCity.cpp:21751); set from combat results via `CvPlayer.cpp:16482`. Multiplies the
-player-level `getWarWearinessPercentAnger()` in `getWarWearinessPercentAnger()` (CvCity.cpp:5474).
+**War weariness city timer** (`getWarWearinessTimer()`, CvCity.cpp:21723): decays by 20/turn; set from
+combat results via `CvPlayer.cpp:16482`. Multiplies the player-level `getWarWearinessPercentAnger()`.
 
-**Event anger** (`getEventAnger()`, CvCity.cpp:21765): decays by 1 every `10 × speedPercent/100`
-turns (checked at `doWarWeariness`, CvCity.cpp:21753).
+**Event anger** (`getEventAnger()`): decays by 1 every `10 × speedPercent/100` turns (checked at
+`doWarWeariness`).
 
-**Espionage counters** (`getEspionageHappinessCounter()`, `getEspionageHealthCounter()`): decay
-by 1 per turn (CvCity.cpp:1414–1417); set by espionage missions.
+**Espionage counters** (`getEspionageHappinessCounter()`, `getEspionageHealthCounter()`): decay by 1 per
+turn (CvCity.cpp:1414–1417); set by espionage missions.
 
 ### 1c. Revolution index — `getRevolutionIndex()` / `getLocalRevIndex()`
 
 `getRevolutionIndex()` (CvCity.cpp:951) — a per-city accumulator; contributes to
-`getRevIndexPercentAnger()` only when `> 325` (CvCity.cpp:5503). `getLocalRevIndex()` (CvCity.cpp:969)
-scales the contribution. Both are updated by events and the doTurn revolution system; details
-deferred to a future revolution-system observability map.
+`getRevIndexPercentAnger()` only when `> 325`. `getLocalRevIndex()` (CvCity.cpp:969) scales the
+contribution. Both are updated by events and the doTurn revolution system; full details deferred to a
+future revolution-system observability map.
 
 ### 1d. Health — `goodHealth()` minus `badHealth()`
 
-**`goodHealth()` sources** (CvCity.cpp:5821–5844):
+**`goodHealth()` sources** (CvCity.cpp:5831–):
 
 | Source | Accessor |
 |---|---|
 | Fresh water | `getFreshWaterGoodHealth()` |
 | Feature good health | `getFeatureGoodHealth()` |
 | Bonus good health | `getBonusGoodHealth()` |
-| Building good health (city + area + player + extra) | `totalGoodBuildingHealth()` (CvCity.cpp:5797) |
+| Building good health (city + area + player + extra) | `totalGoodBuildingHealth()` |
 | Extra health (positive) | `getExtraHealth()` |
 | Handicap health bonus (positive) | `GC.getHandicapInfo().getHealthBonus()` |
 | Improvement good health | `getImprovementGoodHealth()/100` |
@@ -144,14 +150,14 @@ deferred to a future revolution-system observability map.
 | World health (positive) | `owner.getWorldHealth()` |
 | Project health (positive) | `owner.getProjectHealth()` |
 
-**`badHealth()` sources** (CvCity.cpp:5848–5873):
+**`badHealth()` sources** (CvCity.cpp:5858–):
 
 | Source | Accessor |
 |---|---|
 | Espionage health counter (malus) | `-getEspionageHealthCounter()` |
 | Feature bad health | `getFeatureBadHealth()` |
 | Bonus bad health | `getBonusBadHealth()` |
-| Building bad health (city + area + player + extra) | `totalBadBuildingHealth()` (CvCity.cpp:5807) |
+| Building bad health (city + area + player + extra) | `totalBadBuildingHealth()` |
 | Extra health (negative) | `getExtraHealth()` if negative |
 | Handicap health bonus (negative) | `GC.getHandicapInfo().getHealthBonus()` if negative |
 | Extra building bad health | `getExtraBuildingBadHealth()` |
@@ -161,78 +167,77 @@ deferred to a future revolution-system observability map.
 | Extra tech health total (negative) | `getExtraTechHealthTotal()` if negative |
 | Player extra health (negative) | `owner.getExtraHealth()` if negative |
 | Player civic/civ/world/project health (negative) | same accessors as goodHealth |
-| **Population itself** | `unhealthyPopulation(bNoAngry, iExtra)` (CvCity.cpp:5787) — `max(0, pop - angryPop)` unless `isNoUnhealthyPopulation()` |
+| **Population itself** | `unhealthyPopulation(bNoAngry, iExtra)` — `max(0, pop - angryPop)` unless `isNoUnhealthyPopulation()` |
 
-Short-circuit bypass: `isBuildingOnlyHealthy()` (CvCity.cpp:9671) → `totalBadBuildingHealth()` returns 0.
-`isNoUnhealthyPopulation()` (CvCity.cpp:9642) → unhealthy population term = 0.
+Short-circuit bypass: `isBuildingOnlyHealthy()` → `totalBadBuildingHealth()` returns 0.
+`isNoUnhealthyPopulation()` → unhealthy population term = 0.
 
-`healthRate()` = `min(0, goodHealth() - badHealth())` (CvCity.cpp:5876) — always ≤ 0; a sick city
+`healthRate()` = `min(0, goodHealth() - badHealth())` (CvCity.cpp:5886) — always ≤ 0; a sick city
 returns a negative value.
 
 ### 1e. Downstream consequences
 
-**Food starvation via healthRate** (CvCity.cpp:5912–5918):
-`foodConsumption() = getFoodConsumedByPopulation() - angryPopulation() - healthRate()`
-(negative `healthRate` is subtracted, so sick cities consume *more* food per turn, which then
-reduces `foodDifference()` → faster starvation or negative food-stores → population loss via
-`changeFood()` loop at CvCity.cpp:9730–9740).
+**Food starvation via healthRate** (CvCity.cpp:5922–):
+`foodConsumption() = getFoodConsumedByPopulation() - angryPopulation() - healthRate()` — negative
+`healthRate` is subtracted, so sick cities consume *more* food per turn, reducing `foodDifference()` →
+faster starvation or negative food-stores → population loss via the `changeFood()` loop. The food side of
+this is mapped in [`food-yields-wastage.md`](food-yields-wastage.md).
 
-**Growth suppression**: when `angryPopulation(1) > 0`, `AI_avoidGrowth()` triggers (CvCityAI.cpp:9747),
-pinning food at the threshold.
+**Growth suppression**: when `angryPopulation(1) > 0`, `AI_avoidGrowth()` triggers (CvCityAI.cpp), pinning
+food at the threshold.
 
 **WeLoveTheKingDay** (CvCity.cpp:1419–1430): set `false` if `isOccupation() || angryPopulation()>0 ||
-healthRate()<0`; set `true` stochastically (pop-weighted rand < `WE_LOVE_THE_KING_RAND`) otherwise.
-WLTK day waives distance+numCities maintenance (CvCity.cpp:7433/7471/7493/7516/7540) and doubles
-GPP generation (CvCity.cpp:7604). So both health and happiness feed this crucial economic gate.
+healthRate()<0`; set `true` stochastically (pop-weighted rand < `WE_LOVE_THE_KING_RAND`) otherwise. WLTK
+waives distance+numCities maintenance and doubles GPP generation. So both health and happiness feed this
+crucial economic gate.
 
-**Disorder** (`isDisorder()` = `isOccupation() || GET_PLAYER().isAnarchy()`, CvCity.cpp:5282):
-`foodDifference()` returns 0, production idles, corporations and doProduction stall.
+**Disorder** (`isDisorder()` = `isOccupation() || GET_PLAYER().isAnarchy()`): `foodDifference()` returns 0,
+production idles, corporations and doProduction stall.
 
 **Production choice** (CvCityAI): `happyLevel() - unhappyLevel()` and `goodHealth() - badHealth()` both
-feed directly into building value scoring (CvCityAI.cpp:654, 698, 884, 885, 5077, 5079, etc.)
-and the hurry threshold (CvCityAI.cpp:10695).
+feed directly into building value scoring (CvCityAI.cpp:654, 698, 884, 885, 5077, 5079, etc.) and the
+hurry threshold (CvCityAI.cpp:10695).
 
 ---
 
-## 2. Current observability — **TIER 0–1**
+## 2. What's on the wire today — **Tier 0 (health/happiness ledger)**
 
-### What is exposed today
+### What is exposed
 
 | Surface | Fields | Notes |
 |---|---|---|
-| `GET /cities` | `population`, `food` (YIELD_FOOD rate), `production`, `commerce`, `crime`, `education`, `disease` | CvHttpServer.cpp:1544–1562 |
-| `GET /players` | `score`, `era`, `techs`, `gold`, `goldRate`, `scienceRate`, `population`, `units`, `cities` | CvHttpServer.cpp:1465+ |
+| `GET /cities` | `population`, `food` (YIELD_FOOD rate), `production`, `commerce`, `crime`, `education`, `disease` | CvHttpServer.cpp (city walk) |
+| `GET /players` | `score`, `era`, `techs`, `gold`, `goldRate`, `scienceRate`, `population`, `units`, `cities` | CvHttpServer.cpp (player walk) |
 | `[CIT/proplevel]` (CityAI.log, level 1) | per-turn per-city snapshot: `prop=` `val=` `change=` for every active property | CvCity.cpp:1244 |
 | `[CIT/begin]` (CityAI.log, level 1) | `pop=` `danger=` `finTrouble=` `critGold=` `foodProd=` | CvCityAI.cpp:966 |
 
 ### What is NOT exposed
 
-Everything else. Specifically:
+Everything else:
 
 - **Net happiness** (`happyLevel()`, `unhappyLevel()`, `angryPopulation()`) — zero endpoints, zero log lines.
 - **Net health** (`goodHealth()`, `badHealth()`, `healthRate()`) — zero endpoints, zero log lines.
 - **WeLoveTheKingDay** (`isWeLoveTheKingDay()`) — not in any snapshot or log.
 - **All anger timers** (`hurryAngerTimer`, `conscriptAngerTimer`, `defyResolutionAngerTimer`,
-  `happinessTimer`, `warWearinessTimer`, `revRequestAngerTimer`, `revSuccessTimer`,
-  `eventAnger`, `espionageHappinessCounter`, `espionageHealthCounter`) — none visible.
+  `happinessTimer`, `warWearinessTimer`, `revRequestAngerTimer`, `revSuccessTimer`, `eventAnger`,
+  `espionageHappinessCounter`, `espionageHealthCounter`) — none visible.
 - **Revolution index** (`getRevolutionIndex()`, `getLocalRevIndex()`) — not exposed.
 - **War weariness at player level** (`getWarWearinessPercentAnger()`) — not in `/players`.
 - **Per-source breakdown** of any happiness or health contributor — nowhere.
 - **Disorder flag** (`isDisorder()`, `isOccupation()`, `isAnarchy()`) — not in any snapshot.
-- **`isNoUnhappiness()`** / **`isNoUnhealthyPopulation()`** bypass flags — not exposed.
-- **Food starvation signal**: `foodDifference()` could be negative (starvation); current `/cities`
-  `food` field = `YIELD_FOOD` rate (gross), NOT net food change. There is no `foodDifference` field.
+- **Bypass flags** (`isNoUnhappiness()`, `isNoUnhealthyPopulation()`) — not exposed.
+- **Food starvation signal**: `/cities.food` = `YIELD_FOOD` rate (gross), NOT net `foodDifference()`.
 
 ### Tier assessment
 
 | Tier | Name | Status |
 |---|---|---|
 | 0 | Oblivious | baseline — no health/happiness on wire at all |
-| **1** | **Telescreen** | `/cities` gives pop + food RATE (not net); `[CIT/proplevel]` gives property values (disease, crime) but those are the C2C property system, not the Civ4 health/happiness ledger |
+| **1** | **Telescreen** | `/cities` gives pop + food RATE (not net); `[CIT/proplevel]` gives property values (disease, crime) — but those are the C2C property system, not the Civ4 health/happiness ledger |
 
 **Current rating: Tier 0 for health & happiness specifically.** The property system (disease/crime/education)
-has Tier 1 coverage via `[CIT/proplevel]` + the `/cities` `crime`/`education`/`disease` fields, but
-the Civ4 `goodHealth/badHealth/happyLevel/unhappyLevel` ledger is completely dark.
+has Tier 1 coverage via `[CIT/proplevel]` + the `/cities` `crime`/`education`/`disease` fields, but the
+Civ4 `goodHealth/badHealth/happyLevel/unhappyLevel` ledger is completely dark.
 
 ---
 
@@ -244,27 +249,27 @@ An agent watching the HTTP endpoints + logs TODAY cannot:
 2. Know whether WeLoveTheKingDay is active (waives maintenance, doubles GPP).
 3. Know why a city is angry — which source dominates (overcrowding? hurry? war weariness?).
 4. Know the magnitude of any anger timer — can't predict when anger will abate.
-5. Know whether food starvation is occurring (need `foodDifference()` < 0, not just the yield rate).
-6. Know player-level war weariness (`getWarWearinessPercentAnger()`), which multiplies into every
-   city's war-weariness anger.
+5. Know whether food starvation is occurring (needs `foodDifference()` < 0, not just the yield rate).
+6. Know player-level war weariness (`getWarWearinessPercentAnger()`), which multiplies into every city's
+   war-weariness anger.
 7. Know when disorder is active (production and food zeroed, corporations stalled).
 8. Know which happiness/health sources are positive vs negative — can't attribute a happy/sick city.
-9. Know whether bypass flags are active (`isNoUnhappiness`, `isNoUnhealthyPopulation`,
-   `isBuildingOnlyHealthy`).
+9. Know whether bypass flags are active (`isNoUnhappiness`, `isNoUnhealthyPopulation`, `isBuildingOnlyHealthy`).
 
-Consequence for cascade verification: the `requires.operate` targets for happiness- and health-gated
+**Cascade-verification consequence:** the `requires.operate` targets for happiness- and health-gated
 buildings (property-band buildings from `checkPropertyBuildings`, religion-dormancy triggers) cannot be
-verified against ground truth without adding this observability layer. Similarly, the `autoBuild` placement
-shadow cannot explain WHY a property-band building was added/removed without seeing `goodHealth`/`badHealth`.
+verified against ground truth without this layer. The `autoBuild` placement shadow likewise cannot explain
+WHY a property-band building was added/removed without seeing `goodHealth`/`badHealth`.
 
 ---
 
 ## 4. Proposed hooks — climbing from Tier 0 to Tier 3
 
+All hooks follow the three canonical hook shapes — see [DEC-obs-hook-shapes].
+
 ### 4a. `/cities` snapshot additions (cheapest — same publish path)
 
-Add to `CitySnap` struct (CvHttpServer.cpp:83) and the `publishIfDue` city-walk
-(CvHttpServer.cpp:1542+):
+Add to `CitySnap` struct and the `publishIfDue` city-walk:
 
 ```
 happyLevel        int   happyLevel()
@@ -278,8 +283,8 @@ weLoveKingDay     bool  isWeLoveTheKingDay()
 isDisorder        bool  isDisorder()
 ```
 
-These are all cheap single-call reads (most are already computed once per turn for AI scoring).
-They make the most critical derived state readable at Tier 1 for ALL players (AI included).
+All cheap single-call reads (most already computed once per turn for AI scoring). They make the most
+critical derived state readable at Tier 1 for ALL players (AI included).
 
 ### 4b. `/players` snapshot additions
 
@@ -298,13 +303,13 @@ worldHappiness      int   getWorldHappiness()
 worldHealth         int   getWorldHealth()
 ```
 
-These are the player-level aggregates; combined with the per-city fields above, an agent can
-attribute city happiness/health to player-level vs city-level sources.
+The player-level aggregates; combined with the per-city fields above, an agent can attribute city
+happiness/health to player-level vs city-level sources.
 
 ### 4c. `[CIT/happy]` log tag — per-turn per-city headline (Tier 3)
 
-A new level-1 tag in `CvCity::doTurn` (alongside `[CIT/proplevel]`), emitting the net figures
-and any **changed** anger timers. Proposed tag: `[CIT/happy]`.
+A new level-1 tag in `CvCity::doTurn` (alongside `[CIT/proplevel]`), emitting the net figures and any
+**changed** anger timers:
 
 ```
 [CIT/happy] turn=N city=X owner=P happy=H unhappy=U angry=A health=G bad=B rate=R wltk=0|1 disorder=0|1
@@ -315,32 +320,32 @@ and any **changed** anger timers. Proposed tag: `[CIT/happy]`.
 - Streamed to `/events` as a `log` frame (same `streamLogTee` path as `[CIT/proplevel]`).
 
 Optional level-2 expansion: `[CIT/happy/timers]` emitting the non-zero anger timers (hurry, conscript,
-warWeariness, etc.) for forensic correlation. Only emit when any timer > 0 (keeps log quiet).
+warWeariness, etc.). Only emit when any timer > 0 (keeps the log quiet).
 
 ### 4d. `[CIT/angry]` events for timer-set moments (Tier 3 delta)
 
 At the event sites that SET anger timers (hurry, conscript, defy-resolution, war-weariness), emit a
 level-1 `[CIT/angry]` line: `city= owner= cause=hurry|conscript|warWeariness timer=N`. This gives the
-agent the triggering event as it happens (live in `/events`), not just the current value.
+triggering event as it happens (live in `/events`), not just the current value.
 
 Key sites:
-- Hurry timer set: `CvCity::changeHurryAngerTimer` (CvCity.cpp:~9509 area).
-- Conscript timer set: `CvCity::changeConscriptAngerTimer` (CvCity.cpp:~9560 area).
+- Hurry timer set: `CvCity::changeHurryAngerTimer`.
+- Conscript timer set: `CvCity::changeConscriptAngerTimer`.
 - War weariness timer injection: `CvPlayer.cpp:16482`.
 
 ### 4e. `[CIT/wltk]` on WeLoveTheKingDay change
 
-At `CvCity::setWeLoveTheKingDay` (CvCity.cpp:10352), emit a level-1 line when the value **changes**:
-`[CIT/wltk] city= owner= wltk=0|1`. Currently WLTK fires/clears every turn — the toggle itself is
-the signal (WLTK clear = happiness or health problem started; WLTK set = resolved).
+At `CvCity::setWeLoveTheKingDay`, emit a level-1 line when the value **changes**:
+`[CIT/wltk] city= owner= wltk=0|1`. WLTK fires/clears every turn — the toggle itself is the signal (WLTK
+clear = happiness or health problem started; WLTK set = resolved).
 
-### 4f. No new diagnostic gate-eval needed for anger/health
+### 4f. No new diagnostic gate-eval needed yet
 
 Unlike buildability (where cascade vs legacy divergence demands a diagnostic endpoint), health and
-happiness are read-only aggregates without a cascade equivalent yet. The snapshot fields (§4a/§4b) and
-log tags (§4c/§4d/§4e) are sufficient for Tier 3. A `/diagnostic/cityHappiness?id=N` gate-eval can be
-added later when the cascade starts representing happiness sources as `requires`/`enables` atoms — at
-that point a per-source breakdown endpoint becomes the Tier-4/5 verification tool.
+happiness are read-only aggregates without a cascade equivalent yet. The snapshot fields (§4a/§4b) and log
+tags (§4c–4e) are sufficient for Tier 3. A `/diagnostic/cityHappiness?id=N` gate-eval can be added later
+when the cascade starts representing happiness sources as `requires`/`enables` atoms — at that point a
+per-source breakdown endpoint becomes the Tier-4/5 verification tool.
 
 ---
 
@@ -358,19 +363,39 @@ All five are `gCityLogLevel`-gated and off by default — zero cost at `gCityLog
 
 ---
 
-## 6. Cross-references
+## 6. Code cross-reference
 
-- `CvCity.cpp:5596` — `unhappyLevel`
-- `CvCity.cpp:5679` — `happyLevel`
-- `CvCity.cpp:5821` — `goodHealth`
-- `CvCity.cpp:5848` — `badHealth`
-- `CvCity.cpp:5876` — `healthRate`
-- `CvCity.cpp:5912` — `foodConsumption` (health feeds food via healthRate)
-- `CvCity.cpp:9713` — `changeFood` (starvation pop-loss loop)
-- `CvCity.cpp:1374–1430` — anger timer countdown + WLTK gate
-- `CvCity.cpp:21747` — `doWarWeariness` (warWearinessTimer decay, eventAnger decay)
-- `CvHttpServer.cpp:83` — `CitySnap` struct (add fields here)
-- `CvHttpServer.cpp:1542` — city publish walk (add reads here)
-- `docs/dev/plans/cascade-mapping-inventory.md` §D — the observability scale
-- `docs/dev/reference/http-server.md` — live surface reference
-- `docs/dev/reference/ai-logging-reference.md` — `[CIT/*]` tag registry
+> Paths re-grounded to the reorganized `Sources/` tree (`Cv*` engine classes → `Sources/Engine/`,
+> `Cv*AI` → `Sources/AI/`, `CvHttpServer` → `Sources/Tools/`). Line numbers drift — confirm the function.
+
+| Claim | Source |
+|---|---|
+| `unhappyLevel` | `Sources/Engine/CvCity.cpp:5606` |
+| `happyLevel` | `Sources/Engine/CvCity.cpp:5689` |
+| `angryPopulation` | `Sources/Engine/CvCity.cpp:5730` |
+| `goodHealth` | `Sources/Engine/CvCity.cpp:5831` |
+| `badHealth` | `Sources/Engine/CvCity.cpp:5858` |
+| `healthRate` | `Sources/Engine/CvCity.cpp:5886` |
+| `foodConsumption` (health feeds food via healthRate) | `Sources/Engine/CvCity.cpp:5922` |
+| `changeFood` (starvation pop-loss loop) | `Sources/Engine/CvCity.cpp:9723` |
+| anger timer countdown + WLTK gate | `Sources/Engine/CvCity.cpp:1374–1430` |
+| `doWarWeariness` (warWearinessTimer/eventAnger decay) | `Sources/Engine/CvCity.cpp:21747` |
+| war-weariness timer injection | `Sources/Engine/CvPlayer.cpp:16482` |
+| `CitySnap` struct / city publish walk (add fields here) | `Sources/Tools/CvHttpServer.cpp` |
+| production-choice scoring (happy/health feed) | `Sources/AI/CvCityAI.cpp:654, 698, 884, 5077, 10695` |
+
+---
+
+## See also
+- [`README.md`](README.md) — the observability scaffold: the 0–5 scale ([DEC-obs-scale]), the Orwell bar,
+  and the three canonical hook shapes ([DEC-obs-hook-shapes]) this map's hooks instantiate.
+- [`http-server.md`](http-server.md) — the live surface (`/cities`, `/players`, `/events`) these hooks
+  extend, and the live-read rules (logs held open mid-session).
+- [`food-yields-wastage.md`](food-yields-wastage.md) — the food balance that `healthRate()` feeds:
+  sick cities (negative `healthRate`) consume more food and starve faster.
+- [`../../explanation/cascade-architecture.md`](../../explanation/cascade-architecture.md) — why total
+  observability is load-bearing for map-before-delete (the `requires.operate` verification this gap blocks).
+- [`../../README.md`](../../README.md) — the comprehension map / overview-of-overviews.
+
+[DEC-obs-scale]: ../../architecture/decisions.md#dec-obs-scale
+[DEC-obs-hook-shapes]: ../../architecture/decisions.md#dec-obs-hook-shapes

@@ -1,344 +1,230 @@
-# Observability map — Great people generation
+# Observability — great-people generation
 
-> DRAFT observability map (2026-06-18, parent: cascade-mapping-inventory.md) — all claims cited from
-> live code; verify before relying. Line numbers are anchors at time of writing; they drift.
+> **Status:** reference (per-system observability map) · **Verified against:** live source, 2026-06-20
+> **Grounding:** `Sources/Engine/CvCity.cpp`, `Sources/Engine/CvPlayer.cpp`, `Sources/Engine/CvOutcome.cpp`,
+> `Sources/Tools/CvHttpServer.cpp`. Line numbers drift — confirm the named function, not the integer.
+> One-paragraph orientation: this maps how Great-Person-Point (GPP) accumulation, the per-type spawn
+> lottery, and the player threshold ramp are observed today — and why the whole pipeline is invisible from
+> outside the running game. Read the scaffold [`README.md`](README.md) (the 0–5 scale, the Orwell bar, the
+> three hook shapes) and [`http-server.md`](http-server.md) (the live surface + live-read rules) first; this
+> doc does not restate them.
+
+**Tier today: 1 (Telescreen).** A spawned GP unit shows up as a new `UNIT_GREAT_*` row in `/units` *after
+the fact*; the accumulation state (GPP bank), the rate breakdown, the per-type weights, the threshold ramp,
+and the spawn event itself are all invisible. You can tell "a GP appeared this turn" only by snapshot-diffing
+`/units` — never how close any city is, or why.
 
 ---
 
-## 1. How it actually works
+## 1. How it works
 
-### 1a. Per-turn GPP accumulation (city scope)
+### 1a. Per-turn GPP accumulation (`CvCity::doGreatPeople`)
 
-`CvCity::doGreatPeople()` is called once per city per turn from `CvCity::doTurn()` inside a
-`PERF_SCOPE("city.doGreatPeople", getOwner())` wrapper (`CvCity.cpp:1351`).
+`CvCity::doGreatPeople()` (`Sources/Engine/CvCity.cpp:16959`) runs once per city per turn from
+`CvCity::doTurn` inside `PERF_SCOPE("city.doGreatPeople", getOwner())` (`CvCity.cpp:1361`).
 
-**Step 1 — disorder guard.** If the city is in disorder (`isDisorder()`), the function
-returns immediately with no GPP change (`CvCity.cpp:16870-16872`).
-
-**Step 2 — accumulate flat GPP.** `changeGreatPeopleProgress(getGreatPeopleRate())` adds the
-city's per-turn rate to `m_iGreatPeopleProgress` (`CvCity.cpp:16874`).
-
-**Step 3 — accumulate per-type unit weights.** For every unit type, the city's
-`getGreatPeopleUnitRate(UnitTypes)` is added to `m_paiGreatPeopleUnitProgress[iI]`
-(`CvCity.cpp:16876-16879`). This maintains the per-type probability weight used at spawn.
-
-**Step 4 — threshold check.** If `getGreatPeopleProgress() >= greatPeopleThresholdNonMilitary()`
-(`CvCity.cpp:16881`), a spawn fires:
-
-- Sum all per-type unit progress values (`iTotalGreatPeopleUnitProgress`).
-- Draw a synced RNG number in `[0, iTotalGreatPeopleUnitProgress)` via
-  `getSorenRandNum(iTotalGreatPeopleUnitProgress, "Great Person")` (`CvCity.cpp:16888`).
-- Walk unit types in order; first type whose partial sum covers the rand = `eGreatPeopleUnit`
-  (`CvCity.cpp:16891-16901`). This is a weighted random pick proportional to each type's
-  accumulated unit progress.
-- If a unit type was selected: deduct the full threshold from `m_iGreatPeopleProgress`
-  (`CvCity.cpp:16906`), zero all per-type unit progress (`CvCity.cpp:16908-16910`), call
-  `createGreatPeople(eGreatPeopleUnit, true, false)` (`CvCity.cpp:16912`).
+1. **Disorder guard** (`CvCity.cpp:16962-16965`): if `isDisorder()`, returns immediately — no GPP change
+   at all this turn.
+2. **Accumulate flat GPP** (`CvCity.cpp:16966`): `changeGreatPeopleProgress(getGreatPeopleRate())` adds the
+   per-turn rate to `m_iGreatPeopleProgress`.
+3. **Accumulate per-type weights** (`CvCity.cpp:16968-16971`): for every unit type, add
+   `getGreatPeopleUnitRate(UnitTypes)` into `m_paiGreatPeopleUnitProgress[iI]` — the per-type probability
+   weight used at spawn.
+4. **Threshold check & spawn** (`CvCity.cpp:16973`): if `getGreatPeopleProgress() >=
+   GET_PLAYER(getOwner()).greatPeopleThresholdNonMilitary()`:
+   - Sum all per-type progress into `iTotalGreatPeopleUnitProgress` (`CvCity.cpp:16975-16979`).
+   - Draw `getSorenRandNum(iTotalGreatPeopleUnitProgress, "Great Person")` (`CvCity.cpp:16980`).
+   - Walk unit types; first whose partial sum covers the rand = `eGreatPeopleUnit` — a weighted random pick
+     proportional to each type's accumulated weight (`CvCity.cpp:16983-16994`).
+   - If a type was selected (`CvCity.cpp:16996`): deduct the full threshold from `m_iGreatPeopleProgress`
+     (`CvCity.cpp:16998`), zero all per-type progress (`CvCity.cpp:17000-17003`), call
+     `createGreatPeople(eGreatPeopleUnit, true, false)` (`CvCity.cpp:17004`).
 
 ### 1b. The per-turn GPP rate
 
-`CvCity::getGreatPeopleRate()` (`CvCity.cpp:7143-7150`):
-```
-if (isDisorder()) return 0;
-return getBaseGreatPeopleRate() * getTotalGreatPeopleRateModifier() / 100;
-```
-
-`getBaseGreatPeopleRate()` (`CvCity.cpp:7137-7140`):
-```
-return std::max(0, m_iBaseGreatPeopleRate) + GET_PLAYER(getOwner()).getNationalGreatPeopleRate();
-```
-
-Sources of `m_iBaseGreatPeopleRate` (city-local flat GPP):
-- Each building with `kBuilding.getGreatPeopleRateChange() != 0` calls
-  `changeBaseGreatPeopleRate()` on build/demolish (`CvCity.cpp:5076`).
-- Each active specialist with `getGreatPeopleRateChange() != 0` calls
-  `changeBaseGreatPeopleRate()` on assign/remove (`CvCity.cpp:5139`).
-
-`getNationalGreatPeopleRate()` — player-wide flat that applies to every city (`CvPlayer.cpp:29863`):
-```
-return std::max(0, m_iNationalGreatPeopleRate);
-```
-This is driven by national wonders or global-effect buildings via `changeNationalGreatPeopleRate()`.
-
-`getTotalGreatPeopleRateModifier()` (`CvCity.cpp:7153-7170`) — multiplicative factors:
-- Base 100%.
-- `getGreatPeopleRateModifier()` — city-local modifier from buildings
-  (`CvCity.cpp:4618` on building process, driven by `kBuilding.getGreatPeopleRateModifier()`).
-- `owner.getGreatPeopleRateModifier()` — player-wide modifier from civics
-  (`CvPlayer.cpp:18024`), global buildings (`CvPlayer.cpp:7384`, via
-  `kBuilding.getGlobalGreatPeopleRateModifier()`), and traits
-  (`CvPlayer.cpp:28440`, via `GC.getTraitInfo(eTrait).getGreatPeopleRateModifier()`).
-- If the player has a state religion AND the city has that religion:
-  `owner.getStateReligionGreatPeopleRateModifier()` — driven by civics
-  (`CvPlayer.cpp:18027`), traits (`CvPlayer.cpp:28505`).
-- If player is in a golden age: `GC.getGOLDEN_AGE_GREAT_PEOPLE_MODIFIER()` (global define).
-- Result is `std::max(0, iModifier)`.
-
-Per-type unit rate (`getGreatPeopleUnitRate`, `CvCity.cpp:13817-13823`):
-```
-return std::max(0, m_paiGreatPeopleUnitRate[eIndex] + owner.getNationalGreatPeopleUnitRate(eIndex));
-```
-Sources:
-- Building with `kBuilding.getGreatPeopleUnitType() != NO_UNIT`:
-  `changeGreatPeopleUnitRate(eGreatPeopleUnit, kBuilding.getGreatPeopleRateChange())` (`CvCity.cpp:5082`).
-- Specialist with `getGreatPeopleUnitType() != NO_UNIT`:
-  `changeGreatPeopleUnitRate(eGreatPeopleUnit, getGreatPeopleRateChange())` (`CvCity.cpp:5136`).
-- National rate from player (`CvPlayer.cpp:29856`).
+- `CvCity::getGreatPeopleRate()` (`CvCity.cpp:7153`): `isDisorder() ? 0 : getBaseGreatPeopleRate() *
+  getTotalGreatPeopleRateModifier() / 100`.
+- `getBaseGreatPeopleRate()` (`CvCity.cpp`, verify): `max(0, m_iBaseGreatPeopleRate) +
+  GET_PLAYER(getOwner()).getNationalGreatPeopleRate()`. Sources of `m_iBaseGreatPeopleRate`: buildings with
+  `getGreatPeopleRateChange() != 0` and active specialists with `getGreatPeopleRateChange() != 0` call
+  `changeBaseGreatPeopleRate()` on build/demolish / assign/remove (`CvCity.cpp`, verify).
+- `getNationalGreatPeopleRate()` (`Sources/Engine/CvPlayer.cpp:29863`): `max(0, m_iNationalGreatPeopleRate)`
+  — a player-wide flat applying to every city, driven by national wonders / global-effect buildings via
+  `changeNationalGreatPeopleRate()`.
+- `getTotalGreatPeopleRateModifier()` (`CvCity.cpp`, verify) — multiplicative: base 100%; city-local
+  `getGreatPeopleRateModifier()` (buildings); player-wide `owner.getGreatPeopleRateModifier()` (civics,
+  global buildings via `getGlobalGreatPeopleRateModifier()`, traits via `getGreatPeopleRateModifier()`);
+  if state religion matches the city, `owner.getStateReligionGreatPeopleRateModifier()` (civics, traits);
+  if golden age, `GC.getGOLDEN_AGE_GREAT_PEOPLE_MODIFIER()`. Result `max(0, iModifier)`.
+- `getGreatPeopleUnitRate(eIndex)` (`CvCity.cpp`, verify): `max(0, m_paiGreatPeopleUnitRate[eIndex] +
+  owner.getNationalGreatPeopleUnitRate(eIndex))` — fed by GP-typed buildings/specialists and the player
+  national rate.
 
 ### 1c. Threshold scaling
 
-`CvPlayer::greatPeopleThresholdNonMilitary()` (`CvPlayer.cpp:9174-9188`):
+`CvPlayer::greatPeopleThresholdNonMilitary()` (`Sources/Engine/CvPlayer.cpp:9174`):
 ```
-iThreshold = GREAT_PEOPLE_THRESHOLD × era.getGreatPeoplePercent()
-iThreshold = getModifiedIntValue64(iThreshold, getGreatPeopleThresholdModifier())
+iThreshold  = GREAT_PEOPLE_THRESHOLD × era.getGreatPeoplePercent()
+iThreshold  = getModifiedIntValue64(iThreshold, getGreatPeopleThresholdModifier())
 iThreshold *= gameSpeed.getSpeedPercent() / 10000
-return std::max(1, (int)iThreshold)
+return max(1, (int)iThreshold)
 ```
-
 Inputs:
-- `GREAT_PEOPLE_THRESHOLD` — global define (XML `GlobalDefines`).
-- `era.getGreatPeoplePercent()` — the game's **start era**, NOT the current era
-  (`GC.getGame().getStartEra()`).
-- `m_iGreatPeopleThresholdModifier` — modified upward each time a GP spawns:
-  `changeGreatPeopleThresholdModifier(GREAT_PEOPLE_THRESHOLD_INCREASE × (getGreatPeopleCreated()/5 + 2))`
-  (`CvPlayer.cpp:20476`). So threshold grows non-linearly with every 5th GP spawned (the
-  `/5 + 2` step function).
-- `m_iGreatPeopleCreated` — lifetime GP count for this player, incremented at every
-  production-queue or `doGreatPeople()` GP spawn when `bIncrementThreshold=true`
-  (`CvPlayer.cpp:20474`). Governs the step function above.
-- `gameSpeed.getSpeedPercent()` — game speed modifier.
+- `GREAT_PEOPLE_THRESHOLD` — global define.
+- `era.getGreatPeoplePercent()` — the game's **start era** (`GC.getGame().getStartEra()`), NOT the current era.
+- `m_iGreatPeopleThresholdModifier` — bumped each spawn by
+  `GREAT_PEOPLE_THRESHOLD_INCREASE × (getGreatPeopleCreated()/5 + 2)` — non-linear growth via the `/5 + 2`
+  step (`CvPlayer.cpp`, verify, in `createGreatPeople`).
+- `m_iGreatPeopleCreated` — lifetime GP count, incremented at GP spawn when `bIncrementThreshold` is true;
+  governs the step above.
+- `gameSpeed.getSpeedPercent()`.
 
-`greatPeopleThresholdModifier` is the only surviving accumulator; the team-level equivalent
-(commented out at `CvPlayer.cpp:20483`) was disabled by a prior change.
+`greatPeopleThresholdModifier` is the only surviving accumulator; the team-level equivalent was disabled by
+a prior change (commented out in `CvPlayer.cpp`, verify).
 
 ### 1d. GP creation and threshold bump
 
-`CvPlayer::createGreatPeople()` (`CvPlayer.cpp:20457-20507`):
-1. Spawns the unit via `initUnit`.
-2. If `getGoldenAgeOnBirthOfGreatPersonCount(eGreatPersonUnit) > 0` — triggers a golden age.
-3. If `bIncrementThreshold` (true for `doGreatPeople` spawns, false for battle-XP spawns):
-   increments `m_iGreatPeopleCreated`, then bumps `m_iGreatPeopleThresholdModifier` by
-   `GREAT_PEOPLE_THRESHOLD_INCREASE × (getGreatPeopleCreated()/5 + 2)`.
-4. If `bIncrementExperience` (false for GPP spawns, true for Great General path):
-   increments `m_iGreatGeneralsCreated` and bumps the generals threshold.
+`CvPlayer::createGreatPeople()` (`Sources/Engine/CvPlayer.cpp:20457`): spawns via `initUnit`; if
+`getGoldenAgeOnBirthOfGreatPersonCount(...) > 0` triggers a golden age; if `bIncrementThreshold` (true for
+`doGreatPeople` spawns, false for battle-XP spawns) increments `m_iGreatPeopleCreated` then bumps
+`m_iGreatPeopleThresholdModifier`; if `bIncrementExperience` (Great-General path) increments
+`m_iGreatGeneralsCreated` and bumps the generals threshold. **No logging at this call site.**
 
-No logging at this call site.
+### 1e. GPP from `CvOutcome` (secondary path)
 
-### 1e. GPP from CvOutcome (non-main path)
-
-`CvOutcome` can add GPP directly via `pCity->changeGreatPeopleProgress(m_iGPP)` and
-`pCity->changeGreatPeopleUnitProgress(m_eGPUnitType, m_iGPP)` (`CvOutcome.cpp:1124-1129`).
-This is a secondary source (outcome of unit actions — e.g. a missionary special action)
-that bypasses `doGreatPeople()` but feeds the same `m_iGreatPeopleProgress`. No logging at
-this site.
+`CvOutcome` can inject GPP directly via `pCity->changeGreatPeopleProgress(m_iGPP)` and
+`changeGreatPeopleUnitProgress(m_eGPUnitType, m_iGPP)` (`Sources/Engine/CvOutcome.cpp`, verify) — outcome of
+a unit action (e.g. a missionary special action). It bypasses `doGreatPeople()` but feeds the same
+`m_iGreatPeopleProgress`. **No logging at this site.**
 
 ---
 
-## 2. Current observability
+## 2. What's on the wire today
 
-**Overall tier: 1 (Telescreen)** — the spawned GP units are visible as new rows in `/units`
-after the fact, but the accumulation state, the rate breakdown, and the spawn event are all
-invisible.
-
-### What IS observable today
+**Tier 1 (Telescreen).** Observable:
 
 | Observable | How | Notes |
 |---|---|---|
-| GP unit appeared (post-hoc) | `GET /units?playerNumber=N` — new unit row with a `UNIT_GREAT_*` type string | Detected as a new entry comparing snapshot-to-snapshot; no turn of birth, no city of birth, no trigger cause |
-| GP unit type | `type` field in `/units` row (e.g. `UNIT_GREAT_SCIENTIST`) | Only after the unit is on the map |
-| GP unit count (player total) | Count `UNIT_GREAT_*` entries in `/units?playerNumber=N` | No per-city breakdown |
-| Player era (context for threshold) | `era` field in `/players` | Start era is not exposed; current era only |
+| GP unit appeared (post-hoc) | `/units?playerNumber=N` — new `UNIT_GREAT_*` row | snapshot-diff only; no turn/city of birth, no cause |
+| GP unit type | `type` field in the `/units` row | only after it's on the map |
+| GP count (player total) | count `UNIT_GREAT_*` in `/units?playerNumber=N` | no per-city breakdown |
+| Player era (threshold context) | `era` in `/players` | **current** era only — start era (the threshold input) is not exposed |
 
-### What is NOT observable today
-
-| Gap | What is missing |
-|---|---|
-| `m_iGreatPeopleProgress` | Current GPP bank in each city — the most critical gap |
-| `greatPeopleThresholdNonMilitary()` | Effective threshold this player must cross |
-| `getGreatPeopleRate()` per city | Per-turn GPP yield (flat × modifier) |
-| `getBaseGreatPeopleRate()` per city | Flat GPP before modifiers |
-| Per-type unit weights (`m_paiGreatPeopleUnitProgress[i]`) | Current probability distribution over GP types — invisible |
-| Per-type unit rate (`m_paiGreatPeopleUnitRate[i]`) | Per-type base rate feeding the weights |
-| `m_iGreatPeopleCreated` | Lifetime GP count (drives threshold step function) |
-| `m_iGreatPeopleThresholdModifier` | Modifier already accumulated (component of threshold) |
-| Spawn event | No `[CIT/produced]` or any log line fires from `doGreatPeople()` — zero signal |
-| GPP from CvOutcome | GPP injected by unit-action outcomes is invisible |
-| isDisorder suppression | Whether disorder is currently blocking GPP — not surfaced per city |
-| Golden-age GPP bonus | Whether golden-age modifier is currently active per player — not surfaced (but `isGoldenAge()` is derivable from unit scan) |
-| State-religion GPP modifier | Whether religion bonus is applying — not surfaced |
+Everything in the accumulation pipeline is **not** observable: the per-city GPP bank
+(`m_iGreatPeopleProgress`), the effective threshold (`greatPeopleThresholdNonMilitary()`), per-city rate
+(`getGreatPeopleRate()` / `getBaseGreatPeopleRate()`), the per-type weights and rates
+(`m_paiGreatPeopleUnitProgress[i]` / `m_paiGreatPeopleUnitRate[i]`), lifetime count
+(`m_iGreatPeopleCreated`), accumulated threshold modifier (`m_iGreatPeopleThresholdModifier`), the spawn
+event (no log line fires from `doGreatPeople`), `CvOutcome` GPP injection, disorder suppression, and the
+golden-age / state-religion rate bonuses.
 
 ---
 
 ## 3. The gap
 
-The entire accumulation pipeline is invisible. An agent watching the wire today can only
-infer "a GP spawned sometime this turn" by noticing a new `UNIT_GREAT_*` in the next `/units`
-snapshot. It cannot:
-- Know how close any city is to spawning a GP (GPP bank vs threshold).
-- Know how much GPP per city is being generated per turn (rate breakdown invisible).
-- Know what type of GP is most likely (per-type weights invisible).
-- Know when a threshold bump will make the next GP harder to generate.
-- React to the spawn event in the turn it happens (no `[CIT/gpp]` log line reaches `/events`).
-- Reconstruct the state for AI players at all — the human player can observe their own GPP bar,
-  but AI players have no GPP on `/cities`, `/players`, or any log.
-
-This is the §A "opaque system" category from cascade-mapping-inventory.md: **the in-flight
-state-mapping sweep flags this as currently unmapped / unobservable.**
+The entire accumulation pipeline is invisible. An observer can only infer "a GP spawned sometime this turn"
+from the next `/units` diff. It cannot know: how close any city is (GPP bank vs threshold); how much GPP per
+city per turn (rate breakdown); which GP type is most likely (per-type weights); when a threshold bump makes
+the next GP harder; react to the spawn in the turn it happens (no `[CIT/gpp]` line reaches `/events`); or
+reconstruct **any** of it for AI players — a human can watch their own GPP bar, but AI players have no GPP on
+`/cities`, `/players`, or any log. This is an opaque-system case for the cascade hard-switch (§5).
 
 ---
 
 ## 4. Proposed hooks
 
-All hooks should follow the existing gating pattern: file log gated by `gPlayerLogLevel`,
-stream tee via `streamLogTee` through `logCityAI` / `logPlayerAI` so they appear on `/events`.
-"Cheap + gated" — zero cost when `gPlayerLogLevel == 0`.
+All hooks are one of the three canonical shapes — see
+[DEC-obs-hook-shapes](../../architecture/decisions.md#dec-obs-hook-shapes).
 
-### Hook A — `[CIT/gpp]` per-turn rate snapshot (level 1 headline)
-
-**Where:** `CvCity::doGreatPeople()`, immediately after the `changeGreatPeopleProgress` call at
-`CvCity.cpp:16874`, guarded by `gCityLogLevel >= 1` (or the existing `gPlayerLogLevel`).
-
-**What to emit:**
+### Hook A — `[CIT/gpp]` per-turn rate snapshot (level 1)
+In `doGreatPeople`, after the `changeGreatPeopleProgress` accumulation (`CvCity.cpp:16966`), gated by
+`gCityLogLevel`/`gPlayerLogLevel` ≥ 1:
 ```
 [CIT/gpp] turn=N city=<name> owner=N progress=N rate=N threshold=N pct=NN
 ```
-Fields:
-- `progress` — `getGreatPeopleProgress()` AFTER the accumulation this turn.
-- `rate` — `getGreatPeopleRate()`.
-- `threshold` — `GET_PLAYER(getOwner()).greatPeopleThresholdNonMilitary()`.
-- `pct` — `progress * 100 / threshold` (integer, clipped to 100).
+`progress = getGreatPeopleProgress()` (post-accumulation); `rate = getGreatPeopleRate()`;
+`threshold = GET_PLAYER(getOwner()).greatPeopleThresholdNonMilitary()`; `pct = progress*100/threshold`
+(clipped). Makes per-city GPP state reconstructible from `/events` every turn — the bare minimum for the bar.
 
-This single level-1 line makes the per-city GPP state reconstructible from `/events` every
-turn for every city of every player — the bare minimum for the "never look at the screen" bar.
-
-### Hook B — `[CIT/gpp/spawn]` spawn event (level 1 headline)
-
-**Where:** `CvCity::doGreatPeople()`, inside the `if (eGreatPeopleUnit != NO_UNIT)` block at
-`CvCity.cpp:16904`, just before `createGreatPeople()`.
-
-**What to emit:**
+### Hook B — `[CIT/gpp/spawn]` spawn event (level 1)
+In `doGreatPeople`, inside the `if (eGreatPeopleUnit != NO_UNIT)` block (`CvCity.cpp:16996`), just before
+`createGreatPeople`:
 ```
 [CIT/gpp/spawn] turn=N city=<name> owner=N unit=<UNIT_GREAT_xxx> totalWeight=N thresholdNew=N
 ```
-Fields:
-- `unit` — `GC.getUnitInfo(eGreatPeopleUnit).getType()`.
-- `totalWeight` — `iTotalGreatPeopleUnitProgress` (the sum of per-type weights — captures
-  the distribution at the moment of selection without enumerating all types).
-- `thresholdNew` — the new threshold AFTER the bump that `createGreatPeople` will apply
-  (compute as `GET_PLAYER(getOwner()).greatPeopleThresholdNonMilitary()` called after the
-  deduct but before `createGreatPeople` — OR log it inside `createGreatPeople` itself).
+`totalWeight = iTotalGreatPeopleUnitProgress` (the distribution at selection, without enumerating types);
+`thresholdNew` = the threshold after the bump (compute post-deduct, or log inside `createGreatPeople`). The
+primary event hook — count spawns by turn, by city/player/type, track the ramp.
 
-This is the primary event hook. An agent watching `/events` can: count spawns by turn,
-know which city and player, know which GP type, and track the threshold ramp.
-
-### Hook C — `[PLR/gpp]` player-level threshold snapshot (level 1 headline, once per player turn)
-
-**Where:** `CvPlayer::doTurn()` or the `doGreatPeople` call chain's natural player-turn
-boundary, gated by `gPlayerLogLevel >= 1`.
-
-**What to emit:**
+### Hook C — `[PLR/gpp]` player-level threshold snapshot (level 1, once per player turn)
+In `CvPlayer::doTurn` or the player-turn boundary, gated `gPlayerLogLevel` ≥ 1:
 ```
 [PLR/gpp] turn=N player=N created=N threshMod=N threshold=N
 ```
-Fields:
-- `created` — `getGreatPeopleCreated()` (lifetime GP count).
-- `threshMod` — `getGreatPeopleThresholdModifier()` (accumulated penalty so far).
-- `threshold` — `greatPeopleThresholdNonMilitary()` (effective value this player must cross).
+`created = getGreatPeopleCreated()`; `threshMod = getGreatPeopleThresholdModifier()`;
+`threshold = greatPeopleThresholdNonMilitary()`. Reconstructs the threshold ramp without watching every spawn.
 
-This is sufficient to reconstruct the threshold ramp across sessions without watching every
-spawn event.
-
-### Hook D — `/cities` endpoint additions (GPP snapshot fields)
-
-**Where:** `CitySnap` struct (`CvHttpServer.cpp:83`) and the snapshot builder loop
-(`CvHttpServer.cpp:1542-1578`).
-
-**New fields to add to `CitySnap` and the `/cities` JSON output:**
+### Hook D — `/cities` snapshot additions (the highest-value hook)
+Add to `CitySnap` / the `/cities` builder (`Sources/Tools/CvHttpServer.cpp`):
 ```json
-"gppProgress":  <int>,   // m_iGreatPeopleProgress (city's current GPP bank)
+"gppProgress":  <int>,   // m_iGreatPeopleProgress
 "gppRate":      <int>,   // getGreatPeopleRate()
 "gppThreshold": <int>    // GET_PLAYER(owner).greatPeopleThresholdNonMilitary()
 ```
-`gppThreshold` is the same for every city of the same player; emit it per-city anyway (it
-is small, and it avoids a join between `/cities` and a `/players` extension).
+`gppThreshold` is per-player but emit per-city anyway (small; avoids a `/cities`↔`/players` join). Full GPP
+state from a single GET for any player including AI — the snapshot twin of Hook A.
 
-These three fields make the current GPP state reconstructible from a single `/cities` GET
-without needing the log stream — the snapshot equivalent of the per-turn `[CIT/gpp]` lines.
-
-### Hook E — `/players` endpoint additions (GP lifetime counts)
-
-**Where:** `PlayerSnap` struct and `renderPlayers` (`CvHttpServer.cpp:270`).
-
-**New fields:**
+### Hook E — `/players` snapshot additions (GP lifetime counts)
+Add to `PlayerSnap` / `renderPlayers` (`Sources/Tools/CvHttpServer.cpp`):
 ```json
-"greatPeopleCreated":  <int>,   // getGreatPeopleCreated()
-"greatPeopleThreshMod": <int>   // getGreatPeopleThresholdModifier()
+"greatPeopleCreated":   <int>,   // getGreatPeopleCreated()
+"greatPeopleThreshMod": <int>    // getGreatPeopleThresholdModifier()
 ```
-Together with the city-level `gppThreshold`, this lets an agent reconstruct the full
-threshold formula without touching the log files.
+With Hook D's `gppThreshold`, lets an agent reconstruct the full threshold formula without the logs.
 
-### Hook F — `[CIT/gpp/rate]` detailed rate breakdown (level 2)
-
-**Where:** `CvCity::doGreatPeople()`, level-2 guard, after the rate is computed.
-
-**What to emit:**
+### Hook F — `[CIT/gpp/rate]` rate breakdown (level 2, forensic)
 ```
 [CIT/gpp/rate] turn=N city=<name> owner=N base=N natRate=N cityMod=N playerMod=N relMod=N gaMod=N effective=N
 ```
-Fields:
-- `base` — `m_iBaseGreatPeopleRate`.
-- `natRate` — `GET_PLAYER(...).getNationalGreatPeopleRate()`.
-- `cityMod` — `getGreatPeopleRateModifier()`.
-- `playerMod` — `owner.getGreatPeopleRateModifier()`.
-- `relMod` — `owner.getStateReligionGreatPeopleRateModifier()` (0 if condition not met).
-- `gaMod` — `GC.getGOLDEN_AGE_GREAT_PEOPLE_MODIFIER()` if golden age, else 0.
-- `effective` — `getGreatPeopleRate()`.
+`base = m_iBaseGreatPeopleRate`; `natRate = getNationalGreatPeopleRate()`;
+`cityMod = getGreatPeopleRateModifier()`; `playerMod = owner.getGreatPeopleRateModifier()`;
+`relMod = owner.getStateReligionGreatPeopleRateModifier()` (0 if N/A); `gaMod =
+GC.getGOLDEN_AGE_GREAT_PEOPLE_MODIFIER()` if golden age else 0; `effective = getGreatPeopleRate()`. For
+debugging unexpected rates, not routine monitoring.
 
-This is level 2 (verbose — one line per city per turn). Use it to debug unexpected GPP rate
-values, not for routine monitoring.
-
-### Hook G — `[CIT/gpp/weights]` per-type weight dump (level 3)
-
-**Where:** `CvCity::doGreatPeople()`, level-3 guard, before the threshold check.
-
-Emit one key-value pair per unit type that has `getGreatPeopleUnitProgress(iI) > 0`:
+### Hook G — `[CIT/gpp/weights]` per-type weight dump (level 3, deep forensic)
+One key=value per unit type with `getGreatPeopleUnitProgress(iI) > 0`:
 ```
 [CIT/gpp/weights] turn=N city=<name> owner=N UNIT_GREAT_XXX=NNN ...
 ```
-Level 3 by convention; used only when diagnosing GP type selection bias.
+Only when diagnosing GP type-selection bias.
+
+**Priority:** Hook **D** (snapshot — full reconstruction from one GET, incl. AI; unblocks the bar) → Hook
+**B** (spawn event on the wire) → Hook **A** (per-turn heartbeat) → Hook **E** (completes threshold
+reconstruction) → Hook **C** (player-level ramp, low volume) → Hook **F** → Hook **G**.
 
 ---
 
-## 5. Priority ranking
+## 5. Cascade relevance (#428/#430)
 
-| Priority | Hook | Why |
-|---|---|---|
-| **Highest** | D — `/cities` gppProgress + gppRate + gppThreshold | Snapshot-queryable; enables full reconstruction from a single GET for any player including AI; unblocks the "never look at the screen" bar for this system |
-| **High** | B — `[CIT/gpp/spawn]` | Makes the spawn event visible on `/events` in the turn it happens; feeds any shadow that wants to verify cascade GPP triggers |
-| **High** | A — `[CIT/gpp]` per-turn rate | Per-city per-turn heartbeat; makes the accumulation visible on the log stream without a snapshot |
-| **Medium** | E — `/players` greatPeopleCreated + greatPeopleThreshMod | Completes the threshold reconstruction; small addition |
-| **Medium** | C — `[PLR/gpp]` player-level snapshot | One per player per turn; low volume, high utility for tracking threshold ramp |
-| **Low** | F — `[CIT/gpp/rate]` level-2 breakdown | Forensic; useful when debugging but not needed for routine coverage |
-| **Low** | G — `[CIT/gpp/weights]` level-3 weight dump | Deep forensic; rarely needed |
+GPP is an opaque system that needs both understanding and observability before the cascade hard-switch
+([DEC-map-before-delete](../../architecture/decisions.md#dec-map-before-delete)):
+- GP buildings contribute `getGreatPeopleRateChange()` as both a flat-rate source and a per-type weight
+  source — both become `enables`/`modifiers` in the cascade model.
+- `getGreatPeopleRateModifier()` (city) and `getGlobalGreatPeopleRateModifier()` (player) are
+  `modifier-cascade` targets.
+- The `greatPeopleThresholdModifier` ramp is player-owned state the cascade's tally must track (it gates
+  city spawns) — currently outside the cascade's awareness.
+- The per-type unit weights are a **stochastic gate** tied to the active GP-contributing building/specialist
+  set; the cascade must understand this distribution to validate the type mix its placement yields.
+- Hooks D + B are the minimum substrate for a future **GPP shadow** (analogous to `placementSweep` /
+  `[PLACEMENT]`): comparing the cascade's expected GPP yield against the live engine's `getGreatPeopleRate()`.
 
 ---
 
-## 6. Cascade relevance (#428/#430)
-
-The GPP system is a **§A opaque system** in cascade-mapping-inventory.md — it needs both
-understanding and observability before the cascade hard-switch. Specifically:
-
-- GP buildings contribute `getGreatPeopleRateChange()` as both a flat-rate source and a
-  per-type weight source — both become `enables`/`modifiers` in the cascade model.
-- GP buildings also contribute `getGreatPeopleRateModifier()` (percent modifier) at city
-  scope and `getGlobalGreatPeopleRateModifier()` at player scope — both are `modifier-cascade`
-  targets.
-- The `greatPeopleThresholdModifier` ramp is player-owned state that the cascade's tally
-  must track (it gates city-level spawns). It is currently outside the cascade's awareness.
-- The type-selection probability (per-type unit weights) is a **stochastic gate** tied to
-  the set of GP-contributing buildings and specialists active in a city — the cascade must
-  understand this distribution to validate that the building set it places yields the
-  intended type mix.
-- Hook D (GPP endpoint fields) and Hook B (spawn event) are the minimum substrate for a
-  future **GPP shadow** analogous to `placementSweep` / `[PLACEMENT]`: comparing the
-  cascade's expected GPP yield for a city against the live engine's `getGreatPeopleRate()`.
+## See also
+- [`README.md`](README.md) — the observability scale, the Orwell bar, and the three hook shapes this map applies.
+- [`http-server.md`](http-server.md) — the live surface (`/cities`, `/players`, `/units`, `/diagnostic/*`) these hooks extend, and the live-read rules.
+- [`../../architecture/decisions.md`](../../architecture/decisions.md) — [DEC-obs-scale], [DEC-obs-hook-shapes], [DEC-map-before-delete].
+- [`../../explanation/cascade-architecture.md`](../../explanation/cascade-architecture.md) — why total observability is load-bearing, and the cascade model the GP sources feed.
+- [`../../README.md`](../../README.md) — the comprehension map (overview-of-overviews).

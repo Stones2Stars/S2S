@@ -1,405 +1,302 @@
-# Corporations — Observability Map
+# Observability — Corporations — what's on the wire for HQs, spread, and the gold drain
 
-> DRAFT observability map (2026-06-18 by parent agent) — every claim cited from code; verify before relying.
-> Scope: the #428/#430 total-observability ("Orwell") bar — can the running corporation state be
-> reconstructed PURELY from the HTTP endpoints + /events + gated logs, without looking at the game screen?
+> **Status:** reference   ·   **Verified against:** 2026-06-20 (function sites re-confirmed in `Sources/Engine/CvCity.cpp`, `Sources/Engine/CvGame.cpp`, `Sources/Engine/CvPlayer.cpp`, `Sources/Engine/CvUnit.cpp`, `Sources/AI/CvUnitAI.cpp`, `Sources/AI/CvPlayerAI.cpp`; line numbers drift)
+> **Grounding:** live `Sources/Engine/CvCity.cpp` (`doCorporation`, `getCorporationInfluence`, `setHasCorporation`, `applyCorporationModifiers`, `updateCorporationBonus`, `calculateCorporationMaintenanceTimes100`, `calcCorporateMaintenance`, `isActiveCorporation`), `Sources/Engine/CvGame.cpp` (`doFoundCorporation`, `setHeadquarters`), `Sources/Engine/CvPlayer.cpp` (`foundCorporation`, `isActiveCorporation`), `Sources/Engine/CvUnit.cpp` (`canSpreadCorporation`, `spreadCorporation`, `spreadCorporationCost`), `Sources/AI/CvUnitAI.cpp` (`AI_spreadCorporation`), `Sources/AI/CvPlayerAI.cpp` (`AI_corporationValue`), `Sources/Tools/CvHttpServer.cpp` (`/cities`, `/players`, `/units`). Carried from the old draft map; function sites re-confirmed, paths re-grounded to the reorganized `Sources/` tree.
+> Corporations are **Tier 0 (Oblivious)** today: no corporation-specific state appears in any HTTP endpoint. The entire presence map — which corps are in which cities, where each HQ sits, the spread/decay rolls, the per-city maintenance drain, and the resource-transformation chain — is invisible from outside the screen. The only leakage is the executive unit's mission commit (`[UNT/act]`) and a folded-in contribution to aggregate yields/commerce/gold. This map walks the two operating modes → founding → spread/decay → the dormancy gate → maintenance/yields → AI selection, names what's dark, and proposes the snapshot fields / log tags / diagnostic endpoint to climb to Tier 4.
+
+The observability scale (0–5) and the three canonical hook shapes are defined once in
+[`README.md`](README.md) ([DEC-obs-scale], [DEC-obs-hook-shapes]); the live surface and the rules for
+reading it (logs held open mid-session, use `/events` + `/diagnostic`) live in
+[`http-server.md`](http-server.md). This doc does not restate them.
+
+> Line numbers below are anchors at time of writing and **drift** — confirm the named function, not the
+> integer.
 
 ---
 
 ## 1. How it actually works
 
-### 1-A. Two modes of operation: Classic vs Advanced Realistic
+### 1a. Two modes — Classic vs Advanced Realistic
 
-There are **two completely distinct operating modes** gated by `GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS`
-(`CvEnums.h:868`).
+Two distinct operating modes, gated by `GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS`
+(`Sources/Defines/CvEnums.h:868`):
 
-- **Classic mode** (flag absent): corporations are **spread manually** by "executive" units that execute
-  `MISSION_SPREAD_CORPORATION` (`CvEnums.h:1668`). `doCorporation()` returns immediately
-  (`CvCity.cpp:21461`). No autonomous per-turn spread.
-- **Advanced mode** (flag present): `doCorporation()` runs per city per turn (`CvCity.cpp:1316`) and
-  autonomously propagates or decays each corporation. Manual unit-spread is **blocked** unless
-  `MODDERGAMEOPTION_NO_AUTO_CORPORATION_FOUNDING` is also set (`CvUnit.cpp:8592`).
+- **Classic** (flag absent): corporations spread **manually** via "executive" units running
+  `MISSION_SPREAD_CORPORATION`. `CvCity::doCorporation()` returns immediately. No autonomous per-turn spread.
+- **Advanced** (flag present): `doCorporation()` runs per city per turn and autonomously propagates or
+  decays each corporation. Manual unit-spread is **blocked** unless
+  `MODDERGAMEOPTION_NO_AUTO_CORPORATION_FOUNDING` is also set (`Sources/Engine/CvUnit.cpp`, in
+  `canSpreadCorporation`).
 
-In both modes, `calcCorporateMaintenance()` (`CvCity.cpp:21662`) and
-`calculateCorporationMaintenanceTimes100()` (`CvCity.cpp:7791`) run as usual — the gold drain is
-always present once a corporation is active.
+In both modes the gold drain is always present once a corporation is active:
+`calculateCorporationMaintenanceTimes100()` (`Sources/Engine/CvCity.cpp:7801`) and the Advanced-mode
+pop-weighted `calcCorporateMaintenance()` (`Sources/Engine/CvCity.cpp:21754`).
 
-### 1-B. Founding / headquarters placement
+### 1b. Founding / headquarters placement
 
-**Advanced mode**: `CvGame::doFoundCorporation()` (`CvGame.cpp:11166`) is the auto-founder. It runs
-periodically (every `CORPORATION_FOUND_CHECK_TURNS` × speedPercent turns) and selects a best city by
-`getCorporationInfluence()` × `getSpread()` + RNG. If `MODDERGAMEOPTION_NO_AUTO_CORPORATION_FOUNDING`
-is set it defers to the unit-spread path instead (`CvGame.cpp:11184`).
+- **Advanced**: `CvGame::doFoundCorporation()` (`Sources/Engine/CvGame.cpp:11131`) is the auto-founder. It
+  runs periodically (every `CORPORATION_FOUND_CHECK_TURNS` × speedPercent turns) and selects a best city by
+  `getCorporationInfluence()` × `getSpread()` + RNG (`CvGame.cpp:11195`). If
+  `MODDERGAMEOPTION_NO_AUTO_CORPORATION_FOUNDING` is set it defers to the unit-spread path.
+- **Classic**: `CvPlayer::foundCorporation()` (`Sources/Engine/CvPlayer.cpp:8893`) is called from event
+  script / Python. It picks the best city by population + bonus resources + RNG, then calls
+  `CvCity::setHeadquarters()` → `CvGame::setHeadquarters()` (`Sources/Engine/CvGame.cpp:5619`), which
+  installs the HQ building and calls `setHasCorporation(corp, true)` on the HQ city.
 
-**Classic mode**: `CvPlayer::foundCorporation()` (`CvPlayer.cpp:8893`) is called from event script /
-Python. It picks the best city by population + bonus resources + RNG, then calls
-`CvCity::setHeadquarters()` → `CvGame::setHeadquarters()` (`CvGame.cpp:5619`), which installs the HQ
-building and calls `setHasCorporation(corp, true)` on the HQ city.
+`isCorporationFounded` = `m_paiCorporationGameTurnFounded[eIndex] != -1`; the turn is recorded in
+`CvGame::makeCorporationFounded()`.
 
-`isCorporationFounded` = `m_paiCorporationGameTurnFounded[eIndex] != -1`; turn recorded in
-`CvGame::makeCorporationFounded()` (`CvGame.cpp:5405`).
+### 1c. Per-turn autonomous spread and decay (Advanced only)
 
-### 1-C. Per-turn autonomous spread and decay (Advanced mode only)
+`CvCity::doCorporation()` (`Sources/Engine/CvCity.cpp:21549`), called inside `CvCity::doTurn()`, for each
+corporation not yet present in this city:
 
-`CvCity::doCorporation()` (`CvCity.cpp:21457`), called inside `CvCity::doTurn()` (`CvCity.cpp:1316`),
-for each corporation not yet present in this city:
-
-1. Checks HQ exists + `canEverSpread()` (game option gate) + not blocked by civic
+1. Checks HQ exists + `canEverSpread()` (game-option gate) + not blocked by civic
    (`isNoCorporations()` / `isNoForeignCorporations()`).
-2. Sums `iRandThreshold` = max over all CONNECTED cities of:
-   `pLoopCity->getCorporationInfluence(corp)` × `getSpread()` / 100 ÷ distance_factor
-   (`CvCity.cpp:21492–21506`), then multiplied by player spread modifier and owner influence
-   (`CvCity.cpp:21512–21514`), divided by `1 + getCorporationCount()/2` (`CvCity.cpp:21516`).
-3. Rolls `getSorenRandNum(CORPORATION_SPREAD_RAND × speedPercent / 100)`. If roll < threshold →
-   removes competing corps first, then `setHasCorporation(corp, true)` (`CvCity.cpp:21548`).
+2. Sums `iRandThreshold` = max over all CONNECTED cities of
+   `pLoopCity->getCorporationInfluence(corp)` × `getSpread()` / 100 ÷ distance-factor (`CvCity.cpp:21582`),
+   then multiplied by player spread modifier and owner influence (`CvCity.cpp:21606`), divided by
+   `1 + getCorporationCount()/2`.
+3. Rolls `getSorenRandNum(CORPORATION_SPREAD_RAND × speedPercent / 100)`. If roll < threshold → removes
+   competing corps first, then `setHasCorporation(corp, true)`.
 
-**Decay** (also in `doCorporation()`): for cities that already have the corp but are not the HQ:
-compares `getAverageCorporationInfluence()` against the city's own adjusted influence. If average
-exceeds local influence (iDiff > 0), rolls same RNG; if roll < iDiff →
-`setHasCorporation(corp, false)` (`CvCity.cpp:21577`).
+**Decay** (also in `doCorporation()`): for cities that already have the corp but are not the HQ, compares
+`getAverageCorporationInfluence()` against the city's own adjusted influence. If the average exceeds local
+influence (`iDiff > 0`), rolls the same RNG; if roll < `iDiff` → `setHasCorporation(corp, false)`.
 
-### 1-D. Manual unit spread (Classic mode, or Advanced+NO_AUTO_FOUNDING)
+### 1d. Manual unit spread (Classic, or Advanced+NO_AUTO_FOUNDING)
 
-`CvUnit::canSpreadCorporation()` (`CvUnit.cpp:8564`): checks `getCorporationSpreads(corp) > 0`, city
-present, not already has corp, obsolete-tech check, building prereqs, can-enter-area, owner
-`isActiveCorporation`, no competing HQ in city, at least one prereq bonus present, gold >= cost.
+- `CvUnit::canSpreadCorporation()` (`Sources/Engine/CvUnit.cpp:8552`): checks `getCorporationSpreads > 0`,
+  city present, not already has corp, obsolete-tech check, building prereqs, can-enter-area, owner
+  `isActiveCorporation`, no competing HQ in city, at least one prereq bonus present, gold ≥ cost.
+- `CvUnit::spreadCorporation()` (`Sources/Engine/CvUnit.cpp:8695`): deducts gold (cost modified by foreign
+  territory and competing corps), rolls `getCorporationSpreads(corp)` (halved for foreign territory) against
+  `getSorenRandNum(100)`, calls `setHasCorporation` on success, then kills the unit either way.
+- `CvUnit::spreadCorporationCost()` (`Sources/Engine/CvUnit.cpp:8669`): base `getSpreadCost()` ×
+  foreign-percent modifier × per-active-competing-corp spread factor.
 
-`CvUnit::spreadCorporation()` (`CvUnit.cpp:8694`): deducts gold (spread cost modified by foreign
-territory and competing corps), rolls `getCorporationSpreads(corp)` (halved for foreign territory)
-against `getSorenRandNum(100)`, calls `setHasCorporation` on success, kills the unit in either case.
-`spreadCorporationCost()` (`CvUnit.cpp:8668`): base `getSpreadCost()` × foreign-percent modifier ×
-per-active-competing-corp spread factor.
+### 1e. `isActiveCorporation` — the dormancy gate
 
-### 1-E. isActiveCorporation — the dormancy gate
+- **City level** (`CvCity::isActiveCorporation()`, `Sources/Engine/CvCity.cpp:13430`): the city
+  `isHasCorporation` AND `CvPlayer::isActiveCorporation(corp)` AND corp not obsoleted by team tech AND the
+  city has ≥1 prereq bonus (if the corp requires any).
+- **Player level** (`CvPlayer::isActiveCorporation()`, `Sources/Engine/CvPlayer.cpp:14031`): not
+  `isNoCorporations()`, not (`isNoForeignCorporations()` and doesn't own HQ), not obsoleted by team tech.
 
-**City level** (`CvCity::isActiveCorporation()`, `CvCity.cpp:13419`): the city `isHasCorporation` AND
-`CvPlayer::isActiveCorporation(corp)` is true AND corp not obsoleted by team tech AND the city has
-at least one prereq bonus (if corp requires any).
+**Effect of going inactive**: all yields/commerce from the corp drop to 0
+(`getCorporationYieldByCorporation` / `getCorporationCommerceByCorporation` return 0 when
+`!isActiveCorporation`); maintenance still accrues but at 0 rate; buildings whose `getPrereqCorporation()`
+matches are disabled via `applyCorporationModifiers()` → `setDisabledBuilding()`
+(`Sources/Engine/CvCity.cpp:15193`).
 
-**Player level** (`CvPlayer::isActiveCorporation()`, `CvPlayer.cpp:14031`): not
-`isNoCorporations()`, not (`isNoForeignCorporations()` and doesn't own HQ), not obsoleted by team
-tech.
+### 1f. Resource consumption, bonus production, maintenance, yields
 
-**Effect of going inactive**: all yields/commerce from the corp drop to 0 (`getCorporationYieldByCorporation`
-and `getCorporationCommerceByCorporation` both return 0 when `!isActiveCorporation`), the
-corporation maintenance still accrues but at 0 rate. Buildings whose `getPrereqCorporation()` matches
-are disabled via `applyCorporationModifiers()` → `setDisabledBuilding()` (`CvCity.cpp:15182`).
+- **Influence** (`getCorporationInfluence()`, `Sources/Engine/CvCity.cpp:21678`): city-level influence =
+  100 base, +1 per available instance of each prereq bonus, + `CORPORATION_RESOURCE_BASE_INFLUENCE /
+  iBonusesConsumed` per *present* prereq bonus, ÷10 per active competing corp, × population / averagePop.
+- **Resource transformation** (`updateCorporationBonus()`, `Sources/Engine/CvCity.cpp:12691`): for each
+  active corp with `getBonusProduced() != -1`, adds produced-bonus units to a `m_corpBonusProduction`
+  vector (iterated to handle chained production), applied via `processBonus()` when the set changes — e.g.
+  corp A consumes Oil → produces Steel.
+- **Maintenance** (`calculateCorporationMaintenanceTimes100(corp)`, `Sources/Engine/CvCity.cpp:7817`):
+  base = Σ `HeadquarterCommerce` over commerce types × 100; + `getMaintenance() × numBonuses ×
+  worldSizeCorporationMaintenancePercent / 100`; × `(17 + pop) / 18`; Advanced × handicap²/8000, Classic ×
+  handicap/100; × player/team maintenance modifier; rebels pay 50%.
+- **Yields/commerce** (`getCorporationYieldByCorporation` / `...Commerce...`): when active and not in
+  disorder, contribute `getYieldChange × 100 + getYieldProduced × Σnumbonuses × worldSizePercent / 100`
+  (commerce also × team `getCorporationRevenueModifier`). Aggregated into `m_aiCorporationYield` /
+  `m_aiCorporationCommerce`, folded into `getBaseCommerceRate()`.
 
-### 1-F. Resource consumption and bonus production
+### 1g. AI decision-making
 
-`getCorporationInfluence()` (`CvCity.cpp:21586`): city-level influence = 100 base, +1 per available
-instance of each prereq bonus, + `CORPORATION_RESOURCE_BASE_INFLUENCE / iBonusesConsumed` for each
-*present* (not just available) prereq bonus, divided by 10 for each active competing corp, ×
-population / averagePop.
-
-`updateCorporationBonus()` (`CvCity.cpp:12681`): iterates corps active in the city; for each corp
-with `getBonusProduced() != -1`, adds `aiLastCorpProducedBonus[bonusConsumed]` units of the produced
-bonus to a `m_corpBonusProduction` vector (up to N iterations to handle chained production). These
-produced bonuses are added via `processBonus()` when the set changes. This is the "resource
-transformation" mechanic — e.g. corp A consumes Oil to produce Steel.
-
-Maintenance formula (`calculateCorporationMaintenanceTimes100(corp)`, `CvCity.cpp:7807`):
-- Base = sum of `HeadquarterCommerce` over all commerce types × 100.
-- + `getMaintenance() × numBonuses × worldSizeCorporationMaintenancePercent / 100`.
-- × `(17 + pop) / 18` (population scaling).
-- In Advanced mode: × handicap² / 8000; Classic: × handicap / 100.
-- Modifier by player `getCorporationMaintenanceModifier()` + team modifier.
-- Rebels pay 50%.
-
-### 1-G. Yields and commerce from active corporations
-
-`getCorporationYieldByCorporation(yield, corp)` (`CvCity.cpp:12574`): if active + not disorder,
-returns `getYieldChange(yield) × 100 + getYieldProduced(yield) × sum(numBonuses) × worldSizePercent
-/ 100`, rounded up. Summed per yield type into `m_aiCorporationYield` by `updateCorporationYield()`.
-
-`getCorporationCommerceByCorporation(commerce, corp)` (`CvCity.cpp:12596`): same structure but for
-commerce, also multiplied by `getCorporationRevenueModifier()` from the team.
-
-Aggregated in `m_aiCorporationCommerce`, fed into `getBaseCommerceRate()` (`CvCity.cpp:11921`).
-
-### 1-H. AI decision-making (spread)
-
-`CvUnitAI::AI_spreadCorporation()` (`CvUnitAI.cpp:13540`): if the unit can spread a corp and a good
-target city exists (`bestCorporationCity()`), pushes `MISSION_SPREAD_CORPORATION`. The mission logs
-via `[UNT/act]` (level 2) at the push point — but the spread *result* (success/fail at the target)
-is not logged.
-
-`CvPlayerAI::AI_corporationValue()` (`CvPlayerAI.cpp:12291`): evaluates approximate gpt value of
-spreading the corp to a given city (used for training executive units and choosing spread targets).
-This is internal to the AI decision; not observable from outside.
-
-`CvCityAI` at `CvCityAI.cpp:9034`: evaluates `AI_executiveValue` (a random-gated check, not every
-turn) and trains executive units. The train decision surfaces as `[CIT/produced]` when a unit
-completes.
+- `CvUnitAI::AI_spreadCorporation()` (`Sources/AI/CvUnitAI.cpp:13737`): if a unit can spread a corp and a
+  good target city exists, pushes `MISSION_SPREAD_CORPORATION`. The push logs via `[UNT/act]` (level 2);
+  the spread **result** at the target is not logged.
+- `CvPlayerAI::AI_corporationValue()` (`Sources/AI/CvPlayerAI.cpp:12469`): approximate gpt value of
+  spreading a corp to a city (drives executive training + spread-target choice). Internal; not observable.
+- `CvCityAI` trains executive units off a random-gated `AI_executiveValue` check; the train decision only
+  surfaces as `[CIT/produced]` when the unit completes.
 
 ---
 
-## 2. Current observability
+## 2. What's on the wire today — **Tier 0 (Oblivious)** for corporations
 
-**Current tier: Tier 0 — Oblivious** for corporations specifically.
+### What exists
 
-The snapshots at Tier 1 (`/cities`, `/players`, `/units`) capture:
-- `/cities`: population, yields, commerce (but NOT broken down by source — corporation yield contribution
-  is folded into the aggregate `food`/`production`/`commerce` numbers, indistinguishable from building
-  yields). No corporation-specific fields.
-- `/players`: gold rate (includes corporation maintenance drag, but not isolated). No corporation-spread
-  modifier, no HQ flags, no per-corp city counts.
-- `/units`: unit type/AI — an executive unit with `UNITAI_MISSIONARY` and `getCorporationSpreads > 0`
-  is visible by its `type` field (e.g. `UNIT_EXECUTIVE_*`), but there is no `missionCorp` field.
+| Endpoint / stream | Corporation-relevant leakage |
+|---|---|
+| `/cities` | population, food/production/commerce rates — corporation yield/commerce is **folded into** the aggregates, indistinguishable from building yields. No corp-specific fields. |
+| `/players` | gold (+rate) — includes corp maintenance drag, **not isolated**. No spread modifier, HQ flags, or per-corp counts. |
+| `/units` | an executive unit is visible by its `type` (`UNIT_EXECUTIVE_*`) + `unitAI`, but there is no `missionCorp` field. |
+| `[UNT/act]` (level 2, `/events`) | the `AI_spreadCorporation` commit at `pushMission` — fires at mission start, **not** at the spread result. |
+| `[CIT/produced]` (level 1) | an executive finishing production in a city (`type=`, `aiRoleHas=`). |
+| `[PERF/phase]` (level 1) | `city.doCorporation` phase time per city per turn. |
 
-The `/events` stream carries:
-- `[UNT/act]` (level 2): the `AI_spreadCorporation` commit when a unit starts the mission. This fires
-  at `pushMission`, not at the spread *result*.
-- `[CIT/produced]` (level 1): when an executive unit finishes production in a city, with `type=` and
-  `aiRoleHas=`.
-- `[PERF/phase]` (level 1): `city.doCorporation` phase time per city per turn.
+### Confirmed absent
 
-What is **not exposed today**:
-
-| State | Where it lives | Observable today? |
+| State | Where it lives | On the wire? |
 |---|---|---|
-| Which corporations are present in each city (`isHasCorporation`) | `CvCity.m_pabHasCorporation[]` | **NO** — no `/cities` field |
-| Which corporations are *active* (`isActiveCorporation`) per city | derived from HasCorp + prereq bonuses + player gates | **NO** |
-| HQ location per corporation | `CvGame.m_paHeadquarters[]` | **NO** |
-| Corporation founded turn | `CvGame.m_paiCorporationGameTurnFounded[]` | **NO** |
-| Per-city corporation influence score | computed in `getCorporationInfluence()` | **NO** |
-| Spread/decay RNG rolls and their threshold | inside `doCorporation()` | **NO** |
-| Spread success / decay events | `setHasCorporation` call inside `doCorporation` | **NO** — only a `DLL message` for human players, not a machine-readable event |
-| Per-city corporation yield contribution | `m_aiCorporationYield[]` | **NO** (folded into aggregate) |
-| Per-city corporation commerce contribution | `m_aiCorporationCommerce[]` | **NO** (folded into aggregate) |
-| Per-city corporation maintenance cost | `calculateCorporationMaintenance()` | **NO** — no `/cities` field |
-| Per-city corp bonus production (resource transformation) | `m_corpBonusProduction` | **NO** |
-| Player-level corp spread modifier | `getCorporationSpreadModifier()` | **NO** (not in `/players`) |
-| Player's active corp count per corp type | `getHasCorporationCount()` | **NO** |
-| AI corp value score (`AI_corporationValue`) | internal to `CvPlayerAI` | **NO** |
-| Manual spread attempt result (success/fail) | inside `spreadCorporation()` | **NO** — only a `DLL message` to the unit owner |
+| Corps present per city (`isHasCorporation`) | `CvCity.m_pabHasCorporation[]` | **NO** |
+| Corps *active* per city (`isActiveCorporation`) | derived (HasCorp + prereq bonuses + player gates) | **NO** |
+| HQ location per corp | `CvGame.m_paHeadquarters[]` | **NO** |
+| Corp founded turn | `CvGame.m_paiCorporationGameTurnFounded[]` | **NO** |
+| Per-city influence score | `getCorporationInfluence()` | **NO** |
+| Spread/decay rolls + threshold | inside `doCorporation()` | **NO** |
+| Spread success / decay events | `setHasCorporation` in `doCorporation` | **NO** — only a human-UI `DLL message`, not machine-readable |
+| Per-city corp yield / commerce contribution | `m_aiCorporationYield[]` / `m_aiCorporationCommerce[]` | **NO** (folded into aggregate) |
+| Per-city corp maintenance | `calculateCorporationMaintenanceTimes100()` | **NO** |
+| Corp bonus production (resource transform) | `m_corpBonusProduction` | **NO** |
+| Player-level spread modifier | `getCorporationSpreadModifier()` | **NO** |
+| Player per-corp count | `getHasCorporationCount()` | **NO** |
+| AI corp value (`AI_corporationValue`) | internal to `CvPlayerAI` | **NO** |
+| Manual spread result | inside `spreadCorporation()` | **NO** — only a `DLL message` to the unit owner |
 
 ---
 
 ## 3. The gap
 
-The entire corporation state is opaque from outside. Given the total-observability bar, we cannot today:
+The entire corporation state is opaque from outside. Against the reconstruct-from-API bar
+([DEC-map-before-delete]) an agent today **cannot**:
 
-1. **Reconstruct the corporation presence map** — which corps are in which cities. `/cities` has no
-   `hasCorporation` array. Without this, the maintenance formula (`§1-F`), the active-corp dormancy
-   gate (`§1-E`), the building-disable cascade (`applyCorporationModifiers`), and the yield/commerce
-   contributions cannot be replicated from the wire.
-
-2. **Observe spread/decay events** — `doCorporation()` calls `setHasCorporation` silently (only a
-   `DLL message` to human-visible UI, not a machine-readable event). An autoplay session where corp
-   boundaries shift cannot be reconstructed turn-by-turn.
-
-3. **Know the HQ location** — needed to evaluate the influence formula and the "connected to HQ"
-   condition. Not in any snapshot.
-
-4. **Observe the AI corporation decision** — `AI_spreadCorporation` logs via `[UNT/act]` at mission
-   push (visible in `/events`), but the *value calculation* (`AI_corporationValue`) that drove the
-   decision is silent. Whether the AI decided to train an executive this turn is only visible via
-   `[CIT/produced]` when the unit actually finishes, not when the decision was made.
-
-5. **See corporation maintenance as a separate line** — the `/cities` snapshot folds maintenance
-   into the overall gold-rate picture; no per-corp or per-city breakdown.
-
-6. **Observe the resource-transformation chain** — `updateCorporationBonus()` mutates the effective
-   bonus set silently. A city that has Corp A (consuming Iron → producing Horses) shows the Horses in
-   its bonus count but the chain is invisible.
+1. **Reconstruct the presence map** — which corps are in which cities. Without it, the maintenance formula
+   (§1f), the dormancy gate (§1e), the building-disable cascade (`applyCorporationModifiers`), and the
+   yield/commerce contributions cannot be replicated from the wire.
+2. **Observe spread/decay events** — `doCorporation()` flips `setHasCorporation` silently (human-UI message
+   only). An autoplay session where corp boundaries shift cannot be reconstructed turn-by-turn.
+3. **Know the HQ location** — load-bearing for the influence formula and the "connected to HQ" condition;
+   absent from every snapshot.
+4. **Observe the AI corporation decision** — `[UNT/act]` surfaces the mission push, but the value
+   calculation (`AI_corporationValue`) that drove it is silent; the train-an-executive decision is only
+   visible *after the fact* via `[CIT/produced]`.
+5. **See corporation maintenance as a separate line** — folded into the overall gold rate; no per-corp or
+   per-city breakdown.
+6. **Observe the resource-transformation chain** — `updateCorporationBonus()` mutates the effective bonus
+   set silently; the produced bonus shows in the count but the chain is invisible.
 
 ---
 
-## 4. Proposed hooks
+## 4. Proposed hooks — climbing from Tier 0 to Tier 4
 
-All hooks follow the existing `gPlayerLogLevel`-gated pattern (`logPlayerAI` / `logCityAI` at the
-appropriate scope) and should be added as **gated log lines** teed to `/events` via `streamLogTee`,
-matching the `[TAG/subtag] key=value` taxonomy. Endpoint fields are additions to the existing
-publish-and-serve snapshot. All hooks are **read-only** — the OOS firewall is not touched.
+All hooks follow the three canonical hook shapes — see [DEC-obs-hook-shapes].
 
-### Hook 1: `/cities` snapshot — add corporation presence array
+### 4a. Snapshot fields (Tier 0 → 4)
 
-**What**: add a `corporations` array to each city's JSON in `renderCities()` /
-`CvHttpServer.cpp`'s snapshot build loop (`CvHttpServer.cpp:~1542`). Each element: corp type string
-+ `active` bool.
+**`/cities`** — add a `corporations` array per city (CRITICAL; without it no other reconstruction is
+possible), populated from `isHasCorporation` / `isActiveCorporation` in the city snapshot walk; flag the HQ
+city via `GC.getGame().getHeadquarters(corp) == pCity`:
 
-```json
+```jsonc
 "corporations": [
-  {"type": "CORPORATION_MINING_INC", "active": true},
+  {"type": "CORPORATION_MINING_INC",   "active": true,  "hq": true},
   {"type": "CORPORATION_CEREAL_MILLS", "active": false}
 ]
 ```
 
-Populated from `isHasCorporation(corp)` and `isActiveCorporation(corp)` in the `publishIfDue()` city
-walk. The HQ flag can be `"hq": true` for the HQ city (check `GC.getGame().getHeadquarters(corp) == pCity`).
+**`/players`** — add to `PlayerSnap` (HIGH; reconstructs the player-level active gate):
 
-**Priority**: CRITICAL — without this, no other reconstruction is possible.
-
-### Hook 2: `/players` snapshot — add per-player corporation fields
-
-Add to `PlayerSnap` / `renderPlayers()`:
-- `hqCorps`: array of corp type strings where `hasHeadquarters(corp)` is true.
-- `hasCorporationCount`: object `{CORP_TYPE: count}` for corps with count > 0 (from
-  `getHasCorporationCount()`).
-- `noCorporations`: bool (civic gate, from `isNoCorporations()`).
-- `noForeignCorporations`: bool (civic gate, from `isNoForeignCorporations()`).
-
-**Priority**: HIGH — needed to reconstruct the player-level active gate.
-
-### Hook 3: `[CORP/spread]` gated log tag — per-turn spread/decay events
-
-**Tag**: `[CORP/spread]` in a new `logCorpAI(int level, ...)` helper or reuse `logCityAI` at level 1.
-Log file: reuse `CityAI.log` or create `CorpAI.log`.
-Scope global: `gCityLogLevel`.
-
-Emit at the `setHasCorporation(corp, true/false)` calls inside `doCorporation()` (`CvCity.cpp:21548`
-and `21577`):
-
-```
-[CORP/spread] turn=N city=<name> owner=N corp=CORP_X action=spread threshold=N roll=N influence=N
-[CORP/spread] turn=N city=<name> owner=N corp=CORP_X action=decay avgInfluence=N cityInfluence=N roll=N
+```jsonc
+"hqCorps":             ["CORPORATION_MINING_INC", ...],  // hasHeadquarters(corp)
+"hasCorporationCount": {"CORPORATION_MINING_INC": 7},    // getHasCorporationCount(), corps with count>0
+"noCorporations":        <bool>,                          // isNoCorporations()  (civic gate)
+"noForeignCorporations": <bool>                           // isNoForeignCorporations()  (civic gate)
 ```
 
-Also emit when `doCorporation()` SKIPS a city for a corp (level 2):
-```
-[CORP/spread] turn=N city=<name> owner=N corp=CORP_X action=skip reason=noHQ|noCivic|noBonusReach|competitorPresent
-```
+### 4b. Log additions (per-turn stream; Tier 3)
 
-**Priority**: HIGH — this is the event spine for the system; without it, autoplay reconstruction is
-impossible.
+New `logCorpAI` helper (or reuse `logCityAI`), `[CORP]` tags, gated `gCityLogLevel` (zero cost when off):
 
-### Hook 4: `[CORP/found]` — HQ placement event
+| Tag | Level | Site | Line |
+|---|---|---|---|
+| `[CORP/spread]` | 1 | the two `setHasCorporation` calls in `doCorporation()` (`CvCity.cpp:21549`) | `turn= city= owner= corp= action=spread\|decay threshold= roll= influence=` (decay: `avgInfluence= cityInfluence=`) |
+| `[CORP/spread]` (skip) | 2 | `doCorporation()` per skipped city | `turn= city= owner= corp= action=skip reason=noHQ\|noCivic\|noBonusReach\|competitorPresent` |
+| `[CORP/found]` | 1 | `CvGame::setHeadquarters()` (`CvGame.cpp:5619`) when `pNewValue != NULL`; also `doFoundCorporation()` best-city pick | `turn= corp= city= owner= x= y= foundTurn=` (auto: `mode=auto spread=`) |
+| `[CORP/maint]` | 2 | `calcCorporateMaintenance()` / `calculateCorporationMaintenanceTimes100(corp)` per active corp per city | `turn= city= owner= corp= maintenance= bonuses= pop= handicapMod=` |
+| `[CORP/bonus]` | 2 | `updateCorporationBonus()` (`CvCity.cpp:12691`) when the produced set mutates | `turn= city= owner= corp= produced=BONUS_X count= consumes=BONUS_Y` |
+| `[CORP/ai]` | 3 | `AI_corporationValue()` (`CvPlayerAI.cpp:12469`) + `AI_spreadCorporation()` commit (`CvUnitAI.cpp:13737`) | `turn= player= corp= city= value= reason=<label>` (mission: `unit= action=spreadMission targetCity=`) |
 
-Emit at `CvGame::setHeadquarters()` (`CvGame.cpp:5619`) when `pNewValue != NULL`:
+The `[CORP/spread]` and `[CORP/found]` tags are the event spine — without them, autoplay reconstruction of
+the shifting presence map is impossible.
 
-```
-[CORP/found] turn=N corp=CORP_X city=<name> owner=N x=X y=Y foundTurn=N
-```
+### 4c. `/diagnostic/corpSweep?player=N` (Tier 4)
 
-And at `CvGame::doFoundCorporation()` when a best city is found (level 1):
-```
-[CORP/found] turn=N corp=CORP_X mode=auto city=<name> owner=N spread=N
-```
+The mailbox-serviced point-in-time analogue of §4a (the `placementSweep` pattern) — a full corp-state dump
+for verification. For each corporation: HQ city+owner, founding turn, player-level `isActiveCorporation`;
+and per the player's cities: present / active / city-level influence / per-corp maintenance.
 
-**Priority**: HIGH — the HQ location is load-bearing for influence/spread calculation; its placement
-must be visible.
-
-### Hook 5: `[CORP/maintenance]` — per-city per-turn maintenance snapshot
-
-Emit once per active corporation per city at level 2 inside `calcCorporateMaintenance()` (Advanced)
-or `calculateCorporationMaintenanceTimes100(corp)` (Classic):
-
-```
-[CORP/maint] turn=N city=<name> owner=N corp=CORP_X maintenance=N bonuses=N pop=N handicapMod=N
-```
-
-**Priority**: MEDIUM — useful for AI budget analysis; the per-turn gold drain from corporations is
-currently invisible.
-
-### Hook 6: `[CORP/bonus]` — resource-transformation events
-
-Emit inside `updateCorporationBonus()` (`CvCity.cpp:12681`) when `bChanged` is true (the corps
-bonus production set mutated), at level 2:
-
-```
-[CORP/bonus] turn=N city=<name> owner=N corp=CORP_X produced=BONUS_X count=N consumes=BONUS_Y
-```
-
-**Priority**: MEDIUM — needed for the cascade to replicate the `getBonusProduced` chain.
-
-### Hook 7: `/diagnostic/corpSweep` endpoint
-
-A read-only diagnostic endpoint (same mailbox pattern as `placementSweep`) that for `player=N`:
-- Lists every corporation, its HQ city+owner, founding turn.
-- For each of the player's cities: which corps are present, which are active, the city-level
-  influence for each.
-- The player-level `isActiveCorporation` gate result per corp.
-
-This is the snapshot analogue of Hook 1/2 — a full point-in-time state dump for verification.
-
-Example:
-```
-GET /diagnostic/corpSweep?player=1
+```json
 {
   "player": 1,
-  "noCorporations": false,
-  "noForeignCorporations": false,
+  "noCorporations": false, "noForeignCorporations": false,
   "corps": [
-    {"type": "CORPORATION_MINING_INC", "founded": true, "hqCity": "Rome", "hqOwner": 2, "foundTurn": 145,
-     "playerActive": true, "cityCount": 7,
+    {"type": "CORPORATION_MINING_INC", "founded": true, "hqCity": "Rome", "hqOwner": 2,
+     "foundTurn": 145, "playerActive": true, "cityCount": 7,
      "cities": [
        {"cityId": 3, "name": "London", "has": true, "active": true, "influence": 132, "maintenance": 44}
-     ]
-    }
+     ]}
   ]
 }
 ```
 
-**Priority**: HIGH — this is the "render-from-API" bar for corporations.
+---
 
-### Hook 8: `[CORP/ai]` — AI executive valuation trace (level 3)
+## 5. Cost & priority
 
-Emit inside `AI_corporationValue()` (`CvPlayerAI.cpp:12291`) and `AI_executiveValue()` at level 3:
+| Hook | Tier gain | Effort | Rationale |
+|---|---|---|---|
+| `/cities` `corporations` array (§4a) | 0→4 | snapshot-walk reads; bounded by corp count | **CRITICAL** — presence map; everything else builds on it |
+| `/players` HQ + gate fields (§4a) | 0→4 | struct + walk reads | **HIGH** — player-level active gate + per-corp counts |
+| `[CORP/spread]` + `[CORP/found]` (§4b L1) | →3 | gated, zero cost off | **HIGH** — the event spine; live shift of the presence map + HQ placement on `/events` |
+| `/diagnostic/corpSweep` (§4c) | 4 | mailbox slot (`placementSweep` pattern) | **HIGH** — on-demand full state for cascade shadow |
+| `[CORP/maint]` / `[CORP/bonus]` (§4b L2) | 3 | gated | **MEDIUM** — per-city gold drain + resource-transform chain |
+| `[CORP/ai]` (§4b L3) | 3 | gated | **LOW–MEDIUM** — fills the value reasoning behind the `[UNT/act]` commit |
 
-```
-[CORP/ai] turn=N player=N corp=CORP_X city=<name> value=N reason=<label>
-```
-
-And at `AI_spreadCorporation()` commit (`CvUnitAI.cpp:13776`):
-
-```
-[CORP/ai] turn=N player=N unit=N corp=CORP_X action=spreadMission targetCity=<name>
-```
-
-**Priority**: LOW-MEDIUM — the `[UNT/act]` already surfaces the mission commit; this fills in the
-value reasoning.
+With the `/cities` array, the `/players` fields, `[CORP/spread]`, `[CORP/found]`, and `/diagnostic/corpSweep`,
+corporations reach **Tier 4 (Thought Police)**: the full per-turn state is reconstructible from endpoints +
+`/events`, including for AI players the agent cannot watch on screen.
 
 ---
 
-## 5. Summary
+## 6. Code cross-reference
 
-| Gap | Hook | Priority |
-|---|---|---|
-| Corp presence + active per city | Hook 1 (`/cities` array) | CRITICAL |
-| HQ location + player-level gates | Hook 2 (`/players` fields) | HIGH |
-| Per-turn spread/decay events | Hook 3 (`[CORP/spread]` log) | HIGH |
-| HQ founding events | Hook 4 (`[CORP/found]` log) | HIGH |
-| Full on-demand corp state | Hook 7 (`/diagnostic/corpSweep`) | HIGH |
-| Per-city maintenance breakdown | Hook 5 (`[CORP/maint]` log) | MEDIUM |
-| Resource-transformation events | Hook 6 (`[CORP/bonus]` log) | MEDIUM |
-| AI valuation trace | Hook 8 (`[CORP/ai]` log) | LOW-MEDIUM |
+> Paths re-grounded to the reorganized `Sources/` tree (`Cv*` engine → `Sources/Engine/`, `Cv*AI` →
+> `Sources/AI/`, `CvHttpServer` → `Sources/Tools/`, enums → `Sources/Defines/`, info classes →
+> `Sources/Infos/`). Line numbers drift — confirm the function.
 
-With Hooks 1, 2, 3, 4, and 7 implemented, corporations reach **Tier 4 (Thought Police)** for their
-domain: the full per-turn state is reconstructible from endpoints + /events, including for AI players
-the agent cannot watch on screen.
+| Claim | Source |
+|---|---|
+| `CvCity::doCorporation()` (spread/decay, Advanced) | `Sources/Engine/CvCity.cpp:21549` |
+| `CvCity::getCorporationInfluence()` | `Sources/Engine/CvCity.cpp:21678` |
+| `CvCity::isActiveCorporation()` (city dormancy gate) | `Sources/Engine/CvCity.cpp:13430` |
+| `CvCity::setHasCorporation()` (install/remove + modifiers) | `Sources/Engine/CvCity.cpp:15226` |
+| `CvCity::applyCorporationModifiers()` (building disable/enable) | `Sources/Engine/CvCity.cpp:15193` |
+| `CvCity::updateCorporationBonus()` (resource transform) | `Sources/Engine/CvCity.cpp:12691` |
+| `CvCity::calculateCorporationMaintenanceTimes100(corp)` | `Sources/Engine/CvCity.cpp:7817` |
+| `CvCity::calcCorporateMaintenance()` (Advanced, pop-weighted) | `Sources/Engine/CvCity.cpp:21754` |
+| `CvGame::doFoundCorporation()` (auto-founder) | `Sources/Engine/CvGame.cpp:11131` |
+| `CvGame::setHeadquarters()` (HQ assign + building install) | `Sources/Engine/CvGame.cpp:5619` |
+| `CvPlayer::foundCorporation()` (manual HQ placement) | `Sources/Engine/CvPlayer.cpp:8893` |
+| `CvPlayer::isActiveCorporation()` (player dormancy gate) | `Sources/Engine/CvPlayer.cpp:14031` |
+| `CvUnit::canSpreadCorporation()` / `spreadCorporation()` / `spreadCorporationCost()` | `Sources/Engine/CvUnit.cpp:8552 / 8695 / 8669` |
+| `CvUnitAI::AI_spreadCorporation()` (AI mission dispatch) | `Sources/AI/CvUnitAI.cpp:13737` |
+| `CvPlayerAI::AI_corporationValue()` (AI value score) | `Sources/AI/CvPlayerAI.cpp:12469` |
+| `GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS` | `Sources/Defines/CvEnums.h:868` |
+| `CvCorporationInfo` (`getPrereqBonuses`/`getBonusProduced`/`getSpread`/`getMaintenance`) | `Sources/Infos/CvCorporationInfo.h` |
+| `/cities`, `/players`, `/units` snapshot walks (add fields here) | `Sources/Tools/CvHttpServer.cpp` |
 
 ---
 
-## 6. Key code references
+## See also
+- [`README.md`](README.md) — the observability scaffold: the 0–5 scale ([DEC-obs-scale]), the Orwell bar,
+  and the three canonical hook shapes ([DEC-obs-hook-shapes]) this map's hooks instantiate.
+- [`http-server.md`](http-server.md) — the live surface (`/cities`, `/players`, `/units`, `/diagnostic`)
+  these hooks extend, and the live-read rules (logs held open mid-session).
+- [`gold-maintenance-inflation.md`](gold-maintenance-inflation.md) — corporation maintenance is a component
+  of the gold/maintenance ledger mapped there; isolating it (§4b `[CORP/maint]`) sharpens that map.
+- [`../../explanation/cascade-architecture.md`](../../explanation/cascade-architecture.md) — why total
+  observability is load-bearing: the corporation state cannot be shadowed/cut until it is on the wire
+  ([DEC-map-before-delete]).
+- [`../../README.md`](../../README.md) — the comprehension map / overview-of-overviews.
 
-| Function | File:line | What |
-|---|---|---|
-| `CvCity::doCorporation()` | `CvCity.cpp:21457` | Per-turn spread/decay (Advanced mode only) |
-| `CvCity::getCorporationInfluence()` | `CvCity.cpp:21586` | City-level influence score |
-| `CvGame::getAverageCorporationInfluence()` | `CvGame.cpp:11265` | Average influence (decay threshold) |
-| `CvGame::doFoundCorporation()` | `CvGame.cpp:11166` | Auto-founder for Advanced mode |
-| `CvPlayer::foundCorporation()` | `CvPlayer.cpp:8893` | Manual HQ placement |
-| `CvGame::setHeadquarters()` | `CvGame.cpp:5619` | HQ assignment + HQ building install |
-| `CvGame::replaceCorporation()` | `CvGame.cpp:3209` | Hostile-takeover cascade |
-| `CvGame::canEverSpread()` | `CvGame.cpp:11533` | Game-option gate |
-| `CvCity::isActiveCorporation()` | `CvCity.cpp:13419` | Dormancy gate (city level) |
-| `CvPlayer::isActiveCorporation()` | `CvPlayer.cpp:14031` | Dormancy gate (player level) |
-| `CvCity::setHasCorporation()` | `CvCity.cpp:15215` | Corp install/remove + modifiers |
-| `CvCity::applyCorporationModifiers()` | `CvCity.cpp:15182` | Building disable/enable + stat changes |
-| `CvCity::updateCorporationBonus()` | `CvCity.cpp:12681` | Resource-transformation chain |
-| `CvCity::calculateCorporationMaintenanceTimes100(corp)` | `CvCity.cpp:7807` | Per-corp maintenance |
-| `CvCity::calcCorporateMaintenance()` | `CvCity.cpp:21662` | Advanced-mode maintenance (pop-weighted) |
-| `CvUnit::canSpreadCorporation()` | `CvUnit.cpp:8564` | Manual spread precondition check |
-| `CvUnit::spreadCorporation()` | `CvUnit.cpp:8694` | Manual spread execution + RNG |
-| `CvUnit::spreadCorporationCost()` | `CvUnit.cpp:8668` | Spread gold cost |
-| `CvUnitAI::AI_spreadCorporation()` | `CvUnitAI.cpp:13540` | AI mission dispatch |
-| `CvPlayerAI::AI_corporationValue()` | `CvPlayerAI.cpp:12291` | AI value score |
-| `CvCorporationInfo::getPrereqBonuses()` | `CvCorporationInfo.h:46` | Required bonus resources |
-| `CvCorporationInfo::getBonusProduced()` | `CvCorporationInfo.h:38` | Produced bonus (resource transform) |
-| `CvCorporationInfo::getSpread()` | `CvCorporationInfo.h:59` | Base spread rate |
-| `CvCorporationInfo::getMaintenance()` | `CvCorporationInfo.h:35` | Base per-bonus maintenance |
-| `CvPlayer::getCorporationInfluence()` | `CvPlayer.cpp:27701` | Player-level influence modifier |
-| `CvPlayer::getCorporationSpreadModifier()` | `CvPlayer.cpp:27673` | Civic spread modifier |
-| Snapshot publish | `CvHttpServer.cpp:1461` | Where to add new fields |
-| Corp in `/cities` JSON | `CvHttpServer.cpp:340` | renderCities — currently no corp fields |
+[DEC-obs-scale]: ../../architecture/decisions.md#dec-obs-scale
+[DEC-obs-hook-shapes]: ../../architecture/decisions.md#dec-obs-hook-shapes
+[DEC-map-before-delete]: ../../architecture/decisions.md#dec-map-before-delete

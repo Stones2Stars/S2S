@@ -1,436 +1,258 @@
-# Observability map: Gold, Maintenance & Inflation
+# Observability map: Gold, Maintenance & Inflation — the expense side of the economy
 
-> DRAFT observability map (2026-06-18, parent cascade-mapping-inventory sweep) — all
-> mechanics claims cited from live source; verify before relying.  Tier assessment: **1**
-> (Telescreen, bordering 2 in a narrow band for gold/goldRate).
+> **Status:** reference · **Verified against:** live `Sources/Engine/CvPlayer.cpp` / `CvCity.cpp`,
+> `Sources/Tools/CvHttpServer.cpp` — 2026-06-20.
+> **Grounding:** function citations confirmed against the named functions in the live source; the old
+> draft's line numbers had already drifted (e.g. `calculatePreInflatedCosts` 7947→7949), so every
+> citation is "the function named here, near this line" — confirm the function, not the integer.
+>
+> **BLUF:** the whole expense side of a player's economy — city maintenance, civic/unit upkeep, supply,
+> corporate maintenance, treasury tax, and inflation — folds into one opaque net number, `goldRate`, on
+> `/players`. That is **Tier 1** ([Telescreen](README.md)): you see the result, never a component. This
+> map gives the full per-turn mechanics, what is on the wire today, the gap, and the concrete hooks to
+> climb to Tier 3/4.
+
+The observability scale (0–5), the Orwell reconstruction bar, and the three canonical hook shapes are
+defined once in [`README.md`](README.md) ([DEC-obs-scale], [DEC-obs-hook-shapes]) — not restated here.
+The rules for reading the live surface (logs held open; use `/events` + `/diagnostic`) live in
+[`http-server.md`](http-server.md).
 
 ---
 
-## 1. How it actually works — the full per-turn mechanics
+## 1. How it works — the per-turn mechanics
 
-### 1-A. Per-turn gold application — `doGold` (CvPlayer.cpp:15472)
-
-Executed once per player per turn at `CvPlayer::doTurn` line 3809, before city turns run.
-
+### 1-A. Per-turn gold application — `doGold` (`Sources/Engine/CvPlayer.cpp`, ~15472)
+Runs once per player per turn from `CvPlayer::doTurn` (before city turns):
 ```
-gold += calculateGoldRate()          // net gold this turn
+gold += calculateGoldRate()              // net gold this turn
 if gold < 0:
-    gold = 0
-    setStrike(true); changeStrikeTurns(+1)
-    if strikeTurns > 1:
-        disband floor(strikeTurns/2) units   // forced disbanding to recover
+    gold = 0; setStrike(true); changeStrikeTurns(+1)
+    if strikeTurns > 1: disband floor(strikeTurns/2) units   // forced disbanding
 else:
     setStrike(false)
 ```
 
-### 1-B. Gold rate calculation — `calculateGoldRate` (CvPlayer.cpp:8224)
+### 1-B. Gold rate — `calculateGoldRate` (`CvPlayer.cpp`, ~8224)
+```
+if isCommerceFlexible(COMMERCE_RESEARCH): goldRate = calculateBaseNetGold()
+else:                                     goldRate = min(0, calculateBaseNetResearch() + calculateBaseNetGold())
+```
+`calculateBaseNetGold` (~8079) = `getCommerceRate(COMMERCE_GOLD)` (city gold at current slider)
+`+ getGoldPerTurn()` (trade/deal income, `m_iGoldPerTurn`) `− getFinalExpense()`.
 
+`getFinalExpense` (~8014): `isAnarchy() ? 0 : calculatePreInflatedCosts() * getInflationMod10000() / 10000`.
+
+### 1-C. Pre-inflated costs — `calculatePreInflatedCosts` (`CvPlayer.cpp`, ~7949)
+Six additive components (all suppressed during anarchy, which short-circuits before the sum):
 ```
-if isCommerceFlexible(COMMERCE_RESEARCH):       // player can set science slider
-    goldRate = calculateBaseNetGold()
-else:
-    goldRate = min(0, calculateBaseNetResearch() + calculateBaseNetGold())
+getTreasuryUpkeep()        // anti-hoarding tax on the treasury balance
++ getTotalMaintenance()    // sum of city maintenance (city-level dirty-cache)
++ getCivicUpkeep()         // upkeep for current civics
++ getFinalUnitUpkeep()     // net unit upkeep (military + civilian)
++ calculateUnitSupply()    // outside-territory unit supply
++ getCorporateMaintenance()// corporation presence costs
 ```
 
-`calculateBaseNetGold` (CvPlayer.cpp:8079):
-```
-baseNetGold = getCommerceRate(COMMERCE_GOLD)    // city gold output at current slider
-            + getGoldPerTurn()                   // per-turn from trade routes / deals (m_iGoldPerTurn)
-            - getFinalExpense()                  // total spending post-inflation
-```
+### 1-D. City maintenance — `CvCity::updateMaintenance` (`Sources/Engine/CvCity.cpp`, ~7599)
+Per-city lazy cache (`m_bMaintenanceDirty`). Player total = sum over cities, dirty-cached in
+`m_iTotalMaintenance` and returned `/100` (`CvPlayer::updateMaintenance` ~10617, getter ~10728).
 
-`getFinalExpense` (CvPlayer.cpp:8012):
+City raw value:
 ```
-finalExpense = isAnarchy() ? 0
-             : calculatePreInflatedCosts() * getInflationMod10000() / 10000
-```
-
-### 1-C. Pre-inflated costs — `calculatePreInflatedCosts` (CvPlayer.cpp:7947)
-
-```
-preInflatedCosts = getTreasuryUpkeep()           // anti-hoarding tax
-                 + getTotalMaintenance()          // sum of city maintenance (city-level dirty-cache)
-                 + getCivicUpkeep()              // upkeep for current civics
-                 + getFinalUnitUpkeep()          // net unit upkeep (military + civilian)
-                 + calculateUnitSupply()         // outside-territory unit supply
-                 + getCorporateMaintenance()     // corporation presence costs
-```
-All zero during anarchy (`isAnarchy()` short-circuits before the sum).
-
-### 1-D. City maintenance — `CvCity::updateMaintenance` (CvCity.cpp:7599)
-
-Per-city lazy-cached value (`m_bMaintenanceDirty`). Player total = sum over all cities via
-`updateMaintenance` at CvPlayer.cpp:10617 (dirty-cached in `m_iTotalMaintenance`; returned
-`/100` at line 10728).
-
-**City raw value (CvCity.cpp:7599):**
-```
-cityMaintenance = EraInfo.getInitialCityMaintenancePercent()   // era-era floor
+cityMaintenance = EraInfo.getInitialCityMaintenancePercent()       // era floor
 if !isDisorder() && !isWeLoveTheKingDay() && population > 0:
-    cityMaintenance += getModifiedIntValue(
-        calculateBaseMaintenanceTimes100(),
-        getEffectiveMaintenanceModifier()
-    )
+    cityMaintenance += getModifiedIntValue(calculateBaseMaintenanceTimes100(),
+                                           getEffectiveMaintenanceModifier())
 ```
 
-**`calculateBaseMaintenanceTimes100` (CvCity.cpp:7882) — five additive components:**
+`calculateBaseMaintenanceTimes100` (`CvCity.cpp`, ~7882) — five additive components:
 
-| Component | Function | Key factors |
+| Component | Function (`CvCity.cpp`, ~line) | Key factors |
 |---|---|---|
-| **Distance** | `calculateDistanceMaintenanceTimes100` (CvCity.cpp:7622) | Distance to nearest government-center × pop; world-size/handicap/coastal modifiers; halved for rebels; `isGovernmentCenter()` → 0 |
-| **Num-cities** | `calculateNumCitiesMaintenanceTimes100` (CvCity.cpp:7685) | `(numCities-1) × 72 × (pop+13)/13`; vassal city fraction `/ (3+vassals)`; world-size/handicap modifiers; halved for rebels |
-| **Colony** | `calculateColonyMaintenanceTimes100` (CvCity.cpp:7748) | Cities on foreign landmass; `GAMEOPTION_NO_VASSAL_STATES` → 0; capped at `maxColonyMaintenance × distanceMaint` |
-| **Corporation** | `calculateCorporationMaintenanceTimes100` (CvCity.cpp:7791) | HQ commerce + bonus-count × corp maintenance × pop-factor × handicap; `GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS` doubles the handicap |
-| **Building** | `calculateBuildingMaintenanceTimes100` (CvCity.cpp:7860) | Only when `GC.getTREAT_NEGATIVE_GOLD_AS_MAINTENANCE()`; sum of negative-gold active buildings × 100 (or 50 for rebels) |
+| **Distance** | `calculateDistanceMaintenanceTimes100` (~7622) | Distance to nearest government center × pop; world-size/handicap/coastal mods; halved for rebels; `isGovernmentCenter()` → 0 |
+| **Num-cities** | `calculateNumCitiesMaintenanceTimes100` (~7685) | `(numCities−1) × 72 × (pop+13)/13`; vassal fraction `/(3+vassals)`; world-size/handicap mods; halved for rebels |
+| **Colony** | `calculateColonyMaintenanceTimes100` (~7748) | Cities on foreign landmass; `GAMEOPTION_NO_VASSAL_STATES` → 0; capped at `maxColonyMaintenance × distanceMaint` |
+| **Corporation** | `calculateCorporationMaintenanceTimes100` (~7791) | HQ commerce + bonus-count × corp maint × pop-factor × handicap; `GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS` doubles the handicap |
+| **Building** | `calculateBuildingMaintenanceTimes100` (~7860) | Only when `GC.getTREAT_NEGATIVE_GOLD_AS_MAINTENANCE()`; sum of negative-gold active buildings × 100 (×50 for rebels) |
 
-**`getEffectiveMaintenanceModifier` (CvCity.cpp:7578) — global modifier stack:**
+`getEffectiveMaintenanceModifier` (`CvCity.cpp`, ~7578) — global modifier stack:
 ```
-iMod = city.maintenanceModifier
-     + player.maintenanceModifier
+iMod = city.maintenanceModifier + player.maintenanceModifier
      + area.totalAreaMaintenanceModifier(owner)
      + (connected && !capital ? player.connectedCityMaintenanceModifier : 0)
 ```
 
-### 1-E. Civic upkeep — `getCivicUpkeep` (CvPlayer.cpp:14260)
-
-Sum across all civic-option slots of `getSingleCivicUpkeep(currentCivic)`. Each:
+### 1-E. Civic upkeep — `getCivicUpkeep` (`CvPlayer.cpp`, ~14260)
+Sum over civic-option slots of `getSingleCivicUpkeep(currentCivic)`:
 ```
 upkeep = max(0, (population + UPKEEP_POPULATION_OFFSET) × popPercent/100)
        + max(0, (numCities  + UPKEEP_CITY_OFFSET)       × cityPercent/100)
-upkeep = getModifiedIntValue(upkeep, upkeepModifier)
-upkeep × handicap.civicUpkeepPercent / 100
+upkeep = getModifiedIntValue(upkeep, upkeepModifier) × handicap.civicUpkeepPercent / 100
 if isNormalAI(): apply AI handicap + per-era scaling
 ```
-Halved for rebels. Returns at least 1 if a non-zero upkeep civic is active.
+Halved for rebels; returns ≥1 if a non-zero-upkeep civic is active.
 
-### 1-F. Unit upkeep — `calcFinalUnitUpkeep` (CvPlayer.cpp:10332)
-
+### 1-F. Unit upkeep — `calcFinalUnitUpkeep` (`CvPlayer.cpp`, ~10332)
+Net civilian + military upkeep, then handicap-scaled. **Full per-unit mechanics
+(accumulators, modifiers, free allowances) are in [`unit-upkeep-supply.md`](unit-upkeep-supply.md).**
 ```
-iCalc = getUnitUpkeepCivilianNet()    // max(0, civilian_100 × civUpkeepMod / 100) − freeCivilian
-      + getUnitUpkeepMilitaryNet()    // max(0, military_100 × milUpkeepMod / 100) − freeMilitary
+iCalc = getUnitUpkeepCivilianNet() + getUnitUpkeepMilitaryNet()
 if iCalc > 0:
     iCalc × handicap.unitUpkeepPercent / 100
     if !human: × AI handicap × (1 + AIPerEraModifier × era)
 ```
-Returns 0 for NPCs.  `m_iUnitUpkeepMilitary100` / `m_iUnitUpkeepCivilian100` are the raw sums
-accumulated at unit creation/deletion.
+Returns 0 for NPCs.
 
-### 1-G. Unit supply — `calculateUnitSupply` (CvPlayer.cpp:7909)
-
+### 1-G. Unit supply — `calculateUnitSupply` (`CvPlayer.cpp`, ~7909)
+Outside-territory unit cost; see [`unit-upkeep-supply.md`](unit-upkeep-supply.md) §1-E for the full path.
 ```
 paidUnits = max(0, getNumOutsideUnits() − INITIAL_FREE_OUTSIDE_UNITS)
 baseCost  = paidUnits × INITIAL_OUTSIDE_UNIT_GOLD_PERCENT / 100 × (era + 1)
-iMod      = distantUnitSupportCostModifier
-            + (AI: AIUnitSupplyPercent − 100 + AIPerEraModifier × era)
+iMod      = distantUnitSupportCostModifier + (AI: AIUnitSupplyPercent − 100 + AIPerEraModifier × era)
 supply    = getModifiedIntValue(baseCost, iMod)
 ```
 Returns 0 during anarchy or for NPCs.
 
-### 1-H. Treasury upkeep — `getTreasuryUpkeep` (CvPlayer.cpp:14276)
-
-Anti-hoarding tax on the current treasury balance:
+### 1-H. Treasury upkeep — `getTreasuryUpkeep` (`CvPlayer.cpp`, ~14276)
+Anti-hoarding tax on the current treasury balance, scaled by game speed:
 ```
-treasuryUpkeep = (gold + 250 × sqrt(gold))
-               / (25 × gameSpeed.speedPercent)
+treasuryUpkeep = (gold + 250 × sqrt(gold)) / (25 × gameSpeed.speedPercent)
 ```
-Scales with game speed so that larger expected treasuries on slower speeds pay proportionally.
 
-### 1-I. Inflation — `getInflationMod10000` (CvPlayer.cpp:7963)
-
-Returns `10000 + inflationPerTurnTimes10000`.  The per-turn component:
+### 1-I. Inflation — `getInflationMod10000` (`CvPlayer.cpp`, ~7965)
+Returns `10000 + inflationPerTurnTimes10000`. The per-turn component:
 ```
-iInflationPerTurnTimes10000 = 100 × hurriedCount
-iInflationPerTurnTimes10000 × handicap.inflationPercent / 100
-
-iMod = inflationModifier              // from events (CvPlayer.cpp:22121)
-     + getCivicInflation()            // from civics (processsCivics line 18121)
-     + getProjectInflation()          // from projects
-     + getTechInflation()             // from techs
-     + getBuildingInflation()         // from buildings (line 7399)
-     − 100 × isRebel()
+iInflationPerTurnTimes10000 = 100 × hurriedCount × handicap.inflationPercent / 100
+iMod = inflationModifier (events) + getCivicInflation() + getProjectInflation()
+     + getTechInflation() + getBuildingInflation() − 100 × isRebel()
 if iMod != 0: apply to iInflationPerTurnTimes10000
-
 if isNormalAI():
-    iMod2 = handicap.AIInflationPercent − 100
-           + handicap.AIPerEraModifier × era
-    if iMod2 != 0: apply to iInflationPerTurnTimes10000
+    iMod2 = handicap.AIInflationPercent − 100 + handicap.AIPerEraModifier × era
+    if iMod2 != 0: apply
 ```
-`getInflationCost()` (CvPlayer.cpp:8006) = `preInflatedCosts × (inflationMod10000 − 10000) / 10000`
-(the "extra" cost above pre-inflation).  Zero during anarchy.
+`getInflationCost()` (~8010) = `preInflatedCosts × (inflationMod10000 − 10000) / 10000` (the extra above
+pre-inflation; zero during anarchy).
 
-**Hurry-inflation decay — `doAdvancedEconomy` (CvPlayer.cpp:27833, called at doTurn:3832):**
-```
-if hurriedCount > 0:
-    iTurnIncrement1000 = HURRY_INFLATION_DECAY_RATE × gameSpeed.speedPercent × (1 + hurryInflationModifier%)
-    if (elapsedTurns % max(1, iTurnIncrement1000/1000)) == 0:
-        hurriedCount -= clipped decay step
-```
+Hurry-inflation decay — `doAdvancedEconomy` (`CvPlayer.cpp`, ~27833, called from `doTurn`): when
+`hurriedCount > 0`, decays it on a game-speed-scaled cadence (`HURRY_INFLATION_DECAY_RATE`, modified by
+`hurryInflationModifier%`).
 
-### 1-J. Commerce slider auto-correction — `verifyGoldCommercePercent` (CvPlayer.cpp:17974)
-
-Called at doTurn line 3807, before `doGold`:
+### 1-J. Slider auto-correction — `verifyGoldCommercePercent` (`CvPlayer.cpp`, ~17974)
+Called before `doGold`. Silently raises the gold slider while the player would go into deficit:
 ```
 while gold + calculateGoldRate() < 0:
     commercePercent(GOLD) += COMMERCE_PERCENT_CHANGE_INCREMENTS
     if percent == 100: break
 ```
-Silently raises the gold slider when the player would go into deficit.
 
-### 1-K. Per-turn call order in `CvPlayer::doTurn` (CvPlayer.cpp:3683)
-
-```
-3807  verifyGoldCommercePercent()   // auto-raise gold slider if needed
-3809  doGold()                      // apply calculateGoldRate(), handle strike
-3828  updateCorporateMaintenance()  // (when GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS)
-3832  doAdvancedEconomy()           // decay hurriedCount
-```
+### 1-K. Per-turn call order in `CvPlayer::doTurn` (`CvPlayer.cpp`, ~3683)
+`verifyGoldCommercePercent()` → `doGold()` → `updateCorporateMaintenance()` (when
+`GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS`) → `doAdvancedEconomy()` (decay `hurriedCount`).
 
 ---
 
-## 2. Current observability — tier and what is exposed vs not
+## 2. What's on the wire today — Tier 1 (Telescreen)
 
-**Tier: 1 — Telescreen (partial edge into 2)**
-
-### 2-A. What is exposed today
-
-`GET /players` (or `?playerNumber=N`) snapshot — CvHttpServer.cpp:285, 1535:
+`GET /players` (`Sources/Tools/CvHttpServer.cpp`, snapshot publish + `renderPlayers`):
 
 | JSON field | C++ source | Notes |
 |---|---|---|
-| `gold` | `kPlayer.getGold()` | Treasury balance, snapshot-stale (≤5s) |
-| `goldRate` | `kPlayer.calculateGoldRate()` | Net gold per turn — the single aggregated number |
+| `gold` | `kPlayer.getGold()` | Treasury balance, ≤5s stale |
+| `goldRate` | `kPlayer.calculateGoldRate()` | Net gold/turn — the single aggregated number |
 
-`GET /cities` snapshot — per-city `commerce` field:
+`GET /cities` per-city `commerce` = `pLoopCity->getYieldRate(YIELD_COMMERCE)` — raw commerce yield, **not**
+gold output (slider/division not applied).
 
-| JSON field | C++ source | Notes |
-|---|---|---|
-| `commerce` | `pLoopCity->getYieldRate(YIELD_COMMERCE)` | Raw commerce yield (not gold output; slider/division not applied) |
-
-### 2-B. What is NOT exposed today
-
-The entire expense side is invisible. No endpoint or log emits any of:
-
-| State | C++ accessor | Why it matters |
-|---|---|---|
-| `totalMaintenance` | `getTotalMaintenance()` | The aggregated city-maintenance bill |
-| Per-city maintenance | `getMaintenanceTimes100()` | Can't attribute bill to a city; can't watch per-city pressure |
-| Per-city maintenance components | `calculateDistanceMaintenanceTimes100()`, etc. | Can't explain *why* a city is expensive |
-| `civicUpkeep` | `getCivicUpkeep()` | Civic cost contribution |
-| `unitUpkeep` | `getFinalUnitUpkeep()` (= civilian + military nets) | Unit cost contribution |
-| `unitSupply` | `calculateUnitSupply()` | Outside-territory supply cost |
-| `corporateMaintenance` | `getCorporateMaintenance()` | Corporate presence cost |
-| `treasuryUpkeep` | `getTreasuryUpkeep()` | Anti-hoarding tax on gold balance |
-| `finalExpense` | `getFinalExpense()` | Total post-inflation spend |
-| `preInflatedCosts` | `calculatePreInflatedCosts()` | Pre-inflation subtotal |
-| `inflationMod10000` | `getInflationMod10000()` | Multiplier (10000 = 1×) |
-| `inflationCost` | `getInflationCost()` | The delta added by inflation |
-| `hurriedCount` | `getHurriedCount()` | Accumulated hurry-inflation |
-| `hurryInflationModifier` | `getHurryInflationModifier()` | Civic modifier to hurry-decay rate |
-| Inflation component breakdown | `getBuildingInflation()`, `getCivicInflation()`, etc. | Which factor is driving inflation |
-| `isStrike` / `strikeTurns` | `isStrike()`, `getStrikeTurns()` | Bankrupt / unit-disbanding state |
-| `isAnarchy` | `isAnarchy()` | Zero-expense suppression flag |
-| `commercePercent(GOLD)` | `getCommercePercent(COMMERCE_GOLD)` | Tax-slider position (auto-raised by verifyGoldCommercePercent) |
-| `profitMargin` | `getProfitMargin()` | AI financial health metric |
-| `fundingHealth` | `AI_fundingHealth()` | AI financial-trouble test input |
-| `isFinancialTrouble` | `AI_isFinancialTrouble()` | AI decision gate — invisible to agents |
-| `goldTarget` | `AI_goldTarget()` | AI's current gold savings target |
-| `getGoldPerTurn` | `getGoldPerTurn()` (m_iGoldPerTurn) | Trade-route / deal gold; not in snapshot |
-| `minTaxIncome` / `maxTaxIncome` | `getMinTaxIncome()`, `getMaxTaxIncome()` | Slack range for slider |
-
-**AI-specific opaque facts:** `AI_isFinancialTrouble()` drives research-slider, production,
-unit-build, and diplomatic gold decisions but is completely invisible from outside.  The
-AI's effective commerce slider (`getCommercePercent(COMMERCE_GOLD)`) is also not exposed,
-so we can't tell what tax rate an AI player is running at.
+Everything on the expense side is invisible: `getTotalMaintenance()`, per-city
+maintenance + its components, `getCivicUpkeep()`, `getFinalUnitUpkeep()`, `calculateUnitSupply()`,
+`getCorporateMaintenance()`, `getTreasuryUpkeep()`, `getFinalExpense()`, `calculatePreInflatedCosts()`,
+`getInflationMod10000()`, `getInflationCost()`, `getHurriedCount()`, the inflation source breakdown
+(`getBuildingInflation()`/`getCivicInflation()`/…), `isStrike()`/`getStrikeTurns()`, `isAnarchy()`,
+`getCommercePercent(COMMERCE_GOLD)` (tax slider), `getGoldPerTurn()`, and the AI financial gates
+(`AI_isFinancialTrouble()`, `AI_fundingHealth()`, `AI_goldTarget()`, `getProfitMargin()`).
 
 ---
 
-## 3. The gap — what cannot be reconstructed from outside today
+## 3. The gap — what cannot be reconstructed from outside
 
-Given only the HTTP endpoints + `/events` + gated logs, an agent watching a running game
-**cannot** determine any of the following for any player (human or AI):
+Given only `/players` + `/cities` + `/events` + gated logs, an agent **cannot** determine, for any player:
 
-1. **Why `goldRate` is what it is.** The net number is exposed; not a single cost component.
-   For an AI player shedding gold, the agent cannot attribute it to maintenance, unit upkeep,
-   civic cost, inflation, or corporate drag.
-
-2. **The per-city maintenance bill.** No per-city cost is in the `/cities` endpoint.  The only
-   per-city field touching finance is `commerce` (raw yield, not gold output).
-
-3. **The maintenance modifier stack.** Player-level modifiers (distance, num-cities, coastal,
-   corporation, connected-city, home/other area) are not observable.
-
-4. **The inflation state.** `hurriedCount`, the inflation multiplier, and all of its
-   contributing factors (building/civic/project/tech/event) are invisible.  The agent
-   cannot determine whether a high expense is driven by inflation vs. raw costs.
-
-5. **The treasury-upkeep anti-hoarding tax.** This is a non-obvious progressive cost on the
-   gold balance itself; an agent would misattribute the discrepancy if it tried to reconcile
-   `goldRate` from visible components.
-
-6. **The AI financial-trouble state.** `AI_isFinancialTrouble()` ↔ `AI_fundingHealth()` <
-   `AI_safeFunding()` determines whether an AI raises its gold slider, holds off on unit
-   production, declines trades, etc.  This is the primary financial-state gate and nothing
-   about it is readable from outside.
-
-7. **The strike / bankrupt state.** `isStrike()` / `strikeTurns` triggers unit disbanding but
-   is not in any endpoint.  An agent watching `/units` count drop cannot tell forced-disbanding
-   from normal attrition.
-
-8. **Corporate maintenance split.** Only the aggregate `getCorporateMaintenance()` is exposed
-   nowhere; per-corporation costs are completely invisible.
-
-9. **The gold-slider auto-correction.** `verifyGoldCommercePercent` silently lifts the tax
-   rate before the gold calculation runs; an agent cannot see the slider position for AI
-   players and therefore cannot verify the income side either.
+1. **Why `goldRate` is what it is** — the net is exposed; not a single cost component. An AI shedding gold
+   cannot be attributed to maintenance vs upkeep vs civic vs inflation vs corporate drag.
+2. **The per-city maintenance bill** — no per-city cost in `/cities`; only raw `commerce` yield.
+3. **The maintenance modifier stack** — distance/num-cities/coastal/corporation/connected/area modifiers.
+4. **The inflation state** — `hurriedCount`, the multiplier, and every contributing factor.
+5. **The treasury-upkeep tax** — a non-obvious progressive cost on the balance itself; reconciling
+   `goldRate` from visible components would misattribute the gap.
+6. **The AI financial-trouble state** — `AI_isFinancialTrouble()` ↔ `AI_fundingHealth() < AI_safeFunding()`
+   is the primary financial gate (slider, unit production, trade declines) and is unreadable.
+7. **The strike / bankrupt state** — `isStrike()`/`strikeTurns` triggers disbanding; a `/units` count drop
+   can't be distinguished from normal attrition.
+8. **Corporate maintenance split** — only the aggregate exists, and it isn't exposed; per-corp is invisible.
+9. **The gold-slider auto-correction** — `verifyGoldCommercePercent` lifts the AI tax rate silently and the
+   slider position isn't exposed, so the income side can't be verified either.
 
 ---
 
-## 4. Proposed hooks — concrete additions to climb a tier
+## 4. Proposed hooks — climb to Tier 3/4
 
-All hooks follow existing patterns: `key=value` log lines via a new `[FIN]` domain tag,
-plus new fields on `/players` and new per-city fields on `/cities`, all gated by
-`gPlayerLogLevel` / `Autolog__HttpServer`.
+All hooks follow the three canonical shapes ([DEC-obs-hook-shapes]).
 
-### 4-A. New `/players` snapshot fields (CvHttpServer.cpp — add to `publishIfDue` snapshot
-and `renderPlayers`)
-
-| New JSON key | C++ source | What it enables |
-|---|---|---|
-| `finalExpense` | `kPlayer.getFinalExpense()` | Total cost after inflation — the denominator for the whole finance picture |
-| `preInflatedCosts` | `kPlayer.calculatePreInflatedCosts()` | Pre-inflation subtotal for deriving inflation overhead |
-| `inflationMod` | `kPlayer.getInflationMod10000()` | Inflation multiplier (10000 = no inflation) |
-| `hurriedCount` | `kPlayer.getHurriedCount()` | Accumulated hurry pressure |
-| `civicUpkeep` | `kPlayer.getCivicUpkeep()` | Civic cost component |
-| `unitUpkeep` | `kPlayer.getFinalUnitUpkeep()` | Unit cost component |
-| `unitSupply` | `kPlayer.calculateUnitSupply()` | Supply cost for outside-territory units |
-| `treasuryUpkeep` | `kPlayer.getTreasuryUpkeep()` | Anti-hoarding tax |
-| `totalMaintenance` | `kPlayer.getTotalMaintenance()` | Sum of city maintenance |
-| `corpMaintenance` | `kPlayer.getCorporateMaintenance()` | Corporate presence cost |
-| `goldPerTurn` | `kPlayer.getGoldPerTurn()` | Trade/deal income (separate from commerce) |
-| `isStrike` | `kPlayer.isStrike() ? 1 : 0` | Bankrupt flag |
-| `strikeTurns` | `kPlayer.getStrikeTurns()` | Consecutive bankrupt turns (drives disbanding) |
-| `goldSlider` | `kPlayer.getCommercePercent(COMMERCE_GOLD)` | Tax slider position (critical for AI players) |
-| `isFinancialTrouble` | `(kPlayer.isNormalAI() ? kPlayer.AI_isFinancialTrouble() : false) ? 1 : 0` | AI financial-trouble gate |
-| `fundingHealth` | AI players only: `AI_fundingHealth()` | AI's funding health score |
-| `isAnarchy` | `kPlayer.isAnarchy() ? 1 : 0` | Zero-expense flag |
-
-Implementation note: `calculatePreInflatedCosts()`, `calculateUnitSupply()`, and
-`getInflationMod10000()` are `const` pure calculations; the expense sub-fields
-(`getTreasuryUpkeep()`, `getCivicUpkeep()`, etc.) are also `const`.  Snapshot cost at
-publish is one call per player through these already-called functions.
+### 4-A. New `/players` snapshot fields (`CvHttpServer.cpp` — snapshot publish + `renderPlayers`)
+`finalExpense`, `preInflatedCosts`, `inflationMod` (`getInflationMod10000()`), `hurriedCount`,
+`civicUpkeep`, `unitUpkeep` (`getFinalUnitUpkeep()`), `unitSupply`, `treasuryUpkeep`, `totalMaintenance`,
+`corpMaintenance`, `goldPerTurn`, `isStrike`, `strikeTurns`, `goldSlider`
+(`getCommercePercent(COMMERCE_GOLD)`), `isFinancialTrouble`
+(`isNormalAI() ? AI_isFinancialTrouble() : false`), `fundingHealth` (AI only), `isAnarchy`.
+All are `const` calls already invoked elsewhere — one call per player at publish.
 
 ### 4-B. New `/cities` snapshot fields
+`maintenance` (`getMaintenance()`), `distanceMaint`, `numCitiesMaint`, `colonyMaint`, `corpMaint`,
+`buildingMaint` (each `calculate*MaintenanceTimes100() / 100`), `maintenanceMod`
+(`getEffectiveMaintenanceModifier()`), `goldOutput` (`getCommerceRateTimes100(COMMERCE_GOLD) / 100`).
 
-| New JSON key | C++ source | What it enables |
-|---|---|---|
-| `maintenance` | `pCity->getMaintenance()` | Per-city maintenance total |
-| `distanceMaint` | `pCity->calculateDistanceMaintenanceTimes100() / 100` | Distance component |
-| `numCitiesMaint` | `pCity->calculateNumCitiesMaintenanceTimes100() / 100` | City-count component |
-| `colonyMaint` | `pCity->calculateColonyMaintenanceTimes100() / 100` | Colony component |
-| `corpMaint` | `pCity->calculateCorporationMaintenanceTimes100() / 100` | Corporate component |
-| `buildingMaint` | `pCity->calculateBuildingMaintenanceTimes100() / 100` | Negative-gold building component |
-| `maintenanceMod` | `pCity->getEffectiveMaintenanceModifier()` | The modifier that scales the above |
-| `goldOutput` | `pCity->getCommerceRateTimes100(COMMERCE_GOLD) / 100` (or similar) | City's actual gold output after slider |
+### 4-C. Gated `[FIN]` log — `FinanceAI.log`, `gPlayerLogLevel`
+Add `logFinanceAI(level, fmt, …)` to `Sources/AI/BetterBTSAI.{h,cpp}`, tag `[FIN]`:
+- `[FIN/turn]` (lvl 1, per player per turn from `doGold`): `gold/goldRate/expense/preInflated/inflationMod/
+  inflationCost/maint/civicUpkeep/unitUpkeep/supply/corpMaint/treasuryUpkeep/goldPT/goldSlider/isStrike/strikeTurns`
+  — a complete per-turn snapshot, `/events`-streamable at level 1.
+- `[FIN/strike]` (lvl 1, on `setStrike(true)` in `doGold`): `gold/goldRate/strikeTurns/disbanding`.
+- `[FIN/inflation]` (lvl 2, when inflation > 0): `hurriedCount/mod` + source breakdown
+  (`building/civic/project/tech/event/rebel`).
+- `[FIN/aitroubled]` (lvl 1, **state-change only** — maintain `m_bLastFinancialTrouble`; the gate is called
+  many times/turn): `state/fundingHealth/safeFunding/goldTarget/gold/goldRate`.
+- `[FIN/slider]` (lvl 2, when `verifyGoldCommercePercent` raises the slider): `oldSlider/newSlider/gold`.
 
-### 4-C. Per-turn gated log tag: `[FIN]` in a new `FinanceAI.log`, `gPlayerLogLevel`
-
-Add `logFinanceAI(int level, const char* fmt, ...)` to `BetterBTSAI.{h,cpp}`, writing
-`FinanceAI.log`, gated by `gPlayerLogLevel`.  Tag prefix `[FIN]`.
-
-**`[FIN/turn]` (level 1) — one line per player per turn from `doGold` (CvPlayer.cpp:15472):**
-```
-[FIN/turn] turn=N player=P gold=G goldRate=R
-  expense=E preInflated=PI inflationMod=IM inflationCost=IC
-  maint=M civicUpkeep=CU unitUpkeep=UU supply=US corpMaint=CM treasuryUpkeep=TU
-  goldPT=GPT goldSlider=GS isStrike=0 strikeTurns=0
-```
-This one line per player per turn gives a complete per-turn financial snapshot that survives
-log rotation and is `/events`-streamable at level 1.
-
-**`[FIN/strike]` (level 1) — on `setStrike(true)` (CvPlayer.cpp:15484):**
-```
-[FIN/strike] turn=N player=P gold=G goldRate=R strikeTurns=T disbanding=D
-```
-Flags the moment a player goes bankrupt and how many units are disbanded.
-
-**`[FIN/inflation]` (level 2) — on `getInflationMod10000` when inflation > 0:**
-```
-[FIN/inflation] player=P hurriedCount=HC mod=IM
-  building=BI civic=CI project=PI tech=TI event=EI rebel=0
-```
-Breaks down which inflation source is dominant.
-
-**`[FIN/aitroubled]` (level 1) — when `AI_isFinancialTrouble()` changes state (CvPlayerAI.cpp:3923):**
-```
-[FIN/aitroubled] turn=N player=P state=0/1
-  fundingHealth=FH safeFunding=SF goldTarget=GT gold=G goldRate=R
-```
-This makes the AI financial-trouble gate — currently invisible — visible in the event stream.
-Since `AI_isFinancialTrouble` is called frequently (many production/research decisions per turn),
-this should be emitted on **state change only** (maintain `m_bLastFinancialTrouble` bool), not
-every call.
-
-**`[FIN/slider]` (level 2) — when `verifyGoldCommercePercent` raises the slider (CvPlayer.cpp:17978):**
-```
-[FIN/slider] turn=N player=P oldSlider=X newSlider=Y gold=G
-```
-Makes the silent auto-correction visible.
-
-### 4-D. `/diagnostic/financeBreakdown?player=N` endpoint (optional Tier 4 addition)
-
-A new diagnostic endpoint that returns the full finance breakdown on demand:
-```json
-{
-  "player": N, "turn": T,
-  "gold": G, "goldRate": R,
-  "finalExpense": E, "preInflated": PI,
-  "inflationMod": IM, "inflationCost": IC,
-  "components": {
-    "treasuryUpkeep": TU, "totalMaintenance": M,
-    "civicUpkeep": CU, "unitUpkeep": UU,
-    "unitSupply": US, "corpMaintenance": CM
-  },
-  "inflationSources": {
-    "building": BI, "civic": CI, "project": PI, "tech": TI,
-    "event": EI, "rebel": RB, "hurriedCount": HC
-  },
-  "isStrike": false, "strikeTurns": 0,
-  "goldSlider": GS, "isAnarchy": false,
-  "aiFinancialTrouble": null
-}
-```
-This is evaluated on the game thread via the mailbox pattern (same as `placementSweep`), never
-the server thread.
+### 4-D. `/diagnostic/financeBreakdown?player=N` (optional, Tier 4)
+Full breakdown on demand (mailbox / game-thread, the `placementSweep` pattern): `gold`, `goldRate`,
+`finalExpense`, `preInflated`, `inflationMod`/`inflationCost`, a `components` block
+(treasuryUpkeep/totalMaintenance/civicUpkeep/unitUpkeep/unitSupply/corpMaintenance), an `inflationSources`
+block (building/civic/project/tech/event/rebel/hurriedCount), `isStrike`/`strikeTurns`, `goldSlider`,
+`isAnarchy`, `aiFinancialTrouble`.
 
 ---
 
 ## 5. Tier self-assessment
 
-| Tier | Name | Status |
-|---|---|---|
-| **0** Oblivious | Nothing visible | Met — HTTP server exists |
-| **1** Telescreen | `/players` `gold` + `goldRate` | **MET** — but goldRate is an opaque net |
-| **2** Informant | + buildability diagnostics | Met for buildings; NOT met for finance |
-| **3** Big Brother | + per-turn stream + maintainer shadows | NOT met for finance |
-| **4** Thought Police | + every maintainer shadowed | NOT met for finance |
-| **5** Thought Police | + every decision input readable | NOT met for finance |
+| Tier | Status |
+|---|---|
+| **1** Telescreen | **MET** — `/players` `gold` + `goldRate`, but `goldRate` is an opaque net |
+| **2** Informant | NOT met for finance (buildability diagnostics are orthogonal) |
+| **3** Big Brother | NOT met — would be reached by §4-A `/players` + §4-B `/cities` + `[FIN/turn]`/`[FIN/aitroubled]` |
+| **4** Thought Police | NOT met — `/diagnostic/financeBreakdown` (§4-D) closes it |
 
-**Gold/maintenance/inflation is at Tier 1 today.**  The proposed hooks in §4 (new `/players`
-fields + `/cities` maintenance fields + `[FIN/turn]` log line) would bring it to **Tier 3**
-(the Big Brother: per-turn stream exposes every component and `[FIN/aitroubled]` makes the
-AI decision gate visible).  The `/diagnostic/financeBreakdown` endpoint would bring it
-to **Tier 4**.
-
-The gap is larger than it first appears because the finance system is the primary lever the
-AI uses to decide whether to build units, research techs, adopt civics, and make diplomatic
-offers — all of which are currently invisible from the event stream when financially
-motivated.
+**Current tier: 1.** The gap is larger than it looks: finance is the primary lever the AI uses to decide
+whether to build units, research, adopt civics, and make diplomatic offers — all invisible from `/events`
+when financially motivated.
 
 ---
 
-*Cross-references:*
-- `../plans/cascade-mapping-inventory.md` — §A opaque systems; §D the Observability Scale
-- `../http-server.md` — the live surface
-- `../ai-logging-reference.md` — the tag taxonomy; add `[FIN]` to §2 when hooks land
-- `CvPlayer.cpp` — finance functions; see line references above
-- `CvCity.cpp` — city maintenance; see line references above
+## See also
+- [`README.md`](README.md) — the observability scale + the three canonical hook shapes ([DEC-obs-scale], [DEC-obs-hook-shapes]) this map assesses against.
+- [`http-server.md`](http-server.md) — the live surface these snapshot fields/endpoints attach to, and the live-read rules.
+- [`unit-upkeep-supply.md`](unit-upkeep-supply.md) — the per-unit upkeep + supply mechanics that feed §1-F/§1-G's `getFinalUnitUpkeep`/`calculateUnitSupply` aggregates here.
+- [`../../explanation/cascade-architecture.md`](../../explanation/cascade-architecture.md) — why total observability is load-bearing ([DEC-map-before-delete](../../architecture/decisions.md#dec-map-before-delete)).
+- [`../../README.md`](../../README.md) — the comprehension map / overview-of-overviews.
+
+[DEC-obs-scale]: ../../architecture/decisions.md#dec-obs-scale
+[DEC-obs-hook-shapes]: ../../architecture/decisions.md#dec-obs-hook-shapes

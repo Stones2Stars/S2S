@@ -32,7 +32,7 @@ root `AGENTS.md`.
   define `FASSERT_ENABLE`, per `fbuild.bff` — *not* the `.vcxproj`). FinalRelease is the build players
   run, so to verify anything in a FinalRelease run use the gated logging system (`[PERF]` via
   `gPerfLogLevel`/`Autolog__LogLevelPerf`, or a `log<Domain>AI` helper), which ships in every DLL —
-  see `docs/reference/ai-logging-reference.md`.
+  see `docs/dev/reference/observability/ai-logging-reference.md`.
 - `fbuild.bff` is the source-of-truth for compiled directories (the `.vcxproj` is IDE-only).
   New `Sources/<Dir>/` must be added to `fbuild.bff`'s `.UnityInputPath` (~line 201) **and** the `.vcxproj`(+`.filters`),
   or FastBuild fails at link with `LNK2001` while the IDE compiles fine.
@@ -42,7 +42,11 @@ root `AGENTS.md`.
 
 ## Conventions
 
-- Prefer minimal, local changes in large core files.
+- Prefer minimal, local changes in large core files. **"Minimal, local" bounds the SIZE of an edit, NOT the
+  SCOPE of the work (owner clarification 2026-06-20):** a targeted fix inside a tightly-coupled core file stays
+  minimal — don't sprawl it or gratuitously refactor around it — but this is **no brake** on deliberate
+  structural rework (the #428/#430 cascade, the docs rebuild, dissolving the `Cv*AI` god-classes), which is
+  large by design and answers to [DEC-proper-once](../docs/dev/architecture/decisions.md#dec-proper-once).
 - Preserve save compatibility by default; for intentional save breaks, coordinate and mark with `@SAVEBREAK` where relevant.
 - If C++ changes affect XML/Python interfaces, validate related XML and callback references.
 
@@ -54,11 +58,11 @@ root `AGENTS.md`.
 
 ## Reference Docs
 
-- **Developer docs index: [`docs/dev/README.md`](docs/README.md)** — split into
-  `docs/reference/` (how the code works today, one note per class/system) and
-  `docs/plans/` (refactor scopes, rollouts, removal maps, standing initiatives).
+- **Developer docs index: [`docs/dev/README.md`](../docs/dev/README.md)** — split into
+  `docs/dev/reference/` (how the code works today, one note per class/system) and
+  `docs/dev/plans/` (refactor scopes, rollouts, removal maps, standing initiatives).
   Player-facing documentation lives separately under the top-level `docs/` folder.
-- When you add a dev note: behaviour-as-it-is → `docs/reference/`; intended change → `docs/plans/`.
+- When you add a dev note: behaviour-as-it-is → `docs/dev/reference/`; intended change → `docs/dev/plans/`.
 - Setup flow: `DevSetup.bat`
 - CI flow: `appveyor.yml`
 - Source formatting policy: `Sources/.editorconfig`

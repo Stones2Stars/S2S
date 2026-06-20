@@ -1,333 +1,278 @@
-> DRAFT observability map (2026-06-18, parent agent) — claims cited from code; verify before relying.
+# Observability — Trade routes & connectivity — what's on the wire for routes and the bonus oracle
 
-# Observability map: Trade routes & connectivity
+> **Status:** reference   ·   **Verified against:** 2026-06-20 (function sites re-confirmed in `Sources/Engine/CvCity.cpp`/`CvPlot.cpp`/`CvPlayer.cpp`; `/diagnostic/cityInput` trade block confirmed in `Sources/Tools/CvHttpServer.cpp:1374`)
+> **Grounding:** live `Sources/Engine/CvCity.cpp` (route formation / profit / yield), `Sources/Engine/CvPlot.cpp` + `Sources/Engine/CvPlotGroup.cpp` (trade/bonus network), `Sources/Engine/CvPlayer.cpp` (eligibility / player knobs), `Sources/Tools/CvHttpServer.cpp` (`/cities`, `/diagnostic/cityInput`). Carried over from the old draft map; function sites re-confirmed, paths re-grounded to the reorganized `Sources/` tree, and the "trade yield not exposed" claim **corrected** (it now is, via `cityInput` — see §2.1).
+> Trade routes are **Tier 1–2** today. The `/cities` snapshot folds trade yield into the `commerce` total, but the newer `/diagnostic/cityInput` dump now exposes per-city `tradeRoutes`/`maxTradeRoutes`/per-yield `tradeYield` on demand. What remains dark is the **route topology** (who trades with whom), per-route profit, and — most load-bearing for the cascade — the **per-city bonus-connection state** (`hasBonus`, the plot-group bonus oracle) and capital connectivity. This map walks the mechanics, names what is and isn't observable, and proposes the snapshot fields / `[TRD]` log domain / topology endpoint that climb it.
 
-**System:** Trade routes (per-city commerce-yield generation) + the plot-group / bonus-connectivity
-network (the cascade's BONUS-connection oracle).
-**Anchor files:** `Sources/CvCity.cpp`, `Sources/CvPlot.cpp`, `Sources/CvPlotGroup.cpp`, `Sources/CvPlayer.cpp`
-**Context:** #428/#430 "render from API without looking at the screen" bar
-(cascade-mapping-inventory.md §A, §D).
+The observability scale (0–5) and the three canonical hook shapes are defined once in
+[`README.md`](README.md) ([DEC-obs-scale], [DEC-obs-hook-shapes]); the live surface and the rules for
+reading it (logs held open mid-session, use `/events` + `/diagnostic`) live in
+[`http-server.md`](http-server.md). This doc does not restate them.
+
+> **Cascade relevance:** the plot-group bonus-connectivity network is the cascade's **resource-dormancy
+> oracle** — `requires.operate` calls `hasBonus(eBonus)`, which resolves through the plot group's bonus
+> count. Until that is surfaced, the resource-dormancy shadow cannot be verified from the API. See
+> [`../../explanation/cascade-architecture.md`](../../explanation/cascade-architecture.md).
+
+> Line numbers below are anchors at time of writing and **drift** — confirm the named function, not the
+> integer.
 
 ---
 
-## 1. How it actually works
+## 1. How it actually works — route formation & connectivity
 
-### 1a. Per-city trade-route slot count
-
-A city's slot budget is: `CvCity::getTradeRoutes()` (`CvCity.cpp:15336`):
+### 1.1 Per-city slot budget (`CvCity::getTradeRoutes`, CvCity.cpp:15347)
 
 ```
-slots = GC.getGame().getTradeRoutes()         // game-level global (votes/events)
-      + GET_PLAYER(owner).getTradeRoutes()     // player-level delta (civics/techs/traits)
-      + (isCoastal ? player.getCoastalTradeRoutes() : 0)   // coastal bonus
-      + city.getExtraTradeRoutes()             // building-contributed local delta
-capped at [0, getMaxTradeRoutes()]             // hard ceiling = GC.getMAX_TRADE_ROUTES()
-                                               //   + player.getMaxTradeRoutesAdjustment()
+slots = GC.getGame().getTradeRoutes()                    // game-level (votes/events)
+      + GET_PLAYER(owner).getTradeRoutes()               // player delta (civics/techs/traits)
+      + (isCoastal ? player.getCoastalTradeRoutes() : 0) // coastal bonus
+      + city.getExtraTradeRoutes()                        // per-building local delta
+capped at [0, getMaxTradeRoutes()]                        // MAX_TRADE_ROUTES + player adjustment
 ```
+Contributor knobs: `CvGame::getTradeRoutes` (votes/congress); `CvPlayer::getTradeRoutes`/`changeTradeRoutes`
+(civics/tech/traits); `CvPlayer::getCoastalTradeRoutes` (CvPlayer.cpp:11083, building tag);
+`CvCity::changeExtraTradeRoutes` (CvCity.cpp:9885, per-building `getTradeRoutes()`).
 
-The three contributor knobs are changed by:
-- `CvGame::getTradeRoutes` (`CvGame.cpp:3754`) — votes, world congress events.
-- `CvPlayer::getTradeRoutes` / `changeTradeRoutes` (`CvPlayer.cpp:11099`) — civics
-  (`CvCivicInfo::getTradeRoutes`), tech research (`CvPlayer.cpp:30883`), traits
-  (`CvPlayer.cpp:28516`).
-- `CvPlayer::getCoastalTradeRoutes` / `changeCoastalTradeRoutes` (`CvPlayer.cpp:11083`) —
-  building effect tag `getCoastalTradeRoutes()`.
-- `CvCity::changeExtraTradeRoutes` (`CvCity.cpp:9875`) — per-building `kBuilding.getTradeRoutes()`.
+### 1.2 Route formation (`CvCity::updateTradeRoutes`, CvCity.cpp:15379)
 
-### 1b. Route formation — `CvCity::updateTradeRoutes` (`CvCity.cpp:15368`)
-
-Called eagerly on every modifier change (building added/removed, civic change, tech, disorder/plague
-change, plunder state change), **not** in doTurn directly. It:
-
-1. Clears all current routes (`clearTradeRoutes`, `CvCity.cpp:15351`) — sets `m_paTradeCities` back
-   to empty `IDInfo` slots and clears the boolean `m_abTradeRoute[ePlayer]` flags on previously-routed
-   cities.
-2. If the city is disordered, plundered, or quarantined — route count collapses to zero
-   (`CvCity.cpp:15377`).
-3. Otherwise iterates **all alive players** and **all their cities** to find candidates
-   (`CvCity.cpp:15383`):
-   - `canHaveTradeRoutesWith(iI)` — diplomatic eligibility (see §1c).
-   - `pLoopCity->plotGroup(owner) == plotGroup(owner)` — **plot-group connectivity test**
-     (`CvCity.cpp:15393`); `GC.getIGNORE_PLOT_GROUP_FOR_TRADE_ROUTES()` is a global bypass
-     (off by default). Two cities must be in the **same `CvPlotGroup` for the owning player** to
-     form a route.
-   - A city may not already have a route from this owner (one-route-per-city-per-player cap),
-     unless they are on the same team.
-4. Scores each candidate via `calculateTradeProfit(pLoopCity)` (`CvCity.cpp:11629`) and inserts into
-   a best-N sorted list — greedy descending selection. The score formula:
-   - `getBaseTradeProfit(pCity)` (`CvCity.cpp:11585`) = `min(theirPop × THEIR_POPULATION_TRADE_PERCENT,
+Called **eagerly on every modifier change** (building add/remove, civic, tech, disorder/plague/plunder),
+**not** in `doTurn`. It:
+1. Clears current routes (`clearTradeRoutes`, CvCity.cpp:15362) — resets `m_paTradeCities` and the
+   destination `m_abTradeRoute[ePlayer]` flags.
+2. If disordered/plundered/quarantined → route count collapses to zero (§1.6).
+3. Otherwise iterates all alive players and their cities for candidates, gating on:
+   - `canHaveTradeRoutesWith(iI)` — diplomatic eligibility (§1.3).
+   - `pLoopCity->plotGroup(owner) == plotGroup(owner)` — **plot-group connectivity test** (the two
+     cities must be in the same `CvPlotGroup` for the owning player); `IGNORE_PLOT_GROUP_FOR_TRADE_ROUTES`
+     is a global bypass (off by default).
+   - one-route-per-destination-per-player cap (unless same team).
+4. Scores each via `calculateTradeProfit(pLoopCity)` (CvCity.cpp:11630) into a best-N descending list:
+   - `getBaseTradeProfit(pCity)` (CvCity.cpp:11595) = `min(theirPop × POPULATION_TRADE_PERCENT,
      plotDistance × world_TradeProfitPercent) × TRADE_PROFIT_PERCENT / 100`, floor 100.
-   - `totalTradeModifier(pCity)` (`CvCity.cpp:11517`) — a percentage modifier starting at 100:
-     - `+getTradeRouteModifier()` (building tags)
-     - `+getPopulationTradeModifier()` (own pop)
-     - `+GET_TEAM(team).getTradeModifier()` (team-level)
-     - `+GC.getCAPITAL_TRADE_MODIFIER()` if `isConnectedToCapital()` (`CvCity.cpp:11526`)
-     - `+GC.getOVERSEAS_TRADE_MODIFIER()` if different area
-     - `+getForeignTradeRouteModifier()` + player/team foreign bonuses + shared-civic bonus
-       + `getPeaceTradeModifier` if foreign team
-5. After slot fill, calls `setTradeYield` for each yield type from the summed profit
-   (`CvCity.cpp:15447`).
+   - `totalTradeModifier(pCity)` (CvCity.cpp:11527) — a percentage starting at 100, plus
+     `getTradeRouteModifier()` + `getPopulationTradeModifier()` + team `getTradeModifier()` +
+     `CAPITAL_TRADE_MODIFIER` (if `isConnectedToCapital`) + `OVERSEAS_TRADE_MODIFIER` (different area) +
+     foreign/peace/shared-civic bonuses.
+5. After fill, `setTradeYield` (CvCity.cpp:11507) per yield type from the summed profit; the destination
+   city's `m_abTradeRoute[ePlayer]` is set so it is not double-selected.
 
-The **`m_abTradeRoute[ePlayer]` boolean array** on the *destination* city is set true when it is
-selected (`CvCity.cpp:15435`). This is how `updateTradeRoutes` avoids selecting the same destination
-city twice for different source cities of the same non-team player.
+`CvPlayer::updateTradeRoutes` (CvPlayer.cpp:4274) iterates a player's cities highest-modifier-first so
+stronger trade cities get first pick of destinations.
 
-**`CvPlayer::updateTradeRoutes` (`CvPlayer.cpp:4272`)** iterates a player's cities
-highest-modifier-first and calls each city's `updateTradeRoutes()` in that order, ensuring cities
-with more trade power get first pick of destinations.
+### 1.3 Diplomatic eligibility (`CvPlayer::canHaveTradeRoutesWith`, CvPlayer.cpp:24210)
 
-### 1c. Diplomatic eligibility — `canHaveTradeRoutesWith` (`CvPlayer.cpp:24210`)
+True if: same team; OR free-trade/limited-borders/`forceAllTradeRoutes > 0` active **and** (vassal
+relationship OR both players `!isNoForeignTrade()`). `forceAllTradeRoutes` is incremented by buildings
+with `isForceAllTradeRoutes()`.
 
-Returns true if:
-- Same team (always), OR
-- Free trade / limited borders OR `forceAllTradeRoutes > 0` is active **AND** at least one of:
-  vassal relationship, OR both players pass `!isNoForeignTrade()`.
+### 1.4 The plot-group / connectivity network (`CvPlotGroup`)
 
-`forceAllTradeRoutes` is incremented by buildings with `isForceAllTradeRoutes()` tag
-(`CvCity.cpp:12333`).
+Each owned plot belongs to a `CvPlotGroup` for that player — a **connected component** of plots that are
+on the trade network (`CvPlot::isTradeNetwork`, CvPlot.cpp:5653: not at war, not blockaded, not
+trade-impassable, owned/revealed, and on the bonus network `isBonusNetwork` CvPlot.cpp:5645: a route OR
+river OR network terrain). Adjacency is `isTradeNetworkConnected` (CvPlot.cpp:5681).
 
-### 1d. Plot-group / connectivity network — `CvPlotGroup`
+`CvPlotGroup::m_paiNumBonuses` tracks how many of each `BonusType` the group "sees". A city's
+`hasBonus(eBonus)` is true when its plot group for the owning player holds ≥1 of that bonus — the
+cascade's **bonus-connection oracle**. Updated by `CvPlot::updatePlotGroup(PlayerTypes)` (CvPlot.cpp:8925,
+fired on route/improvement/bonus/city/blockade changes; deferred during bulk ops) and the bonus-accounting
+side `updatePlotGroupBonus` (CvPlot.cpp:1752).
 
-Each plot owned by a player belongs to a `CvPlotGroup` for that player
-(`CvPlot::getPlotGroup(ePlayer)`). A group is a **connected component** of plots that are:
-- On the trade network (`CvPlot::isTradeNetwork(eTeam)`, `CvPlot.cpp:5618`): not at war with the
-  owning team, not blockaded, not trade-impassable, owned or revealed, and on the **bonus network**
-  (`isBonusNetwork`, `CvPlot.cpp:5610`): is a route OR river network OR network terrain.
-- Adjacent connectivity is computed by `isTradeNetworkConnected` (`CvPlot.cpp:5646`): route↔route,
-  city↔network-terrain, network-terrain↔network-terrain, and river-network adjacency rules.
+`isConnectedToCapital` (CvCity.cpp:6681) = same plot group as the capital; feeds the
+`CAPITAL_TRADE_MODIFIER` and maintenance. A city not connected to the capital loses the modifier but keeps
+routes sharing a plot group (groups can exist without the capital).
 
-The `CvPlotGroup::m_paiNumBonuses` array tracks how many of each `BonusType` the group "sees"
-(`CvPlotGroup::getNumBonuses`). A city's `hasBonus(eBonus)` (`CvCity.cpp`) is true when the city's
-plot group for the owning player contains at least one unit of that bonus — this is the cascade's
-**BONUS-connection oracle**.
+### 1.5 Yield conversion (`setTradeYield` / profit → yield)
 
-**Plot-group update triggers** (`CvPlot::updatePlotGroup`, `CvPlot.cpp:8846`): fired whenever a
-plot's trade-network membership may change — route built/destroyed, improvement placed/removed,
-bonus visibility change, city founded/razed, blockade placed/lifted. The update walks the connected
-component graph and rebuilds groups via `colorRegion`. Because it is O(network size) it is deferred
-during bulk operations (`startBulkRecalculate`/`endBulkRecalculate`).
+`tradeProfit × player.getTradeYieldModifier(eIndex) / 100` → the per-yield trade contribution stored as
+`m_aiTradeYield[eIndex]` and read by `getTradeYield(eIndex)` (CvCity.cpp:11520). Typically `YIELD_COMMERCE`,
+but food/production if those modifiers are non-zero.
 
-`updatePlotGroupBonus` (`CvPlot.cpp:1717`) is the bonus-accounting side: called when a plot joins
-or leaves a group — adds/removes the plot's contributed bonuses (raw extracted bonuses + city free
-bonuses, capital import/export adjustments).
+### 1.6 Suppression triggers
 
-**Capital connectivity** (`isConnectedToCapital`, `CvCity.cpp:6671`) = `plot()->isConnectedToCapital`
-= same plot group as the capital. Used in `totalTradeModifier` for the
-`+CAPITAL_TRADE_MODIFIER` bonus and in maintenance calculation
-(`CvCity.cpp:7445`). A city that is not connected to the capital loses the modifier but keeps any
-routes that share a plot group (plot groups can exist that don't contain the capital).
-
-### 1e. Yield conversion — `calculateTradeYield` (`CvCity.cpp:11642`)
-
-`tradeProfit × player.getTradeYieldModifier(eIndex) / 100` — converts the raw profit value to a
-yield of type `eIndex` (typically `YIELD_COMMERCE`). If the yield modifier is 0, that yield type
-gets nothing.
-
-### 1f. Suppression triggers
-
-`updateTradeRoutes` immediately zeros routes when any of these become true
-(`CvCity.cpp:15377`): `isDisorder()`, `isPlundered()`, `isQuarantined()`. All three conditions
-call `updateTradeRoutes` on change (disorder via `CvCity::setOccupationTimer` `CvCity.cpp:10229`;
-plunder via `setPlundered` `CvCity.cpp:10341`; quarantine wires similarly).
+`updateTradeRoutes` zeros routes when `isDisorder()`, `isPlundered()`, or `isQuarantined()` — each of
+which calls `updateTradeRoutes` on change.
 
 ---
 
-## 2. Current observability
+## 2. What's on the wire today — **Tier 1–2**
 
-**Tier: 1 — Telescreen** (coarse snapshot; barely above Tier 0 for this subsystem).
-
-### What is already exposed
+### 2.1 What IS observable
 
 | What | Where | Notes |
 |---|---|---|
-| City `commerce` rate | `GET /cities` → `commerce` field (`CvHttpServer.cpp:348`) | `YIELD_COMMERCE` total including trade yield. Trade yield is **folded in** — not broken out. |
-| City `food` + `production` rates | `GET /cities` | Likewise, totals only. |
-| City `population` | `GET /cities` | Input to `getBaseTradeProfit` / `getPopulationTradeModifier`. |
-| City `capital` flag | `GET /cities` | Boolean; needed to determine `isConnectedToCapital`. |
-| Player `gold` + `goldRate` + `scienceRate` | `GET /players` | These are downstream aggregates of commerce; trade yield contributes indirectly. |
-| Building bonus prereqs (diagnostic only) | `GET /diagnostic/canConstruct` `unitBonusPrereqs` field (`CvHttpServer.cpp:901`) | Only in the canTrain diagnostic; whether the **city** currently has the bonus is answered as `and:yes/NO` — but this only covers the diagnostic path for one building/unit at a time. |
-| Building `hasBonus` gate | `GET /diagnostic/canConstruct` → `legacyReason: "bonus"` (`CvHttpServer.cpp:559`) | Diagnostic path only; not in the `/cities` snapshot. |
+| City `commerce`/`food`/`production` rates | `GET /cities` | Trade yield is **folded into** these totals — not broken out here |
+| City `population`, `capital` flag | `GET /cities` | Inputs to `getBaseTradeProfit` / `isConnectedToCapital` |
+| Player `gold`/`goldRate`/`scienceRate` | `GET /players` | Downstream commerce aggregates |
+| **Per-city `tradeRoutes` (active count)** | `GET /diagnostic/cityInput?player=N&city=M` → `tradeRoutes.tradeRoutes` (CvHttpServer.cpp:1377) | **Now exposed** — corrects the old "not published" claim |
+| **Per-city `maxTradeRoutes`** | `/diagnostic/cityInput` → `tradeRoutes.maxTradeRoutes` (CvHttpServer.cpp:1378) | **Now exposed** |
+| **Per-city trade yield (food/prod/commerce)** | `/diagnostic/cityInput` → `tradeRoutes.tradeYield*` (CvHttpServer.cpp:1379-1381) | **Now exposed** — the realized `getTradeYield(YIELD_*)` breakout. Per-partner profit is **not** reproduced offline (noted in the dump) |
+| Per-city `hasBonus` (narrow) | `/diagnostic/canConstruct` → `legacyReason:"bonus"` / `cityInput` resources list (CvHttpServer.cpp:563, 1062) | Only the diagnostic path for one building/loadout at a time — not a general per-city bonus list |
 
-### What is NOT exposed (the gap)
+### 2.2 What is NOT observable
 
-None of the following is in any snapshot endpoint or log stream:
-
-1. **Which cities are connected by a route** — the `m_paTradeCities` list (destinations, by city
-   owner/id) is not published anywhere. You cannot tell from the API who trades with whom.
-2. **Per-city trade yield** — `CvCity::getTradeYield(YIELD_COMMERCE)` and
-   `getTradeYield(YIELD_FOOD)` / `YIELD_PRODUCTION` (trade can yield food/production too if the
-   modifiers are nonzero) are not in the `/cities` snapshot.
-3. **Per-city route count** — `getTradeRoutes()` (number of active slots used) is not published.
-4. **Per-route profit** — `calculateTradeProfit(pOtherCity)` per active route; not published.
-5. **Per-city `totalTradeModifier`** — the percentage modifier that determines route priority and
-   profit; not published.
-6. **`isConnectedToCapital` per city** — not a field in `/cities`. Critical for the cascade
-   `requires` atom (`CAPITAL_TRADE_MODIFIER` and maintenance modifier gating).
-7. **Plot-group membership / bonus-connection state** — `plotGroup(owner)` per city is not
-   published. Whether two cities are in the same plot group is invisible.
-8. **Per-city `hasBonus` for all bonus types** — `CvCity::hasBonus(eBonus)` (= bonus in plot
-   group) is answered only in the narrow diagnostic path (`canConstruct`/`canTrain`), not as a
-   general per-city observable.
-9. **Diplomatic eligibility** — `canHaveTradeRoutesWith(ePlayer)` per player pair is not
-   published; cannot reconstruct which trade partners are possible.
-10. **Suppression state** — `isDisorder()`, `isPlundered()`, `isQuarantined()` are not fields in
-    `/cities`; cannot tell from outside why a city has 0 trade yield.
-11. **Player-level trade knobs** — `getTradeRoutes()`, `getCoastalTradeRoutes()`,
-    `getMaxTradeRoutesAdjustment()`, `isNoForeignTrade()`, `getForceAllTradeRoutes()` are absent
-    from `/players`.
-12. **No trade-route log tags exist** — there is no `[TRD]` or equivalent domain in the AI
-    logging registry (`BetterBTSAI.cpp`, `ai-logging-reference.md §2`). Zero per-turn observability
-    from the log stream.
-13. **`/tally` endpoint not yet built** — the planned bonus-count tally (`/tally` per
-    `http-server.md §Planned`) does not exist; no count-of-bonus-X-in-empire is queryable.
-
----
-
-## 3. The gap — what cannot be reconstructed from outside today
-
-Given only the current `/cities` + `/players` + `/events` + log stream:
-
-- **Cannot identify active trade routes at all.** The `commerce` field in `/cities` is the sum of
-  all commerce sources; there is no way to decompose how much is from trade vs base yields vs
-  specialist slots vs buildings.
-- **Cannot assess connectivity.** Whether a city is connected to the capital (plot-group
-  membership) cannot be determined — this matters both for trade route value and for building
-  maintenance modifiers, which the cascade must reproduce correctly.
-- **Cannot assess bonus-connection state.** The cascade's `requires.operate` uses `hasBonus` as
-  its resource-dormancy oracle. For every building that requires a bonus, the cascade needs to know
-  whether each city is in a plot group containing that bonus. This is the most load-bearing gap
-  relative to the #430 cascade rework — if bonus-connection state is invisible, resource-dormancy
-  shadows (B-ii in cascade-mapping-inventory.md) cannot be verified from the API.
-- **Cannot explain why a city's commerce changed.** No event fires when trade routes are
-  recalculated; `updateTradeRoutes` is called eagerly but silently.
-- **Cannot reconstruct the profit formula inputs per route.** `baseTradeProfit` is driven by
-  `theirPop` and `plotDistance`; `totalTradeModifier` is driven by 8+ factors. None of these are
-  individually surfaced.
-- **Cannot determine which player pairs have diplomatic eligibility for trade.** Cascade needs
-  this if it ever models route formation rather than just dormancy.
-
----
-
-## 4. Proposed hooks — concrete additions to climb from Tier 1 to Tier 3
-
-The additions below are cheap, gated, and match the existing patterns in `CvHttpServer.cpp` and
-the `[TAG]` log system. They are ordered by cascade-criticality: the bonus-connection oracle
-and capital-connectivity are the highest-value items for the #430 rework.
-
-### Priority 1 — `/cities` snapshot fields (server-thread safe; add to `CitySnap` + publish)
-
-These are read-only scalar/boolean fields captured from the game thread during `publishIfDue`
-(`CvHttpServer.cpp:1542` loop), same pattern as `iCommerce`, `iCapital`:
-
-| Field name | Engine call | Purpose |
+| State | Function | Significance |
 |---|---|---|
-| `connectedToCapital` | `pLoopCity->isConnectedToCapital()` | Connectivity oracle for cascade dormancy + maintenance modifier |
-| `tradeRoutes` | `pLoopCity->getTradeRoutes()` | Slot count in use (not the max — the active count) |
-| `tradeYield` | `pLoopCity->getTradeYield(YIELD_COMMERCE)` | Commerce contributed by trade (breakout from `commerce` total) |
-| `disordered` | `pLoopCity->isDisorder()` | Suppression reason 1 |
-| `plundered` | `pLoopCity->isPlundered()` | Suppression reason 2 |
-| `quarantined` | `pLoopCity->isQuarantined()` | Suppression reason 3 |
-| `tradeRouteModifier` | `pLoopCity->totalTradeModifier()` | Priority-ordering observable |
+| Route topology (who → who) | `m_paTradeCities` | Which cities are connected by a route is published nowhere |
+| Per-route profit | `calculateTradeProfit(pOther)` | Per active route; not published |
+| Per-city `totalTradeModifier` | `totalTradeModifier()` (CvCity.cpp:11527) | The priority/profit modifier; not published |
+| `isConnectedToCapital` per city | `isConnectedToCapital()` (CvCity.cpp:6681) | Cascade `requires` atom (`CAPITAL_TRADE_MODIFIER` + maintenance); not a snapshot field |
+| Plot-group membership | `plotGroup(owner)` | Whether two cities share a group is invisible |
+| **Per-city connected-bonus set** | `hasBonus(eBonus)` over all bonuses | The cascade resource-dormancy oracle; only the narrow diagnostic path answers it today |
+| Diplomatic eligibility | `canHaveTradeRoutesWith(P)` per pair | Cannot reconstruct possible trade partners |
+| Suppression state | `isDisorder()`/`isPlundered()`/`isQuarantined()` | Cannot tell from outside why a city has 0 trade yield |
+| Player trade knobs | `getTradeRoutes`/`getCoastalTradeRoutes`/`isNoForeignTrade`/`getForceAllTradeRoutes` | Absent from `/players` |
+| `[TRD]` log domain | — | No trade-route log tag exists; zero per-turn observability from the log stream |
 
-### Priority 2 — `/cities` extended: per-city bonus-connection list
+---
 
-The most load-bearing missing piece for the cascade. Add to `CitySnap` as an optional array
-(only when `?bonuses=1` query param is set, to avoid snapshot bloat by default):
+## 3. The gap
 
+Given the current surface, an observer **cannot**:
+
+1. **Identify active routes at all.** `commerce` is the sum of all sources; `/diagnostic/cityInput`
+   gives the per-city trade *yield total* and route *count*, but not the topology — no way to see who
+   trades with whom or the per-route profit.
+2. **Assess connectivity.** `isConnectedToCapital` (plot-group membership) is not surfaced — it matters
+   for both route value and maintenance modifiers the cascade must reproduce.
+3. **Assess bonus-connection state.** The most load-bearing gap for the cascade: `requires.operate` uses
+   `hasBonus` as its resource-dormancy oracle, but the per-city connected-bonus set is only answerable
+   through the narrow `canConstruct`/`cityInput`-loadout diagnostic, not as a general per-city observable.
+   Until it is, the resource-dormancy shadow cannot be verified from the API.
+4. **Explain why commerce changed.** `updateTradeRoutes` is called eagerly but **silently** — no event
+   fires when routes recalculate (e.g. a road pillaged splitting a plot group and dropping routes).
+5. **Reconstruct the profit inputs.** `baseTradeProfit` (theirPop, plotDistance) and the 8+-factor
+   `totalTradeModifier` are surfaced nowhere individually.
+6. **Determine diplomatic eligibility** for any player pair.
+
+---
+
+## 4. Proposed hooks (concrete additions)
+
+All hooks follow the three canonical hook shapes — see [DEC-obs-hook-shapes]. Ordered by
+cascade-criticality: the bonus-connection oracle and capital connectivity are highest-value for the rework.
+
+### 4.1 `/cities` snapshot fields (HIGH) — snapshot-field shape
+
+Read-only scalars captured during `publishIfDue`, same pattern as `commerce`/`capital`:
+
+| Field | Engine call | Purpose |
+|---|---|---|
+| `connectedToCapital` | `isConnectedToCapital()` | Connectivity oracle for cascade dormancy + maintenance modifier |
+| `tradeRoutes` | `getTradeRoutes()` | Active slot count (promote from `cityInput` to the polling snapshot) |
+| `tradeYield` | `getTradeYield(YIELD_COMMERCE)` | Commerce-from-trade breakout from the `commerce` total |
+| `disordered` / `plundered` / `quarantined` | `isDisorder()` / `isPlundered()` / `isQuarantined()` | The three suppression reasons |
+| `tradeRouteModifier` | `totalTradeModifier()` | Priority-ordering observable |
+
+### 4.2 Per-city connected-bonus list (HIGH) — snapshot-field shape
+
+The most load-bearing piece for the cascade. Add to the `/cities` snapshot as an optional array, gated on
+`?bonuses=1` to avoid default bloat:
 ```json
 "connectedBonuses": ["BONUS_IRON", "BONUS_WHEAT"]
 ```
+Iterate `GC.getNumBonusInfos()`, emit type strings where `hasBonus((BonusTypes)i)` is true. This directly
+enables the resource-dormancy shadow — promoting `hasBonus` from the narrow diagnostic path to a general
+per-city observable.
 
-Implementation: iterate `GC.getNumBonusInfos()`, emit bonus type strings where
-`pLoopCity->hasBonus((BonusTypes)iI)` is true. Gated on a query param so the default
-snapshot stays small. This directly enables the resource-dormancy shadow (B-ii,
-cascade-mapping-inventory.md).
+### 4.3 `/players` snapshot fields (MEDIUM) — snapshot-field shape
 
-### Priority 3 — `/players` snapshot fields
+`tradeRoutes` (`getTradeRoutes()`), `coastalTradeRoutes` (`getCoastalTradeRoutes()`), `noForeignTrade`
+(`isNoForeignTrade()`), `forceAllTradeRoutes` (`getForceAllTradeRoutes()`) — the player-level slot/diplomacy
+knobs.
 
-Add to `PlayerSnap` (same publish loop, `CvHttpServer.cpp:~1520`):
+### 4.4 `[TRD]` log domain (MEDIUM) — gated-log shape
 
-| Field name | Engine call | Purpose |
-|---|---|---|
-| `tradeRoutes` | `kPlayer.getTradeRoutes()` | Player-level delta toward city slot budget |
-| `coastalTradeRoutes` | `kPlayer.getCoastalTradeRoutes()` | Coastal bonus pool |
-| `noForeignTrade` | `kPlayer.isNoForeignTrade()` | Diplomatic trade block flag |
-| `forceAllTradeRoutes` | `kPlayer.getForceAllTradeRoutes()` | Building-driven foreign override |
+Add a `logTradeAI` helper (copy any existing `log<Domain>AI`, scope `gPlayerLogLevel`, new file
+`TradeRoutes.log`), teed to `/events`:
+- **`[TRD/update]`** (level 1) — at the start of `updateTradeRoutes` when the route set actually changes:
+  `city=ID owner=N routes=N reason=modifier|building|civic|plotGroup|suppressed`. Self-throttles (on change only).
+- **`[TRD/route]`** (level 2) — one line per committed slot: `src=ID dst=ID dstOwner=N profit=N modifier=N`.
+  Full per-turn route topology.
+- **`[TRD/plotGroup]`** (level 1) — in `updatePlotGroup(Player)` when a city's group membership changes:
+  `city=ID player=N newGroup=ID oldGroup=ID`. Makes connectivity changes visible in `/events`.
+- **`[TRD/bonus]`** (level 2) — in `updatePlotGroupBonus` when a group gains/loses a bonus:
+  `city=ID player=N bonus=NAME change=+1|-1`.
 
-### Priority 4 — `[TRD]` log domain (new gated log tag)
+### 4.5 `/diagnostic/tradeRoutes?player=N` (MEDIUM) — mailbox-endpoint shape
 
-Add a `logTradeAI` helper to `BetterBTSAI.{h,cpp}` (copy pattern from any existing
-`log<Domain>AI`; use `gPlayerLogLevel` scope; new file `TradeRoutes.log`):
-
-- **`[TRD/update]`** (level 1) — emitted at the start of `CvCity::updateTradeRoutes` when the
-  route set actually changes (compare old `m_paTradeCities` vs new): `city=<id> owner=<n>
-  routes=<count> reason=<modifier|building|civic|plotGroup|suppressed>`. Only on change, so it
-  self-throttles.
-- **`[TRD/route]`** (level 2) — one line per committed route slot: `src=<cityId> dst=<cityId>
-  dstOwner=<n> profit=<n> modifier=<n>`. Provides full route topology per-turn.
-- **`[TRD/plotGroup]`** (level 1) — emitted in `CvPlot::updatePlotGroup(Player)` when a city's
-  group membership changes: `city=<id> player=<n> newGroup=<id> oldGroup=<id>`. This makes
-  connectivity changes visible in `/events`.
-- **`[TRD/bonus]`** (level 2) — emitted in `CvPlot::updatePlotGroupBonus` when a city's group
-  acquires or loses a bonus: `city=<id> player=<n> bonus=<NAME> change=<+1/-1>`.
-
-### Priority 5 — `/diagnostic/tradeRoutes?player=N` endpoint
-
-A diagnostic-family endpoint (similar to `/diagnostic/sweep`) that on-demand returns, for a given
-player, the full route topology as the engine sees it:
-
+The "full topology in one call" view the Orwell bar needs, evaluated on the game thread via the mailbox
+(same as `placementSweep`):
 ```json
-{
-  "player": N, "turn": T,
-  "cities": [
-    {
-      "id": C, "name": "...", "routes": 3,
-      "connectedToCapital": true, "disordered": false,
-      "tradeYield": 14,
-      "slots": [
-        {"dst": D, "dstOwner": P, "profit": 47, "modifier": 130, "foreign": false},
-        ...
-      ]
-    }, ...
-  ]
-}
+{ "player": N, "turn": T, "cities": [
+  { "id": C, "name": "...", "routes": 3, "connectedToCapital": true, "disordered": false,
+    "tradeYield": 14,
+    "slots": [ {"dst": D, "dstOwner": P, "profit": 47, "modifier": 130, "foreign": false} ] } ] }
 ```
-
-Evaluated on the game thread via the mailbox mechanism (same as `placementSweep`). This provides
-the "full topology in one call" view the Orwell bar needs — with it you can reconstruct every
-active route, its profit, and whether it is domestic or foreign, without looking at the screen.
+Reconstructs every active route, its profit, and domestic/foreign status without the screen.
 
 ---
 
-## 5. Summary table
+## 5. Tier assessment
 
-| Piece | Currently observable? | Proposed hook |
+| Tier | Name | Trade-routes status |
 |---|---|---|
-| City commerce total | Yes (`/cities commerce`) | — |
-| Trade-route yield contribution | No | `/cities tradeYield` (P1) |
-| Active route count | No | `/cities tradeRoutes` (P1) |
-| Capital connectivity | No | `/cities connectedToCapital` (P1) |
-| Suppression state (disorder/plunder/quarantine) | No | `/cities disordered/plundered/quarantined` (P1) |
-| Trade modifier % | No | `/cities tradeRouteModifier` (P1) |
-| Per-city connected-bonus set | No | `/cities?bonuses=1 connectedBonuses[]` (P2) |
-| Player trade-route knobs | No | `/players tradeRoutes/coastalTradeRoutes/noForeignTrade/forceAllTradeRoutes` (P3) |
-| Route topology (who→who, profit) | No | `[TRD/route]` log tag + `/diagnostic/tradeRoutes` (P4/P5) |
-| Connectivity changes in event stream | No | `[TRD/plotGroup]` + `[TRD/bonus]` (P4) |
+| 0 | Oblivious | (below) |
+| **1** | **Telescreen** | `/cities commerce` folds trade in; no breakout in the polling snapshot. |
+| **2** | **Informant** | **Partly here today** via `/diagnostic/cityInput` (per-city `tradeRoutes`/`maxTradeRoutes`/`tradeYield` on demand). |
+| 3 | Big Brother | + `[TRD/*]` log domain (§4.4) + `/diagnostic/tradeRoutes` topology (§4.5) + connected-bonus list (§4.2): topology + connectivity changes on the wire. |
+| 4 | Thought Police | + `/cities` extended with `connectedToCapital`/`tradeYield`/suppression/`connectedBonuses` (§4.1–4.2) for all players from the polling snapshot. |
+| 5 | Meta | + per-route profit-formula input decomposition + per-pair diplomatic-eligibility matrix. |
+
+**To climb toward the Orwell bar:** §4.2 (connected-bonus list) is the cascade-critical one;
+§4.1 (`connectedToCapital` + suppression) + §4.5 (topology endpoint) complete the route picture. All
+cheap, gated, off by default.
 
 ---
 
 ## 6. Cascade-specific notes
 
-- **BONUS oracle gap is the most urgent** for #430. The cascade's `requires.operate` resource-dormancy
-  check calls `hasBonus(eBonus)` on the city (`CvCity.cpp:~14364` via `isActiveBuilding`), which
-  resolves through the plot-group's `m_paiNumBonuses`. Until this is surfaced (Priority 2 above),
-  the B-ii dormancy shadow (cascade-mapping-inventory.md §B-ii) cannot be verified from the API.
-- **`isConnectedToCapital`** is needed for the cascade to match `totalTradeModifier`, which affects
-  route selection and yields. If the cascade is to reproduce route-formation order or yields, this
-  must be observable (Priority 1).
-- **No per-turn "routes changed" event** means the cascade cannot detect when a plot-group split
-  silently dropped a city's routes (e.g., road destroyed by pillage). The `[TRD/update]` + `[TRD/plotGroup]`
-  tags plug this hole.
-- **Plot groups are per-player, not global.** Two cities connected for player A are not necessarily
-  connected for player B (different road networks, visibility, war state). The cascade must query
-  per owning-player, not per team or globally.
+- **The bonus oracle gap is the most urgent.** `requires.operate` resource-dormancy calls
+  `hasBonus(eBonus)` (resolves through `m_paiNumBonuses`). Until §4.2 surfaces it as a general per-city
+  observable, the resource-dormancy shadow cannot be verified from the API. See
+  [`../../explanation/cascade-architecture.md`](../../explanation/cascade-architecture.md).
+- **`isConnectedToCapital`** is needed for the cascade to match `totalTradeModifier` (route selection +
+  yields) and the maintenance modifier — §4.1.
+- **No per-turn "routes changed" event** means a plot-group split silently dropping routes (e.g. a
+  pillaged road) is invisible; `[TRD/update]` + `[TRD/plotGroup]` (§4.4) plug it.
+- **Plot groups are per-player, not global** — two cities connected for player A are not necessarily
+  connected for player B. The cascade must query per owning-player, never per team or globally.
+
+---
+
+## 7. Code cross-reference
+
+> Paths re-grounded to the reorganized `Sources/` tree (`Cv*` engine classes → `Sources/Engine/`,
+> `CvHttpServer` → `Sources/Tools/`). Line numbers drift — confirm the function.
+
+| Claim | Source |
+|---|---|
+| Per-city slot budget | `CvCity::getTradeRoutes` — `Sources/Engine/CvCity.cpp:15347` |
+| Route formation | `CvCity::updateTradeRoutes` — `Sources/Engine/CvCity.cpp:15379`; clear `:15362` |
+| Base trade profit / total modifier | `CvCity::getBaseTradeProfit` `:11595` / `totalTradeModifier` `:11527` / `calculateTradeProfit` `:11630` |
+| Trade yield store/read | `CvCity::setTradeYield` `:11507` / `getTradeYield` `:11520` |
+| Capital connectivity | `CvCity::isConnectedToCapital` — `Sources/Engine/CvCity.cpp:6681` |
+| Player route order | `CvPlayer::updateTradeRoutes` — `Sources/Engine/CvPlayer.cpp:4274` |
+| Diplomatic eligibility | `CvPlayer::canHaveTradeRoutesWith` — `Sources/Engine/CvPlayer.cpp:24210` |
+| Player coastal routes | `CvPlayer::getCoastalTradeRoutes` — `Sources/Engine/CvPlayer.cpp:11083` |
+| Trade/bonus network | `CvPlot::isTradeNetwork` `:5653` / `isBonusNetwork` `:5645` / `isTradeNetworkConnected` `:5681` |
+| Plot-group update / bonus accounting | `CvPlot::updatePlotGroup(Player)` `:8925` / `updatePlotGroupBonus` `:1752` |
+| `/cities` snapshot | `Sources/Tools/CvHttpServer.cpp` (`publishIfDue` / `renderCities`) |
+| `/diagnostic/cityInput` trade block (already exposes count + yields) | `Sources/Tools/CvHttpServer.cpp:1374` |
+
+---
+
+## See also
+- [`README.md`](README.md) — the observability scaffold: the 0–5 scale ([DEC-obs-scale]), the Orwell bar,
+  and the three canonical hook shapes ([DEC-obs-hook-shapes]) this map's hooks instantiate.
+- [`http-server.md`](http-server.md) — the live surface (`/cities`, `/diagnostic/cityInput`, `/events`)
+  these hooks extend, and the live-read rules.
+- [`../../explanation/cascade-architecture.md`](../../explanation/cascade-architecture.md) — the cascade
+  side: the bonus-connectivity network is its resource-dormancy oracle (`hasBonus` → `requires.operate`).
+- [`gold-maintenance-inflation.md`](gold-maintenance-inflation.md) — `isConnectedToCapital` also gates the
+  city maintenance modifier mapped there.
+- [`../../README.md`](../../README.md) — the comprehension map / overview-of-overviews.
+
+[DEC-obs-scale]: ../../architecture/decisions.md#dec-obs-scale
+[DEC-obs-hook-shapes]: ../../architecture/decisions.md#dec-obs-hook-shapes
