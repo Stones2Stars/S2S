@@ -47,11 +47,9 @@
    }
   }
  },
- "air": {
+ "range": {
   "unit": {
-   "range": {
-    "flat": 4
-   }
+   "flat": 4
   }
  },
  "strength": {

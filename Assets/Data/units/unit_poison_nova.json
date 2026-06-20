@@ -19,11 +19,13 @@
  "allowed": {
   "empire": 5
  },
+ "range": {
+  "unit": {
+   "flat": -1
+  }
+ },
  "air": {
   "unit": {
-   "range": {
-    "flat": -1
-   },
    "evasion": {
     "percent": 50
    }

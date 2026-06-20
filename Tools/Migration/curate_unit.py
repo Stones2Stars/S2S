@@ -75,7 +75,8 @@ UNIT_FAMILIES = {
     "iCollateralDamage": ("collateral", "damage", "percent"),
     "iCollateralDamageLimit": ("collateral", "limit", "flat"),
     "iCollateralDamageMaxUnits": ("collateral", "maxUnits", "flat"),
-    "iAirRange": ("air", "range", "flat"),
+    "iAirRange": ("range", None, "flat"),   # the top-level `range` family (modifier.md §6.6) -- air-only today (the
+                                            # universal siege=1 is deferred: AI runs ground ranged combat poorly).
     "iInterceptionProbability": ("air", "intercept", "percent"),
     "iEvasionProbability": ("air", "evasion", "percent"),
     "iNukeRange": ("air", "nukeRange", "flat"),

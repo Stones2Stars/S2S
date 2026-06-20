@@ -61,11 +61,13 @@
    }
   }
  },
+ "range": {
+  "unit": {
+   "flat": 18
+  }
+ },
  "air": {
   "unit": {
-   "range": {
-    "flat": 18
-   },
    "intercept": {
     "percent": 55
    },

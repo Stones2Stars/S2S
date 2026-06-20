@@ -45,11 +45,13 @@
    "percent": 35
   }
  },
+ "range": {
+  "unit": {
+   "flat": 1
+  }
+ },
  "air": {
   "unit": {
-   "range": {
-    "flat": 1
-   },
    "intercept": {
     "percent": 40
    }

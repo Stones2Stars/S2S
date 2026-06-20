@@ -33,11 +33,13 @@
    }
   }
  },
+ "range": {
+  "unit": {
+   "flat": 4
+  }
+ },
  "air": {
   "unit": {
-   "range": {
-    "flat": 4
-   },
    "evasion": {
     "percent": 100
    }

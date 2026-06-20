@@ -30,11 +30,9 @@
    ]
   }
  },
- "air": {
+ "range": {
   "unit": {
-   "range": {
-    "flat": 7
-   }
+   "flat": 7
   }
  },
  "capabilities": {

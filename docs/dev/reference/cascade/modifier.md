@@ -474,7 +474,15 @@ via `enabled`):
 - **`range` = one family (radius).** A unit-scope single value: *how far a ranged attack reaches*. It **defines
   "ranged-ness" unambiguously** (siege = `range:1`, true ranged = `2+`) and **deletes the engine's siege-vs-ranged
   special case** — every unit carries a `range`; the value decides reach. (Air/bombard reach are the same radius
-  concept; per-kind runtime nuance like air round-trip stays in the resolver, not the data.)
+  concept; per-kind runtime nuance like air round-trip stays in the resolver, not the data.) The unification is
+  honest because **the ground ranged-attack mission appears to run the same strike code as air** (owner 2026-06-20,
+  trust-but-verify vs `airStrike`).
+  - **CONVERTER STATUS (landed 2026-06-20): air-only.** `curate_unit` lifts `iAirRange → range` (top-level family,
+    human tile value, `unit` scope; the ×100 is the engine's parse job, data≠runtime) — 53 air units. `iAirRangeChange`
+    is a *change* field → a promotion-side `range` modifier (standard shape, `curate_promotion`), not a unit base.
+  - **`range:1` for siege is DEFERRED, deliberately (owner 2026-06-20).** Generalizing range to ground units is a
+    *data* one-liner but has **AI implications — the AI runs ranged combat very poorly** — so it stays out until the
+    AI can drive it. The model is uniform (range universal); only the *rollout* is gated by AI capability, not a gap.
 
 **Conversion = a straightforward renumber (owner 2026-06-20).** Both axes are ×100 fixed-point like every other
 family, so the converter just rescales legacy numbers and lets the standard modifier machinery carry the rest:

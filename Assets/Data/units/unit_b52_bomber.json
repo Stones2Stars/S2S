@@ -65,11 +65,13 @@
    }
   }
  },
+ "range": {
+  "unit": {
+   "flat": 24
+  }
+ },
  "air": {
   "unit": {
-   "range": {
-    "flat": 24
-   },
    "evasion": {
     "percent": 25
    }

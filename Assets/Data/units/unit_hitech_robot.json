@@ -31,11 +31,9 @@
    "percent": 75
   }
  },
- "air": {
+ "range": {
   "unit": {
-   "range": {
-    "flat": 3
-   }
+   "flat": 3
   }
  },
  "capabilities": {
