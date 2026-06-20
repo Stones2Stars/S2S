@@ -33,6 +33,28 @@
   actively shrinking on the modifier side (the city-yields pilot, residual driven down toward a sharper-than-±10%
   bar).
 
+### Update 2026-06-20 — modifier MODEL locked + specialist reshape + range converter (data side)
+
+- **The modifier MODEL is fully written down and locked** in [`modifier.md` §6.5–6.7](../reference/cascade/modifier.md):
+  the HOME RULE (own-output vs governing-deliverer; conditioner via `enabled`, never a keyed sub-scope), `data≠runtime`,
+  **no-special-cases**; **movement** (points/cost ledger, route = override-via-`min` **VERIFIED vs `CvPlot::movementCost`**,
+  `base=100=MOVE_DENOMINATOR`, road=`base/3`, linear `3N`, clamp-to-0); **range** (one family, air-only, siege=1
+  deferred for AI reasons); the **volumetric-specialist** split (output axis vs count axis). Captured in
+  [`decisions.md` DEC-deliveryguy](../architecture/decisions.md#dec-deliveryguy) + [`enabler.md` §2.0](../reference/cascade/enabler.md) (pass-1 order).
+- **Data reshaped + regenerated to the model** (commits `079ac4a53`, `ad44c216e`): specialist OUTPUT axis
+  (`SPECIALIST_BOOSTS` keyed-conditioner → `enabled`), COUNT axis (`freeSpecialists`/`allowedSpecialists` → the
+  `(A)` `{scope:{any|SPECIALIST_X: count}}` shape, free-on-top), the ×100 tech-building double killed at source,
+  `RELIGION_BOOSTS` + the redundant `TECH_BOOSTS` rows retired, and the **range converter** (`iAirRange → range`,
+  53 air units). `TechSpecialistChanges` corrected to `allowedSpecialists` (verified via the inner `<SpecialistCounts>`).
+- **NEXT PHASE — movement/range OBSERVABILITY → shadow → engine code** (start-fresh, per owner 2026-06-20): the
+  movement/range model is data-landed but **unconsumed**; before the engine builds the `movement`/`moveCost`/`range`
+  consumption, the legacy must be made fully observable (per [`modifier.md` §6.6 "observe-then-shadow"](../reference/cascade/modifier.md)):
+  (1) **map** the existing observability surface (`../reference/observability/` — `plotsnapshot`, `path-generator`,
+  `unit-upkeep-supply`, `http-server`) for what unit movement/range + plot `moveCost` it already exposes; (2) **add the
+  emitters** for the gaps (per-unit effective movement points + `range`, per-plot `moveCost` decomposition); (3) build the
+  **movement/range shadow** (analogue of `/diagnostic/modifierSweep`); (4) then build + tune the engine consumption.
+  One open trust-but-verify: the ground ranged-attack mission vs `airStrike` (shared code → honest unified `range`).
+
 ---
 
 ## 1. Engine build status — what's built vs pending
