@@ -56,28 +56,28 @@
    "flat": [
     2,
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_3D_MODELLING",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_WEARABLE_COMPUTERS",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_THOUGHT_SCANNING",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_DROIDS",
       "scope": "team"
@@ -88,31 +88,31 @@
  },
  "culture": {
   "city": {
-   "flat": 2,
-   "percent": [
+   "flat": [
+    2,
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_3D_MODELLING",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_WEARABLE_COMPUTERS",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_THOUGHT_SCANNING",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_DROIDS",
       "scope": "team"

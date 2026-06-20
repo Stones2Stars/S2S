@@ -40,15 +40,6 @@
    ]
   }
  },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_GRAND_MARINE_FESTIVAL": {
-     "flat": 200
-    }
-   }
-  }
- },
  "cost": {
   "research": 126
  },

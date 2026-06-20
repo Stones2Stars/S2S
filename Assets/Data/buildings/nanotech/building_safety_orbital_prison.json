@@ -56,15 +56,17 @@
    "flat": -100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SPY": 3
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_SAFETY_ORBITAL_PRISON"
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SPY": 3
-  },
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

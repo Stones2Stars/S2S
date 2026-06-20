@@ -33,24 +33,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_FACTORY_MICROGENERATORS": {
-     "flat": 900
-    }
-   }
-  }
- },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_BLACKNET": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 36429
  },

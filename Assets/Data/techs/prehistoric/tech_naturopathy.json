@@ -59,15 +59,6 @@
    ]
   }
  },
- "health": {
-  "city": {
-   "buildings": {
-    "BUILDING_WILD_HERBS_GATHERER": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 17
  },

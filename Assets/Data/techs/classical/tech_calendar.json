@@ -56,15 +56,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_COMMUNITY_GARDEN": {
-     "flat": 300
-    }
-   }
-  }
- },
  "cost": {
   "research": 554
  },

@@ -34,24 +34,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_URBAN_PSYCHIC_INTEGRATION": {
-     "flat": 1000
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_HIDE_AND_SEEK": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 80635
  },

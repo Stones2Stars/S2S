@@ -86,6 +86,11 @@
    "flat": 6
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 2560,
   "sizeModifier": 3,
@@ -115,9 +120,6 @@
   "construct": "AS2D_BUILD_OBSERVATORY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "neverCapture": true,
   "worth": 8,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

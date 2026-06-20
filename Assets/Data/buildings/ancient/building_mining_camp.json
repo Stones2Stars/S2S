@@ -81,105 +81,105 @@
    "flat": [
     1,
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_HYDRAULIC_MINING",
       "scope": "team"
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_MASONRY",
       "scope": "team"
      }
     },
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_GEOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_EXPLOSIVES",
       "scope": "team"
      }
     },
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_NITROGLYCERIN",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_MODERN_SEISMOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_ASTROGEOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_VOLCANOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_NANOMINING",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_ASTEROID_MINING",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_ASTEROID_EXTRACTION",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_SUBTERRANEAN_EXPLORATION",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_PLANETARY_EXTRACTION",
       "scope": "team"
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_PULLEY",
       "scope": "team"
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_GEARS",
       "scope": "team"
@@ -193,105 +193,105 @@
    "flat": [
     1,
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_HYDRAULIC_MINING",
       "scope": "team"
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_MASONRY",
       "scope": "team"
      }
     },
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_GEOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_EXPLOSIVES",
       "scope": "team"
      }
     },
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_NITROGLYCERIN",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_MODERN_SEISMOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_ASTROGEOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_VOLCANOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_NANOMINING",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_ASTEROID_MINING",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_ASTEROID_EXTRACTION",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_SUBTERRANEAN_EXPLORATION",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_PLANETARY_EXTRACTION",
       "scope": "team"
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_PULLEY",
       "scope": "team"
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_GEARS",
       "scope": "team"

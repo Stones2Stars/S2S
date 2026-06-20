@@ -31,21 +31,21 @@
   "city": {
    "flat": [
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_ONLINE_COMMUNITY",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_AUTOMATED_TRAFFIC",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_WEARABLE_COMPUTERS",
       "scope": "team"
@@ -56,23 +56,23 @@
  },
  "research": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_DIGITIZATION",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_CYBERWARFARE",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_WAR_SIMULATIONS",
       "scope": "team"

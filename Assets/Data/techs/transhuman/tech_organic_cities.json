@@ -35,46 +35,6 @@
    ]
   }
  },
- "food": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_COLONY_HABITAT_HUGE": {
-     "flat": 1
-    },
-    "IMPROVEMENT_VERTICAL_FARM": {
-     "flat": 3
-    },
-    "IMPROVEMENT_SUBURBS": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_FACTORY_OLED": {
-     "flat": 1000
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_VERTICAL_FARM": {
-     "flat": 1
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_CHEMICALS_DISTRICT": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "health": {
   "empire": {
    "flat": 2

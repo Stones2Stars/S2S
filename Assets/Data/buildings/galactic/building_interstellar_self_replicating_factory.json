@@ -56,7 +56,7 @@
    "flat": [
     50,
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_PLANET_ENGINEERING",
       "scope": "team"
@@ -67,10 +67,10 @@
  },
  "gold": {
   "city": {
-   "flat": 50,
-   "percent": [
+   "flat": [
+    50,
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_GRAVITRONICS",
       "scope": "team"

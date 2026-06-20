@@ -33,24 +33,6 @@
    ]
   }
  },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_ADMINISTRATION_CENTER": {
-     "flat": 1200
-    },
-    "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN": {
-     "flat": 1200
-    },
-    "BUILDING_CHRONOPOLIS": {
-     "flat": 1200
-    },
-    "BUILDING_UNIVERSAL_LIBRARY": {
-     "flat": 1200
-    }
-   }
-  }
- },
  "cost": {
   "research": 271404
  },

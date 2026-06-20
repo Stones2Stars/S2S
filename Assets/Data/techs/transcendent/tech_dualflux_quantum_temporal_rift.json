@@ -45,15 +45,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_CHRONOPOLIS": {
-     "flat": 1300
-    }
-   }
-  }
- },
  "cost": {
   "research": 495679
  },

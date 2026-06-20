@@ -45,28 +45,28 @@
    "flat": [
     50,
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_FEMTOTECHNOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_ZEPTOTECHNOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_GRAVITRONICS",
       "scope": "team"
      }
     },
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_APPLIED_RELATIVITY",
       "scope": "team"

@@ -34,18 +34,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_TIMEHOLE": {
-     "flat": 1300
-    },
-    "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE": {
-     "flat": 1300
-    }
-   }
-  }
- },
  "grants": {
   "firstFreeUnit": "UNIT_MERCHANT"
  },

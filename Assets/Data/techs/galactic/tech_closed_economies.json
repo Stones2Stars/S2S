@@ -29,24 +29,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT": {
-     "flat": 1100
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_PLASMA_ARC_RECYCLING": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 134744
  },

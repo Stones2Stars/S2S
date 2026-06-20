@@ -38,42 +38,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_EFFECT_GPS": {
-     "flat": 800
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_VIDEO_GAME_ARCADE": {
-     "flat": 800
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_USER_EXPERIENCE_RESEARCH_LAB": {
-     "flat": 800
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_VIDEO_GAME_ARCADE": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 23650
  },

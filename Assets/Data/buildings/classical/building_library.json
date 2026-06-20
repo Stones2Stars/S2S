@@ -83,10 +83,10 @@
  },
  "culture": {
   "city": {
-   "flat": 2,
-   "percent": [
+   "flat": [
+    2,
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "TECH_POETRY",
       "scope": "team"
@@ -119,6 +119,11 @@
    "flat": 5
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 2
+  }
+ },
  "cost": {
   "production": 225,
   "sizeModifier": 2,
@@ -141,9 +146,6 @@
   "construct": "AS2D_BUILD_LIBRARY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 2
-  },
   "neverCapture": true,
   "worth": 3,
   "dcmAirbombMission": 2,

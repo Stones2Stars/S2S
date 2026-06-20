@@ -68,15 +68,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_VILLAGE": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 1132
  },

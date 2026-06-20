@@ -40,24 +40,6 @@
    ]
   }
  },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_SPACE_SOLAR_ARRAY": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_SPACE_SOLAR_ARRAY": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 90183
  },

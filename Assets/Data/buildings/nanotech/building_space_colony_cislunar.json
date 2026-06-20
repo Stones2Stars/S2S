@@ -37,7 +37,7 @@
    "flat": [
     5,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_AUGMENTED_CONSUMABLES",
       "scope": "team"

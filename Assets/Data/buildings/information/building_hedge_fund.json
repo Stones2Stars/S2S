@@ -34,14 +34,14 @@
    "percent": 20,
    "flat": [
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_MEGACORPORATIONS",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_MACHINE_LEARNING",
       "scope": "team"
@@ -52,16 +52,16 @@
  },
  "gold": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_MEGACORPORATIONS",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_MACHINE_LEARNING",
       "scope": "team"
@@ -73,6 +73,11 @@
  "hurryCost": {
   "city": {
    "percent": 100
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
   }
  },
  "cost": {
@@ -87,9 +92,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_MERCHANT": 1
-  },
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

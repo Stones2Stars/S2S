@@ -109,63 +109,6 @@
    ]
   }
  },
- "food": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_COLONY_HYDROPONICS": {
-     "flat": 1
-    }
-   }
-  }
- },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_COLONY_SOLAR_ARRAY": {
-     "flat": 1
-    },
-    "IMPROVEMENT_HYDRO_DAM": {
-     "flat": 1
-    },
-    "IMPROVEMENT_SOLAR_PANELS": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_COLONY_HYDROPONICS": {
-     "flat": 1
-    },
-    "IMPROVEMENT_COLONY_SOLAR_ARRAY": {
-     "flat": 1
-    },
-    "IMPROVEMENT_WILDLIFE_SANCTUARY": {
-     "flat": 1
-    },
-    "IMPROVEMENT_NATURE_PRESERVE": {
-     "flat": 1
-    },
-    "IMPROVEMENT_HYDRO_DAM": {
-     "flat": 2
-    },
-    "IMPROVEMENT_SOLAR_PANELS": {
-     "flat": 1
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_CRIME_SHOPLIFTING": {
-     "flat": -300
-    }
-   }
-  }
- },
  "cost": {
   "research": 46107
  },

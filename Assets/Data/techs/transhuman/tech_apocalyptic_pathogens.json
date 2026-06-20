@@ -36,18 +36,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_CISLUNAR_BIOFACTORY": {
-     "flat": 1000
-    },
-    "BUILDING_MARTIAN_BIOFACTORY": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 75052
  },

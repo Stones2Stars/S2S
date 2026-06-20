@@ -40,7 +40,7 @@
   "city": {
    "flat": [
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_TOURISM",
       "scope": "team"
@@ -51,9 +51,9 @@
  },
  "research": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_ARCHEOLOGY",
       "scope": "team"
@@ -64,17 +64,17 @@
  },
  "culture": {
   "city": {
-   "flat": 4,
-   "percent": [
+   "flat": [
+    4,
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_WRITING",
       "scope": "team"
      }
     },
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_CULTURAL_IDENTITY",
       "scope": "team"

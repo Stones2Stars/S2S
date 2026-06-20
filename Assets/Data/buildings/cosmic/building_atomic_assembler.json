@@ -85,6 +85,11 @@
    "flat": 5
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 4
+  }
+ },
  "grants": {
   "repeatable": [
    {
@@ -107,9 +112,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ENGINEER": 4
-  },
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

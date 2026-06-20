@@ -43,15 +43,17 @@
  },
  "gold": {
   "city": {
-   "flat": 60,
-   "percent": [
+   "flat": [
+    60,
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_MULTIVERSE_TRAVERSAL",
       "scope": "team"
      }
-    },
+    }
+   ],
+   "percent": [
     {
      "value": 100,
      "enabled": {
@@ -70,14 +72,14 @@
    }
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_ENGINEER": 1
   }
  },
  "cost": {

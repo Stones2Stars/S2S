@@ -7,74 +7,154 @@
    "flat": 3
   },
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_INDUSTRIOUS": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_INDUSTRIOUS",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_INDUSTRIOUS1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_INDUSTRIOUS1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_INDUSTRIOUS2": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_INDUSTRIOUS2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_INDUSTRIOUS3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_INDUSTRIOUS3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAZY": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_LAZY",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAZY1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_LAZY1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAZY2": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_LAZY2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAZY3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_LAZY3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_PHILOSOPHICAL": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_PHILOSOPHICAL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_PHILOSOPHICAL1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_PHILOSOPHICAL1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_POPULIST": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_POPULIST",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_POPULIST1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_POPULIST1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_UNSANITARY": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_UNSANITARY",
+      "scope": "empire"
+     }
     },
-    "TRAIT_UNSANITARY3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_UNSANITARY3",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "gold": {
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_INDUSTRIOUS": {
-     "flat": -1
+   "flat": [
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_INDUSTRIOUS",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_INDUSTRIOUS1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_INDUSTRIOUS1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_INDUSTRIOUS2": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_INDUSTRIOUS2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_INDUSTRIOUS3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_INDUSTRIOUS3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_GRIM": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_GRIM",
+      "scope": "empire"
+     }
     },
-    "TRAIT_GRIM2": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_GRIM2",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "research": {
@@ -84,27 +164,47 @@
  },
  "culture": {
   "city": {
-   "buildings": {
-    "BUILDING_BAUHAUS_SCHOOL": {
-     "flat": 2
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BUILDING_BAUHAUS_SCHOOL",
+      "scope": "city"
+     }
     }
-   }
+   ]
   },
   "empire": {
-   "traits": {
-    "TRAIT_LAZY": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_LAZY",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAZY1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_LAZY1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAZY2": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_LAZY2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAZY3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_LAZY3",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "experience": {

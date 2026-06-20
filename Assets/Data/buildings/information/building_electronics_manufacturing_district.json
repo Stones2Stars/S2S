@@ -91,7 +91,7 @@
    "flat": [
     10,
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_CLOSED_ECONOMIES",
       "scope": "team"
@@ -186,6 +186,11 @@
    "flat": 1
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "foodKept": {
   "city": {
    "percent": 25
@@ -207,9 +212,6 @@
   }
  },
  "grants": {
-  "specialists": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "repeatable": [
    {
     "unitCombat": "UNITCOMBAT_HEALS_AS_TECH",

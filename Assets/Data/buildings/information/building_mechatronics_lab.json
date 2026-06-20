@@ -47,42 +47,42 @@
    "flat": [
     6,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_POWERED_EXOSKELETON",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_WARMACHINES",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_ANDROIDS",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_GRAPHENE_ALLOYS",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_LIQUID_METALS",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_INTERNAL_SHOCKWAVE_ENGINE",
       "scope": "team"
@@ -98,45 +98,45 @@
  },
  "research": {
   "city": {
-   "flat": 3,
-   "percent": [
+   "flat": [
+    3,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_POWERED_EXOSKELETON",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_WARMACHINES",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_ANDROIDS",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_GRAPHENE_ALLOYS",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_LIQUID_METALS",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_INTERNAL_SHOCKWAVE_ENGINE",
       "scope": "team"
@@ -148,6 +148,12 @@
  "hurryCost": {
   "city": {
    "percent": 100
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_ENGINEER": 1
   }
  },
  "cost": {
@@ -162,10 +168,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1,
-   "SPECIALIST_ENGINEER": 1
-  },
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -54,21 +54,21 @@
   "city": {
    "flat": [
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_REFRIGERATION",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_GENE_MANIPULATION",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_LONG_RANGE_FORECASTING",
       "scope": "team"

@@ -47,69 +47,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_AUYANTEPUI": {
-     "flat": 400
-    }
-   }
-  }
- },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_AUYANTEPUI": {
-     "flat": 400
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_KILIMANJARO": {
-     "flat": 400
-    },
-    "BUILDING_WONDER_OF_NATURE_KRAKATOA": {
-     "flat": 400
-    },
-    "BUILDING_WONDER_OF_NATURE_MT_EVEREST": {
-     "flat": 400
-    },
-    "BUILDING_WONDER_OF_NATURE_SOPKA": {
-     "flat": 400
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_AUYANTEPUI": {
-     "flat": 400
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_KRAKATOA": {
-     "flat": 500
-    }
-   }
-  }
- },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_AUYANTEPUI": {
-     "flat": 400
-    }
-   }
-  }
- },
  "canPassPeaks": {
   "team": {
    "enabler": true

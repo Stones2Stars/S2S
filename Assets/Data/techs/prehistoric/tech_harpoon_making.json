@@ -45,18 +45,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_FISHERMANS_HUT": {
-     "flat": 100
-    },
-    "BUILDING_SPEARFISHER": {
-     "flat": 200
-    }
-   }
-  }
- },
  "cost": {
   "research": 60
  },

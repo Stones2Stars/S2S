@@ -90,6 +90,12 @@
    "flat": 5
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 2,
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 870,
   "sizeModifier": 1,
@@ -116,10 +122,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_PRIEST": 2,
-   "SPECIALIST_SCIENTIST": 1
-  },
   "worth": 4,
   "advisor": "ADVISOR_CULTURE",
   "visibilityPriority": 1,

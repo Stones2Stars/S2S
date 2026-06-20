@@ -30,24 +30,6 @@
    ]
   }
  },
- "religionInfluence": {
-  "city": {
-   "buildings": {
-    "BUILDING_CHRAM": {
-     "flat": 3
-    },
-    "BUILDING_IDOL": {
-     "flat": 2
-    },
-    "BUILDING_GAJ": {
-     "flat": 2
-    },
-    "BUILDING_ARKONA": {
-     "flat": 1
-    }
-   }
-  }
- },
  "shrine": {
   "gold": 1
  },

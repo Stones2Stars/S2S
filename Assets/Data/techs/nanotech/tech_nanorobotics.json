@@ -81,36 +81,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_CISLUNAR_MATERIALS_LAB": {
-     "flat": 900
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_FACTORY_NANOGENERATORS": {
-     "flat": 900
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_ROBOTICS_LAB": {
-     "flat": 900
-    },
-    "BUILDING_VIROTHERAPY_CLINIC": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 42984
  },

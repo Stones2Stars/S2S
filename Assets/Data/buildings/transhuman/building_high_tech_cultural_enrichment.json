@@ -314,24 +314,24 @@
  },
  "research": {
   "city": {
-   "flat": 100,
-   "percent": [
-    1,
+   "flat": [
+    100,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_PHOTONIC_SATELLITES",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_TERRA_COMPUTER",
       "scope": "team"
      }
     }
-   ]
+   ],
+   "percent": 1
   }
  },
  "culture": {
@@ -639,11 +639,17 @@
  },
  "freeSpecialists": {
   "city": {
-   "improvements": {
-    "IMPROVEMENT_ARCHEOLOGICAL_SITE": {
-     "flat": 1
+   "SPECIALIST_CELEBRITY": 8,
+   "SPECIALIST_SPY": 1,
+   "any": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "IMPROVEMENT_ARCHEOLOGICAL_SITE",
+      "scope": "city"
+     }
     }
-   }
+   ]
   }
  },
  "experience": {
@@ -709,10 +715,13 @@
    "flat": 110
   }
  },
- "grants": {
-  "specialists": {
-   "SPECIALIST_CELEBRITY": 8,
-   "SPECIALIST_SPY": 1
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1,
+   "SPECIALIST_SPY": 1,
+   "SPECIALIST_ARTIST": 7,
+   "SPECIALIST_ENGINEER": 2,
+   "SPECIALIST_SCIENTIST": 3
   }
  },
  "cost": {
@@ -728,13 +737,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_PRIEST": 1,
-   "SPECIALIST_SPY": 1,
-   "SPECIALIST_ARTIST": 7,
-   "SPECIALIST_ENGINEER": 2,
-   "SPECIALIST_SCIENTIST": 3
-  },
   "applyFreePromotionOnMove": true,
   "greatPeopleUnitType": "UNIT_PROPHET",
   "advisor": "ADVISOR_CULTURE",

@@ -38,6 +38,26 @@
    "flat": 10
   }
  },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "type": "TECH_STELLAR_COMPUTING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "TECH_STELLAR_ENGINE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_IMPROVEMENT_DYSON_SPHERE"

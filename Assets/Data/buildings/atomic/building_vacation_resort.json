@@ -51,6 +51,11 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
  "cost": {
   "production": 1280,
   "sizeModifier": 3,
@@ -76,9 +81,6 @@
   "construct": "AS2D_BUILD_VACATION_RESORT"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 1
-  },
   "worth": 4,
   "conquestProbability": 25,
   "dcmAirbombMission": 2,

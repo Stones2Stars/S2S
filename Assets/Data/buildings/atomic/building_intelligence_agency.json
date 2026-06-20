@@ -78,6 +78,11 @@
    "flat": -15
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SPY": 2
+  }
+ },
  "cost": {
   "production": 990,
   "sizeModifier": 3,
@@ -100,9 +105,6 @@
   "construct": "AS2D_BUILD_INTELLIGENCE_AGENCY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SPY": 2
-  },
   "worth": 5,
   "conquestProbability": 75,
   "advisor": "ADVISOR_MILITARY",

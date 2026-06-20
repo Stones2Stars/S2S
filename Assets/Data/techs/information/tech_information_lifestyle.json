@@ -142,15 +142,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
-     "percent": -25
-    }
-   }
-  }
- },
  "cost": {
   "research": 19246
  },

@@ -33,18 +33,6 @@
    ]
   }
  },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_CISLUNAR_GOVERNANCE": {
-     "flat": 5000
-    },
-    "BUILDING_APPLIED_SOCIOLOGY_LAB": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 139278
  },

@@ -48,15 +48,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_MAIL_ORDER_CATALOGUE": {
-     "flat": 600
-    }
-   }
-  }
- },
  "cost": {
   "research": 7008
  },

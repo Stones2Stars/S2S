@@ -64,33 +64,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_TAR_GATHERER": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_ENTOMOLOGY_LAB": {
-     "flat": 500
-    },
-    "BUILDING_HERPETOLOGY_LAB": {
-     "flat": 500
-    },
-    "BUILDING_WONDER_OF_NATURE_BASALT_ORGAN": {
-     "flat": 500
-    },
-    "BUILDING_ORNITHOLOGY_LAB": {
-     "flat": 500
-    }
-   }
-  }
- },
  "cost": {
   "research": 3934
  },

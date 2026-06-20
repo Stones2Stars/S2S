@@ -65,6 +65,11 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1
+  }
+ },
  "cost": {
   "production": 192,
   "sizeModifier": 2,
@@ -88,9 +93,6 @@
   "construct": "AS2D_BUILD_BUDDHIST"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_PRIEST": 1
-  },
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

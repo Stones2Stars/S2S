@@ -47,44 +47,44 @@
  },
  "gold": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_MULTIVERSE_TRAVERSAL",
       "scope": "team"
      }
     },
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_INTERGROUP_TRAVEL",
       "scope": "team"
      }
     },
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_INTERCLUSTER_TRAVEL",
       "scope": "team"
      }
     },
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_QUANTUM_RAMJET",
       "scope": "team"
      }
     },
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_HORIZON_BREAKING",
       "scope": "team"
      }
     },
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_REACTIONLESS_DRIVE",
       "scope": "team"

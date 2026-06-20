@@ -31,6 +31,11 @@
    }
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 3
+  }
+ },
  "grants": {
   "holyCity": "RELIGION_CAO_DAI"
  },
@@ -48,9 +53,6 @@
  },
  "identity": {
   "shrine": "RELIGION_CAO_DAI",
-  "specialistSlots": {
-   "SPECIALIST_PRIEST": 3
-  },
   "notConstructible": true,
   "nukeImmune": true,
   "worth": 8,

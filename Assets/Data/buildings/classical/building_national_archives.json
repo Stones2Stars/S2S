@@ -47,6 +47,11 @@
    "flat": 10
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 1
@@ -62,9 +67,9 @@
    "flat": 10
   }
  },
- "grants": {
-  "specialists": {
-   "SPECIALIST_SCIENTIST": 1
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 2
   }
  },
  "cost": {
@@ -93,9 +98,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 2
-  },
   "nukeImmune": true,
   "neverCapture": true,
   "worth": 10,

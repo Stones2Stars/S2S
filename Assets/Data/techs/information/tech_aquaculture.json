@@ -45,39 +45,6 @@
    ]
   }
  },
- "food": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_FISHING_BOATS": {
-     "flat": 1
-    },
-    "IMPROVEMENT_HARVEST_KELP": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_FISHING_BOATS": {
-     "flat": 1
-    },
-    "IMPROVEMENT_HARVEST_KELP": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_MARINE_BIOLOGY_LAB": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 19916
  },

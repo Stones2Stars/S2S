@@ -51,18 +51,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_FACTORY_LEVITATION_GENERATORS": {
-     "flat": 1000
-    },
-    "BUILDING_FACTORY_ANTI_GRAVITY_FIELD_GENERATORS": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 72474
  },

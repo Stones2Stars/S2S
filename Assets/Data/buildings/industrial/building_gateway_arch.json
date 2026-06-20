@@ -50,7 +50,7 @@
  },
  "freeSpecialists": {
   "area": {
-   "flat": 1
+   "any": 1
   }
  },
  "greatPeopleRate": {

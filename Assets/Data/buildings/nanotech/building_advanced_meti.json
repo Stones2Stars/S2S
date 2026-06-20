@@ -29,24 +29,24 @@
  },
  "research": {
   "city": {
-   "flat": 10,
-   "percent": [
+   "flat": [
+    10,
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_XENODIPLOMACY",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_BINARY_SEMIOTICS",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_INTERSTELLAR_COMMUNICATION",
       "scope": "team"

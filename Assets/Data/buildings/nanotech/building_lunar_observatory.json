@@ -71,6 +71,11 @@
    "percent": 10000
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 1300
  },
@@ -87,9 +92,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "conquestProbability": 70,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": "1.0",

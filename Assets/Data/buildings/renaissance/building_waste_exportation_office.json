@@ -32,9 +32,9 @@
  },
  "gold": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": -500,
+     "value": -5,
      "enabled": {
       "type": "TECH_RECYCLING",
       "scope": "team"

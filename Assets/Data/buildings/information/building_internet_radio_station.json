@@ -63,6 +63,11 @@
    "flat": 5
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
  "cost": {
   "production": 2005,
   "complexityModifier": 2
@@ -73,9 +78,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 1
-  },
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

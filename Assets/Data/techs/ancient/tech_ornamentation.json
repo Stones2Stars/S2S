@@ -41,39 +41,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_SMITH_COPPER": {
-     "flat": 200
-    },
-    "BUILDING_SMITH_GOLD": {
-     "flat": 200
-    },
-    "BUILDING_SMITH_SILVER": {
-     "flat": 200
-    },
-    "BUILDING_TAPESTRY_MAKERS_WORKSHOP": {
-     "flat": 200
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_LACQUERWARE_MAKER": {
-     "flat": 200
-    },
-    "BUILDING_POTTERS_HUT": {
-     "flat": 200
-    },
-    "BUILDING_SCULPTORS_WORKSHOP": {
-     "flat": 200
-    }
-   }
-  }
- },
  "cost": {
   "research": 213
  },

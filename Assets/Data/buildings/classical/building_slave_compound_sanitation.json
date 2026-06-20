@@ -50,6 +50,11 @@
    "flat": -1
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SLAVES": 1
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_SLAVE_COMPOUND_SANITATION"
@@ -59,9 +64,6 @@
   "construct": "AS2D_BUILD_SLAVE_MARKET"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SLAVES": 1
-  },
   "notConstructible": true,
   "neverCapture": true,
   "worth": 2,

@@ -50,30 +50,6 @@
  "allowed": {
   "world": 1
  },
- "gold": {
-  "specialist": {
-   "specialists": {
-    "SPECIALIST_PRIEST": {
-     "flat": -1
-    },
-    "SPECIALIST_GREAT_PROPHET": {
-     "flat": -1
-    }
-   }
-  }
- },
- "research": {
-  "specialist": {
-   "specialists": {
-    "SPECIALIST_PRIEST": {
-     "flat": 1
-    },
-    "SPECIALIST_GREAT_PROPHET": {
-     "flat": 1
-    }
-   }
-  }
- },
  "culture": {
   "city": {
    "flat": [

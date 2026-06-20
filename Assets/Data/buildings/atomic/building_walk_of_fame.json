@@ -50,21 +50,6 @@
  "allowed": {
   "world": 1
  },
- "commerce": {
-  "specialist": {
-   "specialists": {
-    "SPECIALIST_ARTIST": {
-     "flat": 2
-    },
-    "SPECIALIST_GREAT_ARTIST": {
-     "flat": 5
-    },
-    "SPECIALIST_CELEBRITY": {
-     "flat": 2
-    }
-   }
-  }
- },
  "culture": {
   "city": {
    "flat": [

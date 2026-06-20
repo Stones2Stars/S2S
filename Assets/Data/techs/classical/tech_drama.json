@@ -25,24 +25,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_CALLIGRAPHY_SCHOOL": {
-     "flat": 100
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_CALLIGRAPHY_SCHOOL": {
-     "flat": 300
-    }
-   }
-  }
- },
  "cost": {
   "research": 824
  },

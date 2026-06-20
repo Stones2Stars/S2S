@@ -41,15 +41,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 172549
  },

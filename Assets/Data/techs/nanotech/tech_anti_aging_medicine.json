@@ -29,45 +29,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_TRANSGENICS_LAB": {
-     "flat": 900
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_TISSUE_ENGINEERING_LAB": {
-     "flat": 900
-    },
-    "BUILDING_TRANSGENICS_LAB": {
-     "flat": 900
-    },
-    "BUILDING_VACCINE_LAB": {
-     "flat": 900
-    }
-   }
-  }
- },
- "health": {
-  "city": {
-   "buildings": {
-    "BUILDING_RETIREMENT_HOME": {
-     "flat": 1
-    },
-    "BUILDING_TISSUE_ENGINEERING_LAB": {
-     "flat": 1
-    },
-    "BUILDING_VETERINARIAN": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 42984
  },

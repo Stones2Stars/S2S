@@ -48,12 +48,37 @@
  },
  "production": {
   "plot": {
-   "flat": 1
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_TELEPORTATION",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "commerce": {
   "plot": {
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_DNA_COMPUTING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_TELEPORTATION",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "world": {

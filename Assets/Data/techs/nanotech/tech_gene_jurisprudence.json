@@ -27,15 +27,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_FORENSICS_LAB": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 38858
  },

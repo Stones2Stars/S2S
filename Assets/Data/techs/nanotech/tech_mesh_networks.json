@@ -30,30 +30,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_FREELANCE_MARKETPLACE": {
-     "flat": 900
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES": {
-     "flat": 900
-    },
-    "BUILDING_MAKERSPACE": {
-     "flat": 900
-    },
-    "BUILDING_PEER_TO_PEER_RENTALS": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 37614
  },

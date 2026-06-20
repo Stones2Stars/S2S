@@ -36,56 +36,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_SCROLL_MAKER": {
-     "flat": -100
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_TOWN": {
-     "flat": 1
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_SCROLL_MAKER": {
-     "flat": 500
-    },
-    "BUILDING_UNIVERSITY": {
-     "flat": 500
-    }
-   }
-  }
- },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_SPY_NETWORK": {
-     "flat": 500
-    }
-   }
-  }
- },
- "freeSpecialists": {
-  "city": {
-   "buildings": {
-    "BUILDING_UNIVERSITY": {
-     "specialists": {
-      "SPECIALIST_ARTIST": {
-       "flat": 1
-      }
-     }
-    }
-   }
-  }
- },
  "grants": {
   "freeTechs": 1
  },

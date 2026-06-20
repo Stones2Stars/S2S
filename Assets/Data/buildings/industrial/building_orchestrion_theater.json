@@ -63,6 +63,12 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1,
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 770
  },
@@ -72,10 +78,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ENGINEER": 1,
-   "SPECIALIST_SCIENTIST": 1
-  },
   "worth": 2,
   "specialBuildingType": "SPECIALBUILDING_PUNK_CLOCK",
   "advisor": "ADVISOR_CULTURE",

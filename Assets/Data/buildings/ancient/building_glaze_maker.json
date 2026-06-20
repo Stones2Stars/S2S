@@ -54,9 +54,9 @@
  },
  "culture": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "TECH_AESTHETICS",
       "scope": "team"
@@ -68,6 +68,11 @@
  "hurryCost": {
   "city": {
    "percent": 100
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
   }
  },
  "cost": {
@@ -96,9 +101,6 @@
   "construct": "AS2D_BUILD_GLASSMITH"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 1
-  },
   "worth": 4,
   "militaryWorth": 2,
   "conquestProbability": 75,

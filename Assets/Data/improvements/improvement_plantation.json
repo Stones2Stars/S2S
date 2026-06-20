@@ -114,6 +114,41 @@
      "enabled": "HAS_IRRIGATION"
     },
     {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SPICE_TRADE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_DRUG_TRADE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_AGRICULTURAL_ENGINEERING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GENE_MANIPULATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_DERIVATIVES",
+      "scope": "team"
+     }
+    },
+    {
      "value": 5,
      "enabled": {
       "HAS_BONUS": "BONUS_INCENSE"

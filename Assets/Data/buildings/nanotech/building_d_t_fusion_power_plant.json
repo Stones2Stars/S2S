@@ -78,6 +78,11 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
  "cost": {
   "production": 3245,
   "sizeModifier": 1,
@@ -101,9 +106,6 @@
   "construct": "AS2D_BUILD_PLANTNUCLEAR"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ENGINEER": 1
-  },
   "neverCapture": true,
   "dcmAirbombMission": 3,
   "specialBuildingType": "SPECIALBUILDING_D_T_FUSION_POWER_PLANT",

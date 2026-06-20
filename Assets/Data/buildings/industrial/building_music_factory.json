@@ -40,17 +40,17 @@
  },
  "culture": {
   "city": {
-   "flat": 70,
-   "percent": [
+   "flat": [
+    70,
     {
-     "value": 2800,
+     "value": 28,
      "enabled": {
       "type": "TECH_MASS_MEDIA",
       "scope": "team"
      }
     },
     {
-     "value": 2400,
+     "value": 24,
      "enabled": {
       "type": "TECH_RADIO",
       "scope": "team"

@@ -28,15 +28,6 @@
    ]
   }
  },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE": {
-     "flat": 2000
-    }
-   }
-  }
- },
  "cost": {
   "research": 686864
  },

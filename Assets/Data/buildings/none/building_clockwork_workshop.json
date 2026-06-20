@@ -94,6 +94,11 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
  "grants": {
   "repeatable": [
    {
@@ -112,9 +117,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ENGINEER": 1
-  },
   "worth": 2,
   "specialBuildingType": "SPECIALBUILDING_PUNK_CLOCK",
   "advisor": "ADVISOR_SCIENCE",

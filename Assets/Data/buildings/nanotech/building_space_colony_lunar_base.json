@@ -46,15 +46,17 @@
    "flat": 3
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_SPACE_COLONY_LUNAR_BASE"
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "notConstructible": true,
   "autoBuild": true,
   "conquestProbability": 100,

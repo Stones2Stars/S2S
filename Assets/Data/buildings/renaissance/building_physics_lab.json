@@ -38,17 +38,17 @@
  },
  "research": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_QUANTUM_PHYSICS",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_MODERN_PHYSICS",
       "scope": "team"
@@ -72,6 +72,11 @@
    "flat": 6
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 515,
   "sizeModifier": 2,
@@ -84,9 +89,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -96,6 +96,11 @@
    "flat": 4
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 2
+  }
+ },
  "cost": {
   "production": 2208,
   "sizeModifier": 3,
@@ -128,9 +133,6 @@
   "construct": "AS2D_BUILD_CONFUCIAN"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 2
-  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 14,

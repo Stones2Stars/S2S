@@ -93,61 +93,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_HAREMS": {
-     "flat": -200
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_DEAD_SEA": {
-     "flat": 300
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_WINERY": {
-     "flat": 1
-    },
-    "IMPROVEMENT_ORCHARD": {
-     "flat": 1
-    },
-    "IMPROVEMENT_MUSHROOM_GATHERER": {
-     "flat": 1
-    },
-    "IMPROVEMENT_LUMBERJACK": {
-     "flat": 1
-    },
-    "IMPROVEMENT_HAMLET": {
-     "flat": 1
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_THIEVES_HIDEOUT": {
-     "flat": 200
-    }
-   }
-  }
- },
- "happiness": {
-  "city": {
-   "buildings": {
-    "BUILDING_HAREMS": {
-     "flat": 1
-    }
-   }
-  }
- },
  "tradeRoutes": {
   "city": {
    "flat": 1

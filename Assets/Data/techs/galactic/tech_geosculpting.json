@@ -32,24 +32,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_SUBTERRANEAN_FARM": {
-     "flat": 1100
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_SUBTERRANEAN_HOTEL": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 126324
  },

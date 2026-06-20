@@ -65,7 +65,7 @@
  },
  "freeSpecialists": {
   "empire": {
-   "flat": 1
+   "any": 1
   }
  },
  "combat": {

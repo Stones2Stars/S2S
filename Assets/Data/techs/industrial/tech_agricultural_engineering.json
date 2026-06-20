@@ -41,36 +41,6 @@
    ]
   }
  },
- "food": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_WINERY": {
-     "flat": 1
-    },
-    "IMPROVEMENT_ORCHARD": {
-     "flat": 1
-    },
-    "IMPROVEMENT_FARM": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_WINERY": {
-     "flat": 1
-    },
-    "IMPROVEMENT_ORCHARD": {
-     "flat": 1
-    },
-    "IMPROVEMENT_PLANTATION": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 6351
  },

@@ -44,6 +44,11 @@
    "flat": 5
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 2
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 2
@@ -62,11 +67,6 @@
  "PROPERTY_EDUCATION": {
   "city": {
    "flat": 8
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_SCIENTIST": 2
   }
  },
  "cost": {

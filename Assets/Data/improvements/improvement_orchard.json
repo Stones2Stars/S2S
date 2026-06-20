@@ -44,6 +44,20 @@
      "enabled": "HAS_IRRIGATION"
     },
     {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_AGRICULTURAL_ENGINEERING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GENE_MANIPULATION",
+      "scope": "team"
+     }
+    },
+    {
      "value": 4,
      "enabled": {
       "HAS_BONUS": "BONUS_APPLE"
@@ -152,6 +166,34 @@
   "plot": {
    "flat": [
     1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_TRADE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CURRENCY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_AGRICULTURAL_ENGINEERING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GLOBALIZATION",
+      "scope": "team"
+     }
+    },
     {
      "value": 1,
      "enabled": {

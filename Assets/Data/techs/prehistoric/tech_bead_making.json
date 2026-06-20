@@ -24,18 +24,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_BONEWORKER": {
-     "flat": 100
-    },
-    "BUILDING_WONDER_OF_NATURE_GREAT_BARRIER_REEF": {
-     "flat": 200
-    }
-   }
-  }
- },
  "cost": {
   "research": 20
  },

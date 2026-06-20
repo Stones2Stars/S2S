@@ -104,6 +104,11 @@
    "flat": 10
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 1130,
   "sizeModifier": 2,
@@ -126,9 +131,6 @@
   "construct": "AS2D_BUILD_LABORATORY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "worth": 6,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

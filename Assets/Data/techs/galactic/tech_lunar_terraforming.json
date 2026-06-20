@@ -37,15 +37,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_LUNAR_SEA": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 139278
  },

@@ -27,6 +27,19 @@
    ]
   }
  },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ARTIFICIAL_STARS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
  "commerce": {
   "plot": {
    "flat": [

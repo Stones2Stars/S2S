@@ -39,7 +39,7 @@
    "flat": [
     100,
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_STAR_LIFTING",
       "scope": "team"

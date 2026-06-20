@@ -92,6 +92,11 @@
    "flat": 1
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1
+  }
+ },
  "cost": {
   "production": 252,
   "sizeModifier": 1,
@@ -115,9 +120,6 @@
   "construct": "AS2D_BUILD_CONFUCIAN"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_PRIEST": 1
-  },
   "neverCapture": true,
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",

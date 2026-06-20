@@ -69,6 +69,11 @@
    "percent": 25
   }
  },
+ "freeSpecialists": {
+  "empire": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
  "revolution": {
   "empire": {
    "national": {
@@ -84,11 +89,6 @@
  "PROPERTY_WATER_POLLUTION": {
   "city": {
    "flat": -100
-  }
- },
- "grants": {
-  "freeSpecialists": {
-   "SPECIALIST_ARTIST": 1
   }
  },
  "ui": {

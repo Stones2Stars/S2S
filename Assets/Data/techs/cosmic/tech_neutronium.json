@@ -38,18 +38,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES": {
-     "flat": 1200
-    },
-    "BUILDING_QUANTUM_ASSEMBLER": {
-     "flat": 1200
-    }
-   }
-  }
- },
  "cost": {
   "research": 352130
  },

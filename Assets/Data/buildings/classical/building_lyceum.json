@@ -133,6 +133,11 @@
    "flat": 15
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 252,
   "sizeModifier": 2,
@@ -145,9 +150,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "conquestProbability": 70,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

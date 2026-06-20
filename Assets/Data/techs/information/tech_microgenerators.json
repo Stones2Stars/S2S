@@ -36,24 +36,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_RECHARGING_NODE": {
-     "flat": 800
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_WIRELESS_NETWORKS": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 26259
  },

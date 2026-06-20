@@ -3,8 +3,8 @@
  "description": "TXT_KEY_UNITCOMBAT_SEA_ANIMAL_TALES",
  "upkeep": {
   "unit": {
-   "extra100": {
-    "flat": 50
+   "extra": {
+    "flat": 0.5
    }
   }
  },

@@ -442,6 +442,11 @@
    "flat": -5
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 5
+  }
+ },
  "cost": {
   "production": 3525,
   "sizeModifier": 1,
@@ -455,9 +460,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_MERCHANT": 5
-  },
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

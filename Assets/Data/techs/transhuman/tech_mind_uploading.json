@@ -110,15 +110,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 70029
  },

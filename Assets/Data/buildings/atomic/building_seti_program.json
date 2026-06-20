@@ -88,6 +88,11 @@
    "percent": 300
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 7680,
   "sizeModifier": 2,
@@ -117,9 +122,6 @@
   "construct": "AS2D_BUILD_GREATLIBRARY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 20,

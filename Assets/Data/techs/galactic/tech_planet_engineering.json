@@ -50,15 +50,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "grants": {
   "firstFreeUnit": "UNIT_GREAT_ENGINEER"
  },

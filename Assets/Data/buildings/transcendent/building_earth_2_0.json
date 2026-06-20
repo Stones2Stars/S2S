@@ -37,14 +37,14 @@
    "flat": 100
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 3
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 10000
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_ARTIST": 3
   }
  },
  "cost": {

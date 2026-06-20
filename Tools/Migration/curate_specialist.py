@@ -62,7 +62,10 @@ ART = {"Texture", "Button"}
 IDENTITY = {"GreatPeopleUnitType": "greatPeopleUnit", "Categories": "categories"}
 BOOL_ID = {"bSlave": "slave", "bVisible": "visible"}
 SOURCE_UNIT = {"CONSTANT": "perTurn", "DECAY": "decay"}
-# TechHappiness/HealthTypes invert onto the conditioner tech (already on tech). YieldChanges is DEAD structure:
+# TechHappiness/HealthTypes -> KEEP-ON-SELF (owner 2026-06-20, Phase-F): the specialist OWNS the output it
+# produces, so its tech-conditioned happiness/health bump rides on the specialist, city-scope, `enabled` by the
+# team-tech (the tech is the GIVER/enabler -- never inverted onto the tech). Read raw post-loop (still in DROP so the
+# default loop skips them; the explicit block below emits keep-on-self). YieldChanges is DEAD structure:
 # read() only reads <Yields> (addYields -> m_piYieldChange); <YieldChanges> populates no member and is unread.
 DROP = {"TechHappinessTypes", "TechHealthTypes", "YieldChanges"}
 FAMILY_ORDER = ["food", "production", "commerce", "gold", "research", "culture", "espionage",
@@ -88,6 +91,19 @@ def _put(fam, family, scope, member, unit, val):
     if member:
         node = node.setdefault(member, {})
     node[unit] = val
+
+
+def _inject_cond(fam, family, scope, unit, value, enabled):
+    """Keep-on-self conditioned deposit: family.scope.unit gets [{value, enabled}, ...] (modifier.md §6.5)."""
+    node = fam.setdefault(family, OrderedDict()).setdefault(scope, OrderedDict())
+    entry = OrderedDict([("value", value), ("enabled", enabled)])
+    cur = node.get(unit)
+    if cur is None:
+        node[unit] = [entry]
+    elif isinstance(cur, list):
+        cur.append(entry)
+    else:
+        node[unit] = [cur, entry]
 
 
 def _apply_family(fam, spec, c):
@@ -163,8 +179,19 @@ def curate(typ, rec, boosts):
                 leftover.append(tag)
                 identity[engine.FIELD_RENAME.get(tag, de_i(tag))] = engine.generic(c)
 
-    for family, fdata in boosts.items():
-        fam[family] = cc._merge_val(fam[family], fdata) if family in fam else fdata
+    # Tech-conditioned OWN happiness/health -> KEEP-ON-SELF (the specialist owns the output it produces; the tech
+    # is the enabling GIVER). city-scope, `enabled` by the team-tech. x1, no de-scale. (owner 2026-06-20, §6.5)
+    for tag, family in (("TechHappinessTypes", "happiness"), ("TechHealthTypes", "health")):
+        node = rec.find(tag)
+        if node is not None:
+            for tech, _u, val in cc._boost_entries(node, None, "flat"):
+                _inject_cond(fam, family, "city", "flat", val, OrderedDict([("type", tech), ("scope", "team")]))
+
+    # Conditioned keep-on-source deposits (building/civic/trait boosts -> THIS specialist's OWN output, `enabled` by
+    # the source's presence; modifier.md §6.5). INJECTED (not merged) so each lands as a {value, enabled} entry that
+    # coexists with the specialist's own base value (int|list-safe), instead of the old keyed-by-conditioner sub-scope.
+    for fam_name, scope, unit, value, enabled in boosts:
+        _inject_cond(fam, fam_name, scope, unit, value, enabled)
 
     out = OrderedDict()
     out["type"] = typ
@@ -193,11 +220,11 @@ def main():
     ap.add_argument("--write", action="store_true")
     args = ap.parse_args()
     store = Store()
-    boosts = cc.accumulate_boosts(store, SPECIALIST_BOOSTS)
+    boosts = cc.accumulate_conditioned(store, SPECIALIST_BOOSTS)
     table = store.table("SpecialistInfo")
     results, all_leftover = OrderedDict(), set()
     for typ, rec in table.items():
-        obj, leftover = curate(typ, rec, boosts.get(typ, {}))
+        obj, leftover = curate(typ, rec, boosts.get(typ, []))
         results[typ] = obj
         all_leftover.update(leftover)
     print("SpecialistInfo curated: %d" % len(results))

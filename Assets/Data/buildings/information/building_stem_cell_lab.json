@@ -58,31 +58,31 @@
  },
  "research": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_REPLACEMENT_ORGANS",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_GENOMIC_ENCYCLOPEDIA",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_GENE_ENHANCEMENT",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_DNA_COMPUTING",
       "scope": "team"
@@ -131,6 +131,11 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 1925,
   "sizeModifier": 2,
@@ -143,9 +148,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

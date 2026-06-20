@@ -37,39 +37,6 @@
    ]
   }
  },
- "religionInfluence": {
-  "city": {
-   "buildings": {
-    "BUILDING_FREYA_SANCTUARY": {
-     "flat": 2
-    },
-    "BUILDING_HEIMDALL_SANCTUARY": {
-     "flat": 2
-    },
-    "BUILDING_LOKI_SANCTUARY": {
-     "flat": 2
-    },
-    "BUILDING_THOR_SANCTUARY": {
-     "flat": 2
-    },
-    "BUILDING_ASATRU_CATHEDRAL": {
-     "flat": 2
-    },
-    "BUILDING_ASATRU_MONASTERY": {
-     "flat": 1
-    },
-    "BUILDING_ASATRU_TEMPLE": {
-     "flat": 1
-    },
-    "BUILDING_THOR_ALTAR": {
-     "flat": 1
-    },
-    "BUILDING_THE_ODINS_SANCTUARY": {
-     "flat": 1
-    }
-   }
-  }
- },
  "shrine": {
   "gold": 1
  },

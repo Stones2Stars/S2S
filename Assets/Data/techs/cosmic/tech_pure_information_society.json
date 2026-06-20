@@ -37,15 +37,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_UNIVERSAL_LIBRARY": {
-     "flat": 1200
-    }
-   }
-  }
- },
  "cost": {
   "research": 352130
  },

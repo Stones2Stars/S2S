@@ -36,15 +36,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_VICTORIA_FALLS": {
-     "flat": 200
-    }
-   }
-  }
- },
  "riverTrade": {
   "team": {
    "enabler": true

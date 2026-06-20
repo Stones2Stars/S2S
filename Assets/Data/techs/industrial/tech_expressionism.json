@@ -25,18 +25,6 @@
    ]
   }
  },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_ART_GALLERY": {
-     "flat": 600
-    },
-    "BUILDING_BALLOON_RIDES": {
-     "flat": 600
-    }
-   }
-  }
- },
  "cost": {
   "research": 7718
  },

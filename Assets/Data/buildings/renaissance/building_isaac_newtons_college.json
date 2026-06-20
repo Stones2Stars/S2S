@@ -32,15 +32,6 @@
  "allowed": {
   "world": 1
  },
- "production": {
-  "specialist": {
-   "specialists": {
-    "SPECIALIST_SCIENTIST": {
-     "flat": 1
-    }
-   }
-  }
- },
  "gold": {
   "city": {
    "flat": -50
@@ -76,6 +67,11 @@
    "flat": 2
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 3
+  }
+ },
  "cost": {
   "production": 3090,
   "sizeModifier": 2,
@@ -105,9 +101,6 @@
   "construct": "AS2D_BUILD_UNIVERSITY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 3
-  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 14,

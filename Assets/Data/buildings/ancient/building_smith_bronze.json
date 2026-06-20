@@ -59,9 +59,9 @@
  },
  "culture": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "TECH_AESTHETICS",
       "scope": "team"

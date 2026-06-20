@@ -28,15 +28,6 @@
    ]
   }
  },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_DATA_COLLECTION": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 166029
  },

@@ -38,27 +38,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_MECHATRONICS_LAB": {
-     "flat": 800
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_MECHATRONICS_LAB": {
-     "flat": 800
-    },
-    "BUILDING_ROBOTICS_LAB": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 27203
  },

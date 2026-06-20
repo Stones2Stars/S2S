@@ -263,15 +263,17 @@
    ]
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SLAVES": 3
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_WORLDVIEW_SLAVERY"
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SLAVES": 3
-  },
   "notConstructible": true,
   "nukeImmune": true,
   "neverCapture": true,

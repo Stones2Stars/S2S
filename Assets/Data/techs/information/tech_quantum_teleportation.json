@@ -26,21 +26,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_HIGH_ENERGY_LAB": {
-     "flat": 800
-    },
-    "BUILDING_STANDARD_MODEL": {
-     "flat": 800
-    },
-    "BUILDING_ATOMIC_CLOCK": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 23650
  },

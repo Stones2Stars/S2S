@@ -30,6 +30,16 @@
      }
     ]
    ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "PROPERTY_DISEASE",
+     "scope": "city",
+     "min": 450,
+     "max": 100000
+    }
+   ]
   }
  },
  "food": {

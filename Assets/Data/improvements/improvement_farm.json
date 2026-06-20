@@ -55,6 +55,62 @@
      "enabled": "HAS_IRRIGATION"
     },
     {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CROP_ROTATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_BIOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_AGRICULTURAL_ENGINEERING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MACHINE_TOOLS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GENE_MANIPULATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CLOUD_PATTERNS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_IRRIGATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PLOUGH",
+      "scope": "team"
+     }
+    },
+    {
      "value": 3,
      "enabled": {
       "HAS_BONUS": "BONUS_CORN"
@@ -120,6 +176,20 @@
  "commerce": {
   "plot": {
    "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_BIOMATERIALS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_DERIVATIVES",
+      "scope": "team"
+     }
+    },
     {
      "value": 2,
      "enabled": {

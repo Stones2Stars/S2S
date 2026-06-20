@@ -48,18 +48,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_DISTANT_SPIRIT_WORLD": {
-     "flat": 1300
-    },
-    "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE": {
-     "flat": 2000
-    }
-   }
-  }
- },
  "cost": {
   "research": 686864
  },

@@ -64,21 +64,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_LAKE_BAIKAL": {
-     "flat": 200
-    },
-    "BUILDING_WONDER_OF_NATURE_GREAT_BARRIER_REEF": {
-     "flat": 200
-    },
-    "BUILDING_WONDER_OF_NATURE_NUKUORO": {
-     "flat": 300
-    }
-   }
-  }
- },
  "cost": {
   "research": 45
  },

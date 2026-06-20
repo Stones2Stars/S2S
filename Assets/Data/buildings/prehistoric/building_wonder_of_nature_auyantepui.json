@@ -30,14 +30,14 @@
   "city": {
    "flat": [
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_MOUNTAINEERING",
       "scope": "team"
      }
     },
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_BIOLOGY",
       "scope": "team"
@@ -50,7 +50,7 @@
   "city": {
    "flat": [
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_MOUNTAINEERING",
       "scope": "team"
@@ -64,14 +64,14 @@
    "flat": [
     2,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_TOURISM",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_VERTICAL_FLIGHT",
       "scope": "team"
@@ -82,9 +82,9 @@
  },
  "gold": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_MOUNTAINEERING",
       "scope": "team"
@@ -95,16 +95,16 @@
  },
  "research": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_BIOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_GEOLOGY",
       "scope": "team"
@@ -115,10 +115,10 @@
  },
  "culture": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_TOURISM",
       "scope": "team"
@@ -129,9 +129,9 @@
  },
  "espionage": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_MOUNTAINEERING",
       "scope": "team"

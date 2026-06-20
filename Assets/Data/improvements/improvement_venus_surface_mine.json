@@ -25,7 +25,29 @@
  },
  "production": {
   "plot": {
-   "flat": 10
+   "flat": [
+    10,
+    {
+     "value": 3,
+     "enabled": {
+      "type": "TECH_NANOMINING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_PLANETARY_TRADE",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "world": {

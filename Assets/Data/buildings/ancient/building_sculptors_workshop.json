@@ -69,24 +69,24 @@
  },
  "culture": {
   "city": {
-   "flat": 1,
-   "percent": [
+   "flat": [
+    1,
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_ORNAMENTATION",
       "scope": "team"
      }
     },
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "TECH_AESTHETICS",
       "scope": "team"
      }
     },
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_FREE_ARTISTRY",
       "scope": "team"
@@ -103,6 +103,11 @@
  "hurryCost": {
   "city": {
    "percent": 100
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
   }
  },
  "cost": {
@@ -131,9 +136,6 @@
   "construct": "AS2D_BUILD_FORGE"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 1
-  },
   "nukeImmune": true,
   "conquestProbability": 80,
   "advisor": "ADVISOR_CULTURE",

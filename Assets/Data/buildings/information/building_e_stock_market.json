@@ -47,14 +47,14 @@
    "percent": 1,
    "flat": [
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_MEGACORPORATIONS",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_DIRECT_MERCHANDISING",
       "scope": "team"
@@ -73,6 +73,11 @@
    "flat": 5
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
  "cost": {
   "production": 2205,
   "complexityModifier": 2
@@ -83,9 +88,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_MERCHANT": 1
-  },
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

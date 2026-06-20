@@ -21,18 +21,6 @@
    ]
   }
  },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_CHIEFS_HUT": {
-     "flat": 200
-    },
-    "BUILDING_FRONTIER_OUTPOST": {
-     "flat": 200
-    }
-   }
-  }
- },
  "openBordersTrading": {
   "team": {
    "enabler": true

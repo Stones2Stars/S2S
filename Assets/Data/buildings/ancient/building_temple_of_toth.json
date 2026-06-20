@@ -95,6 +95,11 @@
    ]
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 50
@@ -117,9 +122,9 @@
    "flat": 3
   }
  },
- "grants": {
-  "specialists": {
-   "SPECIALIST_SCIENTIST": 1
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 2
   }
  },
  "cost": {
@@ -151,9 +156,6 @@
   "construct": "AS2D_UNIT_BUILD_RA_MISSIONARY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 2
-  },
   "worth": 2,
   "conquestProbability": 100,
   "religion": "RELIGION_KEMETISM",

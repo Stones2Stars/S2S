@@ -39,73 +39,9 @@
    ]
   }
  },
- "food": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_PASTURE": {
-     "flat": 1
-    },
-    "IMPROVEMENT_ORCHARD": {
-     "flat": 1
-    },
-    "IMPROVEMENT_FARM": {
-     "flat": 1
-    }
-   }
-  }
- },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_FARM_SUPPLY": {
-     "flat": 800
-    }
-   }
-  }
- },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_PASTURE": {
-     "flat": 1
-    },
-    "IMPROVEMENT_WINERY": {
-     "flat": 1
-    },
-    "IMPROVEMENT_PLANTATION": {
-     "flat": 1
-    },
-    "IMPROVEMENT_SILK_FARM": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_BACTERIOPHAGE_THERAPY_CLINIC": {
-     "flat": 800
-    },
-    "BUILDING_NUCLEIC_ACID_LAB": {
-     "flat": 800
-    },
-    "BUILDING_PROTEIN_LAB": {
-     "flat": 800
-    }
-   }
-  }
- },
  "health": {
   "empire": {
    "flat": 1
-  },
-  "city": {
-   "buildings": {
-    "BUILDING_LANDFILL": {
-     "flat": 1
-    }
-   }
   }
  },
  "cost": {

@@ -157,6 +157,11 @@
    "flat": 5
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1
+  }
+ },
  "cost": {
   "production": 740,
   "sizeModifier": 1,
@@ -170,9 +175,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_PRIEST": 1
-  },
   "conquestProbability": 70,
   "greatPeopleUnitType": "UNIT_PROPHET",
   "advisor": "ADVISOR_SCIENCE",

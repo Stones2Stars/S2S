@@ -31,14 +31,14 @@
    "flat": [
     3,
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "TECH_FISHING",
       "scope": "team"
      }
     },
     {
-     "value": -600,
+     "value": -6,
      "enabled": {
       "type": "TECH_ECOLOGY",
       "scope": "team"
@@ -52,7 +52,7 @@
    "flat": [
     3,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_TOURISM",
       "scope": "team"

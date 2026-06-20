@@ -42,48 +42,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_ANTHROPOMORPHICS_LAB": {
-     "flat": 900
-    },
-    "BUILDING_BIOMORPHICS_LAB": {
-     "flat": 900
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_FACIAL_RECOGNITION_SOFTWARE": {
-     "flat": 900
-    },
-    "BUILDING_INTUITIVE_ALGORITHMS": {
-     "flat": 900
-    },
-    "BUILDING_FACTORY_SERVICE_BOTS": {
-     "flat": 900
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_ANTHROPOMORPHICS_LAB": {
-     "flat": 900
-    },
-    "BUILDING_BIOMORPHICS_LAB": {
-     "flat": 900
-    },
-    "BUILDING_ROBOTICS_LAB": {
-     "flat": 900
-    }
-   }
-  }
- },
  "happiness": {
   "empire": {
    "flat": 1

@@ -33,27 +33,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_DEEP_SPACE_ALIEN_SIGNAL_DECODER": {
-     "flat": 1100
-    }
-   }
-  }
- },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_DEEP_SPACE_ALIEN_SIGNAL_DECODER": {
-     "flat": 1100
-    },
-    "BUILDING_INTERSTELLAR_BROADCAST_NODE": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 194821
  },

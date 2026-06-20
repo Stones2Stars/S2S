@@ -35,30 +35,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_MINING_CAMP": {
-     "flat": 800
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_FACTORY_MICROGENERATORS": {
-     "flat": 800
-    },
-    "BUILDING_MINING_CAMP": {
-     "flat": 800
-    },
-    "BUILDING_SPACE_STATION": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 27203
  },

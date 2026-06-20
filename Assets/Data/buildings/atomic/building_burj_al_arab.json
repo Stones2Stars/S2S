@@ -57,6 +57,11 @@
    "flat": 1
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 2
@@ -79,9 +84,9 @@
    "flat": 4
   }
  },
- "grants": {
-  "specialists": {
-   "SPECIALIST_MERCHANT": 1
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 2
   }
  },
  "cost": {
@@ -116,9 +121,6 @@
   "construct": "AS2D_BUILD_STONEHENGE"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_MERCHANT": 2
-  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 10,

@@ -37,15 +37,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_ASTROBIOLOGY_LAB": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 166029
  },

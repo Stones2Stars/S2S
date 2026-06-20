@@ -89,6 +89,12 @@
    "flat": -10
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 4,
+   "SPECIALIST_DOCTOR": 1
+  }
+ },
  "grants": {
   "repeatable": [
    {
@@ -116,10 +122,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 4,
-   "SPECIALIST_DOCTOR": 1
-  },
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

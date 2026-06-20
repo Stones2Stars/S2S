@@ -36,27 +36,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_OPTRONIC_SUPERCOMPUTER": {
-     "flat": 1100
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_OPTRONIC_SUPERCOMPUTER": {
-     "flat": 1100
-    },
-    "BUILDING_UNIVERSAL_LIBRARY": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 149039
  },

@@ -62,6 +62,12 @@
    "flat": 10
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1,
+   "SPECIALIST_CELEBRITY": 1
+  }
+ },
  "cost": {
   "production": 4980,
   "sizeModifier": 3,
@@ -81,10 +87,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 1,
-   "SPECIALIST_CELEBRITY": 1
-  },
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

@@ -60,40 +60,6 @@
    ]
   }
  },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_UNIVERSITY": {
-     "flat": 500
-    }
-   }
-  }
- },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_GUARDHOUSE": {
-     "flat": 500
-    },
-    "BUILDING_TOWN_PATROL": {
-     "flat": 500
-    }
-   }
-  }
- },
- "freeSpecialists": {
-  "city": {
-   "buildings": {
-    "BUILDING_UNIVERSITY": {
-     "specialists": {
-      "SPECIALIST_PRIEST": {
-       "flat": 1
-      }
-     }
-    }
-   }
-  }
- },
  "cost": {
   "research": 2701
  },

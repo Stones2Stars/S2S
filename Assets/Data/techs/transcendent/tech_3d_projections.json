@@ -30,15 +30,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_TRANSTELLAR_ALDERSON_DISK_FANTASY_ZONE": {
-     "flat": 1300
-    }
-   }
-  }
- },
  "cost": {
   "research": 545221
  },

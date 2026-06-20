@@ -40,24 +40,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_MINING_CAMP": {
-     "flat": 900
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_MINING_CAMP": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 40165
  },

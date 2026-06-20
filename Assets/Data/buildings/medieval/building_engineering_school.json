@@ -67,77 +67,77 @@
    "flat": [
     3,
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_ARCHITECTURE",
       "scope": "team"
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_SURVEYING",
       "scope": "team"
      }
     },
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_CIVIL_ENGINEERING",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_MEGASTRUCTURE_ENGINEERING",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_ECOLOGICAL_ENGINEERING",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_MARINE_ARCHITECTURE",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_ORBITAL_MEGASTRUCTURES",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_LUNAR_MEGASTRUCTURES",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_PLANETARY_MEGASTRUCTURES",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_ATOMIC_SCALE_ENGINEERING",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_COLONY_ARCOLOGY",
       "scope": "team"
@@ -166,6 +166,11 @@
    "flat": 6
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 3
+  }
+ },
  "cost": {
   "production": 300,
   "sizeModifier": 1,
@@ -178,9 +183,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ENGINEER": 3
-  },
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

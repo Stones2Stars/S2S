@@ -311,6 +311,11 @@
    "flat": 3
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 4
+  }
+ },
  "cost": {
   "production": 1030,
   "sizeModifier": 3,
@@ -334,9 +339,6 @@
   "construct": "AS2D_BUILD_GROCER"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_MERCHANT": 4
-  },
   "worth": 6,
   "conquestProbability": 33,
   "dcmAirbombMission": 2,

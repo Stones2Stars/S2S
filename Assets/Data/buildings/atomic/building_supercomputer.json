@@ -31,16 +31,16 @@
  },
  "gold": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_NEURAL_NETWORKS",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_MACHINE_LEARNING",
       "scope": "team"
@@ -51,23 +51,28 @@
  },
  "research": {
   "city": {
-   "flat": 20,
-   "percent": [
+   "flat": [
+    20,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_NEURAL_NETWORKS",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_MACHINE_LEARNING",
       "scope": "team"
      }
     }
    ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
   }
  },
  "hurryCost": {
@@ -78,11 +83,6 @@
  "PROPERTY_EDUCATION": {
   "city": {
    "flat": 5
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_SCIENTIST": 1
   }
  },
  "cost": {

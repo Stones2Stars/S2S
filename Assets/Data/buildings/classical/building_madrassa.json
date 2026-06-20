@@ -47,6 +47,12 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 2,
+   "SPECIALIST_PRIEST": 2
+  }
+ },
  "cost": {
   "production": 320,
   "sizeModifier": 2,
@@ -69,10 +75,6 @@
   "construct": "AS2D_BUILD_LIBRARY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 2,
-   "SPECIALIST_PRIEST": 2
-  },
   "neverCapture": true,
   "worth": 5,
   "dcmAirbombMission": 2,

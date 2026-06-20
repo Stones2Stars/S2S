@@ -42,50 +42,52 @@
  },
  "gold": {
   "city": {
-   "flat": 6,
-   "percent": [
+   "flat": [
+    6,
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_FANTASY_MATERIALS",
       "scope": "team"
      }
     },
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_HYPERINTELLIGENCE",
       "scope": "team"
      }
     },
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_DEITIES",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_POSTHUMANISM",
       "scope": "team"
      }
     },
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_SHAPESHIFTING",
       "scope": "team"
      }
     },
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_MENSIOKINESIS",
       "scope": "team"
      }
-    },
+    }
+   ],
+   "percent": [
     {
      "value": 100,
      "enabled": {

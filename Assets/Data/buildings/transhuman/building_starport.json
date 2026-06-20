@@ -43,21 +43,21 @@
   "city": {
    "flat": [
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_LAUNCH_ARCOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_ADVANCED_SEEDSHIPS",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_INTERSTELLAR_TRADE",
       "scope": "team"
@@ -68,78 +68,80 @@
  },
  "gold": {
   "city": {
-   "flat": 6,
-   "percent": [
+   "flat": [
+    6,
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_FOLDING_SPACE",
       "scope": "team"
      }
     },
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_SPACE_CREASING",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_ANTIMATTER_ROCKETS",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_WORMHOLE_TRAVERSAL",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_NUCLEAR_PULSE_PROPULSION",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_FUSION_SPACECRAFT",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_ACNP_PROPULSION",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_INTERSTELLAR_TRAVEL",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_INTERSTELLAR_COLONIZATION",
       "scope": "team"
      }
-    },
+    }
+   ],
+   "percent": [
     {
      "value": 100,
      "enabled": {

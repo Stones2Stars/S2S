@@ -18,105 +18,115 @@
      }
     ]
    ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 150,
+     "max": 100000
+    }
+   ]
   }
  },
  "gold": {
   "city": {
-   "flat": -2,
-   "percent": [
+   "flat": [
+    -2,
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "TECH_CURRENCY",
       "scope": "team"
      }
     },
     {
-     "value": -200,
+     "value": -2,
      "enabled": {
       "type": "TECH_USURY",
       "scope": "team"
      }
     },
     {
-     "value": -200,
+     "value": -2,
      "enabled": {
       "type": "TECH_BANKING",
       "scope": "team"
      }
     },
     {
-     "value": -200,
+     "value": -2,
      "enabled": {
       "type": "TECH_MERCANTILISM",
       "scope": "team"
      }
     },
     {
-     "value": -300,
+     "value": -3,
      "enabled": {
       "type": "TECH_ECONOMICS",
       "scope": "team"
      }
     },
     {
-     "value": -300,
+     "value": -3,
      "enabled": {
       "type": "TECH_CONSUMERISM",
       "scope": "team"
      }
     },
     {
-     "value": -400,
+     "value": -4,
      "enabled": {
       "type": "TECH_APPLIED_ECONOMICS",
       "scope": "team"
      }
     },
     {
-     "value": -500,
+     "value": -5,
      "enabled": {
       "type": "TECH_GLOBALIZATION",
       "scope": "team"
      }
     },
     {
-     "value": -500,
+     "value": -5,
      "enabled": {
       "type": "TECH_CONGLOMERATES",
       "scope": "team"
      }
     },
     {
-     "value": -500,
+     "value": -5,
      "enabled": {
       "type": "TECH_MEGACORPORATIONS",
       "scope": "team"
      }
     },
     {
-     "value": -300,
+     "value": -3,
      "enabled": {
       "type": "TECH_ENVIRONMENTAL_ECONOMICS",
       "scope": "team"
      }
     },
     {
-     "value": -300,
+     "value": -3,
      "enabled": {
       "type": "TECH_PLANETARY_ECONOMICS",
       "scope": "team"
      }
     },
     {
-     "value": -200,
+     "value": -2,
      "enabled": {
       "type": "TECH_LUNAR_TRADE",
       "scope": "team"
      }
     },
     {
-     "value": -200,
+     "value": -2,
      "enabled": {
       "type": "TECH_INTERSTELLAR_TRADE",
       "scope": "team"

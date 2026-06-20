@@ -32,18 +32,6 @@
    ]
   }
  },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_CAVE_SHELTER": {
-     "flat": 100
-    },
-    "BUILDING_NEANDERTHAL_CAVES": {
-     "flat": 100
-    }
-   }
-  }
- },
  "cost": {
   "research": 17
  },

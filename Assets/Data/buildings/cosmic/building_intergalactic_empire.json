@@ -32,10 +32,10 @@
  },
  "espionage": {
   "city": {
-   "flat": 30,
-   "percent": [
+   "flat": [
+    30,
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_METAVERSE",
       "scope": "team"

@@ -35,28 +35,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_UNIVERSITY": {
-     "flat": 500
-    }
-   }
-  }
- },
- "freeSpecialists": {
-  "city": {
-   "buildings": {
-    "BUILDING_UNIVERSITY": {
-     "specialists": {
-      "SPECIALIST_SCIENTIST": {
-       "flat": 1
-      }
-     }
-    }
-   }
-  }
- },
  "grants": {
   "firstFreeUnit": "UNIT_SCIENTIST"
  },

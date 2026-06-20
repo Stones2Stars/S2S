@@ -78,7 +78,7 @@
    "flat": [
     1,
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "TECH_PAPER",
       "scope": "team"
@@ -89,9 +89,9 @@
  },
  "culture": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_PAPER",
       "scope": "team"

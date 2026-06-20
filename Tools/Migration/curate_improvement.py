@@ -51,9 +51,12 @@ AlternativeImprovementUpgradeTypes/bUpgradeRequiresFortify (upgrade), Improvemen
 (pillage/damage), FeatureChangeTypes/bChangeRemove/bPlaces{Bonus,Feature,Terrain} (placement transform — a "random
 spawn" mechanic, e.g. apple bonus under a lumberjack; owner: KEEP on identity, needs its OWN pass, OUT OF SCOPE #428).
 
-INVERTED / DROPPED: TechYieldChanges -> onto the tech (curate_tech:28; drop; PROVISIONAL pending the Phase-F
-modifier-ownership review, owner 2026-06-16). RouteYieldChanges -> already folded onto the route (curate_route:46;
-drop). iHealthPercent -> drop, BALANCE-CUT as a source from improvements (capability kept globally). Categories /
+TechYieldChanges -> KEEP-ON-SOURCE (owner 2026-06-20, Phase-F modifier-ownership): the improvement OWNS its tile
+yield, so its tech-conditioned bump rides on the improvement, plot-scope, `enabled` by the team-tech (the tech is
+the GIVER/enabler -- never inverted onto the tech). x1 (improvement yields are human-scale, like the base
+YieldChanges). RouteYieldChanges -> stays folded onto the ROUTE (curate_route:46) -- the route GOVERNS which
+improvements it upgrades (owner 2026-06-20), the one human-governance inversion that's correct.
+DROPPED: iHealthPercent -> drop, BALANCE-CUT as a source from improvements (capability kept globally). Categories /
 root iDepletionRand / Button (no improvement button — it lives on the worker Build) / MapCategoryTypes (0/266) -> drop.
 RNG: iAirBombDefense / iFeatureGrowth -> identity. PropertyManipulators -> parked raw `properties` (#429).
 
@@ -85,8 +88,10 @@ EXTRA_DROP = [
     "bNoFreshWater", "bWaterImprovement", "bPeakImprovement", "bCanMoveSeaUnits", "bNotOnAnyBonus",
     # post_process:
     "RiverSideYieldChange", "IrrigatedYieldChange", "BonusTypeStructs", "PropertyManipulators",
-    # inverted / balance-cut / dead:
-    "TechYieldChanges", "RouteYieldChanges", "iHealthPercent", "Categories", "iDepletionRand", "Button",
+    # keep-on-source via post_process (tech-conditioned own yields):
+    "TechYieldChanges",
+    # route governs / balance-cut / dead:
+    "RouteYieldChanges", "iHealthPercent", "Categories", "iDepletionRand", "Button",
     "MapCategoryTypes",
 ]
 
@@ -224,6 +229,16 @@ def post_process(typ, obj, rec, store):
         if node is not None:
             for y, v in engine.named_array(node, engine.YIELDS).items():
                 _inject(obj, y, "plot", "flat", v, pred)
+    # Tech-conditioned OWN yields: the improvement yields more once the team has the tech (legacy
+    # ImprovementInfo.TechYieldChanges). KEEP-ON-SOURCE -- on the improvement, plot-scope, `enabled` by the
+    # team-tech (the tech is the GIVER/enabler, never inverted onto the tech; owner 2026-06-20). x1 human-scale,
+    # like the base YieldChanges -- no de-scale.
+    ty = rec.find("TechYieldChanges")
+    if ty is not None:
+        for tech, _u, yields in cc._boost_entries(ty, engine.YIELDS, "flat"):
+            enabled = OrderedDict([("type", tech), ("scope", "team")])
+            for member, v in (yields.items() if isinstance(yields, dict) else []):
+                _inject(obj, member, "plot", "flat", v, enabled)
     # Per-bonus nest: yields (HAS_BONUS-gated) -> families ; trade/discoverRand/depletionRand -> identity.bonuses.
     bts = rec.find("BonusTypeStructs")
     if bts is not None:

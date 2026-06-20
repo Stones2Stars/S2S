@@ -35,24 +35,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
-     "percent": -5
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
-     "percent": -10
-    }
-   }
-  }
- },
  "cost": {
   "research": 7008
  },

@@ -40,15 +40,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_ETERNAL_INTELLIGENCE": {
-     "flat": 1300
-    }
-   }
-  }
- },
  "cost": {
   "research": 545221
  },

@@ -33,10 +33,10 @@
  },
  "gold": {
   "city": {
-   "flat": 10,
-   "percent": [
+   "flat": [
+    10,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_SIMULATED_REALITY",
       "scope": "team"
@@ -47,10 +47,10 @@
  },
  "research": {
   "city": {
-   "flat": -20,
-   "percent": [
+   "flat": [
+    -20,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_WHOLE_BRAIN_EMULATION",
       "scope": "team"
@@ -61,9 +61,9 @@
  },
  "espionage": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_SIMULATED_REALITY",
       "scope": "team"

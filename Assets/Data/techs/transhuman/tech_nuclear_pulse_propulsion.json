@@ -36,15 +36,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_STARPORT": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 93709
  },

@@ -43,6 +43,13 @@
    "flat": [
     2,
     {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_IRON_WORKING",
+      "scope": "team"
+     }
+    },
+    {
      "value": -1,
      "enabled": {
       "HAS_BONUS": "BONUS_GOLD_ORE"

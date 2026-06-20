@@ -33,37 +33,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_VENTURE_INDUSTRIES": {
-     "flat": 700
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_MOUNTAIN_MINE": {
-     "flat": 1
-    },
-    "IMPROVEMENT_MODERN_MINE": {
-     "flat": 1
-    },
-    "IMPROVEMENT_MANUFACTURING_COMPLEX": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_VENTURE_INDUSTRIES": {
-     "flat": 700
-    }
-   }
-  }
- },
  "cost": {
   "research": 16099
  },

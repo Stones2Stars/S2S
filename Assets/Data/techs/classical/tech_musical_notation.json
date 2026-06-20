@@ -46,36 +46,6 @@
    ]
   }
  },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_GRAND_EARTH_FESTIVAL": {
-     "flat": 300
-    },
-    "BUILDING_GRAND_FIRE_FESTIVAL": {
-     "flat": 300
-    },
-    "BUILDING_GRAND_MARINE_FESTIVAL": {
-     "flat": 300
-    },
-    "BUILDING_GRAND_SKY_FESTIVAL": {
-     "flat": 300
-    },
-    "BUILDING_BRASS_INSTRUMENT_MAKER": {
-     "flat": 300
-    },
-    "BUILDING_PERCUSSION_INSTRUMENT_MAKER": {
-     "flat": 300
-    },
-    "BUILDING_STRING_INSTRUMENT_MAKER": {
-     "flat": 300
-    },
-    "BUILDING_WOODWIND_INSTRUMENT_MAKER": {
-     "flat": 300
-    }
-   }
-  }
- },
  "grants": {
   "firstFreeUnit": "UNIT_ARTIST"
  },

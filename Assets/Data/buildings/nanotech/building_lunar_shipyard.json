@@ -51,10 +51,10 @@
  },
  "gold": {
   "city": {
-   "flat": -500,
-   "percent": [
+   "flat": [
+    -500,
     {
-     "value": 20000,
+     "value": 200,
      "enabled": {
       "type": "TECH_LUNAR_TRADE",
       "scope": "team"
@@ -66,6 +66,11 @@
  "hurryCost": {
   "city": {
    "percent": 10000
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 3
   }
  },
  "cost": {
@@ -84,9 +89,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ENGINEER": 3
-  },
   "conquestProbability": 70,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": "1.0",

@@ -40,21 +40,21 @@
   "city": {
    "flat": [
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_TOURISM",
       "scope": "team"
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_MOUNTAINEERING",
       "scope": "team"
      }
     },
     {
-     "value": -300,
+     "value": -3,
      "enabled": {
       "type": "TECH_FLIGHT",
       "scope": "team"
@@ -65,17 +65,17 @@
  },
  "research": {
   "city": {
-   "flat": 1,
-   "percent": [
+   "flat": [
+    1,
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_MOUNTAINEERING",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_GEOLOGY",
       "scope": "team"

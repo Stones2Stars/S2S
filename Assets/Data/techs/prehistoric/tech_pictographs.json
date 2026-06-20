@@ -25,15 +25,6 @@
    ]
   }
  },
- "happiness": {
-  "city": {
-   "buildings": {
-    "BUILDING_CRAFTS_HUT": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 39
  },

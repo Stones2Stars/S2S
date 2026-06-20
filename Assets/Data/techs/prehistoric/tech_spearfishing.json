@@ -28,36 +28,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_FISHERMANS_HUT": {
-     "flat": 100
-    },
-    "BUILDING_WONDER_OF_NATURE_LAKE_BAIKAL": {
-     "flat": 300
-    },
-    "BUILDING_WONDER_OF_NATURE_GREAT_BARRIER_REEF": {
-     "flat": 300
-    },
-    "BUILDING_WONDER_OF_NATURE_VICTORIA_FALLS": {
-     "flat": 200
-    },
-    "BUILDING_TIDEPOOL_SCAVENGER": {
-     "flat": 100
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_GREAT_BARRIER_REEF": {
-     "flat": 200
-    }
-   }
-  }
- },
  "cost": {
   "research": 30
  },

@@ -53,15 +53,17 @@
    "flat": 25
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
   }
  },
  "grants": {
-  "specialists": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "repeatable": [
    {
     "unitCombat": "UNITCOMBAT_HEALS_AS_TECH",

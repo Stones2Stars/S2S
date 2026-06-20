@@ -4,155 +4,299 @@
  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
  "production": {
   "city": {
-   "flat": 2,
-   "buildings": {
-    "BUILDING_ARCHIMEDES_WORKSHOP": {
-     "flat": 1
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BUILDING_ARCHIMEDES_WORKSHOP",
+      "scope": "city"
+     }
     },
-    "BUILDING_EDISONS_WORKSHOP": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BUILDING_EDISONS_WORKSHOP",
+      "scope": "city"
+     }
     },
-    "BUILDING_GREAT_WALL_OF_CHINA": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BUILDING_GREAT_WALL_OF_CHINA",
+      "scope": "city"
+     }
     },
-    "BUILDING_HADRIANS_WALL": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BUILDING_HADRIANS_WALL",
+      "scope": "city"
+     }
     },
-    "BUILDING_LEONARDOS_WORKSHOP": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BUILDING_LEONARDOS_WORKSHOP",
+      "scope": "city"
+     }
     }
-   }
+   ]
   },
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_INDUSTRIOUS": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_INDUSTRIOUS",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_INDUSTRIOUS1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_INDUSTRIOUS1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_INDUSTRIOUS2": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_INDUSTRIOUS2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_INDUSTRIOUS3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_INDUSTRIOUS3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAZY": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_LAZY",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAZY1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_LAZY1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAZY2": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_LAZY2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAZY3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_LAZY3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_PHILOSOPHICAL": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_PHILOSOPHICAL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_PHILOSOPHICAL1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_PHILOSOPHICAL1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_POPULIST": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_POPULIST",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_POPULIST1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_POPULIST1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_UNSANITARY": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_UNSANITARY",
+      "scope": "empire"
+     }
     },
-    "TRAIT_UNSANITARY3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_UNSANITARY3",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "commerce": {
   "city": {
-   "buildings": {
-    "BUILDING_LONDON_EYE": {
-     "flat": 2
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BUILDING_LONDON_EYE",
+      "scope": "city"
+     }
     }
-   }
+   ]
   }
  },
  "gold": {
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_INDUSTRIOUS": {
-     "flat": -1
+   "flat": [
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_INDUSTRIOUS",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_INDUSTRIOUS1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_INDUSTRIOUS1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_INDUSTRIOUS2": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_INDUSTRIOUS2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_INDUSTRIOUS3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_INDUSTRIOUS3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_GRIM": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_GRIM",
+      "scope": "empire"
+     }
     },
-    "TRAIT_GRIM2": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_GRIM2",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "research": {
   "city": {
-   "buildings": {
-    "BUILDING_ATOMIUM": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BUILDING_ATOMIUM",
+      "scope": "city"
+     }
     }
-   },
-   "civics": {
-    "CIVIC_TECHNOCRACY": {
-     "percent": 200
+   ],
+   "percent": [
+    {
+     "value": 200,
+     "enabled": {
+      "type": "CIVIC_TECHNOCRACY",
+      "scope": "empire"
+     }
     },
-    "CIVIC_GUILDS": {
-     "percent": 50
+    {
+     "value": 50,
+     "enabled": {
+      "type": "CIVIC_GUILDS",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   },
   "empire": {
-   "traits": {
-    "TRAIT_PROGRESSIST": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_PROGRESSIST",
+      "scope": "empire"
+     }
     },
-    "TRAIT_PROGRESSIST1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_PROGRESSIST1",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "culture": {
   "city": {
-   "buildings": {
-    "BUILDING_BAUHAUS_SCHOOL": {
-     "flat": 2
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BUILDING_BAUHAUS_SCHOOL",
+      "scope": "city"
+     }
     }
-   }
+   ]
   },
   "empire": {
-   "traits": {
-    "TRAIT_LAZY": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_LAZY",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAZY1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_LAZY1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAZY2": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_LAZY2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAZY3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_LAZY3",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "greatPeopleRate": {

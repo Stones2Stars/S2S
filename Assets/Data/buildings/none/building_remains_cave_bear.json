@@ -27,9 +27,9 @@
  },
  "research": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_BIOLOGY",
       "scope": "team"

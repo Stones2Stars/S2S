@@ -32,24 +32,6 @@
    ]
   }
  },
- "happiness": {
-  "city": {
-   "buildings": {
-    "BUILDING_STABLE": {
-     "flat": 1
-    },
-    "BUILDING_ANCIENT_CUSTOMS": {
-     "flat": 1
-    },
-    "BUILDING_FISHERMANS_HUT": {
-     "flat": 1
-    },
-    "BUILDING_HUNTERS_CAMP": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 213
  },

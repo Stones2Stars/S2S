@@ -31,39 +31,6 @@
    ]
   }
  },
- "food": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_WHALING_SHIPS": {
-     "flat": 1
-    },
-    "IMPROVEMENT_FISHING_BOATS": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_WHALING_SHIPS": {
-     "flat": 1
-    },
-    "IMPROVEMENT_FISHING_BOATS": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_WEATHER_VANES": {
-     "flat": 500
-    }
-   }
-  }
- },
  "cost": {
   "research": 2701
  },

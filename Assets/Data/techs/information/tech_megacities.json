@@ -44,18 +44,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_CAD_STUDIO": {
-     "flat": 800
-    },
-    "BUILDING_MIXED_USE_DEVELOPMENT": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 26259
  },

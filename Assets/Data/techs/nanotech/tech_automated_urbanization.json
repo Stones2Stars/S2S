@@ -67,51 +67,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_FACIAL_RECOGNITION_SOFTWARE": {
-     "flat": 900
-    },
-    "BUILDING_GESTURE_RECOGNITION_SOFTWARE": {
-     "flat": 900
-    },
-    "BUILDING_INTUITIVE_ALGORITHMS": {
-     "flat": 900
-    },
-    "BUILDING_MIXED_USE_DEVELOPMENT": {
-     "flat": 900
-    },
-    "BUILDING_SPEECH_RECOGNITION_SOFTWARE": {
-     "flat": 900
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_AUTOMATED_HIGHWAY": {
-     "flat": 900
-    },
-    "BUILDING_ELEVATED_BICYCLE_TRACK": {
-     "flat": 900
-    },
-    "BUILDING_NATURAL_LANGUAGE_ALGORITHMS": {
-     "flat": 900
-    }
-   }
-  }
- },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_BLACKNET": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 41539
  },

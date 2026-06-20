@@ -35,15 +35,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_ULTIMATE_COMBAT_ARENA": {
-     "flat": 1200
-    }
-   }
-  }
- },
  "cost": {
   "research": 366008
  },

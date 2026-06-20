@@ -43,14 +43,14 @@
    "flat": 10
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 2
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_MERCHANT": 1
   }
  },
  "cost": {

@@ -48,15 +48,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_BARRINGER_CRATER": {
-     "flat": 500
-    }
-   }
-  }
- },
  "cost": {
   "research": 2528
  },

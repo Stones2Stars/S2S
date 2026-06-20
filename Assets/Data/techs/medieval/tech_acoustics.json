@@ -23,36 +23,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_BARDIC_CIRCLE": {
-     "flat": 400
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_BARDIC_CIRCLE": {
-     "flat": 400
-    },
-    "BUILDING_BRASS_INSTRUMENT_MAKER": {
-     "flat": 400
-    },
-    "BUILDING_PERCUSSION_INSTRUMENT_MAKER": {
-     "flat": 400
-    },
-    "BUILDING_STRING_INSTRUMENT_MAKER": {
-     "flat": 400
-    },
-    "BUILDING_WOODWIND_INSTRUMENT_MAKER": {
-     "flat": 400
-    }
-   }
-  }
- },
  "cost": {
   "research": 1960
  },

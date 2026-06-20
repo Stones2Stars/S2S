@@ -28,18 +28,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_BACTERIOPHAGE_THERAPY_CLINIC": {
-     "flat": 800
-    },
-    "BUILDING_MOLECULAR_BIOLOGY_LAB": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 22074
  },

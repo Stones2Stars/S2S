@@ -37,18 +37,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_GRAVITY_WAVE_DETECTOR": {
-     "flat": 900
-    },
-    "BUILDING_NEUTRINO_OBSERVATORY": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 44505
  },

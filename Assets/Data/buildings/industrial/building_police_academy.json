@@ -91,6 +91,11 @@
    "flat": -24
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_INVESTIGATOR": 2
+  }
+ },
  "cost": {
   "production": 1600,
   "sizeModifier": 3,
@@ -123,9 +128,6 @@
   "construct": "AS2D_BUILD_POLICE_STATION"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_INVESTIGATOR": 2
-  },
   "neverCapture": true,
   "worth": 1,
   "dcmAirbombMission": 2,

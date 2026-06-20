@@ -36,15 +36,6 @@
    ]
   }
  },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_DEAD_SEA": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 274
  },

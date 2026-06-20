@@ -43,23 +43,28 @@
  },
  "research": {
   "city": {
-   "flat": 21,
-   "percent": [
+   "flat": [
+    21,
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_ABSTRACT_MATHEMATICS",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_CHAOS_THEORY",
       "scope": "team"
      }
     }
    ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
   }
  },
  "hurryCost": {
@@ -72,8 +77,8 @@
    "flat": 10
   }
  },
- "grants": {
-  "specialists": {
+ "allowedSpecialists": {
+  "city": {
    "SPECIALIST_SCIENTIST": 1
   }
  },
@@ -88,9 +93,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

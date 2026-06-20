@@ -38,24 +38,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_SOCIABLE_ROBOTS": {
-     "flat": 1000
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_ANDROID_PARENTS": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 75052
  },

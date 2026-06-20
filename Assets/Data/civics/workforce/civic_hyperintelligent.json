@@ -43,6 +43,11 @@
    "flat": 1
   }
  },
+ "freeSpecialists": {
+  "empire": {
+   "SPECIALIST_ANDROID_WORKER": 3
+  }
+ },
  "workRate": {
   "empire": {
    "percent": 33
@@ -57,11 +62,6 @@
  },
  "policies": {
   "upgradeAnywhere": true
- },
- "grants": {
-  "freeSpecialists": {
-   "SPECIALIST_ANDROID_WORKER": 3
-  }
  },
  "ui": {
   "art": {

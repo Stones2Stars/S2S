@@ -34,7 +34,7 @@
   "city": {
    "flat": [
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_MACROVERSE_TRAVERSAL",
       "scope": "team"

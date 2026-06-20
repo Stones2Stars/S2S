@@ -43,6 +43,11 @@
    "flat": -1
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 2
+  }
+ },
  "revolution": {
   "city": {
    "flat": 10
@@ -61,11 +66,6 @@
  "PROPERTY_TOURISM": {
   "city": {
    "flat": 8
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_ARTIST": 2
   }
  },
  "cost": {

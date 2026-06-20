@@ -35,10 +35,10 @@
  },
  "gold": {
   "city": {
-   "flat": -20,
-   "percent": [
+   "flat": [
+    -20,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_BIOMATERIALS",
       "scope": "team"
@@ -49,59 +49,59 @@
  },
  "research": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_PALEONTOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_WILDLIFE_CONSERVATION",
       "scope": "team"
      }
     },
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_MARINE_BIOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_ECOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_GENETICS",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_GENESIS_BIOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_ECOLOGICAL_ENGINEERING",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_GENOMIC_ENCYCLOPEDIA",
       "scope": "team"
@@ -120,6 +120,11 @@
    "flat": 5
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 535,
   "sizeModifier": 2,
@@ -132,9 +137,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -36,21 +36,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_STANDARD_MODEL": {
-     "flat": 1000
-    },
-    "BUILDING_DARK_MATTER_DETECTOR": {
-     "flat": 1000
-    },
-    "BUILDING_GRAVITY_WAVE_DETECTOR": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 63426
  },

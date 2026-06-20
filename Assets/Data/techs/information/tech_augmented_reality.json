@@ -36,45 +36,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_DIGITAL_ADVERTISING_FIRM": {
-     "flat": 800
-    },
-    "BUILDING_GESTURE_RECOGNITION_SOFTWARE": {
-     "flat": 800
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_USER_EXPERIENCE_RESEARCH_LAB": {
-     "flat": 800
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_DIGITAL_GLOBE": {
-     "flat": 800
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_DIGITAL_ADVERTISING_FIRM": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 25354
  },

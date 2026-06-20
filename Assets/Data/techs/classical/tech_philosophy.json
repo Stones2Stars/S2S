@@ -40,20 +40,6 @@
    ]
   }
  },
- "happiness": {
-  "city": {
-   "buildings": {
-    "BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE": {
-     "iHappiness": {
-      "flat": -3
-     },
-     "iHealth": {
-      "flat": -3
-     }
-    }
-   }
-  }
- },
  "cost": {
   "research": 679
  },

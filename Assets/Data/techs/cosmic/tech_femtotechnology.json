@@ -78,31 +78,6 @@
    ]
   }
  },
- "food": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_INTERSTELLAR_COLONY": {
-     "flat": 1
-    }
-   }
-  }
- },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER": {
-     "flat": 1200
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_INTERSTELLAR_COLONY": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 262044
  },

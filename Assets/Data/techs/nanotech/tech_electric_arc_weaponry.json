@@ -41,21 +41,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_ADVANCED_COPPERWORKS": {
-     "flat": 900
-    },
-    "BUILDING_ADVANCED_IRONWORKS": {
-     "flat": 900
-    },
-    "BUILDING_PLASMA_ARC_RECYCLING": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 37614
  },

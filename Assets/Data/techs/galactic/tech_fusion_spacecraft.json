@@ -55,24 +55,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_SOLAR_CONCENTRATOR": {
-     "flat": 1
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_STARPORT": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "grants": {
   "firstFreeUnit": "UNIT_GREAT_ENGINEER"
  },

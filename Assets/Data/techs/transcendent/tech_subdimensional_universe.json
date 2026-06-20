@@ -30,15 +30,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_HYPERSPACE_INFLATON_FIELD": {
-     "flat": 1300
-    }
-   }
-  }
- },
  "cost": {
   "research": 642419
  },

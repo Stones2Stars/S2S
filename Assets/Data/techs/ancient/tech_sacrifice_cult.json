@@ -51,27 +51,6 @@
    ]
   }
  },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_GRAND_SKY_FESTIVAL": {
-     "flat": 200
-    }
-   }
-  }
- },
- "happiness": {
-  "city": {
-   "buildings": {
-    "BUILDING_BLOODHUNTRESSS_HUT": {
-     "flat": 1
-    },
-    "BUILDING_BLOOD_DANCE": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 110
  },

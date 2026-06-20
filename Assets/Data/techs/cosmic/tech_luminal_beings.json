@@ -30,15 +30,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_SPHEREWORLD": {
-     "flat": 1200
-    }
-   }
-  }
- },
  "cost": {
   "research": 366008
  },

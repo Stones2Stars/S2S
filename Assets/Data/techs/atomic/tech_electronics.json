@@ -78,37 +78,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_BELL_LABS": {
-     "flat": 700
-    }
-   }
-  }
- },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_SPY_NETWORK": {
-     "flat": 700
-    }
-   }
-  }
- },
- "freeSpecialists": {
-  "city": {
-   "buildings": {
-    "BUILDING_SPY_NETWORK": {
-     "specialists": {
-      "SPECIALIST_SPY": {
-       "flat": 1
-      }
-     }
-    }
-   }
-  }
- },
  "cost": {
   "research": 10744
  },

@@ -54,15 +54,6 @@
    ]
   }
  },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_WOOD_GATHERER": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 26
  },

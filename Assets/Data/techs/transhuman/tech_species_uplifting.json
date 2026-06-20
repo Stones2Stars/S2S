@@ -31,33 +31,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_ANTHROPOMORPHICS_LAB": {
-     "flat": 1000
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_ANTHROPOMORPHICS_LAB": {
-     "flat": 1000
-    },
-    "BUILDING_ASTROBIOLOGY_LAB": {
-     "flat": 1000
-    },
-    "BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS": {
-     "flat": 1000
-    },
-    "BUILDING_EVOLUTIONARY_ALGORITHMS": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "grants": {
   "firstFreeUnit": "UNIT_SCIENTIST"
  },

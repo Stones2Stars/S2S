@@ -23,7 +23,23 @@
  },
  "production": {
   "plot": {
-   "flat": 25
+   "flat": [
+    25,
+    {
+     "value": 5,
+     "enabled": {
+      "type": "TECH_ZEPTOTECHNOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "type": "TECH_OMEGA_MINUS_ENGINEERING",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "commerce": {

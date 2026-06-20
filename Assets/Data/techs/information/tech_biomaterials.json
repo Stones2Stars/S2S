@@ -37,55 +37,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_FARM_CROP_ALGAE": {
-     "flat": 800
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_FARM": {
-     "flat": 1
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_ENTOMOLOGY_LAB": {
-     "flat": 800
-    },
-    "BUILDING_HERPETOLOGY_LAB": {
-     "flat": 800
-    },
-    "BUILDING_MOLECULAR_BIOLOGY_LAB": {
-     "flat": 800
-    },
-    "BUILDING_ORNITHOLOGY_LAB": {
-     "flat": 800
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_NUCLEIC_ACID_LAB": {
-     "flat": 800
-    },
-    "BUILDING_MICROBIOLOGY_LAB": {
-     "flat": 800
-    },
-    "BUILDING_PROTEIN_LAB": {
-     "flat": 800
-    }
-   }
-  }
- },
  "happiness": {
   "empire": {
    "flat": 1

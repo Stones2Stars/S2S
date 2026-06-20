@@ -47,14 +47,14 @@
    "flat": [
     3,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_ASTEROID_MINING",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_UBIQUITOUS_COMPUTING",
       "scope": "team"

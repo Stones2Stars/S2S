@@ -56,14 +56,14 @@
    }
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 3
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 10000
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_SCIENTIST": 3
   }
  },
  "cost": {

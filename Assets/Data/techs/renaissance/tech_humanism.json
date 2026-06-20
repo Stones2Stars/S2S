@@ -52,37 +52,6 @@
    ]
   }
  },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
-     "percent": -10
-    }
-   }
-  }
- },
- "happiness": {
-  "city": {
-   "buildings": {
-    "BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE": {
-     "iHappiness": {
-      "flat": -3
-     },
-     "iHealth": {
-      "flat": -3
-     }
-    },
-    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
-     "flat": -5
-    }
-   },
-   "specialists": {
-    "SPECIALIST_SLAVES": {
-     "flat": -1
-    }
-   }
-  }
- },
  "cost": {
   "research": 2364
  },

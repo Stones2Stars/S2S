@@ -43,10 +43,10 @@
  },
  "research": {
   "city": {
-   "flat": 1,
-   "percent": [
+   "flat": [
+    1,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_HYPOTHETICAL_BIOCHEMISTRY",
       "scope": "team"

@@ -68,6 +68,11 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_NOBLE": 1
+  }
+ },
  "cost": {
   "production": 300,
   "sizeModifier": 2,
@@ -80,9 +85,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_NOBLE": 1
-  },
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

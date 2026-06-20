@@ -50,8 +50,8 @@
    }
   }
  },
- "grants": {
-  "specialists": {
+ "freeSpecialists": {
+  "city": {
    "SPECIALIST_SCIENTIST": 1
   }
  },

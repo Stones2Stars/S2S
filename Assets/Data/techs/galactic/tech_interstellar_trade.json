@@ -43,31 +43,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_STARPORT": {
-     "flat": 1100
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_COLONY_HABITAT_HUGE": {
-     "flat": 1
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_CRIME_SHOPLIFTING": {
-     "flat": -200
-    }
-   }
-  }
- },
  "cost": {
   "research": 154284
  },

@@ -67,17 +67,17 @@
  },
  "gold": {
   "city": {
-   "flat": 3,
-   "percent": [
+   "flat": [
+    3,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_NANOMINING",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_MEGASTRUCTURE_ENGINEERING",
       "scope": "team"

@@ -81,17 +81,29 @@
  },
  "freeSpecialists": {
   "city": {
-   "improvements": {
-    "IMPROVEMENT_HUNTING_CAMP": {
-     "flat": 1
+   "any": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "IMPROVEMENT_HUNTING_CAMP",
+      "scope": "city"
+     }
     },
-    "IMPROVEMENT_HUNTING_PRESERVE": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "IMPROVEMENT_HUNTING_PRESERVE",
+      "scope": "city"
+     }
     },
-    "IMPROVEMENT_WILDLIFE_SANCTUARY": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "IMPROVEMENT_WILDLIFE_SANCTUARY",
+      "scope": "city"
+     }
     }
-   }
+   ]
   }
  },
  "greatPeopleRate": {

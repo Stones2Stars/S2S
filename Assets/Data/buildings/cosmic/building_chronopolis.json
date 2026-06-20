@@ -42,43 +42,45 @@
  },
  "gold": {
   "city": {
-   "flat": 10,
-   "percent": [
+   "flat": [
+    10,
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_TIMELINE_RECTIFICATION",
       "scope": "team"
      }
     },
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_TIME_REVERSAL",
       "scope": "team"
      }
     },
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
       "scope": "team"
      }
     },
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_MULTIDIMENSIONAL_TIME",
       "scope": "team"
      }
     },
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_STABLE_TIME_LOOPS",
       "scope": "team"
      }
-    },
+    }
+   ],
+   "percent": [
     {
      "value": 100,
      "enabled": {
@@ -92,29 +94,31 @@
  },
  "research": {
   "city": {
-   "flat": 10,
-   "percent": [
+   "flat": [
+    10,
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_MULTIVERSE_TRAVERSAL",
       "scope": "team"
      }
     },
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_MANIFOLD_COLONIZATION",
       "scope": "team"
      }
     },
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_MACROVERSE_TRAVERSAL",
       "scope": "team"
      }
-    },
+    }
+   ],
+   "percent": [
     {
      "value": 100,
      "enabled": {
@@ -128,10 +132,10 @@
  },
  "culture": {
   "city": {
-   "flat": 10,
-   "percent": [
+   "flat": [
+    10,
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_CULTURAL_LONGEVITY",
       "scope": "team"

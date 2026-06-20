@@ -40,15 +40,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_CISLUNAR_SANITATION_SYSTEM": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 49574
  },

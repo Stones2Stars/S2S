@@ -44,15 +44,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_SPACE_STATION": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 22847
  },

@@ -40,15 +40,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES": {
-     "flat": 1200
-    }
-   }
-  }
- },
  "cost": {
   "research": 314134
  },

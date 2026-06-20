@@ -33,18 +33,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_DYSON_SPHERE": {
-     "flat": 3
-    },
-    "IMPROVEMENT_HELIOFORMED_BROWN_DWARF": {
-     "flat": 3
-    }
-   }
-  }
- },
  "cost": {
   "research": 186934
  },

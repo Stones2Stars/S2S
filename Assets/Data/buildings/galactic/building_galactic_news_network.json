@@ -37,6 +37,11 @@
    "flat": 6
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_CELEBRITY": 1
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 2
@@ -55,11 +60,6 @@
  "anarchy": {
   "city": {
    "percent": -25
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_CELEBRITY": 1
   }
  },
  "cost": {

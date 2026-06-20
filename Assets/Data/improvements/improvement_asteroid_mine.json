@@ -32,6 +32,13 @@
    "flat": [
     3,
     {
+     "value": 3,
+     "enabled": {
+      "type": "TECH_ASTEROID_EXTRACTION",
+      "scope": "team"
+     }
+    },
+    {
      "value": 1,
      "enabled": {
       "HAS_BONUS": "BONUS_EXTRATERRESTRIAL_MICROBES"
@@ -50,6 +57,20 @@
   "plot": {
    "flat": [
     3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ACOUSTOPHORESIS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_NANOMINING",
+      "scope": "team"
+     }
+    },
     {
      "value": 2,
      "enabled": {

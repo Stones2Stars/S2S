@@ -28,15 +28,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_ACOUSTIC_DRILLING": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 41539
  },

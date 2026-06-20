@@ -33,15 +33,6 @@
    ]
   }
  },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_DEEP_SPACE_CLOAKING": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 144040
  },

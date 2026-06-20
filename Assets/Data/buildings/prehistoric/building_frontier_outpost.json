@@ -49,9 +49,9 @@
  },
  "espionage": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_NEGOTIATION",
       "scope": "team"

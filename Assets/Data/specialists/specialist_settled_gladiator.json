@@ -7,29 +7,49 @@
    "flat": 1
   },
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_HUMANITARIAN": {
-     "flat": -1
+   "flat": [
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_HUMANITARIAN",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_HUMANITARIAN1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_HUMANITARIAN1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_HUMANITARIAN3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_HUMANITARIAN3",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "culture": {
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_HUMANITARIAN": {
-     "flat": -1
+   "flat": [
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_HUMANITARIAN",
+      "scope": "empire"
+     }
     },
-    "TRAIT_HUMANITARIAN2": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_HUMANITARIAN2",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "experience": {

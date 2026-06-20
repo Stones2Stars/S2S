@@ -25,36 +25,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_ISP_OFFICES": {
-     "flat": 800
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_COMPUTER_SCIENCE_DEPARTMENT": {
-     "flat": 800
-    },
-    "BUILDING_EFFECT_GPS": {
-     "flat": 800
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_CGI_ANIMATION_STUDIO": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 22847
  },

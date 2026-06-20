@@ -34,24 +34,24 @@
  },
  "research": {
   "city": {
-   "flat": 1000,
-   "percent": [
+   "flat": [
+    1000,
     {
-     "value": 5000,
+     "value": 50,
      "enabled": {
       "type": "TECH_OMEGA_MINUS_ENGINEERING",
       "scope": "team"
      }
     },
     {
-     "value": 5000,
+     "value": 50,
      "enabled": {
       "type": "TECH_CONTROLLED_VACUUM_COLLAPSE",
       "scope": "team"
      }
     },
     {
-     "value": 5000,
+     "value": 50,
      "enabled": {
       "type": "TECH_CONTROLLED_INFLATION",
       "scope": "team"

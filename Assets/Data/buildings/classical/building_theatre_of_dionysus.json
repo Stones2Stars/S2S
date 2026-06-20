@@ -79,6 +79,11 @@
    "flat": 6
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 3
+  }
+ },
  "cost": {
   "production": 1620,
   "sizeModifier": 2,
@@ -105,9 +110,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 3
-  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 10,

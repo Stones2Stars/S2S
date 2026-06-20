@@ -32,17 +32,17 @@
  },
  "gold": {
   "city": {
-   "flat": -10,
-   "percent": [
+   "flat": [
+    -10,
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_TACHYON_COMMUNICATIONS",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_WORMHOLE_COMMUNICATIONS",
       "scope": "team"
@@ -58,9 +58,9 @@
  },
  "espionage": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_NEUTRINO_COMMUNICATIONS",
       "scope": "team"

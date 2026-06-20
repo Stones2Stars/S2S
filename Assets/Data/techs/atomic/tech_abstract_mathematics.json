@@ -24,18 +24,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_MATHEMATICS_DEPARTMENT": {
-     "flat": 700
-    },
-    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
-     "percent": -10
-    }
-   }
-  }
- },
  "cost": {
   "research": 9484
  },

@@ -80,10 +80,10 @@
  },
  "research": {
   "city": {
-   "flat": 2,
-   "percent": [
+   "flat": [
+    2,
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "TECH_GEOCENTRISM",
       "scope": "team"

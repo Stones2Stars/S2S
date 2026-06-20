@@ -75,7 +75,7 @@ SCALAR = {
     "iDomesticGreatGeneralRateModifier":("greatGeneralRate","empire", "domestic","percent"),
     "iGreatPeopleRateModifier":        ("greatPeopleRate", "empire", "", "percent"),
     "iMaxConscript":                   ("conscript", "empire", "", "flat"),
-    "iFreeSpecialist":                 ("freeSpecialists", "empire", "", "flat"),
+    "iFreeSpecialist":                 ("freeSpecialists", "empire", "", "any"),
     # wellbeing
     "iCivicHappiness":                 ("happiness", "empire", "",            "flat"),
     "iLargestCityHappiness":           ("happiness", "empire", "largestCity", "flat"),
@@ -296,9 +296,12 @@ def curate(typ, rec, store):
             if v not in (None, 0, 0.0):                    # civic (signed) -> grants (owner 2026-06-15), not a
                 grants["revolution"] = v                   # continuous revolution modifier
         elif tag == "FreeSpecialistCounts":
+            # freeSpecialists COUNT family, keyed by specialist type, empire scope (keep-on-civic; active while the
+            # civic is adopted -- inherent, no extra `enabled`). modifier.md §6.7 (A).
             m = _keyed_entries(c, None)
-            if m:
-                grants["freeSpecialists"] = OrderedDict((k, m[k]) for k in sorted(m))
+            for k in sorted(m):
+                if m[k]:
+                    fam.setdefault("freeSpecialists", {}).setdefault("empire", {})[k] = m[k]
         elif tag == "PropertyManipulators":
             _properties(c, props)
         elif tag == "Flavors":

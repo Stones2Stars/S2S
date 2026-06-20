@@ -93,6 +93,11 @@
    "flat": -5
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_DOCTOR": 1
+  }
+ },
  "grants": {
   "repeatable": [
    {
@@ -130,9 +135,6 @@
   "construct": "AS2D_BUILD_HEALERSHUT"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_DOCTOR": 1
-  },
   "worth": 3,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

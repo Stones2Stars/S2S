@@ -39,7 +39,7 @@
   "city": {
    "flat": [
     {
-     "value": 2000,
+     "value": 20,
      "enabled": {
       "type": "TECH_TRANSFINITE_STRUCTURES",
       "scope": "team"
@@ -50,10 +50,10 @@
  },
  "gold": {
   "city": {
-   "flat": 35,
-   "percent": [
+   "flat": [
+    35,
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_TRANSFINITE_COMPUTATION",
       "scope": "team"

@@ -30,15 +30,6 @@
    ]
   }
  },
- "happiness": {
-  "city": {
-   "buildings": {
-    "BUILDING_GRAND_MARINE_FESTIVAL": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 3704
  },

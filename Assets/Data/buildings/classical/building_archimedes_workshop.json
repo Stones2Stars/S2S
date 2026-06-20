@@ -27,15 +27,6 @@
  "allowed": {
   "world": 1
  },
- "production": {
-  "specialist": {
-   "specialists": {
-    "SPECIALIST_ENGINEER": {
-     "flat": 1
-    }
-   }
-  }
- },
  "defense": {
   "empire": {
    "amount": {

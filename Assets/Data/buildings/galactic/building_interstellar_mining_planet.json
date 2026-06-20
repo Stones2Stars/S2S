@@ -33,7 +33,7 @@
    "flat": [
     45,
     {
-     "value": 2000,
+     "value": 20,
      "enabled": {
       "type": "TECH_INDUCED_SUPERNOVA",
       "scope": "team"

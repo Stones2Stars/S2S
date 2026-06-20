@@ -156,6 +156,11 @@
    "flat": 2
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
@@ -173,9 +178,9 @@
    "flat": 10
   }
  },
- "grants": {
-  "specialists": {
-   "SPECIALIST_MERCHANT": 1
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
   }
  },
  "cost": {
@@ -191,9 +196,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 1
-  },
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

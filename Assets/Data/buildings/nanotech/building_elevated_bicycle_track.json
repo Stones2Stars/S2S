@@ -41,10 +41,10 @@
  },
  "gold": {
   "city": {
-   "flat": 10,
-   "percent": [
+   "flat": [
+    10,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_AUTOMATED_URBANIZATION",
       "scope": "team"

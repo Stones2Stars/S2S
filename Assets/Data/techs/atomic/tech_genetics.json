@@ -27,51 +27,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_COMMUNITY_GARDEN": {
-     "flat": 700
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_ANATOMY_LAB": {
-     "flat": 700
-    },
-    "BUILDING_BACTERIOPHAGE_THERAPY_CLINIC": {
-     "flat": 700
-    },
-    "BUILDING_BIOLOGY_LAB": {
-     "flat": 700
-    },
-    "BUILDING_NUCLEIC_ACID_LAB": {
-     "flat": 700
-    },
-    "BUILDING_ENTOMOLOGY_LAB": {
-     "flat": 700
-    },
-    "BUILDING_HERPETOLOGY_LAB": {
-     "flat": 700
-    },
-    "BUILDING_MICROBIOLOGY_LAB": {
-     "flat": 700
-    },
-    "BUILDING_ORNITHOLOGY_LAB": {
-     "flat": 700
-    },
-    "BUILDING_PALEONTOLOGY_LAB": {
-     "flat": 700
-    },
-    "BUILDING_VACCINE_LAB": {
-     "flat": 700
-    }
-   }
-  }
- },
  "health": {
   "empire": {
    "flat": 1

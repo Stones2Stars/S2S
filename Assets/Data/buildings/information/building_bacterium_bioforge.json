@@ -66,24 +66,24 @@
  },
  "research": {
   "city": {
-   "flat": 4,
-   "percent": [
+   "flat": [
+    4,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_PROTOTYPED_PATHOGENS",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_MAINSTREAM_CLONING",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_AUGMENTED_CONSUMABLES",
       "scope": "team"
@@ -107,6 +107,11 @@
    "flat": -15
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 2865,
   "complexityModifier": 2
@@ -117,9 +122,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

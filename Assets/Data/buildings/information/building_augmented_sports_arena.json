@@ -47,14 +47,14 @@
    "flat": [
     5,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_MEDIA_HIVEMIND",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_BATTLEFIELD_SPORTS",
       "scope": "team"

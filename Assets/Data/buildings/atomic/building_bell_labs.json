@@ -52,73 +52,73 @@
  },
  "research": {
   "city": {
-   "flat": 18,
-   "percent": [
+   "flat": [
+    18,
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_EARLY_COMPUTING",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_TELEVISION",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_LASER",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_COMPUTER_SCIENCE",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_MICROPROCESSOR",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_RADIO_ASTRONOMY",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_COMPUTER_NETWORKS",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_ELECTRONICS",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_SOLAR_POWER",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_COMMUNICATION_NETWORKS",
       "scope": "team"
@@ -127,8 +127,8 @@
    ]
   }
  },
- "grants": {
-  "specialists": {
+ "freeSpecialists": {
+  "city": {
    "SPECIALIST_SCIENTIST": 1
   }
  },

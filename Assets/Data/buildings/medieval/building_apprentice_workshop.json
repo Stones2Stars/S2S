@@ -33,6 +33,15 @@
    "percent": -3
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1,
+   "SPECIALIST_PRIEST": 1,
+   "SPECIALIST_ENGINEER": 1,
+   "SPECIALIST_ARTIST": 1,
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
@@ -41,15 +50,6 @@
  "PROPERTY_EDUCATION": {
   "city": {
    "flat": 5
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_MERCHANT": 1,
-   "SPECIALIST_PRIEST": 1,
-   "SPECIALIST_ENGINEER": 1,
-   "SPECIALIST_ARTIST": 1,
-   "SPECIALIST_SCIENTIST": 1
   }
  },
  "cost": {

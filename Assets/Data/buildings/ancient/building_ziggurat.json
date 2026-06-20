@@ -64,6 +64,11 @@
    "flat": 3
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 2
+  }
+ },
  "cost": {
   "production": 153,
   "sizeModifier": 2,
@@ -87,9 +92,6 @@
   "construct": "AS2D_BUILD_COURTHOUSE"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_PRIEST": 2
-  },
   "worth": 4,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

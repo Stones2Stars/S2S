@@ -25,27 +25,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_VENTURE_INDUSTRIES": {
-     "flat": 800
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_VENTURE_INDUSTRIES": {
-     "flat": 800
-    },
-    "BUILDING_NUCLEIC_ACID_LAB": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 20610
  },

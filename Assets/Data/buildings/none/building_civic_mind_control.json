@@ -28,15 +28,6 @@
    ]
   }
  },
- "production": {
-  "specialist": {
-   "specialists": {
-    "SPECIALIST_SLAVES": {
-     "flat": 3
-    }
-   }
-  }
- },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CIVIC_MIND_CONTROL"

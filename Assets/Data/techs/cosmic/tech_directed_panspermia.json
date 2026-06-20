@@ -34,21 +34,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_LIFE_SILICON_DIOXIDE": {
-     "flat": 1200
-    },
-    "BUILDING_LIFE_SUPERCRITICAL_CO2": {
-     "flat": 1200
-    },
-    "BUILDING_INTERSTELLAR_BIOTIC_SPHERE_WORLD": {
-     "flat": 1200
-    }
-   }
-  }
- },
  "cost": {
   "research": 262044
  },

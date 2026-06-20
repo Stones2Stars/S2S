@@ -32,15 +32,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_EXOTIC_MATTER_LAB": {
-     "flat": 1200
-    }
-   }
-  }
- },
  "cost": {
   "research": 326209
  },

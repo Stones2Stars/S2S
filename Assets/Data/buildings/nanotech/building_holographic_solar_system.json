@@ -44,7 +44,7 @@
    "flat": [
     5,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_PLANETARY_ECONOMICS",
       "scope": "team"
@@ -55,17 +55,17 @@
  },
  "research": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_PHOTONIC_SATELLITES",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_TERRA_COMPUTER",
       "scope": "team"

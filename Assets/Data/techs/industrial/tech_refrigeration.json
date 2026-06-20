@@ -66,33 +66,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_FARM_SUPPLY": {
-     "flat": 600
-    }
-   }
-  }
- },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_PASTURE": {
-     "flat": 1
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_MODERN_WAREHOUSE": {
-     "flat": 600
-    }
-   }
-  }
- },
  "desertFarming": {
   "team": {
    "enabler": true

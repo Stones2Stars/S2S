@@ -52,21 +52,6 @@
    ]
   }
  },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_COLONY_MANUFACTORY": {
-     "flat": 1
-    },
-    "IMPROVEMENT_COLONY_EXTRACTION_FACILITY": {
-     "flat": 1
-    },
-    "IMPROVEMENT_MANUFACTURING_COMPLEX": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 41539
  },

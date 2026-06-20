@@ -79,6 +79,12 @@
    "flat": 8
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1,
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
  "cost": {
   "production": 2460,
   "sizeModifier": 3,
@@ -98,10 +104,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 1,
-   "SPECIALIST_ENGINEER": 1
-  },
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

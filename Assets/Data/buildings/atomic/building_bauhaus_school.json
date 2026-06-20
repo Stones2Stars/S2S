@@ -38,15 +38,6 @@
  "allowed": {
   "world": 1
  },
- "production": {
-  "specialist": {
-   "specialists": {
-    "SPECIALIST_ARTIST": {
-     "flat": 2
-    }
-   }
-  }
- },
  "culture": {
   "city": {
    "flat": [
@@ -60,16 +51,6 @@
      }
     }
    ]
-  },
-  "specialist": {
-   "specialists": {
-    "SPECIALIST_ENGINEER": {
-     "flat": 2
-    },
-    "SPECIALIST_GREAT_ENGINEER": {
-     "flat": 2
-    }
-   }
   }
  },
  "greatPeopleRate": {
@@ -85,6 +66,11 @@
  "PROPERTY_TOURISM": {
   "city": {
    "flat": 10
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 3
   }
  },
  "cost": {
@@ -106,9 +92,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 3
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

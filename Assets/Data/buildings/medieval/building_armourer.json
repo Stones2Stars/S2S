@@ -95,6 +95,11 @@
    "flat": 10
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
  "cost": {
   "production": 300,
   "sizeModifier": 2,
@@ -118,9 +123,6 @@
   "construct": "AS2D_BUILD_FORGE"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ENGINEER": 1
-  },
   "applyFreePromotionOnMove": true,
   "worth": 4,
   "militaryWorth": 5,

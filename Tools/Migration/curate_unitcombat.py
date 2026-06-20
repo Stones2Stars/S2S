@@ -34,7 +34,7 @@ from collections import OrderedDict
 
 import engine
 from store import Store, REPO
-from curate_common import FAMILY_ORDER, put_art, emit_art
+from curate_common import FAMILY_ORDER, put_art, emit_art, descale100
 # REUSE the Promotion unit-stat vocabulary (the shared §5 definition) + helpers.
 from curate_promotion import (STRENGTH, FAMILIES, CAP_BOOL, CAP_PAIR, CAP_COUNT, VISION_PAIRS,
                               VISION_STRUCTS, _txt, _int, _simple_list, _pairs)
@@ -98,6 +98,8 @@ def curate(typ, rec, store):
             node[unit] = v
     for tag, (family, member, unit) in FAMILIES.items():
         v = _int(rec, tag)
+        if tag.endswith("100"):                # one-time x100 -> human de-scale (cascade-fixed-point.md §2; iExtraUpkeep100)
+            v = descale100(v) if v is not None else v
         if v:
             node = vision if family == "vision" else fam_unit(family)
             if member:

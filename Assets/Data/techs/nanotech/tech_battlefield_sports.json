@@ -38,15 +38,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_AUGMENTED_SPORTS_ARENA": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 47795
  },

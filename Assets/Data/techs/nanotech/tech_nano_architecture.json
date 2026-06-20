@@ -60,24 +60,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_OCEAN_CITY": {
-     "flat": 900
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_MODULAR_CONSTRUCTION_FIRM": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 36429
  },

@@ -52,27 +52,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_AUYANTEPUI": {
-     "flat": 700
-    },
-    "BUILDING_WONDER_OF_NATURE_GREAT_BARRIER_REEF": {
-     "flat": 700
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_NATIONAL_AIRCRAFT_MUSEUM": {
-     "flat": 700
-    }
-   }
-  }
- },
  "cost": {
   "research": 12657
  },

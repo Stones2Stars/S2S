@@ -38,7 +38,16 @@
  },
  "commerce": {
   "plot": {
-   "flat": 7
+   "flat": [
+    7,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_TRADE",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "culture": {

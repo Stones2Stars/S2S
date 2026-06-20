@@ -44,56 +44,56 @@
    "flat": [
     1,
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "TECH_WEATHER_LORE",
       "scope": "team"
      }
     },
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "TECH_CALENDAR",
       "scope": "team"
      }
     },
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_METEOROLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_CROP_ROTATION",
       "scope": "team"
      }
     },
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_BIOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_LONG_RANGE_FORECASTING",
       "scope": "team"
      }
     },
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_ORGANIC_CHEMISTRY",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_GENETICS",
       "scope": "team"

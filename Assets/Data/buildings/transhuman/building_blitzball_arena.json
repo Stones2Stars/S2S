@@ -27,15 +27,17 @@
  },
  "gold": {
   "city": {
-   "flat": 2,
-   "percent": [
+   "flat": [
+    2,
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_FANTASY_MATERIALS",
       "scope": "team"
      }
-    },
+    }
+   ],
+   "percent": [
     {
      "value": 100,
      "enabled": {

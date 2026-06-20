@@ -38,24 +38,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_STARPORT": {
-     "flat": 1100
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_VENUS_ARCOLOGY": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 130429
  },

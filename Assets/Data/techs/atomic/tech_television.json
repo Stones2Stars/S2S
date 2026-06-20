@@ -33,33 +33,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_ANIMATION_STUDIO": {
-     "flat": 700
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_BELL_LABS": {
-     "flat": 700
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_ANIMATION_STUDIO": {
-     "flat": 700
-    }
-   }
-  }
- },
  "cost": {
   "research": 11196
  },

@@ -38,6 +38,11 @@
    "flat": 1000
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
  "maintenance": {
   "city": {
    "percent": -2
@@ -51,11 +56,6 @@
  "PROPERTY_TOURISM": {
   "city": {
    "flat": 1
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_MERCHANT": 1
   }
  },
  "cost": {

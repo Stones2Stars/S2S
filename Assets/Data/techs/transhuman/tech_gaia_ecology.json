@@ -201,15 +201,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_LIFE_SILICON_BASED": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 75052
  },

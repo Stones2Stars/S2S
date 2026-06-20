@@ -40,6 +40,16 @@
      }
     ]
    ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "PROPERTY_AIR_POLLUTION",
+     "scope": "city",
+     "min": 1950,
+     "max": 100000
+    }
+   ]
   }
  },
  "food": {

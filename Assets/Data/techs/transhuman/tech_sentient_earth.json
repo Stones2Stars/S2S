@@ -94,45 +94,6 @@
    ]
   }
  },
- "food": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_HYBRID_FOREST": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_NATURE_PRESERVE": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE": {
-     "flat": 1000
-    }
-   }
-  }
- },
- "happiness": {
-  "city": {
-   "buildings": {
-    "BUILDING_COASTAL_PRESERVE": {
-     "flat": 1
-    },
-    "BUILDING_STATE_PARK": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 83654
  },

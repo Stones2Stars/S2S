@@ -35,15 +35,6 @@
    ]
   }
  },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_NUCLEIC_ACID_LAB": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 19916
  },

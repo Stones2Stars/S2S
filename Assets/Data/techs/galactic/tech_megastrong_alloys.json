@@ -37,15 +37,6 @@
    ]
   }
  },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_COLONY_EXTRACTION_FACILITY": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 179514
  },

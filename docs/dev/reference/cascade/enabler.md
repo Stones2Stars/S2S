@@ -47,6 +47,22 @@ So **CAN GET = union(`enables` over HAS) − (`disables` ∪ `obsoletes` ∪ `re
 - **`replaces` overrides the obsolete-stay choice (precedence).** If a target is BOTH obsoleted AND replaced, `replaces` wins — the successor has taken its slot, so the predecessor is genuinely gone even if its `whenObsolete` (§2.2) wanted it to linger.
 - **The `enables` index is partly the kept #195 enabler reverse-index** (`buildConstructibilityEnablerIndex`, `getBuildingsEnabledBy`/`getUnitsEnabledBy`, `Sources/Engine/CvGlobals.cpp` ~3294/3235/3241) — it *is* the candidate-generation `enables` index, partly kept and partly replaced (the demolition map, §8).
 
+### 2.0 The fixed run order — confluence first (owner ruling 2026-06-20)
+
+The four operations run in a **fixed canonical order, but the result is designed to be order-INDEPENDENT** — a stronger guarantee than "same order every time." All four read the **same settled `HAS`** for a recompute (and `HAS` doesn't move underneath them — techs are monotonic), so the frontier is a pure set operation and set-difference is commutative: the membership of `CAN GET` does not depend on order. The canonical order is needed only for **two** things, never the bulk result:
+
+1. **Propagating a POSSESSION change through the enable-graph.** Naive `∪enables(HAS) − removed` has a gap: if possessed building A `enables` unit U and a law `disables` A (destroys it), the subtraction removes A but **leaves U enabled** (U was never in the removed set). A is *gone*, so U must drop. The fix is to let possession-changing removals resolve **before** generation.
+2. **Instance-fate precedence** when a target is removed two ways (a thing both `obsoletes`d and `replaces`d → `replaces` wins, per the bullet above).
+
+This splits the four by **what they touch**: `replaces`/`disables` change **POSSESSION** (a superseded/destroyed thing leaves `HAS`); `enables` **GENERATES** the frontier from the corrected `HAS`; `obsoletes` only **PRUNES** the frontier (existing instances persist and keep enabling — *obsoleted ≠ gone*). Hence the order:
+
+> **`replaces` → `disables` → `enables` → `obsoletes`** — two possession-fixers, then generate, then one frontier-pruner.
+
+- **`replaces` first** — collapse succession chains (A→A′→A″, transitive) so `HAS` holds the final survivors before anything reads it.
+- **`disables` second** — drop destroyed/banned things from `HAS` (a chain survivor can still be banned); a destroyed enabler then can't fire its `enables`.
+- **`enables` third** — generate `CAN GET` from the now-correct possession (destruction/supersession propagation falls out for free).
+- **`obsoletes` last** — prune the generated frontier; a pure frontier op that never retracts a still-possessed instance's `enables`, so `replaces`-wins-over-`obsoletes` is automatic (the replaced thing was already removed in step 1).
+
 ### 2.1 `disables` carries TWO fates by source intent
 
 The default framing is **destruction**: a ban does not park a building dormant — it tears it down. Ban the death penalty → the electric chair is removed and its space repurposed; ban prostitution → the brothels are demolished. **Repeal later and you must REBUILD** (pay the cost) — nothing mothballed silently resumes. This destruction (not a pause) is exactly why `disables` is its own source-side track. This is the **law/doctrine** flavor.

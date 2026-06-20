@@ -76,6 +76,11 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 8070,
   "sizeModifier": 1,
@@ -95,9 +100,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

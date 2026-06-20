@@ -34,15 +34,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_MARTIAN_FUSION_PLANT": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 144040
  },

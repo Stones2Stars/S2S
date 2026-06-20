@@ -31,17 +31,17 @@
  },
  "research": {
   "city": {
-   "flat": 2,
-   "percent": [
-    1,
+   "flat": [
+    2,
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_PRIESTHOOD",
       "scope": "team"
      }
     }
-   ]
+   ],
+   "percent": 1
   }
  },
  "culture": {

@@ -44,7 +44,7 @@
    "flat": [
     20,
     {
-     "value": 2000,
+     "value": 20,
      "enabled": {
       "type": "TECH_EXTRATERRESTRIAL_AGRICULTURE",
       "scope": "team"

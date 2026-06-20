@@ -112,6 +112,11 @@
    "flat": 4
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 2
+  }
+ },
  "cost": {
   "production": 2136,
   "sizeModifier": 2,
@@ -132,9 +137,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_MERCHANT": 2
-  },
   "nukeImmune": true,
   "worth": 10,
   "conquestProbability": 100,

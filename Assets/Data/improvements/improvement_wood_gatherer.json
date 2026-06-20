@@ -37,6 +37,13 @@
    "flat": [
     1,
     {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CARPENTRY",
+      "scope": "team"
+     }
+    },
+    {
      "value": 2,
      "enabled": {
       "HAS_BONUS": "BONUS_PRIME_TIMBER"

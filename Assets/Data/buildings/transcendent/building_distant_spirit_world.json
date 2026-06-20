@@ -26,16 +26,16 @@
  },
  "gold": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_ARCHETYPAL_VECTOR_SPACES",
       "scope": "team"
      }
     },
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_OMEGA_POINT",
       "scope": "team"

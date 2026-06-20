@@ -90,6 +90,11 @@
    ]
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
  "experience": {
   "city": {
    "unitCombats": {
@@ -114,9 +119,10 @@
    "flat": 30
   }
  },
- "grants": {
-  "specialists": {
-   "SPECIALIST_ARTIST": 1
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_ARTIST": 3
   }
  },
  "cost": {
@@ -145,10 +151,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1,
-   "SPECIALIST_ARTIST": 3
-  },
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

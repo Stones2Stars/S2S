@@ -37,13 +37,6 @@
  "commerce": {
   "city": {
    "percent": 12
-  },
-  "specialist": {
-   "specialists": {
-    "SPECIALIST_ENGINEER": {
-     "flat": 2
-    }
-   }
   }
  },
  "culture": {

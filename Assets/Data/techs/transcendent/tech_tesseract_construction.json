@@ -31,15 +31,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERGALACTIC_TEMPORAL_RIFT": {
-     "flat": 1300
-    }
-   }
-  }
- },
  "cost": {
   "research": 528012
  },

@@ -34,28 +34,28 @@
    "flat": [
     1,
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_HERALDRY",
       "scope": "team"
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_GUILDS",
       "scope": "team"
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_ACOUSTICS",
       "scope": "team"
      }
     },
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_ROMANTICISM",
       "scope": "team"
@@ -66,31 +66,31 @@
  },
  "culture": {
   "city": {
-   "flat": 1,
-   "percent": [
+   "flat": [
+    1,
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_HERALDRY",
       "scope": "team"
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_GUILDS",
       "scope": "team"
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_ACOUSTICS",
       "scope": "team"
      }
     },
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_ROMANTICISM",
       "scope": "team"
@@ -114,6 +114,11 @@
    "flat": 5
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
  "cost": {
   "production": 280,
   "sizeModifier": 2,
@@ -128,9 +133,6 @@
   "construct": "AS2D_BUILD_THEATRE"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 1
-  },
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -45,15 +45,7 @@
       }
      }
     }
-   ],
-   "specialists": {
-    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
-     "flat": 4
-    },
-    "SPECIALIST_GREAT_ADMIRAL": {
-     "flat": 4
-    }
-   }
+   ]
   },
   "empire": {
    "buildings": {

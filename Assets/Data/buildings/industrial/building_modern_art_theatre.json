@@ -68,6 +68,11 @@
    "flat": 3
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 3
+  }
+ },
  "cost": {
   "production": 1540,
   "sizeModifier": 3,
@@ -97,9 +102,6 @@
   "construct": "AS2D_BUILD_THEATRE"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 3
-  },
   "neverCapture": true,
   "worth": 8,
   "greatPeopleUnitType": "UNIT_ARTIST",

@@ -60,6 +60,12 @@
    "flat": 5
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_ARTIST": 1
+  }
+ },
  "cost": {
   "production": 3665
  },
@@ -69,10 +75,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1,
-   "SPECIALIST_ARTIST": 1
-  },
   "specialBuildingType": "SPECIALBUILDING_PUNK_BIO",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": "1.0",

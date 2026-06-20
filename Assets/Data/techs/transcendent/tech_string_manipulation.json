@@ -47,15 +47,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_WHITE_HOLE": {
-     "flat": 1300
-    }
-   }
-  }
- },
  "cost": {
   "research": 495679
  },

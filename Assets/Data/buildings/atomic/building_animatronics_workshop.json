@@ -138,6 +138,12 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1,
+   "SPECIALIST_ARTIST": 1
+  }
+ },
  "cost": {
   "production": 1080,
   "sizeModifier": 2,
@@ -151,10 +157,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ENGINEER": 1,
-   "SPECIALIST_ARTIST": 1
-  },
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

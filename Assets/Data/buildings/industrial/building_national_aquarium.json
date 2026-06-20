@@ -63,6 +63,11 @@
    "flat": 15
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 1260,
   "sizeModifier": 3,
@@ -82,9 +87,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "neverCapture": true,
   "centerInCity": true,
   "worth": 10,

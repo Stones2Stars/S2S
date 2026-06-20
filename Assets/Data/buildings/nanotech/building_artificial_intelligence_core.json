@@ -68,24 +68,24 @@
  },
  "research": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_SENTIENT_EARTH",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_TERRA_COMPUTER",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_ARTIFICIAL_LIFE",
       "scope": "team"

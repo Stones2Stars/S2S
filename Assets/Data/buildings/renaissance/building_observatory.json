@@ -91,52 +91,52 @@
  },
  "research": {
   "city": {
-   "flat": 10,
-   "percent": [
+   "flat": [
+    10,
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_CALCULUS",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_RADIO_ASTRONOMY",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_THEORY_OF_RELATIVITY",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_MODERN_PHYSICS",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_ASTRONAUTICS",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_JOVIAN_EXPLORATION",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_ASTEROID_BELT_PROBES",
       "scope": "team"
@@ -158,6 +158,11 @@
  "PROPERTY_EDUCATION": {
   "city": {
    "flat": 10
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
   }
  },
  "cost": {
@@ -182,9 +187,6 @@
   "construct": "AS2D_BUILD_OBSERVATORY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "worth": 5,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

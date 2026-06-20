@@ -41,27 +41,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_LIVING_BUILDINGS": {
-     "flat": 1100
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_SPACESCRAPER": {
-     "flat": 1100
-    },
-    "BUILDING_STRATOSPHERIC_TOWER": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 159944
  },

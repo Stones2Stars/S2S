@@ -55,28 +55,28 @@
    "flat": [
     6,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_SPECIES_UPLIFTING",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_PERSONAL_ROBOTS",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_ANDROIDS",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_CYBERNETICS",
       "scope": "team"
@@ -92,31 +92,31 @@
  },
  "research": {
   "city": {
-   "flat": 3,
-   "percent": [
+   "flat": [
+    3,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_SPECIES_UPLIFTING",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_CYBERNETICS",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_ANDROIDS",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_PERSONAL_ROBOTS",
       "scope": "team"
@@ -128,6 +128,12 @@
  "hurryCost": {
   "city": {
    "percent": 100
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_ENGINEER": 1
   }
  },
  "cost": {
@@ -143,10 +149,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1,
-   "SPECIALIST_ENGINEER": 1
-  },
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

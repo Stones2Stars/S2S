@@ -92,6 +92,11 @@
    "flat": 2
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 2550,
   "sizeModifier": 2,
@@ -121,9 +126,6 @@
   "construct": "AS2D_BUILD_OBSERVATORY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 12,

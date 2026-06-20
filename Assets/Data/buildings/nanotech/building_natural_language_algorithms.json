@@ -43,24 +43,24 @@
  },
  "gold": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_INTERACTIVE_GLASS",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_AUTOMATED_ROBOTICS",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_AUTOMATED_URBANIZATION",
       "scope": "team"
@@ -76,10 +76,10 @@
  },
  "culture": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_UNIVERSAL_TRANSLATOR",
       "scope": "team"

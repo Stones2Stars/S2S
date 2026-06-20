@@ -26,23 +26,23 @@
  },
  "gold": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_WEARABLE_COMPUTERS",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_VIRTUAL_REALITY",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_AUGMENTED_REALITY",
       "scope": "team"

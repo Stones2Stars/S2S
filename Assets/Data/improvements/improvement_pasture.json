@@ -32,6 +32,13 @@
   "plot": {
    "flat": [
     {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GENE_MANIPULATION",
+      "scope": "team"
+     }
+    },
+    {
      "value": 4,
      "enabled": {
       "HAS_BONUS": "BONUS_COW"
@@ -86,6 +93,13 @@
   "plot": {
    "flat": [
     {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_BARBED_WIRE",
+      "scope": "team"
+     }
+    },
+    {
      "value": 2,
      "enabled": {
       "HAS_BONUS": "BONUS_COW"
@@ -127,6 +141,27 @@
  "commerce": {
   "plot": {
    "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_REFRIGERATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GENE_MANIPULATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_BARBED_WIRE",
+      "scope": "team"
+     }
+    },
     {
      "value": 1,
      "enabled": {

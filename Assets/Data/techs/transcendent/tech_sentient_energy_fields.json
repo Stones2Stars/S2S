@@ -31,15 +31,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_MAGITEK_COMBAT_ARENA": {
-     "flat": 1300
-    }
-   }
-  }
- },
  "cost": {
   "research": 563149
  },

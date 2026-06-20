@@ -45,18 +45,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_KILIMANJARO": {
-     "flat": 300
-    },
-    "BUILDING_WONDER_OF_NATURE_MT_SINAI": {
-     "flat": 300
-    }
-   }
-  }
- },
  "happiness": {
   "empire": {
    "flat": 1

@@ -46,15 +46,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_DIGITAL_RESURRECTION": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 65511
  },

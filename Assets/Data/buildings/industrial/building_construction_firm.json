@@ -60,6 +60,11 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
  "cost": {
   "production": 800,
   "sizeModifier": 2,
@@ -83,9 +88,6 @@
   "construct": "AS2D_BUILD_WALLS"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ENGINEER": 1
-  },
   "nukeImmune": true,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

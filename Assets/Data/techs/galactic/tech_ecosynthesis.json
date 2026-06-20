@@ -43,24 +43,6 @@
    ]
   }
  },
- "food": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_PARATERRAFORMED_ASTEROID": {
-     "flat": 1
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_LIFE_SILICON_BASED": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 166029
  },

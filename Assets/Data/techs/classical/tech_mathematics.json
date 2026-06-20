@@ -61,18 +61,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_LUMBERJACK": {
-     "flat": 1
-    },
-    "IMPROVEMENT_GEOGLYPH": {
-     "flat": 1
-    }
-   }
-  }
- },
  "featureProduction": {
   "empire": {
    "percent": 50

@@ -42,54 +42,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_FRAUNHOFER_SOCIETY": {
-     "flat": 800
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_HEDGE_FUND": {
-     "flat": 800
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_HEDGE_FUND": {
-     "flat": 800
-    },
-    "BUILDING_SUPERCOMPUTER": {
-     "flat": 800
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_COMPUTER_SCIENCE_DEPARTMENT": {
-     "flat": 800
-    },
-    "BUILDING_EVOLUTION_SIMULATOR": {
-     "flat": 800
-    },
-    "BUILDING_ROBOTICS_LAB": {
-     "flat": 800
-    },
-    "BUILDING_SUPERCOMPUTER": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 23650
  },

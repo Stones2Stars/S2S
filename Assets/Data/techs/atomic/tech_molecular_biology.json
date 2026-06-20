@@ -33,15 +33,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_BIOLOGY_LAB": {
-     "flat": 700
-    }
-   }
-  }
- },
  "cost": {
   "research": 13724
  },

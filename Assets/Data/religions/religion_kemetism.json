@@ -51,39 +51,6 @@
    ]
   }
  },
- "religionInfluence": {
-  "city": {
-   "buildings": {
-    "BUILDING_TEMPLE_OF_PTAH": {
-     "flat": 4
-    },
-    "BUILDING_TEMPLE_OF_TOTH": {
-     "flat": 4
-    },
-    "BUILDING_TEMPLE_OF_ISIS": {
-     "flat": 3
-    },
-    "BUILDING_TEMPLE_OF_OSIRIS": {
-     "flat": 3
-    },
-    "BUILDING_TEMPLE_OF_SETH": {
-     "flat": 3
-    },
-    "BUILDING_TEMPLE_OF_MUT": {
-     "flat": 3
-    },
-    "BUILDING_TEMPLE_OF_CHONS": {
-     "flat": 1
-    },
-    "BUILDING_TEMPLE_OF_RA": {
-     "flat": 2
-    },
-    "BUILDING_THE_KARNAK_TEMPLE_COMPLEX": {
-     "flat": 4
-    }
-   }
-  }
- },
  "shrine": {
   "culture": 1
  },

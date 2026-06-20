@@ -59,28 +59,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_EARTHWORM_GATHERER": {
-     "flat": 200
-    },
-    "BUILDING_WONDER_OF_NATURE_VICTORIA_FALLS": {
-     "flat": 200
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_GRAPE_PICKING_CAMP": {
-     "flat": 1
-    },
-    "IMPROVEMENT_MUSHROOM_GATHERER": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 84
  },

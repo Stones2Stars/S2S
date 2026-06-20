@@ -67,18 +67,6 @@
    ]
   }
  },
- "happiness": {
-  "city": {
-   "buildings": {
-    "BUILDING_TATTOOER": {
-     "flat": -1
-    },
-    "BUILDING_TATTOO_PARLOR": {
-     "flat": -1
-    }
-   }
-  }
- },
  "cost": {
   "research": 10309
  },

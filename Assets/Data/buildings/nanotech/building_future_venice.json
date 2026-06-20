@@ -44,6 +44,11 @@
    "flat": 7
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 3
+  }
+ },
  "PROPERTY_WATER_POLLUTION": {
   "city": {
    "flat": -50
@@ -52,11 +57,6 @@
  "PROPERTY_TOURISM": {
   "city": {
    "flat": 3
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_MERCHANT": 3
   }
  },
  "cost": {

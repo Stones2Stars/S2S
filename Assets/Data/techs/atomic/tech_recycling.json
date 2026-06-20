@@ -44,27 +44,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_JUNKYARD": {
-     "flat": 700
-    },
-    "BUILDING_WASTE_EXPORTATION_OFFICE": {
-     "flat": -500
-    }
-   }
-  }
- },
- "health": {
-  "city": {
-   "buildings": {
-    "BUILDING_LANDFILL": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 14287
  },

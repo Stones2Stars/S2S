@@ -33,24 +33,6 @@
    ]
   }
  },
- "religionInfluence": {
-  "city": {
-   "buildings": {
-    "BUILDING_SHINTO_JINGU": {
-     "flat": 3
-    },
-    "BUILDING_SHINTO_MONASTERY": {
-     "flat": 1
-    },
-    "BUILDING_SHINTO_TEMPLE": {
-     "flat": 2
-    },
-    "BUILDING_THE_ISE_JINGU": {
-     "flat": 1
-    }
-   }
-  }
- },
  "shrine": {
   "gold": 1,
   "culture": 1

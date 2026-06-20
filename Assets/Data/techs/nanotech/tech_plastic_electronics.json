@@ -38,27 +38,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_SILK_FARM": {
-     "flat": 1
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_LIQUID_METALS_FOUNDRY": {
-     "flat": 900
-    },
-    "BUILDING_FACTORY_NANOGENERATORS": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 40165
  },

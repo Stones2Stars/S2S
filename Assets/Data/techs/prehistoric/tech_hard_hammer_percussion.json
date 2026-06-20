@@ -40,15 +40,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_NGORONGORO_CRATER": {
-     "flat": 200
-    }
-   }
-  }
- },
  "cost": {
   "research": 7
  },

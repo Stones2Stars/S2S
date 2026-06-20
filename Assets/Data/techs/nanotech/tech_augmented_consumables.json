@@ -53,37 +53,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_SPACE_COLONY_CISLUNAR": {
-     "flat": 900
-    },
-    "BUILDING_CULINARY_SCHOOL": {
-     "flat": 900
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_COLONY_HYDROPONICS": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_BACTERIUM_BIOFORGE": {
-     "flat": 900
-    },
-    "BUILDING_GASTRONOMY_LAB": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 38858
  },

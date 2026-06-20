@@ -64,24 +64,6 @@
    ]
   }
  },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_TAR_GATHERER": {
-     "flat": 1
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_GRAND_MARINE_FESTIVAL": {
-     "flat": 300
-    }
-   }
-  }
- },
  "cost": {
   "research": 448
  },

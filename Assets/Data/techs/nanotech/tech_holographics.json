@@ -52,15 +52,6 @@
    ]
   }
  },
- "happiness": {
-  "city": {
-   "buildings": {
-    "BUILDING_BLOGS": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 38858
  },

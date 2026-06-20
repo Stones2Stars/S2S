@@ -69,15 +69,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_CISLUNAR_FACTORY": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 75052
  },

@@ -36,7 +36,7 @@
  },
  "freeSpecialists": {
   "city": {
-   "flat": 1
+   "any": 1
   }
  },
  "hurryCost": {

@@ -60,6 +60,11 @@
    "flat": -1
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 2
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 2
@@ -80,9 +85,9 @@
    "flat": 20
   }
  },
- "grants": {
-  "specialists": {
-   "SPECIALIST_SCIENTIST": 2
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
   }
  },
  "cost": {
@@ -114,9 +119,6 @@
   "construct": "AS2D_BUILD_LABORATORY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "neverCapture": true,
   "worth": 8,
   "dcmAirbombMission": 2,

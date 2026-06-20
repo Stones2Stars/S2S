@@ -49,6 +49,11 @@
    }
   }
  },
+ "freeSpecialists": {
+  "empire": {
+   "SPECIALIST_PRIEST": 2
+  }
+ },
  "stateReligion": {
   "empire": {
    "greatPeopleRate": {
@@ -76,10 +81,7 @@
   "stateReligion": true
  },
  "grants": {
-  "revolution": -15,
-  "freeSpecialists": {
-   "SPECIALIST_PRIEST": 2
-  }
+  "revolution": -15
  },
  "ui": {
   "art": {

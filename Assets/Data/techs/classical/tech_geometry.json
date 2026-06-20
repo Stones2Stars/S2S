@@ -24,24 +24,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_GEOGLYPH": {
-     "flat": 2
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_MATHEMATICS_ACADEMY": {
-     "flat": 300
-    }
-   }
-  }
- },
  "featureProduction": {
   "empire": {
    "percent": 50

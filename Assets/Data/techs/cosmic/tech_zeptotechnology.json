@@ -36,25 +36,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER": {
-     "flat": 1200
-    },
-    "BUILDING_ATOMIC_ASSEMBLER": {
-     "flat": 1200
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_SUPERNOVA_MINE": {
-     "flat": 5
-    }
-   }
-  }
- },
  "cost": {
   "research": 314134
  },

@@ -30,24 +30,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_TISSUE_ENGINEERING_LAB": {
-     "flat": 900
-    }
-   }
-  }
- },
- "health": {
-  "city": {
-   "buildings": {
-    "BUILDING_TISSUE_ENGINEERING_LAB": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 41539
  },

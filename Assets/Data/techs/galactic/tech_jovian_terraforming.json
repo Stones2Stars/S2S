@@ -33,15 +33,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_TERRAFORMED_PLANET": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 172549
  },

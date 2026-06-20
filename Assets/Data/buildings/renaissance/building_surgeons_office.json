@@ -95,6 +95,11 @@
    "flat": -30
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_DOCTOR": 3
+  }
+ },
  "grants": {
   "repeatable": [
    {
@@ -131,9 +136,6 @@
   "construct": "AS2D_BUILD_HOSPITAL"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_DOCTOR": 3
-  },
   "worth": 5,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

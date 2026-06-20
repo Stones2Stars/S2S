@@ -43,14 +43,14 @@
    "flat": 2
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_NOBLE": 1
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_NOBLE": 1
   }
  },
  "cost": {

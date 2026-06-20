@@ -53,36 +53,6 @@
    ]
   }
  },
- "religionInfluence": {
-  "city": {
-   "buildings": {
-    "BUILDING_BEZEKLIK_CAVES": {
-     "flat": 2
-    },
-    "BUILDING_KOTOKU_IN": {
-     "flat": 3
-    },
-    "BUILDING_NARAS_GIANT_BUDDHA": {
-     "flat": 2
-    },
-    "BUILDING_PALACE_OF_POTALA": {
-     "flat": 1
-    },
-    "BUILDING_BUDDHIST_STUPA": {
-     "flat": 3
-    },
-    "BUILDING_BUDDHIST_MONASTERY": {
-     "flat": 1
-    },
-    "BUILDING_BUDDHIST_TEMPLE": {
-     "flat": 2
-    },
-    "BUILDING_THE_MAHABODHI": {
-     "flat": 4
-    }
-   }
-  }
- },
  "shrine": {
   "gold": 1,
   "culture": 2

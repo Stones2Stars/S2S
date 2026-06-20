@@ -26,12 +26,57 @@
  },
  "food": {
   "plot": {
-   "flat": 25
+   "flat": [
+    25,
+    {
+     "value": 3,
+     "enabled": {
+      "type": "TECH_GRAND_UNIFICATION_BIOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    {
+     "value": 5,
+     "enabled": {
+      "type": "TECH_COMPUTRONIUM_UNIVERSE",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "commerce": {
   "plot": {
-   "flat": 1
+   "flat": [
+    1,
+    {
+     "value": 3,
+     "enabled": {
+      "type": "TECH_GALACTIFORMING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "TECH_NOOGENESIS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "TECH_PANPSYCHISM",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "world": {

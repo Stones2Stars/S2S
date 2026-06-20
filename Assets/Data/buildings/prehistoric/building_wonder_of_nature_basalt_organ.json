@@ -46,7 +46,7 @@
    "flat": [
     2,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_TOURISM",
       "scope": "team"
@@ -57,23 +57,23 @@
  },
  "research": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_EDUCATION",
       "scope": "team"
      }
     },
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_GEOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_PALEONTOLOGY",
       "scope": "team"

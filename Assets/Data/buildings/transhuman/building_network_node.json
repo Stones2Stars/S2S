@@ -99,6 +99,11 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 5
+  }
+ },
  "cost": {
   "production": 6405,
   "sizeModifier": 1,
@@ -122,9 +127,6 @@
   "construct": "AS2D_BUILD_BROADCASTTOWER"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 5
-  },
   "worth": 15,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

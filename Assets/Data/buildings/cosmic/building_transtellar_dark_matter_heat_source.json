@@ -34,7 +34,7 @@
    "flat": [
     100,
     {
-     "value": 2500,
+     "value": 25,
      "enabled": {
       "type": "TECH_ENTROPY_REVERSAL",
       "scope": "team"
@@ -50,9 +50,9 @@
  },
  "gold": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_MATERIALIZATION",
       "scope": "team"

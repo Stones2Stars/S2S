@@ -35,18 +35,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_DARPA": {
-     "flat": 800
-    },
-    "BUILDING_NEUROSCIENCE_CENTER": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 29220
  },

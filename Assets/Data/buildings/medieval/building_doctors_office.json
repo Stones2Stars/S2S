@@ -84,6 +84,11 @@
    "flat": -20
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_DOCTOR": 2
+  }
+ },
  "grants": {
   "repeatable": [
    {
@@ -121,9 +126,6 @@
   "construct": "AS2D_BUILD_DOCTORS_OFFICE"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_DOCTOR": 2
-  },
   "worth": 4,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

@@ -47,18 +47,6 @@
    ]
   }
  },
- "health": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_DEAD_SEA": {
-     "flat": 1
-    },
-    "BUILDING_WONDER_OF_NATURE_PAMUKKALE": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 614
  },

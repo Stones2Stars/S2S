@@ -36,7 +36,7 @@
   "city": {
    "flat": [
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_TESSERACT_CONSTRUCTION",
       "scope": "team"
@@ -49,7 +49,7 @@
   "city": {
    "flat": [
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_HYPERLANES",
       "scope": "team"

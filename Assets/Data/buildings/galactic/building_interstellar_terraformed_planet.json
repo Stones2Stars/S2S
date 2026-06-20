@@ -53,9 +53,9 @@
  },
  "gold": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_JOVIAN_TERRAFORMING",
       "scope": "team"

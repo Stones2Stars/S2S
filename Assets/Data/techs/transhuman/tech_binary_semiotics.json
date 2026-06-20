@@ -28,24 +28,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_PERSONAL_WEB_CHANNEL": {
-     "flat": 1000
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_ADVANCED_METI": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 67710
  },

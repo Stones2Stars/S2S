@@ -57,6 +57,11 @@
    "flat": 8
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 2
+  }
+ },
  "cost": {
   "production": 5220,
   "sizeModifier": 3,
@@ -76,9 +81,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 2
-  },
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_STATESMAN",
   "advisor": "ADVISOR_SCIENCE",

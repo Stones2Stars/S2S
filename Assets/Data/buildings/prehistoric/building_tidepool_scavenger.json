@@ -31,7 +31,7 @@
    "flat": [
     1,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_SPEARFISHING",
       "scope": "team"

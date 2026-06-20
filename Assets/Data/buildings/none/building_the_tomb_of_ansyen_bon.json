@@ -34,6 +34,11 @@
    "flat": 1
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 3
+  }
+ },
  "grants": {
   "holyCity": "RELIGION_VOODOO"
  },
@@ -54,9 +59,6 @@
  },
  "identity": {
   "shrine": "RELIGION_VOODOO",
-  "specialistSlots": {
-   "SPECIALIST_PRIEST": 3
-  },
   "notConstructible": true,
   "nukeImmune": true,
   "worth": 8,

@@ -31,24 +31,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_SUPERCOMPUTER": {
-     "flat": 800
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_SUPERCOMPUTER": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 22847
  },

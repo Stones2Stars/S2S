@@ -53,6 +53,11 @@
    }
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 3
+  }
+ },
  "grants": {
   "holyCity": "RELIGION_BAHAI"
  },
@@ -70,9 +75,6 @@
  },
  "identity": {
   "shrine": "RELIGION_BAHAI",
-  "specialistSlots": {
-   "SPECIALIST_PRIEST": 3
-  },
   "notConstructible": true,
   "nukeImmune": true,
   "worth": 8,

@@ -69,6 +69,11 @@
    "flat": 75
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ANDROID_WORKER": 1
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
@@ -79,10 +84,13 @@
    "flat": 15
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 2,
+   "SPECIALIST_SCIENTIST": 2
+  }
+ },
  "grants": {
-  "specialists": {
-   "SPECIALIST_ANDROID_WORKER": 1
-  },
   "repeatable": [
    {
     "unitCombat": "UNITCOMBAT_HEALS_AS_AIRCRAFT",
@@ -114,10 +122,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ENGINEER": 2,
-   "SPECIALIST_SCIENTIST": 2
-  },
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

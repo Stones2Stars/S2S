@@ -107,6 +107,11 @@
    ]
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_CELEBRITY": 1
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
@@ -115,11 +120,6 @@
  "PROPERTY_CRIME": {
   "city": {
    "flat": 5
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_CELEBRITY": 1
   }
  },
  "cost": {

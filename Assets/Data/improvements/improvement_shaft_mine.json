@@ -51,6 +51,34 @@
    "flat": [
     8,
     {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GEOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_STEAM_POWER",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GAS_LIGHTING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_NITROGLYCERIN",
+      "scope": "team"
+     }
+    },
+    {
      "value": 2,
      "enabled": {
       "HAS_BONUS": "BONUS_BAUXITE_ORE"

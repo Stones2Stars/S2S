@@ -39,24 +39,24 @@
  },
  "research": {
   "city": {
-   "flat": 1,
-   "percent": [
+   "flat": [
+    1,
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_MASS_TRANSIT",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_MAGNETIC_LEVITATION",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_SUPERSONIC_RAILS",
       "scope": "team"

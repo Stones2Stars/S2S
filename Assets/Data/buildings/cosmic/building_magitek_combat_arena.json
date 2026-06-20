@@ -27,15 +27,17 @@
  },
  "gold": {
   "city": {
-   "flat": 12,
-   "percent": [
+   "flat": [
+    12,
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_SENTIENT_ENERGY_FIELDS",
       "scope": "team"
      }
-    },
+    }
+   ],
+   "percent": [
     {
      "value": 100,
      "enabled": {

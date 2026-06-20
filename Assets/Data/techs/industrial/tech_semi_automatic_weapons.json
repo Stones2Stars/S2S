@@ -47,15 +47,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_HUNTING_PRESERVE": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 6673
  },

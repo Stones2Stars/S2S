@@ -62,6 +62,11 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
  "cost": {
   "production": 410,
   "sizeModifier": 1,
@@ -75,9 +80,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 1
-  },
   "worth": 1,
   "conquestProbability": 100,
   "advisor": "ADVISOR_CULTURE",

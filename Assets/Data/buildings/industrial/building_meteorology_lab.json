@@ -42,24 +42,24 @@
  },
  "research": {
   "city": {
-   "flat": 6,
-   "percent": [
+   "flat": [
+    6,
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_LONG_RANGE_FORECASTING",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_RADAR",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_SATELLITES",
       "scope": "team"

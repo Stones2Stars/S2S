@@ -45,15 +45,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_METEOROLOGY_LAB": {
-     "flat": 700
-    }
-   }
-  }
- },
  "mapVisible": {
   "team": {
    "enabler": true

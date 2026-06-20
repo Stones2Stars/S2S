@@ -89,6 +89,11 @@
    }
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 2
+  }
+ },
  "cost": {
   "production": 1056,
   "sizeModifier": 3,
@@ -121,9 +126,6 @@
   "construct": "AS2D_BUILD_ANDEAN"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_MERCHANT": 2
-  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 10,

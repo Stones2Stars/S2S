@@ -70,6 +70,11 @@
    "flat": -50
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SPY": 3
+  }
+ },
  "cost": {
   "production": 1070,
   "sizeModifier": 3,
@@ -102,9 +107,6 @@
   "construct": "AS2D_BUILD_MAX_PRISON"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SPY": 3
-  },
   "neverCapture": true,
   "worth": 4,
   "militaryWorth": 6,

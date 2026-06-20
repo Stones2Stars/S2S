@@ -21,18 +21,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_MATHEMATICS_ACADEMY": {
-     "flat": 500
-    },
-    "BUILDING_OBSERVATORY": {
-     "flat": 500
-    }
-   }
-  }
- },
  "cost": {
   "research": 3274
  },

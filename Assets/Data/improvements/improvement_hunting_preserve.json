@@ -144,6 +144,20 @@
   "plot": {
    "flat": [
     {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MATCHLOCK",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SEMI_AUTOMATIC_WEAPONS",
+      "scope": "team"
+     }
+    },
+    {
      "value": 5,
      "enabled": {
       "HAS_BONUS": "BONUS_BEAVERS"

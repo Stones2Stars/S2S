@@ -52,24 +52,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE": {
-     "flat": 1000
-    },
-    "BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS": {
-     "flat": 1000
-    },
-    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
-     "flat": 1000
-    },
-    "BUILDING_HOLOGRAPHIC_SOLAR_SYSTEM": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 77770
  },

@@ -24,7 +24,7 @@
   "city": {
    "flat": [
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_PATENT_RIGHTS",
       "scope": "team"
@@ -35,31 +35,31 @@
  },
  "research": {
   "city": {
-   "flat": 3,
-   "percent": [
+   "flat": [
+    3,
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_SCIENTIFIC_METHOD",
       "scope": "team"
      }
     },
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_REPLACEABLE_PARTS",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_3D_MODELLING",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_RAPID_PROTOTYPING",
       "scope": "team"
@@ -71,6 +71,12 @@
  "hurryCost": {
   "city": {
    "percent": 100
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_ENGINEER": 1
   }
  },
  "cost": {
@@ -85,10 +91,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1,
-   "SPECIALIST_ENGINEER": 1
-  },
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

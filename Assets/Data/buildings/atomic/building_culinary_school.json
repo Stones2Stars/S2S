@@ -35,14 +35,14 @@
    "flat": [
     4,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_GENESIS_BIOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_AUGMENTED_CONSUMABLES",
       "scope": "team"

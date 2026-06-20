@@ -11,22 +11,16 @@ import engine
 import curate_common as cc
 from store import REPO
 
-# Tech-conditioner boosts (entity-targeted modifiers that fold into the tech's `modifiers.{scope}`):
-#   (sourceEntity, field, targetType, channel, valueKeys, unit, scope)
-# unit EXPLICIT per field (verified vs the C++ consumer, workflow wf_7bbae202); never derived from the
-# misnamed value elements. Building Tech{Yield,Commerce}Changes are x100 fixed-point, carried FAITHFULLY (#432).
+# Tech-conditioner folds -- MOSTLY RETIRED (owner 2026-06-20, modifier.md §6.5). A tech is the ENABLING giver, never
+# a modifier HOME, so a tech-conditioned effect stays KEEP-ON-SOURCE (`enabled:{tech}`) on the entity that owns it:
+#   building yield/commerce/happiness/health -> curate_building COND_KEYED (keep-on-building, enabled);
+#   improvement yield -> curate_improvement post_process; specialist happiness/health -> curate_specialist (self).
+# Two rows REMAIN, both FLAGGED for follow-up (still inverted onto the tech meanwhile -- harmless, unconsumed):
+#   - building TechSpecialistChanges (freeSpecialists keyed by specialist): a keyed+tech-`enabled` combo the
+#     keep-on-building machinery doesn't express yet -> belongs on the building (COND_KEYED follow-up).
+#   - route TechMovementChanges: belongs in the `moveCost` family on the route, deferred to the movement subsystem (§6.6).
 TECH_BOOSTS = [
-    ("BuildingInfo",    "TechYieldChanges",      "buildings",    "yield",           engine.YIELDS,    "flat",    "city"),
-    ("BuildingInfo",    "TechYieldModifiers",    "buildings",    "yield",           engine.YIELDS,    "percent", "city"),
-    ("BuildingInfo",    "TechCommerceChanges",   "buildings",    "commerce",        engine.COMMERCES, "flat",    "city"),
-    ("BuildingInfo",    "TechCommerceModifiers", "buildings",    "commerce",        engine.COMMERCES, "percent", "city"),
-    ("BuildingInfo",    "TechHappinessChanges",  "buildings",    "happiness",       None,             "flat",    "city"),
-    ("BuildingInfo",    "TechHealthChanges",     "buildings",    "health",          None,             "flat",    "city"),
-    ("BuildingInfo",    "TechSpecialistChanges", "buildings",    "freeSpecialists", None,             "flat",    "city", "specialists"),  # 2nd key: specialist type -> .specialists.{S}.flat
-    ("SpecialistInfo",  "TechHappinessTypes",    "specialists",  "happiness",       None,             "flat",    "city"),
-    ("SpecialistInfo",  "TechHealthTypes",       "specialists",  "health",          None,             "flat",    "city"),
-    ("ImprovementInfo", "TechYieldChanges",      "improvements", "yield",           engine.YIELDS,    "flat",    "team"),
-    ("RouteInfo",       "TechMovementChanges",   "routes",       "movement",        None,             "flat",    "team"),
+    ("RouteInfo",       "TechMovementChanges",   "routes",       "movement",        None,             "flat",    "team"),                  # FLAG: -> moveCost on the route (movement subsystem, §6.6)
 ]
 
 GRANTS = {"FirstFreeUnit": "firstFreeUnit", "FirstFreeProphet": "firstFreeProphet", "iFirstFreeTechs": "freeTechs"}

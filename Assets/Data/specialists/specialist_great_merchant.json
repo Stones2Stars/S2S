@@ -7,38 +7,70 @@
    "flat": 1
   },
   "empire": {
-   "traits": {
-    "TRAIT_NEGOTIATOR": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_NEGOTIATOR",
+      "scope": "empire"
+     }
     },
-    "TRAIT_NEGOTIATOR2": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_NEGOTIATOR2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_ISOLATIONIST": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_ISOLATIONIST",
+      "scope": "empire"
+     }
     },
-    "TRAIT_ISOLATIONIST2": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_ISOLATIONIST2",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "production": {
   "empire": {
-   "traits": {
-    "TRAIT_NEGOTIATOR": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_NEGOTIATOR",
+      "scope": "empire"
+     }
     },
-    "TRAIT_NEGOTIATOR3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_NEGOTIATOR3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_ISOLATIONIST": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_ISOLATIONIST",
+      "scope": "empire"
+     }
     },
-    "TRAIT_ISOLATIONIST3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_ISOLATIONIST3",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "commerce": {
@@ -46,86 +78,182 @@
    "flat": 6
   },
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_FINANCIAL": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_FINANCIAL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_FINANCIAL1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_FINANCIAL1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_FINANCIAL3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_FINANCIAL3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_GREEDY": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_GREEDY",
+      "scope": "empire"
+     }
     },
-    "TRAIT_GREEDY1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_GREEDY1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_GREEDY3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_GREEDY3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_NEGOTIATOR": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_NEGOTIATOR",
+      "scope": "empire"
+     }
     },
-    "TRAIT_NEGOTIATOR1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_NEGOTIATOR1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_ISOLATIONIST": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_ISOLATIONIST",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_ISOLATIONIST1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_ISOLATIONIST1",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "gold": {
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_FINANCIAL": {
-     "flat": 2
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_FINANCIAL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_FINANCIAL2": {
-     "flat": 2
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TRAIT_FINANCIAL2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_GREEDY": {
-     "flat": -2
+    {
+     "value": -2,
+     "enabled": {
+      "type": "TRAIT_GREEDY",
+      "scope": "empire"
+     }
     },
-    "TRAIT_GREEDY2": {
-     "flat": -2
+    {
+     "value": -2,
+     "enabled": {
+      "type": "TRAIT_GREEDY2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_PHILOSOPHICAL": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_PHILOSOPHICAL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_PHILOSOPHICAL3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_PHILOSOPHICAL3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_POPULIST": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_POPULIST",
+      "scope": "empire"
+     }
     },
-    "TRAIT_POPULIST3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_POPULIST3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_PROLIFIC1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_PROLIFIC1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_GRIM2": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_GRIM2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAWFUL": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_LAWFUL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAWFUL1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_LAWFUL1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_CROOKED": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_CROOKED",
+      "scope": "empire"
+     }
     },
-    "TRAIT_CROOKED1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_CROOKED1",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "experience": {

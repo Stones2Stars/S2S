@@ -36,7 +36,16 @@
  },
  "food": {
   "plot": {
-   "flat": 1
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ORGANIC_CITIES",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "production": {
@@ -46,7 +55,44 @@
  },
  "commerce": {
   "plot": {
-   "flat": 10
+   "flat": [
+    10,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_LUNAR_MEGASTRUCTURES",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PLANETARY_TRADE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PLANETARY_MEGASTRUCTURES",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_INTERSTELLAR_TRADE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_COLONY_ARCOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "world": {

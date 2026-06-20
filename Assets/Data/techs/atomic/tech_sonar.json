@@ -30,24 +30,6 @@
    ]
   }
  },
- "food": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_FISHING_BOATS": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_FISHING_BOATS": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 11196
  },

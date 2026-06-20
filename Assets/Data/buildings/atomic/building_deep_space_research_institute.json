@@ -64,6 +64,11 @@
    "flat": 6
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 2950,
   "sizeModifier": 2,
@@ -93,9 +98,6 @@
   "construct": "AS2D_BUILD_DEEP_SPACE_RESEARCH"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "neverCapture": true,
   "worth": 6,
   "dcmAirbombMission": 2,

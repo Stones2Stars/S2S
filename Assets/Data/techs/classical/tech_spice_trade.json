@@ -74,24 +74,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_PLANTATION": {
-     "flat": 1
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_GRAND_SKY_FESTIVAL": {
-     "flat": 300
-    }
-   }
-  }
- },
  "tradeRoutes": {
   "city": {
    "flat": 1

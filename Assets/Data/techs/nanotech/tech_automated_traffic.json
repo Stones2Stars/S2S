@@ -29,33 +29,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_EFFECT_GPS": {
-     "flat": 900
-    }
-   }
-  }
- },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_WIRELESS_NETWORKS": {
-     "flat": 900
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_TRAFFIC_ENGINEERING_AGENCY": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 36429
  },

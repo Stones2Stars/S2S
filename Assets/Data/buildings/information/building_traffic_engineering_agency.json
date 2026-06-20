@@ -47,17 +47,17 @@
  },
  "gold": {
   "city": {
-   "flat": -5,
-   "percent": [
+   "flat": [
+    -5,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_AUTONOMOUS_VEHICLES",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_AUTOMATED_TRAFFIC",
       "scope": "team"

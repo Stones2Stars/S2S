@@ -59,30 +59,6 @@
    ]
   }
  },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_WATERMILL": {
-     "flat": 1
-    },
-    "IMPROVEMENT_WINDMILL": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_WATERMILL": {
-     "flat": 2
-    },
-    "IMPROVEMENT_WINDMILL": {
-     "flat": 2
-    }
-   }
-  }
- },
  "cost": {
   "research": 6673
  },

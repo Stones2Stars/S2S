@@ -69,6 +69,11 @@
    "flat": -25
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SPY": 5
+  }
+ },
  "cost": {
   "production": 12030,
   "complexityModifier": 2
@@ -86,9 +91,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SPY": 5
-  },
   "nukeImmune": true,
   "militaryWorth": 5,
   "conquestProbability": 100,

@@ -51,15 +51,6 @@
    ]
   }
  },
- "happiness": {
-  "city": {
-   "buildings": {
-    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
-     "flat": -1
-    }
-   }
-  }
- },
  "permanentAllianceTrading": {
   "team": {
    "enabler": true

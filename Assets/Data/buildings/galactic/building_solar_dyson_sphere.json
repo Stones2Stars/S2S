@@ -34,10 +34,10 @@
  },
  "gold": {
   "city": {
-   "flat": 1000,
-   "percent": [
+   "flat": [
+    1000,
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_ULTIMA_ARCHITECTURE",
       "scope": "team"

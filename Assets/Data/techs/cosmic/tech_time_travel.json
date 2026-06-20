@@ -36,15 +36,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_HIDE_AND_SEEK": {
-     "flat": 1200
-    }
-   }
-  }
- },
  "grants": {
   "firstFreeUnit": "UNIT_SCIENTIST"
  },

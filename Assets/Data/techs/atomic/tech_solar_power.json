@@ -32,24 +32,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_FRAUNHOFER_SOCIETY": {
-     "flat": 700
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_BELL_LABS": {
-     "flat": 700
-    }
-   }
-  }
- },
  "cost": {
   "research": 13181
  },

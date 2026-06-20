@@ -40,7 +40,7 @@
    "flat": [
     30,
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_HYPERSTRUCTURE_ENGINEERING",
       "scope": "team"
@@ -51,9 +51,9 @@
  },
  "gold": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_TRANSDIMENSIONAL_COMMERCE",
       "scope": "team"

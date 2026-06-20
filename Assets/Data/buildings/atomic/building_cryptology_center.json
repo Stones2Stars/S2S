@@ -38,31 +38,31 @@
  },
  "espionage": {
   "city": {
-   "flat": 8,
-   "percent": [
+   "flat": [
+    8,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_WAR_SIMULATIONS",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_KNOWLEDGE_MANAGEMENT",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_CYBERWARFARE",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_MASS_SURVEILLANCE",
       "scope": "team"
@@ -79,6 +79,11 @@
  "PROPERTY_CRIME": {
   "city": {
    "flat": -8
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SPY": 1
   }
  },
  "cost": {
@@ -103,9 +108,6 @@
   "construct": "AS2D_BUILD_INTELLIGENCE_AGENCY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SPY": 1
-  },
   "worth": 5,
   "conquestProbability": 75,
   "advisor": "ADVISOR_MILITARY",

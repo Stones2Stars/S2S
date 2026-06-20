@@ -296,6 +296,11 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 2
+  }
+ },
  "cost": {
   "production": 1030,
   "sizeModifier": 2,
@@ -319,9 +324,6 @@
   "construct": "AS2D_BUILD_SUPERMARKET"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_MERCHANT": 2
-  },
   "worth": 6,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

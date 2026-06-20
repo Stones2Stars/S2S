@@ -42,9 +42,9 @@
  },
  "culture": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_SAPIENTROIDS",
       "scope": "team"

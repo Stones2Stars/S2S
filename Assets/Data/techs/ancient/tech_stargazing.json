@@ -35,15 +35,6 @@
    ]
   }
  },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_GRAND_SKY_FESTIVAL": {
-     "flat": 200
-    }
-   }
-  }
- },
  "cost": {
   "research": 144
  },

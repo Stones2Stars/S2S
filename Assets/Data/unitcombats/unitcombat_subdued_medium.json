@@ -3,8 +3,8 @@
  "description": "TXT_KEY_UNITCOMBAT_SUBDUED",
  "upkeep": {
   "unit": {
-   "extra100": {
-    "flat": 40
+   "extra": {
+    "flat": 0.4
    }
   }
  },

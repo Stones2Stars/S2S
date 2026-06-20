@@ -87,6 +87,13 @@
    "flat": 6
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1,
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
  "cost": {
   "production": 2850,
   "sizeModifier": 3,
@@ -109,11 +116,6 @@
   "construct": "AS2D_BUILD_MUSEUM"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 1,
-   "SPECIALIST_SCIENTIST": 1,
-   "SPECIALIST_ENGINEER": 1
-  },
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",
   "advisor": "ADVISOR_SCIENCE",

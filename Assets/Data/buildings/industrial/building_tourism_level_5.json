@@ -18,6 +18,16 @@
      }
     ]
    ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "PROPERTY_TOURISM",
+     "scope": "city",
+     "min": 250,
+     "max": 100000
+    }
+   ]
   }
  },
  "commerce": {

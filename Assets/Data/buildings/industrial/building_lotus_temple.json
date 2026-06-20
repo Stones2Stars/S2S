@@ -57,6 +57,11 @@
    ]
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 2
@@ -70,11 +75,6 @@
  "PROPERTY_TOURISM": {
   "city": {
    "flat": 10
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_PRIEST": 1
   }
  },
  "cost": {

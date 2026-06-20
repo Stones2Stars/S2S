@@ -37,14 +37,14 @@
    "flat": 10
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "PROPERTY_EDUCATION": {
   "city": {
    "flat": 50
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_SCIENTIST": 1
   }
  },
  "cost": {

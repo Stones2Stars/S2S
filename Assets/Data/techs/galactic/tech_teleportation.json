@@ -48,42 +48,6 @@
    ]
   }
  },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_COLONY_EXTRACTION_FACILITY": {
-     "flat": 1
-    },
-    "IMPROVEMENT_GEOTHERMAL_FACTORY": {
-     "flat": 1
-    },
-    "IMPROVEMENT_EXTRACTION_FACILITY": {
-     "flat": 1
-    },
-    "IMPROVEMENT_SUBMERGED_TOWN": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_SUBMERGED_TOWN": {
-     "flat": 1
-    }
-   }
-  }
- },
- "health": {
-  "city": {
-   "buildings": {
-    "BUILDING_GARBAGE_COLLECTION_AGENCY": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 149039
  },

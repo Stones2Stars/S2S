@@ -58,21 +58,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_METRIC_SYSTEM": {
-     "flat": 700
-    },
-    "BUILDING_OBSERVATORY": {
-     "flat": 700
-    },
-    "BUILDING_PHYSICS_LAB": {
-     "flat": 700
-    }
-   }
-  }
- },
  "grants": {
   "firstFreeUnit": "UNIT_SCIENTIST"
  },

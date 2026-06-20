@@ -32,37 +32,9 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_WILD_HERBS_GATHERER": {
-     "flat": 100
-    }
-   }
-  }
- },
  "health": {
   "empire": {
    "flat": 1
-  },
-  "city": {
-   "buildings": {
-    "BUILDING_CARRION_GATHERER": {
-     "flat": 1
-    },
-    "BUILDING_EARTHWORM_GATHERER": {
-     "flat": 1
-    },
-    "BUILDING_SNAIL_GATHERER": {
-     "flat": 1
-    },
-    "BUILDING_NEST_THIEF": {
-     "flat": 1
-    },
-    "BUILDING_TIDEPOOL_SCAVENGER": {
-     "flat": 1
-    }
-   }
   }
  },
  "cost": {

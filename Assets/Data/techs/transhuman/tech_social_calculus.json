@@ -38,15 +38,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_CISLUNAR_GOVERNANCE": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 67710
  },

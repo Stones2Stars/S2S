@@ -160,32 +160,32 @@
  },
  "research": {
   "city": {
-   "flat": 1,
-   "percent": [
+   "flat": [
     1,
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "TECH_LITERATURE",
       "scope": "team"
      }
     }
-   ]
+   ],
+   "percent": 1
   }
  },
  "culture": {
   "city": {
-   "flat": 2,
-   "percent": [
-    1,
+   "flat": [
+    2,
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "TECH_LITERATURE",
       "scope": "team"
      }
     }
-   ]
+   ],
+   "percent": 1
   }
  },
  "espionage": {

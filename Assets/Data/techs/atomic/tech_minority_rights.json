@@ -24,36 +24,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
-     "percent": -5
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
-     "percent": -5
-    }
-   }
-  }
- },
- "happiness": {
-  "city": {
-   "buildings": {
-    "BUILDING_RACIAL_PROFILING": {
-     "flat": -1
-    },
-    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
-     "flat": -5
-    }
-   }
-  }
- },
  "cost": {
   "research": 14287
  },

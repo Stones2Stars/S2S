@@ -75,7 +75,7 @@
    "flat": [
     1,
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_MEDICINE",
       "scope": "team"

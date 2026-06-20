@@ -33,15 +33,6 @@
    ]
   }
  },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_RATIONAL_CITY": {
-     "flat": 1300
-    }
-   }
-  }
- },
  "cost": {
   "research": 601234
  },

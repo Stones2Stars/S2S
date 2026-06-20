@@ -35,35 +35,35 @@
    "flat": [
     5,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_WIRELESS_ELECTRICITY",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_MICROGENERATORS",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_NANOGENERATORS",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_BIONICS",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_CYBERNETICS",
       "scope": "team"

@@ -48,14 +48,14 @@
    "flat": 10
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 2
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_ENGINEER": 1
   }
  },
  "cost": {

@@ -34,18 +34,6 @@
    ]
   }
  },
- "health": {
-  "city": {
-   "buildings": {
-    "BUILDING_BERRY_GATHERER": {
-     "flat": 1
-    },
-    "BUILDING_MUSHROOM_GATHERER": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 5
  },

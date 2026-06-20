@@ -37,27 +37,6 @@
    ]
   }
  },
- "religionInfluence": {
-  "city": {
-   "buildings": {
-    "BUILDING_SLAVE_MARKET": {
-     "flat": -1
-    },
-    "BUILDING_ZOROASTRIAN_PANTHEON": {
-     "flat": 3
-    },
-    "BUILDING_ZOROASTRIAN_SHRINE": {
-     "flat": 1
-    },
-    "BUILDING_ZOROASTRIAN_FIRE_TEMPLE": {
-     "flat": 2
-    },
-    "BUILDING_PIR_E_SABZ": {
-     "flat": 6
-    }
-   }
-  }
- },
  "shrine": {
   "gold": 1
  },

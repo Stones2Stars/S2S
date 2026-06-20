@@ -36,7 +36,7 @@
    "flat": [
     3,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_TOURISM",
       "scope": "team"
@@ -47,10 +47,10 @@
  },
  "culture": {
   "city": {
-   "flat": 3,
-   "percent": [
+   "flat": [
+    3,
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_MYSTICISM",
       "scope": "team"

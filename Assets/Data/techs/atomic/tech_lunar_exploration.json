@@ -29,27 +29,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_VENTURE_INDUSTRIES": {
-     "flat": 700
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_VENTURE_INDUSTRIES": {
-     "flat": 700
-    },
-    "BUILDING_PLANETARIUM": {
-     "flat": 700
-    }
-   }
-  }
- },
  "cost": {
   "research": 15474
  },

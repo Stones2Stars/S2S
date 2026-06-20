@@ -45,84 +45,84 @@
    "flat": [
     2,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_COMPOSITE_TOOLS",
       "scope": "team"
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_MICROLITH",
       "scope": "team"
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_SHARPENING",
       "scope": "team"
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_FLINT_KNAPPING",
       "scope": "team"
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_CHOPPING",
       "scope": "team"
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_PIERCING",
       "scope": "team"
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_SCRAPING",
       "scope": "team"
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "TECH_COPPER_WORKING",
       "scope": "team"
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "TECH_METAL_CASTING",
       "scope": "team"
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "TECH_BRONZE_WORKING",
       "scope": "team"
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "TECH_LEAD_WORKING",
       "scope": "team"
      }
     },
     {
-     "value": -300,
+     "value": -3,
      "enabled": {
       "type": "TECH_SEDENTARY_LIFESTYLE",
       "scope": "team"
@@ -136,56 +136,56 @@
    "flat": [
     1,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_ATLATL_MAKING",
       "scope": "team"
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_SPEAR_MAKING",
       "scope": "team"
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_AXE_MAKING",
       "scope": "team"
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_OBSIDIAN_WEAPONS",
       "scope": "team"
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "TECH_COPPER_WORKING",
       "scope": "team"
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "TECH_METAL_CASTING",
       "scope": "team"
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "TECH_BRONZE_WORKING",
       "scope": "team"
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "TECH_LEAD_WORKING",
       "scope": "team"
@@ -196,65 +196,65 @@
  },
  "research": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_SOFT_HAMMER_PERCUSSION",
       "scope": "team"
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_SCRAPING",
       "scope": "team"
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_CHOPPING",
       "scope": "team"
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_PIERCING",
       "scope": "team"
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_CARVING",
       "scope": "team"
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "TECH_COPPER_WORKING",
       "scope": "team"
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "TECH_METAL_CASTING",
       "scope": "team"
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "TECH_BRONZE_WORKING",
       "scope": "team"
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "TECH_LEAD_WORKING",
       "scope": "team"
@@ -265,9 +265,9 @@
  },
  "culture": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "TECH_IRON_WORKING",
       "scope": "team"

@@ -32,24 +32,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_BIOTIC_GALAXY": {
-     "flat": 3
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER": {
-     "flat": 1200
-    }
-   }
-  }
- },
  "cost": {
   "research": 338869
  },

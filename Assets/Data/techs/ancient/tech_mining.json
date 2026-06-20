@@ -73,24 +73,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_MT_EVEREST": {
-     "flat": 500
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_GRAND_EARTH_FESTIVAL": {
-     "flat": 200
-    }
-   }
-  }
- },
  "cost": {
   "research": 110
  },

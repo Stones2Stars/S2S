@@ -33,7 +33,7 @@
   "city": {
    "flat": [
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_3D_PROJECTIONS",
       "scope": "team"

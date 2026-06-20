@@ -35,27 +35,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_BICYCLE_SHOP": {
-     "flat": 700
-    }
-   }
-  }
- },
- "health": {
-  "city": {
-   "buildings": {
-    "BUILDING_PUBLIC_TRANSPORTATION": {
-     "flat": 2
-    },
-    "BUILDING_VELODROME": {
-     "flat": 2
-    }
-   }
-  }
- },
  "cost": {
   "research": 14870
  },

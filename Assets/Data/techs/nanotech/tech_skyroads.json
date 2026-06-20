@@ -47,33 +47,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_AEROTROPOLIS": {
-     "flat": 900
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_FACTORY_SHOCKWAVE_ENGINES": {
-     "flat": 900
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_NATIONAL_AIRCRAFT_MUSEUM": {
-     "flat": 900
-    }
-   }
-  }
- },
  "movement": {
   "team": {
    "routes": {

@@ -39,24 +39,24 @@
  },
  "gold": {
   "city": {
-   "flat": -30,
-   "percent": [
+   "flat": [
+    -30,
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_TIMELINE_RECTIFICATION",
       "scope": "team"
      }
     },
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_TIME_REVERSAL",
       "scope": "team"
      }
     },
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_MULTIDIMENSIONAL_TIME",
       "scope": "team"

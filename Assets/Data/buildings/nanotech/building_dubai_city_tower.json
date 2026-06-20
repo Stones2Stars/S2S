@@ -42,8 +42,8 @@
    }
   }
  },
- "grants": {
-  "specialists": {
+ "freeSpecialists": {
+  "city": {
    "SPECIALIST_ENGINEER": 1
   }
  },

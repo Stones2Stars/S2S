@@ -343,7 +343,7 @@
  },
  "freeSpecialists": {
   "city": {
-   "flat": 1
+   "any": 1
   }
  },
  "experience": {
@@ -378,6 +378,13 @@
    "flat": 20
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1,
+   "SPECIALIST_SCIENTIST": 2,
+   "SPECIALIST_DOCTOR": 15
+  }
+ },
  "grants": {
   "repeatable": [
    {
@@ -410,11 +417,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_PRIEST": 1,
-   "SPECIALIST_SCIENTIST": 2,
-   "SPECIALIST_DOCTOR": 15
-  },
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

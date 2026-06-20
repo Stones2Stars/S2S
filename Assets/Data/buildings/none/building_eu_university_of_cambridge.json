@@ -76,6 +76,11 @@
    ]
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 2
@@ -91,9 +96,9 @@
    "flat": 30
   }
  },
- "grants": {
-  "specialists": {
-   "SPECIALIST_SCIENTIST": 1
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 4
   }
  },
  "cost": {
@@ -122,9 +127,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 4
-  },
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

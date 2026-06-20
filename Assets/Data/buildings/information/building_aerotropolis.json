@@ -29,35 +29,35 @@
   "city": {
    "flat": [
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_SKYROADS",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_ORBITAL_FLIGHT",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_LEVITATION",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_WEIGHTLESS_FLIGHT",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_FRICTIONLESS_FLIGHT",
       "scope": "team"

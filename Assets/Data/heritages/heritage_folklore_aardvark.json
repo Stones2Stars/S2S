@@ -6,19 +6,19 @@
   "empire": {
    "byEra": {
     "C2C_ERA_PREHISTORIC": {
-     "flat": 40
+     "flat": 0.4
     },
     "C2C_ERA_ANCIENT": {
-     "flat": -10
+     "flat": -0.1
     },
     "C2C_ERA_CLASSICAL": {
-     "flat": -10
+     "flat": -0.1
     },
     "C2C_ERA_MEDIEVAL": {
-     "flat": -10
+     "flat": -0.1
     },
     "C2C_ERA_RENAISSANCE": {
-     "flat": -10
+     "flat": -0.1
     }
    }
   }
@@ -27,19 +27,19 @@
   "empire": {
    "byEra": {
     "C2C_ERA_PREHISTORIC": {
-     "flat": 10
+     "flat": 0.1
     },
     "C2C_ERA_ANCIENT": {
-     "flat": 10
+     "flat": 0.1
     },
     "C2C_ERA_CLASSICAL": {
-     "flat": 10
+     "flat": 0.1
     },
     "C2C_ERA_MEDIEVAL": {
-     "flat": 10
+     "flat": 0.1
     },
     "C2C_ERA_RENAISSANCE": {
-     "flat": 10
+     "flat": 0.1
     }
    }
   }

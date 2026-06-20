@@ -44,36 +44,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_JUNGLE_CAMP": {
-     "flat": 1
-    },
-    "IMPROVEMENT_DESERT_CAMP": {
-     "flat": 1
-    },
-    "IMPROVEMENT_WETLANDS_CAMP": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_ENTOMOLOGY_LAB": {
-     "flat": 600
-    },
-    "BUILDING_HERPETOLOGY_LAB": {
-     "flat": 600
-    },
-    "BUILDING_ORNITHOLOGY_LAB": {
-     "flat": 600
-    }
-   }
-  }
- },
  "cost": {
   "research": 5745
  },

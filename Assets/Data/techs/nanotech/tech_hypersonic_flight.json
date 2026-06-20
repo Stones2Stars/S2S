@@ -39,15 +39,6 @@
    ]
   }
  },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_NATIONAL_AIRCRAFT_MUSEUM": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 37614
  },

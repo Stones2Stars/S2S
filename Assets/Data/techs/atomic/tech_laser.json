@@ -40,54 +40,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_PLANETARIUM": {
-     "flat": 700
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_HIGH_ENERGY_LAB": {
-     "flat": 700
-    },
-    "BUILDING_BELL_LABS": {
-     "flat": 700
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_PLANETARIUM": {
-     "flat": 700
-    }
-   }
-  }
- },
- "happiness": {
-  "city": {
-   "buildings": {
-    "BUILDING_PLANETARIUM": {
-     "flat": 1
-    }
-   }
-  }
- },
- "health": {
-  "city": {
-   "buildings": {
-    "BUILDING_TATTOO_PARLOR": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 13724
  },

@@ -80,17 +80,17 @@
    "investigation": {
     "flat": 25
    },
-   "flat": 5,
-   "percent": [
-    1,
+   "flat": [
+    5,
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_DIVINE_RIGHT",
       "scope": "team"
      }
     }
-   ]
+   ],
+   "percent": 1
   }
  },
  "defense": {
@@ -115,6 +115,11 @@
    "flat": -25
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_INVESTIGATOR": 2
+  }
+ },
  "cost": {
   "production": 368,
   "sizeModifier": 1,
@@ -135,9 +140,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_INVESTIGATOR": 2
-  },
   "militaryWorth": 2,
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [

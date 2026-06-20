@@ -48,22 +48,24 @@
  },
  "gold": {
   "city": {
-   "flat": 40,
-   "percent": [
+   "flat": [
+    40,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_PLANETARY_MEGASTRUCTURES",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_EVOLVED_CONSTRUCTION",
       "scope": "team"
      }
-    },
+    }
+   ],
+   "percent": [
     {
      "value": 100,
      "enabled": {
@@ -82,14 +84,14 @@
    }
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_ENGINEER": 1
   }
  },
  "cost": {

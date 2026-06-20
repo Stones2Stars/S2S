@@ -44,24 +44,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_VACCINE_LAB": {
-     "flat": 900
-    }
-   }
-  }
- },
- "health": {
-  "city": {
-   "buildings": {
-    "BUILDING_CRUISE_SHIP_PORT": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 44505
  },

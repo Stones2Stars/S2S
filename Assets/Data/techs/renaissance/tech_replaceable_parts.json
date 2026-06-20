@@ -27,30 +27,6 @@
    ]
   }
  },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_WORKSHOP": {
-     "flat": 1
-    },
-    "IMPROVEMENT_WATERMILL": {
-     "flat": 1
-    },
-    "IMPROVEMENT_WINDMILL": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_INVENTORS_WORKSHOP": {
-     "flat": 500
-    }
-   }
-  }
- },
  "cost": {
   "research": 3934
  },

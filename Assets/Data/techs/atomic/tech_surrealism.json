@@ -25,15 +25,6 @@
    ]
   }
  },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_ART_GALLERY": {
-     "flat": 700
-    }
-   }
-  }
- },
  "cost": {
   "research": 11665
  },

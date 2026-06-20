@@ -29,7 +29,7 @@
   "city": {
    "flat": [
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_GEOSCULPTING",
       "scope": "team"

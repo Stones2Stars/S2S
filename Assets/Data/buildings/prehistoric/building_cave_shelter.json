@@ -33,10 +33,10 @@
  },
  "culture": {
   "city": {
-   "flat": 1,
-   "percent": [
+   "flat": [
+    1,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_PETROGLYPHS",
       "scope": "team"

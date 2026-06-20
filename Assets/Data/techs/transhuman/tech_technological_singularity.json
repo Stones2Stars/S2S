@@ -45,15 +45,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_OPTRONIC_SUPERCOMPUTER": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 72474
  },

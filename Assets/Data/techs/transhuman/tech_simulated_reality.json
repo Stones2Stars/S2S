@@ -57,24 +57,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_SOMA_DISPENSARY": {
-     "flat": 1000
-    }
-   }
-  }
- },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_SOMA_DISPENSARY": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 65511
  },

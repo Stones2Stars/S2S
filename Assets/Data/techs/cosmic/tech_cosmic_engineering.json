@@ -40,15 +40,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERGALACTIC_RINGED_GALAXY": {
-     "flat": 1200
-    }
-   }
-  }
- },
  "cost": {
   "research": 366008
  },

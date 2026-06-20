@@ -42,18 +42,6 @@
    ]
   }
  },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_MOUNTAIN_MINE": {
-     "flat": 1
-    },
-    "IMPROVEMENT_SHAFT_MINE": {
-     "flat": 1
-    }
-   }
-  }
- },
  "workRate": {
   "empire": {
    "percent": 25

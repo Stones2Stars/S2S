@@ -37,18 +37,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_ANIMAL_RACE_TRACK": {
-     "flat": 700
-    },
-    "BUILDING_COCK_FIGHTING_RING": {
-     "flat": 700
-    }
-   }
-  }
- },
  "cost": {
   "research": 13181
  },

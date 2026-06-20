@@ -94,6 +94,11 @@
    ]
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_LAWYER": 1
+  }
+ },
  "maintenance": {
   "empire": {
    "percent": -10
@@ -124,9 +129,10 @@
    "flat": -10
   }
  },
- "grants": {
-  "specialists": {
-   "SPECIALIST_LAWYER": 1
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_LAWYER": 3
   }
  },
  "cost": {
@@ -155,10 +161,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1,
-   "SPECIALIST_LAWYER": 3
-  },
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_STATESMAN",

@@ -25,7 +25,16 @@
  },
  "commerce": {
   "plot": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WIRELESS_ELECTRICITY",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "culture": {

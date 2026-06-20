@@ -46,8 +46,8 @@
    }
   }
  },
- "grants": {
-  "specialists": {
+ "freeSpecialists": {
+  "city": {
    "SPECIALIST_SPY": 1
   }
  },

@@ -54,10 +54,10 @@
  },
  "culture": {
   "city": {
-   "flat": 2,
-   "percent": [
+   "flat": [
+    2,
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_FOREIGN_POLICY",
       "scope": "team"
@@ -68,17 +68,17 @@
  },
  "espionage": {
   "city": {
-   "flat": 4,
-   "percent": [
-    1,
+   "flat": [
+    4,
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_FOREIGN_POLICY",
       "scope": "team"
      }
     }
-   ]
+   ],
+   "percent": 1
   }
  },
  "happiness": {

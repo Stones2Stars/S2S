@@ -59,30 +59,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_BARDIC_CIRCLE": {
-     "flat": 400
-    },
-    "BUILDING_TAPESTRY_MAKERS_WORKSHOP": {
-     "flat": 400
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_BARDIC_CIRCLE": {
-     "flat": 400
-    },
-    "BUILDING_BRASS_INSTRUMENT_MAKER": {
-     "flat": 400
-    }
-   }
-  }
- },
  "cost": {
   "research": 1445
  },

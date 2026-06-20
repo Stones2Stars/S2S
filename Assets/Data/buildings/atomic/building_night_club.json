@@ -109,6 +109,11 @@
    ]
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_CELEBRITY": 1
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
@@ -119,9 +124,9 @@
    "flat": 3
   }
  },
- "grants": {
-  "specialists": {
-   "SPECIALIST_CELEBRITY": 1
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 2
   }
  },
  "cost": {
@@ -137,9 +142,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 2
-  },
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

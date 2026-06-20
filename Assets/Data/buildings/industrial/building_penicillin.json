@@ -48,6 +48,11 @@
    "flat": -15
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_DOCTOR": 2
+  }
+ },
  "cost": {
   "production": 4800,
   "complexityModifier": 2
@@ -75,9 +80,6 @@
   "construct": "AS2D_BUILD_COLOSSUS"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_DOCTOR": 2
-  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 14,

@@ -29,15 +29,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE": {
-     "flat": 1300
-    }
-   }
-  }
- },
  "cost": {
   "research": 621429
  },

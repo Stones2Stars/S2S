@@ -72,14 +72,14 @@
    "flat": [
     5,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_3D_PRINTING",
       "scope": "team"
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_RAPID_PROTOTYPING",
       "scope": "team"
@@ -108,6 +108,11 @@
    "flat": 5
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
  "cost": {
   "production": 710,
   "sizeModifier": 3,
@@ -120,9 +125,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 1
-  },
   "nukeImmune": true,
   "conquestProbability": 80,
   "advisor": "ADVISOR_CULTURE",

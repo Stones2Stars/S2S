@@ -30,6 +30,16 @@
      }
     ]
    ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 200,
+     "max": 100000
+    }
+   ]
   }
  },
  "gold": {

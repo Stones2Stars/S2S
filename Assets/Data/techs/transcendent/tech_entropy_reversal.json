@@ -30,18 +30,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_TRANSTELLAR_DARK_MATTER_HEAT_SOURCE": {
-     "flat": 2500
-    },
-    "BUILDING_MATERIALIZER": {
-     "flat": 1500
-    }
-   }
-  }
- },
  "cost": {
   "research": 563149
  },

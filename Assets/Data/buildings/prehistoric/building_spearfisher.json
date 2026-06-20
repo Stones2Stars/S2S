@@ -56,7 +56,7 @@
   "city": {
    "flat": [
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_HARPOON_MAKING",
       "scope": "team"

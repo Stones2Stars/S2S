@@ -43,15 +43,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_METEOROLOGY_LAB": {
-     "flat": 700
-    }
-   }
-  }
- },
  "cost": {
   "research": 11665
  },

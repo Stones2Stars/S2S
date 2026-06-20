@@ -67,6 +67,11 @@
    "flat": 3
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 2
+  }
+ },
  "cost": {
   "production": 1350,
   "sizeModifier": 2,
@@ -96,9 +101,6 @@
   "construct": "AS2D_BUILD_LIBRARY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 2
-  },
   "neverCapture": true,
   "worth": 3,
   "conquestProbability": 100,

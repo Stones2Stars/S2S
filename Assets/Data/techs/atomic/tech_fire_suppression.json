@@ -37,16 +37,6 @@
  "health": {
   "empire": {
    "flat": 1
-  },
-  "city": {
-   "buildings": {
-    "BUILDING_FIRE_HANGAR": {
-     "flat": 1
-    },
-    "BUILDING_FIRE_HYDRANTS": {
-     "flat": 1
-    }
-   }
   }
  },
  "cost": {

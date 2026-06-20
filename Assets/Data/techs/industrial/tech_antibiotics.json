@@ -33,15 +33,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_MICROBIOLOGY_LAB": {
-     "flat": 600
-    }
-   }
-  }
- },
  "health": {
   "empire": {
    "flat": 3

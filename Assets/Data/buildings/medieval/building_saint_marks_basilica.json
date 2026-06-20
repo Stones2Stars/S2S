@@ -98,6 +98,11 @@
    ]
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 2
@@ -125,8 +130,8 @@
    "flat": 4
   }
  },
- "grants": {
-  "specialists": {
+ "allowedSpecialists": {
+  "city": {
    "SPECIALIST_MERCHANT": 1
   }
  },
@@ -155,9 +160,6 @@
   "construct": "AS2D_BUILD_CHRISTIAN"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_MERCHANT": 1
-  },
   "nukeImmune": true,
   "worth": 5,
   "militaryWorth": 10,

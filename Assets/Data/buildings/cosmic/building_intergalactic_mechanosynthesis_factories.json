@@ -46,14 +46,14 @@
    "flat": [
     100,
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_ZERO_POINT_ENERGY",
       "scope": "team"
      }
     },
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_NEUTRONIUM",
       "scope": "team"

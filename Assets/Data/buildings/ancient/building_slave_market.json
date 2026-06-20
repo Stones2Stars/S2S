@@ -30,6 +30,11 @@
    "flat": -2
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SETTLED_SLAVE": 1
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
@@ -42,9 +47,9 @@
    }
   }
  },
- "grants": {
-  "specialists": {
-   "SPECIALIST_SETTLED_SLAVE": 1
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SLAVES": 2
   }
  },
  "cost": {
@@ -73,9 +78,6 @@
   "construct": "AS2D_BUILD_SLAVE_MARKET"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SLAVES": 2
-  },
   "neverCapture": true,
   "worth": 3,
   "advisor": "ADVISOR_ECONOMY",

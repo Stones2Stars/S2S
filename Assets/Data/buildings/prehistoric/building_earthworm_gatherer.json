@@ -48,21 +48,21 @@
    "flat": [
     1,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_BOAT_BUILDING",
       "scope": "team"
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_AGRICULTURE",
       "scope": "team"
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_GARDENING",
       "scope": "team"

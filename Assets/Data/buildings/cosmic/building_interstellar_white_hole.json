@@ -29,7 +29,7 @@
    "flat": [
     100,
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_STRING_MANIPULATION",
       "scope": "team"
@@ -42,7 +42,7 @@
   "city": {
    "flat": [
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_REALITY_REPROGRAMMING",
       "scope": "team"

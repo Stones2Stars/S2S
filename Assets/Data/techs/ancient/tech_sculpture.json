@@ -34,18 +34,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_MOAI": {
-     "flat": 1
-    },
-    "IMPROVEMENT_GEOGLYPH": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 187
  },

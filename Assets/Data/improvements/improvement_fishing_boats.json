@@ -32,6 +32,41 @@
   "plot": {
    "flat": [
     {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WEATHER_FORECASTING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SONAR",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_AQUACULTURE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ARTIFICIAL_EVOLUTION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MARINE_BIOLOGY",
+      "scope": "team"
+     }
+    },
+    {
      "value": 3,
      "enabled": {
       "HAS_BONUS": "BONUS_CLAM"
@@ -74,6 +109,34 @@
   "plot": {
    "flat": [
     1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WEATHER_LORE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WEATHER_FORECASTING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SONAR",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_AQUACULTURE",
+      "scope": "team"
+     }
+    },
     {
      "value": 4,
      "enabled": {

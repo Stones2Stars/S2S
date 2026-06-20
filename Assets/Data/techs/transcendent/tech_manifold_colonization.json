@@ -35,24 +35,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_STRINGWORKS": {
-     "flat": 1300
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_CHRONOPOLIS": {
-     "flat": 1300
-    }
-   }
-  }
- },
  "cost": {
   "research": 621429
  },

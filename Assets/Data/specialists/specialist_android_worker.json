@@ -4,32 +4,64 @@
  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
  "food": {
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_AGRICULTURAL": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_AGRICULTURAL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_AGRICULTURAL1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_AGRICULTURAL1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_AGRICULTURAL2": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_AGRICULTURAL2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_AGRICULTURAL3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_AGRICULTURAL3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_GLUTTONOUS": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_GLUTTONOUS",
+      "scope": "empire"
+     }
     },
-    "TRAIT_GLUTTONOUS1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_GLUTTONOUS1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_GLUTTONOUS2": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_GLUTTONOUS2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_GLUTTONOUS3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_GLUTTONOUS3",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "production": {
@@ -37,155 +69,311 @@
    "flat": 10
   },
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_INDUSTRIOUS": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_INDUSTRIOUS",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_INDUSTRIOUS1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_INDUSTRIOUS1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_INDUSTRIOUS2": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_INDUSTRIOUS2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_INDUSTRIOUS3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_INDUSTRIOUS3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAZY": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_LAZY",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAZY1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_LAZY1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAZY2": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_LAZY2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAZY3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_LAZY3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_BIGOT3": {
-     "flat": 2
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TRAIT_BIGOT3",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "commerce": {
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_PHILOSOPHICAL": {
-     "flat": -1
+   "flat": [
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_PHILOSOPHICAL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_PHILOSOPHICAL1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_PHILOSOPHICAL1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_POPULIST": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_POPULIST",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_POPULIST1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_POPULIST1",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "gold": {
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_INDUSTRIOUS": {
-     "flat": -1
+   "flat": [
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_INDUSTRIOUS",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_INDUSTRIOUS1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_INDUSTRIOUS1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_INDUSTRIOUS2": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_INDUSTRIOUS2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_INDUSTRIOUS3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_INDUSTRIOUS3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_FINANCIAL": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_FINANCIAL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_FINANCIAL3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_FINANCIAL3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_GREEDY": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_GREEDY",
+      "scope": "empire"
+     }
     },
-    "TRAIT_GREEDY3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_GREEDY3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_BIGOT3": {
-     "flat": 2
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TRAIT_BIGOT3",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "research": {
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_SCIENTIFIC": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_SCIENTIFIC",
+      "scope": "empire"
+     }
     },
-    "TRAIT_SCIENTIFIC3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_SCIENTIFIC3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_TRADITIONAL": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_TRADITIONAL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_TRADITIONAL3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_TRADITIONAL3",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "culture": {
   "empire": {
-   "traits": {
-    "TRAIT_LAZY": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_LAZY",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAZY1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_LAZY1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAZY2": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_LAZY2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAZY3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_LAZY3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_CREATIVE": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_CREATIVE",
+      "scope": "empire"
+     }
     },
-    "TRAIT_CREATIVE3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_CREATIVE3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_UNREFINED": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_UNREFINED",
+      "scope": "empire"
+     }
     },
-    "TRAIT_UNREFINED3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_UNREFINED3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_BIGOT3": {
-     "flat": 2
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TRAIT_BIGOT3",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "espionage": {
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_DECEIVER": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_DECEIVER",
+      "scope": "empire"
+     }
     },
-    "TRAIT_DECEIVER3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_DECEIVER3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_NAIVE": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_NAIVE",
+      "scope": "empire"
+     }
     },
-    "TRAIT_NAIVE3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_NAIVE3",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "greatPeopleRate": {

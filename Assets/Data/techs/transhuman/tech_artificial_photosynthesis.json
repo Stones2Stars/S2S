@@ -47,45 +47,6 @@
    ]
   }
  },
- "food": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_SPACE_SOLAR_ARRAY": {
-     "flat": 1
-    }
-   }
-  }
- },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_CISLUNAR_AGRICULTURAL_LAB": {
-     "flat": 1000
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_FACTORY_OLED": {
-     "flat": 1000
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_CHEMICALS_DISTRICT": {
-     "flat": 1000
-    },
-    "BUILDING_NOVUS_REFINERY": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "health": {
   "empire": {
    "flat": 1

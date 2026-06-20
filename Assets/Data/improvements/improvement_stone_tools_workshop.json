@@ -44,6 +44,20 @@
    "flat": [
     1,
     {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MICROLITH",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_TRIBALISM",
+      "scope": "team"
+     }
+    },
+    {
      "value": -1,
      "enabled": {
       "HAS_BONUS": "BONUS_GOLD_ORE"

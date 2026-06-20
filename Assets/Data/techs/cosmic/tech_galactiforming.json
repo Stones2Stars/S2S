@@ -37,15 +37,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_BIOTIC_GALAXY": {
-     "flat": 3
-    }
-   }
-  }
- },
  "cost": {
   "research": 302630
  },

@@ -45,21 +45,21 @@
   "city": {
    "flat": [
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_COMPACT_WORMHOLES",
       "scope": "team"
      }
     },
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_MEGAWORMHOLES",
       "scope": "team"
      }
     },
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_WORMHOLE_HIVEMIND",
       "scope": "team"

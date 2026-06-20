@@ -51,6 +51,13 @@
    "flat": [
     13,
     {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ROBOTICS",
+      "scope": "team"
+     }
+    },
+    {
      "value": 3,
      "enabled": {
       "HAS_BONUS": "BONUS_BAUXITE_ORE"

@@ -66,6 +66,12 @@
    "flat": 4
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1,
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 200,
   "sizeModifier": 1,
@@ -92,10 +98,6 @@
   "construct": "AS2D_BUILD_LIBRARY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_PRIEST": 1,
-   "SPECIALIST_SCIENTIST": 1
-  },
   "worth": 3,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

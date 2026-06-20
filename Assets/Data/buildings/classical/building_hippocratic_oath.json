@@ -23,15 +23,6 @@
  "allowed": {
   "world": 1
  },
- "production": {
-  "specialist": {
-   "specialists": {
-    "SPECIALIST_SCIENTIST": {
-     "flat": 1
-    }
-   }
-  }
- },
  "culture": {
   "city": {
    "flat": [

@@ -47,28 +47,28 @@
    "flat": [
     50,
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_DARK_MATTER_ENGINEERING",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_ASTROENGINEERING",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_ORBITAL_ENGINEERING",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_ARTIFICIAL_PLANETS",
       "scope": "team"
@@ -81,7 +81,7 @@
   "city": {
    "flat": [
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_STELLAR_COMPUTING",
       "scope": "team"
@@ -92,10 +92,10 @@
  },
  "gold": {
   "city": {
-   "flat": 75,
-   "percent": [
+   "flat": [
+    75,
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_GRAVITRONICS",
       "scope": "team"

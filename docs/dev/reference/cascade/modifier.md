@@ -405,6 +405,157 @@ against the C++ (applied in different places):
 **Rule of thumb:** changes how fast a *particular thing* is built → `buildRate`; changes the city's *whole
 hammer output* → `production.city`.
 
+### 6.5 The HOME RULE — own-output vs governing-deliverer (owner refinements 2026-06-20)
+
+> **⛔ Special cases are the root of all evil.** The model is **permissive but restrictive**: every legitimate
+> effect lands in a category by a *rule*, never by a per-entity creative-liberty call. A field falls into exactly
+> one of three categories — a **modifier family** (anything *contributed that accumulates*: yields, commerce,
+> happiness/health, defense, movement-cost, range, …), an **enabler edge** (`enables`/`disables`/`obsoletes`/
+> `replaces` + `requires`), or **identity** (a *genuine non-accumulated invariant* only). "Treat this one
+> differently" is forbidden; the rule decides.
+
+Within the modifier category, the home of a **cross-entity** modifier follows ONE rule:
+
+> **A modifier lives on the entity that OWNS/GOVERNS the thing it modifies; a conditioning entity is *referenced*
+> (`enabled`/`disabled`/`requires`), never the home.**
+
+The rule produces two shapes — the discriminator is the §6 deliveryguy test: *does the other entity merely
+ENABLE more of something this entity already produces (→ condition), or does it DELIVER/GOVERN the effect itself
+(→ home)?*
+
+- **own-output** — an entity's *own produced output* (a specialist's yield, an improvement's tile yield, a
+  unit's strength). The producing entity is the home; tech/civic/trait/bonus/building are `enabled` conditions:
+  - civic that boosts a Merchant's commerce → on the **specialist**, `enabled:{CIVIC active}` — **NOT on the civic**.
+  - building that boosts a specialist → on the **specialist**, `enabled:{building in city}`.
+  - tech that boosts an improvement's tile yield → on the **improvement**, `enabled:{tech}`.
+- **governing-deliverer** — an entity that *delivers/governs an effect on others*. The acting entity is the home,
+  keyed by target:
+  - route that upgrades improvements → on the **route**, keyed by improvement(-group).
+  - building that delivers a religion's influence → on the **building**, keyed by religion (`requires` the
+    religion / the all-religions waiver — §6.2-style dormancy).
+
+**⚠ Correction to §6.2's worked list:** `BuildingInfo.SpecialistYieldChanges` is **own-output**, not deliveryguy —
+it is the *specialist's* output conditioned by the building's presence, so it lives **on the specialist**,
+`enabled:{building}`, **not** keep-on-building keyed by specialist. (The curator double-author this surfaced is
+[`../../json-migration/`](../../json-migration/README.md) Phase-F work.)
+
+**Conditioner AXES (which reference form):** a **tech** conditions on the **enabling axis** (giving end, monotonic
+→ `enabled:{tech}`); a **religion/resource** conditions on the **requiring axis** (receiving end, reversible →
+`requires.operate` dormancy). The three layers — pass-1 `enables` gates / pass-2 `requires` / a modifier deposit's
+`enabled`/`disabled` — are kept terminologically distinct (enabler [§2.0](enabler.md)).
+
+**DATA ≠ RUNTIME (the seam is `readJson`).** The JSON is organised for **human** understandability — *one* home per
+relationship, *one* uniform shape — and does **not** mirror the runtime cascade ("nobody cares about that except
+the process itself"). `readJson` builds the links **both ways at parse** so the cascade reads top-down reliably;
+any target-landing inversion is a **parse transform**, never a data-authoring shape. (This is *why* the
+derived-data repository was retired — the parse-built scoped cascade IS the derived-aggregation mechanism;
+[`../../architecture/superseded-ideas.md`](../../architecture/superseded-ideas.md).)
+
+### 6.6 Movement & RANGE — two SEPARATE concerns (not one "reach")
+
+Movement and range are different mechanics; forcing them under one abstraction tangles both → special cases. They
+are **two independent families**, each uniform *internally* (keep-on-source, base group + modifiers, conditioners
+via `enabled`):
+
+- **`movement` = a LEDGER in one normalized currency, "movement points" (owner 2026-06-20).** Two sides, same
+  unit: a unit-scope **credit** `movement` — *how many movement points the unit may spend* (base + modifiers) — and
+  a **debit `moveCost`** — *how many movement points a move/plot charges*. Same currency ⇒ the ledger balances
+  directly (spend points along a path until the budget is gone). **Normalization is the converter's job:** legacy
+  smears scales (`iMoves` small ints, plot costs ×`MOVE_DENOMINATOR`, a road costing ⅓) → flatten ALL of it into
+  clean integer movement points on both sides, so nothing downstream ever sees `MOVE_DENOMINATOR` again. Every
+  contributor is then a credit or a debit in that currency: terrain + feature + hills = **+cost**; a route = a cheap
+  **`min`** cost override; the hunter promotion's "−1 base movement cost" = a unit-side **−cost** discount (legacy
+  `moveDiscount`/`extraMoveDiscount`); a movement promotion = **+points** credit — **floored** so cost can't go below
+  the minimum. **Resolver rule (keeps current behaviour, owner 2026-06-20):** the ledger is NOT "must afford the
+  full cost" — with **any** balance remaining (`> 0`) a unit may ALWAYS step to the next plot regardless of its
+  `moveCost`, and **completing that step sets the remaining points to 0** (the classic "a unit can always move at
+  least one tile" guarantee). The two-sided "inside+outside" lives ONLY here; both sides are quantified, uniform,
+  modifier-driven. Route `TechMovementChanges` is a tech-`enabled` `moveCost` debit on the route, never identity.
+- **`range` = one family (radius).** A unit-scope single value: *how far a ranged attack reaches*. It **defines
+  "ranged-ness" unambiguously** (siege = `range:1`, true ranged = `2+`) and **deletes the engine's siege-vs-ranged
+  special case** — every unit carries a `range`; the value decides reach. (Air/bombard reach are the same radius
+  concept; per-kind runtime nuance like air round-trip stays in the resolver, not the data.)
+
+**Conversion = a straightforward renumber (owner 2026-06-20).** Both axes are ×100 fixed-point like every other
+family, so the converter just rescales legacy numbers and lets the standard modifier machinery carry the rest:
+- **movement points = `iMoves` × 100** — DECIDED: `base = 100 = MOVE_DENOMINATOR` (owner 2026-06-20). This is not an
+  approximation we introduce; the engine **already** computes movement in integer `MOVE_DENOMINATOR` units and merely
+  *displays* a fraction, so base-100 is exactly the current math. `range` base = the unit's range × 100.
+  - **Known baseline (owner 2026-06-20): a road lets a 1-move unit cross 3 plots ⇒ a road tile costs ≈ `base / 3`.**
+    The base does **NOT** need to be divisible by 3 — the always-move-one rule + the **clamp-to-0 on the final move**
+    absorb the remainder, so `base/3` may be approximate and still resolve to 3 plots. A normal flat plot costs the
+    full `base` (= one move). That single fact anchors the base choice and the terrain/feature normalization.
+  - **Scaling is linear (owner 2026-06-20):** budget = `iMoves × base`, road = `base/3`, so a 1-move unit crosses 3
+    road tiles, a 2-move unit 6, an N-move unit `3N` — the same arithmetic covers every route tier.
+  - **The finest late-game route, and why 100 still fits (owner 2026-06-20).** Some late routes let a 1-move unit
+    cross ~11 tiles (road ≈ `100/11 ≈ 9`). At base 100 that rounds — but the error is **≤ ±1 plot at the extreme end,
+    and at 11 tiles nobody notices ±1**. Gameplay > precision, so 100 is accepted: no larger base or exact
+    divisibility needed (the clamp-to-0 already absorbs the remainder).
+- **a route REPLACES terrain/feature on `moveCost`** (the verified override, kept deliberately so movement cost stays
+  consistent), then **terrain/feature costs are normalized to the chosen base afterward** so non-route distances match legacy.
+- every *change* (promotion move/range bonus, etc.) is the **standard modifier shape** over that base — a normal
+  `movement`/`range` flat/percent deposit, `enabled` as usual — **no bespoke path**.
+- **`moveCost` combine (VERIFIED vs `CvPlot::movementCost` 2026-06-20, not guessed):** the terrain path is **ADDITIVE**
+  (terrain + feature + hills sum, ×100) with unit **promotion discounts** as additive −cost. A **ROUTE is an OVERRIDE
+  via `min`, NOT a divider or a terrain-subtraction** — when both plots are routed the cost becomes
+  `min(MOVE_DENOMINATOR, min(routeCost, flatCost))`, where `routeCost = route.getMovementCost() + Σ getTechMovementChange`
+  (additive among routes) — i.e. the route REPLACES the terrain path with its own (cheaper) cost. So routes enter
+  `moveCost` as a **`min`-combine override branch**; per-tech route changes are **additive into that route cost**.
+  (The "divider" intuition comes from the UI showing the *speed* as `MOVE_DENOMINATOR / moves`; the underlying *cost*
+  math is additive + `min`.) **Floored** at the minimum.
+- today **only airplanes carry `range` modifiers** — every other unit is base-only.
+
+Both are the **unit-plane + plot-cost subsystem** (the large, later surface): curators classify movement/range
+fields *into* these homes, built when that subsystem lands — never special-cased to identity meanwhile.
+
+**Validation = observe the legacy, never hand-hunt units (owner 2026-06-20).** Before converting, the legacy
+movement/range is made OBSERVABLE from the running game — dump each unit's effective movement points + `range` and
+each plot's `moveCost` (with the discount / `min` / floor decomposition) — so the converter is diffed against
+ground truth **systematically** (a movement/range shadow, the magnitude analogue of `/diagnostic/modifierSweep`),
+never by hunting specific in-game unit cases by hand. That observe-then-shadow step is the map-before-delete bar
+([DEC-map-before-delete](../../architecture/decisions.md#dec-map-before-delete),
+[DEC-obs-scale](../../architecture/decisions.md#dec-obs-scale)); skipping it is exactly the "cast iron" case-by-case
+slog it avoids.
+
+### 6.7 Specialist COUNTS — two independent additive families (owner 2026-06-20)
+
+**Framing — a specialist is a VOLUMETRIC building (owner 2026-06-20).** A specialist is "almost a volumetric
+resource that produces its own output" — most accurately a *volumetric building*: where a building is 0-or-1 (you
+have it or you don't), a specialist is 0-to-N (a stackable volume), and **each instance produces building-like
+output** (the same modifier families — food/production/commerce/… — authored on the specialist, the §6.5 own-output
+that `SPECIALIST_BOOSTS` now lands in `enabled` form). The clean-design consequence: **the per-instance OUTPUT is
+SEPARATE from the COUNT of instances.** Two orthogonal axes —
+- **output** = the specialist's modifier families (what ONE instance contributes), and
+- **count** = the families below (how MANY instances) —
+
+and the tally rolls up `count × per-instance-output`. Keeping them apart is *why* `freeSpecialists`/
+`allowedSpecialists` are their own count families and never entangle the yield families.
+
+Two distinct per-specialist count families, both **additive**, keep-on-source, conditioners via **`enabled`** (never a
+keyed sub-scope — the keyed-conditioner cleanup, §6.5):
+
+- **`freeSpecialists: { <scope>: { any: N, SPECIALIST_X: M, … } }`** — *granted free* specialists: an **`any`**
+  assignable-slot bucket plus specific auto-assigned types. (Half-modelled today as three shapes — a bare `flat`
+  ⇒ `any`; a `buildings.{B}`/`improvements.{I}` granter ⇒ an `enabled` condition; the gnarly tech
+  `buildings.{UNIVERSITY}.specialists.{SCIENTIST}` ⇒ `freeSpecialists.<scope>.SPECIALIST_SCIENTIST` with an
+  `enabled` clause. The uniform object dissolves all three — and the deferred `TechSpecialistChanges` flag with them.)
+- **`allowedSpecialists: { <scope>: { SPECIALIST_X: N, … } }`** — the *cap* on how many pop may be **manually
+  assigned** as each type (per-type only; no `any` — a cap is inherently per-type).
+
+**Leaf spelling — (A), the specialist-type IS the leaf key (owner ruling 2026-06-20).** Specialists are their own
+"yield-ish" thing, so this family carries its OWN shape — *provided* it stays unambiguous, uses the system's own
+keywords (`enabled`/`value`/the scope names), and `freeSpecialists`/`allowedSpecialists` share ONE structure. Under
+the scope, the key is `any` or a `SPECIALIST_*` type; its value is the **count** — a bare int when unconditioned,
+a `[{value, enabled}, …]` list when conditioned (e.g. an improvement- or tech-gated grant). It's an additive object,
+easily read: `freeSpecialists.city = { any: 2, SPECIALIST_SCIENTIST: [{value:1, enabled:{…}}] }`. (Chosen over the
+`.flat`-unit spelling for terseness + legibility; the count-by-type leaf is the one sanctioned departure from the
+`<scope>.<unit>` leaf, and only because specialists are their own category.)
+
+**Free lives ON TOP of allowed (owner ruling 2026-06-20):** a free specialist is *additional* and does **not** consume
+an `allowedSpecialists` slot. This is a deliberate simplification of legacy (where a free specialist could take an
+allowed slot), accepted under [DEC-parity-not-goal](../../architecture/decisions.md#dec-parity-not-goal) — the two
+families are then **fully independent**, no interaction to model.
+
 ---
 
 ## 7. Resolved accommodations (combine modes, temporal, resolvers)

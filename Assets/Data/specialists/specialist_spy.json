@@ -4,56 +4,112 @@
  "civilopedia": "TXT_KEY_CONCEPT_GREAT_SPY_PEDIA",
  "commerce": {
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_DECEIVER": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_DECEIVER",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_DECEIVER1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_DECEIVER1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_DECEIVER3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_DECEIVER3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_NAIVE": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_NAIVE",
+      "scope": "empire"
+     }
     },
-    "TRAIT_NAIVE1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_NAIVE1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_NAIVE3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_NAIVE3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAWFUL": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_LAWFUL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAWFUL1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_LAWFUL1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_CROOKED": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_CROOKED",
+      "scope": "empire"
+     }
     },
-    "TRAIT_CROOKED1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_CROOKED1",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "gold": {
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_POLITICIAN": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_POLITICIAN",
+      "scope": "empire"
+     }
     },
-    "TRAIT_POLITICIAN3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_POLITICIAN3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_FOREIGN": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_FOREIGN",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_FOREIGN1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_FOREIGN1",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "research": {
@@ -61,94 +117,186 @@
    "flat": 1
   },
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_POLITICIAN": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_POLITICIAN",
+      "scope": "empire"
+     }
     },
-    "TRAIT_POLITICIAN2": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_POLITICIAN2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_FOREIGN": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_FOREIGN",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_FOREIGN1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_FOREIGN1",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "culture": {
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_POLITICIAN": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_POLITICIAN",
+      "scope": "empire"
+     }
     },
-    "TRAIT_POLITICIAN3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_POLITICIAN3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_FOREIGN": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_FOREIGN",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_FOREIGN1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_FOREIGN1",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "espionage": {
   "city": {
    "flat": 4,
-   "civics": {
-    "CIVIC_CAPITALIST": {
-     "percent": 50
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "CIVIC_CAPITALIST",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   },
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_DECEIVER": {
-     "flat": 2
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_DECEIVER",
+      "scope": "empire"
+     }
     },
-    "TRAIT_DECEIVER2": {
-     "flat": 2
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TRAIT_DECEIVER2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_NAIVE": {
-     "flat": -2
+    {
+     "value": -2,
+     "enabled": {
+      "type": "TRAIT_NAIVE",
+      "scope": "empire"
+     }
     },
-    "TRAIT_NAIVE2": {
-     "flat": -2
+    {
+     "value": -2,
+     "enabled": {
+      "type": "TRAIT_NAIVE2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_PHILOSOPHICAL": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_PHILOSOPHICAL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_PHILOSOPHICAL3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_PHILOSOPHICAL3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_POPULIST": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_POPULIST",
+      "scope": "empire"
+     }
     },
-    "TRAIT_POPULIST3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_POPULIST3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_POLITICIAN": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_POLITICIAN",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_POLITICIAN1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_POLITICIAN1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_FOREIGN": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_FOREIGN",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_FOREIGN1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_FOREIGN1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_DECEIVER": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_DECEIVER",
+      "scope": "empire"
+     }
     },
-    "TRAIT_DECEIVER1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_DECEIVER1",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "greatPeopleRate": {

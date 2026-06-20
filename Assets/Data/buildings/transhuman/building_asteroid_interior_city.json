@@ -40,7 +40,7 @@
    "flat": [
     10,
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_PARATERRAFORMING",
       "scope": "team"

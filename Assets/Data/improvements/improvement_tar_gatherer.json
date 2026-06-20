@@ -29,7 +29,36 @@
  },
  "production": {
   "plot": {
-   "flat": 3
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SHIP_BUILDING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GEOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PALEONTOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "world": {

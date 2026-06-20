@@ -60,40 +60,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_AEROTROPOLIS": {
-     "flat": 900
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_COLONY_HABITAT_LARGE": {
-     "flat": 1
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_NOVUS_REFINERY": {
-     "flat": 900
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_NATIONAL_AIRCRAFT_MUSEUM": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 47795
  },

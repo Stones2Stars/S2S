@@ -54,6 +54,11 @@
    "flat": -1
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SPY": 1
+  }
+ },
  "experience": {
   "city": {
    "unitCombats": {
@@ -82,11 +87,6 @@
  "PROPERTY_CRIME": {
   "city": {
    "flat": -10
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_SPY": 1
   }
  },
  "cost": {

@@ -30,24 +30,6 @@
    ]
   }
  },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_BIOTIC_GALAXY": {
-     "flat": 5
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN": {
-     "flat": 1200
-    }
-   }
-  }
- },
  "cost": {
   "research": 302630
  },

@@ -194,15 +194,17 @@
  },
  "gold": {
   "city": {
-   "flat": 85,
-   "percent": [
+   "flat": [
+    85,
     {
-     "value": 5600,
+     "value": 56,
      "enabled": {
       "type": "TECH_TOURISM",
       "scope": "team"
      }
-    },
+    }
+   ],
+   "percent": [
     {
      "value": 100,
      "enabled": {

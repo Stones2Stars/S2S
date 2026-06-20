@@ -28,24 +28,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_EFFECT_GPS": {
-     "flat": 800
-    }
-   }
-  }
- },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_CRYPTOLOGY_CENTER": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 22074
  },

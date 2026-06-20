@@ -70,14 +70,14 @@
    "flat": 1
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 2
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_ARTIST": 1
   }
  },
  "cost": {

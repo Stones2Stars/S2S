@@ -24,6 +24,16 @@
      "scope": "city"
     }
    ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 1000,
+     "max": 100000
+    }
+   ]
   }
  },
  "espionage": {

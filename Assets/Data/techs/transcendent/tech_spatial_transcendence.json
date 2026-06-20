@@ -38,24 +38,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_DISTANT_PARALLEL_UNIVERSE_PORTAL": {
-     "flat": 1300
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_HIDE_AND_SEEK": {
-     "flat": 1300
-    }
-   }
-  }
- },
  "cost": {
   "research": 601234
  },

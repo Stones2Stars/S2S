@@ -43,7 +43,7 @@
    "flat": [
     15,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_MESH_NETWORKS",
       "scope": "team"

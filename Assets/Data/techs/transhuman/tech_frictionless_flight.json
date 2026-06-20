@@ -47,18 +47,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_AEROTROPOLIS": {
-     "flat": 1000
-    },
-    "BUILDING_MAGLEV_LAUNCHER": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 75052
  },

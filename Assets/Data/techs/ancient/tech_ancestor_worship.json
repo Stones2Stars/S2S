@@ -36,24 +36,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_MOAI": {
-     "flat": 1
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_GRAND_FIRE_FESTIVAL": {
-     "flat": 200
-    }
-   }
-  }
- },
  "cost": {
   "research": 110
  },

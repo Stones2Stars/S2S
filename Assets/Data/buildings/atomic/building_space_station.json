@@ -36,14 +36,14 @@
    "flat": [
     8,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_SPACE_TOURISM",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_ASTEROID_MINING",
       "scope": "team"

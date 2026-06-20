@@ -54,42 +54,42 @@
    "flat": [
     3,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_GENESIS_BIOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_MARINE_ARCHITECTURE",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_GENE_ENHANCEMENT",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_VERTICAL_FARMING",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_ORGANIC_CITIES",
       "scope": "team"

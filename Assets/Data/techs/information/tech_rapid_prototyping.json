@@ -116,62 +116,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_FRAUNHOFER_SOCIETY": {
-     "flat": 800
-    },
-    "BUILDING_EVOLUTION_SIMULATOR": {
-     "flat": 800
-    },
-    "BUILDING_MAKERSPACE": {
-     "flat": 800
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_MANUFACTURING_COMPLEX": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_CAD_STUDIO": {
-     "flat": 800
-    },
-    "BUILDING_FACTORY_FURNITURE": {
-     "flat": 800
-    },
-    "BUILDING_FACTORY_SCULPTURES": {
-     "flat": 100
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_MANUFACTURING_COMPLEX": {
-     "flat": 1
-    },
-    "IMPROVEMENT_SOLAR_PANELS": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_INVENTORS_WORKSHOP": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 24485
  },

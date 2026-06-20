@@ -40,45 +40,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_MOAI": {
-     "flat": 2
-    },
-    "IMPROVEMENT_GEOGLYPH": {
-     "flat": 2
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_NGORONGORO_CRATER": {
-     "flat": 1000
-    },
-    "BUILDING_WONDER_OF_NATURE_SHARK_BAY": {
-     "flat": 500
-    },
-    "BUILDING_WONDER_OF_NATURE_ULURU": {
-     "flat": 500
-    },
-    "BUILDING_WONDER_OF_NATURE_VICTORIA_FALLS": {
-     "flat": 500
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_PAMUKKALE": {
-     "flat": 500
-    }
-   }
-  }
- },
  "cost": {
   "research": 3704
  },

@@ -55,18 +55,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_DARPA": {
-     "flat": 800
-    },
-    "BUILDING_ROBOTICS_LAB": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 28189
  },

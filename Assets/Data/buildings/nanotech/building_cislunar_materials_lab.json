@@ -33,21 +33,21 @@
    "flat": [
     5,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_SUPERSTRONG_ALLOYS",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_NANOROBOTICS",
       "scope": "team"

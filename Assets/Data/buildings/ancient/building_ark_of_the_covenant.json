@@ -47,15 +47,6 @@
  "allowed": {
   "world": 1
  },
- "production": {
-  "specialist": {
-   "specialists": {
-    "SPECIALIST_PRIEST": {
-     "flat": 1
-    }
-   }
-  }
- },
  "gold": {
   "city": {
    "flat": [

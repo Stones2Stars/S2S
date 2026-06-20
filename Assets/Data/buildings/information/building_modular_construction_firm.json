@@ -40,14 +40,14 @@
    "percent": 20,
    "flat": [
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_NANO_ARCHITECTURE",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_AUTOMATED_ROBOTICS",
       "scope": "team"
@@ -63,14 +63,14 @@
    }
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_ENGINEER": 1
   }
  },
  "cost": {

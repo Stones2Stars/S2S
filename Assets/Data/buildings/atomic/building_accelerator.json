@@ -62,6 +62,11 @@
    "flat": 4
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 1410,
   "sizeModifier": 2,
@@ -85,9 +90,6 @@
   "construct": "AS2D_BUILD_ACCELERATOR"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "worth": 6,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

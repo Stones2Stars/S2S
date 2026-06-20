@@ -35,6 +35,13 @@
   "plot": {
    "flat": [
     {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_ARTIFICIAL_EVOLUTION",
+      "scope": "team"
+     }
+    },
+    {
      "value": 1,
      "enabled": {
       "HAS_BONUS": "BONUS_RABBIT"
@@ -47,6 +54,27 @@
   "plot": {
    "flat": [
     3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ECOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ECOLOGICAL_ENGINEERING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ENVIRONMENTAL_ECONOMICS",
+      "scope": "team"
+     }
+    },
     {
      "value": 7,
      "enabled": {

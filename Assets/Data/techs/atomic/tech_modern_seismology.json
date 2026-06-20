@@ -41,62 +41,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_MINING_CAMP": {
-     "flat": 700
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_HYDROCARBON_WELL": {
-     "flat": 1
-    },
-    "IMPROVEMENT_MOUNTAIN_MINE": {
-     "flat": 1
-    },
-    "IMPROVEMENT_OFFSHORE_PLATFORM": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_MINING_CAMP": {
-     "flat": 700
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_HYDROCARBON_WELL": {
-     "flat": 1
-    },
-    "IMPROVEMENT_OFFSHORE_PLATFORM": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_ARCHAEOLOGY_LAB": {
-     "flat": 700
-    },
-    "BUILDING_GEOLOGY_LAB": {
-     "flat": 700
-    },
-    "BUILDING_PALEONTOLOGY_LAB": {
-     "flat": 700
-    }
-   }
-  }
- },
  "cost": {
   "research": 13724
  },

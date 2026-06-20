@@ -34,18 +34,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_STANDARD_MODEL": {
-     "flat": 800
-    },
-    "BUILDING_ATOMIC_CLOCK": {
-     "flat": 800
-    }
-   }
-  }
- },
  "grants": {
   "firstFreeUnit": "UNIT_SCIENTIST"
  },

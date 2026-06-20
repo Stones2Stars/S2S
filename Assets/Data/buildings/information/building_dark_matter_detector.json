@@ -31,17 +31,17 @@
  },
  "research": {
   "city": {
-   "flat": 12,
-   "percent": [
+   "flat": [
+    12,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_PHOTON_THERMODYNAMICS",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_UNIFICATION_PHYSICS",
       "scope": "team"

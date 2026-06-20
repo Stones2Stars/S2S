@@ -52,6 +52,11 @@
    "flat": 5
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
  "cost": {
   "production": 280,
   "sizeModifier": 2,
@@ -67,9 +72,6 @@
   "construct": "AS2D_BUILD_COLOSSEUM"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 1
-  },
   "worth": 5,
   "dcmAirbombMission": 2,
   "advisor": "ADVISOR_ECONOMY",

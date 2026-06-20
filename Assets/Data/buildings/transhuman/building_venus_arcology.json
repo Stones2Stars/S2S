@@ -48,17 +48,17 @@
  },
  "gold": {
   "city": {
-   "flat": 500,
-   "percent": [
+   "flat": [
+    500,
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_LAUNCH_ARCOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_COLONY_ARCOLOGY",
       "scope": "team"

@@ -31,6 +31,13 @@
    "flat": [
     2,
     {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_TOURISM",
+      "scope": "team"
+     }
+    },
+    {
      "value": 7,
      "enabled": {
       "HAS_BONUS": "BONUS_FOSSIL_BEDS"

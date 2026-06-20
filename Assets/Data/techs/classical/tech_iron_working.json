@@ -89,27 +89,6 @@
    ]
   }
  },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_EARLY_MOUNTAIN_MINE": {
-     "flat": 2
-    },
-    "IMPROVEMENT_MINE": {
-     "flat": 1
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_STONE_TOOL_MAKER": {
-     "flat": 300
-    }
-   }
-  }
- },
  "cost": {
   "research": 448
  },

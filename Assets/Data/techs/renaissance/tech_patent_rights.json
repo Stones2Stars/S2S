@@ -21,15 +21,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_INVENTORS_WORKSHOP": {
-     "flat": 500
-    }
-   }
-  }
- },
  "cost": {
   "research": 3074
  },

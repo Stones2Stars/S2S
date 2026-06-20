@@ -49,15 +49,6 @@
    ]
   }
  },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_GRAND_FIRE_FESTIVAL": {
-     "flat": 400
-    }
-   }
-  }
- },
  "cost": {
   "research": 1132
  },

@@ -36,36 +36,6 @@
    ]
   }
  },
- "religionInfluence": {
-  "city": {
-   "buildings": {
-    "BUILDING_THE_ERECHTHEUM": {
-     "flat": 2
-    },
-    "BUILDING_PHIDIAS_STATUE_WORKSHOP": {
-     "flat": 2
-    },
-    "BUILDING_THE_NECROMANTEION": {
-     "flat": 2
-    },
-    "BUILDING_THE_PARTHENON": {
-     "flat": 3
-    },
-    "BUILDING_HELLENIC_PANTHEON": {
-     "flat": 3
-    },
-    "BUILDING_HELLENIC_GYMNASIA": {
-     "flat": 1
-    },
-    "BUILDING_HELLENIC_TEMPLE": {
-     "flat": 1
-    },
-    "BUILDING_THE_STATUE_OF_ZEUS": {
-     "flat": 1
-    }
-   }
-  }
- },
  "shrine": {
   "research": 1
  },

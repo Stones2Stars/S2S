@@ -30,27 +30,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_SPACE_SOLAR_ARRAY": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
-     "flat": 1000
-    },
-    "BUILDING_HOLOGRAPHIC_SOLAR_SYSTEM": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 77770
  },

@@ -41,14 +41,14 @@
    "flat": [
     5,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_TOURISM",
       "scope": "team"
      }
     },
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "TECH_TRADE",
       "scope": "team"
@@ -59,17 +59,17 @@
  },
  "research": {
   "city": {
-   "flat": 1,
-   "percent": [
+   "flat": [
+    1,
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_EDUCATION",
       "scope": "team"
      }
     },
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_CHEMISTRY",
       "scope": "team"
@@ -80,10 +80,10 @@
  },
  "culture": {
   "city": {
-   "flat": 3,
-   "percent": [
+   "flat": [
+    3,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_MONOTHEISM",
       "scope": "team"

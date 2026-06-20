@@ -35,7 +35,7 @@
   "city": {
    "flat": [
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_TOURISM",
       "scope": "team"
@@ -46,17 +46,17 @@
  },
  "culture": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "TECH_CULTURAL_IDENTITY",
       "scope": "team"
      }
     },
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "TECH_AESTHETICS",
       "scope": "team"
@@ -94,6 +94,19 @@
      "scope": "team"
     }
    }
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CULTURAL_IDENTITY",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "cost": {

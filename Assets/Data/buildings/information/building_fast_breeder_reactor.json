@@ -69,6 +69,11 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
  "cost": {
   "production": 1845,
   "sizeModifier": 3,
@@ -81,9 +86,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ENGINEER": 1
-  },
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": "1.0",
   "mapCategories": [

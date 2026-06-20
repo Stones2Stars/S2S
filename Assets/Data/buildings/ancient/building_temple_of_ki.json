@@ -80,6 +80,11 @@
    }
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1
+  }
+ },
  "grants": {
   "repeatable": [
    {
@@ -112,9 +117,6 @@
   "construct": "AS2D_BUILD_MESOPOTAMIAN"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_PRIEST": 1
-  },
   "neverCapture": true,
   "worth": 4,
   "greatPeopleUnitType": "UNIT_PROPHET",

@@ -30,33 +30,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_BIOLOGY_LAB": {
-     "flat": 800
-    },
-    "BUILDING_NUCLEIC_ACID_LAB": {
-     "flat": 1000
-    },
-    "BUILDING_MICROBIOLOGY_LAB": {
-     "flat": 800
-    },
-    "BUILDING_MOLECULAR_BIOLOGY_LAB": {
-     "flat": 1000
-    },
-    "BUILDING_PALEONTOLOGY_LAB": {
-     "flat": 800
-    },
-    "BUILDING_PROTEIN_LAB": {
-     "flat": 1000
-    },
-    "BUILDING_VACCINE_LAB": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 22847
  },

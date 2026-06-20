@@ -29,24 +29,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_ROBOTICS_LAB": {
-     "flat": 800
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_NATIONAL_AIRCRAFT_MUSEUM": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 20610
  },

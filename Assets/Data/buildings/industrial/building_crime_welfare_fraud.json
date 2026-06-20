@@ -35,6 +35,14 @@
       "scope": "empire"
      }
     ]
+   ],
+   "all": [
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 260,
+     "max": 100000
+    }
    ]
   }
  },

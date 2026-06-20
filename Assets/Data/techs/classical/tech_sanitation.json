@@ -57,27 +57,6 @@
    ]
   }
  },
- "health": {
-  "city": {
-   "buildings": {
-    "BUILDING_TOWN_WELL": {
-     "flat": 1
-    },
-    "BUILDING_DISEASE_CHOLERA": {
-     "flat": 1
-    },
-    "BUILDING_DISEASE_DIPHTHERIA": {
-     "flat": 1
-    },
-    "BUILDING_DISEASE_DYSENTERY": {
-     "flat": 1
-    },
-    "BUILDING_DISEASE_TYPHOID_FEVER": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 824
  },

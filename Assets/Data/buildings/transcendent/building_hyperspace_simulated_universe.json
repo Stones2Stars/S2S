@@ -47,17 +47,17 @@
  },
  "gold": {
   "city": {
-   "flat": 120,
-   "percent": [
+   "flat": [
+    120,
     {
-     "value": 2000,
+     "value": 20,
      "enabled": {
       "type": "TECH_OMEGA_POINT",
       "scope": "team"
      }
     },
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_UNIVERSAL_SINGULARITY",
       "scope": "team"
@@ -68,10 +68,10 @@
  },
  "research": {
   "city": {
-   "flat": 120,
-   "percent": [
+   "flat": [
+    120,
     {
-     "value": 2000,
+     "value": 20,
      "enabled": {
       "type": "TECH_SIMULATION_AWARENESS",
       "scope": "team"
@@ -82,23 +82,23 @@
  },
  "culture": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_DIRECTED_COSMIC_EVOLUTION",
       "scope": "team"
      }
     },
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_ASCENSION",
       "scope": "team"
      }
     },
     {
-     "value": 2000,
+     "value": 20,
      "enabled": {
       "type": "TECH_ALPHA_POINT",
       "scope": "team"

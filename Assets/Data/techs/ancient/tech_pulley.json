@@ -25,24 +25,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_MINING_CAMP": {
-     "flat": 200
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_MINING_CAMP": {
-     "flat": 200
-    }
-   }
-  }
- },
  "workRate": {
   "empire": {
    "percent": 10

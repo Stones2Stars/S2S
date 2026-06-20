@@ -90,24 +90,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_SOPKA": {
-     "flat": 300
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_ULURU": {
-     "flat": 200
-    }
-   }
-  }
- },
  "embassyTrading": {
   "team": {
    "enabler": true

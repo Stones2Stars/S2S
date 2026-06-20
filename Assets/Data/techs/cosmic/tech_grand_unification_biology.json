@@ -36,36 +36,6 @@
    ]
   }
  },
- "food": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_BIOTIC_GALAXY": {
-     "flat": 3
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_BIOGEOCOMPUTER": {
-     "flat": 1200
-    },
-    "BUILDING_INTERSTELLAR_BIOTIC_SPHERE_WORLD": {
-     "flat": 1200
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_LIFE_DUST_AND_PLASMA": {
-     "flat": 1200
-    }
-   }
-  }
- },
  "cost": {
   "research": 366008
  },

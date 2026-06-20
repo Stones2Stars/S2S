@@ -80,6 +80,11 @@
    "flat": 10
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 320,
   "sizeModifier": 2,
@@ -103,9 +108,6 @@
   "construct": "AS2D_BUILD_ALCHEMIST_LAB"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "neverCapture": true,
   "worth": 4,
   "dcmAirbombMission": 2,

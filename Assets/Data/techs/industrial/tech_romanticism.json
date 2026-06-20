@@ -33,42 +33,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_BARDIC_CIRCLE": {
-     "flat": 600
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
-     "percent": -5
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_ART_GALLERY": {
-     "flat": 600
-    },
-    "BUILDING_BARDIC_CIRCLE": {
-     "flat": 600
-    },
-    "BUILDING_STRING_INSTRUMENT_MAKER": {
-     "flat": 600
-    },
-    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
-     "percent": -5
-    }
-   }
-  }
- },
  "cost": {
   "research": 5187
  },

@@ -31,10 +31,10 @@
  },
  "gold": {
   "city": {
-   "flat": -3,
-   "percent": [
+   "flat": [
+    -3,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_COMMUNICATION_NETWORKS",
       "scope": "team"
@@ -45,24 +45,24 @@
  },
  "research": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_IMAGINARY_PHYSICS",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_QUANTUM_TELEPORTATION",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_SUPERSTRING_THEORY",
       "scope": "team"

@@ -36,15 +36,6 @@
    ]
   }
  },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_BIOMETRIC_SECURITY_SYSTEM": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 40165
  },

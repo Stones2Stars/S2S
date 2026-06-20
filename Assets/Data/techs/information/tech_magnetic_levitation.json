@@ -38,18 +38,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_HIGH_ENERGY_LAB": {
-     "flat": 800
-    },
-    "BUILDING_NATIONAL_RAILROAD_MUSEUM": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 20610
  },

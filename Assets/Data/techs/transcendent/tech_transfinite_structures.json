@@ -29,24 +29,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_HYPERPLANET": {
-     "flat": 2000
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_HIDE_AND_SEEK": {
-     "flat": 1300
-    }
-   }
-  }
- },
  "cost": {
   "research": 642419
  },

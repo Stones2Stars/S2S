@@ -57,33 +57,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_FRUIT_GATHERING_CAMP": {
-     "flat": 1
-    },
-    "IMPROVEMENT_GRAPE_GATHERING_CAMP": {
-     "flat": 1
-    },
-    "IMPROVEMENT_PLANT_GATHERING_CAMP": {
-     "flat": 1
-    },
-    "IMPROVEMENT_MUSHROOM_GATHERER": {
-     "flat": 1
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_THIEVES_HIDEOUT": {
-     "flat": 100
-    }
-   }
-  }
- },
  "cost": {
   "research": 30
  },

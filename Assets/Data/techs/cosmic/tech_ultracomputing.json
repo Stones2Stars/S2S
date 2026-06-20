@@ -31,27 +31,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_OPTRONIC_SUPERCOMPUTER": {
-     "flat": 1200
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN": {
-     "flat": 1200
-    },
-    "BUILDING_OPTRONIC_SUPERCOMPUTER": {
-     "flat": 1200
-    }
-   }
-  }
- },
  "cost": {
   "research": 281279
  },

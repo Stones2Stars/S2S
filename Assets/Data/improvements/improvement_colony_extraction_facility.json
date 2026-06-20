@@ -38,6 +38,41 @@
    "flat": [
     6,
     {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PLANETARY_MANUFACTURING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SUPERSTRONG_ALLOYS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_NANOMINING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MEGASTRONG_ALLOYS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_TELEPORTATION",
+      "scope": "team"
+     }
+    },
+    {
      "value": 4,
      "enabled": {
       "HAS_BONUS": "BONUS_CARBON_DIOXIDE_ICE"
@@ -55,6 +90,13 @@
  "commerce": {
   "plot": {
    "flat": [
+    {
+     "value": 5,
+     "enabled": {
+      "type": "TECH_LUNAR_TRADE",
+      "scope": "team"
+     }
+    },
     {
      "value": 4,
      "enabled": {

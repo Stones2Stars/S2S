@@ -69,6 +69,11 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 2160,
   "sizeModifier": 3,
@@ -98,9 +103,6 @@
   "construct": "AS2D_BUILD_PLANTNUCLEAR"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "nukeImmune": true,
   "neverCapture": true,
   "allowsNukes": true,

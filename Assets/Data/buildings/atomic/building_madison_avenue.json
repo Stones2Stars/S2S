@@ -36,13 +36,6 @@
  "commerce": {
   "city": {
    "percent": 12
-  },
-  "specialist": {
-   "specialists": {
-    "SPECIALIST_ARTIST": {
-     "flat": 1
-    }
-   }
   }
  },
  "gold": {
@@ -112,6 +105,12 @@
    "flat": 6
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 2,
+   "SPECIALIST_MERCHANT": 2
+  }
+ },
  "cost": {
   "production": 6180,
   "sizeModifier": 3,
@@ -131,10 +130,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 2,
-   "SPECIALIST_MERCHANT": 2
-  },
   "nukeImmune": true,
   "worth": 10,
   "conquestProbability": 100,

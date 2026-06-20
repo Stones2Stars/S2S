@@ -51,31 +51,31 @@
  },
  "research": {
   "city": {
-   "flat": 4,
-   "percent": [
+   "flat": [
+    4,
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_COMPULSORY_EDUCATION",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_PROPAGANDA",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_MASS_MEDIA",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_COUNTERCULTURE",
       "scope": "team"
@@ -99,6 +99,11 @@
    "flat": -5
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 830,
   "sizeModifier": 2,
@@ -111,9 +116,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

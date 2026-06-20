@@ -51,24 +51,24 @@
  },
  "gold": {
   "city": {
-   "flat": 3,
-   "percent": [
+   "flat": [
+    3,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_LUNAR_TRADE",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_MEGASTRUCTURE_ENGINEERING",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_SHIELDING",
       "scope": "team"

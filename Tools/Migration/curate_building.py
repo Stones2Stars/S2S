@@ -90,9 +90,9 @@ SCALAR_FAMILIES = {
     # experience / free specialists
     "iExperience": ("experience", "city", None, "flat"),
     "iGlobalExperience": ("experience", "empire", None, "flat"),
-    "iFreeSpecialist": ("freeSpecialists", "city", None, "flat"),
-    "iAreaFreeSpecialist": ("freeSpecialists", "area", None, "flat"),
-    "iGlobalFreeSpecialist": ("freeSpecialists", "empire", None, "flat"),
+    "iFreeSpecialist": ("freeSpecialists", "city", None, "any"),
+    "iAreaFreeSpecialist": ("freeSpecialists", "area", None, "any"),
+    "iGlobalFreeSpecialist": ("freeSpecialists", "empire", None, "any"),
     # misc city
     "iAnarchyModifier": ("anarchy", "city", None, "percent"),
     "iGoldenAgeModifier": ("goldenAge", "empire", None, "percent"),
@@ -244,7 +244,7 @@ ART = ("ArtDefineTag", "Button", "MovieDefineTag", "ConstructSound")
 COND_KEYED = {
     "TechYieldChanges":            (None, "city", engine.YIELDS, "flat", "tech"),
     "TechYieldModifiers":          (None, "city", engine.YIELDS, "percent", "tech"),
-    "TechCommerceChanges":         (None, "city", engine.COMMERCES, "percent", "tech"),
+    "TechCommerceChanges":         (None, "city", engine.COMMERCES, "flat", "tech"),     # FLAT change (changeBuildingCommerceTechChange -> getBaseCommerceRate100, CvCity.cpp:12136) -- NOT a percent (XML sub-tag "CommercePercents" is a misnomer; verify-then-fix, cascade-fixed-point.md §2)
     "TechCommerceModifiers":       (None, "city", engine.COMMERCES, "percent", "tech"),
     "TechHappinessChanges":        ("happiness", "city", None, "flat", "tech"),
     "TechHealthChanges":           ("health", "city", None, "flat", "tech"),
@@ -266,9 +266,9 @@ TARGET_KEYED = {
     "TerrainYieldChanges":           (None, "city", "terrains", engine.YIELDS, "flat"),
     "PlotYieldChanges":              (None, "plot", "plotTypes", engine.YIELDS, "flat"),
     "GlobalBuildingExtraCommerces":  (None, "empire", "buildings", engine.COMMERCES, "flat"),
-    "SpecialistYieldChanges":        (None, "specialist", "specialists", engine.YIELDS, "flat"),
-    "SpecialistCommerceChanges":     (None, "specialist", "specialists", engine.COMMERCES, "flat"),
-    "LocalSpecialistCommerceChanges": (None, "city", "specialists", engine.COMMERCES, "flat"),
+    # Specialist{Yield,Commerce}Changes + Local* -> NOT here: a building boosting a specialist is the SPECIALIST's
+    # OWN output conditioned by the building's presence (own-output home, modifier.md §6.5, owner 2026-06-20), so it
+    # lives ON THE SPECIALIST -- emitted by curate_specialist's SPECIALIST_BOOSTS, dropped at the building.
     "BonusDefenseChanges":           ("defense", "city", "bonuses", None, "flat"),
     "ReligionChanges":               ("religion", "city", None, None, "flat"),
     "UnitCombatFreeExperiences":     ("experience", "city", "unitCombats", None, "flat"),
@@ -280,7 +280,8 @@ TARGET_KEYED = {
     "BuildingProductionModifiers":   ("buildRate", "city", "buildings", None, "percent"),
     "GlobalBuildingProductionModifiers": ("buildRate", "empire", "buildings", None, "percent"),
     "UnitCombatDefenseAgainstModifiers": ("defense", "city", "unitCombats", None, "flat"),
-    "ImprovementFreeSpecialists":    ("freeSpecialists", "city", "improvements", None, "flat"),
+    # ImprovementFreeSpecialists -> NOT keyed here: it's a conditioner (improvement presence), handled as a
+    # conditioned `freeSpecialists.city.any` deposit in the body (modifier.md §6.7).
 }
 _KEY_TAGS = ("PrereqTech", "TechType", "BuildingType", "BonusType", "ImprovementType", "TerrainType",
              "SpecialistType", "ReligionType", "UnitType", "UnitCombatType", "DomainType", "PlotType")
@@ -497,22 +498,45 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables, obsolete
             grants.setdefault("population", OrderedDict())[sc] = v
     if _bool(rec, "bGoldenAge"):
         grants["goldenAge"] = True
+    # FreeSpecialistCounts -> freeSpecialists COUNT family, keyed by specialist type (modifier.md §6.7 (A)).
     fsc = rec.find("FreeSpecialistCounts")
     if fsc is not None:
-        spec = OrderedDict()
+        node = fams.setdefault("freeSpecialists", OrderedDict()).setdefault("city", OrderedDict())
         for k, v in _pairs_generic(fsc):
-            spec[k] = v
-        if spec:
-            grants["specialists"] = spec
+            if v:
+                node[k] = v
     promos = _typelist(rec, "FreePromoTypes")
     if promos:
         grants["promotions"] = promos
-    # SpecialistCounts (slots, capacity) -> identity
+    # SpecialistCounts (capacity/slots) -> allowedSpecialists COUNT family, keyed by specialist type (the cap on
+    # manual assignment, modifier.md §6.7 (A)).
     scn = rec.find("SpecialistCounts")
     if scn is not None:
-        slots = OrderedDict((k, v) for k, v in _pairs_generic(scn))
-        if slots:
-            identity["specialistSlots"] = slots
+        node = fams.setdefault("allowedSpecialists", OrderedDict()).setdefault("city", OrderedDict())
+        for k, v in _pairs_generic(scn):
+            if v:
+                node[k] = v
+    # TechSpecialistChanges = the SAME capacity, tech-conditioned (inner XML is <SpecialistCounts>, verified 2026-06-20)
+    # -> allowedSpecialists.city.SPECIALIST_X enabled by the team-tech. NOT freeSpecialists (the old label was wrong).
+    tsc = rec.find("TechSpecialistChanges")
+    if tsc is not None:
+        for entry in list(tsc):
+            tech = _txt(entry, "PrereqTech")
+            counts = entry.find("SpecialistCounts")
+            if tech and counts is not None:
+                pred = OrderedDict([("type", tech), ("scope", "team")])
+                for k, v in _pairs_generic(counts):
+                    if v:
+                        _inject_cond(fams, "allowedSpecialists", "city", k, v, pred)
+    # ImprovementFreeSpecialists -> free ANY specialist, CONDITIONED on the improvement's presence (modifier.md §6.7).
+    # FLAG: per-improvement-instance vs presence semantics unverified -> modeled as `enabled` presence for now.
+    ifs = rec.find("ImprovementFreeSpecialists")
+    if ifs is not None:
+        for entry in list(ifs):
+            imp = _txt(entry, "ImprovementType")
+            n = _int(entry, "iFreeSpecialistCount")
+            if imp and n:
+                _inject_cond(fams, "freeSpecialists", "city", "any", n, OrderedDict([("type", imp), ("scope", "city")]))
     # --- enables-family authored on the building (FoundsCorporation / Hurrys / vote eligibility) ---
     fc = _txt(rec, "FoundsCorporation")
     if fc:
@@ -1028,9 +1052,14 @@ HANDLED = (set(SCALAR_FAMILIES) | set(YIELD_FAMILIES) | set(CAP_IDENTITY) | set(
 #   (2) With no replace the ladder bands now STACK cumulatively, so re-author each as its INCREMENTAL delta
 #       (full[rank] - full[rank-1]); summing the active cumulative bands reproduces the top band's intended total
 #       ('nerf each building for UX' -- you see every level achieved, the sum is unchanged).
-# The threshold->infinity active/dormant GATING (a requires.operate PROPERTY-in-band atom) is NOT added here -- crime
-# bands carry none either; that is the deferred PropertyEffect/engine concern. We only align education to the existing
-# (crime) data shape: no pseudo->pseudo replace + cumulative incremental values.
+# The threshold->infinity active/dormant GATING is a `requires.operate` PROPERTY-in-band atom authored on EVERY
+# pseudobuilding from its <PropertyBuilding> iMinValue/iMaxValue (owner ruling 2026-06-19, repeated: pseudobuildings
+# COMPOUND, set up by `requires`, NEVER `replace`). The atom {type:PROPERTY_X, scope:city, min:iMinValue, max:iMaxValue}
+# (data-model §2.1 ATOMDOMAIN_PROPERTY, enabler-spec §3) makes the band ACTIVE iff the city's property value is in the
+# band -- so the cascade places ALL in-band bands cumulatively (every other property -- crime/disease/tourism/pollution
+# -- works the same; education's full per-band values were already increment-converted above so the cumulative sum
+# reproduces the highest reached band's intended total). The atom is MERGED into the band's `requires.operate.all`
+# (its requires.build tech gate, if any, is preserved).
 
 PROPERTY_INFOS_XML = os.path.join(REPO, "Assets", "XML", "GameInfo", "CIV4PropertyInfos.xml")
 # top-level reserved (non-family) keys -- everything else on a band object is a modifier family to increment.
@@ -1049,6 +1078,52 @@ def property_band_buildings():
             if ch.tag.split("}")[-1] == "BuildingType" and ch.text:
                 pseudo.add(ch.text.strip())
     return pseudo
+
+
+def property_band_atoms():
+    """Map each property-effect pseudobuilding -> its band atom (PROPERTY_X, iMinValue, iMaxValue) from the XML
+    <PropertyBuilding>. The atom makes the band CUMULATIVELY active when the city's property value is in the band
+    (owner 2026-06-19: pseudobuildings compound, set up by `requires`, never `replace`)."""
+    atoms = {}
+    root = ET.parse(PROPERTY_INFOS_XML).getroot()
+    bare = lambda n: n.tag.split("}")[-1]
+    for pi in root.iter():
+        if bare(pi) != "PropertyInfo":
+            continue
+        ptype = next((ch.text.strip() for ch in pi if bare(ch) == "Type" and ch.text), None)
+        if not ptype:
+            continue
+        for pbs in pi:
+            if bare(pbs) != "PropertyBuildings":
+                continue
+            for pb in pbs:
+                if bare(pb) != "PropertyBuilding":
+                    continue
+                d = {bare(x): (x.text.strip() if x.text else "") for x in pb}
+                bt = d.get("BuildingType")
+                if not bt:
+                    continue
+                lo = int(d["iMinValue"]) if d.get("iMinValue") not in (None, "") else None
+                hi = int(d["iMaxValue"]) if d.get("iMaxValue") not in (None, "") else None
+                atoms[bt] = (ptype, lo, hi)
+    return atoms
+
+
+def _set_requires(obj, req):
+    """Place/replace `requires` in its canonical slot (after enables/obsoletes/replaces/disables, before families)."""
+    LEADING = ("type", "description", "civilopedia", "help", "enables", "obsoletes", "replaces", "disables")
+    out = OrderedDict()
+    inserted = False
+    for k, v in obj.items():
+        if k == "requires":
+            continue
+        if not inserted and k not in LEADING:
+            out["requires"] = req
+            inserted = True
+        out[k] = v
+    if not inserted:
+        out["requires"] = req
+    return out
 
 
 def _band_families(obj):
@@ -1182,7 +1257,30 @@ def apply_property_bands(results, pseudo):
         if real:
             results[b] = _with_disables(obj, OrderedDict([("buildings", real)]))
             disabled += 1
-    return len(comps), n_inc, stripped, disabled
+
+    # (3) author the requires.operate PROPERTY-in-band atom on EVERY pseudobuilding so the band is CUMULATIVE
+    # (active iff the city's property value is in [iMinValue, iMaxValue]) -- owner 2026-06-19: compound, set up by
+    # `requires`, never `replace`. Merged into requires.operate.all, preserving any requires.build tech gate.
+    banded = 0
+    for b, (ptype, lo, hi) in property_band_atoms().items():
+        obj = results.get(b)
+        if not obj:
+            continue
+        atom = OrderedDict([("type", ptype), ("scope", "city")])
+        if lo is not None:
+            atom["min"] = lo
+        if hi is not None:
+            atom["max"] = hi
+        req = obj.get("requires")
+        req = OrderedDict(req) if isinstance(req, dict) else OrderedDict()
+        op = OrderedDict(req.get("operate")) if isinstance(req.get("operate"), dict) else OrderedDict()
+        allc = list(op.get("all")) if isinstance(op.get("all"), list) else []
+        allc.append(atom)
+        op["all"] = allc
+        req["operate"] = op
+        results[b] = _set_requires(obj, req)
+        banded += 1
+    return len(comps), n_inc, stripped, disabled, banded
 
 
 def build_era(store):
@@ -1217,9 +1315,9 @@ def main():
     # PROPERTY-BAND realignment (owner 2026-06-19): strip pseudo->pseudo `replaces` + increment-convert the
     # education ladders so they stack cumulatively like every other property's bands.
     pseudo = property_band_buildings()
-    n_lad, n_inc, n_strip, n_dis = apply_property_bands(results, pseudo)
-    print("PROPERTY BANDS: %d pseudobuildings | %d ladders increment-converted (%d member bands) | %d had `replaces` removed (pseudo never replaces) | %d pseudo->REAL replace -> reversible `disables`"
-          % (len(pseudo), n_lad, n_inc, n_strip, n_dis))
+    n_lad, n_inc, n_strip, n_dis, n_band = apply_property_bands(results, pseudo)
+    print("PROPERTY BANDS: %d pseudobuildings | %d ladders increment-converted (%d member bands) | %d had `replaces` removed (pseudo never replaces) | %d pseudo->REAL replace -> reversible `disables` | %d got requires.operate band atom (cumulative)"
+          % (len(pseudo), n_lad, n_inc, n_strip, n_dis, n_band))
 
     from collections import Counter
     leftover = Counter()

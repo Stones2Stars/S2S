@@ -68,6 +68,13 @@
    "flat": 6
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1,
+   "SPECIALIST_PRIEST": 1,
+   "SPECIALIST_ARTIST": 1
+  }
+ },
  "cost": {
   "production": 1296,
   "sizeModifier": 3
@@ -85,11 +92,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ENGINEER": 1,
-   "SPECIALIST_PRIEST": 1,
-   "SPECIALIST_ARTIST": 1
-  },
   "nukeImmune": true,
   "worth": 6,
   "conquestProbability": 100,

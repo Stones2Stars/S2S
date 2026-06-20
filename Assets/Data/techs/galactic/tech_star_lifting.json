@@ -38,15 +38,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_DEEP_SPACE_FOCUSED_SUNLIGHT_PLANT": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 166029
  },

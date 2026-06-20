@@ -37,18 +37,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_MICROBIOLOGY_LAB": {
-     "flat": 700
-    },
-    "BUILDING_VACCINE_LAB": {
-     "flat": 700
-    }
-   }
-  }
- },
  "cost": {
   "research": 11665
  },

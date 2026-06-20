@@ -57,24 +57,24 @@
  },
  "research": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_GENESIS_BIOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_BRAIN_MACHINE_INTERFACE",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_THOUGHT_SCANNING",
       "scope": "team"

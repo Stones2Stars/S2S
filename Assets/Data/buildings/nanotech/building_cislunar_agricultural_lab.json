@@ -32,21 +32,21 @@
    "flat": [
     5,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_VERTICAL_FARMING",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_ACCELERATED_GERMINATION",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_BOTANICAL_ALCHEMY",
       "scope": "team"
@@ -59,7 +59,7 @@
   "city": {
    "flat": [
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
       "scope": "team"

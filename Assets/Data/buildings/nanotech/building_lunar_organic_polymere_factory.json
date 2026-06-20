@@ -52,10 +52,10 @@
  },
  "gold": {
   "city": {
-   "flat": -250,
-   "percent": [
+   "flat": [
+    -250,
     {
-     "value": 10000,
+     "value": 100,
      "enabled": {
       "type": "TECH_LUNAR_TRADE",
       "scope": "team"

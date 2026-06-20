@@ -72,6 +72,11 @@
    "flat": 3
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
  "grants": {
   "repeatable": [
    {
@@ -104,9 +109,6 @@
   "construct": "AS2D_BUILD_FACTORY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ENGINEER": 1
-  },
   "worth": 5,
   "militaryWorth": 2,
   "conquestProbability": 66,

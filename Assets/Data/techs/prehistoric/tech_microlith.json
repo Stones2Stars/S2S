@@ -25,22 +25,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_STONE_TOOL_MAKER": {
-     "flat": 100
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_STONE_TOOLS_WORKSHOP": {
-     "flat": 1
-    }
-   }
-  }
- },
  "workRate": {
   "empire": {
    "percent": 15

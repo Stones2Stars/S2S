@@ -35,27 +35,6 @@
    ]
   }
  },
- "religionInfluence": {
-  "city": {
-   "buildings": {
-    "BUILDING_NAITERU_KOB_BLESS": {
-     "flat": 2
-    },
-    "BUILDING_NGAI_BLESS": {
-     "flat": 2
-    },
-    "BUILDING_NGAI_NA_NYOKE_BLESS": {
-     "flat": 2
-    },
-    "BUILDING_NGAI_NAROK_BLESS": {
-     "flat": 2
-    },
-    "BUILDING_OLDOINYO_NGAI": {
-     "flat": 1
-    }
-   }
-  }
- },
  "shrine": {
   "culture": 1
  },

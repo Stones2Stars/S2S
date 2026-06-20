@@ -38,24 +38,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_TRANSTELLAR_ALDERSON_DISK": {
-     "flat": 1200
-    }
-   }
-  }
- },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_TRANSTELLAR_ALDERSON_DISK": {
-     "flat": 1200
-    }
-   }
-  }
- },
  "cost": {
   "research": 281279
  },

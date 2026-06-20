@@ -30,21 +30,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_LIFE_SILICON_BASED": {
-     "flat": 1100
-    },
-    "BUILDING_LIFE_NONPHOTOSYNTHETIC_PLANTS": {
-     "flat": 1100
-    },
-    "BUILDING_MOBILE_PLANTS": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 154284
  },

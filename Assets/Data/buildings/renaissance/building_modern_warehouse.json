@@ -56,14 +56,14 @@
    "flat": [
     3,
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_GLOBALIZATION",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_KNOWLEDGE_MANAGEMENT",
       "scope": "team"
@@ -74,9 +74,9 @@
  },
  "gold": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_REFRIGERATION",
       "scope": "team"

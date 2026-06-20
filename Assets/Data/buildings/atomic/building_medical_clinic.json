@@ -157,6 +157,11 @@
    "flat": -50
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_DOCTOR": 4
+  }
+ },
  "grants": {
   "repeatable": [
    {
@@ -194,9 +199,6 @@
   "construct": "AS2D_BUILD_HOSPITAL"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_DOCTOR": 4
-  },
   "worth": 5,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

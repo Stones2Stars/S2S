@@ -29,21 +29,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_AMUNDSEN_SCOTT_SOUTH_POLE_STATION": {
-     "flat": 800
-    },
-    "BUILDING_STANDARD_MODEL": {
-     "flat": 800
-    },
-    "BUILDING_ATOMIC_CLOCK": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 22847
  },

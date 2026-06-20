@@ -77,6 +77,13 @@
    "flat": 6
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1,
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_ARTIST": 1
+  }
+ },
  "cost": {
   "production": 234,
   "sizeModifier": 1,
@@ -106,11 +113,6 @@
   "construct": "AS2D_BUILD_AGORA"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_MERCHANT": 1,
-   "SPECIALIST_SCIENTIST": 1,
-   "SPECIALIST_ARTIST": 1
-  },
   "worth": 4,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

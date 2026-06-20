@@ -33,15 +33,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_ARTIFICIAL_REEF": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 49574
  },

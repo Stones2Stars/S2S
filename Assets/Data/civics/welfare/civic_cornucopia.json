@@ -33,6 +33,11 @@
    "percent": 25
   }
  },
+ "freeSpecialists": {
+  "empire": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
  "upkeep": {
   "empire": {
    "unitCivilian": {
@@ -67,11 +72,6 @@
  "PROPERTY_WATER_POLLUTION": {
   "city": {
    "flat": -50
-  }
- },
- "grants": {
-  "freeSpecialists": {
-   "SPECIALIST_ARTIST": 1
   }
  },
  "ui": {

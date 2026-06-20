@@ -74,6 +74,11 @@
    "flat": 4
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 2
+  }
+ },
  "cost": {
   "production": 3370,
   "sizeModifier": 3,
@@ -103,9 +108,6 @@
   "construct": "AS2D_BUILD_SPACEWAY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 2
-  },
   "neverCapture": true,
   "worth": 6,
   "dcmAirbombMission": 2,

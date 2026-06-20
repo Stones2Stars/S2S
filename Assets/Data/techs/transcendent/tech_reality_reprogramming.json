@@ -38,42 +38,6 @@
    ]
   }
  },
- "food": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_PARALLEL_UNIVERSE": {
-     "flat": 1
-    }
-   }
-  }
- },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_PARALLEL_UNIVERSE": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_WHITE_HOLE": {
-     "flat": 1300
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_DISTANT_DREAM_WORLD": {
-     "flat": 1300
-    }
-   }
-  }
- },
  "cost": {
   "research": 664224
  },

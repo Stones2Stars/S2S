@@ -37,10 +37,10 @@
  },
  "research": {
   "city": {
-   "flat": 10,
-   "percent": [
+   "flat": [
+    10,
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_ADAPTIVE_RADIATION",
       "scope": "team"

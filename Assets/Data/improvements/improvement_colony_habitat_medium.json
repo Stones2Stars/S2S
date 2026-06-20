@@ -36,7 +36,16 @@
  },
  "commerce": {
   "plot": {
-   "flat": 5
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_LUNAR_TOURISM",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "world": {

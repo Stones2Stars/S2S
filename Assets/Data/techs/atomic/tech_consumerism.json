@@ -41,46 +41,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_CHARCOAL_BURNER": {
-     "flat": 700
-    },
-    "BUILDING_MAIL_ORDER_CATALOGUE": {
-     "flat": 700
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_SUBURBS": {
-     "flat": 1
-    },
-    "IMPROVEMENT_FACTORY": {
-     "flat": 1
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_CRIME_SHOPLIFTING": {
-     "flat": -300
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
-     "percent": -5
-    }
-   }
-  }
- },
  "cost": {
   "research": 10309
  },

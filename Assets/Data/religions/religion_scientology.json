@@ -43,24 +43,6 @@
    ]
   }
  },
- "religionInfluence": {
-  "city": {
-   "buildings": {
-    "BUILDING_SCIENTOLOGY_CATHEDRAL": {
-     "flat": 3
-    },
-    "BUILDING_SCIENTOLOGY_MONASTERY": {
-     "flat": 1
-    },
-    "BUILDING_SCIENTOLOGY_TEMPLE": {
-     "flat": 2
-    },
-    "BUILDING_SCIENTOLOGY_SEDE": {
-     "flat": 1
-    }
-   }
-  }
- },
  "shrine": {
   "gold": 2
  },

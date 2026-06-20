@@ -53,21 +53,6 @@
    ]
   }
  },
- "religionInfluence": {
-  "city": {
-   "buildings": {
-    "BUILDING_SIKH_CATHEDRAL": {
-     "flat": 2
-    },
-    "BUILDING_SIKH_GURDWARA": {
-     "flat": 2
-    },
-    "BUILDING_THE_GOLDEN_TEMPLE": {
-     "flat": 4
-    }
-   }
-  }
- },
  "shrine": {
   "gold": 1
  },

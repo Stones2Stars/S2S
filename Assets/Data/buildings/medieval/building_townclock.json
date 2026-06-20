@@ -64,6 +64,11 @@
    "flat": 1
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
  "cost": {
   "production": 356,
   "sizeModifier": 3,
@@ -89,9 +94,6 @@
   "construct": "AS2D_BUILD_TOWNCLOCK"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ENGINEER": 1
-  },
   "centerInCity": true,
   "worth": 4,
   "militaryWorth": 5,

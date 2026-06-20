@@ -80,6 +80,11 @@
    "flat": -15
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_INVESTIGATOR": 1
+  }
+ },
  "cost": {
   "production": 168,
   "sizeModifier": 2,
@@ -99,9 +104,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_INVESTIGATOR": 1
-  },
   "nukeImmune": true,
   "militaryWorth": 2,
   "advisor": "ADVISOR_MILITARY",

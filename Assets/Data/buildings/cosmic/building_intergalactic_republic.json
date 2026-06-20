@@ -37,10 +37,10 @@
  },
  "culture": {
   "city": {
-   "flat": 100,
-   "percent": [
+   "flat": [
+    100,
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_METAVERSE",
       "scope": "team"

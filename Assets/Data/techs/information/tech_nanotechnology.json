@@ -30,24 +30,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_FRAUNHOFER_SOCIETY": {
-     "flat": 800
-    }
-   }
-  }
- },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_SOLAR_PANELS": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 20610
  },

@@ -47,69 +47,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_LUNAR_MINE": {
-     "flat": 2
-    },
-    "IMPROVEMENT_COLONY_EXTRACTION_FACILITY": {
-     "flat": 5
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_LUNAR_ALUMINIUM_PROCESSING_FACILITY": {
-     "flat": 20000
-    },
-    "BUILDING_LUNAR_ASSEMBLY_PLANT": {
-     "flat": 20000
-    },
-    "BUILDING_LUNAR_DROID_FACTORY": {
-     "flat": 20000
-    },
-    "BUILDING_LUNAR_IRON_PROCESSING_FACILITY": {
-     "flat": 10000
-    },
-    "BUILDING_LUNAR_LAUNCH_SITE": {
-     "flat": 10000
-    },
-    "BUILDING_LUNAR_MAGNESIUM_EXTRACTION_FACILITY": {
-     "flat": 5000
-    },
-    "BUILDING_LUNAR_MANGANESE_EXTRACTION_FACILITY": {
-     "flat": 5000
-    },
-    "BUILDING_LUNAR_MANUFACTURING_PLANT": {
-     "flat": 20000
-    },
-    "BUILDING_LUNAR_ORGANIC_POLYMERE_FACTORY": {
-     "flat": 10000
-    },
-    "BUILDING_LUNAR_ROCKET_FUEL_REFINERY": {
-     "flat": 20000
-    },
-    "BUILDING_LUNAR_SHIPYARD": {
-     "flat": 20000
-    },
-    "BUILDING_LUNAR_SILICON_PROCESSING_FACILITY": {
-     "flat": 10000
-    },
-    "BUILDING_LUNAR_TITANIUM_PROCESSING_FACILITY": {
-     "flat": 20000
-    },
-    "BUILDING_FACTORY_LEVITATION_GENERATORS": {
-     "flat": 900
-    },
-    "BUILDING_CRIME_SHOPLIFTING": {
-     "flat": -200
-    }
-   }
-  }
- },
  "cost": {
   "research": 49574
  },

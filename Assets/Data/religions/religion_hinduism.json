@@ -49,33 +49,6 @@
    ]
   }
  },
- "religionInfluence": {
-  "city": {
-   "buildings": {
-    "BUILDING_AKSHARDHAM": {
-     "flat": 6
-    },
-    "BUILDING_THE_BRIHADEESWARAR_TEMPLE": {
-     "flat": 3
-    },
-    "BUILDING_MEENAKSHI_TEMPLE": {
-     "flat": 6
-    },
-    "BUILDING_HINDU_MANDIR": {
-     "flat": 3
-    },
-    "BUILDING_HINDU_MONASTERY": {
-     "flat": 1
-    },
-    "BUILDING_HINDU_TEMPLE": {
-     "flat": 1
-    },
-    "BUILDING_THE_KASHI_VISHWANATH": {
-     "flat": 1
-    }
-   }
-  }
- },
  "shrine": {
   "gold": 1
  },

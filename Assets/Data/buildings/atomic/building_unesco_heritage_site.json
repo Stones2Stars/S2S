@@ -51,11 +51,15 @@
  },
  "freeSpecialists": {
   "city": {
-   "improvements": {
-    "IMPROVEMENT_ARCHEOLOGICAL_SITE": {
-     "flat": 1
+   "any": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "IMPROVEMENT_ARCHEOLOGICAL_SITE",
+      "scope": "city"
+     }
     }
-   }
+   ]
   }
  },
  "hurryCost": {

@@ -141,6 +141,11 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
  "cost": {
   "production": 468,
   "sizeModifier": 3,
@@ -173,9 +178,6 @@
   "construct": "AS2D_BUILD_GRANARY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 1
-  },
   "neverCapture": true,
   "worth": 8,
   "greatPeopleUnitType": "UNIT_ARTIST",

@@ -25,24 +25,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_SUBURBS": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_NATIONAL_RAILROAD_MUSEUM": {
-     "flat": 600
-    }
-   }
-  }
- },
  "cost": {
   "research": 7718
  },

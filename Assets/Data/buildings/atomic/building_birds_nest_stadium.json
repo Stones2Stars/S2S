@@ -76,6 +76,11 @@
    "flat": 10
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 3
+  }
+ },
  "grants": {
   "goldenAge": true
  },
@@ -105,9 +110,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 3
-  },
   "nukeImmune": true,
   "worth": 8,
   "conquestProbability": 100,

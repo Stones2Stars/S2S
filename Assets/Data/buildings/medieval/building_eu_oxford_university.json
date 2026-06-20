@@ -90,6 +90,11 @@
    ]
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
  "experience": {
   "city": {
    "unitCombats": {
@@ -119,9 +124,10 @@
    "flat": 4
   }
  },
- "grants": {
-  "specialists": {
-   "SPECIALIST_MERCHANT": 1
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_MERCHANT": 3
   }
  },
  "cost": {
@@ -150,10 +156,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1,
-   "SPECIALIST_MERCHANT": 3
-  },
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

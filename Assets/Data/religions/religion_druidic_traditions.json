@@ -82,15 +82,6 @@
    ]
   }
  },
- "religionInfluence": {
-  "city": {
-   "buildings": {
-    "BUILDING_NATURE_ANSWER": {
-     "flat": 1
-    }
-   }
-  }
- },
  "shrine": {
   "culture": 1
  },

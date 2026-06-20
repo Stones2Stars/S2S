@@ -55,15 +55,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_FRAUNHOFER_SOCIETY": {
-     "flat": 700
-    }
-   }
-  }
- },
  "cost": {
   "research": 16099
  },

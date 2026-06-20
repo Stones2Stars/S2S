@@ -83,6 +83,11 @@
    "flat": 4
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 3
+  }
+ },
  "cost": {
   "production": 1296,
   "complexityModifier": 2
@@ -107,9 +112,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 3
-  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 8,

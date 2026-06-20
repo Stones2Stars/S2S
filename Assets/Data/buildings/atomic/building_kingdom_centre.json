@@ -65,6 +65,11 @@
    "flat": 1
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 2
@@ -87,9 +92,9 @@
    "flat": 8
   }
  },
- "grants": {
-  "specialists": {
-   "SPECIALIST_MERCHANT": 1
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 2
   }
  },
  "cost": {
@@ -118,9 +123,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_MERCHANT": 2
-  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 20,

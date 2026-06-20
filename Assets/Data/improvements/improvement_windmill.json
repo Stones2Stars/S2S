@@ -19,17 +19,51 @@
  },
  "food": {
   "plot": {
-   "flat": 3
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_AGRICULTURAL_TOOLS",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "production": {
   "plot": {
-   "flat": 1
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_REPLACEABLE_PARTS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ELECTRICITY",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "commerce": {
   "plot": {
-   "flat": 3
+   "flat": [
+    3,
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_ELECTRICITY",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "world": {

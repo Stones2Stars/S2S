@@ -31,24 +31,6 @@
    ]
   }
  },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_PASTURE": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_PASTURE": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 6673
  },

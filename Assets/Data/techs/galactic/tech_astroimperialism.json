@@ -45,24 +45,6 @@
    ]
   }
  },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_TERRAFORMED_PLANET": {
-     "flat": 5
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_CAPITOL": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 172549
  },

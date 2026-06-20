@@ -33,15 +33,6 @@
  "allowed": {
   "world": 1
  },
- "commerce": {
-  "specialist": {
-   "specialists": {
-    "SPECIALIST_CELEBRITY": {
-     "flat": 1
-    }
-   }
-  }
- },
  "culture": {
   "city": {
    "percent": 10

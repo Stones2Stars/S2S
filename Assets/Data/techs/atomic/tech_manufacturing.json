@@ -62,24 +62,6 @@
    ]
   }
  },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_THATCH_CUTTER": {
-     "flat": -1
-    }
-   }
-  }
- },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_THATCH_CUTTER": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 11665
  },

@@ -29,31 +29,31 @@
  },
  "research": {
   "city": {
-   "flat": 25,
-   "percent": [
+   "flat": [
+    25,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_IMAGINARY_PHYSICS",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_QUANTUM_TELEPORTATION",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_SUPERSTRING_THEORY",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_UNIFICATION_PHYSICS",
       "scope": "team"
@@ -62,8 +62,8 @@
    ]
   }
  },
- "grants": {
-  "specialists": {
+ "freeSpecialists": {
+  "city": {
    "SPECIALIST_SCIENTIST": 1
   }
  },

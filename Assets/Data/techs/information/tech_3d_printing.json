@@ -41,34 +41,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_FACTORY_SCULPTURES": {
-     "flat": 100
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_SUBURBS": {
-     "flat": 1
-    },
-    "IMPROVEMENT_MANUFACTURING_COMPLEX": {
-     "flat": 1
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_CGI_ANIMATION_STUDIO": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 22847
  },

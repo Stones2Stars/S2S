@@ -43,15 +43,6 @@
  "allowed": {
   "world": 1
  },
- "production": {
-  "specialist": {
-   "specialists": {
-    "SPECIALIST_NOBLE": {
-     "flat": 1
-    }
-   }
-  }
- },
  "culture": {
   "city": {
    "flat": [

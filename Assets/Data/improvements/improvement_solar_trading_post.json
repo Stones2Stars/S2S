@@ -25,7 +25,16 @@
  },
  "commerce": {
   "plot": {
-   "flat": 8
+   "flat": [
+    8,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PLANETARY_TRADE",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "world": {

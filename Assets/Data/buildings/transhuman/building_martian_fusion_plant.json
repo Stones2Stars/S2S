@@ -34,14 +34,14 @@
    "flat": [
     100,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_ATOMIZATION_FIELD",
       "scope": "team"

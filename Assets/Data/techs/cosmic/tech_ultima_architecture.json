@@ -35,15 +35,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_SOLAR_DYSON_SPHERE": {
-     "flat": 1200
-    }
-   }
-  }
- },
  "cost": {
   "research": 271404
  },

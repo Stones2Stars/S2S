@@ -32,15 +32,6 @@
  "allowed": {
   "world": 1
  },
- "commerce": {
-  "specialist": {
-   "specialists": {
-    "SPECIALIST_MERCHANT": {
-     "flat": 1
-    }
-   }
-  }
- },
  "greatPeopleRate": {
   "city": {
    "flat": 2
@@ -56,6 +47,11 @@
    "modifier": {
     "percent": 25
    }
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 2
   }
  },
  "cost": {
@@ -87,9 +83,6 @@
   "construct": "AS2D_BUILD_COLOSSUS"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_MERCHANT": 2
-  },
   "nukeImmune": true,
   "forceAllTradeRoutes": true,
   "teamShare": true,

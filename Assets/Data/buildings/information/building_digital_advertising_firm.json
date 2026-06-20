@@ -48,28 +48,28 @@
    "flat": [
     5,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_AUGMENTED_REALITY",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_DIRECT_MERCHANDISING",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_VIRTUAL_SOCIETY",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_MEGACORPORATIONS",
       "scope": "team"
@@ -80,31 +80,31 @@
  },
  "culture": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_AUGMENTED_REALITY",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_DIRECT_MERCHANDISING",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_VIRTUAL_SOCIETY",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_MEGACORPORATIONS",
       "scope": "team"
@@ -116,6 +116,12 @@
  "hurryCost": {
   "city": {
    "percent": 100
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1,
+   "SPECIALIST_MERCHANT": 1
   }
  },
  "cost": {
@@ -131,10 +137,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 1,
-   "SPECIALIST_MERCHANT": 1
-  },
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

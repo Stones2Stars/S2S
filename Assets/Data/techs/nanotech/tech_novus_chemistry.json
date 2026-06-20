@@ -46,24 +46,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_LIQUID_METALS_FOUNDRY": {
-     "flat": 900
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_CHEMISTRY_LAB": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 41539
  },

@@ -31,24 +31,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_HIDE_AND_SEEK": {
-     "flat": 1100
-    }
-   }
-  }
- },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_CISLUNAR_CLOAKING": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 186934
  },

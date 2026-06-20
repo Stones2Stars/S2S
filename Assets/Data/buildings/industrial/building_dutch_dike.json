@@ -59,6 +59,11 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
  "cost": {
   "production": 1260,
   "sizeModifier": 3,
@@ -88,9 +93,6 @@
   "construct": "AS2D_BUILD_AQUEDUCT"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ENGINEER": 1
-  },
   "neverCapture": true,
   "worth": 4,
   "militaryWorth": 2,

@@ -42,21 +42,21 @@
    "flat": [
     3,
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_ANIMATION",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_MASS_MEDIA",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_3D_MODELLING",
       "scope": "team"
@@ -76,29 +76,31 @@
  },
  "culture": {
   "city": {
-   "flat": 3,
-   "percent": [
+   "flat": [
+    3,
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_ANIMATION",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_MASS_MEDIA",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_3D_MODELLING",
       "scope": "team"
      }
-    },
+    }
+   ],
+   "percent": [
     {
      "value": 100,
      "enabled": {
@@ -125,6 +127,11 @@
    ]
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_CELEBRITY": 1
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
@@ -135,9 +142,9 @@
    "flat": 6
   }
  },
- "grants": {
-  "specialists": {
-   "SPECIALIST_CELEBRITY": 1
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
   }
  },
  "cost": {
@@ -163,9 +170,6 @@
   "construct": "AS2D_BUILD_MOVIE_THEATER"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 1
-  },
   "worth": 8,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

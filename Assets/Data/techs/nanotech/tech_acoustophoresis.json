@@ -33,15 +33,6 @@
    ]
   }
  },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_ASTEROID_MINE": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 40165
  },

@@ -38,17 +38,17 @@
  },
  "research": {
   "city": {
-   "flat": 10,
-   "percent": [
+   "flat": [
+    10,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_SYNERGETICS",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_CYBERSOCIAL_INTEGRATION",
       "scope": "team"
@@ -59,9 +59,9 @@
  },
  "espionage": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_PRECISION_SOCIAL_ENGINEERING",
       "scope": "team"

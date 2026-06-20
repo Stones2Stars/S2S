@@ -33,9 +33,9 @@
  },
  "culture": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_TOURISM",
       "scope": "team"
@@ -72,14 +72,22 @@
  },
  "freeSpecialists": {
   "city": {
-   "improvements": {
-    "IMPROVEMENT_FOREST_PRESERVE": {
-     "flat": 1
+   "any": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "IMPROVEMENT_FOREST_PRESERVE",
+      "scope": "city"
+     }
     },
-    "IMPROVEMENT_WILDLIFE_SANCTUARY": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "IMPROVEMENT_WILDLIFE_SANCTUARY",
+      "scope": "city"
+     }
     }
-   }
+   ]
   }
  },
  "maintenance": {

@@ -60,47 +60,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_ENGINEERING_SCHOOL": {
-     "flat": 600
-    },
-    "BUILDING_UNIVERSITY": {
-     "flat": 600
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_SUBURBS": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_QUARRY": {
-     "flat": 1
-    }
-   }
-  }
- },
- "freeSpecialists": {
-  "city": {
-   "buildings": {
-    "BUILDING_UNIVERSITY": {
-     "specialists": {
-      "SPECIALIST_ENGINEER": {
-       "flat": 1
-      }
-     }
-    }
-   }
-  }
- },
  "cost": {
   "research": 7008
  },

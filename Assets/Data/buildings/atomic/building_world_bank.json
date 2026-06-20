@@ -61,6 +61,11 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
  "cost": {
   "production": 2360,
   "sizeModifier": 3,
@@ -90,9 +95,6 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_MERCHANT": 1
-  },
   "neverCapture": true,
   "worth": 10,
   "greatPeopleUnitType": "UNIT_MERCHANT",

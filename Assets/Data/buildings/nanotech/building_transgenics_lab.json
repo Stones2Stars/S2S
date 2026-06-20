@@ -50,10 +50,10 @@
  },
  "gold": {
   "city": {
-   "flat": -30,
-   "percent": [
+   "flat": [
+    -30,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_ANTI_AGING_MEDICINE",
       "scope": "team"
@@ -64,38 +64,38 @@
  },
  "research": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_MAINSTREAM_CLONING",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_ANTI_AGING_MEDICINE",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_BIONICS",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_QUADRUPLE_HELIX",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_NEURON_ENGINEERING",
       "scope": "team"
@@ -114,6 +114,11 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 3385,
   "sizeModifier": 1,
@@ -127,9 +132,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

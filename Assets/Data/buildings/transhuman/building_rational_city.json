@@ -70,10 +70,10 @@
  },
  "culture": {
   "city": {
-   "flat": 10,
-   "percent": [
+   "flat": [
+    10,
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_OMNIBENEVOLENT_MANDATE",
       "scope": "team"

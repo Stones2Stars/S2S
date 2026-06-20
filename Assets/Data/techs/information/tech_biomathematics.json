@@ -24,24 +24,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_BIOINFORMATICS_LAB": {
-     "flat": 1000
-    },
-    "BUILDING_NUCLEIC_ACID_LAB": {
-     "flat": 1000
-    },
-    "BUILDING_MOLECULAR_BIOLOGY_LAB": {
-     "flat": 1000
-    },
-    "BUILDING_PROTEIN_LAB": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 23650
  },

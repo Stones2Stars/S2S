@@ -75,6 +75,11 @@
    "flat": 5
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
  "cost": {
   "production": 800,
   "sizeModifier": 1,
@@ -101,9 +106,6 @@
   "construct": "AS2D_BUILD_BANK"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_MERCHANT": 1
-  },
   "conquestProbability": 30,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

@@ -34,33 +34,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_BICYCLE_BOULEVARD": {
-     "flat": 800
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_TRAFFIC_ENGINEERING_AGENCY": {
-     "flat": 800
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_DARPA": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 25354
  },

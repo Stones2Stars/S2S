@@ -29,15 +29,6 @@
  "allowed": {
   "world": 1
  },
- "commerce": {
-  "specialist": {
-   "specialists": {
-    "SPECIALIST_MERCHANT": {
-     "flat": 1
-    }
-   }
-  }
- },
  "culture": {
   "city": {
    "flat": [

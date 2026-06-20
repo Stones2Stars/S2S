@@ -36,36 +36,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_VIDEO_GAME_ARCADE": {
-     "flat": 900
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_EVOLUTIONARY_ALGORITHMS": {
-     "flat": 900
-    },
-    "BUILDING_ROBOTICS_LAB": {
-     "flat": 900
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_VIDEO_GAME_ARCADE": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 44505
  },

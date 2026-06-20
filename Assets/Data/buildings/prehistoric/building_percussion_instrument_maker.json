@@ -62,52 +62,52 @@
  },
  "culture": {
   "city": {
-   "flat": 1,
-   "percent": [
+   "flat": [
+    1,
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_FOLK_MUSIC",
       "scope": "team"
      }
     },
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "TECH_MUSICAL_NOTATION",
       "scope": "team"
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_ACOUSTICS",
       "scope": "team"
      }
     },
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_STEAM_POWER",
       "scope": "team"
      }
     },
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_MILITARY_TRADITION",
       "scope": "team"
      }
     },
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_RADIO",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_MASS_MEDIA",
       "scope": "team"

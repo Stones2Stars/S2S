@@ -52,6 +52,11 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 990,
   "sizeModifier": 2,
@@ -84,9 +89,6 @@
   "construct": "AS2D_BUILD_PRESS_AGENCY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "neverCapture": true,
   "worth": 20,
   "militaryWorth": 10,

@@ -45,21 +45,21 @@
   "city": {
    "flat": [
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_CLONING",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_LUNAR_EXPLORATION",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_SPACE_STATIONS",
       "scope": "team"
@@ -73,7 +73,7 @@
    "flat": [
     5,
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_ROBOTICS",
       "scope": "team"
@@ -89,31 +89,31 @@
  },
  "research": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_LUNAR_EXPLORATION",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_SPACE_STATIONS",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_ROBOTICS",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_CLONING",
       "scope": "team"

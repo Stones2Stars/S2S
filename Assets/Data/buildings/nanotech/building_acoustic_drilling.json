@@ -29,7 +29,7 @@
    "flat": [
     5,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_ELECTROMAGNETIC_FIELD_SHIELDING",
       "scope": "team"

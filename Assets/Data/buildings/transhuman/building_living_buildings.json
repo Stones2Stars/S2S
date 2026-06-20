@@ -34,7 +34,7 @@
   "city": {
    "flat": [
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_ADAPTIVE_ARCHITECTURE",
       "scope": "team"

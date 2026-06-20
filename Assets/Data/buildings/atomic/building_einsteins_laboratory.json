@@ -32,15 +32,6 @@
  "allowed": {
   "world": 1
  },
- "production": {
-  "specialist": {
-   "specialists": {
-    "SPECIALIST_SCIENTIST": {
-     "flat": 1
-    }
-   }
-  }
- },
  "gold": {
   "city": {
    "flat": -50
@@ -54,6 +45,11 @@
  "culture": {
   "city": {
    "flat": 4
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 2
   }
  },
  "greatPeopleRate": {
@@ -74,11 +70,6 @@
  "PROPERTY_TOURISM": {
   "city": {
    "flat": 4
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_SCIENTIST": 2
   }
  },
  "cost": {

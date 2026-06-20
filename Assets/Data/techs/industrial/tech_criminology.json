@@ -56,15 +56,6 @@
    ]
   }
  },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_JAIL": {
-     "flat": 600
-    }
-   }
-  }
- },
  "cost": {
   "research": 7008
  },

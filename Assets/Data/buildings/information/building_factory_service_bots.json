@@ -52,14 +52,14 @@
    "flat": [
     3,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_ANDROIDS",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_PERSONAL_ROBOTS",
       "scope": "team"

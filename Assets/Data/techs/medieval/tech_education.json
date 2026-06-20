@@ -64,24 +64,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_LAKE_BAIKAL": {
-     "flat": 500
-    },
-    "BUILDING_WONDER_OF_NATURE_BASALT_ORGAN": {
-     "flat": 500
-    },
-    "BUILDING_WONDER_OF_NATURE_DEAD_SEA": {
-     "flat": 500
-    },
-    "BUILDING_WONDER_OF_NATURE_SHARK_BAY": {
-     "flat": 400
-    }
-   }
-  }
- },
  "cost": {
   "research": 1820
  },

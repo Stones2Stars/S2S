@@ -34,15 +34,6 @@
    ]
   }
  },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_CHILDCARE_HUT": {
-     "flat": 200
-    }
-   }
-  }
- },
  "cost": {
   "research": 84
  },

@@ -53,60 +53,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_MT_EVEREST": {
-     "flat": -500
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_INVENTORS_WORKSHOP": {
-     "flat": 500
-    },
-    "BUILDING_ENCLOSURE_AMPHIBIAN_POND": {
-     "flat": 500
-    },
-    "BUILDING_ENCLOSURE_BAD_BOYS": {
-     "flat": 500
-    },
-    "BUILDING_ENCLOSURE_BEAR": {
-     "flat": 500
-    },
-    "BUILDING_ENCLOSURE_BIG_CAT": {
-     "flat": 500
-    },
-    "BUILDING_ENCLOSURE_BIRD": {
-     "flat": 500
-    },
-    "BUILDING_ENCLOSURE_MARSUPIAL": {
-     "flat": 500
-    },
-    "BUILDING_ENCLOSURE_PRIMATE": {
-     "flat": 500
-    },
-    "BUILDING_ENCLOSURE_REPTILE": {
-     "flat": 500
-    },
-    "BUILDING_ENCLOSURE_RODENT": {
-     "flat": 500
-    },
-    "BUILDING_ENCLOSURE_WOLF": {
-     "flat": 500
-    },
-    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
-     "percent": -5
-    },
-    "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE": {
-     "percent": 1
-    }
-   }
-  }
- },
  "grants": {
   "freeTechs": 1
  },

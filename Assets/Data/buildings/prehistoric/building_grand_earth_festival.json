@@ -219,45 +219,45 @@
  },
  "culture": {
   "city": {
-   "flat": 4,
-   "percent": [
+   "flat": [
+    4,
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_MINING",
       "scope": "team"
      }
     },
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "TECH_CONSTRUCTION",
       "scope": "team"
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_FOLK_DANCE",
       "scope": "team"
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_FOLK_MUSIC",
       "scope": "team"
      }
     },
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "TECH_MUSICAL_NOTATION",
       "scope": "team"
      }
     },
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_METALLURGY",
       "scope": "team"

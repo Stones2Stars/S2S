@@ -34,33 +34,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_VIDEO_GAME_ARCADE": {
-     "flat": 900
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_NEUROSCIENCE_CENTER": {
-     "flat": 900
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_VIDEO_GAME_ARCADE": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 36429
  },

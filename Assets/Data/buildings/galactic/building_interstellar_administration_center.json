@@ -41,9 +41,9 @@
  },
  "gold": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_TACHYON_COMMUNICATIONS",
       "scope": "team"
@@ -54,9 +54,9 @@
  },
  "culture": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_CULTURAL_LONGEVITY",
       "scope": "team"
@@ -67,30 +67,30 @@
  },
  "espionage": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_GALACTIC_WARFARE",
       "scope": "team"
      }
     },
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_COSMIC_WARFARE",
       "scope": "team"
      }
     },
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_COSMIC_GOVERNANCE",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_GALACTIC_FEDERATION",
       "scope": "team"

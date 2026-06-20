@@ -50,15 +50,6 @@
    ]
   }
  },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_STONE_TOOLS_WORKSHOP": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 30
  },

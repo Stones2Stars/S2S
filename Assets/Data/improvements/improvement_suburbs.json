@@ -31,14 +31,66 @@
    ]
   }
  },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ORGANIC_CITIES",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
  "production": {
   "plot": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CIVIL_ENGINEERING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MEGASTRUCTURE_ENGINEERING",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "commerce": {
   "plot": {
-   "flat": 14
+   "flat": [
+    14,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MASS_TRANSIT",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CONSUMERISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_3D_PRINTING",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "culture": {

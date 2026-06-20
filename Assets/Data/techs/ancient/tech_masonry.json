@@ -96,31 +96,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_MINING_CAMP": {
-     "flat": 200
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_MINING_CAMP": {
-     "flat": 200
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_MOAI": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 164
  },

@@ -142,6 +142,12 @@
    "flat": 2
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 2,
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
  "cost": {
   "production": 425,
   "countModifier": 1,
@@ -166,10 +172,6 @@
   "construct": "AS2D_BUILD_JEWELLERY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 2,
-   "SPECIALIST_ENGINEER": 1
-  },
   "worth": 3,
   "greatPeopleUnitType": "UNIT_ARTIST",
   "advisor": "ADVISOR_CULTURE",

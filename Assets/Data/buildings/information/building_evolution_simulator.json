@@ -50,7 +50,7 @@
   "city": {
    "flat": [
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_RAPID_PROTOTYPING",
       "scope": "team"
@@ -66,17 +66,17 @@
  },
  "research": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_GENESIS_BIOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_MACHINE_LEARNING",
       "scope": "team"

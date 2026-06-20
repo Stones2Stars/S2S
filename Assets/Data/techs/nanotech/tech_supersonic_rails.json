@@ -39,15 +39,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_NATIONAL_RAILROAD_MUSEUM": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 44505
  },

@@ -55,15 +55,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_TAPESTRY_MAKERS_WORKSHOP": {
-     "flat": 400
-    }
-   }
-  }
- },
  "cost": {
   "research": 1820
  },

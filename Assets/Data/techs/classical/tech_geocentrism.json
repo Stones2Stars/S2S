@@ -25,15 +25,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_ASTROLOGY_SCHOOL": {
-     "flat": 300
-    }
-   }
-  }
- },
  "cost": {
   "research": 904
  },

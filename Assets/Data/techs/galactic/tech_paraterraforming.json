@@ -40,37 +40,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_ASTEROID_INTERIOR_CITY": {
-     "flat": 1100
-    },
-    "BUILDING_OORT_CLOUD_HILLS_COLONY": {
-     "flat": 1100
-    },
-    "BUILDING_KUIPER_BELT_OUTPOST": {
-     "flat": 1100
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_LUNAR_ARCOLOGY": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_ASTEROID_EPITAXY_FACTORY": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 126324
  },

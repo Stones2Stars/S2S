@@ -46,18 +46,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERGALACTIC_STARPORT": {
-     "flat": 1300
-    },
-    "BUILDING_GALACTIC_PORT": {
-     "flat": 1300
-    }
-   }
-  }
- },
  "cost": {
   "research": 495679
  },

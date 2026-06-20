@@ -35,7 +35,7 @@
    "flat": [
     5,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_MESH_NETWORKS",
       "scope": "team"
@@ -49,6 +49,11 @@
    "flat": 1
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
@@ -57,11 +62,6 @@
  "PROPERTY_TOURISM": {
   "city": {
    "flat": 1
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_MERCHANT": 1
   }
  },
  "cost": {

@@ -36,10 +36,10 @@
  },
  "culture": {
   "city": {
-   "flat": 2,
-   "percent": [
+   "flat": [
+    2,
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_COMMUNITY",
       "scope": "team"

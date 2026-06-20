@@ -36,46 +36,6 @@
    ]
   }
  },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_KILIMANJARO": {
-     "flat": 500
-    },
-    "BUILDING_WONDER_OF_NATURE_MT_FUJI": {
-     "flat": 300
-    },
-    "BUILDING_WONDER_OF_NATURE_MT_SINAI": {
-     "flat": 500
-    },
-    "BUILDING_WONDER_OF_NATURE_ULURU": {
-     "flat": 500
-    }
-   }
-  }
- },
- "happiness": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_MT_EVEREST": {
-     "flat": 2
-    }
-   }
-  }
- },
- "freeSpecialists": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_MT_FUJI": {
-     "specialists": {
-      "SPECIALIST_ARTIST": {
-       "flat": 1
-      }
-     }
-    }
-   }
-  }
- },
  "cost": {
   "research": 13
  },

@@ -48,15 +48,6 @@
    ]
   }
  },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_GRAND_EARTH_FESTIVAL": {
-     "flat": 500
-    }
-   }
-  }
- },
  "cost": {
   "research": 2528
  },

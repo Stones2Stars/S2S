@@ -42,12 +42,30 @@
  },
  "production": {
   "plot": {
-   "flat": 10
+   "flat": [
+    10,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_INDUSTRIALISM",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "commerce": {
   "plot": {
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CONSUMERISM",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "properties": [

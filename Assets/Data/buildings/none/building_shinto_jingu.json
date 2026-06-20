@@ -115,6 +115,11 @@
    "flat": 4
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 2
+  }
+ },
  "cost": {
   "production": 280,
   "sizeModifier": 1,
@@ -138,9 +143,6 @@
   "construct": "SND_BUILD_SHINTO"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_PRIEST": 2
-  },
   "neverCapture": true,
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",

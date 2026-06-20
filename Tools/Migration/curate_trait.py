@@ -71,7 +71,7 @@ SCALAR = {
     "iGreatPeopleRateModifier":        ("greatPeopleRate", "empire", "", "percent"),
     "iGreatGeneralRateModifier":       ("greatGeneralRate", "empire", "", "percent"),
     "iDomesticGreatGeneralRateModifier":("greatGeneralRate", "empire", "domestic", "percent"),
-    "iFreeSpecialist":                 ("freeSpecialists", "empire", "", "flat"),
+    "iFreeSpecialist":                 ("freeSpecialists", "empire", "", "any"),
     # build-rate (owner 2026-06-16: production=total city OUTPUT; buildRate=faster to build a target/category).
     "iMilitaryProductionModifier":     ("buildRate", "empire", "military", "percent"),
     "iMaxGlobalBuildingProductionModifier": ("buildRate", "empire", "worldWonder", "percent"),

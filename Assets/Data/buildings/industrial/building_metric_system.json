@@ -25,17 +25,17 @@
  },
  "research": {
   "city": {
-   "flat": 15,
-   "percent": [
+   "flat": [
+    15,
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_MODERN_PHYSICS",
       "scope": "team"
      }
     },
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_ORGANIC_CHEMISTRY",
       "scope": "team"
@@ -44,8 +44,8 @@
    ]
   }
  },
- "grants": {
-  "specialists": {
+ "freeSpecialists": {
+  "city": {
    "SPECIALIST_ENGINEER": 2
   }
  },

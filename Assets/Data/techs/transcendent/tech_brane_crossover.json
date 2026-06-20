@@ -32,15 +32,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_STRINGWORKS": {
-     "flat": 1300
-    }
-   }
-  }
- },
  "cost": {
   "research": 601234
  },

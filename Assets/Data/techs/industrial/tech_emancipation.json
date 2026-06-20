@@ -23,20 +23,6 @@
    ]
   }
  },
- "happiness": {
-  "city": {
-   "buildings": {
-    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
-     "flat": -2
-    }
-   },
-   "specialists": {
-    "SPECIALIST_SLAVES": {
-     "flat": -1
-    }
-   }
-  }
- },
  "cost": {
   "research": 5460
  },

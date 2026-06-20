@@ -87,6 +87,11 @@
    "flat": 1
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 3
@@ -109,9 +114,9 @@
    "flat": 6
   }
  },
- "grants": {
-  "specialists": {
-   "SPECIALIST_ARTIST": 1
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 2
   }
  },
  "cost": {
@@ -146,9 +151,6 @@
   "construct": "AS2D_BUILD_CHRISTIAN"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 2
-  },
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

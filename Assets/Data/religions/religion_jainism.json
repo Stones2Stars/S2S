@@ -30,24 +30,6 @@
    ]
   }
  },
- "religionInfluence": {
-  "city": {
-   "buildings": {
-    "BUILDING_JAIN_CATHEDRAL": {
-     "flat": 3
-    },
-    "BUILDING_JAIN_MONASTERY": {
-     "flat": 2
-    },
-    "BUILDING_JAIN_TEMPLE": {
-     "flat": 2
-    },
-    "BUILDING_STATUE_OF_GOMATESHWARA": {
-     "flat": 1
-    }
-   }
-  }
- },
  "shrine": {
   "gold": 1
  },

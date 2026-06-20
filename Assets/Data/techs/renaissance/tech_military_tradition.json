@@ -68,21 +68,6 @@
    ]
   }
  },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_BRASS_INSTRUMENT_MAKER": {
-     "flat": 500
-    },
-    "BUILDING_PERCUSSION_INSTRUMENT_MAKER": {
-     "flat": 500
-    },
-    "BUILDING_WOODWIND_INSTRUMENT_MAKER": {
-     "flat": 500
-    }
-   }
-  }
- },
  "cost": {
   "research": 4174
  },

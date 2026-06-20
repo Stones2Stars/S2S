@@ -31,15 +31,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_AEROTROPOLIS": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 67710
  },

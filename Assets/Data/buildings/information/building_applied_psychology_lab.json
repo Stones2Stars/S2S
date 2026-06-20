@@ -51,10 +51,10 @@
  },
  "research": {
   "city": {
-   "flat": 4,
-   "percent": [
+   "flat": [
+    4,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_VIRTUAL_SOCIETY",
       "scope": "team"
@@ -87,6 +87,11 @@
    "flat": -5
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 2305,
   "sizeModifier": 2,
@@ -99,9 +104,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

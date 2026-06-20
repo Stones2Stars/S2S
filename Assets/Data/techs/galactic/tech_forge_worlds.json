@@ -42,18 +42,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_OORT_CLOUD_BASE": {
-     "flat": 1100
-    },
-    "BUILDING_ROGUE_PLANET_OUTPOST": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 159944
  },

@@ -28,15 +28,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_UNIVERSAL_LIBRARY": {
-     "flat": 1300
-    }
-   }
-  }
- },
  "grants": {
   "firstFreeUnit": "UNIT_ARTIST"
  },

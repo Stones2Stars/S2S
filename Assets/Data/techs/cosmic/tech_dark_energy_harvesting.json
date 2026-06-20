@@ -39,24 +39,6 @@
    ]
   }
  },
- "food": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_INTERGALACTIC_COLONY": {
-     "flat": 1
-    }
-   }
-  }
- },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_INTERGALACTIC_COLONY": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 352130
  },

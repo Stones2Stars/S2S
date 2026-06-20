@@ -52,31 +52,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_ANATOMY_LAB": {
-     "flat": 600
-    },
-    "BUILDING_UNIVERSITY": {
-     "flat": 600
-    }
-   }
-  }
- },
- "freeSpecialists": {
-  "city": {
-   "buildings": {
-    "BUILDING_UNIVERSITY": {
-     "specialists": {
-      "SPECIALIST_SCIENTIST": {
-       "flat": 1
-      }
-     }
-    }
-   }
-  }
- },
  "cost": {
   "research": 7356
  },

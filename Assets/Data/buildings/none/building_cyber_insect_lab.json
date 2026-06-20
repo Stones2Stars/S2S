@@ -50,6 +50,11 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 5455
  },
@@ -59,9 +64,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "specialBuildingType": "SPECIALBUILDING_PUNK_CYBER",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": "1.0",

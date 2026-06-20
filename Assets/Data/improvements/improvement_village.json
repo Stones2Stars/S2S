@@ -33,12 +33,30 @@
  },
  "production": {
   "plot": {
-   "flat": 3
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ENGINEERING",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "commerce": {
   "plot": {
-   "flat": 9
+   "flat": [
+    9,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CIVIL_SERVICE",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "culture": {

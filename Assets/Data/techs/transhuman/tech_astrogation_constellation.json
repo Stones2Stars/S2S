@@ -56,15 +56,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_CISLUNAR_SPACEPORT": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 70029
  },

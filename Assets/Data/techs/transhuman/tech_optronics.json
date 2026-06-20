@@ -29,27 +29,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_MARTIAN_BROADBAND": {
-     "flat": 1000
-    },
-    "BUILDING_VENUS_BROADBAND": {
-     "flat": 1000
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_NEUTRINO_OBSERVATORY": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 70029
  },

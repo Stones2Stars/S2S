@@ -28,12 +28,30 @@
  },
  "production": {
   "plot": {
-   "flat": 7
+   "flat": [
+    7,
+    {
+     "value": 3,
+     "enabled": {
+      "type": "TECH_APPLIED_RELATIVITY",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "commerce": {
   "plot": {
-   "flat": 7
+   "flat": [
+    7,
+    {
+     "value": 3,
+     "enabled": {
+      "type": "TECH_STELLAR_ENGINE",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "world": {

@@ -26,15 +26,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_WEAVER": {
-     "flat": 200
-    }
-   }
-  }
- },
  "cost": {
   "research": 164
  },

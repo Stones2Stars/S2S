@@ -37,51 +37,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_FACTORY_OLED": {
-     "flat": 900
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_BACTERIOPHAGE_THERAPY_CLINIC": {
-     "flat": 900
-    },
-    "BUILDING_MICROBIOLOGY_LAB": {
-     "flat": 900
-    },
-    "BUILDING_STEM_CELL_LAB": {
-     "flat": 900
-    },
-    "BUILDING_TISSUE_ENGINEERING_LAB": {
-     "flat": 900
-    },
-    "BUILDING_VACCINE_LAB": {
-     "flat": 900
-    },
-    "BUILDING_VIROTHERAPY_CLINIC": {
-     "flat": 900
-    }
-   }
-  }
- },
- "health": {
-  "city": {
-   "buildings": {
-    "BUILDING_STEM_CELL_LAB": {
-     "flat": 1
-    },
-    "BUILDING_TISSUE_ENGINEERING_LAB": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 37614
  },

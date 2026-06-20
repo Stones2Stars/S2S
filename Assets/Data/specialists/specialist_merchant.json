@@ -4,170 +4,334 @@
  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
  "food": {
   "empire": {
-   "traits": {
-    "TRAIT_NEGOTIATOR": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_NEGOTIATOR",
+      "scope": "empire"
+     }
     },
-    "TRAIT_NEGOTIATOR2": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_NEGOTIATOR2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_ISOLATIONIST": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_ISOLATIONIST",
+      "scope": "empire"
+     }
     },
-    "TRAIT_ISOLATIONIST2": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_ISOLATIONIST2",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "production": {
   "empire": {
-   "traits": {
-    "TRAIT_NEGOTIATOR": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_NEGOTIATOR",
+      "scope": "empire"
+     }
     },
-    "TRAIT_NEGOTIATOR3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_NEGOTIATOR3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_ISOLATIONIST": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_ISOLATIONIST",
+      "scope": "empire"
+     }
     },
-    "TRAIT_ISOLATIONIST3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_ISOLATIONIST3",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "commerce": {
   "city": {
-   "flat": 3,
-   "buildings": {
-    "BUILDING_ADAM_SMITHS_TRADING_COMPANY": {
-     "flat": 1
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BUILDING_ADAM_SMITHS_TRADING_COMPANY",
+      "scope": "city"
+     }
     },
-    "BUILDING_MARCO_POLOS_EMBASSY": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BUILDING_MARCO_POLOS_EMBASSY",
+      "scope": "city"
+     }
     },
-    "BUILDING_SILK_ROAD": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BUILDING_SILK_ROAD",
+      "scope": "city"
+     }
     }
-   }
+   ]
   },
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_FINANCIAL": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_FINANCIAL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_FINANCIAL1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_FINANCIAL1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_FINANCIAL3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_FINANCIAL3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_GREEDY": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_GREEDY",
+      "scope": "empire"
+     }
     },
-    "TRAIT_GREEDY1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_GREEDY1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_GREEDY3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_GREEDY3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_NEGOTIATOR": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_NEGOTIATOR",
+      "scope": "empire"
+     }
     },
-    "TRAIT_NEGOTIATOR1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_NEGOTIATOR1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_ISOLATIONIST": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_ISOLATIONIST",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_ISOLATIONIST1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_ISOLATIONIST1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_FINANCIAL": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_FINANCIAL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_FINANCIAL1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_FINANCIAL1",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "gold": {
   "city": {
-   "civics": {
-    "CIVIC_CONFEDERACY": {
-     "percent": 50
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "CIVIC_CONFEDERACY",
+      "scope": "empire"
+     }
     },
-    "CIVIC_CAPITALIST": {
-     "percent": 50
+    {
+     "value": 50,
+     "enabled": {
+      "type": "CIVIC_CAPITALIST",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   },
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_FINANCIAL": {
-     "flat": 2
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_FINANCIAL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_FINANCIAL2": {
-     "flat": 2
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TRAIT_FINANCIAL2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_GREEDY": {
-     "flat": -2
+    {
+     "value": -2,
+     "enabled": {
+      "type": "TRAIT_GREEDY",
+      "scope": "empire"
+     }
     },
-    "TRAIT_GREEDY2": {
-     "flat": -2
+    {
+     "value": -2,
+     "enabled": {
+      "type": "TRAIT_GREEDY2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_PHILOSOPHICAL": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_PHILOSOPHICAL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_PHILOSOPHICAL3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_PHILOSOPHICAL3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_POPULIST": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_POPULIST",
+      "scope": "empire"
+     }
     },
-    "TRAIT_POPULIST3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_POPULIST3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_PROLIFIC1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_PROLIFIC1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_GRIM2": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_GRIM2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAWFUL": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_LAWFUL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_LAWFUL1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_LAWFUL1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_CROOKED": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_CROOKED",
+      "scope": "empire"
+     }
     },
-    "TRAIT_CROOKED1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_CROOKED1",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "research": {
   "city": {
-   "civics": {
-    "CIVIC_GUILDS": {
-     "percent": 50
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "CIVIC_GUILDS",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "culture": {
   "empire": {
-   "traits": {
-    "TRAIT_CREATIVE1": {
-     "flat": 2
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TRAIT_CREATIVE1",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "greatPeopleRate": {

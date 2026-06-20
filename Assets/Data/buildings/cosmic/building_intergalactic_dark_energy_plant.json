@@ -39,7 +39,7 @@
    "flat": [
     300,
     {
-     "value": 5000,
+     "value": 50,
      "enabled": {
       "type": "TECH_HYPERSTRUCTURE_ENGINEERING",
       "scope": "team"

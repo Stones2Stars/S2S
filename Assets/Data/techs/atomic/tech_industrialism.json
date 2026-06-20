@@ -82,39 +82,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_FALCONER": {
-     "flat": -100
-    },
-    "BUILDING_FALCONRY_SCHOOL": {
-     "flat": -100
-    }
-   }
-  }
- },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_LUMBERMILL": {
-     "flat": 1
-    },
-    "IMPROVEMENT_FACTORY": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_BUSINESS_SCHOOL": {
-     "flat": 700
-    }
-   }
-  }
- },
  "cost": {
   "research": 9484
  },

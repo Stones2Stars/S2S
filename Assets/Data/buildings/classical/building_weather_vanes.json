@@ -64,10 +64,10 @@
  },
  "research": {
   "city": {
-   "flat": 1,
-   "percent": [
+   "flat": [
+    1,
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_WEATHER_FORECASTING",
       "scope": "team"

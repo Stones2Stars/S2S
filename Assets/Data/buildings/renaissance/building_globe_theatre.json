@@ -37,15 +37,6 @@
  "allowed": {
   "world": 1
  },
- "commerce": {
-  "specialist": {
-   "specialists": {
-    "SPECIALIST_CELEBRITY": {
-     "flat": 1
-    }
-   }
-  }
- },
  "culture": {
   "city": {
    "flat": [
@@ -88,6 +79,11 @@
    "flat": 6
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 3
+  }
+ },
  "cost": {
   "production": 2550,
   "sizeModifier": 2,
@@ -114,9 +110,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 3
-  },
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

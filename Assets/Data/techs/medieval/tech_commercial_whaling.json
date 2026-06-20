@@ -42,15 +42,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_SHARK_BAY": {
-     "flat": 400
-    }
-   }
-  }
- },
  "cost": {
   "research": 1563
  },

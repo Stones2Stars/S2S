@@ -60,6 +60,11 @@
    "percent": 7
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 2
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 2
@@ -70,9 +75,9 @@
    "percent": 100
   }
  },
- "grants": {
-  "specialists": {
-   "SPECIALIST_SCIENTIST": 2
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 4
   }
  },
  "cost": {
@@ -104,9 +109,6 @@
   "construct": "AS2D_BUILD_INTELLIGENCE_AGENCY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 4
-  },
   "neverCapture": true,
   "worth": 8,
   "militaryWorth": 10,

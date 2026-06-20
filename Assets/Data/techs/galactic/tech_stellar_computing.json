@@ -32,22 +32,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET": {
-     "flat": 1100
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_DYSON_SPHERE": {
-     "flat": 3
-    }
-   }
-  }
- },
  "cost": {
   "research": 179514
  },

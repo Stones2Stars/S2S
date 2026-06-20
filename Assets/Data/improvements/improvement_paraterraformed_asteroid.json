@@ -32,7 +32,16 @@
  },
  "food": {
   "plot": {
-   "flat": 10
+   "flat": [
+    10,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ECOSYNTHESIS",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "production": {

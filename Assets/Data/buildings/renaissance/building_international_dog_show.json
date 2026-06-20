@@ -58,6 +58,11 @@
    "flat": 1
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_CELEBRITY": 1
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 1
@@ -76,11 +81,6 @@
  "PROPERTY_TOURISM": {
   "city": {
    "flat": 4
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_CELEBRITY": 1
   }
  },
  "cost": {

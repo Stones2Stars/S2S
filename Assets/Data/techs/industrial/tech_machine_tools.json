@@ -33,15 +33,6 @@
    ]
   }
  },
- "food": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_FARM": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 5745
  },

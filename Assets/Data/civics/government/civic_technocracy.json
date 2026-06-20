@@ -62,6 +62,12 @@
    "percent": -10
   }
  },
+ "freeSpecialists": {
+  "empire": {
+   "SPECIALIST_ENGINEER": 2,
+   "SPECIALIST_SCIENTIST": 2
+  }
+ },
  "combat": {
   "empire": {
    "captureResistance": {
@@ -99,11 +105,7 @@
   }
  },
  "grants": {
-  "revolution": 50,
-  "freeSpecialists": {
-   "SPECIALIST_ENGINEER": 2,
-   "SPECIALIST_SCIENTIST": 2
-  }
+  "revolution": 50
  },
  "ui": {
   "art": {

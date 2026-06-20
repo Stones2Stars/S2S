@@ -74,6 +74,18 @@ Plot-substrate entities (terrain/feature/improvement/route) each own their *own*
 scope. This REFINES keep-on-source and **superseded the earlier "inversion" approach** — the discriminator
 is *who delivers*, not conditioner-vs-target. **Home:** [`reference/cascade/modifier.md` §6](../reference/cascade/modifier.md#6-ownership--the-deliveryguy-rule) (owner ruling 2026-06-16).
 
+**Refined 2026-06-20 (modifier.md §6.5/§6.6).** The explicit HOME RULE — *a modifier lives on the entity that
+OWNS/GOVERNS the thing it modifies; a conditioner is REFERENCED (`enabled`/`requires`), never the home* —
+producing two shapes: **own-output** (a specialist's/improvement's/unit's own output → on that entity, source as
+`enabled`) and **governing-deliverer** (a route upgrading improvements, a building delivering religion influence →
+on the actor, keyed by target). Conditioner AXES: a **tech** references on the **enabling** axis (`enabled`,
+monotonic); a **religion/resource** on the **requiring** axis (`requires.operate`, reversible). **Corrections:**
+`Building.SpecialistYieldChanges` is own-output → on the **specialist** (not keep-on-building). **DATA ≠ RUNTIME** —
+JSON is organised for humans; `readJson` builds the links both ways at parse; target-landing inversion is a parse
+transform, never a data shape (the reason the derived-data repository was retired). **No special cases** — the rule
+decides every case (permissive but restrictive). Movement & range are two separate defined families
+(`movement`+`moveCost` vs `range`). **Home:** [`reference/cascade/modifier.md` §6.5/§6.6](../reference/cascade/modifier.md#65-the-home-rule--own-output-vs-governing-deliverer-owner-refinements-2026-06-20) (owner refinements 2026-06-20).
+
 ### DEC-cascade-bidirectional
 The cascade is **bidirectional**, not down-only: the enabler resolves its `requires` by a `require` callback
 **UP** the scope chain. `requires` is precisely the **AND** mechanism — it is **mapped on the subset of data

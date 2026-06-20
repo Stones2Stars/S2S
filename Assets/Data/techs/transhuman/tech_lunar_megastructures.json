@@ -39,31 +39,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_ENGINEERING_SCHOOL": {
-     "flat": 1000
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_COLONY_MANUFACTORY": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_COLONY_HABITAT_HUGE": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 90183
  },

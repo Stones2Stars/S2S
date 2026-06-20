@@ -59,45 +59,45 @@
  },
  "research": {
   "city": {
-   "flat": 1,
-   "percent": [
+   "flat": [
+    1,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_AESTHETICS",
       "scope": "team"
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_DRAMA",
       "scope": "team"
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "TECH_POETRY",
       "scope": "team"
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_CHARTERS",
       "scope": "team"
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_PAPER",
       "scope": "team"
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_CARTOGRAPHY",
       "scope": "team"
@@ -108,45 +108,45 @@
  },
  "culture": {
   "city": {
-   "flat": 1,
-   "percent": [
+   "flat": [
+    1,
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "TECH_AESTHETICS",
       "scope": "team"
      }
     },
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "TECH_DRAMA",
       "scope": "team"
      }
     },
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "TECH_POETRY",
       "scope": "team"
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_CHARTERS",
       "scope": "team"
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_PAPER",
       "scope": "team"
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_CARTOGRAPHY",
       "scope": "team"
@@ -165,6 +165,11 @@
    "flat": 5
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
  "cost": {
   "production": 243,
   "sizeModifier": 2,
@@ -177,9 +182,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 1
-  },
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

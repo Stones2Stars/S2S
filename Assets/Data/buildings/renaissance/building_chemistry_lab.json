@@ -58,17 +58,17 @@
  },
  "research": {
   "city": {
-   "flat": 15,
-   "percent": [
+   "flat": [
+    15,
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_ORGANIC_CHEMISTRY",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_NOVUS_CHEMISTRY",
       "scope": "team"
@@ -112,6 +112,11 @@
    "flat": 10
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 495,
   "sizeModifier": 2,
@@ -124,9 +129,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

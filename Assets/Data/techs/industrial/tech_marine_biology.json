@@ -40,36 +40,6 @@
    ]
   }
  },
- "food": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_WHALING_SHIPS": {
-     "flat": 1
-    },
-    "IMPROVEMENT_FISHING_BOATS": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_ENTOMOLOGY_LAB": {
-     "flat": 600
-    },
-    "BUILDING_HERPETOLOGY_LAB": {
-     "flat": 600
-    },
-    "BUILDING_WONDER_OF_NATURE_SHARK_BAY": {
-     "flat": 600
-    },
-    "BUILDING_ORNITHOLOGY_LAB": {
-     "flat": 600
-    }
-   }
-  }
- },
  "cost": {
   "research": 5187
  },

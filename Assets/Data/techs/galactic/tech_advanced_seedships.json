@@ -39,15 +39,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_STARPORT": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 166029
  },

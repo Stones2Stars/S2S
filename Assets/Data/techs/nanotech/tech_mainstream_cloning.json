@@ -42,18 +42,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_BACTERIUM_BIOFORGE": {
-     "flat": 900
-    },
-    "BUILDING_TRANSGENICS_LAB": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 38858
  },

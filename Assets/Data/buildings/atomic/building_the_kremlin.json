@@ -55,6 +55,11 @@
    "percent": -33
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SPY": 2
+  }
+ },
  "cost": {
   "production": 5940,
   "sizeModifier": 3,
@@ -84,9 +89,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SPY": 2
-  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 16,

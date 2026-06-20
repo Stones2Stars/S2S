@@ -51,6 +51,27 @@
    "flat": [
     6,
     {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GUILDS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_STEAM_POWER",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_INDUSTRIALISM",
+      "scope": "team"
+     }
+    },
+    {
      "value": 2,
      "enabled": {
       "HAS_BONUS": "BONUS_APPLE"

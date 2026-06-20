@@ -33,15 +33,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_ROBOTICS_LAB": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 36429
  },

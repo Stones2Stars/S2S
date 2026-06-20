@@ -44,15 +44,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_PLANETARIUM": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 19916
  },

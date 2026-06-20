@@ -52,30 +52,6 @@
    ]
   }
  },
- "religionInfluence": {
-  "city": {
-   "buildings": {
-    "BUILDING_MASADA": {
-     "flat": 3
-    },
-    "BUILDING_SOLOMONS_TEMPLE": {
-     "flat": 6
-    },
-    "BUILDING_JEWISH_SYNAGOGUE": {
-     "flat": 3
-    },
-    "BUILDING_JEWISH_MONASTERY": {
-     "flat": 2
-    },
-    "BUILDING_JEWISH_TEMPLE": {
-     "flat": 1
-    },
-    "BUILDING_THE_TEMPLE_OF_SOLOMON": {
-     "flat": 4
-    }
-   }
-  }
- },
  "shrine": {
   "gold": 1
  },

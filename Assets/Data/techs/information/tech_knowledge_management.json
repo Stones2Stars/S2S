@@ -36,36 +36,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_MODERN_WAREHOUSE": {
-     "flat": 800
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_FORENSICS_LAB": {
-     "flat": 800
-    },
-    "BUILDING_ISP_OFFICES": {
-     "flat": 800
-    }
-   }
-  }
- },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_CRYPTOLOGY_CENTER": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 21329
  },

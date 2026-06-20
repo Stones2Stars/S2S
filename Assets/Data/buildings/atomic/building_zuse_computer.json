@@ -45,6 +45,12 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1,
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 1130
  },
@@ -54,10 +60,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ENGINEER": 1,
-   "SPECIALIST_SCIENTIST": 1
-  },
   "specialBuildingType": "SPECIALBUILDING_PUNK_DIESEL",
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": "1.0",

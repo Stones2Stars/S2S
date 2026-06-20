@@ -48,6 +48,11 @@
    "percent": 300
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 8850,
   "sizeModifier": 3,
@@ -77,9 +82,6 @@
   "construct": "AS2D_BUILD_LABORATORY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 20,

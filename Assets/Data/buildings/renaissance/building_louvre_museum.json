@@ -63,6 +63,11 @@
    "flat": 6
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 2
+  }
+ },
  "cost": {
   "production": 2850,
   "sizeModifier": 3,
@@ -92,9 +97,6 @@
   "construct": "AS2D_BUILD_COLOSSUS"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 2
-  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 14,

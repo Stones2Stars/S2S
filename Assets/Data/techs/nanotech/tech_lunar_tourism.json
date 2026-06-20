@@ -23,15 +23,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_COLONY_HABITAT_MEDIUM": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 40165
  },

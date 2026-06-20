@@ -47,6 +47,11 @@
    ]
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
@@ -65,11 +70,6 @@
  "PROPERTY_WATER_POLLUTION": {
   "city": {
    "flat": 5
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_MERCHANT": 1
   }
  },
  "cost": {

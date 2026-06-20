@@ -22,9 +22,50 @@
    ]
   }
  },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WEATHER_FORECASTING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SCREW_PROPELLER",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MARINE_BIOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
  "production": {
   "plot": {
    "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_NAVAL_CANNON",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SCREW_PROPELLER",
+      "scope": "team"
+     }
+    },
     {
      "value": 3,
      "enabled": {
@@ -38,6 +79,34 @@
   "plot": {
    "flat": [
     3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WEATHER_FORECASTING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_NAVAL_CANNON",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CORPORATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SCREW_PROPELLER",
+      "scope": "team"
+     }
+    },
     {
      "value": 4,
      "enabled": {

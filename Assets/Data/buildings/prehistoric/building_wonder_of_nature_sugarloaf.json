@@ -41,7 +41,7 @@
    "flat": [
     2,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_TOURISM",
       "scope": "team"

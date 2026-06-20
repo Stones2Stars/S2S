@@ -31,15 +31,6 @@
    ]
   }
  },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 144040
  },

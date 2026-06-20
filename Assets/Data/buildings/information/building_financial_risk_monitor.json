@@ -29,7 +29,7 @@
    "flat": [
     3,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_DERIVATIVES",
       "scope": "team"

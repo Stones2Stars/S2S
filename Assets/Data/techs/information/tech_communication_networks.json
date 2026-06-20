@@ -60,33 +60,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_ISP_OFFICES": {
-     "flat": 800
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_ATOMIC_CLOCK": {
-     "flat": 800
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_BELL_LABS": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 20610
  },

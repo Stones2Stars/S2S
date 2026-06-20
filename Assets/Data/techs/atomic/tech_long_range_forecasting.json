@@ -28,33 +28,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_COMMUNITY_GARDEN": {
-     "flat": 700
-    }
-   }
-  }
- },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_FARM_SUPPLY": {
-     "flat": 700
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_METEOROLOGY_LAB": {
-     "flat": 700
-    }
-   }
-  }
- },
  "happiness": {
   "empire": {
    "flat": 1

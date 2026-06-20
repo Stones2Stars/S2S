@@ -33,15 +33,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_STONE_TOOL_MAKER": {
-     "flat": 100
-    }
-   }
-  }
- },
  "workRate": {
   "empire": {
    "percent": 10

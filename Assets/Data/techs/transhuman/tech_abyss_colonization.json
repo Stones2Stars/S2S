@@ -61,15 +61,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_OCEAN_CITY": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 72474
  },

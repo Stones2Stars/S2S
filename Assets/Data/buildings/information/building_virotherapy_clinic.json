@@ -64,24 +64,24 @@
  },
  "research": {
   "city": {
-   "flat": 6,
-   "percent": [
+   "flat": [
+    6,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_GENE_ENHANCEMENT",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_CYBERIMMUNOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_NANOROBOTICS",
       "scope": "team"
@@ -105,6 +105,11 @@
    "flat": -25
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_DOCTOR": 1
+  }
+ },
  "cost": {
   "production": 2205,
   "sizeModifier": 2,
@@ -118,9 +123,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_DOCTOR": 1
-  },
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

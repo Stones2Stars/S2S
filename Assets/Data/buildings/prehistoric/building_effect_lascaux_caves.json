@@ -27,10 +27,10 @@
  },
  "research": {
   "city": {
-   "flat": 1,
-   "percent": [
+   "flat": [
+    1,
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "TECH_LITERATURE",
       "scope": "team"
@@ -41,10 +41,10 @@
  },
  "culture": {
   "city": {
-   "flat": 2,
-   "percent": [
+   "flat": [
+    2,
     {
-     "value": -200,
+     "value": -2,
      "enabled": {
       "type": "TECH_LITERATURE",
       "scope": "team"

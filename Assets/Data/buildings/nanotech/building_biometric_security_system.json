@@ -54,17 +54,17 @@
  },
  "espionage": {
   "city": {
-   "flat": 15,
-   "percent": [
+   "flat": [
+    15,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_MASS_SURVEILLANCE",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_SYNTHETIC_SENTIENCE",
       "scope": "team"

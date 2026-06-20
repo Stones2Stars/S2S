@@ -38,6 +38,13 @@
    "flat": [
     5,
     {
+     "value": 5,
+     "enabled": {
+      "type": "TECH_NANOMINING",
+      "scope": "team"
+     }
+    },
+    {
      "value": 2,
      "enabled": {
       "HAS_BONUS": "BONUS_IRON_ORE"
@@ -61,6 +68,13 @@
  "commerce": {
   "plot": {
    "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_LUNAR_TRADE",
+      "scope": "team"
+     }
+    },
     {
      "value": 1,
      "enabled": {

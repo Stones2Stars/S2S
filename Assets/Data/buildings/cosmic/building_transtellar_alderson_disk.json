@@ -38,7 +38,7 @@
    "flat": [
     20,
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_GALACTIC_ENGINEERING",
       "scope": "team"
@@ -52,7 +52,7 @@
    "flat": [
     100,
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_GALACTIC_ENGINEERING",
       "scope": "team"

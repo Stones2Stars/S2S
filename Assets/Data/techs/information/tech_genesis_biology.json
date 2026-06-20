@@ -30,66 +30,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_CULINARY_SCHOOL": {
-     "flat": 800
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_FACTORY_OLED": {
-     "flat": 800
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_BACTERIOPHAGE_THERAPY_CLINIC": {
-     "flat": 800
-    },
-    "BUILDING_BIOLOGY_LAB": {
-     "flat": 800
-    },
-    "BUILDING_NUCLEIC_ACID_LAB": {
-     "flat": 800
-    },
-    "BUILDING_ENTOMOLOGY_LAB": {
-     "flat": 800
-    },
-    "BUILDING_EVOLUTION_SIMULATOR": {
-     "flat": 800
-    },
-    "BUILDING_GASTRONOMY_LAB": {
-     "flat": 800
-    },
-    "BUILDING_HERPETOLOGY_LAB": {
-     "flat": 800
-    },
-    "BUILDING_MOLECULAR_BIOLOGY_LAB": {
-     "flat": 800
-    },
-    "BUILDING_NEUROSCIENCE_CENTER": {
-     "flat": 800
-    },
-    "BUILDING_ORNITHOLOGY_LAB": {
-     "flat": 800
-    },
-    "BUILDING_PROTEIN_LAB": {
-     "flat": 800
-    },
-    "BUILDING_SYSTEMS_BIOLOGY_SIMULATOR": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 29220
  },

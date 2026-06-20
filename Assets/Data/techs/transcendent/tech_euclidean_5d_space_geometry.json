@@ -29,15 +29,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_HYPERFACTORY": {
-     "flat": 2000
-    }
-   }
-  }
- },
  "cost": {
   "research": 528012
  },

@@ -21,34 +21,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_MINING_CAMP": {
-     "flat": 200
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_MINE": {
-     "flat": 1
-    },
-    "IMPROVEMENT_QUARRY": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_MINING_CAMP": {
-     "flat": 200
-    }
-   }
-  }
- },
  "cost": {
   "research": 309
  },

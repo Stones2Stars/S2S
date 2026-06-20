@@ -55,7 +55,7 @@
    "flat": [
     10,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_ELECTRIC_ARC_WEAPONRY",
       "scope": "team"

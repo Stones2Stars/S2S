@@ -34,24 +34,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_TERRAFORMED_PLANET": {
-     "flat": 3
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_STARPORT": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 179514
  },

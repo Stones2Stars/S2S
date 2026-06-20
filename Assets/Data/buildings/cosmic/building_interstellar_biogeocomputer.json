@@ -40,23 +40,23 @@
  },
  "gold": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_GALACTIC_ECOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_GRAND_UNIFICATION_BIOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_PARTICLE_GENETICS",
       "scope": "team"

@@ -79,6 +79,11 @@
    "flat": 3
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 2
+  }
+ },
  "cost": {
   "production": 770,
   "sizeModifier": 3,
@@ -101,9 +106,6 @@
   "construct": "AS2D_BUILD_OPERA"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 2
-  },
   "neverCapture": true,
   "worth": 3,
   "dcmAirbombMission": 2,

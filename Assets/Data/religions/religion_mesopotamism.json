@@ -41,33 +41,6 @@
    ]
   }
  },
- "religionInfluence": {
-  "city": {
-   "buildings": {
-    "BUILDING_HAMMURABI_STELE_OF_LAWS": {
-     "flat": 2
-    },
-    "BUILDING_NIMRUD_PALACE": {
-     "flat": 6
-    },
-    "BUILDING_TEMPLE_OF_AN": {
-     "flat": 1
-    },
-    "BUILDING_TEMPLE_OF_ENKI": {
-     "flat": 1
-    },
-    "BUILDING_TEMPLE_OF_ENLIL": {
-     "flat": 1
-    },
-    "BUILDING_TEMPLE_OF_INANNA": {
-     "flat": 1
-    },
-    "BUILDING_TEMPLE_OF_KI": {
-     "flat": 1
-    }
-   }
-  }
- },
  "shrine": {
   "gold": 1,
   "culture": 1

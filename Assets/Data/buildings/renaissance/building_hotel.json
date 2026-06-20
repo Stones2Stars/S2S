@@ -63,6 +63,11 @@
    "flat": 3
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
@@ -73,11 +78,6 @@
    "modifier": {
     "percent": 3
    }
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_MERCHANT": 1
   }
  },
  "cost": {

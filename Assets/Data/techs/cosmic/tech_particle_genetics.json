@@ -32,27 +32,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_BIOGEOCOMPUTER": {
-     "flat": 1200
-    },
-    "BUILDING_INTERSTELLAR_BIOTIC_SPHERE_WORLD": {
-     "flat": 1200
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_ZOO": {
-     "flat": 1200
-    }
-   }
-  }
- },
  "cost": {
   "research": 271404
  },

@@ -40,7 +40,7 @@
   "city": {
    "flat": [
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_TECHNOLOGICAL_SINGULARITY",
       "scope": "team"
@@ -51,17 +51,17 @@
  },
  "gold": {
   "city": {
-   "flat": 20,
-   "percent": [
+   "flat": [
+    20,
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_DATA_ARCHIVAL",
       "scope": "team"
      }
     },
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_ULTRACOMPUTING",
       "scope": "team"
@@ -72,23 +72,28 @@
  },
  "research": {
   "city": {
-   "flat": 40,
-   "percent": [
+   "flat": [
+    40,
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_DATA_ARCHIVAL",
       "scope": "team"
      }
     },
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_ULTRACOMPUTING",
       "scope": "team"
      }
     }
    ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
   }
  },
  "hurryCost": {
@@ -99,11 +104,6 @@
  "PROPERTY_EDUCATION": {
   "city": {
    "flat": 5
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_SCIENTIST": 1
   }
  },
  "cost": {

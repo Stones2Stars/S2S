@@ -37,24 +37,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_WIRELESS_NETWORKS": {
-     "flat": 900
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_COMPUTER_SCIENCE_DEPARTMENT": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 21329
  },

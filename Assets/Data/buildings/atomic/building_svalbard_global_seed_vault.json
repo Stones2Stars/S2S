@@ -47,15 +47,6 @@
  "allowed": {
   "world": 1
  },
- "food": {
-  "specialist": {
-   "specialists": {
-    "SPECIALIST_SCIENTIST": {
-     "flat": 1
-    }
-   }
-  }
- },
  "greatPeopleRate": {
   "city": {
    "flat": 2

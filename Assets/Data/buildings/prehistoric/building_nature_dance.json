@@ -49,15 +49,17 @@
    "flat": 1
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_CELEBRITY": 1
+  }
+ },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_NATURE_DANCE"
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_CELEBRITY": 1
-  },
   "notConstructible": true,
   "nukeImmune": true,
   "worth": 1,

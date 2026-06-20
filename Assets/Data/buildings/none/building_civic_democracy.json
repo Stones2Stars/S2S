@@ -28,15 +28,6 @@
    ]
   }
  },
- "commerce": {
-  "specialist": {
-   "specialists": {
-    "SPECIALIST_SLAVES": {
-     "flat": -1
-    }
-   }
-  }
- },
  "world": {
   "art": {
    "icon": "ART_DEF_BUILDING_CIVIC_DEMOCRACY"

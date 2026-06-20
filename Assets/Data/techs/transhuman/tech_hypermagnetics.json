@@ -41,15 +41,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_ASTEROID_EPITAXY_FACTORY": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 65511
  },

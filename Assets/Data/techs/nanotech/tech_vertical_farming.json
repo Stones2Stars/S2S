@@ -51,43 +51,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_CISLUNAR_AGRICULTURAL_LAB": {
-     "flat": 900
-    },
-    "BUILDING_FARM_BOT_CONTROL_CENTER": {
-     "flat": 900
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_COLONY_HYDROPONICS": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_FACTORY_OLED": {
-     "flat": 900
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_CHEMICALS_DISTRICT": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 42984
  },

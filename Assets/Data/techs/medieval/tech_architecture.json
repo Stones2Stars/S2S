@@ -35,15 +35,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_ENGINEERING_SCHOOL": {
-     "flat": 400
-    }
-   }
-  }
- },
  "cost": {
   "research": 1334
  },

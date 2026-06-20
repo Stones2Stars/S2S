@@ -76,6 +76,11 @@
    "percent": 6
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_CELEBRITY": 1
+  }
+ },
  "greatPeopleRate": {
   "empire": {
    "percent": 10
@@ -84,11 +89,6 @@
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_CELEBRITY": 1
   }
  },
  "cost": {

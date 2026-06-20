@@ -36,42 +36,42 @@
    "flat": [
     20,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_RENEWABLE_ENERGY",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_MACHINE_LEARNING",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_COMPOSITES",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_RAPID_PROTOTYPING",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_NANOTECHNOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_SOLAR_POWER",
       "scope": "team"

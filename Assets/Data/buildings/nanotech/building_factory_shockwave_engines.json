@@ -51,17 +51,17 @@
  },
  "gold": {
   "city": {
-   "flat": 3,
-   "percent": [
+   "flat": [
+    3,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_WARMACHINES",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_SKYROADS",
       "scope": "team"

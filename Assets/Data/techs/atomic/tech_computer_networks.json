@@ -31,18 +31,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_BELL_LABS": {
-     "flat": 700
-    },
-    "BUILDING_DARPA": {
-     "flat": 700
-    }
-   }
-  }
- },
  "grants": {
   "freeTechs": 1
  },

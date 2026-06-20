@@ -48,52 +48,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_THEATRE": {
-     "flat": 500
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_SCULPTORS_WORKSHOP": {
-     "flat": 500
-    },
-    "BUILDING_THEATRE": {
-     "flat": 500
-    },
-    "BUILDING_UNIVERSITY": {
-     "flat": 500
-    }
-   }
-  }
- },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_SPY_NETWORK": {
-     "flat": 500
-    }
-   }
-  }
- },
- "freeSpecialists": {
-  "city": {
-   "buildings": {
-    "BUILDING_UNIVERSITY": {
-     "specialists": {
-      "SPECIALIST_ARTIST": {
-       "flat": 1
-      }
-     }
-    }
-   }
-  }
- },
  "cost": {
   "research": 2528
  },

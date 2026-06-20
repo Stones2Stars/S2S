@@ -67,6 +67,11 @@
    "flat": 10
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 2
+  }
+ },
  "cost": {
   "production": 6180,
   "sizeModifier": 3,
@@ -86,9 +91,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ENGINEER": 2
-  },
   "nukeImmune": true,
   "worth": 10,
   "conquestProbability": 100,

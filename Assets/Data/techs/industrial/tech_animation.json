@@ -25,27 +25,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_MOVIE_THEATRE": {
-     "flat": 600
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_ART_GALLERY": {
-     "flat": 700
-    },
-    "BUILDING_MOVIE_THEATRE": {
-     "flat": 600
-    }
-   }
-  }
- },
  "cost": {
   "research": 7718
  },

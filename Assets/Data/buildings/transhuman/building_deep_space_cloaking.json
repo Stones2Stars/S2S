@@ -31,31 +31,31 @@
  },
  "espionage": {
   "city": {
-   "flat": 10,
-   "percent": [
+   "flat": [
+    10,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_NANOSHIELDING",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_NANOMORPHIC_TROIDS",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_NANO_DISASSEMBLY",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_NANOTROIDS",
       "scope": "team"

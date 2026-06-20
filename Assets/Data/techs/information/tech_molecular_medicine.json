@@ -28,39 +28,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_BACTERIOPHAGE_THERAPY_CLINIC": {
-     "flat": 800
-    },
-    "BUILDING_MICROBIOLOGY_LAB": {
-     "flat": 800
-    }
-   }
-  }
- },
- "health": {
-  "city": {
-   "buildings": {
-    "BUILDING_NUCLEIC_ACID_LAB": {
-     "flat": 2
-    },
-    "BUILDING_MOLECULAR_BIOLOGY_LAB": {
-     "flat": 2
-    },
-    "BUILDING_WONDER_OF_NATURE_DEAD_SEA": {
-     "flat": 1
-    },
-    "BUILDING_WONDER_OF_NATURE_PAMUKKALE": {
-     "flat": 1
-    },
-    "BUILDING_PROTEIN_LAB": {
-     "flat": 2
-    }
-   }
-  }
- },
  "cost": {
   "research": 22847
  },

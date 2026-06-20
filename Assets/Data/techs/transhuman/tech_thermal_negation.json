@@ -41,15 +41,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_VENUS_SURFACE_CITY": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 80635
  },

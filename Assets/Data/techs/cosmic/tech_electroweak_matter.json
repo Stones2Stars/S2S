@@ -60,24 +60,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_INDUSTRIAL_THINGAMAJIG": {
-     "flat": 1200
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_JADE_MERCHANT_LOCAL": {
-     "flat": 200
-    }
-   }
-  }
- },
  "cost": {
   "research": 338869
  },

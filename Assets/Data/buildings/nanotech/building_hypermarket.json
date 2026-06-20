@@ -1038,6 +1038,12 @@
    "flat": 30
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 5,
+   "SPECIALIST_ARTIST": 1
+  }
+ },
  "grants": {
   "repeatable": [
    {
@@ -1070,10 +1076,6 @@
   "construct": "AS2D_BUILD_HYPERMARKET"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_MERCHANT": 5,
-   "SPECIALIST_ARTIST": 1
-  },
   "worth": 6,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

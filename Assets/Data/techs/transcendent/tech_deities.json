@@ -32,15 +32,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_ULTIMATE_COMBAT_ARENA": {
-     "flat": 1300
-    }
-   }
-  }
- },
  "grants": {
   "firstFreeProphet": "UNIT_PROPHET"
  },

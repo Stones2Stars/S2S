@@ -39,15 +39,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_MINING_PLANET": {
-     "flat": 2000
-    }
-   }
-  }
- },
  "cost": {
   "research": 314134
  },

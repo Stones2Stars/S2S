@@ -23,38 +23,9 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_FINANCIAL_RISK_MONITOR": {
-     "flat": 800
-    },
-    "BUILDING_WALL_STREET": {
-     "percent": 5
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_PLANTATION": {
-     "flat": 1
-    },
-    "IMPROVEMENT_HYDROCARBON_WELL": {
-     "flat": 1
-    },
-    "IMPROVEMENT_FARM": {
-     "flat": 1
-    }
-   }
-  }
- },
  "freeSpecialists": {
   "empire": {
-   "specialists": {
-    "SPECIALIST_MERCHANT": {
-     "flat": 1
-    }
-   }
+   "SPECIALIST_MERCHANT": 1
   }
  },
  "cost": {

@@ -42,24 +42,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_VENUS_SURFACE_MINE": {
-     "flat": 2
-    },
-    "IMPROVEMENT_MARTIAN_MINE": {
-     "flat": 2
-    },
-    "IMPROVEMENT_SOLAR_TRADING_POST": {
-     "flat": 1
-    },
-    "IMPROVEMENT_COLONY_HABITAT_HUGE": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 63426
  },

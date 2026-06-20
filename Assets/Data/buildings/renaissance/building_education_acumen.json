@@ -18,6 +18,16 @@
      }
     ]
    ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "PROPERTY_EDUCATION",
+     "scope": "city",
+     "min": 2500,
+     "max": 2000000
+    }
+   ]
   }
  },
  "production": {

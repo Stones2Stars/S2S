@@ -41,15 +41,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_SELF_CONSTRUCTION_FIRM": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 70029
  },

@@ -69,52 +69,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_MODERN_WAREHOUSE": {
-     "flat": 700
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_BUSINESS_SCHOOL": {
-     "flat": 700
-    },
-    "BUILDING_FACTORY_FURNITURE": {
-     "flat": 700
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_WINERY": {
-     "flat": 1
-    },
-    "IMPROVEMENT_ORCHARD": {
-     "flat": 1
-    },
-    "IMPROVEMENT_SILK_FARM": {
-     "flat": 1
-    },
-    "IMPROVEMENT_OFFSHORE_PLATFORM": {
-     "flat": 1
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_CRIME_SHOPLIFTING": {
-     "flat": -500
-    }
-   }
-  }
- },
  "cost": {
   "research": 11665
  },

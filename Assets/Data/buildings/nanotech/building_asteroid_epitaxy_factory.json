@@ -36,7 +36,7 @@
    "flat": [
     5,
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_PARATERRAFORMING",
       "scope": "team"
@@ -47,17 +47,17 @@
  },
  "gold": {
   "city": {
-   "flat": 200,
-   "percent": [
+   "flat": [
+    200,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_HYPERMAGNETICS",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_PLANET_CRACKING",
       "scope": "team"

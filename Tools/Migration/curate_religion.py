@@ -59,10 +59,10 @@ IDENTITY = {"iSpreadFactor": "spreadFactor"}
 DROP = {"TechPrereq"}
 FAMILY_ORDER = ["gold", "research", "culture", "espionage", "religionInfluence"]
 
-# inbound entity-targeted modifiers: (sourceEntity, field, targetType, family, valueKeys, unit, scope)
-RELIGION_BOOSTS = [
-    ("BuildingInfo", "ReligionChanges", "buildings", "religionInfluence", None, "flat", "city"),
-]
+# No inbound boosts (owner 2026-06-20, modifier.md §6.5): a building delivering a religion's influence is a
+# governing-deliverer effect that lives ON THE BUILDING keyed by religion (curate_building TARGET_KEYED
+# "ReligionChanges"), NOT inverted onto the religion -- "modelling that on the religion itself is cumbersome".
+RELIGION_BOOSTS = []
 
 
 def _properties(node, props):

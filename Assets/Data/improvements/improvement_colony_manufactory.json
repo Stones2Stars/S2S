@@ -36,7 +36,44 @@
  },
  "production": {
   "plot": {
-   "flat": 5
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SUPERSTRONG_ALLOYS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_LUNAR_MEGASTRUCTURES",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MEGASTRUCTURE_ENGINEERING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PLANETARY_MANUFACTURING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PLANETARY_MEGASTRUCTURES",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "world": {

@@ -52,15 +52,7 @@
       }
      }
     }
-   ],
-   "specialists": {
-    "SPECIALIST_ARTIST": {
-     "flat": 4
-    },
-    "SPECIALIST_GREAT_ARTIST": {
-     "flat": 4
-    }
-   }
+   ]
   }
  },
  "buildRate": {

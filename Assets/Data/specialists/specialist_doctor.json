@@ -4,62 +4,110 @@
  "civilopedia": "TXT_KEY_CONCEPT_SPECIALIST_DOCTOR_PEDIA",
  "food": {
   "empire": {
-   "traits": {
-    "TRAIT_MEDICAL": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_MEDICAL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_MEDICAL1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_MEDICAL1",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "production": {
   "empire": {
-   "traits": {
-    "TRAIT_MEDICAL": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_MEDICAL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_MEDICAL2": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_MEDICAL2",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "commerce": {
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_SCIENTIFIC": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_SCIENTIFIC",
+      "scope": "empire"
+     }
     },
-    "TRAIT_SCIENTIFIC2": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_SCIENTIFIC2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_TRADITIONAL": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_TRADITIONAL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_TRADITIONAL2": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_TRADITIONAL2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_MEDICAL": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_MEDICAL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_MEDICAL3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_MEDICAL3",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "gold": {
   "empire": {
-   "traits": {
-    "TRAIT_MEDICAL2": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_MEDICAL2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_UNSANITARY2": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_UNSANITARY2",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "research": {
@@ -67,98 +115,202 @@
    "flat": 1
   },
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_SCIENTIFIC": {
-     "flat": 2
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_SCIENTIFIC",
+      "scope": "empire"
+     }
     },
-    "TRAIT_SCIENTIFIC3": {
-     "flat": 2
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TRAIT_SCIENTIFIC3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_TRADITIONAL": {
-     "flat": -2
+    {
+     "value": -2,
+     "enabled": {
+      "type": "TRAIT_TRADITIONAL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_TRADITIONAL3": {
-     "flat": -2
+    {
+     "value": -2,
+     "enabled": {
+      "type": "TRAIT_TRADITIONAL3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_PHILOSOPHICAL": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_PHILOSOPHICAL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_PHILOSOPHICAL3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_PHILOSOPHICAL3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_POPULIST": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_POPULIST",
+      "scope": "empire"
+     }
     },
-    "TRAIT_POPULIST3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_POPULIST3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_EXPANSIVE1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_EXPANSIVE1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_MINIMALIST1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_MINIMALIST1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_HUMANITARIAN": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_HUMANITARIAN",
+      "scope": "empire"
+     }
     },
-    "TRAIT_HUMANITARIAN2": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_HUMANITARIAN2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_CRUEL": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_CRUEL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_CRUEL2": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_CRUEL2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_MEDICAL": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_MEDICAL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_MEDICAL1": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_MEDICAL1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_UNSANITARY": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_UNSANITARY",
+      "scope": "empire"
+     }
     },
-    "TRAIT_UNSANITARY1": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_UNSANITARY1",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "culture": {
   "empire": {
-   "traits": {
-    "TRAIT_MEDICAL3": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_MEDICAL3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_UNSANITARY3": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_UNSANITARY3",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "espionage": {
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_HUMANITARIAN": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_HUMANITARIAN",
+      "scope": "empire"
+     }
     },
-    "TRAIT_HUMANITARIAN3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_HUMANITARIAN3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_COMPLEX_CRUEL": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_CRUEL",
+      "scope": "empire"
+     }
     },
-    "TRAIT_CRUEL3": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_CRUEL3",
+      "scope": "empire"
+     }
     },
-    "TRAIT_MEDICAL2": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_MEDICAL2",
+      "scope": "empire"
+     }
     },
-    "TRAIT_UNSANITARY2": {
-     "flat": -1
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TRAIT_UNSANITARY2",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "greatPeopleRate": {

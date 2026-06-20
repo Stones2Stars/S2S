@@ -42,7 +42,7 @@
    "flat": [
     1,
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_ELECTROWEAK_MATTER",
       "scope": "team"

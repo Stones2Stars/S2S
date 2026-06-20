@@ -39,15 +39,6 @@
    ]
   }
  },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_LUMBERJACK": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 110
  },

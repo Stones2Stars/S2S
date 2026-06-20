@@ -37,66 +37,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_SILK_FARM": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_ASSASSIN_BUG_SANCTUARY": {
-     "flat": 500
-    },
-    "BUILDING_BIOLOGY_LAB": {
-     "flat": 500
-    },
-    "BUILDING_BUTTERFLY_SANCTUARY": {
-     "flat": 500
-    },
-    "BUILDING_CICADA_SANCTUARY": {
-     "flat": 500
-    },
-    "BUILDING_CRICKET_SANCTUARY": {
-     "flat": 500
-    },
-    "BUILDING_DRAGONFLY_SANCTUARY": {
-     "flat": 500
-    },
-    "BUILDING_FIREFLY_SANCTUARY": {
-     "flat": 500
-    },
-    "BUILDING_GOLIATH_BEETLE_SANCTUARY": {
-     "flat": 500
-    },
-    "BUILDING_HERCULES_BEETLE_SANCTUARY": {
-     "flat": 500
-    },
-    "BUILDING_JUNEBUG_SANCTUARY": {
-     "flat": 500
-    },
-    "BUILDING_LADYBUG_SANCTUARY": {
-     "flat": 500
-    },
-    "BUILDING_PRAYING_MANTIS_SANCTUARY": {
-     "flat": 500
-    },
-    "BUILDING_SCARAB_BEETLE_SANCTUARY": {
-     "flat": 500
-    },
-    "BUILDING_SCORPION_SANCTUARY": {
-     "flat": 500
-    },
-    "BUILDING_WEAVING_SPIDER_SANCTUARY": {
-     "flat": 500
-    }
-   }
-  }
- },
  "cost": {
   "research": 3704
  },

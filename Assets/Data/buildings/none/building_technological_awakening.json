@@ -30,6 +30,12 @@
    "percent": 5
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
  "PROPERTY_EDUCATION": {
   "city": {
    "flat": {
@@ -40,12 +46,6 @@
      "scope": "city"
     }
    }
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_SCIENTIST": 1,
-   "SPECIALIST_ENGINEER": 1
   }
  },
  "cost": {

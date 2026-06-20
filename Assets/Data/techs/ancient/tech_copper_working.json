@@ -99,40 +99,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_STONE_TOOL_MAKER": {
-     "flat": -100
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_THATCH_CUTTER": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_STONE_TOOL_MAKER": {
-     "flat": -100
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_STONE_TOOL_MAKER": {
-     "flat": -100
-    }
-   }
-  }
- },
  "cost": {
   "research": 144
  },

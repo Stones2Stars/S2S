@@ -58,6 +58,11 @@
    "flat": 5
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_CELEBRITY": 3
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
@@ -66,11 +71,6 @@
  "PROPERTY_DISEASE": {
   "city": {
    "flat": 25
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_CELEBRITY": 3
   }
  },
  "cost": {

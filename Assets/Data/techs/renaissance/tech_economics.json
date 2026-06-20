@@ -58,49 +58,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_TOWN": {
-     "flat": 1
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_UNIVERSITY": {
-     "flat": 500
-    },
-    "BUILDING_CRIME_SHOPLIFTING": {
-     "flat": -300
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
-     "percent": -5
-    }
-   }
-  }
- },
- "freeSpecialists": {
-  "city": {
-   "buildings": {
-    "BUILDING_UNIVERSITY": {
-     "specialists": {
-      "SPECIALIST_MERCHANT": {
-       "flat": 1
-      }
-     }
-    }
-   }
-  }
- },
  "grants": {
   "firstFreeUnit": "UNIT_MERCHANT"
  },

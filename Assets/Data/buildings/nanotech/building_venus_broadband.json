@@ -26,10 +26,10 @@
  },
  "gold": {
   "city": {
-   "flat": 20,
-   "percent": [
+   "flat": [
+    20,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_OPTRONICS",
       "scope": "team"

@@ -114,29 +114,31 @@
  },
  "gold": {
   "city": {
-   "flat": 75,
-   "percent": [
+   "flat": [
+    75,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_ORGANIC_CITIES",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_VERTICAL_FARMING",
       "scope": "team"
      }
-    },
+    }
+   ],
+   "percent": [
     {
      "value": 200,
      "enabled": {
@@ -206,6 +208,11 @@
    "flat": 10
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 2
+  }
+ },
  "cost": {
   "production": 3805,
   "sizeModifier": 1,
@@ -219,9 +226,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 2
-  },
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

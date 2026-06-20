@@ -65,6 +65,11 @@
    ]
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
@@ -90,9 +95,9 @@
    "flat": 5
   }
  },
- "grants": {
-  "specialists": {
-   "SPECIALIST_ENGINEER": 1
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 2
   }
  },
  "cost": {
@@ -117,9 +122,6 @@
   "construct": "AS2D_BUILD_FACTORY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ENGINEER": 2
-  },
   "worth": 6,
   "militaryWorth": 35,
   "conquestProbability": 75,

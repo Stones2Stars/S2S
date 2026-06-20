@@ -32,27 +32,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_COMMUNITY_GARDEN": {
-     "flat": 300
-    }
-   }
-  }
- },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_WHALING_BOATS": {
-     "flat": 1
-    },
-    "IMPROVEMENT_FISHING_BOATS": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 824
  },

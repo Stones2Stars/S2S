@@ -33,24 +33,6 @@
    ]
   }
  },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_OFFSHORE_PLATFORM": {
-     "flat": 1
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_MARINE_BIOLOGY_LAB": {
-     "flat": 700
-    }
-   }
-  }
- },
  "cost": {
   "research": 13181
  },

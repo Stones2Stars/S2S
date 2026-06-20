@@ -34,15 +34,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_ECUMENOPOLIS": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 194821
  },

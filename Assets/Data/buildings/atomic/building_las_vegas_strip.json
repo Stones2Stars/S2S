@@ -81,6 +81,11 @@
    ]
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_CELEBRITY": 3
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 2
@@ -94,11 +99,6 @@
  "PROPERTY_CRIME": {
   "city": {
    "flat": 20
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_CELEBRITY": 3
   }
  },
  "cost": {

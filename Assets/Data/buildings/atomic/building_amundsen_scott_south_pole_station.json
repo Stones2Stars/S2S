@@ -31,17 +31,17 @@
  },
  "research": {
   "city": {
-   "flat": 20,
-   "percent": [
+   "flat": [
+    20,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_EXOPLANET_DISCOVERY",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_IMAGINARY_PHYSICS",
       "scope": "team"

@@ -40,15 +40,6 @@
  "allowed": {
   "world": 1
  },
- "production": {
-  "specialist": {
-   "specialists": {
-    "SPECIALIST_PRIEST": {
-     "flat": 1
-    }
-   }
-  }
- },
  "research": {
   "city": {
    "flat": [
@@ -96,6 +87,11 @@
    }
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 2
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 1
@@ -118,8 +114,8 @@
    "flat": 5
   }
  },
- "grants": {
-  "specialists": {
+ "allowedSpecialists": {
+  "city": {
    "SPECIALIST_PRIEST": 2
   }
  },
@@ -152,9 +148,6 @@
   "construct": "AS2D_BUILD_JEWISH"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_PRIEST": 2
-  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 6,

@@ -50,7 +50,7 @@
   "city": {
    "flat": [
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_AUTOMATED_TRAFFIC",
       "scope": "team"
@@ -64,35 +64,35 @@
    "flat": [
     5,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_CLOUD_COMPUTING",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_MICROGENERATORS",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_NANOGENERATORS",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_WIRELESS_ELECTRICITY",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_UNIVERSAL_TRANSLATOR",
       "scope": "team"
@@ -103,17 +103,17 @@
  },
  "culture": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_MEDIA_PSYCHOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_UNIVERSAL_TRANSLATOR",
       "scope": "team"
@@ -124,9 +124,9 @@
  },
  "espionage": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_CYBERWARFARE",
       "scope": "team"

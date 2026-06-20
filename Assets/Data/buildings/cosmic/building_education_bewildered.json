@@ -18,6 +18,16 @@
      }
     ]
    ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "PROPERTY_EDUCATION",
+     "scope": "city",
+     "min": -2000000,
+     "max": -30000
+    }
+   ]
   }
  },
  "production": {
@@ -38,7 +48,7 @@
  },
  "freeSpecialists": {
   "city": {
-   "flat": -1
+   "any": -1
   }
  },
  "greatPeopleRate": {

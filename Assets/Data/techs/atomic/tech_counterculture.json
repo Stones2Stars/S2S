@@ -45,15 +45,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_PSYCHOLOGY_LAB": {
-     "flat": 700
-    }
-   }
-  }
- },
  "cost": {
   "research": 13724
  },

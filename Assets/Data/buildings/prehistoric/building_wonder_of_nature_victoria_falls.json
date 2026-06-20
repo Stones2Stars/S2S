@@ -31,21 +31,21 @@
    "flat": [
     5,
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_RAFT_BUILDING",
       "scope": "team"
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_SPEARFISHING",
       "scope": "team"
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_AGRICULTURE",
       "scope": "team"
@@ -64,7 +64,7 @@
    "flat": [
     2,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_TOURISM",
       "scope": "team"
@@ -75,9 +75,9 @@
  },
  "research": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_ARCHEOLOGY",
       "scope": "team"
@@ -88,10 +88,10 @@
  },
  "culture": {
   "city": {
-   "flat": 2,
-   "percent": [
+   "flat": [
+    2,
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_ANIMISM",
       "scope": "team"
@@ -103,6 +103,11 @@
  "happiness": {
   "city": {
    "flat": 3
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
   }
  },
  "greatPeopleRate": {
@@ -129,11 +134,6 @@
      "scope": "team"
     }
    }
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_ARTIST": 1
   }
  },
  "cost": {

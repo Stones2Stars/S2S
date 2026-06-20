@@ -86,35 +86,35 @@
    "flat": [
     1,
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_FURNITURE_MAKING",
       "scope": "team"
      }
     },
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "TECH_AESTHETICS",
       "scope": "team"
      }
     },
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "TECH_MACHINERY",
       "scope": "team"
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_GUILDS",
       "scope": "team"
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_INVENTION",
       "scope": "team"

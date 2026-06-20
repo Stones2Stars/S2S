@@ -143,6 +143,12 @@
    "flat": 40
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1,
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 870,
   "sizeModifier": 2,
@@ -169,10 +175,6 @@
   "construct": "AS2D_BUILD_SCHOOL"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 1,
-   "SPECIALIST_SCIENTIST": 1
-  },
   "worth": 3,
   "conquestProbability": 33,
   "dcmAirbombMission": 2,

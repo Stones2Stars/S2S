@@ -38,7 +38,30 @@
  },
  "commerce": {
   "plot": {
-   "flat": 11
+   "flat": [
+    11,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PRINTING_PRESS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SOCIAL_CONTRACT",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ECONOMICS",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "culture": {

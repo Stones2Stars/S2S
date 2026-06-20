@@ -31,14 +31,22 @@
  },
  "freeSpecialists": {
   "city": {
-   "improvements": {
-    "IMPROVEMENT_QUARRY": {
-     "flat": 1
+   "any": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "IMPROVEMENT_QUARRY",
+      "scope": "city"
+     }
     },
-    "IMPROVEMENT_CORE_MINE": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "IMPROVEMENT_CORE_MINE",
+      "scope": "city"
+     }
     }
-   }
+   ]
   }
  },
  "greatPeopleRate": {
@@ -51,6 +59,11 @@
    "RELIGION_NAGHUALISM": {
     "flat": 4
    }
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 3
   }
  },
  "grants": {
@@ -73,9 +86,6 @@
  },
  "identity": {
   "shrine": "RELIGION_NAGHUALISM",
-  "specialistSlots": {
-   "SPECIALIST_PRIEST": 3
-  },
   "notConstructible": true,
   "nukeImmune": true,
   "worth": 8,

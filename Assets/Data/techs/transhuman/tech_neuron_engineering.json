@@ -48,15 +48,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_TRANSGENICS_LAB": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 63426
  },

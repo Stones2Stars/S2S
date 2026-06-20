@@ -34,15 +34,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_SOMA_DISPENSARY": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 70029
  },

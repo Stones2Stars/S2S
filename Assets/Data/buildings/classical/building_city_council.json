@@ -95,7 +95,7 @@
  },
  "freeSpecialists": {
   "city": {
-   "flat": 3
+   "any": 3
   }
  },
  "maintenance": {

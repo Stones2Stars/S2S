@@ -25,15 +25,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_MATHEMATICS_ACADEMY": {
-     "flat": 400
-    }
-   }
-  }
- },
  "canFoundOnPeaks": {
   "team": {
    "enabler": true

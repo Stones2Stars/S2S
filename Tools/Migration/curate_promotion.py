@@ -47,7 +47,7 @@ import os
 from collections import OrderedDict
 
 import engine
-from curate_common import put_art, emit_art, FAMILY_ORDER, de_i
+from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, descale100
 from store import Store, REPO
 
 # ---- scalar deposits: tag -> (family, member|None, unit). All at `unit` scope (self-accumulator, §5). ----
@@ -126,7 +126,7 @@ FAMILIES = {
     "iSMCargoVolumeChange":         ("cargo", "volume", "flat"),
     "iSMCargoVolumeModifierChange": ("cargo", "volumeModifier", "percent"),
     "iUpkeepModifier":              ("upkeep", "modifier", "percent"),
-    "iExtraUpkeep100":              ("upkeep", "extra100", "flat"),
+    "iExtraUpkeep100":              ("upkeep", "extra", "flat"),       # x100 legacy (calcUpkeep100) -> de-scaled to human in the applier (tag endswith 100); member renamed off the 100 (cold-modder)
     "iUpgradeDiscount":             ("upkeep", "upgradeDiscount", "percent"),
     "iVisibilityChange":            ("vision", "range", "flat"),
     "iCaptureProbabilityModifierChange":   ("capture", "probability", "flat"),
@@ -310,6 +310,8 @@ def curate(typ, rec, store):
     # --- other scalar families ---
     for tag, (family, member, unit) in FAMILIES.items():
         v = _int(rec, tag)
+        if tag.endswith("100"):                # one-time x100 -> human de-scale (cascade-fixed-point.md §2; iExtraUpkeep100)
+            v = descale100(v) if v is not None else v
         if v:
             node = fam_unit(family)
             if family == "vision":

@@ -61,15 +61,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_KRAKATOA": {
-     "flat": -300
-    }
-   }
-  }
- },
  "cost": {
   "research": 9484
  },

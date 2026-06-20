@@ -39,7 +39,7 @@
    "flat": [
     4,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_AUTONOMOUS_VEHICLES",
       "scope": "team"

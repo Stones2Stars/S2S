@@ -45,6 +45,20 @@
   "plot": {
    "flat": [
     {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_DEEP_SEA_EXPLORATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MODERN_SEISMOLOGY",
+      "scope": "team"
+     }
+    },
+    {
      "value": 2,
      "enabled": {
       "HAS_BONUS": "BONUS_OIL"
@@ -63,6 +77,20 @@
   "plot": {
    "flat": [
     1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GLOBALIZATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MODERN_SEISMOLOGY",
+      "scope": "team"
+     }
+    },
     {
      "value": 3,
      "enabled": {

@@ -38,9 +38,9 @@
  },
  "research": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_SOCIAL_CALCULUS",
       "scope": "team"
@@ -51,9 +51,9 @@
  },
  "culture": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_CULTURAL_EVOLUTION",
       "scope": "team"
@@ -64,23 +64,23 @@
  },
  "espionage": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_GERONTOCRACY",
       "scope": "team"
      }
     },
     {
-     "value": 5000,
+     "value": 50,
      "enabled": {
       "type": "TECH_PRECISION_SOCIAL_ENGINEERING",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_COLONY_GOVERNANCE",
       "scope": "team"

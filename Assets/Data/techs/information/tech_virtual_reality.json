@@ -32,24 +32,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_USER_EXPERIENCE_RESEARCH_LAB": {
-     "flat": 800
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_CGI_ANIMATION_STUDIO": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 22074
  },

@@ -25,15 +25,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_FURNITURE_MAKER": {
-     "flat": 200
-    }
-   }
-  }
- },
  "cost": {
   "research": 242
  },

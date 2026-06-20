@@ -54,21 +54,21 @@
    "flat": [
     1,
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_FREE_ARTISTRY",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_MODERN_ART",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_MASS_MEDIA",
       "scope": "team"
@@ -79,24 +79,24 @@
  },
  "culture": {
   "city": {
-   "flat": 3,
-   "percent": [
+   "flat": [
+    3,
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_FREE_ARTISTRY",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_MODERN_ART",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_MASS_MEDIA",
       "scope": "team"
@@ -138,6 +138,11 @@
    "flat": 4
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 2
+  }
+ },
  "cost": {
   "production": 270,
   "sizeModifier": 2,
@@ -161,9 +166,6 @@
   "construct": "AS2D_BUILD_THEATRE"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 2
-  },
   "neverCapture": true,
   "worth": 3,
   "dcmAirbombMission": 2,

@@ -63,6 +63,12 @@
    "flat": 2
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 2,
+   "SPECIALIST_SCIENTIST": 2
+  }
+ },
  "cost": {
   "production": 1680,
   "sizeModifier": 2,
@@ -83,10 +89,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ENGINEER": 2,
-   "SPECIALIST_SCIENTIST": 2
-  },
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

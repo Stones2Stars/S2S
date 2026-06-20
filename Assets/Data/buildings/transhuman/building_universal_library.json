@@ -32,15 +32,17 @@
  },
  "gold": {
   "city": {
-   "flat": -20,
-   "percent": [
+   "flat": [
+    -20,
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_ENDLESS_EXPLORATION",
       "scope": "team"
      }
-    },
+    }
+   ],
+   "percent": [
     {
      "value": 100,
      "enabled": {
@@ -54,24 +56,24 @@
  },
  "research": {
   "city": {
-   "flat": 20,
-   "percent": [
+   "flat": [
+    20,
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_PURE_INFORMATION_SOCIETY",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_DATA_ARCHIVAL",
       "scope": "team"
      }
     },
     {
-     "value": 1300,
+     "value": 13,
      "enabled": {
       "type": "TECH_ALTERNATE_HISTORY_EXPLORATION",
       "scope": "team"
@@ -82,17 +84,17 @@
  },
  "culture": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_CULTURAL_LONGEVITY",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_CULTURAL_EVOLUTION",
       "scope": "team"

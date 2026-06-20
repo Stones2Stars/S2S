@@ -37,30 +37,6 @@
    ]
   }
  },
- "food": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_CISLUNAR_EXPANSION_MODULE": {
-     "flat": 1
-    },
-    "IMPROVEMENT_SATELLITE_STATION": {
-     "flat": 1
-    }
-   }
-  }
- },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_CISLUNAR_EXPANSION_MODULE": {
-     "flat": 1
-    },
-    "IMPROVEMENT_SATELLITE_STATION": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 149039
  },

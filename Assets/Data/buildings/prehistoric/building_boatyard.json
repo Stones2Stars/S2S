@@ -49,11 +49,15 @@
  },
  "freeSpecialists": {
   "city": {
-   "improvements": {
-    "IMPROVEMENT_FISHING_BOATS": {
-     "flat": 1
+   "any": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "IMPROVEMENT_FISHING_BOATS",
+      "scope": "city"
+     }
     }
-   }
+   ]
   }
  },
  "hurryCost": {

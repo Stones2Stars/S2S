@@ -34,15 +34,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_GRAND_UNIFIED_ACCELERATOR": {
-     "flat": 5000
-    }
-   }
-  }
- },
  "cost": {
   "research": 511504
  },

@@ -58,36 +58,6 @@
    ]
   }
  },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_LUMBERJACK": {
-     "flat": 1
-    },
-    "IMPROVEMENT_THATCH_CUTTER": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_THATCH_CUTTER": {
-     "flat": 1
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_GRAND_EARTH_FESTIVAL": {
-     "flat": 300
-    }
-   }
-  }
- },
  "bridgeBuilding": {
   "team": {
    "enabler": true

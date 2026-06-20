@@ -29,12 +29,30 @@
  },
  "food": {
   "plot": {
-   "flat": 1
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_DARK_ENERGY_HARVESTING",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "production": {
   "plot": {
-   "flat": 1
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_DARK_ENERGY_HARVESTING",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "commerce": {

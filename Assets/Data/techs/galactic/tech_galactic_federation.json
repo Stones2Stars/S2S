@@ -31,24 +31,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_CAPITOL": {
-     "flat": 1100
-    }
-   }
-  }
- },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_ADMINISTRATION_CENTER": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 186934
  },

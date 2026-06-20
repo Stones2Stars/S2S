@@ -7,7 +7,8 @@ Two real modifier sources, both EMPIRE scope (consumed at the player level):
 - EraCommerceChanges -> the SPLIT commerce families (gold/research/culture/espionage), each with a `byEra`
   member keyed by the era band. Era is a THRESHOLD CONDITION, not a scope: processHeritage applies a band's
   commerce for every era where `currentEra >= band` (CvPlayer.cpp:30984), so the bands accumulate — authored
-  verbatim, the engine applies the threshold. CentiCommerce is x100 fixed-point, carried FAITHFULLY (#432).
+  verbatim, the engine applies the threshold. CentiCommerce is x100 legacy fixed-point -> DE-SCALED to human here
+  (the curator's one-time job, cascade-fixed-point.md §2; readJson re-applies the uniform human->x100).
   Era keys are the era Type (C2C_ERA_*) VERBATIM — era is a data-driven Type, so it is referenced like every
   other Type (BONUS_*/TECH_*), matching how techs carry `era: C2C_ERA_*`; resolve to the era file via type.lower().
 - PropertyManipulators -> per-PROPERTY_* family, empire scope, as a LIST of gated source deposits. Unlike
@@ -50,13 +51,16 @@ def _era_key(era):
 
 
 def _era_commerce(node, fam):
-    """EraCommerceChanges -> <commerce>.empire.byEra.<era>.flat (x100 faithful, zeros dropped)."""
+    """EraCommerceChanges -> <commerce>.empire.byEra.<era>.flat (CentiCommerce x100 -> human de-scaled, zeros dropped)."""
     for entry in list(node):
         era = engine.text(entry.find("EraType"))
         centi = entry.find("CentiCommerce")
         if not era or centi is None:
             continue
         for member, v in engine.named_array(centi, engine.COMMERCES).items():
+            v = cc.descale100(v)                          # one-time x100 -> human (cascade-fixed-point.md §2)
+            if not v:
+                continue
             (fam.setdefault(member, {}).setdefault("empire", {}).setdefault("byEra", {})
              .setdefault(_era_key(era), {}))["flat"] = v
 

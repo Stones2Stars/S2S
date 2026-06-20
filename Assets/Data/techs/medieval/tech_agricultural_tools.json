@@ -35,18 +35,6 @@
    ]
   }
  },
- "food": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_WATERMILL": {
-     "flat": 1
-    },
-    "IMPROVEMENT_WINDMILL": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 1445
  },

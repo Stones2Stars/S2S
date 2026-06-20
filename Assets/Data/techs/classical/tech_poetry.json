@@ -22,27 +22,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_CALLIGRAPHY_SCHOOL": {
-     "flat": 100
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_CALLIGRAPHY_SCHOOL": {
-     "flat": 300
-    },
-    "BUILDING_LIBRARY": {
-     "flat": 300
-    }
-   }
-  }
- },
  "grants": {
   "firstFreeUnit": "UNIT_ARTIST"
  },

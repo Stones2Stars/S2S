@@ -39,36 +39,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_BLOGS": {
-     "flat": 800
-    },
-    "BUILDING_DIGITAL_ADVERTISING_FIRM": {
-     "flat": 800
-    },
-    "BUILDING_E_STOCK_MARKET": {
-     "flat": 800
-    },
-    "BUILDING_GESTURE_RECOGNITION_SOFTWARE": {
-     "flat": 800
-    },
-    "BUILDING_MAKERSPACE": {
-     "flat": 800
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_DIGITAL_ADVERTISING_FIRM": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 24485
  },

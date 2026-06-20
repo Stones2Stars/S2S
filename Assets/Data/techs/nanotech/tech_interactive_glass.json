@@ -26,27 +26,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_FACIAL_RECOGNITION_SOFTWARE": {
-     "flat": 900
-    },
-    "BUILDING_INTUITIVE_ALGORITHMS": {
-     "flat": 900
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_NATURAL_LANGUAGE_ALGORITHMS": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 44505
  },

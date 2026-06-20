@@ -76,6 +76,12 @@
    "flat": -10
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_DOCTOR": 1
+  }
+ },
  "cost": {
   "production": 5905,
   "sizeModifier": 1,
@@ -89,10 +95,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1,
-   "SPECIALIST_DOCTOR": 1
-  },
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

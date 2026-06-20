@@ -129,6 +129,13 @@
   "plot": {
    "flat": [
     {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_BARTER",
+      "scope": "team"
+     }
+    },
+    {
      "value": 2,
      "enabled": {
       "HAS_BONUS": "BONUS_SPICES"

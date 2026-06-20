@@ -36,12 +36,44 @@
  },
  "production": {
   "plot": {
-   "flat": 7
+   "flat": [
+    7,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WIRELESS_ELECTRICITY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WEATHER_CONTROL",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "commerce": {
   "plot": {
-   "flat": 7
+   "flat": [
+    7,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WIRELESS_ELECTRICITY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_WEATHER_CONTROL",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "world": {

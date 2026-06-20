@@ -39,8 +39,8 @@
    "flat": 10
   }
  },
- "grants": {
-  "specialists": {
+ "freeSpecialists": {
+  "city": {
    "SPECIALIST_PRIEST": 3
   }
  },

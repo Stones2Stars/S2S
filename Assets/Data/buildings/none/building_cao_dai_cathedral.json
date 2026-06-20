@@ -83,6 +83,11 @@
    }
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 2
+  }
+ },
  "cost": {
   "production": 950,
   "sizeModifier": 1,
@@ -103,9 +108,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_PRIEST": 2
-  },
   "neverCapture": true,
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",

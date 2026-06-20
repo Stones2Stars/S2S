@@ -52,17 +52,17 @@
  },
  "research": {
   "city": {
-   "flat": 1,
-   "percent": [
+   "flat": [
+    1,
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_ZOOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_BIOLOGY",
       "scope": "team"
@@ -73,10 +73,10 @@
  },
  "culture": {
   "city": {
-   "flat": 1,
-   "percent": [
+   "flat": [
+    1,
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_PAPER",
       "scope": "team"

@@ -259,6 +259,11 @@
    "flat": 5
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 2
+  }
+ },
  "cost": {
   "production": 710,
   "sizeModifier": 3,
@@ -281,9 +286,6 @@
   "construct": "AS2D_BUILD_FACTORY"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ENGINEER": 2
-  },
   "worth": 6,
   "militaryWorth": 15,
   "conquestProbability": 75,

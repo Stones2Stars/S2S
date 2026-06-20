@@ -25,12 +25,30 @@
  },
  "food": {
   "plot": {
-   "flat": 1
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MOLECULAR_ASSEMBLY",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "production": {
   "plot": {
-   "flat": 1
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MOLECULAR_ASSEMBLY",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "commerce": {

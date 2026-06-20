@@ -38,15 +38,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_DEEP_SPACE_FUSION_CORE": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 126324
  },

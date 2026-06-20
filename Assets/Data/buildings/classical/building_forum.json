@@ -47,6 +47,11 @@
    "flat": 6
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 2
+  }
+ },
  "cost": {
   "production": 234,
   "sizeModifier": 2,
@@ -70,9 +75,6 @@
   "construct": "AS2D_BUILD_MARKETPLACE"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_MERCHANT": 2
-  },
   "worth": 4,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

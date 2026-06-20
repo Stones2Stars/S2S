@@ -61,15 +61,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_FACTORY_NANOGENERATORS": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 41539
  },

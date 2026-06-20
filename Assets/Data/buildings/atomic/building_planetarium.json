@@ -31,10 +31,10 @@
  },
  "gold": {
   "city": {
-   "flat": -10,
-   "percent": [
+   "flat": [
+    -10,
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_LASER",
       "scope": "team"
@@ -45,31 +45,31 @@
  },
  "research": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_RADIO_ASTRONOMY",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_LUNAR_EXPLORATION",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_PLANETARY_EXPLORATION",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_JOVIAN_EXPLORATION",
       "scope": "team"
@@ -80,9 +80,9 @@
  },
  "culture": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_LASER",
       "scope": "team"
@@ -122,6 +122,11 @@
    "flat": 7
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 1030,
   "sizeModifier": 2,
@@ -134,9 +139,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

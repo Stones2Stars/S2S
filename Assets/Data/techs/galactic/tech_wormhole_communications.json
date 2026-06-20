@@ -29,15 +29,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_BROADCAST_NODE": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 179514
  },

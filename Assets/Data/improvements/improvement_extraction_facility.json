@@ -60,6 +60,20 @@
    "flat": [
     5,
     {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_NANOMINING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_TELEPORTATION",
+      "scope": "team"
+     }
+    },
+    {
      "value": 2,
      "enabled": {
       "HAS_BONUS": "BONUS_OIL"
@@ -90,6 +104,13 @@
   "plot": {
    "flat": [
     5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_NANOMINING",
+      "scope": "team"
+     }
+    },
     {
      "value": 3,
      "enabled": {

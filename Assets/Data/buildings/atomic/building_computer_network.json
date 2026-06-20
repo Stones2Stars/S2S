@@ -163,6 +163,11 @@
    "flat": 10
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
  "cost": {
   "production": 1475,
   "countModifier": 2,
@@ -185,9 +190,6 @@
   "construct": "AS2D_BUILD_COMPUTER_NETWORK"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ENGINEER": 1
-  },
   "worth": 6,
   "conquestProbability": 75,
   "dcmAirbombMission": 2,

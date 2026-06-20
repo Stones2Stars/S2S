@@ -51,37 +51,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_ENGINEERING_SCHOOL": {
-     "flat": 1000
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_COLONY_MANUFACTORY": {
-     "flat": 1
-    },
-    "IMPROVEMENT_SUBURBS": {
-     "flat": 1
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_FACTORY_LEVITATION_GENERATORS": {
-     "flat": 1000
-    },
-    "BUILDING_SUPERSTRONG_ALLOY_FOUNDRY": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 67710
  },

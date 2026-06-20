@@ -33,7 +33,16 @@
  },
  "commerce": {
   "plot": {
-   "flat": 30
+   "flat": [
+    30,
+    {
+     "value": 3,
+     "enabled": {
+      "type": "TECH_ARCHETYPAL_VECTOR_SPACES",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "world": {

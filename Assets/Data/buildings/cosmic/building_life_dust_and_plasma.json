@@ -44,10 +44,10 @@
  },
  "research": {
   "city": {
-   "flat": 125,
-   "percent": [
+   "flat": [
+    125,
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_GRAND_UNIFICATION_BIOLOGY",
       "scope": "team"

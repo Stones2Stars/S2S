@@ -31,15 +31,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_SOLAR_PANELS": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 27203
  },

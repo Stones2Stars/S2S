@@ -98,7 +98,7 @@
   "city": {
    "flat": [
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_BIOLOGY",
       "scope": "team"
@@ -111,7 +111,7 @@
   "city": {
    "flat": [
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_CIVIL_ENGINEERING",
       "scope": "team"
@@ -122,10 +122,10 @@
  },
  "gold": {
   "city": {
-   "flat": -15,
-   "percent": [
+   "flat": [
+    -15,
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_ECONOMICS",
       "scope": "team"
@@ -136,17 +136,17 @@
  },
  "research": {
   "city": {
-   "flat": 25,
-   "percent": [
+   "flat": [
+    25,
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_PHYSICS",
       "scope": "team"
      }
     },
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_PSYCHOLOGY",
       "scope": "team"
@@ -157,24 +157,24 @@
  },
  "culture": {
   "city": {
-   "flat": 4,
-   "percent": [
+   "flat": [
+    4,
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_FREE_ARTISTRY",
       "scope": "team"
      }
     },
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_PRINTING_PRESS",
       "scope": "team"
      }
     },
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_DIVINE_RIGHT",
       "scope": "team"
@@ -191,6 +191,76 @@
  "PROPERTY_EDUCATION": {
   "city": {
    "flat": 25
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_BIOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PHYSICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PSYCHOLOGY",
+      "scope": "team"
+     }
+    }
+   ],
+   "SPECIALIST_ARTIST": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_FREE_ARTISTRY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PRINTING_PRESS",
+      "scope": "team"
+     }
+    }
+   ],
+   "SPECIALIST_MERCHANT": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ECONOMICS",
+      "scope": "team"
+     }
+    }
+   ],
+   "SPECIALIST_PRIEST": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_DIVINE_RIGHT",
+      "scope": "team"
+     }
+    }
+   ],
+   "SPECIALIST_ENGINEER": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CIVIL_ENGINEERING",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "cost": {

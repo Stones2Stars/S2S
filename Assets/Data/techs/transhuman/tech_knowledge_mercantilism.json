@@ -31,33 +31,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_DISTRIBUTED_SOCIAL_NETWORK": {
-     "flat": 1000
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_KNOWLEDGE_NAVIGATOR": {
-     "flat": 1000
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_DISTRIBUTED_SOCIAL_NETWORK": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 75052
  },

@@ -33,24 +33,6 @@
    ]
   }
  },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_SUPERNOVA_MINE": {
-     "flat": 5
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_GRAND_UNIFIED_ACCELERATOR": {
-     "flat": 5000
-    }
-   }
-  }
- },
  "cost": {
   "research": 352130
  },

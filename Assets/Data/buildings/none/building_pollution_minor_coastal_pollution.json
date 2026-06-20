@@ -15,6 +15,16 @@
      }
     ]
    ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "PROPERTY_WATER_POLLUTION",
+     "scope": "city",
+     "min": 650,
+     "max": 100000
+    }
+   ]
   }
  },
  "food": {

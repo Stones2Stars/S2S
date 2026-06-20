@@ -31,24 +31,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERGALACTIC_TEMPORAL_RIFT": {
-     "flat": 1300
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_HIDE_AND_SEEK": {
-     "flat": 1300
-    }
-   }
-  }
- },
  "cost": {
   "research": 545221
  },

@@ -45,7 +45,7 @@
    "flat": [
     1,
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_GUILDS",
       "scope": "team"

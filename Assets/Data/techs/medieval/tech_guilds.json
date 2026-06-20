@@ -65,52 +65,6 @@
    ]
   }
  },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_LUMBERMILL": {
-     "flat": 1
-    },
-    "IMPROVEMENT_WORKSHOP": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_BARDIC_CIRCLE": {
-     "flat": 400
-    },
-    "BUILDING_CARPET_MAKER": {
-     "flat": 400
-    },
-    "BUILDING_FURNITURE_MAKER": {
-     "flat": 400
-    },
-    "BUILDING_TAILOR_SHOP": {
-     "flat": 400
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_WORKSHOP": {
-     "flat": 1
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_BARDIC_CIRCLE": {
-     "flat": 400
-    }
-   }
-  }
- },
  "cost": {
   "research": 1445
  },

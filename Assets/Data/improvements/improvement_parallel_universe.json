@@ -26,12 +26,30 @@
  },
  "food": {
   "plot": {
-   "flat": 3
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_REALITY_REPROGRAMMING",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "production": {
   "plot": {
-   "flat": 3
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_REALITY_REPROGRAMMING",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "commerce": {

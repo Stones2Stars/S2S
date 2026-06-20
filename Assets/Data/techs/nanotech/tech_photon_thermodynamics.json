@@ -49,24 +49,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_CISLUNAR_RESUPPLY": {
-     "flat": 900
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_DARK_MATTER_DETECTOR": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 44505
  },

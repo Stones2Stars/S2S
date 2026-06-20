@@ -34,42 +34,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_SUBMERGED_TOWN": {
-     "flat": 1
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_NOVUS_REFINERY": {
-     "flat": 900
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_STEM_CELL_LAB": {
-     "flat": 900
-    }
-   }
-  }
- },
- "health": {
-  "city": {
-   "buildings": {
-    "BUILDING_STEM_CELL_LAB": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 47795
  },

@@ -7,23 +7,35 @@
    "flat": 4
   },
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_NOMADIC1": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_NOMADIC1",
+      "scope": "empire"
+     }
     },
-    "TRAIT_NOMADIC2": {
-     "flat": 1
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_NOMADIC2",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "production": {
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_NOMADIC": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_NOMADIC",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "commerce": {
@@ -31,41 +43,61 @@
    "flat": 1
   },
   "empire": {
-   "traits": {
-    "TRAIT_NOMADIC3": {
-     "flat": 1
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TRAIT_NOMADIC3",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "gold": {
   "empire": {
-   "traits": {
-    "TRAIT_NOMADIC3": {
-     "flat": 2
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TRAIT_NOMADIC3",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "research": {
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_NOMADIC1": {
-     "flat": 2
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_NOMADIC1",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "espionage": {
   "empire": {
-   "traits": {
-    "TRAIT_COMPLEX_NOMADIC": {
-     "flat": 2
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TRAIT_COMPLEX_NOMADIC",
+      "scope": "empire"
+     }
     },
-    "TRAIT_NOMADIC2": {
-     "flat": 2
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TRAIT_NOMADIC2",
+      "scope": "empire"
+     }
     }
-   }
+   ]
   }
  },
  "experience": {

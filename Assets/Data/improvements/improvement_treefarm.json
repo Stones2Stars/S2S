@@ -51,6 +51,13 @@
    "flat": [
     10,
     {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ECOLOGICAL_ENGINEERING",
+      "scope": "team"
+     }
+    },
+    {
      "value": 2,
      "enabled": {
       "HAS_BONUS": "BONUS_APPLE"
@@ -84,6 +91,13 @@
     {
      "value": 1,
      "enabled": "HAS_RIVER"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ECOLOGICAL_ENGINEERING",
+      "scope": "team"
+     }
     },
     {
      "value": 2,

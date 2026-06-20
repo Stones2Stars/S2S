@@ -30,7 +30,16 @@
  },
  "commerce": {
   "plot": {
-   "flat": 5
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_FUSION_SPACECRAFT",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "world": {

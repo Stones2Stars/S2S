@@ -34,7 +34,7 @@
   "city": {
    "flat": [
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION",
       "scope": "team"

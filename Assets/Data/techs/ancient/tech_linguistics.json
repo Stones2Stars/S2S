@@ -33,15 +33,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_GRAMMATICUS": {
-     "flat": 200
-    }
-   }
-  }
- },
  "cost": {
   "research": 348
  },

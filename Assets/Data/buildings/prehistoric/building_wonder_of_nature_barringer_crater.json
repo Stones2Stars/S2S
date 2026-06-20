@@ -35,7 +35,7 @@
   "city": {
    "flat": [
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_TOURISM",
       "scope": "team"
@@ -46,17 +46,17 @@
  },
  "research": {
   "city": {
-   "flat": 2,
-   "percent": [
+   "flat": [
+    2,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_SPACE_STATIONS",
       "scope": "team"
      }
     },
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_ASTRONOMY",
       "scope": "team"

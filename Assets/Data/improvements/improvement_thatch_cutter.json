@@ -24,12 +24,72 @@
  },
  "production": {
   "plot": {
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_COPPER_WORKING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CONSTRUCTION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -2,
+     "enabled": {
+      "type": "TECH_ASSEMBLY_LINE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TECH_MANUFACTURING",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "commerce": {
   "plot": {
-   "flat": 1
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CONSTRUCTION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_ASSEMBLY_LINE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MANUFACTURING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_TOURISM",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "world": {

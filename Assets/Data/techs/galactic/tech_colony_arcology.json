@@ -57,33 +57,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_ENGINEERING_SCHOOL": {
-     "flat": 1100
-    }
-   }
-  }
- },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_COLONY_HABITAT_HUGE": {
-     "flat": 1
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_VENUS_ARCOLOGY": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 126324
  },

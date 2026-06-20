@@ -29,7 +29,16 @@
  },
  "commerce": {
   "plot": {
-   "flat": 3
+   "flat": [
+    3,
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_TOURISM",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "world": {

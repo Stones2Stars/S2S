@@ -59,17 +59,17 @@
  },
  "gold": {
   "city": {
-   "flat": 25,
-   "percent": [
+   "flat": [
+    25,
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_SPACETIME_ECONOMICS",
       "scope": "team"
      }
     },
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_COMPUTRONIUM_UNIVERSE",
       "scope": "team"
@@ -80,17 +80,17 @@
  },
  "research": {
   "city": {
-   "flat": 25,
-   "percent": [
+   "flat": [
+    25,
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_ULTRACOMPUTING",
       "scope": "team"
      }
     },
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_UNIFICATION_MATHEMATICS",
       "scope": "team"
@@ -101,10 +101,10 @@
  },
  "culture": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_CULTURAL_LONGEVITY",
       "scope": "team"
@@ -115,10 +115,10 @@
  },
  "espionage": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_IMMORTALITY",
       "scope": "team"

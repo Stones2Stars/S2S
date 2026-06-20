@@ -54,24 +54,6 @@
    ]
   }
  },
- "religionInfluence": {
-  "city": {
-   "buildings": {
-    "BUILDING_CAO_DAI_CATHEDRAL": {
-     "flat": 3
-    },
-    "BUILDING_CAO_DAI_MONASTERY": {
-     "flat": 1
-    },
-    "BUILDING_CAO_DAI_TEMPLE": {
-     "flat": 2
-    },
-    "BUILDING_GREAT_TEMPLE_TAY_NINH": {
-     "flat": 4
-    }
-   }
-  }
- },
  "shrine": {
   "gold": 1,
   "culture": 3

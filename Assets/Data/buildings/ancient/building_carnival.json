@@ -70,6 +70,11 @@
    "flat": 1
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
  "cost": {
   "production": 153,
   "sizeModifier": 1,
@@ -99,9 +104,6 @@
   "construct": "AS2D_BUILD_CARNIVAL"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 1
-  },
   "worth": 3,
   "conquestProbability": 25,
   "advisor": "ADVISOR_CULTURE",

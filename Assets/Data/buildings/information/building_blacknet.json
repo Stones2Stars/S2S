@@ -46,23 +46,23 @@
  },
  "espionage": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_UBIQUITOUS_COMPUTING",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_AUTOMATED_URBANIZATION",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_VIRTUAL_SOCIETY",
       "scope": "team"

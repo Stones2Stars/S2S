@@ -113,6 +113,11 @@
    "flat": -25
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_INVESTIGATOR": 3
+  }
+ },
  "cost": {
   "production": 455,
   "sizeModifier": 2,
@@ -136,9 +141,6 @@
   "construct": "AS2D_BUILD_JAIL"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_INVESTIGATOR": 3
-  },
   "militaryWorth": 2,
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [

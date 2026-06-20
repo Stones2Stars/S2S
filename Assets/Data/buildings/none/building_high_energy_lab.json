@@ -72,45 +72,45 @@
  },
  "research": {
   "city": {
-   "flat": 25,
-   "percent": [
+   "flat": [
+    25,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_SUPERCONDUCTORS",
       "scope": "team"
      }
     },
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_WIRELESS_ELECTRICITY",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_LASER",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_MAGNETIC_LEVITATION",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_QUANTUM_TELEPORTATION",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_CONTROLLED_PLASMA",
       "scope": "team"
@@ -133,6 +133,11 @@
    "percent": 100
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
  "cost": {
   "production": 1345
  },
@@ -142,9 +147,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 1
-  },
   "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

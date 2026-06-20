@@ -22,24 +22,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_CALLIGRAPHY_SCHOOL": {
-     "flat": 400
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_CALLIGRAPHY_SCHOOL": {
-     "flat": 400
-    }
-   }
-  }
- },
  "mapTrading": {
   "team": {
    "enabler": true

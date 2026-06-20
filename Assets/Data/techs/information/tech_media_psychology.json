@@ -31,24 +31,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_MIXED_USE_DEVELOPMENT": {
-     "flat": 800
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_WIRELESS_NETWORKS": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 23650
  },

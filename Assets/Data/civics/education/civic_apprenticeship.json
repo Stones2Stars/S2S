@@ -49,7 +49,7 @@
  },
  "freeSpecialists": {
   "empire": {
-   "flat": 3
+   "any": 3
   }
  },
  "workRate": {

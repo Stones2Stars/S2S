@@ -30,15 +30,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTELLIGENT_PERSONAL_ASSISTANT": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 40165
  },

@@ -31,15 +31,6 @@
    ]
   }
  },
- "religionInfluence": {
-  "city": {
-   "buildings": {
-    "BUILDING_SHRINE_OF_BAB": {
-     "flat": 1
-    }
-   }
-  }
- },
  "shrine": {
   "gold": 1
  },

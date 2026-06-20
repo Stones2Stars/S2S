@@ -41,27 +41,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_VENTURE_INDUSTRIES": {
-     "flat": 700
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_VENTURE_INDUSTRIES": {
-     "flat": 700
-    },
-    "BUILDING_WONDER_OF_NATURE_BARRINGER_CRATER": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 16099
  },

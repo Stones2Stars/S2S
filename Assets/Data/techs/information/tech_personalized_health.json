@@ -49,27 +49,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_VACCINE_LAB": {
-     "flat": 800
-    }
-   }
-  }
- },
- "health": {
-  "city": {
-   "buildings": {
-    "BUILDING_APPLIED_PSYCHOLOGY_LAB": {
-     "flat": 2
-    },
-    "BUILDING_SYSTEMS_BIOLOGY_SIMULATOR": {
-     "flat": 2
-    }
-   }
-  }
- },
  "cost": {
   "research": 26259
  },

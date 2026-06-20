@@ -39,18 +39,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_OBSERVATORY": {
-     "flat": 800
-    },
-    "BUILDING_PLANETARIUM": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 29220
  },

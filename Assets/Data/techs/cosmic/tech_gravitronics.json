@@ -40,30 +40,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER": {
-     "flat": 1200
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_KUGELBLITZ_FACTORY": {
-     "flat": 1200
-    },
-    "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET": {
-     "flat": 1200
-    },
-    "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY": {
-     "flat": 1200
-    }
-   }
-  }
- },
  "cost": {
   "research": 271404
  },

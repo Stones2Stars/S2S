@@ -64,45 +64,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_ANCIENT_CUSTOMS": {
-     "flat": -100
-    },
-    "BUILDING_WONDER_OF_NATURE_KILIMANJARO": {
-     "flat": 400
-    },
-    "BUILDING_WONDER_OF_NATURE_MT_SINAI": {
-     "flat": 400
-    },
-    "BUILDING_ROCK_ART": {
-     "flat": -100
-    },
-    "BUILDING_EFFECT_LASCAUX_CAVES": {
-     "flat": -100
-    },
-    "BUILDING_SNAKE_CHARMER": {
-     "flat": -100
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_ANCIENT_CUSTOMS": {
-     "flat": -100
-    },
-    "BUILDING_ROCK_ART": {
-     "flat": -100
-    },
-    "BUILDING_EFFECT_LASCAUX_CAVES": {
-     "flat": -200
-    }
-   }
-  }
- },
  "cost": {
   "research": 499
  },

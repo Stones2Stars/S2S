@@ -35,33 +35,6 @@
    ]
   }
  },
- "religionInfluence": {
-  "city": {
-   "buildings": {
-    "BUILDING_PYRAMID_OF_THE_MOON": {
-     "flat": 6
-    },
-    "BUILDING_PYRAMID_OF_THE_SUN": {
-     "flat": 6
-    },
-    "BUILDING_PYRAMID_OF_THE_MAGICIAN": {
-     "flat": 3
-    },
-    "BUILDING_TEMPLE_OF_TLALOC": {
-     "flat": 3
-    },
-    "BUILDING_CALMACEC": {
-     "flat": 1
-    },
-    "BUILDING_TEMPLE_OF_QUETZALCOATL": {
-     "flat": 2
-    },
-    "BUILDING_TEOTIHUACAN": {
-     "flat": 4
-    }
-   }
-  }
- },
  "shrine": {
   "gold": 1,
   "culture": 2

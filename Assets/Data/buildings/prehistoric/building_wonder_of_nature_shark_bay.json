@@ -31,14 +31,14 @@
    "flat": [
     3,
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_COMMERCIAL_WHALING",
       "scope": "team"
      }
     },
     {
-     "value": -500,
+     "value": -5,
      "enabled": {
       "type": "TECH_ECOLOGY",
       "scope": "team"
@@ -56,14 +56,14 @@
   "city": {
    "flat": [
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_TOURISM",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_EXTREME_SPORTS",
       "scope": "team"
@@ -74,23 +74,23 @@
  },
  "research": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_ARCHEOLOGY",
       "scope": "team"
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_EDUCATION",
       "scope": "team"
      }
     },
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_MARINE_BIOLOGY",
       "scope": "team"

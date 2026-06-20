@@ -36,21 +36,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_ASTEROID_EPITAXY_FACTORY": {
-     "flat": 1100
-    },
-    "BUILDING_IO_GEOTHERMAL_POWER_PLANT": {
-     "flat": 1100
-    },
-    "BUILDING_KUIPER_BELT_INTERSTELLAR_SUPPLY_BASE": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 154284
  },

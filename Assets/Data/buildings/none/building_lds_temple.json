@@ -91,6 +91,11 @@
    "flat": 4
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 2
+  }
+ },
  "cost": {
   "production": 770,
   "sizeModifier": 1,
@@ -114,9 +119,6 @@
   "construct": "AS2D_BUILD_MORMON"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_PRIEST": 2
-  },
   "neverCapture": true,
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",

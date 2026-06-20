@@ -32,39 +32,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_WORMHOLE_BEACON": {
-     "flat": 1300
-    },
-    "BUILDING_INTERGALACTIC_WORMHOLE_COMMUNICATION_NETWORK": {
-     "flat": 1300
-    },
-    "BUILDING_INTERGALACTIC_TACHYON_COMMUNICATION_CENTER": {
-     "flat": 1300
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERGALACTIC_REPUBLIC": {
-     "flat": 1300
-    }
-   }
-  }
- },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERGALACTIC_EMPIRE": {
-     "flat": 1300
-    }
-   }
-  }
- },
  "cost": {
   "research": 495679
  },

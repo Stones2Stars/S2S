@@ -90,16 +90,16 @@
  },
  "culture": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_ORNAMENTATION",
       "scope": "team"
      }
     },
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "TECH_AESTHETICS",
       "scope": "team"

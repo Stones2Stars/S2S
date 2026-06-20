@@ -59,10 +59,10 @@
  },
  "research": {
   "city": {
-   "flat": 1,
-   "percent": [
+   "flat": [
+    1,
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "TECH_LINGUISTICS",
       "scope": "team"

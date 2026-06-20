@@ -85,6 +85,11 @@
    "flat": -10
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SPY": 1
+  }
+ },
  "cost": {
   "production": 2105,
   "sizeModifier": 3,
@@ -97,9 +102,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SPY": 1
-  },
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

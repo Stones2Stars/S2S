@@ -26,27 +26,6 @@
    ]
   }
  },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_DEVILS_TABLE": {
-     "flat": 500
-    },
-    "BUILDING_WONDER_OF_NATURE_MT_EVEREST": {
-     "flat": 500
-    }
-   }
-  }
- },
- "happiness": {
-  "city": {
-   "buildings": {
-    "BUILDING_SPEARPOINT_BURIAL": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 52
  },

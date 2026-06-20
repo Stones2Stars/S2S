@@ -43,14 +43,14 @@
   "city": {
    "flat": [
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_RAPID_PROTOTYPING",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_MEGACITIES",
       "scope": "team"
@@ -66,14 +66,14 @@
    }
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
-  }
- },
- "grants": {
-  "specialists": {
-   "SPECIALIST_ENGINEER": 1
   }
  },
  "cost": {

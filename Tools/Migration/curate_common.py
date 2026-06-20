@@ -20,6 +20,22 @@ from store import Store, REPO
 
 MAPDIR = os.path.join(os.path.dirname(__file__), "mapping")
 
+
+def descale100(v):
+    """The curator's ONE-TIME x100 -> HUMAN-READABLE de-scale (cascade-fixed-point.md §0/§1.1, owner-LOCKED).
+    A legacy XML value stored x100 (a `get...100()` accessor / a `Centi*` or `*100` field that flows into a x100
+    accumulator) becomes a plain human number: int when divisible by 100 (700 -> 7), else a 2-decimal float
+    (150 -> 1.5). Recurses into split/member dicts. After this single XML->JSON conversion NO x100 representation
+    survives in the JSON; readJson then does the uniform human -> integer-x100 conversion. ONE place for every
+    curator (building/heritage/promotion/unitcombat/...) so the de-scale can never drift per-entity."""
+    if isinstance(v, dict):
+        return OrderedDict((k, descale100(x)) for k, x in v.items())
+    if isinstance(v, bool):
+        return v
+    if isinstance(v, int):
+        return v // 100 if v % 100 == 0 else round(v / 100.0, 2)
+    return v
+
 HOIST = {"Description": "description", "Civilopedia": "civilopedia", "Quote": "quote",
          "Help": "help", "Strategy": "strategy"}
 # b-flags -> clean boolean keys (no Hungarian). Rename the unclear ones; others just drop the leading 'b'.
@@ -204,6 +220,38 @@ def accumulate_boosts(store, boosts_config):
     return boosts
 
 
+# A CONDITIONER's natural presence scope (where "having it" is read), distinct from the deposit scope: a building is
+# present in a CITY, a civic/trait is active EMPIRE-wide, a tech is known at TEAM scope. Used to build the `enabled` atom.
+_COND_SCOPE = {"BuildingInfo": "city", "CivicInfo": "empire", "TraitInfo": "empire",
+               "BonusInfo": "city", "TechInfo": "team", "ReligionInfo": "city"}
+
+
+def accumulate_conditioned(store, config):
+    """The keep-on-source CONDITIONED inverse of accumulate_boosts (modifier.md §6.5). The source entity is a
+    CONDITIONER, NOT a keyed target: the modifier lands on its HOME (the keyed ref -- e.g. the specialist that OWNS
+    the output) as a flat/percent deposit `enabled` by the source's PRESENCE. The deposit scope is the config scope;
+    the `enabled` atom's scope is the conditioner's own presence scope (_COND_SCOPE), which can DIFFER (a civic boosts
+    a specialist's CITY yield but is active at EMPIRE scope). Returns {home: [(family, scope, unit, value, enabled)]} --
+    a list of deposits to inject via the caller's _inject_cond (so it merges with the home's own base, int|list-safe).
+    config row (7-tuple, target_type ignored): (src_ent, field, _ttype, family, valueKeys, unit, deposit_scope)."""
+    out = {}
+    for cfg in config:
+        src_ent, fld, _ttype, family, keys, unit, scope = cfg[:7]
+        scope = "empire" if scope == "player" else ("world" if scope == "game" else scope)
+        cond_scope = _COND_SCOPE.get(src_ent, scope)
+        for cond_t, rec in store.table(src_ent).items():        # cond_t = the conditioner (building/civic/trait)
+            node = rec.find(fld)
+            if node is None:
+                continue
+            for ref, u, val in _boost_entries(node, keys, unit):   # ref = the HOME (the specialist that owns the output)
+                items = list(val.items()) if isinstance(val, dict) else [(None, val)]
+                for member, v in items:
+                    fam = member if (member is not None and family in SPLIT_FAMILIES) else family
+                    enabled = OrderedDict([("type", cond_t), ("scope", cond_scope)])
+                    out.setdefault(ref, []).append((fam, scope, u, v, enabled))
+    return out
+
+
 def apply_channel(families, spec, c):
     """Deposit a scope-wide modifier into its FAMILY (flat-family layout, §3): <family>.<scope>[.<member>].<unit>.
     The mapping `channel` IS the family; named valueKeys (food/gold/…) are members; a scalar has no member."""
@@ -221,6 +269,12 @@ def apply_channel(families, spec, c):
     if target_type:
         for ref, _u, val in _boost_entries(c, keys, kind):
             if val in (None, {}, [], "") or val == 0:
+                continue
+            if family in ("freeSpecialists", "allowedSpecialists"):
+                # (A) count families (modifier.md §6.7): the specialist-type IS the leaf, value is a bare count —
+                # NOT a `<targetType>.<ref>.<unit>` keyed sub-scope.
+                node = families.setdefault(family, {}).setdefault(scope, {})
+                node[ref] = _merge_val(node[ref], val) if ref in node else val
                 continue
             leaf = (families.setdefault(family, {}).setdefault(scope, {})
                     .setdefault(target_type, {}).setdefault(ref, {}))

@@ -30,7 +30,7 @@
   "city": {
    "flat": [
     {
-     "value": -500,
+     "value": -5,
      "enabled": {
       "type": "TECH_SCIENTIFIC_METHOD",
       "scope": "team"
@@ -44,14 +44,14 @@
    "flat": [
     3,
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_MINING",
       "scope": "team"
      }
     },
     {
-     "value": -500,
+     "value": -5,
      "enabled": {
       "type": "TECH_TOURISM",
       "scope": "team"
@@ -64,14 +64,14 @@
   "city": {
    "flat": [
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_TOURISM",
       "scope": "team"
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "TECH_MOUNTAINEERING",
       "scope": "team"
@@ -82,10 +82,10 @@
  },
  "culture": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "TECH_MYSTICISM",
       "scope": "team"
@@ -132,6 +132,19 @@
      "scope": "team"
     }
    }
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_TOURISM",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "cost": {

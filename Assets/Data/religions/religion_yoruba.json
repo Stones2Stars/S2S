@@ -33,30 +33,6 @@
    ]
   }
  },
- "religionInfluence": {
-  "city": {
-   "buildings": {
-    "BUILDING_PATTAKY_OF_OBATALA": {
-     "flat": 2
-    },
-    "BUILDING_PATTAKY_OF_OGGUN": {
-     "flat": 2
-    },
-    "BUILDING_PATTAKY_OF_OLOFIN": {
-     "flat": 2
-    },
-    "BUILDING_PATTAKY_OF_OLOKUN": {
-     "flat": 2
-    },
-    "BUILDING_PATTAKY_OF_OSHOSI": {
-     "flat": 2
-    },
-    "BUILDING_PATTAKY_OF_OLODUMARE": {
-     "flat": 2
-    }
-   }
-  }
- },
  "shrine": {
   "gold": 1
  },

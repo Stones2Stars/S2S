@@ -44,14 +44,14 @@
    "flat": [
     10,
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_CONSUMERISM",
       "scope": "team"
      }
     },
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "TECH_TELEPHONE",
       "scope": "team"

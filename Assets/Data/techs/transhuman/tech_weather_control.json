@@ -106,33 +106,6 @@
    ]
   }
  },
- "production": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_MODERN_WINDMILL": {
-     "flat": 1
-    },
-    "IMPROVEMENT_TIDAL_HARNESS": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_MODERN_WINDMILL": {
-     "flat": 2
-    },
-    "IMPROVEMENT_TIDAL_HARNESS": {
-     "flat": 1
-    },
-    "IMPROVEMENT_SEA_MILL": {
-     "flat": 2
-    }
-   }
-  }
- },
  "cost": {
   "research": 83654
  },

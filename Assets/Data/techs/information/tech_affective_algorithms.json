@@ -32,15 +32,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_SYSTEMS_BIOLOGY_SIMULATOR": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 26259
  },

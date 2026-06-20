@@ -46,7 +46,7 @@
    "flat": [
     2,
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "TECH_INDUSTRIALISM",
       "scope": "team"
@@ -60,7 +60,7 @@
    "flat": [
     1,
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_TOURISM",
       "scope": "team"
@@ -89,6 +89,11 @@
    "flat": 1
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SPY": 1
+  }
+ },
  "cost": {
   "production": 310,
   "sizeModifier": 3,
@@ -101,9 +106,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SPY": 1
-  },
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

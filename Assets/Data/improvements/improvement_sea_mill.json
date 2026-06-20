@@ -37,7 +37,23 @@
  },
  "commerce": {
   "plot": {
-   "flat": 5
+   "flat": [
+    5,
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_WIRELESS_ELECTRICITY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_WEATHER_CONTROL",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "world": {

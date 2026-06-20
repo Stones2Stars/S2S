@@ -38,38 +38,38 @@
  },
  "research": {
   "city": {
-   "flat": 20,
-   "percent": [
+   "flat": [
+    20,
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_AUTONOMOUS_VEHICLES",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_COMPUTER_NETWORKS",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_DISASTER_ROBOTS",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_MILITARY_ROBOTICS",
       "scope": "team"
      }
     },
     {
-     "value": 800,
+     "value": 8,
      "enabled": {
       "type": "TECH_BRAIN_MACHINE_INTERFACE",
       "scope": "team"
@@ -78,8 +78,8 @@
    ]
   }
  },
- "grants": {
-  "specialists": {
+ "freeSpecialists": {
+  "city": {
    "SPECIALIST_SCIENTIST": 1
   }
  },

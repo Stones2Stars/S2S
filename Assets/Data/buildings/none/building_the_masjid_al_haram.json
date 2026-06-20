@@ -41,6 +41,11 @@
    }
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 3
+  }
+ },
  "grants": {
   "holyCity": "RELIGION_ISLAM"
  },
@@ -61,9 +66,6 @@
  },
  "identity": {
   "shrine": "RELIGION_ISLAM",
-  "specialistSlots": {
-   "SPECIALIST_PRIEST": 3
-  },
   "notConstructible": true,
   "nukeImmune": true,
   "worth": 8,

@@ -32,27 +32,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_THEATRE": {
-     "flat": 700
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_ART_GALLERY": {
-     "flat": 700
-    },
-    "BUILDING_THEATRE": {
-     "flat": 700
-    }
-   }
-  }
- },
  "cost": {
   "research": 10744
  },

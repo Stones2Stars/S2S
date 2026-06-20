@@ -39,15 +39,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_APPLIED_SOCIOLOGY_LAB": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 67710
  },

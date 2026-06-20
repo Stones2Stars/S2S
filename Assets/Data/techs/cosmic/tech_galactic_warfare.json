@@ -30,24 +30,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_CAPITOL": {
-     "flat": 1200
-    }
-   }
-  }
- },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_ADMINISTRATION_CENTER": {
-     "flat": 1200
-    }
-   }
-  }
- },
  "grants": {
   "firstFreeUnit": "UNIT_GREAT_GENERAL"
  },

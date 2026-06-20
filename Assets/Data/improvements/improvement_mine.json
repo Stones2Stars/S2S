@@ -52,6 +52,27 @@
     {
      "value": 1,
      "enabled": {
+      "type": "TECH_HYDRAULIC_MINING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_IRON_WORKING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_COAL_MINING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
       "HAS_BONUS": "BONUS_BAUXITE_ORE"
      }
     },

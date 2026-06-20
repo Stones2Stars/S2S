@@ -29,15 +29,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST": {
-     "flat": 1200
-    }
-   }
-  }
- },
  "cost": {
   "research": 326209
  },

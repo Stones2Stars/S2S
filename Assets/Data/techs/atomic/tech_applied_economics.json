@@ -38,15 +38,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_CRIME_SHOPLIFTING": {
-     "flat": -400
-    }
-   }
-  }
- },
  "grants": {
   "firstFreeUnit": "UNIT_MERCHANT"
  },

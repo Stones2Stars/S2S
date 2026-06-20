@@ -65,6 +65,11 @@
    }
   }
  },
+ "freeSpecialists": {
+  "empire": {
+   "SPECIALIST_NOBLE": 3
+  }
+ },
  "maintenance": {
   "empire": {
    "distance": {
@@ -104,11 +109,6 @@
    "national": {
     "flat": -1
    }
-  }
- },
- "grants": {
-  "freeSpecialists": {
-   "SPECIALIST_NOBLE": 3
   }
  },
  "ai": {

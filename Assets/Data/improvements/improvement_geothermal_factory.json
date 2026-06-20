@@ -26,6 +26,13 @@
    "flat": [
     10,
     {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_TELEPORTATION",
+      "scope": "team"
+     }
+    },
+    {
      "value": 3,
      "enabled": {
       "HAS_BONUS": "BONUS_GEOTHERMAL_ENERGY"
@@ -37,6 +44,13 @@
  "commerce": {
   "plot": {
    "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_PLANETARY_ECONOMICS",
+      "scope": "team"
+     }
+    },
     {
      "value": 2,
      "enabled": {

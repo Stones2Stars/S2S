@@ -33,42 +33,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_DIGITAL_ADVERTISING_FIRM": {
-     "flat": 900
-    },
-    "BUILDING_E_STOCK_MARKET": {
-     "flat": 900
-    },
-    "BUILDING_HEDGE_FUND": {
-     "flat": 900
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_HEDGE_FUND": {
-     "flat": 900
-    },
-    "BUILDING_CRIME_SHOPLIFTING": {
-     "flat": -500
-    }
-   }
-  }
- },
- "culture": {
-  "city": {
-   "buildings": {
-    "BUILDING_DIGITAL_ADVERTISING_FIRM": {
-     "flat": 900
-    }
-   }
-  }
- },
  "cost": {
   "research": 38858
  },

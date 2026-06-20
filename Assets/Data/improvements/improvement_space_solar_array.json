@@ -21,14 +21,52 @@
    ]
   }
  },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
  "production": {
   "plot": {
-   "flat": 5
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SOLAR_ORDNANCE",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "commerce": {
   "plot": {
-   "flat": 5
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PHOTONIC_SATELLITES",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SOLAR_ORDNANCE",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "world": {

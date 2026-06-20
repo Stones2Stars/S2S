@@ -33,6 +33,13 @@
     {
      "value": 1,
      "enabled": "HAS_RIVER"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ECOLOGY",
+      "scope": "team"
+     }
     }
    ]
   }

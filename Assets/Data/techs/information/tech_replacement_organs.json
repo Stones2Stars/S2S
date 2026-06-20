@@ -112,28 +112,9 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_STEM_CELL_LAB": {
-     "flat": 800
-    }
-   }
-  }
- },
  "health": {
   "empire": {
    "flat": 1
-  },
-  "city": {
-   "buildings": {
-    "BUILDING_MEDICAL_PROSTHETICS_LAB": {
-     "flat": 1
-    },
-    "BUILDING_STEM_CELL_LAB": {
-     "flat": 1
-    }
-   }
   }
  },
  "cost": {

@@ -48,7 +48,7 @@
    "flat": [
     50,
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_APOCALYPTIC_PATHOGENS",
       "scope": "team"

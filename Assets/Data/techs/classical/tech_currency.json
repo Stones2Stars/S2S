@@ -40,33 +40,6 @@
    ]
   }
  },
- "commerce": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_WINERY": {
-     "flat": 1
-    },
-    "IMPROVEMENT_ORCHARD": {
-     "flat": 1
-    },
-    "IMPROVEMENT_SILK_FARM": {
-     "flat": 1
-    }
-   }
-  }
- },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_THIEVES_HIDEOUT": {
-     "flat": 300
-    },
-    "BUILDING_CRIME_SHOPLIFTING": {
-     "flat": -100
-    }
-   }
-  }
- },
  "goldTrading": {
   "team": {
    "enabler": true

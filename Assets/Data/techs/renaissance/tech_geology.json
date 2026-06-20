@@ -40,61 +40,6 @@
    ]
   }
  },
- "production": {
-  "city": {
-   "buildings": {
-    "BUILDING_MINING_CAMP": {
-     "flat": 500
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_TAR_GATHERER": {
-     "flat": 1
-    },
-    "IMPROVEMENT_SHAFT_MINE": {
-     "flat": 1
-    },
-    "IMPROVEMENT_QUARRY": {
-     "flat": 1
-    }
-   }
-  }
- },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_MINING_CAMP": {
-     "flat": 500
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_AUYANTEPUI": {
-     "flat": 700
-    },
-    "BUILDING_WONDER_OF_NATURE_BASALT_ORGAN": {
-     "flat": 500
-    },
-    "BUILDING_WONDER_OF_NATURE_KRAKATOA": {
-     "flat": 1000
-    }
-   }
-  }
- },
- "happiness": {
-  "city": {
-   "buildings": {
-    "BUILDING_GRAND_EARTH_FESTIVAL": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 3484
  },

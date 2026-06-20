@@ -35,17 +35,17 @@
  },
  "research": {
   "city": {
-   "flat": 8,
-   "percent": [
+   "flat": [
+    8,
     {
-     "value": 900,
+     "value": 9,
      "enabled": {
       "type": "TECH_AMPLIFIED_WAVELENGTHS",
       "scope": "team"
      }
     },
     {
-     "value": 1000,
+     "value": 10,
      "enabled": {
       "type": "TECH_OPTRONICS",
       "scope": "team"

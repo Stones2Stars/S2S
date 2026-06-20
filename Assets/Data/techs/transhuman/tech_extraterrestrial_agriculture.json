@@ -48,34 +48,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_FARM_MECH_CONTROL_CENTER": {
-     "flat": 1000
-    },
-    "BUILDING_FARM_NANOBOT_CONTROL_CENTER": {
-     "flat": 2000
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_COLONY_HYDROPONICS": {
-     "flat": 2
-    }
-   }
-  }
- },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_ASTROBIOLOGY_LAB": {
-     "flat": 1000
-    }
-   }
-  }
- },
  "cost": {
   "research": 93709
  },

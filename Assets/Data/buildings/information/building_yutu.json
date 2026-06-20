@@ -28,8 +28,8 @@
    "flat": 50
   }
  },
- "grants": {
-  "specialists": {
+ "freeSpecialists": {
+  "city": {
    "SPECIALIST_SCIENTIST": 3
   }
  },

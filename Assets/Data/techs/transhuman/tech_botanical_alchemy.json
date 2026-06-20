@@ -53,22 +53,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_CISLUNAR_AGRICULTURAL_LAB": {
-     "flat": 1000
-    }
-   }
-  },
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_COLONY_HYDROPONICS": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 70029
  },

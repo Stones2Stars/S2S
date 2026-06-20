@@ -34,15 +34,6 @@
    ]
   }
  },
- "food": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_INTERSTELLAR_TRADING_POST": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 179514
  },

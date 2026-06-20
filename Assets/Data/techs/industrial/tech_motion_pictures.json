@@ -35,15 +35,6 @@
    ]
   }
  },
- "commerce": {
-  "city": {
-   "buildings": {
-    "BUILDING_WONDER_OF_NATURE_PRAVCICKA_BRANA": {
-     "flat": 600
-    }
-   }
-  }
- },
  "cost": {
   "research": 7356
  },

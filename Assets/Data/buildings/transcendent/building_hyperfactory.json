@@ -39,7 +39,7 @@
    "flat": [
     200,
     {
-     "value": 2000,
+     "value": 20,
      "enabled": {
       "type": "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY",
       "scope": "team"

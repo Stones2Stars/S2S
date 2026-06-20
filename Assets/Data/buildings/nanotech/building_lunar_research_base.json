@@ -137,6 +137,11 @@
    "flat": 5
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 3
+  }
+ },
  "cost": {
   "production": 2000
  },
@@ -153,9 +158,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_SCIENTIST": 3
-  },
   "conquestProbability": 70,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": "1.0",

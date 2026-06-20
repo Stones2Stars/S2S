@@ -49,15 +49,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "buildings": {
-    "BUILDING_CRIME_SHOPLIFTING": {
-     "flat": -200
-    }
-   }
-  }
- },
  "cost": {
   "research": 1445
  },

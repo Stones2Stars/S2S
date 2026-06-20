@@ -34,14 +34,14 @@
    "flat": [
     11,
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_GLOBALIZATION",
       "scope": "team"
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "TECH_INDUSTRIALISM",
       "scope": "team"

@@ -33,15 +33,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_HIGH_ENERGY_LAB": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 23650
  },

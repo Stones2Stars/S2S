@@ -65,6 +65,11 @@
    ]
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 2
+  }
+ },
  "cost": {
   "production": 1080
  },
@@ -84,9 +89,6 @@
   "construct": "AS2D_BUILD_BROADCASTTOWER"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 2
-  },
   "worth": 5,
   "dcmAirbombMission": 2,
   "specialBuildingType": "SPECIALBUILDING_PUNK_DIESEL",

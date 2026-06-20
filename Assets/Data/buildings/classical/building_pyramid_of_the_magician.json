@@ -69,6 +69,11 @@
    ]
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 2
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 2
@@ -101,11 +106,13 @@
    "flat": 4
   }
  },
- "grants": {
-  "goldenAge": true,
-  "specialists": {
-   "SPECIALIST_PRIEST": 2
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1
   }
+ },
+ "grants": {
+  "goldenAge": true
  },
  "cost": {
   "production": 1458,
@@ -136,9 +143,6 @@
   "construct": "AS2D_BUILD_ISLAMIC"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_PRIEST": 1
-  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 8,

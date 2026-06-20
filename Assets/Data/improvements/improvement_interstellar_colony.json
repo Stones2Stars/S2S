@@ -27,12 +27,30 @@
  },
  "food": {
   "plot": {
-   "flat": 1
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_FEMTOTECHNOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "production": {
   "plot": {
-   "flat": 1
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_FEMTOTECHNOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "commerce": {

@@ -29,15 +29,6 @@
    ]
   }
  },
- "espionage": {
-  "city": {
-   "buildings": {
-    "BUILDING_CISLUNAR_GOVERNANCE": {
-     "flat": 1100
-    }
-   }
-  }
- },
  "cost": {
   "research": 159944
  },

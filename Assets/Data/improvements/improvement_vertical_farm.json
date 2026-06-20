@@ -91,6 +91,20 @@
    "flat": [
     15,
     {
+     "value": 3,
+     "enabled": {
+      "type": "TECH_ARTIFICIAL_EVOLUTION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "TECH_ORGANIC_CITIES",
+      "scope": "team"
+     }
+    },
+    {
      "value": 4,
      "enabled": {
       "HAS_BONUS": "BONUS_CORN"
@@ -380,6 +394,20 @@
   "plot": {
    "flat": [
     10,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ARTIFICIAL_EVOLUTION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ORGANIC_CITIES",
+      "scope": "team"
+     }
+    },
     {
      "value": 2,
      "enabled": {

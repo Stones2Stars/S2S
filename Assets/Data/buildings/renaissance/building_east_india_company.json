@@ -45,6 +45,11 @@
    }
   }
  },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 2
+  }
+ },
  "cost": {
   "production": 2640,
   "sizeModifier": 3,
@@ -74,9 +79,6 @@
   "construct": "AS2D_BUILD_COLOSSUS"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_MERCHANT": 2
-  },
   "nukeImmune": true,
   "teamShare": true,
   "worth": 14,

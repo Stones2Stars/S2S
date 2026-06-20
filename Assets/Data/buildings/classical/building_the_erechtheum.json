@@ -91,6 +91,11 @@
    }
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 2
@@ -113,9 +118,9 @@
    "flat": 3
   }
  },
- "grants": {
-  "specialists": {
-   "SPECIALIST_PRIEST": 1
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 2
   }
  },
  "cost": {
@@ -150,9 +155,6 @@
   "construct": "AS2D_BUILD_CHRISTIAN"
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_PRIEST": 2
-  },
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

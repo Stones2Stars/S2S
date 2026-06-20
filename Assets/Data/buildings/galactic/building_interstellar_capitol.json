@@ -41,24 +41,24 @@
  },
  "gold": {
   "city": {
-   "flat": 50,
-   "percent": [
+   "flat": [
+    50,
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_GALACTIC_FEDERATION",
       "scope": "team"
      }
     },
     {
-     "value": 1100,
+     "value": 11,
      "enabled": {
       "type": "TECH_ASTROIMPERIALISM",
       "scope": "team"
      }
     },
     {
-     "value": 1200,
+     "value": 12,
      "enabled": {
       "type": "TECH_GALACTIC_WARFARE",
       "scope": "team"

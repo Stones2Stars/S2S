@@ -49,6 +49,11 @@
    "flat": 1
   }
  },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_CELEBRITY": 1
+  }
+ },
  "greatPeopleRate": {
   "city": {
    "flat": 1
@@ -59,9 +64,9 @@
    "percent": 100
   }
  },
- "grants": {
-  "specialists": {
-   "SPECIALIST_CELEBRITY": 1
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
   }
  },
  "cost": {
@@ -83,9 +88,6 @@
   }
  },
  "identity": {
-  "specialistSlots": {
-   "SPECIALIST_ARTIST": 1
-  },
   "neverCapture": true,
   "greatPeopleUnitType": "UNIT_ARTIST",
   "advisor": "ADVISOR_ECONOMY",

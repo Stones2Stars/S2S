@@ -45,15 +45,6 @@
    ]
   }
  },
- "food": {
-  "team": {
-   "improvements": {
-    "IMPROVEMENT_MUSHROOM_GATHERER": {
-     "flat": 1
-    }
-   }
-  }
- },
  "cost": {
   "research": 110
  },

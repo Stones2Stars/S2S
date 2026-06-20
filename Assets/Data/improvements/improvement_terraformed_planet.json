@@ -53,9 +53,31 @@
    ]
   }
  },
+ "production": {
+  "plot": {
+   "flat": [
+    {
+     "value": 5,
+     "enabled": {
+      "type": "TECH_ASTROIMPERIALISM",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
  "commerce": {
   "plot": {
-   "flat": 1
+   "flat": [
+    1,
+    {
+     "value": 3,
+     "enabled": {
+      "type": "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS",
+      "scope": "team"
+     }
+    }
+   ]
   }
  },
  "world": {

@@ -38,15 +38,6 @@
    ]
   }
  },
- "food": {
-  "city": {
-   "buildings": {
-    "BUILDING_EARTHWORM_GATHERER": {
-     "flat": 100
-    }
-   }
-  }
- },
  "cost": {
   "research": 39
  },

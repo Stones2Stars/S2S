@@ -29,15 +29,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_MATHEMATICS_DEPARTMENT": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 19916
  },

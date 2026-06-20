@@ -50,9 +50,29 @@
    "flat": [
     4,
     {
+     "value": 5,
+     "enabled": {
+      "type": "TECH_NANOMINING",
+      "scope": "team"
+     }
+    },
+    {
      "value": 1,
      "enabled": {
       "HAS_BONUS": "BONUS_MARTIAN_BLUEBERRIES"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_PLANETARY_TRADE",
+      "scope": "team"
      }
     }
    ]

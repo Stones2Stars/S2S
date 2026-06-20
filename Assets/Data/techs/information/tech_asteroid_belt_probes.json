@@ -37,15 +37,6 @@
    ]
   }
  },
- "research": {
-  "city": {
-   "buildings": {
-    "BUILDING_OBSERVATORY": {
-     "flat": 800
-    }
-   }
-  }
- },
  "cost": {
   "research": 26259
  },
