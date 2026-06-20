@@ -1136,9 +1136,12 @@ namespace
 				CvUnitMoveAgg agg;
 				cascadeUnitMoveAgg(pUnit, agg);
 				const CvUnitInfo& kUI = GC.getUnitInfo(eUT);
-				const int iEngMoves = kUI.getMoves() + pUnit->getExtraMoves();   // own + commander (cross-edge)
+				// FULL engine values -- the cascade agg now folds team/empire scope, so the diff spans the whole
+				// baseMoves/airRange. The only residue is the commander/commodore cross-edge (getExtraMoves folds it,
+				// the cascade doesn't -> tagged commanderCrossEdge) and runtime grants (circumnavigate sea moves).
+				const int iEngMoves = pUnit->baseMoves();   // UnitInfo.getMoves + getExtraMoves(own+cmd) + team(domain)
 				const int iEngDisc  = pUnit->getExtraMoveDiscount();             // own + commander
-				const int iEngRange = kUI.getAirRange() + pUnit->getExtraAirRange();
+				const int iEngRange = pUnit->airRange();    // the full four-term (info + extra + team-AIR + national)
 				const int iDMoves = agg.iMovesMigrated - iEngMoves;
 				const int iDDisc  = agg.iMoveDiscount  - iEngDisc;
 				const int iDRange = agg.iRangeMigrated - iEngRange;
@@ -1197,20 +1200,29 @@ namespace
 						const CvMoveSourceRef& ref = agg.sources[si];
 						const CvMoveSourceProfile* p = ref.pProfile;
 						picojson::value::object s;
-						const char* szKind = (ref.iKind == 0) ? "unit" : (ref.iKind == 1) ? "promotion" : "unitcombat";
-						const char* szT = (ref.iKind == 0) ? GC.getUnitInfo((UnitTypes)ref.iType).getType()
-							: (ref.iKind == 1) ? GC.getPromotionInfo((PromotionTypes)ref.iType).getType()
-							: GC.getUnitCombatInfo((UnitCombatTypes)ref.iType).getType();
-						s["kind"] = picojson::value(std::string(szKind));
-						s["type"] = picojson::value(std::string(szT));
-						if (p->iMoves != 0)        s["moves"]        = picojson::value((double)p->iMoves);
-						if (p->iMoveDiscount != 0) s["moveDiscount"] = picojson::value((double)p->iMoveDiscount);
-						if (p->iRange != 0)        s["range"]        = picojson::value((double)p->iRange);
-						if (p->bIgnoreTerrain)     s["ignoreTerrain"] = picojson::value(true);
-						if (p->bFlatMoveCost)      s["flatMoveCost"]  = picojson::value(true);
-						if (p->bHillsDoubleMove)   s["hillsDoubleMove"] = picojson::value(true);
-						if (!p->aiTerrainDM.empty()) s["terrainDoubleMove"] = picojson::value((double)p->aiTerrainDM.size());
-						if (!p->aiFeatureDM.empty()) s["featureDoubleMove"] = picojson::value((double)p->aiFeatureDM.size());
+						if (p != NULL) // unit / promotion / unitcombat -- the full per-source profile
+						{
+							const char* szKind = (ref.iKind == 0) ? "unit" : (ref.iKind == 1) ? "promotion" : "unitcombat";
+							const char* szT = (ref.iKind == 0) ? GC.getUnitInfo((UnitTypes)ref.iType).getType()
+								: (ref.iKind == 1) ? GC.getPromotionInfo((PromotionTypes)ref.iType).getType()
+								: GC.getUnitCombatInfo((UnitCombatTypes)ref.iType).getType();
+							s["kind"] = picojson::value(std::string(szKind));
+							s["type"] = picojson::value(std::string(szT));
+							if (p->iMoves != 0)        s["moves"]        = picojson::value((double)p->iMoves);
+							if (p->iMoveDiscount != 0) s["moveDiscount"] = picojson::value((double)p->iMoveDiscount);
+							if (p->iRange != 0)        s["range"]        = picojson::value((double)p->iRange);
+							if (p->bIgnoreTerrain)     s["ignoreTerrain"] = picojson::value(true);
+							if (p->bFlatMoveCost)      s["flatMoveCost"]  = picojson::value(true);
+							if (p->bHillsDoubleMove)   s["hillsDoubleMove"] = picojson::value(true);
+							if (!p->aiTerrainDM.empty()) s["terrainDoubleMove"] = picojson::value((double)p->aiTerrainDM.size());
+							if (!p->aiFeatureDM.empty()) s["featureDoubleMove"] = picojson::value((double)p->aiFeatureDM.size());
+						}
+						else // tech (team route/domain) / trait (national range) -- the team/empire-scope aggregate
+						{
+							s["kind"] = picojson::value(std::string(ref.iKind == 3 ? "team" : "empire"));
+							if (ref.iContribMoves != 0) s["moves"] = picojson::value((double)ref.iContribMoves);
+							if (ref.iContribRange != 0) s["range"] = picojson::value((double)ref.iContribRange);
+						}
 						kSrc.push_back(picojson::value(s));
 					}
 					u["cascadeSources"] = picojson::value(kSrc); // the Meta per-source decomposition
@@ -1311,6 +1323,9 @@ namespace
 			kUDO["unitParsed"]   = picojson::value((double)kUD.iUnitParsed);   // unit types with any movement/range/cap
 			kUDO["promoParsed"]  = picojson::value((double)kUD.iPromoParsed);  // promotions with any movement datum
 			kUDO["combatParsed"] = picojson::value((double)kUD.iCombatParsed); // unitcombats with any movement datum
+			kUDO["techRouteParsed"]  = picojson::value((double)kUD.iTechRouteParsed);  // tech->route moveCost deposits
+			kUDO["techDomainParsed"] = picojson::value((double)kUD.iTechDomainParsed); // tech->domain moves (curator gap: 0)
+			kUDO["traitRangeParsed"] = picojson::value((double)kUD.iTraitRangeParsed); // trait->national range deposits
 			o["cascadeUnitData"] = picojson::value(kUDO);
 			picojson::value::object kBM;
 			for (std::map<int, int>::const_iterator it = kBaseMovesHist.begin(); it != kBaseMovesHist.end(); ++it)

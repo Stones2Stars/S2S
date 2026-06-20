@@ -69,8 +69,13 @@
   `cascadeRangeDelta` + cap bools) + `cascadeUnitDiverge`/cause/care histograms + the **META** `cascadeSources[]`
   per-source attribution (reconstruct WHY each unit moves as it does, from the wire). Team/national/commander/flying
   residue is engine-only, excluded (commander units tag `commanderCrossEdge`). See [`modifier.md` §6.6](../reference/cascade/modifier.md).
-  **Remaining unit-side DATA to migrate** (shadow residue, separate modifier-sources): `team.getExtraMoves`,
-  the `airRange` team/national terms, the route `getRouteChange` tech delta. The carried
+  (4b) ✅ **team/empire-scope sources — WIRED (cut 3, 2026-06-20, Assert-clean):** `cascadeTeamRouteChange` (sum
+  the team's researched techs' `movement.team.routes` → closes the route tech-delta into the resolver route branch),
+  `cascadePlayerNationalRange` (sum the player's adopted traits' `combat.empire.{missileRange|flightRange}`), and
+  `cascadeTeamExtraMoves` (tech domain moves — **curator gap**: `curate_tech` doesn't emit `getDomainExtraMoves`, so
+  the shadow surfaces it). The unit shadow now diffs vs the FULL engine `baseMoves()`/`airRange()`. Genuine residue,
+  by design: commander cross-edge + runtime circumnavigate + the domain-moves curator gap. **The whole movement/range
+  subsystem is now shadow-wired end to end.** The carried
   trust-but-verify is **RESOLVED** (2026-06-20): ground
   `rangeStrike` and `airStrike` both derive reach from `airRange()` and share target/limit/collateral/damage-shape —
   the unified `range` family is honest ([`modifier.md` §6.6](../reference/cascade/modifier.md)).

@@ -607,9 +607,25 @@ type/promotion/unitcombat's exact contribution: which promo gave +1 move, which 
 The team/national scopes + the commander/commodore cross-edge (`getExtraMoves` folds them) + the flying-runtime
 `canFliesToMove()` OR are engine-only (NOT migrated) and deliberately excluded from the migrated diff — a
 commander unit is cause-tagged `commanderCrossEdge` (care Weird, expected), so a real `moves`/`moveDiscount`/`range`
-divergence isolates the unit-plane data migration. **Remaining unit-side data to migrate** (the shadow's expected
-residue): `team.getExtraMoves(domain)` (team-scope), the four-term `airRange` team/national contributions, and the
-route `CvTeam::getRouteChange` tech delta — each a separate modifier-source migration.
+divergence isolates the unit-plane data migration.
+
+**STATUS — the TEAM/EMPIRE-scope movement/range sources are WIRED (cut 3, 2026-06-20, Assert-clean).** The
+residue the per-unit/per-edge channels read from the engine is now **cascade-reconstructed from the migrated
+source data**, gated by live team/player state: `cascadeTeamRouteChange` sums the team's **researched techs'**
+`movement.team.routes.{ROUTE}.flat` (== `CvTeam::getRouteChange`; folded into the resolver route branch, so the
+route cost is now FULLY cascade-sourced — the route tech-delta is closed into the *edge* channel); `cascadePlayer
+NationalRange` sums the player's **adopted traits'** `combat.empire.{missileRange|flightRange}.flat` (== `CvPlayer::
+getNational{Missile|Flight}OperationRangeChange`, branch-correct by special-unit type); `cascadeTeamExtraMoves`
+sums the team's techs' domain-extra-moves. The unit shadow now diffs the cascade against the **FULL** engine
+`baseMoves()`/`airRange()` (not the partial), with team/empire attribution in `cascadeSources` (kinds `team`/
+`empire`). **Genuine residue, by design** (surfaced, not hidden — adjudicated at the verification pass): (a) the
+commander/commodore cross-edge (`getExtraMoves` folds it; the cascade doesn't — `commanderCrossEdge`); (b) runtime
+grants (circumnavigate's `CIRCUMNAVIGATE_FREE_MOVES(DOMAIN_SEA)` — an engine state-event, not static data); (c)
+the **tech domain-extra-moves curator gap** — `curate_tech` does not emit `getDomainExtraMoves`, so `cascadeTeam
+ExtraMoves` reads 0 and the shadow surfaces any engine-nonzero domain moves as a `moves`/`range` divergence (a
+curator fix, not an engine one). So the whole movement/range subsystem is shadow-wired end to end; the resolver +
+the unit aggregate are the deletable-legacy map for `CvPlot::movementCost` + the `CvUnit` movement `m_iExtra*`
+stack + `CvTeam`/`CvPlayer` movement accumulators.
 
 ### 6.7 Specialist COUNTS — two independent additive families (owner 2026-06-20)
 

@@ -110,8 +110,21 @@ struct CvMoveSourceProfile
 		  bHillsDoubleMove(false), bAny(false) {}
 };
 
-// The parse-once unit-plane move data. aMovePromoIdx / aMoveCombatIdx hold the indices whose profile is non-empty,
-// so the per-unit aggregation iterates only the movement-relevant promotions/unitcombats (a few dozen), not all.
+// A TEAM/EMPIRE-scope movement/range source deposit (the residue the per-unit/per-edge channels read from the
+// engine until migrated). Three migrated kinds, all read off the SOURCE entity's JSON + gated by team/player state:
+//  - TECH route change: `movement.team.routes.{ROUTE}.flat` -> CvTeam::getRouteChange(route), summed over the
+//    team's RESEARCHED techs (engine: changeRouteChange = route.getTechMovementChange(tech), in processTech).
+//  - TECH domain moves: tech.getDomainExtraMoves(domain) -> CvTeam::getExtraMoves(domain). ⚠ NOT mapped by
+//    curate_tech today (a curator gap) -> cascade reads 0 -> the shadow SURFACES it as a `moves`/`range` divergence
+//    on teams holding such a tech (map-before-delete doing its job; fix the curator at the verification pass).
+//  - TRAIT national range: `combat.empire.{missileRange|flightRange}.flat` -> CvPlayer::getNational{Missile|Flight}
+//    OperationRangeChange, summed over the player's adopted TRAITS (engine: changeNational*RangeChange in processTrait).
+// (Runtime grants like circumnavigate's CIRCUMNAVIGATE_FREE_MOVES(DOMAIN_SEA) are engine-state events, not static
+// data -- engine-only residue like the commander cross-edge; they surface as divergence, adjudicated at verify.)
+struct CvTeamMoveDeposit { int iSource; int iKey; int iFlat; }; // iSource = tech/trait idx; iKey = route/domain/missileFlag
+
+// The parse-once unit-plane + team/empire move data. aMovePromoIdx / aMoveCombatIdx hold the indices whose profile
+// is non-empty, so the per-unit aggregation iterates only the movement-relevant sources (a few dozen), not all.
 struct CvMovementUnitData
 {
 	std::vector<CvMoveSourceProfile> aUnit;   // [UnitTypes]
@@ -119,20 +132,35 @@ struct CvMovementUnitData
 	std::vector<CvMoveSourceProfile> aCombat; // [UnitCombatTypes]
 	std::vector<int> aMovePromoIdx;
 	std::vector<int> aMoveCombatIdx;
-	int  iUnitParsed, iPromoParsed, iCombatParsed; // sources with any movement/range/cap datum
+	std::vector<CvTeamMoveDeposit> aTechRoute;  // tech -> route moveCost delta (iKey = RouteTypes)
+	std::vector<CvTeamMoveDeposit> aTechDomain; // tech -> domain extra moves (iKey = DomainTypes; empty today)
+	std::vector<CvTeamMoveDeposit> aTraitRange; // trait -> national range (iKey: 1 = missile, 0 = flight)
+	int  iUnitParsed, iPromoParsed, iCombatParsed;            // sources with any movement/range/cap datum
+	int  iTechRouteParsed, iTechDomainParsed, iTraitRangeParsed;
 	bool bLoaded;
-	CvMovementUnitData() : iUnitParsed(0), iPromoParsed(0), iCombatParsed(0), bLoaded(false) {}
+	CvMovementUnitData() : iUnitParsed(0), iPromoParsed(0), iCombatParsed(0),
+		iTechRouteParsed(0), iTechDomainParsed(0), iTraitRangeParsed(0), bLoaded(false) {}
 };
 const CvMovementUnitData& cascadeMovementUnitData();
 
-// One contributing source in a live unit's aggregated profile (the META per-source attribution). pProfile points
-// into the parse-once cache (stable for the process), so the endpoint can render the exact per-source contribution.
+// The cascade's reconstruction of the engine's team/empire movement/range accumulators, from the migrated source
+// data gated by live team/player state (so a divergence vs the engine's getter isolates the data migration). Both
+// the resolver (route branch) and the unit aggregation fold these in, closing the residue into the shadow.
+int cascadeTeamRouteChange(int iTeam, int iRoute);       // == CvTeam::getRouteChange(route)
+int cascadeTeamExtraMoves(int iTeam, int iDomain);       // == CvTeam::getExtraMoves(domain) (static part)
+int cascadePlayerNationalRange(int iPlayer, bool bMissile); // == CvPlayer::getNational{Missile|Flight}RangeChange
+
+// One contributing source in a live unit's aggregated profile (the META per-source attribution). For unit/promo/
+// combat, pProfile points into the parse-once cache (the endpoint renders the full per-source profile). For tech/
+// trait (the team/empire scope), pProfile is NULL and iContribMoves/iContribRange carry the contextual contribution.
 struct CvMoveSourceRef
 {
-	int iKind; // 0 = unit type, 1 = promotion, 2 = unitcombat
+	int iKind; // 0 = unit type, 1 = promotion, 2 = unitcombat, 3 = tech (team route/domain), 4 = trait (national range)
 	int iType; // the engine Type index
-	const CvMoveSourceProfile* pProfile;
-	CvMoveSourceRef() : iKind(0), iType(-1), pProfile(0) {}
+	const CvMoveSourceProfile* pProfile; // unit/promo/combat only; NULL for tech/trait
+	int iContribMoves; // tech/trait: the moves contribution (team domain moves)
+	int iContribRange; // tech/trait: the range contribution (route delta folds into the edge channel, not here)
+	CvMoveSourceRef() : iKind(0), iType(-1), pProfile(0), iContribMoves(0), iContribRange(0) {}
 };
 
 // A live unit's aggregated cascade movement/range profile + the per-source attribution. The *Migrated values are

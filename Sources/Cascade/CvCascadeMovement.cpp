@@ -13,12 +13,14 @@
 #include "CvCascadeModifier.h"           // ModifierCareLevel (CARE_FINE..CARE_MELTDOWN) -- the shared care scale
 #include "Defines/CvGlobals.h"           // GC
 #include "Infrastructure/CvInitCore.h"   // getDLLPath
-#include "AI/CvTeamAI.h"                 // GET_TEAM (route tech change -- the not-yet-migrated tech delta)
+#include "AI/CvTeamAI.h"                 // GET_TEAM -- isHasTech (team route/domain reconstruction)
+#include "AI/CvPlayerAI.h"              // GET_PLAYER -- hasTrait (national range reconstruction)
 #include "Engine/CvUnit.h"
 #include "Engine/CvPlot.h"
-#include "CvInfos.h"                     // GC.get{Terrain,Feature,Route,Unit,Promotion}Info().getType() (umbrella --
-                                         // matches the sibling readJson harness; the CvInfos.h retirement is separate)
+#include "CvInfos.h"                     // GC.get{Terrain,Feature,Route,Unit,Promotion,Tech}Info().getType() (umbrella
+                                         // -- matches the sibling readJson harness; the CvInfos.h retirement is separate)
 #include "CvUnitCombatInfo.h"            // GC.getUnitCombatInfo().getType() (not pulled by the CvInfos.h umbrella)
+#include "CvTraitInfo.h"                 // GC.getTraitInfo().getType() (the national-range source)
 #include <fstream>
 #include <sstream>
 #include <cctype>
@@ -193,14 +195,16 @@ void cascadeResolveMoveCost(const CvPlot* pTo, const CvUnit* pUnit, const CvPlot
 		const RouteTypes eTo = pTo->getRouteType();
 		const CvRouteInfo& kFrom = GC.getRouteInfo(eFrom);
 		const CvRouteInfo& kTo = GC.getRouteInfo(eTo);
-		// route move cost: cascade base + the per-tech route delta (CvTeam::getRouteChange -- a tech-`enabled`
-		// moveCost modifier family, NOT yet migrated, so read from the engine). max of from/to when they differ.
+		// route move cost: cascade base + the per-tech route delta. The delta is now CASCADE-reconstructed
+		// (cascadeTeamRouteChange = Σ the team's researched techs' movement.team.routes deposits == the engine's
+		// CvTeam::getRouteChange) -- so the route cost is FULLY cascade-sourced and the edge shadow diffs the whole
+		// thing vs the legacy decomposition. max of from/to when they differ.
 		int iRoute = cmRoute(k, eFrom, kFrom.getMovementCost(), r.bSubstrateMiss)
-			+ GET_TEAM(pUnit->getTeam()).getRouteChange(eFrom);
+			+ cascadeTeamRouteChange(pUnit->getTeam(), eFrom);
 		if (eTo != eFrom)
 		{
 			const int iToCost = cmRoute(k, eTo, kTo.getMovementCost(), r.bSubstrateMiss)
-				+ GET_TEAM(pUnit->getTeam()).getRouteChange(eTo);
+				+ cascadeTeamRouteChange(pUnit->getTeam(), eTo);
 			if (iToCost > iRoute) iRoute = iToCost;
 		}
 		r.iRouteCost = iRoute;
@@ -371,6 +375,74 @@ namespace
 			if (cmReadEntityJson(GC.getUnitCombatInfo((UnitCombatTypes)i).getType(), "unitcombats", s))
 			{ cmParseSource(s, false, k.aCombat[i]); if (k.aCombat[i].bAny) { ++k.iCombatParsed; k.aMoveCombatIdx.push_back(i); } }
 		}
+
+		// TECH -> team route changes: movement.team.routes.{ROUTE}.flat (engine: CvTeam::getRouteChange, processTech).
+		// (Domain extra moves -- tech.getDomainExtraMoves -> CvTeam::getExtraMoves -- are NOT emitted by curate_tech
+		// today, so aTechDomain stays empty; the shadow surfaces any engine-nonzero domain moves as a divergence.)
+		for (int i = 0; i < GC.getNumTechInfos(); ++i)
+		{
+			std::string s;
+			if (!cmReadEntityJson(GC.getTechInfo((TechTypes)i).getType(), "techs", s)) continue;
+			picojson::value root;
+			if (!picojson::parse(root, s).empty() || !root.is<picojson::object>()) continue;
+			const picojson::object& o = root.get<picojson::object>();
+			picojson::object::const_iterator im = o.find("movement");
+			if (im == o.end() || !im->second.is<picojson::object>()) continue;
+			picojson::object::const_iterator it = im->second.get<picojson::object>().find("team");
+			if (it == im->second.get<picojson::object>().end() || !it->second.is<picojson::object>()) continue;
+			const picojson::object& team = it->second.get<picojson::object>();
+			picojson::object::const_iterator ir = team.find("routes");
+			if (ir != team.end() && ir->second.is<picojson::object>())
+			{
+				const picojson::object& routes = ir->second.get<picojson::object>();
+				for (picojson::object::const_iterator r = routes.begin(); r != routes.end(); ++r)
+				{
+					const int iRoute = GC.getInfoTypeForString(r->first.c_str(), true);
+					int iFlat = 0;
+					if (iRoute >= 0 && r->second.is<picojson::object>())
+					{
+						picojson::object::const_iterator f = r->second.get<picojson::object>().find("flat");
+						if (f != r->second.get<picojson::object>().end() && f->second.is<double>())
+						{
+							iFlat = (int)f->second.get<double>();
+							CvTeamMoveDeposit d; d.iSource = i; d.iKey = iRoute; d.iFlat = iFlat;
+							k.aTechRoute.push_back(d); ++k.iTechRouteParsed;
+						}
+					}
+				}
+			}
+		}
+
+		// TRAIT -> national missile/flight range: combat.empire.{missileRange|flightRange}.flat (engine:
+		// CvPlayer::getNational{Missile|Flight}OperationRangeChange, processTrait). iKey: 1 = missile, 0 = flight.
+		for (int i = 0; i < GC.getNumTraitInfos(); ++i)
+		{
+			std::string s;
+			if (!cmReadEntityJson(GC.getTraitInfo((TraitTypes)i).getType(), "traits", s)) continue;
+			picojson::value root;
+			if (!picojson::parse(root, s).empty() || !root.is<picojson::object>()) continue;
+			const picojson::object& o = root.get<picojson::object>();
+			picojson::object::const_iterator ic = o.find("combat");
+			if (ic == o.end() || !ic->second.is<picojson::object>()) continue;
+			picojson::object::const_iterator ie = ic->second.get<picojson::object>().find("empire");
+			if (ie == ic->second.get<picojson::object>().end() || !ie->second.is<picojson::object>()) continue;
+			const picojson::object& emp = ie->second.get<picojson::object>();
+			int v = 0;
+			picojson::object::const_iterator mr = emp.find("missileRange");
+			if (mr != emp.end() && mr->second.is<picojson::object>())
+			{
+				picojson::object::const_iterator f = mr->second.get<picojson::object>().find("flat");
+				if (f != mr->second.get<picojson::object>().end() && f->second.is<double>())
+				{ v = (int)f->second.get<double>(); CvTeamMoveDeposit d; d.iSource = i; d.iKey = 1; d.iFlat = v; k.aTraitRange.push_back(d); ++k.iTraitRangeParsed; }
+			}
+			picojson::object::const_iterator fr = emp.find("flightRange");
+			if (fr != emp.end() && fr->second.is<picojson::object>())
+			{
+				picojson::object::const_iterator f = fr->second.get<picojson::object>().find("flat");
+				if (f != fr->second.get<picojson::object>().end() && f->second.is<double>())
+				{ v = (int)f->second.get<double>(); CvTeamMoveDeposit d; d.iSource = i; d.iKey = 0; d.iFlat = v; k.aTraitRange.push_back(d); ++k.iTraitRangeParsed; }
+			}
+		}
 		k.bLoaded = true;
 	}
 
@@ -403,6 +475,43 @@ const CvMovementUnitData& cascadeMovementUnitData()
 	return g_cmUnitData;
 }
 
+int cascadeTeamRouteChange(int iTeam, int iRoute)
+{
+	if (iTeam < 0 || iTeam >= MAX_TEAMS) return 0;
+	const CvMovementUnitData& k = cascadeMovementUnitData();
+	const CvTeamAI& kTeam = GET_TEAM((TeamTypes)iTeam);
+	int iSum = 0;
+	for (size_t n = 0; n < k.aTechRoute.size(); ++n)
+		if (k.aTechRoute[n].iKey == iRoute && kTeam.isHasTech((TechTypes)k.aTechRoute[n].iSource))
+			iSum += k.aTechRoute[n].iFlat;
+	return iSum;
+}
+
+int cascadeTeamExtraMoves(int iTeam, int iDomain)
+{
+	if (iTeam < 0 || iTeam >= MAX_TEAMS) return 0;
+	const CvMovementUnitData& k = cascadeMovementUnitData();
+	const CvTeamAI& kTeam = GET_TEAM((TeamTypes)iTeam);
+	int iSum = 0; // aTechDomain is empty today (curate_tech gap) -> 0; structure ready for the curator fix
+	for (size_t n = 0; n < k.aTechDomain.size(); ++n)
+		if (k.aTechDomain[n].iKey == iDomain && kTeam.isHasTech((TechTypes)k.aTechDomain[n].iSource))
+			iSum += k.aTechDomain[n].iFlat;
+	return iSum;
+}
+
+int cascadePlayerNationalRange(int iPlayer, bool bMissile)
+{
+	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return 0;
+	const CvMovementUnitData& k = cascadeMovementUnitData();
+	const CvPlayerAI& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+	const int iWant = bMissile ? 1 : 0;
+	int iSum = 0;
+	for (size_t n = 0; n < k.aTraitRange.size(); ++n)
+		if (k.aTraitRange[n].iKey == iWant && kPlayer.hasTrait((TraitTypes)k.aTraitRange[n].iSource))
+			iSum += k.aTraitRange[n].iFlat;
+	return iSum;
+}
+
 void cascadeUnitMoveAgg(const CvUnit* pUnit, CvUnitMoveAgg& out)
 {
 	out = CvUnitMoveAgg();
@@ -421,5 +530,36 @@ void cascadeUnitMoveAgg(const CvUnit* pUnit, CvUnitMoveAgg& out)
 	{
 		const int i = k.aMoveCombatIdx[n];
 		if (pUnit->isHasUnitCombat((UnitCombatTypes)i)) cmFold(out, k.aCombat[i], 2, i, false);
+	}
+
+	// TEAM/EMPIRE scope, mirroring CvUnit::baseMoves()/airRange() exactly so the migrated diff spans the full value:
+	//  - baseMoves adds team.getExtraMoves(domain) ONLY for non-air domains (the `domain != AIR` guard).
+	//  - airRange adds team.getExtraMoves(AIR) + the national missile|flight range, for DOMAIN_AIR units, by branch.
+	const int iTeam = pUnit->getTeam();
+	const int iOwner = pUnit->getOwner();
+	const DomainTypes eDom = pUnit->getDomainType();
+	if (eDom != DOMAIN_AIR)
+	{
+		const int iTM = cascadeTeamExtraMoves(iTeam, eDom);
+		out.iMovesMigrated += iTM;
+		if (iTM != 0) { CvMoveSourceRef ref; ref.iKind = 3; ref.iType = -1; ref.iContribMoves = iTM; out.sources.push_back(ref); }
+	}
+	else
+	{
+		const int iTA = cascadeTeamExtraMoves(iTeam, DOMAIN_AIR); // folds into airRange, not baseMoves
+		out.iRangeMigrated += iTA;
+		if (iTA != 0) { CvMoveSourceRef ref; ref.iKind = 3; ref.iType = -1; ref.iContribRange = iTA; out.sources.push_back(ref); }
+		// national range: airRange uses the missile term iff specialUnit == MISSILE; the flight term iff
+		// (nukeRange() == -1 && specialUnit != MISSILE). Any other DOMAIN_AIR unit gets neither (the 2-term else).
+		const bool bMissile = (pUnit->getSpecialUnitType() == GC.getSPECIALUNIT_MISSILE());
+		bool bWantNat = false;
+		if (bMissile) bWantNat = true;
+		else if (pUnit->nukeRange() == -1) bWantNat = true;
+		if (bWantNat)
+		{
+			const int iNR = cascadePlayerNationalRange(iOwner, bMissile);
+			out.iRangeMigrated += iNR;
+			if (iNR != 0) { CvMoveSourceRef ref; ref.iKind = 4; ref.iType = -1; ref.iContribRange = iNR; out.sources.push_back(ref); }
+		}
 	}
 }
