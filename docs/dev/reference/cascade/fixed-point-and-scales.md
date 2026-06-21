@@ -85,6 +85,7 @@ The "`*100` getters mark the scaled fields" rule is INCOMPLETE: some fields are 
 |---|---|---|---|
 | `BonusCommercePercentChanges` (Building) | **×100, and FLAT** | added raw beside `100 * getBuildingCommerce` inside `getBuildingCommerce100` (`CvCity.cpp:12132`); the *rate* modifier is the separate `m_aiBonusCommerceRateModifier` | ÷100 de-scale **+ relabel `percent`→`flat`** (the name's "Percent" is a misnomer) |
 | `YieldPerPopChange` / `CommercePerPopChange` (per-pop) | **×1 human, NOT ×100** | added raw into the ×100-space `getExtraYield100` / `getBuildingCommerce100` (`CvCity.cpp:11323` / `:12132`) — the legacy "latent /100 weakening" | **emit as-is; do NOT de-scale** (÷100 here corrupts `1/pop` → `0.01/pop`) |
+| `YieldsProduced` / `CommercesProduced` (Corporation) | **×100** | `getCorporationYieldByCorporation` (`CvCity.cpp:12594-12602`): `produced × Σ getNumBonuses(prereqBonus) × worldCorpMaintPct / 100`, then the corp result `/100` — so `produced=75` ⇒ 0.75/bonus. NOT the genuinely-×1 `*Changes` twin (`getYieldChange × 100` in-formula) | ÷100 de-scale → human (`curate_corporation`, fixed 2026-06-21). **TODO (corp rework):** `iMaintenance` is likely ×100 too (`calculateCorporationMaintenanceTimes100`) — verify + de-scale in the dedicated corp pass |
 
 > The per-pop finding retires an earlier tentative "de-scale perPopulation" plan — it was wrong. This is
 > exactly the [DEC-no-guessing](../../architecture/decisions.md#dec-no-guessing) case: the scale was *mapped* at the
