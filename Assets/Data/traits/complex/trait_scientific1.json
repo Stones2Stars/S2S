@@ -1,0 +1,258 @@
+{
+ "type": "TRAIT_SCIENTIFIC1",
+ "description": "TXT_KEY_TRAIT_COMPLEX_SCIENTIFIC1",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_SCIENTIFIC1_PEDIA",
+ "enables": {
+  "traits": [
+   "TRAIT_SCIENTIFIC2"
+  ]
+ },
+ "buildRate": {
+  "empire": {
+   "teamWonder": {
+    "percent": 25
+   },
+   "buildings": {
+    "BUILDING_STORYTELLER": {
+     "percent": 25
+    },
+    "BUILDING_KNOWLEDGE_INHERITANCE": {
+     "percent": 25
+    },
+    "BUILDING_ELDER_COUNCIL": {
+     "percent": 25
+    },
+    "BUILDING_STARGAZERS_HUT": {
+     "percent": 25
+    },
+    "BUILDING_SCHOOL_OF_SCRIBES": {
+     "percent": 25
+    },
+    "BUILDING_MATHEMATICS_ACADEMY": {
+     "percent": 25
+    },
+    "BUILDING_MADRASSA": {
+     "percent": 25
+    },
+    "BUILDING_LIBRARY": {
+     "percent": 25
+    },
+    "BUILDING_ASTROLOGY_SCHOOL": {
+     "percent": 25
+    },
+    "BUILDING_ALCHEMISTS_LAB": {
+     "percent": 25
+    },
+    "BUILDING_INVENTORS_WORKSHOP": {
+     "percent": 25
+    },
+    "BUILDING_UNIVERSITY": {
+     "percent": 25
+    },
+    "BUILDING_ANATOMY_LAB": {
+     "percent": 25
+    },
+    "BUILDING_MATHEMATICS_DEPARTMENT": {
+     "percent": 25
+    },
+    "BUILDING_CHEMISTRY_LAB": {
+     "percent": 25
+    },
+    "BUILDING_CHEMICALS_DISTRICT": {
+     "percent": 25
+    },
+    "BUILDING_LYCEUM": {
+     "percent": 25
+    },
+    "BUILDING_ELEMENTARY_SCHOOL": {
+     "percent": 25
+    },
+    "BUILDING_HOLOGRAPHIC_SCHOOL": {
+     "percent": 25
+    },
+    "BUILDING_OBSERVATORY": {
+     "percent": 25
+    }
+   },
+   "military": {
+    "percent": -10
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": 2,
+   "percent": 5,
+   "capital": {
+    "percent": 5
+   },
+   "specialist": {
+    "perSpecialist": 1
+   },
+   "byTech": {
+    "TECH_LANGUAGE": {
+     "percent": 20
+    },
+    "TECH_ORAL_TRADITION": {
+     "percent": 20
+    },
+    "TECH_CULTURAL_IDENTITY": {
+     "percent": 20
+    },
+    "TECH_STARGAZING": {
+     "percent": 20
+    },
+    "TECH_WRITING": {
+     "percent": 20
+    },
+    "TECH_MATHEMATICS": {
+     "percent": 20
+    },
+    "TECH_LITERATURE": {
+     "percent": 20
+    },
+    "TECH_ASTROLOGY": {
+     "percent": 20
+    },
+    "TECH_ALCHEMY": {
+     "percent": 20
+    },
+    "TECH_INVENTION": {
+     "percent": 20
+    },
+    "TECH_EDUCATION": {
+     "percent": 20
+    },
+    "TECH_ANATOMY": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "nonStateReligion": {
+    "flat": -1
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_SOLAR_PANELS": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 10
+   }
+  }
+ },
+ "policies": {
+  "upgradeAnywhere": true
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_SCIENTIFIC",
+  "priority": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -1
+   },
+   {
+    "FLAVOR_RELIGION": -3
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 14
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitScientific.dds"
+  }
+ },
+ "identity": {
+  "impurePropertyManipulators": true
+ },
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_SCIENTIFIC_STRATEGY",
+ "excludes": [
+  "TRAIT_TRADITIONAL1"
+ ],
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 10,
+   "units": {
+    "UNIT_SCIENTIST": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "religiousAnarchy": {
+    "percent": 50
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "spreadProbability": {
+    "percent": -10
+   },
+   "nonStateSpreadProbability": {
+    "percent": -10
+   }
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
+   }
+  }
+ }
+}

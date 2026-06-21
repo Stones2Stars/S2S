@@ -1,0 +1,201 @@
+{
+ "type": "TRAIT_REVOLUTIONARY1",
+ "description": "TXT_KEY_TRAIT_COMPLEX_REVOLUTIONARY1",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_REVOLUTIONARY1_PEDIA",
+ "enables": {
+  "traits": [
+   "TRAIT_REVOLUTIONARY2"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "flat": 1,
+   "percent": 5,
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": 1,
+   "percent": 20
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": 30
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -1
+   },
+   "national": {
+    "flat": -2
+   },
+   "distanceModifier": {
+    "percent": -15
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_INSTIGATOR1": [
+    "UNITCOMBAT_SPY"
+   ]
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_REVOLUTIONARY",
+  "priority": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   },
+   {
+    "FLAVOR_GROWTH": -2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitRevolutionary.dds"
+  }
+ },
+ "identity": {
+  "impurePropertyManipulators": true
+ },
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_REVOLUTIONARY_STRATEGY",
+ "excludes": [
+  "TRAIT_USURPER1"
+ ],
+ "food": {
+  "empire": {
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "nationalWonder": {
+    "percent": 25
+   },
+   "military": {
+    "percent": 15
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": 1,
+   "percent": 5,
+   "capital": {
+    "percent": 5
+   }
+  }
+ },
+ "combat": {
+  "empire": {
+   "espionageDefense": {
+    "percent": 10
+   },
+   "captureResistance": {
+    "percent": 20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 10
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "foreign": {
+    "percent": -10
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "anger": {
+    "percent": 25
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 10
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -20
+   },
+   "attitude": {
+    "flat": -1
+   }
+  }
+ }
+}

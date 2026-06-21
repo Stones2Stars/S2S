@@ -1,0 +1,432 @@
+{
+ "type": "TRAIT_FINANCIAL1",
+ "description": "TXT_KEY_TRAIT_COMPLEX_FINANCIAL1",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_FINANCIAL1_PEDIA",
+ "enables": {
+  "traits": [
+   "TRAIT_FINANCIAL2"
+  ]
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_JADE_CARVER": {
+     "percent": 25
+    },
+    "BUILDING_JEWELER": {
+     "percent": 25
+    },
+    "BUILDING_AMBER_GATHERER": {
+     "percent": 25
+    },
+    "BUILDING_BARTER_POST": {
+     "percent": 25
+    },
+    "BUILDING_JADE_GATHERER": {
+     "percent": 25
+    },
+    "BUILDING_TAXPERSON": {
+     "percent": 25
+    },
+    "BUILDING_PEARL_DIVER": {
+     "percent": 25
+    },
+    "BUILDING_MINE_AMETHYST": {
+     "percent": 25
+    },
+    "BUILDING_MINE_DIAMOND": {
+     "percent": 25
+    },
+    "BUILDING_MINE_EMERALD": {
+     "percent": 25
+    },
+    "BUILDING_MINE_GARNET": {
+     "percent": 25
+    },
+    "BUILDING_MINE_SAPPHIRE": {
+     "percent": 25
+    },
+    "BUILDING_MINE_SILVER": {
+     "percent": 25
+    },
+    "BUILDING_MINE_TURQUOISE": {
+     "percent": 25
+    },
+    "BUILDING_GEMCUTTER": {
+     "percent": 25
+    },
+    "BUILDING_MINE_GOLD": {
+     "percent": 25
+    },
+    "BUILDING_MINE_JADE": {
+     "percent": 25
+    },
+    "BUILDING_MINE_RUBY": {
+     "percent": 25
+    },
+    "BUILDING_MINE_TOPAZ": {
+     "percent": 25
+    },
+    "BUILDING_MARKET_SCALES": {
+     "percent": 25
+    },
+    "BUILDING_GAMBLING_DEN": {
+     "percent": 25
+    },
+    "BUILDING_MINE_ONYX": {
+     "percent": 25
+    },
+    "BUILDING_SMELTER_GOLD": {
+     "percent": 25
+    },
+    "BUILDING_SMELTER_SILVER": {
+     "percent": 25
+    },
+    "BUILDING_SMITH_SILVER": {
+     "percent": 25
+    },
+    "BUILDING_SMITH_GOLD": {
+     "percent": 25
+    },
+    "BUILDING_CARAVAN_POST": {
+     "percent": 25
+    },
+    "BUILDING_BAZAAR": {
+     "percent": 25
+    },
+    "BUILDING_GROCER": {
+     "percent": 25
+    },
+    "BUILDING_MARKET": {
+     "percent": 25
+    },
+    "BUILDING_FARM_ANIMAL_SILK": {
+     "percent": 25
+    },
+    "BUILDING_SMITH_ELECTRUM": {
+     "percent": 25
+    },
+    "BUILDING_SMELTER_ELECTRUM": {
+     "percent": 25
+    },
+    "BUILDING_AUCTION_HOUSE": {
+     "percent": 25
+    },
+    "BUILDING_MINE_PLATINUM": {
+     "percent": 25
+    },
+    "BUILDING_SMITH_PLATINUM": {
+     "percent": 25
+    },
+    "BUILDING_SMELTER_PLATINUM": {
+     "percent": 25
+    },
+    "BUILDING_INSURANCE_OFFICE": {
+     "percent": 25
+    },
+    "BUILDING_GUILD_HALL": {
+     "percent": 25
+    },
+    "BUILDING_GAMBLING_HALL": {
+     "percent": 25
+    },
+    "BUILDING_TOLL_HOUSE": {
+     "percent": 25
+    },
+    "BUILDING_BANK": {
+     "percent": 25
+    },
+    "BUILDING_COMMERCIAL_PORT": {
+     "percent": 25
+    },
+    "BUILDING_MANUFACTURING_DISTRICT": {
+     "percent": 25
+    },
+    "BUILDING_MINE_AMBER": {
+     "percent": 25
+    },
+    "BUILDING_CORE_MINE": {
+     "percent": 25
+    },
+    "BUILDING_TRADING_POST": {
+     "percent": 25
+    },
+    "BUILDING_SHOPPING_DISTRICT": {
+     "percent": 25
+    },
+    "BUILDING_OFFICIUM": {
+     "percent": 25
+    },
+    "BUILDING_MODERN_OFFICES": {
+     "percent": 25
+    },
+    "BUILDING_AQUAFARM": {
+     "percent": 25
+    },
+    "BUILDING_METALS_MEGACOMPLEX": {
+     "percent": 25
+    },
+    "BUILDING_MALL": {
+     "percent": 25
+    },
+    "BUILDING_HYPERMARKET": {
+     "percent": 25
+    },
+    "BUILDING_SUPERMARKET": {
+     "percent": 25
+    },
+    "BUILDING_TEXTILE_MANUFACTURING_DISTRICT": {
+     "percent": 25
+    },
+    "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES": {
+     "percent": 25
+    },
+    "BUILDING_CUSTOMS_OFFICE": {
+     "percent": 25
+    },
+    "BUILDING_INTERNATIONAL_PORT": {
+     "percent": 25
+    },
+    "BUILDING_CASINO": {
+     "percent": 25
+    },
+    "BUILDING_OCEAN_ADMINISTRATION": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "tradeRoute": {
+    "percent": 10
+   },
+   "percent": 5
+  }
+ },
+ "extraYieldThreshold": {
+  "empire": {
+   "commerce": {
+    "flat": 5
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": -10
+  }
+ },
+ "combat": {
+  "empire": {
+   "cityDefense": {
+    "percent": -5
+   },
+   "espionageDefense": {
+    "percent": -5
+   },
+   "bombardDefense": {
+    "percent": -5
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "corporation": {
+    "percent": -10
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": -15
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_FINANCIAL",
+  "priority": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -3
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 12
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": -1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitFinancial.dds"
+  }
+ },
+ "identity": {
+  "impurePropertyManipulators": true
+ },
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_FINANCIAL_STRATEGY",
+ "excludes": [
+  "TRAIT_GREEDY1"
+ ],
+ "gold": {
+  "empire": {
+   "flat": 2,
+   "percent": 5,
+   "capital": {
+    "percent": 5
+   },
+   "specialist": {
+    "perSpecialist": 1
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "byTech": {
+    "TECH_CARVING": {
+     "percent": 20
+    },
+    "TECH_PERSONAL_ADORNMENTS": {
+     "percent": 20
+    },
+    "TECH_BEAD_MAKING": {
+     "percent": 20
+    },
+    "TECH_BARTER": {
+     "percent": 20
+    },
+    "TECH_ARITHMETIC": {
+     "percent": 20
+    },
+    "TECH_MINING": {
+     "percent": 20
+    },
+    "TECH_STANDARDIZATION": {
+     "percent": 20
+    },
+    "TECH_BOARD_GAMES": {
+     "percent": 20
+    },
+    "TECH_MASONRY": {
+     "percent": 20
+    },
+    "TECH_METAL_CASTING": {
+     "percent": 20
+    },
+    "TECH_TRADE": {
+     "percent": 20
+    },
+    "TECH_SERICULTURE": {
+     "percent": 20
+    },
+    "TECH_BRASS_WORKING": {
+     "percent": 20
+    },
+    "TECH_MATHEMATICS": {
+     "percent": 20
+    },
+    "TECH_CURRENCY": {
+     "percent": 20
+    },
+    "TECH_IRON_WORKING": {
+     "percent": 20
+    },
+    "TECH_SPICE_TRADE": {
+     "percent": 20
+    },
+    "TECH_INSURANCE": {
+     "percent": 20
+    },
+    "TECH_GUILDS": {
+     "percent": 20
+    },
+    "TECH_USURY": {
+     "percent": 20
+    },
+    "TECH_BANKING": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 10,
+   "units": {
+    "UNIT_MERCHANT": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": -10
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "cost": {
+    "percent": -25
+   }
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 5
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 8,
+     "scope": "city"
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,163 @@
+{
+ "type": "TRAIT_HUMANITARIAN",
+ "description": "TXT_KEY_TRAIT_COMPLEX_HUMANITARIAN",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_HUMANITARIAN_PEDIA",
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": -10
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1,
+   "largestCity": {
+    "flat": 1
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": 20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 20
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_NATURE_PRESERVE": {
+     "percent": 75
+    }
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 20
+   },
+   "attitude": {
+    "flat": 1
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_HUMANITARIAN"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -2
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": -5
+   },
+   {
+    "FLAVOR_GOLD": -2
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 21
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitHumanitarian.dds"
+  }
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_HUMANITARIAN_SHORT"
+ },
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_HUMANITARIAN_STRATEGY",
+ "excludes": [
+  "TRAIT_CRUEL"
+ ],
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": -2
+  }
+ },
+ "hurry": {
+  "empire": {
+   "anger": {
+    "percent": 25
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": -2
+   },
+   "distanceModifier": {
+    "percent": -10
+   },
+   "nationalityMod": {
+    "percent": -10
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_HUMANITARIAN": [
+    "UNITCOMBAT_HEALTH_CARE",
+    "UNITCOMBAT_RECON"
+   ]
+  }
+ }
+}

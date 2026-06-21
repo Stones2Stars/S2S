@@ -1,0 +1,215 @@
+{
+ "type": "TRAIT_ANTI_CLERICAL1",
+ "description": "TXT_KEY_TRAIT_COMPLEX_ANTI_CLERICAL1",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ANTI_CLERICAL1_PEDIA",
+ "enables": {
+  "traits": [
+   "TRAIT_ANTI_CLERICAL2"
+  ]
+ },
+ "happiness": {
+  "empire": {
+   "nonStateReligion": {
+    "flat": -1
+   }
+  }
+ },
+ "combat": {
+  "empire": {
+   "espionageDefense": {
+    "percent": 25
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "corporation": {
+    "percent": -10
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "flat": 22
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "religiousAnarchy": {
+    "percent": 100
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "greatPeopleRate": {
+    "percent": -10
+   },
+   "happiness": {
+    "flat": -1
+   },
+   "unitProduction": {
+    "percent": -5
+   },
+   "buildingProduction": {
+    "percent": -5
+   },
+   "freeExperience": {
+    "flat": -1
+   },
+   "holyCityXP": {
+    "percent": -5
+   },
+   "spreadProbability": {
+    "percent": -15
+   },
+   "nonStateSpreadProbability": {
+    "percent": -15
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "holyCityGood": {
+    "flat": -5
+   },
+   "holyCityBad": {
+    "flat": 5
+   },
+   "badReligionMod": {
+    "percent": 20
+   },
+   "goodReligionMod": {
+    "percent": -20
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 6,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_ANTI_CLERICAL",
+  "priority": -1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -1
+   },
+   {
+    "FLAVOR_RELIGION": 12
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": -1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitAnti-Clerical.dds"
+  }
+ },
+ "identity": {
+  "negativeTrait": true
+ },
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_ANTI_CLERICAL_STRATEGY",
+ "excludes": [
+  "TRAIT_FANATICAL",
+  "TRAIT_PIOUS1",
+  "TRAIT_SPIRITUAL1"
+ ],
+ "buildRate": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_MISSIONARY": {
+     "percent": -25
+    }
+   },
+   "military": {
+    "percent": 5
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "byTech": {
+    "TECH_SIKHISM": {
+     "percent": -20
+    },
+    "TECH_DIVINE_RIGHT": {
+     "percent": -20
+    },
+    "TECH_ENLIGHTENMENT": {
+     "percent": -20
+    },
+    "TECH_MORMON": {
+     "percent": -20
+    },
+    "TECH_CAO_DAI": {
+     "percent": -20
+    },
+    "TECH_SCIENTOLOGY": {
+     "percent": -20
+    },
+    "TECH_BAHAI": {
+     "percent": -20
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 10,
+   "units": {
+    "UNIT_PROPHET": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "flat": 1,
+   "nonStateHolyCityXP": {
+    "percent": -5
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -10
+   }
+  }
+ },
+ "policies": {
+  "allowInquisitions": true,
+  "bansNonStateReligions": true
+ }
+}

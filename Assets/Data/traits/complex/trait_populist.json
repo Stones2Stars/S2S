@@ -1,0 +1,174 @@
+{
+ "type": "TRAIT_POPULIST",
+ "description": "TXT_KEY_TRAIT_COMPLEX_POPULIST",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_POPULIST_PEDIA",
+ "food": {
+  "empire": {
+   "tradeRoute": {
+    "percent": 60
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "commerce": {
+  "empire": {
+   "specialist": {
+    "perSpecialist": -1
+   }
+  }
+ },
+ "extraYieldThreshold": {
+  "empire": {
+   "food": {
+    "flat": 8
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "largestCity": {
+    "flat": 1
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "combat": {
+  "empire": {
+   "cityDefense": {
+    "percent": -10
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": -20
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -1
+   },
+   "national": {
+    "flat": 1
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_POPULIST"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -2
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_ESPIONAGE": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPopulist.dds"
+  }
+ },
+ "identity": {
+  "negativeTrait": true,
+  "impurePropertyManipulators": true
+ },
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_POPULIST_STRATEGY",
+ "excludes": [
+  "TRAIT_PHILOSOPHICAL"
+ ],
+ "gold": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -40
+  }
+ },
+ "freeSpecialists": {
+  "empire": {
+   "any": -1
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 4
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": -10
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ }
+}

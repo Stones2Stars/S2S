@@ -1,0 +1,144 @@
+{
+ "type": "TRAIT_PHILOSOPHICAL",
+ "description": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL_PEDIA",
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CLONING_LABORATORY": {
+     "percent": 20
+    },
+    "BUILDING_CONVENTION_CENTRE": {
+     "percent": 20
+    },
+    "BUILDING_UNIVERSITY": {
+     "percent": 20
+    },
+    "BUILDING_BATH_HOUSE": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 50
+  }
+ },
+ "goldenAge": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 10
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 20
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_PHILOSOPHICAL"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -2
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   },
+   {
+    "FLAVOR_ESPIONAGE": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPhilosophical.dds"
+  }
+ },
+ "identity": {
+  "impurePropertyManipulators": true
+ },
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_PHILOSOPHICAL_STRATEGY",
+ "excludes": [
+  "TRAIT_POPULIST"
+ ],
+ "commerce": {
+  "empire": {
+   "specialist": {
+    "perSpecialist": 1
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 20
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "anger": {
+    "percent": 25
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "policies": {
+  "freeSpecialistPerNationalWonder": true,
+  "freeSpecialistPerWorldWonder": true
+ }
+}

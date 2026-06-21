@@ -1,0 +1,176 @@
+{
+ "type": "TRAIT_FOREIGN1",
+ "description": "TXT_KEY_TRAIT_COMPLEX_FOREIGN1",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_FOREIGN1_PEDIA",
+ "enables": {
+  "traits": [
+   "TRAIT_FOREIGN2"
+  ]
+ },
+ "buildRate": {
+  "empire": {
+   "worldWonder": {
+    "percent": 10
+   },
+   "teamWonder": {
+    "percent": 10
+   },
+   "nationalWonder": {
+    "percent": -10
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "capital": {
+    "percent": -5
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": -1,
+   "percent": -5,
+   "capital": {
+    "percent": -10
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": -1,
+   "percent": -5,
+   "capital": {
+    "percent": -10
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -20
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "foreign": {
+    "percent": 30
+   }
+  }
+ },
+ "grants": {
+  "freePromotions": {
+   "PROMOTION_LOYALTY": [
+    "UNITCOMBAT_SPY"
+   ]
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_FOREIGNER",
+  "priority": -1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -1
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": -1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   },
+   {
+    "FLAVOR_ESPIONAGE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitForeigner.dds"
+  }
+ },
+ "identity": {
+  "negativeTrait": true
+ },
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_FOREIGN_STRATEGY",
+ "excludes": [
+  "TRAIT_POLITICIAN1"
+ ],
+ "food": {
+  "empire": {
+   "capital": {
+    "percent": -5
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "capital": {
+    "percent": -5
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "experience": {
+  "empire": {
+   "capital": {
+    "percent": -5
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "corporation": {
+    "percent": -10
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 50
+   },
+   "religiousAnarchy": {
+    "percent": 25
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": 1
+   }
+  }
+ }
+}

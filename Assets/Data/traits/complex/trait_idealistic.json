@@ -1,0 +1,178 @@
+{
+ "type": "TRAIT_IDEALISTIC",
+ "description": "TXT_KEY_TRAIT_COMPLEX_IDEALISTIC",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_IDEALISTIC_PEDIA",
+ "culture": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": -10
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 25
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_IDEALISTIC"
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": -1
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitIdealistic.dds"
+  }
+ },
+ "identity": {
+  "negativeTrait": true
+ },
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_IDEALISTIC_STRATEGY",
+ "excludes": [
+  "TRAIT_PRAGMATIC"
+ ],
+ "food": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": 10
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 2,
+   "largestCity": {
+    "flat": 1
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "flat": -2
+  }
+ },
+ "combat": {
+  "empire": {
+   "cityDefense": {
+    "percent": -10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": -20
+   },
+   "numCities": {
+    "percent": -20
+   },
+   "corporation": {
+    "percent": -20
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
+   }
+  }
+ }
+}

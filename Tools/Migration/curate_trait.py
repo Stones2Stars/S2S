@@ -495,7 +495,9 @@ def main():
     args = ap.parse_args()
     store = Store()
     table = store.table("TraitInfo")
-    complex_ids = set(v["replacement"] for v in store.replacements.get("TraitInfo", {}).values())
+    repl_map = store.replacements.get("TraitInfo", {})        # {baseType: {"replacement": rid, "condition": elem}}
+    complex_ids = set(v["replacement"] for v in repl_map.values())
+    rid_to_base = {v["replacement"]: b for b, v in repl_map.items()}   # replacement type -> the base it overwrites
     results, all_leftover, folders = OrderedDict(), set(), {}
     for typ, rec in table.items():
         obj, leftover = curate(typ, rec, store)
@@ -521,12 +523,43 @@ def main():
             print(json.dumps(results.get(nm, {"(not found)": nm}), indent=1, ensure_ascii=False))
     if args.write:
         out_dir = os.path.join(REPO, "Assets", "Data", "traits")
-        for typ, obj in results.items():                       # simple/ + complex/ — two separate sets (folders)
-            folder = os.path.join(out_dir, folders[typ])
-            os.makedirs(folder, exist_ok=True)
-            with open(os.path.join(folder, typ.lower() + ".json"), "w") as f:
+
+        def _write(folder, typ, obj):
+            d = os.path.join(out_dir, folder)
+            os.makedirs(d, exist_ok=True)
+            with open(os.path.join(d, typ.lower() + ".json"), "w") as f:
                 json.dump(obj, f, indent=1, ensure_ascii=False)
-        print("\nwrote %d TraitInfo JSON files under Assets/Data/traits/{simple,complex}/" % len(results))
+
+        # Fresh dirs so types that are no longer emitted standalone (the replacement records, now MERGED into
+        # complex/<base>) don't linger as stale files.
+        for sub in ("simple", "complex"):
+            d = os.path.join(out_dir, sub)
+            if os.path.isdir(d):
+                for fn in os.listdir(d):
+                    if fn.endswith(".json"):
+                        os.remove(os.path.join(d, fn))
+        nwritten = 0
+        for typ, obj in results.items():
+            if typ in rid_to_base:
+                continue   # standalone replacement record -> subsumed into complex/<base> below; don't emit alone
+            _write(folders[typ], typ, obj)                    # base/plain -> simple/ (or complex-only -> complex/)
+            nwritten += 1
+            if typ in repl_map:
+                # base trait WITH a complex replacement: emit the EFFECTIVE complex def, keyed by the BASE type
+                # (the type the player actually holds) so the calc can pick it by GAMEOPTION. Shallow top-level
+                # overwrite: the replacement's sections win (the engine's CvInfoReplacements is a whole-Info
+                # overwrite -- e.g. industrious's replacement `production` block has no tradeRoute -> 0), and the
+                # base fills only the sections the replacement omits (owner ruling 2026-06-21). This makes the
+                # complex/ set SELF-COMPLETE and fully INDEPENDENT of simple/ -- the two trait systems live
+                # completely separate, as they should. It COMPLETES the 2026-06-15 simple/complex split (each
+                # set a standalone, full trait set), it does NOT reverse it.
+                rid = repl_map[typ]["replacement"]
+                merged = OrderedDict(obj)
+                merged.update(results.get(rid, OrderedDict()))
+                merged["type"] = typ
+                _write("complex", typ, merged)
+                nwritten += 1
+        print("\nwrote %d TraitInfo JSON files under Assets/Data/traits/{simple,complex}/" % nwritten)
 
 
 if __name__ == "__main__":

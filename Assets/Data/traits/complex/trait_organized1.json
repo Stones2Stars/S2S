@@ -1,0 +1,148 @@
+{
+ "type": "TRAIT_ORGANIZED1",
+ "description": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED1",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED1_PEDIA",
+ "enables": {
+  "traits": [
+   "TRAIT_ORGANIZED2"
+  ]
+ },
+ "buildRate": {
+  "empire": {
+   "teamWonder": {
+    "percent": 25
+   },
+   "military": {
+    "percent": 10
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "capital": {
+    "percent": 20
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": -1,
+   "capital": {
+    "percent": -10
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": -30
+   },
+   "numCities": {
+    "percent": -30
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": -30
+   },
+   "freeCivilian": {
+    "flat": 5,
+    "perPopulation": 15
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_ORGANIZED",
+  "priority": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -2
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_GOLD": 9
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": -2
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitOrganized.dds"
+  }
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_ORGANIZED_SHORT"
+ },
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED_STRATEGY",
+ "excludes": [
+  "TRAIT_IMPULSIVE1"
+ ],
+ "production": {
+  "empire": {
+   "specialist": {
+    "perSpecialist": 1
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "largestCity": {
+    "flat": 1
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "experience": {
+  "empire": {
+   "levelModifier": {
+    "percent": 5
+   }
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": 100
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 15
+   }
+  }
+ }
+}

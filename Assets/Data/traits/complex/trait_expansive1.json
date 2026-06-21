@@ -1,0 +1,154 @@
+{
+ "type": "TRAIT_EXPANSIVE1",
+ "description": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE1",
+ "civilopedia": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE1_PEDIA",
+ "enables": {
+  "traits": [
+   "TRAIT_EXPANSIVE2"
+  ]
+ },
+ "buildRate": {
+  "empire": {
+   "worldWonder": {
+    "percent": -10
+   },
+   "unitCombats": {
+    "UNITCOMBAT_SETTLER": {
+     "percent": 50
+    },
+    "UNITCOMBAT_WORKER": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "largestCity": {
+    "flat": 1
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": -20
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "inBorder": {
+    "percent": -25
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": -15
+   },
+   "numCities": {
+    "percent": -15
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "distanceModifier": {
+    "percent": -5
+   }
+  }
+ },
+ "succession": {
+  "promotionLine": "PROMOTIONLINE_EXPANSIVE",
+  "priority": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -1
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_SCIENCE": -5
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitExpansive.dds"
+  }
+ },
+ "identity": {
+  "shortDescription": "TXT_KEY_TRAIT_EXPANSIVE_SHORT"
+ },
+ "strategy": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE_STRATEGY",
+ "excludes": [
+  "TRAIT_MINIMALIST1"
+ ],
+ "food": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "combat": {
+  "empire": {
+   "cityDefense": {
+    "percent": -5
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeCivilian": {
+    "perPopulation": 15
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 35
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": 100
+  }
+ }
+}
