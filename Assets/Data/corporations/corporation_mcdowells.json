@@ -11,7 +11,7 @@
   "city": {
    "flat": [
     {
-     "value": 175,
+     "value": 1.75,
      "enabled": {
       "HAS_CORPORATION": "CORPORATION_MCDOWELLS"
      },

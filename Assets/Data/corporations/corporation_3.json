@@ -18,7 +18,7 @@
   "city": {
    "flat": [
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "HAS_CORPORATION": "CORPORATION_3"
      },

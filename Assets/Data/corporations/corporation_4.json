@@ -11,7 +11,7 @@
   "city": {
    "flat": [
     {
-     "value": 50,
+     "value": 0.5,
      "enabled": {
       "HAS_CORPORATION": "CORPORATION_4"
      },
@@ -40,7 +40,7 @@
   "city": {
    "flat": [
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "HAS_CORPORATION": "CORPORATION_4"
      },

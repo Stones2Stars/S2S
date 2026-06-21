@@ -18,7 +18,7 @@
   "city": {
    "flat": [
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "HAS_CORPORATION": "CORPORATION_SAFARI"
      },
@@ -39,7 +39,7 @@
   "city": {
    "flat": [
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "HAS_CORPORATION": "CORPORATION_SAFARI"
      },

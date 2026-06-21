@@ -40,7 +40,7 @@ from collections import OrderedDict
 
 import engine
 import curate_common as cc
-from curate_common import de_i
+from curate_common import de_i, descale100
 from store import Store, REPO
 
 # Corporation follows the RELIGION model (owner 2026-06-15): founding creates the HQ building, then the corp
@@ -105,7 +105,13 @@ def _apply_family(fam, spec, c, typ, per_bonus):
     per = per_bonus if perbonus else None
     if keys:                                   # SPLIT base family: the identifier IS the family name
         for ident, v in engine.named_array(c, keys).items():
-            _put_entry(fam, ident, scope, member, unit, _entry(v, typ, per))
+            # `*Produced` (perbonus) is x100 in the legacy XML -- getYieldProduced/getCommerceProduced. The C++
+            # accessor is NOT named get...100() so the accessor-name heuristic misses it, but the MATH is decisive:
+            # getCorporationYieldByCorporation (CvCity.cpp:12594-12602) makes produced=75 -> 0.75/bonus, so it is x100.
+            # De-scale to human (readJson re-applies x100). `*Changes` (perbonus=False) is genuinely x1
+            # (getYieldChange is x100'd in-formula) -> stays as-is.
+            vv = descale100(v) if perbonus else v
+            _put_entry(fam, ident, scope, member, unit, _entry(vv, typ, per))
     else:
         t = engine.text(c)
         if engine.is_int(t) and int(t) != 0:

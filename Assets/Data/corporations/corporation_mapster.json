@@ -11,7 +11,7 @@
   "city": {
    "flat": [
     {
-     "value": 75,
+     "value": 0.75,
      "enabled": {
       "HAS_CORPORATION": "CORPORATION_MAPSTER"
      },

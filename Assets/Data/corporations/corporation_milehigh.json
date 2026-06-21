@@ -18,7 +18,7 @@
   "city": {
    "flat": [
     {
-     "value": 50,
+     "value": 0.5,
      "enabled": {
       "HAS_CORPORATION": "CORPORATION_MILEHIGH"
      },
@@ -40,7 +40,7 @@
   "city": {
    "flat": [
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "HAS_CORPORATION": "CORPORATION_MILEHIGH"
      },

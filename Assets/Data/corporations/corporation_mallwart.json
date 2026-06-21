@@ -11,7 +11,7 @@
   "city": {
    "flat": [
     {
-     "value": 150,
+     "value": 1.5,
      "enabled": {
       "HAS_CORPORATION": "CORPORATION_MALLWART"
      },
