@@ -54,10 +54,10 @@
  },
  "gold": {
   "city": {
-   "flat": 50,
-   "percent": [
+   "flat": [
+    50,
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "BONUS_PERSONAL_STARCRAFT",
       "scope": "city",

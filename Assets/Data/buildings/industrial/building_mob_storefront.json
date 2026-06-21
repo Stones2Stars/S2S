@@ -46,9 +46,6 @@
  },
  "espionage": {
   "city": {
-   "insidiousness": {
-    "flat": 35
-   },
    "flat": -1
   }
  },
@@ -115,6 +112,13 @@
  "hurryCost": {
   "city": {
    "percent": 100
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "insidiousness": {
+    "flat": 35
+   }
   }
  },
  "PROPERTY_CRIME": {

@@ -91,11 +91,9 @@
       "type": "TECH_REACTIONLESS_DRIVE",
       "scope": "team"
      }
-    }
-   ],
-   "percent": [
+    },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_PERSONAL_STARCRAFT",
       "scope": "city",

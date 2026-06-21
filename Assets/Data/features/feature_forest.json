@@ -17,11 +17,6 @@
    "percent": 25
   }
  },
- "movement": {
-  "plot": {
-   "flat": 1
-  }
- },
  "defense": {
   "plot": {
    "amount": {
@@ -101,6 +96,7 @@
   "growth": "AS2D_FEATUREGROWTH"
  },
  "identity": {
+  "movementCost": 1,
   "popDestroys": 3,
   "validTerrains": [
    "TERRAIN_GRASSLAND",

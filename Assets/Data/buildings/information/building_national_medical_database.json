@@ -43,14 +43,14 @@
  "allowed": {
   "empire": 1
  },
- "gold": {
-  "city": {
-   "flat": -20
-  }
- },
  "health": {
   "city": {
    "flat": 5
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 20
   }
  },
  "greatPeopleRate": {

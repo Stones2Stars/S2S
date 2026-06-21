@@ -28,9 +28,6 @@
   "world": 1
  },
  "gold": {
-  "city": {
-   "flat": -2
-  },
   "empire": {
    "buildings": {
     "BUILDING_COMMUNICATIONS_SATELLITE": {
@@ -56,6 +53,11 @@
  "happiness": {
   "empire": {
    "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 2
   }
  },
  "cost": {

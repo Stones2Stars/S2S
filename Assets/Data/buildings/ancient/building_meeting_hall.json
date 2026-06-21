@@ -47,11 +47,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -2
-  }
- },
  "culture": {
   "city": {
    "percent": 1
@@ -88,6 +83,11 @@
      }
     }
    ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 2
   }
  },
  "revolution": {

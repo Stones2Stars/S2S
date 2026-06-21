@@ -39,16 +39,16 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -1
-  }
- },
  "buildRate": {
   "city": {
    "military": {
     "percent": 5
    }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
   }
  },
  "allowedSpecialists": {

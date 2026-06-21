@@ -76,11 +76,9 @@
       "type": "TECH_TIME_TRAVEL",
       "scope": "team"
      }
-    }
-   ],
-   "percent": [
+    },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_HUMAN_MOD_NOVEL_SENSES",
       "scope": "city",

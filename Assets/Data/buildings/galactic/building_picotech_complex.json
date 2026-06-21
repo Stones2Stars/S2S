@@ -64,10 +64,10 @@
  },
  "gold": {
   "city": {
-   "flat": 200,
-   "percent": [
+   "flat": [
+    200,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_ALUMINUM_INGOTS",
       "scope": "city",
@@ -75,7 +75,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_BIOPOLYMERS",
       "scope": "city",
@@ -83,7 +83,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_CHEMICALS",
       "scope": "city",
@@ -91,7 +91,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_FIBERGLASS",
       "scope": "city",
@@ -99,7 +99,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_GRAPHENE",
       "scope": "city",
@@ -107,7 +107,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_NANOTUBES",
       "scope": "city",
@@ -115,7 +115,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_STEEL_INGOTS",
       "scope": "city",
@@ -123,7 +123,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_TITANIUM_INGOTS",
       "scope": "city",

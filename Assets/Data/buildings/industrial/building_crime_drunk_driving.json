@@ -42,18 +42,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -5
-  }
- },
- "espionage": {
-  "city": {
-   "insidiousness": {
-    "flat": 6
-   }
-  }
- },
  "happiness": {
   "city": {
    "flat": -2,
@@ -67,6 +55,18 @@
    "flat": -2,
    "perPopulation": {
     "percent": -10
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "insidiousness": {
+    "flat": 6
    }
   }
  },

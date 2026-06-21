@@ -41,10 +41,10 @@
  },
  "gold": {
   "city": {
-   "percent": [
-    1,
+   "percent": 1,
+   "flat": [
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_TRANSPARENT_ALUMINUM",
       "scope": "city",

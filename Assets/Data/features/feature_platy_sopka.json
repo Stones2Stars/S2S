@@ -2,11 +2,6 @@
  "type": "FEATURE_PLATY_SOPKA",
  "description": "TXT_KEY_FEATURE_SOPKA",
  "civilopedia": "TXT_KEY_FEATURE_SOPKA_PEDIA",
- "movement": {
-  "plot": {
-   "flat": 1
-  }
- },
  "vision": {
   "plot": {
    "seeThrough": {
@@ -33,6 +28,7 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "movementCost": 1,
   "requiresFlatlands": true,
   "noCity": true,
   "noImprovement": true,

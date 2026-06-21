@@ -60,11 +60,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -1
-  }
- },
  "health": {
   "city": {
    "perPopulation": {
@@ -87,6 +82,11 @@
      }
     }
    ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
   }
  },
  "hurryCost": {

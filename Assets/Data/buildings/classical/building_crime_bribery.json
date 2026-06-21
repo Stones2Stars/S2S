@@ -32,9 +32,6 @@
  },
  "espionage": {
   "city": {
-   "insidiousness": {
-    "flat": 40
-   },
    "percent": -20
   }
  },
@@ -58,6 +55,13 @@
  "revolution": {
   "city": {
    "flat": 40
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "insidiousness": {
+    "flat": 40
+   }
   }
  },
  "espionageDefense": {

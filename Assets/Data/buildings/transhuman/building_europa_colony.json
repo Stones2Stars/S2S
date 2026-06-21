@@ -51,14 +51,14 @@
    "flat": 5
   }
  },
- "gold": {
-  "city": {
-   "flat": -10
-  }
- },
  "research": {
   "city": {
    "flat": 120
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
   }
  },
  "revolution": {

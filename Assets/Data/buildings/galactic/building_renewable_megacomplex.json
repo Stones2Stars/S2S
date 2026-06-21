@@ -63,9 +63,9 @@
  },
  "gold": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_FULLERENE",
       "scope": "city",
@@ -73,7 +73,7 @@
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "BONUS_QUANTUM_DOTS",
       "scope": "city",

@@ -45,11 +45,6 @@
    "percent": 50
   }
  },
- "gold": {
-  "city": {
-   "flat": -250
-  }
- },
  "buildRate": {
   "city": {
    "military": {
@@ -67,6 +62,11 @@
    "amount": {
     "percent": -300
    }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 250
   }
  },
  "hurryCost": {

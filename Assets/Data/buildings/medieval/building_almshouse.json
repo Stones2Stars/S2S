@@ -25,17 +25,17 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -1
-  }
- },
  "happiness": {
   "city": {
    "flat": 1
   }
  },
  "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
   "city": {
    "flat": 1
   }

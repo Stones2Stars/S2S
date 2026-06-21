@@ -33,7 +33,6 @@
  "gold": {
   "city": {
    "flat": [
-    -10,
     {
      "value": 12,
      "enabled": {
@@ -67,6 +66,11 @@
      }
     }
    ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
   }
  },
  "hurryCost": {

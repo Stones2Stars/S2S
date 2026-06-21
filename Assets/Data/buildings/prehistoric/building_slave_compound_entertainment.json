@@ -79,17 +79,17 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -1
-  }
- },
  "culture": {
   "city": {
    "flat": 3
   }
  },
  "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
   "city": {
    "flat": 1
   }

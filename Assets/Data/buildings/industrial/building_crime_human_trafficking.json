@@ -36,13 +36,6 @@
    ]
   }
  },
- "espionage": {
-  "city": {
-   "insidiousness": {
-    "flat": 20
-   }
-  }
- },
  "happiness": {
   "city": {
    "flat": -6,
@@ -71,6 +64,13 @@
  "revolution": {
   "city": {
    "flat": 50
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "insidiousness": {
+    "flat": 20
+   }
   }
  },
  "PROPERTY_DISEASE": {

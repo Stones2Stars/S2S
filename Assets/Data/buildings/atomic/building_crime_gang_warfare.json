@@ -35,13 +35,6 @@
    "percent": -10
   }
  },
- "espionage": {
-  "city": {
-   "insidiousness": {
-    "flat": 10
-   }
-  }
- },
  "happiness": {
   "city": {
    "flat": -4,
@@ -70,6 +63,13 @@
  "revolution": {
   "city": {
    "flat": 40
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "insidiousness": {
+    "flat": 10
+   }
   }
  },
  "PROPERTY_CRIME": {

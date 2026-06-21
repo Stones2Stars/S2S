@@ -37,11 +37,6 @@
  "allowed": {
   "world": 1
  },
- "gold": {
-  "city": {
-   "flat": -10
-  }
- },
  "research": {
   "city": {
    "flat": 10
@@ -50,6 +45,11 @@
  "culture": {
   "city": {
    "flat": 3
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
   }
  },
  "greatPeopleRate": {

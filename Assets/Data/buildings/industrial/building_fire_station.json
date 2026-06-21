@@ -48,11 +48,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -1
-  }
- },
  "happiness": {
   "city": {
    "flat": 2
@@ -61,6 +56,11 @@
  "health": {
   "city": {
    "flat": 2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
   }
  },
  "hurryCost": {

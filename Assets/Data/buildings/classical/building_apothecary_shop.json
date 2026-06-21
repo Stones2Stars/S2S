@@ -66,10 +66,9 @@
  },
  "gold": {
   "city": {
-   "flat": -1,
-   "percent": [
+   "flat": [
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_OPIUM",
       "scope": "city",
@@ -77,7 +76,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_PEYOTE",
       "scope": "city",
@@ -85,7 +84,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_HEMP",
       "scope": "city",
@@ -93,7 +92,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_COCOA",
       "scope": "city",
@@ -106,6 +105,11 @@
  "health": {
   "city": {
    "flat": 2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
   }
  },
  "hurryCost": {

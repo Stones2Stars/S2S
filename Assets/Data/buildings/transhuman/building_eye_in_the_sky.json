@@ -57,11 +57,6 @@
  "allowed": {
   "world": 1
  },
- "gold": {
-  "city": {
-   "flat": -5
-  }
- },
  "culture": {
   "city": {
    "flat": -3
@@ -73,6 +68,11 @@
   },
   "empire": {
    "percent": 2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
   }
  },
  "PROPERTY_CRIME": {

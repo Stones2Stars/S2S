@@ -2,11 +2,6 @@
  "type": "FEATURE_CRATER_SMALL",
  "description": "TXT_KEY_FEATURE_CRATER_SMALL",
  "civilopedia": "TXT_KEY_FEATURE_CRATER_PEDIA",
- "movement": {
-  "plot": {
-   "flat": 1
-  }
- },
  "vision": {
   "plot": {
    "seeThrough": {
@@ -23,6 +18,7 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "movementCost": 1,
   "appearance": 250,
   "popDestroys": 20,
   "noAdjacent": true,

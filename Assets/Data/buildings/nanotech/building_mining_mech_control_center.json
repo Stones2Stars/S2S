@@ -50,9 +50,9 @@
  },
  "gold": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_AMBER",
       "scope": "city",
@@ -60,7 +60,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_BAUXITE_ORE",
       "scope": "city",
@@ -68,7 +68,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_COAL",
       "scope": "city",
@@ -76,7 +76,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_COPPER_ORE",
       "scope": "city",
@@ -84,7 +84,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_DIAMOND",
       "scope": "city",
@@ -92,7 +92,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_CLAY",
       "scope": "city",
@@ -100,7 +100,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_FOSSILS",
       "scope": "city",
@@ -108,7 +108,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_GEODE",
       "scope": "city",
@@ -116,7 +116,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_GOLD_ORE",
       "scope": "city",
@@ -124,7 +124,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_IRON_ORE",
       "scope": "city",
@@ -132,7 +132,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_JADE",
       "scope": "city",
@@ -140,7 +140,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_LEAD_ORE",
       "scope": "city",
@@ -148,7 +148,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_MARBLE",
       "scope": "city",
@@ -156,7 +156,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_NATURAL_GAS",
       "scope": "city",
@@ -164,7 +164,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_OBSIDIAN",
       "scope": "city",
@@ -172,7 +172,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_OIL",
       "scope": "city",
@@ -180,7 +180,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_PLATINUM_ORE",
       "scope": "city",
@@ -188,7 +188,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_RUBIES",
       "scope": "city",
@@ -196,7 +196,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SAPPHIRES",
       "scope": "city",
@@ -204,7 +204,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SALT",
       "scope": "city",
@@ -212,7 +212,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SILVER_ORE",
       "scope": "city",
@@ -220,7 +220,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_STONE",
       "scope": "city",
@@ -228,7 +228,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SULPHUR",
       "scope": "city",
@@ -236,7 +236,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_TIN_ORE",
       "scope": "city",
@@ -244,7 +244,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_TITANIUM_ORE",
       "scope": "city",
@@ -252,7 +252,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_TURQUOISE",
       "scope": "city",
@@ -260,7 +260,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_URANIUM",
       "scope": "city",

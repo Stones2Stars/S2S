@@ -44,17 +44,14 @@
  },
  "gold": {
   "city": {
-   "flat": -10,
-   "percent": [
-    {
-     "value": 100,
-     "enabled": {
-      "type": "BONUS_BIOPOLYMERS",
-      "scope": "city",
-      "min": 1
-     }
+   "flat": {
+    "value": 1,
+    "enabled": {
+     "type": "BONUS_BIOPOLYMERS",
+     "scope": "city",
+     "min": 1
     }
-   ]
+   }
   }
  },
  "research": {
@@ -109,11 +106,9 @@
       "type": "TECH_BIOMATHEMATICS",
       "scope": "team"
      }
-    }
-   ],
-   "percent": [
+    },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_BIOPOLYMERS",
       "scope": "city",
@@ -121,7 +116,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_ENZYMES",
       "scope": "city",
@@ -142,6 +137,11 @@
      }
     }
    ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
   }
  },
  "hurryCost": {

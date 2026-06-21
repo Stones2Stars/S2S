@@ -17,11 +17,6 @@
    "percent": 25
   }
  },
- "movement": {
-  "plot": {
-   "flat": 2
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface\\Buttons\\WorldBuilder\\lunarHighlands.dds"
@@ -37,6 +32,7 @@
  },
  "identity": {
   "found": true,
+  "movementCost": 2,
   "mapCategories": [
    "MAPCATEGORY_LUNAR"
   ]

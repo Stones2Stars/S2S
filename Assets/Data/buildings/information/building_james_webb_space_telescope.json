@@ -32,14 +32,14 @@
  "allowed": {
   "world": 1
  },
- "gold": {
-  "city": {
-   "flat": -10
-  }
- },
  "research": {
   "city": {
    "flat": 20
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
   }
  },
  "PROPERTY_EDUCATION": {

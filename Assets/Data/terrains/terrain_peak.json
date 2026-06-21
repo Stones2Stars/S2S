@@ -33,11 +33,6 @@
    "percent": 75
   }
  },
- "movement": {
-  "plot": {
-   "flat": 2
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface\\Buttons\\WorldBuilder\\feature_peak.dds"
@@ -47,5 +42,8 @@
   "art": {
    "icon": "ART_DEF_TERRAIN_PEAK"
   }
+ },
+ "identity": {
+  "movementCost": 2
  }
 }

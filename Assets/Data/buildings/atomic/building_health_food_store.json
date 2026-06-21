@@ -31,10 +31,10 @@
  },
  "gold": {
   "city": {
-   "flat": 3,
-   "percent": [
+   "flat": [
+    3,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_FRUIT",
       "scope": "city",
@@ -42,7 +42,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_VEGETABLES",
       "scope": "city",
@@ -50,7 +50,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_GRAINS",
       "scope": "city",
@@ -58,7 +58,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_DRUGS",
       "scope": "city",
@@ -66,7 +66,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_CHEESE",
       "scope": "city",
@@ -74,7 +74,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_NUTS",
       "scope": "city",
@@ -82,7 +82,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_BERRIES",
       "scope": "city",
@@ -90,7 +90,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SEASONING",
       "scope": "city",

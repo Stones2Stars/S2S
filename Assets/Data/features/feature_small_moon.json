@@ -2,11 +2,6 @@
  "type": "FEATURE_SMALL_MOON",
  "description": "TXT_KEY_FEATURE_SMALL_MOON",
  "civilopedia": "TXT_KEY_FEATURE_SMALL_MOON_PEDIA",
- "movement": {
-  "plot": {
-   "flat": 2
-  }
- },
  "defense": {
   "plot": {
    "amount": {
@@ -31,6 +26,7 @@
  },
  "identity": {
   "popDestroys": -1,
+  "movementCost": 2,
   "validTerrains": [
    "TERRAIN_OUTER_SOLAR_SYSTEM"
   ]

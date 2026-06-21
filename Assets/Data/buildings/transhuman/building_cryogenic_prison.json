@@ -61,11 +61,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -2
-  }
- },
  "espionage": {
   "city": {
    "flat": 1,
@@ -75,6 +70,11 @@
  "happiness": {
   "city": {
    "flat": -2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 2
   }
  },
  "revolution": {

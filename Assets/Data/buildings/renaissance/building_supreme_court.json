@@ -46,11 +46,6 @@
  "allowed": {
   "empire": 1
  },
- "gold": {
-  "city": {
-   "flat": -10
-  }
- },
  "espionage": {
   "city": {
    "flat": 4
@@ -58,7 +53,8 @@
  },
  "maintenance": {
   "city": {
-   "percent": -10
+   "percent": -10,
+   "flat": 10
   }
  },
  "hurryCost": {

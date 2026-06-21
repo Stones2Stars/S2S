@@ -37,9 +37,6 @@
  },
  "espionage": {
   "city": {
-   "insidiousness": {
-    "flat": 35
-   },
    "flat": -1
   }
  },
@@ -95,6 +92,13 @@
  "revolution": {
   "city": {
    "flat": 10
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "insidiousness": {
+    "flat": 35
+   }
   }
  },
  "grants": {

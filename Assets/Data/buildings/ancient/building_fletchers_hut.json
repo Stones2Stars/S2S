@@ -85,11 +85,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -1
-  }
- },
  "buildRate": {
   "city": {
    "units": {
@@ -106,6 +101,11 @@
      "flat": 2
     }
    }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
   }
  },
  "hurryCost": {

@@ -51,11 +51,9 @@
       "type": "TECH_MULTIVERSE_TRAVERSAL",
       "scope": "team"
      }
-    }
-   ],
-   "percent": [
+    },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SYNTHETIC_DIAMOND",
       "scope": "city",

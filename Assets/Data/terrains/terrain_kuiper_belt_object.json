@@ -17,11 +17,6 @@
    "percent": 50
   }
  },
- "movement": {
-  "plot": {
-   "flat": 3
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/baseterrain/kuiper_belt_object.dds"
@@ -37,6 +32,7 @@
  },
  "identity": {
   "found": true,
+  "movementCost": 3,
   "mapCategories": [
    "MAPCATEGORY_SOLAR_SYSTEM",
    "MAPCATEGORY_JOVIAN"

@@ -2,11 +2,6 @@
  "type": "FEATURE_PLATY_BARRINGER_CRATER",
  "description": "TXT_KEY_FEATURE_BARRINGER_CRATER",
  "civilopedia": "TXT_KEY_FEATURE_BARRINGER_CRATER_PEDIA",
- "movement": {
-  "plot": {
-   "flat": 1
-  }
- },
  "world": {
   "art": {
    "icon": "ART_DEF_FEATURE_BARRINGER_CRATER"
@@ -16,6 +11,7 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "movementCost": 1,
   "requiresFlatlands": true,
   "noCity": true,
   "noImprovement": true,

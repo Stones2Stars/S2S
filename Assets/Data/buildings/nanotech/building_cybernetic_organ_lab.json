@@ -42,11 +42,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -20
-  }
- },
  "research": {
   "city": {
    "flat": 5
@@ -55,6 +50,11 @@
  "health": {
   "city": {
    "flat": 2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 20
   }
  },
  "hurryCost": {

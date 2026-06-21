@@ -47,11 +47,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -1
-  }
- },
  "defense": {
   "city": {
    "amount": {
@@ -60,6 +55,11 @@
    "adjacentDamage": {
     "percent": 10
    }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
   }
  },
  "hurryCost": {

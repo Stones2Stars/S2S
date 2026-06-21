@@ -32,7 +32,6 @@
  },
  "gold": {
   "city": {
-   "flat": -40,
    "percent": -25
   }
  },
@@ -43,9 +42,6 @@
  },
  "espionage": {
   "city": {
-   "insidiousness": {
-    "flat": 30
-   },
    "percent": -50
   }
  },
@@ -60,6 +56,18 @@
     "UNITCOMBAT_CRIMINAL": {
      "flat": 4
     }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "insidiousness": {
+    "flat": 30
    }
   }
  },

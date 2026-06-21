@@ -37,11 +37,6 @@
  "allowed": {
   "empire": 1
  },
- "gold": {
-  "city": {
-   "flat": -40
-  }
- },
  "research": {
   "city": {
    "flat": 20,
@@ -63,6 +58,11 @@
  "freeSpecialists": {
   "city": {
    "SPECIALIST_SCIENTIST": 2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 40
   }
  },
  "greatPeopleRate": {

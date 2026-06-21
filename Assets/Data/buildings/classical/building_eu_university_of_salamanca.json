@@ -50,11 +50,6 @@
  "allowed": {
   "world": 1
  },
- "gold": {
-  "city": {
-   "flat": -50
-  }
- },
  "research": {
   "city": {
    "percent": 7
@@ -102,6 +97,9 @@
  "maintenance": {
   "empire": {
    "percent": -10
+  },
+  "city": {
+   "flat": 50
   }
  },
  "greatPeopleRate": {

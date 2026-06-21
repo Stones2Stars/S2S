@@ -31,16 +31,13 @@
  },
  "gold": {
   "city": {
-   "flat": [
-    -3,
-    {
-     "value": 8,
-     "enabled": {
-      "type": "TECH_COMMUNICATION_NETWORKS",
-      "scope": "team"
-     }
+   "flat": {
+    "value": 8,
+    "enabled": {
+     "type": "TECH_COMMUNICATION_NETWORKS",
+     "scope": "team"
     }
-   ]
+   }
   }
  },
  "research": {
@@ -69,6 +66,11 @@
      }
     }
    ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 3
   }
  },
  "hurryCost": {

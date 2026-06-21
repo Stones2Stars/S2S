@@ -27,17 +27,13 @@
    "percent": -80
   }
  },
- "movement": {
-  "plot": {
-   "flat": 1
-  }
- },
  "world": {
   "art": {
    "icon": "ART_DEF_FEATURE_FALLOUT"
   }
  },
  "identity": {
+  "movementCost": 1,
   "disappearance": 800,
   "growth": 60,
   "popDestroys": -1,

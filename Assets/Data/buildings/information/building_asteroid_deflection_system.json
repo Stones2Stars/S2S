@@ -38,11 +38,6 @@
  "allowed": {
   "empire": 1
  },
- "gold": {
-  "city": {
-   "flat": -25
-  }
- },
  "research": {
   "city": {
    "flat": 10
@@ -53,6 +48,11 @@
      "flat": 3
     }
    }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 25
   }
  },
  "PROPERTY_FLAMMABILITY": {

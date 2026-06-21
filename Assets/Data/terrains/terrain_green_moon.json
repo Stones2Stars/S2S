@@ -22,11 +22,6 @@
    "percent": 50
   }
  },
- "movement": {
-  "plot": {
-   "flat": 3
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface\\Buttons\\WorldBuilder\\Terrain_Grass.dds"
@@ -42,6 +37,7 @@
  },
  "identity": {
   "found": true,
+  "movementCost": 3,
   "mapCategories": [
    "MAPCATEGORY_LUNAR"
   ]

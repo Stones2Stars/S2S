@@ -30,11 +30,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -3
-  }
- },
  "buildRate": {
   "self": {
    "percent": [
@@ -76,6 +71,11 @@
    "noEntryLevel": {
     "flat": 80
    }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 3
   }
  },
  "hurryCost": {

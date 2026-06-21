@@ -37,15 +37,7 @@
  },
  "gold": {
   "city": {
-   "flat": -10,
    "percent": -3
-  }
- },
- "espionage": {
-  "city": {
-   "insidiousness": {
-    "flat": 10
-   }
   }
  },
  "happiness": {
@@ -67,9 +59,21 @@
    }
   }
  },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
  "revolution": {
   "city": {
    "flat": 100
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "insidiousness": {
+    "flat": 10
+   }
   }
  },
  "PROPERTY_TOURISM": {

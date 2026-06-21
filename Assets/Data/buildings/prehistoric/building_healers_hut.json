@@ -71,16 +71,16 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -1
-  }
- },
  "health": {
   "city": {
    "perPopulation": {
     "percent": 10
    }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
   }
  },
  "hurryCost": {

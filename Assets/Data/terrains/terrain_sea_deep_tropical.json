@@ -17,11 +17,6 @@
    "flat": 3
   }
  },
- "movement": {
-  "plot": {
-   "flat": 2
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface\\Buttons\\WorldBuilder\\Terrain_Ocean.dds"
@@ -133,6 +128,7 @@
  "identity": {
   "distanceToLand": 2,
   "climateZoneType": "CLIMATE_ZONE_TROPICAL",
+  "movementCost": 2,
   "mapCategories": [
    "MAPCATEGORY_EARTH",
    "MAPCATEGORY_AQUATIC"

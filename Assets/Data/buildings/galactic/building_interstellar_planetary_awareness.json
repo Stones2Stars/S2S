@@ -39,14 +39,14 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -10
-  }
- },
  "espionage": {
   "city": {
    "flat": 30
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
   }
  },
  "revolution": {

@@ -30,13 +30,6 @@
    ]
   }
  },
- "espionage": {
-  "city": {
-   "insidiousness": {
-    "flat": 2
-   }
-  }
- },
  "happiness": {
   "city": {
    "flat": -2
@@ -45,6 +38,13 @@
  "health": {
   "city": {
    "flat": -2
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "insidiousness": {
+    "flat": 2
+   }
   }
  },
  "world": {

@@ -2,11 +2,6 @@
  "type": "FEATURE_PLATY_KILIMANJARO",
  "description": "TXT_KEY_FEATURE_KILIMANJARO",
  "civilopedia": "TXT_KEY_FEATURE_KILIMANJARO_PEDIA",
- "movement": {
-  "plot": {
-   "flat": 2
-  }
- },
  "vision": {
   "plot": {
    "seeThrough": {
@@ -23,6 +18,7 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "movementCost": 2,
   "noCity": true,
   "noImprovement": true,
   "noBonus": true,

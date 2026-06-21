@@ -27,21 +27,23 @@
  },
  "gold": {
   "city": {
-   "flat": [
-    -5,
-    {
-     "value": 8,
-     "enabled": {
-      "type": "TECH_ECOLOGICAL_ENGINEERING",
-      "scope": "team"
-     }
+   "flat": {
+    "value": 8,
+    "enabled": {
+     "type": "TECH_ECOLOGICAL_ENGINEERING",
+     "scope": "team"
     }
-   ]
+   }
   }
  },
  "research": {
   "city": {
    "flat": 8
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
   }
  },
  "cost": {

@@ -71,11 +71,10 @@
  },
  "research": {
   "city": {
-   "flat": 100,
-   "percent": [
-    1,
+   "flat": [
+    100,
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "BONUS_CALCULATORS",
       "scope": "city",
@@ -83,7 +82,7 @@
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "BONUS_COMPUTERS",
       "scope": "city",
@@ -91,14 +90,15 @@
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "BONUS_PENCILS",
       "scope": "city",
       "min": 1
      }
     }
-   ]
+   ],
+   "percent": 1
   }
  },
  "culture": {

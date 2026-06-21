@@ -52,11 +52,6 @@
    "percent": 25
   }
  },
- "gold": {
-  "city": {
-   "flat": -10
-  }
- },
  "espionage": {
   "city": {
    "flat": 1
@@ -79,6 +74,11 @@
  "happiness": {
   "city": {
    "flat": -2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
   }
  },
  "warWeariness": {

@@ -102,9 +102,9 @@
  },
  "gold": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_METAL_FOAM",
       "scope": "city",
@@ -112,7 +112,7 @@
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "BONUS_ALUMINUM_WARES",
       "scope": "city",
@@ -120,7 +120,7 @@
      }
     },
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "BONUS_COMPUTERS",
       "scope": "city",
@@ -128,7 +128,7 @@
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "BONUS_FIBERGLASS",
       "scope": "city",
@@ -136,7 +136,7 @@
      }
     },
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "BONUS_NANOTUBES",
       "scope": "city",
@@ -144,7 +144,7 @@
      }
     },
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "BONUS_STEEL_WARES",
       "scope": "city",
@@ -152,7 +152,7 @@
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "BONUS_TITANIUM_WARES",
       "scope": "city",

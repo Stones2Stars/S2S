@@ -41,9 +41,9 @@
  },
  "gold": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_HUMAN_MOD_ENLIGHTENED",
       "scope": "city",
@@ -55,10 +55,10 @@
  },
  "research": {
   "city": {
-   "flat": 3,
-   "percent": [
+   "flat": [
+    3,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_HUMAN_MOD_ENLIGHTENED",
       "scope": "city",

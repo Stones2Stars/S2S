@@ -12,11 +12,6 @@
    "flat": 2
   }
  },
- "movement": {
-  "plot": {
-   "flat": 1
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/WorldBuilder/star_cluster.dds"
@@ -29,6 +24,7 @@
  },
  "identity": {
   "found": true,
+  "movementCost": 1,
   "mapCategories": [
    "MAPCATEGORY_GALACTIC",
    "MAPCATEGORY_MILKY_WAY"

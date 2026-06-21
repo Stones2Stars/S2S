@@ -85,11 +85,9 @@
       "type": "TECH_MENSIOKINESIS",
       "scope": "team"
      }
-    }
-   ],
-   "percent": [
+    },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_HUMAN_MOD_NOVEL_SENSES",
       "scope": "city",
@@ -97,7 +95,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_MITHRIL",
       "scope": "city",

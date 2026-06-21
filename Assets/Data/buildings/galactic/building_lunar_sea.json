@@ -48,14 +48,14 @@
    "flat": 3
   }
  },
- "gold": {
-  "city": {
-   "flat": -10
-  }
- },
  "culture": {
   "city": {
    "flat": 30
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
   }
  },
  "hurryCost": {

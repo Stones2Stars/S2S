@@ -46,10 +46,10 @@
  },
  "gold": {
   "city": {
-   "flat": 25,
-   "percent": [
+   "flat": [
+    25,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_TOBACCO",
       "scope": "city",
@@ -57,7 +57,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_HEMP",
       "scope": "city",
@@ -65,7 +65,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_OPIUM",
       "scope": "city",
@@ -73,7 +73,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_ECSTASY",
       "scope": "city",
@@ -81,7 +81,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_LSD",
       "scope": "city",
@@ -89,7 +89,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_METHAMPHETAMINE",
       "scope": "city",

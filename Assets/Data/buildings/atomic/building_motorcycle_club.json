@@ -64,10 +64,10 @@
  },
  "gold": {
   "city": {
-   "flat": 10,
-   "percent": [
+   "flat": [
+    10,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_HEMP",
       "scope": "city",
@@ -75,7 +75,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_MUSHROOMS",
       "scope": "city",
@@ -83,7 +83,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_POISON",
       "scope": "city",
@@ -91,7 +91,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_OPIUM",
       "scope": "city",
@@ -99,7 +99,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_PEYOTE",
       "scope": "city",
@@ -107,7 +107,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_DRUGS",
       "scope": "city",
@@ -115,7 +115,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_AUTOMOBILES",
       "scope": "city",
@@ -123,7 +123,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_TIRES",
       "scope": "city",
@@ -131,7 +131,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_LSD",
       "scope": "city",
@@ -139,7 +139,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_ECSTASY",
       "scope": "city",
@@ -147,7 +147,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_METHAMPHETAMINE",
       "scope": "city",
@@ -159,9 +159,6 @@
  },
  "espionage": {
   "city": {
-   "insidiousness": {
-    "flat": 25
-   },
    "flat": -1
   }
  },
@@ -187,6 +184,13 @@
  "hurryCost": {
   "city": {
    "percent": 100
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "insidiousness": {
+    "flat": 25
+   }
   }
  },
  "PROPERTY_CRIME": {

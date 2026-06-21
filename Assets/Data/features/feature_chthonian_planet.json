@@ -2,11 +2,6 @@
  "type": "FEATURE_CHTHONIAN_PLANET",
  "description": "TXT_KEY_FEATURE_CHTHONIAN_PLANET",
  "civilopedia": "TXT_KEY_FEATURE_CHTHONIAN_PLANET_PEDIA",
- "movement": {
-  "plot": {
-   "flat": 2
-  }
- },
  "defense": {
   "plot": {
    "amount": {
@@ -31,6 +26,7 @@
  },
  "identity": {
   "popDestroys": -1,
+  "movementCost": 2,
   "validTerrains": [
    "TERRAIN_TRANSTELLAR_SPACE"
   ]

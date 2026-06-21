@@ -62,9 +62,9 @@
  "allowed": {
   "world": 1
  },
- "gold": {
+ "maintenance": {
   "city": {
-   "flat": -5
+   "flat": 5
   }
  },
  "cost": {

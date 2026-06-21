@@ -17,11 +17,6 @@
    "percent": 25
   }
  },
- "movement": {
-  "plot": {
-   "flat": 3
-  }
- },
  "defense": {
   "plot": {
    "amount": {
@@ -44,6 +39,7 @@
  },
  "identity": {
   "found": true,
+  "movementCost": 3,
   "mapCategories": [
    "MAPCATEGORY_LUNAR"
   ]

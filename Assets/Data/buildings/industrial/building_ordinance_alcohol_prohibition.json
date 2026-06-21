@@ -46,14 +46,14 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -5
-  }
- },
  "health": {
   "city": {
    "flat": 2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
   }
  },
  "world": {

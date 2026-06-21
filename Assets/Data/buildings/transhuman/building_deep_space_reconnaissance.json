@@ -24,11 +24,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -20
-  }
- },
  "research": {
   "city": {
    "flat": 200
@@ -37,6 +32,11 @@
  "espionage": {
   "city": {
    "flat": 50
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 20
   }
  },
  "revolution": {

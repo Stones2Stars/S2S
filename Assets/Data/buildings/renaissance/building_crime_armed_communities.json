@@ -35,13 +35,6 @@
    ]
   }
  },
- "espionage": {
-  "city": {
-   "investigation": {
-    "flat": 20
-   }
-  }
- },
  "happiness": {
   "city": {
    "flat": -2
@@ -64,6 +57,13 @@
  "revolution": {
   "city": {
    "flat": -50
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "investigation": {
+    "flat": 20
+   }
   }
  },
  "PROPERTY_CRIME": {

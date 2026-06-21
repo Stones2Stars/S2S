@@ -96,9 +96,9 @@
  },
  "gold": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_FUR",
       "scope": "city",
@@ -106,7 +106,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SILK",
       "scope": "city",
@@ -114,7 +114,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_ALCOHOL",
       "scope": "city",
@@ -122,7 +122,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_IVORY",
       "scope": "city",
@@ -130,7 +130,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_WHALE_OIL",
       "scope": "city",
@@ -138,7 +138,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_DRUGS",
       "scope": "city",
@@ -146,7 +146,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_COMPUTERS",
       "scope": "city",
@@ -154,7 +154,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_AUTOMOBILES",
       "scope": "city",
@@ -162,7 +162,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_FIREARMS",
       "scope": "city",

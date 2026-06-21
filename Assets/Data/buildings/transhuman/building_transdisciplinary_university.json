@@ -24,12 +24,12 @@
    ]
   }
  },
- "gold": {
+ "research": {
   "city": {
-   "flat": -20
+   "flat": 20
   }
  },
- "research": {
+ "maintenance": {
   "city": {
    "flat": 20
   }

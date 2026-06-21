@@ -27,11 +27,6 @@
    "percent": -50
   }
  },
- "movement": {
-  "plot": {
-   "flat": 3
-  }
- },
  "defense": {
   "plot": {
    "amount": {
@@ -78,6 +73,7 @@
   ]
  },
  "identity": {
+  "movementCost": 3,
   "appearance": 200,
   "popDestroys": 6,
   "requiresFlatlands": true,

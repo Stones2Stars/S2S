@@ -39,17 +39,12 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -30
-  }
- },
  "research": {
   "city": {
-   "flat": 10,
-   "percent": [
+   "flat": [
+    10,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_HUMAN_MOD_COGNITIVE_ENHANCEMENT",
       "scope": "city",
@@ -57,7 +52,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_TRANSPARENT_ALUMINUM",
       "scope": "city",
@@ -70,6 +65,11 @@
  "health": {
   "city": {
    "flat": -1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 30
   }
  },
  "hurryCost": {

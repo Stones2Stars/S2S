@@ -52,7 +52,6 @@
  },
  "gold": {
   "city": {
-   "flat": -100,
    "percent": 10
   }
  },
@@ -102,6 +101,11 @@
      "flat": 4
     }
    }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 100
   }
  },
  "greatPeopleRate": {

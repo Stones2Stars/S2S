@@ -49,11 +49,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -20
-  }
- },
  "research": {
   "city": {
    "flat": 7
@@ -72,6 +67,11 @@
      }
     }
    ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 20
   }
  },
  "hurryCost": {

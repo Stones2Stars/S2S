@@ -12,11 +12,6 @@
    "flat": 2
   }
  },
- "movement": {
-  "plot": {
-   "flat": 1
-  }
- },
  "vision": {
   "plot": {
    "seeThrough": {
@@ -127,6 +122,7 @@
   ]
  },
  "identity": {
+  "movementCost": 1,
   "appearance": -1,
   "validTerrains": [
    "TERRAIN_COAST",

@@ -39,9 +39,6 @@
   "city": {
    "adjacentDamage": {
     "percent": 10
-   },
-   "repel": {
-    "flat": 20
    }
   }
  },

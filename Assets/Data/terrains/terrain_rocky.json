@@ -27,11 +27,6 @@
    "percent": 50
   }
  },
- "movement": {
-  "plot": {
-   "flat": 2
-  }
- },
  "defense": {
   "plot": {
    "amount": {
@@ -149,6 +144,7 @@
  },
  "identity": {
   "found": true,
+  "movementCost": 2,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

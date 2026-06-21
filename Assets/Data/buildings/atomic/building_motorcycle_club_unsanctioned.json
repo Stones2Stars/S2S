@@ -64,9 +64,6 @@
  },
  "espionage": {
   "city": {
-   "insidiousness": {
-    "flat": 25
-   },
    "flat": -1
   }
  },
@@ -74,6 +71,13 @@
   "city": {
    "perPopulation": {
     "percent": -25
+   }
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "insidiousness": {
+    "flat": 25
    }
   }
  },

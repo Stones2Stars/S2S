@@ -37,17 +37,17 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -1
-  }
- },
  "espionage": {
   "city": {
    "flat": 1
   }
  },
  "experience": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
   "city": {
    "flat": 1
   }

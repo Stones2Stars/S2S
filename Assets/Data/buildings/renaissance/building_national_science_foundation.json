@@ -32,14 +32,14 @@
  "allowed": {
   "empire": 1
  },
- "gold": {
-  "city": {
-   "flat": -25
-  }
- },
  "research": {
   "city": {
    "percent": 25
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 25
   }
  },
  "greatPeopleRate": {

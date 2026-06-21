@@ -7,11 +7,6 @@
    "flat": 20
   }
  },
- "movement": {
-  "plot": {
-   "flat": 1
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/WorldBuilder/Space.dds"
@@ -23,6 +18,7 @@
   }
  },
  "identity": {
-  "found": true
+  "found": true,
+  "movementCost": 1
  }
 }

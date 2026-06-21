@@ -2,11 +2,6 @@
  "type": "FEATURE_PLATY_ULURU",
  "description": "TXT_KEY_FEATURE_ULURU",
  "civilopedia": "TXT_KEY_FEATURE_ULURU_PEDIA",
- "movement": {
-  "plot": {
-   "flat": 1
-  }
- },
  "defense": {
   "plot": {
    "amount": {
@@ -30,6 +25,7 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "movementCost": 1,
   "requiresFlatlands": true,
   "noCity": true,
   "noImprovement": true,

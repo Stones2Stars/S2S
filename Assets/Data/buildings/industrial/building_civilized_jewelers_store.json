@@ -44,9 +44,9 @@
  },
  "gold": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_GOLD_ORE",
       "scope": "city",
@@ -54,7 +54,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SILVER_ORE",
       "scope": "city",
@@ -62,7 +62,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_GEMSTONE",
       "scope": "city",
@@ -70,7 +70,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_PEARLS",
       "scope": "city",

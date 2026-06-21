@@ -37,9 +37,6 @@
  },
  "espionage": {
   "city": {
-   "investigation": {
-    "flat": 10
-   },
    "flat": 5,
    "percent": 10
   }
@@ -61,6 +58,13 @@
  "revolution": {
   "city": {
    "flat": -100
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "investigation": {
+    "flat": 10
+   }
   }
  },
  "PROPERTY_CRIME": {

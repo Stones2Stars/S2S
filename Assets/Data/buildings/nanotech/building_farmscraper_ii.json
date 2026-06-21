@@ -186,10 +186,10 @@
  },
  "gold": {
   "city": {
-   "flat": 25,
-   "percent": [
+   "flat": [
+    25,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_ALCOHOL",
       "scope": "city",
@@ -197,7 +197,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_GRAPES",
       "scope": "city",

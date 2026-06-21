@@ -31,11 +31,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -1000
-  }
- },
  "research": {
   "city": {
    "flat": 25
@@ -44,6 +39,11 @@
  "health": {
   "city": {
    "flat": 3
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1000
   }
  },
  "allowedSpecialists": {

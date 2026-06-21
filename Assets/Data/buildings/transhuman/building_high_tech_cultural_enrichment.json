@@ -162,11 +162,10 @@
  },
  "gold": {
   "city": {
-   "flat": 300,
-   "percent": [
-    3,
+   "flat": [
+    300,
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "BONUS_NATRON",
       "scope": "city",
@@ -174,7 +173,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_HUMAN_MOD_NOVEL_SENSES",
       "scope": "city",
@@ -182,7 +181,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_BIONIC_SUITS",
       "scope": "city",
@@ -190,7 +189,7 @@
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "BONUS_DYE",
       "scope": "city",
@@ -198,7 +197,7 @@
      }
     },
     {
-     "value": 700,
+     "value": 7,
      "enabled": {
       "type": "BONUS_HATS",
       "scope": "city",
@@ -206,7 +205,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_MICROGENERATORS",
       "scope": "city",
@@ -214,7 +213,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_NEUROIMPLANTS",
       "scope": "city",
@@ -222,7 +221,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_ORGANIC_PHOTONIC_CELLS",
       "scope": "city",
@@ -230,7 +229,7 @@
      }
     },
     {
-     "value": 600,
+     "value": 6,
      "enabled": {
       "type": "BONUS_SHOES",
       "scope": "city",
@@ -238,7 +237,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_METAMATERIALS",
       "scope": "city",
@@ -246,7 +245,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_BOOKS",
       "scope": "city",
@@ -254,7 +253,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_CLOTHING",
       "scope": "city",
@@ -262,7 +261,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_FIRECRACKERS",
       "scope": "city",
@@ -270,7 +269,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_GLASSWARE",
       "scope": "city",
@@ -278,7 +277,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_JEWELRY",
       "scope": "city",
@@ -286,7 +285,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_MASKS",
       "scope": "city",
@@ -294,7 +293,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SCULPTURES",
       "scope": "city",
@@ -302,14 +301,15 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_TOYS",
       "scope": "city",
       "min": 1
      }
     }
-   ]
+   ],
+   "percent": 3
   }
  },
  "research": {
@@ -336,11 +336,10 @@
  },
  "culture": {
   "city": {
-   "flat": 300,
-   "percent": [
-    2,
+   "flat": [
+    300,
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "BONUS_DYE",
       "scope": "city",
@@ -348,7 +347,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_HATS",
       "scope": "city",
@@ -356,7 +355,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SHOES",
       "scope": "city",
@@ -364,7 +363,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_BOOKS",
       "scope": "city",
@@ -372,7 +371,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_CLOTHING",
       "scope": "city",
@@ -380,7 +379,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_COMPUTERS",
       "scope": "city",
@@ -388,7 +387,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_JEWELRY",
       "scope": "city",
@@ -396,7 +395,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_PHONOGRAPHS",
       "scope": "city",
@@ -404,7 +403,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_PLASTIC",
       "scope": "city",
@@ -412,7 +411,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SCROLLS",
       "scope": "city",
@@ -420,7 +419,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SYNTHETIC_RUBBER",
       "scope": "city",
@@ -428,14 +427,15 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_TABLETS",
       "scope": "city",
       "min": 1
      }
     }
-   ]
+   ],
+   "percent": 2
   }
  },
  "espionage": {

@@ -43,10 +43,10 @@
  },
  "gold": {
   "city": {
-   "flat": 4,
-   "percent": [
+   "flat": [
+    4,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_HUMAN_MOD_GILLS",
       "scope": "city",

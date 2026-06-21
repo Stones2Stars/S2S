@@ -57,11 +57,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -1
-  }
- },
  "espionage": {
   "city": {
    "flat": 2
@@ -81,6 +76,11 @@
    "adjacentDamage": {
     "percent": 35
    }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
   }
  },
  "hurryCost": {

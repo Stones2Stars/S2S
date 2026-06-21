@@ -45,16 +45,13 @@
  },
  "gold": {
   "city": {
-   "flat": [
-    -15,
-    {
-     "value": 8,
-     "enabled": {
-      "type": "TECH_BIOMATERIALS",
-      "scope": "team"
-     }
+   "flat": {
+    "value": 8,
+    "enabled": {
+     "type": "TECH_BIOMATERIALS",
+     "scope": "team"
     }
-   ]
+   }
   }
  },
  "research": {
@@ -103,6 +100,11 @@
      }
     }
    ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 15
   }
  },
  "hurryCost": {

@@ -22,11 +22,6 @@
    "percent": 100
   }
  },
- "movement": {
-  "plot": {
-   "flat": 4
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface\\Buttons\\WorldBuilder\\Terrain_Ice.dds"
@@ -138,6 +133,7 @@
  "identity": {
   "foundCoast": true,
   "foundFreshWater": true,
+  "movementCost": 4,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

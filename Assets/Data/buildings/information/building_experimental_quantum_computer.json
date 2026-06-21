@@ -31,10 +31,10 @@
  },
  "research": {
   "city": {
-   "flat": 20,
-   "percent": [
+   "flat": [
+    20,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_QUANTUM_DOTS",
       "scope": "city",

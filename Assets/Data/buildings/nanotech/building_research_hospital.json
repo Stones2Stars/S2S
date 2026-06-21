@@ -53,11 +53,6 @@
  "allowed": {
   "empire": 1
  },
- "gold": {
-  "city": {
-   "flat": -30
-  }
- },
  "research": {
   "city": {
    "flat": 5
@@ -66,6 +61,11 @@
  "health": {
   "city": {
    "flat": 5
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 30
   }
  },
  "hurryCost": {

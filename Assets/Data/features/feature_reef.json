@@ -12,11 +12,6 @@
    "flat": 2
   }
  },
- "movement": {
-  "plot": {
-   "flat": 5
-  }
- },
  "vision": {
   "plot": {
    "seeThrough": {
@@ -127,6 +122,7 @@
   ]
  },
  "identity": {
+  "movementCost": 5,
   "appearance": 400,
   "nukeImmune": true,
   "validTerrains": [

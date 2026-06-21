@@ -17,11 +17,6 @@
    "flat": 1
   }
  },
- "movement": {
-  "plot": {
-   "flat": 2
-  }
- },
  "properties": [
   {
    "source": "CONSTANT",
@@ -38,6 +33,7 @@
   }
  },
  "identity": {
+  "movementCost": 2,
   "appearance": -1,
   "validTerrains": [
    "TERRAIN_COAST",

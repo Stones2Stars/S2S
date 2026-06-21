@@ -34,11 +34,6 @@
    "percent": 20
   }
  },
- "gold": {
-  "city": {
-   "flat": -20
-  }
- },
  "culture": {
   "city": {
    "percent": -5
@@ -47,6 +42,11 @@
  "health": {
   "city": {
    "flat": -5
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 20
   }
  },
  "warWeariness": {

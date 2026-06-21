@@ -17,11 +17,6 @@
    "percent": 25
   }
  },
- "movement": {
-  "plot": {
-   "flat": 3
-  }
- },
  "defense": {
   "plot": {
    "amount": {
@@ -45,6 +40,7 @@
  "identity": {
   "foundCoast": true,
   "foundFreshWater": true,
+  "movementCost": 3,
   "mapCategories": [
    "MAPCATEGORY_MARTIAN"
   ]

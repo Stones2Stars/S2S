@@ -33,11 +33,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -30
-  }
- },
  "espionage": {
   "city": {
    "flat": 10
@@ -54,6 +49,11 @@
    "airDefense": {
     "percent": -25
    }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 30
   }
  },
  "warWeariness": {

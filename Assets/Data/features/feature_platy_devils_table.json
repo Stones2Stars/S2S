@@ -2,11 +2,6 @@
  "type": "FEATURE_PLATY_DEVILS_TABLE",
  "description": "TXT_KEY_FEATURE_DEVILS_TABLE",
  "civilopedia": "TXT_KEY_FEATURE_DEVILS_TABLE_PEDIA",
- "movement": {
-  "plot": {
-   "flat": 1
-  }
- },
  "defense": {
   "plot": {
    "amount": {
@@ -30,6 +25,7 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "movementCost": 1,
   "noCity": true,
   "noImprovement": true,
   "noBonus": true,

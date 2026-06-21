@@ -22,11 +22,6 @@
    "percent": 45
   }
  },
- "movement": {
-  "plot": {
-   "flat": 3
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/baseterrain/DuneIce.dds"
@@ -137,6 +132,7 @@
  },
  "identity": {
   "found": true,
+  "movementCost": 3,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

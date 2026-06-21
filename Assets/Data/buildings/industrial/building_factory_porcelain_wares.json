@@ -72,10 +72,10 @@
  },
  "culture": {
   "city": {
-   "flat": 3,
-   "percent": [
+   "flat": [
+    3,
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "BONUS_DYE",
       "scope": "city",

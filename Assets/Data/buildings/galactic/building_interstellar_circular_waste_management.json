@@ -39,14 +39,10 @@
    "flat": 25
   }
  },
- "gold": {
-  "city": {
-   "flat": -5
-  }
- },
  "maintenance": {
   "city": {
-   "percent": -2
+   "percent": -2,
+   "flat": 5
   }
  },
  "foodKept": {

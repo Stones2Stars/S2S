@@ -45,11 +45,6 @@
  "allowed": {
   "empire": 1
  },
- "gold": {
-  "city": {
-   "flat": -100
-  }
- },
  "espionage": {
   "city": {
    "percent": 100
@@ -58,6 +53,11 @@
  "happiness": {
   "city": {
    "flat": -3
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 100
   }
  },
  "hurryCost": {

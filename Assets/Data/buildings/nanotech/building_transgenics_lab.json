@@ -50,16 +50,13 @@
  },
  "gold": {
   "city": {
-   "flat": [
-    -30,
-    {
-     "value": 9,
-     "enabled": {
-      "type": "TECH_ANTI_AGING_MEDICINE",
-      "scope": "team"
-     }
+   "flat": {
+    "value": 9,
+    "enabled": {
+     "type": "TECH_ANTI_AGING_MEDICINE",
+     "scope": "team"
     }
-   ]
+   }
   }
  },
  "research": {
@@ -107,6 +104,11 @@
  "happiness": {
   "city": {
    "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 30
   }
  },
  "hurryCost": {

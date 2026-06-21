@@ -28,11 +28,6 @@
  "allowed": {
   "world": 1
  },
- "gold": {
-  "city": {
-   "flat": -1
-  }
- },
  "research": {
   "city": {
    "flat": 10
@@ -43,6 +38,11 @@
      "flat": 5
     }
    }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
   }
  },
  "PROPERTY_EDUCATION": {

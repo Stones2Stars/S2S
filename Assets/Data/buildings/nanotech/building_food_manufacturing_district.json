@@ -229,10 +229,10 @@
  },
  "gold": {
   "city": {
-   "flat": 125,
-   "percent": [
+   "flat": [
+    125,
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "BONUS_APPLE",
       "scope": "city",
@@ -240,7 +240,7 @@
      }
     },
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "BONUS_BANANA",
       "scope": "city",
@@ -248,7 +248,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_CHEESE",
       "scope": "city",
@@ -256,7 +256,7 @@
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "BONUS_CHOCOLATE",
       "scope": "city",
@@ -264,7 +264,7 @@
      }
     },
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "BONUS_COFFEE",
       "scope": "city",
@@ -272,7 +272,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_DYE",
       "scope": "city",
@@ -280,7 +280,7 @@
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "BONUS_GRAPES",
       "scope": "city",
@@ -288,7 +288,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_GUAVAS",
       "scope": "city",
@@ -296,7 +296,7 @@
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "BONUS_HONEY",
       "scope": "city",
@@ -304,7 +304,7 @@
      }
     },
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "BONUS_LEMONS",
       "scope": "city",
@@ -312,7 +312,7 @@
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "BONUS_MANGO",
       "scope": "city",
@@ -320,7 +320,7 @@
      }
     },
     {
-     "value": 400,
+     "value": 4,
      "enabled": {
       "type": "BONUS_MELONS",
       "scope": "city",
@@ -328,7 +328,7 @@
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "BONUS_NUTS",
       "scope": "city",
@@ -336,7 +336,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_OLIVE_OIL",
       "scope": "city",
@@ -344,7 +344,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_PAPAYA",
       "scope": "city",
@@ -352,7 +352,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_PIG",
       "scope": "city",
@@ -360,7 +360,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SALT",
       "scope": "city",
@@ -368,7 +368,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SHRIMP",
       "scope": "city",
@@ -376,7 +376,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SPICES",
       "scope": "city",
@@ -384,7 +384,7 @@
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "BONUS_SUGAR",
       "scope": "city",
@@ -392,7 +392,7 @@
      }
     },
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "BONUS_VANILLA",
       "scope": "city",

@@ -64,11 +64,6 @@
    "flat": 5
   }
  },
- "gold": {
-  "city": {
-   "flat": -10
-  }
- },
  "happiness": {
   "city": {
    "flat": 2
@@ -77,6 +72,11 @@
  "health": {
   "city": {
    "flat": 5
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
   }
  },
  "greatPeopleRate": {

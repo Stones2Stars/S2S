@@ -31,11 +31,6 @@
  "allowed": {
   "world": 1
  },
- "gold": {
-  "city": {
-   "flat": -100
-  }
- },
  "research": {
   "city": {
    "flat": 50
@@ -44,6 +39,11 @@
  "espionage": {
   "city": {
    "flat": 10
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 100
   }
  },
  "cost": {

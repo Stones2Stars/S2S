@@ -86,17 +86,14 @@
  },
  "gold": {
   "city": {
-   "flat": -1,
-   "percent": [
-    {
-     "value": 300,
-     "enabled": {
-      "type": "BONUS_NATRON",
-      "scope": "city",
-      "min": 1
-     }
+   "flat": {
+    "value": 3,
+    "enabled": {
+     "type": "BONUS_NATRON",
+     "scope": "city",
+     "min": 1
     }
-   ]
+   }
   }
  },
  "research": {
@@ -135,6 +132,11 @@
  "health": {
   "city": {
    "flat": 13
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
   }
  },
  "greatPeopleRate": {

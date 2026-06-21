@@ -2,11 +2,6 @@
  "type": "FEATURE_ASTEROIDS",
  "description": "TXT_KEY_FEATURE_ASTEROIDS",
  "civilopedia": "TXT_KEY_FEATURE_ASTEROIDS_PEDIA",
- "movement": {
-  "plot": {
-   "flat": 2
-  }
- },
  "defense": {
   "plot": {
    "amount": {
@@ -30,6 +25,7 @@
   "soundscape": "ASSS_ASTEROIDS_SELECT_AMB"
  },
  "identity": {
+  "movementCost": 2,
   "popDestroys": -1,
   "validTerrains": [
    "TERRAIN_INNER_SOLAR_SYSTEM",

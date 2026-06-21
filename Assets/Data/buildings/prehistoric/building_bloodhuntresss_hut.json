@@ -59,10 +59,10 @@
  },
  "culture": {
   "city": {
-   "flat": 1,
-   "percent": [
+   "flat": [
+    1,
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "BONUS_CARCASS",
       "scope": "city",

@@ -43,11 +43,6 @@
  "allowed": {
   "empire": 1
  },
- "gold": {
-  "city": {
-   "flat": -2
-  }
- },
  "buildRate": {
   "self": {
    "percent": [
@@ -76,6 +71,11 @@
      "flat": 5
     }
    }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 2
   }
  },
  "greatPeopleRate": {

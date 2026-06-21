@@ -47,17 +47,12 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -100
-  }
- },
  "research": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_METHANE_ICE",
       "scope": "city",
@@ -65,7 +60,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_HYDROTHERMAL_VENT",
       "scope": "city",
@@ -73,6 +68,11 @@
      }
     }
    ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 100
   }
  },
  "hurryCost": {

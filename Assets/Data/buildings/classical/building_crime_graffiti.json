@@ -32,9 +32,9 @@
  },
  "gold": {
   "city": {
-   "percent": [
+   "flat": [
     {
-     "value": -200,
+     "value": -2,
      "enabled": {
       "type": "BONUS_DYE",
       "scope": "city",
@@ -46,10 +46,10 @@
  },
  "culture": {
   "city": {
-   "flat": -2,
-   "percent": [
+   "flat": [
+    -2,
     {
-     "value": -200,
+     "value": -2,
      "enabled": {
       "type": "BONUS_DYE",
       "scope": "city",
@@ -57,13 +57,6 @@
      }
     }
    ]
-  }
- },
- "espionage": {
-  "city": {
-   "insidiousness": {
-    "flat": 1
-   }
   }
  },
  "happiness": {
@@ -77,6 +70,13 @@
     "UNITCOMBAT_CRIMINAL": {
      "flat": 1
     }
+   }
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "insidiousness": {
+    "flat": 1
    }
   }
  },

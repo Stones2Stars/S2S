@@ -33,9 +33,6 @@
   "empire": 1
  },
  "gold": {
-  "city": {
-   "flat": -10
-  },
   "empire": {
    "buildings": {
     "BUILDING_SPACE_COLONY_INTERSTELLAR_MOTHERSHIP": {
@@ -52,6 +49,11 @@
  "culture": {
   "city": {
    "flat": 15
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
   }
  },
  "cost": {

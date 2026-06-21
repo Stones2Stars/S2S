@@ -36,14 +36,14 @@
    "flat": 5
   }
  },
- "gold": {
-  "city": {
-   "flat": -15
-  }
- },
  "health": {
   "city": {
    "flat": 3
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 15
   }
  },
  "hurryCost": {

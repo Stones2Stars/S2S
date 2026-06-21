@@ -46,13 +46,6 @@
    "flat": 20
   }
  },
- "espionage": {
-  "city": {
-   "insidiousness": {
-    "flat": 50
-   }
-  }
- },
  "happiness": {
   "city": {
    "flat": -1
@@ -66,6 +59,13 @@
  "hurryCost": {
   "city": {
    "percent": 100
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "insidiousness": {
+    "flat": 50
+   }
   }
  },
  "PROPERTY_FLAMMABILITY": {

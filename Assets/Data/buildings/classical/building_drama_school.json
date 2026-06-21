@@ -39,12 +39,12 @@
    ]
   }
  },
- "gold": {
+ "culture": {
   "city": {
-   "flat": -1
+   "flat": 1
   }
  },
- "culture": {
+ "maintenance": {
   "city": {
    "flat": 1
   }

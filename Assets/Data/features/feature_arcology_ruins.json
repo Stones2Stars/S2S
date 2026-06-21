@@ -2,11 +2,6 @@
  "type": "FEATURE_ARCOLOGY_RUINS",
  "description": "TXT_KEY_IMPROVEMENT_ARCOLOGY_RUINS",
  "civilopedia": "TXT_KEY_IMPROVEMENT_CITY_RUINS_PEDIA",
- "movement": {
-  "plot": {
-   "flat": 1
-  }
- },
  "vision": {
   "plot": {
    "seeThrough": {
@@ -117,6 +112,7 @@
   ]
  },
  "identity": {
+  "movementCost": 1,
   "popDestroys": 0
  }
 }

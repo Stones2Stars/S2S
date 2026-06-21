@@ -98,11 +98,9 @@
       "type": "TECH_3D_MODELLING",
       "scope": "team"
      }
-    }
-   ],
-   "percent": [
+    },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_OSTRICH_FEATHERS",
       "scope": "city",

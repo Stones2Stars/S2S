@@ -36,11 +36,6 @@
  "allowed": {
   "empire": 1
  },
- "gold": {
-  "city": {
-   "flat": -25
-  }
- },
  "espionage": {
   "city": {
    "percent": 100
@@ -56,6 +51,11 @@
      "flat": 3
     }
    }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 25
   }
  },
  "PROPERTY_CRIME": {

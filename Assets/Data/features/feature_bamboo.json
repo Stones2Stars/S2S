@@ -12,11 +12,6 @@
    "flat": 1
   }
  },
- "movement": {
-  "plot": {
-   "flat": 1
-  }
- },
  "defense": {
   "plot": {
    "amount": {
@@ -64,6 +59,7 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "movementCost": 1,
   "appearance": 500,
   "growth": 20,
   "popDestroys": 5,

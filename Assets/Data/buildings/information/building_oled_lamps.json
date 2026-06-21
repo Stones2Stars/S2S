@@ -39,12 +39,12 @@
    "flat": 4
   }
  },
- "gold": {
+ "happiness": {
   "city": {
-   "flat": -1
+   "flat": 1
   }
  },
- "happiness": {
+ "maintenance": {
   "city": {
    "flat": 1
   }

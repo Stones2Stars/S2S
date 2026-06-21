@@ -117,11 +117,9 @@
       "type": "TECH_MASS_MEDIA",
       "scope": "team"
      }
-    }
-   ],
-   "percent": [
+    },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_TOYS",
       "scope": "city",

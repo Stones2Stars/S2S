@@ -43,7 +43,7 @@
  },
  "gold": {
   "city": {
-   "perPopulation": -50
+   "perPopulation": -0.5
   }
  },
  "hurryCost": {

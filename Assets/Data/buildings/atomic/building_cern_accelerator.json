@@ -33,14 +33,14 @@
  "allowed": {
   "world": 1
  },
- "gold": {
-  "city": {
-   "flat": -35
-  }
- },
  "research": {
   "city": {
    "flat": 10
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 35
   }
  },
  "greatPeopleRate": {

@@ -139,11 +139,9 @@
       "type": "TECH_INTERSTELLAR_COLONIZATION",
       "scope": "team"
      }
-    }
-   ],
-   "percent": [
+    },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_PERSONAL_SPACECRAFT",
       "scope": "city",

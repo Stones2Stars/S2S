@@ -2,11 +2,6 @@
  "type": "FEATURE_PLANETARY_RING",
  "description": "TXT_KEY_FEATURE_PLANETARY_RING",
  "civilopedia": "TXT_KEY_FEATURE_PLANETARY_RING_PEDIA",
- "movement": {
-  "plot": {
-   "flat": 2
-  }
- },
  "defense": {
   "plot": {
    "amount": {
@@ -31,6 +26,7 @@
  },
  "identity": {
   "popDestroys": -1,
+  "movementCost": 2,
   "validTerrains": [
    "TERRAIN_OUTER_SOLAR_SYSTEM"
   ]

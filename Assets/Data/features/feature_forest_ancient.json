@@ -22,11 +22,6 @@
    "percent": 50
   }
  },
- "movement": {
-  "plot": {
-   "flat": 2
-  }
- },
  "defense": {
   "plot": {
    "amount": {
@@ -78,6 +73,7 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "movementCost": 2,
   "appearance": 300,
   "popDestroys": 3,
   "validTerrains": [

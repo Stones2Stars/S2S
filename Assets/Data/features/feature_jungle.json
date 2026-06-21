@@ -17,11 +17,6 @@
    "percent": -20
   }
  },
- "movement": {
-  "plot": {
-   "flat": 2
-  }
- },
  "defense": {
   "plot": {
    "amount": {
@@ -112,6 +107,7 @@
   "growth": "AS2D_FEATUREGROWTH"
  },
  "identity": {
+  "movementCost": 2,
   "growth": 10,
   "popDestroys": 3,
   "validTerrains": [

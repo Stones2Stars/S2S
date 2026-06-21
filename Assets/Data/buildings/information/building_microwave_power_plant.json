@@ -55,9 +55,9 @@
    "flat": 16
   }
  },
- "gold": {
+ "maintenance": {
   "city": {
-   "flat": -20
+   "flat": 20
   }
  },
  "hurryCost": {

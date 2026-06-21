@@ -80,12 +80,12 @@
    "percent": 4
   }
  },
- "gold": {
+ "health": {
   "city": {
-   "flat": -1
+   "flat": 1
   }
  },
- "health": {
+ "maintenance": {
   "city": {
    "flat": 1
   }

@@ -30,16 +30,16 @@
    ]
   }
  },
- "espionage": {
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "copsAndRobbers": {
   "city": {
    "insidiousness": {
     "flat": 1
    }
-  }
- },
- "happiness": {
-  "city": {
-   "flat": -2
   }
  },
  "PROPERTY_CRIME": {

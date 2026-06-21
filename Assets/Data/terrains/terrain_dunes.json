@@ -22,11 +22,6 @@
    "percent": 125
   }
  },
- "movement": {
-  "plot": {
-   "flat": 4
-  }
- },
  "defense": {
   "plot": {
    "amount": {
@@ -145,6 +140,7 @@
  "identity": {
   "foundCoast": true,
   "foundFreshWater": true,
+  "movementCost": 4,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]

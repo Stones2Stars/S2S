@@ -30,13 +30,6 @@
    ]
   }
  },
- "espionage": {
-  "city": {
-   "insidiousness": {
-    "flat": 4
-   }
-  }
- },
  "buildRate": {
   "city": {
    "military": {
@@ -61,6 +54,13 @@
  "revolution": {
   "city": {
    "flat": 30
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "insidiousness": {
+    "flat": 4
+   }
   }
  },
  "PROPERTY_CRIME": {

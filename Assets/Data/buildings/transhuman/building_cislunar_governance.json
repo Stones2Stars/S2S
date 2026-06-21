@@ -31,11 +31,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -3
-  }
- },
  "research": {
   "city": {
    "flat": [
@@ -101,7 +96,8 @@
  },
  "maintenance": {
   "city": {
-   "percent": -2
+   "percent": -2,
+   "flat": 3
   }
  },
  "revolution": {

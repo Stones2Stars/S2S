@@ -28,12 +28,12 @@
    ]
   }
  },
- "gold": {
+ "espionage": {
   "city": {
-   "flat": -20
+   "flat": 20
   }
  },
- "espionage": {
+ "maintenance": {
   "city": {
    "flat": 20
   }

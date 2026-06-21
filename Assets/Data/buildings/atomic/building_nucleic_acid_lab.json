@@ -42,11 +42,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -15
-  }
- },
  "research": {
   "city": {
    "flat": [
@@ -106,11 +101,9 @@
       "type": "TECH_BIOMATHEMATICS",
       "scope": "team"
      }
-    }
-   ],
-   "percent": [
+    },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_BIOPOLYMERS",
       "scope": "city",
@@ -118,7 +111,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_ENZYMES",
       "scope": "city",
@@ -130,9 +123,6 @@
  },
  "espionage": {
   "city": {
-   "investigation": {
-    "flat": 50
-   },
    "flat": [
     {
      "value": 8,
@@ -157,9 +147,21 @@
    ]
   }
  },
+ "maintenance": {
+  "city": {
+   "flat": 15
+  }
+ },
  "hurryCost": {
   "city": {
    "percent": 100
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "investigation": {
+    "flat": 50
+   }
   }
  },
  "PROPERTY_EDUCATION": {

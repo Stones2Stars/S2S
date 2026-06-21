@@ -47,9 +47,6 @@
    },
    "adjacentDamage": {
     "percent": 20
-   },
-   "repel": {
-    "flat": 20
    }
   }
  },

@@ -12,11 +12,6 @@
    "flat": 3
   }
  },
- "movement": {
-  "plot": {
-   "flat": 1
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/WorldBuilder/Space.dds"
@@ -30,6 +25,7 @@
  "identity": {
   "found": true,
   "impassable": true,
+  "movementCost": 1,
   "mapCategories": [
    "MAPCATEGORY_CISLUNAR"
   ]

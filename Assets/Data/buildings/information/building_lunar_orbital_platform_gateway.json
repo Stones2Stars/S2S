@@ -23,14 +23,14 @@
  "allowed": {
   "world": 1
  },
- "gold": {
-  "city": {
-   "flat": -100
-  }
- },
  "research": {
   "city": {
    "flat": 50
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 100
   }
  },
  "cost": {

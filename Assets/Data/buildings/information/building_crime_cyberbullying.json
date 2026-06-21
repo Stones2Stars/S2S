@@ -35,16 +35,16 @@
    ]
   }
  },
- "espionage": {
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "copsAndRobbers": {
   "city": {
    "insidiousness": {
     "flat": 1
    }
-  }
- },
- "happiness": {
-  "city": {
-   "flat": -1
   }
  },
  "world": {

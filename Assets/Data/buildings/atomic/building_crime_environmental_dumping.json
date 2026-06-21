@@ -39,13 +39,6 @@
    }
   }
  },
- "espionage": {
-  "city": {
-   "insidiousness": {
-    "flat": 3
-   }
-  }
- },
  "happiness": {
   "city": {
    "flat": -3,
@@ -74,6 +67,13 @@
  "revolution": {
   "city": {
    "flat": 20
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "insidiousness": {
+    "flat": 3
+   }
   }
  },
  "PROPERTY_WATER_POLLUTION": {

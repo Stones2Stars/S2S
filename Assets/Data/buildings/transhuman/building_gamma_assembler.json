@@ -68,9 +68,9 @@
    "percent": 40
   }
  },
- "gold": {
+ "maintenance": {
   "city": {
-   "flat": -20
+   "flat": 20
   }
  },
  "hurryCost": {

@@ -22,11 +22,6 @@
    "flat": 6
   }
  },
- "movement": {
-  "plot": {
-   "flat": 6
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface\\Buttons\\WorldBuilder\\Terrain_Coast.dds"
@@ -136,6 +131,7 @@
   "soundscape": "ASSS_COAST_SELECT_AMB"
  },
  "identity": {
-  "distanceToLand": 1
+  "distanceToLand": 1,
+  "movementCost": 6
  }
 }

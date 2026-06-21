@@ -30,11 +30,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -4
-  }
- },
  "espionage": {
   "city": {
    "flat": 4,
@@ -44,6 +39,11 @@
  "happiness": {
   "city": {
    "flat": -2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 4
   }
  },
  "warWeariness": {

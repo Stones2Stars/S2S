@@ -82,11 +82,6 @@
    "percent": 7
   }
  },
- "gold": {
-  "city": {
-   "flat": -1
-  }
- },
  "defense": {
   "city": {
    "amount": {
@@ -95,6 +90,11 @@
    "riverDefensePenalty": {
     "flat": 21
    }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
   }
  },
  "hurryCost": {

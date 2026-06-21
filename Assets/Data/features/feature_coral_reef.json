@@ -12,11 +12,6 @@
    "flat": 2
   }
  },
- "movement": {
-  "plot": {
-   "flat": 4
-  }
- },
  "properties": [
   {
    "source": "CONSTANT",
@@ -33,6 +28,7 @@
   }
  },
  "identity": {
+  "movementCost": 4,
   "appearance": 500,
   "growth": 5,
   "validTerrains": [

@@ -52,11 +52,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -2
-  }
- },
  "buildRate": {
   "self": {
    "percent": [
@@ -72,6 +67,11 @@
   }
  },
  "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "maintenance": {
   "city": {
    "flat": 2
   }

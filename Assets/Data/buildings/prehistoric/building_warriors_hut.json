@@ -28,11 +28,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -1
-  }
- },
  "buildRate": {
   "city": {
    "domains": {
@@ -55,6 +50,11 @@
      "flat": 1
     }
    }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
   }
  },
  "hurryCost": {

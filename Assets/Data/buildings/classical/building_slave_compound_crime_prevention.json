@@ -99,9 +99,9 @@
    ]
   }
  },
- "gold": {
+ "maintenance": {
   "city": {
-   "flat": -1
+   "flat": 1
   }
  },
  "PROPERTY_CRIME": {

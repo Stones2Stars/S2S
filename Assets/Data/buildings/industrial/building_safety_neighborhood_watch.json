@@ -22,12 +22,12 @@
  },
  "gold": {
   "city": {
-   "perPopulation": -50
+   "perPopulation": -0.5
   }
  },
  "espionage": {
   "city": {
-   "perPopulation": 100
+   "perPopulation": 1
   }
  },
  "PROPERTY_CRIME": {

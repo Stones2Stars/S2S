@@ -2,11 +2,6 @@
  "type": "FEATURE_PLATY_NGORONGORO_CRATER",
  "description": "TXT_KEY_FEATURE_NGORONGORO_CRATER",
  "civilopedia": "TXT_KEY_FEATURE_NGORONGORO_CRATER_PEDIA",
- "movement": {
-  "plot": {
-   "flat": 1
-  }
- },
  "world": {
   "art": {
    "icon": "ART_DEF_FEATURE_NGORONGORO_CRATER"
@@ -17,6 +12,7 @@
  },
  "identity": {
   "addsFreshWater": true,
+  "movementCost": 1,
   "requiresFlatlands": true,
   "noCity": true,
   "noImprovement": true,

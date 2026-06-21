@@ -103,10 +103,10 @@
  },
  "gold": {
   "city": {
-   "flat": 175,
-   "percent": [
+   "flat": [
+    175,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_BREAD",
       "scope": "city",
@@ -114,7 +114,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_AMBER",
       "scope": "city",
@@ -122,7 +122,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_BAMBOO",
       "scope": "city",
@@ -130,7 +130,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_BEADS",
       "scope": "city",
@@ -138,7 +138,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_BRASS_WARES",
       "scope": "city",
@@ -146,7 +146,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_CHEMICALS",
       "scope": "city",
@@ -154,7 +154,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_CLAM",
       "scope": "city",
@@ -162,7 +162,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_COPPER_INGOTS",
       "scope": "city",
@@ -170,7 +170,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_COPPER_WARES",
       "scope": "city",
@@ -178,7 +178,7 @@
      }
     },
     {
-     "value": 500,
+     "value": 5,
      "enabled": {
       "type": "BONUS_DYE",
       "scope": "city",
@@ -186,7 +186,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_ELECTRUM_WARES",
       "scope": "city",
@@ -194,7 +194,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_FEATHERS",
       "scope": "city",
@@ -202,7 +202,7 @@
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "BONUS_GEMSTONE",
       "scope": "city",
@@ -210,7 +210,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_GOLD_WARES",
       "scope": "city",
@@ -218,7 +218,7 @@
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "BONUS_IVORY",
       "scope": "city",
@@ -226,7 +226,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_JADE",
       "scope": "city",
@@ -234,7 +234,7 @@
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "BONUS_LEAD_INGOTS",
       "scope": "city",
@@ -242,7 +242,7 @@
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "BONUS_PEARLS",
       "scope": "city",
@@ -250,7 +250,7 @@
      }
     },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "BONUS_PLASTIC",
       "scope": "city",
@@ -258,7 +258,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_PLATINUM_WARES",
       "scope": "city",
@@ -266,7 +266,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_POTASH",
       "scope": "city",
@@ -274,7 +274,7 @@
      }
     },
     {
-     "value": 300,
+     "value": 3,
      "enabled": {
       "type": "BONUS_PRIME_TIMBER",
       "scope": "city",
@@ -282,7 +282,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_RUBBER",
       "scope": "city",
@@ -290,7 +290,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SILVER_WARES",
       "scope": "city",
@@ -298,7 +298,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_TIN_INGOTS",
       "scope": "city",
@@ -306,7 +306,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_TIN_WARES",
       "scope": "city",
@@ -314,7 +314,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_WOOD",
       "scope": "city",
@@ -331,10 +331,10 @@
  },
  "culture": {
   "city": {
-   "flat": 90,
-   "percent": [
+   "flat": [
+    90,
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "BONUS_DYE",
       "scope": "city",

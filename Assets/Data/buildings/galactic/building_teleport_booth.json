@@ -138,9 +138,6 @@
  },
  "espionage": {
   "city": {
-   "investigation": {
-    "flat": 10
-   },
    "flat": 10
   }
  },
@@ -184,6 +181,13 @@
    "flat": 5,
    "modifier": {
     "percent": 60
+   }
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "investigation": {
+    "flat": 10
    }
   }
  },

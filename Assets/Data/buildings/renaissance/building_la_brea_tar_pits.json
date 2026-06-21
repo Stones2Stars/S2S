@@ -70,10 +70,10 @@
  },
  "research": {
   "city": {
-   "flat": 3,
-   "percent": [
+   "flat": [
+    3,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_FOSSIL_BEDS",
       "scope": "city",
@@ -81,7 +81,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_MAMMOTH",
       "scope": "city",

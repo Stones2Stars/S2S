@@ -49,9 +49,6 @@
    },
    "damageToAttacker": {
     "flat": 5
-   },
-   "repel": {
-    "flat": 10
    }
   }
  },

@@ -35,11 +35,9 @@
       "type": "TECH_FANTASY_MATERIALS",
       "scope": "team"
      }
-    }
-   ],
-   "percent": [
+    },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_HUMAN_MOD_NOVEL_SENSES",
       "scope": "city",

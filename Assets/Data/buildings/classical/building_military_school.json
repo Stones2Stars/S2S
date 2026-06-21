@@ -42,11 +42,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -5
-  }
- },
  "research": {
   "city": {
    "flat": 3
@@ -62,6 +57,11 @@
    "military": {
     "percent": 25
    }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
   }
  },
  "warWeariness": {

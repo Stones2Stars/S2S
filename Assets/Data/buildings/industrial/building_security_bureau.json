@@ -25,11 +25,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -15
-  }
- },
  "espionage": {
   "city": {
    "flat": 8
@@ -45,6 +40,11 @@
      "flat": 1
     }
    }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 15
   }
  },
  "hurryCost": {

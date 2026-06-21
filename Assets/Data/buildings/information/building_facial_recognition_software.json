@@ -93,16 +93,16 @@
    "flat": 5
   }
  },
- "espionage": {
+ "hurryCost": {
+  "city": {
+   "percent": 100
+  }
+ },
+ "copsAndRobbers": {
   "city": {
    "investigation": {
     "flat": 50
    }
-  }
- },
- "hurryCost": {
-  "city": {
-   "percent": 100
   }
  },
  "cost": {

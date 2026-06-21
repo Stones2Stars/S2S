@@ -31,11 +31,6 @@
  "allowed": {
   "empire": 1
  },
- "gold": {
-  "city": {
-   "flat": -100
-  }
- },
  "research": {
   "city": {
    "flat": 20
@@ -44,6 +39,11 @@
  "espionage": {
   "city": {
    "flat": 30
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 100
   }
  },
  "cost": {

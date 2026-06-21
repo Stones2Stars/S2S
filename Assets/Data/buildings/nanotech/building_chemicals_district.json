@@ -136,11 +136,9 @@
       "type": "TECH_VERTICAL_FARMING",
       "scope": "team"
      }
-    }
-   ],
-   "percent": [
+    },
     {
-     "value": 200,
+     "value": 2,
      "enabled": {
       "type": "BONUS_POTASH",
       "scope": "city",

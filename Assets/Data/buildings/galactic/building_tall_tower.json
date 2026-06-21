@@ -44,11 +44,6 @@
    "flat": 6
   }
  },
- "gold": {
-  "city": {
-   "flat": -50
-  }
- },
  "research": {
   "city": {
    "flat": 50
@@ -61,6 +56,11 @@
      "percent": 10
     }
    }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 50
   }
  },
  "cost": {

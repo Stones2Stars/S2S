@@ -17,11 +17,6 @@
    "flat": 1
   }
  },
- "movement": {
-  "plot": {
-   "flat": 2
-  }
- },
  "vision": {
   "plot": {
    "seeThrough": {
@@ -48,6 +43,7 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "movementCost": 2,
   "appearance": -1,
   "noCity": true,
   "nukeImmune": true,

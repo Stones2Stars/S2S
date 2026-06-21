@@ -2,11 +2,6 @@
  "type": "FEATURE_BLACK_HOLE",
  "description": "TXT_KEY_FEATURE_BLACK_HOLE",
  "civilopedia": "TXT_KEY_FEATURE_BLACK_HOLE_PEDIA",
- "movement": {
-  "plot": {
-   "flat": 4
-  }
- },
  "world": {
   "art": {
    "icon": "ART_DEF_FEATURE_BLACK_HOLE"
@@ -16,6 +11,7 @@
   "soundscape": "ASSS_BLACK_HOLE_SELECT_AMB"
  },
  "identity": {
+  "movementCost": 4,
   "appearance": 500,
   "noCoast": true,
   "noRiver": true,

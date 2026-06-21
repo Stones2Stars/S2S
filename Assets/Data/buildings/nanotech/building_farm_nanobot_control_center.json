@@ -55,10 +55,10 @@
  },
  "gold": {
   "city": {
-   "flat": 20,
-   "percent": [
+   "flat": [
+    20,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_BARLEY",
       "scope": "city",
@@ -66,7 +66,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_CORN",
       "scope": "city",
@@ -74,7 +74,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_POTATOES",
       "scope": "city",
@@ -82,7 +82,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_RICE",
       "scope": "city",
@@ -90,7 +90,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_WHEAT",
       "scope": "city",
@@ -98,7 +98,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_APPLE",
       "scope": "city",
@@ -106,7 +106,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_BANANA",
       "scope": "city",
@@ -114,7 +114,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_COFFEE",
       "scope": "city",
@@ -122,7 +122,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_FIG",
       "scope": "city",
@@ -130,7 +130,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_LEMONS",
       "scope": "city",
@@ -138,7 +138,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_MANGO",
       "scope": "city",
@@ -146,7 +146,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_OLIVES",
       "scope": "city",
@@ -154,7 +154,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_PAPAYA",
       "scope": "city",
@@ -162,7 +162,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SPICES",
       "scope": "city",
@@ -170,7 +170,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SUGAR",
       "scope": "city",
@@ -178,7 +178,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_PUMPKIN",
       "scope": "city",
@@ -186,7 +186,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SQUASH",
       "scope": "city",
@@ -194,7 +194,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_TEA",
       "scope": "city",
@@ -202,7 +202,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_VANILLA",
       "scope": "city",
@@ -210,7 +210,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_GRAPES",
       "scope": "city",

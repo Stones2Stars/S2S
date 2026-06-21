@@ -36,11 +36,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -1
-  }
- },
  "experience": {
   "city": {
    "unitCombats": {
@@ -57,6 +52,11 @@
      "flat": 1
     }
    }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
   }
  },
  "cost": {

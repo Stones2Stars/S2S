@@ -51,16 +51,18 @@
  },
  "gold": {
   "city": {
-   "flat": [
-    -500,
-    {
-     "value": 200,
-     "enabled": {
-      "type": "TECH_LUNAR_TRADE",
-      "scope": "team"
-     }
+   "flat": {
+    "value": 200,
+    "enabled": {
+     "type": "TECH_LUNAR_TRADE",
+     "scope": "team"
     }
-   ]
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 500
   }
  },
  "hurryCost": {

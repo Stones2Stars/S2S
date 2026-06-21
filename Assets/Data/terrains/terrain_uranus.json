@@ -12,11 +12,6 @@
    "flat": 2
   }
  },
- "movement": {
-  "plot": {
-   "flat": 3
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/baseterrain/uranus.dds"
@@ -31,6 +26,7 @@
   "soundscape": "ASSS_TUNDRA_SELECT_AMB"
  },
  "identity": {
+  "movementCost": 3,
   "found": true,
   "mapCategories": [
    "MAPCATEGORY_SOLAR_SYSTEM",

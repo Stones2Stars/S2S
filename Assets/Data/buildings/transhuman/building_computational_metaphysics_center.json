@@ -34,16 +34,13 @@
  },
  "gold": {
   "city": {
-   "flat": [
-    -5,
-    {
-     "value": 12,
-     "enabled": {
-      "type": "TECH_NOOGENESIS",
-      "scope": "team"
-     }
+   "flat": {
+    "value": 12,
+    "enabled": {
+     "type": "TECH_NOOGENESIS",
+     "scope": "team"
     }
-   ]
+   }
   }
  },
  "research": {
@@ -71,6 +68,11 @@
      }
     }
    ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
   }
  },
  "hurryCost": {

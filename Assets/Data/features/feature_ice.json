@@ -7,11 +7,6 @@
    "flat": 3
   }
  },
- "movement": {
-  "plot": {
-   "flat": 2
-  }
- },
  "properties": [
   {
    "source": "CONSTANT",
@@ -52,6 +47,7 @@
   ]
  },
  "identity": {
+  "movementCost": 2,
   "addsFreshWater": true,
   "impassable": true,
   "validTerrains": [

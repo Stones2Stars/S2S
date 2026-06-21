@@ -33,7 +33,6 @@
  "gold": {
   "city": {
    "flat": [
-    -2,
     {
      "value": -1,
      "enabled": {
@@ -135,13 +134,6 @@
    ]
   }
  },
- "espionage": {
-  "city": {
-   "insidiousness": {
-    "flat": 6
-   }
-  }
- },
  "happiness": {
   "city": {
    "flat": -2
@@ -153,6 +145,18 @@
     "UNITCOMBAT_CRIMINAL": {
      "flat": 2
     }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "insidiousness": {
+    "flat": 6
    }
   }
  },

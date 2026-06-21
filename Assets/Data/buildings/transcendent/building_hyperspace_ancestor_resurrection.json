@@ -25,11 +25,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -10
-  }
- },
  "culture": {
   "city": {
    "flat": 20
@@ -38,6 +33,11 @@
  "happiness": {
   "city": {
    "flat": 3
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
   }
  },
  "revolution": {

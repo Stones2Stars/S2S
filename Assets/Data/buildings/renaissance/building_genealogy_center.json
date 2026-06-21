@@ -41,10 +41,10 @@
  },
  "culture": {
   "city": {
-   "flat": 5,
-   "percent": [
+   "flat": [
+    5,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_TABLETS",
       "scope": "city",
@@ -52,7 +52,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SCROLLS",
       "scope": "city",
@@ -60,7 +60,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_BOOKS",
       "scope": "city",

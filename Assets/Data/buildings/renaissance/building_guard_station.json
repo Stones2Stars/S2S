@@ -72,16 +72,8 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -1
-  }
- },
  "espionage": {
   "city": {
-   "investigation": {
-    "flat": 30
-   },
    "flat": 10,
    "percent": 1
   }
@@ -93,6 +85,11 @@
    }
   }
  },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
  "warWeariness": {
   "city": {
    "percent": -10
@@ -101,6 +98,13 @@
  "hurryCost": {
   "city": {
    "percent": 100
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "investigation": {
+    "flat": 30
+   }
   }
  },
  "espionageDefense": {

@@ -38,11 +38,6 @@
  "allowed": {
   "empire": 1
  },
- "gold": {
-  "city": {
-   "flat": -10
-  }
- },
  "culture": {
   "city": {
    "flat": [
@@ -56,6 +51,11 @@
      }
     }
    ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
   }
  },
  "greatPeopleRate": {

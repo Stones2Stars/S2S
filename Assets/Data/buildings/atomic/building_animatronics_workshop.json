@@ -59,10 +59,10 @@
  },
  "culture": {
   "city": {
-   "flat": 1,
-   "percent": [
+   "flat": [
+    1,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_DYE",
       "scope": "city",
@@ -70,7 +70,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_CLOTHING",
       "scope": "city",
@@ -78,7 +78,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_HATS",
       "scope": "city",
@@ -86,7 +86,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SHOES",
       "scope": "city",
@@ -94,7 +94,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_JEWELRY",
       "scope": "city",
@@ -102,7 +102,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SYNTHETIC_RUBBER",
       "scope": "city",
@@ -110,7 +110,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_PLASTIC",
       "scope": "city",
@@ -118,7 +118,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_COMPUTERS",
       "scope": "city",

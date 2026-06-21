@@ -34,11 +34,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -10
-  }
- },
  "research": {
   "city": {
    "flat": 5
@@ -47,6 +42,11 @@
  "freeSpecialists": {
   "city": {
    "SPECIALIST_SCIENTIST": 2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
   }
  },
  "greatPeopleRate": {

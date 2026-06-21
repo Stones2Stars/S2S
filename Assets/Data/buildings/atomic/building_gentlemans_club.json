@@ -73,10 +73,10 @@
  },
  "culture": {
   "city": {
-   "flat": 3,
-   "percent": [
+   "flat": [
+    3,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_OSTRICH_FEATHERS",
       "scope": "city",

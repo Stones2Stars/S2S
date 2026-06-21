@@ -17,11 +17,6 @@
    "flat": 1
   }
  },
- "movement": {
-  "plot": {
-   "flat": 1
-  }
- },
  "properties": [
   {
    "source": "CONSTANT",
@@ -55,6 +50,7 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "movementCost": 1,
   "appearance": 300,
   "requiresFlatlands": true,
   "noCity": true,

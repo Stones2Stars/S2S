@@ -2,11 +2,6 @@
  "type": "FEATURE_OCEAN_PLANET",
  "description": "TXT_KEY_FEATURE_OCEAN_PLANET",
  "civilopedia": "TXT_KEY_FEATURE_OCEAN_PLANET_PEDIA",
- "movement": {
-  "plot": {
-   "flat": 2
-  }
- },
  "defense": {
   "plot": {
    "amount": {
@@ -30,6 +25,7 @@
   "soundscape": "ASSS_ASTEROIDS_SELECT_AMB"
  },
  "identity": {
+  "movementCost": 2,
   "popDestroys": -1,
   "validTerrains": [
    "TERRAIN_TRANSTELLAR_SPACE"

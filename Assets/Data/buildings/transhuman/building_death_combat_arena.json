@@ -37,10 +37,10 @@
  },
  "gold": {
   "city": {
-   "flat": 10,
-   "percent": [
+   "flat": [
+    10,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_HUMAN_MOD_NOVEL_SENSES",
       "scope": "city",
@@ -48,7 +48,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_MITHRIL",
       "scope": "city",

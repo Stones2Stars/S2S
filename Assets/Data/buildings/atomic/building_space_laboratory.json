@@ -42,11 +42,6 @@
  "allowed": {
   "empire": 1
  },
- "gold": {
-  "city": {
-   "flat": -9
-  }
- },
  "research": {
   "city": {
    "flat": 10
@@ -57,6 +52,11 @@
    "space": {
     "percent": 20
    }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 9
   }
  },
  "hurryCost": {

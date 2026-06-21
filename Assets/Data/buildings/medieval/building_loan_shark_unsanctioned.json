@@ -40,17 +40,17 @@
    "percent": 2
   }
  },
- "espionage": {
-  "city": {
-   "insidiousness": {
-    "flat": 2
-   }
-  }
- },
  "happiness": {
   "city": {
    "perPopulation": {
     "percent": -20
+   }
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "insidiousness": {
+    "flat": 2
    }
   }
  },

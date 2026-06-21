@@ -2,11 +2,6 @@
  "type": "FEATURE_ROCK_FORM1",
  "description": "TXT_KEY_FEATURE_OUTCROP",
  "civilopedia": "TXT_KEY_FEATURE_OUTCROP_PEDIA",
- "movement": {
-  "plot": {
-   "flat": 1
-  }
- },
  "vision": {
   "plot": {
    "seeThrough": {
@@ -36,6 +31,7 @@
   ]
  },
  "identity": {
+  "movementCost": 1,
   "appearance": 50,
   "popDestroys": 4,
   "validTerrains": [

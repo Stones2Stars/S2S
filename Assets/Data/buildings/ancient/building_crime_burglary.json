@@ -32,10 +32,9 @@
  },
  "gold": {
   "city": {
-   "flat": -5,
-   "percent": [
+   "flat": [
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "BONUS_JEWELRY",
       "scope": "city",
@@ -43,7 +42,7 @@
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "BONUS_SCULPTURES",
       "scope": "city",
@@ -51,7 +50,7 @@
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "BONUS_POTTERY",
       "scope": "city",
@@ -59,7 +58,7 @@
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "BONUS_GLASSWARE",
       "scope": "city",
@@ -67,7 +66,7 @@
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "BONUS_CLOTHING",
       "scope": "city",
@@ -75,7 +74,7 @@
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "BONUS_HATS",
       "scope": "city",
@@ -83,7 +82,7 @@
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "BONUS_SHOES",
       "scope": "city",
@@ -91,7 +90,7 @@
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "BONUS_PERCUSSION_INSTRUMENTS",
       "scope": "city",
@@ -99,7 +98,7 @@
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "BONUS_WOODWIND_INSTRUMENTS",
       "scope": "city",
@@ -107,7 +106,7 @@
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "BONUS_BRASS_INSTRUMENTS",
       "scope": "city",
@@ -115,7 +114,7 @@
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "BONUS_STRING_INSTRUMENTS",
       "scope": "city",
@@ -123,7 +122,7 @@
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "BONUS_BOOKS",
       "scope": "city",
@@ -131,7 +130,7 @@
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "BONUS_BICYCLES",
       "scope": "city",
@@ -139,7 +138,7 @@
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "BONUS_TOYS",
       "scope": "city",
@@ -147,7 +146,7 @@
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "BONUS_SKIS",
       "scope": "city",
@@ -155,7 +154,7 @@
      }
     },
     {
-     "value": -100,
+     "value": -1,
      "enabled": {
       "type": "BONUS_COMPUTERS",
       "scope": "city",
@@ -163,13 +162,6 @@
      }
     }
    ]
-  }
- },
- "espionage": {
-  "city": {
-   "insidiousness": {
-    "flat": 14
-   }
   }
  },
  "happiness": {
@@ -189,9 +181,21 @@
    }
   }
  },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
  "revolution": {
   "city": {
    "flat": 15
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "insidiousness": {
+    "flat": 14
+   }
   }
  },
  "PROPERTY_TOURISM": {

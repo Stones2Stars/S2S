@@ -48,11 +48,6 @@
  "allowed": {
   "empire": 1
  },
- "gold": {
-  "city": {
-   "flat": -25
-  }
- },
  "espionage": {
   "city": {
    "flat": 5,
@@ -69,6 +64,11 @@
      "percent": 10
     }
    }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 25
   }
  },
  "warWeariness": {

@@ -2,11 +2,6 @@
  "type": "FEATURE_CRATER_LARGE",
  "description": "TXT_KEY_FEATURE_CRATER_LARGE",
  "civilopedia": "TXT_KEY_FEATURE_CRATER_PEDIA",
- "movement": {
-  "plot": {
-   "flat": 1
-  }
- },
  "defense": {
   "plot": {
    "amount": {
@@ -30,6 +25,7 @@
   "soundscape": "ASSS_OASIS_SELECT_AMB"
  },
  "identity": {
+  "movementCost": 1,
   "popDestroys": 40,
   "appearance": 250,
   "noAdjacent": true,

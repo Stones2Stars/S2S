@@ -28,9 +28,6 @@
   "world": 1
  },
  "gold": {
-  "city": {
-   "flat": -10
-  },
   "empire": {
    "buildings": {
     "BUILDING_PLANETARIUM": {
@@ -42,6 +39,11 @@
  "research": {
   "city": {
    "flat": 25
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
   }
  },
  "cost": {

@@ -33,18 +33,15 @@
  "gold": {
   "city": {
    "flat": [
-    -20,
     {
      "value": 13,
      "enabled": {
       "type": "TECH_ENDLESS_EXPLORATION",
       "scope": "team"
      }
-    }
-   ],
-   "percent": [
+    },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_HUMAN_MOD_INDEFINITE_LIFESPAN",
       "scope": "city",
@@ -101,6 +98,11 @@
      }
     }
    ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 20
   }
  },
  "hurryCost": {

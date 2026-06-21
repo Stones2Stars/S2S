@@ -31,16 +31,13 @@
  },
  "gold": {
   "city": {
-   "flat": [
-    -10,
-    {
-     "value": 7,
-     "enabled": {
-      "type": "TECH_LASER",
-      "scope": "team"
-     }
+   "flat": {
+    "value": 7,
+    "enabled": {
+     "type": "TECH_LASER",
+     "scope": "team"
     }
-   ]
+   }
   }
  },
  "research": {
@@ -110,6 +107,11 @@
      }
     }
    ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
   }
  },
  "hurryCost": {

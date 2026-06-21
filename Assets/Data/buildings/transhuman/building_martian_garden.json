@@ -33,11 +33,6 @@
    ]
   }
  },
- "gold": {
-  "city": {
-   "flat": -1
-  }
- },
  "research": {
   "city": {
    "flat": 200
@@ -54,6 +49,11 @@
   }
  },
  "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
   "city": {
    "flat": 1
   }

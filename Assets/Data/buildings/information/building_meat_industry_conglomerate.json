@@ -261,10 +261,10 @@
  },
  "gold": {
   "city": {
-   "flat": 160,
-   "percent": [
+   "flat": [
+    160,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_COW",
       "scope": "city",
@@ -272,7 +272,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_HORSE",
       "scope": "city",
@@ -280,7 +280,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_PIG",
       "scope": "city",
@@ -288,7 +288,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SHEEP",
       "scope": "city",
@@ -296,7 +296,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_WHALE",
       "scope": "city",

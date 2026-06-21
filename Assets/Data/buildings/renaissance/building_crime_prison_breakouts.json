@@ -48,13 +48,6 @@
    ]
   }
  },
- "espionage": {
-  "city": {
-   "insidiousness": {
-    "flat": 15
-   }
-  }
- },
  "happiness": {
   "city": {
    "flat": -3,
@@ -76,6 +69,13 @@
     "UNITCOMBAT_CRIMINAL": {
      "flat": 5
     }
+   }
+  }
+ },
+ "copsAndRobbers": {
+  "city": {
+   "insidiousness": {
+    "flat": 15
    }
   }
  },

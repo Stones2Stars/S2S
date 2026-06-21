@@ -46,11 +46,6 @@
  "allowed": {
   "world": 1
  },
- "gold": {
-  "city": {
-   "flat": -5
-  }
- },
  "research": {
   "empire": {
    "buildings": {
@@ -66,6 +61,11 @@
  "health": {
   "empire": {
    "flat": 2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
   }
  },
  "greatPeopleRate": {

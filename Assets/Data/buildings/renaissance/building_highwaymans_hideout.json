@@ -66,10 +66,10 @@
  },
  "gold": {
   "city": {
-   "flat": 15,
-   "percent": [
+   "flat": [
+    15,
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_COPPER_ORE",
       "scope": "city",
@@ -77,7 +77,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_SILVER_ORE",
       "scope": "city",
@@ -85,7 +85,7 @@
      }
     },
     {
-     "value": 100,
+     "value": 1,
      "enabled": {
       "type": "BONUS_GOLD_ORE",
       "scope": "city",
