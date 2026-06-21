@@ -785,6 +785,9 @@ public:
 	int baseCombatStr() const;
 	int baseCombatStrNonGranular() const;
 	int baseCombatStrPreCheck() const;
+	// raw base combat (m_iBaseCombat) -- exposed so the diagnostic dump can decompose baseCombatStrPreCheck
+	// (owner ruling 2026-06-20: visibility never justifies dropping a calc source; zero sensitive data in a game mod).
+	int getBaseCombat() const { return m_iBaseCombat; }
 	int baseAirCombatStrPreCheck() const;
 	float fbaseCombatStr() const;
 	/*** Dexy - Surround and Destroy START ****/

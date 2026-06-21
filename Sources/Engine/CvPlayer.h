@@ -1358,6 +1358,10 @@ public:
 	int getCivicInflation() const;
 	void changeCivicInflation(int iChange);
 
+	// the raw inflation modifier (m_iInflationModifier) -- exposed so the diagnostic dump can decompose
+	// getInflationMod10000 (owner ruling 2026-06-20: visibility never justifies dropping a calc source).
+	int getInflationModifier() const { return m_iInflationModifier; }
+
 	int getHurryCostModifier() const;
 	void changeHurryCostModifier(int iChange);
 

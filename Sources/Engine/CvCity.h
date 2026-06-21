@@ -280,6 +280,7 @@ public:
 
 	bool canHurry(const HurryTypes eHurry, const bool bTestVisible = false) const;
 	int64_t getHurryGold(const HurryTypes eHurry, int iHurryCost = -1) const;
+	int getHurryPopulation(HurryTypes eHurry, int iHurryCost) const; // public so the diagnostic dump can report the whip-pop cost (promoted from protected; non-virtual, no ABI impact)
 	void hurry(HurryTypes eHurry);
 	bool hurryOverflow(HurryTypes eHurry, int* iProduction, int* iGold, bool bCountThisTurn = false) const;
 
@@ -476,6 +477,9 @@ public:
 	void changeNumGreatPeople(int iChange);
 
 	int getBaseGreatPeopleRate() const;
+	// raw member (m_iBaseGreatPeopleRate), pre-max(0,·) and pre-national -- exposed so the dump can reconstruct
+	// the base when it is negative (owner ruling 2026-06-20: visibility never justifies dropping a calc source).
+	int getBaseGreatPeopleRateRaw() const { return m_iBaseGreatPeopleRate; }
 	int getGreatPeopleRate() const;
 	int getTotalGreatPeopleRateModifier() const;
 	void changeBaseGreatPeopleRate(int iChange);
@@ -1313,6 +1317,9 @@ public:
 
 	int getMinimumDefenseLevel() const;
 	void setMinimumDefenseLevel(int iNewValue);
+	// raw member, ungated by REALISTIC_SIEGE -- exposed so the dump can attribute minimumDefenseLevel when the
+	// option is off (owner ruling 2026-06-20: visibility never justifies dropping a calc source).
+	int getMinimumDefenseLevelRaw() const { return m_iMinimumDefenseLevel; }
 
 	SpecialistTypes getBestSpecialist(int iExtra) const;
 
@@ -1852,7 +1859,6 @@ protected:
 	int getHurryCost(UnitTypes eUnit) const;
 	int getHurryCost(BuildingTypes eType) const;
 	int getHurryCost(int iProductionLeft, int iHurryModifier) const;
-	int getHurryPopulation(HurryTypes eHurry, int iHurryCost) const;
 	bool canHurryUnit(HurryTypes eHurry, UnitTypes eUnit) const;
 	bool canHurryBuilding(HurryTypes eHurry, BuildingTypes eType) const;
 	void recalculateMaxFoodKeptPercent();
